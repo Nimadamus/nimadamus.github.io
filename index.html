@@ -25,7 +25,7 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 30px; /* updated spacing */
+      gap: 30px;
     }
     .sidebar a {
       color: yellow;
@@ -54,13 +54,19 @@
     }
     .affiliate {
       margin: 10px auto;
-      padding: 10px 20px;
+      padding: 12px 25px;
       background-color: yellow;
       color: black;
       font-weight: bold;
       border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
       cursor: pointer;
-      display: block;
+      transition: background-color 0.3s;
+    }
+    .affiliate:hover {
+      background-color: gold;
     }
     .curry-img {
       max-width: 200px;
@@ -87,15 +93,4 @@
   <div class="main">
     <img src="logo.png" alt="Logo" class="logo" />
     <div class="date" id="date"></div>
-    <a class="affiliate" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">Join YouWager Now</a>
-    <img src="curry.png" alt="Steph Curry" class="curry-img" />
-  </div>
-
-  <script>
-    const dateElement = document.getElementById('date');
-    const today = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    dateElement.textContent = today.toLocaleDateString(undefined, options);
-  </script>
-</body>
-</html>
+    <a class="affiliate" href="https://www.youwager.lv/join-now?aff
