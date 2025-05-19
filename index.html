@@ -16,39 +16,32 @@
       color: white;
       font-family: 'Inter', sans-serif;
     }
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 200px;
+    header {
       background-color: black;
-      color: yellow;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      font-weight: bold;
+      text-align: center;
     }
-    .sidebar a {
+    nav {
+      background-color: black;
+      text-align: center;
+      padding-bottom: 10px;
+    }
+    nav a {
       color: yellow;
       text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 14px;
     }
     .main {
-      margin-left: 220px;
-      padding: 40px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+      text-align: center;
+      padding: 40px 20px 20px;
     }
-    .header-text {
-      max-width: 40%;
-    }
-    .header-text h1 {
+    .main h1 {
       font-size: 42px;
       margin: 0;
     }
-    .header-text p {
+    .main p {
       font-size: 16px;
       margin: 10px 0 20px;
     }
@@ -64,24 +57,22 @@
     }
     .image-row {
       display: flex;
-      gap: 20px;
-      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 50px;
+      flex-wrap: wrap;
     }
     .image-row img {
-      max-height: 300px;
-      height: auto;
+      max-height: 320px;
       width: auto;
-      border-radius: 10px;
-      object-fit: contain;
-    }
-    .image-row img.bonds {
-      max-height: 340px;
+      border-radius: 12px;
     }
     .cards {
       display: flex;
       justify-content: center;
       gap: 30px;
       margin-top: 80px;
+      flex-wrap: wrap;
     }
     .card {
       background-color: #1c1c1c;
@@ -110,7 +101,11 @@
   </style>
 </head>
 <body>
-  <div class="sidebar">
+  <header>
+    <h1 style="color: yellow; margin-bottom: 5px;">BETLEGEND PICKS</h1>
+  </header>
+
+  <nav>
     <a href="index.html">HOME</a>
     <a href="upcomingpicks.html">UPCOMING PICKS</a>
     <a href="odds.html">LIVE ODDS</a>
@@ -120,18 +115,17 @@
     <a href="nfl.html">NFL</a>
     <a href="nhl.html">NHL</a>
     <a href="email.html">GET FREE PICKS</a>
-  </div>
+  </nav>
 
   <div class="main">
-    <div class="header-text">
-      <h1>BetLegend Picks</h1>
-      <p>Expert Sports Betting Picks and Live Odds</p>
-      <button class="start-button">START WINNING NOW</button>
-    </div>
+    <h1>BetLegend Picks</h1>
+    <p>Expert Sports Betting Picks and Live Odds</p>
+    <button class="start-button">START WINNING NOW</button>
+
     <div class="image-row">
       <img src="jerry-rice.png" alt="Jerry Rice">
       <img src="steph-curry-hero.png" alt="Steph Curry">
-      <img src="barry-bonds.png" alt="Barry Bonds" class="bonds">
+      <img src="barry-bonds.png" alt="Barry Bonds">
     </div>
   </div>
 
