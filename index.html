@@ -2,207 +2,152 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="BetLegend Picks - Expert Sports Betting Picks and Live Odds" />
-  <meta name="keywords" content="sports betting, free picks, live odds, BetLegend, MLB, NBA, NHL, NFL" />
-  <meta name="author" content="Nima" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Expert sports betting picks and live odds. Get free picks daily on MLB, NBA, and NHL.">
+  <meta name="keywords" content="sports betting, free picks, MLB picks, NBA picks, NHL picks, betting odds">
+  <meta name="author" content="BetLegend Picks">
+  <meta name="robots" content="index, follow">
   <title>BetLegend Picks</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"/>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Poppins', sans-serif;
-      background: #000;
-      color: #fff;
-      padding: 0;
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: 'Inter', sans-serif;
     }
-
-    header {
-      background: #000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 30px 60px;
-      flex-wrap: wrap;
-    }
-
-    .logo-text {
-      font-size: 24px;
-      font-weight: 700;
-      color: #FFD700;
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 24px;
-    }
-
-    nav a {
-      color: #FFD700;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .hero {
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 200px;
+      background-color: black;
+      color: yellow;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 60px 20px;
+      gap: 25px;
+      font-weight: bold;
     }
-
-    .hero h1 {
-      font-size: 48px;
-      font-weight: 700;
-      margin-bottom: 20px;
+    .sidebar a {
+      color: yellow;
+      text-decoration: none;
     }
-
-    .hero p {
-      font-size: 18px;
-      color: #ccc;
-      margin-bottom: 40px;
+    .main {
+      margin-left: 220px;
+      padding: 40px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
     }
-
-    .cta-button {
-      background-color: #FFD700;
+    .header-text {
+      max-width: 40%;
+    }
+    .header-text h1 {
+      font-size: 42px;
+      margin: 0;
+    }
+    .header-text p {
+      font-size: 16px;
+      margin: 10px 0 20px;
+    }
+    .start-button {
+      background-color: yellow;
       color: black;
       font-weight: bold;
-      font-size: 16px;
-      padding: 16px 36px;
+      padding: 15px 25px;
+      border-radius: 30px;
       border: none;
-      border-radius: 999px;
       cursor: pointer;
+      font-size: 14px;
+    }
+    .image-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .image-row img {
+      max-height: 300px;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 80px;
+    }
+    .card {
+      background-color: #1c1c1c;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: left;
+      width: 240px;
+    }
+    .card h3 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+    .twitter-button {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .twitter-button a {
+      background-color: #1DA1F2;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 20px;
+      font-weight: bold;
       text-decoration: none;
       display: inline-block;
-      transition: background 0.3s ease;
-      margin-bottom: 50px;
-    }
-
-    .cta-button:hover {
-      background-color: #e6c200;
-    }
-
-    .legends-row {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .legends-row img {
-      height: 360px;
-      width: auto;
-      border-radius: 20px;
-      object-fit: cover;
-    }
-
-    .features {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin: 60px 60px 30px;
-      flex-wrap: wrap;
-    }
-
-    .feature-box {
-      background: #111;
-      padding: 30px;
-      border-radius: 16px;
-      width: 280px;
-    }
-
-    .feature-box h3 {
-      color: #fff;
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .feature-box p {
-      color: #ccc;
-      font-size: 14px;
-      line-height: 1.5em;
-    }
-
-    .twitter-bar {
-      margin: 40px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #111;
-      border-radius: 999px;
-      padding: 12px 24px;
-      width: fit-content;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .twitter-bar img {
-      width: 18px;
-      margin-right: 10px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo-text">BETLEGEND <span style="color:#fff;font-weight:400">PICKS</span></div>
-    <nav>
-      <a href="index.html">HOME</a>
-      <a href="upcomingpicks.html">UPCOMING PICKS</a>
-      <a href="odds.html">LIVE ODDS</a>
-      <a href="#">RECORDS</a>
-      <a href="#">MLB</a>
-      <a href="#">NBA</a>
-      <a href="#">NFL</a>
-      <a href="#">NHL</a>
-    </nav>
-  </header>
+  <div class="sidebar">
+    <a href="index.html">HOME</a>
+    <a href="upcomingpicks.html">UPCOMING PICKS</a>
+    <a href="odds.html">LIVE ODDS</a>
+    <a href="records.html">RECORDS</a>
+    <a href="mlb.html">MLB</a>
+    <a href="nba.html">NBA</a>
+    <a href="nfl.html">NFL</a>
+    <a href="nhl.html">NHL</a>
+    <a href="email.html">GET FREE PICKS</a>
+    <a href="https://twitter.com/BetLegendPicks" target="_blank">FOLLOW US ON TWITTER</a>
+  </div>
 
-  <section class="hero">
-    <h1>BetLegend Picks</h1>
-    <p>Expert Sports Betting Picks and Live Odds</p>
-    <a class="cta-button" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">START WINNING NOW</a>
-    <div class="legends-row">
+  <div class="main">
+    <div class="header-text">
+      <h1>BetLegend Picks</h1>
+      <p>Expert Sports Betting Picks and Live Odds</p>
+      <button class="start-button">START WINNING NOW</button>
+    </div>
+    <div class="image-row">
       <img src="jerry-rice.png" alt="Jerry Rice">
       <img src="steph-curry-hero.png" alt="Steph Curry">
       <img src="barry-bonds.png" alt="Barry Bonds">
     </div>
-  </section>
+  </div>
 
-  <section class="features">
-    <div class="feature-box">
+  <div class="cards">
+    <div class="card">
       <h3>Free Picks</h3>
       <p>Get our expert sports betting picks every day.</p>
     </div>
-    <div class="feature-box">
+    <div class="card">
       <h3>Live Odds</h3>
       <p>Check the latest MLB, NBA and NHL betting odds.</p>
     </div>
-    <div class="feature-box">
+    <div class="card">
       <h3>Get Free Picks</h3>
       <p>Sign up to receive free sports betting picks by email.</p>
     </div>
-  </section>
-
-  <div class="twitter-bar">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" alt="Twitter">
-    FOLLOW US ON TWITTER
   </div>
 
-  <!-- Clicky Tracking -->
-  <a title="Google Analytics Alternative" href="https://clicky.com/101485054">
-    <img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" />
-  </a>
-  <script async data-id="101485054" src="//static.getclicky.com/js"></script>
-
+  <div class="twitter-button">
+    <a href="https://twitter.com/BetLegendPicks" target="_blank">FOLLOW US ON TWITTER</a>
+  </div>
 </body>
 </html>
