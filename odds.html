@@ -110,7 +110,7 @@
 <body>
 
   <div class="ticker">
-    <span id="liveTicker">Loading live odds ticker...</span>
+    <span id="liveTicker">Loading live matchups...</span>
   </div>
 
   <!-- Pregame Button -->
@@ -141,6 +141,43 @@
   </div>
 
   <script>
+    const API_KEY = "c63a449bea9b087de00bc25f8fe42f7a";
+
+    async function fetchMatchups() {
+      const today = new Date().toISOString().split('T')[0];
+      const sports = [
+        { name: "MLB", league: 1 },     // Example league IDs - to be updated based on real league IDs
+        { name: "NBA", league: 12 },
+        { name: "NHL", league: 57 }
+      ];
+
+      let matchups = [];
+
+      for (let sport of sports) {
+        const url = `https://v1.api-sports.io/games?date=${today}&league=${sport.league}&season=2024`;
+        try {
+          const response = await fetch(url, {
+            headers: {
+              "x-apisports-key": API_KEY
+            }
+          });
+          const data = await response.json();
+          if (data.response && data.response.length > 0) {
+            data.response.forEach(game => {
+              if (game.teams && game.teams.home && game.teams.away) {
+                matchups.push(`${game.teams.home.name} vs ${game.teams.away.name}`);
+              }
+            });
+          }
+        } catch (err) {
+          console.error("Error fetching", sport.name, "games:", err);
+        }
+      }
+
+      const ticker = matchups.length ? matchups.join(" | ") : "No live games today.";
+      document.getElementById("liveTicker").textContent = ticker;
+    }
+
     function showTab(id) {
       document.querySelectorAll('.content').forEach(div => div.classList.remove('active'));
       document.querySelectorAll('.tablink').forEach(btn => btn.classList.remove('active'));
@@ -148,21 +185,8 @@
       document.querySelector(`.tablink[onclick="showTab('${id}')"]`).classList.add('active');
     }
 
-    async function updateTicker() {
-      const games = [
-        "Yankees vs Red Sox",
-        "Warriors vs Lakers",
-        "Stars vs Avalanche",
-        "Giants vs Dodgers",
-        "Heat vs Celtics",
-        "Rangers vs Penguins"
-      ];
-      const randomTicker = games.map(game => `${game}`).join(" | ");
-      document.getElementById('liveTicker').textContent = randomTicker;
-    }
-
-    updateTicker();
-    setInterval(updateTicker, 60000);
+    fetchMatchups();
+    setInterval(fetchMatchups, 60000);
   </script>
 </body>
 </html>
