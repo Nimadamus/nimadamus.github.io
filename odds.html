@@ -20,23 +20,42 @@
       color: #ffcc00;
     }
 
-    .odds-table {
-      width: 100%;
-      max-width: 900px;
-      margin: 40px auto;
-      border-collapse: collapse;
-    }
-
-    .odds-table th, .odds-table td {
-      padding: 12px;
-      border-bottom: 1px solid #444;
-      text-align: center;
-      font-size: 1.1em;
-    }
-
-    .odds-table th {
+    h2 {
       color: #ffcc00;
-      font-size: 1.2em;
+      font-size: 1.8em;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .odds-section {
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+    }
+
+    .odds-card {
+      background-color: #1c1c1c;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    }
+
+    .odds-card h3 {
+      margin: 0 0 10px;
+      color: #fff;
+      font-size: 1.3em;
+    }
+
+    .odds-details {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1em;
+      color: #ccc;
+    }
+
+    .odds-details span {
+      flex: 1;
+      text-align: center;
     }
 
     .ticker {
@@ -66,38 +85,59 @@
   <h1>📈 Live Odds Feed</h1>
 
   <div class="ticker">
-    <span>Dodgers -120 🔹 Yankees +135 🔹 Celtics -6.5 🔹 Oilers @ Canucks o/u 6.5 🔹 Warriors -3 🔹 Giants +105</span>
+    <span>Warriors -3.5 🔹 Red Sox -150 🔹 Oilers @ Canucks o/u 6.5 🔹 Celtics -6.5 🔹 Yankees +135</span>
   </div>
 
-  <table class="odds-table">
-    <thead>
-      <tr>
-        <th>Game</th>
-        <th>Moneyline</th>
-        <th>Total</th>
-        <th>Spread</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Yankees @ Red Sox</td>
-        <td>NYY +135 / BOS -150</td>
-        <td>8.5</td>
-        <td>BOS -1.5</td>
-      </tr>
-      <tr>
-        <td>Warriors @ Lakers</td>
-        <td>GSW -135 / LAL +115</td>
-        <td>230.5</td>
-        <td>GSW -2.5</td>
-      </tr>
-      <tr>
-        <td>Oilers @ Canucks</td>
-        <td>EDM +110 / VAN -125</td>
-        <td>6.5</td>
-        <td>VAN -1.5</td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- MLB Section -->
+  <div class="odds-section">
+    <h2>⚾ MLB</h2>
+
+    <div class="odds-card">
+      <h3>Yankees @ Red Sox</h3>
+      <div class="odds-details">
+        <span>ML: NYY +135 / BOS -150</span>
+        <span>Total: 8.5</span>
+        <span>💰 Public: 62% bets on BOS, 58% money on NYY</span>
+      </div>
+    </div>
+
+    <div class="odds-card">
+      <h3>Dodgers @ Giants</h3>
+      <div class="odds-details">
+        <span>ML: LAD -120 / SF +110</span>
+        <span>Total: 7.0</span>
+        <span>💰 Public: 72% bets on LAD, 51% money on SF</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NBA Section -->
+  <div class="odds-section">
+    <h2>🏀 NBA</h2>
+
+    <div class="odds-card">
+      <h3>Warriors @ Lakers</h3>
+      <div class="odds-details">
+        <span>ML: GSW -135 / LAL +115</span>
+        <span>Total: 230.5</span>
+        <span>💰 Public: 68% bets on GSW, 53% money on LAL</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHL Section -->
+  <div class="odds-section">
+    <h2>🏒 NHL</h2>
+
+    <div class="odds-card">
+      <h3>Oilers @ Canucks</h3>
+      <div class="odds-details">
+        <span>ML: EDM +110 / VAN -125</span>
+        <span>Total: 6.5</span>
+        <span>💰 Public: 55% bets on EDM, 60% money on VAN</span>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
