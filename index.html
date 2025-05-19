@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BetLegend Picks</title>
   <style>
     body {
@@ -10,28 +10,27 @@
       font-family: Arial, sans-serif;
       background-color: black;
       color: white;
+      display: flex;
     }
 
     .sidebar {
-      height: 100vh;
       width: 220px;
-      position: fixed;
-      top: 0;
-      left: 0;
+      height: 100vh;
       background-color: black;
       display: flex;
       flex-direction: column;
       padding-top: 20px;
       gap: 15px;
-      z-index: 10;
+      position: fixed;
+      left: 0;
+      top: 0;
     }
 
     .sidebar a {
-      padding: 10px 20px;
+      color: yellow;
       text-decoration: none;
       font-weight: bold;
-      color: yellow;
-      transition: background-color 0.3s;
+      padding: 10px 20px;
     }
 
     .sidebar a:hover {
@@ -43,51 +42,53 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      width: calc(100% - 220px);
       min-height: 100vh;
-      text-align: center;
     }
 
     .content {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 25px;
+      text-align: center;
+      gap: 20px;
       max-width: 600px;
-      padding: 20px;
     }
 
     .logo {
-      max-width: 180px;
+      width: 180px;
       height: auto;
     }
 
-    .curry-image {
+    .curry {
       max-width: 100%;
-      height: auto;
       border-radius: 12px;
-      box-shadow: 0 0 15px #222;
+      box-shadow: 0 0 20px #444;
     }
 
-    .button-row {
+    .buttons {
       display: flex;
       gap: 15px;
       flex-wrap: wrap;
       justify-content: center;
     }
 
-    .button-row a button {
-      background-color: #1DA1F2;
-      color: white;
+    .buttons a button {
       padding: 10px 20px;
+      font-size: 16px;
       border: none;
       border-radius: 8px;
-      font-size: 14px;
       cursor: pointer;
     }
 
-    .button-row a:first-child button {
+    .buttons a:first-child button {
       background-color: #00ffff;
       color: black;
+    }
+
+    .buttons a:last-child button {
+      background-color: #1DA1F2;
+      color: white;
     }
   </style>
 </head>
@@ -106,8 +107,8 @@
   <div class="main">
     <div class="content">
       <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
-      <img src="curry.png" alt="Steph Curry" class="curry-image">
-      <div class="button-row">
+      <img src="curry.png" alt="Steph Curry" class="curry">
+      <div class="buttons">
         <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
           <button>Join Now – Bet with YouWager</button>
         </a>
