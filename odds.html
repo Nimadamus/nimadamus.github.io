@@ -85,6 +85,14 @@
       border-radius: 8px;
       margin-bottom: 20px;
     }
+
+    .iframe-container {
+      width: 100%;
+      max-width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -92,6 +100,9 @@
   <div class="ticker">
     <span id="liveTicker">Loading live odds ticker...</span>
   </div>
+
+  <!-- Pregame Sportsbook Spy Embed -->
+  <iframe class="iframe-container" src="https://pregame.com/sportsbook-spy" frameborder="0"></iframe>
 
   <div class="tabs">
     <button class="tablink active" onclick="showTab('mlb')">MLB</button>
@@ -115,8 +126,6 @@
   </div>
 
   <script>
-    const API_KEY = 'c405ed8a7ef14ec945d39aeeaf647e4b';
-
     function showTab(id) {
       document.querySelectorAll('.content').forEach(div => div.classList.remove('active'));
       document.querySelectorAll('.tablink').forEach(btn => btn.classList.remove('active'));
@@ -124,60 +133,21 @@
       document.querySelector(`.tablink[onclick="showTab('${id}')"]`).classList.add('active');
     }
 
-    async function fetchOdds(sport, elementId) {
-      const url = `https://api.the-odds-api.com/v4/sports/${sport}/odds/?regions=us&markets=h2h,spreads,totals&oddsFormat=american&apiKey=${API_KEY}`;
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        let html = '';
-        data.forEach(game => {
-          html += `<div class="odds-box"><strong>${game.home_team} vs ${game.away_team}</strong><br>`;
-          game.bookmakers.forEach(book => {
-            html += `<em>${book.title}</em><br>`;
-            book.markets.forEach(market => {
-              html += `${market.key.toUpperCase()}: `;
-              market.outcomes.forEach(outcome => {
-                html += `${outcome.name} (${outcome.price}) `;
-              });
-              html += '<br>';
-            });
-          });
-          html += `</div>`;
-        });
-        document.getElementById(elementId).innerHTML = html || 'No data available.';
-      } catch (error) {
-        document.getElementById(elementId).innerHTML = 'Failed to load odds.';
-      }
-    }
-
     async function updateTicker() {
-      const url = `https://api.the-odds-api.com/v4/sports/upcoming/odds/?regions=us&markets=h2h&oddsFormat=american&apiKey=${API_KEY}`;
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        let ticker = '';
-        data.slice(0, 10).forEach(game => {
-          ticker += `${game.home_team} vs ${game.away_team} | `;
-        });
-        document.getElementById('liveTicker').textContent = ticker || 'No odds available.';
-      } catch {
-        document.getElementById('liveTicker').textContent = 'Failed to load ticker.';
-      }
+      const games = [
+        "Yankees vs Red Sox",
+        "Warriors vs Lakers",
+        "Stars vs Avalanche",
+        "Giants vs Dodgers",
+        "Heat vs Celtics",
+        "Rangers vs Penguins"
+      ];
+      const randomTicker = games.map(game => `${game}`).join(" | ");
+      document.getElementById('liveTicker').textContent = randomTicker;
     }
 
-    fetchOdds('baseball_mlb', 'mlbContent');
-    fetchOdds('basketball_nba', 'nbaContent');
-    fetchOdds('icehockey_nhl', 'nhlContent');
     updateTicker();
-
-    setInterval(() => {
-      fetchOdds('baseball_mlb', 'mlbContent');
-      fetchOdds('basketball_nba', 'nbaContent');
-      fetchOdds('icehockey_nhl', 'nhlContent');
-      updateTicker();
-    }, 60000);
+    setInterval(updateTicker, 60000);
   </script>
 </body>
 </html>
-
-   
