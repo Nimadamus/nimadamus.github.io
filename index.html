@@ -1,113 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BetLegend Picks</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: white;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 200px;
-      height: 100%;
-      background-color: #000;
-      padding-top: 20px;
-    }
-    .sidebar a {
-      display: block;
-      color: white;
-      padding: 12px 20px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .sidebar a:hover {
-      background-color: #444;
-    }
-    .main {
-      margin-left: 220px;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    .logo {
-      max-width: 180px;
-      margin: 10px auto 20px;
-      display: block;
-    }
-    .affiliate {
-      background-color: #222;
-      padding: 12px 25px;
-      border-radius: 12px;
-      display: inline-block;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    .affiliate a {
-      color: #0ff;
-      text-decoration: none;
-    }
-    .affiliate a:hover {
-      text-decoration: underline;
-    }
-    .date {
-      margin-top: 15px;
-      font-size: 20px;
-    }
-    .follow-button {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 24px;
-      background-color: #1DA1F2;
-      color: white;
-      border-radius: 25px;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .follow-button:hover {
-      background-color: #0d8ddb;
-    }
-    .curry {
-      margin-top: 30px;
-      max-width: 100%;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BetLegend Picks</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100%;
+      background-color: #000;
+      padding-top: 20px;
+    }
+    .sidebar a {
+      display: block;
+      color: #FFD700; /* Yellow */
+      padding: 12px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      text-align: left;
+    }
+    .sidebar a:hover {
+      background-color: #444;
+    }
+    .main {
+      margin-left: 200px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px 20px 60px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .logo {
+      max-width: 180px;
+      margin: 0 auto 20px;
+      display: block;
+    }
+    .affiliate {
+      background-color: #222;
+      padding: 12px 25px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    .affiliate a {
+      color: #0ff;
+      text-decoration: none;
+    }
+    .affiliate a:hover {
+      text-decoration: underline;
+    }
+    .follow-button {
+      margin-top: 10px;
+      padding: 12px 24px;
+      background-color: #1DA1F2;
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      display: inline-block;
+    }
+    .follow-button:hover {
+      background-color: #0d8ddb;
+    }
+    .curry {
+      margin-top: 40px;
+      max-width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+  </style>
 </head>
 <body>
-  <div class="sidebar">
-    <a href="index.html">Home</a>
-    <a href="upcomingpicks.html">Upcoming Picks</a>
-    <a href="odds.html">Live Odds</a>
-    <a href="records.html">Records</a>
-    <a href="mlb.html">MLB</a>
-    <a href="nba.html">NBA</a>
-    <a href="nhl.html">NHL</a>
-    <a href="email.html">Get Free Picks</a>
-  </div>
-  <div class="main">
-    <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
-    <div class="affiliate">
-      <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">Join Now – Bet with YouWager</a>
-    </div>
-    <div class="date" id="live-date"></div>
-    <a href="https://twitter.com/BetLegendPicks" target="_blank" class="follow-button">Follow Us on Twitter</a>
-    <img src="stephbg.jpg" alt="Steph Curry" class="curry">
-  </div>
-  <script>
-    const dateElement = document.getElementById('live-date');
-    const now = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    dateElement.textContent = now.toLocaleDateString(undefined, options);
-  </script>
-</body>
-</html>
+  <div class="sidebar">
+    <a href="index.html
