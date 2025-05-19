@@ -44,10 +44,30 @@
       100% { transform: translateX(-100%); }
     }
 
+    .pregame-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pregame-link a {
+      background-color: #ffcc00;
+      color: #111;
+      text-decoration: none;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .pregame-link a:hover {
+      background-color: #ffc107;
+    }
+
     .tabs {
       display: flex;
       justify-content: center;
-      margin-top: 20px;
+      margin-top: 30px;
     }
 
     .tabs button {
@@ -85,14 +105,6 @@
       border-radius: 8px;
       margin-bottom: 20px;
     }
-
-    .iframe-container {
-      width: 100%;
-      max-width: 100%;
-      height: 600px;
-      border: none;
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
@@ -101,9 +113,12 @@
     <span id="liveTicker">Loading live odds ticker...</span>
   </div>
 
-  <!-- Pregame Sportsbook Spy Embed -->
-  <iframe class="iframe-container" src="https://pregame.com/sportsbook-spy" frameborder="0"></iframe>
+  <!-- Pregame Button -->
+  <div class="pregame-link">
+    <a href="https://pregame.com/sportsbook-spy" target="_blank">View Public Betting %</a>
+  </div>
 
+  <!-- Odds Tabs -->
   <div class="tabs">
     <button class="tablink active" onclick="showTab('mlb')">MLB</button>
     <button class="tablink" onclick="showTab('nba')">NBA</button>
