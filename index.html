@@ -3,84 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Expert sports betting picks and odds."/>
+  <meta name="keywords" content="sports betting, picks, odds, MLB, NBA, NHL"/>
+  <meta name="author" content="Nima Jooyandeh"/>
+  <meta name="robots" content="index, follow"/>
   <title>BetLegend Picks</title>
-  <meta name="description" content="Expert sports picks for MLB, NBA, and NHL. Track our records and follow live odds daily.">
-  <meta name="keywords" content="sports betting, MLB picks, NBA picks, NHL picks, BetLegend, free picks, live odds">
-  <meta name="author" content="BetLegend">
-  <meta name="robots" content="index, follow">
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: black;
+      background-color: black;
       color: white;
     }
     .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
+      height: 100vh;
       width: 200px;
-      height: 100%;
-      background: yellow !important;
-      padding-top: 60px;
+      position: fixed;
+      background-color: black;
+      padding-top: 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 25px;
+      color: yellow;
     }
     .sidebar a {
       text-decoration: none;
-      color: black;
-      font-weight: bold;
-      font-size: 16px;
+      color: yellow;
+      padding-left: 20px;
+      font-size: 18px;
     }
-    .content {
-      margin-left: 200px;
+    .main-content {
+      margin-left: 220px;
       padding: 20px;
       text-align: center;
     }
     .logo {
-      position: relative;
-      top: 10px;
-      left: -38px;
-      height: 80px;
-    }
-    .curry {
+      width: 170px;
+      margin: 0 auto 20px;
       display: block;
-      margin: 20px auto 10px;
-      position: relative;
-      left: -30px;
-      max-width: 90%;
-      height: auto;
+    }
+    .affiliate-link {
+      display: inline-block;
+      background-color: yellow;
+      color: black;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 10px;
+      border-radius: 6px;
     }
     .twitter-button {
-      text-align: center;
-      margin-top: 10px;
-    }
-    .twitter-button a {
-      background-color: #1da1f2;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
       display: inline-block;
-    }
-    .affiliate {
-      margin-top: 15px;
-    }
-    .affiliate a {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 24px;
-      text-decoration: none;
-      font-weight: bold;
+      margin-top: 30px;
+      background-color: yellow;
+      color: black;
+      padding: 10px 16px;
       border-radius: 6px;
-      display: inline-block;
-    }
-    .date {
-      margin-top: 10px;
       font-weight: bold;
+      text-decoration: none;
+    }
+    .steph-image {
+      width: 80%;
+      max-width: 400px;
+      margin-top: 30px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
 </head>
@@ -89,38 +77,18 @@
     <a href="index.html">Home</a>
     <a href="upcomingpicks.html">Upcoming Picks</a>
     <a href="odds.html">Live Odds</a>
-    <a href="#">Records</a>
-    <a href="#">MLB</a>
-    <a href="#">NBA</a>
-    <a href="#">NHL</a>
+    <a href="records.html">Records</a>
+    <a href="mlb.html">MLB</a>
+    <a href="nba.html">NBA</a>
+    <a href="nhl.html">NHL</a>
     <a href="email.html">Get Free Picks</a>
-    <div class="twitter-button">
-      <a href="https://twitter.com/BetLegendPicks" target="_blank">Follow Us on Twitter</a>
-    </div>
   </div>
-
-  <div class="content">
-    <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
-    <div class="affiliate">
-      <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">Join YouWager – Claim Your Bonus</a>
-    </div>
-    <div class="date" id="currentDate"></div>
-    <img src="curry.png" alt="Stephen Curry" class="curry">
+  <div class="main-content">
+    <img src="logo.png" alt="Logo" class="logo" />
+    <a href="https://www.youwager.lv/join-now?affid=BABS123" class="affiliate-link" target="_blank">Join Now to Bet</a>
+    <img src="steph.png" alt="Steph Curry" class="steph-image" />
+    <br />
+    <a class="twitter-button" href="https://twitter.com/BetLegendPicks" target="_blank">Follow Us on Twitter</a>
   </div>
-
-  <script>
-    const today = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById("currentDate").textContent = today.toLocaleDateString('en-US', options);
-  </script>
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
 </body>
 </html>
