@@ -14,30 +14,69 @@
     gtag('js', new Date());
     gtag('config', 'G-68HCDNXQ3G');
   </script>
-  <!-- End Google Analytics -->
 
   <style>
     body {
       background-color: #111;
       font-family: 'Rajdhani', sans-serif;
       color: white;
-      padding: 40px;
+      margin: 0;
+      padding: 0;
     }
 
-    h1 {
-      text-align: center;
+    .ticker {
+      background-color: #ffcc00;
+      color: #000;
+      padding: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: bold;
+    }
+
+    .ticker span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: ticker 20s linear infinite;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .tabs button {
+      background-color: #222;
+      border: none;
+      padding: 12px 20px;
       color: #ffcc00;
-      font-size: 2.2em;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    .sport-section {
+    .tabs button:hover, .tabs button.active {
+      background-color: #ffcc00;
+      color: black;
+    }
+
+    .content {
+      display: none;
+      padding: 20px;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    h2 {
       margin-top: 30px;
-    }
-
-    .sport-section h2 {
       color: #ffcc00;
-      font-size: 1.6em;
-      margin-bottom: 10px;
     }
 
     .odds-box {
@@ -49,21 +88,96 @@
   </style>
 </head>
 <body>
-  <h1>Live Odds</h1>
 
-  <div class="sport-section">
-    <h2>MLB</h2>
-    <div class="odds-box">[Insert MLB live odds feed here]</div>
+  <div class="ticker">
+    <span id="liveTicker">Loading live odds ticker...</span>
   </div>
 
-  <div class="sport-section">
-    <h2>NBA</h2>
-    <div class="odds-box">[Insert NBA live odds feed here]</div>
+  <div class="tabs">
+    <button class="tablink active" onclick="showTab('mlb')">MLB</button>
+    <button class="tablink" onclick="showTab('nba')">NBA</button>
+    <button class="tablink" onclick="showTab('nhl')">NHL</button>
   </div>
 
-  <div class="sport-section">
-    <h2>NHL</h2>
-    <div class="odds-box">[Insert NHL live odds feed here]</div>
+  <div id="mlb" class="content active">
+    <h2>MLB Odds</h2>
+    <div id="mlbContent">Loading MLB odds...</div>
   </div>
+
+  <div id="nba" class="content">
+    <h2>NBA Odds</h2>
+    <div id="nbaContent">Loading NBA odds...</div>
+  </div>
+
+  <div id="nhl" class="content">
+    <h2>NHL Odds</h2>
+    <div id="nhlContent">Loading NHL odds...</div>
+  </div>
+
+  <script>
+    const API_KEY = 'c405ed8a7ef14ec945d39aeeaf647e4b';
+
+    function showTab(id) {
+      document.querySelectorAll('.content').forEach(div => div.classList.remove('active'));
+      document.querySelectorAll('.tablink').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelector(`.tablink[onclick="showTab('${id}')"]`).classList.add('active');
+    }
+
+    async function fetchOdds(sport, elementId) {
+      const url = `https://api.the-odds-api.com/v4/sports/${sport}/odds/?regions=us&markets=h2h,spreads,totals&oddsFormat=american&apiKey=${API_KEY}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        let html = '';
+        data.forEach(game => {
+          html += `<div class="odds-box"><strong>${game.home_team} vs ${game.away_team}</strong><br>`;
+          game.bookmakers.forEach(book => {
+            html += `<em>${book.title}</em><br>`;
+            book.markets.forEach(market => {
+              html += `${market.key.toUpperCase()}: `;
+              market.outcomes.forEach(outcome => {
+                html += `${outcome.name} (${outcome.price}) `;
+              });
+              html += '<br>';
+            });
+          });
+          html += `</div>`;
+        });
+        document.getElementById(elementId).innerHTML = html || 'No data available.';
+      } catch (error) {
+        document.getElementById(elementId).innerHTML = 'Failed to load odds.';
+      }
+    }
+
+    async function updateTicker() {
+      const url = `https://api.the-odds-api.com/v4/sports/upcoming/odds/?regions=us&markets=h2h&oddsFormat=american&apiKey=${API_KEY}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        let ticker = '';
+        data.slice(0, 10).forEach(game => {
+          ticker += `${game.home_team} vs ${game.away_team} | `;
+        });
+        document.getElementById('liveTicker').textContent = ticker || 'No odds available.';
+      } catch {
+        document.getElementById('liveTicker').textContent = 'Failed to load ticker.';
+      }
+    }
+
+    fetchOdds('baseball_mlb', 'mlbContent');
+    fetchOdds('basketball_nba', 'nbaContent');
+    fetchOdds('icehockey_nhl', 'nhlContent');
+    updateTicker();
+
+    setInterval(() => {
+      fetchOdds('baseball_mlb', 'mlbContent');
+      fetchOdds('basketball_nba', 'nbaContent');
+      fetchOdds('icehockey_nhl', 'nhlContent');
+      updateTicker();
+    }, 60000);
+  </script>
 </body>
 </html>
+
+   
