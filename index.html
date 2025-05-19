@@ -25,7 +25,7 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 25px; /* clean spacing between items */
+      gap: 25px;
     }
     .sidebar a {
       color: yellow;
@@ -48,4 +48,43 @@
       color: black;
       font-weight: bold;
       border: none;
-      cursor:
+      cursor: pointer;
+      display: block;
+    }
+    .curry-img {
+      max-width: 200px;
+      margin-left: -30px;
+    }
+    .date {
+      margin: 20px 0;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="index.html">Home</a>
+    <a href="upcomingpicks.html">Upcoming Picks</a>
+    <a href="odds.html">Live Odds</a>
+    <a href="#">Records</a>
+    <a href="#">MLB</a>
+    <a href="#">NBA</a>
+    <a href="#">NHL</a>
+    <a href="email.html">Get Free Picks</a>
+    <a href="https://twitter.com/betlegendpicks" target="_blank">Follow Us on Twitter</a>
+  </div>
+  <div class="main">
+    <img src="logo.png" alt="Logo" class="logo" />
+    <div class="date" id="date"></div>
+    <a class="affiliate" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">Join YouWager Now</a>
+    <img src="curry.png" alt="Steph Curry" class="curry-img" />
+  </div>
+
+  <script>
+    const dateElement = document.getElementById('date');
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    dateElement.textContent = today.toLocaleDateString(undefined, options);
+  </script>
+</body>
+</html>
