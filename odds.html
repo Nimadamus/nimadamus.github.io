@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Odds Feed</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Rajdhani', sans-serif;
+      background-color: #111;
+      color: white;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      color: #ffcc00;
+    }
+
+    .odds-table {
+      width: 100%;
+      max-width: 900px;
+      margin: 40px auto;
+      border-collapse: collapse;
+    }
+
+    .odds-table th, .odds-table td {
+      padding: 12px;
+      border-bottom: 1px solid #444;
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    .odds-table th {
+      color: #ffcc00;
+      font-size: 1.2em;
+    }
+
+    .ticker {
+      background: #222;
+      color: #ffcc00;
+      padding: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      box-shadow: 0 0 10px #000;
+      margin-bottom: 30px;
+      font-size: 1.1em;
+    }
+
+    .ticker span {
+      display: inline-block;
+      animation: scroll 25s linear infinite;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📈 Live Odds Feed</h1>
+
+  <div class="ticker">
+    <span>Dodgers -120 🔹 Yankees +135 🔹 Celtics -6.5 🔹 Oilers @ Canucks o/u 6.5 🔹 Warriors -3 🔹 Giants +105</span>
+  </div>
+
+  <table class="odds-table">
+    <thead>
+      <tr>
+        <th>Game</th>
+        <th>Moneyline</th>
+        <th>Total</th>
+        <th>Spread</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Yankees @ Red Sox</td>
+        <td>NYY +135 / BOS -150</td>
+        <td>8.5</td>
+        <td>BOS -1.5</td>
+      </tr>
+      <tr>
+        <td>Warriors @ Lakers</td>
+        <td>GSW -135 / LAL +115</td>
+        <td>230.5</td>
+        <td>GSW -2.5</td>
+      </tr>
+      <tr>
+        <td>Oilers @ Canucks</td>
+        <td>EDM +110 / VAN -125</td>
+        <td>6.5</td>
+        <td>VAN -1.5</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
