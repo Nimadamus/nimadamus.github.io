@@ -3,124 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BetLegend Picks</title>
-
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Expert MLB, NBA, and NHL betting picks. Live odds, public betting trends, and free daily plays. Bet smarter with BetLegend Picks.">
-  <meta name="keywords" content="sports betting picks, MLB odds, NBA picks, NHL predictions, betting trends, free picks, BetLegend">
-  <meta name="author" content="BetLegend">
+  <meta name="description" content="Get expert MLB, NBA, and NHL picks with real-time odds and analysis.">
+  <meta name="keywords" content="sports betting, MLB picks, NBA picks, NHL picks, live odds, free picks">
+  <meta name="author" content="BetLegend Picks">
   <meta name="robots" content="index, follow">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-68HCDNXQ3G"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-68HCDNXQ3G');
-  </script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+  <title>BetLegend Picks</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Rajdhani', sans-serif;
-      background: url('https://cdn.nba.com/manage/2022/05/GettyImages-1389449608-scaled-e1653864647697.jpg') no-repeat center center fixed;
+      font-family: Arial, sans-serif;
+      background: url('stephbg.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
     }
-    nav {
-      background-color: rgba(0, 0, 0, 0.85);
-      padding: 20px;
-      width: 200px;
-      height: 100vh;
+    .sidebar {
       position: fixed;
       top: 0;
       left: 0;
+      width: 200px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      padding-top: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
     }
-    nav a {
+    .sidebar a {
       display: block;
-      color: #ffcc00;
+      color: white;
+      padding: 12px 20px;
       text-decoration: none;
-      margin: 15px 0;
-      font-size: 1.2em;
+      font-weight: bold;
     }
-    nav a:hover {
-      text-decoration: underline;
+    .sidebar a:hover {
+      background-color: #444;
     }
-    main {
+    .main {
       margin-left: 220px;
-      padding: 30px;
-    }
-    header {
+      padding: 20px;
       text-align: center;
-      margin-bottom: 40px;
     }
-    header img {
-      max-width: 200px;
+    .logo {
+      max-width: 160px;
+      margin: 10px auto;
       display: block;
-      margin: 0 auto 10px;
-    }
-    header h1 {
-      font-size: 2.4em;
-      margin: 0;
-      color: #ffcc00;
     }
     .affiliate {
-      text-align: center;
-      margin-top: 10px;
-    }
-    .affiliate a {
-      color: #ffcc00;
-      font-size: 1.2em;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .twitter-btn {
+      background-color: rgba(0, 0, 0, 0.7);
       display: inline-block;
-      margin-top: 30px;
-      background-color: #1DA1F2;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 8px;
+      padding: 10px 20px;
+      margin: 10px 0;
+      border-radius: 10px;
       font-weight: bold;
-      font-size: 1.1em;
-      text-decoration: none;
-      transition: background-color 0.3s;
     }
-    .twitter-btn:hover {
-      background-color: #0d8ddb;
-    }
-    #date {
-      text-align: center;
-      margin-top: 5px;
-      font-size: 1em;
-      color: #ddd;
+    .date {
+      margin-top: 10px;
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
-  <nav>
-    <a href="index.html">🏠 Home</a>
+  <div class="sidebar">
+    <a href="index.html">Home</a>
     <a href="upcomingpicks.html">Upcoming Picks</a>
     <a href="odds.html">Live Odds</a>
     <a href="email.html">Get Free Picks</a>
-  </nav>
-
-  <main>
-    <header>
-      <img src="logo.png" alt="BetLegend Logo" onerror="this.style.display='none'">
-      <h1>BetLegend Picks</h1>
-      <div class="affiliate">
-        <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">Join YouWager & Get Bonuses</a>
-      </div>
-      <div id="date"></div>
-      <script>document.getElementById('date').textContent = new Date().toDateString();</script>
-    </header>
-
-    <section style="text-align: center;">
-      <a class="twitter-btn" href="https://x.com/BetLegend2025" target="_blank">📢 Follow Us on Twitter</a>
-    </section>
-  </main>
+  </div>
+  <div class="main">
+    <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+    <div class="affiliate">
+      <a href="https://www.youwager.lv/join-now?affid=BABS123" style="color: white;" target="_blank">Join Now – Bet with YouWager</a>
+    </div>
+    <div class="date" id="live-date"></div>
+  </div>
+  <script>
+    const dateElement = document.getElementById('live-date');
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    dateElement.textContent = now.toLocaleDateString(undefined, options);
+  </script>
 </body>
 </html>
