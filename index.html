@@ -1,27 +1,142 @@
-<div class="main">
-  <img src="logo.png" alt="BetLegend Logo" class="logo" onerror="this.style.display='none'" />
-  <h1>BetLegend Picks</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BetLegend Picks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Rajdhani', sans-serif;
+      background-color: #111;
+      color: white;
+      display: flex;
+    }
 
-  <div class="affiliate">
-    <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
-      Click Here to Bet with YouWager.lv
-    </a>
+    .sidebar {
+      width: 200px;
+      background-color: #222;
+      padding: 20px;
+      height: 100vh;
+      box-sizing: border-box;
+      position: sticky;
+      top: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      margin: 15px 0;
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 5px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+      color: white;
+      padding-left: 10px;
+    }
+
+    .main {
+      flex: 1;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    .affiliate a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #ffcc00;
+      color: #000;
+      font-weight: bold;
+      font-size: 1.2em;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    img.curry-image {
+      margin-top: 30px;
+      max-width: 90%;
+      height: auto;
+      border: 5px solid #333;
+      border-radius: 10px;
+    }
+
+    .date {
+      font-size: 1.3em;
+      margin-top: 20px;
+      color: #ffcc00;
+    }
+
+    .todays-picks h2 {
+      color: #ffcc00;
+      font-size: 1.8em;
+      margin-top: 40px;
+    }
+
+    .todays-picks div {
+      font-size: 1.4em;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="todayspicks.html">Today's Picks</a>
+    <a href="mlb.html">MLB</a>
+    <a href="nba.html">NBA</a>
+    <a href="nhl.html">NHL</a>
+    <a href="records.html">Records</a>
+    <a href="about.html">About</a>
   </div>
 
-  <div class="date" id="currentDate"></div>
+  <div class="main">
+    <img src="logo.png" alt="BetLegend Logo" class="logo" onerror="this.style.display='none'" />
+    <h1>BetLegend Picks</h1>
 
-  <img
-    class="curry-image"
-    src="https://media.bleacherreport.com/f_auto,w_802,q_auto,c_fill/br-img-images/003/578/045/b1a1fdfc56e90515383e06dc61c3324e_crop_north.jpg"
-    alt="Steph Curry Game Winner"
-  />
+    <div class="affiliate">
+      <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
+        Click Here to Bet with YouWager.lv
+      </a>
+    </div>
 
-  <div class="todays-picks">
-    <h2 style="color:#ffcc00; font-size: 1.8em; margin-top: 40px;">🔥 Today’s Picks</h2>
-    <div style="margin-top: 25px;">
-      <div style="font-size: 1.4em; margin: 12px 0;">MLB</div>
-      <div style="font-size: 1.4em; margin: 12px 0;">NBA</div>
-      <div style="font-size: 1.4em; margin: 12px 0;">NHL</div>
+    <div class="date" id="currentDate"></div>
+
+    <img
+      class="curry-image"
+      src="https://media.bleacherreport.com/f_auto,w_802,q_auto,c_fill/br-img-images/003/578/045/b1a1fdfc56e90515383e06dc61c3324e_crop_north.jpg"
+      alt="Steph Curry Game Winner"
+    />
+
+    <div class="todays-picks">
+      <h2>🔥 Today’s Picks</h2>
+      <div>MLB</div>
+      <div>NBA</div>
+      <div>NHL</div>
     </div>
   </div>
-</div>
+
+  <script>
+    const dateElement = document.getElementById('currentDate');
+    const today = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    dateElement.textContent = today.toLocaleDateString('en-US', options);
+  </script>
+</body>
+</html>
