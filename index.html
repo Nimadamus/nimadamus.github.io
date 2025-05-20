@@ -2,273 +2,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Expert sports betting picks and live odds. Get free picks daily on MLB, NBA, and NHL.">
-  <meta name="keywords" content="sports betting, free picks, MLB picks, NBA picks, NHL picks, betting odds">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BetLegend Picks</title>
+  <meta name="description" content="Expert sports betting picks, live odds, and sharp insights.">
+  <meta name="keywords" content="sports betting, expert picks, live odds, NFL, NBA, MLB, NHL">
   <meta name="author" content="BetLegend Picks">
   <meta name="robots" content="index, follow">
-  <title>BetLegend Picks</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png" />
   <style>
     body {
-      margin: 0;
-      padding: 0;
       background-color: black;
       color: white;
-      font-family: 'Inter', sans-serif;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 20px 40px 0;
-    }
-
-    .logo-container {
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100%;
+      background-color: #000;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      padding-top: 50px;
+      gap: 25px;
     }
-
-    .logo-text {
-      font-size: 18px;
-      font-weight: 700;
-      color: yellow;
-      text-align: center;
-    }
-
-    .logo-text span {
-      font-weight: 400;
-    }
-
-    .logo-container img {
-      margin-top: 10px;
-      height: 120px;
-      width: auto;
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-    }
-
-    nav a {
+    .sidebar a {
       color: yellow;
       text-decoration: none;
-      margin: 0 14px;
       font-weight: bold;
-      font-size: 14px;
+      padding: 5px 20px;
     }
-
-    .hero {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px 40px 0;
-      flex-wrap: wrap;
-      position: relative;
+    .main {
+      margin-left: 220px;
+      padding: 20px;
     }
-
-    .hero-text {
-      max-width: 500px;
-      flex: 1;
-      padding-right: 20px;
+    .logo {
+      display: block;
+      margin-left: -33px;
+      margin-top: 20px;
+      max-width: 180px;
     }
-
-    .hero-text h1 {
-      font-size: 48px;
-      margin: 0 0 10px;
-    }
-
-    .hero-text p {
-      font-size: 20px;
-      font-weight: bold;
-      color: #f0f0f0;
-      margin: 10px 0 16px;
-    }
-
-    .hero-image {
-      flex: 1;
+    .title {
       text-align: center;
-      padding-left: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: -30px;
     }
-
-    .hero-image img {
-      width: 100%;
-      max-width: 750px;
-      max-height: 600px;
-      object-fit: contain;
-      border-radius: 12px;
+    .subtitle {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 10px;
     }
-
-    .cards {
+    .card-container {
       display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 40px 20px;
       flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
     }
-
     .card {
-      background-color: #1c1c1c;
-      padding: 25px;
-      border-radius: 12px;
-      text-align: left;
+      background-color: #1a1a1a;
+      border: 2px solid yellow;
+      border-radius: 10px;
+      padding: 20px;
       width: 260px;
-    }
-
-    .card h3 {
-      margin-top: 0;
-      font-size: 18px;
-    }
-
-    .card p {
-      font-size: 14px;
-      color: #ccc;
-    }
-
-    .card a {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 14px;
-      color: yellow;
-      text-decoration: none;
+      text-align: center;
       font-weight: bold;
     }
-
-    .affiliate-button-container {
-      position: absolute;
-      left: 0;
-      top: 240px;
-      padding-left: 20px;
+    .card a {
+      color: yellow;
+      text-decoration: none;
     }
-
-    .affiliate-button-container a {
+    .twitter-section {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .affiliate-button {
+      display: block;
+      margin-top: -80px;
+      margin-left: 10px;
       background-color: yellow;
       color: black;
-      padding: 16px 40px;
-      font-size: 16px;
-      font-weight: 800;
-      text-decoration: none;
-      border-radius: 30px;
-      box-shadow: 0 0 10px yellow;
-      display: inline-block;
-      transition: transform 0.2s ease;
-    }
-
-    .affiliate-button-container a:hover {
-      transform: scale(1.05);
-    }
-
-    .twitter-button {
-      margin: 50px 0;
-      text-align: center;
-    }
-
-    .twitter-button a {
-      background-color: #1DA1F2;
-      color: white;
-      padding: 12px 60px;
-      border-radius: 25px;
       font-weight: bold;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
       text-decoration: none;
-      display: inline-block;
-      font-size: 14px;
-      position: relative;
-      min-width: 300px;
+      width: fit-content;
     }
-
-    .twitter-button a .left-logo,
-    .twitter-button a .right-logo {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 16px;
-      width: 16px;
-      opacity: 0.8;
-    }
-
-    .twitter-button a .left-logo {
-      left: 16px;
-    }
-
-    .twitter-button a .right-logo {
-      right: 16px;
-    }
-
-    .twitter-button .center-text {
+    .curry-image {
       display: block;
-      text-align: center;
-    }
-
-    footer {
-      height: 100px;
+      margin: -30px auto 10px auto;
+      max-width: 250px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo-container">
-      <div class="logo-text">BETLEGEND <span>PICKS</span></div>
-      <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
-    </div>
-    <nav>
-      <a href="index.html">HOME</a>
-      <a href="upcomingpicks.html">UPCOMING PICKS</a>
-      <a href="odds.html">LIVE ODDS</a>
-      <a href="records.html">RECORDS</a>
-      <a href="mlb.html">MLB</a>
-      <a href="nba.html">NBA</a>
-      <a href="nfl.html">NFL</a>
-      <a href="nhl.html">NHL</a>
-    </nav>
-  </header>
+  <div class="sidebar">
+    <a href="index.html">Home</a>
+    <a href="upcomingpicks.html">Upcoming Picks</a>
+    <a href="odds.html">Live Odds</a>
+    <a href="records.html">Records</a>
+    <a href="mlb.html">MLB</a>
+    <a href="nba.html">NBA</a>
+    <a href="nhl.html">NHL</a>
+    <a href="email.html">Get Free Picks</a>
+    <a href="affiliates.html">Most Respected Online Sportsbooks</a>
+    <a href="https://twitter.com/BetLegendPicks" target="_blank">Follow Us on Twitter</a>
+  </div>
 
-  <div class="hero">
-    <div class="hero-text">
-      <h1>BetLegend Picks</h1>
-      <p>Expert Sports Betting Picks and Live Odds</p>
+  <div class="main">
+    <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'" />
+    <div class="title">BetLegend Picks</div>
+    <div class="subtitle">Expert Sports Betting Picks and Live Odds</div>
+    <img src="curry.png" alt="Steph Curry" class="curry-image" />
+    <a class="affiliate-button" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">Bet Like a Legend – Get your 350% bonus now</a>
+
+    <div class="card-container">
+      <div class="card"><a href="email.html">GET FREE PICKS</a></div>
+      <div class="card"><a href="affiliates.html">Click here for the most reputable online sportsbooks</a></div>
     </div>
-    <div class="hero-image">
-      <img src="steph-curry-hero.png" alt="Steph Curry">
-    </div>
-    <div class="affiliate-button-container">
-      <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
-        BET LIKE A LEGEND – GET YOUR 350% BONUS NOW
-      </a>
+
+    <div class="twitter-section">
+      <a class="twitter-timeline" data-height="500" href="https://twitter.com/BetLegendPicks">Tweets by BetLegendPicks</a>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
   </div>
 
-  <div class="cards">
-    <div class="card">
-      <h3>Click Here for the Most Reputable Online Sportsbooks</h3>
-      <p>Explore our top-rated sportsbook partners offering the best bonuses and trusted betting platforms.</p>
-      <a href="affiliates.html">Visit Sportsbooks →</a>
-    </div>
-
-    <div class="card">
-      <h3>Live Odds</h3>
-      <p>Check the latest MLB, NBA and NHL betting odds.</p>
-    </div>
-
-    <div class="card">
-      <h3>Most Respected Online Sportsbooks</h3>
-      <p>View our curated list of the most trusted online sportsbooks with great bonuses and offers.</p>
-      <a href="affiliates.html">Explore Sportsbooks →</a>
-    </div>
-  </div>
-
-  <div class="twitter-button">
-    <a href="https://twitter.com/BetLegendPicks" target="_blank">
-      <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="Twitter" class="left-logo">
-      <span class="center-text">FOLLOW US ON TWITTER</span>
-      <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="Twitter" class="right-logo">
-    </a>
-  </div>
-
-  <footer></footer>
+  <!-- Clicky Analytics -->
+  <a title="Google Analytics Alternative" href="https://clicky.com/101485054">
+    <img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" />
+  </a>
+  <script async data-id="101485054" src="//static.getclicky.com/js"></script>
 </body>
 </html>
