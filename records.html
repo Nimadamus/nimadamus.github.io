@@ -9,59 +9,98 @@
       color: #FFD700;
       font-family: Arial, sans-serif;
       padding: 30px;
-      margin: 0;
     }
     h1 {
       text-align: center;
       font-size: 36px;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
       margin-bottom: 40px;
     }
-    .record-card {
-      background-color: #111;
+    th, td {
       border: 1px solid #FFD700;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 0 auto 25px auto;
-      max-width: 700px;
-      box-shadow: 0 0 12px #FFD70066;
-    }
-    .record-header {
-      font-size: 22px;
-      font-weight: bold;
-      border-bottom: 1px solid #FFD70044;
-      padding-bottom: 8px;
-      margin-bottom: 15px;
-    }
-    .record-row {
-      font-size: 18px;
-      margin: 6px 0;
-    }
-    .note {
+      padding: 10px;
       text-align: center;
-      color: #aaa;
-      font-size: 16px;
-      margin-top: 10px;
+    }
+    th {
+      background-color: #111;
+    }
+    tr:nth-child(even) {
+      background-color: #1a1a1a;
+    }
+    .win {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+    .loss {
+      color: #FF4C4C;
+      font-weight: bold;
+    }
+    .void {
+      color: #ccc;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
   <h1>BetLegend Records</h1>
 
-  <div class="record-card">
-    <div class="record-header">May 20, 2025</div>
-    <div class="record-row">Graded Picks: <strong>3</strong></div>
-    <div class="record-row">Record: <strong>1–2</strong></div>
-    <div class="record-row">Units: <strong>-1.40</strong></div>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Game</th>
+        <th>Pick</th>
+        <th>Odds</th>
+        <th>Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- May 20 Picks -->
+      <tr>
+        <td>May 20, 2025</td>
+        <td>Reds @ Pirates</td>
+        <td>Reds ML</td>
+        <td>-130</td>
+        <td class="loss">Loss</td>
+      </tr>
+      <tr>
+        <td>May 20, 2025</td>
+        <td>Phillies @ Rockies</td>
+        <td>Over 10.5</td>
+        <td>-110</td>
+        <td class="win">Win</td>
+      </tr>
+      <tr>
+        <td>May 20, 2025</td>
+        <td>Cubs @ Marlins</td>
+        <td>Under 8.5</td>
+        <td>-110</td>
+        <td class="loss">Loss</td>
+      </tr>
+      <tr>
+        <td>May 20, 2025</td>
+        <td>Twins Game 2</td>
+        <td>Twins ML</td>
+        <td>N/A</td>
+        <td class="void">Void</td>
+      </tr>
 
-  <div class="record-card">
-    <div class="record-header">May 19, 2025</div>
-    <div class="record-row">Graded Picks: <strong>7</strong></div>
-    <div class="record-row">Record: <strong>4–3</strong></div>
-    <div class="record-row">Units: <strong>+0.30</strong></div>
-  </div>
-
-  <div class="note">Note: Twins (Game 2) was voided due to rainout.</div>
-</body>
-</html>
-
+      <!-- May 19 Picks -->
+      <tr>
+        <td>May 19, 2025</td>
+        <td>Reds @ Dodgers</td>
+        <td>Reds ML</td>
+        <td>-130</td>
+        <td class="win">Win</td>
+      </tr>
+      <tr>
+        <td>May 19, 2025</td>
+        <td>Cubs @ Pirates</td>
+        <td>Cubs -1.5</td>
+        <td>+110</td>
+        <td
