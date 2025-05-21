@@ -1,81 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Upcoming Picks - BetLegend</title>
-  <link rel="stylesheet" href="style.css" />
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const now = new Date();
-      document.querySelectorAll(".pick-card").forEach(card => {
-        const gameTime = new Date(card.getAttribute("data-gametime"));
-        if (now >= gameTime) {
-          card.style.display = "none";
-        }
-      });
-    });
-  </script>
   <style>
     body {
-      background-color: black;
-      color: white;
+      background-color: #000;
+      color: #FFD700;
       font-family: Arial, sans-serif;
       padding: 20px;
     }
-    .pick-section {
-      max-width: 800px;
-      margin: auto;
-    }
-    .pick-section h1 {
+    h1 {
       text-align: center;
-      font-size: 2em;
-      margin-bottom: 20px;
-      color: yellow;
+      font-size: 32px;
     }
     .pick-card {
-      background: #222;
+      background-color: #111;
+      border: 1px solid #FFD700;
       border-radius: 10px;
       padding: 15px;
-      margin-bottom: 15px;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0 0 10px #FFD70055;
     }
-    .pick-card h2 {
-      margin: 0 0 5px;
+    .game {
+      font-size: 20px;
+      font-weight: bold;
     }
-    .pick-card p {
-      margin: 2px 0;
+    .pick {
+      font-size: 18px;
+      margin-top: 5px;
+    }
+    .date-label {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #fff;
     }
   </style>
 </head>
 <body>
-  <div class="pick-section">
-    <h1>Upcoming Picks - May 21, 2025</h1>
+  <h1>Upcoming Picks</h1>
+  <div class="date-label">May 21, 2025</div>
 
-    <div class="pick-card" data-gametime="2025-05-21T09:35:00">
-      <h2>Reds @ Pirates</h2>
-      <p><strong>Pick:</strong> Reds -130 (Moneyline)</p>
-    </div>
+  <div class="pick-card">
+    <div class="game">Reds @ Pirates</div>
+    <div class="pick">Pick: <strong>Reds -130</strong> (Moneyline)</div>
+  </div>
 
-    <div class="pick-card" data-gametime="2025-05-21T10:10:00">
-      <h2>Cubs @ Marlins</h2>
-      <p><strong>Pick:</strong> Over 4.5 (First 5 Innings Total)</p>
-    </div>
+  <div class="pick-card">
+    <div class="game">Cubs @ Marlins</div>
+    <div class="pick">Pick: <strong>Over 4.5</strong> (First 5 Innings Total)</div>
+  </div>
 
-    <div class="pick-card" data-gametime="2025-05-21T11:10:00">
-      <h2>Mariners @ White Sox</h2>
-      <p><strong>Pick:</strong> Mariners Over 4.5 (Team Total)</p>
-    </div>
+  <div class="pick-card">
+    <div class="game">Mariners @ White Sox</div>
+    <div class="pick">Pick: <strong>Mariners Over 4.5</strong> (Team Total)</div>
+  </div>
 
-    <div class="pick-card" data-gametime="2025-05-21T17:40:00">
-      <h2>Phillies @ Rockies</h2>
-      <p><strong>Pick:</strong> Over 10 (Full Game Total)</p>
-    </div>
+  <div class="pick-card">
+    <div class="game">Phillies @ Rockies</div>
+    <div class="pick">Pick: <strong>Over 10</strong> (Full Game Total)</div>
+  </div>
 
-    <div class="pick-card" data-gametime="2025-05-21T19:10:00">
-      <h2>Diamondbacks @ Dodgers</h2>
-      <p><strong>Pick:</strong> Zac Gallen Over 5.5 Ks (Pitcher Prop)</p>
-    </div>
+  <div class="pick-card">
+    <div class="game">Diamondbacks @ Dodgers</div>
+    <div class="pick">Pick: <strong>Zac Gallen Over 5.5 Ks</strong> (Pitcher Prop)</div>
   </div>
 </body>
 </html>
