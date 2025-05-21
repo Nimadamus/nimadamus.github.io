@@ -1,4 +1,81 @@
-<div class="pick-section">
-  <h1>Upcoming Picks</h1>
-  <p style="text-align:center; margin-top:10px;">Check back soon for upcoming picks.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upcoming Picks - BetLegend</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const now = new Date();
+      document.querySelectorAll(".pick-card").forEach(card => {
+        const gameTime = new Date(card.getAttribute("data-gametime"));
+        if (now >= gameTime) {
+          card.style.display = "none";
+        }
+      });
+    });
+  </script>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .pick-section {
+      max-width: 800px;
+      margin: auto;
+    }
+    .pick-section h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: yellow;
+    }
+    .pick-card {
+      background: #222;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    .pick-card h2 {
+      margin: 0 0 5px;
+    }
+    .pick-card p {
+      margin: 2px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="pick-section">
+    <h1>Upcoming Picks - May 21, 2025</h1>
+
+    <div class="pick-card" data-gametime="2025-05-21T09:35:00">
+      <h2>Reds @ Pirates</h2>
+      <p><strong>Pick:</strong> Reds -130 (Moneyline)</p>
+    </div>
+
+    <div class="pick-card" data-gametime="2025-05-21T10:10:00">
+      <h2>Cubs @ Marlins</h2>
+      <p><strong>Pick:</strong> Over 4.5 (First 5 Innings Total)</p>
+    </div>
+
+    <div class="pick-card" data-gametime="2025-05-21T11:10:00">
+      <h2>Mariners @ White Sox</h2>
+      <p><strong>Pick:</strong> Mariners Over 4.5 (Team Total)</p>
+    </div>
+
+    <div class="pick-card" data-gametime="2025-05-21T17:40:00">
+      <h2>Phillies @ Rockies</h2>
+      <p><strong>Pick:</strong> Over 10 (Full Game Total)</p>
+    </div>
+
+    <div class="pick-card" data-gametime="2025-05-21T19:10:00">
+      <h2>Diamondbacks @ Dodgers</h2>
+      <p><strong>Pick:</strong> Zac Gallen Over 5.5 Ks (Pitcher Prop)</p>
+    </div>
+  </div>
+</body>
+</html>
