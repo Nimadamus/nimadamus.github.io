@@ -116,35 +116,81 @@
 </style>
 
 
-  <style>
-/* Extra Mobile Touch-ups */
+<style>
+/* Extra Mobile Touch-ups + Force Layout Reset */
 @media only screen and (max-width: 768px) {
+  html, body {
+    margin: 0;
+    padding: 0;
+    max-width: 100vw;
+    overflow-x: hidden;
+    font-size: 15px;
+    background-color: #000;
+    color: #FFD700;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .container, .main, .content, .wrapper, .blog-post, header, footer {
+    padding: 15px;
+    margin: 0 auto;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    float: none !important;
+  }
+
   .sidebar {
-    padding: 15px 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 12px;
+    padding: 15px 10px;
   }
 
   .sidebar a {
     font-size: 18px;
     padding: 12px;
     width: 95%;
-  }
-
-  .container, .blog-post, .content {
-    padding: 15px;
-    width: 100%;
+    text-align: center;
   }
 
   table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
     font-size: 15px;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 8px;
+    white-space: nowrap;
+  }
+
+  .logo img, .hero-image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .affiliate-link, .twitter-button {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
   }
 
   p, li, h1, h2, h3 {
     padding: 0 10px;
     line-height: 1.6;
   }
+
+  .hero-image {
+    width: 100%;
+    overflow: hidden;
+  }
 }
 </style>
+
 
 
 
