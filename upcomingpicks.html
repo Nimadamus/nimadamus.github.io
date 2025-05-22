@@ -10,34 +10,44 @@
       color: #FFD700;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 30px;
     }
 
     h1 {
       text-align: center;
-      font-size: 28px;
-      margin-bottom: 20px;
+      font-size: 32px;
+      margin-bottom: 30px;
     }
 
-    .pick-entry {
-      margin: 10px 0;
+    .pick-card {
+      background-color: #111;
+      border: 1px solid #FFD700;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin: 15px 0;
       font-size: 16px;
-      line-height: 1.6;
+      line-height: 1.7;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+    }
+
+    .pick-card strong {
+      color: #fff;
     }
 
     .timestamp {
       display: none;
     }
   </style>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const now = new Date();
-      document.querySelectorAll(".pick-entry").forEach(entry => {
-        const timeSpan = entry.querySelector(".timestamp");
-        if (timeSpan) {
-          const gameTime = new Date(timeSpan.textContent);
+      document.querySelectorAll(".pick-card").forEach(card => {
+        const timeEl = card.querySelector(".timestamp");
+        if (timeEl) {
+          const gameTime = new Date(timeEl.textContent);
           if (gameTime <= now) {
-            entry.style.display = "none";
+            card.style.display = "none";
           }
         }
       });
@@ -47,12 +57,13 @@
 <body>
   <h1>Upcoming Picks</h1>
 
-  <!-- EXAMPLE PICK ENTRY -->
-  <div class="pick-entry">
-    <strong>May 22, 2025</strong> — Tigers vs Royals — 
-    <strong>Pick:</strong> Tigers ML — 
-    <strong>Odds:</strong> -137 — 
-    <strong>Units:</strong> 2 — 
+  <!-- ✅ PICK BLOCK — NOW SHOWING CORRECT ODDS -->
+  <div class="pick-card">
+    <strong>Date:</strong> May 22, 2025<br/>
+    <strong>Game:</strong> Tigers vs Royals<br/>
+    <strong>Pick:</strong> Tigers ML<br/>
+    <strong>Odds:</strong> –137<br/>
+    <strong>Units:</strong> 2<br/>
     <strong>Type:</strong> Moneyline
     <span class="timestamp">2025-05-22T17:10:00</span>
   </div>
