@@ -1,191 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Live Odds – BetLegend</title>
-
-  <!-- SEO Meta Tags -->
-  <meta name="title" content="Live Sports Betting Odds – MLB, NBA, NHL | BetLegend">
-  <meta name="description" content="Track live odds for MLB, NBA, and NHL games. Real-time lines updated with matchup data, spreads, totals, and public betting trends.">
-  <meta name="keywords" content="live odds, sports betting odds, MLB lines, NBA odds, NHL totals, public betting percentages, betlegend">
-  <meta name="author" content="BetLegend">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.betlegendpicks.com/odds.html" />
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.betlegendpicks.com/odds.html">
-  <meta property="og:title" content="Live Sports Betting Odds – MLB, NBA, NHL | BetLegend">
-  <meta property="og:description" content="Track live odds across all major sports. Compare matchups, betting lines, totals, and public money. Updated in real time.">
-  <meta property="og:image" content="https://www.betlegendpicks.com/logo.png">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://www.betlegendpicks.com/odds.html">
-  <meta name="twitter:title" content="Live Sports Betting Odds – MLB, NBA, NHL | BetLegend">
-  <meta name="twitter:description" content="Track real-time lines, matchups, and totals across MLB, NBA, NHL. Sharp, fast, and reliable.">
-  <meta name="twitter:image" content="https://www.betlegendpicks.com/logo.png">
-
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background-color: #111;
-      font-family: 'Rajdhani', sans-serif;
-      color: white;
-      margin: 0;
-      padding: 0;
-    }
-    .ticker {
-      background-color: #ffcc00;
-      color: #000;
-      padding: 10px;
-      overflow: hidden;
-      white-space: nowrap;
-      font-weight: bold;
-    }
-    .ticker span {
-      display: inline-block;
-      padding-left: 100%;
-      animation: ticker 20s linear infinite;
-    }
-    @keyframes ticker {
-      0% { transform: translateX(0%); }
-      100% { transform: translateX(-100%); }
-    }
-    .pregame-link {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .pregame-link a {
-      background-color: #ffcc00;
-      color: #111;
-      text-decoration: none;
-      padding: 12px 24px;
-      font-size: 1.2em;
-      font-weight: bold;
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
-    }
-    .pregame-link a:hover {
-      background-color: #ffc107;
-    }
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-top: 30px;
-    }
-    .tabs button {
-      background-color: #222;
-      border: none;
-      padding: 12px 20px;
-      color: #ffcc00;
-      font-size: 1em;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .tabs button:hover, .tabs button.active {
-      background-color: #ffcc00;
-      color: black;
-    }
-    .content {
-      display: none;
-      padding: 20px;
-    }
-    .content.active {
-      display: block;
-    }
-    h2 {
-      margin-top: 30px;
-      color: #ffcc00;
-    }
-    .odds-box {
-      background-color: #222;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="ticker">
-    <span id="liveTicker">Loading live matchups...</span>
+<div id="mlb-matchups">
+  <div class="game-card">
+    <h4>Giants @ Dodgers</h4>
+    <p>🕒 Start Time: 7:10 PM</p>
+    <p>📍 Status: Scheduled</p>
   </div>
-
-  <!-- Pregame Button -->
-  <div class="pregame-link">
-    <a href="https://pregame.com/sportsbook-spy" target="_blank">View Public Betting %</a>
+  <div class="game-card">
+    <h4>Yankees @ Red Sox</h4>
+    <p>🕒 Start Time: 4:05 PM</p>
+    <p>📍 Status: Scheduled</p>
   </div>
-
-  <!-- Odds Tabs -->
-  <div class="tabs">
-    <button class="tablink active" onclick="showTab('mlb')">MLB</button>
-    <button class="tablink" onclick="showTab('nba')">NBA</button>
-    <button class="tablink" onclick="showTab('nhl')">NHL</button>
+  <div class="game-card">
+    <h4>Braves @ Phillies</h4>
+    <p>🕒 Start Time: 6:20 PM</p>
+    <p>📍 Status: Scheduled</p>
   </div>
+</div>
 
-  <div id="mlb" class="content active">
-    <h2>MLB Odds</h2>
-    <div id="mlbContent">Loading MLB odds...</div>
-  </div>
-
-  <div id="nba" class="content">
-    <h2>NBA Odds</h2>
-    <div id="nbaContent">Loading NBA odds...</div>
-  </div>
-
-  <div id="nhl" class="content">
-    <h2>NHL Odds</h2>
-    <div id="nhlContent">Loading NHL odds...</div>
-  </div>
-
-  <script>
-    const API_KEY = "c63a449bea9b087de00bc25f8fe42f7a";
-
-    async function fetchMatchups() {
-      const today = new Date().toISOString().split('T')[0];
-      const sports = [
-        { name: "MLB", league: 1 },
-        { name: "NBA", league: 12 },
-        { name: "NHL", league: 57 }
-      ];
-
-      let matchups = [];
-
-      for (let sport of sports) {
-        const url = `https://v1.api-sports.io/games?date=${today}&league=${sport.league}&season=2024`;
-        try {
-          const response = await fetch(url, {
-            headers: {
-              "x-apisports-key": API_KEY
-            }
-          });
-          const data = await response.json();
-          if (data.response && data.response.length > 0) {
-            data.response.forEach(game => {
-              if (game.teams && game.teams.home && game.teams.away) {
-                matchups.push(`${game.teams.home.name} vs ${game.teams.away.name}`);
-              }
-            });
-          }
-        } catch (err) {
-          console.error("Error fetching", sport.name, "games:", err);
-        }
-      }
-
-      const ticker = matchups.length ? matchups.join(" | ") : "No live games today.";
-      document.getElementById("liveTicker").textContent = ticker;
-    }
-
-    function showTab(id) {
-      document.querySelectorAll('.content').forEach(div => div.classList.remove('active'));
-      document.querySelectorAll('.tablink').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelector(`.tablink[onclick="showTab('${id}')"]`).classList.add('active');
-    }
-
-    fetchMatchups();
     setInterval(fetchMatchups, 60000);
   </script>
 </body>
