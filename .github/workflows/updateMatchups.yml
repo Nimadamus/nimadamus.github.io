@@ -1,38 +1,6 @@
-name: Update Matchups Daily
-
-on:
-  schedule:
-    - cron: '0 15 * * *' # Runs daily at 8 AM PT
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install axios dotenv
-
-      - name: Create .env file
-        run: echo "API_KEY=${{ secrets.API_KEY }}" > .env
-
-      - name: Run script
-        run: node updateMatchups.js
-
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
-
-        
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add matchups.html
-          git commit -m "Update matchups"
-          git push
+          git add matchups.html || true
+          git diff --quiet && echo "No changes to commit" || (git commit -m "Update matchups" && git push)
