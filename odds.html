@@ -1,22 +1,122 @@
-<div id="mlb-matchups">
-  <div class="game-card">
-    <h4>Giants @ Dodgers</h4>
-    <p>🕒 Start Time: 7:10 PM</p>
-    <p>📍 Status: Scheduled</p>
-  </div>
-  <div class="game-card">
-    <h4>Yankees @ Red Sox</h4>
-    <p>🕒 Start Time: 4:05 PM</p>
-    <p>📍 Status: Scheduled</p>
-  </div>
-  <div class="game-card">
-    <h4>Braves @ Phillies</h4>
-    <p>🕒 Start Time: 6:20 PM</p>
-    <p>📍 Status: Scheduled</p>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BetLegend - Matchups and Odds</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #FFD700;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-    setInterval(fetchMatchups, 60000);
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.75rem;
+      color: #fff;
+      margin-bottom: 40px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 15px;
+    }
+
+    .tab-button {
+      background-color: #111;
+      border: 2px solid #FFD700;
+      color: #FFD700;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab-button:hover {
+      background-color: #FFD700;
+      color: #000;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .game-card {
+      background-color: #111;
+      border-left: 4px solid #FFD700;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #333;
+    }
+  </style>
+  <script>
+    function showTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    window.onload = function () {
+      showTab('mlb-odds'); // default to MLB tab
+    }
   </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Matchups and Odds</h1>
+
+    <div class="tabs">
+      <button class="tab-button" onclick="showTab('mlb-odds')">MLB</button>
+      <button class="tab-button" onclick="showTab('nba-odds')">NBA</button>
+      <button class="tab-button" onclick="showTab('nhl-odds')">NHL</button>
+    </div>
+
+    <!-- MLB Tab -->
+    <div id="mlb-odds" class="tab-content active">
+      <div id="mlb-matchups">
+        <div class="game-card">
+          <h4>Giants @ Dodgers</h4>
+          <p>🕒 Start Time: 7:10 PM</p>
+          <p>📍 Status: Scheduled</p>
+        </div>
+        <div class="game-card">
+          <h4>Yankees @ Red Sox</h4>
+          <p>🕒 Start Time: 4:05 PM</p>
+          <p>📍 Status: Scheduled</p>
+        </div>
+        <div class="game-card">
+          <h4>Braves @ Phillies</h4>
+          <p>🕒 Start Time: 6:20 PM</p>
+          <p>📍 Status: Scheduled</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NBA Tab -->
+    <div id="nba-odds" class="tab-content">
+      <p>NBA matchups will appear here.</p>
+    </div>
+
+    <!-- NHL Tab -->
+    <div id="nhl-odds" class="tab-content">
+      <p>NHL matchups will appear here.</p>
+    </div>
+  </div>
 </body>
 </html>
