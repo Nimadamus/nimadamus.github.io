@@ -3,7 +3,7 @@ name: Update MLB Matchups Daily
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 15 * * *'  # Runs daily at 8 AM PT
+    - cron: '0 15 * * *'  # Every day at 8 AM PT / 11 AM ET
 
 jobs:
   fetch-and-update:
@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Create matchups.html
         run: |
@@ -27,14 +27,14 @@ jobs:
           const today = new Date().toISOString().split('T')[0];
 
           const headers = {
-            'x-apisports-key': API_KEY.toString()
+            'x-apisports-key': API_KEY
           };
 
           const BASE_URL = 'https://v1.baseball.api-sports.io';
 
           async function fetchMLBGamesAndWriteHTML() {
             try {
-              const gamesRes = await axios.get(\`\${BASE_URL}/games?league=1&season=2025&date=\${today}\`, {
+              const gamesRes = await axios.get(`${BASE_URL}/games?league=1&season=2025&date=${today}`, {
                 headers,
               });
               const games = gamesRes.data.response;
@@ -51,8 +51,8 @@ jobs:
                 return \`
                   <div class='game-card'>
                     <h4>\${away} @ \${home}</h4>
-                    <p>Start Time: \${time}</p>
-                    <p>Status: \${status}</p>
+                    <p>🕒 Start Time: \${time}</p>
+                    <p>📊 Status: \${status}</p>
                   </div>
                 \`;
               });
@@ -75,8 +75,6 @@ jobs:
 
           npm install axios dotenv
           node updateMatchups.js
-        env:
-          API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
 
       - name: Commit and push matchups.html
         env:
@@ -85,5 +83,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add matchups.html
-          git commit -m "⚾ Auto-update matchups.html" || echo "No changes to commit"
+          git commit -m "🕒 Auto-update matchups.html"
           git push https://x-access-token:${GH_PAT}@github.com/Nimadamus/nimadamus.github.io.git HEAD:main
