@@ -2,14 +2,15 @@ name: Update MLB Matchups Daily
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # runs daily at 8am PT / 3pm UTC
+    - cron: '0 15 * * *'  # every day at 8am PT
   workflow_dispatch:
 
 jobs:
   fetch-and-update:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Node.js
@@ -17,46 +18,66 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm install axios dotenv
-
-      - name: Create fetch script
+      - name: Create matchups.html
         run: |
           echo "require('dotenv').config();
           const axios = require('axios');
           const fs = require('fs');
+
           const API_KEY = process.env.API_SPORTS_KEY;
           const today = new Date().toISOString().split('T')[0];
-          const headers = { 'x-apisports-key': API_KEY };
+
+          const headers = {
+            'x-apisports-key': API_KEY,
+          };
+
           const BASE_URL = 'https://v1.baseball.api-sports.io';
 
-          async function go() {
+          async function fetchMLBGamesAndWriteHTML() {
             try {
-              const res = await axios.get(\`\${BASE_URL}/games?league=1&season=2025&date=\${today}\`, { headers });
-              const games = res.data.response;
-              const cards = games.map(g => {
-                const home = g.teams.home.name;
-                const away = g.teams.away.name;
-                const time = new Date(g.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                const status = g.status.long;
-                return \`<div class='game-card'><h4>\${away} @ \${home}</h4><p>Start Time: \${time}</p><p>Status: \${status}</p></div>\`;
+              const gamesRes = await axios.get(\`\${BASE_URL}/games?league=1&season=2025&date=\${today}\`, { headers });
+              const games = gamesRes.data.response;
+
+              const gameCards = games.map(game => {
+                const home = game.teams.home.name;
+                const away = game.teams.away.name;
+                const time = new Date(game.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const status = game.status.long;
+
+                return \`
+                  <div class='game-card'>
+                    <h4>\${away} @ \${home}</h4>
+                    <p>⏰ Start Time: \${time}</p>
+                    <p>📍 Status: \${status}</p>
+                  </div>
+                \`;
               });
-              const html = \`<div id='mlb-matchups'>\${cards.join('\\n')}</div>\`;
-              fs.writeFileSync('matchups.html', html);
+
+              const htmlOutput = \`
+                <div id='mlb-matchups'>
+                  \${gameCards.join('\\n')}
+                </div>
+              \`;
+
+              fs.writeFileSync('matchups.html', htmlOutput);
+              console.log('✅ matchups.html created!');
             } catch (err) {
-              console.error('Fetch failed:', err.message);
+              console.error('❌ Error:', err.message);
+              process.exit(1);
             }
           }
 
-          go();" > fetch.js
+          fetchMLBGamesAndWriteHTML();" > updateMatchups.js
 
-      - name: Run fetch script
-        run: node fetch.js
+          npm install axios dotenv
+          node updateMatchups.js
 
-      - name: Commit updated matchups.html
+      - name: Commit and push matchups.html
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add matchups.html
-          git commit -m "Auto-update matchups.html" || echo "No changes to commit"
-          git push
+          git commit -m "🔄 Auto-update matchups.html"
+          git push https://x-access-token:${GH_PAT}@github.com/Nimadamus/nimadamus.github.io.git HEAD:main
