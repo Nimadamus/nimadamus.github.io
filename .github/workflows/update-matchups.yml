@@ -2,7 +2,7 @@ name: Update MLB Matchups Daily
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # every day at 8am PT
+    - cron: '0 18 * * *'  # runs daily at 11:00 AM PT
   workflow_dispatch:
 
 jobs:
@@ -19,6 +19,8 @@ jobs:
           node-version: '20'
 
       - name: Create matchups.html
+        env:
+          API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
         run: |
           echo "require('dotenv').config();
           const axios = require('axios');
@@ -35,20 +37,25 @@ jobs:
 
           async function fetchMLBGamesAndWriteHTML() {
             try {
-              const gamesRes = await axios.get(\`\${BASE_URL}/games?league=1&season=2025&date=\${today}\`, { headers });
+              const gamesRes = await axios.get(\`\${BASE_URL}/games?league=1&season=2025&date=\${today}\`, {
+                headers,
+              });
               const games = gamesRes.data.response;
 
               const gameCards = games.map(game => {
                 const home = game.teams.home.name;
                 const away = game.teams.away.name;
-                const time = new Date(game.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const time = new Date(game.time).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                });
                 const status = game.status.long;
 
                 return \`
                   <div class='game-card'>
                     <h4>\${away} @ \${home}</h4>
-                    <p>⏰ Start Time: \${time}</p>
-                    <p>📍 Status: \${status}</p>
+                    <p>🕒 Start Time: \${time}</p>
+                    <p>📊 Status: \${status}</p>
                   </div>
                 \`;
               });
@@ -67,7 +74,8 @@ jobs:
             }
           }
 
-          fetchMLBGamesAndWriteHTML();" > updateMatchups.js
+          fetchMLBGamesAndWriteHTML();
+          " > updateMatchups.js
 
           npm install axios dotenv
           node updateMatchups.js
@@ -79,5 +87,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add matchups.html
-          git commit -m "🔄 Auto-update matchups.html"
+          git commit -m "🧠 Auto-update matchups.html"
           git push https://x-access-token:${GH_PAT}@github.com/Nimadamus/nimadamus.github.io.git HEAD:main
