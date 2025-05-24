@@ -3,8 +3,8 @@ const axios = require("axios");
 require("dotenv").config();
 
 const API_KEY = process.env.API_KEY;
-const API_URL = "https://v3.football.api-sports.io/fixtures";
-const DATE = new Date().toISOString().split("T")[0]; // e.g. 2025-05-24
+const API_URL = "https://v1.baseball.api-sports.io/games";
+const DATE = new Date().toISOString().split("T")[0]; // e.g., 2025-05-24
 
 const options = {
   method: "GET",
@@ -22,13 +22,16 @@ axios
     games.forEach((game) => {
       const home = game.teams.home.name;
       const away = game.teams.away.name;
-      const time = new Date(game.fixture.date).toLocaleTimeString("en-US", { timeZone: "America/Los_Angeles" });
+      const time = new Date(game.fixture.date).toLocaleTimeString("en-US", {
+        timeZone: "America/Los_Angeles",
+      });
       html += `<li>${away} @ ${home} - ${time}</li>`;
     });
     html += "</ul></body></html>";
     fs.writeFileSync("matchups.html", html);
-    console.log("matchups.html updated!");
+    console.log("✅ matchups.html updated");
   })
   .catch((error) => {
     console.error("API error:", error);
   });
+
