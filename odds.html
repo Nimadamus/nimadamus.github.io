@@ -111,9 +111,15 @@
 
     function formatAmericanOdds(decimalOdds) {
       if (decimalOdds === null || decimalOdds === undefined) return 'N/A';
-      const american = Math.round((decimalOdds - 1) * 100);
-      if (american > 0) return `+${american}`;
-      return american.toString();
+      if (decimalOdds < 1) return 'N/A'; // invalid decimal odds
+
+      if (decimalOdds === 1) return '+100'; // even odds
+
+      if (decimalOdds >= 2) {
+        return `+${Math.round((decimalOdds - 1) * 100)}`;
+      } else {
+        return `${Math.round(-100 / (decimalOdds - 1))}`;
+      }
     }
 
     function formatPoint(point) {
