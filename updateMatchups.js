@@ -17,6 +17,7 @@ axios
   .request(options)
   .then((response) => {
     const games = response.data.response;
+
     let html = `
 <!DOCTYPE html>
 <html>
@@ -66,7 +67,9 @@ axios
         const home = game.teams.home.name.toUpperCase();
         const away = game.teams.away.name.toUpperCase();
         const time = new Date(game.fixture.date).toLocaleTimeString("en-US", {
-          timeZone: "America/Los_Angeles"
+          timeZone: "America/Los_Angeles",
+          hour: "numeric",
+          minute: "2-digit"
         });
         html += `<div class="matchup">${away} @ ${home} – ${time}</div>`;
       });
@@ -78,11 +81,9 @@ axios
 </html>
 `;
 
-    fs.writeFileSync("matchups.html", html);
-    console.log("✅ matchups.html written with UPPERCASE names");
+    fs.writeFileSync("matchups.html", html, { flag: "w" });
+    console.log("✅ matchups.html successfully written with uppercase teams.");
   })
   .catch((error) => {
-    console.error("❌ API error:", error.message);
+    console.error("❌ API ERROR:", error.message);
   });
-
-
