@@ -1,35 +1,93 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MLB MATCHUPS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BetLegend - Live MLB Matchups</title>
   <style>
     body {
-      background-color: #000;
+      background-color: #121212;
       color: #FFD700;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
       padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
     }
     h1 {
+      text-align: center;
       font-size: 2.5rem;
       margin-bottom: 40px;
     }
     .matchup {
-      background-color: #111;
-      margin: 15px auto;
-      padding: 15px 30px;
+      background-color: #1E1E1E;
+      border-left: 5px solid #FFD700;
+      padding: 20px;
+      margin-bottom: 25px;
       border-radius: 10px;
-      max-width: 600px;
-      box-shadow: 0 0 10px #222;
+      box-shadow: 0 0 15px #000000AA;
+    }
+    .matchup h4 {
+      margin: 0 0 10px;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+    .matchup p {
+      margin: 5px 0;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
-  <h1>TODAY'S MLB MATCHUPS</h1>
-  
+  <h1>Today's MLB Matchups</h1>
+  <div id="matchups-container">
+    <p>Loading matchups...</p>
+  </div>
+
+  <script>
+    const apiKey = 'c405ed8a7e1f4ec945d39aeeaf647e4b';
+    const container = document.getElementById('matchups-container');
+
+    async function loadMatchups() {
+      try {
+        const res = await fetch(`https://api.the-odds-api.com/v4/sports/baseball_mlb/scheduled/?apiKey=${apiKey}`);
+        if (!res.ok) throw new Error('Failed to fetch');
+        const data = await res.json();
+
+        if (data.length === 0) {
+          container.innerHTML = '<p>No scheduled games for today.</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        data.forEach(game => {
+          const gameDiv = document.createElement('div');
+          gameDiv.className = 'matchup';
+
+          const commenceTime = new Date(game.commence_time).toLocaleString('en-US', {
+            timeZone: 'America/Los_Angeles',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+          });
+
+          gameDiv.innerHTML = `
+            <h4>${game.away_team} @ ${game.home_team}</h4>
+            <p>Start Time: ${commenceTime}</p>
+            <p>Status: ${game.status || 'Scheduled'}</p>
+          `;
+
+          container.appendChild(gameDiv);
+        });
+      } catch (error) {
+        container.innerHTML = '<p>Failed to load matchups. Please try again later.</p>';
+        console.error(error);
+      }
+    }
+
+    loadMatchups();
+  </script>
 </body>
 </html>
-    
