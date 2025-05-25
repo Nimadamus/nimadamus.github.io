@@ -109,16 +109,14 @@
       document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
     }
 
-    // Detect if odds is decimal or already American and format accordingly
+    // Convert decimal or American odds to American format
     function formatAmericanOdds(odds) {
       if (odds === null || odds === undefined) return 'N/A';
 
-      // If odds is integer and large positive or negative, assume American
       if (Number.isInteger(odds) && (odds > 100 || odds < -100)) {
         return odds > 0 ? `+${odds}` : `${odds}`;
       }
 
-      // Otherwise assume decimal odds and convert
       if (odds < 1) return 'N/A';
 
       if (odds === 2) return '+100';
@@ -163,9 +161,6 @@
 
           const bookmaker = game.bookmakers[0];
           let oddsHtml = '';
-
-          // DEBUG: log raw odds data to console
-          console.log(`Odds for ${away} @ ${home}:`, bookmaker.markets.map(m => m.outcomes.map(o => o.price)));
 
           bookmaker.markets.forEach(market => {
             if (market.key === 'h2h') {
