@@ -62,3 +62,10 @@ const fetchMatchups = async () => {
     `;
 
     fs.writeFileSync('matchups.html', html);
+    console.log('✅ matchups.html successfully updated');
+  } catch (error) {
+    console.error('❌ Failed to fetch or write matchups:', error.message);
+  }
+};
+
+fetchMatchups();
