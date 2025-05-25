@@ -17,21 +17,33 @@ axios
   .request(options)
   .then((response) => {
     const games = response.data.response;
-    console.log(`✅ Pulled ${games.length} games from API`);
-
-    let html = `
+    const html = `
 <!DOCTYPE html>
 <html>
-<head><title>Matchups</title></head>
-<body><h1>LIVE MATCHUPS</h1><pre>${JSON.stringify(games, null, 2)}</pre></body>
+<head>
+  <title>Matchups Debug</title>
+</head>
+<body style="background:black;color:gold;padding:40px;font-family:sans-serif">
+  <h1>✅ API CONNECTED</h1>
+  <p>Total games found: ${games.length}</p>
+  <pre>${JSON.stringify(games, null, 2)}</pre>
+</body>
 </html>
     `;
-
     fs.writeFileSync("matchups.html", html, { flag: "w" });
-    console.log("✅ Wrote matchups.html with raw JSON");
+    console.log("✅ matchups.html written.");
   })
   .catch((error) => {
-    console.error("❌ API call failed:", error.message);
-    let html = `<html><body><h1>API ERROR</h1><p>${error.message}</p></body></html>`;
+    const html = `
+<!DOCTYPE html>
+<html>
+<head><title>Error</title></head>
+<body style="background:black;color:red;padding:40px;font-family:sans-serif">
+  <h1>❌ API ERROR</h1>
+  <p>${error.message}</p>
+</body>
+</html>
+    `;
     fs.writeFileSync("matchups.html", html, { flag: "w" });
+    console.error("❌ API call failed:", error.message);
   });
