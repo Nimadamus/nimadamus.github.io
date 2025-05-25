@@ -8,42 +8,29 @@ const DATE = new Date().toISOString().split("T")[0];
 const options = {
   method: "GET",
   url: `https://v1.baseball.api-sports.io/games?date=${DATE}&league=1&season=2025`,
-  headers: {
-    "x-apisports-key": API_KEY
-  }
+  headers: { "x-apisports-key": API_KEY }
 };
 
-axios
-  .request(options)
-  .then((response) => {
-    const games = response.data.response;
-    const html = `
+axios.request(options).then(response => {
+  const games = response.data.response;
+  let html = `
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Matchups Debug</title>
-</head>
-<body style="background:black;color:gold;padding:40px;font-family:sans-serif">
-  <h1>✅ API CONNECTED</h1>
-  <p>Total games found: ${games.length}</p>
-  <pre>${JSON.stringify(games, null, 2)}</pre>
-</body>
-</html>
-    `;
-    fs.writeFileSync("matchups.html", html, { flag: "w" });
-    console.log("✅ matchups.html written.");
-  })
-  .catch((error) => {
-    const html = `
-<!DOCTYPE html>
-<html>
-<head><title>Error</title></head>
-<body style="background:black;color:red;padding:40px;font-family:sans-serif">
-  <h1>❌ API ERROR</h1>
-  <p>${error.message}</p>
-</body>
-</html>
-    `;
-    fs.writeFileSync("matchups.html", html, { flag: "w" });
-    console.error("❌ API call failed:", error.message);
+<head><title>Today's MLB Matchups</title></head>
+<body style="background:black;color:gold;font-family:sans-serif;padding:40px">
+<h1>TODAY'S MLB MATCHUPS</h1>
+`;
+
+  games.forEach(game => {
+    const home = game.teams.home.name.toUpperCase();
+    const away = game.teams.away.name.toUpperCase();
+    const time = new Date(game.time).toLocaleTimeString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", minute: "2-digit" });
+    html += `<div style="margin-bottom:12px;background:#111;padding:15px;border-radius:8px">${away} @ ${home} — ${time}</div>`;
   });
+
+  html += `</body></html>`;
+  fs.writeFileSync("matchups.html", html);
+  console.log("✅ Matchups page updated.");
+}).catch(err => {
+  console.error("❌ API error:", err.message);
+});
