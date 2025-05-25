@@ -1,0 +1,36 @@
+name: Update Odds Page
+
+on:
+  schedule:
+    - cron: '30 13 * * *'  # Runs daily at 6:30 AM PT / 9:30 AM ET
+  workflow_dispatch:
+
+jobs:
+  update-odds:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 pandas
+
+      - name: Run scraper
+        run: python espn_scraper.py
+
+      - name: Commit and push updated matchups
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Auto-update matchups.html [daily scrape]"
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
