@@ -2,7 +2,7 @@ const fs = require('fs');
 const axios = require('axios');
 require('dotenv').config();
 
-const API_KEY = process.env.API_SPORTS_KEY;
+const API_KEY = process.env.API_KEY;
 const DATE = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
 
 const fetchMatchups = async () => {
@@ -69,4 +69,3 @@ const fetchMatchups = async () => {
 };
 
 fetchMatchups();
-
