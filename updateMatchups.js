@@ -17,73 +17,21 @@ axios
   .request(options)
   .then((response) => {
     const games = response.data.response;
+    console.log(`✅ Pulled ${games.length} games from API`);
 
     let html = `
 <!DOCTYPE html>
 <html>
-<head>
-  <title>MLB Matchups</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      background-color: black;
-      color: #FFD700;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 30px;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 30px;
-    }
-    .matchups {
-      max-width: 700px;
-      margin: 0 auto;
-      background-color: #111;
-      border-radius: 10px;
-      padding: 25px;
-      box-shadow: 0 0 10px #222;
-    }
-    .matchup {
-      padding: 12px;
-      border-bottom: 1px solid #444;
-    }
-    .matchup:last-child {
-      border-bottom: none;
-    }
-  </style>
-</head>
-<body>
-  <h1>Today's MLB Matchups</h1>
-  <div class="matchups">
-`;
-
-    if (games.length === 0) {
-      html += `<div class="matchup">NO MATCHUPS FOUND FOR TODAY.</div>`;
-    } else {
-      games.forEach((game) => {
-        const home = game.teams.home.name.toUpperCase();
-        const away = game.teams.away.name.toUpperCase();
-        const time = new Date(game.fixture.date).toLocaleTimeString("en-US", {
-          timeZone: "America/Los_Angeles",
-          hour: "numeric",
-          minute: "2-digit"
-        });
-        html += `<div class="matchup">${away} @ ${home} – ${time}</div>`;
-      });
-    }
-
-    html += `
-  </div>
-</body>
+<head><title>Matchups</title></head>
+<body><h1>LIVE MATCHUPS</h1><pre>${JSON.stringify(games, null, 2)}</pre></body>
 </html>
-`;
+    `;
 
     fs.writeFileSync("matchups.html", html, { flag: "w" });
-    console.log("✅ matchups.html successfully written with uppercase teams.");
+    console.log("✅ Wrote matchups.html with raw JSON");
   })
   .catch((error) => {
-    console.error("❌ API ERROR:", error.message);
+    console.error("❌ API call failed:", error.message);
+    let html = `<html><body><h1>API ERROR</h1><p>${error.message}</p></body></html>`;
+    fs.writeFileSync("matchups.html", html, { flag: "w" });
   });
