@@ -60,11 +60,11 @@ axios
 `;
 
     if (games.length === 0) {
-      html += `<div class="matchup">No matchups found for today.</div>`;
+      html += `<div class="matchup">NO MATCHUPS FOUND FOR TODAY.</div>`;
     } else {
       games.forEach((game) => {
-        const home = game.teams.home.name;
-        const away = game.teams.away.name;
+        const home = game.teams.home.name.toUpperCase();
+        const away = game.teams.away.name.toUpperCase();
         const time = new Date(game.fixture.date).toLocaleTimeString("en-US", {
           timeZone: "America/Los_Angeles"
         });
@@ -79,7 +79,7 @@ axios
 `;
 
     fs.writeFileSync("matchups.html", html);
-    console.log("✅ matchups.html successfully written");
+    console.log("✅ matchups.html written with UPPERCASE names");
   })
   .catch((error) => {
     console.error("❌ API error:", error.message);
