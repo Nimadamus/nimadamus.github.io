@@ -74,6 +74,52 @@
 
     window.onload = function () {
       showTab('mlb-odds'); // default to MLB tab
+      fetchMLBOdds();
+    }
+
+    const apiKey = 'c405ed8a7e1f4ec945d39aeeaf647e4b';
+
+    async function fetchMLBOdds() {
+      try {
+        const response = await fetch(`https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?regions=us&markets=h2h,spreads,totals&apiKey=${apiKey}`);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+
+        const mlbContainer = document.getElementById('mlb-matchups');
+        mlbContainer.innerHTML = ''; // Clear existing content
+
+        data.forEach(game => {
+          const home = game.home_team;
+          const away = game.away_team;
+          const commenceTime = new Date(game.commence_time).toLocaleString();
+
+          // Find first bookmaker odds for simplicity
+          const bookmaker = game.bookmakers[0];
+          let oddsHtml = '';
+          bookmaker.markets.forEach(market => {
+            if (market.key === 'h2h') {
+              oddsHtml += `<p><strong>Moneyline:</strong> ${market.outcomes.map(o => `${o.name}: ${o.price}`).join(', ')}</p>`;
+            } else if (market.key === 'spreads') {
+              oddsHtml += `<p><strong>Spread:</strong> ${market.outcomes.map(o => `${o.name} ${o.point}: ${o.price}`).join(', ')}</p>`;
+            } else if (market.key === 'totals') {
+              oddsHtml += `<p><strong>Totals:</strong> ${market.outcomes.map(o => `${o.name} ${o.point}: ${o.price}`).join(', ')}</p>`;
+            }
+          });
+
+          const gameCard = document.createElement('div');
+          gameCard.className = 'game-card';
+          gameCard.innerHTML = `
+            <h4>${away} @ ${home}</h4>
+            <p>🕒 Start Time: ${commenceTime}</p>
+            ${oddsHtml}
+          `;
+
+          mlbContainer.appendChild(gameCard);
+        });
+      } catch (error) {
+        console.error('Failed to fetch MLB odds:', error);
+        document.getElementById('mlb-matchups').innerHTML = '<p>Failed to load live odds data.</p>';
+      }
     }
   </script>
 </head>
@@ -90,21 +136,7 @@
     <!-- MLB Tab -->
     <div id="mlb-odds" class="tab-content active">
       <div id="mlb-matchups">
-        <div class="game-card">
-          <h4>Giants @ Dodgers</h4>
-          <p>🕒 Start Time: 7:10 PM</p>
-          <p>📍 Status: Scheduled</p>
-        </div>
-        <div class="game-card">
-          <h4>Yankees @ Red Sox</h4>
-          <p>🕒 Start Time: 4:05 PM</p>
-          <p>📍 Status: Scheduled</p>
-        </div>
-        <div class="game-card">
-          <h4>Braves @ Phillies</h4>
-          <p>🕒 Start Time: 6:20 PM</p>
-          <p>📍 Status: Scheduled</p>
-        </div>
+        <!-- Live MLB matchups will be loaded here -->
       </div>
     </div>
 
