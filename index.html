@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BetLegend</title>
   <meta name="description" content="BetLegend offers sharp, data-driven MLB, NBA, and NHL picks with professional write-ups and a custom edge model.">
-<meta name="keywords" content="sports betting, MLB picks, NBA odds, NHL predictions, BetLegend, best sports picks, free picks">
-<link rel="canonical" href="https://www.betlegendpicks.com/index.html">
-
-<meta property="og:title" content="BetLegend – Sharp Sports Picks with Real Edge">
-<meta property="og:description" content="Get pro-level MLB, NBA, and NHL picks with full breakdowns and sharp betting angles from the BetLegend Pro model.">
-<meta property="og:url" content="https://www.betlegendpicks.com/index.html">
-<meta property="og:image" content="https://www.betlegendpicks.com/logo.png">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BetLegend – Sharp Sports Picks with Real Edge">
-<meta name="twitter:description" content="Daily picks backed by data, edge %, and pro write-ups.">
-<meta name="twitter:image" content="https://www.betlegendpicks.com/logo.png">
+  <meta name="keywords" content="sports betting, MLB picks, NBA odds, NHL predictions, BetLegend, best sports picks, free picks">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.betlegendpicks.com/index.html">
+  <meta property="og:title" content="BetLegend – Sharp Sports Picks with Real Edge">
+  <meta property="og:description" content="Get pro-level MLB, NBA, and NHL picks with full breakdowns and sharp betting angles from the BetLegend Pro model.">
+  <meta property="og:url" content="https://www.betlegendpicks.com/index.html">
+  <meta property="og:image" content="https://www.betlegendpicks.com/logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BetLegend – Sharp Sports Picks with Real Edge">
+  <meta name="twitter:description" content="Daily picks backed by data, edge %, and pro write-ups.">
+  <meta name="twitter:image" content="https://www.betlegendpicks.com/logo.png">
+  <link rel="icon" href="https://www.betlegendpicks.com/logo.png" type="image/png">
 
   <style>
     body {
@@ -26,6 +26,7 @@
       background-size: cover;
       color: white;
     }
+
     header {
       background-color: transparent;
       display: flex;
@@ -33,23 +34,74 @@
       align-items: center;
       padding: 10px 20px 0;
     }
-    
+
+    .logo {
+      height: 80px;
+      display: block;
+      margin-top: 10px;
+      filter: drop-shadow(0 0 2px white);
     }
-     .logo {
-  height: 80px;
-  display: block;
-  margin-top: 10px;
-  filter: drop-shadow(0 0 2px white);
-}
 
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 180px 30px 40px;
+      max-width: 900px;
+    }
 
-    .top-affiliate {
+    .title {
+      font-size: 72px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 40px;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-bottom: 60px;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      font-size: 20px;
+    }
+
+    .cards {
       position: absolute;
-      top: 10px;
+      bottom: 30px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 280px;
+    }
+
+    .footer-buttons {
+      position: fixed;
+      bottom: 50px;
       left: 50%;
       transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       z-index: 10;
     }
+
     .affiliate {
       background-color: gold;
       color: black;
@@ -59,68 +111,25 @@
       text-decoration: none;
       font-size: 17px;
     }
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      padding: 10px 180px 30px 40px;
-      max-width: 900px;
-    }
-    .title {
-      font-size: 72px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .subtitle {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 40px;
-    }
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      margin-bottom: 60px;
-    }
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      font-size: 20px;
-    }
-    .cards {
-      position: absolute;
-      bottom: 30px;
-      left: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .card {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid white;
-      border-radius: 10px;
-      padding: 20px;
-      width: 280px;
-    }
-    .footer-buttons {
-      position: fixed;
-      bottom: 20px;
-      right: 40px;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      z-index: 10;
-    }
+
     .twitter-button {
+      position: absolute;
+      top: 15px;
+      right: 20px;
       background-color: #1DA1F2;
       color: white;
       padding: 10px 20px;
       border-radius: 5px;
       text-decoration: none;
       font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+
     .powered {
       position: fixed;
-      bottom: 0;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -129,157 +138,44 @@
       padding: 10px 20px;
       width: auto;
     }
-     @media (max-width: 768px) {
-     .top-affiliate {
-  position: static;
-  transform: none;
-  text-align: center;
-  margin-top: 10px;
-  width: 100%;
-}
 
-  body {
-    padding: 10px;
-  }
-
-  header {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-  }
-
-  .logo {
-    height: 40px;
-  }
-
-  .affiliate {
-    width: 100%;
-    text-align: center;
-    display: block;
-    margin-top: 10px;
-  }
-
-  .sidebar {
-    position: static;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 10px;
-    padding: 10px;
-    margin-bottom: 20px;
-  }
-
-  .main-content {
-    margin-left: 0;
-    padding: 10px;
-  }
-
-  .title,
-  .subtitle {
-    text-align: center;
-    width: 100%;
-  }
-
-  .cards {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .card {
-    width: 90%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 15px;
-    font-size: 16px;
-  }
-
-  .footer-buttons {
-    text-align: center;
-    margin-top: 30px;
-  }
-
-  .twitter-button {
-    width: 100%;
-    max-width: 250px;
-    margin-top: 10px;
-  }
-
-  .powered {
-    text-align: center;
-    font-size: 14px;
-    margin-top: 20px;
-    .cards {
-  display: none;
-}
-
-  }
-}
-
-
-  .affiliate {
-    width: 100%;
-    text-align: center;
-    display: block;
-    margin-top: 10px;
-  }
-
-  .tit
-
+    @media (max-width: 768px) {
+      .cards {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-   
+    <div class="sidebar">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="odds.html">Live Odds</a>
+      <a href="bankroll.html">Bankroll Management</a>
+      <a href="FreeAlerts.html">Free Alerts</a>
+      <a href="Best Online Sportsbook.html">Best Online Sportsbook</a>
+    </div>
+    <a href="https://twitter.com/BetLegendPicks" class="twitter-button">
+      <img src="https://abs.twimg.com/favicons/twitter.ico" style="height: 16px;"> Follow Us
+    </a>
   </header>
-
-  <div class="top-affiliate">
-    <a href="#" class="affiliate">Bet Like a Legend — Get Your 350% Bonus Now</a>
-  </div>
 
   <div class="main-content">
     <div class="title">BetLegend</div>
     <div class="subtitle">Tech-Driven. Stat-Fueled. Edge-Focused.</div>
-
-    <div class="sidebar">
-  <a href="index.html">Home</a>
-  <a href="blog.html">Blog</a>
-  <a href="odds.html">Live Odds</a>
-  <a href="bankroll.html">Bankroll Management</a>
-  <a href="FreeAlerts.html">Free Alerts</a>
-
-
-  <a href="Best Online Sportsbook.html">Best Online Sportsbook</a>
-
-</div>
-
-    </div>
   </div>
 
   <div class="cards">
-  <div class="card">
-    <strong>May 25, 2025</strong><br>
-    MLB: Dodgers/Mets Over 8.5<br>
-    Pick: Over 8.5 Runs (-114)<br>
-    Units: 2
+    <div class="card">
+      <strong>Pick of the Day</strong><br>
+      May 25, 2025<br>
+      MLB: Dodgers/Mets Over 8 (-115)
+    </div>
   </div>
-  <div class="card">
-    <strong>May 25, 2025</strong><br>
-    <br>
-    
-  </div>
-  <div class="card">
-    <strong>May 25, 2025</strong><br>
-    <br>
-    
-  </div>
-</div>
-
 
   <div class="footer-buttons">
-    <a href="#" class="twitter-button">Follow Us on Twitter</a>
+    <a href="#" class="affiliate">Bet Like a Legend — Get Your 350% Bonus Now</a>
   </div>
 
   <div class="powered">Powered by BetLegend Pro model</div>
