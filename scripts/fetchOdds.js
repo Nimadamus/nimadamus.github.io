@@ -1,33 +1,37 @@
-name: Update Odds Page Daily
+const fs = require('fs');
 
-on:
-  schedule:
-    - cron: '0 16 * * *'
-  workflow_dispatch:
+const now = new Date().toLocaleString();
 
-jobs:
-  update-odds:
-    runs-on: ubuntu-latest
+const html = `
+<html>
+  <head>
+    <title>Debug Odds Output</title>
+    <style>
+      body {
+        background-color: #000;
+        color: #FFD700;
+        font-family: sans-serif;
+        padding: 40px;
+      }
+      .card {
+        border: 1px solid #FFD700;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ODDS DEBUG: ${now}</h1>
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    <div class="card">
+      <h3>This proves odds.html was overwritten.</h3>
+      <p>If you see this, the script worked.</p>
+    </div>
+  </body>
+</html>
+`;
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+fs.writeFileSync('odds.html', html.trim());
+console.log('✅ odds.html overwritten for debug test');
 
-      - name: Install Axios
-        run: npm install axios
-
-      - name: Run Odds Fetch Script
-        run: node scripts/fetchOdds.js
-
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add odds.html
-          git commit -m "Auto-update odds.html [live odds]" || echo "No changes to commit"
-          git push https://x-access-token:${{ secrets.PAT }}@github.com/Nimadamus/nimadamus.github.io.git HEAD:main
