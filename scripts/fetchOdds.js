@@ -1,7 +1,7 @@
 const fs = require('fs');
 const axios = require('axios');
 
-const API_KEY = 'c63a449bea9b087de00bc25f8fe42f7a'; // Your real API key
+const API_KEY = 'c63a449bea9b087de00bc25f8fe42f7a';
 const API_URL = 'https://v1.baseball.api-sports.io/games';
 const today = new Date().toISOString().split('T')[0];
 
