@@ -1,0 +1,33 @@
+name: Update Live Feed Daily
+
+on:
+  schedule:
+    - cron: '0 14 * * *'  # Runs every day at 7 AM Pacific
+  workflow_dispatch:       # Allows manual run in Actions tab
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run update script
+        run: python scripts/update_feed.py
+
+      - name: Commit updated JSON
+        run: |
+          git config user.name "BetLegend Bot"
+          git config user.email "bot@betlegend.com"
+          git add data/live_feed.json
+          git commit -m "🔄 Auto-update live feed"
+          git push
