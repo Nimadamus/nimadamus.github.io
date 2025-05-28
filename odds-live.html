@@ -6,80 +6,26 @@
   <title>Live MLB Odds</title>
   <style>
     body {
-      background-color: black;
-      color: gold;
+      background-color: #000;
+      color: #FFD700;
       font-family: Arial, sans-serif;
+      margin: 0;
       padding: 20px;
+      text-align: center;
     }
     h1 {
-      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
     }
-    table {
+    iframe {
+      border: 2px solid #FFD700;
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 30px;
-    }
-    th, td {
-      border: 1px solid gold;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #222;
-    }
-    td {
-      background-color: #111;
+      height: 1000px;
     }
   </style>
 </head>
 <body>
   <h1>Live MLB Odds (Auto-Updated)</h1>
-  <table id="odds-table">
-    <thead>
-      <tr>
-        <th>Matchup</th>
-        <th>Moneyline</th>
-        <th>Spread</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody id="odds-body">
-      <tr><td colspan="4">Loading odds...</td></tr>
-    </tbody>
-  </table>
-
-  <script>
-    async function loadOdds() {
-      const apiKey = 'c405ed8a7e1f4ec945d39aeeaf647e4b'; // your API key
-      const response = await fetch(`https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?regions=us&markets=h2h,spreads,totals&apiKey=${apiKey}`);
-      const data = await response.json();
-
-      const tbody = document.getElementById('odds-body');
-      tbody.innerHTML = '';
-
-      data.forEach(game => {
-        const teams = game.home_team + ' vs ' + game.away_team;
-
-        const h2h = game.bookmakers?.[0]?.markets?.find(m => m.key === 'h2h')?.outcomes || [];
-        const spreads = game.bookmakers?.[0]?.markets?.find(m => m.key === 'spreads')?.outcomes || [];
-        const totals = game.bookmakers?.[0]?.markets?.find(m => m.key === 'totals')?.outcomes || [];
-
-        const moneyline = h2h.map(o => `${o.name}: ${o.price}`).join(' / ') || '-';
-        const spread = spreads.map(o => `${o.name}: ${o.point} (${o.price})`).join(' / ') || '-';
-        const total = totals.map(o => `${o.name} ${o.point} (${o.price})`).join(' / ') || '-';
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${teams}</td>
-          <td>${moneyline}</td>
-          <td>${spread}</td>
-          <td>${total}</td>
-        `;
-        tbody.appendChild(row);
-      });
-    }
-
-    loadOdds();
-  </script>
+  <iframe src="https://pregame.com/game-center/odds" loading="lazy"></iframe>
 </body>
 </html>
