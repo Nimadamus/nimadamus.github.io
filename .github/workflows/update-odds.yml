@@ -2,7 +2,7 @@ name: Update Odds Page Daily
 
 on:
   schedule:
-    - cron: '0 14 * * *'  # Runs every day at 7 AM PT (14:00 UTC)
+    - cron: '0 14 * * *'  # 7 AM PT
   workflow_dispatch:
 
 jobs:
@@ -10,49 +10,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Fetch MLB odds
-        run: |
-          curl "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?regions=us&markets=h2h,spreads,totals&bookmakers=fanduel&apiKey=c405ed8a7e1f4ec945d39aeeaf647e4b" -o raw_odds.json
+    - name: Fetch MLB odds
+      run: |
+        curl "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?regions=us&markets=h2h,spreads,totals&bookmakers=fanduel&apiKey=c405ed8a7e1f4ec945d39aeeaf647e4b" -o raw_odds.json
 
-      - name: Inject odds into HTML
-        run: |
-          python3 - <<EOF
-import json
+    - name: Inject odds into HTML
+      run: |
+        python3 <<EOF
+        import json
 
-with open('raw_odds.json') as f:
-    data = json.load(f)
+        with open('raw_odds.json') as f:
+            data = json.load(f)
 
-html = '<h2>MLB Odds (Fanduel)</h2><table border="1" cellpadding="6"><tr><th>Matchup</th><th>Moneyline</th><th>Run Line</th><th>Total</th></tr>'
+        html = '<h2>MLB Odds (Fanduel)</h2><table border="1" cellpadding="6"><tr><th>Matchup</th><th>Moneyline</th><th>Run Line</th><th>Total</th></tr>'
+        for game in data:
+            teams = " vs. ".join(game['teams'])
+            markets = {m['key']: m for m in game['bookmakers'][0]['markets']}
+            ml = ' / '.join(f"{o['name']} {o['price']}" for o in markets['h2h']['outcomes'])
+            rl = ' / '.join(f"{o['name']} {o['point']}: {o['price']}" for o in markets['spreads']['outcomes'])
+            ttl = ' / '.join(f"{o['name']} {o['point']}: {o['price']}" for o in markets['totals']['outcomes'])
+            html += f"<tr><td>{teams}</td><td>{ml}</td><td>{rl}</td><td>{ttl}</td></tr>"
+        html += '</table>'
 
-for game in data:
-    teams = " vs. ".join(game['teams'])
-    markets = {m['key']: m for m in game['bookmakers'][0]['markets']}
-    ml = ' / '.join(f"{o['name']} {o['price']}" for o in markets['h2h']['outcomes'])
-    rl = ' / '.join(f"{o['name']} {o['point']}: {o['price']}" for o in markets['spreads']['outcomes'])
-    ttl = ' / '.join(f"{o['name']} {o['point']}: {o['price']}" for o in markets['totals']['outcomes'])
+        with open('odds.html') as f:
+            page = f.read()
 
-    html += f"<tr><td>{teams}</td><td>{ml}</td><td>{rl}</td><td>{ttl}</td></tr>"
+        start = page.find('<body>')
+        end = page.find('</body>')
+        updated = page[:start+6] + html + page[end:] if start != -1 and end != -1 else html
 
-html += '</table>'
+        with open('odds.html', 'w') as f:
+            f.write(updated)
+        EOF
 
-with open('odds.html') as f:
-    page = f.read()
-
-start = page.find('<body>')
-end = page.find('</body>')
-updated = page[:start+6] + html + page[end:] if start != -1 and end != -1 else html
-
-with open('odds.html', 'w') as f:
-    f.write(updated)
-EOF
-
-      - name: Commit and push
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add odds.html
-          git commit -m "Updated odds page"
-          git push
+    - name: Commit and push
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add odds.html
+        git commit -m "Auto-update odds page"
+        git push
