@@ -2,7 +2,7 @@ name: Update Odds Page Daily
 
 on:
   schedule:
-    - cron: '0 14 * * *'
+    - cron: '0 16 * * *'  # Runs daily at 9AM PT
   workflow_dispatch:
 
 jobs:
@@ -10,25 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Fetch MLB odds
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Odds Fetch Script
+        run: node scripts/fetchOdds.js  # Replace with your actual odds-fetching script
+
+      - name: Commit and Push Changes
         run: |
-          curl "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?regions=us&markets=h2h,spreads,totals&bookmakers=fanduel&apiKey=c405ed8a7e1f4ec945d39aeeaf647e4b" -o raw_odds.json
-
-      - name: Inject odds into HTML
-        run: |
-          python3 - <<EOF
-          import json
-
-          with open('raw_odds.json') as f:
-              data = json.load(f)
-
-          html = '<h2>MLB Odds (Fanduel)</h2><table border="1" cellpadding="6"><tr><th>Matchup</th><th>Moneyline</th><th>Run Line</th><th>Total</th></tr>'
-
-          for game in data:
-              teams = f"{game['home_team']} vs {game['away_team']}"
-              markets = {m['key']: m for m in game['bookmakers'][0]['markets']}
-
-              ml = ' / '.join(f"{o['name']} {o['price']}" for o in m
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add odds.html
+          git commit -m "Update odds.html [Auto]" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.PAT }}@github.com/Nimadamus/nimadamus.github.io.git HEAD:main
