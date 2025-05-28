@@ -1,35 +1,66 @@
-name: Update Matchups Daily
+name: Update Odds Page Daily
 
 on:
   schedule:
-    - cron: '0 14 * * *'  # Runs every day at 7 AM PT (14:00 UTC)
-  workflow_dispatch:      # Allows manual runs
+    - cron: '0 14 * * *'
+  workflow_dispatch:
 
 jobs:
-  update:
+  update-odds:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
+    - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-
-    - name: Install dependencies
+    - name: Fetch MLB odds from The Odds API (Fanduel only)
       run: |
-        python -m pip install --upgrade pip
-        pip install requests pandas beautifulsoup4
+        curl "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?regions=us&markets=h2h,spreads,totals&bookmakers=fanduel&apiKey=c405ed8a7e1f4ec945d39aeeaf647e4b" -o raw_odds.json
 
-    - name: Run ESPN scraper
-      run: python espn_scraper.py
-
-    - name: Commit and push changes
+    - name: Generate HTML table
       run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add matchups.html
-        git commit -m "Auto-update matchups from ESPN"
+        python3 <<EOF
+import json
+
+with open('raw_odds.json', 'r') as f:
+    data = json.load(f)
+
+html = '<h2>MLB Odds (Fanduel)</h2>'
+html += '<table border="1" cellpadding="6" cellspacing="0">'
+html += '<tr><th>Matchup</th><th>Moneyline</th><th>Run Line</th><th>Total</th></tr>'
+
+for game in data:
+    teams = f"{game['away_team']} @ {game['home_team']}"
+    bm = next((b for b in game.get('bookmakers', []) if b['key'] == 'fanduel'), None)
+    if not bm: continue
+
+    markets = {m['key']: m for m in bm.get('markets', [])}
+    ml = ' / '.join([f"{o['name']}: {o['price']}" for o in markets.get('h2h', {}).get('outcomes', [])]) or 'N/A'
+    rl = ' / '.join([f"{o['name']} {o['point']}: {o['price']}" for o in markets.get('spreads', {}).get('outcomes', [])]) or 'N/A'
+    total = ' / '.join([f"{o['name']} {o['point']}: {o['price']}" for o in markets.get('totals', {}).get('outcomes', [])]) or 'N/A'
+
+    html += f'<tr><td>{teams}</td><td>{ml}</td><td>{rl}</td><td>{total}</td></tr>'
+
+html += '</table>'
+
+with open('odds.html', 'r') as f:
+    original = f.read()
+
+start = original.find('<body>')
+end = original.find('</body>')
+if start != -1 and end != -1:
+    updated = original[:start+6] + html + original[end:]
+else:
+    updated = html
+
+with open('odds.html', 'w') as f:
+    f.write(updated)
+EOF
+
+    - name: Commit and push updated odds
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add odds.html
+        git commit -m "Auto-update odds.html with live MLB odds"
         git push
