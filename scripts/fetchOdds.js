@@ -58,4 +58,15 @@ axios.get(`${API_URL}?date=${today}&league=1&season=2025`, {
           </tr>
         </thead>
         <tbody>
-          $
+          ${rows}
+        </tbody>
+      </table>
+    </body>
+  </html>
+  `;
+
+  fs.writeFileSync('odds.html', html.trim());
+  console.log('✅ Table written to odds.html');
+})
+.catch(err => {
+  const fallback
