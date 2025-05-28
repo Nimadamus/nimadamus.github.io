@@ -17,6 +17,7 @@ jobs:
         run: |
           curl "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?regions=us&markets=h2h,spreads,totals&bookmakers=fanduel&apiKey=c405ed8a7e1f4ec945d39aeeaf647e4b" -o raw_odds.json
 
+
       - name: Inject odds into HTML
         run: |
           python3 - <<EOF
