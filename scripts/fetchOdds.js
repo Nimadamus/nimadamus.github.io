@@ -1,81 +1,83 @@
-const fs = require('fs');
 const axios = require('axios');
+const fs = require('fs');
 
-const API_KEY = 'c63a449bea9b087de00bc25f8fe42f7a';
-const API_URL = 'https://v1.baseball.api-sports.io/games';
+const apiKey = process.env.API_KEY || 'c63a449bea9b087de00bc25f8fe42f7a'; // Your API key
 const today = new Date().toISOString().split('T')[0];
 
-axios.get(`${API_URL}?date=${today}&league=1&season=2025`, {
-  headers: { 'x-apisports-key': API_KEY }
+const url = `https://v1.baseball.api-sports.io/games?date=${today}&league=1&season=2024`;
+
+axios.get(url, {
+  headers: {
+    'x-rapidapi-key': apiKey,
+    'x-rapidapi-host': 'v1.baseball.api-sports.io'
+  }
 })
 .then(response => {
   const games = response.data.response;
-  if (!games.length) throw new Error('No games found.');
 
-  const rows = games.map(game => {
-    const away = game.teams.away.name;
-    const home = game.teams.home.name;
-    const time = game.time || '';
-    const status = game.status.long || '';
-    return `<tr><td>${away}</td><td>${home}</td><td>${time}</td><td>${status}</td></tr>`;
-  }).join('\n');
-
-  const html = `
-  <html>
+  let html = `
+    <html>
     <head>
-      <title>MLB Odds – Auto</title>
+      <title>MLB Matchups – Auto Updated</title>
       <style>
         body {
-          background: #000;
-          color: #FFD700;
-          font-family: sans-serif;
+          background-color: black;
+          color: yellow;
+          font-family: Arial, sans-serif;
           padding: 40px;
         }
         table {
           width: 100%;
           border-collapse: collapse;
-          background: #121212;
         }
         th, td {
-          border: 1px solid #FFD700;
+          border: 1px solid yellow;
           padding: 10px;
           text-align: left;
         }
         th {
-          background-color: #1f1f1f;
+          background-color: #222;
         }
       </style>
     </head>
     <body>
-      <h1>MLB Matchups – ${today}</h1>
+      <h1>MLB Matchups – Auto Updated</h1>
       <table>
         <thead>
           <tr>
-            <th>Away Team</th>
-            <th>Home Team</th>
+            <th>Matchup</th>
             <th>Time</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          ${rows}
+  `;
+
+  for (const game of games) {
+    const home = game.teams.home.name;
+    const away = game.teams.away.name;
+    const time = game.time;
+    const status = game.status.short;
+
+    html += `
+      <tr>
+        <td>${away} @ ${home}</td>
+        <td>${time}</td>
+        <td>${status}</td>
+      </tr>
+    `;
+  }
+
+  html += `
         </tbody>
       </table>
     </body>
-  </html>
+    </html>
   `;
 
-  fs.writeFileSync('odds-live.html', html.trim());
-  console.log('✅ odds-live.html successfully updated');
+  fs.writeFileSync('odds-live.html', html);
+  console.log("✅ odds-live.html updated successfully");
 })
-.catch(err => {
-  const fallback = `
-  <html>
-    <body style="background:#000; color:#FFD700; padding:40px;">
-      <h1>Error loading odds</h1>
-      <p>${err.message}</p>
-    </body>
-  </html>`;
-  fs.writeFileSync('odds-live.html', fallback.trim());
-  console.error('❌ Failed:', err.message);
+.catch(error => {
+  console.error("❌ Error fetching odds:", error.message);
 });
