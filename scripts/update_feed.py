@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 import difflib
 
-# Keys
+# API Keys
 API_SPORTS_KEY = "c63a449bea9b087de00bc25f8fe42f7a"
 ODDS_API_KEY = "c405ed8a7e1f4ec945d39aeeaf647e4b"
 
@@ -32,15 +32,13 @@ odds_resp = requests.get(
 odds_data = odds_resp.json()
 
 def match_team(name, options):
-    """Use fuzzy matching to find the best match for a team name."""
+    """Fuzzy match to handle name differences like 'Blue Jays' vs 'Toronto Blue Jays'."""
     matches = difflib.get_close_matches(name, options, n=1, cutoff=0.5)
     return matches[0] if matches else None
 
 def find_odds(home_team, away_team):
-    team_names = set()
-    for game in odds_data:
-        team_names.add(game.get("home_team", ""))
-        team_names.add(game.get("away_team", ""))
+    team_names = {game["home_team"] for game in odds_data if "home_team" in game} | \
+                 {game["away_team"] for game in odds_data if "away_team" in game}
 
     matched_home = match_team(home_team, list(team_names))
     matched_away = match_team(away_team, list(team_names))
@@ -56,17 +54,17 @@ def find_odds(home_team, away_team):
                                 odds["moneyline"]["home"] = o["price"]
                             elif o["name"] == matched_away:
                                 odds["moneyline"]["away"] = o["price"]
-                    if market["key"] == "totals":
-                        for o in market["outcomes"]:
+                    elif market["key"] == "totals":
+                        for o in market.get("outcomes", []):
                             if o["name"] == "Over":
-                                odds["total"]["line"] = market["outcomes"][0]["point"]
+                                odds["total"]["line"] = market["outcomes"][0].get("point", 0)
                                 odds["total"]["over"] = o["price"]
                             elif o["name"] == "Under":
                                 odds["total"]["under"] = o["price"]
             return odds
     return {"moneyline": {}, "total": {}}
 
-# 3. Build feed
+# 3. Build the live feed
 combined = {
     "date": today,
     "games": []
@@ -84,11 +82,4 @@ for g in games_data:
     combined["games"].append({
         "home_team": home,
         "away_team": away,
-        "start_time": start_time,
-        "pitchers": pitchers,
-        "odds": odds
-    })
-
-# 4. Save to file
-with open("data/live_feed.json", "w", encoding="utf-8") as f:
-    json.dump(combined, f, indent=2, ensure_ascii=False)
+        "start_time":_
