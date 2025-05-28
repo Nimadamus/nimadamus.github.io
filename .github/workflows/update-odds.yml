@@ -3,7 +3,7 @@ name: Update Odds Page Daily
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '0 14 * * *' # Runs daily at 7AM PST
 
 jobs:
   update-odds:
@@ -16,21 +16,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
-      - name: Install axios
+      - name: Install dependencies
         run: npm install axios
 
-      - name: Run odds fetch script
+      - name: Run odds fetcher
         run: node scripts/fetchOdds.js
 
-      - name: Show contents of odds.html
-        run: cat odds.html
-
-      - name: Commit and push odds.html
+      - name: Commit odds-live.html
         run: |
-          git config --global user.name "Nimabot"
-          git config --global user.email "bot@betlegend.ai"
-          git add odds.html
-          git commit -m "🔄 Auto-update odds page with latest matchups" || echo "No changes to commit"
-          git push https://x-access-token:${{ secrets.PAT }}@github.com/Nimadamus/nimadamus.github.io.git HEAD:main
+          git config --global user.email "bot@github.com"
+          git config --global user.name "GitHub Actions Bot"
+          git add odds-live.html
+          git commit -m "Auto-update odds-live.html" || echo "No changes to commit"
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
