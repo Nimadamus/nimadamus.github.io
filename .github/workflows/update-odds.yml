@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Fetch MLB odds from The Odds API (Fanduel only)
-      run: |
-        curl "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?regions=us&markets=h2h,spreads,totals&bookmakers=fanduel&apiKey=c405ed8a7e1f4ec945d39aeeaf647e4b" -o raw_odds.json
+      - name: Fetch MLB odds from The Odds API (Fanduel only)
+        run: |
+          curl "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/?regions=us&markets=h2h,spreads,totals&bookmakers=fanduel&apiKey=c405ed8a7e1f4ec945d39aeeaf647e4b" -o raw_odds.json
 
-    - name: Generate HTML table
-      run: |
-        python3 <<EOF
+      - name: Generate HTML table
+        run: |
+          python3 <<EOF
 import json
 
 with open('raw_odds.json', 'r') as f:
@@ -57,10 +57,10 @@ with open('odds.html', 'w') as f:
     f.write(updated)
 EOF
 
-    - name: Commit and push updated odds
-      run: |
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
-        git add odds.html
-        git commit -m "Auto-update odds.html with live MLB odds"
-        git push
+      - name: Commit and push updated odds
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add odds.html
+          git commit -m "Auto-update odds.html with live MLB odds"
+          git push
