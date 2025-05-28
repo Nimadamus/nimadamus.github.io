@@ -19,37 +19,16 @@ jobs:
 
       - name: Inject odds into HTML
         run: |
-          echo "import json
-with open('raw_odds.json') as f:
-    data = json.load(f)
+          python3 - <<EOF
+          import json
 
-html = '<h2>MLB Odds (Fanduel)</h2><table border=\"1\" cellpadding=\"6\"><tr><th>Matchup</th><th>Moneyline</th><th>Run Line</th><th>Total</th></tr>'
+          with open('raw_odds.json') as f:
+              data = json.load(f)
 
-for game in data:
-    teams = f\"{game['home_team']} vs {game['away_team']}\"
-    markets = {m['key']: m for m in game['bookmakers'][0]['markets']}
-    ml = ' / '.join([f\"{o['name']} {o['price']}\" for o in markets['h2h']['outcomes']])
-    rl = ' / '.join([f\"{o['name']} {o['point']}: {o['price']}\" for o in markets['spreads']['outcomes']])
-    ttl = ' / '.join([f\"{o['name']} {o['point']}: {o['price']}\" for o in markets['totals']['outcomes']])
-    html += f\"<tr><td>{teams}</td><td>{ml}</td><td>{rl}</td><td>{ttl}</td></tr>\"
+          html = '<h2>MLB Odds (Fanduel)</h2><table border="1" cellpadding="6"><tr><th>Matchup</th><th>Moneyline</th><th>Run Line</th><th>Total</th></tr>'
 
-html += '</table>'
+          for game in data:
+              teams = f"{game['home_team']} vs {game['away_team']}"
+              markets = {m['key']: m for m in game['bookmakers'][0]['markets']}
 
-with open('odds.html') as f:
-    page = f.read()
-
-start = page.find('<body>')
-end = page.find('</body>')
-updated = page[:start+6] + html + page[end:] if start != -1 and end != -1 else html
-
-with open('odds.html', 'w') as f:
-    f.write(updated)" > inject.py
-          python3 inject.py
-
-      - name: Commit and push
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add odds.html
-          git commit -m "Updated odds page"
-          git push
+              ml = ' / '.join(f"{o['name']} {o['price']}" for o in m
