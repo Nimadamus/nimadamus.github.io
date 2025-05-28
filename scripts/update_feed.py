@@ -32,7 +32,6 @@ odds_resp = requests.get(
 odds_data = odds_resp.json()
 
 def match_team(name, options):
-    """Fuzzy match to handle name differences like 'Blue Jays' vs 'Toronto Blue Jays'."""
     matches = difflib.get_close_matches(name, options, n=1, cutoff=0.5)
     return matches[0] if matches else None
 
@@ -49,7 +48,7 @@ def find_odds(home_team, away_team):
             for book in game.get("bookmakers", []):
                 for market in book.get("markets", []):
                     if market["key"] == "h2h":
-                        for o in market["outcomes"]:
+                        for o in market.get("outcomes", []):
                             if o["name"] == matched_home:
                                 odds["moneyline"]["home"] = o["price"]
                             elif o["name"] == matched_away:
@@ -64,7 +63,7 @@ def find_odds(home_team, away_team):
             return odds
     return {"moneyline": {}, "total": {}}
 
-# 3. Build the live feed
+# 3. Build the feed
 combined = {
     "date": today,
     "games": []
@@ -82,4 +81,11 @@ for g in games_data:
     combined["games"].append({
         "home_team": home,
         "away_team": away,
-        "start_time":_
+        "start_time": start_time,
+        "pitchers": pitchers,
+        "odds": odds
+    })
+
+# 4. Save the file
+with open("data/live_feed.json", "w", encoding="utf-8") as f:
+    json.dump(combined, f, indent=2, ensure_ascii=False)
