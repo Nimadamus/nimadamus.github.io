@@ -17,6 +17,7 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      flex-wrap: wrap;
       padding: 20px;
     }
     .sidebar-container {
@@ -85,12 +86,11 @@
     }
     .main-row {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      position: absolute;
-      bottom: 60px;
-      width: 100%;
-      padding: 0 30px;
+      justify-content: center;
+      gap: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      padding: 20px;
       box-sizing: border-box;
     }
     .card {
@@ -106,7 +106,7 @@
       padding: 20px;
       border: 1px solid white;
       border-radius: 10px;
-      width: 280px;
+      width: 300px;
     }
     .email-box input {
       width: 100%;
@@ -126,18 +126,31 @@
       cursor: pointer;
     }
     .powered {
-      position: fixed;
+      position: relative;
       bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      width: 100%;
       text-align: center;
       font-size: 16px;
       background-color: rgba(0, 0, 0, 0.6);
       padding: 10px 20px;
+      margin-top: 40px;
     }
     @media (max-width: 768px) {
-      .card, .email-box {
-        display: none !important;
+      .title {
+        font-size: 42px;
+      }
+      .subtitle {
+        font-size: 18px;
+      }
+      .top-right-buttons {
+        position: static;
+        align-items: flex-start;
+        margin-top: 20px;
+      }
+      .main-row {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -159,7 +172,6 @@
     </div>
     <div class="top-right-buttons">
       <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="affiliate">Bet Like a Legend – Get Your 350% Bonus</a>
-
       <a href="https://twitter.com/BetLegend2025" class="twitter-button" target="_blank">
         <img src="https://abs.twimg.com/responsive-web/client-web/icon-ios.b1fc7275.png" alt="Twitter logo">
         Follow Us
