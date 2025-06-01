@@ -86,11 +86,12 @@
     }
     .main-row {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      padding: 20px;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: absolute;
+      bottom: 60px;
+      width: 100%;
+      padding: 0 30px;
       box-sizing: border-box;
     }
     .card {
@@ -106,7 +107,7 @@
       padding: 20px;
       border: 1px solid white;
       border-radius: 10px;
-      width: 300px;
+      width: 280px;
     }
     .email-box input {
       width: 100%;
@@ -126,15 +127,14 @@
       cursor: pointer;
     }
     .powered {
-      position: relative;
+      position: fixed;
       bottom: 10px;
-      left: 0;
-      width: 100%;
+      left: 50%;
+      transform: translateX(-50%);
       text-align: center;
       font-size: 16px;
       background-color: rgba(0, 0, 0, 0.6);
       padding: 10px 20px;
-      margin-top: 40px;
     }
     @media (max-width: 768px) {
       .title {
@@ -151,6 +151,14 @@
       .main-row {
         flex-direction: column;
         align-items: center;
+        position: static;
+        padding: 20px;
+      }
+      .powered {
+        position: static;
+        margin-top: 20px;
+        transform: none;
+        text-align: center;
       }
     }
   </style>
