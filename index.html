@@ -25,11 +25,14 @@
       justify-content: space-between;
       align-items: flex-start;
       padding: 20px;
+      flex-wrap: wrap;
     }
     .sidebar-container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      flex: 1;
+      min-width: 250px;
     }
     .title {
       font-size: 60px;
@@ -132,22 +135,6 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    .recent-wins {
-      margin-top: 580px;
-      text-align: center;
-      padding: 20px;
-    }
-    .recent-wins h2 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: gold;
-    }
-    .recent-wins img {
-      max-width: 300px;
-      margin: 10px;
-      border: 2px solid gold;
-      border-radius: 10px;
-    }
     .powered {
       position: fixed;
       bottom: 10px;
@@ -159,20 +146,29 @@
       padding: 10px 20px;
     }
     @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .top-right-buttons {
+        position: static;
+        align-items: flex-start;
+        margin-top: 20px;
+      }
       .main-row {
         flex-direction: column;
         align-items: center;
-        bottom: 100px;
+        position: static;
+        margin-top: 40px;
+        padding: 0 15px;
       }
       .card, .email-box {
         width: 90%;
         margin-bottom: 20px;
       }
-      .recent-wins img {
-        max-width: 90%;
-      }
       .powered {
-        bottom: 20px;
+        position: static;
+        margin-top: 30px;
       }
     }
   </style>
@@ -217,13 +213,6 @@
         <button type="submit">Subscribe</button>
       </form>
     </div>
-  </div>
-
-  <div class="recent-wins">
-    <h2>Recent Wins</h2>
-    <img src="images/1000079685.jpg" alt="Win Screenshot 1">
-    <img src="images/1000079686.jpg" alt="Win Screenshot 2">
-    <img src="images/1000079687.jpg" alt="Win Screenshot 3">
   </div>
 
   <div class="powered">Powered by BetLegend Pro model</div>
