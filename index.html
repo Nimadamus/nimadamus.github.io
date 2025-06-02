@@ -23,32 +23,33 @@
     header {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
       padding: 20px;
-      flex-wrap: wrap;
     }
     .sidebar-container {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
     }
     .title {
-      font-size: 48px;
+      font-size: 60px;
       font-weight: bold;
       margin-bottom: 5px;
     }
     .subtitle {
-      font-size: 18px;
+      font-size: 24px;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     .sidebar {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 50px;
     }
     .sidebar a {
       color: white;
       text-decoration: none;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
     }
     .top-right-buttons {
@@ -56,6 +57,9 @@
       flex-direction: column;
       align-items: flex-end;
       gap: 12px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
     }
     .affiliate {
       background-color: gold;
@@ -88,12 +92,13 @@
     }
     .main-row {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: flex-end;
-      gap: 40px;
-      margin: 60px auto 30px auto;
-      flex-wrap: wrap;
-      max-width: 1000px;
+      position: absolute;
+      bottom: 30px;
+      width: 100%;
+      padding: 0 30px;
+      box-sizing: border-box;
     }
     .card {
       background: rgba(0, 0, 0, 0.6);
@@ -108,7 +113,7 @@
       padding: 20px;
       border: 1px solid white;
       border-radius: 10px;
-      width: 300px;
+      width: 280px;
     }
     .email-box input {
       width: 100%;
@@ -127,20 +132,13 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    .powered {
-      text-align: center;
-      font-size: 16px;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 10px 20px;
-      margin: 20px auto;
-      width: fit-content;
-    }
     .recent-wins {
+      margin-top: 580px;
       text-align: center;
       padding: 20px;
     }
     .recent-wins h2 {
-      font-size: 24px;
+      font-size: 28px;
       margin-bottom: 20px;
       color: gold;
     }
@@ -150,27 +148,31 @@
       border: 2px solid gold;
       border-radius: 10px;
     }
+    .powered {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 16px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 10px 20px;
+    }
     @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: center;
-      }
-      .title {
-        font-size: 36px;
-      }
-      .subtitle {
-        font-size: 16px;
-      }
-      .top-right-buttons {
-        align-items: center;
-        margin-top: 20px;
-      }
       .main-row {
         flex-direction: column;
         align-items: center;
+        bottom: 100px;
       }
       .card, .email-box {
         width: 90%;
+        margin-bottom: 20px;
+      }
+      .recent-wins img {
+        max-width: 90%;
+      }
+      .powered {
+        bottom: 20px;
       }
     }
   </style>
