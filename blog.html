@@ -134,7 +134,9 @@
 
       const start = (page - 1) * postsPerPage;
       const end = start + postsPerPage;
-      const postsToShow = blogPosts.slice(start, end);
+      const reversedPosts = blogPosts.slice().reverse();
+const postsToShow = reversedPosts.slice(start, end);
+
 
       const container = document.getElementById('blog-container');
       postsToShow.forEach(postHTML => {
