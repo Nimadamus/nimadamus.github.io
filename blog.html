@@ -132,10 +132,12 @@
       const urlParams = new URLSearchParams(window.location.search);
       const page = parseInt(urlParams.get('page')) || 1;
 
-      const start = (page - 1) * postsPerPage;
-      const end = start + postsPerPage;
       const reversedPosts = blogPosts.slice().reverse();
+const start = (page - 1) * postsPerPage;
+const end = start + postsPerPage;
 const postsToShow = reversedPosts.slice(start, end);
+
+
 
 
       const container = document.getElementById('blog-container');
