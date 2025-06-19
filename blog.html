@@ -166,31 +166,4 @@
 
 
 
-      const container = document.getElementById('blog-container');
-      postsToShow.forEach(postHTML => {
-        const div = document.createElement('div');
-        div.innerHTML = postHTML;
-        container.appendChild(div);
-      });
-
-      const totalPages = Math.ceil(blogPosts.length / postsPerPage);
-      const pagination = document.getElementById('pagination');
-      if (totalPages > 1) {
-        if (page > 1) {
-          pagination.innerHTML += `<a href="?page=${page - 1}">« Prev</a>`;
-        }
-        for (let i = 1; i <= totalPages; i++) {
-          if (i === page) {
-            pagination.innerHTML += ` | Page ${i} `;
-          } else {
-            pagination.innerHTML += ` | <a href="?page=${i}">${i}</a> `;
-          }
-        }
-        if (page < totalPages) {
-          pagination.innerHTML += `<a href="?page=${page + 1}">Next »</a>`;
-        }
-      }
-    });
-  </script>
-</body>
-</html>
+     
