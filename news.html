@@ -54,47 +54,49 @@
 </head>
 <body>
 
-  <!-- News container for injected posts -->
+  <!-- News container for dynamic posts -->
   <div id="news-container"></div>
 
   <!-- Pagination controls -->
   <div class="pagination" id="pagination"></div>
 
-  <!-- Load posts and handle pagination -->
+  <!-- Load and inject posts -->
   <script src="news-posts.js"></script>
   <script>
-    const postsPerPage = 10;
-    const urlParams = new URLSearchParams(window.location.search);
-    const page = parseInt(urlParams.get('page')) || 1;
+    window.addEventListener('DOMContentLoaded', function () {
+      const postsPerPage = 10;
+      const urlParams = new URLSearchParams(window.location.search);
+      const page = parseInt(urlParams.get('page')) || 1;
 
-    const start = (page - 1) * postsPerPage;
-    const end = start + postsPerPage;
-    const postsToShow = newsPosts.slice(start, end);
+      const start = (page - 1) * postsPerPage;
+      const end = start + postsPerPage;
+      const postsToShow = newsPosts.slice(start, end);
 
-    const container = document.getElementById('news-container');
-    postsToShow.forEach(postHTML => {
-      const div = document.createElement('div');
-      div.innerHTML = postHTML;
-      container.appendChild(div);
-    });
+      const container = document.getElementById('news-container');
+      postsToShow.forEach(postHTML => {
+        const div = document.createElement('div');
+        div.innerHTML = postHTML;
+        container.appendChild(div);
+      });
 
-    const totalPages = Math.ceil(newsPosts.length / postsPerPage);
-    const pagination = document.getElementById('pagination');
-    if (totalPages > 1) {
-      if (page > 1) {
-        pagination.innerHTML += `<a href="?page=${page - 1}">« Prev</a>`;
-      }
-      for (let i = 1; i <= totalPages; i++) {
-        if (i === page) {
-          pagination.innerHTML += ` | Page ${i} `;
-        } else {
-          pagination.innerHTML += ` | <a href="?page=${i}">${i}</a> `;
+      const totalPages = Math.ceil(newsPosts.length / postsPerPage);
+      const pagination = document.getElementById('pagination');
+      if (totalPages > 1) {
+        if (page > 1) {
+          pagination.innerHTML += `<a href="?page=${page - 1}">« Prev</a>`;
+        }
+        for (let i = 1; i <= totalPages; i++) {
+          if (i === page) {
+            pagination.innerHTML += ` | Page ${i} `;
+          } else {
+            pagination.innerHTML += ` | <a href="?page=${i}">${i}</a> `;
+          }
+        }
+        if (page < totalPages) {
+          pagination.innerHTML += `<a href="?page=${page + 1}">Next »</a>`;
         }
       }
-      if (page < totalPages) {
-        pagination.innerHTML += `<a href="?page=${page + 1}">Next »</a>`;
-      }
-    }
+    });
   </script>
 </body>
 </html>
