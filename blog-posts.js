@@ -1,5 +1,7 @@
 const blogPosts = [
-  `<div class="news-post">
+ `<div class="blog-post">`
+
+
 <link rel="canonical" href="https://www.betlegendpicks.com/news.html#braves-mets-under" />
 <meta name="title" content="Braves vs Mets First 5 Innings Under Pick – June 19, 2025" />
 <meta name="description" content="June 19 MLB betting preview: Braves vs Mets First 5 Innings Under 4.5 (-115). Real stats, recent trends, and pitcher analysis from BetLegend." />
