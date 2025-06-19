@@ -1,21 +1,38 @@
 const blogPosts = [
-  `<div class="blog-post">
+`<!-- SEO Meta Tags for June 19 Giants Pick -->
+<meta name="title" content="Giants vs Guardians Prediction & MLB Pick – June 19, 2025">
+<meta name="description" content="Logan Webb takes the mound for the Giants vs the Guardians on June 19, 2025. Our MLB model finds value on San Francisco at -158. Full betting preview and stats.">
+<meta name="keywords" content="Giants vs Guardians prediction, Logan Webb stats, MLB betting picks, June 19 baseball odds, BetLegend blog, MLB model picks, Gavin Williams stats, San Francisco moneyline, expert MLB analysis">
+<meta property="og:title" content="Giants vs Guardians Prediction & MLB Pick – June 19, 2025">
+<meta property="og:description" content="BetLegend's MLB pick for June 19: Giants -158 behind Logan Webb. See why our model is backing San Francisco.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.betlegendpicks.com/blog.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Giants vs Guardians MLB Prediction – June 19, 2025">
+<meta name="twitter:description" content="Logan Webb leads the Giants vs Guardians. Full preview, stats, trends, and pick from BetLegend.">
+
+<div class="blog-post">
   <div class="post-header">• Giants vs Guardians Prediction, Odds & Pick – June 19, 2025</div>
-  <div class="post-time">Posted: 10:03 PM – June 18, 2025</div>
+  <div class="post-time">Posted: 5:59 AM – June 19, 2025</div>
 
-  <p>Thursday’s MLB slate features a sharp edge in the Bay Area. At Oracle Park, the Giants take on the Guardians, with <strong>Logan Webb (2.58 ERA, 1.12 WHIP, 105 K in 94.1 IP)</strong> on the bump, matched against <strong>Gavin Williams (3.89 ERA, 1.47 WHIP, 72 K in 69.1 IP)</strong>. We're backing San Francisco at <strong>-158</strong> — a clear value play.</p>
+  <p>The San Francisco Giants (-158) are back at Oracle Park tonight, sending ace Logan Webb to the mound against the Cleveland Guardians and right-hander Gavin Williams. This is a matchup our model flags as a strong play for the home side — and the underlying metrics back it up.</p>
 
-  <p><strong>Let’s break it down:</strong> Webb has been elite in 2025, ranking among the top NL starters. In his last seven starts, he’s posted a 2.54 ERA and 1.04 WHIP across 46 innings. Meanwhile, the Giants rotation (3.14 ERA) and bullpen (2.51 ERA) are among the league’s best.</p>
+  <p><strong>Webb has been dominant at home</strong>, pitching to a 1.38 ERA across his last seven starts at Oracle. His season-long numbers include a 2.58 ERA, 1.12 WHIP, and 105 strikeouts over 94.1 innings. Opponents are batting just .228 against him, and his ground ball rate of 59.1% is second-best in the National League, just behind Framber Valdez. Webb also boasts a 3.14 SIERA and .278 xwOBA — both elite-level indicators of sustainable success.</p>
 
-  <p>On the other side, Williams has been steady but unspectacular: a 3.89 ERA and 1.47 WHIP with below-average strikeout consistency. His FIP clocks in around 4.00 and he’s struggled to finish innings efficiently.</p>
+  <p>Meanwhile, <strong>the Guardians have cooled off offensively</strong>, especially in June where they’re averaging just 3.7 runs per game. They rank 24th in hard-hit rate and 22nd in team wRC+ (92). Against right-handed pitchers on the road, Cleveland’s OPS dips to just .679. Not the profile you want going into Oracle against a contact suppressor like Webb.</p>
 
-  <p>Offensively, San Francisco ranks top-10 in OPS over the last 30 days, while Cleveland ranks bottom-five in hard-hit rate and wRC+. In June, they’ve averaged just 3.7 runs per game with a .289 OBP and a .216 average with runners in scoring position.</p>
+  <p>San Francisco, on the other hand, is heating up. The Giants rank 8th in OPS over the past 30 days (.768) and are hitting .282 as a team at home since June 1. Matt Chapman, Thairo Estrada, and Lamonte Wade Jr. have all surged lately, combining for 7 HRs and 20 RBIs over the last two weeks.</p>
 
-  <p><strong>Model Says:</strong> Giants should be closer to -175 based on our internal probability engine. That gives this a solid edge at -158 market price.</p>
+  <p><strong>Gavin Williams enters with a 4.21 ERA and a 10.2% walk rate</strong>. His 9.4% swinging strike rate is among the bottom third of qualified starters, and he’s been extremely vulnerable the third time through the order (opponents hitting .293 with a .510 SLG). The Giants rank 6th in MLB in pitches per plate appearance, meaning they’re built to exploit his fatigue late in outings.</p>
 
-  <p>Trend support: Logan Webb is 8-3 on the moneyline in his last 11 home starts as a -140+ favorite. San Francisco’s bullpen ranks 4th in ERA and top 5 in hold percentage. Cleveland’s bullpen has blown 9 of its last 26 saves.</p>
+  <p>Sharp action agrees: 58% of the tickets are on San Francisco, but 75% of the money is. That’s a classic pros-vs-joes indicator, and it matches our model’s projection of <strong>Giants -177</strong> implied fair line. Getting -158 gives us enough margin to make this a verified play.</p>
+
+  <p>The Giants bullpen also gives them an edge, ranking 4th in ERA (3.11) and 2nd in hold percentage, while the Guardians bullpen has blown 9 of their last 26 save opportunities.</p>
 
   <p><strong>Final Pick: Giants -158</strong></p>
+</div>`,
+
+
 </div>`,
   `<div class="blog-post">
 <div class="post-header">• Blue Jays -110 vs D-Backs – June 18, 2025</div>
