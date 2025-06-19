@@ -2883,5 +2883,5 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 <p>I’m locked in — not going anywhere. This isn’t a hobby, and it’s not just about posting picks. It’s about building something real — a brand, a tone, a voice that cuts through the noise in this industry.</p>
 <p>Too many sites try to act sharp while hiding losses and chasing trends. That’s not what BetLegend is about. This is a place where we take pride in transparency, in modeling real edges, and in staying authentic even when the scoreboard doesn’t look pretty.</p>
 <p>The legends in this game aren’t afraid to be bold. They’re not scared of variance. They take the long view, keep their discipline, and put in the work when no one’s watching. That’s the energy I’m bringing here — and if you’re about that life too, welcome to the crew.</p>
-</div>`
+</div>`,
 ];
