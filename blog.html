@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,11 +57,12 @@
 </head>
 <body>
   <div style="background: #000; padding: 20px 0; text-align: center;">
-    <a href="https://www.betlegendpicks.com">
-      <img src="https://www.betlegendpicks.com/logo.png" alt="BetLegend Logo" style="height: 60px;" />
-    </a>
-    <h1 style="color: gold; font-size: 36px; margin: 10px 0 0;">BetLegend Daily Picks and Analysis</h1>
-  </div>
+  <a href="https://www.betlegendpicks.com">
+    <img src="https://www.betlegendpicks.com/logo.png" alt="BetLegend Logo" style="height: 60px;" />
+  </a>
+  <h1 style="color: gold; font-size: 36px; margin: 10px 0 0;">BetLegend Daily Picks and Analysis</h1>
+</div>
+
 
   <div id="blog-container"></div>
   <div class="pagination" id="pagination"></div>
@@ -74,9 +76,7 @@
 
       const start = (page - 1) * postsPerPage;
       const end = start + postsPerPage;
-
-      // Only reverse the sliced page group — not the whole list
-      const postsToShow = blogPosts.slice(start, end).reverse();
+      const postsToShow = blogPosts.slice(start, end);
 
       const container = document.getElementById('blog-container');
       postsToShow.forEach(postHTML => {
