@@ -1,5 +1,23 @@
 const blogPosts = [
-`<div class="blog-post">
+  `<div class="blog-post">
+  <div class="post-header">• Giants vs Guardians Prediction, Odds & Pick – June 19, 2025</div>
+  <div class="post-time">Posted: 10:03 PM – June 18, 2025</div>
+
+  <p>Thursday’s MLB slate features a sharp edge in the Bay Area. At Oracle Park, the Giants take on the Guardians, with <strong>Logan Webb (2.58 ERA, 1.12 WHIP, 105 K in 94.1 IP)</strong> on the bump, matched against <strong>Gavin Williams (3.89 ERA, 1.47 WHIP, 72 K in 69.1 IP)</strong>. We're backing San Francisco at <strong>-158</strong> — a clear value play.</p>
+
+  <p><strong>Let’s break it down:</strong> Webb has been elite in 2025, ranking among the top NL starters. In his last seven starts, he’s posted a 2.54 ERA and 1.04 WHIP across 46 innings. Meanwhile, the Giants rotation (3.14 ERA) and bullpen (2.51 ERA) are among the league’s best.</p>
+
+  <p>On the other side, Williams has been steady but unspectacular: a 3.89 ERA and 1.47 WHIP with below-average strikeout consistency. His FIP clocks in around 4.00 and he’s struggled to finish innings efficiently.</p>
+
+  <p>Offensively, San Francisco ranks top-10 in OPS over the last 30 days, while Cleveland ranks bottom-five in hard-hit rate and wRC+. In June, they’ve averaged just 3.7 runs per game with a .289 OBP and a .216 average with runners in scoring position.</p>
+
+  <p><strong>Model Says:</strong> Giants should be closer to -175 based on our internal probability engine. That gives this a solid edge at -158 market price.</p>
+
+  <p>Trend support: Logan Webb is 8-3 on the moneyline in his last 11 home starts as a -140+ favorite. San Francisco’s bullpen ranks 4th in ERA and top 5 in hold percentage. Cleveland’s bullpen has blown 9 of its last 26 saves.</p>
+
+  <p><strong>Final Pick: Giants -158</strong></p>
+</div>`,
+  `<div class="blog-post">
 <div class="post-header">• Blue Jays -110 vs D-Backs – June 18, 2025</div>
 <div class="post-time">Posted: 12:32 PM – June 18, 2025</div>
 <p style="font-size: 16px; color: white; line-height: 1.7;">
