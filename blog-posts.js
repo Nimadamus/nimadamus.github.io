@@ -1,33 +1,4 @@
 const blogPosts = [
- `<div class="blog-post">`
-
-
-<link rel="canonical" href="https://www.betlegendpicks.com/news.html#braves-mets-under" />
-<meta name="title" content="Braves vs Mets First 5 Innings Under Pick – June 19, 2025" />
-<meta name="description" content="June 19 MLB betting preview: Braves vs Mets First 5 Innings Under 4.5 (-115). Real stats, recent trends, and pitcher analysis from BetLegend." />
-<meta name="keywords" content="Braves vs Mets, First 5 Innings Under, Spencer Strider, Clay Holmes, Braves pitching stats, Mets scoring trends, BetLegend picks" />
-<meta property="og:title" content="Braves vs Mets First 5 Innings Under Pick – June 19, 2025" />
-<meta property="og:description" content="MLB pick: Braves vs Mets First 5 Under 4.5. Backed by pitcher splits, head-to-head trends, and weather at Citi Field." />
-<meta property="article:author" content="@BetLegendPicks" />
-<h3 style="color: #ffc107; font-size: 26px;">Braves vs Mets First 5 Innings Under Pick – June 19, 2025</h3>
-<div style="font-size: 12px; color: #aaa;">Posted: 11:31 AM – June 19, 2025</div>
-<p style="font-size: 17px; color: #f2f2f2; line-height: 1.65;">
-Thursday’s game between the Braves and Mets features two in-form right-handers in Spencer Strider and Clay Holmes. Both starters bring high strikeout rates and have shown consistency in early innings.
-</p>
-<p style="font-size: 17px; color: #f2f2f2; line-height: 1.65%;">
-Strider has recorded 37 strikeouts in 31 innings this season with a 1.16 WHIP, while Holmes holds a 2.87 ERA and 1.17 WHIP over 11 starts. Holmes has also delivered 5 quality starts in his last 6 appearances.
-</p>
-<p style="font-size: 17px; color: #f2f2f2; line-height: 1.65%;">
-The under is 6-1 in the last 7 Braves/Mets meetings through five innings. Both teams have ranked bottom 10 in first-half scoring and wRC+ over the past 3 weeks. 
-</p>
-<p style="font-size: 17px; color: #f2f2f2; line-height: 1.65%;">
-Citi Field offers neutral hitting conditions today with calm winds and no weather interference. 
-</p>
-<p style="font-size: 17px; color: #f2f2f2; line-height: 1.65%;">
-Final pick: Braves vs Mets First 5 Innings Under 4.5 (-115)
-</p>
-</div>`,
-
   `<div class="blog-post">
   <div class="post-header">• Giants vs Guardians Prediction, Odds & Pick – June 19, 2025</div>
   <div class="post-time">Posted: 10:03 PM – June 18, 2025</div>
