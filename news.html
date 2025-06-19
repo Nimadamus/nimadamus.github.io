@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,12 +53,17 @@
   </style>
 </head>
 <body>
+
+  <!-- News container for injected posts -->
   <div id="news-container"></div>
+
+  <!-- Pagination controls -->
   <div class="pagination" id="pagination"></div>
 
+  <!-- Load posts and handle pagination -->
   <script src="news-posts.js"></script>
   <script>
-    const postsPerPage = 20;
+    const postsPerPage = 10;
     const urlParams = new URLSearchParams(window.location.search);
     const page = parseInt(urlParams.get('page')) || 1;
 
