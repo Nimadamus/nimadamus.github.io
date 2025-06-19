@@ -1,0 +1,11 @@
+const newsPosts = [
+  `<div class='news-post'>\n    <h3 style='color: #ffc107; font-size: 26px;'>NBA Finals Game 6: Thunder Look to Close Out Series vs Pacers</h3>\n    <div style='font-size: 12px; color: #aaa;'>Posted: 12:40 PM – June 18, 2025</div>\n    <p style='font-size: 17px; color: #f2f2f2; line-height: 1.65;'>The Oklahoma City Thunder are one win away from completing one of the most impressive rebuild-to-title arcs in modern NBA history. Leading the 2025 NBA Finals 3–2 over the Indiana Pacers, the Thunder will attempt to close out the series tonight in front of their home crowd at Paycom Center...
+
+Tip-off is scheduled for 6:00 PM Pacific / 9:00 PM Eastern, with live coverage on ABC and ESPN+. The Thunder are currently listed as 5.5-point favorites with an over/under of 215.5. Bettors have leaned toward OKC early, with 61% of public tickets backing the home side to clinch.</p>\n  `,
+  `<div class='news-post'>\n    <h3 style='color: #ffc107; font-size: 26px;'>Red Sox Trade Rafael Devers to Giants in Shocking Blockbuster</h3>\n    <div style='font-size: 12px; color: #aaa;'>Posted: 4:23 PM – June 15, 2025</div>\n    <p style='font-size: 17px; color: #f2f2f2; line-height: 1.65;'>In a stunning midseason blockbuster, the Boston Red Sox have traded star third baseman Rafael Devers to the San Francisco Giants. Heading back to Boston in the deal are 23-year-old left-handed starter Kyle Harrison, veteran reliever Jordan Hicks, and two additional prospects...
+
+The Giants, meanwhile, are making their intentions clear: it’s time to win now. Devers is expected to slot into the heart of the lineup and provide immediate thunder alongside Conforto, Estrada, and Bailey.</p>\n  `,
+  `<div class='news-post'>\n    <h3 style='color: #ffc107; font-size: 26px;'>Oilers Stun Panthers in Overtime, Tie Stanley Cup Final 2–2</h3>\n    <div style='font-size: 12px; color: #aaa;'>Posted: 9:49 PM – June 12, 2025</div>\n    <p style='font-size: 17px; color: #f2f2f2; line-height: 1.65;'>Just when it looked like the Panthers were about to take a stranglehold on the series, the Edmonton Oilers flipped the script in dramatic fashion. Down 3–0 after the first period, Edmonton clawed all the way back and eventually sealed a 5–4 overtime win to tie the Stanley Cup Final at two games apiece.
+
+This Final is officially up for grabs.</p>\n  `,
+];
