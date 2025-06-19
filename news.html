@@ -658,6 +658,50 @@
   <!-- Clicky Analytics -->
 <script async data-id="101485054" src="//static.getclicky.com/js"></script>
 <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101485054ns.gif" /></p></noscript>
+<div id="news-container"></div>
+<div class="pagination" id="pagination" style="text-align: center; margin: 30px auto;"></div>
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const postsPerPage = 10;
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = parseInt(urlParams.get('page')) || 1;
+
+    const start = (page - 1) * postsPerPage;
+    const end = start + postsPerPage;
+    const postsToShow = newsPosts.slice(start, end);
+
+    const container = document.getElementById('news-container');
+    postsToShow.forEach(postHTML => {
+      const div = document.createElement('div');
+      div.innerHTML = postHTML;
+      container.appendChild(div);
+    });
+
+    const totalPages = Math.ceil(newsPosts.length / postsPerPage);
+    const pagination = document.getElementById('pagination');
+    if (totalPages > 1) {
+      if (page > 1) {
+        pagination.innerHTML += `<a href="?page=${page - 1}">« Prev</a> `;
+      }
+
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === page) {
+          pagination.innerHTML += ` | Page ${i} `;
+        } else {
+          pagination.innerHTML += ` | <a href="?page=${i}">${i}</a> `;
+        }
+      }
+
+      if (page < totalPages) {
+        pagination.innerHTML += ` <a href="?page=${page + 1}">Next »</a>`;
+      }
+    }
+  });
+</script>
+
+
 
 </body>
 </html>
