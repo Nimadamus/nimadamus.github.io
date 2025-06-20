@@ -72,7 +72,7 @@
       const urlParams = new URLSearchParams(window.location.search);
       const page = parseInt(urlParams.get('page')) || 1;
 
-      fetch('blog-posts-RESTORED-FULL.json')
+      fetch('blog-posts.json')
         .then(response => response.json())
         .then(blogPosts => {
           const start = (page - 1) * postsPerPage;
