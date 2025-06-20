@@ -67,47 +67,48 @@
   <div class="pagination" id="pagination"></div>
 
   <script>
-    const postsPerPage = 10;
-    const urlParams = new URLSearchParams(window.location.search);
-    const page = parseInt(urlParams.get('page')) || 1;
+    window.addEventListener('DOMContentLoaded', function () {
+      const postsPerPage = 10;
+      const urlParams = new URLSearchParams(window.location.search);
+      const page = parseInt(urlParams.get('page')) || 1;
 
-    fetch('blog-posts.json')
-      .then(response => response.json())
-      .then(data => {
-        const blogPosts = data.map(p => p.html);
-        const start = (page - 1) * postsPerPage;
-        const end = start + postsPerPage;
-        const postsToShow = blogPosts.slice(start, end);
+      fetch('blog-posts-RESTORED-FULL.json')
+        .then(response => response.json())
+        .then(blogPosts => {
+          const start = (page - 1) * postsPerPage;
+          const end = start + postsPerPage;
+          const postsToShow = blogPosts.slice(start, end);
 
-        const container = document.getElementById('blog-container');
-        postsToShow.forEach(postHTML => {
-          const div = document.createElement('div');
-          div.innerHTML = postHTML;
-          container.appendChild(div);
-        });
+          const container = document.getElementById('blog-container');
+          postsToShow.forEach(post => {
+            const div = document.createElement('div');
+            div.innerHTML = post.html;
+            container.appendChild(div);
+          });
 
-        const totalPages = Math.ceil(blogPosts.length / postsPerPage);
-        const pagination = document.getElementById('pagination');
-        if (totalPages > 1) {
-          if (page > 1) {
-            pagination.innerHTML += `<a href="?page=${page - 1}">« Prev</a>`;
-          }
-          for (let i = 1; i <= totalPages; i++) {
-            if (i === page) {
-              pagination.innerHTML += ` | Page ${i} `;
-            } else {
-              pagination.innerHTML += ` | <a href="?page=${i}">${i}</a> `;
+          const totalPages = Math.ceil(blogPosts.length / postsPerPage);
+          const pagination = document.getElementById('pagination');
+          if (totalPages > 1) {
+            if (page > 1) {
+              pagination.innerHTML += `<a href="?page=${page - 1}">« Prev</a>`;
+            }
+            for (let i = 1; i <= totalPages; i++) {
+              if (i === page) {
+                pagination.innerHTML += ` | Page ${i} `;
+              } else {
+                pagination.innerHTML += ` | <a href="?page=${i}">${i}</a> `;
+              }
+            }
+            if (page < totalPages) {
+              pagination.innerHTML += `<a href="?page=${page + 1}">Next »</a>`;
             }
           }
-          if (page < totalPages) {
-            pagination.innerHTML += `<a href="?page=${page + 1}">Next »</a>`;
-          }
-        }
-      })
-      .catch(error => {
-        document.getElementById('blog-container').innerHTML = "<p style='color:red; text-align:center;'>Failed to load blog posts.</p>";
-        console.error('Error loading blog-posts.json:', error);
-      });
+        })
+        .catch(error => {
+          document.getElementById('blog-container').innerHTML = "<p style='color:red; text-align:center;'>Failed to load blog posts.</p>";
+          console.error('Error loading blog-posts.json:', error);
+        });
+    });
   </script>
 </body>
 </html>
