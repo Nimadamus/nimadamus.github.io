@@ -1,5 +1,34 @@
 const blogPosts = [
   `<div class="blog-post">
+  <div class="post-header">• Braves/Mets First 5 Innings Under 4.5 – June 20, 2025</div>
+  <div class="post-time">Posted: 12:15 PM – June 20, 2025</div>
+  <p>It’s a Friday afternoon game with two high-powered arms and two lineups trending colder than expected. We’re targeting the <strong>First 5 Innings Under 4.5</strong> in Braves vs Mets behind elite starting pitching and some sneaky under-the-hood regression signs for both offenses.</p>
+  <p><strong>Spencer Strider</strong> enters with a 3.12 ERA, 2.85 FIP, and an absurd 13.3 K/9 rate — the highest in baseball among qualified starters. The Mets have struck out 28% of the time against righties in the past two weeks, and they’ve scored 2 runs or fewer in 5 of their last 7 first halves.</p>
+  <p><strong>Clay Holmes</strong>, recently stretched out as a starter, has been quietly dominant. Since transitioning from the pen, he’s allowed just 1 ER over 10.1 innings with a 63% groundball rate and a sub-1.00 WHIP. He’s yet to allow a homer this season — a great sign against a Braves lineup that lives and dies with the long ball.</p>
+  <p>The Braves have also cooled off: just a .217 batting average and .624 OPS over the past 10 games, with a 29th-ranked hard-hit rate in that span. Neither team has scored more than 2 runs in the first 5 innings in their last 5 meetings.</p>
+  <p>Weather looks neutral (72°F, slight breeze in), and both managers have shown early-game conservatism. We’ll trust the aces to keep this one tame out of the gate.</p>
+  <p><strong>Final pick: Braves/Mets First 5 Innings Under 4.5 (-115)</strong></p>
+</div>`,
+  `<div class="blog-post">
+  <div class="post-header">• Braves/Mets First 5 Innings Under – June 19, 2025</div>
+  <div class="post-time">Posted: 11:25 AM – June 19, 2025</div>
+  <p style="font-size: 16px; color: white; line-height: 1.7;">
+    In Thursday’s matinee matchup between the Braves and Mets, we’re looking toward the First 5 Innings Under 4.5 (-115), and for good reason. Both starting pitchers have shown solid early-game command, and the lineups haven’t been exactly setting the world on fire in the early frames.
+  </p>
+  <p style="font-size: 16px; color: white; line-height: 1.7;">
+    Spencer Strider takes the mound for Atlanta, and while his season ERA sits at 3.67, his numbers the first time through the order are dominant: opponents are batting just .192 with a 36.4% strikeout rate. Meanwhile, José Quintana counters for the Mets, coming off back-to-back outings allowing 1 run or fewer through the first five. His FIP across the last 30 days is an encouraging 3.31, and he’s excelled at keeping the ball in the park.
+  </p>
+  <p style="font-size: 16px; color: white; line-height: 1.7;">
+    On the offensive side, both teams rank in the bottom half of MLB in first five innings runs per game: the Braves at 2.27 (18th) and the Mets at 2.11 (22nd). Add in the early start time (1:10 PM ET) and travel fatigue, and we’re looking at a sleepy start.
+  </p>
+  <p style="font-size: 16px; color: white; line-height: 1.7;">
+    Weather is also on our side: winds blowing in from left field at 10 mph with temps in the low 70s should keep the ball in the yard and runs in check.
+  </p>
+  <p style="font-size: 16px; color: white; line-height: 1.7;">
+    <strong>The pick: Braves/Mets First 5 Innings Under 4.5 (-115)</strong>
+  </p>
+</div>`,
+  `<div class="blog-post">
   <div class="post-header">• Giants vs Guardians Prediction, Odds & Pick – June 19, 2025</div>
   <div class="post-time">Posted: 10:03 PM – June 18, 2025</div>
 
@@ -40,8 +69,7 @@ const blogPosts = [
   </p>
 <p style="font-size: 16px; color: white; line-height: 1.7;"><b>Final pick: Blue Jays -110</b></p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• Giants ML – June 17, 2025</div>
 <div class="post-time">Posted: 7:26 PM – June 16, 2025</div>
 <p>
@@ -60,8 +88,7 @@ const blogPosts = [
     With the line currently sitting at –153, this looks like a strong value play on a team with the better pitcher, the hotter offense, and a significant home-field advantage. San Francisco has been reliable all year at Oracle Park, and given the Guardians' recent cold streak, this is a favorable matchup across the board for the Giants.
   </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• June 16 Picks – Mariners ML and Nationals ML – June 16, 2025</div>
 <div class="post-time">Posted: 12:23 PM – June 16, 2025</div>
 <p>
@@ -101,8 +128,7 @@ const blogPosts = [
     To recap: We’re taking two favorites with better starters, more complete bullpens, and meaningful trend support. Neither price is cheap, but both are playable straight or in a small two-leg parlay. Let’s stay hot and keep building.
   </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• Tampa Bay -120 is the Free Pick of the Day – June 16, 2025</div>
 <div class="post-time">Posted: 10:54 PM – June 15, 2025</div>
 <p style="font-size: 16px; color: white; line-height: 1.7;">
@@ -124,8 +150,7 @@ const blogPosts = [
 <strong>Final pick: Rays ML -120</strong>
 </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• Dodgers Team Total Under – June 15, 2025</div>
 <div class="post-time">Posted: 11:42 AM – June 15, 2025</div>
 <p>Tonight, the BetLegend model is firing on a sharp edge in the late game between the San Francisco Giants and Los Angeles Dodgers. The official pick: <strong>Dodgers Team Total Under 5 runs (-148)</strong>.</p>
@@ -135,8 +160,7 @@ const blogPosts = [
 <p>Weather also leans to the Under, with mild 65-degree conditions and a pitcher-friendly marine layer at Dodger Stadium.</p>
 <p><strong>The pick: Dodgers Team Total Under 5 runs (-148)</strong></p>
 </div>`,
-
-`<div class="blog-post" style="background:#111; border-left:4px solid gold; padding:44px; border-radius:14px; box-shadow: 0 0 20px rgba(255,215,0,0.2); max-width:1140px; margin:auto;">
+  `<div class="blog-post" style="background:#111; border-left:4px solid gold; padding:44px; border-radius:14px; box-shadow: 0 0 20px rgba(255,215,0,0.2); max-width:1140px; margin:auto;">
 <div class="post-header">• Giants +1.5 (-127) vs Dodgers – June 15, 2025</div>
 <div class="post-time">Posted: 10:11 AM – June 15, 2025</div>
 <p style="font-size:16px; color:white; line-height:1.7;">
@@ -167,8 +191,7 @@ const blogPosts = [
 <strong>Final pick: Giants +1.5 (-127) – Backed by the BetLegend Model</strong>
 </p>
 </div>`,
-
-`<div class="blog-post" style="background:#111; border-left:4px solid gold; padding:44px; border-radius:14px; box-shadow: 0 0 20px rgba(255,215,0,0.2); max-width:1140px; margin:auto;">
+  `<div class="blog-post" style="background:#111; border-left:4px solid gold; padding:44px; border-radius:14px; box-shadow: 0 0 20px rgba(255,215,0,0.2); max-width:1140px; margin:auto;">
 <div class="post-header">• Royals -148 vs A's – June 15, 2025</div>
 <div class="post-time">Posted: 9:17 AM – June 15, 2025</div>
 <p style="font-size:16px; color:white; line-height:1.7;">
@@ -199,8 +222,7 @@ const blogPosts = [
 <strong>Final Pick: Royals -148 – Backed by the BetLegend Model</strong>
 </p>
 </div>`,
-
-`<div class="blog-post" style="background:#111; border-left:4px solid gold; padding:44px; border-radius:14px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); max-width:1140px; margin:auto;">
+  `<div class="blog-post" style="background:#111; border-left:4px solid gold; padding:44px; border-radius:14px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); max-width:1140px; margin:auto;">
 <div class="post-header" style="font-size:30px; color:gold; font-weight:bold; margin-bottom:24px;">
     • Royals vs Athletics Moneyline Pick &amp; Breakdown – June 13, 2025
   </div>
@@ -226,8 +248,7 @@ const blogPosts = [
 <strong>Final Pick: Kansas City Royals Moneyline (–152)</strong>
 </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• New York Mets vs Tampa Bay Rays – June 13, 2025 MLB Betting Pick</div>
 <div class="post-time">Posted: 9:37 PM – June 12, 2025</div>
 <p>The New York Mets welcome the Tampa Bay Rays to Citi Field on Saturday, and on paper, this matchup tilts strongly in the Mets’ favor. The Rays are handing the ball to Taj Bradley, while New York counters with right-hander Clay Holmes, who’s quietly turned in one of the more reliable campaigns for any NL starter so far.</p>
@@ -238,8 +259,7 @@ const blogPosts = [
 <p>This is a spot where everything lines up — the better pitcher, the hotter lineup, the better pen, and the home field. The price may not be cheap, but Holmes has earned it. If the Mets can grab an early lead off Bradley, they should be able to ride Holmes and a solid pen to the finish line.</p>
 <p>We’re taking the New York Mets moneyline on Saturday behind Clay Holmes. The edge is clear, and we’re backing the home side to get it done against a Rays team that continues to stumble on the road.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• Angels Moneyline vs A’s – June 11, 2025</div>
 <div class="post-time">Posted: 11:10 PM – June 10, 2025</div>
 <p>
@@ -267,8 +287,7 @@ const blogPosts = [
 <strong>The pick: Angels Moneyline –130</strong>
 </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• Giants ML Pick – June 10, 2025</div>
 <div class="post-time">Posted: 12:44 AM – June 10, 2025</div>
 <p style="font-size: 16px; color: white; line-height: 1.7;">
@@ -299,8 +318,7 @@ const blogPosts = [
 <strong>Final pick: San Francisco Giants ML (–225)</strong>
 </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• MLB Betting Pick – Angels vs Athletics Prediction – June 10, 2025</div>
 <div class="post-time">Posted: 10:29 PM – June 9, 2025</div>
 <p>
@@ -320,8 +338,7 @@ const blogPosts = [
   </p>
 <p><strong>Final pick: Angels ML – June 10th, 2025</strong></p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• Reds vs. Guardians Under 8.5 (+100) – June 9, 2025</div>
 <div class="post-time">Posted: 5:56 PM – June 8, 2025</div>
 <p>
@@ -349,8 +366,7 @@ const blogPosts = [
     Final pick: Reds vs Guardians under 8.5 at +100
   </p>
 </div>`,
-
-`<div class="blog-post" style="background-color:#111; border-left:4px solid gold; padding:44px; border-radius:14px; box-shadow:0 4px 12px rgba(0,0,0,0.5); width:1140px; margin:40px auto;">
+  `<div class="blog-post" style="background-color:#111; border-left:4px solid gold; padding:44px; border-radius:14px; box-shadow:0 4px 12px rgba(0,0,0,0.5); width:1140px; margin:40px auto;">
 <div class="post-header" style="font-size:30px; color:gold; font-weight:bold;">
     • Twins vs Blue Jays Preview: Minnesota Twins -170 – June 8th, 2025
   </div>
@@ -375,8 +391,7 @@ const blogPosts = [
 <strong>Our pick: Minnesota Twins -170</strong>
 </div>
 </div>`,
-
-`<div class="blog-post" style="background: #111; border-left: 4px solid gold; padding: 44px; border-radius: 14px; box-shadow: 0 0 12px rgba(0,0,0,0.5); max-width: 1140px; margin: 60px auto;">
+  `<div class="blog-post" style="background: #111; border-left: 4px solid gold; padding: 44px; border-radius: 14px; box-shadow: 0 0 12px rgba(0,0,0,0.5); max-width: 1140px; margin: 60px auto;">
 <div class="post-header" style="font-size: 30px; font-weight: bold; color: gold; margin-bottom: 10px;">
     • Phillies vs Pirates Under 7 – June 8, 2025
   </div>
@@ -393,8 +408,7 @@ const blogPosts = [
 <p><strong>Official Pick: Phillies vs Pirates Under 7 (Full Game)</strong></p>
 </div>
 </div>`,
-
-`<div class="blog-post" style="background: #111; border-left: 4px solid gold; padding: 44px; border-radius: 14px; box-shadow: 0 0 12px rgba(0,0,0,0.5); max-width: 1140px; margin: 60px auto;">
+  `<div class="blog-post" style="background: #111; border-left: 4px solid gold; padding: 44px; border-radius: 14px; box-shadow: 0 0 12px rgba(0,0,0,0.5); max-width: 1140px; margin: 60px auto;">
 <div class="post-header" style="font-size: 30px; font-weight: bold; color: gold; margin-bottom: 10px;">
     • Skenes vs Sánchez: First 5 Under on Watch in Phillies–Pirates Pitching Duel – June 8, 2025
   </div>
@@ -411,8 +425,7 @@ const blogPosts = [
 <p><strong>Lean: First 5 Innings Under (Projected Line: 3.0 or 2.5)</strong></p>
 </div>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="post-header">• Astros vs Guardians Under 7.5 — Sharp Total Play for June 7, 2025</div>
 <div class="post-time">Posted: 1:00 AM – June 7, 2025</div>
 <p>This one has the feel of a classic under. Two red-hot starters take the mound — Hunter Brown has been lights out for Houston, with a 1.83 ERA and a fastball that’s generating serious whiffs. Over his last four outings, he’s allowed just three total earned runs while striking out 26 across 24.1 innings.</p>
@@ -422,8 +435,7 @@ const blogPosts = [
 <p>The umpire behind the plate is Jordan Baker — known for a wider zone and a slight under lean. Games he's called behind the plate have gone 8-14-1 to the under this season. That adds another layer of value in what already sets up as a pitching-heavy battle.</p>
 <p>The total opened at 7.5 and hasn’t budged, which we love. It tells us books aren’t interested in inviting over money despite the market’s tendency to chase offense. We’re locking in <b>Under 7.5 (-110) for 1 unit</b> — and trusting the arms to control the pace from the first pitch to the final out.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="hidden-meta">
 <meta content="Sharp betting analysis on why the San Francisco Giants at +122 were a strong underdog play for June 6, 2025 — backed by matchup breakdowns, bullpen data, and model-driven value." name="description"/>
 <meta content="Giants vs Braves pick, Giants +122, sharp MLB pick June 6 2025, Birdsong vs Schwellenbach, underdog MLB betting, BetLegend blog, sharp baseball bets, betting model picks, MLB picks June 6, betting analysis blog" name="keywords"/>
@@ -443,8 +455,7 @@ const blogPosts = [
 <p><b>Final Word:</b><br/>
   Giants +122 is a smart dog play for June 6. Fade public recency bias and ride the sharper side at home with strong pitching and late-game edges.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="hidden-meta">
 <meta content="Sharp betting blog post on what to do when there are no valuable bets. Learn when to pass, how BetLegend evaluates edge, and why no picks can still be sharp." name="description"/>
 <meta content="no value bets, mlb betting strategy, disciplined betting, when not to bet, sharp picks, sports betting blog, betlegend, bankroll discipline, june 2025 betting" name="keywords"/>
@@ -470,8 +481,7 @@ const blogPosts = [
 <p>Anyone can fire picks every day. most of them lose. the real edge comes from knowing when to strike, and when to stay on the sidelines.</p>
 <p>Today, we wait. tomorrow, maybe we bet.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>• Dodgers vs. Mets — Under 9.5 (-109)</h2>
 <p><strong>Pitching Matchup:</strong></p>
 <p><strong>David Peterson (LHP, Mets):</strong> Peterson enters this matchup with a 2.69 ERA across 63.2 IP and a WHIP of 1.26. He’s allowed 3 earned runs or fewer in 10 of his 11 starts this season, and over his last 7 outings he’s sporting a 2.38 ERA. The Mets rotation overall has done a great job keeping the ball in the yard, and Peterson is a big part of that.</p>
@@ -490,8 +500,7 @@ const blogPosts = [
 <p><strong>Summary:</strong> Two starters in solid form, a pitcher-friendly park, and two offenses showing signs of fatigue and inconsistency. With favorable weather and historical trends backing it up, this total feels a half-run too high.</p>
 <p><strong>🧠 Official Pick: Dodgers vs. Mets — UNDER 9.5 (-109)</strong></p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3 style="color: #ffc107; font-size: 28px; margin-top: 40px;">• Astros vs Pirates Under 7.5 (+100) – June 5, 2025</h3>
 <p style="color: #ccc; font-size: 14px; margin-bottom: 12px;">Posted: 8:11 PM – June 4, 2025</p>
 <p style="color: #f2f2f2; font-size: 16px; line-height: 1.6;">
@@ -517,8 +526,7 @@ const blogPosts = [
 <strong>Units:</strong> 2 Units
   </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3 style="color: #ffc107; font-size: 28px; margin-top: 40px;">• Giants ML -114 – June 5, 2025</h3>
 <p style="color: #ccc; font-size: 14px; margin-bottom: 12px;">Posted: 7:23 PM – June 4, 2025</p>
 <p style="color: #f2f2f2; font-size: 16px; line-height: 1.6;">
@@ -544,8 +552,7 @@ const blogPosts = [
 <strong>Units:</strong> 1 Unit
     </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3 style="color: #ffc107; font-size: 28px; margin-top: 40px;">• MLB: Tigers -200 at White Sox – June 4, 2025</h3>
 <p style="color: #ccc; font-size: 14px; margin-bottom: 12px;">Posted: 1:18 PM – June 4, 2025</p>
 <p style="color: #f2f2f2;">The Tigers are laying -200 on the road today in Chicago, and while laying that kind of price away from home might feel steep, the matchup supports it.</p>
@@ -555,8 +562,7 @@ const blogPosts = [
 <p style="color: #f2f2f2;">Even with the Tigers on the road, the gap between these two teams is massive. Detroit is first in MLB in wins, while Chicago is last in run differential. Detroit is also 9-1 in its last 10 games against teams with a sub-.400 record. The Tigers’ bullpen has been top-10 in ERA over the past month, while Chicago’s relief corps ranks 28th.</p>
 <p style="color: #f2f2f2;">Yes, it’s a road favorite, but everything in the matchup supports the Tigers in this spot. Pitching edge, bullpen edge, and a huge disparity in lineup quality. It’s not cheap, but it’s the right side.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3 style="color: #ffc107; font-size: 28px; margin-top: 40px;">• MLB: San Diego Padres at San Francisco Giants – Under 7.5 (-125) – June 4, 2025</h3>
 <p style="color: #ccc; font-size: 14px; margin-bottom: 12px;">Posted: June 3, 2025</p>
 <p style="color: #f2f2f2; font-size: 16px; line-height: 1.6;">
@@ -575,8 +581,7 @@ const blogPosts = [
     We're locking in Under 7.5 runs at -125 in Wednesday night's Giants vs. Padres matchup.
   </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3 style="color: #ffc107; font-size: 28px; margin-top: 40px;">• Why Beating the Closing Line Matters – June 3, 2025</h3>
 <p style="color: #ccc; font-size: 14px; margin-bottom: 12px;">Posted: 3:38 PM – June 3, 2025</p>
 <p style="color: #f2f2f2; font-size: 16px; line-height: 1.6;">
@@ -597,8 +602,7 @@ const blogPosts = [
     This isn’t hype. This is how sharp betting works.
   </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3 style="color: #ffc107; font-size: 28px; margin-top: 40px;">• Pirates vs. Astros Under 7.5 – June 3, 2025</h3>
 <p style="color: #ccc; font-size: 14px; margin-bottom: 12px;">Posted: 2:17 AM – June 3, 2025</p>
 <p style="color: #f2f2f2; font-size: 16px; line-height: 1.6;">
@@ -620,8 +624,7 @@ const blogPosts = [
     The smart side is to trust the arms and fade the bats.
   </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3 style="color: #ffc107; font-size: 28px; margin-top: 40px;">• Mets +1.5 – June 3, 2025</h3>
 <p style="color: #ccc; font-size: 14px; margin-bottom: 12px;">Posted: 2:17 AM – June 3, 2025</p>
 <p style="color: #f2f2f2; font-size: 16px; line-height: 1.6;">
@@ -640,8 +643,7 @@ const blogPosts = [
     In a game that projects to be low-scoring and tightly contested, grabbing +1.5 with a red-hot Mets team and a potentially rusty Kershaw on the hill offers value — especially given New York’s ability to grind out one-run games.
   </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3 style="color: #ffc107; font-size: 28px; margin-top: 40px;">• Padres Team Total Under 3.5 – June 2, 2025</h3>
 <p style="color: #ccc; font-size: 14px; margin-bottom: 12px;">Posted: 4:38 PM – June 2, 2025</p>
 <p>
@@ -676,8 +678,7 @@ const blogPosts = [
   </p>
 <p style="color: #ffc107; font-size: 20px; font-weight: bold;">✔️ Official Play: Padres Team Total Under 3.5 (-122)</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <p class="timestamp">Posted: 1:48 PM – June 2, 2025</p>
 <h2>• Under 9.5 in Angels vs. Red Sox – June 2, 2025</h2>
 <p>As the Los Angeles Angels (26–32) take on the Boston Red Sox (29–32) at Fenway Park, the total is set at 9.5 runs, and the under is currently priced at +104. With two quality starters on the mound and two inconsistent offenses, the under looks like the sharp side.</p>
@@ -691,8 +692,7 @@ const blogPosts = [
 <p>This game lines up as a classic Fenway under: two pitchers who can eat innings, two quiet offenses, and a high total at 9.5. The fact that the under is sitting at plus money (+104) adds even more value to this spot.</p>
 <p><em><strong>• MLB: Under 9.5 Red Sox/Angels (−104) — 1 Unit</strong></em></p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>• Twins ML (-160) – June 2, 2025</h2>
 <p class="timestamp"><em>Posted: June 2, 2025 – 12:10 PM PT</em></p>
 <p>The Twins are starting to look like the team people expected in April — after a rough start, they’ve flipped the switch with a dominant stretch that includes a 13-game win streak and an offense that’s finally clicking. At 31-27, they’ve pulled themselves back into the playoff mix and have won 6 of their last 7 against Oakland. Monday’s game sets up extremely well for them across the board.</p>
@@ -703,8 +703,7 @@ const blogPosts = [
 <p>This is a play on consistency, recent form, and overall roster edge. Ryan is locked in. The lineup is producing. The bullpen is reliable. And the opponent is overmatched in all three phases. At -160, this is a very fair price to back a hot team with a major pitching advantage.</p>
 <p><strong>✅ Official Pick:</strong> Twins ML (-160)</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>• Under 7.5 – Twins vs. Mariners</h2>
 <p class="timestamp"><em>Posted: June 1, 2025 – 12:12 PM PT</em></p>
 <p>Today’s rubber match between the Minnesota Twins and Seattle Mariners sets up as a clear under 7.5 opportunity. Both teams feature strong starting pitchers, inconsistent lineups, and are playing in one of the most pitcher-friendly parks in baseball — T-Mobile Park.</p>
@@ -715,8 +714,7 @@ const blogPosts = [
 <p>With Castillo and Paddack both in good form, and no explosive bats on either side, this total looks a half-run too high. Our model projects 6.3 total runs in this one, and the betting market agrees — this opened at 8 and has been bet down to 7.5 juiced toward the under.</p>
 <p><strong>Final verdict:</strong> This is a sharp under backed by pitching, park, trends, and line movement. Lock in Under 7.5.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>• Orioles vs. White Sox — Why Baltimore is a Strong Bet (June 1, 2025)</h2>
 <p><strong>Posted: June 1, 2025 — 12:00 AM PST</strong></p>
 <p><strong>Matchup:</strong> Chicago White Sox (18–40) vs. Baltimore Orioles (21–36)<br/>
@@ -1740,8 +1738,7 @@ try{ clicky.init(101485054); }catch(e){}
 </script>
 <noscript><p><img alt="Clicky" height="1" src="//in.getclicky.com/101485054ns.gif" width="1"/></p></noscript>
 </em></p></div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>• Blue Jays ML (-145) vs. Athletics — May 31, 2025</h2>
 <p><strong>Posted:</strong> May 31, 2025 – 11:45 AM PST</p>
 <p><strong>Matchup:</strong> Oakland Athletics (23–35) at Toronto Blue Jays (29–28)<br/>
@@ -1789,8 +1786,7 @@ try{ clicky.init(101485054); }catch(e){}
   • <em>Sprinkle:</em> Blue Jays -1.5 (+130)<br/>
 <strong>Confidence Rating:</strong> ★★★★☆</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <p class="timestamp"><em>Posted May 30, 2025 – 11:52 AM PST</em></p>
 <h2>Pick of the Day: Giants ML (-160)</h2>
 <p><strong>Matchup:</strong> San Francisco Giants vs. Miami Marlins<br/>
@@ -1805,8 +1801,7 @@ try{ clicky.init(101485054); }catch(e){}
 <p><strong>Historical Matchup:</strong> While specific head-to-head statistics for this season aren't provided, the current form and statistics favor the Giants, making them a reliable pick for today's game.</p>
 <p><strong>Conclusion:</strong> Given the Giants' consistent performance, superior bullpen, and the Marlins' ongoing struggles, backing San Francisco on the moneyline at -160 offers solid value.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <p class="timestamp"><em>Posted May 30, 2025 – 11:52 AM PST</em></p>
 <h2>Pick of the Day: Twins/Mariners Under 7 (-114)</h2>
 <p><strong>Matchup:</strong> Minnesota Twins vs. Seattle Mariners<br/>
@@ -1825,8 +1820,7 @@ try{ clicky.init(101485054); }catch(e){}
 <p><strong>Recent Trends:</strong> The Twins' recent games have leaned towards the under, with their last 10 games failing to hit the over nine times. This trend, combined with the Mariners' offensive struggles, supports the under bet. <em>(Source: Fox Sports)</em></p>
 <p><strong>Conclusion:</strong> Considering the strong starting pitchers, offensive inconsistencies, and the pitcher-friendly environment of T-Mobile Park, the under 7 runs at -114 is a compelling bet for this matchup.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>Mariners ML (-115) vs. Nationals – May 29, 2025</h2>
 <p><strong>Pitching Matchup:</strong><br/>
     Seattle Mariners: Emerson Hancock (2–2, 5.95 ERA, 1.65 WHIP)<br/>
@@ -1844,16 +1838,14 @@ try{ clicky.init(101485054); }catch(e){}
 <h3>The Bottom Line</h3>
 <p>We’re backing the better bullpen, the stronger home team, and a young starter in Hancock who is trending in the right direction. Mariners ML (-115) is the play.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>May 28, 2025 – Blog Picks</h2>
 <p><strong>• Blue Jays ML (+116) at Rangers</strong></p>
 <p>The Blue Jays are sending Paxton Schultz to the mound against the Rangers' Tyler Mahle. Schultz has shown promise with a 2.53 ERA in limited innings, and the Blue Jays' bullpen has been reliable. Mahle, while having a strong season, may face challenges against Toronto's lineup. The Blue Jays have a balanced form, going 5-5 in their last 10 games, and are looking to secure a series victory on the road. The line movement has slightly favored Toronto, indicating some sharp support.</p>
 <p><strong>• Angels ML (+140) vs. Yankees</strong></p>
 <p>Yusei Kikuchi takes the mound for the Angels against Clarke Schmidt of the Yankees. Kikuchi has maintained a 3.17 ERA and has been effective in recent outings. Schmidt has struggled on the road, with a 6.75 ERA in away games. The Angels are motivated to avoid a series sweep at home and have shown resilience in close games. Despite the Yankees' strong record, this matchup presents a valuable opportunity for the Angels to capitalize on home-field advantage.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>💸 The Truth About Arbitrage Betting (and Why Most Bettors Don’t Stick With It)</h2>
 <p>I’ve been around the betting world a long time. Casinos, sportsbooks, forums, Reddit threads — I’ve seen just about every system and strategy people come up with. One of the more interesting ones out there is something called <strong>arbitrage betting</strong>.</p>
 <p>It’s not glamorous, and it’s not what you’ll see hyped on Twitter. But it’s very real.</p>
@@ -1881,8 +1873,7 @@ try{ clicky.init(101485054); }catch(e){}
 <p>Arbitrage betting is real. You’re not gambling — you’re trading. But it’s not a forever strategy. It’s tedious, it requires a lot of accounts, and once you get good at it, the books will shut you down fast.</p>
 <p>It’s a good intro to disciplined betting. But if you’re serious about sustained profits, you’re going to need more than price gaps. You’re going to need edge. That’s the part most people miss.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>Why the Dodgers Are a Smart Bet at -140 vs. Guardians (May 28, 2025)</h2>
 <p><strong>The Los Angeles Dodgers</strong>, with a 34-21 record, are leading the NL West and are poised to complete a sweep against the Cleveland Guardians (29-25) at Progressive Field. Betting on the Dodgers at -140 offers value, supported by several key factors.</p>
 <h3>🔹 Clayton Kershaw's Return Bolsters the Rotation</h3>
@@ -1901,8 +1892,7 @@ try{ clicky.init(101485054); }catch(e){}
 <h3>✅ Conclusion</h3>
 <p>Considering Kershaw's return, the Dodgers' offensive prowess, and the Guardians' bullpen performance, betting on the Dodgers at -140 is a well-supported decision. The combination of these factors positions Los Angeles favorably to secure a victory and complete the series sweep.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2 class="blog-title">• Why We’re On the Under in Reds–Royals Today</h2>
 <p class="timestamp">Posted on May 26, 2025 at 4:08 AM PST</p>
 <p>
@@ -1959,8 +1949,7 @@ try{ clicky.init(101485054); }catch(e){}
     We’re on: <strong>UNDER 8 (Reds vs. Royals — May 26)</strong>
 </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2 class="blog-title">What 29 Casinos Taught Me About Edge — and Why I’ll Never Stop Chasing It</h2>
 <p class="timestamp">Posted on May 25, 2025 at 8:30 PM PST</p>
 <p>
@@ -2025,8 +2014,7 @@ try{ clicky.init(101485054); }catch(e){}
     So yeah — I’ve been banned from 29 casinos. But I’m still betting. Still building. Still finding edge. And I’ll keep doing that until someone figures out how to ban math itself.
   </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2 class="blog-title">The Revolution Will Be Quantified: How Advanced Metrics Are Reshaping Sports Betting</h2>
 <p class="timestamp">Posted on May 25, 2025 at 8:08 PM PST</p>
 <p>
@@ -2084,8 +2072,7 @@ try{ clicky.init(101485054); }catch(e){}
     Because the revolution is already happening. And it’s being measured one decimal point at a time.
   </p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>🔥 Why Over 8.5 Runs Is the Sharpest Bet Tonight: Dodgers vs. Mets — May 25, 2025</h2>
 <p><strong>📅 Posted: May 25, 2025 – 3:22 PM PT</strong></p>
 <h3>⚾ Game Details:</h3>
@@ -2201,8 +2188,7 @@ try{ clicky.init(101485054); }catch(e){}
 <li><strong>Pete Alonso Over 1.5 Total Bases (-106)</strong> — 0.5 Units</li>
 </ul>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <div class="blog-post">
 <h2>• <strong>MLB Prop Picks – May 24, 2025</strong></h2>
 <p><strong>May 24, 2025</strong><br/>
@@ -2527,8 +2513,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 <p>The legends in this game aren’t afraid to be bold. They’re not scared of variance. They take the long view, keep their discipline, and put in the work when no one’s watching. That’s the energy I’m bringing here — and if you’re about that life too, welcome to the crew.</p>
 </div>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>• <strong>MLB Prop Picks – May 24, 2025</strong></h2>
 <p><strong>May 24, 2025</strong><br/>
 <em>Posted at 11:53 AM PT</em><br/>
@@ -2556,8 +2541,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 <li><strong>PHI/OAK YRFI (-120)</strong></li>
 </ul>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>• <strong>MLB: Giants ML (-159)</strong></h2>
 <p><strong>May 24, 2025</strong><br/>
 <em>Posted at 11:35 AM PT</em><br/>
@@ -2598,8 +2582,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
   We’re getting <strong>model edge, pitching edge, bullpen edge, matchup edge, and trend edge</strong> all in one spot.<br/>
 <strong>Let’s ride the Giants ML and trust the math.</strong></p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>May 23, 2025</h2>
 <p><em>Posted at 3:23 AM PT</em></p>
 <h3>Our Model’s #1 MLB Strategy: 5-Inning Unders That Print</h3>
@@ -2617,8 +2600,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 <p><em>📩 Want model picks sent to your inbox? <a href="https://buttondown.email/betlegend" style="color:#FFD700;" target="_blank">Subscribe here — it’s free</a>.</em></p>
 <p><em>📩 Want model picks sent to your inbox? <a href="https://buttondown.email/betlegend" style="color:#FFD700;" target="_blank">Subscribe here — it’s free</a>.</em></p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h2>May 22, 2025</h2>
 <p><strong>Posted at:</strong> 11:68 PM PT</p>
 <h3>• Brewers @ Pirates – Under 7.0 (-114)</h3>
@@ -2645,8 +2627,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 <p>It’s hard to find value in low totals like this — but we’ve got it here. Between two strikeout-heavy aces, two bottom-tier lineups, and a ballpark that swallows offense, Under 7.0 (-114) is a legit plus-EV wager. It grades out at +5.12% edge — good for a 2-unit recommendation from the BetLegend Pro model.</p>
 <p><strong>Let’s cash a quiet one.</strong></p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <p><em>Posted at 10:37 PM PST – May 22, 2025</em></p>
 <h3>• If Props Are Your Thing, We Got You</h3>
 <p>Let’s be real — props have taken over the betting world. Whether it’s FanDuel, DraftKings, PrizePicks, or one of a dozen new sportsbooks popping up every month, player props are the new hotness. Everyone’s betting on strikeouts, points, rebounds, assists, total bases, even how many first-half threes a bench guy is gonna hit. And we’re here for it.</p>
@@ -2655,8 +2636,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 <p>If props are your thing — you just found your new home. BetLegend is building the sharpest prop feed online. We’re doing the work, running the numbers, and giving you picks that hit long-term. This isn’t hype. It’s probability.</p>
 <p>Check the daily blog. Follow the plays. Or just bookmark us and come back when your favorite influencer’s 8-leg parlay busts in the first quarter. We’ll still be here — doing props like it’s our job. Because it is.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <p><em>Posted at 10:21 PM PST – May 22, 2025</em></p>
 <h3>• Freddie Freeman Over 1.5 Total Bases (+120)</h3>
 <p><strong>Matchup:</strong> Dodgers @ Mets<br/>
@@ -2666,8 +2646,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 
 Throw in the fact that this game is at Citi Field with warm weather and no wind issues, and we’ve got everything lining up. Our model simulates Freeman going over 1.5 total bases 52.2% of the time — that gives us a +6.7% edge at +120, which is just too much value to ignore. Strong 2-unit smash. I'm not trying to overthink this one. The guy’s raking and he’s in a spot to keep doing damage.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>• Chris Bassitt Over 17.5 Outs Recorded (+105)</h3>
 <p><strong>Matchup:</strong> Blue Jays @ Rays<br/>
 <strong>Units:</strong> 1 Unit<br/>
@@ -2676,8 +2655,7 @@ Throw in the fact that this game is at Citi Field with warm weather and no wind 
 
 Tropicana Field is a pitcher-friendly park and with Bassitt’s tendency to induce soft contact (31.2% hard-hit rate), we like him to go at least 6 full. The model shows him going 18.1 outs on average, giving us a 51.8% hit rate at +105. That’s a clean, disciplined 1-unit value play — nothing sexy, just solid math and a good spot to back a guy who’s quietly dependable.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>• Zack Wheeler Under 5.5 Hits Allowed (-115)</h3>
 <p><strong>Matchup:</strong> Phillies @ Athletics<br/>
 <strong>Units:</strong> 1 Unit<br/>
@@ -2686,8 +2664,7 @@ Tropicana Field is a pitcher-friendly park and with Bassitt’s tendency to indu
 
 At spacious Oakland Coliseum, with cool temps and low humidity forecasted, this is one of the toughest parks for hitters to stack base hits. Wheeler’s been averaging 4.8 hits allowed per game — the model gives him a 56.4% chance of staying under 5.5 hits. We’ll take the edge and ride it for 1 unit. He’s simply too good and Oakland’s too weak to expect 6+ hits off him unless something fluky happens.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>• Freddy Peralta Over 7.5 Strikeouts (-110)</h3>
 <p><strong>Matchup:</strong> Brewers @ Pirates<br/>
 <strong>Units:</strong> 2 Units<br/>
@@ -2696,8 +2673,7 @@ At spacious Oakland Coliseum, with cool temps and low humidity forecasted, this 
 
 Peralta has already notched 9+ Ks in four of his last six starts and gets a good park setup with a neutral ump behind the plate. Our model gives him a 57.1% chance to cash this number. At -110, that’s value for a 2-unit play. When Peralta’s sharp, he racks them up in bunches — and Pittsburgh’s lineup doesn’t scare anyone. High ceiling, real edge, worth the extra exposure.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>• Clarke Schmidt Over 5.5 Strikeouts (+100)</h3>
 <p><strong>Matchup:</strong> Yankees @ Rockies<br/>
 <strong>Units:</strong> 2 Units<br/>
@@ -2706,8 +2682,7 @@ Peralta has already notched 9+ Ks in four of his last six starts and gets a good
 
 Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air might be thin, but if you can't make contact, you're still walking back to the dugout. With a neutral ump and little wind expected, our model gives Schmidt a 54.0% hit rate at even money. That’s a 2-unit edge. Quietly a great matchup for Ks, and we’re taking the value where we find it.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>May 22, 2025</h3>
 <span class="timestamp">Posted at 12:03 PM PT</span>
 <p><strong>Model Pick:</strong> Mariners ML (-120)<br>
@@ -2741,8 +2716,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
   Recommended Unit Size: 1 unit
   </br></br></br></p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>May 22, 2025 — Prop Picks</h3>
 <span class="timestamp">Posted at 12:03 PM PT</span>
 <ul>
@@ -2757,8 +2731,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 </ul>
 <p>All props show model edge between 3.2% and 5.8%, qualifying for 1-unit exposure under our system.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>May 22, 2025</h3>
 <span class="timestamp">Posted at 5:44 AM PT</span>
 <p><strong>Model Pick:</strong> Tigers ML (-156 model odds, 61.9% win probability)<br>
@@ -2810,8 +2783,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
   Yes — the Tigers are a confirmed official play from the model for May 22, 2025.
   </br></br></br></br></br></br></br></br></br></p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>May 21, 2025</h3>
 <span class="timestamp">Posted at 11:05 PM PT</span>
 <p><strong>Pick 1 – MLB:</strong> Astros vs. Rays <strong>Under 9 (-120)</strong></p>
@@ -2831,8 +2803,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 <p>At -150, the Stars team total under 3.5 needs to cash 60% of the time to break even. We make it 67.4% based on sim data, form, and opponent context. That gives us an edge of +7.4% — not massive, but definitely enough to fire.</p>
 <p>These are the types of plays that don’t just come from vibe-checking the board. These come from digging deep — from models, matchup data, and recognizing inefficiencies in lines the public might not be seeing. Let’s keep pushing edges and stacking value.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>May 20 Picks – Straight to Business</h3>
 <span class="timestamp">Posted: May 20, 2025 – 12:05 PM PT</span>
 <p>We’re not here to waste time — here’s what I’m rolling with for Tuesday, May 20. I’ve dug into the matchups, pitchers, weather, trends, and numbers. These aren’t gut plays — they’re edges I actually believe in.</p>
@@ -2846,8 +2817,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 <p>Both starters have been steady lately, and I think the market’s slightly off here. Wind is neutral and bullpens are fresh. Not an exciting game, but a slow grind with limited scoring suits the Under.</p>
 <p>I’ll track these by the numbers — risk 1 unit each. Let’s get it.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>No Gimmicks. No Deleting Picks. Just Real Transparency.</h3>
 <span class="timestamp">Posted: May 19, 2025 – 6:25 PM PT</span>
 <p>Here’s where we draw the line between hype and honesty. This isn’t about throwing around buzzwords or pretending we never lose — this is about being real with our bets, our record, and our voice.</p>
@@ -2859,8 +2829,7 @@ Yes, Coors can elevate scoring, but it doesn’t prevent strikeouts. The air mig
 </ul>
 <p>We don't hide losses. We don't inflate records. Every pick — win or lose — stays on the board. That’s the foundation of trust, and that’s the standard we hold ourselves to.</p>
 </div>`,
-
-`<div class="blog-post">
+  `<div class="blog-post">
 <h3>Stick Around. You Might Be the Next Legend.</h3>
 <span class="timestamp">Posted: May 19, 2025 – 6:10 PM PT</span>
 <p>I’m locked in — not going anywhere. This isn’t a hobby, and it’s not just about posting picks. It’s about building something real — a brand, a tone, a voice that cuts through the noise in this industry.</p>
