@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,16 +143,36 @@
       position: relative;
       z-index: 100;
     }
-    .cta a {
-      background-color: gold;
-      color: black;
-      font-weight: bold;
-      font-size: 26px;
-      padding: 20px 40px;
-      border-radius: 10px;
-      text-decoration: none;
-      box-shadow: 0 0 30px rgba(255,215,0,0.6);
-      display: inline-block;
+    /* --- New Flashing Record Button --- */
+    .record-btn-flash {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      padding: 24px 38px;
+      font-size: 1.45rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #FF4500 0%, #FF9900 100%);
+      color: #fff;
+      border: none;
+      border-radius: 2.5rem;
+      box-shadow: 0 0 18px 0 #ff9800;
+      cursor: pointer;
+      animation: flash 1.2s linear infinite;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 8px #ff5722;
+    }
+    .record-btn-flash a {
+      color: #fff;
+      text-decoration: underline;
+      font-size: 1.1rem;
+      margin: 0 10px;
+    }
+    @keyframes flash {
+      0%, 100% { box-shadow: 0 0 24px 8px #ff4500; background: linear-gradient(90deg, #FF4500 0%, #FF9900 100%); }
+      20% { box-shadow: 0 0 34px 16px #ff9800, 0 0 60px 18px #fff2; }
+      50% { box-shadow: 0 0 18px 2px #ffb300; background: linear-gradient(90deg, #ff9800 0%, #FF4500 100%); }
+      70% { box-shadow: 0 0 40px 16px #ff9800; }
     }
     .powered {
       position: fixed;
@@ -187,6 +208,13 @@
       .powered {
         position: static;
         margin-top: 30px;
+      }
+      .cta {
+        margin: 24px 0 36px 0;
+      }
+      .record-btn-flash {
+        font-size: 1rem;
+        padding: 13px 8px;
       }
     }
   </style>
@@ -234,7 +262,12 @@
   </div>
 
   <div class="cta">
-    <a href="https://www.betlegendpicks.com/subscribe.html">🔥 Get Full Access – Unlock All Picks 🔥</a>
+    <button class="record-btn-flash">
+      🔥 24–11–1 Last 36 Picks 🔥
+      <a href="/picks-and-analysis.html" target="_blank">Verify It</a>
+      |
+      <a href="/subscribe.html" target="_blank">Subscribe Here</a>
+    </button>
   </div>
 
   <div class="powered">Powered by BetLegend Pro model</div>
