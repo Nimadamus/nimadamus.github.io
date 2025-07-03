@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -16,17 +15,29 @@
       font-family: 'Orbitron', sans-serif;
       color: white;
       display: flex;
+      flex-direction: column;
       min-height: 100vh;
+    }
+    .layout {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
     }
     .sidebar {
       width: 240px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      height: 100vh;
+      overflow-y: auto;
       background-color: rgba(0, 0, 0, 0.85);
       padding: 30px 20px;
       box-shadow: 0 0 12px #00e0ff;
       display: flex;
       flex-direction: column;
       gap: 25px;
-      position: sticky;
+      position: relative;
       top: 0;
     }
     .sidebar a {
@@ -46,6 +57,8 @@
     }
     .main {
       flex: 1;
+      margin-left: 240px;
+      margin-right: 240px;
       padding: 20px;
       display: flex;
       flex-direction: column;
@@ -88,13 +101,19 @@
     }
     .rightbar {
       width: 240px;
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      height: 100vh;
+      overflow-y: auto;
       background-color: rgba(0, 0, 0, 0.85);
       padding: 30px 20px;
       box-shadow: 0 0 12px #00e0ff;
       display: flex;
       flex-direction: column;
       gap: 20px;
-      position: sticky;
+      position: relative;
       top: 0;
     }
     .social-link {
@@ -118,6 +137,8 @@
       color: #888;
     }
     .card-row {
+  margin-bottom: 60px;
+  justify-content: center;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -127,6 +148,8 @@
     }
     .card {
       background-color: #000;
+      min-width: 300px;
+      flex: 0 0 auto;
       border: 2px solid #00e0ff;
       padding: 30px;
       border-radius: 14px;
@@ -162,16 +185,29 @@
       border-radius: 6px;
     }
     @media (max-width: 1000px) {
-      .sidebar, .rightbar {
-        display: none;
+      .layout {
+        padding-top: 0;
+        padding-top: 0;
       }
-      .main {
-        padding: 10px;
+        flex-direction: column;
+        align-items: center;
+      }
+      .sidebar, .rightbar {
+        width: 90%;
+        position: relative;
+        margin-bottom: 20px;
+      }
+      .card-row {
+  margin-bottom: 60px;
+  justify-content: center;
+        order: 10;
+        flex-direction: column;
       }
     }
   </style>
 </head>
 <body>
+<div class="layout">
 <div class="sidebar">
 <a href="index.html">Home</a>
 <a href="blog.html">Picks &amp; Analysis</a>
@@ -187,8 +223,30 @@
 <div class="title">BetLegend</div>
 <div class="subtitle">AI Models + Proven Backtests. The Outcome = Income</div>
 <div class="record-bar">🔥 45–25–2 All-Time (+12.10 Units) – Subscribe here 🔥</div>
+
+<div class="card-row">
+  <div class="card">
+    <h3>Free Pick of the Day 7-3-2025</h3>
+    <p>SF Giants -114.</p>
+  </div>
+  <div class="card">
+    <h3>Bonus Pick Email</h3>
+    <form action="https://buttondown.email/api/emails/embed-subscribe/betlegend" method="post" onsubmit="window.open('https://buttondown.email/betlegend', 'popupwindow')" target="popupwindow">
+      <label for="bd-email">Get it sent daily:</label>
+      <input id="bd-email" name="email" placeholder="Enter your email" required="" type="email"/>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</div>
 <div class="footer">
     Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">Verify Record</a>
+</div>
+</div>
+<div class="rightbar">
+<a class="social-link" href="https://twitter.com/BetLegend2025" target="_blank">Follow on Twitter</a>
+<a class="social-link" href="https://discord.gg/NbMc3wCV" target="_blank">Join Discord</a>
+<a class="social-link" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">350% Bonus Offer</a>
+</div>
 </div>
 <div class="card-row">
 <div class="card">
@@ -203,11 +261,6 @@
 <button type="submit">Subscribe</button>
 </form>
 </div>
-</div></div>
-<div class="rightbar">
-<a class="social-link" href="https://twitter.com/BetLegend2025" target="_blank">Follow on Twitter</a>
-<a class="social-link" href="https://discord.gg/NbMc3wCV" target="_blank">Join Discord</a>
-<a class="social-link" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">350% Bonus Offer</a>
 </div>
 </body>
 </html>
