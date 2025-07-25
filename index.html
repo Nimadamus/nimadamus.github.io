@@ -8,76 +8,76 @@
 <link rel="canonical" href="https://www.betlegendpicks.com/">
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
 body {
   margin: 0;
-  background: black url('https://nimadamus.github.io/curry.gif') no-repeat right -200px fixed;
-  background-size: cover;
+  background-color: #0c0c0c;
   font-family: 'Orbitron', sans-serif;
   color: white;
-  display: flex;
-  min-height: 100vh;
 }
 
-.sidebar, .rightbar {
-  width: 240px;
-  background-color: rgba(0, 0, 0, 0.85);
-  padding: 30px 20px;
-  box-shadow: 0 0 12px #00e0ff;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  position: sticky;
-  top: 0;
-}
-
-.sidebar a {
-  color: #00e0ff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-  border: 2px solid #00e0ff;
-  padding: 12px 16px;
-  border-radius: 10px;
-  text-align: center;
-  transition: background 0.3s ease;
-}
-
-.sidebar a:hover {
-  background-color: #00e0ff;
-  color: black;
-}
-
-.social-link {
-  background-color: #00e0ff;
-  color: black;
-  text-align: center;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 16px;
-  text-decoration: none;
-  transition: transform 0.2s ease;
-}
-
-.social-link:hover {
-  transform: scale(1.05);
-}
-
-.main {
-  flex: 1;
+.content-wrapper {
+  width: 100%;
+  max-width: 900px; /* Centered content column */
+  margin: 0 auto;
   padding: 20px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 240px;
-  margin-right: 240px;
+}
+
+/* STYLES FOR CORNER-FIXED CARDS (DESKTOP) */
+.fixed-card-left,
+.fixed-card-right {
+  position: fixed;
+  top: 30px;
+  width: 100%;
+  max-width: 350px;
+  z-index: 1000;
+}
+
+.fixed-card-left {
+  left: 30px;
+}
+
+.fixed-card-right {
+  right: 30px;
+}
+
+.header-branding {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px 30px;
+  width: 100%;
+  padding: 25px 0;
+  border-top: 1px solid rgba(0, 224, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 224, 255, 0.2);
+}
+
+.nav-links a {
+  color: #00e0ff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: text-shadow 0.3s ease;
+}
+
+.nav-links a:hover {
+  text-shadow: 0 0 8px #00e0ff;
 }
 
 .title {
   font-size: 60px;
   color: #00e0ff;
-  margin-top: 50px;
+  margin: 0;
   text-shadow: 0 0 15px #00e0ff;
   animation: pulseGlow 2s infinite alternate;
 }
@@ -93,7 +93,43 @@ body {
   margin-top: 10px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  text-align: center;
+}
+
+.sportsbook-banner {
+    width: 100%;
+    margin: 30px auto;
+    background: linear-gradient(to right, #00e0ff, #00ffc3);
+    border-radius: 12px;
+    box-shadow: 0 0 25px #00e0ff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sportsbook-banner:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 35px #00e0ff;
+}
+
+.sportsbook-banner a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 20px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+
+.banner-main-text {
+    font-size: 24px;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+}
+
+.banner-sub-text {
+    font-size: 16px;
+    margin-top: 8px;
+    opacity: 0.9;
 }
 
 .record-bar {
@@ -105,20 +141,15 @@ body {
   border-radius: 50px;
   margin: 40px auto;
   width: max-content;
+  max-width: 100%;
   box-shadow: 0 0 25px #00e0ff;
   animation: flashBar 1.5s ease-in-out infinite alternate;
+  text-align: center;
 }
 
 @keyframes flashBar {
   from { box-shadow: 0 0 12px #00ffc3; }
   to { box-shadow: 0 0 24px #00e0ff, 0 0 8px #00fff2 inset; }
-}
-
-.footer {
-  text-align: center;
-  padding: 30px;
-  font-size: 14px;
-  color: #888;
 }
 
 .card {
@@ -127,6 +158,7 @@ body {
   padding: 30px;
   border-radius: 14px;
   box-shadow: 0 0 18px rgba(0, 224, 255, 0.4);
+  box-sizing: border-box;
 }
 
 .card h3 {
@@ -137,6 +169,7 @@ body {
 }
 
 .card p, .card form, .card label {
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
   color: #f2f2f2;
 }
@@ -164,182 +197,65 @@ button {
   font-size: 14px;
 }
 
-.card-row.lowered {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin: 370px auto 60px;
-  max-width: 1000px;
-}
-
-.card-row.lowered .card {
-  width: 300px;
-}
-
-/* IMPROVED MOBILE STYLES */
-@media (max-width: 768px) {
-  body {
-    flex-direction: column;
-    background: black;
-    overflow-x: hidden;
-  }
-
-  .sidebar, .rightbar {
+.gif-showcase {
     width: 100%;
-    position: static;
-    box-shadow: 0 2px 8px #00e0ff;
-    margin: 0;
-    padding: 15px;
-    gap: 15px;
-  }
-
-  .sidebar {
-    order: 1;
-  }
-
-  .main {
-    order: 2;
-    margin: 0;
-    padding: 20px 15px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .rightbar {
-    order: 3;
-  }
-
-  .title {
-    font-size: 32px;
-    margin-top: 20px;
-    text-align: center;
-    line-height: 1.2;
-  }
-
-  .subtitle {
-    font-size: 14px;
-    text-align: center;
-    line-height: 1.4;
-    margin: 15px 0;
-    padding: 0 10px;
-  }
-
-  .record-bar {
-    font-size: 14px;
-    padding: 12px 20px;
-    text-align: center;
     margin: 30px auto;
-    max-width: 90%;
-    line-height: 1.3;
-  }
+    border: 2px solid #00e0ff;
+    border-radius: 14px;
+    box-shadow: 0 0 18px rgba(0, 224, 255, 0.4);
+    overflow: hidden;
+}
 
-  .record-bar a {
-    color: black;
-    text-decoration: underline;
-    font-weight: bold;
-  }
-
-  .card-row.lowered {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin: 40px auto 60px;
+.gif-showcase img {
     width: 100%;
-    padding: 0 15px;
-    box-sizing: border-box;
-  }
-
-  .card-row.lowered .card {
-    width: 100%;
-    max-width: 350px;
-    margin: 0;
-  }
-
-  .sidebar a, .social-link {
-    font-size: 14px;
-    padding: 10px 12px;
-    text-align: center;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-  }
-
-  .footer {
-    padding: 20px 15px;
-    font-size: 12px;
-    line-height: 1.4;
-  }
-
-  /* Ensure all images are responsive */
-  img {
-    max-width: 100%;
-    height: auto;
     display: block;
-  }
+}
 
-  /* Better form styling on mobile */
-  input[type="email"] {
-    font-size: 16px; /* Prevents zoom on iOS */
-    padding: 12px;
-  }
+.footer {
+  text-align: center;
+  padding: 30px;
+  font-size: 14px;
+  color: #888;
+  margin-top: 40px;
+}
 
-  button {
-    padding: 12px;
+/* This container holds the cards on mobile */
+.mobile-cards-container {
+    display: none; /* Hidden by default */
+}
+
+/* RESPONSIVE STYLES */
+@media (max-width: 1450px) {
+  .fixed-card-left, .fixed-card-right {
+    max-width: 300px;
+  }
+}
+
+/* Hides fixed cards and shows mobile container on smaller screens */
+@media (max-width: 1280px) {
+    .fixed-card-left,
+    .fixed-card-right {
+        display: none;
+    }
+    .mobile-cards-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        align-items: center;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 38px;
+  }
+  .subtitle {
     font-size: 16px;
-    min-height: 44px;
   }
 }
 
-/* Extra small mobile devices */
-@media (max-width: 480px) {
-  .title {
-    font-size: 28px;
-  }
-
-  .subtitle {
-    font-size: 12px;
-  }
-
-  .record-bar {
-    font-size: 12px;
-    padding: 10px 15px;
-  }
-
-  .card {
-    padding: 20px;
-  }
-
-  .card h3 {
-    font-size: 18px;
-  }
-
-  .card p, .card label {
-    font-size: 14px;
-  }
-}
-
-/* Landscape mobile orientation */
-@media (max-width: 768px) and (orientation: landscape) {
-  .title {
-    font-size: 28px;
-    margin-top: 15px;
-  }
-
-  .subtitle {
-    font-size: 13px;
-    margin: 10px 0;
-  }
-
-  .record-bar {
-    margin: 20px auto;
-  }
-
-  .card-row.lowered {
-    margin: 30px auto 40px;
-  }
-}
 </style>
 
 <script data-domain="betlegendpicks.com" defer="True" src="https://plausible.io/js/script.file-downloads.outbound-links.js"></script>
@@ -355,47 +271,81 @@ button {
 <meta content="BetLegend Logo" property="og:image:alt"/>
 </head>
 <body>
-<div class="sidebar">
-<a href="index.html">Home</a>
-<a href="blog.html">Picks &amp; Analysis</a>
-<a href="bankroll.html">Bankroll</a>
-<a href="news.html">News</a>
-<a href="howitworks.html">How It Works</a>
-<a href="bestonlinesportsbook.html">Best Sportsbook</a>
-<a href="betlegend-verified-records.html">Records</a>
-<a href="screenshots.html">Screenshots</a>
-<a href="mlb.html">MLB Stats</a>
+
+<!-- CARDS FOR DESKTOP VIEW (FIXED) -->
+<div class="fixed-card-left">
+    <div class="card">
+        <h3>Free Pick of the Day 7-25-2025</h3>
+        <p>Giants/Mets F5 under 4.5 -154</p>
+    </div>
+</div>
+<div class="fixed-card-right">
+    <div class="card">
+        <h3>Bonus Pick Email</h3>
+        <form action="https://buttondown.email/api/emails/embed-subscribe/betlegend" method="post" onsubmit="window.open('https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04', 'popupwindow')" target="popupwindow">
+            <label for="bd-email">Get it sent daily:</label>
+            <input id="bd-email" name="email" placeholder="Enter your email" required="" type="email"/>
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
 </div>
 
-<div class="main">
-<div class="title">BetLegend</div>
-<div class="subtitle">AI Models + Proven Backtests. The Outcome = Income</div>
-<div class="record-bar">🔥  58-33-2 All-Time (+14.25 Units) – <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" style="color:black; text-decoration:underline;" target="_blank">Subscribe here</a> 🔥</div>
 
-<div class="card-row lowered">
-<div class="card">
-<h3>Free Pick of the Day 7-25-2025</h3>
-<p>Giants/Mets F5 under 4.5 -154</p>
-</div>
-<div class="card">
-<h3>Bonus Pick Email</h3>
-<form action="https://buttondown.email/api/emails/embed-subscribe/betlegend" method="post" onsubmit="window.open('https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04', 'popupwindow')" target="popupwindow">
-<label for="bd-email">Get it sent daily:</label>
-<input id="bd-email" name="email" placeholder="Enter your email" required="" type="email"/>
-<button type="submit">Subscribe</button>
-</form>
-</div>
+<!-- MAIN CONTENT (CENTERED) -->
+<div class="content-wrapper">
+
+    <div class="header-branding">
+        <div class="title">BetLegend</div>
+        <div class="subtitle">AI Models + Proven Backtests. The Outcome = Income</div>
+    </div>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Picks & Analysis</a>
+        <a href="bankroll.html">Bankroll</a>
+        <a href="news.html">News</a>
+        <a href="howitworks.html">How It Works</a>
+        <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+        <a href="betlegend-verified-records.html">Records</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="mlb.html">MLB Stats</a>
+        <a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a>
+        <a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
+    </div>
+    
+    <!-- CARDS FOR MOBILE VIEW (IN-FLOW) -->
+    <div class="mobile-cards-container">
+        <div class="card">
+            <h3>Free Pick of the Day 7-25-2025</h3>
+            <p>Giants/Mets F5 under 4.5 -154</p>
+        </div>
+        <div class="card">
+            <h3>Bonus Pick Email</h3>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/betlegend" method="post" onsubmit="window.open('https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04', 'popupwindow')" target="popupwindow">
+                <label for="bd-email">Get it sent daily:</label>
+                <input id="bd-email" name="email" placeholder="Enter your email" required="" type="email"/>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="sportsbook-banner">
+        <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
+            <span class="banner-main-text">Our Trusted Sportsbook</span>
+            <span class="banner-sub-text">Get a 350% Bonus When You Sign Up Today!</span>
+        </a>
+    </div>
+    
+    <div class="gif-showcase">
+        <img src="https://nimadamus.github.io/curry.gif" alt="BetLegend Animation">
+    </div>
+
+    <div class="record-bar">🔥  58-33-2 All-Time (+14.25 Units) – <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" style="color:black; text-decoration:underline;" target="_blank">Subscribe here</a> 🔥</div>
+
+    <div class="footer">
+        Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">See Full Betting History</a>
+    </div>
 </div>
 
-<div class="footer">
-    Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">See Full Betting History</a>
-</div>
-</div>
-
-<div class="rightbar">
-<a class="social-link" href="https://twitter.com/BetLegend2025" target="_blank">Follow on Twitter</a>
-<a class="social-link" href="https://discord.gg/NbMc3wCV" target="_blank">Join Discord</a>
-<a class="social-link" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">350% Bonus Offer</a>
-</div>
 </body>
 </html>
