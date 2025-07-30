@@ -41,9 +41,8 @@
 
     .content-wrapper {
         position: relative; z-index: 10; width: 100%; max-width: 900px;
-        margin: 0 auto; padding: 80px 20px 40px 20px;
+        margin: 0 auto; padding: 50px 20px 0px 20px; /* Reduced top/bottom padding */
         box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
-        margin-bottom: 40px;
     }
     .header-branding { text-align: center; margin-bottom: 25px; }
     .title { font-size: 64px; font-weight: 900; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
@@ -52,7 +51,7 @@
     
     .nav-links {
         display: flex; flex-wrap: wrap; justify-content: center;
-        gap: 15px 30px; width: 100%; padding: 20px 0; margin-bottom: 40px;
+        gap: 15px 30px; width: 100%; padding: 20px 0; margin-bottom: 30px; /* Reduced margin */
         border-top: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2);
         background: rgba(0,0,0,0.3);
     }
@@ -60,12 +59,14 @@
     .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--glow-color); }
 
     .gif-showcase {
-        width: 100%; max-width: 650px; border: 2px solid var(--glow-color);
+        width: 100%; max-width: 600px; /* Reduced size */
+        border: 2px solid var(--glow-color);
         border-radius: 14px; box-shadow: 0 0 35px rgba(0, 224, 255, 0.5);
-        overflow: hidden; margin-bottom: 40px;
+        overflow: hidden;
+        margin-bottom: 40px; /* ADDED a gap between GIF and the footer/dashboard */
     }
     .gif-showcase img { width: 100%; display: block; }
-    .footer { text-align: center; padding: 30px; font-size: 14px; color: #888; background: rgba(0,0,0,0.4); width: 100%; }
+    .footer { text-align: center; padding: 20px; font-size: 14px; color: #888; background: rgba(0,0,0,0.4); width: 100%; }
 
     .interactive-dashboard {
         position: fixed; bottom: 0; left: 0; width: 100%; height: 95px;
@@ -123,145 +124,13 @@
     <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
 </div>
 
-<!-- DEFINITIVE SCRIPT - v5 with NEW, WORKING URL -->
+<!-- FINAL SCRIPT - v6 with Intelligent Date Parsing -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("BetLegend Script V5: Initializing...");
-
     // --- CONFIGURATION ---
-    // This is your new, working URL.
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
 
     // --- ELEMENT REFERENCES ---
     const recordDisplay = document.querySelector('#dash-record p');
     const freePickDisplay = document.querySelector('#dash-free-pick p');
-    const tickerContent = document.getElementById('ticker-content');
-
-    // --- MAIN FUNCTION ---
-    async function run() {
-        if (!recordDisplay || !freePickDisplay || !tickerContent) {
-            console.error("Fatal Error: A dashboard HTML element is missing. Check your element IDs.");
-            return;
-        }
-        console.log("Elements found. Fetching data...");
-
-        try {
-            // Fetch data from the sheet, adding a cache-buster
-            const response = await fetch(`${googleSheetUrl}&_=${new Date().getTime()}`);
-            if (!response.ok) throw new Error(`Network error: Sheet returned status ${response.status}`);
-            
-            const csvText = await response.text();
-            if (!csvText.trim()) throw new Error("Sheet is empty or returned no data.");
-            
-            console.log("Data fetched successfully. Parsing now...");
-
-            // Parse the CSV content
-            const rows = csvText.trim().split(/\r?\n/);
-            const headers = rows.shift().split(',').map(h => h.trim());
-            
-            const allPicks = rows.map(row => {
-                const values = row.split(',');
-                const entry = {};
-                headers.forEach((header, i) => {
-                    entry[header] = values[i] ? values[i].trim() : '';
-                });
-                return entry;
-            }).filter(p => p.Pick); // Only keep rows that have a value in the "Pick" column
-
-            console.log(`Found ${allPicks.length} valid pick(s).`);
-
-            // If no valid picks, display default messages
-            if (allPicks.length === 0) {
-                console.log("No picks found after filtering. Displaying default text.");
-                displayDefaults();
-                return;
-            }
-
-            // Update all parts of the UI
-            updateRecord(allPicks);
-            updateDailyPick(allPicks);
-            updateTicker(allPicks);
-            console.log("BetLegend Script V5: All components updated successfully!");
-
-        } catch (error) {
-            console.error("SCRIPT FAILED:", error);
-            displayError(error.message);
-        }
-    }
-
-    // --- UI HELPER FUNCTIONS ---
-    function updateRecord(picks) {
-        let wins = 0, losses = 0, pushes = 0;
-        for (const p of picks) {
-            if (p.Grade) { // Only count picks that have a grade
-                const grade = p.Grade.toUpperCase();
-                if (grade === 'W') wins++;
-                else if (grade === 'L') losses++;
-                else if (grade === 'P') pushes++;
-            }
-        }
-        recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
-        console.log(`Record calculated: ${wins}-${losses}-${pushes}`);
-    }
-
-    function updateDailyPick(picks) {
-        const latestUngradedPick = [...picks].reverse().find(p => !p.Grade);
-        if (latestUngradedPick && latestUngradedPick.Line) {
-            freePickDisplay.textContent = `${latestUngradedPick.Pick} (${latestUngradedPick.Line})`;
-            console.log(`Daily pick found: ${latestUngradedPick.Pick}`);
-        } else {
-            freePickDisplay.textContent = 'Check Back Soon';
-            console.log("No daily pick found.");
-        }
-    }
-
-    function updateTicker(picks) {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const recentGradedPicks = picks.filter(p => {
-            if (!p.Grade || !p.Date) return false;
-            const pickDate = new Date(p.Date);
-            if (isNaN(pickDate.getTime())) return false;
-            const diffTime = today.getTime() - pickDate.getTime();
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            return diffDays >= 0 && diffDays <= 3;
-        }).sort((a, b) => new Date(a.Date) - new Date(b.Date)); // Sort oldest first for ticker flow
-
-        if (recentGradedPicks.length === 0) {
-            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
-            console.log("No recent picks found for ticker.");
-            return;
-        }
-
-        const separator = ' <span class="ticker__separator">|||</span> ';
-        let tickerHTML = recentGradedPicks.map(p => {
-            const gradeClass = p.Grade.toUpperCase() === 'W' ? 'win' : 'loss';
-            const pickDate = new Date(p.Date);
-            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
-            return `<div class="ticker__item">${displayDate}: ${p.Pick} <span class="grade ${gradeClass}">${p.Grade}</span></div>`;
-        }).join(separator);
-
-        tickerContent.innerHTML = tickerHTML + separator + tickerHTML; // Duplicate for animation
-        console.log(`Ticker updated with ${recentGradedPicks.length} picks.`);
-    }
-
-    function displayDefaults() {
-        recordDisplay.textContent = '0-0-0';
-        freePickDisplay.textContent = 'Check Back Soon';
-        tickerContent.innerHTML = '<div class="ticker__item">No pick data available.</div>';
-    }
-
-    function displayError(message) {
-        recordDisplay.textContent = 'Error';
-        freePickDisplay.textContent = 'Error';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: Data could not be loaded.</div>`;
-    }
-
-    // --- Let's Go ---
-    run();
-});
-</script>
-
-</body>
-</html>
+    const tickerContent = document.getElementById('ticker-
