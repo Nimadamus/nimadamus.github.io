@@ -30,6 +30,7 @@
         .records-table td .win { color: var(--win-color); font-weight: 700; }
         .records-table td .loss { color: var(--loss-color); font-weight: 700; }
         .records-table td .push { color: #888; font-weight: 700; }
+        #loading-message { font-size: 18px; text-align: center; padding: 40px; }
     </style>
 </head>
 <body>
@@ -46,70 +47,87 @@
         </div>
         <table class="records-table">
             <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
-            <tbody id="records-tbody"></tbody>
+            <tbody id="records-tbody">
+                <!-- Data will be loaded here by the script -->
+            </tbody>
         </table>
+        <div id="loading-container">
+             <p id="loading-message">Loading full record from the official ledger...</p>
+        </div>
     </div>
 
-    <script src="picks-data.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof picksDatabase === 'undefined' || picksDatabase.length === 0) {
-                document.getElementById('overall-record').textContent = 'N/A';
-                document.getElementById('total-units').textContent = 'N/A';
-                return;
-            }
+            // This is the URL for your main Google Sheet with all historical picks
+            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?output=csv';
 
             const tableBody = document.getElementById('records-tbody');
-            let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
+            const loadingContainer = document.getElementById('loading-container');
 
-            const chronologicalPicks = [...picksDatabase].reverse();
-            
-            chronologicalPicks.forEach(p => {
-                let unitChange = 0;
-                let lineStr = p.line > 0 ? `+${p.line}` : p.line;
-                let resultClass = '';
+            fetch(googleSheetUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok.');
+                    return response.text();
+                })
+                .then(csvText => {
+                    const rows = csvText.trim().split(/\r?\n/);
+                    const headers = rows[0].split(',').map(h => h.trim());
+                    const picksDatabase = rows.slice(1).map(row => {
+                        const values = row.split(',');
+                        const entry = {};
+                        headers.forEach((header, i) => { entry[header] = values[i] ? values[i].trim() : ''; });
+                        return entry;
+                    });
 
-                // =================================================================
-                // == THIS IS THE NEW, 100% CORRECT CALCULATION LOGIC ==
-                // =================================================================
-                if (p.result === 'W') {
-                    wins++;
-                    resultClass = 'win';
-                    // ANY win is always +1.00 unit.
-                    unitChange = 1.00;
-                } else if (p.result === 'L') {
-                    losses++;
-                    resultClass = 'loss';
-                    if (p.line > 0) {
-                        // Loss on an underdog (+odds), you risk 1 unit.
-                        unitChange = -1.00;
-                    } else {
-                        // Loss on a favorite (-odds), you risk the line to win 1.
-                        unitChange = p.line / 100;
+                    // We now use the 'Result' header from your new file, but check for 'Grade' from the sheet
+                    const gradedPicks = picksDatabase.filter(p => p.Grade && p.Grade.trim() !== '');
+                    if (gradedPicks.length === 0) {
+                        document.getElementById('overall-record').textContent = '0-0-0';
+                        document.getElementById('total-units').textContent = '+0.00';
+                        loadingContainer.innerHTML = `<p id="loading-message">No graded picks found in the record yet.</p>`;
+                        return;
                     }
-                } else { // 'P' for Push
-                    pushes++;
-                    resultClass = 'push';
-                    unitChange = 0.0;
-                }
-                
-                totalUnits += unitChange;
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${p.date}</td>
-                    <td>${p.team}</td>
-                    <td>${lineStr}</td>
-                    <td><span class="${resultClass}">${p.result}</span></td>
-                    <td><span class="${resultClass}">${unitChange > 0 ? '+' : ''}${unitChange.toFixed(2)}</span></td>
-                `;
-                tableBody.prepend(row);
-            });
+                    loadingContainer.style.display = 'none'; // Hide loading message
+                    
+                    let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
 
-            document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
-            const unitsElement = document.getElementById('total-units');
-            unitsElement.textContent = `${totalUnits > 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
-            unitsElement.classList.add(totalUnits > 0 ? 'win' : 'loss');
+                    // Display newest picks first
+                    gradedPicks.reverse().forEach(p => {
+                        let resultClass = '';
+                        let grade = p.Grade;
+
+                        if (grade === 'Win' || grade === 'W') { wins++; resultClass = 'win'; }
+                        else if (grade === 'Loss' || grade === 'L') { losses++; resultClass = 'loss'; }
+                        else if (grade === 'Push' || grade === 'P') { pushes++; resultClass = 'push'; }
+                        
+                        const unitValue = parseFloat(p.Units);
+                        if (!isNaN(unitValue)) {
+                            totalUnits += unitValue;
+                        }
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${p.Date}</td>
+                            <td>${p.Pick}</td>
+                            <td>${p.Line}</td>
+                            <td><span class="${resultClass}">${grade}</span></td>
+                            <td><span class="${resultClass}">${unitValue >= 0 ? '+' : ''}${unitValue.toFixed(2)}</span></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+
+                    document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
+                    const unitsElement = document.getElementById('total-units');
+                    unitsElement.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+                    unitsElement.classList.add(totalUnits >= 0 ? 'win' : 'loss');
+
+                }).catch(error => {
+                    console.error("Error fetching Verified Records:", error);
+                    document.getElementById('overall-record').textContent = 'Error';
+                    document.getElementById('total-units').textContent = 'Error';
+                    loadingContainer.innerHTML = `<p id="loading-message">Could not load record. Please check the Google Sheet URL and ensure it's published correctly.</p>`;
+                });
         });
     </script>
 </body>
