@@ -125,7 +125,8 @@
 <!-- AUTOMATION SCRIPT -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // PASTE YOUR GOOGLE SHEET URL HERE
+    // THIS IS THE ONLY LINE YOU NEED TO EDIT
+    // Paste the URL you copied from Google Sheets between the single quotes.
     const googleSheetUrl = 'PASTE_YOUR_PUBLISHED_CSV_URL_HERE';
 
     const recordDisplay = document.querySelector('#dash-record p');
@@ -139,37 +140,31 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Function to parse CSV data
     function parseCSV(text) {
-        const rows = text.split(/\r\n|\n/);
-        const headers = rows[0].split(',');
+        const rows = text.trim().split(/\r?\n/);
+        const headers = rows[0].split(',').map(h => h.trim());
         const data = [];
         for (let i = 1; i < rows.length; i++) {
             if (!rows[i]) continue;
             const values = rows[i].split(',');
             const entry = {};
-            for (let j = 0; j < headers.length; j++) {
-                entry[headers[j]] = values[j];
-            }
+            headers.forEach((header, j) => {
+                entry[header] = values[j] ? values[j].trim() : '';
+            });
             data.push(entry);
         }
         return data;
     }
-
+    
     fetch(googleSheetUrl)
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
             return response.text();
         })
         .then(csvText => {
             const picksDatabase = parseCSV(csvText);
 
-            // --- 1. UPDATE THE VERIFIED RECORD ---
-            let wins = 0;
-            let losses = 0;
-            let pushes = 0;
+            let wins = 0, losses = 0, pushes = 0;
             picksDatabase.forEach(p => {
                 if (p.Grade === 'W') wins++;
                 else if (p.Grade === 'L') losses++;
@@ -177,18 +172,19 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
             
-            // --- 2. UPDATE THE FREE DAILY PICK ---
             const today = new Date();
-            const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-            const todaysPick = picksDatabase.find(p => p.Date === todayString);
+            const todaysPick = picksDatabase.find(p => {
+                if (!p.Date) return false;
+                const pickDate = new Date(p.Date.replace(/-/g, '/'));
+                return pickDate.setHours(0,0,0,0) === today.setHours(0,0,0,0) && !p.Grade;
+            });
             freePickDisplay.textContent = todaysPick ? todaysPick.Pick : 'Check Back Soon!';
 
-            // --- 3. UPDATE THE TICKER ---
             const recentDays = {};
             picksDatabase.forEach(p => {
-                if (!p.Date || !p.Grade) return; // Skip entries without a date or grade
+                if (!p.Date || !p.Grade) return;
                 const pickDate = new Date(p.Date.replace(/-/g, '/'));
-                const diffDays = Math.round((today - pickDate) / (1000 * 60 * 60 * 24));
+                const diffDays = Math.round((new Date().setHours(0,0,0,0) - pickDate.setHours(0,0,0,0)) / (1000 * 60 * 60 * 24));
                 if (diffDays > 0 && diffDays <= 3) {
                     if (!recentDays[p.Date]) {
                         const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -204,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 lastThreeDaysPicks.forEach((day, index) => {
                     day.picks.forEach(p => {
                         const gradeClass = p.grade === 'W' ? 'win' : 'loss';
-                        tickerHTML += `<div class="ticker__item">${day.dateStr}: ${p.pick} <span class="grade ${gradeClass}">${p.grade}</span></div>`;
+                        tickerHTML += `<div class="ticker__item">${day.dateStr}: ${p.Pick} <span class="grade ${gradeClass}">${p.Grade}</span></div>`;
                     });
                     if (index < lastThreeDaysPicks.length - 1) { tickerHTML += separator; }
                 });
