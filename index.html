@@ -18,6 +18,7 @@
 <meta content="index, follow" name="robots"/>
 
 <style>
+    /* LAYOUT IS FINAL - THIS SECTION WILL NOT BE MODIFIED */
     :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
     body {
         margin: 0; padding-bottom: 95px; background-color: #000;
@@ -42,7 +43,7 @@
     .content-wrapper {
         position: relative; z-index: 10; width: 100%; max-width: 900px;
         margin: 0 auto;
-        padding: 50px 20px 40px 20px; /* Final padding */
+        padding: 50px 20px 0px 20px;
         box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
     }
     .header-branding { text-align: center; margin-bottom: 25px; }
@@ -65,15 +66,13 @@
         border: 2px solid var(--glow-color);
         border-radius: 14px; box-shadow: 0 0 35px rgba(0, 224, 255, 0.5);
         overflow: hidden;
-        /* NOTE: The margin-bottom was moved to the new .caption class below */
     }
     .gif-showcase img { width: 100%; display: block; }
     
-    /* LAYOUT FIX: New style for the "Powered by" text */
     .caption {
         text-align: center; padding: 15px; font-size: 14px; color: #888;
         width: 100%; max-width: 600px; box-sizing: border-box;
-        margin-bottom: 40px; /* This creates the space below the caption */
+        margin-bottom: 40px;
     }
     .caption a { color: var(--glow-color); }
 
@@ -123,7 +122,6 @@
     <div class="gif-showcase">
         <img src="https://nimadamus.github.io/curry.gif" alt="Animated graphic showing BetLegend sports betting picks and analysis.">
     </div>
-    <!-- LAYOUT FIX: "Powered by" text is now here, acting as a caption -->
     <div class="caption">
         Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">See Full Betting History</a>
     </div>
@@ -137,10 +135,13 @@
     <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
 </div>
 
-<!-- FINAL SCRIPT - v7 with Intelligent Date Parsing and Defensive Checks -->
+<!-- PAPA PARSE LIBRARY - The professional CSV parser -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+
+<!-- FINAL SCRIPT - v8 using Papa Parse for robust data handling -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("BetLegend Script V7: Initializing...");
+    console.log("BetLegend Script V8 (Papa Parse): Initializing...");
 
     // --- CONFIGURATION ---
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
@@ -150,15 +151,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const freePickDisplay = document.querySelector('#dash-free-pick p');
     const tickerContent = document.getElementById('ticker-content');
 
-    // --- HELPER FUNCTION to parse dates like "MM-DD-YYYY" ---
+    // --- HELPER to parse dates like "MM-DD-YYYY" or "M/D/YYYY" ---
     function parseDate(dateStr) {
         if (!dateStr) return null;
-        // Handles both MM-DD-YYYY and MM/DD/YYYY
         const parts = dateStr.split(/[-/]/);
         if (parts.length === 3) {
-            // new Date(year, monthIndex, day)
-            const dt = new Date(parts[2], parts[0] - 1, parts[1]);
-            // Check if the date is valid
+            const dt = new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
             return isNaN(dt.getTime()) ? null : dt;
         }
         return null;
@@ -167,47 +165,40 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- MAIN FUNCTION ---
     async function run() {
         if (!recordDisplay || !freePickDisplay || !tickerContent) {
-            console.error("Fatal Error: A dashboard HTML element is missing. Check your element IDs.");
+            console.error("Fatal Error: A dashboard HTML element is missing.");
             return;
         }
         console.log("Elements found. Fetching data...");
 
         try {
-            const response = await fetch(`${googleSheetUrl}&_=${new Date().getTime()}`);
-            if (!response.ok) throw new Error(`Network error: Sheet returned status ${response.status}`);
-            
-            const csvText = await response.text();
-            if (!csvText.trim()) throw new Error("Sheet is empty or returned no data.");
-            
-            console.log("Data fetched successfully. Parsing now...");
+            // Use Papa Parse to fetch and parse the CSV directly. It's much more robust.
+            Papa.parse(googleSheetUrl, {
+                download: true,
+                header: true, // Automatically uses the first row as headers
+                skipEmptyLines: true,
+                complete: function(results) {
+                    console.log("Papa Parse complete. Data received:", results.data);
+                    
+                    // The parsed data is in results.data
+                    const allPicks = results.data.filter(p => p.Pick); // Filter out any completely empty rows
+                    console.log(`Found ${allPicks.length} valid pick(s). Headers found:`, results.meta.fields);
 
-            const rows = csvText.trim().split(/\r?\n/);
-            const headers = rows.shift().split(',').map(h => h.trim());
-            
-            const allPicks = rows.map((row, index) => {
-                const values = row.split(',');
-                const entry = {};
-                headers.forEach((header, i) => {
-                    entry[header] = values[i] ? values[i].trim() : '';
-                });
-                // Attach original row number for debugging
-                entry.rowNum = index + 2; 
-                return entry;
-            }).filter(p => p.Pick);
+                    if (allPicks.length === 0) {
+                        console.log("No valid picks found after filtering. Displaying default text.");
+                        displayDefaults();
+                        return;
+                    }
 
-            console.log(`Found ${allPicks.length} rows with a 'Pick' value.`);
-
-            if (allPicks.length === 0) {
-                console.log("No valid picks found. Displaying default text.");
-                displayDefaults();
-                return;
-            }
-
-            // Update all UI components
-            updateRecord(allPicks);
-            updateDailyPick(allPicks);
-            updateTicker(allPicks);
-            console.log("BetLegend Script V7: All components updated successfully!");
+                    // Update all UI components with the correctly parsed data
+                    updateRecord(allPicks);
+                    updateDailyPick(allPicks);
+                    updateTicker(allPicks);
+                    console.log("BetLegend Script V8: All components updated successfully!");
+                },
+                error: function(error) {
+                    throw new Error(`Papa Parse Error: ${error.message}`);
+                }
+            });
 
         } catch (error) {
             console.error("SCRIPT FAILED:", error);
@@ -220,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let wins = 0, losses = 0, pushes = 0;
         for (const p of picks) {
             if (p.Grade) {
-                const grade = p.Grade.toUpperCase();
+                const grade = p.Grade.trim().toUpperCase();
                 if (grade === 'W') wins++;
                 else if (grade === 'L') losses++;
                 else if (grade === 'P') pushes++;
@@ -232,23 +223,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateDailyPick(picks) {
         const today = new Date();
+        today.setHours(23, 59, 59, 999); // End of today
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(today.getDate() - 7);
+        sevenDaysAgo.setHours(0, 0, 0, 0); // Start of 7 days ago
 
-        // Find the most recent pick that has NO grade and is from the last 7 days.
         const latestUngradedPick = [...picks].reverse().find(p => {
-            if (p.Grade) return false; // Must be ungraded
+            if (p.Grade) return false;
             const pickDate = parseDate(p.Date);
-            if (!pickDate) return false; // Must have a valid date
-            return pickDate >= sevenDaysAgo && pickDate <= today;
+            return pickDate && pickDate >= sevenDaysAgo && pickDate <= today;
         });
 
         if (latestUngradedPick && latestUngradedPick.Line) {
-            freePickDisplay.textContent = `${latestUngradedPick.Pick} (${latestUngradedPick.Line})`;
-            console.log(`Daily pick found (Row ${latestUngradedPick.rowNum}): ${latestUngradedPick.Pick}`);
+            freePickDisplay.textContent = `${latestUngradedPick.Pick.trim()} (${latestUngradedPick.Line.trim()})`;
+            console.log(`Daily pick found: ${latestUngradedPick.Pick}`);
         } else {
             freePickDisplay.textContent = 'Check Back Soon';
-            console.log("No recent, ungraded pick found to display as Daily Pick.");
+            console.log("No recent, ungraded pick found.");
         }
     }
 
@@ -259,30 +250,27 @@ document.addEventListener('DOMContentLoaded', function() {
         const recentGradedPicks = picks.filter(p => {
             if (!p.Grade || !p.Date) return false;
             const pickDate = parseDate(p.Date);
-            if (!pickDate) return false;
-            const diffTime = today.getTime() - pickDate.getTime();
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            return diffDays >= 0 && diffDays <= 3;
-        }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date)); // Sort oldest first
+            return pickDate && (today.getTime() - pickDate.getTime()) < (3 * 24 * 60 * 60 * 1000); // last 3 days
+        }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date));
 
         if (recentGradedPicks.length === 0) {
             tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
-            console.log("No recent picks found for ticker.");
+            console.log("No recent picks for ticker.");
             return;
         }
 
         const separator = ' <span class="ticker__separator">|||</span> ';
         let tickerHTML = recentGradedPicks.map(p => {
-            const gradeClass = p.Grade.toUpperCase() === 'W' ? 'win' : 'loss';
+            const gradeClass = p.Grade.trim().toUpperCase() === 'W' ? 'win' : 'loss';
             const pickDate = parseDate(p.Date);
             const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
-            return `<div class="ticker__item">${displayDate}: ${p.Pick} <span class="grade ${gradeClass}">${p.Grade}</span></div>`;
+            return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${gradeClass}">${p.Grade.trim()}</span></div>`;
         }).join(separator);
 
         tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
         console.log(`Ticker updated with ${recentGradedPicks.length} picks.`);
     }
-    
+
     function displayDefaults() {
         recordDisplay.textContent = '0-0-0';
         freePickDisplay.textContent = '--';
@@ -292,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayError(message) {
         recordDisplay.textContent = 'Error';
         freePickDisplay.textContent = 'Error';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: Data could not be loaded.</div>`;
+        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
     }
 
     run();
