@@ -183,28 +183,30 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // =================================================================================
-    // IMPORTANT: THIS IS THE SINGLE SOURCE OF TRUTH FOR YOUR PICKS
-    // To add a new pick, simply copy the template line and add it to the TOP of the list.
-    // Fill in your real data. The script handles the rest.
+    // == THIS IS THE ONLY PLACE YOU NEED TO EDIT ==
+    //
+    // To add a new pick, just copy the template line and add it to the TOP of the list.
+    // Fill in the four parts. The script handles the rest.
     // =================================================================================
     const picksDatabase = [
         // --- TEMPLATE (Copy this line for new picks) ---
-        // { date: 'YYYY-MM-DD', pick: 'TEAM NAME HERE (+100)', grade: 'W' },
+        // { date: 'YYYY-MM-DD', team: 'TEAM NAME HERE', line: '+100', result: 'W' },
+        
+        // --- This space is intentionally left blank. ---
+        // --- Add your real, verified picks here to populate the ticker. ---
 
-        // --- ENTER YOUR REAL PICKS HERE ---
-        // Example:
-        // { date: '2025-07-29', pick: 'Brewers F5 ML (-132)', grade: 'W' },
-        // { date: '2025-07-28', pick: 'Dodgers/Reds F5 U4.5 (-120)', grade: 'W' },
-        // { date: '2025-07-27', pick: 'Phillies ML (-155)', grade: 'W' },
     ];
+
+    // --- The rest of the script works automatically. No need to edit below this line. ---
 
     function generateTickerHTML(days) {
         let tickerHTML = '';
         const separator = ' <span class="ticker__separator">|||</span> ';
         days.forEach((day, index) => {
             day.picks.forEach(p => {
-                const gradeClass = p.grade === 'W' ? 'win' : 'loss';
-                tickerHTML += `<div class="ticker__item">${day.dateStr}: ${p.pick} <span class="grade ${gradeClass}">${p.grade}</span></div>`;
+                const gradeClass = p.result === 'W' ? 'win' : 'loss';
+                const fullPickString = `${p.team} (${p.line})`;
+                tickerHTML += `<div class="ticker__item">${day.dateStr}: ${fullPickString} <span class="grade ${gradeClass}">${p.result}</span></div>`;
             });
             if (index < days.length - 1) { tickerHTML += separator; }
         });
@@ -226,16 +228,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const diffDays = Math.round((today.getTime() - pickDate.getTime()) / (1000 * 60 * 60 * 24));
 
             if (diffDays > 0 && diffDays <= daysToShow) {
-                if (!groupedPicks[p.date]) {
-                    groupedPicks[p.date] = [];
-                }
+                if (!groupedPicks[p.date]) { groupedPicks[p.date] = []; }
                 groupedPicks[p.date].push(p);
             }
         }
 
         const sortedDates = Object.keys(groupedPicks).sort((a, b) => new Date(b) - new Date(a));
 
-        const result = sortedDates.map(date => {
+        return sortedDates.map(date => {
             const dateObj = parseDate(date);
             const month = dateObj.toLocaleString('default', { month: 'short' }).toUpperCase();
             return {
@@ -243,8 +243,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 picks: groupedPicks[date]
             };
         });
-
-        return result;
     }
 
     const lastThreeDaysPicks = getRecentPicks(picksDatabase, 3);
@@ -252,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (lastThreeDaysPicks.length > 0) {
         let fullTickerHTML = generateTickerHTML(lastThreeDaysPicks);
-        tickerContent.innerHTML = fullTickerHTML + fullTickerHTML; // Duplicate for seamless scroll
+        tickerContent.innerHTML = fullTickerHTML + fullTickerHTML;
     } else {
         tickerContent.innerHTML = '<div class="ticker__item">No recent results to display. Check back soon!</div>';
     }
@@ -261,7 +259,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const freePickDisplay = document.querySelector('#dash-free-pick p');
     if (picksDatabase.length > 0) {
         // Display the most recent pick in the database as the free pick
-        freePickDisplay.textContent = picksDatabase[0].pick;
+        const latestPick = picksDatabase[0];
+        freePickDisplay.textContent = `${latestPick.team} (${latestPick.line})`;
     } else {
         freePickDisplay.textContent = 'Check Back Soon!';
     }
