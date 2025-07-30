@@ -41,7 +41,9 @@
 
     .content-wrapper {
         position: relative; z-index: 10; width: 100%; max-width: 900px;
-        margin: 0 auto; padding: 50px 20px 0px 20px; /* Reduced top/bottom padding */
+        margin: 0 auto;
+        /* LAYOUT FIX: Reduced top padding */
+        padding: 50px 20px 0px 20px;
         box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
     }
     .header-branding { text-align: center; margin-bottom: 25px; }
@@ -51,7 +53,7 @@
     
     .nav-links {
         display: flex; flex-wrap: wrap; justify-content: center;
-        gap: 15px 30px; width: 100%; padding: 20px 0; margin-bottom: 30px; /* Reduced margin */
+        gap: 15px 30px; width: 100%; padding: 20px 0; margin-bottom: 30px;
         border-top: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2);
         background: rgba(0,0,0,0.3);
     }
@@ -59,11 +61,14 @@
     .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--glow-color); }
 
     .gif-showcase {
-        width: 100%; max-width: 600px; /* Reduced size */
+        width: 100%;
+        /* LAYOUT FIX: Reduced GIF size */
+        max-width: 600px; 
         border: 2px solid var(--glow-color);
         border-radius: 14px; box-shadow: 0 0 35px rgba(0, 224, 255, 0.5);
         overflow: hidden;
-        margin-bottom: 40px; /* ADDED a gap between GIF and the footer/dashboard */
+        /* LAYOUT FIX: Added space below GIF */
+        margin-bottom: 40px; 
     }
     .gif-showcase img { width: 100%; display: block; }
     .footer { text-align: center; padding: 20px; font-size: 14px; color: #888; background: rgba(0,0,0,0.4); width: 100%; }
@@ -119,18 +124,8 @@
 </div>
 <div class="interactive-dashboard">
     <div class="dash-item" id="dash-record"><svg viewBox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg><h3>Verified Record</h3><p>--</p></div>
-    <div class="dash-item" id="dash-free-pick"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg><h3>Free Daily Pick</h3><p>--</p></div>
-    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg><h3>Premium Email</h3><p>Subscribe Now</p></a>
-    <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
-</div>
-
-<!-- FINAL SCRIPT - v6 with Intelligent Date Parsing -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // --- CONFIGURATION ---
-    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
-
-    // --- ELEMENT REFERENCES ---
-    const recordDisplay = document.querySelector('#dash-record p');
-    const freePickDisplay = document.querySelector('#dash-free-pick p');
-    const tickerContent = document.getElementById('ticker-
+    <div class="dash-item" id="dash-free-pick"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg><h3>Free Daily Pick</h3>
+        <!-- PLACEHOLDER FIX: This now correctly shows a neutral placeholder -->
+        <p>--</p>
+    </div>
+    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 2
