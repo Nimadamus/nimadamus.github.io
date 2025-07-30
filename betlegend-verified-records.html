@@ -61,17 +61,24 @@
             const tableBody = document.getElementById('records-tbody');
             const loadingContainer = document.getElementById('loading-container');
 
+            function parseCSV(text) {
+                const rows = text.trim().split(/\r?\n/);
+                const headers = rows[0].split(',').map(h => h.trim());
+                return rows.slice(1).map(row => {
+                    const values = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
+                    const entry = {};
+                    headers.forEach((header, i) => {
+                        const value = values[i] ? values[i].replace(/"/g, '').trim() : '';
+                        entry[header] = value;
+                    });
+                    return entry;
+                });
+            }
+
             fetch(googleSheetUrl)
                 .then(response => response.text())
                 .then(csvText => {
-                    const rows = csvText.trim().split(/\r?\n/);
-                    const headers = rows[0].split(',').map(h => h.trim());
-                    const picksDatabase = rows.slice(1).map(row => {
-                        const values = row.split(',');
-                        const entry = {};
-                        headers.forEach((header, i) => { entry[header] = values[i] ? values[i].trim() : ''; });
-                        return entry;
-                    });
+                    const picksDatabase = parseCSV(csvText);
                     
                     const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
                     if (gradedPicks.length === 0) {
@@ -91,10 +98,10 @@
                         let resultClass = '';
                         let grade = p.Result;
 
-                        // THIS IS THE CRITICAL FIX: It now correctly checks for "W", "L", and "P"
-                        if (grade === 'W') { wins++; resultClass = 'win'; }
-                        else if (grade === 'L') { losses++; resultClass = 'loss'; }
-                        else if (grade === 'P') { pushes++; resultClass = 'push'; }
+                        // THIS IS THE CRITICAL FIX: It now checks for both full words and single letters.
+                        if (grade === 'W' || grade === 'Win') { wins++; resultClass = 'win'; }
+                        else if (grade === 'L' || grade === 'Loss') { losses++; resultClass = 'loss'; }
+                        else if (grade === 'P' || grade === 'Push') { pushes++; resultClass = 'push'; }
                         
                         const unitValue = parseFloat(p.Units);
                         if (!isNaN(unitValue)) {
