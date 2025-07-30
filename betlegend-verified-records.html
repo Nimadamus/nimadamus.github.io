@@ -1,169 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BetLegend Picks – Full Verified Record</title>
-<meta name="description" content="The complete, unabridged, and live-updated betting record for BetLegend Picks, powered by our official Google Sheet.">
-<link rel="canonical" href="https://www.betlegendpicks.com/betlegend-verified-records.html">
-<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-    :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
-    body {
-        margin: 0;
-        background-color: #000;
-        background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto-format&fit=crop');
-        background-size: cover; background-position: center; background-attachment: fixed;
-        font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden;
-    }
-    .content-wrapper {
-        position: relative; z-index: 10; width: 100%; max-width: 900px;
-        margin: 0 auto; padding: 40px 20px;
-        box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
-    }
-    .header-branding { text-align: center; margin-bottom: 25px; }
-    .title { font-size: 64px; font-weight: 900; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
-    .title .highlight { color: var(--glow-color); }
-    .subtitle { font-size: 20px; color: #ccc; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; font-family: 'Roboto', sans-serif; }
-    
-    .nav-links {
-        display: flex; flex-wrap: wrap; justify-content: center;
-        gap: 15px 30px; width: 100%; padding: 20px 0; margin-bottom: 40px;
-        border-top: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2);
-        background: rgba(0,0,0,0.3);
-    }
-    .nav-links a { color: var(--glow-color); text-decoration: none; font-size: 16px; font-weight: bold; transition: text-shadow 0.3s ease, color 0.3s ease; }
-    .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--glow-color); }
-
-    .records-container {
-        width: 100%;
-        background: rgba(10, 20, 30, 0.5);
-        border: 1px solid rgba(0, 224, 255, 0.3);
-        backdrop-filter: blur(10px);
-        border-radius: 12px;
-        padding: 30px;
-        box-sizing: border-box;
-    }
-    
-    .records-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: 'Roboto', sans-serif;
-    }
-    .records-table th, .records-table td {
-        padding: 12px 15px;
-        text-align: left;
-        border-bottom: 1px solid rgba(0, 224, 255, 0.2);
-    }
-    .records-table th {
-        font-family: 'Orbitron', sans-serif;
-        color: var(--glow-color);
-        text-transform: uppercase;
-        font-size: 14px;
-    }
-    .records-table tbody tr:last-child td {
-        border-bottom: none;
-    }
-    .records-table td {
-        font-size: 16px;
-    }
-    .grade-win { color: var(--win-color); font-weight: bold; }
-    .grade-loss { color: var(--loss-color); font-weight: bold; }
-    .grade-push { color: #aaa; font-weight: bold; }
-    #loading-message { font-size: 18px; text-align: center; padding: 40px; }
-
-    @media (max-width: 768px) {
-        .title { font-size: 10vw; } .subtitle { font-size: 4vw; }
-        .records-container { padding: 15px; }
-        .records-table th, .records-table td { padding: 10px 8px; font-size: 14px; }
-    }
-</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verified Records - BetLegend Picks</title>
+    <link rel="canonical" href="https://www.betlegendpicks.com/betlegend-verified-records.html">
+    <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
+        body { margin: 0; background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden; }
+        .content-wrapper { position: relative; z-index: 10; width: 100%; max-width: 900px; margin: 0 auto; padding: 40px 20px 40px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+        .header-branding { text-align: center; margin-bottom: 25px; }
+        .title { font-size: 64px; font-weight: 900; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
+        .title .highlight { color: var(--glow-color); }
+        .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px 30px; width: 100%; padding: 20px 0; margin-bottom: 30px; border-top: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2); background: rgba(0,0,0,0.3); }
+        .nav-links a { color: var(--glow-color); text-decoration: none; font-size: 16px; font-weight: bold; transition: text-shadow 0.3s ease, color 0.3s ease; }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--glow-color); }
+        .summary-stats { display: flex; justify-content: space-around; width: 100%; max-width: 800px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(0, 224, 255, 0.2); }
+        .stat-box { text-align: center; }
+        .stat-box h3 { margin: 0 0 10px 0; font-size: 16px; color: var(--glow-color); text-transform: uppercase; }
+        .stat-box p { margin: 0; font-size: 28px; font-weight: 700; }
+        .stat-box p.win { color: var(--win-color); }
+        .stat-box p.loss { color: var(--loss-color); }
+        .records-table { width: 100%; border-collapse: collapse; background: rgba(0,0,0,0.3); border-radius: 12px; overflow: hidden; }
+        .records-table th, .records-table td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(0, 224, 255, 0.2); font-family: 'Roboto', sans-serif; }
+        .records-table th { background-color: rgba(0, 224, 255, 0.1); font-family: 'Orbitron', sans-serif; }
+        .records-table td .win { color: var(--win-color); font-weight: 700; }
+        .records-table td .loss { color: var(--loss-color); font-weight: 700; }
+        .records-table td .push { color: #888; font-weight: 700; }
+    </style>
 </head>
 <body>
-
-<div class="content-wrapper">
-    <div class="header-branding">
-        <h1 class="title">VERIFIED <span class="highlight">RECORD</span></h1>
-        <h2 class="subtitle">Full, Unabridged Betting History</h2>
+    <div class="content-wrapper">
+        <div class="header-branding">
+            <h1 class="title">Verified<span class="highlight">Records</span></h1>
+        </div>
+        <div class="nav-links">
+             <a href="index.html">Home</a><a href="blog.html">Picks & Analysis</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
+        </div>
+        <div class="summary-stats">
+            <div class="stat-box"><h3>Overall Record</h3><p id="overall-record">--</p></div>
+            <div class="stat-box"><h3>Total Units</h3><p id="total-units">--</p></div>
+        </div>
+        <table class="records-table">
+            <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
+            <tbody id="records-tbody"></tbody>
+        </table>
     </div>
 
-    <div class="nav-links">
-        <a href="index.html">Home</a><a href="blog.html">Picks & Analysis</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
-    </div>
-
-    <div class="records-container" id="records-table-container">
-        <p id="loading-message">Loading full record from the official ledger...</p>
-        <!-- The table will be generated here by the script -->
-    </div>
-</div>
-
-<!-- AUTOMATION SCRIPT -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?output=csv';
-    const container = document.getElementById('records-table-container');
-
-    fetch(googleSheetUrl)
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok.');
-            return response.text();
-        })
-        .then(csvText => {
-            const rows = csvText.trim().split(/\r?\n/);
-            const headers = rows[0].split(',').map(h => h.trim());
-            const picksDatabase = rows.slice(1).map(row => {
-                const values = row.split(',');
-                const entry = {};
-                headers.forEach((header, i) => { entry[header] = values[i] ? values[i].trim() : ''; });
-                return entry;
-            });
-
-            // Filter out any picks that haven't been graded yet
-            const gradedPicks = picksDatabase.filter(p => p.Grade);
-
-            if (gradedPicks.length === 0) {
-                container.innerHTML = '<p id="loading-message">No graded picks found in the record yet.</p>';
+    <script src="picks-data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof picksDatabase === 'undefined' || picksDatabase.length === 0) {
+                document.getElementById('overall-record').textContent = 'N/A';
+                document.getElementById('total-units').textContent = 'N/A';
                 return;
             }
 
-            // Build the HTML table
-            let tableHTML = '<table class="records-table">';
-            tableHTML += '<thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Grade</th><th>Units</th></tr></thead>';
-            tableHTML += '<tbody>';
+            const tableBody = document.getElementById('records-tbody');
+            let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
 
-            gradedPicks.forEach(pick => {
-                let gradeClass = '';
-                if (pick.Grade === 'W') gradeClass = 'grade-win';
-                else if (pick.Grade === 'L') gradeClass = 'grade-loss';
-                else if (pick.Grade === 'P') gradeClass = 'grade-push';
+            const chronologicalPicks = [...picksDatabase].reverse();
+            
+            chronologicalPicks.forEach(p => {
+                let unitChange = 0;
+                let lineStr = p.line > 0 ? `+${p.line}` : p.line;
+                let resultClass = '';
+
+                // =================================================================
+                // == THIS IS THE NEW, 100% CORRECT CALCULATION LOGIC ==
+                // =================================================================
+                if (p.result === 'W') {
+                    wins++;
+                    resultClass = 'win';
+                    // ANY win is always +1.00 unit.
+                    unitChange = 1.00;
+                } else if (p.result === 'L') {
+                    losses++;
+                    resultClass = 'loss';
+                    if (p.line > 0) {
+                        // Loss on an underdog (+odds), you risk 1 unit.
+                        unitChange = -1.00;
+                    } else {
+                        // Loss on a favorite (-odds), you risk the line to win 1.
+                        unitChange = p.line / 100;
+                    }
+                } else { // 'P' for Push
+                    pushes++;
+                    resultClass = 'push';
+                    unitChange = 0.0;
+                }
                 
-                // Format the date
-                const dateParts = pick.Date.split('-');
-                const displayDate = `${dateParts[1]}-${dateParts[2]}-${dateParts[0]}`;
+                totalUnits += unitChange;
 
-                tableHTML += `
-                    <tr>
-                        <td>${displayDate}</td>
-                        <td>${pick.Pick}</td>
-                        <td>${pick.Line}</td>
-                        <td><span class="${gradeClass}">${pick.Grade}</span></td>
-                        <td>${pick.Units}</td>
-                    </tr>
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${p.date}</td>
+                    <td>${p.team}</td>
+                    <td>${lineStr}</td>
+                    <td><span class="${resultClass}">${p.result}</span></td>
+                    <td><span class="${resultClass}">${unitChange > 0 ? '+' : ''}${unitChange.toFixed(2)}</span></td>
                 `;
+                tableBody.prepend(row);
             });
 
-            tableHTML += '</tbody></table>';
-            container.innerHTML = tableHTML;
-        })
-        .catch(error => {
-            console.error('Error fetching or parsing Google Sheet data:', error);
-            container.innerHTML = '<p id="loading-message">Could not load the verified record. Please try again later.</p>';
+            document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
+            const unitsElement = document.getElementById('total-units');
+            unitsElement.textContent = `${totalUnits > 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+            unitsElement.classList.add(totalUnits > 0 ? 'win' : 'loss');
         });
-});
-</script>
-
+    </script>
 </body>
 </html>
