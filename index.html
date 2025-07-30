@@ -125,45 +125,31 @@
 <!-- AUTOMATION SCRIPT -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // THIS IS THE ONLY LINE YOU NEED TO EDIT
-    // Paste the URL you copied from Google Sheets between the single quotes.
-    const googleSheetUrl = 'PASTE_YOUR_PUBLISHED_CSV_URL_HERE';
+    // This is the live URL for your Google Sheet data.
+    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?output=csv';
 
     const recordDisplay = document.querySelector('#dash-record p');
     const freePickDisplay = document.querySelector('#dash-free-pick p');
     const tickerContent = document.getElementById('ticker-content');
-
-    if (!googleSheetUrl || googleSheetUrl === 'PASTE_YOUR_PUBLISHED_CSV_URL_HERE') {
-        tickerContent.innerHTML = '<div class="ticker__item">Error: Google Sheet URL not configured.</div>';
-        recordDisplay.textContent = 'Error';
-        freePickDisplay.textContent = 'Error';
-        return;
-    }
-
-    function parseCSV(text) {
-        const rows = text.trim().split(/\r?\n/);
-        const headers = rows[0].split(',').map(h => h.trim());
-        const data = [];
-        for (let i = 1; i < rows.length; i++) {
-            if (!rows[i]) continue;
-            const values = rows[i].split(',');
-            const entry = {};
-            headers.forEach((header, j) => {
-                entry[header] = values[j] ? values[j].trim() : '';
-            });
-            data.push(entry);
-        }
-        return data;
-    }
     
     fetch(googleSheetUrl)
         .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok) throw new Error('Network response was not ok. Check that the sheet is published correctly.');
             return response.text();
         })
         .then(csvText => {
-            const picksDatabase = parseCSV(csvText);
+            const rows = csvText.trim().split(/\r?\n/);
+            const headers = rows[0].split(',').map(h => h.trim());
+            const picksDatabase = rows.slice(1).map(row => {
+                const values = row.split(',');
+                const entry = {};
+                headers.forEach((header, i) => {
+                    entry[header] = values[i] ? values[i].trim() : '';
+                });
+                return entry;
+            });
 
+            // 1. UPDATE VERIFIED RECORD
             let wins = 0, losses = 0, pushes = 0;
             picksDatabase.forEach(p => {
                 if (p.Grade === 'W') wins++;
@@ -172,25 +158,23 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
             
-            const today = new Date();
-            const todaysPick = picksDatabase.find(p => {
-                if (!p.Date) return false;
-                const pickDate = new Date(p.Date.replace(/-/g, '/'));
-                return pickDate.setHours(0,0,0,0) === today.setHours(0,0,0,0) && !p.Grade;
-            });
-            freePickDisplay.textContent = todaysPick ? todaysPick.Pick : 'Check Back Soon!';
+            // 2. UPDATE FREE DAILY PICK
+            const todaysPick = picksDatabase.find(p => p.Date && !p.Grade);
+            freePickDisplay.textContent = todaysPick ? `${todaysPick.Pick} (${todaysPick.Line})` : 'Check Back Soon!';
 
+            // 3. UPDATE THE TICKER
             const recentDays = {};
+            const today = new Date();
             picksDatabase.forEach(p => {
                 if (!p.Date || !p.Grade) return;
                 const pickDate = new Date(p.Date.replace(/-/g, '/'));
-                const diffDays = Math.round((new Date().setHours(0,0,0,0) - pickDate.setHours(0,0,0,0)) / (1000 * 60 * 60 * 24));
+                const diffDays = Math.round((today.setHours(0,0,0,0) - pickDate.setHours(0,0,0,0)) / (1000 * 60 * 60 * 24));
                 if (diffDays > 0 && diffDays <= 3) {
                     if (!recentDays[p.Date]) {
                         const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
                         recentDays[p.Date] = { dateStr: `${monthNames[pickDate.getMonth()]} ${pickDate.getDate()}`, picks: [] };
                     }
-                    recentDays[p.Date].picks.push({ pick: p.Pick, grade: p.Grade });
+                    recentDays[p.Date].picks.push({ pick: p.Pick, line: p.Line, grade: p.Grade });
                 }
             });
             const lastThreeDaysPicks = Object.values(recentDays).sort((a, b) => new Date(b.dateStr) - new Date(a.dateStr));
@@ -199,8 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const separator = ' <span class="ticker__separator">|||</span> ';
                 lastThreeDaysPicks.forEach((day, index) => {
                     day.picks.forEach(p => {
-                        const gradeClass = p.grade === 'W' ? 'win' : 'loss';
-                        tickerHTML += `<div class="ticker__item">${day.dateStr}: ${p.Pick} <span class="grade ${gradeClass}">${p.Grade}</span></div>`;
+                        const gradeClass = p.grade === 'W' ? 'win' : (p.grade === 'L' ? 'loss' : 'push');
+                        tickerHTML += `<div class="ticker__item">${day.dateStr}: ${p.pick} (${p.line}) <span class="grade ${gradeClass}">${p.grade}</span></div>`;
                     });
                     if (index < lastThreeDaysPicks.length - 1) { tickerHTML += separator; }
                 });
