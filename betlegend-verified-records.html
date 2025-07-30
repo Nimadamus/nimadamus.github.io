@@ -47,9 +47,7 @@
         </div>
         <table class="records-table">
             <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
-            <tbody id="records-tbody">
-                <!-- Data will be loaded here by the script -->
-            </tbody>
+            <tbody id="records-tbody"></tbody>
         </table>
         <div id="loading-container">
              <p id="loading-message">Loading full record from the official ledger...</p>
@@ -64,10 +62,7 @@
             const loadingContainer = document.getElementById('loading-container');
 
             fetch(googleSheetUrl)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok.');
-                    return response.text();
-                })
+                .then(response => response.text())
                 .then(csvText => {
                     const rows = csvText.trim().split(/\r?\n/);
                     const headers = rows[0].split(',').map(h => h.trim());
@@ -90,16 +85,16 @@
                     
                     let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
 
-                    // THIS IS THE CRITICAL FIX: Sort by date, newest first.
                     gradedPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
                     
                     gradedPicks.forEach(p => {
                         let resultClass = '';
                         let grade = p.Result;
 
-                        if (grade === 'Win') { wins++; resultClass = 'win'; }
-                        else if (grade === 'Loss') { losses++; resultClass = 'loss'; }
-                        else if (grade === 'Push') { pushes++; resultClass = 'push'; }
+                        // THIS IS THE CRITICAL FIX: It now correctly checks for "W", "L", and "P"
+                        if (grade === 'W') { wins++; resultClass = 'win'; }
+                        else if (grade === 'L') { losses++; resultClass = 'loss'; }
+                        else if (grade === 'P') { pushes++; resultClass = 'push'; }
                         
                         const unitValue = parseFloat(p.Units);
                         if (!isNaN(unitValue)) {
@@ -112,7 +107,7 @@
                             <td>${p.Pick}</td>
                             <td>${p.Line}</td>
                             <td><span class="${resultClass}">${grade}</span></td>
-                            <td><span class="${resultClass}">${unitValue >= 0 ? '+' : ''}${unitValue.toFixed(2)}</span></td>
+                            <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
                         `;
                         tableBody.appendChild(row);
                     });
