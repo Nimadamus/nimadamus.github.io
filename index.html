@@ -180,10 +180,21 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- DATABASE OF PICKS ---
-    // This is now empty. Add your new, real picks here.
-    // Example: { date: '2025-07-30', pick: 'Yankees ML (-150)', grade: 'W' }
+    // THIS IS WHERE YOU ADD YOUR PICKS.
+    // Newest picks go at the top of the list.
+    // The script automatically finds the last 3 days of results.
     const picksDatabase = [
-        // No placeholder picks
+        // --- Today is July 30th, 2025 ---
+        // Example for yesterday's picks (July 29th)
+        { date: '2025-07-29', pick: 'Brewers F5 ML (-132)', grade: 'W' },
+        { date: '2025-07-29', pick: 'Reds +1.5 (-150)', grade: 'L' },
+        
+        // Example for two days ago (July 28th)
+        { date: '2025-07-28', pick: 'Dodgers/Reds F5 U4.5 (-120)', grade: 'W' },
+        { date: '2025-07-28', pick: 'Blue Jays ML (+130)', grade: 'L' },
+
+        // Example for three days ago (July 27th)
+        { date: '2025-07-27', pick: 'Phillies ML (-155)', grade: 'W' },
     ];
 
     function generateTickerHTML(days) {
@@ -210,7 +221,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const diffDays = Math.round((today - pickDate) / (1000 * 60 * 60 * 24));
             if (diffDays > 0 && diffDays <= daysToShow) {
                 if (!recentDays[p.date]) {
-                    recentDays[p.date] = { dateStr: `JUL ${pickDate.getDate()}`, picks: [] };
+                    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+                    recentDays[p.date] = { dateStr: `${monthNames[pickDate.getMonth()]} ${pickDate.getDate()}`, picks: [] };
                 }
                 recentDays[p.date].picks.push(p);
             }
@@ -225,19 +237,22 @@ document.addEventListener('DOMContentLoaded', function() {
         let fullTickerHTML = generateTickerHTML(lastThreeDaysPicks);
         tickerContent.innerHTML = fullTickerHTML + fullTickerHTML;
     } else {
-        // Updated fallback message for when there are no picks
         tickerContent.innerHTML = '<div class="ticker__item">No recent results to display. Check back soon!</div>';
     }
 
     // --- DASHBOARD FREE PICK LOGIC ---
+    // This now finds the pick for *today's* date to show as the Free Pick.
     const freePickDisplay = document.querySelector('#dash-free-pick p');
-    // Finds the most recent pick. If the database is empty, it will be null.
-    const latestPick = picksDatabase.length > 0 ? picksDatabase[0] : null; 
     
-    if (latestPick) {
-        freePickDisplay.textContent = latestPick.pick;
+    const today = new Date();
+    const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    
+    // Find the first pick in the database that matches today's date
+    const todaysPick = picksDatabase.find(p => p.date === todayString);
+
+    if (todaysPick) {
+        freePickDisplay.textContent = todaysPick.pick;
     } else {
-        // Fallback message for the dashboard
         freePickDisplay.textContent = 'Check Back Soon!';
     }
 });
