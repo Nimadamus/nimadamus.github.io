@@ -58,7 +58,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // This is the URL for your main Google Sheet with all historical picks
             const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?output=csv';
 
             const tableBody = document.getElementById('records-tbody');
@@ -78,9 +77,9 @@
                         headers.forEach((header, i) => { entry[header] = values[i] ? values[i].trim() : ''; });
                         return entry;
                     });
-
-                    // We now use the 'Result' header from your new file, but check for 'Grade' from the sheet
-                    const gradedPicks = picksDatabase.filter(p => p.Grade && p.Grade.trim() !== '');
+                    
+                    // THIS IS THE CRITICAL FIX: The script now looks for the 'Result' column.
+                    const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
                     if (gradedPicks.length === 0) {
                         document.getElementById('overall-record').textContent = '0-0-0';
                         document.getElementById('total-units').textContent = '+0.00';
@@ -88,18 +87,17 @@
                         return;
                     }
 
-                    loadingContainer.style.display = 'none'; // Hide loading message
+                    loadingContainer.style.display = 'none';
                     
                     let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
 
-                    // Display newest picks first
                     gradedPicks.reverse().forEach(p => {
                         let resultClass = '';
-                        let grade = p.Grade;
+                        let grade = p.Result; // Using the correct column name
 
-                        if (grade === 'Win' || grade === 'W') { wins++; resultClass = 'win'; }
-                        else if (grade === 'Loss' || grade === 'L') { losses++; resultClass = 'loss'; }
-                        else if (grade === 'Push' || grade === 'P') { pushes++; resultClass = 'push'; }
+                        if (grade === 'Win') { wins++; resultClass = 'win'; }
+                        else if (grade === 'Loss') { losses++; resultClass = 'loss'; }
+                        else if (grade === 'Push') { pushes++; resultClass = 'push'; }
                         
                         const unitValue = parseFloat(p.Units);
                         if (!isNaN(unitValue)) {
