@@ -42,8 +42,7 @@
     .content-wrapper {
         position: relative; z-index: 10; width: 100%; max-width: 900px;
         margin: 0 auto;
-        /* LAYOUT FIX: Reduced top padding */
-        padding: 50px 20px 0px 20px;
+        padding: 50px 20px 40px 20px; /* Final padding */
         box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
     }
     .header-branding { text-align: center; margin-bottom: 25px; }
@@ -62,16 +61,22 @@
 
     .gif-showcase {
         width: 100%;
-        /* LAYOUT FIX: Reduced GIF size */
         max-width: 600px; 
         border: 2px solid var(--glow-color);
         border-radius: 14px; box-shadow: 0 0 35px rgba(0, 224, 255, 0.5);
         overflow: hidden;
-        /* LAYOUT FIX: Added space below GIF */
-        margin-bottom: 40px; 
+        /* NOTE: The margin-bottom was moved to the new .caption class below */
     }
     .gif-showcase img { width: 100%; display: block; }
-    .footer { text-align: center; padding: 20px; font-size: 14px; color: #888; background: rgba(0,0,0,0.4); width: 100%; }
+    
+    /* LAYOUT FIX: New style for the "Powered by" text */
+    .caption {
+        text-align: center; padding: 15px; font-size: 14px; color: #888;
+        width: 100%; max-width: 600px; box-sizing: border-box;
+        margin-bottom: 40px; /* This creates the space below the caption */
+    }
+    .caption a { color: var(--glow-color); }
+
 
     .interactive-dashboard {
         position: fixed; bottom: 0; left: 0; width: 100%; height: 95px;
@@ -118,14 +123,181 @@
     <div class="gif-showcase">
         <img src="https://nimadamus.github.io/curry.gif" alt="Animated graphic showing BetLegend sports betting picks and analysis.">
     </div>
-    <div class="footer">
-        Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank" style="color: #00e0ff;">See Full Betting History</a>
+    <!-- LAYOUT FIX: "Powered by" text is now here, acting as a caption -->
+    <div class="caption">
+        Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">See Full Betting History</a>
     </div>
 </div>
 <div class="interactive-dashboard">
     <div class="dash-item" id="dash-record"><svg viewBox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg><h3>Verified Record</h3><p>--</p></div>
     <div class="dash-item" id="dash-free-pick"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg><h3>Free Daily Pick</h3>
-        <!-- PLACEHOLDER FIX: This now correctly shows a neutral placeholder -->
         <p>--</p>
     </div>
-    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 2
+    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg><h3>Premium Email</h3><p>Subscribe Now</p></a>
+    <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
+</div>
+
+<!-- FINAL SCRIPT - v7 with Intelligent Date Parsing and Defensive Checks -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("BetLegend Script V7: Initializing...");
+
+    // --- CONFIGURATION ---
+    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
+
+    // --- ELEMENT REFERENCES ---
+    const recordDisplay = document.querySelector('#dash-record p');
+    const freePickDisplay = document.querySelector('#dash-free-pick p');
+    const tickerContent = document.getElementById('ticker-content');
+
+    // --- HELPER FUNCTION to parse dates like "MM-DD-YYYY" ---
+    function parseDate(dateStr) {
+        if (!dateStr) return null;
+        // Handles both MM-DD-YYYY and MM/DD/YYYY
+        const parts = dateStr.split(/[-/]/);
+        if (parts.length === 3) {
+            // new Date(year, monthIndex, day)
+            const dt = new Date(parts[2], parts[0] - 1, parts[1]);
+            // Check if the date is valid
+            return isNaN(dt.getTime()) ? null : dt;
+        }
+        return null;
+    }
+
+    // --- MAIN FUNCTION ---
+    async function run() {
+        if (!recordDisplay || !freePickDisplay || !tickerContent) {
+            console.error("Fatal Error: A dashboard HTML element is missing. Check your element IDs.");
+            return;
+        }
+        console.log("Elements found. Fetching data...");
+
+        try {
+            const response = await fetch(`${googleSheetUrl}&_=${new Date().getTime()}`);
+            if (!response.ok) throw new Error(`Network error: Sheet returned status ${response.status}`);
+            
+            const csvText = await response.text();
+            if (!csvText.trim()) throw new Error("Sheet is empty or returned no data.");
+            
+            console.log("Data fetched successfully. Parsing now...");
+
+            const rows = csvText.trim().split(/\r?\n/);
+            const headers = rows.shift().split(',').map(h => h.trim());
+            
+            const allPicks = rows.map((row, index) => {
+                const values = row.split(',');
+                const entry = {};
+                headers.forEach((header, i) => {
+                    entry[header] = values[i] ? values[i].trim() : '';
+                });
+                // Attach original row number for debugging
+                entry.rowNum = index + 2; 
+                return entry;
+            }).filter(p => p.Pick);
+
+            console.log(`Found ${allPicks.length} rows with a 'Pick' value.`);
+
+            if (allPicks.length === 0) {
+                console.log("No valid picks found. Displaying default text.");
+                displayDefaults();
+                return;
+            }
+
+            // Update all UI components
+            updateRecord(allPicks);
+            updateDailyPick(allPicks);
+            updateTicker(allPicks);
+            console.log("BetLegend Script V7: All components updated successfully!");
+
+        } catch (error) {
+            console.error("SCRIPT FAILED:", error);
+            displayError(error.message);
+        }
+    }
+
+    // --- UI HELPER FUNCTIONS ---
+    function updateRecord(picks) {
+        let wins = 0, losses = 0, pushes = 0;
+        for (const p of picks) {
+            if (p.Grade) {
+                const grade = p.Grade.toUpperCase();
+                if (grade === 'W') wins++;
+                else if (grade === 'L') losses++;
+                else if (grade === 'P') pushes++;
+            }
+        }
+        recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
+        console.log(`Record calculated: ${wins}-${losses}-${pushes}`);
+    }
+
+    function updateDailyPick(picks) {
+        const today = new Date();
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(today.getDate() - 7);
+
+        // Find the most recent pick that has NO grade and is from the last 7 days.
+        const latestUngradedPick = [...picks].reverse().find(p => {
+            if (p.Grade) return false; // Must be ungraded
+            const pickDate = parseDate(p.Date);
+            if (!pickDate) return false; // Must have a valid date
+            return pickDate >= sevenDaysAgo && pickDate <= today;
+        });
+
+        if (latestUngradedPick && latestUngradedPick.Line) {
+            freePickDisplay.textContent = `${latestUngradedPick.Pick} (${latestUngradedPick.Line})`;
+            console.log(`Daily pick found (Row ${latestUngradedPick.rowNum}): ${latestUngradedPick.Pick}`);
+        } else {
+            freePickDisplay.textContent = 'Check Back Soon';
+            console.log("No recent, ungraded pick found to display as Daily Pick.");
+        }
+    }
+
+    function updateTicker(picks) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const recentGradedPicks = picks.filter(p => {
+            if (!p.Grade || !p.Date) return false;
+            const pickDate = parseDate(p.Date);
+            if (!pickDate) return false;
+            const diffTime = today.getTime() - pickDate.getTime();
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays >= 0 && diffDays <= 3;
+        }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date)); // Sort oldest first
+
+        if (recentGradedPicks.length === 0) {
+            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
+            console.log("No recent picks found for ticker.");
+            return;
+        }
+
+        const separator = ' <span class="ticker__separator">|||</span> ';
+        let tickerHTML = recentGradedPicks.map(p => {
+            const gradeClass = p.Grade.toUpperCase() === 'W' ? 'win' : 'loss';
+            const pickDate = parseDate(p.Date);
+            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
+            return `<div class="ticker__item">${displayDate}: ${p.Pick} <span class="grade ${gradeClass}">${p.Grade}</span></div>`;
+        }).join(separator);
+
+        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
+        console.log(`Ticker updated with ${recentGradedPicks.length} picks.`);
+    }
+    
+    function displayDefaults() {
+        recordDisplay.textContent = '0-0-0';
+        freePickDisplay.textContent = '--';
+        tickerContent.innerHTML = '<div class="ticker__item">No pick data available.</div>';
+    }
+
+    function displayError(message) {
+        recordDisplay.textContent = 'Error';
+        freePickDisplay.textContent = 'Error';
+        tickerContent.innerHTML = `<div class="ticker__item">Error: Data could not be loaded.</div>`;
+    }
+
+    run();
+});
+</script>
+
+</body>
+</html>
