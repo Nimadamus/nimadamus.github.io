@@ -78,7 +78,6 @@
                         return entry;
                     });
                     
-                    // THIS IS THE CRITICAL FIX: The script now looks for the 'Result' column.
                     const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
                     if (gradedPicks.length === 0) {
                         document.getElementById('overall-record').textContent = '0-0-0';
@@ -91,9 +90,12 @@
                     
                     let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
 
-                    gradedPicks.reverse().forEach(p => {
+                    // THIS IS THE CRITICAL FIX: Sort by date, newest first.
+                    gradedPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+                    
+                    gradedPicks.forEach(p => {
                         let resultClass = '';
-                        let grade = p.Result; // Using the correct column name
+                        let grade = p.Result;
 
                         if (grade === 'Win') { wins++; resultClass = 'win'; }
                         else if (grade === 'Loss') { losses++; resultClass = 'loss'; }
