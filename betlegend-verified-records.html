@@ -53,29 +53,48 @@
     <script src="picks-data.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof picksDatabase === 'undefined' || picksDatabase.length === 0) return;
+            if (typeof picksDatabase === 'undefined' || picksDatabase.length === 0) {
+                // If there's no data, show a message and stop.
+                document.getElementById('overall-record').textContent = 'N/A';
+                document.getElementById('total-units').textContent = 'N/A';
+                return;
+            }
 
             const tableBody = document.getElementById('records-tbody');
             let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
 
-            picksDatabase.forEach(p => {
+            // Reverse the array to calculate the running total from oldest to newest
+            const chronologicalPicks = [...picksDatabase].reverse();
+            
+            chronologicalPicks.forEach(p => {
                 let unitChange = 0;
                 let lineStr = p.line > 0 ? `+${p.line}` : p.line;
                 let resultClass = '';
 
+                // =================================================================
+                // == THIS IS THE NEW, CORRECT CALCULATION LOGIC ==
+                // =================================================================
                 if (p.result === 'W') {
                     wins++;
                     resultClass = 'win';
-                    unitChange = p.line > 0 ? (p.line / 100) : (100 / Math.abs(p.line));
+                    if (p.line > 0) {
+                        // For positive odds, profit is the odds / 100
+                        unitChange = p.line / 100;
+                    } else {
+                        // For negative odds, profit is 100 / odds (risk 1 unit to win this amount)
+                        unitChange = 100 / Math.abs(p.line);
+                    }
                 } else if (p.result === 'L') {
                     losses++;
                     resultClass = 'loss';
+                    // Any loss is always -1 unit risked
                     unitChange = -1.0;
-                } else {
+                } else { // 'P' for Push
                     pushes++;
                     resultClass = 'push';
                     unitChange = 0.0;
                 }
+                
                 totalUnits += unitChange;
 
                 const row = document.createElement('tr');
@@ -84,10 +103,13 @@
                     <td>${p.team}</td>
                     <td>${lineStr}</td>
                     <td><span class="${resultClass}">${p.result}</span></td>
-                    <td>${unitChange.toFixed(2)}</td>`;
-                tableBody.appendChild(row);
+                    <td><span class="${resultClass}">${unitChange > 0 ? '+' : ''}${unitChange.toFixed(2)}</span></td>
+                `;
+                // Prepend the row to have the newest picks at the top of the table
+                tableBody.prepend(row);
             });
 
+            // Update the summary stats at the top of the page with final totals
             document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
             const unitsElement = document.getElementById('total-units');
             unitsElement.textContent = `${totalUnits > 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
