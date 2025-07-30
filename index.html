@@ -3,45 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BetLegend Picks – Interactive Sports Betting Dashboard</title>
-<meta name="description" content="A new era of sports betting analysis with an interactive dashboard displaying automated, graded MLB picks, verified records, and daily plays.">
-<meta name="keywords" content="sports betting dashboard, MLB betting picks, AI betting models, daily MLB picks, baseball picks, betting analysis, verified betting record">
+<title>BetLegend Picks – Live Automated Betting Dashboard</title>
+<meta name="description" content="The future of sports betting: A live dashboard automatically updated from our official records, displaying graded picks, verified record, and daily plays.">
+<meta name="keywords" content="google sheets sports betting, automated betting record, live betting picks, mlb picks, betting analysis, verified record">
 <link rel="canonical" href="https://www.betlegendpicks.com/">
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-<meta property="og:title" content="BetLegend Picks – The Future of Sports Betting Analysis"/>
-<meta property="og:description" content="Experience our interactive dashboard with live-updated, graded picks and essential betting tools."/>
+<meta property="og:title" content="BetLegend Picks – Live Automated Betting Dashboard"/>
+<meta property="og:description" content="Our picks and record, updated live from our official Google Sheet."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://www.betlegendpicks.com/"/>
 <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png"/>
-<meta property="og:image:secure_url" content="https://www.betlegendpicks.com/newlogo.png"/>
-<meta property="og:image:alt" content="BetLegend Picks Logo"/>
 <meta content="index, follow" name="robots"/>
 
 <style>
-    :root {
-        --glow-color: #00e0ff;
-        --win-color: #39FF14;
-        --loss-color: #FF3131;
-    }
+    :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
     body {
-        margin: 0;
-        padding-bottom: 95px; 
-        background-color: #000;
+        margin: 0; padding-bottom: 95px; background-color: #000;
         background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        font-family: 'Orbitron', sans-serif;
-        color: white;
-        overflow-x: hidden;
+        background-size: cover; background-position: center; background-attachment: fixed;
+        font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden;
     }
     .ticker-wrap {
         position: fixed; top: 0; left: 0; width: 100%;
-        background-color: rgba(0, 0, 0, 0.75);
-        backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px);
         padding: 10px 0; z-index: 1001; overflow: hidden;
         border-bottom: 1px solid rgba(0, 224, 255, 0.3);
     }
@@ -54,8 +40,7 @@
     @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
     .content-wrapper {
-        position: relative; z-index: 10; width: 100%;
-        max-width: 900px;
+        position: relative; z-index: 10; width: 100%; max-width: 900px;
         margin: 0 auto; padding: 80px 20px 40px 20px;
         box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
     }
@@ -66,47 +51,33 @@
     
     .nav-links {
         display: flex; flex-wrap: wrap; justify-content: center;
-        gap: 15px 30px; width: 100%; padding: 20px 0;
-        margin-bottom: 40px; border-top: 1px solid rgba(0, 224, 255, 0.2);
-        border-bottom: 1px solid rgba(0, 224, 255, 0.2); background: rgba(0,0,0,0.3);
+        gap: 15px 30px; width: 100%; padding: 20px 0; margin-bottom: 40px;
+        border-top: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2);
+        background: rgba(0,0,0,0.3);
     }
     .nav-links a { color: var(--glow-color); text-decoration: none; font-size: 16px; font-weight: bold; transition: text-shadow 0.3s ease, color 0.3s ease; }
     .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--glow-color); }
 
     .gif-showcase {
-        width: 100%;
-        max-width: 650px; 
-        border: 2px solid var(--glow-color);
-        border-radius: 14px;
-        box-shadow: 0 0 35px rgba(0, 224, 255, 0.5);
-        overflow: hidden;
-        margin-bottom: 40px;
+        width: 100%; max-width: 650px; border: 2px solid var(--glow-color);
+        border-radius: 14px; box-shadow: 0 0 35px rgba(0, 224, 255, 0.5);
+        overflow: hidden; margin-bottom: 40px;
     }
     .gif-showcase img { width: 100%; display: block; }
-
     .footer { text-align: center; padding: 30px; font-size: 14px; color: #888; background: rgba(0,0,0,0.4); width: 100%; }
 
-    /* INTERACTIVE DASHBOARD */
     .interactive-dashboard {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 95px;
-        background: rgba(10, 15, 25, 0.8);
-        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-        border-top: 1px solid rgba(0, 224, 255, 0.4);
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        z-index: 1000;
+        position: fixed; bottom: 0; left: 0; width: 100%; height: 95px;
+        background: rgba(10, 15, 25, 0.8); backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(0, 224, 255, 0.4); display: grid;
+        grid-template-columns: repeat(4, 1fr); z-index: 1000;
         box-shadow: 0 -5px 30px rgba(0,0,0,0.3);
     }
     .dash-item {
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         text-align: center; padding: 10px; gap: 8px;
         border-right: 1px solid rgba(0, 224, 255, 0.2);
-        transition: background-color 0.3s ease;
-        text-decoration: none; color: #fff;
+        transition: background-color 0.3s ease; text-decoration: none; color: #fff;
     }
     .dash-item:last-child { border-right: none; }
     .dash-item.clickable:hover { background-color: rgba(0, 224, 255, 0.1); cursor: pointer; }
@@ -115,11 +86,9 @@
     .dash-item p { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.1; font-family: 'Roboto', sans-serif; }
     .dash-item .highlight { color: var(--win-color); font-family: 'Orbitron', sans-serif; }
 
-    /* RESPONSIVE STYLES */
     @media (max-width: 768px) {
         body { padding-bottom: 190px; }
-        .title { font-size: 10vw; }
-        .subtitle { font-size: 4vw; }
+        .title { font-size: 10vw; } .subtitle { font-size: 4vw; }
         .interactive-dashboard { height: 190px; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
         .dash-item { border-right: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2); padding: 15px 5px; }
         .dash-item:nth-child(2) { border-right: none; }
@@ -130,131 +99,126 @@
 </head>
 <body>
 
-<div class="ticker-wrap">
-    <div class="ticker" id="ticker-content"></div>
-</div>
-    
+<div class="ticker-wrap"><div class="ticker" id="ticker-content"></div></div>
 <div class="content-wrapper">
     <div class="header-branding">
         <h1 class="title">BET<span class="highlight">LEGEND</span></h1>
         <h2 class="subtitle">The Universe of Probabilities Has Just Been Hacked.</h2>
     </div>
-
     <div class="nav-links">
         <a href="index.html">Home</a><a href="blog.html">Picks & Analysis</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
     </div>
-
     <div class="gif-showcase">
         <img src="https://nimadamus.github.io/curry.gif" alt="Animated graphic showing BetLegend sports betting picks and analysis.">
     </div>
-
     <div class="footer">
         Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank" style="color: #00e0ff;">See Full Betting History</a>
     </div>
 </div>
-
 <div class="interactive-dashboard">
-    <div class="dash-item" id="dash-record">
-        <svg viewBox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg>
-        <h3>Verified Record</h3>
-        <p>58-33-2</p>
-    </div>
-    <div class="dash-item" id="dash-free-pick">
-        <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-        <h3>Free Daily Pick</h3>
-        <p>Loading...</p>
-    </div>
-    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable" id="dash-email">
-        <svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg>
-        <h3>Premium Email</h3>
-        <p>Subscribe Now</p>
-    </a>
-    <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable" id="dash-sportsbook">
-        <svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg>
-        <h3>Sportsbook</h3>
-        <p>350% <span class="highlight">BONUS</span></p>
-    </a>
+    <div class="dash-item" id="dash-record"><svg viewBox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg><h3>Verified Record</h3><p>--</p></div>
+    <div class="dash-item" id="dash-free-pick"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg><h3>Free Daily Pick</h3><p>--</p></div>
+    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg><h3>Premium Email</h3><p>Subscribe Now</p></a>
+    <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
 </div>
 
-<!-- AUTOMATION JAVASCRIPT -->
+<!-- AUTOMATION SCRIPT -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // --- DATABASE OF PICKS ---
-    // THIS IS WHERE YOU ADD YOUR PICKS.
-    // Newest picks go at the top of the list.
-    // The script automatically finds the last 3 days of results.
-    const picksDatabase = [
-        // --- Today is July 30th, 2025 ---
-        // Example for yesterday's picks (July 29th)
-        { date: '2025-07-29', pick: 'Brewers F5 ML (-132)', grade: 'W' },
-        { date: '2025-07-29', pick: 'Reds +1.5 (-150)', grade: 'L' },
-        
-        // Example for two days ago (July 28th)
-        { date: '2025-07-28', pick: 'Dodgers/Reds F5 U4.5 (-120)', grade: 'W' },
-        { date: '2025-07-28', pick: 'Blue Jays ML (+130)', grade: 'L' },
+    // PASTE YOUR GOOGLE SHEET URL HERE
+    const googleSheetUrl = 'PASTE_YOUR_PUBLISHED_CSV_URL_HERE';
 
-        // Example for three days ago (July 27th)
-        { date: '2025-07-27', pick: 'Phillies ML (-155)', grade: 'W' },
-    ];
-
-    function generateTickerHTML(days) {
-        let tickerHTML = '';
-        const separator = ' <span class="ticker__separator">|||</span> ';
-        days.forEach((day, index) => {
-            day.picks.forEach(p => {
-                const gradeClass = p.grade === 'W' ? 'win' : 'loss';
-                tickerHTML += `<div class="ticker__item">${day.dateStr}: ${p.pick} <span class="grade ${gradeClass}">${p.grade}</span></div>`;
-            });
-            if (index < days.length - 1) { tickerHTML += separator; }
-        });
-        return tickerHTML;
-    }
-
-    function getRecentPicks(daysToShow) {
-        const recentDays = {};
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const parseDate = (dateString) => new Date(dateString.replace(/-/g, '/'));
-        for (const p of picksDatabase) {
-            const pickDate = parseDate(p.date);
-            pickDate.setHours(0,0,0,0);
-            const diffDays = Math.round((today - pickDate) / (1000 * 60 * 60 * 24));
-            if (diffDays > 0 && diffDays <= daysToShow) {
-                if (!recentDays[p.date]) {
-                    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-                    recentDays[p.date] = { dateStr: `${monthNames[pickDate.getMonth()]} ${pickDate.getDate()}`, picks: [] };
-                }
-                recentDays[p.date].picks.push(p);
-            }
-        }
-        return Object.values(recentDays).sort((a, b) => new Date(b.dateStr) - new Date(a.dateStr));
-    }
-
-    const lastThreeDaysPicks = getRecentPicks(3);
-    const tickerContent = document.getElementById('ticker-content');
-    
-    if (lastThreeDaysPicks.length > 0) {
-        let fullTickerHTML = generateTickerHTML(lastThreeDaysPicks);
-        tickerContent.innerHTML = fullTickerHTML + fullTickerHTML;
-    } else {
-        tickerContent.innerHTML = '<div class="ticker__item">No recent results to display. Check back soon!</div>';
-    }
-
-    // --- DASHBOARD FREE PICK LOGIC ---
-    // This now finds the pick for *today's* date to show as the Free Pick.
+    const recordDisplay = document.querySelector('#dash-record p');
     const freePickDisplay = document.querySelector('#dash-free-pick p');
-    
-    const today = new Date();
-    const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-    
-    // Find the first pick in the database that matches today's date
-    const todaysPick = picksDatabase.find(p => p.date === todayString);
+    const tickerContent = document.getElementById('ticker-content');
 
-    if (todaysPick) {
-        freePickDisplay.textContent = todaysPick.pick;
-    } else {
-        freePickDisplay.textContent = 'Check Back Soon!';
+    if (!googleSheetUrl || googleSheetUrl === 'PASTE_YOUR_PUBLISHED_CSV_URL_HERE') {
+        tickerContent.innerHTML = '<div class="ticker__item">Error: Google Sheet URL not configured.</div>';
+        recordDisplay.textContent = 'Error';
+        freePickDisplay.textContent = 'Error';
+        return;
     }
+
+    // Function to parse CSV data
+    function parseCSV(text) {
+        const rows = text.split(/\r\n|\n/);
+        const headers = rows[0].split(',');
+        const data = [];
+        for (let i = 1; i < rows.length; i++) {
+            if (!rows[i]) continue;
+            const values = rows[i].split(',');
+            const entry = {};
+            for (let j = 0; j < headers.length; j++) {
+                entry[headers[j]] = values[j];
+            }
+            data.push(entry);
+        }
+        return data;
+    }
+
+    fetch(googleSheetUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(csvText => {
+            const picksDatabase = parseCSV(csvText);
+
+            // --- 1. UPDATE THE VERIFIED RECORD ---
+            let wins = 0;
+            let losses = 0;
+            let pushes = 0;
+            picksDatabase.forEach(p => {
+                if (p.Grade === 'W') wins++;
+                else if (p.Grade === 'L') losses++;
+                else if (p.Grade === 'P') pushes++;
+            });
+            recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
+            
+            // --- 2. UPDATE THE FREE DAILY PICK ---
+            const today = new Date();
+            const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            const todaysPick = picksDatabase.find(p => p.Date === todayString);
+            freePickDisplay.textContent = todaysPick ? todaysPick.Pick : 'Check Back Soon!';
+
+            // --- 3. UPDATE THE TICKER ---
+            const recentDays = {};
+            picksDatabase.forEach(p => {
+                if (!p.Date || !p.Grade) return; // Skip entries without a date or grade
+                const pickDate = new Date(p.Date.replace(/-/g, '/'));
+                const diffDays = Math.round((today - pickDate) / (1000 * 60 * 60 * 24));
+                if (diffDays > 0 && diffDays <= 3) {
+                    if (!recentDays[p.Date]) {
+                        const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+                        recentDays[p.Date] = { dateStr: `${monthNames[pickDate.getMonth()]} ${pickDate.getDate()}`, picks: [] };
+                    }
+                    recentDays[p.Date].picks.push({ pick: p.Pick, grade: p.Grade });
+                }
+            });
+            const lastThreeDaysPicks = Object.values(recentDays).sort((a, b) => new Date(b.dateStr) - new Date(a.dateStr));
+            if (lastThreeDaysPicks.length > 0) {
+                let tickerHTML = '';
+                const separator = ' <span class="ticker__separator">|||</span> ';
+                lastThreeDaysPicks.forEach((day, index) => {
+                    day.picks.forEach(p => {
+                        const gradeClass = p.grade === 'W' ? 'win' : 'loss';
+                        tickerHTML += `<div class="ticker__item">${day.dateStr}: ${p.pick} <span class="grade ${gradeClass}">${p.grade}</span></div>`;
+                    });
+                    if (index < lastThreeDaysPicks.length - 1) { tickerHTML += separator; }
+                });
+                tickerContent.innerHTML = tickerHTML + tickerHTML;
+            } else {
+                tickerContent.innerHTML = '<div class="ticker__item">No recent results to display. Check back soon!</div>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching or parsing Google Sheet data:', error);
+            tickerContent.innerHTML = '<div class="ticker__item">Could not load pick data.</div>';
+            recordDisplay.textContent = 'N/A';
+            freePickDisplay.textContent = 'N/A';
+        });
 });
 </script>
 
