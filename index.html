@@ -3,382 +3,270 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BetLegend Picks – Daily MLB Picks and Betting Analysis</title>
-<meta name="description" content="Daily MLB betting picks, verified records, and sharp analysis from BetLegend. Join the movement for smarter bets and real results.">
-<meta name="keywords" content="MLB betting picks, sports betting, AI betting models, daily MLB picks, baseball picks, betting analysis, verified betting record">
+<title>BetLegend Picks – Interactive Sports Betting Dashboard</title>
+<meta name="description" content="A new era of sports betting analysis with an interactive dashboard displaying automated, graded MLB picks, verified records, and daily plays.">
+<meta name="keywords" content="sports betting dashboard, MLB betting picks, AI betting models, daily MLB picks, baseball picks, betting analysis, verified betting record">
 <link rel="canonical" href="https://www.betlegendpicks.com/">
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-<!-- Open Graph / Social Media Meta Tags -->
-<meta property="og:title" content="BetLegend Picks – Daily MLB Picks and Betting Analysis"/>
-<meta property="og:description" content="BetLegend provides daily MLB picks, transparent betting records, and data-driven insight."/>
+<meta property="og:title" content="BetLegend Picks – The Future of Sports Betting Analysis"/>
+<meta property="og:description" content="Experience our interactive dashboard with live-updated, graded picks and essential betting tools."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://www.betlegendpicks.com/"/>
 <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png"/>
 <meta property="og:image:secure_url" content="https://www.betlegendpicks.com/newlogo.png"/>
 <meta property="og:image:alt" content="BetLegend Picks Logo"/>
-
-<!-- Robots Meta Tag -->
 <meta content="index, follow" name="robots"/>
 
 <style>
-body {
-  margin: 0;
-  background-color: #0c0c0c;
-  font-family: 'Orbitron', sans-serif;
-  color: white;
-}
-
-.content-wrapper {
-  width: 100%;
-  max-width: 900px; /* Centered content column */
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* STYLES FOR CORNER-FIXED CARDS (DESKTOP) */
-.fixed-card-left,
-.fixed-card-right {
-  position: fixed;
-  top: 30px;
-  width: 100%;
-  max-width: 350px;
-  z-index: 1000;
-}
-
-.fixed-card-left {
-  left: 30px;
-}
-
-.fixed-card-right {
-  right: 30px;
-}
-
-.header-branding {
-  text-align: center;
-  padding: 30px 0;
-}
-
-.nav-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px 30px;
-  width: 100%;
-  padding: 25px 0;
-  border-top: 1px solid rgba(0, 224, 255, 0.2);
-  border-bottom: 1px solid rgba(0, 224, 255, 0.2);
-}
-
-.nav-links a {
-  color: #00e0ff;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-  transition: text-shadow 0.3s ease;
-}
-
-.nav-links a:hover {
-  text-shadow: 0 0 8px #00e0ff;
-}
-
-.title {
-  font-size: 60px;
-  color: #00e0ff;
-  margin: 0;
-  text-shadow: 0 0 15px #00e0ff;
-  animation: pulseGlow 2s infinite alternate;
-}
-
-@keyframes pulseGlow {
-  from { text-shadow: 0 0 10px #00e0ff; }
-  to { text-shadow: 0 0 30px #00e0ff; }
-}
-
-.subtitle {
-  font-size: 22px;
-  color: #ccc;
-  margin-top: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-}
-
-.sportsbook-banner {
-    width: 100%;
-    margin: 30px auto;
-    background: linear-gradient(to right, #00e0ff, #00ffc3);
-    border-radius: 12px;
-    box-shadow: 0 0 25px #00e0ff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.sportsbook-banner:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 35px #00e0ff;
-}
-
-.sportsbook-banner a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 25px 20px;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-}
-
-.banner-main-text {
-    font-size: 24px;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
-}
-
-.banner-sub-text {
-    font-size: 16px;
-    margin-top: 8px;
-    opacity: 0.9;
-}
-
-.record-bar {
-  background: linear-gradient(to right, #00e0ff, #00ffc3);
-  color: black;
-  font-weight: bold;
-  font-size: 20px;
-  padding: 16px 30px;
-  border-radius: 50px;
-  margin: 40px auto;
-  width: max-content;
-  max-width: 100%;
-  box-shadow: 0 0 25px #00e0ff;
-  animation: flashBar 1.5s ease-in-out infinite alternate;
-  text-align: center;
-}
-
-@keyframes flashBar {
-  from { box-shadow: 0 0 12px #00ffc3; }
-  to { box-shadow: 0 0 24px #00e0ff, 0 0 8px #00fff2 inset; }
-}
-
-.card {
-  background-color: #000;
-  border: 2px solid #00e0ff;
-  padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 0 18px rgba(0, 224, 255, 0.4);
-  box-sizing: border-box;
-}
-
-.card h3 {
-  color: #00e0ff;
-  font-size: 20px;
-  margin-bottom: 12px;
-  text-shadow: 0 0 4px #00e0ff;
-}
-
-.card p, .card form, .card label {
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  color: #f2f2f2;
-}
-
-input[type="email"] {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 12px;
-  border: none;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #00e0ff;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  color: black;
-  border-radius: 6px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 14px;
-}
-
-.gif-showcase {
-    width: 100%;
-    margin: 30px auto;
-    border: 2px solid #00e0ff;
-    border-radius: 14px;
-    box-shadow: 0 0 18px rgba(0, 224, 255, 0.4);
-    overflow: hidden;
-}
-
-.gif-showcase img {
-    width: 100%;
-    display: block;
-}
-
-.footer {
-  text-align: center;
-  padding: 30px;
-  font-size: 14px;
-  color: #888;
-  margin-top: 40px;
-}
-
-/* This container holds the cards on mobile */
-.mobile-cards-container {
-    display: none; /* Hidden by default */
-}
-
-/* RESPONSIVE STYLES */
-@media (max-width: 1450px) {
-  .fixed-card-left, .fixed-card-right {
-    max-width: 300px;
-  }
-}
-
-/* Hides fixed cards and shows mobile container on smaller screens */
-@media (max-width: 1280px) {
-    .fixed-card-left,
-    .fixed-card-right {
-        display: none;
+    :root {
+        --glow-color: #00e0ff;
+        --win-color: #39FF14;
+        --loss-color: #FF3131;
     }
-    .mobile-cards-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+    body {
+        margin: 0;
+        padding-bottom: 95px; 
+        background-color: #000;
+        background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: 'Orbitron', sans-serif;
+        color: white;
+        overflow-x: hidden;
+    }
+    .ticker-wrap {
+        position: fixed; top: 0; left: 0; width: 100%;
+        background-color: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        padding: 10px 0; z-index: 1001; overflow: hidden;
+        border-bottom: 1px solid rgba(0, 224, 255, 0.3);
+    }
+    .ticker { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker-scroll 75s linear infinite; }
+    .ticker__item { display: inline-block; padding: 0 1.5rem; font-family: 'Roboto', sans-serif; font-size: 14px; color: #ddd; }
+    .ticker__item .grade { font-weight: 700; font-family: 'Orbitron', sans-serif; padding: 3px 8px; border-radius: 4px; margin-left: 8px; font-size: 12px; border: 1px solid; }
+    .ticker__item .grade.win { color: var(--win-color); border-color: var(--win-color); text-shadow: 0 0 5px var(--win-color); }
+    .ticker__item .grade.loss { color: var(--loss-color); border-color: var(--loss-color); text-shadow: 0 0 5px var(--loss-color); }
+    .ticker__separator { color: rgba(0, 224, 255, 0.5); font-weight: 700; }
+    @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+    .content-wrapper {
+        position: relative; z-index: 10; width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 60px 20px 30px 20px;
+        box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
+    }
+    .header-branding { text-align: center; margin-bottom: 25px; }
+    .title { font-size: 64px; font-weight: 900; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
+    .title .highlight { color: var(--glow-color); }
+    .subtitle { font-size: 20px; color: #ccc; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; font-family: 'Roboto', sans-serif; }
+    
+    .nav-links {
+        display: flex; flex-wrap: wrap; justify-content: center;
+        gap: 15px 30px; width: 100%; padding: 20px 0;
+        margin-bottom: 30px; 
+        border-top: 1px solid rgba(0, 224, 255, 0.2);
+        border-bottom: 1px solid rgba(0, 224, 255, 0.2); background: rgba(0,0,0,0.3);
+    }
+    .nav-links a { color: var(--glow-color); text-decoration: none; font-size: 16px; font-weight: bold; transition: text-shadow 0.3s ease, color 0.3s ease; }
+    .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--glow-color); }
+
+    .gif-showcase {
         width: 100%;
-        align-items: center;
-        margin-top: 30px;
+        max-width: 600px; 
+        border: 2px solid var(--glow-color);
+        border-radius: 14px;
+        box-shadow: 0 0 35px rgba(0, 224, 255, 0.5);
+        overflow: hidden;
+        margin-bottom: 30px;
     }
-}
+    .gif-showcase img { width: 100%; display: block; }
 
-@media (max-width: 768px) {
-  .title {
-    font-size: 38px;
-  }
-  .subtitle {
-    font-size: 16px;
-  }
-}
+    .footer { text-align: center; padding: 30px; font-size: 14px; color: #888; background: rgba(0,0,0,0.4); width: 100%; }
+
+    /* INTERACTIVE DASHBOARD */
+    .interactive-dashboard {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 95px;
+        background: rgba(10, 15, 25, 0.8);
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(0, 224, 255, 0.4);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        z-index: 1000;
+        box-shadow: 0 -5px 30px rgba(0,0,0,0.3);
+    }
+    .dash-item {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center; padding: 10px; gap: 8px;
+        border-right: 1px solid rgba(0, 224, 255, 0.2);
+        transition: background-color 0.3s ease;
+        text-decoration: none; color: #fff;
+    }
+    .dash-item:last-child { border-right: none; }
+    .dash-item.clickable:hover { background-color: rgba(0, 224, 255, 0.1); cursor: pointer; }
+    .dash-item svg { width: 24px; height: 24px; fill: var(--glow-color); filter: drop-shadow(0 0 3px var(--glow-color)); }
+    .dash-item h3 { margin: 0; font-size: 12px; font-weight: 700; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px; }
+    .dash-item p { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.1; font-family: 'Roboto', sans-serif; }
+    .dash-item .highlight { color: var(--win-color); font-family: 'Orbitron', sans-serif; }
+
+    /* RESPONSIVE STYLES */
+    @media (max-width: 768px) {
+        body { padding-bottom: 190px; }
+        .title { font-size: 10vw; }
+        .subtitle { font-size: 4vw; }
+        .interactive-dashboard { height: 190px; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .dash-item { border-right: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2); padding: 15px 5px; }
+        .dash-item:nth-child(2) { border-right: none; }
+        .dash-item:nth-child(3), .dash-item:nth-child(4) { border-bottom: none; }
+        .dash-item p { font-size: 16px; }
+    }
 </style>
-
-<!-- SEO Schema Markup -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "name": "BetLegend Picks",
-      "url": "https://www.betlegendpicks.com/",
-      "logo": "https://www.betlegendpicks.com/newlogo.png",
-      "sameAs": [
-        "https://twitter.com/BetLegend2025",
-        "https://discord.gg/NbMc3wCV"
-      ]
-    },
-    {
-      "@type": "WebSite",
-      "name": "BetLegend Picks",
-      "url": "https://www.betlegendpicks.com/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.betlegendpicks.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-  ]
-}
-</script>
-
-<script data-domain="betlegendpicks.com" defer="True" src="https://plausible.io/js/script.file-downloads.outbound-links.js"></script>
-<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 </head>
 <body>
 
-<!-- CARDS FOR DESKTOP VIEW (FIXED) -->
-<div class="fixed-card-left">
-    <div class="card">
-        <h3>Free Pick of the Day 7-25-2025</h3>
-        <p>Giants/Mets F5 under 4.5 -154</p>
-    </div>
+<div class="ticker-wrap">
+    <div class="ticker" id="ticker-content"></div>
 </div>
-<div class="fixed-card-right">
-    <div class="card">
-        <h3>Bonus Pick Email</h3>
-        <form action="https://buttondown.email/api/emails/embed-subscribe/betlegend" method="post" onsubmit="window.open('https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04', 'popupwindow')" target="popupwindow">
-            <label for="bd-email">Get it sent daily:</label>
-            <input id="bd-email" name="email" placeholder="Enter your email" required="" type="email"/>
-            <button type="submit">Subscribe</button>
-        </form>
-    </div>
-</div>
-
-
-<!-- MAIN CONTENT (CENTERED) -->
+    
 <div class="content-wrapper">
-
     <div class="header-branding">
-        <h1 class="title">BetLegend</h1>
-        <h2 class="subtitle">AI Models + Proven Backtests. The Outcome = Income</h2>
+        <h1 class="title">BET<span class="highlight">LEGEND</span></h1>
+        <h2 class="subtitle">The Universe of Probabilities Has Just Been Hacked.</h2>
     </div>
 
     <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="blog.html">Picks & Analysis</a>
-        <a href="bankroll.html">Bankroll</a>
-        <a href="news.html">News</a>
-        <a href="howitworks.html">How It Works</a>
-        <a href="bestonlinesportsbook.html">Best Sportsbook</a>
-        <a href="betlegend-verified-records.html">Records</a>
-        <a href="screenshots.html">Screenshots</a>
-        <a href="mlb.html">MLB Stats</a>
-        <a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a>
-        <a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
+        <a href="index.html">Home</a><a href="blog.html">Picks & Analysis</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
     </div>
-    
-    <!-- CARDS FOR MOBILE VIEW (IN-FLOW) -->
-    <div class="mobile-cards-container">
-        <div class="card">
-            <h3>Free Pick of the Day 7-30-2025</h3>
-            <p>Blue Jays -109</p>
-        </div>
-        <div class="card">
-            <h3>Bonus Pick Email</h3>
-            <form action="https://buttondown.email/api/emails/embed-subscribe/betlegend" method="post" onsubmit="window.open('https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04', 'popupwindow')" target="popupwindow">
-                <label for="bd-email-mobile">Get it sent daily:</label>
-                <input id="bd-email-mobile" name="email" placeholder="Enter your email" required="" type="email"/>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-    </div>
-    
-    <div class="sportsbook-banner">
-        <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
-            <span class="banner-main-text">Our Trusted Sportsbook</span>
-            <span class="banner-sub-text">Get a 350% Bonus When You Sign Up Today!</span>
-        </a>
-    </div>
-    
+
     <div class="gif-showcase">
         <img src="https://nimadamus.github.io/curry.gif" alt="Animated graphic showing BetLegend sports betting picks and analysis.">
     </div>
 
-    <div class="record-bar">🔥  58-33-2 All-Time (+14.25 Units) – <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" style="color:black; text-decoration:underline;" target="_blank">Subscribe here</a> 🔥</div>
-
     <div class="footer">
-        Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">See Full Betting History</a>
+        Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank" style="color: #00e0ff;">See Full Betting History</a>
     </div>
 </div>
+
+<div class="interactive-dashboard">
+    <div class="dash-item" id="dash-record">
+        <svg viewBox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg>
+        <h3>Verified Record</h3>
+        <p>58-33-2</p>
+    </div>
+    <div class="dash-item" id="dash-free-pick">
+        <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+        <h3>Free Daily Pick</h3>
+        <p>Loading...</p>
+    </div>
+    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable" id="dash-email">
+        <svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg>
+        <h3>Premium Email</h3>
+        <p>Subscribe Now</p>
+    </a>
+    <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable" id="dash-sportsbook">
+        <svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg>
+        <h3>Sportsbook</h3>
+        <p>350% <span class="highlight">BONUS</span></p>
+    </a>
+</div>
+
+<!-- AUTOMATION JAVASCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // =================================================================================
+    // IMPORTANT: THIS IS THE SINGLE SOURCE OF TRUTH FOR YOUR PICKS
+    // To add a new pick, simply copy the template line and add it to the TOP of the list.
+    // Fill in your real data. The script handles the rest.
+    // =================================================================================
+    const picksDatabase = [
+        // --- TEMPLATE (Copy this line for new picks) ---
+        // { date: 'YYYY-MM-DD', pick: 'TEAM NAME HERE (+100)', grade: 'W' },
+
+        // --- ENTER YOUR REAL PICKS HERE ---
+        // Example:
+        // { date: '2025-07-29', pick: 'Brewers F5 ML (-132)', grade: 'W' },
+        // { date: '2025-07-28', pick: 'Dodgers/Reds F5 U4.5 (-120)', grade: 'W' },
+        // { date: '2025-07-27', pick: 'Phillies ML (-155)', grade: 'W' },
+    ];
+
+    function generateTickerHTML(days) {
+        let tickerHTML = '';
+        const separator = ' <span class="ticker__separator">|||</span> ';
+        days.forEach((day, index) => {
+            day.picks.forEach(p => {
+                const gradeClass = p.grade === 'W' ? 'win' : 'loss';
+                tickerHTML += `<div class="ticker__item">${day.dateStr}: ${p.pick} <span class="grade ${gradeClass}">${p.grade}</span></div>`;
+            });
+            if (index < days.length - 1) { tickerHTML += separator; }
+        });
+        return tickerHTML;
+    }
+
+    function getRecentPicks(db, daysToShow) {
+        const groupedPicks = {};
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const parseDate = (dateString) => {
+            const parts = dateString.split('-');
+            return new Date(parts[0], parts[1] - 1, parts[2]);
+        };
+
+        for (const p of db) {
+            const pickDate = parseDate(p.date);
+            const diffDays = Math.round((today.getTime() - pickDate.getTime()) / (1000 * 60 * 60 * 24));
+
+            if (diffDays > 0 && diffDays <= daysToShow) {
+                if (!groupedPicks[p.date]) {
+                    groupedPicks[p.date] = [];
+                }
+                groupedPicks[p.date].push(p);
+            }
+        }
+
+        const sortedDates = Object.keys(groupedPicks).sort((a, b) => new Date(b) - new Date(a));
+
+        const result = sortedDates.map(date => {
+            const dateObj = parseDate(date);
+            const month = dateObj.toLocaleString('default', { month: 'short' }).toUpperCase();
+            return {
+                dateStr: `${month} ${dateObj.getDate()}`,
+                picks: groupedPicks[date]
+            };
+        });
+
+        return result;
+    }
+
+    const lastThreeDaysPicks = getRecentPicks(picksDatabase, 3);
+    const tickerContent = document.getElementById('ticker-content');
+    
+    if (lastThreeDaysPicks.length > 0) {
+        let fullTickerHTML = generateTickerHTML(lastThreeDaysPicks);
+        tickerContent.innerHTML = fullTickerHTML + fullTickerHTML; // Duplicate for seamless scroll
+    } else {
+        tickerContent.innerHTML = '<div class="ticker__item">No recent results to display. Check back soon!</div>';
+    }
+
+    // --- DASHBOARD FREE PICK LOGIC ---
+    const freePickDisplay = document.querySelector('#dash-free-pick p');
+    if (picksDatabase.length > 0) {
+        // Display the most recent pick in the database as the free pick
+        freePickDisplay.textContent = picksDatabase[0].pick;
+    } else {
+        freePickDisplay.textContent = 'Check Back Soon!';
+    }
+});
+</script>
 
 </body>
 </html>
