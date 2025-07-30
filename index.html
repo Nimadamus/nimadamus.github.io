@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- All head content is the same -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BetLegend Picks – Interactive Sports Betting Dashboard</title>
-    <!-- All head content is the same -->
-    <link rel="canonical" href="https://www.betlegendpicks.com/">
-    <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* All CSS is the same */
         :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
@@ -44,60 +40,85 @@
     </style>
 </head>
 <body>
-
     <div class="ticker-wrap"><div class="ticker" id="ticker-content"></div></div>
-    
     <div class="content-wrapper">
         <div class="header-branding">
             <h1 class="title">BET<span class="highlight">LEGEND</span></h1>
             <h2 class="subtitle">The Universe of Probabilities Has Just Been Hacked.</h2>
         </div>
         <div class="nav-links">
-            <!-- Nav links are the same -->
              <a href="index.html">Home</a><a href="blog.html">Picks & Analysis</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
         </div>
         <div class="gif-showcase"><img src="https://nimadamus.github.io/curry.gif" alt="Animated graphic showing BetLegend sports betting picks and analysis."></div>
         <div class="footer">Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank" style="color: #00e0ff;">See Full Betting History</a></div>
     </div>
-
     <div class="interactive-dashboard">
-        <!-- The dashboard record text will be updated by the script -->
         <div class="dash-item" id="dash-record"><svg viewBox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg><h3>Verified Record</h3><p>--</p></div>
         <div class="dash-item" id="dash-free-pick"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg><h3>Free Daily Pick</h3><p>Loading...</p></div>
         <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg><h3>Premium Email</h3><p>Subscribe Now</p></a>
         <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
     </div>
 
-    <!-- The script now references your single data file -->
     <script src="picks-data.js"></script> 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if picksDatabase exists and has picks
             if (typeof picksDatabase === 'undefined' || picksDatabase.length === 0) {
                 document.getElementById('ticker-content').innerHTML = '<div class="ticker__item">No recent results to display. Check back soon!</div>';
                 document.querySelector('#dash-free-pick p').textContent = 'Check Back Soon!';
                 document.querySelector('#dash-record p').textContent = 'N/A';
-                return; // Stop the script if there's no data
+                return;
             }
 
-            // --- THIS LOGIC IS NOW ON THE HOMEPAGE AS WELL ---
             let wins = 0, losses = 0, pushes = 0;
             picksDatabase.forEach(p => {
                 if (p.result === 'W') wins++;
                 else if (p.result === 'L') losses++;
                 else if (p.result === 'P') pushes++;
             });
-            // Update the dashboard record
             document.querySelector('#dash-record p').textContent = `${wins}-${losses}-${pushes}`;
 
-
-            // --- Ticker and Free Pick Logic (works as before) ---
             const tickerContent = document.getElementById('ticker-content');
             const freePickDisplay = document.querySelector('#dash-free-pick p');
             
-            function generateTickerHTML(days) { /* ... same logic as before ... */ }
-            function getRecentPicks(db, daysToShow) { /* ... same logic as before ... */ }
+            // ** BUG-FREE LOGIC **
+            function getRecentPicks(db, daysToShow) {
+                const groupedPicks = {};
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                const parseDate = (dateString) => new Date(dateString.replace(/-/g, '/'));
+
+                for (const p of db) {
+                    const pickDate = parseDate(p.date);
+                    const diffDays = Math.round((today - pickDate) / (1000 * 60 * 60 * 24));
+                    if (diffDays > 0 && diffDays <= daysToShow) {
+                        if (!groupedPicks[p.date]) groupedPicks[p.date] = [];
+                        groupedPicks[p.date].push(p);
+                    }
+                }
+                const sortedDates = Object.keys(groupedPicks).sort((a, b) => new Date(b) - new Date(a));
+                return sortedDates.map(date => {
+                    const dateObj = parseDate(date);
+                    const month = dateObj.toLocaleString('default', { month: 'short' }).toUpperCase();
+                    return { dateStr: `${month} ${dateObj.getDate()}`, picks: groupedPicks[date] };
+                });
+            }
             
+            function generateTickerHTML(days) {
+                let tickerHTML = '';
+                const separator = ' <span class="ticker__separator">|||</span> ';
+                days.forEach((day, index) => {
+                    day.picks.forEach(p => {
+                        const gradeClass = p.result === 'W' ? 'win' : 'loss';
+                        const lineStr = p.line > 0 ? `+${p.line}` : p.line;
+                        const fullPickString = `${p.team} (${lineStr})`;
+                        tickerHTML += `<div class="ticker__item">${day.dateStr}: ${fullPickString} <span class="grade ${gradeClass}">${p.result}</span></div>`;
+                    });
+                    if (index < days.length - 1) { tickerHTML += separator; }
+                });
+                return tickerHTML;
+            }
+
             const lastThreeDaysPicks = getRecentPicks(picksDatabase, 3);
             if (lastThreeDaysPicks.length > 0) {
                 let fullTickerHTML = generateTickerHTML(lastThreeDaysPicks);
