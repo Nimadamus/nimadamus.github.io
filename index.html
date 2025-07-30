@@ -1,28 +1,40 @@
-<!-- FIX #3: EVEN MORE ROBUST AUTOMATION SCRIPT -->
+<!-- FIX #4: ULTRA-SAFE SCRIPT TO PREVENT WHITE SCREEN -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // --- Configuration ---
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?output=csv';
 
+    // --- Element Selectors ---
     const recordDisplay = document.querySelector('#dash-record p');
     const freePickDisplay = document.querySelector('#dash-free-pick p');
     const tickerContent = document.getElementById('ticker-content');
-    
-    if (!recordDisplay || !freePickDisplay || !tickerContent) {
-        console.error("Critical Error: Dashboard elements not found in HTML! Check your IDs: #dash-record p, #dash-free-pick p, #ticker-content.");
-        return;
-    }
 
-    async function fetchAndProcessData() {
+    // --- Main Function ---
+    async function initializeDashboard() {
         try {
-            const response = await fetch(googleSheetUrl + '&t=' + new Date().getTime()); // Appends a timestamp to bypass cache
-            if (!response.ok) throw new Error('Network Error: Could not fetch Google Sheet. Check that it is published to the web.');
-            
-            const csvText = await response.text();
-            if (!csvText) throw new Error('Data Error: Fetched sheet is empty.');
+            // Safety check: Ensure all HTML elements we need are on the page
+            if (!recordDisplay || !freePickDisplay || !tickerContent) {
+                throw new Error("HTML elements for the dashboard are missing. Check your element IDs.");
+            }
 
+            // Fetch the data from Google Sheets
+            const response = await fetch(googleSheetUrl + '&cachebust=' + new Date().getTime());
+            if (!response.ok) {
+                throw new Error(`Network Error: Failed to fetch sheet (status: ${response.status}).`);
+            }
+            const csvText = await response.text();
+            if (!csvText || csvText.trim() === '') {
+                throw new Error("Data Error: The Google Sheet appears to be empty.");
+            }
+
+            // Parse the CSV data safely
             const rows = csvText.trim().split(/\r?\n/);
+            if (rows.length < 2) {
+                // Not enough data to process (just a header or empty)
+                updateUIWithNoData();
+                return;
+            }
             const headers = rows[0].split(',').map(h => h.trim());
-            
             const allPicks = rows.slice(1).map(row => {
                 const values = row.split(',');
                 let entry = {};
@@ -30,66 +42,87 @@ document.addEventListener('DOMContentLoaded', function() {
                     entry[header] = values[i] ? values[i].trim() : '';
                 });
                 return entry;
-            }).filter(p => p.Pick);
+            }).filter(p => p.Pick); // Critically, only include rows that actually have a pick name.
 
-            // --- 1. UPDATE VERIFIED RECORD ---
-            let wins = 0, losses = 0, pushes = 0;
-            allPicks.forEach(p => {
-                // THIS IS THE FIX: Only count rows that actually have a grade.
-                if (p.Grade) {
-                    const grade = p.Grade.toUpperCase();
-                    if (grade === 'W') wins++;
-                    else if (grade === 'L') losses++;
-                    else if (grade === 'P') pushes++;
-                }
-            });
-            recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
-
-            // --- 2. UPDATE FREE DAILY PICK (most recent ungraded pick) ---
-            const todaysPick = [...allPicks].reverse().find(p => !p.Grade);
-            freePickDisplay.textContent = todaysPick ? `${todaysPick.Pick} (${todaysPick.Line})` : 'Check Back Soon!';
-
-            // --- 3. UPDATE THE TICKER WITH LAST 3 DAYS OF *GRADED* PICKS ---
-            const gradedPicks = allPicks.filter(p => p.Grade && p.Date);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            const lastThreeDaysPicks = gradedPicks.filter(p => {
-                const pickDate = new Date(p.Date);
-                if (isNaN(pickDate.getTime())) return false; // Skip invalid dates
-                const diffTime = today.getTime() - pickDate.getTime();
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                return diffDays >= 0 && diffDays <= 3; // Graded picks from today, yesterday, 2 days ago, 3 days ago
-            });
-            
-            if (lastThreeDaysPicks.length > 0) {
-                let tickerHTML = '';
-                const separator = ' <span class="ticker__separator">|||</span> ';
-                lastThreeDaysPicks.sort((a,b) => new Date(b.Date) - new Date(a.Date)); // Sort newest first
-
-                lastThreeDaysPicks.forEach((p, index) => {
-                    const gradeClass = p.Grade.toUpperCase() === 'W' ? 'win' : 'loss';
-                    const pickDate = new Date(p.Date);
-                    const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
-                    
-                    tickerHTML += `<div class="ticker__item">${displayDate}: ${p.Pick} <span class="grade ${gradeClass}">${p.Grade}</span></div>`;
-                    if (index < lastThreeDaysPicks.length - 1) {
-                        tickerHTML += separator;
-                    }
-                });
-                tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
-            } else {
-                tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
+            // If we have no valid picks after filtering, treat as no data
+            if (allPicks.length === 0) {
+                updateUIWithNoData();
+                return;
             }
+            
+            // Now, update the UI with the processed data
+            updateRecord(allPicks);
+            updateDailyPick(allPicks);
+            updateTicker(allPicks);
 
         } catch (error) {
-            console.error('SCRIPT ERROR:', error);
-            tickerContent.innerHTML = `<div class="ticker__item">Error: ${error.message}</div>`;
-            recordDisplay.textContent = 'Error';
-            freePickDisplay.textContent = 'Error';
+            // This is the most important part: If ANY error happens, we catch it here
+            // and display an error message instead of a white screen.
+            console.error("DASHBOARD FAILED TO INITIALIZE:", error);
+            if (recordDisplay) recordDisplay.textContent = 'Error';
+            if (freePickDisplay) freePickDisplay.textContent = 'Error';
+            if (tickerContent) tickerContent.innerHTML = `<div class="ticker__item">Error loading data. ${error.message}</div>`;
         }
     }
 
-    fetchAndProcessData();
+    // --- UI Update Functions ---
+    function updateRecord(picks) {
+        let wins = 0, losses = 0, pushes = 0;
+        for (const p of picks) {
+            if (p.Grade) {
+                const grade = p.Grade.toUpperCase();
+                if (grade === 'W') wins++;
+                else if (grade === 'L') losses++;
+                else if (grade === 'P') pushes++;
+            }
+        }
+        recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
+    }
+
+    function updateDailyPick(picks) {
+        // Find the last pick in the sheet that doesn't have a grade
+        const latestUngradedPick = [...picks].reverse().find(p => !p.Grade);
+        freePickDisplay.textContent = latestUngradedPick ? `${latestUngradedPick.Pick} (${latestUngradedPick.Line})` : 'Check Back Soon';
+    }
+
+    function updateTicker(picks) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const recentGradedPicks = picks.filter(p => {
+            if (!p.Grade || !p.Date) return false;
+            const pickDate = new Date(p.Date);
+            // Check if date is valid
+            if (isNaN(pickDate.getTime())) return false; 
+            const diffTime = today.getTime() - pickDate.getTime();
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays >= 0 && diffDays <= 3;
+        }).sort((a, b) => new Date(b.Date) - new Date(a.Date)); // Sort newest first
+
+        if (recentGradedPicks.length === 0) {
+            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
+            return;
+        }
+
+        const separator = ' <span class="ticker__separator">|||</span> ';
+        let tickerHTML = recentGradedPicks.map(p => {
+            const gradeClass = p.Grade.toUpperCase() === 'W' ? 'win' : 'loss';
+            const pickDate = new Date(p.Date);
+            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
+            return `<div class="ticker__item">${displayDate}: ${p.Pick} <span class="grade ${gradeClass}">${p.Grade}</span></div>`;
+        }).join(separator);
+        
+        // Duplicate for smooth animation loop
+        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
+    }
+    
+    function updateUIWithNoData() {
+        recordDisplay.textContent = '0-0-0';
+        freePickDisplay.textContent = 'Check Back Soon';
+        tickerContent.innerHTML = '<div class="ticker__item">No pick data found.</div>';
+    }
+
+    // --- Run the dashboard ---
+    initializeDashboard();
 });
 </script>
