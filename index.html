@@ -131,4 +131,147 @@
         <h3>Verified Record</h3>
         <p>--</p>
     </a>
-    <div class="dash-item" id="dash-free-pick"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2
+    <div class="dash-item" id="dash-free-pick"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg><h3>Free Daily Pick</h3>
+        <p>--</p>
+    </div>
+    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg><h3>Premium Email</h3><p>Subscribe Now</p></a>
+    <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
+</div>
+
+<!-- PAPA PARSE LIBRARY -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+
+<!-- FINAL SCRIPT - v11 Corrected for "Result" Header -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("BetLegend Script V11 (Header Fix): Initializing...");
+
+    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
+
+    const recordDisplay = document.querySelector('#dash-record p');
+    const freePickDisplay = document.querySelector('#dash-free-pick p');
+    const tickerContent = document.getElementById('ticker-content');
+
+    // Robust date parsing function
+    function parseDate(dateStr) {
+        if (!dateStr || typeof dateStr !== 'string') return null;
+        const parts = dateStr.trim().split(/[-/]/);
+        if (parts.length === 3) {
+            const year = parseInt(parts[2]);
+            const month = parseInt(parts[0]) - 1; // Month is 0-indexed
+            const day = parseInt(parts[1]);
+            // A basic check for a valid-looking date
+            if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) {
+                return new Date(year, month, day);
+            }
+        }
+        return null;
+    }
+
+    function run() {
+        if (!recordDisplay || !freePickDisplay || !tickerContent) {
+            console.error("Fatal Error: HTML element missing.");
+            return;
+        }
+
+        Papa.parse(googleSheetUrl, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            transformHeader: header => header.trim(), // Crucial for fixing "Result " vs "Result"
+            complete: function(results) {
+                console.log("Parsing complete. Headers found:", results.meta.fields);
+                console.log("Total rows found:", results.data.length);
+
+                const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
+                if (allPicks.length === 0) {
+                    displayDefaults();
+                    return;
+                }
+
+                updateRecord(allPicks);
+                updateDailyPick(allPicks);
+                updateTicker(allPicks);
+                console.log("BetLegend Script V11: Success.");
+            },
+            error: function(error) {
+                console.error("SCRIPT FAILED:", error);
+                displayError(error.message);
+            }
+        });
+    }
+
+    function updateRecord(picks) {
+        let wins = 0, losses = 0, pushes = 0;
+        for (const p of picks) {
+            // THE FIX IS HERE: We now look for p.Result
+            if (p.Result && p.Result.trim() !== '') {
+                const result = p.Result.trim().toUpperCase();
+                if (result === 'W') wins++;
+                else if (result === 'L') losses++;
+                else if (result === 'P') pushes++;
+            }
+        }
+        recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
+    }
+
+    function updateDailyPick(picks) {
+        const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && parseDate(p.Date));
+        if (gradedPicks.length === 0) {
+            freePickDisplay.textContent = 'Check Back Soon';
+            return;
+        }
+        gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
+        const latestPick = gradedPicks[0];
+        if (latestPick && latestPick.Line) {
+            freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`;
+        } else {
+            freePickDisplay.textContent = 'Check Back Soon';
+        }
+    }
+
+    function updateTicker(picks) {
+        const today = new Date();
+        today.setHours(23, 59, 59, 999);
+
+        const recentGradedPicks = picks.filter(p => {
+            const pickDate = parseDate(p.Date);
+            // Must have a Result and be within the last 3 days
+            return p.Result && p.Result.trim() !== '' && pickDate && (today.getTime() - pickDate.getTime()) < (3 * 24 * 60 * 60 * 1000);
+        }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date));
+
+        if (recentGradedPicks.length === 0) {
+            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
+            return;
+        }
+
+        const separator = ' <span class="ticker__separator">|||</span> ';
+        let tickerHTML = recentGradedPicks.map(p => {
+            const result = p.Result.trim().toUpperCase();
+            const resultClass = result === 'W' ? 'win' : 'loss';
+            const pickDate = parseDate(p.Date);
+            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
+            return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${resultClass}">${result}</span></div>`;
+        }).join(separator);
+
+        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
+    }
+
+    function displayDefaults() {
+        recordDisplay.textContent = '0-0-0';
+        freePickDisplay.textContent = '--';
+        tickerContent.innerHTML = '<div class="ticker__item">No data available.</div>';
+    }
+
+    function displayError(message) {
+        recordDisplay.textContent = 'Error';
+        freePickDisplay.textContent = 'Error';
+        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
+    }
+
+    run();
+});
+</script>
+
+</body>
+</html>
