@@ -141,9 +141,11 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- FINAL SCRIPT - v12 with the correct "Result" header name -->
+<!-- DIAGNOSTIC SCRIPT - v13 with Detailed Logging -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("BetLegend Script V13 (Diagnostic): Initializing...");
+
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
 
     const recordDisplay = document.querySelector('#dash-record p');
@@ -166,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function run() {
         if (!recordDisplay || !freePickDisplay || !tickerContent) {
-            console.error("HTML elements missing.");
+            console.error("Fatal Error: HTML element missing.");
             return;
         }
 
@@ -176,7 +178,12 @@ document.addEventListener('DOMContentLoaded', function() {
             skipEmptyLines: true,
             transformHeader: header => header.trim(),
             complete: function(results) {
+                console.log("--- DIAGNOSTIC START ---");
+                console.log("Parsing complete. Headers found:", results.meta.fields);
+                
                 const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
+                console.log(`Total rows with a 'Pick' value: ${allPicks.length}`);
+
                 if (allPicks.length === 0) {
                     displayDefaults();
                     return;
@@ -185,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateRecord(allPicks);
                 updateDailyPick(allPicks);
                 updateTicker(allPicks);
+                console.log("--- DIAGNOSTIC END ---");
             },
             error: function(error) {
                 console.error("SCRIPT FAILED:", error);
@@ -193,17 +201,25 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // DIAGNOSTIC VERSION of updateRecord
     function updateRecord(picks) {
+        console.log(`RECORD_DIAGNOSTIC: Starting record calculation with ${picks.length} picks.`);
         let wins = 0, losses = 0, pushes = 0;
+        
         for (const p of picks) {
-            // THE FIX: Looking for p.Result, which matches your sheet.
             if (p.Result && p.Result.trim() !== '') {
                 const result = p.Result.trim().toUpperCase();
-                if (result === 'W') wins++;
-                else if (result === 'L') losses++;
-                else if (result === 'P') pushes++;
+                if (result === 'W') {
+                    wins++;
+                } else if (result === 'L') {
+                    losses++;
+                } else if (result === 'P') {
+                    pushes++;
+                }
             }
         }
+        
+        console.log(`RECORD_DIAGNOSTIC: Final Count - Wins: ${wins}, Losses: ${losses}, Pushes: ${pushes}`);
         recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
     }
 
@@ -226,11 +242,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const today = new Date();
         today.setHours(23, 59, 59, 999);
         const threeDaysAgo = new Date(today);
-        threeDaysAgo.setDate(today.getDate() - 2); // Set to start of 3 days ago
+        threeDaysAgo.setDate(today.getDate() - 2);
 
         const recentGradedPicks = picks.filter(p => {
             const pickDate = parseDate(p.Date);
-            // THE FIX: Looking for p.Result, which matches your sheet.
             return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
         }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date));
 
