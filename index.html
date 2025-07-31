@@ -22,7 +22,7 @@
     :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
     body {
         margin: 0; padding-bottom: 95px; background-color: #000;
-        background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
+        background-image: url('https://images.unsplash.com/photo-1534796636912-.jpg');
         background-size: cover; background-position: center; background-attachment: fixed;
         font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden;
     }
@@ -141,7 +141,7 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- FINAL SCRIPT - v16 with Corrected Logic -->
+<!-- FINAL SCRIPT - v17 with Intelligent Result Parsing -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
@@ -172,10 +172,9 @@ document.addEventListener('DOMContentLoaded', function() {
         Papa.parse(googleSheetUrl, {
             download: true,
             header: true,
-            skipEmptyLines: 'greedy', // Aggressively skips any blank lines
+            skipEmptyLines: 'greedy',
             transformHeader: header => header.trim(),
             complete: function(results) {
-                // This is the CRITICAL FIX: Filter the data FIRST to remove any rows that don't have a Pick.
                 const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
 
                 if (allPicks.length === 0) {
@@ -193,14 +192,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // THIS IS THE CORRECTED FUNCTION
     function updateRecord(picks) {
         let wins = 0, losses = 0, pushes = 0;
         for (const p of picks) {
-            if (p.Result && p.Result.trim() !== '') {
+            if (p.Pick && p.Pick.trim() !== '' && p.Result && p.Result.trim() !== '') {
                 const result = p.Result.trim().toUpperCase();
-                if (result === 'W') wins++;
-                else if (result === 'L') losses++;
-                else if (result === 'P') pushes++;
+                // THE FIX: Check for both "W" OR "WIN"
+                if (result === 'W' || result === 'WIN') {
+                    wins++;
+                // THE FIX: Check for both "L" OR "LOSS"
+                } else if (result === 'L' || result === 'LOSS') {
+                    losses++;
+                } else if (result === 'P' || result === 'PUSH') {
+                    pushes++;
+                }
             }
         }
         recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
@@ -240,10 +246,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const separator = ' <span class="ticker__separator">|||</span> ';
         let tickerHTML = recentGradedPicks.map(p => {
             const result = p.Result.trim().toUpperCase();
-            const resultClass = result === 'W' ? 'win' : 'loss';
+            // THE FIX: Check for both "W" or "WIN" for styling
+            const resultClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
+            const resultText = result.charAt(0); // Show just W, L, or P
+            
             const pickDate = parseDate(p.Date);
             const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
-            return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${resultClass}">${result}</span></div>`;
+            return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${resultClass}">${resultText}</span></div>`;
         }).join(separator);
 
         tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
@@ -266,13 +275,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 </body>
-</html>```
-
-### **Final Instructions**
-
-1.  **Clean your Google Sheet** one last time by deleting the empty rows.
-2.  **Replace your `index.html`** file with the code above.
-3.  Save and upload it.
-4.  Go to your website and perform a **HARD REFRESH** (**Ctrl + Shift + R**).
-
-This is the end of the problem. The combination of clean data and a script that intelligently filters for only valid rows will now produce the correct record.
+</html>
