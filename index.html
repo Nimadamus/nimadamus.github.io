@@ -141,26 +141,22 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- FINAL SCRIPT - v11 Corrected for "Result" Header -->
+<!-- FINAL SCRIPT - v12 with the correct "Result" header name -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("BetLegend Script V11 (Header Fix): Initializing...");
-
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
 
     const recordDisplay = document.querySelector('#dash-record p');
     const freePickDisplay = document.querySelector('#dash-free-pick p');
     const tickerContent = document.getElementById('ticker-content');
 
-    // Robust date parsing function
     function parseDate(dateStr) {
         if (!dateStr || typeof dateStr !== 'string') return null;
         const parts = dateStr.trim().split(/[-/]/);
         if (parts.length === 3) {
             const year = parseInt(parts[2]);
-            const month = parseInt(parts[0]) - 1; // Month is 0-indexed
+            const month = parseInt(parts[0]) - 1;
             const day = parseInt(parts[1]);
-            // A basic check for a valid-looking date
             if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) {
                 return new Date(year, month, day);
             }
@@ -170,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function run() {
         if (!recordDisplay || !freePickDisplay || !tickerContent) {
-            console.error("Fatal Error: HTML element missing.");
+            console.error("HTML elements missing.");
             return;
         }
 
@@ -178,11 +174,8 @@ document.addEventListener('DOMContentLoaded', function() {
             download: true,
             header: true,
             skipEmptyLines: true,
-            transformHeader: header => header.trim(), // Crucial for fixing "Result " vs "Result"
+            transformHeader: header => header.trim(),
             complete: function(results) {
-                console.log("Parsing complete. Headers found:", results.meta.fields);
-                console.log("Total rows found:", results.data.length);
-
                 const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
                 if (allPicks.length === 0) {
                     displayDefaults();
@@ -192,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateRecord(allPicks);
                 updateDailyPick(allPicks);
                 updateTicker(allPicks);
-                console.log("BetLegend Script V11: Success.");
             },
             error: function(error) {
                 console.error("SCRIPT FAILED:", error);
@@ -204,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateRecord(picks) {
         let wins = 0, losses = 0, pushes = 0;
         for (const p of picks) {
-            // THE FIX IS HERE: We now look for p.Result
+            // THE FIX: Looking for p.Result, which matches your sheet.
             if (p.Result && p.Result.trim() !== '') {
                 const result = p.Result.trim().toUpperCase();
                 if (result === 'W') wins++;
@@ -233,11 +225,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateTicker(picks) {
         const today = new Date();
         today.setHours(23, 59, 59, 999);
+        const threeDaysAgo = new Date(today);
+        threeDaysAgo.setDate(today.getDate() - 2); // Set to start of 3 days ago
 
         const recentGradedPicks = picks.filter(p => {
             const pickDate = parseDate(p.Date);
-            // Must have a Result and be within the last 3 days
-            return p.Result && p.Result.trim() !== '' && pickDate && (today.getTime() - pickDate.getTime()) < (3 * 24 * 60 * 60 * 1000);
+            // THE FIX: Looking for p.Result, which matches your sheet.
+            return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
         }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date));
 
         if (recentGradedPicks.length === 0) {
