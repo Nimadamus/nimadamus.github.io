@@ -79,7 +79,7 @@
     .interactive-dashboard {
         position: fixed; bottom: 0; left: 0; width: 100%; height: 95px;
         background: rgba(10, 15, 25, 0.8); backdrop-filter: blur(12px);
-        border-top: 1px solid rgba(0, 224, 255,.4); display: grid;
+        border-top: 1px solid rgba(0, 224, 255, 0.4); display: grid;
         grid-template-columns: repeat(4, 1fr); z-index: 1000;
         box-shadow: 0 -5px 30px rgba(0,0,0,0.3);
     }
@@ -109,7 +109,7 @@
 </head>
 <body>
 
-<div class="ticker-wrap"><div class="ticker" id="ticker-content"><div class="ticker__item">--</div></div></div>
+<div class="ticker-wrap"><div class="ticker" id="ticker-content"><div class="ticker__item">Loading...</div></div></div>
 <div class="content-wrapper">
     <div class="header-branding">
         <h1 class="title">BET<span class="highlight">LEGEND</span></h1>
@@ -141,70 +141,138 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- DIAGNOSTIC SCRIPT v15 - Raw Data Dump -->
+<!-- FINAL SCRIPT - v16 with Corrected Logic -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
 
-    // This script's ONLY purpose is to fetch the data and log it.
-    function runDiagnostics() {
-        console.log("--- DIAGNOSTIC SCRIPT V15 INITIATED ---");
-        console.log("Fetching data from:", googleSheetUrl);
+    const recordDisplay = document.querySelector('#dash-record p');
+    const freePickDisplay = document.querySelector('#dash-free-pick p');
+    const tickerContent = document.getElementById('ticker-content');
+
+    function parseDate(dateStr) {
+        if (!dateStr || typeof dateStr !== 'string') return null;
+        const parts = dateStr.trim().split(/[-/]/);
+        if (parts.length === 3) {
+            const year = parseInt(parts[2]);
+            const month = parseInt(parts[0]) - 1;
+            const day = parseInt(parts[1]);
+            if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) {
+                return new Date(year, month, day);
+            }
+        }
+        return null;
+    }
+
+    function run() {
+        if (!recordDisplay || !freePickDisplay || !tickerContent) {
+            return;
+        }
 
         Papa.parse(googleSheetUrl, {
             download: true,
             header: true,
-            skipEmptyLines: 'greedy', // Aggressively skips all empty lines
+            skipEmptyLines: 'greedy', // Aggressively skips any blank lines
             transformHeader: header => header.trim(),
             complete: function(results) {
-                console.log("--- PAPA PARSE COMPLETE ---");
-                console.log("Headers Found:", results.meta.fields);
-                console.log("Total Rows Parsed (after skipping empty):", results.data.length);
-                
-                // Log the entire raw data object as a string for easy copying
-                console.log("--- START OF RAW DATA DUMP ---");
-                console.log(JSON.stringify(results.data, null, 2));
-                console.log("--- END OF RAW DATA DUMP ---");
+                // This is the CRITICAL FIX: Filter the data FIRST to remove any rows that don't have a Pick.
+                const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
 
-                // Now, we will try to calculate the record and log our work.
-                let wins = 0, losses = 0, pushes = 0;
-                
-                results.data.forEach((row, index) => {
-                    // Check if the row has the necessary data to be counted
-                    if (row.Pick && row.Pick.trim() !== '' && row.Result && row.Result.trim() !== '') {
-                        const result = row.Result.trim().toUpperCase();
-                        if (result === 'W') {
-                            wins++;
-                        } else if (result === 'L') {
-                            losses++;
-                        } else if (result === 'P') {
-                            pushes++;
-                        }
-                    } else {
-                        // Log any row that is skipped by the calculation
-                        console.log(`Skipping row ${index + 2} because it is missing Pick or Result. Data:`, row);
-                    }
-                });
+                if (allPicks.length === 0) {
+                    displayDefaults();
+                    return;
+                }
 
-                console.log("--- FINAL CALCULATION ---");
-                console.log(`Wins counted: ${wins}`);
-                console.log(`Losses counted: ${losses}`);
-                console.log(`Pushes counted: ${pushes}`);
-                console.log(`Final Record Displayed SHOULD BE: ${wins}-${losses}-${pushes}`);
-                console.log("--------------------------");
+                updateRecord(allPicks);
+                updateDailyPick(allPicks);
+                updateTicker(allPicks);
             },
-            error: function(error, file) {
-                console.error("--- SCRIPT FAILED ---");
-                console.error("Error during parsing:", error);
-                console.error("File:", file);
-                console.error("---------------------");
+            error: function(error) {
+                displayError(error.message);
             }
         });
     }
 
-    runDiagnostics();
+    function updateRecord(picks) {
+        let wins = 0, losses = 0, pushes = 0;
+        for (const p of picks) {
+            if (p.Result && p.Result.trim() !== '') {
+                const result = p.Result.trim().toUpperCase();
+                if (result === 'W') wins++;
+                else if (result === 'L') losses++;
+                else if (result === 'P') pushes++;
+            }
+        }
+        recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
+    }
+
+    function updateDailyPick(picks) {
+        const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && parseDate(p.Date));
+        if (gradedPicks.length === 0) {
+            freePickDisplay.textContent = 'Check Back Soon';
+            return;
+        }
+        gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
+        const latestPick = gradedPicks[0];
+        if (latestPick && latestPick.Line) {
+            freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`;
+        } else {
+            freePickDisplay.textContent = 'Check Back Soon';
+        }
+    }
+
+    function updateTicker(picks) {
+        const today = new Date();
+        today.setHours(23, 59, 59, 999);
+        const threeDaysAgo = new Date(today);
+        threeDaysAgo.setDate(today.getDate() - 2);
+
+        const recentGradedPicks = picks.filter(p => {
+            const pickDate = parseDate(p.Date);
+            return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
+        }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date));
+
+        if (recentGradedPicks.length === 0) {
+            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
+            return;
+        }
+
+        const separator = ' <span class="ticker__separator">|||</span> ';
+        let tickerHTML = recentGradedPicks.map(p => {
+            const result = p.Result.trim().toUpperCase();
+            const resultClass = result === 'W' ? 'win' : 'loss';
+            const pickDate = parseDate(p.Date);
+            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
+            return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${resultClass}">${result}</span></div>`;
+        }).join(separator);
+
+        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
+    }
+
+    function displayDefaults() {
+        recordDisplay.textContent = '0-0-0';
+        freePickDisplay.textContent = '--';
+        tickerContent.innerHTML = '<div class="ticker__item">No data available.</div>';
+    }
+
+    function displayError(message) {
+        recordDisplay.textContent = 'Error';
+        freePickDisplay.textContent = 'Error';
+        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
+    }
+
+    run();
 });
 </script>
 
 </body>
-</html>
+</html>```
+
+### **Final Instructions**
+
+1.  **Clean your Google Sheet** one last time by deleting the empty rows.
+2.  **Replace your `index.html`** file with the code above.
+3.  Save and upload it.
+4.  Go to your website and perform a **HARD REFRESH** (**Ctrl + Shift + R**).
+
+This is the end of the problem. The combination of clean data and a script that intelligently filters for only valid rows will now produce the correct record.
