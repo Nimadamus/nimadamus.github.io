@@ -104,7 +104,8 @@
     }
     .dash-item {
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        text-align: center; padding: 10px; gap: 8px;
+        text-align: center; padding: 10px;
+        gap: 5px; /* *** CSS FIX 1: Reduced gap from 8px to 5px *** */
         border-right: 1px solid rgba(0, 224, 255, 0.2);
         transition: background-color 0.3s ease; text-decoration: none; color: #fff;
     }
@@ -112,7 +113,13 @@
     .dash-item.clickable:hover { background-color: rgba(0, 224, 255, 0.1); cursor: pointer; }
     .dash-item svg { width: 24px; height: 24px; fill: var(--glow-color); filter: drop-shadow(0 0 3px var(--glow-color)); }
     .dash-item h3 { margin: 0; font-size: 12px; font-weight: 700; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px; }
-    .dash-item p { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.1; font-family: 'Roboto', sans-serif; }
+    .dash-item p {
+        margin: 0;
+        font-size: 16px; /* *** CSS FIX 2: Reduced font-size from 18px to 16px *** */
+        font-weight: 700;
+        line-height: 1.2; /* Adjusted line-height for better spacing */
+        font-family: 'Roboto', sans-serif;
+    }
     .dash-item .highlight { color: var(--win-color); font-family: 'Orbitron', sans-serif; }
 
     @media (max-width: 768px) {
@@ -190,7 +197,7 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- FINAL, COMPLETE, AND CORRECTED SCRIPT - v21 -->
+<!-- FINAL, COMPLETE, AND CORRECTED SCRIPT - v22 -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- CONFIGURATION ---
@@ -219,11 +226,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!dateStr || typeof dateStr !== 'string') return null;
         const parts = dateStr.trim().split(/[-/]/);
         if (parts.length === 3) {
-            // Assuming MM/DD/YYYY or MM-DD-YYYY
             const month = parseInt(parts[0]) - 1;
-            const day = parseInt(parts[1]);
+            let day = parseInt(parts[1]);
             let year = parseInt(parts[2]);
-            if (year < 100) year += 2000; // Handle yy format
+            if (year < 100) year += 2000;
 
             if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) {
                 return new Date(year, month, day);
@@ -261,8 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- RECORD PROCESSING LOGIC ---
     function processAndDisplayRecords(picks) {
         const recordsBySport = {};
-        let total = { w: 0, l: 0, p: 0, units: 0.0 };
-
+        
         for (const p of picks) {
             const result = p.Result ? p.Result.trim().toUpperCase() : '';
             const sport = p.Sport ? p.Sport.trim() : 'Misc';
@@ -285,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Calculate total from the aggregated sports data
+        const total = { w: 0, l: 0, p: 0, units: 0.0 };
         Object.values(recordsBySport).forEach(sportStats => {
             total.w += sportStats.w;
             total.l += sportStats.l;
@@ -311,11 +316,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
             const recordString = `${data.w}-${data.l}-${data.p}`;
 
-            // Fade out
             recordH3.style.opacity = '0';
             recordP.style.opacity = '0';
 
-            // Wait for fade out, then update content and fade in
             setTimeout(() => {
                 recordH3.textContent = `${sportName} Record`;
                 recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
@@ -360,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const recentGradedPicks = picks.filter(p => {
             const pickDate = parseDate(p.Date);
             return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
-        }).sort((a, b) => parseDate(b.Date) - parseDate(a.Date)); // Sort descending to show newest first
+        }).sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
 
         if (recentGradedPicks.length === 0) {
             tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
@@ -381,7 +384,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${resultClass}">${resultText}</span></div>`;
         }).join(separator);
 
-        // Duplicate for seamless scroll
         tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
     }
 
