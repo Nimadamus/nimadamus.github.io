@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return null;
     }
 
-    function run() {
+    function run() {.
         if (!recordDisplay || !freePickDisplay || !tickerContent) {
             return;
         }
@@ -238,4 +238,45 @@ document.addEventListener('DOMContentLoaded', function() {
         const threeDaysAgo = new Date(today);
         threeDaysAgo.setDate(today.getDate() - 2);
 
-        co
+        const recentGradedPicks = picks.filter(p => {
+            const pickDate = parseDate(p.Date);
+            return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
+        }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date));
+
+        if (recentGradedPicks.length === 0) {
+            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
+            return;
+        }
+
+        const separator = ' <span class="ticker__separator">|||</span> ';
+        let tickerHTML = recentGradedPicks.map(p => {
+            const result = p.Result.trim().toUpperCase();
+            const resultClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
+            const resultText = result.charAt(0); // Show just W, L, or P
+            
+            const pickDate = parseDate(p.Date);
+            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
+            return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${resultClass}">${resultText}</span></div>`;
+        }).join(separator);
+
+        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
+    }
+
+    function displayDefaults() {
+        recordDisplay.textContent = '0-0-0';
+        freePickDisplay.textContent = '--';
+        tickerContent.innerHTML = '<div class="ticker__item">No data available.</div>';
+    }
+
+    function displayError(message) {
+        recordDisplay.textContent = 'Error';
+        freePickDisplay.textContent = 'Error';
+        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
+    }
+
+    run();
+});
+</script>
+
+</body>
+</html>
