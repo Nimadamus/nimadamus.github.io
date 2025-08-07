@@ -26,16 +26,18 @@
   gtag('config', 'G-QS8L5TDNLY');
 </script>
 <style>
-    /* --- CSS Revamp v29 - Final Working Version --- */
+    /* --- CSS Revamp v30 - FINAL --- */
     :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
     body {
         margin: 0;
         padding-bottom: 95px; /* Standard dashboard height */
-        background-color: #000; /* Plain black background */
-        background-image: none;
+        background-color: #000;
+        background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
+        background-size: cover; background-position: center; background-attachment: fixed;
         font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden;
     }
 
+    /* --- MODERNIZED TICKER --- */
     .ticker-wrap {
         position: fixed; top: 0; left: 0; width: 100%;
         background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
@@ -109,9 +111,10 @@
     }
     .caption a { color: var(--glow-color); }
 
+    /* --- CORRECTED DASHBOARD --- */
     .interactive-dashboard {
         position: fixed; bottom: 0; left: 0; width: 100%;
-        height: 95px;
+        height: 95px; /* Standard height, prevents covering content */
         background: rgba(10, 15, 25, 0.8); backdrop-filter: blur(12px);
         border-top: 1px solid rgba(0, 224, 255, 0.4); display: grid;
         grid-template-columns: repeat(4, 1fr); z-index: 1000;
@@ -121,9 +124,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center; /* *** DEFINITIVE VERTICAL CENTERING FIX *** */
+        justify-content: center; /* *** DEFINITIVE VERTICAL ALIGNMENT FIX *** */
         text-align: center;
-        padding: 5px;
+        padding: 5px; 
         gap: 8px;
         border-right: 1px solid rgba(0, 224, 255, 0.2);
         transition: background-color 0.3s ease; text-decoration: none; color: #fff;
