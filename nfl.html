@@ -1,54 +1,208 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-<title>Upcoming NFL Picks | BetLegend</title>
-<link rel="canonical" href="https://www.betlegendpicks.com/nfl.html" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFL Betting Picks & Analysis | BetLegend</title>
+    <link rel="canonical" href="https://www.betlegendpicks.com/nfl.html" />
+    <meta content="Get ready for a huge NFL season with expert picks, in-depth analysis, props and sharp angles from the BetLegend model." name="description"/>
+    <meta content="NFL picks, football predictions, NFL betting model, NFL analysis, Super Bowl odds" name="keywords"/>
+    <meta content="index, follow" name="robots"/>
 
-<meta content="Get ready for a huge NFL season with picks, totals, props and sharp angles from the BetLegend model." name="description"/>
-<meta content="NFL picks, football predictions, betting model, NFL edges" name="keywords"/>
-<meta content="index, follow" name="robots"/>
-<meta charset="utf-8"/>
-<style>
-    body {
-      background-color: #111;
-      color: #f2f2f2;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      padding: 60px 20px;
-    }
-    .container {
-      max-width: 800px;
-      width: 100%;
-    }
-    h1 {
-      color: gold;
-      font-size: 32px;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    p {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-    a {
-      color: #ffc107;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #2c2c2c;
+            --accent-color: #ffd700; /* Gold */
+            --text-color: #e0e0e0;
+            --text-muted: #a0a0a0;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: var(--secondary-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .navbar .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover,
+        .navbar .nav-links a.active {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .header h1 {
+            color: var(--accent-color);
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main Content Section */
+        .content-section {
+            padding: 40px 0;
+        }
+
+        .article {
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .article h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #fff;
+            margin-top: 0;
+        }
+
+        .article h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-top: 30px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .article p, .article ul {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+        
+        .article ul {
+            padding-left: 20px;
+        }
+        
+        .article li {
+            margin-bottom: 10px;
+        }
+
+        .article .odds-highlight {
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        /* Call to Action */
+        .cta {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #fff;
+            transform: translateY(-3px);
+        }
+
+    </style>
 </head>
 <body>
-<div class="container">
-<h1>Monster NFL Season Coming Soon</h1>
-<p>We’re gearing up for one of the biggest NFL seasons in BetLegend history. Once the season kicks off, expect a full slate of sides, totals, team totals, and carefully selected prop bets — all powered by our in-house model.</p>
-<p>We’ve spent the offseason refining our approach: red zone efficiency, neutral pace, weather splits, market movement — it’s all built into what we do.</p>
-<p>Bookmark this page, check out our <a href="upcomingpicks.html">Upcoming Picks</a> board, or review our past football record on the <a href="betlegend-verified-records.html">Verified Records</a>.</p>
-<p>Kickoff is coming. Be ready.</p>
-</div>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">BetLegend</a>
+        <div class="nav-links">
+            <a href="nfl.html" class="active">NFL</a>
+            <a href="upcomingpicks.html">Upcoming Picks</a>
+            <a href="betlegend-verified-records.html">Verified Records</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <header class="header">
+            <h1>NFL Betting Hub</h1>
+            <p>Your home for data-driven NFL picks, futures analysis, and prop bets powered by the BetLegend model. The edge you've been looking for is right here.</p>
+        </header>
+
+        <main class="content-section">
+            <article class="article">
+                <h2>Featured Analysis: The Market Is Wrong About This NFC Contender</h2>
+                <p>While casual money flows towards last year's winners, true betting value is found by identifying teams the market has mispriced. Heading into the 2025 season, no team represents a bigger opportunity than the San Francisco 49ers.</p>
+
+                <h3>The Dark Horse Case for the 49ers</h3>
+                <p>After a 6-11 season derailed by catastrophic injuries, the 49ers are being offered at <span class="odds-highlight">+1300 to win the Super Bowl</span>. This price is an overreaction to a record that doesn't reflect the roster's elite talent. Here's why they are the smartest dark horse bet on the board:</p>
+                <ul>
+                    <li><strong>Return to Health:</strong> Key superstars like Christian McCaffrey and Brandon Aiyuk are returning. When healthy, advanced metrics showed this was a top-10 team in efficiency, suggesting their poor record was more about bad luck than poor play.</li>
+                    <li><strong>Favorable Win Total:</strong> Their season win total is set at just 10.5. Given their talent and softer schedule, betting the <span class="odds-highlight">Over 10.5 wins</span> presents a fantastic +EV (positive expected value) opportunity for season-long bettors.</li>
+                    <li><strong>Market Discrepancy:</strong> The +1300 odds value them as a mid-tier team. However, their true talent level is that of a top-tier contender. This gap between the price and their actual potential is where sharp bettors find their edge.</li>
+                </ul>
+                <p><strong>The Verdict:</strong> Betting on the 49ers is a calculated risk on a return to normalcy. You are wagering that a team with elite talent will perform at its expected level, making their current odds a high-value investment before the rest of the market catches on.</p>
+            </article>
+
+            <section class="cta">
+                <h2>Ready for Kickoff?</h2>
+                <p>Our model is constantly analyzing the latest data to find the best edges. All official plays for the upcoming NFL season will be posted on our picks board.</p>
+                <a href="upcomingpicks.html" class="cta-button">View All Upcoming Picks</a>
+            </section>
+        </main>
+    </div>
+
 </body>
 </html>
