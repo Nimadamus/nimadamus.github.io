@@ -26,14 +26,13 @@
   gtag('config', 'G-QS8L5TDNLY');
 </script>
 <style>
-    /* --- CSS Revamp v26 - Focused Vertical Alignment Fix --- */
+    /* --- CSS Revamp v28 - Final Definitive Fix --- */
     :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
     body {
         margin: 0;
-        padding-bottom: 95px; /* Reverted to original height */
-        background-color: #000;
-        background-image: url('https://images.unsplash.com/photo-1534796636912-3b95-bab5986?q=80&w=2071&auto=format&fit=crop');
-        background-size: cover; background-position: center; background-attachment: fixed;
+        padding-bottom: 95px; /* *** FIX: Set to standard dashboard height *** */
+        background-color: #000; /* *** FIX: Plain black background per request *** */
+        background-image: none;
         font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden;
     }
 
@@ -73,10 +72,7 @@
         padding: 50px 20px 0px 20px;
         box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
     }
-    .header-branding {
-        text-align: center;
-        margin-bottom: 25px;
-    }
+    .header-branding { text-align: center; margin-bottom: 25px; }
     .title { font-size: 64px; font-weight: 900; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
     .title .highlight { color: var(--glow-color); }
     .subtitle { font-size: 20px; color: #ccc; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; font-family: 'Roboto', sans-serif; }
@@ -84,8 +80,7 @@
     .nav-links {
         display: flex; flex-wrap: wrap; justify-content: center;
         align-items: center; gap: 15px 35px;
-        width: 100%; padding: 20px 0;
-        margin-bottom: 30px;
+        width: 100%; padding: 20px 0; margin-bottom: 30px;
         border-top: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2);
         background: rgba(0,0,0,0.3);
     }
@@ -116,7 +111,7 @@
 
     .interactive-dashboard {
         position: fixed; bottom: 0; left: 0; width: 100%;
-        height: 95px; /* *** FIX: Back to original height *** */
+        height: 95px; /* *** FIX: Reverted to standard, less tall height *** */
         background: rgba(10, 15, 25, 0.8); backdrop-filter: blur(12px);
         border-top: 1px solid rgba(0, 224, 255, 0.4); display: grid;
         grid-template-columns: repeat(4, 1fr); z-index: 1000;
@@ -126,9 +121,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center; /* *** THIS IS THE KEY FIX *** */
+        justify-content: center; /* *** THIS IS THE DEFINITIVE FIX FOR VERTICAL ALIGNMENT *** */
         text-align: center;
-        padding: 5px; /* Reduced padding to let justify-content work */
+        padding: 5px; 
         gap: 8px;
         border-right: 1px solid rgba(0, 224, 255, 0.2);
         transition: background-color 0.3s ease; text-decoration: none; color: #fff;
@@ -146,201 +141,7 @@
     .dash-item .highlight { color: var(--win-color); font-family: 'Orbitron', sans-serif; }
 
     @media (max-width: 768px) {
-        body { padding-bottom: 190px; /* 95px * 2 rows */ }
+        body { padding-bottom: 190px; }
         .title { font-size: 10vw; } .subtitle { font-size: 4vw; }
         .interactive-dashboard { height: 190px; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
-        .dash-item { border-right: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2); padding: 15px 5px; }
-        .dash-item:nth-child(2) { border-right: none; }
-        .dash-item:nth-child(3), .dash-item:nth-child(4) { border-bottom: none; }
-        .dash-item p { font-size: 17px; }
-    }
-</style>
-</head>
-<body>
-
-<div class="ticker-wrap"><div class="ticker" id="ticker-content"><div class="ticker__item">Loading...</div></div></div>
-<div class="content-wrapper">
-    <div class="header-branding">
-        <h1 class="title">BET<span class="highlight">LEGEND</span></h1>
-        <h2 class="subtitle">The Universe of Probabilities Has Just Been Hacked.</h2>
-    </div>
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="blog.html">Picks & Analysis</a>
-        <a href="betlegend-verified-records.html">Records</a>
-        
-        <div class="dropdown">
-            <button class="dropbtn">Sports</button>
-            <div class="dropdown-content">
-                <a href="nfl.html">NFL</a>
-                <a href="mlb.html">MLB</a>
-            </div>
-        </div>
-        
-        <div class="dropdown">
-            <button class="dropbtn">Resources</button>
-            <div class="dropdown-content">
-                <a href="howitworks.html">How It Works</a>
-                <a href="bankroll.html">Bankroll</a>
-                <a href="screenshots.html">Screenshots</a>
-                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
-            </div>
-        </div>
-        
-        <a href="news.html">News</a>
-
-        <div class="dropdown">
-            <button class="dropbtn">Community</button>
-            <div class="dropdown-content">
-                <a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a>
-                <a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
-            </div>
-        </div>
-    </div>
-    <div class="gif-showcase">
-        <img src="https://nimadamus.github.io/curry.gif" alt="Animated graphic showing BetLegend sports betting picks and analysis.">
-    </div>
-    <div class="caption">
-        Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">See Full Betting History</a>
-    </div>
-</div>
-<div class="interactive-dashboard">
-    <a href="betlegend-verified-records.html" class="dash-item clickable" id="dash-record">
-        <svg viewBox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg>
-        <h3>Verified Record</h3>
-        <p>--</p>
-    </a>
-    <div class="dash-item" id="dash-free-pick"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg><h3>Free Daily Pick</h3>
-        <p>--</p>
-    </div>
-    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg><h3>Premium Email</h3><p>Subscribe Now</p></a>
-    <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
-</div>
-
-<!-- PAPA PARSE LIBRARY -->
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-
-<!-- FINAL SCRIPT - v26 -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // --- CONFIGURATION ---
-    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
-    const cycleSpeed = 4000;
-
-    // --- ELEMENT SELECTORS ---
-    const recordDashItem = document.getElementById('dash-record');
-    const recordH3 = recordDashItem.querySelector('h3');
-    const recordP = recordDashItem.querySelector('p');
-    const freePickDisplay = document.querySelector('#dash-free-pick p');
-    const tickerContent = document.getElementById('ticker-content');
-    
-    if (!recordDashItem || !freePickDisplay || !tickerContent) {
-        console.error("Critical dashboard elements could not be found. Aborting script.");
-        return;
-    }
-    
-    recordH3.style.transition = 'opacity 0.4s ease-in-out';
-    recordP.style.transition = 'opacity 0.4s ease-in-out';
-
-    // --- HELPER FUNCTION ---
-    function parseDate(dateStr) {
-        if (!dateStr || typeof dateStr !== 'string') return null;
-        const parts = dateStr.trim().split(/[-/]/);
-        if (parts.length === 3) {
-            const month = parseInt(parts[0]) - 1;
-            let day = parseInt(parts[1]);
-            let year = parseInt(parts[2]);
-            if (year < 100) year += 2000;
-
-            if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) {
-                return new Date(year, month, day);
-            }
-        }
-        return null;
-    }
-    
-    // --- MAIN EXECUTION ---
-    function run() {
-        Papa.parse(googleSheetUrl, {
-            download: true,
-            header: true,
-            skipEmptyLines: 'greedy',
-            transformHeader: header => header.trim(),
-            complete: function(results) {
-                const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
-
-                if (allPicks.length === 0) {
-                    displayDefaults();
-                    return;
-                }
-                
-                processAndDisplayRecords(allPicks);
-                updateDailyPick(allPicks);
-                updateTicker(allPicks);
-            },
-            error: function(error) {
-                console.error("Papa Parse Error:", error);
-                displayError(error.message);
-            }
-        });
-    }
-
-    // --- RECORD PROCESSING LOGIC ---
-    function processAndDisplayRecords(picks) {
-        const recordsBySport = {};
-        
-        for (const p of picks) {
-            const result = p.Result ? p.Result.trim().toUpperCase() : '';
-            const sport = p.Sport ? p.Sport.trim() : 'Misc';
-            const unitChange = parseFloat(p.Units);
-
-            if (result !== '' && !isNaN(unitChange)) {
-                if (!recordsBySport[sport]) {
-                    recordsBySport[sport] = { w: 0, l: 0, p: 0, units: 0.0 };
-                }
-                
-                if (result === 'W' || result === 'WIN') recordsBySport[sport].w++;
-                else if (result === 'L' || result === 'LOSS') recordsBySport[sport].l++;
-                else if (result === 'P' || result === 'PUSH') recordsBySport[sport].p++;
-                
-                recordsBySport[sport].units += unitChange;
-            }
-        }
-
-        const total = { w: 0, l: 0, p: 0, units: 0.0 };
-        Object.values(recordsBySport).forEach(sportStats => {
-            total.w += sportStats.w;
-            total.l += sportStats.l;
-            total.p += sportStats.p;
-            total.units += sportStats.units;
-        });
-
-        const displayData = { 'Overall': total, ...recordsBySport };
-        
-        if (!displayData['NFL']) {
-            displayData['NFL'] = { w: 0, l: 0, p: 0, units: 0.0 };
-        }
-        
-        const sportsToCycle = Object.keys(displayData);
-        let currentIndex = 0;
-        let intervalId = null;
-
-        function updateDisplay() {
-            if (sportsToCycle.length === 0) return;
-            const sportName = sportsToCycle[currentIndex];
-            const data = displayData[sportName];
-
-            const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
-            const recordString = `${data.w}-${data.l}-${data.p}`;
-
-            recordH3.style.opacity = '0';
-            recordP.style.opacity = '0';
-
-            setTimeout(() => {
-                recordH3.textContent = `${sportName} Record`;
-                recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
-                recordH3.style.opacity = '1';
-                recordP.style.opacity = '1';
-            }, 400);
-
-         
+        .dash-item { border-right: 1px solid rgba(0, 
