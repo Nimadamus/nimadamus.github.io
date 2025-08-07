@@ -190,7 +190,7 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- START OF NEW, UPGRADED SCRIPT -->
+<!-- FINAL SCRIPT - v19 - Adapted to User's Sheet Structure -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- CONFIGURATION ---
@@ -204,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const freePickDisplay = document.querySelector('#dash-free-pick p');
     const tickerContent = document.getElementById('ticker-content');
     
-    // Add a transition style for smooth fading
     if(recordH3 && recordP) {
         recordH3.style.transition = 'opacity 0.4s ease-in-out';
         recordP.style.transition = 'opacity 0.4s ease-in-out';
@@ -219,18 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) return new Date(year, month, day);
         }
         return null;
-    }
-
-    function calculateUnitsWon(stake, odds) {
-        stake = parseFloat(stake);
-        odds = parseInt(odds);
-        if (isNaN(stake) || isNaN(odds)) return 0;
-        
-        if (odds > 0) { // Positive odds
-            return stake * (odds / 100);
-        } else { // Negative odds
-            return stake * (100 / Math.abs(odds));
-        }
     }
     
     // --- MAIN EXECUTION ---
@@ -249,10 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
-                // *** NEW: Process records by sport and units ***
                 processAndDisplayRecords(allPicks);
-
-                // These functions remain unchanged
                 updateDailyPick(allPicks);
                 updateTicker(allPicks);
             },
@@ -262,45 +246,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- RECORD PROCESSING AND DISPLAY LOGIC (THE NEW PART) ---
+    // --- NEW RECORD PROCESSING LOGIC - Reads your sheet structure directly ---
     function processAndDisplayRecords(picks) {
         const recordsBySport = {};
         let total = { w: 0, l: 0, p: 0, units: 0 };
 
         for (const p of picks) {
             const result = p.Result ? p.Result.trim().toUpperCase() : '';
-            const sport = p.Sport ? p.Sport.trim() : 'Misc';
-            const stake = parseFloat(p.Stake);
+            // Reads your new 'Sport' column. Defaults to 'Misc' if empty.
+            const sport = p.Sport ? p.Sport.trim() : 'Misc'; 
+            // Reads your 'Units' column directly.
+            const unitChange = parseFloat(p.Units); 
 
-            if (p.Pick && p.Pick.trim() !== '' && result !== '') {
+            // Process only if there's a result and a valid Unit number
+            if (result !== '' && !isNaN(unitChange)) {
                 // Initialize sport if it's new
                 if (!recordsBySport[sport]) {
                     recordsBySport[sport] = { w: 0, l: 0, p: 0, units: 0 };
                 }
                 
-                // Update stats
+                // Tally W-L-P record
                 if (result === 'W' || result === 'WIN') {
                     recordsBySport[sport].w++;
                     total.w++;
-                    if(!isNaN(stake)) recordsBySport[sport].units += calculateUnitsWon( stake, p.Odds);
                 } else if (result === 'L' || result === 'LOSS') {
                     recordsBySport[sport].l++;
                     total.l++;
-                    if(!isNaN(stake)) recordsBySport[sport].units -= stake;
                 } else if (result === 'P' || result === 'PUSH') {
                     recordsBySport[sport].p++;
                     total.p++;
                 }
+                
+                // Sum the units directly from your sheet
+                recordsBySport[sport].units += unitChange;
+                total.units += unitChange;
             }
         }
 
-        // Calculate total units from all sports
-        total.units = Object.values(recordsBySport).reduce((acc, sport) => acc + sport.units, 0);
-
-        // Prepare data for cycling display
         const displayData = { 'Overall': total, ...recordsBySport };
         
-        // Add NFL entry if it doesn't exist, so it shows up before the season starts
         if (!displayData['NFL']) {
             displayData['NFL'] = { w: 0, l: 0, p: 0, units: 0 };
         }
@@ -310,18 +294,16 @@ document.addEventListener('DOMContentLoaded', function() {
         let intervalId = null;
 
         function updateDisplay() {
+            if (sportsToCycle.length === 0) return;
             const sportName = sportsToCycle[currentIndex];
             const data = displayData[sportName];
 
-            // Format units to 2 decimal places and add a + sign for positive values
-            const unitsString = `${data.units > 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
+            const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
             const recordString = `${data.w}-${data.l}-${data.p}`;
 
-            // Fade out
             recordH3.style.opacity = '0';
             recordP.style.opacity = '0';
 
-            // Wait for fade out, then update content and fade in
             setTimeout(() => {
                 recordH3.textContent = `${sportName} Record`;
                 recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
@@ -332,18 +314,15 @@ document.addEventListener('DOMContentLoaded', function() {
             currentIndex = (currentIndex + 1) % sportsToCycle.length;
         }
 
-        // Stop any previous interval before starting a new one
         if (intervalId) clearInterval(intervalId);
-        
-        // Start the cycle
-        updateDisplay(); // Show the first one immediately
+        updateDisplay();
         intervalId = setInterval(updateDisplay, cycleSpeed);
     }
     
     // --- UNCHANGED FUNCTIONS ---
     function updateDailyPick(picks) {
         const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && parseDate(p.Date));
-        if (gradedPicks.length === 0) { freePickDisplay.textContent = 'Check Back Soon'; return; }
+        if (gradedPacks.length === 0) { freePickDisplay.textContent = 'Check Back Soon'; return; }
         gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
         const latestPick = gradedPicks[0];
         if (latestPick && latestPick.Line) { freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`; } 
@@ -352,52 +331,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateTicker(picks) {
         const today = new Date();
-        today.setHours(23, 59, 59, 999);
-        const threeDaysAgo = new Date(today);
-        threeDaysAgo.setDate(today.getDate() - 2);
-
-        const recentGradedPicks = picks.filter(p => {
-            const pickDate = parseDate(p.Date);
-            return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
-        }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date));
-
-        if (recentGradedPicks.length === 0) {
-            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
-            return;
-        }
-
-        const separator = ' <span class="ticker__separator">|||</span> ';
-        let tickerHTML = recentGradedPicks.map(p => {
-            const result = p.Result.trim().toUpperCase();
-            const resultClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
-            const resultText = result.charAt(0);
-            const pickDate = parseDate(p.Date);
-            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
-            return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${resultClass}">${resultText}</span></div>`;
-        }).join(separator);
-
-        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
-    }
-
-    function displayDefaults() {
-        recordH3.textContent = 'Verified Record';
-        recordP.textContent = '0-0-0';
-        freePickDisplay.textContent = '--';
-        tickerContent.innerHTML = '<div class="ticker__item">No data available.</div>';
-    }
-
-    function displayError(message) {
-        recordH3.textContent = 'Verified Record';
-        recordP.textContent = 'Error';
-        freePickDisplay.textContent = 'Error';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
-    }
-
-    // --- INITIALIZE THE SCRIPT ---
-    run();
-});
-</script>
-<!-- END OF NEW SCRIPT -->
-
-</body>
-</html>
