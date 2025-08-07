@@ -124,7 +124,7 @@
         <h2 class="subtitle">The Universe of Probabilities Has Just Been Hacked.</h2>
     </div>
     <div class="nav-links">
-        <a href="index.html">Home</a><a href="blog.html">Picks & Analysis</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="nfl.html">NFL</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
+        <a href="index.html">Home</a><a href="blog.html">Picks & Analysis</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="nfl.html">NFL</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">MLB</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
     </div>
     <div class="gif-showcase">
         <img src="https://nimadamus.github.io/curry.gif" alt="Animated graphic showing BetLegend sports betting picks and analysis.">
@@ -238,45 +238,4 @@ document.addEventListener('DOMContentLoaded', function() {
         const threeDaysAgo = new Date(today);
         threeDaysAgo.setDate(today.getDate() - 2);
 
-        const recentGradedPicks = picks.filter(p => {
-            const pickDate = parseDate(p.Date);
-            return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
-        }).sort((a, b) => parseDate(a.Date) - parseDate(b.Date));
-
-        if (recentGradedPicks.length === 0) {
-            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
-            return;
-        }
-
-        const separator = ' <span class="ticker__separator">|||</span> ';
-        let tickerHTML = recentGradedPicks.map(p => {
-            const result = p.Result.trim().toUpperCase();
-            const resultClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
-            const resultText = result.charAt(0); // Show just W, L, or P
-            
-            const pickDate = parseDate(p.Date);
-            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
-            return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${resultClass}">${resultText}</span></div>`;
-        }).join(separator);
-
-        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
-    }
-
-    function displayDefaults() {
-        recordDisplay.textContent = '0-0-0';
-        freePickDisplay.textContent = '--';
-        tickerContent.innerHTML = '<div class="ticker__item">No data available.</div>';
-    }
-
-    function displayError(message) {
-        recordDisplay.textContent = 'Error';
-        freePickDisplay.textContent = 'Error';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
-    }
-
-    run();
-});
-</script>
-
-</body>
-</html>
+        co
