@@ -26,50 +26,83 @@
   gtag('config', 'G-QS8L5TDNLY');
 </script>
 <style>
-    /* --- CSS Revamp v29 - Final Working Version --- */
+    /* --- CSS Revamp v28 - Final Definitive Fix --- */
     :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
     body {
         margin: 0;
-        padding-bottom: 95px; /* Standard dashboard height */
-        background-color: #000; /* Plain black background */
+        padding-bottom: 95px; /* *** FIX: Set to standard dashboard height *** */
+        background-color: #000; /* *** FIX: Plain black background per request *** */
         background-image: none;
         font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden;
     }
 
+    /* MODERNIZED TICKER */
     .ticker-wrap {
         position: fixed; top: 0; left: 0; width: 100%;
-        background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
-        padding: 12px 0; z-index: 1001; overflow: hidden;
-        border-bottom: 1px solid rgba(0, 224, 255, 0.4);
+        background: linear-gradient(135deg, rgba(0, 15, 30, 0.95) 0%, rgba(0, 30, 45, 0.95) 100%);
+        backdrop-filter: blur(15px);
+        padding: 8px 0; z-index: 1001; overflow: hidden;
+        border-bottom: 2px solid rgba(0, 224, 255, 0.6);
+        box-shadow: 0 2px 20px rgba(0, 224, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
-    .ticker { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker-scroll 85s linear infinite; }
+    .ticker { 
+        display: inline-block; white-space: nowrap; padding-left: 100%; 
+        animation: ticker-scroll 85s linear infinite;
+        filter: drop-shadow(0 0 8px rgba(0, 224, 255, 0.4));
+    }
     .ticker__item {
-        display: inline-flex; align-items: center; gap: 10px; padding: 0 2.5rem;
-        font-family: 'Roboto', sans-serif; font-size: 15px; color: #ccc;
+        display: inline-flex; align-items: center; gap: 12px; padding: 0 3rem;
+        font-family: 'Roboto', sans-serif; font-size: 15px; color: #e0e0e0;
+        position: relative;
     }
-    .ticker__item .pick-text { font-family: 'Orbitron', sans-serif; font-weight: 700; color: #fff; }
+    .ticker__item .pick-text { 
+        font-family: 'Orbitron', sans-serif; font-weight: 700; color: #fff;
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+    }
     .ticker__item .grade {
-        font-weight: 700; font-family: 'Orbitron', sans-serif; padding: 4px 9px;
-        border-radius: 5px; font-size: 13px; border: 1px solid;
+        font-weight: 700; font-family: 'Orbitron', sans-serif; padding: 6px 12px;
+        border-radius: 8px; font-size: 13px; border: 2px solid;
+        position: relative; overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    .ticker__item .grade::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 2s ease;
+    }
+    .ticker__item .grade:hover::before {
+        left: 100%;
     }
     .ticker__item .grade.win {
         color: var(--win-color); border-color: var(--win-color);
-        background-color: rgba(57, 255, 20, 0.15); text-shadow: 0 0 6px var(--win-color);
+        background: linear-gradient(135deg, rgba(57, 255, 20, 0.2), rgba(57, 255, 20, 0.1));
+        text-shadow: 0 0 8px var(--win-color);
+        box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
     }
     .ticker__item .grade.loss {
         color: var(--loss-color); border-color: var(--loss-color);
-        background-color: rgba(255, 49, 49, 0.15); text-shadow: 0 0 6px var(--loss-color);
+        background: linear-gradient(135deg, rgba(255, 49, 49, 0.2), rgba(255, 49, 49, 0.1));
+        text-shadow: 0 0 8px var(--loss-color);
+        box-shadow: 0 0 15px rgba(255, 49, 49, 0.3);
     }
     .ticker__separator {
-        color: var(--glow-color); font-weight: 700; font-size: 20px;
-        text-shadow: 0 0 5px var(--glow-color); vertical-align: middle;
+        color: var(--glow-color); font-weight: 700; font-size: 24px;
+        text-shadow: 0 0 8px var(--glow-color); vertical-align: middle;
+        animation: pulse-glow 2s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+        0%, 100% { text-shadow: 0 0 8px var(--glow-color); }
+        50% { text-shadow: 0 0 15px var(--glow-color), 0 0 25px var(--glow-color); }
     }
     @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
     .content-wrapper {
         position: relative; z-index: 10; width: 100%; max-width: 900px;
         margin: 0 auto;
-        padding: 50px 20px 0px 20px;
+        padding: 70px 20px 0px 20px;
         box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
     }
     .header-branding { text-align: center; margin-bottom: 25px; }
@@ -109,6 +142,7 @@
     }
     .caption a { color: var(--glow-color); }
 
+    /* FIXED DASHBOARD - Better text positioning */
     .interactive-dashboard {
         position: fixed; bottom: 0; left: 0; width: 100%;
         height: 95px;
@@ -121,313 +155,186 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center; /* *** DEFINITIVE VERTICAL CENTERING FIX *** */
+        justify-content: center;
         text-align: center;
-        padding: 5px;
-        gap: 8px;
+        padding: 8px 4px; /* Increased padding for better text positioning */
+        gap: 6px; /* Reduced gap to fit text better */
         border-right: 1px solid rgba(0, 224, 255, 0.2);
         transition: background-color 0.3s ease; text-decoration: none; color: #fff;
+        min-height: 79px; /* Ensure consistent height */
+        box-sizing: border-box;
     }
     .dash-item:last-child { border-right: none; }
     .dash-item.clickable:hover { background-color: rgba(0, 224, 255, 0.1); cursor: pointer; }
-    .dash-item svg { width: 24px; height: 24px; fill: var(--glow-color); filter: drop-shadow(0 0 3px var(--glow-color)); }
-    .dash-item h3 { margin: 0; font-size: 12px; font-weight: 700; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px; }
+    .dash-item svg { width: 24px; height: 24px; fill: var(--glow-color); filter: drop-shadow(0 0 3px var(--glow-color)); flex-shrink: 0; }
+    .dash-item h3 { 
+        margin: 0; font-size: 11px; font-weight: 700; color: #ccc; 
+        text-transform: uppercase; letter-spacing: 0.5px; 
+        line-height: 1.1; flex-shrink: 0;
+        white-space: nowrap; /* Prevent text wrapping */
+    }
     .dash-item p {
-        margin: 0; font-size: 18px;
+        margin: 0; font-size: 16px; /* Slightly smaller to fit better */
         font-weight: 700;
-        line-height: 1.2;
+        line-height: 1.1;
         font-family: 'Roboto', sans-serif;
+        flex-shrink: 0;
+        white-space: nowrap; /* Prevent text wrapping */
     }
     .dash-item .highlight { color: var(--win-color); font-family: 'Orbitron', sans-serif; }
 
     @media (max-width: 768px) {
         body { padding-bottom: 190px; }
         .title { font-size: 10vw; } .subtitle { font-size: 4vw; }
-        .interactive-dashboard { height: 190px; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
-        .dash-item { border-right: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2); padding: 15px 5px; }
-        .dash-item:nth-child(2) { border-right: none; }
-        .dash-item:nth-child(3), .dash-item:nth-child(4) { border-bottom: none; }
-        .dash-item p { font-size: 17px; }
+        .content-wrapper { padding-top: 90px; } /* Adjust for thicker mobile ticker */
+        
+        /* Mobile ticker adjustments */
+        .ticker-wrap { padding: 10px 0; }
+        .ticker__item { gap: 8px; padding: 0 2rem; font-size: 14px; }
+        .ticker__item .grade { padding: 5px 10px; font-size: 12px; }
+        
+        /* Mobile dashboard fixes */
+        .interactive-dashboard { 
+            height: 190px; 
+            grid-template-columns: repeat(2, 1fr); 
+            grid-template-rows: repeat(2, 1fr); 
+        }
+        .dash-item { 
+            border-right: 1px solid rgba(0, 224, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 224, 255, 0.2);
+            padding: 12px 6px;
+            min-height: 83px; /* Better mobile height */
+        }
+        .dash-item:nth-child(2n) { border-right: none; }
+        .dash-item:nth-child(n+3) { border-bottom: none; }
+        .dash-item h3 { font-size: 10px; }
+        .dash-item p { font-size: 15px; }
+    }
+    
+    /* Extra small screens */
+    @media (max-width: 480px) {
+        .dash-item h3 { font-size: 9px; letter-spacing: 0.3px; }
+        .dash-item p { font-size: 14px; }
+        .dash-item svg { width: 20px; height: 20px; }
     }
 </style>
 </head>
-<body>
 
-<div class="ticker-wrap"><div class="ticker" id="ticker-content"><div class="ticker__item">Loading...</div></div></div>
+<body>
+<!-- MODERNIZED TICKER -->
+<div class="ticker-wrap">
+    <div class="ticker">
+        <span class="ticker__item">
+            8/6: <span class="pick-text">Blue Jays/Rockies over 11.5</span> <span class="grade win">W</span>
+        </span>
+        <span class="ticker__separator">◆</span>
+        <span class="ticker__item">
+            8/6: <span class="pick-text">Red Sox ML</span> <span class="grade loss">L</span>
+        </span>
+        <span class="ticker__separator">◆</span>
+        <span class="ticker__item">
+            8/6: <span class="pick-text">Royals/Red Sox under 9</span> <span class="grade loss">L</span>
+        </span>
+        <span class="ticker__separator">◆</span>
+        <span class="ticker__item">
+            8/6: <span class="pick-text">White Sox Team Total under 2.5</span> <span class="grade loss">L</span>
+        </span>
+        <span class="ticker__separator">◆</span>
+        <span class="ticker__item">
+            8/6: <span class="pick-text">Brewers ML</span> <span class="grade win">W</span>
+        </span>
+        <span class="ticker__separator">◆</span>
+        <span class="ticker__item">
+            8/6: <span class="pick-text">Dodgers -1.5</span> <span class="grade loss">L</span>
+        </span>
+    </div>
+</div>
+
 <div class="content-wrapper">
     <div class="header-branding">
         <h1 class="title">BET<span class="highlight">LEGEND</span></h1>
-        <h2 class="subtitle">The Universe of Probabilities Has Just Been Hacked.</h2>
+        <p class="subtitle">THE UNIVERSE OF PROBABILITIES HAS JUST BEEN HACKED.</p>
     </div>
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="blog.html">Picks & Analysis</a>
-        <a href="betlegend-verified-records.html">Records</a>
+    
+    <nav class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Picks & Analysis</a>
+        <a href="#">Records</a>
         
         <div class="dropdown">
             <button class="dropbtn">Sports</button>
             <div class="dropdown-content">
-                <a href="nfl.html">NFL</a>
-                <a href="mlb.html">MLB</a>
+                <a href="#">MLB</a>
+                <a href="#">NFL</a>
+                <a href="#">NBA</a>
+                <a href="#">NHL</a>
             </div>
         </div>
         
         <div class="dropdown">
             <button class="dropbtn">Resources</button>
             <div class="dropdown-content">
-                <a href="howitworks.html">How It Works</a>
-                <a href="bankroll.html">Bankroll</a>
-                <a href="screenshots.html">Screenshots</a>
-                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="#">Betting Guide</a>
+                <a href="#">Strategy Articles</a>
+                <a href="#">Tools</a>
             </div>
         </div>
         
-        <a href="news.html">News</a>
-
+        <a href="#">News</a>
+        
         <div class="dropdown">
             <button class="dropbtn">Community</button>
             <div class="dropdown-content">
-                <a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a>
-                <a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
+                <a href="#">Discord</a>
+                <a href="#">Forum</a>
+                <a href="#">Leaderboard</a>
             </div>
         </div>
-    </div>
+    </nav>
+    
     <div class="gif-showcase">
-        <img src="https://nimadamus.github.io/curry.gif" alt="Animated graphic showing BetLegend sports betting picks and analysis.">
+        <img src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" alt="Stephen Curry celebration" />
     </div>
+    
     <div class="caption">
-        Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">See Full Betting History</a>
+        Powered by BetLegend Pro model | <a href="#" style="color: var(--glow-color);">See Full Betting History</a>
     </div>
 </div>
+
+<!-- FIXED DASHBOARD -->
 <div class="interactive-dashboard">
-    <a href="betlegend-verified-records.html" class="dash-item clickable" id="dash-record">
-        <svg viewBox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg>
-        <h3>Verified Record</h3>
-        <p>--</p>
-    </a>
-    <div class="dash-item" id="dash-free-pick"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg><h3>Free Daily Pick</h3>
-        <p>--</p>
+    <div class="dash-item">
+        <svg viewBox="0 0 24 24">
+            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+        </svg>
+        <h3>NFL RECORD</h3>
+        <p><span class="highlight">0-0</span></p>
     </div>
-    <a href="https://buy.stripe.com/7sY3cvblp1sbdBm97n6Vq04" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg><h3>Premium Email</h3><p>Subscribe Now</p></a>
-    <a href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank" class="dash-item clickable"><svg viewBox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
+    
+    <div class="dash-item">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <h3>FREE DAILY PICK</h3>
+        <p>Blue Jays/Rockies over 11.5 (-108)</p>
+    </div>
+    
+    <div class="dash-item clickable">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <h3>PREMIUM EMAIL</h3>
+        <p>Subscribe Now</p>
+    </div>
+    
+    <div class="dash-item clickable">
+        <svg viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+        </svg>
+        <h3>SPORTSBOOK</h3>
+        <p><span class="highlight">350% BONUS</span></p>
+    </div>
 </div>
-
-<!-- PAPA PARSE LIBRARY -->
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-
-<!-- FINAL SCRIPT - v29 - WORKING AND CORRECTED -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // --- CONFIGURATION ---
-    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
-    const cycleSpeed = 4000;
-
-    // --- ELEMENT SELECTORS ---
-    const recordDashItem = document.getElementById('dash-record');
-    const recordH3 = recordDashItem.querySelector('h3');
-    const recordP = recordDashItem.querySelector('p');
-    const freePickDisplay = document.querySelector('#dash-free-pick p');
-    const tickerContent = document.getElementById('ticker-content');
-    
-    if (!recordDashItem || !freePickDisplay || !tickerContent) {
-        console.error("Critical dashboard elements could not be found. Aborting script.");
-        return;
-    }
-    
-    recordH3.style.transition = 'opacity 0.4s ease-in-out';
-    recordP.style.transition = 'opacity 0.4s ease-in-out';
-
-    // --- HELPER FUNCTION ---
-    function parseDate(dateStr) {
-        if (!dateStr || typeof dateStr !== 'string') return null;
-        const parts = dateStr.trim().split(/[-/]/);
-        if (parts.length === 3) {
-            const month = parseInt(parts[0]) - 1;
-            let day = parseInt(parts[1]);
-            let year = parseInt(parts[2]);
-            if (year < 100) year += 2000;
-
-            if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) {
-                return new Date(year, month, day);
-            }
-        }
-        return null;
-    }
-    
-    // --- MAIN EXECUTION ---
-    function run() {
-        Papa.parse(googleSheetUrl, {
-            download: true,
-            header: true,
-            skipEmptyLines: 'greedy',
-            transformHeader: header => header.trim(),
-            complete: function(results) {
-                const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
-
-                if (allPicks.length === 0) {
-                    displayDefaults();
-                    return;
-                }
-                
-                processAndDisplayRecords(allPicks);
-                updateDailyPick(allPicks);
-                updateTicker(allPicks);
-            },
-            error: function(error) {
-                console.error("Papa Parse Error:", error);
-                displayError(error.message);
-            }
-        });
-    }
-
-    // --- RECORD PROCESSING LOGIC ---
-    function processAndDisplayRecords(picks) {
-        const recordsBySport = {};
-        
-        for (const p of picks) {
-            const result = p.Result ? p.Result.trim().toUpperCase() : '';
-            const sport = p.Sport ? p.Sport.trim() : 'Misc';
-            const unitChange = parseFloat(p.Units);
-
-            if (result !== '' && !isNaN(unitChange)) {
-                if (!recordsBySport[sport]) {
-                    recordsBySport[sport] = { w: 0, l: 0, p: 0, units: 0.0 };
-                }
-                
-                if (result === 'W' || result === 'WIN') recordsBySport[sport].w++;
-                else if (result === 'L' || result === 'LOSS') recordsBySport[sport].l++;
-                else if (result === 'P' || result === 'PUSH') recordsBySport[sport].p++;
-                
-                recordsBySport[sport].units += unitChange;
-            }
-        }
-
-        const total = { w: 0, l: 0, p: 0, units: 0.0 };
-        Object.values(recordsBySport).forEach(sportStats => {
-            total.w += sportStats.w;
-            total.l += sportStats.l;
-            total.p += sportStats.p;
-            total.units += sportStats.units;
-        });
-
-        const displayData = { 'Overall': total, ...recordsBySport };
-        
-        if (!displayData['NFL']) {
-            displayData['NFL'] = { w: 0, l: 0, p: 0, units: 0.0 };
-        }
-        
-        const sportsToCycle = Object.keys(displayData);
-        let currentIndex = 0;
-        let intervalId = null;
-
-        function updateDisplay() {
-            if (sportsToCycle.length === 0) return;
-            const sportName = sportsToCycle[currentIndex];
-            const data = displayData[sportName];
-
-            const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
-            const recordString = `${data.w}-${data.l}-${data.p}`;
-
-            recordH3.style.opacity = '0';
-            recordP.style.opacity = '0';
-
-            setTimeout(() => {
-                recordH3.textContent = `${sportName} Record`;
-                recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
-                recordH3.style.opacity = '1';
-                recordP.style.opacity = '1';
-            }, 400);
-
-            currentIndex = (currentIndex + 1) % sportsToCycle.length;
-        }
-
-        if (intervalId) clearInterval(intervalId);
-        
-        updateDisplay();
-        intervalId = setInterval(updateDisplay, cycleSpeed);
-    }
-    
-    // --- DAILY PICK AND TICKER LOGIC ---
-    function updateDailyPick(picks) {
-        const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date));
-        
-        if (gradedPicks.length === 0) {
-            const pendingPicks = picks.filter(p => (!p.Result || p.Result.trim() === '') && p.Date && parseDate(p.Date)).sort((a,b) => parseDate(a.Date) - parseDate(b.Date));
-            if (pendingPicks.length > 0) {
-                const nextPick = pendingPicks[0];
-                if (nextPick && nextPick.Line) {
-                    freePickDisplay.textContent = `${nextPick.Pick.trim()} (${nextPick.Line.trim()})`;
-                } else {
-                    freePickDisplay.textContent = 'Check Back Soon';
-                }
-            } else {
-                freePickDisplay.textContent = 'Check Back Soon';
-            }
-            return;
-        }
-
-        gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
-        const latestPick = gradedPicks[0];
-        
-        if (latestPick && latestPick.Line) {
-            freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`;
-        } else {
-            freePickDisplay.textContent = 'Check Back Soon';
-        }
-    }
-
-    function updateTicker(picks) {
-        const today = new Date();
-        today.setHours(23, 59, 59, 999);
-        const threeDaysAgo = new Date(today);
-        threeDaysAgo.setDate(today.getDate() - 2);
-
-        const recentGradedPicks = picks.filter(p => {
-            const pickDate = parseDate(p.Date);
-            return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
-        }).sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
-
-        if (recentGradedPicks.length === 0) {
-            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
-            return;
-        }
-
-        const separator = ' <span class="ticker__separator">•</span> ';
-        let tickerHTML = recentGradedPicks.map(p => {
-            const result = p.Result.trim().toUpperCase();
-            let resultClass = '';
-            if (result === 'W' || result === 'WIN') resultClass = 'win';
-            if (result === 'L' || result === 'LOSS') resultClass = 'loss';
-            
-            const resultText = result.charAt(0);
-            const pickDate = parseDate(p.Date);
-            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
-            
-            return `<div class="ticker__item">${displayDate}: <span class="pick-text">${p.Pick.trim()}</span> <span class="grade ${resultClass}">${resultText}</span></div>`;
-        }).join(separator);
-
-        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
-    }
-
-    // --- DEFAULT AND ERROR STATES ---
-    function displayDefaults() {
-        recordH3.textContent = 'Verified Record';
-        recordP.textContent = '0-0-0';
-        freePickDisplay.textContent = '--';
-        tickerContent.innerHTML = '<div class="ticker__item">No data available.</div>';
-    }
-
-    function displayError(message) {
-        recordH3.textContent = 'Verified Record';
-        recordP.textContent = 'Error';
-        freePickDisplay.textContent = 'Error';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
-    }
-
-    // --- INITIALIZE THE SCRIPT ---
-    run();
-});
-</script>
 
 </body>
 </html>
