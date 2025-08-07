@@ -190,33 +190,52 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- FINAL SCRIPT - v17 with Intelligent Result Parsing -->
+<!-- START OF NEW, UPGRADED SCRIPT -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // --- CONFIGURATION ---
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
+    const cycleSpeed = 4000; // Time in milliseconds to show each sport (4 seconds)
 
-    const recordDisplay = document.querySelector('#dash-record p');
+    // --- ELEMENT SELECTORS ---
+    const recordDashItem = document.getElementById('dash-record');
+    const recordH3 = recordDashItem.querySelector('h3');
+    const recordP = recordDashItem.querySelector('p');
     const freePickDisplay = document.querySelector('#dash-free-pick p');
     const tickerContent = document.getElementById('ticker-content');
+    
+    // Add a transition style for smooth fading
+    if(recordH3 && recordP) {
+        recordH3.style.transition = 'opacity 0.4s ease-in-out';
+        recordP.style.transition = 'opacity 0.4s ease-in-out';
+    }
 
+    // --- HELPER FUNCTIONS ---
     function parseDate(dateStr) {
         if (!dateStr || typeof dateStr !== 'string') return null;
         const parts = dateStr.trim().split(/[-/]/);
         if (parts.length === 3) {
-            const year = parseInt(parts[2]);
-            const month = parseInt(parts[0]) - 1;
-            const day = parseInt(parts[1]);
-            if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) {
-                return new Date(year, month, day);
-            }
+            const year = parseInt(parts[2]); const month = parseInt(parts[0]) - 1; const day = parseInt(parts[1]);
+            if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) return new Date(year, month, day);
         }
         return null;
     }
 
-    function run() {
-        if (!recordDisplay || !freePickDisplay || !tickerContent) {
-            return;
+    function calculateUnitsWon(stake, odds) {
+        stake = parseFloat(stake);
+        odds = parseInt(odds);
+        if (isNaN(stake) || isNaN(odds)) return 0;
+        
+        if (odds > 0) { // Positive odds
+            return stake * (odds / 100);
+        } else { // Negative odds
+            return stake * (100 / Math.abs(odds));
         }
+    }
+    
+    // --- MAIN EXECUTION ---
+    function run() {
+        if (!recordDashItem || !freePickDisplay || !tickerContent) return;
 
         Papa.parse(googleSheetUrl, {
             download: true,
@@ -225,13 +244,15 @@ document.addEventListener('DOMContentLoaded', function() {
             transformHeader: header => header.trim(),
             complete: function(results) {
                 const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
-
                 if (allPicks.length === 0) {
                     displayDefaults();
                     return;
                 }
+                
+                // *** NEW: Process records by sport and units ***
+                processAndDisplayRecords(allPicks);
 
-                updateRecord(allPicks);
+                // These functions remain unchanged
                 updateDailyPick(allPicks);
                 updateTicker(allPicks);
             },
@@ -241,36 +262,92 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function updateRecord(picks) {
-        let wins = 0, losses = 0, pushes = 0;
+    // --- RECORD PROCESSING AND DISPLAY LOGIC (THE NEW PART) ---
+    function processAndDisplayRecords(picks) {
+        const recordsBySport = {};
+        let total = { w: 0, l: 0, p: 0, units: 0 };
+
         for (const p of picks) {
-            if (p.Pick && p.Pick.trim() !== '' && p.Result && p.Result.trim() !== '') {
-                const result = p.Result.trim().toUpperCase();
+            const result = p.Result ? p.Result.trim().toUpperCase() : '';
+            const sport = p.Sport ? p.Sport.trim() : 'Misc';
+            const stake = parseFloat(p.Stake);
+
+            if (p.Pick && p.Pick.trim() !== '' && result !== '') {
+                // Initialize sport if it's new
+                if (!recordsBySport[sport]) {
+                    recordsBySport[sport] = { w: 0, l: 0, p: 0, units: 0 };
+                }
+                
+                // Update stats
                 if (result === 'W' || result === 'WIN') {
-                    wins++;
+                    recordsBySport[sport].w++;
+                    total.w++;
+                    if(!isNaN(stake)) recordsBySport[sport].units += calculateUnitsWon( stake, p.Odds);
                 } else if (result === 'L' || result === 'LOSS') {
-                    losses++;
+                    recordsBySport[sport].l++;
+                    total.l++;
+                    if(!isNaN(stake)) recordsBySport[sport].units -= stake;
                 } else if (result === 'P' || result === 'PUSH') {
-                    pushes++;
+                    recordsBySport[sport].p++;
+                    total.p++;
                 }
             }
         }
-        recordDisplay.textContent = `${wins}-${losses}-${pushes}`;
-    }
 
+        // Calculate total units from all sports
+        total.units = Object.values(recordsBySport).reduce((acc, sport) => acc + sport.units, 0);
+
+        // Prepare data for cycling display
+        const displayData = { 'Overall': total, ...recordsBySport };
+        
+        // Add NFL entry if it doesn't exist, so it shows up before the season starts
+        if (!displayData['NFL']) {
+            displayData['NFL'] = { w: 0, l: 0, p: 0, units: 0 };
+        }
+        
+        const sportsToCycle = Object.keys(displayData);
+        let currentIndex = 0;
+        let intervalId = null;
+
+        function updateDisplay() {
+            const sportName = sportsToCycle[currentIndex];
+            const data = displayData[sportName];
+
+            // Format units to 2 decimal places and add a + sign for positive values
+            const unitsString = `${data.units > 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
+            const recordString = `${data.w}-${data.l}-${data.p}`;
+
+            // Fade out
+            recordH3.style.opacity = '0';
+            recordP.style.opacity = '0';
+
+            // Wait for fade out, then update content and fade in
+            setTimeout(() => {
+                recordH3.textContent = `${sportName} Record`;
+                recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
+                recordH3.style.opacity = '1';
+                recordP.style.opacity = '1';
+            }, 400);
+
+            currentIndex = (currentIndex + 1) % sportsToCycle.length;
+        }
+
+        // Stop any previous interval before starting a new one
+        if (intervalId) clearInterval(intervalId);
+        
+        // Start the cycle
+        updateDisplay(); // Show the first one immediately
+        intervalId = setInterval(updateDisplay, cycleSpeed);
+    }
+    
+    // --- UNCHANGED FUNCTIONS ---
     function updateDailyPick(picks) {
         const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && parseDate(p.Date));
-        if (gradedPicks.length === 0) {
-            freePickDisplay.textContent = 'Check Back Soon';
-            return;
-        }
+        if (gradedPicks.length === 0) { freePickDisplay.textContent = 'Check Back Soon'; return; }
         gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
         const latestPick = gradedPicks[0];
-        if (latestPick && latestPick.Line) {
-            freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`;
-        } else {
-            freePickDisplay.textContent = 'Check Back Soon';
-        }
+        if (latestPick && latestPick.Line) { freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`; } 
+        else { freePickDisplay.textContent = 'Check Back Soon'; }
     }
 
     function updateTicker(picks) {
@@ -293,8 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let tickerHTML = recentGradedPicks.map(p => {
             const result = p.Result.trim().toUpperCase();
             const resultClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
-            const resultText = result.charAt(0); // Show just W, L, or P
-            
+            const resultText = result.charAt(0);
             const pickDate = parseDate(p.Date);
             const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
             return `<div class="ticker__item">${displayDate}: ${p.Pick.trim()} <span class="grade ${resultClass}">${resultText}</span></div>`;
@@ -304,20 +380,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayDefaults() {
-        recordDisplay.textContent = '0-0-0';
+        recordH3.textContent = 'Verified Record';
+        recordP.textContent = '0-0-0';
         freePickDisplay.textContent = '--';
         tickerContent.innerHTML = '<div class="ticker__item">No data available.</div>';
     }
 
     function displayError(message) {
-        recordDisplay.textContent = 'Error';
+        recordH3.textContent = 'Verified Record';
+        recordP.textContent = 'Error';
         freePickDisplay.textContent = 'Error';
         tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
     }
 
+    // --- INITIALIZE THE SCRIPT ---
     run();
 });
 </script>
+<!-- END OF NEW SCRIPT -->
 
 </body>
 </html>
