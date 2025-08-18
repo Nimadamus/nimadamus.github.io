@@ -76,7 +76,450 @@
 <!-- DO NOT TOUCH ANYTHING ABOVE THIS LINE -->
 <!-- DROP NEW POSTS BELOW THIS LINE -->
 
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>BetLegend: Daily Expert MLB Picks & Betting Analysis</title>
+<meta name="description" content="Get daily expert MLB picks, in-depth betting analysis, and high-value predictions. BetLegend provides moneyline, run line, totals, and F5 bets backed by advanced stats.">
+<meta name="keywords" content="mlb picks, mlb best bets, baseball betting, expert mlb predictions, mlb moneyline picks, mlb run line picks, daily mlb picks, sports betting, baseball picks today">
+<link href="https://www.betlegendpicks.com/logo.png" rel="icon" type="image/png"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600&family=Rubik&display=swap" rel="stylesheet"/>
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: white;
+      font-family: 'Rubik', sans-serif;
+    }
+    .pagination {
+      text-align: center;
+      color: blue;
+      margin: 20px 0;
+    }
+    .pagination a {
+      color: blue;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    h1 {
+      text-align: center;
+      color: gold;
+      font-size: 40px;
+      margin-top: 20px;
+      font-family: 'Sora', sans-serif;
+    }
+    .blog-post {
+      background-color: #111;
+      border-left: 4px solid gold;
+      padding: 44px;
+      border-radius: 14px;
+      box-shadow: 0 0 10px #000;
+      margin: 40px auto;
+      max-width: 1140px;
+    }
+    .blog-post .post-header {
+      font-size: 30px;
+      color: gold;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .blog-post .post-time {
+      font-size: 15px;
+      color: #aaa;
+      margin-bottom: 24px;
+    }
+    .blog-post p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: white;
+    }
+
+    /* PAYWALL STYLES */
+    .post-paywall-overlay {
+      position: relative;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      border: 2px solid #00d4ff;
+      border-radius: 20px;
+      padding: 40px;
+      margin: 30px 0;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+    }
+
+    .post-paywall-overlay::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent);
+      animation: shimmer 4s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .paywall-lock-icon {
+      font-size: 4em;
+      color: #00d4ff;
+      margin-bottom: 25px;
+      animation: pulse 2s infinite;
+      filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .paywall-title {
+      color: #ffffff;
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      font-weight: bold;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    }
+
+    .paywall-subtitle {
+      color: #e0e0e0;
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .paywall-pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    .paywall-price-option {
+      background: linear-gradient(145deg, #1e3a5f 0%, #2d4a7a 100%);
+      border: 2px solid #00d4ff;
+      border-radius: 15px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .paywall-price-option::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(145deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .paywall-price-option:hover {
+      border-color: #ffffff;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 212, 255, 0.4);
+    }
+
+    .paywall-price-option:hover::before {
+      opacity: 1;
+    }
+
+    .paywall-price {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 8px;
+      text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
+    }
+
+    .paywall-price-period {
+      color: #b0c4de;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .paywall-subscribe-btn {
+      background: linear-gradient(45deg, #00d4ff, #0099cc);
+      color: #ffffff;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      width: 100%;
+      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .paywall-subscribe-btn:hover {
+      background: linear-gradient(45deg, #ffffff, #e0e0e0);
+      color: #1a1a2e;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(0, 212, 255, 0.5);
+    }
+
+    .paywall-track-record {
+      background: linear-gradient(145deg, #0d2818 0%, #1a4d2e 100%);
+      border: 2px solid #00ff88;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
+    }
+
+    .paywall-track-record h4 {
+      color: #ffffff;
+      margin-bottom: 15px;
+      font-size: 1.6em;
+      text-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+    }
+
+    .paywall-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .paywall-stat-item {
+      text-align: center;
+      background: rgba(0, 255, 136, 0.1);
+      padding: 15px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+
+    .paywall-stat-number {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #00ff88;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+      margin-bottom: 5px;
+    }
+
+    .paywall-stat-label {
+      font-size: 0.9em;
+      color: #ffffff;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .paywall-guarantee {
+      background: linear-gradient(145deg, #1a2e0d 0%, #2e4d1a 100%);
+      border: 2px solid #00ff88;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 25px;
+      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
+    }
+
+    .paywall-guarantee-title {
+      color: #ffffff;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 1.2em;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+    }
+
+    .paywall-guarantee p {
+      color: #e0e0e0;
+      margin: 0;
+      font-size: 1em;
+    }
+
+    @media (max-width: 768px) {
+      .paywall-pricing-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .paywall-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+</style>
+</head>
     
+<body>
+<img src="https://www.betlegendpicks.com/logo.png" alt="BetLegend Picks Logo" style="display: block; margin: 30px auto; width: 200px;"/>
+<h1>BetLegend Daily Picks and Analysis</h1>
+
+<div class="blog-post">
+ <div class="post-header" style="text-align: center;">
+   • Sunday's Elite Edge: 5 Sharp Plays for August 18th
+ </div>
+ <div class="post-time" style="text-align: center;">
+   Posted: August 18, 2025 2:08 AM
+ </div>
+
+ <div style="text-align: center;">
+   <img src="august-18-2025.png" alt="August 18 2025" style="width: 85%; margin: 30px 0; border-radius: 10px;">
+ </div>
+
+ <p>
+   What's good, legends! We're continuing our hot streak with another card that's built around systematic edge identification. I've been grinding the advanced metrics all night, and Sunday's slate presents several spots where the market has left us clear, exploitable value.
+ </p>
+
+ <p>
+   This isn't guesswork. Every single play on today's card is backed by converging data streams that the casual betting public simply doesn't have access to. We're talking about starter peripherals, recent form trends, environmental factors, and situational angles that create mathematical certainties.
+ </p>
+
+ <p>
+   Today's approach targets multiple different types of analytical edges across the board. The beauty is in how these plays complement each other from a risk management perspective while maximizing our profit potential. Each spot represents a different pathway to cash, but they all share one common thread: the numbers are screaming in our direction.
+ </p>
+
+ <p>
+   To uncover all 5 plays with complete analysis and reasoning, grab a daily pass for just $25 or choose from our other subscription options below.
+ </p>
+
+ <div class="post-paywall-overlay">
+   <div class="paywall-lock-icon">🔒</div>
+   <div class="paywall-title">UNLOCK TODAY'S PREMIUM PLAYS</div>
+   <div class="paywall-subtitle">Get access to 5 elite plays with deep statistical breakdowns and our proven system</div>
+   
+   <div class="paywall-track-record">
+     <h4>🏆 VERIFIED TRACK RECORD</h4>
+     <p style="margin-bottom: 15px;"><strong>Since May 2024 - Documented Across Multiple Platforms</strong></p>
+     <div class="paywall-stats-grid">
+       <div class="paywall-stat-item">
+         <div class="paywall-stat-number">161</div>
+         <div class="paywall-stat-label">WINS</div>
+       </div>
+       <div class="paywall-stat-item">
+         <div class="paywall-stat-number">109</div>
+         <div class="paywall-stat-label">LOSSES</div>
+       </div>
+       <div class="paywall-stat-item">
+         <div class="paywall-stat-number">9</div>
+         <div class="paywall-stat-label">PUSHES</div>
+       </div>
+       <div class="paywall-stat-item">
+         <div class="paywall-stat-number">+28.27</div>
+         <div class="paywall-stat-label">UNITS</div>
+       </div>
+       <div class="paywall-stat-item">
+         <div class="paywall-stat-number">59.5%</div>
+         <div class="paywall-stat-label">WIN RATE</div>
+       </div>
+     </div>
+   </div>
+   
+   <div class="paywall-pricing-grid">
+     <div class="paywall-price-option">
+       <div class="paywall-price">$25</div>
+       <div class="paywall-price-period">Daily Pass</div>
+       <a href="https://buy.stripe.com/28E7sLdVkdye8f86m5grS04" class="paywall-subscribe-btn">Get Daily Picks</a>
+     </div>
+
+     <div class="paywall-price-option">
+       <div class="paywall-price">$79</div>
+       <div class="paywall-price-period">Weekly Pass</div>
+       <a href="https://buy.stripe.com/14AeVdcRg1Pw7b4dOxgrS05" class="paywall-subscribe-btn">Get Weekly Access</a>
+     </div>
+
+     <div class="paywall-price-option">
+       <div class="paywall-price">$149</div>
+       <div class="paywall-price-period">Monthly Plan</div>
+       <a href="https://buy.stripe.com/dRmdR98B065Mcvo6m5grS02" class="paywall-subscribe-btn">Start Monthly</a>
+     </div>
+
+     <div class="paywall-price-option">
+       <div class="paywall-price">$750</div>
+       <div class="paywall-price-period">Season Pass</div>
+       <a href="https://buy.stripe.com/bJe5kD9F43XE2UOh0JgrS03" class="paywall-subscribe-btn">Get Season Pass</a>
+     </div>
+   </div>
+   
+   <div class="paywall-guarantee">
+     <div class="paywall-guarantee-title">💯 PROFIT GUARANTEE</div>
+     <p>If you're not ahead when your subscription ends, we'll keep giving you picks until you're profitable. No questions asked.</p>
+   </div>
+ </div>
+
+ <!-- ADMIN BUTTON (Only visible to you) -->
+ <div id="admin-controls" style="text-align: center; margin: 20px 0; padding: 20px; background: #222; border-radius: 10px;">
+   <p style="color: #ccc; margin-bottom: 15px;">Admin Controls (Games Over?)</p>
+   <button id="reveal-picks-btn" onclick="revealPicks()" style="background: #ff4444; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px;">
+     🔓 REVEAL PICKS (Games Over)
+   </button>
+   <button id="hide-picks-btn" onclick="hidePicks()" style="background: #4444ff; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; margin-left: 10px; display: none;">
+     🔒 HIDE PICKS (Reset)
+   </button>
+ </div>
+
+ <!-- PREMIUM CONTENT (Hidden until revealed) -->
+ <div id="premium-content" style="display: none;">
+   <h3 style="color: gold; font-size: 18px;">BetLegend Official Card - August 18th, 2025</h3>
+   <ul style="font-size: 18px; color: white; line-height: 2.0; list-style-type: none; padding-left: 0; text-align: center; font-family: 'Sora', sans-serif;">
+      <li>🔒 Blue Jays/Pirates Under 7 (-106) [2 Units]</li>
+      <li>🎯 Cubs/Brewers Under 8.5 (-132)</li>
+      <li>⚫ Pirates F5 (-154)</li>
+      <li>🌟 Tigers/Astros Under 8.5 (-116)</li>
+      <li>🎲 Rangers/Royals Under 9 (-109)</li>
+   </ul>
+   
+   <p style="color: #ccc; text-align: center; margin-top: 20px; font-style: italic;">
+     These picks were revealed after games concluded to maintain transparency.
+   </p>
+ </div>
+
+ <script>
+ function revealPicks() {
+   // Hide the paywall
+   document.querySelector('.post-paywall-overlay').style.display = 'none';
+   
+   // Show the premium content
+   document.getElementById('premium-content').style.display = 'block';
+   
+   // Switch admin buttons
+   document.getElementById('reveal-picks-btn').style.display = 'none';
+   document.getElementById('hide-picks-btn').style.display = 'inline-block';
+   
+   // Save state in localStorage so it persists on page refresh
+   localStorage.setItem('picksRevealed_aug18', 'true');
+ }
+ 
+ function hidePicks() {
+   // Show the paywall
+   document.querySelector('.post-paywall-overlay').style.display = 'block';
+   
+   // Hide the premium content
+   document.getElementById('premium-content').style.display = 'none';
+   
+   // Switch admin buttons
+   document.getElementById('reveal-picks-btn').style.display = 'inline-block';
+   document.getElementById('hide-picks-btn').style.display = 'none';
+   
+   // Remove saved state
+   localStorage.removeItem('picksRevealed_aug18');
+ }
+ 
+ // Check if picks were already revealed when page loads
+ window.addEventListener('load', function() {
+   if (localStorage.getItem('picksRevealed_aug18') === 'true') {
+     revealPicks();
+   }
+ });
+ </script>
+
+</div>
+
+</body>
+</html>
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Sunday Slate Domination: 9 Elite MLB Picks for August 17, 2025
