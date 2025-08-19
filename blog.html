@@ -582,6 +582,298 @@
 <!-- DO NOT TOUCH ANYTHING ABOVE THIS LINE -->
 <!-- DROP NEW POSTS BELOW THIS LINE -->
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>BetLegend: Daily Expert MLB Picks & Betting Analysis</title>
+<meta name="description" content="Get daily expert MLB picks, in-depth betting analysis, and high-value predictions. BetLegend provides moneyline, run line, totals, and F5 bets backed by advanced stats."/>
+<meta name="keywords" content="mlb picks, mlb best bets, baseball betting, expert mlb predictions, mlb moneyline picks, mlb run line picks, daily mlb picks, sports betting, baseball picks today"/>
+<link href="https://www.betlegendpicks.com/logo.png" rel="icon" type="image/png"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600&family=Rubik&display=swap" rel="stylesheet"/>
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: white;
+      font-family: 'Rubik', sans-serif;
+    }
+    .pagination {
+      text-align: center;
+      color: blue;
+      margin: 20px 0;
+    }
+    .pagination a {
+      color: blue;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    h1 {
+      text-align: center;
+      color: gold;
+      font-size: 40px;
+      margin-top: 20px;
+      font-family: 'Sora', sans-serif;
+    }
+    .blog-post {
+      background-color: #111;
+      border-left: 4px solid gold;
+      padding: 44px;
+      border-radius: 14px;
+      box-shadow: 0 0 10px #000;
+      margin: 40px auto;
+      max-width: 1140px;
+    }
+    .blog-post .post-header {
+      font-size: 30px;
+      color: gold;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .blog-post .post-time {
+      font-size: 15px;
+      color: #aaa;
+      margin-bottom: 24px;
+    }
+    .blog-post p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: white;
+    }
+
+    /* PAYWALL STYLES */
+    .post-paywall-overlay {
+      position: relative;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      border: 2px solid #00d4ff;
+      border-radius: 20px;
+      padding: 40px;
+      margin: 30px 0;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+    }
+
+    .post-paywall-overlay::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent);
+      animation: shimmer 4s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .paywall-lock-icon {
+      font-size: 4em;
+      color: #00d4ff;
+      margin-bottom: 25px;
+      animation: pulse 2s infinite;
+      filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .paywall-title {
+      color: #ffffff;
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      font-weight: bold;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    }
+
+    .paywall-subtitle {
+      color: #e0e0e0;
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .paywall-pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    .paywall-price-option {
+      background: linear-gradient(145deg, #1e3a5f 0%, #2d4a7a 100%);
+      border: 2px solid #00d4ff;
+      border-radius: 15px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .paywall-price-option::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(145deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .paywall-price-option:hover {
+      border-color: #ffffff;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 212, 255, 0.4);
+    }
+
+    .paywall-price-option:hover::before {
+      opacity: 1;
+    }
+
+    .paywall-price {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 8px;
+      text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
+    }
+
+    .paywall-price-period {
+      color: #b0c4de;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .paywall-subscribe-btn {
+      background: linear-gradient(45deg, #00d4ff, #0099cc);
+      color: #ffffff;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      width: 100%;
+      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .paywall-subscribe-btn:hover {
+      background: linear-gradient(45deg, #ffffff, #e0e0e0);
+      color: #1a1a2e;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(0, 212, 255, 0.5);
+    }
+
+    .paywall-track-record {
+      background: linear-gradient(145deg, #0d2818 0%, #1a4d2e 100%);
+      border: 2px solid #00ff88;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
+    }
+
+    .paywall-track-record h4 {
+      color: #ffffff;
+      margin-bottom: 15px;
+      font-size: 1.6em;
+      text-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+    }
+
+    .paywall-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .paywall-stat-item {
+      text-align: center;
+      background: rgba(0, 255, 136, 0.1);
+      padding: 15px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+
+    .paywall-stat-number {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #00ff88;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+      margin-bottom: 5px;
+    }
+
+    .paywall-stat-label {
+      font-size: 0.9em;
+      color: #ffffff;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .paywall-guarantee {
+      background: linear-gradient(145deg, #1a2e0d 0%, #2e4d1a 100%);
+      border: 2px solid #00ff88;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 25px;
+      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
+    }
+
+    .paywall-guarantee-title {
+      color: #ffffff;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 1.2em;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+    }
+
+    .paywall-guarantee p {
+      color: #e0e0e0;
+      margin: 0;
+      font-size: 1em;
+    }
+
+    @media (max-width: 768px) {
+      .paywall-pricing-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .paywall-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+</style>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+</head>
+<body>
+<img src="https://www.betlegendpicks.com/logo.png" alt="BetLegend Picks Logo" style="display: block; margin: 30px auto; width: 200px;"/><h1>BetLegend Daily Picks and Analysis</h1>
+
+<!-- DO NOT TOUCH ANYTHING ABOVE THIS LINE -->
+<!-- DROP NEW POSTS BELOW THIS LINE -->
+
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Sunday's Elite Edge: 5 Sharp Plays for August 18th
