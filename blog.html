@@ -290,590 +290,6 @@
 <!-- DO NOT TOUCH ANYTHING ABOVE THIS LINE -->
 <!-- DROP NEW POSTS BELOW THIS LINE -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<title>BetLegend: Daily Expert MLB Picks & Betting Analysis</title>
-<meta name="description" content="Get daily expert MLB picks, in-depth betting analysis, and high-value predictions. BetLegend provides moneyline, run line, totals, and F5 bets backed by advanced stats."/>
-<meta name="keywords" content="mlb picks, mlb best bets, baseball betting, expert mlb predictions, mlb moneyline picks, mlb run line picks, daily mlb picks, sports betting, baseball picks today"/>
-<link href="https://www.betlegendpicks.com/logo.png" rel="icon" type="image/png"/>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600&family=Rubik&display=swap" rel="stylesheet"/>
-<style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: black;
-      color: white;
-      font-family: 'Rubik', sans-serif;
-    }
-    .pagination {
-      text-align: center;
-      color: blue;
-      margin: 20px 0;
-    }
-    .pagination a {
-      color: blue;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-    h1 {
-      text-align: center;
-      color: gold;
-      font-size: 40px;
-      margin-top: 20px;
-      font-family: 'Sora', sans-serif;
-    }
-    .blog-post {
-      background-color: #111;
-      border-left: 4px solid gold;
-      padding: 44px;
-      border-radius: 14px;
-      box-shadow: 0 0 10px #000;
-      margin: 40px auto;
-      max-width: 1140px;
-    }
-    .blog-post .post-header {
-      font-size: 30px;
-      color: gold;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .blog-post .post-time {
-      font-size: 15px;
-      color: #aaa;
-      margin-bottom: 24px;
-    }
-    .blog-post p {
-      font-size: 16px;
-      line-height: 1.7;
-      color: white;
-    }
-
-    /* PAYWALL STYLES */
-    .post-paywall-overlay {
-      position: relative;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-      border: 2px solid #00d4ff;
-      border-radius: 20px;
-      padding: 40px;
-      margin: 30px 0;
-      text-align: center;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
-    }
-
-    .post-paywall-overlay::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent);
-      animation: shimmer 4s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { left: -100%; }
-      100% { left: 100%; }
-    }
-
-    .paywall-lock-icon {
-      font-size: 4em;
-      color: #00d4ff;
-      margin-bottom: 25px;
-      animation: pulse 2s infinite;
-      filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-
-    .paywall-title {
-      color: #ffffff;
-      font-size: 2.2em;
-      margin-bottom: 15px;
-      font-weight: bold;
-      text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
-    }
-
-    .paywall-subtitle {
-      color: #e0e0e0;
-      font-size: 1.2em;
-      margin-bottom: 30px;
-    }
-
-    .paywall-pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin: 25px 0;
-    }
-
-    .paywall-price-option {
-      background: linear-gradient(145deg, #1e3a5f 0%, #2d4a7a 100%);
-      border: 2px solid #00d4ff;
-      border-radius: 15px;
-      padding: 20px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .paywall-price-option::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(145deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .paywall-price-option:hover {
-      border-color: #ffffff;
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 212, 255, 0.4);
-    }
-
-    .paywall-price-option:hover::before {
-      opacity: 1;
-    }
-
-    .paywall-price {
-      font-size: 2.5em;
-      font-weight: bold;
-      color: #ffffff;
-      margin-bottom: 8px;
-      text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
-    }
-
-    .paywall-price-period {
-      color: #b0c4de;
-      font-size: 1.1em;
-      margin-bottom: 20px;
-      font-weight: 500;
-    }
-
-    .paywall-subscribe-btn {
-      background: linear-gradient(45deg, #00d4ff, #0099cc);
-      color: #ffffff;
-      border: none;
-      padding: 14px 24px;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s ease;
-      width: 100%;
-      font-size: 1em;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
-    }
-
-    .paywall-subscribe-btn:hover {
-      background: linear-gradient(45deg, #ffffff, #e0e0e0);
-      color: #1a1a2e;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(0, 212, 255, 0.5);
-    }
-
-    .paywall-track-record {
-      background: linear-gradient(145deg, #0d2818 0%, #1a4d2e 100%);
-      border: 2px solid #00ff88;
-      border-radius: 15px;
-      padding: 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
-    }
-
-    .paywall-track-record h4 {
-      color: #ffffff;
-      margin-bottom: 15px;
-      font-size: 1.6em;
-      text-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
-    }
-
-    .paywall-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: 15px;
-      margin-top: 15px;
-    }
-
-    .paywall-stat-item {
-      text-align: center;
-      background: rgba(0, 255, 136, 0.1);
-      padding: 15px 10px;
-      border-radius: 10px;
-      border: 1px solid rgba(0, 255, 136, 0.3);
-    }
-
-    .paywall-stat-number {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #00ff88;
-      text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
-      margin-bottom: 5px;
-    }
-
-    .paywall-stat-label {
-      font-size: 0.9em;
-      color: #ffffff;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .paywall-guarantee {
-      background: linear-gradient(145deg, #1a2e0d 0%, #2e4d1a 100%);
-      border: 2px solid #00ff88;
-      border-radius: 15px;
-      padding: 20px;
-      margin-top: 25px;
-      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
-    }
-
-    .paywall-guarantee-title {
-      color: #ffffff;
-      font-weight: bold;
-      margin-bottom: 8px;
-      font-size: 1.2em;
-      text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
-    }
-
-    .paywall-guarantee p {
-      color: #e0e0e0;
-      margin: 0;
-      font-size: 1em;
-    }
-
-    @media (max-width: 768px) {
-      .paywall-pricing-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      
-      .paywall-stats-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-</style>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QS8L5TDNLY');
-</script>
-</head>
-<body>
-<img src="https://www.betlegendpicks.com/logo.png" alt="BetLegend Picks Logo" style="display: block; margin: 30px auto; width: 200px;"/><h1>BetLegend Daily Picks and Analysis</h1>
-
-<!-- DO NOT TOUCH ANYTHING ABOVE THIS LINE -->
-<!-- DROP NEW POSTS BELOW THIS LINE -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<title>BetLegend: Daily Expert MLB Picks & Betting Analysis</title>
-<meta name="description" content="Get daily expert MLB picks, in-depth betting analysis, and high-value predictions. BetLegend provides moneyline, run line, totals, and F5 bets backed by advanced stats."/>
-<meta name="keywords" content="mlb picks, mlb best bets, baseball betting, expert mlb predictions, mlb moneyline picks, mlb run line picks, daily mlb picks, sports betting, baseball picks today"/>
-<link href="https://www.betlegendpicks.com/logo.png" rel="icon" type="image/png"/>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600&family=Rubik&display=swap" rel="stylesheet"/>
-<style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: black;
-      color: white;
-      font-family: 'Rubik', sans-serif;
-    }
-    .pagination {
-      text-align: center;
-      color: blue;
-      margin: 20px 0;
-    }
-    .pagination a {
-      color: blue;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-    h1 {
-      text-align: center;
-      color: gold;
-      font-size: 40px;
-      margin-top: 20px;
-      font-family: 'Sora', sans-serif;
-    }
-    .blog-post {
-      background-color: #111;
-      border-left: 4px solid gold;
-      padding: 44px;
-      border-radius: 14px;
-      box-shadow: 0 0 10px #000;
-      margin: 40px auto;
-      max-width: 1140px;
-    }
-    .blog-post .post-header {
-      font-size: 30px;
-      color: gold;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .blog-post .post-time {
-      font-size: 15px;
-      color: #aaa;
-      margin-bottom: 24px;
-    }
-    .blog-post p {
-      font-size: 16px;
-      line-height: 1.7;
-      color: white;
-    }
-
-    /* PAYWALL STYLES */
-    .post-paywall-overlay {
-      position: relative;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-      border: 2px solid #00d4ff;
-      border-radius: 20px;
-      padding: 40px;
-      margin: 30px 0;
-      text-align: center;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
-    }
-
-    .post-paywall-overlay::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent);
-      animation: shimmer 4s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { left: -100%; }
-      100% { left: 100%; }
-    }
-
-    .paywall-lock-icon {
-      font-size: 4em;
-      color: #00d4ff;
-      margin-bottom: 25px;
-      animation: pulse 2s infinite;
-      filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-
-    .paywall-title {
-      color: #ffffff;
-      font-size: 2.2em;
-      margin-bottom: 15px;
-      font-weight: bold;
-      text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
-    }
-
-    .paywall-subtitle {
-      color: #e0e0e0;
-      font-size: 1.2em;
-      margin-bottom: 30px;
-    }
-
-    .paywall-pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin: 25px 0;
-    }
-
-    .paywall-price-option {
-      background: linear-gradient(145deg, #1e3a5f 0%, #2d4a7a 100%);
-      border: 2px solid #00d4ff;
-      border-radius: 15px;
-      padding: 20px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .paywall-price-option::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(145deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .paywall-price-option:hover {
-      border-color: #ffffff;
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 212, 255, 0.4);
-    }
-
-    .paywall-price-option:hover::before {
-      opacity: 1;
-    }
-
-    .paywall-price {
-      font-size: 2.5em;
-      font-weight: bold;
-      color: #ffffff;
-      margin-bottom: 8px;
-      text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
-    }
-
-    .paywall-price-period {
-      color: #b0c4de;
-      font-size: 1.1em;
-      margin-bottom: 20px;
-      font-weight: 500;
-    }
-
-    .paywall-subscribe-btn {
-      background: linear-gradient(45deg, #00d4ff, #0099cc);
-      color: #ffffff;
-      border: none;
-      padding: 14px 24px;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s ease;
-      width: 100%;
-      font-size: 1em;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
-    }
-
-    .paywall-subscribe-btn:hover {
-      background: linear-gradient(45deg, #ffffff, #e0e0e0);
-      color: #1a1a2e;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(0, 212, 255, 0.5);
-    }
-
-    .paywall-track-record {
-      background: linear-gradient(145deg, #0d2818 0%, #1a4d2e 100%);
-      border: 2px solid #00ff88;
-      border-radius: 15px;
-      padding: 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
-    }
-
-    .paywall-track-record h4 {
-      color: #ffffff;
-      margin-bottom: 15px;
-      font-size: 1.6em;
-      text-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
-    }
-
-    .paywall-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: 15px;
-      margin-top: 15px;
-    }
-
-    .paywall-stat-item {
-      text-align: center;
-      background: rgba(0, 255, 136, 0.1);
-      padding: 15px 10px;
-      border-radius: 10px;
-      border: 1px solid rgba(0, 255, 136, 0.3);
-    }
-
-    .paywall-stat-number {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #00ff88;
-      text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
-      margin-bottom: 5px;
-    }
-
-    .paywall-stat-label {
-      font-size: 0.9em;
-      color: #ffffff;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .paywall-guarantee {
-      background: linear-gradient(145deg, #1a2e0d 0%, #2e4d1a 100%);
-      border: 2px solid #00ff88;
-      border-radius: 15px;
-      padding: 20px;
-      margin-top: 25px;
-      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
-    }
-
-    .paywall-guarantee-title {
-      color: #ffffff;
-      font-weight: bold;
-      margin-bottom: 8px;
-      font-size: 1.2em;
-      text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
-    }
-
-    .paywall-guarantee p {
-      color: #e0e0e0;
-      margin: 0;
-      font-size: 1em;
-    }
-
-    @media (max-width: 768px) {
-      .paywall-pricing-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      
-      .paywall-stats-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-</style>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QS8L5TDNLY');
-</script>
-</head>
-<body>
-<img src="https://www.betlegendpicks.com/logo.png" alt="BetLegend Picks Logo" style="display: block; margin: 30px auto; width: 200px;"/><h1>BetLegend Daily Picks and Analysis</h1>
-
-<!-- DO NOT TOUCH ANYTHING ABOVE THIS LINE -->
-<!-- DROP NEW POSTS BELOW THIS LINE -->
-
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Sunday's Elite Edge: 5 Sharp Plays for August 18th
@@ -994,6 +410,14 @@
  </div>
 
  <script>
+ // This function only handles the visual change of showing the picks
+ function showRevealedState() {
+   document.querySelector('.post-paywall-overlay').style.display = 'none';
+   document.getElementById('premium-content').style.display = 'block';
+   document.getElementById('reveal-picks-btn').style.display = 'none';
+   document.getElementById('hide-picks-btn').style.display = 'inline-block';
+ }
+ 
  function revealPicks() {
    const password = prompt("Enter admin password:");
    if (password !== "chipper2025") {
@@ -1001,55 +425,32 @@
        return;
    }
    
-   // Hide the paywall
-   document.querySelector('.post-paywall-overlay').style.display = 'none';
-   
-   // Show the premium content
-   document.getElementById('premium-content').style.display = 'block';
-   
-   // Switch admin buttons
-   document.getElementById('reveal-picks-btn').style.display = 'none';
-   document.getElementById('hide-picks-btn').style.display = 'inline-block';
-   
-   // Save state in localStorage so it persists on page refresh
+   // If password is correct, show the picks and save the state
+   showRevealedState();
    localStorage.setItem('picksRevealed_aug18', 'true');
-   localStorage.setItem('adminAuthenticated', 'true');
  }
  
  function hidePicks() {
-   const password = prompt("Enter admin password:");
-   if (password !== "chipper2025") {
-       alert("Access denied");
-       return;
-   }
-   
-   // Show the paywall
+   // Show the paywall and hide the picks
    document.querySelector('.post-paywall-overlay').style.display = 'block';
-   
-   // Hide the premium content
    document.getElementById('premium-content').style.display = 'none';
-   
-   // Switch admin buttons
    document.getElementById('reveal-picks-btn').style.display = 'inline-block';
    document.getElementById('hide-picks-btn').style.display = 'none';
    
-   // Remove saved state
+   // Remove the saved state
    localStorage.removeItem('picksRevealed_aug18');
-   localStorage.removeItem('adminAuthenticated');
  }
  
- // Check if picks were already revealed when page loads
+ // When the page loads, check if the state is already 'revealed'
  window.addEventListener('load', function() {
    if (localStorage.getItem('picksRevealed_aug18') === 'true') {
-     revealPicks();
+     // If it is, just show the content without asking for a password
+     showRevealedState();
    }
  });
  </script>
 
 </div>
-
-</body>
-</html>
 
 
 <div class="blog-post">
@@ -1239,22 +640,18 @@
     <li>🌉 Giants/Rays UNDER 8 (-128) [1 Unit]</li>
  </ul>
 </div>
-```
 
-    <!-- START OF NEW BLOG POST: AUGUST 16TH, 2025 -->
 <div class="blog-post">
   <div class="post-header" style="text-align:center;">
     • The Saturday 9: Expert MLB Picks & Best Bets for August 16, 2025
   </div>
   <div class="post-time" style="text-align:center;">
-    Posted: August 16, 2025 <!-- (update this timestamp as you prefer) -->
+    Posted: August 16, 2025
   </div>
 
-  <!-- SEO -->
   <meta name="description" content="9 expert MLB picks for August 16, 2025 with deep, source-backed analysis: Blue Jays vs Rangers, Phillies vs Nationals, Red Sox vs Marlins, Diamondbacks–Rockies (Coors), Brewers vs Reds, Mariners–Mets F5 Over, D-backs F5, Pirates Team Total Under, and Cubs F5. Includes park factors, recent team form, and matchup edges."/>
   <meta name="keywords" content="MLB picks August 16 2025, Blue Jays vs Rangers pick, Phillies vs Nationals prediction, Red Sox vs Marlins preview, Diamondbacks Rockies pick, Brewers vs Reds bet, Mariners Mets F5 over, Pirates team total under, Cubs F5 pick, expert MLB predictions, advanced stats, park factors, bullpen analysis"/>
 
-  <!-- Schema -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -1277,7 +674,6 @@
     verifiable edges—park run environments (Statcast), current team context, and the tactical “why” behind each market (full game, F5, or team total).
   </p>
 
-  <!-- 1) BLUE JAYS ML -->
   <h3 style="color:gold; font-size:18px;">Blue Jays ML (≈−148) vs Rangers — [2 Units]</h3>
   <p>
     <b>Why ML (not RL):</b> Toronto’s value leans on home environment and late-inning leverage rather than blowout probability. Rogers Centre is neutral-to-slightly
@@ -1289,7 +685,6 @@
     we’re betting the aggregate run-prevention infrastructure at home and shorter leverage chains. (Context: depth charts & pen roles via FanGraphs RosterResource. )
   </p>
 
-  <!-- 2) PHILLIES ML -->
   <h3 style="color:gold; font-size:18px;">Phillies ML (≈−146) at Nationals — [1–2 Units]</h3>
   <p>
     <b>Why:</b> Philadelphia’s current profile is that of a complete club—rotation front end, improving back end, and a top-tier middle of the order. Washington’s run
@@ -1300,14 +695,12 @@
     late volatility in a coin-flip inning. (Bullpen form write-up. )
   </p>
 
-  <!-- 3) RED SOX ML / RL LEAN -->
   <h3 style="color:gold; font-size:18px;">Red Sox ML (≈−170) vs Marlins — [1 Unit]</h3>
   <p>
     <b>Why ML:</b> Fenway run-prevention with Boston’s preferred starter/pen sequencing plus a Marlins lineup that’s struggled to sustain rallies in 2025. We prefer ML
     exposure to cap variance; the handicap is about <i>run creation reliability</i> on Boston’s side vs. Miami’s offensive trough (recent forms have trended light).
   </p>
 
-  <!-- 4) D-BACKS -1.5 at Rockies -->
   <h3 style="color:gold; font-size:18px;">Diamondbacks −1.5 (≈−127) at Rockies — [1–2 Units]</h3>
   <p>
     <b>Why RL at Coors:</b> Coors Field remains the most extreme scoring environment in MLB, increasing margin volatility—when you’re right, you’re often right by multiple runs.
@@ -1315,21 +708,18 @@
     documentation; Coors venue page. )
   </p>
 
-  <!-- 5) BREWERS ML -->
   <h3 style="color:gold; font-size:18px;">Brewers ML (≈−136) at Reds — [2 Units]</h3>
   <p>
     <b>Why:</b> Milwaukee’s current profile (contact suppression + workable pen depth) travels well, and Great American Ball Park’s HR inflation affects both clubs equally.
     We project Milwaukee’s run-prevention core to be stronger inning-for-inning than Cincinnati’s in a high-variance yard.
   </p>
 
-  <!-- 6) MARINERS/METS F5 OVER 4.5 -->
   <h3 style="color:gold; font-size:18px;">Mariners @ Mets — F5 Over 4.5 (≈−125) — [1 Unit]</h3>
   <p>
     <b>Why F5:</b> F5 isolates starting-pitcher volatility and hot-bat carryover without introducing late-inning bullpen risk. Seattle’s offense has been in a better groove
     of late, and New York’s home splits have supported run clusters when contact quality is elevated. In a neutral park, starter-exposed innings are the edge case.
   </p>
 
-  <!-- 7) D-BACKS F5 -0.5 -->
   <h3 style="color:gold; font-size:18px;">Diamondbacks F5 −0.5 at Rockies (≈−125) — [1 Unit]</h3>
   <p>
     <b>Why F5 with RL exposure:</b> We want to press the <i>starting</i> pitching delta before Coors chaos + bullpens kick in. Arizona’s early-game approach (patience + swing
@@ -1337,7 +727,6 @@
     first-five lead. (Coors environment notes via Statcast. )
   </p>
 
-  <!-- 8) PIRATES TEAM TOTAL UNDER -->
   <h3 style="color:gold; font-size:18px;">Pirates Team Total Under 3.5 at Cubs (≈−120) — [1 Unit]</h3>
   <p>
     <b>Why TTU (not full Under):</b> This isolates a Pittsburgh lineup that has struggled to string quality at-bats against higher-end left-handed looks. With the Cubs at
@@ -1345,7 +734,6 @@
     Cubs 2025 team page; series vs PIT on the schedule. )
   </p>
 
-  <!-- 9) CUBS F5 -0.5 -->
   <h3 style="color:gold; font-size:18px;">Cubs F5 −0.5 vs Pirates — [1 Unit]</h3>
   <p>
     <b>Why F5 for CHC:</b> We want five innings of a frontline lefty at Wrigley versus a lineup that can lag in early scoring versus LHP. Chicago’s path to lead-holding
@@ -1375,10 +763,7 @@
     <li>⚾️ Cubs F5 −0.5 vs Pirates — <b>1 Unit</b></li>
   </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-
-    <!-- START OF NEW BLOG POST: AUGUST 15TH, 2025 -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • The Friday 7: Expert MLB Picks & Best Bets for August 15, 2025
@@ -1460,9 +845,7 @@
     <li>⚾️ Mariners ML (+106)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-    <!-- START OF NEW BLOG POST: AUGUST 14TH, 2025 -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • The Thursday Blueprint: 5 Expert MLB Picks & Advanced Analysis for August 14, 2025
@@ -1538,9 +921,7 @@
     <li>⚾️ Mets ML (-194)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-    <!-- START OF NEW BLOG POST: AUGUST 13TH, 2025 -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • The Midweek Edge: 5 Expert MLB Picks & Advanced Analysis for August 13, 2025
@@ -1616,10 +997,7 @@
     <li>⚾️ Tigers ML (-132)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-
-    <!-- START OF NEW BLOG POST: AUGUST 12TH, 2025 -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • The Tuesday Takedown: 9 Expert MLB Picks & Best Bets for August 12, 2025
@@ -1704,9 +1082,7 @@
     <li>⚾️ Reds/Phillies Over 9 (-117)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-    <!-- START OF NEW BLOG POST: AUGUST 11TH, 2025 -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • The Monday Blueprint: 9 Expert MLB Picks & Best Bets for August 11, 2025
@@ -1797,7 +1173,6 @@
  </ul>
 </div>
 
-    <!-- START OF NEW BLOG POST: AUGUST 10TH, 2025 -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • The Sunday Slate: Expert MLB Picks & Best Bets for August 10, 2025
@@ -1882,9 +1257,7 @@
     <li>⚾️ Braves/Marlins Over 8 (-147)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-    <!-- START OF NEW BLOG POST: AUGUST 9TH, 2025 -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • The Saturday 7: Expert MLB Picks & Best Bets for August 9, 2025
@@ -1962,9 +1335,7 @@
     <li>⚾️ Rockies/D-backs Over 10 (+112)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-    <!-- START OF NEW BLOG POST: AUGUST 8TH, 2025 -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Expert MLB Picks (August 8, 2025): Data-Driven Best Bets & Analysis
@@ -2045,9 +1416,7 @@
     <li>⚾️ Phillies/Rangers F5 Under 4.5 (-175)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->```
 
-    <!-- START OF NEW BLOG POST: BENGALS PRESEASON PICK -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Expert NFL Preseason Pick: Bengals vs Eagles (August 7, 2025)
@@ -2113,9 +1482,7 @@
     <li>🏈 Cincinnati Bengals 1H -6</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-    <!-- START OF NEW BLOG POST: AUGUST 7TH SLATE -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Legend's Ledger: Cashing Tickets & Dominating August
@@ -2182,9 +1549,7 @@
     <li>🚢 Mariners/White Sox F5 Under 4.5 (-135)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-<!-- START OF NEW BLOG POST: AUGUST 6TH SLATE -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Legend's Blueprint: Deconstructing the August 6th MLB Slate
@@ -2272,9 +1637,7 @@
     <li>🍺 Brewers ML (+118)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->```
 
-    <!-- START OF NEW BLOG POST: AUGUST 5TH SLATE -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Legend's Blueprint: The Definitive Guide to the August 5th MLB Slate
@@ -2353,9 +1716,7 @@
     <li>⚾️ White Sox/Mariners Under 8 (-146)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-    <!-- START OF NEW BLOG POST: PADRES ML -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Legend's Lock: Fading Pfaadt & The D-Backs Mismatch
@@ -2418,9 +1779,7 @@
     <li>🔒 Padres ML (-132)</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
 
-<!-- START OF NEW BLOG POST: TIGERS ML ADDITION -->
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Legend's Late Addition: Riding the Tigers at Home
@@ -2479,8 +1838,6 @@
     <li>🐅 Tigers ML (-180) [2 Units]</li>
  </ul>
 </div>
-<!-- END OF NEW BLOG POST -->
-
 
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
@@ -2547,7 +1904,7 @@
  </ul>
 </div>
 
-    <div class="blog-post">
+<div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Legend's Locks: An In-Depth Look at Tomorrow's MLB Slate (August 3rd, 2025)
  </div>
@@ -2622,7 +1979,7 @@
  </ul>
 </div>
 
-        <div class="blog-post">
+<div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Saturday Night Hammer: Why We're All-In on the Padres ML
  </div>
@@ -2692,7 +2049,7 @@
  </p>
 </div>
 
-    <div class="blog-post">
+<div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • MLB Best Bets 8/2/25: Going for 8 Straight with Pirates & Coors Bomb
  </div>
@@ -2827,7 +2184,7 @@
  </ul>
 </div>
 
-    <div class="blog-post">
+<div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Expert MLB Picks 8/1/25: 2-Unit Under & The Coors Field Hammer
  </div>
@@ -2890,7 +2247,7 @@
  </p>
 </div>
 
-    <div class="blog-post">
+<div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Late Slate Lock: Mariners vs. Rangers Under 8 & Full Card Recap
  </div>
@@ -2946,7 +2303,7 @@
  </ul>
 </div>
 
-    <div class="blog-post">
+<div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Expert MLB Picks 7/31/25: Cashing Our 6th Straight Winning Day
  </div>
@@ -2998,7 +2355,7 @@
  </p>
 </div>
 
-    <div class="blog-post">
+<div class="blog-post">
  <div class="post-header" style="text-align: center;">
    • Wednesday's MLB Picks: Backing Aces and Key Totals
  </div>
@@ -3037,8 +2394,6 @@
    The Baltimore Orioles' offense has been explosive, scoring 30 runs in the first three games of this series. While José Berríos is a solid pitcher for the Blue Jays, he faces a red-hot Orioles lineup. On the other side, Toronto's powerful offense, which leads the league in batting average, gets to face Dean Kremer and his 4.23 ERA. With two high-powered offenses going head-to-head against pitchers who can be vulnerable, this game has all the makings of a high-scoring affair.
  </p>
 </div>
-
-
 
 <div class="blog-post">
  <div class="post-header" style="text-align: center;">
