@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -23,11 +22,10 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-QS8L5TDNLY');
 </script>
 <style>
-    /* --- CSS Revamp v31 - FINAL WORKING VERSION --- */
+    /* --- CSS Revamp v40 - Correct Fixed Sidebar Layout --- */
     :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
     body {
         margin: 0;
@@ -45,36 +43,70 @@
         border-bottom: 1px solid rgba(0, 224, 255, 0.4);
     }
     .ticker { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker-scroll 85s linear infinite; }
-    .ticker__item {
-        display: inline-flex; align-items: center; gap: 10px; padding: 0 2.5rem;
-        font-family: 'Roboto', sans-serif; font-size: 15px; color: #ccc;
-    }
+    .ticker__item { display: inline-flex; align-items: center; gap: 10px; padding: 0 2.5rem; font-family: 'Roboto', sans-serif; font-size: 15px; color: #ccc; }
     .ticker__item .pick-text { font-family: 'Orbitron', sans-serif; font-weight: 700; color: #fff; }
-    .ticker__item .grade {
-        font-weight: 700; font-family: 'Orbitron', sans-serif; padding: 4px 9px;
-        border-radius: 5px; font-size: 13px; border: 1px solid;
-    }
-    .ticker__item .grade.win {
-        color: var(--win-color); border-color: var(--win-color);
-        background-color: rgba(57, 255, 20, 0.15); text-shadow: 0 0 6px var(--win-color);
-    }
-    .ticker__item .grade.loss {
-        color: var(--loss-color); border-color: var(--loss-color);
-        background-color: rgba(255, 49, 49, 0.15); text-shadow: 0 0 6px var(--loss-color);
-    }
-    .ticker__separator {
-        color: var(--glow-color); font-weight: 700; font-size: 20px;
-        text-shadow: 0 0 5px var(--glow-color); vertical-align: middle;
-    }
+    .ticker__item .grade { font-weight: 700; font-family: 'Orbitron', sans-serif; padding: 4px 9px; border-radius: 5px; font-size: 13px; border: 1px solid; }
+    .ticker__item .grade.win { color: var(--win-color); border-color: var(--win-color); background-color: rgba(57, 255, 20, 0.15); text-shadow: 0 0 6px var(--win-color); }
+    .ticker__item .grade.loss { color: var(--loss-color); border-color: var(--loss-color); background-color: rgba(255, 49, 49, 0.15); text-shadow: 0 0 6px var(--loss-color); }
+    .ticker__separator { color: var(--glow-color); font-weight: 700; font-size: 20px; text-shadow: 0 0 5px var(--glow-color); vertical-align: middle; }
     @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
+    /* --- CORRECTED: Fixed Position Sidebar Container --- */
+    .fixed-sidebar {
+        position: fixed;
+        top: 80px; /* Position below the ticker */
+        left: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 300px;
+    }
+    .special-offer-box {
+        width: 100%; text-align: center; padding: 20px;
+        border: 2px solid gold; border-radius: 12px;
+        background: rgba(255, 215, 0, 0.15);
+        box-shadow: 0 0 20px gold;
+        font-family: Arial, sans-serif;
+        box-sizing: border-box;
+        animation: pulseGlow 2s infinite;
+    }
+    .special-offer-box h2 {
+        color: gold; font-size: 24px; font-weight: bold;
+        margin: 0 0 10px 0; text-shadow: 0 0 8px orange; text-transform: uppercase;
+    }
+    .special-offer-box p {
+        color: #eee; font-size: 18px; font-weight: bold;
+        line-height: 1.4; margin: 0;
+    }
+    .special-offer-box .highlight-offer { color: #fff; }
+    @keyframes pulseGlow {
+      0% { box-shadow:0 0 15px gold; }
+      50% { box-shadow:0 0 35px orange; }
+      100% { box-shadow:0 0 15px gold; }
+    }
+    
+    .plans-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .plan-card {
+        text-align: center; padding: 15px; background: rgba(17, 17, 17, 0.8);
+        border: 1px solid var(--glow-color); border-radius: 8px; text-decoration: none;
+        color: #fff; transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .plan-card:hover { background-color: rgba(0, 224, 255, 0.15); transform: translateY(-3px); }
+    .plan-card .plan-title { font-size: 18px; color: var(--glow-color); font-weight: 700; margin-bottom: 5px; }
+    .plan-card .plan-price { font-size: 15px; font-family: 'Roboto', sans-serif; }
+    
     .content-wrapper {
         position: relative; z-index: 10; width: 100%; max-width: 900px;
         margin: 0 auto;
-        padding: 50px 20px 0px 20px;
+        padding: 70px 20px 40px 20px;
         box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
     }
-    .header-branding { text-align: center; margin-bottom: 25px; }
+    .header-branding { text-align: center; margin-bottom: 40px; }
     .title { font-size: 64px; font-weight: 900; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
     .title .highlight { color: var(--glow-color); }
     .subtitle { font-size: 20px; color: #ccc; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; font-family: 'Roboto', sans-serif; }
@@ -82,7 +114,7 @@
     .nav-links {
         display: flex; flex-wrap: wrap; justify-content: center;
         align-items: center; gap: 15px 35px;
-        width: 100%; padding: 20px 0; margin-bottom: 30px;
+        width: 100%; padding: 20px 0; margin-bottom: 40px;
         border-top: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2);
         background: rgba(0,0,0,0.3);
     }
@@ -95,52 +127,43 @@
     .dropdown-content a:hover { background-color: rgba(0, 224, 255, 0.1); color: #fff; }
     .dropdown:hover .dropdown-content { display: block; }
     .dropbtn::after { content: ' ▼'; font-size: 0.6em; vertical-align: middle; }
-
+    
     .gif-showcase {
         width: 100%; max-width: 600px; 
         border: 2px solid var(--glow-color);
         border-radius: 14px; box-shadow: 0 0 35px rgba(0, 224, 255, 0.5);
         overflow: hidden;
+        margin-bottom: 15px;
     }
     .gif-showcase img { width: 100%; display: block; }
-    
     .caption {
-        text-align: center; padding: 15px; font-size: 14px; color: #888;
-        width: 100%; max-width: 600px; box-sizing: border-box;
-        margin-bottom: 40px;
+        text-align: center; font-size: 14px; color: #888;
+        width: 100%; max-width: 600px; box-sizing: border-box; margin-bottom: 40px;
     }
     .caption a { color: var(--glow-color); }
-
+    
     .interactive-dashboard {
-        position: fixed; bottom: 0; left: 0; width: 100%;
-        height: 95px;
+        position: fixed; bottom: 0; left: 0; width: 100%; height: 95px;
         background: rgba(10, 15, 25, 0.8); backdrop-filter: blur(12px);
         border-top: 1px solid rgba(0, 224, 255, 0.4); display: grid;
-        grid-template-columns: repeat(4, 1fr); z-index: 1000;
-        box-shadow: 0 -5px 30px rgba(0,0,0,0.3);
+        grid-template-columns: repeat(4, 1fr); z-index: 1000; box-shadow: 0 -5px 30px rgba(0,0,0,0.3);
     }
-    .dash-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center; /* *** DEFINITIVE VERTICAL CENTERING FIX *** */
-        text-align: center;
-        padding: 5px; 
-        gap: 8px;
-        border-right: 1px solid rgba(0, 224, 255, 0.2);
-        transition: background-color 0.3s ease; text-decoration: none; color: #fff;
-    }
+    .dash-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5px; gap: 8px; border-right: 1px solid rgba(0, 224, 255, 0.2); transition: background-color 0.3s ease; text-decoration: none; color: #fff; }
     .dash-item:last-child { border-right: none; }
     .dash-item.clickable:hover { background-color: rgba(0, 224, 255, 0.1); cursor: pointer; }
     .dash-item svg { width: 24px; height: 24px; fill: var(--glow-color); filter: drop-shadow(0 0 3px var(--glow-color)); }
     .dash-item h3 { margin: 0; font-size: 12px; font-weight: 700; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px; }
-    .dash-item p {
-        margin: 0; font-size: 18px;
-        font-weight: 700;
-        line-height: 1.2;
-        font-family: 'Roboto', sans-serif;
-    }
+    .dash-item p { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.2; font-family: 'Roboto', sans-serif; }
     .dash-item .highlight { color: var(--win-color); font-family: 'Orbitron', sans-serif; }
+
+    @media (max-width: 1024px) {
+        .fixed-sidebar { display: none; } /* Hide fixed sidebar on tablets and smaller screens */
+        .pay-hero { display: block; } /* Show the in-page subscription plans instead */
+    }
+
+    @media (min-width: 1025px) {
+        .pay-hero { display: none; } /* Hide in-page plans when fixed sidebar is visible */
+    }
 
     @media (max-width: 768px) {
         body { padding-bottom: 190px; }
@@ -154,102 +177,137 @@
 </style>
 </head>
 <body>
-<div style="position:fixed; top:20px; left:20px; z-index:99999; background:yellow; padding:20px; border-radius:12px; box-shadow:0 0 20px yellow; font-family:Arial, sans-serif; max-width:340px; text-align:center; animation:pulseGlow 2s infinite;">
-<h2 style="color:#000; font-size:30px; font-weight:bold; margin-bottom:10px; text-shadow:1px 1px 4px #fff;">
-        SPECIAL OFFER FOR NEW CLIENTS
-    </h2>
-<p style="color:#000; font-size:20px; font-weight:bold; line-height:1.4; margin:0;">
-        We’re so confident you’ll be thrilled with our picks that you can pay for <span style="color:red;">half a season upfront</span> 
-        and the other half <span style="color:red;">halfway through the season</span> — with the money you win from us!
-    </p>
+
+<div class="ticker-wrap">
+    <div class="ticker" id="ticker-content">
+        <div class="ticker__item">Loading recent results...</div>
+    </div>
 </div>
-<style>
-@keyframes pulseGlow {
-  0% { box-shadow:0 0 15px gold; }
-  50% { box-shadow:0 0 40px orange; }
-  100% { box-shadow:0 0 15px gold; }
-}
-</style>
-<!-- Top Left Special Offer Banner -->
+
+<!-- CORRECTED: Top Left Fixed Sidebar -->
+<div class="fixed-sidebar" id="subscribe">
+    <div class="special-offer-box">
+        <h2>SPECIAL OFFER</h2>
+        <p>
+            Pay for <span class="highlight-offer">half a season upfront</span> 
+            and the other half <span class="highlight-offer">mid-season</span> with the money you win from us!
+        </p>
+    </div>
+    <div class="plans-container">
+        <a href="https://buy.stripe.com/28E7sLdVkdye8f86m5grS04" class="plan-card" target="_blank">
+            <div class="plan-title">Daily Pass</div>
+            <div class="plan-price">$25 / day</div>
+        </a>
+        <a href="https://buy.stripe.com/6oUeVd6sSbq6gLE4dXgrS08" class="plan-card" target="_blank">
+            <div class="plan-title">Weekly Pass</div>
+            <div class="plan-price">$79 / week</div>
+        </a>
+        <a href="https://buy.stripe.com/fZu6oH4kK1Pwbrk39TgrS07" class="plan-card" target="_blank">
+            <div class="plan-title">Monthly Pass</div>
+            <div class="plan-price">$149 / month</div>
+        </a>
+        <a href="https://buy.stripe.com/bJe5kD9F43XE2UOh0JgrS03" class="plan-card" target="_blank">
+            <div class="plan-title">Yearly Pass</div>
+            <div class="plan-price">$750 / year</div>
+        </a>
+    </div>
+</div>
+
 <div class="content-wrapper">
-<div class="header-branding">
-<h1 class="title">BET<span class="highlight">LEGEND</span></h1>
-<h2 class="subtitle">The Universe of Probabilities Has Just Been Hacked.</h2>
-</div>
-<div class="pay-hero" id="subscribe">
-<h1 style="color:#00e0ff;font-family:'Orbitron',sans-serif;text-align:center;margin:10px 0 20px 0;">Subscribe Now</h1>
-<p style="text-align:center;color:#ccc;font-family:'Roboto',sans-serif;margin-bottom:25px;">Get full daily cards, NFL, NBA, college plays, and closing recaps. All verified and tracked.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:900px;margin:0 auto;">
-<a href="https://buy.stripe.com/28E7sLdVkdye8f86m5grS04" style="text-align:center;padding:16px;background:#111;border:1px solid #00e0ff;border-radius:8px;text-decoration:none;color:#fff;" target="_blank">
-<div style="font-size:18px;color:#00e0ff;">Daily Pass</div>
-<div>$25 / day</div>
-</a>
-<a href="https://buy.stripe.com/6oUeVd6sSbq6gLE4dXgrS08" style="text-align:center;padding:16px;background:#111;border:1px solid #00e0ff;border-radius:8px;text-decoration:none;color:#fff;" target="_blank">
-<div style="font-size:18px;color:#00e0ff;">Weekly Pass</div>
-<div>$79 / week</div>
-</a>
-<a href="https://buy.stripe.com/fZu6oH4kK1Pwbrk39TgrS07" style="text-align:center;padding:16px;background:#111;border:1px solid #00e0ff;border-radius:8px;text-decoration:none;color:#fff;" target="_blank">
-<div style="font-size:18px;color:#00e0ff;">Monthly Pass</div>
-<div>$149 / month</div>
-</a>
-<a href="https://buy.stripe.com/bJe5kD9F43XE2UOh0JgrS03" style="text-align:center;padding:16px;background:#111;border:1px solid #00e0ff;border-radius:8px;text-decoration:none;color:#fff;" target="_blank">
-<div style="font-size:18px;color:#00e0ff;">Yearly Pass</div>
-<div>$750 / year</div>
-</a>
-</div>
-<p style="text-align:center;color:#9ad7ff;font-family:'Roboto',sans-serif;margin-top:10px;">Every plan includes all sports in season — NFL, College Football, NBA, College Basketball, and MLB.</p>
-</div>
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="blog.html">Picks &amp; Analysis</a>
-<a href="betlegend-verified-records.html">Records</a>
-<div class="dropdown">
-<button class="dropbtn">Sports</button>
-<div class="dropdown-content">
-<a href="nfl.html">NFL</a>
-<a href="mlb.html">MLB</a>
-</div>
-</div>
-<div class="dropdown">
-<button class="dropbtn">Resources</button>
-<div class="dropdown-content">
-<a href="howitworks.html">How It Works</a>
-<a href="bankroll.html">Bankroll</a>
-<a href="screenshots.html">Screenshots</a>
-<a href="bestonlinesportsbook.html">Best Sportsbook</a>
-</div>
-</div>
-<a href="news.html">News</a>
-<div class="dropdown">
-<button class="dropbtn">Community</button>
-<div class="dropdown-content">
-<a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a>
-<a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
-</div>
-</div>
-</div>
-<div class="gif-showcase">
-<img alt="Animated graphic showing BetLegend sports betting picks and analysis." src="https://nimadamus.github.io/curry.gif"/>
-</div>
-<div class="caption">
+    <div class="header-branding">
+        <h1 class="title">BET<span class="highlight">LEGEND</span></h1>
+        <h2 class="subtitle">The Universe of Probabilities Has Just Been Hacked.</h2>
+    </div>
+    
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Picks &amp; Analysis</a>
+        <a href="betlegend-verified-records.html">Records</a>
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb.html">MLB</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+            </div>
+        </div>
+        <a href="news.html">News</a>
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Centered GIF -->
+    <div class="gif-showcase">
+        <img alt="Animated graphic showing BetLegend sports betting picks and analysis." src="https://nimadamus.github.io/curry.gif"/>
+    </div>
+    <div class="caption">
         Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">See Full Betting History</a>
+    </div>
+
+    <!-- In-page subscription section for mobile/tablet -->
+    <div class="pay-hero">
+        <h1>Subscribe Now</h1>
+        <p class="section-subtitle">Get full daily cards, NFL, NBA, college plays, and closing recaps. All verified and tracked.</p>
+        <div class="subscription-grid">
+            <a href="https://buy.stripe.com/28E7sLdVkdye8f86m5grS04" class="plan-card" target="_blank">
+                <div class="plan-title">Daily Pass</div>
+                <div class="plan-price">$25 / day</div>
+            </a>
+            <a href="https://buy.stripe.com/6oUeVd6sSbq6gLE4dXgrS08" class="plan-card" target="_blank">
+                <div class="plan-title">Weekly Pass</div>
+                <div class="plan-price">$79 / week</div>
+            </a>
+            <a href="https://buy.stripe.com/fZu6oH4kK1Pwbrk39TgrS07" class="plan-card" target="_blank">
+                <div class="plan-title">Monthly Pass</div>
+                <div class="plan-price">$149 / month</div>
+            </a>
+            <a href="https://buy.stripe.com/bJe5kD9F43XE2UOh0JgrS03" class="plan-card" target="_blank">
+                <div class="plan-title">Yearly Pass</div>
+                <div class="plan-price">$750 / year</div>
+            </a>
+        </div>
+        <p class="all-sports-included">Every plan includes all sports in season — NFL, College Football, NBA, College Basketball, and MLB.</p>
+    </div>
 </div>
-</div>
+
 <div class="interactive-dashboard">
-<a class="dash-item clickable" href="betlegend-verified-records.html" id="dash-record">
-<svg viewbox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg>
-<h3>Verified Record</h3>
-<p>--</p>
-</a>
-<div class="dash-item" id="dash-free-pick"><svg viewbox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg><h3>Free Daily Pick</h3>
-<p>--</p>
-</div>
-<a class="dash-item clickable" href="#plans"><svg viewbox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg><h3>Premium Email</h3><p>Subscribe Now</p></a>
-<a class="dash-item clickable" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank"><svg viewbox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg><h3>Sportsbook</h3><p>350% <span class="highlight">BONUS</span></p></a>
+    <a class="dash-item clickable" href="betlegend-verified-records.html" id="dash-record">
+        <svg viewbox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg>
+        <h3>Verified Record</h3>
+        <p>--</p>
+    </a>
+    <div class="dash-item" id="dash-free-pick">
+        <svg viewbox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+        <h3>Free Daily Pick</h3>
+        <p>--</p>
+    </div>
+    <a class="dash-item clickable" href="#subscribe">
+        <svg viewbox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg>
+        <h3>Premium Email</h3>
+        <p>Subscribe Now</p>
+    </a>
+    <a class="dash-item clickable" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
+        <svg viewbox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg>
+        <h3>Sportsbook</h3>
+        <p>350% <span class="highlight">BONUS</span></p>
+    </a>
 </div>
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-<!-- FINAL SCRIPT - v30 - WORKING AND CORRECTED -->
+<!-- FINAL SCRIPT - v31 - SCRIPT ERROR CORRECTED -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- CONFIGURATION ---
