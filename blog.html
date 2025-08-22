@@ -447,40 +447,39 @@
     </div>
     
     <script>
-    function showRevealedState_aug22() {
-      var postContainer = document.querySelector('#admin-controls-aug21').parentNode;
-      postContainer.querySelector('.post-paywall-overlay').style.display = 'none';
-      postContainer.querySelector('#premium-content-aug22').style.display = 'block';
-      postContainer.querySelector('#reveal-picks-btn-aug22').style.display = 'none';
-      postContainer.querySelector('#hide-picks-btn-aug22').style.display = 'inline-block';
-    }
-    
-    function revealPicks_aug22() {
-      const password = prompt("Enter admin password:");
-      if (password !== "chipper2025") {
-          alert("Access denied");
-          return;
-      }
-      showRevealedState_aug22();
-      localStorage.setItem('picksRevealed_aug22', 'true');
-    }
-    
-    function hidePicks_aug22() {
-      var postContainer = document.querySelector('#admin-controls-aug22').parentNode;
-      postContainer.querySelector('.post-paywall-overlay').style.display = 'block';
-      postContainer.querySelector('#premium-content-aug22').style.display = 'none';
-      postContainer.querySelector('#reveal-picks-btn-aug22').style.display = 'inline-block';
-      postContainer.querySelector('#hide-picks-btn-aug22').style.display = 'none';
-      localStorage.removeItem('picksRevealed_aug22');
-    }
-    
-    window.addEventListener('load', function() {
-      if (localStorage.getItem('picksRevealed_aug22') === 'true') {
-        showRevealedState_aug22();
-      }
-    });
-    </script>
-</div>
+function showRevealedState_aug22() {
+  var postContainer = document.querySelector('#admin-controls-aug22').parentNode;
+  postContainer.querySelector('.post-paywall-overlay').style.display = 'none';
+  postContainer.querySelector('#premium-content-aug22').style.display = 'block';
+  postContainer.querySelector('#reveal-picks-btn-aug22').style.display = 'none';
+  postContainer.querySelector('#hide-picks-btn-aug22').style.display = 'inline-block';
+}
+
+function revealPicks_aug22() {
+  const password = prompt("Enter admin password:");
+  if (password !== "chipper2025") {
+      alert("Access denied");
+      return;
+  }
+  showRevealedState_aug22();
+  localStorage.setItem('picksRevealed_aug22', 'true');
+}
+
+function hidePicks_aug22() {
+  var postContainer = document.querySelector('#admin-controls-aug22').parentNode;
+  postContainer.querySelector('.post-paywall-overlay').style.display = 'block';
+  postContainer.querySelector('#premium-content-aug22').style.display = 'none';
+  postContainer.querySelector('#reveal-picks-btn-aug22').style.display = 'inline-block';
+  postContainer.querySelector('#hide-picks-btn-aug22').style.display = 'none';
+  localStorage.removeItem('picksRevealed_aug22');
+}
+
+window.addEventListener('load', function() {
+  if (localStorage.getItem('picksRevealed_aug22') === 'true') {
+    showRevealedState_aug22();
+  }
+});
+</script>
 
     <div class="blog-post">
     <div class="post-header" style="text-align: center;">
