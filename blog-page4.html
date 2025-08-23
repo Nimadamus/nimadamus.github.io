@@ -558,12 +558,96 @@
       <p>It’s a good intro to disciplined betting. But if you’re serious about sustained profits, you’re going to need more than price gaps. You’re going to need edge. That’s the part most people miss.</p>
     </div>
     
-    <div class="pagination" style="margin-top: 40px; margin-bottom: 40px;">
-        <a href="blog.html">1</a>
-        <a href="blog-page2.html">2</a>
-        <a href="blog-page3.html">3</a>
-        <span style="color: #FFD700; margin: 0 15px; font-weight: bold; text-decoration: underline;">4</span>
-    </div>
+    <!-- START: Custom Pagination Logic -->
+<!-- This single block of code works on all blog pages -->
+
+<div id="custom-pagination-container"></div>
+
+<style>
+    /* Styles for the custom previous/next pagination arrows */
+    .pagination-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 50px;
+        padding-top: 25px;
+        border-top: 2px solid #444;
+    }
+    .pagination-nav a, .pagination-nav span {
+        display: inline-block;
+        padding: 12px 25px;
+        font-size: 1.1em;
+        font-weight: bold;
+        text-decoration: none;
+        border: 2px solid #D4AF37; /* Gold border */
+        color: #D4AF37; /* Gold text */
+        background-color: #222;
+        border-radius: 8px;
+        transition: background-color 0.3s, color 0.3s;
+        cursor: pointer;
+    }
+    .pagination-nav a:hover {
+        background-color: #D4AF37;
+        color: #121212;
+    }
+    /* This style is for the disabled state (e.g., "Previous" on the first page) */
+    .pagination-nav span {
+        color: #666;
+        border-color: #444;
+        background-color: #1a1a1a;
+        cursor: not-allowed;
+    }
+</style>
+
+<script>
+    // IIFE to keep variables local and avoid conflicts
+    (function() {
+        // --- This is your custom page sequence. ---
+        // The script will follow this exact order.
+        const pageOrder = [
+            'blog-page5.html', // Newest
+            'blog.html',
+            'blog-page2.html',
+            'blog-page3.html',
+            'blog-page4.html'  // Oldest
+        ];
+
+        // --- Logic to generate the correct buttons ---
+        const currentPage = window.location.pathname.split('/').pop();
+        const currentIndex = pageOrder.indexOf(currentPage);
+
+        if (currentIndex === -1) {
+            return; // Do nothing if the page isn't in our list
+        }
+
+        const prevPage = currentIndex > 0 ? pageOrder[currentIndex - 1] : null;
+        const nextPage = currentIndex < pageOrder.length - 1 ? pageOrder[currentIndex + 1] : null;
+
+        const container = document.getElementById('custom-pagination-container');
+        if (!container) return;
+        
+        let paginationHTML = '<nav class="pagination-nav" aria-label="Blog post navigation">';
+
+        // Previous Button Logic
+        if (prevPage) {
+            paginationHTML += `<a href="${prevPage}" rel="prev">&#9664; Previous</a>`;
+        } else {
+            paginationHTML += `<span>&#9664; Previous</span>`;
+        }
+
+        // Next Button Logic
+        if (nextPage) {
+            paginationHTML += `<a href="${nextPage}" rel="next">Next &#9654;</a>`;
+        } else {
+            paginationHTML += `<span>Next &#9654;</span>`;
+        }
+
+        paginationHTML += '</nav>';
+        container.innerHTML = paginationHTML;
+    })();
+</script>
+
+<!-- END: Custom Pagination Logic -->
 
   </div>
 </body>
