@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verified Records - BetLegend Picks</title>
+  <meta name="description" content="Official MLB verified betting records for BetLegend Picks. Every MLB play is logged with date, line, result, units, and a running total. Updated continuously for full transparency.">
+
     <link rel="canonical" href="https://www.betlegendpicks.com/betlegend-verified-records.html">
     <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
@@ -52,6 +54,28 @@
         </div>
         <div class="summary-stats">
             <div class="stat-box"><h3>Overall Record</h3><p id="overall-record">--</p></div>
+
+<section id="mlb-records-intro" style="width:100%;max-width:800px;background:rgba(0,0,0,0.3);border:1px solid rgba(0, 224, 255, 0.2);border-left:6px solid #00e0ff;border-radius:12px;padding:16px 18px;margin:0 0 24px 0;color:#fff;">
+  <h2 style="margin:0 0 8px 0;color:#00e0ff;font-family:'Orbitron',sans-serif;font-weight:700;">MLB Verified Records</h2>
+  <p style="margin:0 0 8px 0;line-height:1.6;font-family:'Roboto',sans-serif;">
+    This page shows the official MLB record for BetLegend. Every pick is logged on the day it is posted and graded after the game. The table lists the date, pick, line, result, units, and the running total so visitors can audit the entire MLB history at a glance. Nothing is hidden or removed.
+  </p>
+  <p style="margin:0;opacity:.85;font-size:14px;font-family:'Roboto',sans-serif;">
+    Last updated: <span id="mlb-last-updated"></span>
+  </p>
+</section>
+
+<script>
+  (function(){
+    var el = document.getElementById('mlb-last-updated');
+    if (el) {
+      var d = new Date();
+      el.textContent = d.toLocaleString(undefined, { year:'numeric', month:'long', day:'numeric' });
+    }
+  })();
+</script>
+
+
             <div class="stat-box"><h3>Total Units</h3><p id="total-units">--</p></div>
         </div>
         <table class="records-table">
@@ -141,5 +165,17 @@
                 });
         });
     </script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "BetLegend MLB Verified Records",
+  "description": "Official MLB verified betting records for BetLegend Picks with date, line, result, units, and a continuous running total. Updated continuously.",
+  "url": "https://www.betlegendpicks.com/betlegend-verified-records.html",
+  "creator": { "@type": "Organization", "name": "BetLegend Picks" }
+}
+</script>
+
 </body>
 </html>
