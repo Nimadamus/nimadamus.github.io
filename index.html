@@ -222,227 +222,187 @@
         <img alt="Animated graphic showing BetLegend sports betting picks and analysis." src="https://nimadamus.github.io/curry.gif"/>
     </div>
     <div class="caption">
-        Real-time dashboard powered by <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgI0sXSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXggOmrk0iQWmSEYExtx6xwFMfIXv/pubhtml?gid=0&single=true" target="_blank">our official records</a>.
-    </div>
-
-    <div class="pay-hero">
-        <!-- Mobile subscription plans will appear here based on CSS -->
+        Real-time dashboard powered by our official records.
     </div>
 </div>
 
 <div class="interactive-dashboard">
-    <a class="dash-item clickable" href="betlegend-verified-records.html" id="dash-record">
-        <svg viewbox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg>
-        <h3>Verified Record</h3>
-        <p>Loading...</p>
-    </a>
-    <div class="dash-item" id="dash-free-pick">
-        <svg viewbox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-        <h3>Free Daily Pick</h3>
-        <p>Loading...</p>
+    <div class="dash-item">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 15L7 10l1.41-1.41L12 12.17l3.59-3.58L17 10l-5 5z"/></svg>
+        <h3>Today</h3>
+        <p id="today-record" class="highlight">Loading...</p>
     </div>
-    <a class="dash-item clickable" href="#subscribe">
-        <svg viewbox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg>
-        <h3>Premium Email</h3>
-        <p>Subscribe Now</p>
-    </a>
-    <a class="dash-item clickable" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
-        <svg viewbox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg>
-        <h3>Sportsbook</h3>
-        <p>350% <span class="highlight">BONUS</span></p>
-    </a>
+    <div class="dash-item">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        <h3>This Week</h3>
+        <p id="week-record" class="highlight">Loading...</p>
+    </div>
+    <div class="dash-item">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+        <h3>This Month</h3>
+        <p id="month-record" class="highlight">Loading...</p>
+    </div>
+    <div class="dash-item clickable" onclick="window.location.href='betlegend-verified-records.html'">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <h3>All Time</h3>
+        <p id="alltime-record" class="highlight">Loading...</p>
+    </div>
 </div>
-<!-- PAPA PARSE LIBRARY -->
+
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // --- CONFIGURATION ---
-    // *** THIS IS THE CORRECTED GOOGLE SHEET URL ***
-    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgI0sXSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXggOmrk0iQWmSEYExtx6xwFMfIXv/pub?output=csv';
-    const cycleSpeed = 4000; // Time in ms to cycle records
+    // --- CONFIGURATION: Links to your three sheets ---
+    const SHEETS_URLS = {
+        mlb: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgI0sXSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXggOmrk0iQWmSEYExtx6xwFMfIXv/pub?output=csv',
+        ncaaf: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9C45xiuXWNe-fAXYMoNbLOOKCBHfmf4Yn-Xr2LUqdCliuoiXXDgrDa5mqtPZqxjg8hx-5KnSOL4UVU/pub?gid=0&single=true&output=csv',
+        nfl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQggB4WcyyEpMBp_XI_yahCTY8KrHzrOvuLMQ9VoGFOnzfqI4IkAWVb92nDxkXUhLVhzr4RTWZRXQ/pub?gid=0&single=true&output=csv'
+    };
 
-    // --- ELEMENT SELECTORS ---
-    const recordDashItem = document.getElementById('dash-record');
-    const recordH3 = recordDashItem.querySelector('h3');
-    const recordP = recordDashItem.querySelector('p');
-    const freePickDisplay = document.querySelector('#dash-free-pick p');
-    const tickerContent = document.getElementById('ticker-content');
-    
-    // --- HELPER FUNCTION to parse dates like "8-25-2025" ---
-    function parseDate(dateStr) {
-        if (!dateStr || typeof dateStr !== 'string') return null;
+    let allRecordsData = [];
+
+    // --- DATA FETCHING (Reliable Method) ---
+    async function fetchSheetData(url) {
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        try {
+            const response = await fetch(proxyUrl);
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            const data = await response.json();
+            return new Promise(resolve => {
+                Papa.parse(data.contents, {
+                    header: true,
+                    skipEmptyLines: true,
+                    transformHeader: h => h.trim(),
+                    complete: (results) => resolve(results.data),
+                    error: (err) => { console.error('PapaParse error:', err); resolve([]); }
+                });
+            });
+        } catch (error) {
+            console.error(`Failed to fetch from ${url}:`, error);
+            return [];
+        }
+    }
+
+    async function loadAllData() {
+        console.log('Loading data from all sheets...');
+        const fetchPromises = Object.values(SHEETS_URLS).map(url => fetchSheetData(url));
+        const results = await Promise.all(fetchPromises);
+        
+        allRecordsData = results.flat().filter(record => record.Date && record.Result);
+        
+        if (allRecordsData.length > 0) {
+            console.log(`Success: Loaded ${allRecordsData.length} total records.`);
+            updateDashboard();
+            updateTicker();
+        } else {
+            console.error('Failure: Could not load any records.');
+            displayErrorState();
+        }
+    }
+
+    // --- DATE & CALCULATION LOGIC (Timezone-safe) ---
+    function parseUTCDate(dateStr) {
+        if (!dateStr) return null;
         const parts = dateStr.trim().split(/[-/]/);
         if (parts.length === 3) {
-            const month = parseInt(parts[0], 10) - 1; // JS months are 0-indexed
-            const day = parseInt(parts[1], 10);
-            let year = parseInt(parts[2], 10);
-            if (year < 100) year += 2000; // Handle yy format
-            if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-                return new Date(year, month, day);
-            }
+            const m = parseInt(parts[0], 10) - 1;
+            const d = parseInt(parts[1], 10);
+            let y = parseInt(parts[2], 10);
+            if (y < 100) y += 2000;
+            return Date.UTC(y, m, d);
         }
         return null;
     }
-    
-    // --- MAIN FUNCTION ---
-    function fetchData() {
-        Papa.parse(googleSheetUrl, {
-            download: true,
-            header: true,
-            skipEmptyLines: 'greedy',
-            transformHeader: header => header.trim(),
-            complete: function(results) {
-                const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
-                if (allPicks.length === 0) {
-                    displayError("No picks found in the data source.");
-                    return;
-                }
-                processAndDisplayRecords(allPicks);
-                updateDailyPick(allPicks);
-                updateTicker(allPicks);
-            },
-            error: function(error) {
-                console.error("Papa Parse Error:", error);
-                displayError("Could not load records.");
+
+    function calculateRecords() {
+        const now = new Date();
+        const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+        
+        const records = {
+            today: { wins: 0, losses: 0 },
+            week: { wins: 0, losses: 0 },
+            month: { wins: 0, losses: 0 },
+            allTime: { wins: 0, losses: 0 }
+        };
+
+        const dayOfWeek = new Date(todayUTC).getUTCDay(); 
+        const startOfWeekUTC = todayUTC - (dayOfWeek * 86400000); // 86400000 ms in a day
+        const startOfMonthUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1);
+
+        allRecordsData.forEach(record => {
+            const recordDateUTC = parseUTCDate(record.Date);
+            if (!recordDateUTC) return;
+
+            const result = record.Result.trim().toUpperCase();
+            const isWin = result.startsWith('W');
+            const isLoss = result.startsWith('L');
+            
+            if (!isWin && !isLoss) return;
+
+            if (isWin) records.allTime.wins++;
+            if (isLoss) records.allTime.losses++;
+
+            if (recordDateUTC >= startOfMonthUTC) {
+                if (isWin) records.month.wins++;
+                if (isLoss) records.month.losses++;
+            }
+            
+            if (recordDateUTC >= startOfWeekUTC) {
+                 if (isWin) records.week.wins++;
+                 if (isLoss) records.week.losses++;
+            }
+
+            if (recordDateUTC === todayUTC) {
+                if (isWin) records.today.wins++;
+                if (isLoss) records.today.losses++;
             }
         });
+        return records;
     }
 
-    // --- RECORD PROCESSING & CYCLING ---
-    function processAndDisplayRecords(picks) {
-        const recordsBySport = {};
-        
-        for (const p of picks) {
-            const result = p.Result ? p.Result.trim().toUpperCase() : '';
-            const sport = p.Sport ? p.Sport.trim() : 'Misc';
-            const unitChange = parseFloat(p.Units);
-
-            if (result !== '' && !isNaN(unitChange)) {
-                if (!recordsBySport[sport]) {
-                    recordsBySport[sport] = { w: 0, l: 0, p: 0, units: 0.0 };
-                }
-                
-                if (result.startsWith('W')) recordsBySport[sport].w++;
-                else if (result.startsWith('L')) recordsBySport[sport].l++;
-                else if (result.startsWith('P')) recordsBySport[sport].p++;
-                
-                recordsBySport[sport].units += unitChange;
-            }
-        }
-
-        const total = { w: 0, l: 0, p: 0, units: 0.0 };
-        Object.values(recordsBySport).forEach(sportStats => {
-            total.w += sportStats.w;
-            total.l += sportStats.l;
-            total.p += sportStats.p;
-            total.units += sportStats.units;
-        });
-
-        const displayData = { 'Overall': total, ...recordsBySport };
-        const sportsToCycle = Object.keys(displayData);
-        let currentIndex = 0;
-
-        function updateDisplay() {
-            if (sportsToCycle.length === 0) return;
-            const sportName = sportsToCycle[currentIndex];
-            const data = displayData[sportName];
-
-            const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
-            const recordString = `${data.w}-${data.l}` + (data.p > 0 ? `-${data.p}` : '');
-
-            recordH3.style.opacity = '0';
-            recordP.style.opacity = '0';
-
-            setTimeout(() => {
-                recordH3.textContent = `${sportName} Record`;
-                recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
-                recordH3.style.opacity = '1';
-                recordP.style.opacity = '1';
-            }, 400);
-
-            currentIndex = (currentIndex + 1) % sportsToCycle.length;
-        }
-        
-        // Clear any previous interval, start a new one
-        if (window.recordCycleInterval) clearInterval(window.recordCycleInterval);
-        updateDisplay();
-        window.recordCycleInterval = setInterval(updateDisplay, cycleSpeed);
-    }
-    
-    // --- DAILY PICK AND TICKER LOGIC ---
-    function updateDailyPick(picks) {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        // Find the most recent graded pick
-        const gradedPicks = picks
-            .filter(p => p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date))
-            .sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
-
-        // Find the next upcoming (pending) pick
-        const pendingPicks = picks
-            .filter(p => (!p.Result || p.Result.trim() === '') && p.Date && parseDate(p.Date) >= today)
-            .sort((a,b) => parseDate(a.Date) - parseDate(b.Date));
-        
-        let pickToShow = null;
-        // Prioritize showing today's pending pick
-        if (pendingPicks.length > 0) {
-            pickToShow = pendingPicks[0];
-        } else if (gradedPicks.length > 0) {
-            // Otherwise, show the most recently graded pick
-            pickToShow = gradedPicks[0];
-        }
-
-        if (pickToShow) {
-            const line = pickToShow.Line ? `(${pickToShow.Line.trim()})` : '';
-            freePickDisplay.textContent = `${pickToShow.Pick.trim()} ${line}`;
-        } else {
-            freePickDisplay.textContent = 'Check Back Soon';
-        }
+    // --- UI UPDATING ---
+    function updateDashboard() {
+        const records = calculateRecords();
+        document.getElementById('today-record').textContent = `${records.today.wins}-${records.today.losses}`;
+        document.getElementById('week-record').textContent = `${records.week.wins}-${records.week.losses}`;
+        document.getElementById('month-record').textContent = `${records.month.wins}-${records.month.losses}`;
+        document.getElementById('alltime-record').textContent = `${records.allTime.wins}-${records.allTime.losses}`;
     }
 
-    function updateTicker(picks) {
-        // Show picks from the last 3 days that have been graded
-        const threeDaysAgo = new Date();
-        threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-        threeDaysAgo.setHours(0,0,0,0);
+    function updateTicker() {
+        const tickerContent = document.getElementById('ticker-content');
+        const sortedRecords = allRecordsData
+            .filter(record => record.Pick && record.Result.trim() !== '')
+            .sort((a, b) => (parseUTCDate(b.Date) || 0) - (parseUTCDate(a.Date) || 0))
+            .slice(0, 20);
 
-        const recentGradedPicks = picks
-            .filter(p => {
-                const pickDate = parseDate(p.Date);
-                return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo;
-            })
-            .sort((a, b) => parseDate(b.Date) - parseDate(a.Date)) // Most recent first
-            .slice(0, 15); // Limit to 15 picks
-
-        if (recentGradedPicks.length === 0) {
-            tickerContent.innerHTML = '<div class="ticker__item">No recent results. Check back soon!</div>';
+        if (sortedRecords.length === 0) {
+            tickerContent.innerHTML = '<div class="ticker__item">No recent picks found.</div>';
             return;
         }
 
-        const separator = ' <span class="ticker__separator">•</span> ';
-        let tickerHTML = recentGradedPicks.map(p => {
-            const result = p.Result.trim().toUpperCase();
-            let resultClass = result.startsWith('W') ? 'win' : (result.startsWith('L') ? 'loss' : '');
-            
-            return `<div class="ticker__item"><span class="pick-text">${p.Pick.trim()}</span> <span class="grade ${resultClass}">${result}</span></div>`;
-        }).join(separator);
-
-        // Repeat for smooth animation
-        tickerContent.innerHTML = tickerHTML + separator + tickerHTML; 
+        let tickerHTML = sortedRecords.map(record => {
+            const result = record.Result.trim().toUpperCase();
+            const gradeClass = result.startsWith('W') ? 'win' : (result.startsWith('L') ? 'loss' : '');
+            const pickText = record.Pick.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            return `<div class="ticker__item"><span class="pick-text">${pickText}</span> <span class="grade ${gradeClass}">${result}</span></div>`;
+        }).join('<span class="ticker__separator">•</span>');
+        
+        tickerContent.innerHTML = tickerHTML.repeat(2);
+    }
+    
+    function displayErrorState() {
+        document.getElementById('today-record').textContent = 'Error';
+        document.getElementById('week-record').textContent = 'Error';
+        document.getElementById('month-record').textContent = 'Error';
+        document.getElementById('alltime-record').textContent = 'Error';
+        document.getElementById('ticker-content').innerHTML = '<div class="ticker__item">Error loading recent results.</div>';
     }
 
-    // --- ERROR STATE ---
-    function displayError(message) {
-        recordH3.textContent = 'Verified Record';
-        recordP.textContent = 'Error';
-        freePickDisplay.textContent = 'Error';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
-    }
-
-    // --- INITIALIZE THE SCRIPT ---
-    fetchData();
+    // --- INITIALIZE ---
+    loadAllData();
 });
 </script>
+
 </body>
 </html>
