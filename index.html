@@ -317,14 +317,16 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- SCRIPT MODIFIED to fetch from MLB, NFL, and NCAAF sheets -->
+<!-- SCRIPT MODIFIED to be RESILIENT, using Promise.allSettled -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- CONFIGURATION ---
-    const mlbSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
-    // !!! IMPORTANT: REPLACE these placeholder URLs with your actual published Google Sheet URLs !!!
-    const nflSheetUrl = 'https://docs.google.com/spreadsheets/d/e/YOUR_NFL_SHEET_PUBLISHED_URL/pub?output=csv';
-    const ncaafSheetUrl = 'https://docs.google.com/spreadsheets/d/e/YOUR_NCAAF_SHEET_PUBLISHED_URL/pub?output=csv';
+    const sheetUrls = [
+        'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv',
+        // !!! IMPORTANT: REPLACE these placeholder URLs with your actual published Google Sheet URLs !!!
+        'https://docs.google.com/spreadsheets/d/e/YOUR_NFL_SHEET_PUBLISHED_URL/pub?output=csv',
+        'https://docs.google.com/spreadsheets/d/e/YOUR_NCAAF_SHEET_PUBLISHED_URL/pub?output=csv'
+    ];
     const cycleSpeed = 4000;
 
     // --- ELEMENT SELECTORS ---
@@ -361,44 +363,41 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // --- MAIN DATA FETCHING AND EXECUTION ---
     function run() {
-        // Create a function that returns a Promise for parsing a single URL
         const fetchAndParse = (url) => {
             return new Promise((resolve, reject) => {
                 Papa.parse(url, {
-                    download: true,
-                    header: true,
-                    skipEmptyLines: 'greedy',
+                    download: true, header: true, skipEmptyLines: 'greedy',
                     transformHeader: header => header.trim(),
-                    complete: resolve,
-                    error: reject
+                    complete: resolve, error: reject
                 });
             });
         };
 
-        // Use Promise.all to fetch from all sheets concurrently
-        Promise.all([
-            fetchAndParse(mlbSheetUrl),
-            fetchAndParse(nflSheetUrl),
-            fetchAndParse(ncaafSheetUrl)
-        ]).then(resultsArray => {
-            // Combine data from all sheets into one array
-            // resultsArray is an array of PapaParse result objects, e.g., [mlbResults, nflResults, ncaafResults]
-            const allPicks = [].concat(...resultsArray.map(result => result.data))
-                               .filter(p => p.Pick && p.Pick.trim() !== '');
+        // Use Promise.allSettled to fetch all sheets. This will not fail if one URL is bad.
+        Promise.allSettled(sheetUrls.map(url => fetchAndParse(url)))
+            .then(resultsArray => {
+                let allPicks = [];
+                resultsArray.forEach((result, index) => {
+                    if (result.status === 'fulfilled') {
+                        // If the sheet was fetched successfully, add its data to the allPicks array
+                        const sheetData = result.value.data.filter(p => p.Pick && p.Pick.trim() !== '');
+                        allPicks = allPicks.concat(sheetData);
+                    } else {
+                        // If a sheet failed to load, log an error to the console for debugging
+                        console.error(`Failed to load data from URL #${index}: ${sheetUrls[index]}`, result.reason);
+                    }
+                });
 
-            if (allPicks.length === 0) {
-                displayDefaults();
-                return;
-            }
-            
-            processAndDisplayRecords(allPicks);
-            updateDailyPick(allPicks);
-            updateTicker(allPicks);
-
-        }).catch(error => {
-            console.error("Error fetching or parsing one of the sheets:", error);
-            displayError("Data feed interrupted");
-        });
+                if (allPicks.length === 0) {
+                    console.error("No valid data could be loaded from any source.");
+                    displayError("Data feed unavailable");
+                    return;
+                }
+                
+                processAndDisplayRecords(allPicks);
+                updateDailyPick(allPicks);
+                updateTicker(allPicks);
+            });
     }
 
     // --- RECORD PROCESSING LOGIC ---
@@ -433,12 +432,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const displayData = { 'Overall': total, ...recordsBySport };
         
-        if (!displayData['NFL']) {
-            displayData['NFL'] = { w: 0, l: 0, p: 0, units: 0.0 };
-        }
-         if (!displayData['NCAAF']) {
-            displayData['NCAAF'] = { w: 0, l: 0, p: 0, units: 0.0 };
-        }
+        // Ensure default objects exist if no data was found for these sports
+        if (!displayData['NFL']) displayData['NFL'] = { w: 0, l: 0, p: 0, units: 0.0 };
+        if (!displayData['NCAAF']) displayData['NCAAF'] = { w: 0, l: 0, p: 0, units: 0.0 };
         
         const sportsToCycle = Object.keys(displayData);
         let currentIndex = 0;
