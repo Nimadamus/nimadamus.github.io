@@ -219,7 +219,7 @@
     </div>
     
     <div class="nav-links">
-        <a href="blog-page5.html">Picks &amp; Analysis</a>
+        <a href="blog-page5.html">Picks & Analysis</a>
         <div class="dropdown">
             <button class="dropbtn">Records</button>
             <div class="dropdown-content">
@@ -254,4 +254,253 @@
     </div>
 
     <div class="gif-showcase">
-        <img alt="Animated graphic showing BetLegend sports betting picks and analysis." src="https://nimadamus.github.io/curry.gif
+        <img alt="Animated graphic showing BetLegend sports betting picks and analysis." src="https://nimadamus.github.io/curry.gif"/>
+    </div>
+    <div class="caption">
+        Real-time dashboard powered by <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABglOSxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrkOiQwnSEYExtx6xwFMfIXv/pubhtml?gid=0&single=true" target="_blank">our official records</a>.
+    </div>
+</div>
+
+<div class="interactive-dashboard">
+    <div class="dash-item">
+        <svg viewBox="0 0 24 24">
+            <path d="M7 10l5 5 5-5z"/>
+        </svg>
+        <h3>Today</h3>
+        <p id="today-record" class="highlight">Loading...</p>
+    </div>
+    <div class="dash-item">
+        <svg viewBox="0 0 24 24">
+            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+        </svg>
+        <h3>This Week</h3>
+        <p id="week-record" class="highlight">Loading...</p>
+    </div>
+    <div class="dash-item">
+        <svg viewBox="0 0 24 24">
+            <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+        </svg>
+        <h3>This Month</h3>
+        <p id="month-record" class="highlight">Loading...</p>
+    </div>
+    <div class="dash-item clickable" onclick="window.location.href='betlegend-verified-records.html'">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <h3>All Time</h3>
+        <p id="alltime-record" class="highlight">Loading...</p>
+    </div>
+</div>
+
+<script>
+// Google Sheets URLs for CSV data
+const SHEETS_CONFIG = {
+    mlb: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABglOSxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrkOiQwnSEYExtx6xwFMfIXv/pub?output=csv',
+    ncaaf: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNbO0kCBHfMf4Yn-Xr2LUqdCluoiXXDgrDa5mq1PZqxjg8hx-5KnSQL4uVU/pub?gid=0&single=true&output=csv',
+    nfl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_Xl_ya6hC7Y8kRaHzrOvuLMq9voGFO0nzfqi4lkmAWVb92nDkxUhLVhzr4TWtZRxq/pub?gid=0&single=true&output=csv'
+};
+
+let allData = {
+    mlb: [],
+    ncaaf: [],
+    nfl: []
+};
+
+// Parse CSV data
+function parseCSV(text) {
+    const lines = text.trim().split('\n');
+    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    const data = [];
+    
+    for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+        if (values.length === headers.length && values[0]) {
+            const row = {};
+            headers.forEach((header, index) => {
+                row[header] = values[index] || '';
+            });
+            data.push(row);
+        }
+    }
+    return data;
+}
+
+// Fetch data from Google Sheets
+async function fetchSheetData(url, sport) {
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const data = parseCSV(text);
+        allData[sport] = data;
+        console.log(`${sport.toUpperCase()} data loaded:`, data.length, 'records');
+        return data;
+    } catch (error) {
+        console.error(`Error fetching ${sport} data:`, error);
+        return [];
+    }
+}
+
+// Load all data
+async function loadAllData() {
+    try {
+        await Promise.all([
+            fetchSheetData(SHEETS_CONFIG.mlb, 'mlb'),
+            fetchSheetData(SHEETS_CONFIG.ncaaf, 'ncaaf'),
+            fetchSheetData(SHEETS_CONFIG.nfl, 'nfl')
+        ]);
+        
+        updateDashboard();
+        updateTicker();
+    } catch (error) {
+        console.error('Error loading data:', error);
+    }
+}
+
+// Get date in MM-DD-YYYY format
+function formatDate(date) {
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}-${day}-${year}`;
+}
+
+// Calculate records for different time periods
+function calculateRecords() {
+    const today = new Date();
+    const todayStr = formatDate(today);
+    
+    const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+    
+    let todayWins = 0, todayLosses = 0;
+    let weekWins = 0, weekLosses = 0;
+    let monthWins = 0, monthLosses = 0;
+    let allWins = 0, allLosses = 0;
+    
+    // Combine all sports data
+    const allRecords = [...allData.mlb, ...allData.ncaaf, ...allData.nfl];
+    
+    allRecords.forEach(record => {
+        if (!record.Date || !record.Result) return;
+        
+        // Parse date - handle different formats
+        let recordDate;
+        const dateStr = record.Date.trim();
+        
+        if (dateStr.includes('-')) {
+            const parts = dateStr.split('-');
+            if (parts.length === 3) {
+                // Handle MM-DD-YYYY or M-D-YYYY format
+                const month = parseInt(parts[0]);
+                const day = parseInt(parts[1]);
+                const year = parseInt(parts[2]);
+                recordDate = new Date(year, month - 1, day);
+            }
+        }
+        
+        if (!recordDate || isNaN(recordDate.getTime())) return;
+        
+        const result = record.Result.trim().toUpperCase();
+        const isWin = result === 'W' || result === 'WIN';
+        const isLoss = result === 'L' || result === 'LOSS' || result === 'LOSE';
+        
+        if (!isWin && !isLoss) return;
+        
+        // All time
+        if (isWin) allWins++;
+        if (isLoss) allLosses++;
+        
+        // Today
+        if (formatDate(recordDate) === todayStr) {
+            if (isWin) todayWins++;
+            if (isLoss) todayLosses++;
+        }
+        
+        // This week
+        if (recordDate >= weekAgo) {
+            if (isWin) weekWins++;
+            if (isLoss) weekLosses++;
+        }
+        
+        // This month
+        if (recordDate >= monthAgo) {
+            if (isWin) monthWins++;
+            if (isLoss) monthLosses++;
+        }
+    });
+    
+    return {
+        today: { wins: todayWins, losses: todayLosses },
+        week: { wins: weekWins, losses: weekLosses },
+        month: { wins: monthWins, losses: monthLosses },
+        allTime: { wins: allWins, losses: allLosses }
+    };
+}
+
+// Update dashboard with records
+function updateDashboard() {
+    const records = calculateRecords();
+    
+    // Update dashboard elements
+    document.getElementById('today-record').textContent = 
+        `${records.today.wins}-${records.today.losses}`;
+    document.getElementById('week-record').textContent = 
+        `${records.week.wins}-${records.week.losses}`;
+    document.getElementById('month-record').textContent = 
+        `${records.month.wins}-${records.month.losses}`;
+    document.getElementById('alltime-record').textContent = 
+        `${records.allTime.wins}-${records.allTime.losses}`;
+}
+
+// Update ticker with recent picks
+function updateTicker() {
+    const tickerContent = document.getElementById('ticker-content');
+    
+    // Get recent picks from all sports (last 10)
+    const allRecords = [...allData.mlb, ...allData.ncaaf, ...allData.nfl];
+    
+    // Sort by date (most recent first)
+    const sortedRecords = allRecords
+        .filter(record => record.Date && record.Pick && record.Result)
+        .sort((a, b) => {
+            const dateA = new Date(a.Date);
+            const dateB = new Date(b.Date);
+            return dateB.getTime() - dateA.getTime();
+        })
+        .slice(0, 15); // Get last 15 picks for ticker
+    
+    if (sortedRecords.length === 0) {
+        tickerContent.innerHTML = '<div class="ticker__item">No recent picks available</div>';
+        return;
+    }
+    
+    let tickerHTML = '';
+    sortedRecords.forEach((record, index) => {
+        const result = record.Result.trim().toUpperCase();
+        const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
+        const gradeText = (result === 'W' || result === 'WIN') ? 'WIN' : 'LOSS';
+        
+        tickerHTML += `
+            <div class="ticker__item">
+                <span class="pick-text">${record.Pick}</span>
+                <span class="grade ${gradeClass}">${gradeText}</span>
+            </div>
+            <span class="ticker__separator">●</span>
+        `;
+    });
+    
+    // Remove last separator
+    tickerHTML = tickerHTML.replace(/<span class="ticker__separator">●<\/span>$/, '');
+    tickerContent.innerHTML = tickerHTML;
+}
+
+// Initialize everything when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadAllData();
+    
+    // Refresh data every 5 minutes
+    setInterval(loadAllData, 5 * 60 * 1000);
+});
+</script>
+
+</body>
