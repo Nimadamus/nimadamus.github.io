@@ -223,9 +223,7 @@
         <div class="dropdown">
             <button class="dropbtn">Records</button>
             <div class="dropdown-content">
-                <a href="betlegend-verified-records.html">MLB Records</a>
-                <a href="nfl-records.html">NFL Records</a>
-                <a href="ncaaf-records.html">NCAAF Records</a>
+                <a href="betlegend-verified-records.html">Verified Records</a>
             </div>
         </div>
         <div class="dropdown">
@@ -276,4 +274,227 @@
         <p>--</p>
     </div>
     <a class="dash-item clickable" href="#subscribe">
-        <svg viewbox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20
+        <svg viewbox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg>
+        <h3>Premium Email</h3>
+        <p>Subscribe Now</p>
+    </a>
+    <a class="dash-item clickable" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
+        <svg viewbox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg>
+        <h3>Sportsbook</h3>
+        <p>350% <span class="highlight">BONUS</span></p>
+    </a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- CONFIGURATION ---
+    const sheetUrls = [
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv",
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?gid=0&single=true&output=csv",
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?gid=0&single=true&output=csv"
+    ];
+    const cycleSpeed = 4000;
+
+    // --- ELEMENT SELECTORS ---
+    const recordDashItem = document.getElementById('dash-record');
+    const recordH3 = recordDashItem.querySelector('h3');
+    const recordP = recordDashItem.querySelector('p');
+    const freePickDisplay = document.querySelector('#dash-free-pick p');
+    const tickerContent = document.getElementById('ticker-content');
+    
+    if (!recordDashItem || !freePickDisplay || !tickerContent) {
+        console.error("Critical dashboard elements could not be found. Aborting script.");
+        return;
+    }
+    
+    recordH3.style.transition = 'opacity 0.4s ease-in-out';
+    recordP.style.transition = 'opacity 0.4s ease-in-out';
+
+    // --- HELPER FUNCTION ---
+    function parseDate(dateStr) {
+      if (!dateStr) return null;
+      const s = String(dateStr).trim();
+      let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+      if (m) {
+        const mo = +m[1] - 1, d = +m[2]; let y = +m[3];
+        if (y < 100) y += 2000;
+        return (y > 2000 && mo >= 0 && mo < 12 && d > 0 && d <= 31) ? new Date(y, mo, d) : null;
+      }
+      m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+      if (m) {
+        const y = +m[1], mo = +m[2] - 1, d = +m[3];
+        return (mo >= 0 && mo < 12 && d > 0 && d <= 31) ? new Date(y, mo, d) : null;
+      }
+      return null;
+    }
+
+    function run() {
+        const fetchAndParse = (url) => {
+            return new Promise((resolve, reject) => {
+                Papa.parse(url, {
+                    download: true, header: true, skipEmptyLines: 'greedy',
+                    transformHeader: header => header.trim(),
+                    complete: resolve, error: reject
+                });
+            });
+        };
+
+        Promise.allSettled(sheetUrls.map(url => fetchAndParse(url)))
+            .then(resultsArray => {
+                let allPicks = [];
+                resultsArray.forEach((result, index) => {
+                    if (result.status === 'fulfilled' && result.value.data) {
+                        const sheetData = result.value.data.filter(p => p.Pick && p.Pick.trim() !== '');
+                        allPicks = allPicks.concat(sheetData);
+                    } else {
+                        console.error(`Failed to load or parse data from URL #${index}: ${sheetUrls[index]}`, result.reason);
+                    }
+                });
+
+                if (allPicks.length === 0) {
+                    console.error("No valid data could be loaded from any source.");
+                    displayError("Data feed unavailable");
+                    return;
+                }
+                
+                processAndDisplayRecords(allPicks);
+                updateDailyPick(allPicks);
+                updateTicker(allPicks);
+            });
+    }
+
+    function processAndDisplayRecords(picks) {
+        const recordsBySport = {};
+        
+        for (const p of picks) {
+            const result = p.Result ? p.Result.trim().toUpperCase() : '';
+            const sport = p.Sport ? p.Sport.trim() : 'Misc';
+            const unitChange = parseFloat(p.Units);
+
+            if (result !== '' && !isNaN(unitChange)) {
+                if (!recordsBySport[sport]) {
+                    recordsBySport[sport] = { w: 0, l: 0, p: 0, units: 0.0 };
+                }
+                
+                if (result === 'W' || result === 'WIN') recordsBySport[sport].w++;
+                else if (result === 'L' || result === 'LOSS') recordsBySport[sport].l++;
+                else if (result === 'P' || result === 'PUSH') recordsBySport[sport].p++;
+                
+                recordsBySport[sport].units += unitChange;
+            }
+        }
+
+        const total = { w: 0, l: 0, p: 0, units: 0.0 };
+        Object.values(recordsBySport).forEach(sportStats => {
+            total.w += sportStats.w;
+            total.l += sportStats.l;
+            total.p += sportStats.p;
+            total.units += sportStats.units;
+        });
+
+        const displayData = { 'Overall': total, ...recordsBySport };
+        
+        if (!displayData['NFL']) displayData['NFL'] = { w: 0, l: 0, p: 0, units: 0.0 };
+        if (!displayData['NCAAF']) displayData['NCAAF'] = { w: 0, l: 0, p: 0, units: 0.0 };
+        
+        const sportsToCycle = Object.keys(displayData);
+        let currentIndex = 0;
+
+        function updateDisplay() {
+            if (sportsToCycle.length === 0) return;
+            const sportName = sportsToCycle[currentIndex];
+            const data = displayData[sportName];
+
+            const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
+            const recordString = `${data.w}-${data.l}-${data.p}`;
+
+            recordH3.style.opacity = '0';
+            recordP.style.opacity = '0';
+
+            setTimeout(() => {
+                recordH3.textContent = `${sportName} Record`;
+                recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
+                recordH3.style.opacity = '1';
+                recordP.style.opacity = '1';
+            }, 400);
+
+            currentIndex = (currentIndex + 1) % sportsToCycle.length;
+        }
+        
+        updateDisplay();
+        setInterval(updateDisplay, cycleSpeed);
+    }
+    
+    function updateDailyPick(picks) {
+        const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date));
+        
+        if (gradedPicks.length === 0) {
+            const pendingPicks = picks.filter(p => (!p.Result || p.Result.trim() === '') && p.Date && parseDate(p.Date)).sort((a,b) => parseDate(a.Date) - parseDate(b.Date));
+            if (pendingPicks.length > 0) {
+                const nextPick = pendingPicks[0];
+                if (nextPick && nextPick.Line) {
+                    freePickDisplay.textContent = `${nextPick.Pick.trim()} (${nextPick.Line.trim()})`;
+                } else {
+                    freePickDisplay.textContent = 'Check Back Soon';
+                }
+            } else {
+                freePickDisplay.textContent = 'Check Back Soon';
+            }
+            return;
+        }
+
+        gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
+        const latestPick = gradedPicks[0];
+        
+        if (latestPick && latestPick.Line) {
+            freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`;
+        } else {
+            freePickDisplay.textContent = 'Check Back Soon';
+        }
+    }
+
+    function updateTicker(picks) {
+        const today = new Date();
+        today.setHours(23, 59, 59, 999);
+        const threeDaysAgo = new Date(today);
+        threeDaysAgo.setDate(today.getDate() - 2);
+
+        const recentGradedPicks = picks.filter(p => {
+            const pickDate = parseDate(p.Date);
+            return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
+        }).sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
+
+        if (recentGradedPicks.length === 0) {
+            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
+            return;
+        }
+
+        const separator = ' <span class="ticker__separator">•</span> ';
+        let tickerHTML = recentGradedPicks.map(p => {
+            const result = p.Result.trim().toUpperCase();
+            let resultClass = '';
+            if (result === 'W' || result === 'WIN') resultClass = 'win';
+            if (result === 'L' || result === 'LOSS') resultClass = 'loss';
+            
+            const resultText = result.charAt(0);
+            const pickDate = parseDate(p.Date);
+            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
+            
+            return `<div class="ticker__item">${displayDate}: <span class="pick-text">${p.Pick.trim()}</span> <span class="grade ${resultClass}">${resultText}</span></div>`;
+        }).join(separator);
+
+        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
+    }
+
+    function displayError(message) {
+        recordP.textContent = 'Error';
+        freePickDisplay.textContent = 'Error';
+    }
+
+    run();
+});
+</script>
+</body>
+</html>
