@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
+<meta charset="UTF-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>BetLegend Picks â€" Expert picks. Winning records. All tracked daily. </title>
+<title>BetLegend Picks — Expert picks. Winning records. All tracked daily.</title>
 <meta content="The future of sports betting: A live dashboard automatically updated from our official records, displaying graded picks, verified record, and daily plays." name="description"/>
 <meta content="google sheets sports betting, automated betting record, live betting picks, mlb picks, nfl picks, ncaaf picks, betting analysis, verified record" name="keywords"/>
 <link href="https://www.betlegendpicks.com/" rel="canonical"/>
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<meta content="BetLegend Picks â€" Live Automated Betting Dashboard" property="og:title"/>
+<meta content="BetLegend Picks — Live Automated Betting Dashboard" property="og:title"/>
 <meta content="Our picks and record, updated live from our official Google Sheet." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://www.betlegendpicks.com/" property="og:url"/>
@@ -126,7 +126,7 @@
     .dropdown-content a { color: var(--glow-color); padding: 12px 16px; text-decoration: none; display: block; font-size: 16px; text-align: left; }
     .dropdown-content a:hover { background-color: rgba(0, 224, 255, 0.1); color: #fff; }
     .dropdown:hover .dropdown-content { display: block; }
-    .dropbtn::after { content: ' â–¼'; font-size: 0.6em; vertical-align: middle; }
+    .dropbtn::after { content: ' ▼'; font-size: 0.6em; vertical-align: middle; }
     
     .gif-showcase {
         width: 100%; max-width: 600px; 
@@ -266,76 +266,53 @@
 
 <div class="interactive-dashboard">
     <div class="dash-item">
-        <svg viewBox="0 0 24 24">
-            <path d="M7 10l5 5 5-5z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 15.0001L7 10.0001L8.41 8.59009L12 12.1701L15.59 8.59009L17 10.0001L12 15.0001Z"/></svg>
         <h3>Today</h3>
         <p id="today-record" class="highlight">Loading...</p>
     </div>
     <div class="dash-item">
-        <svg viewBox="0 0 24 24">
-            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M17 13H19V15H17V13ZM17 9H19V11H17V9ZM13 13H15V15H13V13ZM13 9H15V11H13V9ZM9 13H11V15H9V13ZM9 9H11V11H9V9ZM21 5V19C21 20.103 20.103 21 19 21H5C3.897 21 3 20.103 3 19V5C3 3.897 3.897 3 5 3H6V1H8V3H16V1H18V3H19C20.103 3 21 3.897 21 5ZM19 7H5V19H19V7Z"/></svg>
         <h3>This Week</h3>
         <p id="week-record" class="highlight">Loading...</p>
     </div>
     <div class="dash-item">
-        <svg viewBox="0 0 24 24">
-            <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
         <h3>This Month</h3>
         <p id="month-record" class="highlight">Loading...</p>
     </div>
     <div class="dash-item clickable" onclick="window.location.href='betlegend-verified-records.html'">
-        <svg viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/></svg>
         <h3>All Time</h3>
         <p id="alltime-record" class="highlight">Loading...</p>
     </div>
 </div>
 
 <script>
-// Google Sheets URLs - using different approach to avoid CORS
+// --- CORRECTED GOOGLE SHEETS URLS ---
 const SHEETS_CONFIG = {
-    mlb: 'https://docs.google.com/spreadsheets/d/1d07V8GQv4OT3wNCOCEuAF_wd4vnIYPIisqehEzZXtz4/export?format=csv&gid=0',
-    ncaaf: 'https://docs.google.com/spreadsheets/d/1g_ElCWoQFdozHvkCyj_npEkWpOqj8b3bZL-zW5uRi/export?format=csv&gid=0',
-    nfl: 'https://docs.google.com/spreadsheets/d/1g_EI9WcQFdozHvkCyj_npEkWpOqj8b3bZL-zW5uRi/export?format=csv&gid=0'
+    // This sheet contains all sports picks now (MLB, NCAAF, NFL)
+    all_sports: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgI0sXSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXggOmrk0iQWmSEYExtx6xwFMfIXv/pub?output=csv',
+    
+    // Kept separate in case you want to use them in the future
+    ncaaf: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9C45xiuXWNe-fAXYMoNbLOOKCBHfmf4Yn-Xr2LUqdCliuoiXXDgrDa5mqtPZqxjg8hx-5KnSOL4UVU/pub?gid=0&single=true&output=csv',
+    nfl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQggB4WcyyEpMBp_XI_yahCTY8KrHzrOvuLMQ9VoGFOnzfqI4IkAWVb92nDxkXUhLVhzr4RTWZRXQ/pub?gid=0&single=true&output=csv'
 };
 
-let allData = {
-    mlb: [],
-    ncaaf: [],
-    nfl: []
-};
-
-// Fallback data for testing
-const fallbackData = {
-    mlb: [
-        { Date: '8-25-2025', Sport: 'MLB', Pick: 'Yankees -1.5', Result: 'W' },
-        { Date: '8-24-2025', Sport: 'MLB', Pick: 'Red Sox over 8.5', Result: 'L' },
-        { Date: '8-23-2025', Sport: 'MLB', Pick: 'Dodgers ML', Result: 'W' }
-    ],
-    ncaaf: [
-        { Date: '8-23-2025', Sport: 'NCAAF', Pick: 'Fresno St/Kansas under 50', Result: 'W' }
-    ],
-    nfl: [
-        { Date: '8-7-2025', Sport: 'NFL', Pick: 'Bengals First Half -6 (Preseason)', Result: 'W' }
-    ]
-};
+let allRecordsData = [];
 
 // Simple CSV parser
 function parseCSV(text) {
     try {
         const lines = text.trim().split('\n');
-        if (lines.length === 0) return [];
+        if (lines.length < 2) return []; // Need headers and at least one row
         
         const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
         const data = [];
         
         for (let i = 1; i < lines.length; i++) {
+            // Basic CSV parsing - won't handle commas within quotes
             const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
-            if (values.length >= 2 && values[0]) { // At least date and some data
+            if (values.length >= headers.length && values[0]) { // Check for date and ensure row isn't malformed
                 const row = {};
                 headers.forEach((header, index) => {
                     row[header] = values[index] || '';
@@ -343,7 +320,6 @@ function parseCSV(text) {
                 data.push(row);
             }
         }
-        
         return data;
     } catch (error) {
         console.error('CSV parsing error:', error);
@@ -351,242 +327,179 @@ function parseCSV(text) {
     }
 }
 
-// Fetch with multiple fallback strategies
-async function fetchSheetData(url, sport) {
-    const attempts = [
-        // Original URL
-        url,
-        // Try with CORS proxy
-        `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-        // Try alternative export format
-        url.replace('/pub?output=csv', '/export?format=csv&gid=0')
-    ];
-    
-    for (let i = 0; i < attempts.length; i++) {
-        try {
-            console.log(`Attempt ${i + 1} for ${sport}:`, attempts[i]);
-            
-            const response = await fetch(attempts[i], {
-                method: 'GET',
-                mode: 'cors',
-                cache: 'no-cache',
-                headers: {
-                    'Accept': 'text/csv,text/plain,*/*'
-                }
-            });
-            
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            
-            let text = await response.text();
-            
-            // Handle CORS proxy response
-            if (attempts[i].includes('allorigins')) {
-                const jsonData = JSON.parse(text);
-                text = jsonData.contents;
-            }
-            
-            console.log(`${sport} data length:`, text.length);
-            
-            if (text.length > 50) { // Must have substantial content
-                const data = parseCSV(text);
-                if (data.length > 0) {
-                    allData[sport] = data;
-                    console.log(`${sport.toUpperCase()} loaded:`, data.length, 'records');
-                    return data;
-                }
-            }
-            
-        } catch (error) {
-            console.error(`${sport} attempt ${i + 1} failed:`, error.message);
+// Fetch data from a given sheet URL
+async function fetchSheetData(url) {
+    try {
+        // Using a CORS proxy to prevent cross-origin issues
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const response = await fetch(proxyUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        const data = await response.json();
+        const csvText = data.contents;
+        
+        if (!csvText || csvText.length < 50) { // Check for valid content
+             throw new Error("Fetched data is empty or invalid.");
+        }
+        
+        return parseCSV(csvText);
+
+    } catch (error) {
+        console.error(`Failed to fetch or parse sheet data from ${url}:`, error);
+        return []; // Return empty array on failure
     }
-    
-    // If all attempts failed, use fallback data
-    console.log(`Using fallback data for ${sport}`);
-    allData[sport] = fallbackData[sport] || [];
-    return allData[sport];
 }
 
-// Load all data with better error handling
+// Load all necessary data
 async function loadAllData() {
-    console.log('Starting to load data from all sheets...');
+    console.log('Starting data load...');
+    // Fetching from the main "Bet Legend Picks" sheet which contains all sports
+    allRecordsData = await fetchSheetData(SHEETS_CONFIG.all_sports);
     
-    try {
-        const results = await Promise.allSettled([
-            fetchSheetData(SHEETS_CONFIG.mlb, 'mlb'),
-            fetchSheetData(SHEETS_CONFIG.ncaaf, 'ncaaf'),
-            fetchSheetData(SHEETS_CONFIG.nfl, 'nfl')
-        ]);
-        
-        // Check results
-        results.forEach((result, index) => {
-            const sport = ['mlb', 'ncaaf', 'nfl'][index];
-            if (result.status === 'fulfilled') {
-                console.log(`${sport} loaded successfully:`, result.value.length, 'records');
-            } else {
-                console.error(`${sport} failed to load:`, result.reason);
-            }
-        });
-        
-        // Update dashboard and ticker even if some sheets failed
+    if (allRecordsData.length > 0) {
+        console.log(`Successfully loaded ${allRecordsData.length} records.`);
         updateDashboard();
         updateTicker();
-        
-        console.log('Data loading completed');
-        
-    } catch (error) {
-        console.error('Error in loadAllData:', error);
-        // Set fallback data
+    } else {
+        console.error('Failed to load any records. Displaying error state.');
+        // Display error message if data loading fails
         document.getElementById('today-record').textContent = 'Error';
         document.getElementById('week-record').textContent = 'Error';
         document.getElementById('month-record').textContent = 'Error';
         document.getElementById('alltime-record').textContent = 'Error';
-        document.getElementById('ticker-content').innerHTML = '<div class="ticker__item">Error loading data</div>';
+        document.getElementById('ticker-content').innerHTML = '<div class="ticker__item">Error loading recent results.</div>';
     }
+    console.log('Data loading process finished.');
 }
 
-// Get date in MM-DD-YYYY format
-function formatDate(date) {
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}-${day}-${year}`;
+// Helper to parse dates consistently
+function parseDate(dateStr) {
+    if (!dateStr) return null;
+    // Assuming M-D-YYYY format, e.g., "8-25-2025"
+    const parts = dateStr.trim().split('-');
+    if (parts.length === 3) {
+        const [month, day, year] = parts.map(Number);
+        if (!isNaN(month) && !isNaN(day) && !isNaN(year)) {
+            // JavaScript months are 0-indexed (0=Jan, 11=Dec)
+            return new Date(year, month - 1, day);
+        }
+    }
+    return null; // Return null if format is invalid
 }
+
 
 // Calculate records
 function calculateRecords() {
     const today = new Date();
-    const todayStr = formatDate(today);
+    today.setHours(0, 0, 0, 0); // Normalize to start of day
+
+    const records = {
+        today: { wins: 0, losses: 0 },
+        week: { wins: 0, losses: 0 },
+        month: { wins: 0, losses: 0 },
+        allTime: { wins: 0, losses: 0 }
+    };
+
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(today.getDate() - 7);
+
+    const thirtyDaysAgo = new Date(today);
+    thirtyDaysAgo.setDate(today.getDate() - 30);
     
-    const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
-    
-    let todayWins = 0, todayLosses = 0;
-    let weekWins = 0, weekLosses = 0;
-    let monthWins = 0, monthLosses = 0;
-    let allWins = 0, allLosses = 0;
-    
-    // Combine all sports data
-    const allRecords = [...allData.mlb, ...allData.ncaaf, ...allData.nfl];
-    
-    allRecords.forEach(record => {
+    allRecordsData.forEach(record => {
         if (!record.Date || !record.Result) return;
         
-        // Parse date
-        let recordDate;
-        const dateStr = record.Date.trim();
-        
-        if (dateStr.includes('-')) {
-            const parts = dateStr.split('-');
-            if (parts.length === 3) {
-                const month = parseInt(parts[0]);
-                const day = parseInt(parts[1]);
-                const year = parseInt(parts[2]);
-                recordDate = new Date(year, month - 1, day);
-            }
-        }
-        
-        if (!recordDate || isNaN(recordDate.getTime())) return;
-        
+        const recordDate = parseDate(record.Date);
+        if (!recordDate) return; // Skip if date is invalid
+
         const result = record.Result.trim().toUpperCase();
-        const isWin = result === 'W' || result === 'WIN';
-        const isLoss = result === 'L' || result === 'LOSS' || result === 'LOSE';
+        const isWin = result.startsWith('W');
+        const isLoss = result.startsWith('L');
+
+        if (!isWin && !isLoss) return; // Skip pushes, etc.
+
+        // All Time
+        if (isWin) records.allTime.wins++;
+        if (isLoss) records.allTime.losses++;
+
+        // This Month
+        if (recordDate >= thirtyDaysAgo) {
+            if (isWin) records.month.wins++;
+            if (isLoss) records.month.losses++;
+        }
         
-        if (!isWin && !isLoss) return;
-        
-        // All time
-        if (isWin) allWins++;
-        if (isLoss) allLosses++;
-        
+        // This Week
+        if (recordDate >= sevenDaysAgo) {
+             if (isWin) records.week.wins++;
+             if (isLoss) records.week.losses++;
+        }
+
         // Today
-        if (formatDate(recordDate) === todayStr) {
-            if (isWin) todayWins++;
-            if (isLoss) todayLosses++;
-        }
-        
-        // This week
-        if (recordDate >= weekAgo) {
-            if (isWin) weekWins++;
-            if (isLoss) weekLosses++;
-        }
-        
-        // This month
-        if (recordDate >= monthAgo) {
-            if (isWin) monthWins++;
-            if (isLoss) monthLosses++;
+        if (recordDate.getTime() === today.getTime()) {
+            if (isWin) records.today.wins++;
+            if (isLoss) records.today.losses++;
         }
     });
     
-    return {
-        today: { wins: todayWins, losses: todayLosses },
-        week: { wins: weekWins, losses: weekLosses },
-        month: { wins: monthWins, losses: monthLosses },
-        allTime: { wins: allWins, losses: allLosses }
-    };
+    return records;
 }
 
 // Update dashboard with records
 function updateDashboard() {
     const records = calculateRecords();
-    
-    document.getElementById('today-record').textContent = 
-        `${records.today.wins}-${records.today.losses}`;
-    document.getElementById('week-record').textContent = 
-        `${records.week.wins}-${records.week.losses}`;
-    document.getElementById('month-record').textContent = 
-        `${records.month.wins}-${records.month.losses}`;
-    document.getElementById('alltime-record').textContent = 
-        `${records.allTime.wins}-${records.allTime.losses}`;
+    document.getElementById('today-record').textContent = `${records.today.wins}-${records.today.losses}`;
+    document.getElementById('week-record').textContent = `${records.week.wins}-${records.week.losses}`;
+    document.getElementById('month-record').textContent = `${records.month.wins}-${records.month.losses}`;
+    document.getElementById('alltime-record').textContent = `${records.allTime.wins}-${records.allTime.losses}`;
 }
 
 // Update ticker with recent picks
 function updateTicker() {
     const tickerContent = document.getElementById('ticker-content');
     
-    // Get recent picks from all sports
-    const allRecords = [...allData.mlb, ...allData.ncaaf, ...allData.nfl];
-    
-    // Sort by date (most recent first)
-    const sortedRecords = allRecords
-        .filter(record => record.Date && record.Pick && record.Result)
+    const sortedRecords = allRecordsData
+        .filter(record => record.Date && record.Pick && record.Result && (record.Result.startsWith('W') || record.Result.startsWith('L')))
         .sort((a, b) => {
-            const dateA = new Date(a.Date);
-            const dateB = new Date(b.Date);
-            return dateB.getTime() - dateA.getTime();
+            const dateA = parseDate(a.Date);
+            const dateB = parseDate(b.Date);
+            if (!dateA || !dateB) return 0;
+            return dateB - dateA; // Most recent first
         })
-        .slice(0, 15);
+        .slice(0, 20); // Show up to 20 recent picks
     
     if (sortedRecords.length === 0) {
-        tickerContent.innerHTML = '<div class="ticker__item">No recent picks available</div>';
+        tickerContent.innerHTML = '<div class="ticker__item">No recent picks available.</div>';
         return;
     }
     
     let tickerHTML = '';
-    sortedRecords.forEach((record, index) => {
+    sortedRecords.forEach(record => {
         const result = record.Result.trim().toUpperCase();
-        const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
-        const gradeText = (result === 'W' || result === 'WIN') ? 'WIN' : 'LOSS';
+        const isWin = result.startsWith('W');
+        const gradeClass = isWin ? 'win' : 'loss';
+        const gradeText = isWin ? 'WIN' : 'LOSS';
+        
+        // Sanitize pick text to prevent HTML injection
+        const pickText = record.Pick.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         
         tickerHTML += `
             <div class="ticker__item">
-                <span class="pick-text">${record.Pick}</span>
+                <span class="pick-text">${pickText}</span>
                 <span class="grade ${gradeClass}">${gradeText}</span>
             </div>
             <span class="ticker__separator">●</span>
         `;
     });
     
-    // Remove last separator
-    tickerHTML = tickerHTML.replace(/<span class="ticker__separator">●<\/span>$/, '');
-    tickerContent.innerHTML = tickerHTML;
+    tickerContent.innerHTML = tickerHTML.repeat(2); // Repeat for a seamless loop
 }
 
 // Initialize everything when page loads
 document.addEventListener('DOMContentLoaded', function() {
     loadAllData();
-    
     // Refresh data every 5 minutes
     setInterval(loadAllData, 5 * 60 * 1000);
 });
