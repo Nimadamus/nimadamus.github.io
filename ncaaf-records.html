@@ -15,9 +15,6 @@
         .header-branding { text-align: center; margin-bottom: 25px; }
         .title { font-size: 64px; font-weight: 900; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
         .title .highlight { color: var(--glow-color); }
-        .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px 30px; width: 100%; padding: 20px 0; margin-bottom: 30px; border-top: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2); background: rgba(0,0,0,0.3); }
-        .nav-links a { color: var(--glow-color); text-decoration: none; font-size: 16px; font-weight: bold; transition: text-shadow 0.3s ease, color 0.3s ease; }
-        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--glow-color); }
         .summary-stats { display: flex; justify-content: space-around; width: 100%; max-width: 800px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(0, 224, 255, 0.2); }
         .stat-box { text-align: center; }
         .stat-box h3 { margin: 0 0 10px 0; font-size: 16px; color: var(--glow-color); text-transform: uppercase; }
@@ -31,20 +28,13 @@
         .records-table td .loss { color: var(--loss-color); font-weight: 700; }
         .records-table td .push { color: #888; font-weight: 700; }
         #loading-message { font-size: 18px; text-align: center; padding: 40px; }
-
-        /* Records dropdown block */
         .records-switcher { display:flex; gap:10px; align-items:center; justify-content:center; margin: 10px 0 24px; }
         .records-switcher label { color:#00e0ff; font-weight:700; }
         .records-switcher select { background:#061015; color:#fff; border:1px solid rgba(0, 224, 255, 0.35); padding:8px 10px; border-radius:8px; font-family: 'Roboto', sans-serif; }
+        .nav-home { display: block; text-align: center; margin-top: 30px; }
+        .nav-home a { color: var(--glow-color); text-decoration: none; font-weight: bold; }
+        .nav-home a:hover { text-shadow: 0 0 8px var(--glow-color); }
     </style>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-QS8L5TDNLY');
-</script>
 </head>
 <body>
     <div class="content-wrapper">
@@ -53,17 +43,14 @@
         </div>
 
         <div class="records-switcher">
-          <label for="records-select">View:</label>
+          <label for="records-select">View Records:</label>
           <select id="records-select" onchange="location=this.value;">
-            <option value="betlegend-verified-records.html">MLB Records</option>
+            <option value="betlegend-verified-records.html">All Sports (Combined)</option>
             <option value="nfl-records.html">NFL Records</option>
             <option value="ncaaf-records.html" selected>NCAAF Records</option>
           </select>
         </div>
 
-        <div class="nav-links">
-             <a href="index.html">Home</a><a href="blog.html">Picks & Analysis</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
-        </div>
         <div class="summary-stats">
             <div class="stat-box"><h3>Overall Record</h3><p id="overall-record">--</p></div>
             <div class="stat-box"><h3>Total Units</h3><p id="total-units">--</p></div>
@@ -73,85 +60,88 @@
             <tbody id="records-tbody"></tbody>
         </table>
         <div id="loading-container">
-             <p id="loading-message">Loading full record from the official ledger...</p>
+             <p id="loading-message">Loading NCAAF record from the official ledger...</p>
+        </div>
+        <div class="nav-home">
+             <a href="/">← Back to Homepage</a>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
+            // --- CONFIGURATION: Correct URL for the NCAAF sheet ---
+            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9C45xiuXWNe-fAXYMoNbLOOKCBHfmf4Yn-Xr2LUqdCliuoiXXDgrDa5mqtPZqxjg8hx-5KnSOL4UVU/pub?gid=0&single=true&output=csv';
 
             const tableBody = document.getElementById('records-tbody');
             const loadingContainer = document.getElementById('loading-container');
 
-            function parseCSV(text) {
-                const rows = text.trim().split(/\r?\n/);
-                const headers = rows[0].split(',').map(h => h.trim());
-                return rows.slice(1).map(row => {
-                    const values = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
-                    const entry = {};
-                    headers.forEach((header, i) => {
-                        const value = values[i] ? values[i].replace(/"/g, '').trim() : '';
-                        entry[header] = value;
+            async function fetchSheetData(url) {
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                try {
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    const data = await response.json();
+                    return new Promise(resolve => {
+                        Papa.parse(data.contents, {
+                            header: true, skipEmptyLines: true, transformHeader: h => h.trim(),
+                            complete: (results) => resolve(results.data),
+                            error: (err) => { console.error('PapaParse error:', err); resolve([]); }
+                        });
                     });
-                    return entry;
+                } catch (error) {
+                    console.error(`Failed to fetch from ${url}:`, error);
+                    return [];
+                }
+            }
+            
+            async function loadAndDisplayRecords() {
+                const picksDatabase = await fetchSheetData(googleSheetUrl);
+                const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
+
+                if (gradedPicks.length === 0) {
+                    document.getElementById('overall-record').textContent = '0-0-0';
+                    document.getElementById('total-units').textContent = '+0.00';
+                    loadingContainer.innerHTML = `<p id="loading-message">No graded NCAAF picks found yet.</p>`;
+                    return;
+                }
+
+                loadingContainer.style.display = 'none';
+                
+                let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
+                gradedPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+                
+                gradedPicks.forEach(p => {
+                    let resultClass = '';
+                    const grade = p.Result.trim().toUpperCase();
+                    if (grade.startsWith('W')) { wins++; resultClass = 'win'; }
+                    else if (grade.startsWith('L')) { losses++; resultClass = 'loss'; }
+                    else if (grade.startsWith('P')) { pushes++; resultClass = 'push'; }
+                    
+                    const unitValue = parseFloat(p.Units);
+                    if (!isNaN(unitValue)) totalUnits += unitValue;
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${p.Date}</td>
+                        <td>${p.Pick}</td>
+                        <td>${p.Line || 'N/A'}</td>
+                        <td><span class="${resultClass}">${p.Result}</span></td>
+                        <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
+                    `;
+                    tableBody.appendChild(row);
                 });
+
+                document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
+                const unitsElement = document.getElementById('total-units');
+                unitsElement.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+                unitsElement.classList.add(totalUnits >= 0 ? 'win' : 'loss');
             }
 
-            fetch(googleSheetUrl)
-                .then(response => response.text())
-                .then(csvText => {
-                    const picksDatabase = parseCSV(csvText);
-                    
-                    const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
-                    if (gradedPicks.length === 0) {
-                        document.getElementById('overall-record').textContent = '0-0-0';
-                        document.getElementById('total-units').textContent = '+0.00';
-                        loadingContainer.innerHTML = `<p id="loading-message">No graded picks found in the record yet.</p>`;
-                        return;
-                    }
-
-                    loadingContainer.style.display = 'none';
-                    
-                    let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
-
-                    gradedPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-                    
-                    gradedPicks.forEach(p => {
-                        let resultClass = '';
-                        let grade = p.Result;
-
-                        if (grade === 'W' || grade === 'Win') { wins++; resultClass = 'win'; }
-                        else if (grade === 'L' || grade === 'Loss') { losses++; resultClass = 'loss'; }
-                        else if (grade === 'P' || grade === 'Push') { pushes++; resultClass = 'push'; }
-                        
-                        const unitValue = parseFloat(p.Units);
-                        if (!isNaN(unitValue)) {
-                            totalUnits += unitValue;
-                        }
-
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${p.Date}</td>
-                            <td>${p.Pick}</td>
-                            <td>${p.Line}</td>
-                            <td><span class="${resultClass}">${grade}</span></td>
-                            <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-
-                    document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
-                    const unitsElement = document.getElementById('total-units');
-                    unitsElement.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
-                    unitsElement.classList.add(totalUnits >= 0 ? 'win' : 'loss');
-
-                }).catch(error => {
-                    console.error("Error fetching Verified Records:", error);
-                    document.getElementById('overall-record').textContent = 'Error';
-                    document.getElementById('total-units').textContent = 'Error';
-                    loadingContainer.innerHTML = `<p id="loading-message">Could not load record. Please check the Google Sheet URL and ensure it's published correctly.</p>`;
-                });
+            loadAndDisplayRecords().catch(error => {
+                console.error("Error fetching NCAAF Records:", error);
+                loadingContainer.innerHTML = `<p id="loading-message">Could not load NCAAF record.</p>`;
+            });
         });
     </script>
 </body>
