@@ -157,12 +157,12 @@
     .dash-item .highlight { color: var(--win-color); font-family: 'Orbitron', sans-serif; }
 
     @media (max-width: 1024px) {
-        .fixed-sidebar { display: none; } /* Hide fixed sidebar on tablets and smaller screens */
-        .pay-hero { display: block; } /* Show the in-page subscription plans instead */
+        .fixed-sidebar { display: none; }
+        .pay-hero { display: block; }
     }
 
     @media (min-width: 1025px) {
-        .pay-hero { display: none; } /* Hide in-page plans when fixed sidebar is visible */
+        .pay-hero { display: none; }
     }
 
     @media (max-width: 768px) {
@@ -184,7 +184,6 @@
     </div>
 </div>
 
-<!-- CORRECTED: Top Left Fixed Sidebar -->
 <div class="fixed-sidebar" id="subscribe">
     <div class="special-offer-box">
         <h2>SPECIAL OFFER</h2>
@@ -220,8 +219,7 @@
     </div>
     
     <div class="nav-links">
-                <a href="blog-page5.html">Picks &amp; Analysis</a>
-        
+        <a href="blog-page5.html">Picks &amp; Analysis</a>
         <div class="dropdown">
             <button class="dropbtn">Records</button>
             <div class="dropdown-content">
@@ -230,7 +228,6 @@
                 <a href="ncaaf-records.html">NCAAF Records</a>
             </div>
         </div>
-
         <div class="dropdown">
             <button class="dropbtn">Sports</button>
             <div class="dropdown-content">
@@ -258,7 +255,6 @@
         </div>
     </div>
 
-    <!-- Centered GIF -->
     <div class="gif-showcase">
         <img alt="Animated graphic showing BetLegend sports betting picks and analysis." src="https://nimadamus.github.io/curry.gif"/>
     </div>
@@ -266,30 +262,6 @@
         Powered by BetLegend Pro model • <a href="betlegend-verified-records.html" target="_blank">See Full Betting History</a>
     </div>
 
-    <!-- In-page subscription section for mobile/tablet -->
-    <div class="pay-hero">
-        <h1>Subscribe Now</h1>
-        <p class="section-subtitle">Get full daily cards, NFL, NBA, college plays, and closing recaps. All verified and tracked.</p>
-        <div class="subscription-grid">
-            <a href="https://buy.stripe.com/28E7sLdVkdye8f86m5grS04" class="plan-card" target="_blank">
-                <div class="plan-title">Daily Pass</div>
-                <div class="plan-price">$25 / day</div>
-            </a>
-            <a href="https://buy.stripe.com/6oUeVd6sSbq6gLE4dXgrS08" class="plan-card" target="_blank">
-                <div class="plan-title">Weekly Pass</div>
-                <div class="plan-price">$79 / week</div>
-            </a>
-            <a href="https://buy.stripe.com/fZu6oH4kK1Pwbrk39TgrS07" class="plan-card" target="_blank">
-                <div class="plan-title">Monthly Pass</div>
-                <div class="plan-price">$149 / month</div>
-            </a>
-            <a href="https://buy.stripe.com/bJe5kD9F43XE2UOh0JgrS03" class="plan-card" target="_blank">
-                <div class="plan-title">Yearly Pass</div>
-                <div class="plan-price">$750 / year</div>
-            </a>
-        </div>
-        <p class="all-sports-included">Every plan includes all sports in season — NFL, College Football, NBA, College Basketball, and MLB.</p>
-    </div>
 </div>
 
 <div class="interactive-dashboard">
@@ -304,256 +276,4 @@
         <p>--</p>
     </div>
     <a class="dash-item clickable" href="#subscribe">
-        <svg viewbox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z"></path></svg>
-        <h3>Premium Email</h3>
-        <p>Subscribe Now</p>
-    </a>
-    <a class="dash-item clickable" href="https://www.youwager.lv/join-now?affid=BABS123" target="_blank">
-        <svg viewbox="0 0 24 24"><path d="M21.41 11.58L12.41 2.58C12.05 2.22 11.55 2 11 2H4C2.9 2 2 2.9 2 4V11C2 11.55 2.22 12.05 2.59 12.41L11.59 21.41C11.95 21.78 12.45 22 13 22C13.55 22 14.05 21.78 14.41 21.41L21.41 14.41C21.78 14.05 22 13.55 22 13C22 12.45 21.78 11.95 21.41 11.58M13 20L4 11V4H11L20 13L13 20M6.5 7.5C7.33 7.5 8 6.83 8 6C8 5.17 7.33 4.5 6.5 4.5C5.67 4.5 5 5.17 5 6C5 6.83 5.67 7.5 6.5 7.5M19 12L17 14L15 12L17 10L19 12Z"></path></svg>
-        <h3>Sportsbook</h3>
-        <p>350% <span class="highlight">BONUS</span></p>
-    </a>
-</div>
-<!-- PAPA PARSE LIBRARY -->
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-
-<!-- SCRIPT MODIFIED to be RESILIENT, using Promise.allSettled -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // --- CONFIGURATION ---
-    const sheetUrls = [
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv",
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?gid=0&single=true&output=csv",
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?gid=0&single=true&output=csv"
-];
-    const cycleSpeed = 4000;
-
-    // --- ELEMENT SELECTORS ---
-    const recordDashItem = document.getElementById('dash-record');
-    const recordH3 = recordDashItem.querySelector('h3');
-    const recordP = recordDashItem.querySelector('p');
-    const freePickDisplay = document.querySelector('#dash-free-pick p');
-    const tickerContent = document.getElementById('ticker-content');
-    
-    if (!recordDashItem || !freePickDisplay || !tickerContent) {
-        console.error("Critical dashboard elements could not be found. Aborting script.");
-        return;
-    }
-    
-    recordH3.style.transition = 'opacity 0.4s ease-in-out';
-    recordP.style.transition = 'opacity 0.4s ease-in-out';
-
-    // --- HELPER FUNCTION ---
-    function parseDate(dateStr) {
-  if (!dateStr) return null;
-  const s = String(dateStr).trim();
-
-  // ISO 8601: YYYY-MM-DD or YYYY/MM/DD
-  let m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
-  if (m) {
-    const y = +m[1], mo = +m[2] - 1, d = +m[3];
-    return (mo>=0&&mo<12&&d>0&&d<=31) ? new Date(y, mo, d) : null;
-  }
-
-  // US: MM/DD/YY(YY) or MM-DD-YY(YY)
-  m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-  if (m) {
-    const mo = +m[1] - 1, d = +m[2]; let y = +m[3];
-    if (y < 100) y += 2000;
-    return (y>2000&&mo>=0&&mo<12&&d>0&&d<=31) ? new Date(y, mo, d) : null;
-  }
-  return null;
-}
-
-// --- MAIN DATA FETCHING AND EXECUTION ---
-    function run() {
-        const fetchAndParse = (url) => {
-            return new Promise((resolve, reject) => {
-                Papa.parse(url, {
-                    download: true, header: true, skipEmptyLines: 'greedy',
-                    transformHeader: header => header.trim(),
-                    complete: resolve, error: reject
-                });
-            });
-        };
-
-        // Use Promise.allSettled to fetch all sheets. This will not fail if one URL is bad.
-        Promise.allSettled(sheetUrls.map(url => fetchAndParse(url)))
-            .then(resultsArray => {
-                let allPicks = [];
-                resultsArray.forEach((result, index) => {
-                    if (result.status === 'fulfilled') {
-                        // If the sheet was fetched successfully, add its data to the allPicks array
-                        const sheetData = result.value.data.filter(p => p.Pick && p.Pick.trim() !== '');
-                        allPicks = allPicks.concat(sheetData);
-                    } else {
-                        // If a sheet failed to load, log an error to the console for debugging
-                        console.error(`Failed to load data from URL #${index}: ${sheetUrls[index]}`, result.reason);
-                    }
-                });
-
-                if (allPicks.length === 0) {
-                    console.error("No valid data could be loaded from any source.");
-                    displayError("Data feed unavailable");
-                    return;
-                }
-                
-                processAndDisplayRecords(allPicks);
-                updateDailyPick(allPicks);
-                updateTicker(allPicks);
-            });
-    }
-
-    // --- RECORD PROCESSING LOGIC ---
-    function processAndDisplayRecords(picks) {
-        const recordsBySport = {};
-        
-        for (const p of picks) {
-            const result = p.Result ? p.Result.trim().toUpperCase() : '';
-            const sport = p.Sport ? p.Sport.trim() : 'Misc';
-            const unitChange = parseFloat(p.Units);
-
-            if (result !== '' && !isNaN(unitChange)) {
-                if (!recordsBySport[sport]) {
-                    recordsBySport[sport] = { w: 0, l: 0, p: 0, units: 0.0 };
-                }
-                
-                if (result === 'W' || result === 'WIN') recordsBySport[sport].w++;
-                else if (result === 'L' || result === 'LOSS') recordsBySport[sport].l++;
-                else if (result === 'P' || result === 'PUSH') recordsBySport[sport].p++;
-                
-                recordsBySport[sport].units += unitChange;
-            }
-        }
-
-        const total = { w: 0, l: 0, p: 0, units: 0.0 };
-        Object.values(recordsBySport).forEach(sportStats => {
-            total.w += sportStats.w;
-            total.l += sportStats.l;
-            total.p += sportStats.p;
-            total.units += sportStats.units;
-        });
-
-        const displayData = { 'Overall': total, ...recordsBySport };
-        
-        // Ensure default objects exist if no data was found for these sports
-        if (!displayData['NFL']) displayData['NFL'] = { w: 0, l: 0, p: 0, units: 0.0 };
-        if (!displayData['NCAAF']) displayData['NCAAF'] = { w: 0, l: 0, p: 0, units: 0.0 };
-        
-        const sportsToCycle = Object.keys(displayData);
-        let currentIndex = 0;
-        let intervalId = null;
-
-        function updateDisplay() {
-            if (sportsToCycle.length === 0) return;
-            const sportName = sportsToCycle[currentIndex];
-            const data = displayData[sportName];
-
-            const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
-            const recordString = `${data.w}-${data.l}-${data.p}`;
-
-            recordH3.style.opacity = '0';
-            recordP.style.opacity = '0';
-
-            setTimeout(() => {
-                recordH3.textContent = `${sportName} Record`;
-                recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
-                recordH3.style.opacity = '1';
-                recordP.style.opacity = '1';
-            }, 400);
-
-            currentIndex = (currentIndex + 1) % sportsToCycle.length;
-        }
-
-        if (intervalId) clearInterval(intervalId);
-        
-        updateDisplay();
-        intervalId = setInterval(updateDisplay, cycleSpeed);
-    }
-    
-    // --- DAILY PICK AND TICKER LOGIC ---
-    function updateDailyPick(picks) {
-        const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date));
-        
-        if (gradedPicks.length === 0) {
-            const pendingPicks = picks.filter(p => (!p.Result || p.Result.trim() === '') && p.Date && parseDate(p.Date)).sort((a,b) => parseDate(a.Date) - parseDate(b.Date));
-            if (pendingPicks.length > 0) {
-                const nextPick = pendingPicks[0];
-                if (nextPick && nextPick.Line) {
-                    freePickDisplay.textContent = `${nextPick.Pick.trim()} (${nextPick.Line.trim()})`;
-                } else {
-                    freePickDisplay.textContent = 'Check Back Soon';
-                }
-            } else {
-                freePickDisplay.textContent = 'Check Back Soon';
-            }
-            return;
-        }
-
-        gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
-        const latestPick = gradedPicks[0];
-        
-        if (latestPick && latestPick.Line) {
-            freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`;
-        } else {
-            freePickDisplay.textContent = 'Check Back Soon';
-        }
-    }
-
-    function updateTicker(picks) {
-        const today = new Date();
-        today.setHours(23, 59, 59, 999);
-        const threeDaysAgo = new Date(today);
-        threeDaysAgo.setDate(today.getDate() - 2);
-
-        const recentGradedPicks = picks.filter(p => {
-            const pickDate = parseDate(p.Date);
-            return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
-        }).sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
-
-        if (recentGradedPicks.length === 0) {
-            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
-            return;
-        }
-
-        const separator = ' <span class="ticker__separator">•</span> ';
-        let tickerHTML = recentGradedPicks.map(p => {
-            const result = p.Result.trim().toUpperCase();
-            let resultClass = '';
-            if (result === 'W' || result === 'WIN') resultClass = 'win';
-            if (result === 'L' || result === 'LOSS') resultClass = 'loss';
-            
-            const resultText = result.charAt(0);
-            const pickDate = parseDate(p.Date);
-            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
-            
-            return `<div class="ticker__item">${displayDate}: <span class="pick-text">${p.Pick.trim()}</span> <span class="grade ${resultClass}">${resultText}</span></div>`;
-        }).join(separator);
-
-        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
-    }
-
-    // --- DEFAULT AND ERROR STATES ---
-    function displayDefaults() {
-        recordH3.textContent = 'Verified Record';
-        recordP.textContent = '0-0-0';
-        freePickDisplay.textContent = '--';
-        tickerContent.innerHTML = '<div class="ticker__item">No data available.</div>';
-    }
-
-    function displayError(message) {
-        recordH3.textContent = 'Verified Record';
-        recordP.textContent = 'Error';
-        freePickDisplay.textContent = 'Error';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
-    }
-
-    // --- INITIALIZE THE SCRIPT ---
-    run();
-});
-</script>
-
-
-
-</body>
-</html>
+        <svg viewbox="0 0 24 24"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20
