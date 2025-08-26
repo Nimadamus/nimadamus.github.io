@@ -120,7 +120,7 @@
             <div class="dropdown">
                 <button class="dropbtn" onclick="toggleDropdown(this)">Records</button>
                 <div class="dropdown-content">
-                    <a href="mlb-page2.html">MLB Records</a>
+                    <a href="betlegend-verified-records.html">MLB Records</a>
                     <a href="ncaaf-records.html">NCAAF Records</a>
                     <a href="nfl-records.html">NFL Records</a>
                 </div>
@@ -196,10 +196,18 @@ function toggleDropdown(button) {
 
 // Close dropdowns when clicking outside
 document.addEventListener('click', function(event) {
-    if (!event.target.matches('.dropbtn')) {
+    if (!event.target.matches('.dropbtn') && !event.target.closest('.dropdown-content')) {
         document.querySelectorAll('.dropdown').forEach(dropdown => {
             dropdown.classList.remove('show');
         });
+    }
+});
+
+// Ensure dropdown links work properly
+document.addEventListener('click', function(event) {
+    if (event.target.matches('.dropdown-content a')) {
+        event.stopPropagation();
+        // Let the link navigate normally
     }
 });
 
