@@ -21,7 +21,6 @@
         .stat-box .units-win, .stat-box .roi-win { color: var(--win-color); }
         .stat-box .units-loss, .stat-box .roi-loss { color: var(--loss-color); }
         .section-title { font-size: 28px; text-align: center; margin: 40px 0 20px 0; color: var(--glow-color); text-shadow: 0 0 10px var(--glow-color); }
-        .breakdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
         .table-container { overflow-x: auto; width: 100%; }
         table { width: 100%; border-collapse: collapse; font-family: 'Roboto', sans-serif; min-width: 600px; }
         th, td { padding: 12px 15px; text-align: left; white-space: nowrap; }
@@ -36,7 +35,7 @@
         .records-switcher { display:flex; gap:10px; align-items:center; justify-content:center; margin: -10px 0 24px; }
         .records-switcher label { color:#00e0ff; font-weight:700; }
         .records-switcher select { background:#061015; color:#fff; border:1px solid rgba(0, 224, 255, 0.35); padding:8px 10px; border-radius:8px; font-family: 'Roboto', sans-serif; }
-        @media (max-width: 768px) { .breakdown-grid { grid-template-columns: 1fr; } .header h1 { font-size: 36px; } }
+        @media (max-width: 768px) { .header h1 { font-size: 36px; } }
     </style>
 </head>
 <body>
@@ -60,6 +59,15 @@
             <div class="stat-box"><h3>Total Units</h3><p id="summary-units">--</p></div>
             <div class="stat-box"><h3>Win Percentage</h3><p id="summary-win-pct">--</p></div>
             <div class="stat-box"><h3>ROI</h3><p id="summary-roi">--</p></div>
+        </div>
+        
+        <!-- NEW 2 UNIT PLAYS SECTION -->
+        <h2 class="section-title">Breakdown of 2 Unit Plays</h2>
+        <div class="table-container">
+            <table id="two-unit-table">
+                <thead><tr><th>Record</th><th>Units</th><th>ROI</th></tr></thead>
+                <tbody></tbody>
+            </table>
         </div>
 
         <h2 class="section-title">Breakdown by Wager Type</h2>
@@ -92,8 +100,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // To update records, simply replace the content of this array with your new JSON data.
     const mlbPicksData = [
+        // Your full MLB data array goes here, same as the one from the previous version...
         { "Date": "8-25-2025", "Sport": "MLB", "Pick": "Tigers F5 -0.5", "Line": "-154", "Result": "L", "Units": "-1.54" },
         { "Date": "8-25-2025", "Sport": "MLB", "Pick": "Angels Team Total  under 3.5", "Line": "-145", "Result": "L", "Units": "-2.9" },
         { "Date": "8-25-2025", "Sport": "MLB", "Pick": "Phillies F5 ML ", "Line": "-140", "Result": "L", "Units": "-1.4" },
@@ -424,7 +432,6 @@ document.addEventListener('DOMContentLoaded', function () {
         { "Date": "5-30-2025", "Sport": "MLB", "Pick": "Giants Moneyline", "Line": "-160", "Result": "W", "Units": "1" }
     ];
 
-    // --- CALCULATION LOGIC (Robust Version) ---
     function processPicks(picks) {
         return picks.map(p => {
             try {
@@ -456,7 +463,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const processedPicks = processPicks(mlbPicksData);
     
-    // --- Render Full History Table ---
     document.getElementById('picks-table-body').innerHTML = processedPicks.map(p => `
         <tr>
             <td>${p.Date}</td>
@@ -468,7 +474,6 @@ document.addEventListener('DOMContentLoaded', function () {
         </tr>
     `).join('');
 
-    // --- Aggregate Stats Function ---
     function aggregateStats(picks) {
         let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
         picks.forEach(p => {
@@ -483,22 +488,16 @@ document.addEventListener('DOMContentLoaded', function () {
         return { wins, losses, pushes, totalUnits, roi };
     }
 
-    // --- Render Summary Boxes ---
     const summaryStats = aggregateStats(processedPicks);
     document.getElementById('summary-record').textContent = `${summaryStats.wins}-${summaryStats.losses}-${summaryStats.pushes}`;
     const unitsEl = document.getElementById('summary-units');
     unitsEl.textContent = `${summaryStats.totalUnits >= 0 ? '+' : ''}${summaryStats.totalUnits.toFixed(2)}`;
     unitsEl.className = summaryStats.totalUnits >= 0 ? 'units-win' : 'units-loss';
-    if(summaryStats.wins + summaryStats.losses > 0) {
-      document.getElementById('summary-win-pct').textContent = `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%`;
-    } else {
-      document.getElementById('summary-win-pct').textContent = 'N/A';
-    }
+    document.getElementById('summary-win-pct').textContent = summaryStats.wins + summaryStats.losses > 0 ? `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%` : 'N/A';
     const roiEl = document.getElementById('summary-roi');
     roiEl.textContent = `${summaryStats.roi >= 0 ? '+' : ''}${summaryStats.roi.toFixed(2)}%`;
     roiEl.className = summaryStats.roi >= 0 ? 'roi-win' : 'roi-loss';
 
-    // --- Render Breakdown Tables ---
     const wagerTypeStats = {};
     const monthlyStats = {};
     processedPicks.forEach(p => {
@@ -508,6 +507,16 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!monthlyStats[month]) monthlyStats[month] = [];
         monthlyStats[month].push(p);
     });
+    
+    // --- NEW: Filter for 2 Unit Plays ---
+    const twoUnitPicks = processedPicks.filter(p => p.units === 2 || p.risk > 1.9);
+    const twoUnitStats = aggregateStats(twoUnitPicks);
+    const twoUnitBody = document.getElementById('two-unit-table').querySelector('tbody');
+    twoUnitBody.innerHTML = `<tr>
+        <td>${twoUnitStats.wins}-${twoUnitStats.losses}-${twoUnitStats.pushes}</td>
+        <td class="${twoUnitStats.totalUnits >= 0 ? 'win' : 'loss'}">${twoUnitStats.totalUnits >= 0 ? '+' : ''}${twoUnitStats.totalUnits.toFixed(2)}</td>
+        <td class="${twoUnitStats.roi >= 0 ? 'win' : 'loss'}">${twoUnitStats.roi >= 0 ? '+' : ''}${twoUnitStats.roi.toFixed(2)}%</td>
+    </tr>`;
 
     const wagerBody = document.getElementById('wager-type-table').querySelector('tbody');
     wagerBody.innerHTML = Object.keys(wagerTypeStats).sort().map(type => {
