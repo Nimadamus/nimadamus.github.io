@@ -317,15 +317,14 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- SCRIPT MODIFIED to be RESILIENT, using Promise.allSettled -->
+<!-- FINAL SCRIPT WITH CORRECTED, WORKING URLs -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- CONFIGURATION ---
     const sheetUrls = [
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv',
-        // !!! IMPORTANT: REPLACE these placeholder URLs with your actual published Google Sheet URLs !!!
-        'https://docs.google.com/spreadsheets/d/e/YOUR_NFL_SHEET_PUBLISHED_URL/pub?output=csv',
-        'https://docs.google.com/spreadsheets/d/e/YOUR_NCAAF_SHEET_PUBLISHED_URL/pub?output=csv'
+        'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv', // MLB
+        'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?gid=0&single=true&output=csv',      // NFL
+        'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?gid=0&single=true&output=csv'       // NCAAF
     ];
     const cycleSpeed = 4000;
 
@@ -378,13 +377,12 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(resultsArray => {
                 let allPicks = [];
                 resultsArray.forEach((result, index) => {
-                    if (result.status === 'fulfilled') {
-                        // If the sheet was fetched successfully, add its data to the allPicks array
+                    if (result.status === 'fulfilled' && result.value.data) {
                         const sheetData = result.value.data.filter(p => p.Pick && p.Pick.trim() !== '');
                         allPicks = allPicks.concat(sheetData);
                     } else {
                         // If a sheet failed to load, log an error to the console for debugging
-                        console.error(`Failed to load data from URL #${index}: ${sheetUrls[index]}`, result.reason);
+                        console.error(`Failed to load data from URL #${index + 1}`, result.reason);
                     }
                 });
 
@@ -406,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         for (const p of picks) {
             const result = p.Result ? p.Result.trim().toUpperCase() : '';
-            const sport = p.Sport ? p.Sport.trim() : 'Misc';
+            const sport = p.Sport ? p.Sport.trim().toUpperCase() : 'MISC';
             const unitChange = parseFloat(p.Units);
 
             if (result !== '' && !isNaN(unitChange)) {
@@ -550,3 +548,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+Please try it again
