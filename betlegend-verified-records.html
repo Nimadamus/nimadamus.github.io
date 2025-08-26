@@ -13,6 +13,9 @@
             --loss-color: #FF3131;
             --push-color: #888;
         }
+        * {
+            box-sizing: border-box;
+        }
         body {
             background-color: #000;
             background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
@@ -26,9 +29,9 @@
         }
         .container {
             max-width: 1000px;
-            margin: 40px auto;
+            margin: 20px auto;
             padding: 25px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             border: 1px solid var(--glow-color);
             border-radius: 15px;
             box-shadow: 0 0 35px rgba(0, 224, 255, 0.5);
@@ -50,7 +53,6 @@
             font-family: 'Roboto', sans-serif;
             color: #ccc;
             line-height: 1.6;
-            max-width: 800px;
             margin: 0 auto 20px auto;
             padding: 20px;
             border: 1px solid rgba(0, 224, 255, 0.2);
@@ -59,7 +61,7 @@
         .last-updated { font-size: 14px; color: #888; margin-top: 10px; }
         .stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
             text-align: center;
@@ -85,15 +87,20 @@
         .stat-box .units-win { color: var(--win-color); }
         .stat-box .units-loss { color: var(--loss-color); }
 
-        .table-container { overflow-x: auto; }
+        .table-container { 
+            overflow-x: auto; /* This creates the horizontal scrollbar ONLY for the table */
+            width: 100%;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
             font-family: 'Roboto', sans-serif;
+            min-width: 600px; /* Prevents table from becoming too cramped */
         }
         th, td {
             padding: 12px 15px;
             text-align: left;
+            white-space: nowrap; /* Prevents text wrapping in cells */
         }
         thead tr {
             background-color: rgba(0, 224, 255, 0.15);
@@ -108,18 +115,22 @@
         .result-W { font-weight: bold; color: var(--win-color); }
         .result-L { font-weight: bold; color: var(--loss-color); }
         .result-P { font-weight: bold; color: var(--push-color); }
-        .no-picks-message {
-            text-align: center;
-            padding: 40px;
-            font-size: 18px;
-            color: #888;
-        }
-        .loading-message {
-            text-align: center; padding: 50px; font-size: 20px; color: var(--glow-color);
-        }
+        .no-picks-message { text-align: center; padding: 40px; font-size: 18px; color: #888; }
+        .loading-message { text-align: center; padding: 50px; font-size: 20px; color: var(--glow-color); }
         .nav-home { display: block; text-align: center; margin-top: 30px; }
         .nav-home a { color: var(--glow-color); text-decoration: none; font-weight: bold; }
         .nav-home a:hover { text-shadow: 0 0 8px var(--glow-color); }
+        .records-switcher { display:flex; gap:10px; align-items:center; justify-content:center; margin: -10px 0 24px; }
+        .records-switcher label { color:#00e0ff; font-weight:700; }
+        .records-switcher select { background:#061015; color:#fff; border:1px solid rgba(0, 224, 255, 0.35); padding:8px 10px; border-radius:8px; font-family: 'Roboto', sans-serif; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; margin: 10px auto; }
+            .header h1 { font-size: 32px; }
+            .stat-box p { font-size: 24px; }
+            th, td { padding: 10px 8px; font-size: 14px; }
+        }
     </style>
 </head>
 <body>
@@ -128,8 +139,18 @@
         <div class="header">
             <h1>Verified<span>Records</span></h1>
         </div>
+
+        <div class="records-switcher">
+          <label for="records-select">View Records:</label>
+          <select id="records-select" onchange="location=this.value;">
+            <option value="betlegend-verified-records.html" selected>All Sports (Combined)</option>
+            <option value="nfl-records.html">NFL Records</option>
+            <option value="ncaaf-records.html">NCAAF Records</option>
+          </select>
+        </div>
+
         <div class="description">
-            This page shows the official combined record for BetLegend across all sports. Every pick is logged on the day it is posted and graded after the game. The table lists the date, pick, line, result, and units, and the running total so visitors can audit the entire Betting History at a glance. Nothing is hidden or removed.
+            This page shows the official combined record for BetLegend across all sports. Every pick is logged and graded after the game. Nothing is hidden or removed.
             <div class="last-updated" id="last-updated-date">Last updated: ...</div>
         </div>
 
@@ -147,20 +168,13 @@
         <div class="table-container">
             <table>
                 <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Sport</th>
-                        <th>Pick</th>
-                        <th>Line</th>
-                        <th>Result</th>
-                        <th>Units</th>
-                    </tr>
+                    <tr><th>Date</th><th>Sport</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr>
                 </thead>
                 <tbody id="picks-table-body">
-                    <!-- Data will be loaded here -->
+                    <!-- Data will be populated by JavaScript -->
                 </tbody>
             </table>
-            <div id="loading-message" class="loading-message">Loading record...</div>
+            <div id="loading-message" class="loading-message">Loading all records...</div>
         </div>
         <div class="nav-home">
              <a href="/">← Back to Homepage</a>
@@ -170,102 +184,83 @@
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- CONFIGURATION ---
-            const sheetUrls = [
-                "https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv",
-                "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?gid=0&single=true&output=csv",
-                "https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?gid=0&single=true&output=csv"
-            ];
+            // --- CONFIGURATION: Correct URLs for ALL sheets ---
+            const SHEET_URLS = {
+                mlb: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgI0sXSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXggOmrk0iQWmSEYExtx6xwFMfIXv/pub?output=csv',
+                ncaaf: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9C45xiuXWNe-fAXYMoNbLOOKCBHfmf4Yn-Xr2LUqdCliuoiXXDgrDa5mqtPZqxjg8hx-5KnSOL4UVU/pub?gid=0&single=true&output=csv',
+                nfl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQggB4WcyyEpMBp_XI_yahCTY8KrHzrOvuLMQ9VoGFOnzfqI4IkAWVb92nDxkXUhLVhzr4RTWZRXQ/pub?gid=0&single=true&output=csv'
+            };
 
-            // --- ELEMENT SELECTORS ---
             const overallRecordEl = document.getElementById('overall-record');
             const totalUnitsEl = document.getElementById('total-units');
             const tableBodyEl = document.getElementById('picks-table-body');
             const loadingMessageEl = document.getElementById('loading-message');
             const lastUpdatedEl = document.getElementById('last-updated-date');
 
-            // --- HELPER FUNCTION ---
-            function parseDate(dateStr) {
-                if (!dateStr) return null;
-                const s = String(dateStr).trim();
-                let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-                if (m) {
-                    const mo = +m[1] - 1, d = +m[2]; let y = +m[3];
-                    if (y < 100) y += 2000;
-                    return (y > 2000 && mo >= 0 && mo < 12 && d > 0 && d <= 31) ? new Date(y, mo, d) : null;
-                }
-                m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
-                if (m) {
-                    const y = +m[1], mo = +m[2] - 1, d = +m[3];
-                    return (mo >= 0 && mo < 12 && d > 0 && d <= 31) ? new Date(y, mo, d) : null;
-                }
-                return null;
-            }
-
-            // --- MAIN FUNCTION ---
-            async function loadAndDisplayRecords() {
-                const fetchAndParse = (url) => new Promise((resolve, reject) => {
-                    Papa.parse(url, {
-                        download: true, header: true, skipEmptyLines: 'greedy',
-                        transformHeader: h => h.trim(),
-                        complete: resolve, error: reject
+            // --- RELIABLE DATA FETCHING ---
+            async function fetchSheetData(url) {
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                try {
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    const data = await response.json();
+                    return new Promise(resolve => {
+                        Papa.parse(data.contents, {
+                            header: true, skipEmptyLines: true, transformHeader: h => h.trim(),
+                            complete: (results) => resolve(results.data),
+                            error: (err) => { console.error('PapaParse error:', err); resolve([]); }
+                        });
                     });
-                });
-
-                const resultsArray = await Promise.allSettled(sheetUrls.map(fetchAndParse));
-
-                let allPicks = [];
-                resultsArray.forEach(result => {
-                    if (result.status === 'fulfilled' && result.value.data) {
-                        allPicks = allPicks.concat(result.value.data);
-                    }
-                });
+                } catch (error) {
+                    console.error(`Failed to fetch from ${url}:`, error);
+                    return [];
+                }
+            }
+            
+            async function loadAndDisplayRecords() {
+                const fetchPromises = Object.values(SHEET_URLS).map(url => fetchSheetData(url));
+                const results = await Promise.all(fetchPromises);
+                const allPicks = results.flat();
 
                 const gradedPicks = allPicks
                     .filter(p => p.Result && p.Result.trim() !== '' && p.Units && !isNaN(parseFloat(p.Units)))
-                    .map(p => ({...p, parsedDate: parseDate(p.Date) }))
-                    .filter(p => p.parsedDate)
+                    .map(p => ({...p, parsedDate: new Date(p.Date) }))
+                    .filter(p => p.parsedDate && !isNaN(p.parsedDate))
                     .sort((a, b) => b.parsedDate - a.parsedDate);
                 
                 loadingMessageEl.style.display = 'none';
 
                 if (gradedPicks.length === 0) {
-                    tableBodyEl.innerHTML = `<tr><td colspan="6" class="no-picks-message">No graded picks found in the record yet.</td></tr>`;
+                    tableBodyEl.innerHTML = `<tr><td colspan="6" class="no-picks-message">No graded picks found.</td></tr>`;
                     return;
                 }
 
-                // Calculate stats
                 let wins = 0, losses = 0, pushes = 0, totalUnits = 0.0;
+                let tableHTML = '';
+
                 gradedPicks.forEach(p => {
                     const result = p.Result.trim().toUpperCase();
-                    if (result === 'W' || result === 'WIN') wins++;
-                    else if (result === 'L' || result === 'LOSS') losses++;
-                    else if (result === 'P' || result === 'PUSH') pushes++;
+                    if (result.startsWith('W')) wins++;
+                    else if (result.startsWith('L')) losses++;
+                    else if (result.startsWith('P')) pushes++;
                     totalUnits += parseFloat(p.Units);
-                });
 
-                // Update stat boxes
-                overallRecordEl.textContent = `${wins}-${losses}-${pushes}`;
-                totalUnitsEl.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
-                totalUnitsEl.className = totalUnits >= 0 ? 'units-win' : 'units-loss';
-                
-                // Update last updated date
-                lastUpdatedEl.textContent = `Last updated: ${new Date().toLocaleDateString()}`;
-
-                // Populate table
-                let tableHTML = '';
-                gradedPicks.forEach(p => {
                     tableHTML += `
                         <tr>
                             <td>${p.Date.trim()}</td>
                             <td>${p.Sport ? p.Sport.trim() : 'N/A'}</td>
                             <td>${p.Pick.trim()}</td>
                             <td>${p.Line ? p.Line.trim() : 'N/A'}</td>
-                            <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result.trim()}</td>
+                            <td class="result-${result.charAt(0)}">${p.Result.trim()}</td>
                             <td>${parseFloat(p.Units).toFixed(2)}</td>
                         </tr>
                     `;
                 });
+
+                overallRecordEl.textContent = `${wins}-${losses}-${pushes}`;
+                totalUnitsEl.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+                totalUnitsEl.className = totalUnits >= 0 ? 'units-win' : 'loss';
+                lastUpdatedEl.textContent = `Last updated: ${new Date().toLocaleDateString()}`;
                 tableBodyEl.innerHTML = tableHTML;
             }
 
