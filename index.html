@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>BetLegend Picks – Expert picks. Winning records. All tracked daily. </title>
+<title>BetLegend Picks â€" Expert picks. Winning records. All tracked daily. </title>
 <meta content="The future of sports betting: A live dashboard automatically updated from our official records, displaying graded picks, verified record, and daily plays." name="description"/>
 <meta content="google sheets sports betting, automated betting record, live betting picks, mlb picks, nfl picks, ncaaf picks, betting analysis, verified record" name="keywords"/>
 <link href="https://www.betlegendpicks.com/" rel="canonical"/>
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<meta content="BetLegend Picks – Live Automated Betting Dashboard" property="og:title"/>
+<meta content="BetLegend Picks â€" Live Automated Betting Dashboard" property="og:title"/>
 <meta content="Our picks and record, updated live from our official Google Sheet." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://www.betlegendpicks.com/" property="og:url"/>
@@ -126,7 +126,7 @@
     .dropdown-content a { color: var(--glow-color); padding: 12px 16px; text-decoration: none; display: block; font-size: 16px; text-align: left; }
     .dropdown-content a:hover { background-color: rgba(0, 224, 255, 0.1); color: #fff; }
     .dropdown:hover .dropdown-content { display: block; }
-    .dropbtn::after { content: ' ▼'; font-size: 0.6em; vertical-align: middle; }
+    .dropbtn::after { content: ' â–¼'; font-size: 0.6em; vertical-align: middle; }
     
     .gif-showcase {
         width: 100%; max-width: 600px; 
@@ -219,11 +219,13 @@
     </div>
     
     <div class="nav-links">
-        <a href="blog-page5.html">Picks & Analysis</a>
+        <a href="blog-page5.html">Picks &amp; Analysis</a>
         <div class="dropdown">
             <button class="dropbtn">Records</button>
             <div class="dropdown-content">
-                <a href="betlegend-verified-records.html">Verified Records</a>
+                <a href="betlegend-verified-records.html">MLB Records</a>
+                <a href="ncaaf-records.html">NCAAF Records</a>
+                <a href="nfl-records.html">NFL Records</a>
             </div>
         </div>
         <div class="dropdown">
@@ -231,6 +233,7 @@
             <div class="dropdown-content">
                 <a href="nfl.html">NFL</a>
                 <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf.html">NCAAF</a>
             </div>
         </div>
         <div class="dropdown">
@@ -461,46 +464,4 @@ function updateTicker() {
     
     // Sort by date (most recent first)
     const sortedRecords = allRecords
-        .filter(record => record.Date && record.Pick && record.Result)
-        .sort((a, b) => {
-            const dateA = new Date(a.Date);
-            const dateB = new Date(b.Date);
-            return dateB.getTime() - dateA.getTime();
-        })
-        .slice(0, 15); // Get last 15 picks for ticker
-    
-    if (sortedRecords.length === 0) {
-        tickerContent.innerHTML = '<div class="ticker__item">No recent picks available</div>';
-        return;
-    }
-    
-    let tickerHTML = '';
-    sortedRecords.forEach((record, index) => {
-        const result = record.Result.trim().toUpperCase();
-        const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
-        const gradeText = (result === 'W' || result === 'WIN') ? 'WIN' : 'LOSS';
-        
-        tickerHTML += `
-            <div class="ticker__item">
-                <span class="pick-text">${record.Pick}</span>
-                <span class="grade ${gradeClass}">${gradeText}</span>
-            </div>
-            <span class="ticker__separator">●</span>
-        `;
-    });
-    
-    // Remove last separator
-    tickerHTML = tickerHTML.replace(/<span class="ticker__separator">●<\/span>$/, '');
-    tickerContent.innerHTML = tickerHTML;
-}
-
-// Initialize everything when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    loadAllData();
-    
-    // Refresh data every 5 minutes
-    setInterval(loadAllData, 5 * 60 * 1000);
-});
-</script>
-
-</body>
+        .filter(record => record.Date && record.Pick
