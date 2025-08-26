@@ -4,36 +4,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCAAF Verified Records - BetLegend Picks</title>
-    <link rel="canonical" href="https://www.betlegendpicks.com/ncaaf-records.html">
-    <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
-        body { margin: 0; background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden; }
-        .content-wrapper { position: relative; z-index: 10; width: 100%; max-width: 900px; margin: 0 auto; padding: 40px 20px 40px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+        body { margin: 0; background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; padding: 10px; }
+        .content-wrapper { max-width: 900px; margin: 20px auto; padding: 25px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--glow-color); border-radius: 15px; }
         .header-branding { text-align: center; margin-bottom: 25px; }
-        .title { font-size: 64px; font-weight: 900; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
+        .title { font-size: 64px; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
         .title .highlight { color: var(--glow-color); }
-        .summary-stats { display: flex; justify-content: space-around; width: 100%; max-width: 800px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(0, 224, 255, 0.2); }
+        .summary-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; width: 100%; padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(0, 224, 255, 0.2); }
         .stat-box { text-align: center; }
         .stat-box h3 { margin: 0 0 10px 0; font-size: 16px; color: var(--glow-color); text-transform: uppercase; }
         .stat-box p { margin: 0; font-size: 28px; font-weight: 700; }
         .stat-box p.win { color: var(--win-color); }
         .stat-box p.loss { color: var(--loss-color); }
-        .records-table { width: 100%; border-collapse: collapse; background: rgba(0,0,0,0.3); border-radius: 12px; overflow: hidden; }
+        .table-container { overflow-x: auto; }
+        .records-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; }
         .records-table th, .records-table td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(0, 224, 255, 0.2); font-family: 'Roboto', sans-serif; }
         .records-table th { background-color: rgba(0, 224, 255, 0.1); font-family: 'Orbitron', sans-serif; }
-        .records-table td .win { color: var(--win-color); font-weight: 700; }
-        .records-table td .loss { color: var(--loss-color); font-weight: 700; }
-        .records-table td .push { color: #888; font-weight: 700; }
-        #loading-message { font-size: 18px; text-align: center; padding: 40px; }
+        .records-table td .win { color: var(--win-color); } .records-table td .loss { color: var(--loss-color); }
         .records-switcher { display:flex; gap:10px; align-items:center; justify-content:center; margin: 10px 0 24px; }
-        .records-switcher label { color:#00e0ff; font-weight:700; }
-        .records-switcher select { background:#061015; color:#fff; border:1px solid rgba(0, 224, 255, 0.35); padding:8px 10px; border-radius:8px; font-family: 'Roboto', sans-serif; }
+        .records-switcher label { color:#00e0ff; }
+        .records-switcher select { background:#061015; color:#fff; border:1px solid rgba(0, 224, 255, 0.35); padding:8px 10px; border-radius:8px; }
         .nav-home { display: block; text-align: center; margin-top: 30px; }
         .nav-home a { color: var(--glow-color); text-decoration: none; font-weight: bold; }
-        .nav-home a:hover { text-shadow: 0 0 8px var(--glow-color); }
     </style>
 </head>
 <body>
@@ -41,7 +36,6 @@
         <div class="header-branding">
             <h1 class="title">NCAAF<span class="highlight">Records</span></h1>
         </div>
-
         <div class="records-switcher">
           <label for="records-select">View Records:</label>
           <select id="records-select" onchange="location=this.value;">
@@ -50,98 +44,72 @@
             <option value="ncaaf-records.html" selected>NCAAF Records</option>
           </select>
         </div>
-
         <div class="summary-stats">
-            <div class="stat-box"><h3>Overall Record</h3><p id="overall-record">--</p></div>
-            <div class="stat-box"><h3>Total Units</h3><p id="total-units">--</p></div>
+            <div class="stat-box"><h3>Record</h3><p id="overall-record">--</p></div>
+            <div class="stat-box"><h3>Units</h3><p id="total-units">--</p></div>
+            <div class="stat-box"><h3>ROI</h3><p id="summary-roi">--</p></div>
         </div>
-        <table class="records-table">
-            <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
-            <tbody id="records-tbody"></tbody>
-        </table>
-        <div id="loading-container">
-             <p id="loading-message">Loading NCAAF record from the official ledger...</p>
+        <div class="table-container">
+            <table class="records-table">
+                <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
+                <tbody id="records-tbody"></tbody>
+            </table>
         </div>
-        <div class="nav-home">
-             <a href="/">← Back to Homepage</a>
-        </div>
+        <div class="nav-home"><a href="/">← Back to Homepage</a></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- CONFIGURATION: Correct URL for the NCAAF sheet ---
-            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9C45xiuXWNe-fAXYMoNbLOOKCBHfmf4Yn-Xr2LUqdCliuoiXXDgrDa5mqtPZqxjg8hx-5KnSOL4UVU/pub?gid=0&single=true&output=csv';
+            const ncaafPicksData = [
+                { Date: '8-23-2025', Sport: 'NCAAF', Pick: 'Fresno St/Kansas under 50', Line: '-110', Result: 'W', Units: '1' }
+            ];
 
+            let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
             const tableBody = document.getElementById('records-tbody');
-            const loadingContainer = document.getElementById('loading-container');
 
-            async function fetchSheetData(url) {
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-                try {
-                    const response = await fetch(proxyUrl);
-                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-                    const data = await response.json();
-                    return new Promise(resolve => {
-                        Papa.parse(data.contents, {
-                            header: true, skipEmptyLines: true, transformHeader: h => h.trim(),
-                            complete: (results) => resolve(results.data),
-                            error: (err) => { console.error('PapaParse error:', err); resolve([]); }
-                        });
-                    });
-                } catch (error) {
-                    console.error(`Failed to fetch from ${url}:`, error);
-                    return [];
-                }
-            }
-            
-            async function loadAndDisplayRecords() {
-                const picksDatabase = await fetchSheetData(googleSheetUrl);
-                const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
-
-                if (gradedPicks.length === 0) {
-                    document.getElementById('overall-record').textContent = '0-0-0';
-                    document.getElementById('total-units').textContent = '+0.00';
-                    loadingContainer.innerHTML = `<p id="loading-message">No graded NCAAF picks found yet.</p>`;
-                    return;
-                }
-
-                loadingContainer.style.display = 'none';
-                
-                let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
-                gradedPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-                
-                gradedPicks.forEach(p => {
-                    let resultClass = '';
-                    const grade = p.Result.trim().toUpperCase();
-                    if (grade.startsWith('W')) { wins++; resultClass = 'win'; }
-                    else if (grade.startsWith('L')) { losses++; resultClass = 'loss'; }
-                    else if (grade.startsWith('P')) { pushes++; resultClass = 'push'; }
-                    
-                    const unitValue = parseFloat(p.Units);
-                    if (!isNaN(unitValue)) totalUnits += unitValue;
-
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${p.Date}</td>
-                        <td>${p.Pick}</td>
-                        <td>${p.Line || 'N/A'}</td>
-                        <td><span class="${resultClass}">${p.Result}</span></td>
-                        <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-
-                document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
-                const unitsElement = document.getElementById('total-units');
-                unitsElement.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
-                unitsElement.classList.add(totalUnits >= 0 ? 'win' : 'loss');
+            if (ncaafPicksData.length === 0) {
+                 document.getElementById('overall-record').textContent = '0-0-0';
+                 document.getElementById('total-units').textContent = '+0.00';
+                 document.getElementById('summary-roi').textContent = '0.00%';
+                 tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No NCAAF picks recorded yet.</td></tr>`;
+                 return;
             }
 
-            loadAndDisplayRecords().catch(error => {
-                console.error("Error fetching NCAAF Records:", error);
-                loadingContainer.innerHTML = `<p id="loading-message">Could not load NCAAF record.</p>`;
+            ncaafPicksData.forEach(p => {
+                const result = p.Result.trim().toUpperCase();
+                const units = parseFloat(p.Units);
+                const line = parseFloat(p.Line);
+                let risk = 0;
+
+                if (units < 0) { risk = Math.abs(units); }
+                else if (units > 0) { risk = (line > 0) ? (units / (line / 100)) : (units * (Math.abs(line) / 100)); }
+                
+                if (result.startsWith('W')) wins++;
+                else if (result.startsWith('L')) losses++;
+                else if (result.startsWith('P')) pushes++;
+                
+                totalUnits += units;
+                totalRisk += risk;
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${p.Date}</td>
+                    <td>${p.Pick}</td>
+                    <td>${p.Line}</td>
+                    <td><span class="${result.startsWith('W') ? 'win' : 'loss'}">${p.Result}</span></td>
+                    <td><span class="${units >= 0 ? 'win' : 'loss'}">${units.toFixed(2)}</span></td>
+                `;
+                tableBody.appendChild(row);
             });
+
+            const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
+            document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
+            const unitsElement = document.getElementById('total-units');
+            unitsElement.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+            unitsElement.className = totalUnits >= 0 ? 'win' : 'loss';
+            const roiElement = document.getElementById('summary-roi');
+            roiElement.textContent = `${roi >= 0 ? '+' : ''}${roi.toFixed(2)}%`;
+            roiElement.className = roi >= 0 ? 'win' : 'loss';
         });
     </script>
 </body>
