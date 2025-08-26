@@ -317,15 +317,13 @@
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
-<!-- FINAL SCRIPT WITH CORRECTED, WORKING URLs -->
+<!-- SCRIPT MODIFIED to be RESILIENT, using Promise.allSettled -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- CONFIGURATION ---
     const sheetUrls = [
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv', // MLB
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?gid=0&single=true&output=csv',      // NFL
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?gid=0&single=true&output=csv'       // NCAAF
-    ];
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv"
+];
     const cycleSpeed = 4000;
 
     // --- ELEMENT SELECTORS ---
@@ -345,18 +343,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- HELPER FUNCTION ---
     function parseDate(dateStr) {
-        if (!dateStr || typeof dateStr !== 'string') return null;
-        const parts = dateStr.trim().split(/[-/]/);
-        if (parts.length === 3) {
-            const month = parseInt(parts[0]) - 1;
-            let day = parseInt(parts[1]);
-            let year = parseInt(parts[2]);
-            if (year < 100) year += 2000;
+  if (!dateStr) return null;
+  const s = String(dateStr).trim();
 
-            if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) {
-                return new Date(year, month, day);
-            }
-        }
+  // ISO 8601: YYYY-MM-DD or YYYY/MM/DD
+  let m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+  if (m) {
+    const y = +m[1], mo = +m[2] - 1, d = +m[3];
+    return (mo>=0&&mo<12&&d>0&&d<=31) ? new Date(y, mo, d) : null;
+  }
+
+  // US: MM/DD/YY(YY) or MM-DD-YY(YY)
+  m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+  if (m) {
+    const mo = +m[1] - 1, d = +m[2]; let y = +m[3];
+    if (y < 100) y += 2000;
+    return (y>2000&&mo>=0&&mo<12&&d>0&&d<=31) ? new Date(y, mo, d) : null;
+  }
+  return null;
+})[\\/-](\\d{1,2})[\\/-](\\d{1,2})$/);
+  if (m) {
+    const y = +m[1], mo = +m[2] - 1, d = +m[3];
+    return (mo>=0&&mo<12&&d>0&&d<=31) ? new Date(y, mo, d) : null;
+  }
+
+  // US: MM/DD/YY(YY) or MM-DD-YY(YY)
+  m = s.match(/^(\\d{1,2})[\\/-](\\d{1,2})[\\/-](\\d{2,4})$/);
+  if (m) {
+    const mo = +m[1] - 1, d = +m[2]; let y = +m[3];
+    if (y < 100) y += 2000;
+    return (y>2000&&mo>=0&&mo<12&&d>0&&d<=31) ? new Date(y, mo, d) : null;
+  }
+  return null;
+}}
         return null;
     }
     
@@ -377,12 +396,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(resultsArray => {
                 let allPicks = [];
                 resultsArray.forEach((result, index) => {
-                    if (result.status === 'fulfilled' && result.value.data) {
+                    if (result.status === 'fulfilled') {
+                        // If the sheet was fetched successfully, add its data to the allPicks array
                         const sheetData = result.value.data.filter(p => p.Pick && p.Pick.trim() !== '');
                         allPicks = allPicks.concat(sheetData);
                     } else {
                         // If a sheet failed to load, log an error to the console for debugging
-                        console.error(`Failed to load data from URL #${index + 1}`, result.reason);
+                        console.error(`Failed to load data from URL #${index}: ${sheetUrls[index]}`, result.reason);
                     }
                 });
 
@@ -404,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         for (const p of picks) {
             const result = p.Result ? p.Result.trim().toUpperCase() : '';
-            const sport = p.Sport ? p.Sport.trim().toUpperCase() : 'MISC';
+            const sport = p.Sport ? p.Sport.trim() : 'Misc';
             const unitChange = parseFloat(p.Units);
 
             if (result !== '' && !isNaN(unitChange)) {
@@ -546,6 +566,79 @@ document.addEventListener('DOMContentLoaded', function() {
     run();
 });
 </script>
+
+<!-- === BETLEGEND QUICK FIX WIDGETS (resilient fallbacks) === -->
+<script>
+(function() {
+  function onReady(fn){ if(document.readyState!=='loading'){fn();} else {document.addEventListener('DOMContentLoaded',fn);} }
+
+  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+  async function getJSON(url, fallback=null, timeoutMs=5000){
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), timeoutMs);
+    try{
+      const res = await fetch(url, {cache:'no-store', signal: ctrl.signal});
+      clearTimeout(t);
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      return await res.json();
+    }catch(e){
+      return fallback;
+    }
+  }
+
+  onReady(async function(){
+    // Let any older scripts run first, then we overwrite their 'Error' state.
+    await sleep(50);
+
+    const dashRecordP = document.querySelector('#dash-record p');
+    const freePickP   = document.querySelector('#dash-free-pick p');
+    const tickerMount = document.getElementById('ticker-content');
+
+    // ---- Verified Records snapshot (JSON -> chip text, else fallback) ----
+    try{
+      const summary = await getJSON('/data/verified-records-summary.json', null, 4000);
+      if (dashRecordP){
+        if (summary && summary.all_time && (summary.units!==undefined && summary.units!==null)){
+          dashRecordP.textContent = `${summary.all_time} | ${summary.units}u`;
+        } else {
+          dashRecordP.textContent = 'Open Records';
+        }
+      }
+    }catch(e){ if(dashRecordP){ dashRecordP.textContent = 'Open Records'; } }
+
+    // ---- Free Daily Pick (use first ticker item if present) ----
+    let tickerData = await getJSON('/data/ticker.json', null, 4000);
+    if(freePickP){
+      if (tickerData && Array.isArray(tickerData.items) && tickerData.items.length){
+        const first = tickerData.items[0];
+        freePickP.textContent = (first && (first.text||first.pick)) ? (first.text||first.pick) : 'See Picks & Analysis';
+      } else {
+        freePickP.textContent = 'See Picks & Analysis';
+      }
+    }
+
+    // ---- Ticker render (fallback if no JSON) ----
+    if (tickerMount){
+      let items = [];
+      if (tickerData && Array.isArray(tickerData.items) && tickerData.items.length){
+        items = tickerData.items.map(it => {
+          const tag = it.tag ? `[${it.tag}] ` : '';
+          const txt = (it.text || it.pick || '').toString();
+          return `<span class="ticker__item">${tag}${txt}</span><span class="ticker__separator"> • </span>`;
+        });
+      } else {
+        items = [
+          '<span class="ticker__item">Welcome to BetLegend</span><span class="ticker__separator"> • </span>',
+          '<span class="ticker__item">Today\'s card is live in Picks & Analysis</span><span class="ticker__separator"> • </span>',
+          '<span class="ticker__item">Join the Discord for updates</span><span class="ticker__separator"> • </span>'
+        ];
+      }
+      tickerMount.innerHTML = `<div class="ticker">${items.join('')}</div>`;
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
-Please try it again
