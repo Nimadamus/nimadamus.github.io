@@ -361,25 +361,9 @@ document.addEventListener('DOMContentLoaded', function() {
     return (y>2000&&mo>=0&&mo<12&&d>0&&d<=31) ? new Date(y, mo, d) : null;
   }
   return null;
-})[\\/-](\\d{1,2})[\\/-](\\d{1,2})$/);
-  if (m) {
-    const y = +m[1], mo = +m[2] - 1, d = +m[3];
-    return (mo>=0&&mo<12&&d>0&&d<=31) ? new Date(y, mo, d) : null;
-  }
+}
 
-  // US: MM/DD/YY(YY) or MM-DD-YY(YY)
-  m = s.match(/^(\\d{1,2})[\\/-](\\d{1,2})[\\/-](\\d{2,4})$/);
-  if (m) {
-    const mo = +m[1] - 1, d = +m[2]; let y = +m[3];
-    if (y < 100) y += 2000;
-    return (y>2000&&mo>=0&&mo<12&&d>0&&d<=31) ? new Date(y, mo, d) : null;
-  }
-  return null;
-}}
-        return null;
-    }
-    
-    // --- MAIN DATA FETCHING AND EXECUTION ---
+// --- MAIN DATA FETCHING AND EXECUTION ---
     function run() {
         const fetchAndParse = (url) => {
             return new Promise((resolve, reject) => {
@@ -567,78 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- === BETLEGEND QUICK FIX WIDGETS (resilient fallbacks) === -->
-<script>
-(function() {
-  function onReady(fn){ if(document.readyState!=='loading'){fn();} else {document.addEventListener('DOMContentLoaded',fn);} }
 
-  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-  async function getJSON(url, fallback=null, timeoutMs=5000){
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), timeoutMs);
-    try{
-      const res = await fetch(url, {cache:'no-store', signal: ctrl.signal});
-      clearTimeout(t);
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      return await res.json();
-    }catch(e){
-      return fallback;
-    }
-  }
-
-  onReady(async function(){
-    // Let any older scripts run first, then we overwrite their 'Error' state.
-    await sleep(50);
-
-    const dashRecordP = document.querySelector('#dash-record p');
-    const freePickP   = document.querySelector('#dash-free-pick p');
-    const tickerMount = document.getElementById('ticker-content');
-
-    // ---- Verified Records snapshot (JSON -> chip text, else fallback) ----
-    try{
-      const summary = await getJSON('/data/verified-records-summary.json', null, 4000);
-      if (dashRecordP){
-        if (summary && summary.all_time && (summary.units!==undefined && summary.units!==null)){
-          dashRecordP.textContent = `${summary.all_time} | ${summary.units}u`;
-        } else {
-          dashRecordP.textContent = 'Open Records';
-        }
-      }
-    }catch(e){ if(dashRecordP){ dashRecordP.textContent = 'Open Records'; } }
-
-    // ---- Free Daily Pick (use first ticker item if present) ----
-    let tickerData = await getJSON('/data/ticker.json', null, 4000);
-    if(freePickP){
-      if (tickerData && Array.isArray(tickerData.items) && tickerData.items.length){
-        const first = tickerData.items[0];
-        freePickP.textContent = (first && (first.text||first.pick)) ? (first.text||first.pick) : 'See Picks & Analysis';
-      } else {
-        freePickP.textContent = 'See Picks & Analysis';
-      }
-    }
-
-    // ---- Ticker render (fallback if no JSON) ----
-    if (tickerMount){
-      let items = [];
-      if (tickerData && Array.isArray(tickerData.items) && tickerData.items.length){
-        items = tickerData.items.map(it => {
-          const tag = it.tag ? `[${it.tag}] ` : '';
-          const txt = (it.text || it.pick || '').toString();
-          return `<span class="ticker__item">${tag}${txt}</span><span class="ticker__separator"> • </span>`;
-        });
-      } else {
-        items = [
-          '<span class="ticker__item">Welcome to BetLegend</span><span class="ticker__separator"> • </span>',
-          '<span class="ticker__item">Today\'s card is live in Picks & Analysis</span><span class="ticker__separator"> • </span>',
-          '<span class="ticker__item">Join the Discord for updates</span><span class="ticker__separator"> • </span>'
-        ];
-      }
-      tickerMount.innerHTML = `<div class="ticker">${items.join('')}</div>`;
-    }
-  });
-})();
-</script>
 
 </body>
 </html>
