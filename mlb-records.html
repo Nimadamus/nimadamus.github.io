@@ -86,132 +86,174 @@
         <div class="nav-home"><a href="/">← Back to Homepage</a></div>
     </div>
 
+<!-- Papa Parse for CSV -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 <script>
-    async function initialize() {
-        try {
-            // This URL points to a stable, raw text file of your complete JSON data. This will not fail.
-            const dataUrl = 'https://pastebin.com/raw/e87aY4YQ';
-            const response = await fetch(dataUrl);
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.statusText}`);
-            }
-            const dataText = await response.text();
-            const mlbPicksData = JSON.parse(dataText);
-            
-            runCalculations(mlbPicksData);
+    const GOOGLE_SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv";
 
-        } catch (e) {
-            console.error("A critical error occurred:", e);
-            document.getElementById('container-content').innerHTML = `<h1>Error Loading Records</h1><p>There was a problem fetching the betting history. Please try again later. Details: ${e.message}</p>`;
-        }
+    function parseDate(dateStr){
+        if(!dateStr) return null;
+        const parts = String(dateStr).trim().split(/[\/-]/);
+        if(parts.length !== 3) return null;
+        const m = parseInt(parts[0],10) - 1;
+        const d = parseInt(parts[1],10);
+        let y = parseInt(parts[2],10);
+        if(y < 100) y += 2000;
+        if(isNaN(m)||isNaN(d)||isNaN(y)) return null;
+        return new Date(y,m,d);
     }
 
-    function runCalculations(mlbPicksData) {
-        const processedPicks = mlbPicksData.map(p => {
-            try {
-                if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
-                const pickText = String(p.Pick).trim();
-                const resultText = String(p.Result).trim().toUpperCase();
-                const units = parseFloat(p.Units);
-                const line = parseFloat(p.Line);
-                if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
-
-                let risk = 0;
-                if (units < 0) { risk = Math.abs(units); }
-                else if (units > 0) {
-                    if (line > 0) { risk = (units / (line / 100)); }
-                    else { risk = (units * (Math.abs(line) / 100)); }
+    function aggregateStats(picks){
+        let wins=0,losses=0,pushes=0,totalUnits=0,totalRisk=0;
+        for(const p of picks){
+            const res = (p.Result||"").trim().toUpperCase();
+            if(res.startsWith("W")) wins++;
+            else if(res.startsWith("L")) losses++;
+            else if(res.startsWith("P")) pushes++;
+            const units = parseFloat(p.Units);
+            const line = parseFloat(p.Line);
+            const isPush = res.startsWith("P");
+            if(!isNaN(units)) totalUnits += units;
+            // risk calc for ROI (skip pushes)
+            if(!isPush && !isNaN(units) && !isNaN(line)){
+                if(units > 0){
+                    totalRisk += line > 0 ? (units / (line/100)) : (units * (Math.abs(line)/100));
+                }else if(units < 0){
+                    totalRisk += Math.abs(units);
                 }
-
-                let wagerType = 'Other';
-                const pLower = pickText.toLowerCase();
-                if (pLower.includes('under') || pLower.includes('over')) wagerType = pLower.includes('team total') || pLower.includes('tt') ? 'Team Total' : 'Total';
-                else if (pLower.includes('f5') || pLower.includes('first 5') || pLower.includes('1st 5')) wagerType = 'First 5 Innings';
-                else if (pLower.includes(' ml') || pLower.endsWith('ml') || pLower.includes('moneyline')) wagerType = 'Moneyline';
-                else if (pLower.match(/[+-]\d+(\.\d+)?/)) wagerType = 'Spread / Runline';
-                
-                return { ...p, units, risk, wagerType, parsedDate: new Date(p.Date) };
-            } catch { return null; }
-        }).filter(p => p !== null).sort((a, b) => b.parsedDate - a.parsedDate);
-
-        document.getElementById('picks-table-body').innerHTML = processedPicks.map(p => `
-            <tr>
-                <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
-                <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
-                <td class="${p.units >= 0 ? 'win' : 'loss'}">${p.units.toFixed(2)}</td>
-            </tr>`).join('');
-
-        function aggregateStats(picks) {
-            let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
-            picks.forEach(p => {
-                const result = p.Result.trim().toUpperCase();
-                if (result.startsWith('W')) wins++; else if (result.startsWith('L')) losses++; else if (result.startsWith('P')) pushes++;
-                totalUnits += p.units;
-                if(!result.startsWith('P')) totalRisk += p.risk;
-            });
-            const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
-            return { wins, losses, pushes, totalUnits, roi };
+            }
         }
+        const roi = totalRisk > 0 ? (totalUnits/totalRisk)*100 : 0;
+        return {wins,losses,pushes,totalUnits,roi};
+    }
 
-        const summaryStats = aggregateStats(processedPicks);
-        document.getElementById('summary-record').textContent = `${summaryStats.wins}-${summaryStats.losses}-${summaryStats.pushes}`;
-        const unitsEl = document.getElementById('summary-units');
-        unitsEl.textContent = `${summaryStats.totalUnits >= 0 ? '+' : ''}${summaryStats.totalUnits.toFixed(2)}`;
-        unitsEl.className = summaryStats.totalUnits >= 0 ? 'units-win' : 'units-loss';
-        document.getElementById('summary-win-pct').textContent = summaryStats.wins + summaryStats.losses > 0 ? `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%` : 'N/A';
-        const roiEl = document.getElementById('summary-roi');
-        roiEl.textContent = `${summaryStats.roi >= 0 ? '+' : ''}${summaryStats.roi.toFixed(2)}%`;
-        roiEl.className = summaryStats.roi >= 0 ? 'roi-win' : 'roi-loss';
+    function renderTables(picks){
+        // Full table
+        const tbody = document.getElementById("picks-table-body");
+        tbody.innerHTML = picks.map(p => {
+            const res = (p.Result||"").trim().toUpperCase();
+            const units = parseFloat(p.Units)||0;
+            const cls = units>=0 ? "win" : "loss";
+            const resCls = "result-" + (res ? res.charAt(0) : "P");
+            return `<tr>
+                <td>${p.Date||""}</td>
+                <td>${p.Sport||""}</td>
+                <td>${p.Pick||""}</td>
+                <td>${p.Line||""}</td>
+                <td class="${resCls}">${p.Result||""}</td>
+                <td class="${cls}">${units>=0?"+":""}${units.toFixed(2)}</td>
+            </tr>`;
+        }).join("");
 
-        const wagerTypeStats = {};
-        const monthlyStats = {};
-        processedPicks.forEach(p => {
-            if (!wagerTypeStats[p.wagerType]) wagerTypeStats[p.wagerType] = [];
-            wagerTypeStats[p.wagerType].push(p);
-            const month = p.parsedDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-            if (!monthlyStats[month]) monthlyStats[month] = [];
-            monthlyStats[month].push(p);
-        });
-        
-        const twoUnitPicks = processedPicks.filter(p => {
-            const result = p.Result.trim().toUpperCase();
-            if (result.startsWith('W')) {
-                return p.units === 2;
-            } else if (result.startsWith('L')) {
-                return p.risk > 1.9 && p.risk < 2.3;
+        // Summary top cards
+        const summary = aggregateStats(picks);
+        document.getElementById("summary-record").textContent = `${summary.wins}-${summary.losses}-${summary.pushes}`;
+        const uEl = document.getElementById("summary-units");
+        uEl.textContent = `${summary.totalUnits>=0?"+":""}${summary.totalUnits.toFixed(2)}`;
+        uEl.className = summary.totalUnits>=0 ? "units-win" : "units-loss";
+        const games = summary.wins + summary.losses;
+        document.getElementById("summary-win-pct").textContent = games>0 ? `${(summary.wins/games*100).toFixed(1)}%` : "N/A";
+        const rEl = document.getElementById("summary-roi");
+        rEl.textContent = `${summary.roi>=0?"+":""}${summary.roi.toFixed(2)}%`;
+        rEl.className = summary.roi>=0 ? "roi-win" : "roi-loss";
+
+        // Wager types
+        const types = {};
+        for(const p of picks){
+            const pickText = String(p.Pick||"").toLowerCase();
+            let type = "Other";
+            if(pickText.includes("under") || pickText.includes("over")){
+                type = (pickText.includes("team total") || pickText.includes("tt")) ? "Team Total" : "Total";
+            }else if(pickText.includes("f5") || pickText.includes("first 5") || pickText.includes("1st 5")){
+                type = "First 5 Innings";
+            }else if(pickText.includes(" ml") || pickText.endsWith("ml") || pickText.includes("moneyline")){
+                type = "Moneyline";
+            }else if(/[+-]\d+(\.\d+)?/.test(pickText)){
+                type = "Spread / Runline";
+            }
+            (types[type] ||= []).push(p);
+        }
+        const wtBody = document.querySelector("#wager-type-table tbody");
+        wtBody.innerHTML = Object.keys(types).sort().map(t => {
+            const s = aggregateStats(types[t]);
+            return `<tr>
+                <td>${t}</td>
+                <td>${s.wins}-${s.losses}-${s.pushes}</td>
+                <td class="${s.totalUnits>=0?"win":"loss"}">${s.totalUnits>=0?"+":""}${s.totalUnits.toFixed(2)}</td>
+                <td class="${s.roi>=0?"win":"loss"}">${s.roi>=0?"+":""}${s.roi.toFixed(2)}%</td>
+            </tr>`;
+        }).join("");
+
+        // Monthly
+        const months = {};
+        for(const p of picks){
+            const d = parseDate(p.Date);
+            if(!d) continue;
+            const key = d.toLocaleString('default',{month:'long',year:'numeric'});
+            (months[key] ||= []).push(p);
+        }
+        const mBody = document.querySelector("#monthly-table tbody");
+        mBody.innerHTML = Object.entries(months)
+            .map(([k,v]) => ({k, d: new Date(k)}))
+            .sort((a,b)=> b.d - a.d)
+            .map(({k}) => {
+                const s = aggregateStats(months[k]);
+                return `<tr>
+                    <td>${k}</td>
+                    <td>${s.wins}-${s.losses}-${s.pushes}</td>
+                    <td class="${s.totalUnits>=0?"win":"loss"}">${s.totalUnits>=0?"+":""}${s.totalUnits.toFixed(2)}</td>
+                    <td class="${s.roi>=0?"win":"loss"}">${s.roi>=0?"+":""}${s.roi.toFixed(2)}%</td>
+                </tr>`;
+            }).join("");
+
+        // 2-unit breakdown
+        const twoUnit = picks.filter(p => {
+            const res = (p.Result||"").trim().toUpperCase();
+            const units = parseFloat(p.Units)||0;
+            const line = parseFloat(p.Line);
+            if(res.startsWith("W")) return units === 2;
+            if(res.startsWith("L")){
+                const risk = isNaN(line) ? 0 :
+                    units > 0 ? (line>0 ? (units/(line/100)) : (units * (Math.abs(line)/100))) :
+                    Math.abs(units);
+                return risk > 1.9 && risk < 2.3;
             }
             return false;
         });
-        const twoUnitStats = aggregateStats(twoUnitPicks);
-        const twoUnitBody = document.getElementById('two-unit-table').querySelector('tbody');
-        twoUnitBody.innerHTML = `<tr>
-            <td>${twoUnitStats.wins}-${twoUnitStats.losses}-${twoUnitStats.pushes}</td>
-            <td class="${twoUnitStats.totalUnits >= 0 ? 'win' : 'loss'}">${twoUnitStats.totalUnits >= 0 ? '+' : ''}${twoUnitStats.totalUnits.toFixed(2)}</td>
-            <td class="${twoUnitStats.roi >= 0 ? 'win' : 'loss'}">${twoUnitStats.roi >= 0 ? '+' : ''}${twoUnitStats.roi.toFixed(2)}%</td>
+        const twoS = aggregateStats(twoUnit);
+        const tuBody = document.querySelector("#two-unit-table tbody");
+        tuBody.innerHTML = `<tr>
+            <td>${twoS.wins}-${twoS.losses}-${twoS.pushes}</td>
+            <td class="${twoS.totalUnits>=0?"win":"loss"}">${twoS.totalUnits>=0?"+":""}${twoS.totalUnits.toFixed(2)}</td>
+            <td class="${twoS.roi>=0?"win":"loss"}">${twoS.roi>=0?"+":""}${twoS.roi.toFixed(2)}%</td>
         </tr>`;
-
-        const wagerBody = document.getElementById('wager-type-table').querySelector('tbody');
-        wagerBody.innerHTML = Object.keys(wagerTypeStats).sort().map(type => {
-            const stats = aggregateStats(wagerTypeStats[type]);
-            return `<tr>
-                <td>${type}</td><td>${stats.wins}-${stats.losses}-${stats.pushes}</td>
-                <td class="${stats.totalUnits >= 0 ? 'win' : 'loss'}">${stats.totalUnits >= 0 ? '+' : ''}${stats.totalUnits.toFixed(2)}</td>
-                <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
-            </tr>`;
-        }).join('');
-
-        const monthlyBody = document.getElementById('monthly-table').querySelector('tbody');
-        monthlyBody.innerHTML = Object.keys(monthlyStats).map(month => ({ month, date: new Date(month) })).sort((a, b) => b.date - a.date).map(({ month }) => {
-            const stats = aggregateStats(monthlyStats[month]);
-            return `<tr>
-                <td>${month}</td><td>${stats.wins}-${stats.losses}-${stats.pushes}</td>
-                <td class="${stats.totalUnits >= 0 ? 'win' : 'loss'}">${stats.totalUnits >= 0 ? '+' : ''}${stats.totalUnits.toFixed(2)}</td>
-                <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
-            </tr>`;
-        }).join('');
     }
 
-    document.addEventListener('DOMContentLoaded', initialize);
+    function loadSheet(){
+        Papa.parse(GOOGLE_SHEET_CSV, {
+            download: true,
+            header: true,
+            skipEmptyLines: 'greedy',
+            transformHeader: h => String(h||"").trim(),
+            complete: function(results){
+                const rows = results.data.filter(r => r.Pick && String(r.Pick).trim() !== "");
+                // Keep MLB only if Sport column exists and equals MLB, else keep all
+                const mlbOnly = rows.filter(r => !r.Sport || String(r.Sport).toUpperCase().includes("MLB") || String(r.Sport).trim()==="");
+                // Sort newest first by Date
+                mlbOnly.sort((a,b) => {
+                    const da = parseDate(a.Date);
+                    const db = parseDate(b.Date);
+                    return (db?db.getTime():0) - (da?da.getTime():0);
+                });
+                renderTables(mlbOnly);
+            },
+            error: function(err){
+                document.getElementById('container-content').innerHTML = `<h1>Error Loading Records</h1><p>${err.message||err}</p>`;
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", loadSheet);
 </script>
 </body>
 </html>
