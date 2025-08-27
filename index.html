@@ -320,7 +320,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- CONFIGURATION ---
-    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv';
+    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
     const cycleSpeed = 4000;
 
     // --- ELEMENT SELECTORS ---
@@ -433,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function() {
             recordP.style.opacity = '0';
 
             setTimeout(() => {
-                recordH3.textContent = `${sportName} Record";
+                recordH3.textContent = `${sportName} Record`; // Corrected syntax here
                 recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
                 recordH3.style.opacity = '1';
                 recordP.style.opacity = '1';
@@ -470,64 +470,4 @@ document.addEventListener('DOMContentLoaded', function() {
         gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
         const latestPick = gradedPicks[0];
         
-        if (latestPick && latestPick.Line) {
-            freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`;
-        } else {
-            freePickDisplay.textContent = 'Check Back Soon';
-        }
-    }
-
-    function updateTicker(picks) {
-        const today = new Date();
-        today.setHours(23, 59, 59, 999);
-        const threeDaysAgo = new Date(today);
-        threeDaysAgo.setDate(today.getDate() - 2);
-
-        const recentGradedPicks = picks.filter(p => {
-            const pickDate = parseDate(p.Date);
-            return p.Result && p.Result.trim() !== '' && pickDate && pickDate >= threeDaysAgo && pickDate <= today;
-        }).sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
-
-        if (recentGradedPicks.length === 0) {
-            tickerContent.innerHTML = '<div class="ticker__item">No recent graded results to display.</div>';
-            return;
-        }
-
-        const separator = ' <span class="ticker__separator">•</span> ';
-        let tickerHTML = recentGradedPicks.map(p => {
-            const result = p.Result.trim().toUpperCase();
-            let resultClass = '';
-            if (result === 'W' || result === 'WIN') resultClass = 'win';
-            if (result === 'L' || result === 'LOSS') resultClass = 'loss';
-            
-            const resultText = result.charAt(0);
-            const pickDate = parseDate(p.Date);
-            const displayDate = `${pickDate.getMonth() + 1}/${pickDate.getDate()}`;
-            
-            return `<div class="ticker__item">${displayDate}: <span class="pick-text">${p.Pick.trim()}</span> <span class="grade ${resultClass}">${resultText}</span></div>`;
-        }).join(separator);
-
-        tickerContent.innerHTML = tickerHTML + separator + tickerHTML;
-    }
-
-    // --- DEFAULT AND ERROR STATES ---
-    function displayDefaults() {
-        recordH3.textContent = 'Verified Record';
-        recordP.textContent = '0-0-0';
-        freePickDisplay.textContent = '--';
-        tickerContent.innerHTML = '<div class="ticker__item">No data available.</div>';
-    }
-
-    function displayError(message) {
-        recordH3.textContent = 'Verified Record';
-        recordP.textContent = 'Error';
-        freePickDisplay.textContent = 'Error';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
-    }
-
-    // --- INITIALIZE THE SCRIPT ---
-    run();
-});
-</script>
-</body>
-</html>
+        
