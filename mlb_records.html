@@ -1,170 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MLB Records - BetLegend Picks</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
     <style>
-        :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
-        body { margin: 0; padding: 20px; background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; }
-        .container { max-width: 1200px; margin: 0 auto; background: rgba(0, 0, 0, 0.75); padding: 20px; border-radius: 10px; border: 1px solid var(--glow-color); }
-        h1 { text-align: center; font-size: 48px; text-shadow: 0 0 10px var(--glow-color); margin-bottom: 20px; }
-        .summary-stats { display: flex; justify-content: space-around; flex-wrap: wrap; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--glow-color); border-radius: 10px; padding: 20px; margin-bottom: 30px; text-align: center; }
-        .stat-item { text-align: center; margin: 10px 20px; }
-        .stat-label { display: block; font-size: 18px; color: #ccc; text-transform: uppercase; }
-        .stat-value { display: block; font-size: 32px; font-weight: bold; color: #fff; font-family: 'Orbitron', sans-serif; }
-        .units-win, .roi-win { color: var(--win-color); }
-        .units-loss, .roi-loss { color: var(--loss-color); }
-        #records-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        #records-table th, #records-table td { padding: 12px 15px; border: 1px solid rgba(0, 224, 255, 0.2); text-align: left; font-family: 'Roboto', sans-serif; }
-        #records-table th { background-color: rgba(0, 224, 255, 0.15); font-family: 'Orbitron', sans-serif; font-size: 16px; text-transform: uppercase; }
-        #records-table tr:nth-child(even) { background-color: rgba(0, 0, 0, 0.2); }
-        #records-table tr:hover { background-color: rgba(0, 224, 255, 0.1); }
-        .loader { text-align: center; font-size: 24px; padding: 50px; }
+        :root { 
+            --glow-color: #00e0ff; 
+            --win-color: #39FF14; 
+            --loss-color: #FF3131; 
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed;
+            font-family: 'Orbitron', sans-serif; 
+            color: white; 
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 50px rgba(0, 224, 255, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 224, 255, 0.5);
+        }
+
+        .title {
+            font-size: 3.5em;
+            font-weight: 900;
+            color: #fff;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color);
+        }
+
+        .title .highlight {
+            color: var(--glow-color);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #ccc;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--glow-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #fff;
+            text-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #ccc;
+        }
+
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: var(--loss-color);
+            font-size: 1.2em;
+        }
+
+        .table-container {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 224, 255, 0.3);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.3) 0%, rgba(0, 150, 200, 0.3) 100%);
+        }
+
+        th {
+            padding: 20px 15px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--glow-color);
+            border-bottom: 2px solid rgba(0, 224, 255, 0.5);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        tbody tr:hover {
+            background: rgba(0, 224, 255, 0.1);
+            transform: scale(1.005);
+        }
+
+        td {
+            padding: 15px;
+            font-family: 'Roboto', sans-serif;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .result-win {
+            color: var(--win-color) !important;
+            font-weight: bold;
+            text-shadow: 0 0 8px var(--win-color);
+            background: rgba(57, 255, 20, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--win-color);
+        }
+
+        .result-loss {
+            color: var(--loss-color) !important;
+            font-weight: bold;
+            text-shadow: 0 0 8px var(--loss-color);
+            background: rgba(255, 49, 49, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--loss-color);
+        }
+
+        .units-positive {
+            color: var(--win-color) !important;
+            font-weight: bold;
+        }
+
+        .units-negative {
+            color: var(--loss-color) !important;
+            font-weight: bold;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, var(--glow-color) 0%, #0099cc 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 224, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5em;
+            }
+
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            th, td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>MLB Verified Records</h1>
-
-        <div class="summary-stats">
-            <div class="stat-item">
-                <span class="stat-label">Record (W-L-P)</span>
-                <span class="stat-value" id="summary-record">...</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Total Units</span>
-                <span class="stat-value" id="summary-units">...</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Win %</span>
-                <span class="stat-value" id="summary-win-pct">...</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">ROI</span>
-                <span class="stat-value" id="summary-roi">...</span>
-            </div>
+        <a href="/" class="back-link">← Back to BetLegend</a>
+        
+        <div class="header">
+            <h1 class="title">MLB <span class="highlight">RECORDS</span></h1>
+            <p class="subtitle">Complete Verified Betting History</p>
         </div>
 
-        <table id="records-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Pick</th>
-                    <th>Line</th>
-                    <th>Result</th>
-                    <th>Units</th>
-                </tr>
-            </thead>
-            <tbody id="records-body">
-                <tr>
-                    <td colspan="5" class="loader">Loading Records...</td>
-                </tr>
-            </tbody>
-        </table>
+        <button class="refresh-btn" onclick="loadData()">🔄 Refresh Data</button>
+
+        <div id="content">
+            <div class="loading">
+                <p>⚾ Loading MLB records...</p>
+            </div>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv';
+        async function loadData() {
+            const contentDiv = document.getElementById('content');
+            
+            try {
+                contentDiv.innerHTML = '<div class="loading"><p>⚾ Loading MLB records...</p></div>';
 
-            function processPicks(picks) {
-                return picks.map(p => {
-                    try {
-                        if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
-                        const pickText = String(p.Pick).trim();
-                        const resultText = String(p.Result).trim().toUpperCase();
-                        const units = parseFloat(p.Units);
-                        const line = parseFloat(p.Line);
-                        if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
+                // Use CORS proxy to fetch CSV from Google Sheets
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv';
+                const proxyUrl = 'https://corsproxy.io/?';
+                
+                const response = await fetch(proxyUrl + encodeURIComponent(csvUrl));
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
-                        let risk = 0;
-                        if (units < 0) {
-                            risk = Math.abs(units);
-                        } else if (units > 0) {
-                            if (line > 0) {
-                                risk = (units / (line / 100));
-                            } else {
-                                risk = (units * (Math.abs(line) / 100));
+                const csvText = await response.text();
+                const lines = csvText.split('\n').filter(line => line.trim());
+                
+                if (lines.length === 0) {
+                    throw new Error('No data found');
+                }
+
+                // Parse CSV manually
+                const data = [];
+                for (let line of lines) {
+                    const row = [];
+                    let current = '';
+                    let inQuotes = false;
+                    
+                    for (let i = 0; i < line.length; i++) {
+                        const char = line[i];
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            row.push(current.trim());
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    row.push(current.trim());
+                    data.push(row);
+                }
+
+                displayData(data);
+
+            } catch (error) {
+                console.error('Error:', error);
+                contentDiv.innerHTML = `
+                    <div class="error">
+                        <h3>⚠️ Error Loading Data</h3>
+                        <p>Could not load MLB records from Google Sheets.</p>
+                        <p>Error: ${error.message}</p>
+                        <button class="refresh-btn" onclick="loadData()" style="margin-top: 15px;">
+                            Try Again
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function displayData(data) {
+            const contentDiv = document.getElementById('content');
+            
+            if (!data || data.length <= 1) {
+                contentDiv.innerHTML = '<div class="error"><p>No records found.</p></div>';
+                return;
+            }
+
+            const headers = data[0];
+            const rows = data.slice(1).filter(row => row.some(cell => cell && cell.trim()));
+
+            let tableHTML = `
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+            `;
+
+            headers.forEach(header => {
+                if (header && header.trim()) {
+                    tableHTML += `<th>${header}</th>`;
+                }
+            });
+
+            tableHTML += `</tr></thead><tbody>`;
+
+            rows.forEach(row => {
+                tableHTML += '<tr>';
+                headers.forEach((header, index) => {
+                    if (header && header.trim()) {
+                        let cellValue = row[index] || '';
+                        let cellClass = '';
+                        
+                        // Style results with proper colors
+                        if (header.toLowerCase().includes('result')) {
+                            const result = cellValue.toUpperCase().trim();
+                            if (result === 'W' || result === 'WIN') {
+                                cellClass = 'result-win';
+                                cellValue = 'W';
+                            } else if (result === 'L' || result === 'LOSS') {
+                                cellClass = 'result-loss';
+                                cellValue = 'L';
                             }
                         }
-                        return { ...p, units, risk };
-                    } catch {
-                        return null;
+                        
+                        // Style units
+                        if (header.toLowerCase().includes('units')) {
+                            const unitValue = parseFloat(cellValue);
+                            if (!isNaN(unitValue)) {
+                                if (unitValue > 0) {
+                                    cellClass = 'units-positive';
+                                    cellValue = `+${unitValue}`;
+                                } else if (unitValue < 0) {
+                                    cellClass = 'units-negative';
+                                }
+                            }
+                        }
+                        
+                        tableHTML += `<td class="${cellClass}">${cellValue}</td>`;
                     }
-                }).filter(p => p !== null);
-            }
-
-            function aggregateStats(picks) {
-                let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
-                picks.forEach(p => {
-                    const result = p.Result.trim().toUpperCase();
-                    if (result.startsWith('W')) wins++;
-                    else if (result.startsWith('L')) losses++;
-                    else if (result.startsWith('P')) pushes++;
-                    totalUnits += p.units;
-                    if (!result.startsWith('P')) totalRisk += p.risk;
                 });
-                const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
-                const winPct = wins + losses > 0 ? (wins / (wins + losses)) * 100 : 0;
-                return { wins, losses, pushes, totalUnits, roi, winPct };
-            }
+                tableHTML += '</tr>';
+            });
 
-            function displayRecords(picks) {
-                const tableBody = document.getElementById('records-body');
-                tableBody.innerHTML = ''; // Clear loader
-                picks.forEach(pick => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${pick.Date}</td>
-                        <td>${pick.Pick}</td>
-                        <td>${pick.Line}</td>
-                        <td>${pick.Result}</td>
-                        <td>${pick.Units}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            }
+            tableHTML += `</tbody></table></div>`;
+            contentDiv.innerHTML = tableHTML;
+        }
 
-            function displaySummaryStats(stats) {
-                document.getElementById('summary-record').textContent = `${stats.wins}-${stats.losses}-${stats.pushes}`;
-                
-                const unitsEl = document.getElementById('summary-units');
-                unitsEl.textContent = `${stats.totalUnits >= 0 ? '+' : ''}${stats.totalUnits.toFixed(2)}`;
-                unitsEl.className = `stat-value ${stats.totalUnits >= 0 ? 'units-win' : 'units-loss'}`;
-
-                const winPctEl = document.getElementById('summary-win-pct');
-                winPctEl.textContent = `${stats.winPct.toFixed(1)}%`;
-
-                const roiEl = document.getElementById('summary-roi');
-                roiEl.textContent = `${stats.roi.toFixed(2)}%`;
-                roiEl.className = `stat-value ${stats.roi >= 0 ? 'roi-win' : 'roi-loss'}`;
-            }
-
-            fetch(CSV_URL)
-                .then(response => response.text())
-                .then(csvText => {
-                    const lines = csvText.split('\n').slice(1); // Skip header row
-                    const picks = lines.map(line => {
-                        const [Date, Sport, Pick, Line, Result, Units] = line.split(',');
-                        return { Date, Sport, Pick, Line, Result, Units };
-                    });
-
-                    const processed = processPicks(picks);
-                    const summary = aggregateStats(processed);
-
-                    displayRecords(processed);
-                    displaySummaryStats(summary);
-                })
-                .catch(error => {
-                    console.error('Error fetching or parsing CSV data:', error);
-                    document.getElementById('records-body').innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--loss-color);">Error loading records. Please try again later.</td></tr>';
-                });
-        });
+        // Load data when page loads
+        loadData();
     </script>
-
 </body>
 </html>
