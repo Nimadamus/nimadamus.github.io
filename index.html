@@ -5,8 +5,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>BetLegend Picks – Expert picks. Winning records. All tracked daily.</title>
     <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
     <style>
         :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
         body { margin: 0; padding-bottom: 95px; background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden; }
@@ -55,45 +55,12 @@
         .dash-item .record { font-family: 'Orbitron', sans-serif; font-size: 18px; }
         .dash-item .units.win { color: var(--win-color); }
         .dash-item .units.loss { color: var(--loss-color); }
-
-        /* Summary Stats Styling */
-        .summary-stats { 
-            background: rgba(0, 0, 0, 0.7); 
-            border: 1px solid var(--glow-color); 
-            border-radius: 10px; 
-            padding: 20px; 
-            margin-bottom: 30px; 
-            text-align: center; 
-        }
-        .summary-stats h2 { 
-            color: var(--glow-color); 
-            margin-bottom: 15px; 
-        }
-        .stat-item { 
-            display: inline-block; 
-            margin: 0 20px; 
-            text-align: center; 
-        }
-        .stat-label { 
-            display: block; 
-            font-size: 14px; 
-            color: #ccc; 
-            text-transform: uppercase; 
-        }
-        .stat-value { 
-            display: block; 
-            font-size: 24px; 
-            font-weight: bold; 
-            color: #fff; 
-            font-family: 'Orbitron', sans-serif; 
-        }
-        .units-win { color: var(--win-color); }
-        .units-loss { color: var(--loss-color); }
-        .roi-win { color: var(--win-color); }
-        .roi-loss { color: var(--loss-color); }
-
-        @media (max-width: 1024px) { .fixed-sidebar { display: none; } }
-        @media (max-width: 768px) { body { padding-bottom: 190px; } .interactive-dashboard { height: 190px; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); } .dash-item { border-bottom: 1px solid rgba(0, 224, 255, 0.2); } }
+        .summary-stats { display: flex; justify-content: space-around; flex-wrap: wrap; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--glow-color); border-radius: 10px; padding: 20px; margin-bottom: 30px; text-align: center; }
+        .stat-item { text-align: center; margin: 10px 20px; }
+        .stat-label { display: block; font-size: 18px; color: #ccc; text-transform: uppercase; }
+        .stat-value { display: block; font-size: 32px; font-weight: bold; color: #fff; font-family: 'Orbitron', sans-serif; }
+        .units-win, .roi-win { color: var(--win-color); }
+        .units-loss, .roi-loss { color: var(--loss-color); }
     </style>
 </head>
 <body>
@@ -118,15 +85,15 @@
         <div class="nav-links">
             <a href="blog-page5.html">Picks & Analysis</a>
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown(this)">Records</button>
+                <button class="dropbtn">Records</button>
                 <div class="dropdown-content">
-                    <a href="/betlegend-verified-records.html">MLB Records</a>
-                    <a href="/nfl-records.html">NFL Records</a>
-                    <a href="/ncaaf-records.html">NCAAF Records</a>
+                    <a href="mlb_records.html">MLB Records</a>
+                    <a href="nfl-records.html">NFL Records</a>
+                    <a href="ncaaf-records.html">NCAAF Records</a>
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown(this)">Sports</button>
+                <button class="dropbtn">Sports</button>
                 <div class="dropdown-content">
                     <a href="nfl.html">NFL</a>
                     <a href="mlb-page2.html">MLB</a>
@@ -134,7 +101,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown(this)">Resources</button>
+                <button class="dropbtn">Resources</button>
                 <div class="dropdown-content">
                     <a href="howitworks.html">How It Works</a>
                     <a href="bankroll.html">Bankroll</a>
@@ -143,7 +110,7 @@
             <a href="news.html">News</a>
             <a href="featured-game-of-the-day.html">Game of the Day</a>
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown(this)">Community</button>
+                <button class="dropbtn">Community</button>
                 <div class="dropdown-content">
                     <a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a>
                     <a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
@@ -151,11 +118,30 @@
             </div>
         </div>
 
+        <div class="summary-stats">
+            <div class="stat-item">
+                <span class="stat-label">Record (W-L-P)</span>
+                <span class="stat-value" id="summary-record">...</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Units</span>
+                <span class="stat-value" id="summary-units">...</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Win %</span>
+                <span class="stat-value" id="summary-win-pct">...</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">ROI</span>
+                <span class="stat-value" id="summary-roi">...</span>
+            </div>
+        </div>
+
         <div class="gif-showcase"><img alt="Stephen Curry GIF" src="https://nimadamus.github.io/curry.gif"/></div>
         <p class="caption">Real-time dashboard powered by our official records.</p>
+
     </div>
 
-    <!-- NEW DASHBOARD LAYOUT -->
     <div class="interactive-dashboard">
         <div class="dash-item" id="dash-mlb">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.75 2.25C12.75 1.83579 12.4142 1.5 12 1.5C11.5858 1.5 11.25 1.83579 11.25 2.25V3.91901C8.23238 4.41328 6 7.03447 6 10.125V18.75C6 19.1642 6.33579 19.5 6.75 19.5H17.25C17.6642 19.5 18 19.1642 18 18.75V10.125C18 7.03447 15.7676 4.41328 12.75 3.91901V2.25ZM9.75 21C9.75 22.2426 10.7574 23.25 12 23.25C13.2426 23.25 14.25 22.2426 14.25 21H9.75Z"></path></svg>
@@ -179,120 +165,137 @@
         </a>
     </div>
 
-<script>
-// Fixed dropdown functionality
-function toggleDropdown(button) {
-    const dropdown = button.parentElement;
-    const isOpen = dropdown.classList.contains('show');
-    
-    // Close all dropdowns first
-    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show'));
-    
-    // Toggle current dropdown if it wasn't open
-    if (!isOpen) {
-        dropdown.classList.add('show');
-    }
-}
-
-// Close dropdowns when clicking outside
-document.addEventListener('click', function(event) {
-    if (!event.target.matches('.dropbtn') && !event.target.closest('.dropdown-content')) {
-        document.querySelectorAll('.dropdown').forEach(dropdown => {
-            dropdown.classList.remove('show');
-        });
-    }
-});
-
-// Ensure dropdown links work properly
-document.addEventListener('click', function(event) {
-    if (event.target.matches('.dropdown-content a')) {
-        event.stopPropagation();
-        // Let the link navigate normally
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    // This is the static data for the entire site, taken from your CSVs.
-    const allPicksData = [
-        { "Date": "8-25-2025", "Sport": "MLB", "Pick": "Tigers F5 -0.5", "Line": "-154", "Result": "L", "Units": "-1.54" },
-        { "Date": "8-25-2025", "Sport": "MLB", "Pick": "Angels Team Total  under 3.5", "Line": "-145", "Result": "L", "Units": "-2.9" },
-        { "Date": "8-25-2025", "Sport": "MLB", "Pick": "Phillies F5 ML ", "Line": "-140", "Result": "L", "Units": "-1.4" },
-        { "Date": "8-25-2025", "Sport": "MLB", "Pick": "Brewers F5 -0.5", "Line": "-120", "Result": "W", "Units": "1" },
-        { "Date": "8-25-2025", "Sport": "MLB", "Pick": "Brewers Team Total over 3.5", "Line": "-175", "Result": "W", "Units": "1" },
-        { "Date": "8-24-2025", "Sport": "MLB", "Pick": "Guardians/Rangers under 8", "Line": "-114", "Result": "W", "Units": "2" },
-        { "Date": "8-24-2025", "Sport": "MLB", "Pick": "Phillies -1.5", "Line": "-142", "Result": "L", "Units": "-1.42" },
-        { "Date": "8-24-2025", "Sport": "MLB", "Pick": "Tigers F5 ML", "Line": "-160", "Result": "W", "Units": "1" },
-        { "Date": "8-24-2025", "Sport": "MLB", "Pick": "Rockies Team Total under 2.5", "Line": "-125", "Result": "W", "Units": "1" },
-        { "Date": "8-24-2025", "Sport": "MLB", "Pick": "Pirates -1.5", "Line": "-158", "Result": "W", "Units": "1" }
-        // Using just a sample of the data - in your actual file this would be the complete dataset
-    ];
-
-    function processPicks(picks) {
-        return picks.map(p => {
-            try {
-                if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
-                const pickText = String(p.Pick).trim();
-                const resultText = String(p.Result).trim().toUpperCase();
-                const units = parseFloat(p.Units);
-                const line = parseFloat(p.Line);
-                if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
-
-                let risk = 0;
-                if (units < 0) { 
-                    risk = Math.abs(units); 
-                } else if (units > 0) {
-                    if (line > 0) { 
-                        risk = (units / (line / 100)); 
-                    } else { 
-                        risk = (units * (Math.abs(line) / 100)); 
-                    }
-                }
-
-                return { ...p, units, risk, parsedDate: new Date(p.Date) };
-            } catch { 
-                return null; 
+    <script>
+        // Dropdown functionality
+        document.addEventListener('click', function(e) {
+            const isDropdownButton = e.target.matches(".dropbtn");
+            if (!isDropdownButton && e.target.closest('.dropdown') === null) {
+                document.querySelectorAll('.dropdown-content').forEach(function(dropdown) {
+                    dropdown.style.display = 'none';
+                });
             }
-        }).filter(p => p !== null).sort((a, b) => b.parsedDate - a.parsedDate);
-    }
-
-    const processedPicks = processPicks(allPicksData);
-    
-    function aggregateStats(picks) {
-        let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
-        picks.forEach(p => {
-            const result = p.Result.trim().toUpperCase();
-            if (result.startsWith('W')) wins++;
-            else if (result.startsWith('L')) losses++;
-            else if (result.startsWith('P')) pushes++;
-            totalUnits += p.units;
-            if (!result.startsWith('P')) totalRisk += p.risk;
+            if (isDropdownButton) {
+                const currentDropdown = e.target.nextElementSibling;
+                const isVisible = currentDropdown.style.display === 'block';
+                document.querySelectorAll('.dropdown-content').forEach(function(dropdown) {
+                    dropdown.style.display = 'none';
+                });
+                if (!isVisible) {
+                    currentDropdown.style.display = 'block';
+                }
+            }
         });
-        const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
-        return { wins, losses, pushes, totalUnits, roi, totalRisk };
-    }
 
-    const summaryStats = aggregateStats(processedPicks);
-    
-    // Update summary display
-    document.getElementById('summary-record').textContent = `${summaryStats.wins}-${summaryStats.losses}-${summaryStats.pushes}`;
-    
-    const unitsEl = document.getElementById('summary-units');
-    unitsEl.textContent = `${summaryStats.totalUnits >= 0 ? '+' : ''}${summaryStats.totalUnits.toFixed(2)}`;
-    unitsEl.className = `stat-value ${summaryStats.totalUnits >= 0 ? 'units-win' : 'units-loss'}`;
-    
-    const winPct = summaryStats.wins + summaryStats.losses > 0 ? ((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100) : 0;
-    document.getElementById('summary-win-pct').textContent = `${winPct.toFixed(1)}%`;
-    
-    const roiEl = document.getElementById('summary-roi');
-    roiEl.textContent = `${summaryStats.roi >= 0 ? '+' : ''}${summaryStats.roi.toFixed(2)}%`;
-    roiEl.className = `stat-value ${summaryStats.roi >= 0 ? 'roi-win' : 'roi-loss'}`;
+        // Data fetching and processing for summary stats
+        document.addEventListener('DOMContentLoaded', function () {
+            const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv';
 
-    console.log('SUMMARY STATISTICS:');
-    console.log('Record:', `${summaryStats.wins}-${summaryStats.losses}-${summaryStats.pushes}`);
-    console.log('Total Units:', `${summaryStats.totalUnits >= 0 ? '+' : ''}${summaryStats.totalUnits.toFixed(2)}`);
-    console.log('Win %:', `${winPct.toFixed(1)}%`);
-    console.log('ROI:', `${summaryStats.roi >= 0 ? '+' : ''}${summaryStats.roi.toFixed(2)}%`);
-});
-</script>
+            function processPicks(picks) {
+                return picks.map(p => {
+                    try {
+                        if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
+                        const pickText = String(p.Pick).trim();
+                        const resultText = String(p.Result).trim().toUpperCase();
+                        const units = parseFloat(p.Units);
+                        const line = parseFloat(p.Line);
+                        if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
+
+                        let risk = 0;
+                        if (units < 0) {
+                            risk = Math.abs(units);
+                        } else if (units > 0) {
+                            if (line > 0) {
+                                risk = (units / (line / 100));
+                            } else {
+                                risk = (units * (Math.abs(line) / 100));
+                            }
+                        }
+                        return { ...p, units, risk };
+                    } catch {
+                        return null;
+                    }
+                }).filter(p => p !== null);
+            }
+
+            function aggregateStats(picks) {
+                let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
+                picks.forEach(p => {
+                    const result = p.Result.trim().toUpperCase();
+                    if (result.startsWith('W')) wins++;
+                    else if (result.startsWith('L')) losses++;
+                    else if (result.startsWith('P')) pushes++;
+                    totalUnits += p.units;
+                    if (!result.startsWith('P')) totalRisk += p.risk;
+                });
+                const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
+                const winPct = wins + losses > 0 ? (wins / (wins + losses)) * 100 : 0;
+                return { wins, losses, pushes, totalUnits, roi, winPct };
+            }
+
+            function displaySummaryStats(stats) {
+                document.getElementById('summary-record').textContent = `${stats.wins}-${stats.losses}-${stats.pushes}`;
+                
+                const unitsEl = document.getElementById('summary-units');
+                unitsEl.textContent = `${stats.totalUnits >= 0 ? '+' : ''}${stats.totalUnits.toFixed(2)}`;
+                unitsEl.className = `stat-value ${stats.totalUnits >= 0 ? 'units-win' : 'units-loss'}`;
+
+                const winPctEl = document.getElementById('summary-win-pct');
+                winPctEl.textContent = `${stats.winPct.toFixed(1)}%`;
+
+                const roiEl = document.getElementById('summary-roi');
+                roiEl.textContent = `${stats.roi.toFixed(2)}%`;
+                roiEl.className = `stat-value ${stats.roi >= 0 ? 'roi-win' : 'roi-loss'}`;
+            }
+
+            fetch(CSV_URL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.statusText}`);
+                    }
+                    return response.text();
+                })
+                .then(csvText => {
+                    const lines = csvText.split(/[
+]+/).slice(1);
+                    const picks = lines.map(line => {
+                        const values = line.split(',');
+                        if (values.length < 6) return null;
+                        const [Date, Sport, Pick, Line, Result, Units] = values;
+                        return { Date, Sport, Pick, Line, Result, Units };
+                    }).filter(p => p !== null);
+
+                    const processed = processPicks(picks);
+                    const summary = aggregateStats(processed);
+
+                    displaySummaryStats(summary);
+
+                    // Also update the ticker
+                    const tickerContent = document.getElementById('ticker-content');
+                    if (tickerContent) {
+                        let tickerHTML = '';
+                        processed.slice(0, 10).forEach(p => {
+                            const resultClass = p.Result.trim().toUpperCase().startsWith('W') ? 'win' : 'loss';
+                            tickerHTML += `<div class="ticker__item"><span class="pick-text">${p.Pick}</span> <span class="grade ${resultClass}">${p.Result}</span></div><span class="ticker__separator">◆</span>`;
+                        });
+                        tickerContent.innerHTML = tickerHTML;
+                    }
+
+                    // Also update the dashboard
+                    const mlbStats = document.getElementById('mlb-stats');
+                    if (mlbStats) {
+                        mlbStats.innerHTML = `${summary.wins}-${summary.losses}-${summary.pushes} <br><span class="units ${summary.totalUnits >= 0 ? 'win' : 'loss'}">${summary.totalUnits >= 0 ? '+' : ''}${summary.totalUnits.toFixed(2)} U</span>`;
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error fetching or parsing CSV data:', error);
+                    document.getElementById('summary-record').textContent = 'Error';
+                    document.getElementById('summary-units').textContent = 'Error';
+                    document.getElementById('summary-win-pct').textContent = 'Error';
+                    document.getElementById('summary-roi').textContent = 'Error';
+                });
+        });
+    </script>
+
 </body>
 </html>
