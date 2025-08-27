@@ -1,61 +1,42 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>MLB Verified Records</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MLB Records</title>
+  <link rel="icon" href="/newlogo.png" type="image/png"/>
   <style>
-    body {
-      background-color: black;
-      color: white;
-      font-family: 'Sora', sans-serif;
-      text-align: center;
+    html,body {
+      margin:0; padding:0;
+      background:#000; color:#fff;
+      font-family:Arial, Helvetica, sans-serif;
     }
-    table {
-      margin: 40px auto;
-      border-collapse: collapse;
-      width: 90%;
+    .wrap { max-width:1200px; margin:0 auto; padding:20px; }
+    h1 { text-align:center; color:#0ff; text-shadow:0 0 12px rgba(0,224,255,.5); }
+    .frame {
+      height:85vh;
+      border:1px solid #1e1e1e;
+      border-radius:12px;
+      overflow:hidden;
+      background:#0b0b0b;
     }
-    th, td {
-      border: 1px solid #ffd700;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #333;
-      color: #ffd700;
-    }
-    tr:nth-child(even) {
-      background-color: #222;
-    }
+    iframe { width:100%; height:100%; border:0; }
+    .note { text-align:center; margin-top:10px; font-size:13px; opacity:.75; }
+    .note a { color:#76e0ff; text-decoration:none; }
   </style>
 </head>
 <body>
-  <h1>MLB Verified Records</h1>
-  <div id="record-table">Loading records...</div>
-
-  <script>
-    fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv")
-      .then(response => response.text())
-      .then(data => {
-        const rows = data.trim().split("\n");
-        const table = document.createElement("table");
-        rows.forEach((row, index) => {
-          const tr = document.createElement("tr");
-          row.split(",").forEach(cell => {
-            const td = document.createElement(index === 0 ? "th" : "td");
-            td.textContent = cell.trim();
-            tr.appendChild(td);
-          });
-          table.appendChild(tr);
-        });
-        document.getElementById("record-table").innerHTML = "";
-        document.getElementById("record-table").appendChild(table);
-      })
-      .catch(error => {
-        document.getElementById("record-table").innerText = "Error loading records.";
-        console.error("Error fetching CSV:", error);
-      });
-  </script>
+  <div class="wrap">
+    <h1>MLB Records</h1>
+    <div class="frame">
+      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pubhtml?gid=121997960&single=true"></iframe>
+    </div>
+    <p class="note">
+      If the embed doesn’t load, 
+      <a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pubhtml?gid=121997960&single=true">
+        open the sheet in a new tab
+      </a>.
+    </p>
+  </div>
 </body>
 </html>
