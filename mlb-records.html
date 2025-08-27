@@ -7,82 +7,30 @@
   <link rel="icon" type="image/png" href="https://www.betlegendpicks.com/newlogo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root { --bg:#000; --fg:#fff; --gold:#d4af37; --maxw:1140px; }
-    html,body{background:var(--bg);color:var(--fg);margin:0;font-family:Sora,Arial,sans-serif}
-    header{text-align:center;padding:20px 16px}
-    h1{color:var(--gold);font-size:28px;margin:0}
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:8px 16px 40px}
-    #records{margin-top:12px}
-    table{border-collapse:collapse;width:100%}
-    th,td{border:1px solid var(--gold);padding:8px 10px;text-align:center}
-    th{background:var(--gold);color:#000}
-    .note{margin-top:10px;text-align:right;font-size:12px}
-    .note a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold)}
+    body { background:#000; color:#fff; font-family:Sora,Arial,sans-serif; margin:0; }
+    header { text-align:center; padding:20px; }
+    h1 { color:#d4af37; margin:0; font-size:28px; }
+    p.sub { opacity:0.8; font-size:14px; margin:8px 0 0; }
+    .wrap { max-width:1140px; margin:40px auto; text-align:center; }
+    a.btn {
+      display:inline-block; padding:12px 24px;
+      background:#d4af37; color:#000; text-decoration:none;
+      font-weight:600; border-radius:6px; font-size:16px;
+    }
+    a.btn:hover { background:#b9972e; }
   </style>
 </head>
 <body>
   <header>
     <h1>MLB Verified Records</h1>
-    <div style="opacity:.85;font-size:14px;margin-top:6px">Live from Google Sheets, MLB only</div>
+    <p class="sub">Click below to view the live Google Sheet</p>
   </header>
 
   <div class="wrap">
-    <div id="records">Loading records…</div>
-    <div class="note">
-      If anything fails to load, open the CSV
-      <a target="_blank" rel="noopener"
-         href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4qg7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv">
-        here
-      </a>.
-    </div>
+    <a class="btn" target="_blank" rel="noopener" 
+       href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4qg7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv">
+      View MLB Records
+    </a>
   </div>
-
-  <script>
-    function parseCSV(text){
-      const rows=[]; let cur=[], val='', inQuotes=false;
-      for(let i=0;i<text.length;i++){
-        const c=text[i], n=text[i+1];
-        if(inQuotes){
-          if(c==='"' && n==='"'){ val+='"'; i++; }
-          else if(c==='"'){ inQuotes=false; }
-          else { val+=c; }
-        }else{
-          if(c===','){ cur.push(val); val=''; }
-          else if(c==='"'){ inQuotes=true; }
-          else if(c==='\n'){ cur.push(val); rows.push(cur); cur=[]; val=''; }
-          else if(c==='\r'){ /* ignore */ }
-          else { val+=c; }
-        }
-      }
-      if(val.length || cur.length) { cur.push(val); rows.push(cur); }
-      return rows;
-    }
-
-    async function loadCSV(){
-      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4qg7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv";
-      try{
-        const res = await fetch(url, {cache:'no-store'});
-        if(!res.ok) throw new Error('Fetch failed: ' + res.status);
-        const text = await res.text();
-        const rows = parseCSV(text);
-
-        if(!rows.length){ document.getElementById('records').textContent='No data.'; return; }
-
-        let html = '<table><thead><tr>';
-        rows[0].forEach(h=>{ html += '<th>'+h+'</th>'; });
-        html += '</tr></thead><tbody>';
-        for(let i=1;i<rows.length;i++){
-          html += '<tr>';
-          rows[i].forEach(c=>{ html += '<td>'+c+'</td>'; });
-          html += '</tr>';
-        }
-        html += '</tbody></table>';
-        document.getElementById('records').innerHTML = html;
-      }catch(err){
-        document.getElementById('records').textContent = 'Error: ' + err.message;
-      }
-    }
-    loadCSV();
-  </script>
 </body>
 </html>
