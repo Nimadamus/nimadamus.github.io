@@ -9,7 +9,7 @@
     <style>
         :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; --push-color: #888; }
         * { box-sizing: border-box; }
-        body { background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab_5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; margin: 0; padding: 10px; }
+        body { background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; margin: 0; padding: 10px; }
         .container { max-width: 1200px; margin: 20px auto; padding: 25px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--glow-color); border-radius: 15px; box-shadow: 0 0 35px rgba(0, 224, 255, 0.5); backdrop-filter: blur(10px); }
         .header { text-align: center; margin-bottom: 30px; }
         .header h1 { font-size: 48px; color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 25px var(--glow-color); }
@@ -156,9 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
             monthlyStats[month].push(p);
         });
         
-        const twoUnitPicks = processedPicks.filter(p => {
-            return (p.units === 2) || (p.risk > 1.9 && p.risk < 2.3);
-        });
+        const twoUnitPicks = processedPicks.filter(p => Math.round(p.risk) === 2);
         const twoUnitStats = aggregateStats(twoUnitPicks);
         const twoUnitBody = document.getElementById('two-unit-table').querySelector('tbody');
         twoUnitBody.innerHTML = `<tr>
