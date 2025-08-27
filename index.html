@@ -5,8 +5,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>BetLegend Picks – Expert picks. Winning records. All tracked daily.</title>
     <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
     <style>
         :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
         body { margin: 0; padding-bottom: 95px; background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden; }
@@ -85,7 +85,7 @@
         <div class="nav-links">
             <a href="blog-page5.html">Picks & Analysis</a>
             <div class="dropdown">
-                <button class="dropbtn">Records</button>
+                <button class="dropbtn" onclick="toggleDropdown(this)">Records</button>
                 <div class="dropdown-content">
                     <a href="mlb_records.html">MLB Records</a>
                     <a href="nfl-records.html">NFL Records</a>
@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn">Sports</button>
+                <button class="dropbtn" onclick="toggleDropdown(this)">Sports</button>
                 <div class="dropdown-content">
                     <a href="nfl.html">NFL</a>
                     <a href="mlb-page2.html">MLB</a>
@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn">Resources</button>
+                <button class="dropbtn" onclick="toggleDropdown(this)">Resources</button>
                 <div class="dropdown-content">
                     <a href="howitworks.html">How It Works</a>
                     <a href="bankroll.html">Bankroll</a>
@@ -110,7 +110,7 @@
             <a href="news.html">News</a>
             <a href="featured-game-of-the-day.html">Game of the Day</a>
             <div class="dropdown">
-                <button class="dropbtn">Community</button>
+                <button class="dropbtn" onclick="toggleDropdown(this)">Community</button>
                 <div class="dropdown-content">
                     <a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a>
                     <a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
@@ -167,24 +167,26 @@
 
     <script>
         // Dropdown functionality
-        document.addEventListener('click', function(e) {
-            const isDropdownButton = e.target.matches(".dropbtn");
-            if (!isDropdownButton && e.target.closest('.dropdown') === null) {
-                document.querySelectorAll('.dropdown-content').forEach(function(dropdown) {
-                    dropdown.style.display = 'none';
-                });
+        function toggleDropdown(button) {
+            const dropdown = button.parentElement;
+            const isOpen = dropdown.classList.contains('show');
+            document.querySelectorAll('.dropdown.show').forEach(d => d.classList.remove('show'));
+            if (!isOpen) {
+                dropdown.classList.add('show');
             }
-            if (isDropdownButton) {
-                const currentDropdown = e.target.nextElementSibling;
-                const isVisible = currentDropdown.style.display === 'block';
-                document.querySelectorAll('.dropdown-content').forEach(function(dropdown) {
-                    dropdown.style.display = 'none';
-                });
-                if (!isVisible) {
-                    currentDropdown.style.display = 'block';
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.parentElement.classList.contains('show')) {
+                        openDropdown.parentElement.classList.remove('show');
+                    }
                 }
             }
-        });
+        }
 
         // Data fetching and processing for summary stats
         document.addEventListener('DOMContentLoaded', function () {
