@@ -156,7 +156,20 @@ document.addEventListener('DOMContentLoaded', function () {
             monthlyStats[month].push(p);
         });
         
-        const twoUnitPicks = processedPicks.filter(p => Math.round(p.risk) === 2);
+        // --- FINAL, CORRECTED 2 UNIT PLAY LOGIC ---
+        const twoUnitPicks = processedPicks.filter(p => {
+            const result = p.Result.trim().toUpperCase();
+            if (result.startsWith('W')) {
+                // A 2-unit WIN is where the profit is exactly 2 units.
+                return p.units === 2;
+            } else if (result.startsWith('L')) {
+                // A 2-unit LOSS is a bet made TO WIN 2 units.
+                // The risk (the negative unit value) will be > 2.
+                // For example, betting to win 2 at -110 means risking 2.2.
+                return p.risk > 2.0; 
+            }
+            return false;
+        });
         const twoUnitStats = aggregateStats(twoUnitPicks);
         const twoUnitBody = document.getElementById('two-unit-table').querySelector('tbody');
         twoUnitBody.innerHTML = `<tr>
