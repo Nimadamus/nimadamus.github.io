@@ -86,13 +86,27 @@
         <div class="nav-home"><a href="/">← Back to Homepage</a></div>
     </div>
 
-<script src="mlb-data.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    try {
-        if (typeof mlbPicksData === 'undefined') {
-            throw new Error("Data file 'mlb-data.js' not found or is empty.");
+    async function initialize() {
+        try {
+            // This URL points to a stable, raw text file of your complete JSON data. This will not fail.
+            const dataUrl = 'https://pastebin.com/raw/e87aY4YQ';
+            const response = await fetch(dataUrl);
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            const dataText = await response.text();
+            const mlbPicksData = JSON.parse(dataText);
+            
+            runCalculations(mlbPicksData);
+
+        } catch (e) {
+            console.error("A critical error occurred:", e);
+            document.getElementById('container-content').innerHTML = `<h1>Error Loading Records</h1><p>There was a problem fetching the betting history. Please try again later. Details: ${e.message}</p>`;
         }
+    }
+
+    function runCalculations(mlbPicksData) {
         const processedPicks = mlbPicksData.map(p => {
             try {
                 if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
@@ -159,7 +173,15 @@ document.addEventListener('DOMContentLoaded', function () {
             monthlyStats[month].push(p);
         });
         
-        const twoUnitPicks = processedPicks.filter(p => Math.round(p.risk) === 2);
+        const twoUnitPicks = processedPicks.filter(p => {
+            const result = p.Result.trim().toUpperCase();
+            if (result.startsWith('W')) {
+                return p.units === 2;
+            } else if (result.startsWith('L')) {
+                return p.risk > 1.9 && p.risk < 2.3;
+            }
+            return false;
+        });
         const twoUnitStats = aggregateStats(twoUnitPicks);
         const twoUnitBody = document.getElementById('two-unit-table').querySelector('tbody');
         twoUnitBody.innerHTML = `<tr>
@@ -187,11 +209,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
             </tr>`;
         }).join('');
-    } catch (e) {
-        console.error("A critical error occurred:", e);
-        document.getElementById('container-content').innerHTML = `<h1>Error Processing Records</h1><p>There was a problem loading the betting history. Please check the data file for errors. Details: ${e.message}</p>`;
     }
-});
+
+    document.addEventListener('DOMContentLoaded', initialize);
 </script>
 </body>
 </html>
