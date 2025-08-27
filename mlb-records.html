@@ -156,7 +156,17 @@ document.addEventListener('DOMContentLoaded', function () {
             monthlyStats[month].push(p);
         });
         
-        const twoUnitPicks = processedPicks.filter(p => p.units === 2 || (p.risk > 1.9 && p.risk < 2.1));
+        // --- CORRECTED 2 UNIT PLAY LOGIC ---
+        const twoUnitPicks = processedPicks.filter(p => {
+            const result = p.Result.trim().toUpperCase();
+            if (result.startsWith('W')) {
+                return p.units === 2;
+            } else if (result.startsWith('L')) {
+                // Check if the risk was approximately 2 units (e.g., 2 units at -110 is a 2.2 unit loss)
+                return p.risk > 1.9 && p.risk < 2.3;
+            }
+            return false;
+        });
         const twoUnitStats = aggregateStats(twoUnitPicks);
         const twoUnitBody = document.getElementById('two-unit-table').querySelector('tbody');
         twoUnitBody.innerHTML = `<tr>
