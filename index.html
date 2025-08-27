@@ -51,19 +51,16 @@
     .ticker__separator { color: var(--glow-color); font-weight: 700; font-size: 20px; text-shadow: 0 0 5px var(--glow-color); vertical-align: middle; }
     @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-    /* --- CORRECTED: Fixed Position Sidebar Container --- */
+    /* --- ALTERNATIVE: Absolute Positioning Sidebar --- */
     .fixed-sidebar {
-        position: fixed;
-        top: 50px; /* Move much higher */
-        left: 15px; /* Slightly closer to edge */
+        position: absolute;
+        top: 120px; 
+        left: 15px;
         z-index: 9999;
         display: flex;
         flex-direction: column;
-        gap: 8px; /* Very small gaps */
-        width: 250px; /* Much narrower */
-        height: auto;
-        max-height: 70vh; /* Use viewport height percentage instead */
-        overflow: visible; /* Remove auto scroll to see what happens */
+        gap: 10px;
+        width: 240px;
     }
     .special-offer-box {
         width: 100%; text-align: center; padding: 20px;
