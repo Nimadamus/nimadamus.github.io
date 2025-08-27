@@ -54,13 +54,15 @@
     /* --- CORRECTED: Fixed Position Sidebar Container --- */
     .fixed-sidebar {
         position: fixed;
-        top: 80px; /* Position below the ticker */
+        top: 70px; /* Position below the ticker */
         left: 20px;
         z-index: 9999;
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        width: 300px;
+        gap: 15px;
+        width: 280px;
+        max-height: calc(100vh - 180px); /* Ensure it fits within viewport */
+        overflow-y: auto; /* Allow scrolling if needed */
     }
     .special-offer-box {
         width: 100%; text-align: center; padding: 20px;
@@ -383,69 +385,89 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- RECORD PROCESSING LOGIC ---
     function processAndDisplayRecords(picks) {
-        const recordsBySport = {};
+        // Fetch data from all three sports
+        const mlbUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+        const nflUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv';
+        const ncaafUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
+        
+        // Calculate records for MLB (current picks)
+        const mlbRecord = calculateSportRecord(picks);
+        
+        // Fetch other sports data
+        Promise.all([
+            fetch(nflUrl).then(r => r.text()).then(csvText => {
+                const nflPicks = Papa.parse(csvText, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data.filter(p => p.Pick && p.Pick.trim() !== '');
+                return calculateSportRecord(nflPicks);
+            }).catch(() => ({ w: 0, l: 0, p: 0, units: 0.0 })),
+            
+            fetch(ncaafUrl).then(r => r.text()).then(csvText => {
+                const ncaafPicks = Papa.parse(csvText, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data.filter(p => p.Pick && p.Pick.trim() !== '');
+                return calculateSportRecord(ncaafPicks);
+            }).catch(() => ({ w: 0, l: 0, p: 0, units: 0.0 }))
+        ]).then(([nflRecord, ncaafRecord]) => {
+            
+            const displayData = { 
+                'MLB': mlbRecord, 
+                'NFL': nflRecord, 
+                'NCAAF': ncaafRecord,
+                'Overall': {
+                    w: mlbRecord.w + nflRecord.w + ncaafRecord.w,
+                    l: mlbRecord.l + nflRecord.l + ncaafRecord.l,
+                    p: mlbRecord.p + nflRecord.p + ncaafRecord.p,
+                    units: mlbRecord.units + nflRecord.units + ncaafRecord.units
+                }
+            };
+            
+            const sportsToCycle = Object.keys(displayData);
+            let currentIndex = 0;
+            let intervalId = null;
+
+            function updateDisplay() {
+                if (sportsToCycle.length === 0) return;
+                const sportName = sportsToCycle[currentIndex];
+                const data = displayData[sportName];
+
+                const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
+                const recordString = `${data.w}-${data.l}-${data.p}`;
+
+                recordH3.style.opacity = '0';
+                recordP.style.opacity = '0';
+
+                setTimeout(() => {
+                    recordH3.textContent = `${sportName} Record`;
+                    recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
+                    recordH3.style.opacity = '1';
+                    recordP.style.opacity = '1';
+                }, 400);
+
+                currentIndex = (currentIndex + 1) % sportsToCycle.length;
+            }
+
+            if (intervalId) clearInterval(intervalId);
+            
+            updateDisplay();
+            intervalId = setInterval(updateDisplay, cycleSpeed);
+        });
+    }
+    
+    // Helper function to calculate record for any sport
+    function calculateSportRecord(picks) {
+        const record = { w: 0, l: 0, p: 0, units: 0.0 };
         
         for (const p of picks) {
             const result = p.Result ? p.Result.trim().toUpperCase() : '';
-            const sport = p.Sport ? p.Sport.trim() : 'Misc';
             const unitChange = parseFloat(p.Units);
 
             if (result !== '' && !isNaN(unitChange)) {
-                if (!recordsBySport[sport]) {
-                    recordsBySport[sport] = { w: 0, l: 0, p: 0, units: 0.0 };
-                }
+                if (result === 'W' || result === 'WIN') record.w++;
+                else if (result === 'L' || result === 'LOSS') record.l++;
+                else if (result === 'P' || result === 'PUSH') record.p++;
                 
-                if (result === 'W' || result === 'WIN') recordsBySport[sport].w++;
-                else if (result === 'L' || result === 'LOSS') recordsBySport[sport].l++;
-                else if (result === 'P' || result === 'PUSH') recordsBySport[sport].p++;
-                
-                recordsBySport[sport].units += unitChange;
+                record.units += unitChange;
             }
         }
-
-        const total = { w: 0, l: 0, p: 0, units: 0.0 };
-        Object.values(recordsBySport).forEach(sportStats => {
-            total.w += sportStats.w;
-            total.l += sportStats.l;
-            total.p += sportStats.p;
-            total.units += sportStats.units;
-        });
-
-        const displayData = { 'Overall': total, ...recordsBySport };
         
-        if (!displayData['NFL']) {
-            displayData['NFL'] = { w: 0, l: 0, p: 0, units: 0.0 };
-        }
-        
-        const sportsToCycle = Object.keys(displayData);
-        let currentIndex = 0;
-        let intervalId = null;
-
-        function updateDisplay() {
-            if (sportsToCycle.length === 0) return;
-            const sportName = sportsToCycle[currentIndex];
-            const data = displayData[sportName];
-
-            const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
-            const recordString = `${data.w}-${data.l}-${data.p}`;
-
-            recordH3.style.opacity = '0';
-            recordP.style.opacity = '0';
-
-            setTimeout(() => {
-                recordH3.textContent = `${sportName} Record`;
-                recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
-                recordH3.style.opacity = '1';
-                recordP.style.opacity = '1';
-            }, 400);
-
-            currentIndex = (currentIndex + 1) % sportsToCycle.length;
-        }
-
-        if (intervalId) clearInterval(intervalId);
-        
-        updateDisplay();
-        intervalId = setInterval(updateDisplay, cycleSpeed);
+        return record;
     }
     
     // --- DAILY PICK AND TICKER LOGIC ---
