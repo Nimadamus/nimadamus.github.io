@@ -160,10 +160,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const twoUnitPicks = processedPicks.filter(p => {
             const result = p.Result.trim().toUpperCase();
             if (result.startsWith('W')) {
+                // A win is a 2 unit play if the profit was exactly 2 units
                 return p.units === 2;
             } else if (result.startsWith('L')) {
-                // Check if the risk was approximately 2 units (e.g., 2 units at -110 is a 2.2 unit loss)
-                return p.risk > 1.9 && p.risk < 2.3;
+                // A loss is a 2 unit play if the amount risked was around 2 units
+                // (e.g. 2 units at -110 risks 2.2; 2 units at -125 risks 2.5)
+                return p.risk > 1.9 && p.risk < 2.6;
             }
             return false;
         });
