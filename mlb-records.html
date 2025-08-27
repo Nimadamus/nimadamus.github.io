@@ -1,259 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLB Verified Records - BetLegend</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; --push-color: #888; }
-        * { box-sizing: border-box; }
-        body { background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; margin: 0; padding: 10px; }
-        .container { max-width: 1200px; margin: 20px auto; padding: 25px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--glow-color); border-radius: 15px; box-shadow: 0 0 35px rgba(0, 224, 255, 0.5); backdrop-filter: blur(10px); }
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { font-size: 48px; color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 25px var(--glow-color); }
-        .header h1 span { color: var(--glow-color); }
-        .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-box { background: rgba(17, 17, 17, 0.8); padding: 20px; border-radius: 8px; border: 1px solid var(--glow-color); text-align: center; }
-        .stat-box h3 { margin: 0 0 10px 0; font-size: 16px; color: var(--glow-color); text-transform: uppercase; }
-        .stat-box p { margin: 0; font-family: 'Roboto', sans-serif; font-size: 28px; font-weight: 700; }
-        .stat-box .units-win, .stat-box .roi-win { color: var(--win-color); }
-        .stat-box .units-loss, .stat-box .roi-loss { color: var(--loss-color); }
-        .section-title { font-size: 28px; text-align: center; margin: 40px 0 20px 0; color: var(--glow-color); text-shadow: 0 0 10px var(--glow-color); }
-        .table-container { overflow-x: auto; width: 100%; }
-        table { width: 100%; border-collapse: collapse; font-family: 'Roboto', sans-serif; min-width: 600px; }
-        th, td { padding: 12px 15px; text-align: left; white-space: nowrap; }
-        thead tr { background-color: rgba(0, 224, 255, 0.15); color: var(--glow-color); font-family: 'Orbitron', sans-serif; font-size: 14px; text-transform: uppercase; }
-        tbody tr { border-bottom: 1px solid rgba(0, 224, 255, 0.2); }
-        td { color: #ddd; }
-        .result-W, .win { font-weight: bold; color: var(--win-color); }
-        .result-L, .loss { font-weight: bold; color: var(--loss-color); }
-        .result-P { font-weight: bold; color: var(--push-color); }
-        .nav-home { display: block; text-align: center; margin-top: 30px; }
-        .nav-home a { color: var(--glow-color); text-decoration: none; font-weight: bold; }
-        .records-switcher { display:flex; gap:10px; align-items:center; justify-content:center; margin: -10px 0 24px; }
-        .records-switcher label { color:#00e0ff; font-weight:700; }
-        .records-switcher select { background:#061015; color:#fff; border:1px solid rgba(0, 224, 255, 0.35); padding:8px 10px; border-radius:8px; font-family: 'Roboto', sans-serif; }
-        @media (max-width: 768px) { .header h1 { font-size: 36px; } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BetLegend MLB Verified Records</title>
+  <link rel="icon" type="image/png" href="https://www.betlegendpicks.com/newlogo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { background: #000; color: #fff; font-family: 'Sora', sans-serif; margin:0; }
+    header { text-align:center; padding:20px; }
+    header h1 { color:#d4af37; font-size:28px; margin:0; }
+    p.sub { font-size:14px; opacity:0.8; margin:8px 0 0; }
+    .frame-wrap { max-width:1140px; margin:0 auto; padding:20px; }
+    iframe { width:100%; height:80vh; border:0; background:#111; }
+    .fallback { text-align:right; font-size:13px; margin-top:6px; }
+    .fallback a { color:#d4af37; text-decoration:none; border-bottom:1px dotted #d4af37; }
+  </style>
 </head>
 <body>
-    <div class="container" id="container-content">
-        <div class="header"><h1>MLB<span> Verified Records</span></h1></div>
-        <div class="records-switcher">
-          <label for="records-select">View Records:</label>
-          <select id="records-select" onchange="location=this.value;">
-            <option value="mlb-records.html" selected>MLB Records</option>
-            <option value="nfl-records.html">NFL Records</option>
-            <option value="ncaaf-records.html">NCAAF Records</option>
-          </select>
-        </div>
-        <div class="stats-container">
-            <div class="stat-box"><h3>Overall Record</h3><p id="summary-record">--</p></div>
-            <div class="stat-box"><h3>Total Units</h3><p id="summary-units">--</p></div>
-            <div class="stat-box"><h3>Win Percentage</h3><p id="summary-win-pct">--</p></div>
-            <div class="stat-box"><h3>ROI</h3><p id="summary-roi">--</p></div>
-        </div>
-        <h2 class="section-title">Breakdown of 2 Unit Plays</h2>
-        <div class="table-container">
-            <table id="two-unit-table">
-                <thead><tr><th>Record</th><th>Units</th><th>ROI</th></tr></thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <h2 class="section-title">Breakdown by Wager Type</h2>
-        <div class="table-container">
-            <table id="wager-type-table">
-                <thead><tr><th>Wager Type</th><th>Record</th><th>Units</th><th>ROI</th></tr></thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <h2 class="section-title">Breakdown by Month</h2>
-        <div class="table-container">
-            <table id="monthly-table">
-                <thead><tr><th>Month</th><th>Record</th><th>Units</th><th>ROI</th></tr></thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <h2 class="section-title">Full Betting History</h2>
-        <div class="table-container">
-            <table>
-                <thead><tr><th>Date</th><th>Sport</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
-                <tbody id="picks-table-body"></tbody>
-            </table>
-        </div>
-        <div class="nav-home"><a href="/">← Back to Homepage</a></div>
+  <header>
+    <h1>MLB Verified Records</h1>
+    <p class="sub">Live updates pulled directly from our tracking sheet</p>
+  </header>
+
+  <div class="frame-wrap">
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4qg7teoncN5GLmG5faXmHsDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pubhtml?gid=121997960&amp;single=true"
+            loading="lazy"></iframe>
+    <div class="fallback">
+      If the embed does not load, 
+      <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4qg7teoncN5GLmG5faXmHsDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pubhtml?gid=121997960&amp;single=true" 
+         target="_blank" rel="noopener">open the MLB sheet here</a>.
     </div>
-
-<!-- Papa Parse for CSV -->
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-<script>
-    const GOOGLE_SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHvgLVm48LPxFgZQvTca47OwpWQdqh2RANE2ZFhP67-Qb-cQXPUFJDZtUCnChIkwq5mxQNjYgAGMw/pub?gid=121997960&single=true&output=csv";
-
-    function parseDate(dateStr){
-        if(!dateStr) return null;
-        const parts = String(dateStr).trim().split(/[\/-]/);
-        if(parts.length !== 3) return null;
-        const m = parseInt(parts[0],10) - 1;
-        const d = parseInt(parts[1],10);
-        let y = parseInt(parts[2],10);
-        if(y < 100) y += 2000;
-        if(isNaN(m)||isNaN(d)||isNaN(y)) return null;
-        return new Date(y,m,d);
-    }
-
-    function aggregateStats(picks){
-        let wins=0,losses=0,pushes=0,totalUnits=0,totalRisk=0;
-        for(const p of picks){
-            const res = (p.Result||"").trim().toUpperCase();
-            if(res.startsWith("W")) wins++;
-            else if(res.startsWith("L")) losses++;
-            else if(res.startsWith("P")) pushes++;
-            const units = parseFloat(p.Units);
-            const line = parseFloat(p.Line);
-            const isPush = res.startsWith("P");
-            if(!isNaN(units)) totalUnits += units;
-            // risk calc for ROI (skip pushes)
-            if(!isPush && !isNaN(units) && !isNaN(line)){
-                if(units > 0){
-                    totalRisk += line > 0 ? (units / (line/100)) : (units * (Math.abs(line)/100));
-                }else if(units < 0){
-                    totalRisk += Math.abs(units);
-                }
-            }
-        }
-        const roi = totalRisk > 0 ? (totalUnits/totalRisk)*100 : 0;
-        return {wins,losses,pushes,totalUnits,roi};
-    }
-
-    function renderTables(picks){
-        // Full table
-        const tbody = document.getElementById("picks-table-body");
-        tbody.innerHTML = picks.map(p => {
-            const res = (p.Result||"").trim().toUpperCase();
-            const units = parseFloat(p.Units)||0;
-            const cls = units>=0 ? "win" : "loss";
-            const resCls = "result-" + (res ? res.charAt(0) : "P");
-            return `<tr>
-                <td>${p.Date||""}</td>
-                <td>${p.Sport||""}</td>
-                <td>${p.Pick||""}</td>
-                <td>${p.Line||""}</td>
-                <td class="${resCls}">${p.Result||""}</td>
-                <td class="${cls}">${units>=0?"+":""}${units.toFixed(2)}</td>
-            </tr>`;
-        }).join("");
-
-        // Summary top cards
-        const summary = aggregateStats(picks);
-        document.getElementById("summary-record").textContent = `${summary.wins}-${summary.losses}-${summary.pushes}`;
-        const uEl = document.getElementById("summary-units");
-        uEl.textContent = `${summary.totalUnits>=0?"+":""}${summary.totalUnits.toFixed(2)}`;
-        uEl.className = summary.totalUnits>=0 ? "units-win" : "units-loss";
-        const games = summary.wins + summary.losses;
-        document.getElementById("summary-win-pct").textContent = games>0 ? `${(summary.wins/games*100).toFixed(1)}%` : "N/A";
-        const rEl = document.getElementById("summary-roi");
-        rEl.textContent = `${summary.roi>=0?"+":""}${summary.roi.toFixed(2)}%`;
-        rEl.className = summary.roi>=0 ? "roi-win" : "roi-loss";
-
-        // Wager types
-        const types = {};
-        for(const p of picks){
-            const pickText = String(p.Pick||"").toLowerCase();
-            let type = "Other";
-            if(pickText.includes("under") || pickText.includes("over")){
-                type = (pickText.includes("team total") || pickText.includes("tt")) ? "Team Total" : "Total";
-            }else if(pickText.includes("f5") || pickText.includes("first 5") || pickText.includes("1st 5")){
-                type = "First 5 Innings";
-            }else if(pickText.includes(" ml") || pickText.endsWith("ml") || pickText.includes("moneyline")){
-                type = "Moneyline";
-            }else if(/[+-]\d+(\.\d+)?/.test(pickText)){
-                type = "Spread / Runline";
-            }
-            (types[type] ||= []).push(p);
-        }
-        const wtBody = document.querySelector("#wager-type-table tbody");
-        wtBody.innerHTML = Object.keys(types).sort().map(t => {
-            const s = aggregateStats(types[t]);
-            return `<tr>
-                <td>${t}</td>
-                <td>${s.wins}-${s.losses}-${s.pushes}</td>
-                <td class="${s.totalUnits>=0?"win":"loss"}">${s.totalUnits>=0?"+":""}${s.totalUnits.toFixed(2)}</td>
-                <td class="${s.roi>=0?"win":"loss"}">${s.roi>=0?"+":""}${s.roi.toFixed(2)}%</td>
-            </tr>`;
-        }).join("");
-
-        // Monthly
-        const months = {};
-        for(const p of picks){
-            const d = parseDate(p.Date);
-            if(!d) continue;
-            const key = d.toLocaleString('default',{month:'long',year:'numeric'});
-            (months[key] ||= []).push(p);
-        }
-        const mBody = document.querySelector("#monthly-table tbody");
-        mBody.innerHTML = Object.entries(months)
-            .map(([k,v]) => ({k, d: new Date(k)}))
-            .sort((a,b)=> b.d - a.d)
-            .map(({k}) => {
-                const s = aggregateStats(months[k]);
-                return `<tr>
-                    <td>${k}</td>
-                    <td>${s.wins}-${s.losses}-${s.pushes}</td>
-                    <td class="${s.totalUnits>=0?"win":"loss"}">${s.totalUnits>=0?"+":""}${s.totalUnits.toFixed(2)}</td>
-                    <td class="${s.roi>=0?"win":"loss"}">${s.roi>=0?"+":""}${s.roi.toFixed(2)}%</td>
-                </tr>`;
-            }).join("");
-
-        // 2-unit breakdown
-        const twoUnit = picks.filter(p => {
-            const res = (p.Result||"").trim().toUpperCase();
-            const units = parseFloat(p.Units)||0;
-            const line = parseFloat(p.Line);
-            if(res.startsWith("W")) return units === 2;
-            if(res.startsWith("L")){
-                const risk = isNaN(line) ? 0 :
-                    units > 0 ? (line>0 ? (units/(line/100)) : (units * (Math.abs(line)/100))) :
-                    Math.abs(units);
-                return risk > 1.9 && risk < 2.3;
-            }
-            return false;
-        });
-        const twoS = aggregateStats(twoUnit);
-        const tuBody = document.querySelector("#two-unit-table tbody");
-        tuBody.innerHTML = `<tr>
-            <td>${twoS.wins}-${twoS.losses}-${twoS.pushes}</td>
-            <td class="${twoS.totalUnits>=0?"win":"loss"}">${twoS.totalUnits>=0?"+":""}${twoS.totalUnits.toFixed(2)}</td>
-            <td class="${twoS.roi>=0?"win":"loss"}">${twoS.roi>=0?"+":""}${twoS.roi.toFixed(2)}%</td>
-        </tr>`;
-    }
-
-    function loadSheet(){
-        Papa.parse(GOOGLE_SHEET_CSV, {
-            download: true,
-            header: true,
-            skipEmptyLines: 'greedy',
-            transformHeader: h => String(h||"").trim(),
-            complete: function(results){
-                const rows = results.data.filter(r => r.Pick && String(r.Pick).trim() !== "");
-                // Keep MLB only if Sport column exists and equals MLB, else keep all
-                const mlbOnly = rows.filter(r => !r.Sport || String(r.Sport).toUpperCase().includes("MLB") || String(r.Sport).trim()==="");
-                // Sort newest first by Date
-                mlbOnly.sort((a,b) => {
-                    const da = parseDate(a.Date);
-                    const db = parseDate(b.Date);
-                    return (db?db.getTime():0) - (da?da.getTime():0);
-                });
-                renderTables(mlbOnly);
-            },
-            error: function(err){
-                document.getElementById('container-content').innerHTML = `<h1>Error Loading Records</h1><p>${err.message||err}</p>`;
-            }
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", loadSheet);
-</script>
+  </div>
 </body>
 </html>
