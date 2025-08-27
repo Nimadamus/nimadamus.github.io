@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>MLB Records - BetLegend Picks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
+        body { margin: 0; padding: 20px; background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; }
+        .container { max-width: 1200px; margin: 0 auto; background: rgba(0, 0, 0, 0.75); padding: 20px; border-radius: 10px; border: 1px solid var(--glow-color); }
+        h1 { text-align: center; font-size: 48px; text-shadow: 0 0 10px var(--glow-color); margin-bottom: 20px; }
+        .summary-stats { display: flex; justify-content: space-around; flex-wrap: wrap; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--glow-color); border-radius: 10px; padding: 20px; margin-bottom: 30px; text-align: center; }
+        .stat-item { text-align: center; margin: 10px 20px; }
+        .stat-label { display: block; font-size: 18px; color: #ccc; text-transform: uppercase; }
+        .stat-value { display: block; font-size: 32px; font-weight: bold; color: #fff; font-family: 'Orbitron', sans-serif; }
+        .units-win, .roi-win { color: var(--win-color); }
+        .units-loss, .roi-loss { color: var(--loss-color); }
+        #records-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        #records-table th, #records-table td { padding: 12px 15px; border: 1px solid rgba(0, 224, 255, 0.2); text-align: left; font-family: 'Roboto', sans-serif; }
+        #records-table th { background-color: rgba(0, 224, 255, 0.15); font-family: 'Orbitron', sans-serif; font-size: 16px; text-transform: uppercase; }
+        #records-table tr:nth-child(even) { background-color: rgba(0, 0, 0, 0.2); }
+        #records-table tr:hover { background-color: rgba(0, 224, 255, 0.1); }
+        .loader { text-align: center; font-size: 24px; padding: 50px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>MLB Verified Records</h1>
+
+        <div class="summary-stats">
+            <div class="stat-item">
+                <span class="stat-label">Record (W-L-P)</span>
+                <span class="stat-value" id="summary-record">...</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Units</span>
+                <span class="stat-value" id="summary-units">...</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Win %</span>
+                <span class="stat-value" id="summary-win-pct">...</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">ROI</span>
+                <span class="stat-value" id="summary-roi">...</span>
+            </div>
+        </div>
+
+        <table id="records-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Pick</th>
+                    <th>Line</th>
+                    <th>Result</th>
+                    <th>Units</th>
+                </tr>
+            </thead>
+            <tbody id="records-body">
+                <tr>
+                    <td colspan="5" class="loader">Loading Records...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?gid=121997960&single=true&output=csv';
+
+            function processPicks(picks) {
+                return picks.map(p => {
+                    try {
+                        if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
+                        const pickText = String(p.Pick).trim();
+                        const resultText = String(p.Result).trim().toUpperCase();
+                        const units = parseFloat(p.Units);
+                        const line = parseFloat(p.Line);
+                        if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
+
+                        let risk = 0;
+                        if (units < 0) {
+                            risk = Math.abs(units);
+                        } else if (units > 0) {
+                            if (line > 0) {
+                                risk = (units / (line / 100));
+                            } else {
+                                risk = (units * (Math.abs(line) / 100));
+                            }
+                        }
+                        return { ...p, units, risk };
+                    } catch {
+                        return null;
+                    }
+                }).filter(p => p !== null);
+            }
+
+            function aggregateStats(picks) {
+                let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
+                picks.forEach(p => {
+                    const result = p.Result.trim().toUpperCase();
+                    if (result.startsWith('W')) wins++;
+                    else if (result.startsWith('L')) losses++;
+                    else if (result.startsWith('P')) pushes++;
+                    totalUnits += p.units;
+                    if (!result.startsWith('P')) totalRisk += p.risk;
+                });
+                const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
+                const winPct = wins + losses > 0 ? (wins / (wins + losses)) * 100 : 0;
+                return { wins, losses, pushes, totalUnits, roi, winPct };
+            }
+
+            function displayRecords(picks) {
+                const tableBody = document.getElementById('records-body');
+                tableBody.innerHTML = ''; // Clear loader
+                picks.forEach(pick => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${pick.Date}</td>
+                        <td>${pick.Pick}</td>
+                        <td>${pick.Line}</td>
+                        <td>${pick.Result}</td>
+                        <td>${pick.Units}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            function displaySummaryStats(stats) {
+                document.getElementById('summary-record').textContent = `${stats.wins}-${stats.losses}-${stats.pushes}`;
+                
+                const unitsEl = document.getElementById('summary-units');
+                unitsEl.textContent = `${stats.totalUnits >= 0 ? '+' : ''}${stats.totalUnits.toFixed(2)}`;
+                unitsEl.className = `stat-value ${stats.totalUnits >= 0 ? 'units-win' : 'units-loss'}`;
+
+                const winPctEl = document.getElementById('summary-win-pct');
+                winPctEl.textContent = `${stats.winPct.toFixed(1)}%`;
+
+                const roiEl = document.getElementById('summary-roi');
+                roiEl.textContent = `${stats.roi.toFixed(2)}%`;
+                roiEl.className = `stat-value ${stats.roi >= 0 ? 'roi-win' : 'roi-loss'}`;
+            }
+
+            fetch(CSV_URL)
+                .then(response => response.text())
+                .then(csvText => {
+                    const lines = csvText.split('\n').slice(1); // Skip header row
+                    const picks = lines.map(line => {
+                        const [Date, Sport, Pick, Line, Result, Units] = line.split(',');
+                        return { Date, Sport, Pick, Line, Result, Units };
+                    });
+
+                    const processed = processPicks(picks);
+                    const summary = aggregateStats(processed);
+
+                    displayRecords(processed);
+                    displaySummaryStats(summary);
+                })
+                .catch(error => {
+                    console.error('Error fetching or parsing CSV data:', error);
+                    document.getElementById('records-body').innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--loss-color);">Error loading records. Please try again later.</td></tr>';
+                });
+        });
+    </script>
+
+</body>
+</html>
