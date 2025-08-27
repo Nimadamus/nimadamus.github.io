@@ -185,10 +185,10 @@ document.addEventListener('DOMContentLoaded', function () {
             </tr>`;
         }).join('');
     } catch (e) {
-        console.error("A critical error occurred while processing the data:", e);
-        document.querySelector('.container').innerHTML = '<h1>Error Processing Records</h1><p>There was a problem loading the betting history. Please check the data file for errors.</p>';
+        console.error("A critical error occurred:", e);
+        document.querySelector('.container').innerHTML = `<h1>Error Processing Records</h1><p>There was a problem loading the betting history. Please check the data file for errors. Details: ${e.message}</p>`;
     }
 });
 </script>
 </body>
-</html>```
+</html>
