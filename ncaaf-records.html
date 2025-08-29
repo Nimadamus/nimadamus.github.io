@@ -29,6 +29,8 @@
         .records-switcher select { background:#061015; color:#fff; border:1px solid rgba(0, 224, 255, 0.35); padding:8px 10px; border-radius:8px; }
         .nav-home { display: block; text-align: center; margin-top: 30px; }
         .nav-home a { color: var(--glow-color); text-decoration: none; font-weight: bold; }
+        .loading { text-align: center; color: var(--glow-color); margin: 20px 0; }
+        .error { text-align: center; color: var(--loss-color); margin: 20px 0; }
     </style>
 </head>
 <body>
@@ -44,6 +46,8 @@
             <option value="ncaaf-records.html" selected>NCAAF Records</option>
           </select>
         </div>
+        <div id="loading-message" class="loading">Loading records from Google Sheets...</div>
+        <div id="error-message" class="error" style="display: none;"></div>
         <div class="summary-stats">
             <div class="stat-box"><h3>Record</h3><p id="overall-record">--</p></div>
             <div class="stat-box"><h3>Units</h3><p id="total-units">--</p></div>
@@ -59,57 +63,187 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const ncaafPicksData = [
-                { Date: '8-23-2025', Sport: 'NCAAF', Pick: 'Fresno St/Kansas under 50', Line: '-110', Result: 'W', Units: '1' }
-            ];
+        const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
 
+        async function fetchGoogleSheetData() {
+            try {
+                const response = await fetch(GOOGLE_SHEET_CSV_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                return parseCSV(csvText);
+            } catch (error) {
+                console.error('Error fetching Google Sheet data:', error);
+                throw error;
+            }
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n');
+            const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                
+                const values = parseCSVLine(lines[i]);
+                if (values.length === headers.length) {
+                    const row = {};
+                    headers.forEach((header, index) => {
+                        row[header] = values[index];
+                    });
+                    data.push(row);
+                }
+            }
+            return data;
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+
+        function filterNCAAFData(allData) {
+            // Filter for NCAAF picks only
+            return allData.filter(row => {
+                const sport = row.Sport || row.sport || '';
+                return sport.toLowerCase().includes('ncaaf') || sport.toLowerCase().includes('college football');
+            });
+        }
+
+        function processRecordsData(ncaafData) {
             let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
             const tableBody = document.getElementById('records-tbody');
+            const loadingMessage = document.getElementById('loading-message');
+            const errorMessage = document.getElementById('error-message');
 
-            if (ncaafPicksData.length === 0) {
-                 document.getElementById('overall-record').textContent = '0-0-0';
-                 document.getElementById('total-units').textContent = '+0.00';
-                 document.getElementById('summary-roi').textContent = '0.00%';
-                 tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No NCAAF picks recorded yet.</td></tr>`;
-                 return;
+            // Hide loading message
+            loadingMessage.style.display = 'none';
+
+            if (ncaafData.length === 0) {
+                document.getElementById('overall-record').textContent = '0-0-0';
+                document.getElementById('total-units').textContent = '+0.00';
+                document.getElementById('summary-roi').textContent = '0.00%';
+                tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No NCAAF picks found in the spreadsheet.</td></tr>`;
+                return;
             }
 
-            ncaafPicksData.forEach(p => {
-                const result = p.Result.trim().toUpperCase();
-                const units = parseFloat(p.Units);
-                const line = parseFloat(p.Line);
+            // Clear existing table content
+            tableBody.innerHTML = '';
+
+            ncaafData.forEach(row => {
+                // Handle different possible column names
+                const date = row.Date || row.date || '';
+                const pick = row.Pick || row.pick || row.Game || row.game || '';
+                const line = row.Line || row.line || row.Odds || row.odds || '';
+                const result = (row.Result || row.result || '').trim().toUpperCase();
+                const units = parseFloat(row.Units || row.units || '0');
+
+                // Calculate risk
+                const lineNum = parseFloat(line.replace(/[^\d.-]/g, '')) || -110;
                 let risk = 0;
 
-                if (units < 0) { risk = Math.abs(units); }
-                else if (units > 0) { risk = (line > 0) ? (units / (line / 100)) : (units * (Math.abs(line) / 100)); }
+                if (units < 0) { 
+                    risk = Math.abs(units); 
+                } else if (units > 0) { 
+                    risk = (lineNum > 0) ? (units / (lineNum / 100)) : (units * (Math.abs(lineNum) / 100)); 
+                }
                 
-                if (result.startsWith('W')) wins++;
-                else if (result.startsWith('L')) losses++;
-                else if (result.startsWith('P')) pushes++;
+                // Count wins/losses/pushes
+                if (result.startsWith('W')) {
+                    wins++;
+                } else if (result.startsWith('L')) {
+                    losses++;
+                } else if (result.startsWith('P')) {
+                    pushes++;
+                }
                 
                 totalUnits += units;
                 totalRisk += risk;
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${p.Date}</td>
-                    <td>${p.Pick}</td>
-                    <td>${p.Line}</td>
-                    <td><span class="${result.startsWith('W') ? 'win' : 'loss'}">${p.Result}</span></td>
+                // Add row to table
+                const tableRow = document.createElement('tr');
+                tableRow.innerHTML = `
+                    <td>${date}</td>
+                    <td>${pick}</td>
+                    <td>${line}</td>
+                    <td><span class="${result.startsWith('W') ? 'win' : (result.startsWith('P') ? '' : 'loss')}">${result || 'TBD'}</span></td>
                     <td><span class="${units >= 0 ? 'win' : 'loss'}">${units.toFixed(2)}</span></td>
                 `;
-                tableBody.appendChild(row);
+                tableBody.appendChild(tableRow);
             });
 
+            // Update summary statistics
             const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
             document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
+            
             const unitsElement = document.getElementById('total-units');
             unitsElement.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
             unitsElement.className = totalUnits >= 0 ? 'win' : 'loss';
+            
             const roiElement = document.getElementById('summary-roi');
             roiElement.textContent = `${roi >= 0 ? '+' : ''}${roi.toFixed(2)}%`;
             roiElement.className = roi >= 0 ? 'win' : 'loss';
+        }
+
+        // Fallback data in case Google Sheets fails
+        function loadFallbackData() {
+            const fallbackData = [
+                { Date: '8-23-2025', Sport: 'NCAAF', Pick: 'Fresno St/Kansas under 50', Line: '-110', Result: 'W', Units: '1' }
+            ];
+            processRecordsData(fallbackData);
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Page loaded, attempting to fetch data...');
+            
+            try {
+                console.log('Fetching from:', GOOGLE_SHEET_CSV_URL);
+                const allData = await fetchGoogleSheetData();
+                console.log('Raw data received:', allData.length, 'rows');
+                console.log('Sample data:', allData.slice(0, 2));
+                
+                const ncaafData = filterNCAAFData(allData);
+                console.log('Filtered NCAAF data:', ncaafData.length, 'rows');
+                
+                if (ncaafData.length === 0) {
+                    console.log('No NCAAF data found, trying with all data...');
+                    processRecordsData(allData.slice(0, 10)); // Show first 10 rows for debugging
+                } else {
+                    processRecordsData(ncaafData);
+                }
+            } catch (error) {
+                console.error('Error loading Google Sheets data:', error);
+                
+                document.getElementById('loading-message').style.display = 'none';
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.innerHTML = `
+                    <p>Failed to load from Google Sheets. Using fallback data.</p>
+                    <p style="font-size: 12px;">Error: ${error.message}</p>
+                `;
+                errorMessage.style.display = 'block';
+                
+                // Load fallback data so page isn't empty
+                loadFallbackData();
+            }
         });
     </script>
 </body>
