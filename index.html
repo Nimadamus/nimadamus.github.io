@@ -4,14 +4,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>BetLegend Picks - Expert Sports Betting Picks | Verified Records</title>
-<meta content="Expert NFL, MLB, and NCAAF betting picks with verified records. Live tracking of all picks and results. Join our winning subscribers today." name="description"/>
-<meta content="sports betting picks, NFL picks, MLB picks, NCAAF picks, betting analysis, verified betting records, expert picks" name="keywords"/>
+<meta content="Expert NFL, MLB, NBA, NHL, college football, and college basketball betting picks with verified records. Live tracking of all picks and results. Join our winning subscribers today." name="description"/>
+<meta content="sports betting picks, NFL picks, MLB picks, NBA picks, NHL picks, college football picks, college basketball picks, betting analysis, verified betting records, expert picks" name="keywords"/>
 <link href="https://www.betlegendpicks.com/" rel="canonical"/>
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <meta content="BetLegend Picks - Expert Sports Betting Picks Dashboard" property="og:title"/>
-<meta content="Expert NFL, MLB, and NCAAF betting picks with verified records updated live from our official tracking system." property="og:description"/>
+<meta content="Expert NFL, MLB, NBA, NHL, college football, and college basketball betting picks with verified records updated live from our official tracking system." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://www.betlegendpicks.com/" property="og:url"/>
 <meta content="https://www.betlegendpicks.com/newlogo.png" property="og:image"/>
@@ -23,7 +23,7 @@
   "@context": "https://schema.org",
   "@type": "SportsTeam",
   "name": "BetLegend Picks",
-  "description": "Expert sports betting picks and analysis for NFL, MLB, and college football",
+  "description": "Expert sports betting picks and analysis for NFL, MLB, NBA, NHL, college football, and college basketball",
   "url": "https://www.betlegendpicks.com",
   "sameAs": [
     "https://twitter.com/BetLegend2025",
@@ -295,14 +295,14 @@
     </div>
     
     <div class="nav-links">
-        <a href="blog-page5.html">Expert Picks &amp; Analysis</a>
+        <a href="blog-page5.html">Picks &amp; Analysis</a>
         
         <div class="dropdown">
-            <button class="dropbtn">Verified Records</button>
+            <button class="dropbtn">Records</button>
             <div class="dropdown-content">
-                <a href="/betlegend-verified-records.html" target="_blank" rel="noopener">MLB Betting Records</a>
-                <a href="/nfl-records.html">NFL Betting Records</a>
-                <a href="/ncaaf-records.html">NCAAF Betting Records</a>
+                <a href="/betlegend-verified-records.html" target="_blank" rel="noopener">MLB Records</a>
+                <a href="/nfl-records.html">NFL Records</a>
+                <a href="/ncaaf-records.html">NCAAF Records</a>
             </div>
         </div>
 
@@ -315,29 +315,29 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">Betting Resources</button>
+            <button class="dropbtn">Resources</button>
             <div class="dropdown-content">
-                <a href="howitworks.html">How Our System Works</a>
-                <a href="bankroll.html">Bankroll Management</a>
-                <a href="screenshots.html">Winning Screenshots</a>
-                <a href="bestonlinesportsbook.html">Best Sportsbooks 2025</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
             </div>
         </div>
-        <a href="news.html">Betting News</a>
-        <a href="proofofpicks.html">Verified Proof of Picks</a>
+        <a href="news.html">News</a>
+        <a href="proofofpicks.html">Proof of Picks</a>
         <a href="featured-game-of-the-day.html">Game of the Day</a>
         <div class="dropdown">
             <button class="dropbtn">Community</button>
             <div class="dropdown-content">
-                <a href="https://twitter.com/BetLegend2025" target="_blank">Follow on Twitter</a>
-                <a href="https://discord.gg/NbMc3wCV" target="_blank">Join Discord</a>
+                <a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
             </div>
         </div>
     </div>
 
     <!-- Centered GIF -->
     <div class="gif-showcase">
-        <img alt="BetLegend NFL picks MLB picks college football betting analysis dashboard live tracking verified records" src="https://nimadamus.github.io/curry.gif"/>
+        <img alt="BetLegend NFL picks MLB picks NBA picks NHL picks college football college basketball betting analysis dashboard live tracking verified records" src="https://nimadamus.github.io/curry.gif"/>
     </div>
     <div class="caption">
         Powered by BetLegend Pro model • <a href="/mlb-records.html" target="_blank">See Complete Verified Betting History</a>
@@ -499,4 +499,156 @@ document.addEventListener('DOMContentLoaded', function() {
         ]).then(([nflRecord, ncaafRecord]) => {
             
             const displayData = { 
-                'MLB': ml
+                'MLB': mlbRecord, 
+                'NFL': nflRecord, 
+                'NCAAF': ncaafRecord,
+                'Overall': {
+                    w: mlbRecord.w + nflRecord.w + ncaafRecord.w,
+                    l: mlbRecord.l + nflRecord.l + ncaafRecord.l,
+                    p: mlbRecord.p + nflRecord.p + ncaafRecord.p,
+                    units: mlbRecord.units + nflRecord.units + ncaafRecord.units
+                }
+            };
+            
+            const sportsToCycle = Object.keys(displayData);
+            let currentIndex = 0;
+            let intervalId = null;
+
+            function updateDisplay() {
+                if (sportsToCycle.length === 0) return;
+                const sportName = sportsToCycle[currentIndex];
+                const data = displayData[sportName];
+
+                const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
+                const recordString = `${data.w}-${data.l}-${data.p}`;
+
+                recordH3.style.opacity = '0';
+                recordP.style.opacity = '0';
+
+                setTimeout(() => {
+                    recordH3.textContent = `${sportName} Record`;
+                    recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
+                    recordH3.style.opacity = '1';
+                    recordP.style.opacity = '1';
+                }, 400);
+
+                currentIndex = (currentIndex + 1) % sportsToCycle.length;
+            }
+
+            if (intervalId) clearInterval(intervalId);
+            
+            updateDisplay();
+            intervalId = setInterval(updateDisplay, cycleSpeed);
+        });
+    }
+    
+    // Helper function to calculate record for any sport
+    function calculateSportRecord(picks) {
+        const record = { w: 0, l: 0, p: 0, units: 0.0 };
+        
+        for (const p of picks) {
+            const result = p.Result ? p.Result.trim().toUpperCase() : '';
+            const unitChange = parseFloat(p.Units);
+
+            if (result !== '' && !isNaN(unitChange)) {
+                if (result === 'W' || result === 'WIN') record.w++;
+                else if (result === 'L' || result === 'LOSS') record.l++;
+                else if (result === 'P' || result === 'PUSH') record.p++;
+                
+                record.units += unitChange;
+            }
+        }
+        
+        return record;
+    }
+    
+    // --- DAILY PICK AND TICKER LOGIC ---
+    function updateDailyPick(picks) {
+        const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date));
+        
+        if (gradedPicks.length > 0) {
+            gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
+            const latestPick = gradedPicks[0];
+            
+            if (latestPick && latestPick.Line) {
+                freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`;
+                return;
+            }
+        }
+
+        // If no graded picks or fallback needed, show pending picks
+        const pendingPicks = picks.filter(p => (!p.Result || p.Result.trim() === '') && p.Date && parseDate(p.Date)).sort((a,b) => parseDate(a.Date) - parseDate(b.Date));
+        if (pendingPicks.length > 0) {
+            const nextPick = pendingPicks[0];
+            if (nextPick && nextPick.Line) {
+                freePickDisplay.textContent = `${nextPick.Pick.trim()} (${nextPick.Line.trim()})`;
+                return;
+            }
+        }
+
+        // Final fallback - show any recent pick
+        if (picks.length > 0) {
+            const recentPick = picks[picks.length - 1];
+            if (recentPick && recentPick.Pick) {
+                freePickDisplay.textContent = recentPick.Pick.trim();
+                return;
+            }
+        }
+
+        freePickDisplay.textContent = 'Loading...';
+    }
+
+    // --- TICKER LOGIC ---
+    function updateTicker(picks) {
+        const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date));
+        
+        if (gradedPicks.length === 0) {
+            tickerContent.innerHTML = '<div class="ticker__item">Loading recent results...</div>';
+            return;
+        }
+
+        gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
+        const recentPicks = gradedPicks.slice(0, 10);
+
+        let tickerHTML = '';
+        recentPicks.forEach((pick, index) => {
+            const result = pick.Result.trim().toUpperCase();
+            const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
+            const gradeText = (result === 'W' || result === 'WIN') ? 'W' : (result === 'P' || result === 'PUSH') ? 'P' : 'L';
+            
+            tickerHTML += `
+                <div class="ticker__item">
+                    <span class="pick-text">${pick.Pick.trim()}</span>
+                    <span class="grade ${gradeClass}">${gradeText}</span>
+                </div>
+            `;
+            
+            if (index < recentPicks.length - 1) {
+                tickerHTML += '<span class="ticker__separator">•</span>';
+            }
+        });
+
+        tickerContent.innerHTML = tickerHTML;
+    }
+
+    // --- UTILITY FUNCTIONS ---
+    function displayDefaults() {
+        recordH3.textContent = 'Verified Record';
+        recordP.innerHTML = 'Loading...';
+        freePickDisplay.textContent = 'Loading...';
+        tickerContent.innerHTML = '<div class="ticker__item">Loading recent results...</div>';
+    }
+
+    function displayError(message) {
+        recordH3.textContent = 'Error';
+        recordP.innerHTML = 'Unable to load data';
+        freePickDisplay.textContent = 'Error loading picks';
+        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
+    }
+
+    // --- START THE APP ---
+    run();
+});
+</script>
+</body>
+</html>
