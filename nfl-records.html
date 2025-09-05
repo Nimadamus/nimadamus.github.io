@@ -35,6 +35,7 @@
         .records-switcher { display:flex; gap:10px; align-items:center; justify-content:center; margin: -10px 0 24px; }
         .records-switcher label { color:#00e0ff; font-weight:700; }
         .records-switcher select { background:#061015; color:#fff; border:1px solid rgba(0, 224, 255, 0.35); padding:8px 10px; border-radius:8px; font-family: 'Roboto', sans-serif; }
+        .loading-message { text-align: center; color: var(--glow-color); margin: 20px 0; font-size: 18px; }
         @media (max-width: 768px) { .header h1 { font-size: 36px; } }
     </style>
 </head>
@@ -56,6 +57,7 @@
             <div class="stat-box"><h3>ROI</h3><p id="summary-roi">--</p></div>
         </div>
         <h2 class="section-title">Full Betting History</h2>
+        <div class="loading-message" id="loading-message">Loading records from Google Sheets...</div>
         <div class="table-container">
             <table>
                 <thead><tr><th>Date</th><th>Sport</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
@@ -65,12 +67,90 @@
         <div class="nav-home"><a href="/">← Back to Homepage</a></div>
     </div>
 
-<script src="nfl-data.js"></script>
 <script>
-    // This script is identical to the MLB one, but loads from nfl-data.js
-    // I have removed the extra breakdowns since there is only one game.
-    // They will automatically appear if you add more data with different types/months.
-    document.addEventListener('DOMContentLoaded', function () {
+    // Google Sheets CSV URL
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv';
+
+    // Function to parse CSV data
+    function parseCSV(csv) {
+        const lines = csv.split('\n');
+        const headers = lines[0].split(',').map(header => header.trim().replace(/"/g, ''));
+        const records = [];
+
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (line) {
+                const values = parseCSVLine(line);
+                if (values.length >= headers.length) {
+                    const record = {};
+                    headers.forEach((header, index) => {
+                        record[header] = values[index] ? values[index].replace(/"/g, '').trim() : '';
+                    });
+                    
+                    // Only add records that have actual data
+                    if (record.Date && record.Pick) {
+                        records.push(record);
+                    }
+                }
+            }
+        }
+        return records;
+    }
+
+    function parseCSVLine(line) {
+        const values = [];
+        let current = '';
+        let inQuotes = false;
+        
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                values.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        values.push(current);
+        return values;
+    }
+
+    // Function to convert Google Sheets data to the format expected by the original script
+    function convertToMLBFormat(sheetData) {
+        return sheetData.map(row => ({
+            Date: row.Date || '',
+            Sport: 'NFL',
+            Pick: row.Pick || '',
+            Line: row.Line || '',
+            Result: row.Result || '',
+            Units: row.Units || ''
+        }));
+    }
+
+    // Load data from Google Sheets and process it
+    async function loadDataFromSheets() {
+        try {
+            const response = await fetch(GOOGLE_SHEETS_CSV_URL);
+            const csvData = await response.text();
+            const sheetData = parseCSV(csvData);
+            const mlbPicksData = convertToMLBFormat(sheetData);
+            
+            // Hide loading message
+            document.getElementById('loading-message').style.display = 'none';
+            
+            // Process the data using the original logic
+            processPicksData(mlbPicksData);
+            
+        } catch (error) {
+            console.error('Error loading data from Google Sheets:', error);
+            document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';
+        }
+    }
+
+    // Original processing logic (adapted from the original script)
+    function processPicksData(mlbPicksData) {
         try {
             const processedPicks = mlbPicksData.map(p => {
                 try {
@@ -81,13 +161,21 @@
                     const line = parseFloat(p.Line);
                     if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
                     let risk = 0;
-                    if (units < 0) { risk = Math.abs(units); }
+                    if (units < 0) { 
+                        risk = Math.abs(units); 
+                    }
                     else if (units > 0) {
-                        if (line > 0) { risk = (units / (line / 100)); }
-                        else { risk = (units * (Math.abs(line) / 100)); }
+                        if (line > 0) { 
+                            risk = (units / (line / 100)); 
+                        }
+                        else { 
+                            risk = (units * (Math.abs(line) / 100)); 
+                        }
                     }
                     return { ...p, units, risk, parsedDate: new Date(p.Date) };
-                } catch { return null; }
+                } catch { 
+                    return null; 
+                }
             }).filter(p => p !== null).sort((a, b) => b.parsedDate - a.parsedDate);
 
             document.getElementById('picks-table-body').innerHTML = processedPicks.map(p => `
@@ -101,7 +189,9 @@
                 let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
                 picks.forEach(p => {
                     const result = p.Result.trim().toUpperCase();
-                    if (result.startsWith('W')) wins++; else if (result.startsWith('L')) losses++; else if (result.startsWith('P')) pushes++;
+                    if (result.startsWith('W')) wins++; 
+                    else if (result.startsWith('L')) losses++; 
+                    else if (result.startsWith('P')) pushes++;
                     totalUnits += p.units;
                     if(!result.startsWith('P')) totalRisk += p.risk;
                 });
@@ -122,7 +212,15 @@
             console.error("A critical error occurred:", e);
             document.querySelector('.container').innerHTML = `<h1>Error Processing Records</h1><p>There was a problem loading the betting history. Please check the data file for errors. Details: ${e.message}</p>`;
         }
+    }
+
+    // Load data when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        loadDataFromSheets();
     });
+
+    // Optional: Refresh data every 5 minutes
+    setInterval(loadDataFromSheets, 300000);
 </script>
 </body>
 </html>
