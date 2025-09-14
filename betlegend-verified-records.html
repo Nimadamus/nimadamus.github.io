@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verified Records - BetLegend Picks</title>
-    <link rel="canonical" href="https://www.betlegendpicks.com/betlegend-verified-records.html">
-    <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Verified Records - BetLegend Picks</title>
+<link href="https://www.betlegendpicks.com/betlegend-verified-records.html" rel="canonical"/>
+<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
         :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
         body { margin: 0; background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; overflow-x: hidden; }
         .content-wrapper { position: relative; z-index: 10; width: 100%; max-width: 900px; margin: 0 auto; padding: 40px 20px 40px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
@@ -32,8 +33,8 @@
         .records-table td .push { color: #888; font-weight: 700; }
         #loading-message { font-size: 18px; text-align: center; padding: 40px; }
     </style>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -41,29 +42,127 @@
 
   gtag('config', 'G-QS8L5TDNLY');
 </script>
-</head>
+</link></head>
 <body>
-    <div class="content-wrapper">
-        <div class="header-branding">
-            <h1 class="title">Verified<span class="highlight">Records</span></h1>
-        </div>
-        <div class="nav-links">
-          <a href="index.html">Home</a><a href="blog-page5.html">Picks & Analysis</a><a href="featured-game-of-the-day.html">Featured Game</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
-        </div>
-        <div class="summary-stats">
-            <div class="stat-box"><h3>Overall Record</h3><p id="overall-record">--</p></div>
-            <div class="stat-box"><h3>Total Units</h3><p id="total-units">--</p></div>
-        </div>
-        <table class="records-table">
-            <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
-            <tbody id="records-tbody"></tbody>
-        </table>
-        <div id="loading-container">
-             <p id="loading-message">Loading full record from the official ledger...</p>
-        </div>
-    </div>
+<div class="content-wrapper">
+<div class="header-branding">
+<h1 class="title">Verified<span class="highlight">Records</span></h1>
+</div>
+<div class="nav-links">
+<a href="index.html">Home</a><a href="blog-page5.html">Picks &amp; Analysis</a><a href="featured-game-of-the-day.html">Featured Game</a><a href="bankroll.html">Bankroll</a><a href="news.html">News</a><a href="howitworks.html">How It Works</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betlegend-verified-records.html">Records</a><a href="screenshots.html">Screenshots</a><a href="mlb.html">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
+</div>
+<div class="summary-stats">
+<div class="stat-box"><h3>Overall Record</h3><p id="overall-record">--</p></div>
+<div class="stat-box"><h3>Total Units</h3><p id="total-units">--</p></div>
+</div>
+<section id="units-chart-section" style="max-width:1140px;margin:30px auto;padding:16px;background:#0c1220;border-radius:12px;box-shadow:0 0 20px rgba(0,0,0,0.35)"><h2 style="margin:0 0 8px 0;text-align:center;font-family:Sora,Arial,Helvetica,sans-serif;color:#00e3a2;font-weight:700;letter-spacing:0.5px">Units Won Over Time</h2><p style="margin:0 0 14px 0;text-align:center;color:#9bb3c9;font-size:14px">Auto‑generated from the table below. Updates automatically when you add new results.</p><canvas height="140" id="unitsChart"></canvas><script>
+(function(){
+  function parseNumber(txt){
+    if(!txt) return 0;
+    // Remove commas and spaces
+    txt = txt.replace(/,/g,'').trim();
+    // Handle leading + or -
+    var num = parseFloat(txt);
+    if(isNaN(num)) return 0;
+    return num;
+  }
 
-    <script>
+  function getData(){
+    var table = document.querySelector('table');
+    if(!table) return {labels:[], units:[]};
+    var rows = Array.from(table.querySelectorAll('tr'));
+    // Assume first row is header if it has th elements
+    if(rows.length && rows[0].querySelectorAll('th').length) rows.shift();
+
+    // Extract date (col 1) and units (last col)
+    var points = rows.map(function(tr){
+      var cells = tr.querySelectorAll('td');
+      if(!cells.length) return null;
+      var dateTxt = cells[0].textContent.trim();
+      var unitsTxt = (cells[cells.length-1] || {}).textContent || "0";
+      var unitsVal = parseNumber(unitsTxt);
+      return {date: dateTxt, units: unitsVal};
+    }).filter(Boolean);
+
+    // The table is likely reverse-chronological. Reverse to chronological for cumulative curve.
+    points.reverse();
+
+    var labels = [];
+    var cum = 0;
+    var series = points.map(function(p, idx){
+      cum += p.units;
+      labels.push(p.date + ' #' + (idx+1));
+      return Number(cum.toFixed(2));
+    });
+
+    return {labels: labels, cumulative: series};
+  }
+
+  function makeChart(){
+    var ctx = document.getElementById('unitsChart');
+    if(!ctx || !window.Chart) return;
+    var data = getData();
+    if(data.labels.length === 0) return;
+
+    // Destroy previous chart if re-run
+    if(window.__unitsChart) { window.__unitsChart.destroy(); }
+
+    window.__unitsChart = new Chart(ctx.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: data.labels,
+        datasets: [{
+          label: 'Total Units',
+          data: data.cumulative,
+          tension: 0.25,
+          borderWidth: 2,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            ticks: { color: '#b9c7d6', maxRotation: 0, autoSkip: true, autoSkipPadding: 8 },
+            grid: { display: false }
+          },
+          y: {
+            ticks: { color: '#b9c7d6' },
+            grid: { color: 'rgba(255,255,255,0.06)' }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: { color: '#eaf2f9' }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(ctx){
+                return ' ' + ctx.parsed.y + ' units';
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', makeChart);
+  } else {
+    makeChart();
+  }
+})();
+</script></section><table class="records-table">
+<thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
+<tbody id="records-tbody"></tbody>
+</table>
+<div id="loading-container">
+<p id="loading-message">Loading full record from the official ledger...</p>
+</div>
+</div>
+<script>
         document.addEventListener('DOMContentLoaded', function() {
             const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
 
@@ -141,5 +240,121 @@
                 });
         });
     </script>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script><script>
+(function(){
+  function hasUnitsHeader(table){
+    if(!table) return false;
+    var ths = Array.from(table.querySelectorAll('th')).map(th => th.textContent.trim().toLowerCase());
+    if(ths.length === 0){
+      // Some tables use td for headers; try first row
+      var firstRow = table.querySelector('tr');
+      if(firstRow){
+        ths = Array.from(firstRow.querySelectorAll('td')).map(td => td.textContent.trim().toLowerCase());
+      }
+    }
+    return ths.some(t => t === 'units') && ths.some(t => t === 'date');
+  }
+
+  function ensureSection(beforeEl){
+    var section = document.getElementById('units-chart-section');
+    if(section) return section;
+    section = document.createElement('section');
+    section.id = 'units-chart-section';
+    section.style.cssText = "max-width:1140px;margin:30px auto;padding:16px;background:#0c1220;border-radius:12px;box-shadow:0 0 20px rgba(0,0,0,0.35)";
+    var h2 = document.createElement('h2');
+    h2.textContent = 'Units Won Over Time';
+    h2.style.cssText = "margin:0 0 8px 0;text-align:center;font-family:Sora,Arial,Helvetica,sans-serif;color:#00e3a2;font-weight:700;letter-spacing:0.5px";
+    var p = document.createElement('p');
+    p.textContent = 'Auto-generated from the table below. Updates automatically when you add new results.';
+    p.style.cssText = "margin:0 0 14px 0;text-align:center;color:#9bb3c9;font-size:14px";
+    var canvas = document.createElement('canvas');
+    canvas.id = 'unitsChart';
+    canvas.style.height = '320px';
+    section.appendChild(h2);
+    section.appendChild(p);
+    section.appendChild(canvas);
+    beforeEl.parentNode.insertBefore(section, beforeEl);
+    return section;
+  }
+
+  function parseNumber(txt){
+    if(!txt) return 0;
+    txt = txt.replace(/,/g,'').trim();
+    var num = parseFloat(txt);
+    return isNaN(num) ? 0 : num;
+  }
+
+  function extractFrom(table){
+    var rows = Array.from(table.querySelectorAll('tr'));
+    if(rows.length && rows[0].querySelectorAll('th').length) rows.shift();
+    var pts = rows.map(function(tr){
+      var tds = tr.querySelectorAll('td');
+      if(!tds.length) return null;
+      var dateTxt = tds[0].textContent.trim();
+      var unitsTxt = (tds[tds.length-1]||{}).textContent || "0";
+      return {date: dateTxt, units: parseNumber(unitsTxt)};
+    }).filter(Boolean);
+    pts.reverse();
+    var labels = [];
+    var cum = 0;
+    var series = pts.map(function(p,i){ cum += p.units; labels.push(p.date + ' #' + (i+1)); return +cum.toFixed(2); });
+    return {labels: labels, cumulative: series};
+  }
+
+  function run(){
+    var tables = Array.from(document.querySelectorAll('table'));
+    var recTable = tables.find(hasUnitsHeader) || tables[0];
+    if(!recTable) return;
+
+    // Ensure section is placed correctly
+    ensureSection(recTable);
+
+    // Build data
+    var data = extractFrom(recTable);
+    if(!data.labels.length) {
+      var sec = document.getElementById('units-chart-section');
+      if(sec){
+        var warn = document.createElement('div');
+        warn.textContent = 'No units data found in the table.';
+        warn.style.cssText = "text-align:center;color:#f2c94c;margin-top:8px";
+        sec.appendChild(warn);
+      }
+      return;
+    }
+    // Render chart
+    if(window.Chart){
+      var ctx = document.getElementById('unitsChart').getContext('2d');
+      if(window.__unitsChart) window.__unitsChart.destroy();
+      window.__unitsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            label: 'Total Units',
+            data: data.cumulative,
+            tension: 0.25,
+            borderWidth: 2,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: '#b9c7d6', autoSkip: true, autoSkipPadding: 8 }, grid: { display: false } },
+            y: { ticks: { color: '#b9c7d6' }, grid: { color: 'rgba(255,255,255,0.06)' } }
+          },
+          plugins: { legend: { labels: { color: '#eaf2f9' } } }
+        }
+      });
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', run);
+  }else{
+    run();
+  }
+})();
+</script></body>
 </html>
