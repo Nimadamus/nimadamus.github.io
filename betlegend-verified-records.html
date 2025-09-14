@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Verified Records - BetLegend Picks</title>
+<title>MLB Record - BetLegend Picks</title>
 <link href="https://www.betlegendpicks.com/betlegend-verified-records.html" rel="canonical"/>
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
@@ -194,7 +194,7 @@
                 var rows = Array.from(table.querySelectorAll('tr'));
                 if(rows.length === 0) return {labels:[], units:[], dates:[]};
 
-                // Extract data and sort chronologically (oldest first)
+                // Extract data - the table shows newest first, so we need to reverse it
                 var points = rows.map(function(tr){
                     var cells = tr.querySelectorAll('td');
                     if(!cells.length) return null;
@@ -214,29 +214,34 @@
                     };
                 }).filter(Boolean);
 
-                // Sort chronologically (oldest first)
-                points.sort(function(a, b) {
-                    return a.dateObj - b.dateObj;
-                });
+                // CRITICAL: Since your table shows newest first, reverse it to get chronological order
+                points.reverse();
 
                 var labels = [];
                 var dates = [];
                 var cumulative = 0;
                 var series = [];
                 
+                // Calculate cumulative from oldest to newest
                 points.forEach(function(p, idx){
                     cumulative += p.units;
                     
-                    // Create readable labels
-                    var shortDate = p.date;
+                    // Use actual date strings for better display
+                    var displayDate = p.date;
                     if(p.dateObj && !isNaN(p.dateObj)) {
-                        shortDate = (p.dateObj.getMonth() + 1) + '/' + p.dateObj.getDate();
+                        var month = p.dateObj.getMonth() + 1;
+                        var day = p.dateObj.getDate();
+                        displayDate = month + '/' + day;
                     }
                     
-                    labels.push(shortDate);
+                    labels.push(displayDate);
                     dates.push(p.date);
                     series.push(Number(cumulative.toFixed(2)));
                 });
+
+                console.log('Points in chronological order:', points.length);
+                console.log('Cumulative series (should end at peak):', series);
+                console.log('Final cumulative (should be current units):', cumulative);
 
                 return {
                     labels: labels,
@@ -263,44 +268,38 @@
                 return;
             }
 
-            // Update stats
+            // Update stats - ensure accuracy
             var currentUnits = data.cumulative[data.cumulative.length - 1] || 0;
             var peakUnits = Math.max(...data.cumulative);
             
             document.getElementById('chart-total-bets').textContent = data.totalBets;
             document.getElementById('chart-current-units').textContent = (currentUnits >= 0 ? '+' : '') + currentUnits.toFixed(2);
             document.getElementById('chart-current-units').style.color = currentUnits >= 0 ? '#39FF14' : '#FF3131';
-            document.getElementById('chart-peak-units').textContent = '+' + peakUnits.toFixed(2);
+            document.getElementById('chart-peak-units').textContent = (peakUnits >= 0 ? '+' : '') + peakUnits.toFixed(2);
 
             // Destroy previous chart
             if(window.__improvedUnitsChart) { 
                 window.__improvedUnitsChart.destroy(); 
             }
 
-            // Create gradient
-            var gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 400);
-            gradient.addColorStop(0, 'rgba(0, 224, 255, 0.3)');
-            gradient.addColorStop(1, 'rgba(0, 224, 255, 0.05)');
-
+            // Clean chart with thin line
             window.__improvedUnitsChart = new Chart(ctx.getContext('2d'), {
                 type: 'line',
                 data: {
                     labels: data.labels,
                     datasets: [{
-                        label: 'Cumulative Units',
+                        label: 'Units',
                         data: data.cumulative,
                         borderColor: '#00e0ff',
-                        backgroundColor: gradient,
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.3,
-                        pointBackgroundColor: '#00e0ff',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        pointHoverBackgroundColor: '#ffffff',
-                        pointHoverBorderColor: '#00e0ff'
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.1,
+                        pointRadius: 0,
+                        pointHoverRadius: 4,
+                        pointHoverBackgroundColor: '#00e0ff',
+                        pointHoverBorderColor: '#ffffff',
+                        pointHoverBorderWidth: 2
                     }]
                 },
                 options: {
@@ -314,38 +313,39 @@
                         x: {
                             ticks: { 
                                 color: '#b9c7d6',
-                                maxRotation: 45,
-                                autoSkip: true,
-                                autoSkipPadding: 20,
+                                maxRotation: 0,
+                                autoSkip: false,
                                 font: {
                                     family: 'Roboto',
-                                    size: 11
+                                    size: 10
                                 }
                             },
                             grid: { 
                                 display: true,
-                                color: 'rgba(255,255,255,0.05)'
+                                color: 'rgba(255,255,255,0.1)'
                             },
                             border: {
-                                color: 'rgba(0, 224, 255, 0.2)'
+                                color: 'rgba(0, 224, 255, 0.3)'
                             }
                         },
                         y: {
+                            beginAtZero: false,
                             ticks: { 
                                 color: '#b9c7d6',
                                 font: {
                                     family: 'Roboto',
-                                    size: 11
+                                    size: 12
                                 },
+                                stepSize: 5,
                                 callback: function(value) {
-                                    return (value >= 0 ? '+' : '') + value + ' units';
+                                    return (value >= 0 ? '+' : '') + value;
                                 }
                             },
                             grid: { 
-                                color: 'rgba(255,255,255,0.08)'
+                                color: 'rgba(255,255,255,0.15)'
                             },
                             border: {
-                                color: 'rgba(0, 224, 255, 0.2)'
+                                color: 'rgba(0, 224, 255, 0.3)'
                             }
                         }
                     },
@@ -376,7 +376,7 @@
                                 },
                                 label: function(context) {
                                     var value = context.parsed.y;
-                                    return 'Total Units: ' + (value >= 0 ? '+' : '') + value;
+                                    return 'Total Units: ' + (value >= 0 ? '+' : '') + value.toFixed(2);
                                 }
                             }
                         }
@@ -384,7 +384,7 @@
                 }
             });
             
-            console.log('Chart created successfully');
+            console.log('Chart created successfully - Current units:', currentUnits, 'Peak units:', peakUnits);
         }
 </script>
 </body>
