@@ -76,11 +76,13 @@
 <h1 class="title">MLB<span class="highlight">Record</span></h1>
 </div>
 <div class="nav-links">
-<a href="index.html" title="Home — Free NFL & MLB Picks">Home</a><a href="blog-page5.html">Picks &amp; Analysis</a><a href="featured-game-of-the-day.html">Featured Game</a><a href="bankroll.html" title="Bankroll Management Guide">Bankroll</a><a href="news.html" title="Latest Sports Betting News">News</a><a href="howitworks.html" title="How Our Picks Work">How It Works</a><a href="bestonlinesportsbook.html" title="Best Online Sportsbook">Best Sportsbook</a><a href="betlegend-verified-records.html" title="View Our Verified Betting Results">Records</a><a href="screenshots.html" title="Pick Verification Screenshots">Screenshots</a><a href="mlb.html" title="MLB Stats & Analytics">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
+<a href="index.html" title="Home â€" Free NFL & MLB Picks">Home</a><a href="blog-page5.html">Picks &amp; Analysis</a><a href="featured-game-of-the-day.html">Featured Game</a><a href="bankroll.html" title="Bankroll Management Guide">Bankroll</a><a href="news.html" title="Latest Sports Betting News">News</a><a href="howitworks.html" title="How Our Picks Work">How It Works</a><a href="bestonlinesportsbook.html" title="Best Online Sportsbook">Best Sportsbook</a><a href="betlegend-verified-records.html" title="View Our Verified Betting Results">Records</a><a href="screenshots.html" title="Pick Verification Screenshots">Screenshots</a><a href="mlb.html" title="MLB Stats & Analytics">MLB Stats</a><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a>
 </div>
 <div class="summary-stats">
 <div class="stat-box"><h3>Overall Record</h3><p id="overall-record">--</p></div>
 <div class="stat-box"><h3>Total Units</h3><p id="total-units">--</p></div>
+<div class="stat-box"><h3>Win Percentage</h3><p id="win-percentage">--</p></div>
+<div class="stat-box"><h3>ROI</h3><p id="roi">--</p></div>
 </div>
 
 <!-- IMPROVED CHART SECTION -->
@@ -153,13 +155,15 @@
                     if (gradedPicks.length === 0) {
                         document.getElementById('overall-record').textContent = '0-0-0';
                         document.getElementById('total-units').textContent = '+0.00';
+                        document.getElementById('win-percentage').textContent = '0.0%';
+                        document.getElementById('roi').textContent = '0.00%';
                         loadingContainer.innerHTML = `<p id="loading-message">No graded picks found in the record yet.</p>`;
                         return;
                     }
 
                     loadingContainer.style.display = 'none';
                     
-                    let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
+                    let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
 
                     gradedPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
                     
@@ -177,6 +181,26 @@
                             totalUnits += unitValue;
                         }
 
+                        // Calculate risk for ROI (same logic as NFL/NCAAF pages)
+                        const line = parseFloat(p.Line);
+                        if (!isNaN(line) && !isNaN(unitValue)) {
+                            let risk = 0;
+                            if (unitValue < 0) { 
+                                risk = Math.abs(unitValue); 
+                            }
+                            else if (unitValue > 0) {
+                                if (line > 0) { 
+                                    risk = (unitValue / (line / 100)); 
+                                }
+                                else { 
+                                    risk = (unitValue * (Math.abs(line) / 100)); 
+                                }
+                            }
+                            if (grade !== 'P' && grade !== 'Push') {
+                                totalRisk += risk;
+                            }
+                        }
+
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${p.Date}</td>
@@ -188,10 +212,24 @@
                         tableBody.appendChild(row);
                     });
 
+                    // Calculate and display all stats
+                    const totalGames = wins + losses;
+                    const winPercentage = totalGames > 0 ? ((wins / totalGames) * 100) : 0;
+                    const roi = totalRisk > 0 ? ((totalUnits / totalRisk) * 100) : 0;
+
                     document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
+                    
                     const unitsElement = document.getElementById('total-units');
                     unitsElement.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
                     unitsElement.classList.add(totalUnits >= 0 ? 'win' : 'loss');
+
+                    const winPctElement = document.getElementById('win-percentage');
+                    winPctElement.textContent = `${winPercentage.toFixed(1)}%`;
+                    winPctElement.classList.add(winPercentage >= 50 ? 'win' : 'loss');
+
+                    const roiElement = document.getElementById('roi');
+                    roiElement.textContent = `${roi >= 0 ? '+' : ''}${roi.toFixed(2)}%`;
+                    roiElement.classList.add(roi >= 0 ? 'win' : 'loss');
 
                     // CREATE THE IMPROVED CHART AFTER DATA LOADS
                     setTimeout(createImprovedChart, 500);
@@ -200,6 +238,8 @@
                     console.error("Error fetching Verified Records:", error);
                     document.getElementById('overall-record').textContent = 'Error';
                     document.getElementById('total-units').textContent = 'Error';
+                    document.getElementById('win-percentage').textContent = 'Error';
+                    document.getElementById('roi').textContent = 'Error';
                     loadingContainer.innerHTML = `<p id="loading-message">Could not load record. Please check the Google Sheet URL and ensure it's published correctly.</p>`;
                 });
         });
