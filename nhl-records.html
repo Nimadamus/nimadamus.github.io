@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +45,6 @@
         <tr>
           <th style="width:110px;">Date</th>
           <th>Pick</th>
-          <th style="width:80px;">Line</th>
           <th style="width:80px;">Odds</th>
           <th style="width:80px;">Result</th>
           <th style="width:80px;">Units</th>
@@ -55,14 +53,13 @@
       <tbody></tbody>
     </table>
     <div class="note">
-      Note: Stats reflect rows labeled Win/Loss/Push. Pending rows are ignored in percentages and ROI.
-      ROI is computed as total units / number of graded bets. If you track variable staking, we can switch ROI to units / risked units.
+      Note: Stats reflect rows labeled Win/Loss/Push. Pending rows are ignored in percentages and ROI. ROI is computed as total units / number of graded bets. If you track variable staking, we can switch ROI to units / risked units.
     </div>
   </div>
 </div>
 
 <script>
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv'; // Replace with your published CSV link for NHL
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv'; // Live NHL CSV
 const DATE_FMT = new Intl.DateTimeFormat('en-US', { month:'short', day:'2-digit', year:'numeric' });
 
 function normalizeResult(val) {
@@ -86,7 +83,7 @@ function computeStats(rows) {
     const res = normalizeResult(r.Result);
     if(res==='Win') { w++; graded++; totalUnits += parseUnits(r.Units); }
     else if(res==='Loss') { l++; graded++; totalUnits += parseUnits(r.Units); }
-    else if(res==='Push') { p++; /* graded stays same? push is graded but neutral; don't count in denominator */ }
+    else if(res==='Push') { p++; /* not in denominator */ }
   });
   const winPct = (w + l) ? (w/(w+l))*100 : 0;
   const roi = graded ? (totalUnits/graded)*100 : 0;
@@ -94,7 +91,6 @@ function computeStats(rows) {
 }
 
 function render(rows) {
-  // last updated now
   document.getElementById('last-updated').textContent = new Date().toLocaleString();
   const tb = document.querySelector('#records-table tbody');
   tb.innerHTML = '';
@@ -104,7 +100,6 @@ function render(rows) {
     tr.innerHTML = `
       <td>${dateStr}</td>
       <td>${r.Pick || ''}</td>
-      <td>${r.Line || ''}</td>
       <td>${r.Odds || ''}</td>
       <td>${normalizeResult(r.Result)}</td>
       <td>${r.Units || ''}</td>
