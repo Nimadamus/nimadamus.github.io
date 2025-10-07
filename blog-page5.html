@@ -2165,16 +2165,8 @@
         const container = document.getElementById('custom-pagination-container');
         if (!container) return;
         let paginationHTML = '<nav class="pagination-nav" aria-label="Blog post navigation">';
-        if (prevPage) {
-            paginationHTML += `&#9664; Previous`;
-        } else {
-            paginationHTML += `<span>&#9664; Previous</span>`;
-        }
-        if (nextPage) {
-            paginationHTML += `Next &#9654;`;
-        } else {
-            paginationHTML += `<span>Next &#9654;</span>`;
-        }
+        if (prevPage) { paginationHTML += `<a href="${prevPage}">&#9664; Previous</a>`; } else { paginationHTML += `<span>&#9664; Previous</span>`; }
+        if (nextPage) { paginationHTML += `<a href="${nextPage}">Next &#9654;</a>`; } else { paginationHTML += `<span>Next &#9654;</span>`; }
         paginationHTML += '</nav>';
         container.innerHTML = paginationHTML;
     })();
