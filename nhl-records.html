@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BetLegend NHL Records</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<style>
+  :root { --glow-color:#00e0ff; }
+  body { margin:0; background:#000; color:#fff; font-family: 'Roboto', sans-serif; }
+  .container { max-width:1140px; margin:40px auto; padding:0 16px; }
+  .logo { text-align:center; font-family:'Orbitron', sans-serif; font-size:34px; color:var(--glow-color); letter-spacing:1px; margin-bottom:8px; }
+  .card { background:#0a0f19; border-left:4px solid gold; border-radius:14px; padding:32px; box-shadow:0 15px 30px rgba(0,0,0,0.45); }
+  .header { text-align:center; color:gold; font-size:26px; margin-bottom:6px; }
+  .timestamp { text-align:center; color:#aaa; font-size:14px; margin-bottom:20px; }
+
+  .stats { display:grid; grid-template-columns: repeat(4, minmax(140px,1fr)); gap:14px; margin:10px 0 18px; }
+  .stat { background:#0f1524; border:1px solid #1e2a44; border-radius:12px; padding:12px; text-align:center; }
+  .stat .label { font-size:12px; color:#87a0c4; margin-bottom:4px; }
+  .stat .value { font-size:20px; color:#fff; font-weight:700; }
+
+  table { width:100%; border-collapse:collapse; margin-top:10px; }
+  th, td { padding:12px 10px; border-bottom:1px solid #1b263b; font-size:14px; }
+  th { color:gold; text-align:left; position:sticky; top:0; background:#0a0f19; }
+  .note { color:#9fb3d1; font-size:13px; margin-top:12px; }
+  a { color:var(--glow-color); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">BetLegend NHL</div>
+  <div class="card">
+    <div class="header">• NHL Records</div>
+    <div class="timestamp">Updated: <span id="last-updated"></span></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Record</div><div class="value" id="stat-record">–</div></div>
+      <div class="stat"><div class="label">Win %</div><div class="value" id="stat-winpct">–</div></div>
+      <div class="stat"><div class="label">ROI</div><div class="value" id="stat-roi">–</div></div>
+      <div class="stat"><div class="label">Units</div><div class="value" id="stat-units">–</div></div>
+    </div>
+    <table id="records-table" aria-label="NHL verified records table">
+      <thead>
+        <tr>
+          <th style="width:110px;">Date</th>
+          <th>Pick</th>
+          <th style="width:80px;">Line</th>
+          <th style="width:80px;">Odds</th>
+          <th style="width:80px;">Result</th>
+          <th style="width:80px;">Units</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div class="note">
+      Note: Stats reflect rows labeled Win/Loss/Push. Pending rows are ignored in percentages and ROI.
+      ROI is computed as total units / number of graded bets. If you track variable staking, we can switch ROI to units / risked units.
+    </div>
+  </div>
+</div>
+
+<script>
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv'; // Replace with your published CSV link for NHL
+const DATE_FMT = new Intl.DateTimeFormat('en-US', { month:'short', day:'2-digit', year:'numeric' });
+
+function normalizeResult(val) {
+  if(!val) return '';
+  const s = String(val).trim().toLowerCase();
+  if (s in {'w':1,'win':1,'won':1}) return 'Win';
+  if (s in {'l':1,'loss':1,'lost':1}) return 'Loss';
+  if (s in {'p':1,'push':1,'tie':1}) return 'Push';
+  if (s in {'pending':1,'open':1}) return 'Pending';
+  return val;
+}
+
+function parseUnits(v) {
+  const n = parseFloat(String(v).replace(/[^0-9+\-\.]/g,'')); 
+  return isFinite(n) ? n : 0;
+}
+
+function computeStats(rows) {
+  let w=0,l=0,p=0,totalUnits=0, graded=0;
+  rows.forEach(r => {
+    const res = normalizeResult(r.Result);
+    if(res==='Win') { w++; graded++; totalUnits += parseUnits(r.Units); }
+    else if(res==='Loss') { l++; graded++; totalUnits += parseUnits(r.Units); }
+    else if(res==='Push') { p++; /* graded stays same? push is graded but neutral; don't count in denominator */ }
+  });
+  const winPct = (w + l) ? (w/(w+l))*100 : 0;
+  const roi = graded ? (totalUnits/graded)*100 : 0;
+  return { w,l,p, totalUnits, winPct, roi };
+}
+
+function render(rows) {
+  // last updated now
+  document.getElementById('last-updated').textContent = new Date().toLocaleString();
+  const tb = document.querySelector('#records-table tbody');
+  tb.innerHTML = '';
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    const dateStr = r.Date ? r.Date : '';
+    tr.innerHTML = `
+      <td>${dateStr}</td>
+      <td>${r.Pick || ''}</td>
+      <td>${r.Line || ''}</td>
+      <td>${r.Odds || ''}</td>
+      <td>${normalizeResult(r.Result)}</td>
+      <td>${r.Units || ''}</td>
+    `;
+    tb.appendChild(tr);
+  });
+  const st = computeStats(rows);
+  document.getElementById('stat-record').textContent = `${st.w}-${st.l}-${st.p}`;
+  document.getElementById('stat-winpct').textContent = (st.winPct).toFixed(2) + '%';
+  document.getElementById('stat-roi').textContent = (st.roi).toFixed(2) + '%';
+  document.getElementById('stat-units').textContent = (st.totalUnits).toFixed(2);
+}
+
+fetch(CSV_URL)
+  .then(r => r.text())
+  .then(csv => {
+    const parsed = Papa.parse(csv, { header:true, skipEmptyLines:true, transformHeader: h => h.trim() });
+    const rows = parsed.data.filter(r => r.Pick && String(r.Pick).trim() !== '');
+    render(rows);
+  })
+  .catch(err => {
+    console.error('CSV load error', err);
+    render([]);
+  });
+</script>
+
+</body>
+</html>
