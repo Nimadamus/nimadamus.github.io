@@ -26,7 +26,6 @@
   th { color:gold; text-align:left; position:sticky; top:0; background:#0a0f19; }
   .note { color:#9fb3d1; font-size:13px; margin-top:12px; }
   a { color:var(--glow-color); text-decoration:none; }
-
   .result.win { color:#00ff66; font-weight:700; }
   .result.loss { color:#ff3333; font-weight:700; }
   .result.push { color:#87a0c4; font-weight:700; }
@@ -81,9 +80,8 @@ function parseUnits(v) {
   return isFinite(n) ? n : 0;
 }
 
-
 function computeStats(rows) {
-  // ROI = total profit / total risk, inferred from Odds + Units.
+  // Compute ROI as profit / total risk inferred from Odds & Units; no extra sheet columns required.
   function parseOdds(v) {
     const n = parseFloat(String(v).replace(/[^0-9+\-\.]/g,''));
     return isFinite(n) ? n : NaN;
@@ -95,39 +93,33 @@ function computeStats(rows) {
   }
   function approxEqual(a,b,tol=0.02) { return Math.abs(a-b) <= tol; }
 
-  let w=0, l=0, p=0, totalUnits=0, totalRisk=0;
+  let w=0, l=0, p=0, profit=0, totalRisk=0;
   rows.forEach(r => {
     const res = normalizeResult(r.Result);
     const odds = parseOdds(r.Odds);
-    const u = parseUnits(r.Units);
-    if (res==='Win') {
-      const won = Math.abs(u);
-      const risk = riskToWin(won, odds);
+    const units = parseUnits(r.Units);
+    if (res === 'Win') {
+      const won = Math.abs(units);           // Units recorded as amount won
+      const risk = riskToWin(won, odds);     // Risk needed to win that amount
       w++;
-      totalUnits += won;
-      totalRisk  += risk;
-    } else if (res==='Loss') {
-      const lossAbs = Math.abs(u);
-      const inferredRiskFromToWin = riskToWin(lossAbs, odds);
-      const risk = approxEqual(lossAbs, inferredRiskFromToWin) ? inferredRiskFromToWin : lossAbs;
+      profit += won;
+      totalRisk += risk;
+    } else if (res === 'Loss') {
+      const lossAbs = Math.abs(units);
+      // If sheet stored to-win on loss, infer risk; otherwise treat as risk lost
+      const inferredRisk = riskToWin(lossAbs, odds);
+      const risk = approxEqual(lossAbs, inferredRisk) ? inferredRisk : lossAbs;
       l++;
-      totalUnits -= risk;
-      totalRisk  += risk;
-    } else if (res==='Push') {
+      profit -= risk;
+      totalRisk += risk;
+    } else if (res === 'Push') {
       p++;
     }
   });
   const graded = w + l;
-  const winPct = graded ? (w/graded)*100 : 0;
-  const roi = totalRisk ? (totalUnits/totalRisk)*100 : 0;
-  return { w,l,p, totalUnits, winPct, roi };
-}
-else if(res==='Loss') { l++; graded++; totalUnits += parseUnits(r.Units); }
-    else if(res==='Push') { p++; /* not in denominator */ }
-  });
-  const winPct = (w + l) ? (w/(w+l))*100 : 0;
-  const roi = graded ? (totalUnits/graded)*100 : 0;
-  return { w,l,p, totalUnits, winPct, roi };
+  const winPct = graded ? (w / graded) * 100 : 0;
+  const roi = totalRisk ? (profit / totalRisk) * 100 : 0;
+  return { w, l, p, totalUnits: profit, winPct, roi };
 }
 
 function render(rows) {
