@@ -26,6 +26,10 @@
   th { color:gold; text-align:left; position:sticky; top:0; background:#0a0f19; }
   .note { color:#9fb3d1; font-size:13px; margin-top:12px; }
   a { color:var(--glow-color); text-decoration:none; }
+
+  .result.win { color:#00ff66; font-weight:700; }
+  .result.loss { color:#ff3333; font-weight:700; }
+  .result.push { color:#87a0c4; font-weight:700; }
 </style>
 </head>
 <body>
@@ -53,7 +57,7 @@
       <tbody></tbody>
     </table>
     <div class="note">
-      Note: Stats reflect rows labeled Win/Loss/Push. Pending rows are ignored in percentages and ROI. ROI is computed as total units / number of graded bets. If you track variable staking, we can switch ROI to units / risked units.
+      Note: Stats reflect rows labeled Win/Loss/Push. Pending rows are ignored in percentages and ROI. ROI is computed as profit / total risk inferred from Odds and Units (no extra sheet columns needed). For Wins, Units is treated as to-win; for Losses we infer whether Units is risk or to-win.
     </div>
   </div>
 </div>
@@ -77,12 +81,48 @@ function parseUnits(v) {
   return isFinite(n) ? n : 0;
 }
 
+
 function computeStats(rows) {
-  let w=0,l=0,p=0,totalUnits=0, graded=0;
+  // ROI = total profit / total risk, inferred from Odds + Units.
+  function parseOdds(v) {
+    const n = parseFloat(String(v).replace(/[^0-9+\-\.]/g,''));
+    return isFinite(n) ? n : NaN;
+  }
+  function riskToWin(toWin, odds) {
+    if (!isFinite(odds)) return 0;
+    if (odds < 0) return toWin * (Math.abs(odds) / 100);
+    return toWin * (100 / odds);
+  }
+  function approxEqual(a,b,tol=0.02) { return Math.abs(a-b) <= tol; }
+
+  let w=0, l=0, p=0, totalUnits=0, totalRisk=0;
   rows.forEach(r => {
     const res = normalizeResult(r.Result);
-    if(res==='Win') { w++; graded++; totalUnits += parseUnits(r.Units); }
-    else if(res==='Loss') { l++; graded++; totalUnits += parseUnits(r.Units); }
+    const odds = parseOdds(r.Odds);
+    const u = parseUnits(r.Units);
+    if (res==='Win') {
+      const won = Math.abs(u);
+      const risk = riskToWin(won, odds);
+      w++;
+      totalUnits += won;
+      totalRisk  += risk;
+    } else if (res==='Loss') {
+      const lossAbs = Math.abs(u);
+      const inferredRiskFromToWin = riskToWin(lossAbs, odds);
+      const risk = approxEqual(lossAbs, inferredRiskFromToWin) ? inferredRiskFromToWin : lossAbs;
+      l++;
+      totalUnits -= risk;
+      totalRisk  += risk;
+    } else if (res==='Push') {
+      p++;
+    }
+  });
+  const graded = w + l;
+  const winPct = graded ? (w/graded)*100 : 0;
+  const roi = totalRisk ? (totalUnits/totalRisk)*100 : 0;
+  return { w,l,p, totalUnits, winPct, roi };
+}
+else if(res==='Loss') { l++; graded++; totalUnits += parseUnits(r.Units); }
     else if(res==='Push') { p++; /* not in denominator */ }
   });
   const winPct = (w + l) ? (w/(w+l))*100 : 0;
@@ -101,7 +141,7 @@ function render(rows) {
       <td>${dateStr}</td>
       <td>${r.Pick || ''}</td>
       <td>${r.Odds || ''}</td>
-      <td>${normalizeResult(r.Result)}</td>
+      <td class="result ${normalizeResult(r.Result).toLowerCase()}">${normalizeResult(r.Result)}</td>
       <td>${r.Units || ''}</td>
     `;
     tb.appendChild(tr);
