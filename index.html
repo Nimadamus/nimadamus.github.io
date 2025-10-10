@@ -357,11 +357,11 @@
         <div class="dropdown">
   <button class="dropbtn" aria-label="View Verified Records">Records</button>
   <div class="dropdown-content">
-    <a href="/betlegend-verified-records.html" target="_blank" rel="noopener" title="MLB Betting Records">MLB Records</a>
-    <a href="/nfl-records.html" title="NFL Betting Records">NFL Records</a>
-    <a href="/ncaaf-records.html" title="College Football Betting Records">NCAAF Records</a>
-    <a href="/nba-records.html" title="NBA Betting Records">NBA Records</a>
-    <a href="/nhl-records.html" title="NHL Betting Records">NHL Records</a>
+    <a href="betlegend-verified-records.html" title="MLB Betting Records">MLB Records</a>
+    <a href="nfl-records.html" title="NFL Betting Records">NFL Records</a>
+    <a href="ncaaf-records.html" title="College Football Betting Records">NCAAF Records</a>
+    <a href="nhl-records.html" title="NHL Betting Records">NHL Records</a>
+    <a href="nba-records.html" title="NBA Betting Records">NBA Records</a>
   </div>
 </div>
 
@@ -402,7 +402,7 @@
         <img alt="BetLegend free NFL picks today MLB predictions college football betting analysis dashboard live tracking verified records expert sports picks" src="https://nimadamus.github.io/curry.gif" loading="lazy" />
     </div>
     <div class="caption">
-        Powered by BetLegend Pro model - <a href="/mlb-records.html" target="_blank" title="View Complete Verified Betting History">See Complete Verified Betting History</a>
+        Powered by BetLegend Pro model - <a href="betlegend-verified-records.html" title="View Complete Verified Betting History">See Complete Verified Betting History</a>
     </div>
 
     <!-- SEO Content Section -->
@@ -459,7 +459,7 @@
 </div>
 
 <div class="interactive-dashboard">
-    <a class="dash-item clickable" href="/mlb-records.html" id="dash-record">
+    <a class="dash-item clickable" href="betlegend-verified-records.html" id="dash-record">
         <svg viewbox="0 0 24 24"><path d="M16,11.78L20.24,4.45L21.64,5.45L16.74,14.3L11.5,9.04L1.22,19.36L2.2,20.34L11.5,11L16,15.5L20.66,8.53L19.56,7.47L16,11.78Z"></path></svg>
         <h3>Verified Record</h3>
         <p>--</p>
@@ -482,7 +482,7 @@
 </div>
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-<!-- FINAL SCRIPT - v31 - SCRIPT ERROR CORRECTED -->
+<!-- FINAL SCRIPT - v31 - SCRIPT ERROR CORRECTED - WITH NHL ADDED -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- CONFIGURATION ---
@@ -547,12 +547,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- RECORD PROCESSING LOGIC ---
+    // --- RECORD PROCESSING LOGIC WITH NHL ADDED ---
     function processAndDisplayRecords(picks) {
-        // Fetch data from all three sports
+        // Fetch data from all sports
         const mlbUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
         const nflUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv';
         const ncaafUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
+        const nhlUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv';
         
         // Calculate records for MLB (current picks)
         const mlbRecord = calculateSportRecord(picks);
@@ -567,18 +568,24 @@ document.addEventListener('DOMContentLoaded', function() {
             fetch(ncaafUrl).then(r => r.text()).then(csvText => {
                 const ncaafPicks = Papa.parse(csvText, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data.filter(p => p.Pick && p.Pick.trim() !== '');
                 return calculateSportRecord(ncaafPicks);
+            }).catch(() => ({ w: 0, l: 0, p: 0, units: 0.0 })),
+            
+            fetch(nhlUrl).then(r => r.text()).then(csvText => {
+                const nhlPicks = Papa.parse(csvText, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data.filter(p => p.Pick && p.Pick.trim() !== '');
+                return calculateSportRecord(nhlPicks);
             }).catch(() => ({ w: 0, l: 0, p: 0, units: 0.0 }))
-        ]).then(([nflRecord, ncaafRecord]) => {
+        ]).then(([nflRecord, ncaafRecord, nhlRecord]) => {
             
             const displayData = { 
                 'MLB': mlbRecord, 
                 'NFL': nflRecord, 
                 'NCAAF': ncaafRecord,
+                'NHL': nhlRecord,
                 'Overall': {
-                    w: mlbRecord.w + nflRecord.w + ncaafRecord.w,
-                    l: mlbRecord.l + nflRecord.l + ncaafRecord.l,
-                    p: mlbRecord.p + nflRecord.p + ncaafRecord.p,
-                    units: mlbRecord.units + nflRecord.units + ncaafRecord.units
+                    w: mlbRecord.w + nflRecord.w + ncaafRecord.w + nhlRecord.w,
+                    l: mlbRecord.l + nflRecord.l + ncaafRecord.l + nhlRecord.l,
+                    p: mlbRecord.p + nflRecord.p + ncaafRecord.p + nhlRecord.p,
+                    units: mlbRecord.units + nflRecord.units + ncaafRecord.units + nhlRecord.units
                 }
             };
             
