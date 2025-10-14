@@ -67,6 +67,38 @@ color: #D4AF37;
 font-weight: bold;
 margin: 10px 0 0 0;
 }
+.pagination-nav {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin: 50px auto 40px;
+padding-top: 25px;
+border-top: 2px solid #444;
+max-width: 1140px;
+}
+.pagination-nav a, .pagination-nav span {
+display: inline-block;
+padding: 12px 25px;
+font-size: 1.1em;
+font-weight: bold;
+text-decoration: none;
+border: 2px solid #D4AF37;
+color: #D4AF37;
+background-color: #222;
+border-radius: 8px;
+transition: background-color 0.3s, color 0.3s;
+cursor: pointer;
+}
+.pagination-nav a:hover {
+background-color: #D4AF37;
+color: #121212;
+}
+.pagination-nav span {
+color: #666;
+border-color: #444;
+background-color: #1a1a1a;
+cursor: not-allowed;
+}
 </style>
 <title>Free Soccer Picks Today | Expert Analysis | BetLegend Picks Page 8</title>
 <meta content="Get today's free soccer picks and expert analysis with verified records. Daily breakdown on World Cup qualifiers, corner totals, and value plays backed by real stats." name="description"/>
@@ -98,68 +130,6 @@ margin: 10px 0 0 0;
 <body>
 <img alt="BetLegend Picks Logo" loading="lazy" src="https://www.betlegendpicks.com/logo.png" style="display: block; margin: 30px auto; width: 200px;"/>
 <h1>BetLegend Daily Picks and Analysis</h1>
-
-<div id="custom-pagination-container"></div>
-<style>
-.pagination-nav {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-top: 50px;
-padding-top: 25px;
-border-top: 2px solid #444;
-}
-.pagination-nav a, .pagination-nav span {
-display: inline-block;
-padding: 12px 25px;
-font-size: 1.1em;
-font-weight: bold;
-text-decoration: none;
-border: 2px solid #D4AF37;
-color: #D4AF37;
-background-color: #222;
-border-radius: 8px;
-transition: background-color 0.3s, color 0.3s;
-cursor: pointer;
-}
-.pagination-nav a:hover {
-background-color: #D4AF37;
-color: #121212;
-}
-.pagination-nav span {
-color: #666;
-border-color: #444;
-background-color: #1a1a1a;
-cursor: not-allowed;
-}
-</style>
-<script>
-(function() {
-const pageOrder = [
-'blog-page8.html',
-'blog-page7.html',
-'blog-page5.html',
-'blog-page4.html',
-'blog-page3.html',
-'blog-page2.html',
-'blog.html'
-];
-const currentPage = window.location.pathname.split('/').pop();
-const currentIndex = pageOrder.indexOf(currentPage);
-if (currentIndex === -1) {
-return;
-}
-const prevPage = currentIndex > 0 ? pageOrder[currentIndex - 1] : null;
-const nextPage = currentIndex < pageOrder.length - 1 ? pageOrder[currentIndex + 1] : null;
-const container = document.getElementById('custom-pagination-container');
-if (!container) return;
-let paginationHTML = '<nav class="pagination-nav" aria-label="Blog post navigation">';
-if (prevPage) { paginationHTML += `<a href="${prevPage}">&#9664; Previous</a>`; } else { paginationHTML += `<span>&#9664; Previous</span>`; }
-if (nextPage) { paginationHTML += `<a href="${nextPage}">Next &#9654;</a>`; } else { paginationHTML += `<span>Next &#9654;</span>`; }
-paginationHTML += '</nav>';
-container.innerHTML = paginationHTML;
-})();
-</script>
 
 <div class="blog-post">
 <div class="post-header" style="text-align: center;">Why Armenia vs Ireland Total Corners Under 8.5 is the Sharp Play</div>
@@ -255,6 +225,36 @@ container.innerHTML = paginationHTML;
 <p class="the-pick">Armenia vs Ireland Total Corners UNDER 8.5 at -115</p>
 </div>
 </div>
+
+<div id="custom-pagination-container"></div>
+
+<script>
+(function() {
+const pageOrder = [
+'blog-page8.html',
+'blog-page7.html',
+'blog-page5.html',
+'blog-page4.html',
+'blog-page3.html',
+'blog-page2.html',
+'blog.html'
+];
+const currentPage = window.location.pathname.split('/').pop();
+const currentIndex = pageOrder.indexOf(currentPage);
+if (currentIndex === -1) {
+return;
+}
+const prevPage = currentIndex > 0 ? pageOrder[currentIndex - 1] : null;
+const nextPage = currentIndex < pageOrder.length - 1 ? pageOrder[currentIndex + 1] : null;
+const container = document.getElementById('custom-pagination-container');
+if (!container) return;
+let paginationHTML = '<nav class="pagination-nav" aria-label="Blog post navigation">';
+if (prevPage) { paginationHTML += `<a href="${prevPage}">&#9664; Previous</a>`; } else { paginationHTML += `<span>&#9664; Previous</span>`; }
+if (nextPage) { paginationHTML += `<a href="${nextPage}">Next &#9654;</a>`; } else { paginationHTML += `<span>Next &#9654;</span>`; }
+paginationHTML += '</nav>';
+container.innerHTML = paginationHTML;
+})();
+</script>
 
 </body>
 </html>
