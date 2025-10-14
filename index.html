@@ -352,7 +352,7 @@
     </div>
     
     <nav class="nav-links" aria-label="Main Navigation">
-        <a href="blog-page8.html" title="Today's Free Sports Picks and Analysis">Picks &amp; Analysis</a>
+        <a href="blog-page7.html" title="Today's Free Sports Picks and Analysis">Picks &amp; Analysis</a>
         
         <div class="dropdown">
   <button class="dropbtn" aria-label="View Verified Records">Records</button>
@@ -362,6 +362,7 @@
     <a href="ncaaf-records.html" title="College Football Betting Records">NCAAF Records</a>
     <a href="nhl-records.html" title="NHL Betting Records">NHL Records</a>
     <a href="nba-records.html" title="NBA Betting Records">NBA Records</a>
+    <a href="soccer-records.html" title="Soccer Betting Records">Soccer Records</a>
   </div>
 </div>
 
@@ -385,7 +386,7 @@
                 <a href="betting-101.html" title="Betting 101 Education">Betting 101</a>
             </div>
         </div>
-        <a href="news.html" title="Sports Betting News">News</a>
+        <a href="blog-page8.html" title="Sports Betting News">News</a>
         <a href="proofofpicks.html" title="Verified Proof of Picks">Proof of Picks</a>
         <a href="featured-game-of-the-day.html" title="Today's Featured Game Pick">Game of the Day</a>
         <div class="dropdown">
@@ -692,42 +693,3 @@ document.addEventListener('DOMContentLoaded', function() {
         let tickerHTML = '';
         recentPicks.forEach((pick, index) => {
             const result = pick.Result.trim().toUpperCase();
-            const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
-            const gradeText = (result === 'W' || result === 'WIN') ? 'W' : (result === 'P' || result === 'PUSH') ? 'P' : 'L';
-            
-            tickerHTML += `
-                <div class="ticker__item">
-                    <span class="pick-text">${pick.Pick.trim()}</span>
-                    <span class="grade ${gradeClass}">${gradeText}</span>
-                </div>
-            `;
-            
-            if (index < recentPicks.length - 1) {
-                tickerHTML += '<span class="ticker__separator">•</span>';
-            }
-        });
-
-        tickerContent.innerHTML = tickerHTML;
-    }
-
-    // --- UTILITY FUNCTIONS ---
-    function displayDefaults() {
-        recordH3.textContent = 'Verified Record';
-        recordP.innerHTML = 'Loading...';
-        freePickDisplay.textContent = 'Loading...';
-        tickerContent.innerHTML = '<div class="ticker__item">Loading recent results...</div>';
-    }
-
-    function displayError(message) {
-        recordH3.textContent = 'Error';
-        recordP.innerHTML = 'Unable to load data';
-        freePickDisplay.textContent = 'Error loading picks';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
-    }
-
-    // --- START THE APP ---
-    run();
-});
-</script>
-</body>
-</html>
