@@ -362,7 +362,6 @@
     <a href="ncaaf-records.html" title="College Football Betting Records">NCAAF Records</a>
     <a href="nhl-records.html" title="NHL Betting Records">NHL Records</a>
     <a href="nba-records.html" title="NBA Betting Records">NBA Records</a>
-    <a href="soccer-records.html" title="Soccer Betting Records">Soccer Records</a>
   </div>
 </div>
 
@@ -386,7 +385,7 @@
                 <a href="betting-101.html" title="Betting 101 Education">Betting 101</a>
             </div>
         </div>
-        <a href="blog-page8.html" title="Sports Betting News">News</a>
+        <a href="news.html" title="Sports Betting News">News</a>
         <a href="proofofpicks.html" title="Verified Proof of Picks">Proof of Picks</a>
         <a href="featured-game-of-the-day.html" title="Today's Featured Game Pick">Game of the Day</a>
         <div class="dropdown">
@@ -693,3 +692,151 @@ document.addEventListener('DOMContentLoaded', function() {
         let tickerHTML = '';
         recentPicks.forEach((pick, index) => {
             const result = pick.Result.trim().toUpperCase();
+            const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
+            const gradeText = (result === 'W' || result === 'WIN') ? 'W' : (result === 'P' || result === 'PUSH') ? 'P' : 'L';
+            
+            tickerHTML += `
+                <div class="ticker__item">
+                    <span class="pick-text">${pick.Pick.trim()}</span>
+                    <span class="grade ${gradeClass}">${gradeText}</span>
+                </div>
+            `;
+            
+            if (index < recentPicks.length - 1) {
+                tickerHTML += '<span class="ticker__separator">•</span>';
+            }
+        });
+
+        tickerContent.innerHTML = tickerHTML;
+    }
+
+    // --- UTILITY FUNCTIONS ---
+    function displayDefaults() {
+        recordH3.textContent = 'Verified Record';
+        recordP.innerHTML = 'Loading...';
+        freePickDisplay.textContent = 'Loading...';
+        tickerContent.innerHTML = '<div class="ticker__item">Loading recent results...</div>';
+    }
+
+    function displayError(message) {
+        recordH3.textContent = 'Error';
+        recordP.innerHTML = 'Unable to load data';
+        freePickDisplay.textContent = 'Error loading picks';
+        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
+    }
+
+    // --- START THE APP ---
+    run();
+});
+</script>
+
+<!-- BEGIN: BetLegend minimal enhancer (autodetect + Soccer wired) -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function findTileByHeading(textRegex) {
+    const tiles = document.querySelectorAll('.dash-item, a.dash-item, div.dash-item');
+    for (const t of tiles) {
+      const h3 = t.querySelector('h3');
+      if (h3 && textRegex.test(h3.textContent.trim())) return t;
+    }
+    return null;
+  }
+  const recTile = document.getElementById('dash-record') || findTileByHeading(/verified\s*record/i);
+  const subTile = document.getElementById('dash-subscribe') || findTileByHeading(/subscribe/i);
+
+  (function() {
+    if (!subTile) return;
+    const labelP = subTile.querySelector('p');
+    if (!labelP) return;
+    const plans = [
+      { label:'Daily Pass',   price:'$25',  href:'https://buy.stripe.com/28E7sLdVkdye8f86m5grS04' },
+      { label:'Weekly Pass',  price:'$79',  href:'https://buy.stripe.com/6oUeVd6sSbq6gLE4dXgrS08' },
+      { label:'Monthly Pass', price:'$149', href:'https://buy.stripe.com/fZu6oH4kK1Pwbrk39TgrS07' },
+      { label:'Yearly Pass',  price:'$750', href:'https://buy.stripe.com/bJe5kD9F43XE2UOh0JgrS03' }
+    ];
+    let i = 0;
+    function rotate() {
+      const p = plans[i];
+      if (subTile.tagName.toLowerCase() === 'a') subTile.href = p.href;
+      labelP.textContent = p.label + ' ' + p.price;
+      i = (i + 1) % plans.length;
+    }
+    rotate();
+    setInterval(rotate, 4000);
+  })();
+
+  (function() {
+    if (!recTile) return;
+    const h3 = recTile.querySelector('h3');
+    const p  = recTile.querySelector('p');
+    if (!h3 || !p) return;
+    h3.style.transition = 'opacity .35s ease';
+    p.style.transition  = 'opacity .35s ease';
+
+    const FEEDS = {
+      MLB:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv',
+      NFL:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv',
+      NCAAF: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv',
+      NHL:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv',
+      SOCCER: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
+    };
+
+    function parseCSV(csv) {
+      const lines = csv.split(/\r?\n/).filter(Boolean);
+      if (!lines.length) return [];
+      const headers = lines[0].split(',').map(h => h.trim());
+      const out = [];
+      for (let i=1;i<lines.length;i++) {
+        const row = lines[i].split(',');
+        const o = {};
+        headers.forEach((h,idx)=> o[h] = (row[idx]||'').trim());
+        out.push(o);
+      }
+      return out;
+    }
+    function calcRecord(rows) {
+      const r = {w:0,l:0,p:0,units:0};
+      for (const x of rows) {
+        const res = (x.Result||'').trim().toUpperCase();
+        const u = parseFloat(x.Units);
+        if (res && !isNaN(u)) {
+          if (res==='W'||res==='WIN') r.w++;
+          else if (res==='L'||res==='LOSS') r.l++;
+          else if (res==='P'||res==='PUSH') r.p++;
+          r.units += u;
+        }
+      }
+      return r;
+    }
+
+    const entries = Object.entries(FEEDS);
+    Promise.all(entries.map(([sport, url]) => url
+      ? fetch(url).then(r=>r.text()).then(csv => ({sport, rows: parseCSV(csv)})).catch(()=>({sport, rows:[]}))
+      : Promise.resolve({sport, rows:[]})
+    )).then(list => {
+      const recs = {};
+      list.forEach(d => recs[d.sport] = calcRecord(d.rows));
+      recs['Overall'] = Object.values(recs).reduce((a,r)=>({w:a.w+r.w,l:a.l+r.l,p:a.p+r.p,units:a.units+r.units}),{w:0,l:0,p:0,units:0});
+
+      const order = Object.keys(recs);
+      let idx = 0;
+      function cycle() {
+        const s = order[idx];
+        const r = recs[s];
+        h3.style.opacity='0'; p.style.opacity='0';
+        setTimeout(()=>{
+          h3.textContent = s + ' Record';
+          p.innerHTML = `${r.w}-${r.l}-${r.p}<br><span class="highlight">${(r.units>=0?'+':'')}${r.units.toFixed(2)} Units</span>`;
+          h3.style.opacity='1'; p.style.opacity='1';
+        }, 300);
+        idx = (idx + 1) % order.length;
+      }
+      cycle();
+      setInterval(cycle, 4000);
+    }).catch(()=>{});
+  })();
+});
+</script>
+<!-- END: BetLegend minimal enhancer (autodetect + Soccer wired) -->
+</body>
+</html>
