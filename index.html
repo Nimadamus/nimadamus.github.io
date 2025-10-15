@@ -678,37 +678,81 @@ document.addEventListener('DOMContentLoaded', function() {
         freePickDisplay.textContent = 'Loading...';
     }
 
-    // --- TICKER LOGIC ---
+    // --- TICKER LOGIC - ALL SPORTS LAST 24 HOURS ---
     function updateTicker(picks) {
-        const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date));
+        // Fetch all sports data
+        const mlbUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+        const nflUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv';
+        const ncaafUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
+        const nhlUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv';
+        const soccerUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv';
         
-        if (gradedPicks.length === 0) {
-            tickerContent.innerHTML = '<div class="ticker__item">Loading recent results...</div>';
-            return;
-        }
-
-        gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
-        const recentPicks = gradedPicks.slice(0, 10);
-
-        let tickerHTML = '';
-        recentPicks.forEach((pick, index) => {
-            const result = pick.Result.trim().toUpperCase();
-            const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
-            const gradeText = (result === 'W' || result === 'WIN') ? 'W' : (result === 'P' || result === 'PUSH') ? 'P' : 'L';
+        Promise.all([
+            fetch(mlbUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data),
+            fetch(nflUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data),
+            fetch(ncaafUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data),
+            fetch(nhlUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data),
+            fetch(soccerUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data)
+        ]).then(([mlbPicks, nflPicks, ncaafPicks, nhlPicks, soccerPicks]) => {
             
-            tickerHTML += `
-                <div class="ticker__item">
-                    <span class="pick-text">${pick.Pick.trim()}</span>
-                    <span class="grade ${gradeClass}">${gradeText}</span>
-                </div>
-            `;
+            // Combine all picks
+            const allPicks = [
+                ...mlbPicks.map(p => ({...p, sport: 'MLB'})),
+                ...nflPicks.map(p => ({...p, sport: 'NFL'})),
+                ...ncaafPicks.map(p => ({...p, sport: 'NCAAF'})),
+                ...nhlPicks.map(p => ({...p, sport: 'NHL'})),
+                ...soccerPicks.map(p => ({...p, sport: 'SOCCER'}))
+            ];
             
-            if (index < recentPicks.length - 1) {
-                tickerHTML += '<span class="ticker__separator">•</span>';
+            // Filter for graded picks with dates
+            const gradedPicks = allPicks.filter(p => {
+                const hasResult = p.Result && p.Result.trim() !== '';
+                const hasDate = p.Date && parseDate(p.Date);
+                return hasResult && hasDate;
+            });
+            
+            if (gradedPicks.length === 0) {
+                tickerContent.innerHTML = '<div class="ticker__item">Loading recent results...</div>';
+                return;
             }
+            
+            // Filter for last 24 hours
+            const now = new Date();
+            const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+            
+            const recentPicks = gradedPicks.filter(p => {
+                const pickDate = parseDate(p.Date);
+                return pickDate && pickDate >= twentyFourHoursAgo;
+            }).sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
+            
+            // If no picks in last 24 hours, show most recent 10
+            const displayPicks = recentPicks.length > 0 ? recentPicks.slice(0, 20) : gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date)).slice(0, 10);
+            
+            let tickerHTML = '';
+            displayPicks.forEach((pick, index) => {
+                const result = pick.Result.trim().toUpperCase();
+                const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
+                const gradeText = (result === 'W' || result === 'WIN') ? 'W' : (result === 'P' || result === 'PUSH') ? 'P' : 'L';
+                
+                tickerHTML += `
+                    <div class="ticker__item">
+                        <span style="color: #00e0ff; font-weight: 600;">${pick.sport}</span>
+                        <span class="pick-text">${pick.Pick.trim()}</span>
+                        <span class="grade ${gradeClass}">${gradeText}</span>
+                    </div>
+                `;
+                
+                if (index < displayPicks.length - 1) {
+                    tickerHTML += '<span class="ticker__separator">•</span>';
+                }
+            });
+            
+            tickerContent.innerHTML = tickerHTML;
+            
+        }).catch(error => {
+            console.error('Error fetching ticker data:', error);
+            tickerContent.innerHTML = '<div class="ticker__item">Error loading results...</div>';
         });
-
-        tickerContent.innerHTML = tickerHTML;
     }
 
     // --- UTILITY FUNCTIONS ---
