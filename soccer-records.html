@@ -21,8 +21,12 @@
         .dropdown-content a { color: var(--glow-color); padding: 12px 16px; text-decoration: none; display: block; font-size: 14px; text-align: left; }
         .dropdown-content a:hover { background-color: rgba(0, 224, 255, 0.1); color: #fff; }
         .dropdown:hover .dropdown-content { display: block; }
-        .unit-scale-notice { text-align: center; background: rgba(0, 224, 255, 0.1); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 8px; padding: 15px; margin-bottom: 25px; max-width: 800px; }
-        .unit-scale-notice p { margin: 0; font-size: 14px; color: #fff; font-family: 'Roboto', sans-serif; line-height: 1.6; }
+        .unit-scale-notice { background: linear-gradient(135deg, rgba(0, 224, 255, 0.1) 0%, rgba(0, 224, 255, 0.05) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 20px; padding: 30px; box-shadow: 0 8px 32px 0 rgba(0, 224, 255, 0.2); display: flex; align-items: center; gap: 25px; margin-bottom: 25px; max-width: 800px; }
+        .unit-scale-notice .icon { font-size: 48px; filter: drop-shadow(0 0 10px #00e0ff); }
+        .unit-scale-notice .content { flex: 1; }
+        .unit-scale-notice .title { font-family: 'Orbitron', sans-serif; font-size: 16px; color: #00e0ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .unit-scale-notice .description { font-size: 17px; line-height: 1.6; color: #fff; }
+        @media (max-width: 768px) { .unit-scale-notice { flex-direction: column; text-align: center; } }
         .summary-stats { display: flex; justify-content: space-around; width: 100%; max-width: 800px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(0, 224, 255, 0.2); }
         .stat-box { text-align: center; }
         .stat-box h3 { margin: 0 0 10px 0; font-size: 16px; color: var(--glow-color); text-transform: uppercase; }
@@ -133,7 +137,11 @@
 </nav>
 
 <div class="unit-scale-notice">
-<p><strong>All plays are between half a unit and 3 units on a 1 to 6 scale.</strong> 6 being the highest confidence (3 units), 1 being the lowest confidence (half a unit).</p>
+<div class="icon">💎</div>
+<div class="content">
+<div class="title">Unit Scale Explained</div>
+<div class="description">All plays range from <strong>0.5 to 3 units</strong> on a confidence scale of 1-6. Higher confidence (6) = 3 units. Lower confidence (1) = 0.5 units.</div>
+</div>
 </div>
 
 <div class="summary-stats">
