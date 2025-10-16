@@ -193,13 +193,34 @@
             function parseCSV(text) {
                 const rows = text.trim().split(/\r?\n/);
                 const headers = rows[0].split(',').map(h => h.trim());
+                
                 return rows.slice(1).map(row => {
-                    const values = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
+                    // Better CSV parsing that handles commas in quoted values
+                    const values = [];
+                    let current = '';
+                    let inQuotes = false;
+                    
+                    for (let i = 0; i < row.length; i++) {
+                        const char = row[i];
+                        
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            values.push(current.trim());
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    values.push(current.trim());
+                    
                     const entry = {};
                     headers.forEach((header, i) => {
-                        const value = values[i] ? values[i].replace(/"/g, '').trim() : '';
-                        entry[header] = value;
+                        const value = values[i] || '';
+                        // Remove quotes and trim
+                        entry[header] = value.replace(/^"|"$/g, '').trim();
                     });
+                    
                     return entry;
                 });
             }
@@ -210,6 +231,7 @@
                     const picksDatabase = parseCSV(csvText);
                     
                     const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
+                    
                     if (gradedPicks.length === 0) {
                         document.getElementById('overall-record').textContent = '0-0-0';
                         document.getElementById('total-units').textContent = '+0.00';
@@ -229,28 +251,44 @@
                         let resultClass = '';
                         let grade = p.Result;
 
-                        if (grade === 'W' || grade === 'Win') { wins++; resultClass = 'win'; }
-                        else if (grade === 'L' || grade === 'Loss') { losses++; resultClass = 'loss'; }
-                        else if (grade === 'P' || grade === 'Push') { pushes++; resultClass = 'push'; }
+                        if (grade === 'W' || grade === 'Win') { 
+                            wins++; 
+                            resultClass = 'win'; 
+                        } else if (grade === 'L' || grade === 'Loss') { 
+                            losses++; 
+                            resultClass = 'loss'; 
+                        } else if (grade === 'P' || grade === 'Push') { 
+                            pushes++; 
+                            resultClass = 'push'; 
+                        }
                         
                         const unitValue = parseFloat(p.Units);
                         if (!isNaN(unitValue)) {
                             totalUnits += unitValue;
                         }
 
-                        // FIXED ROI CALCULATION
-                        const line = parseFloat(p.Line);
-                        if (!isNaN(line) && !isNaN(unitValue)) {
+                        // Get the odds value - using "Odds" column name
+                        let oddsValue = p.Odds || p.odds || '';
+                        
+                        // Extract numeric value from odds (handles formats like "-175", "+150", etc.)
+                        let odds = null;
+                        const oddsMatch = oddsValue.match(/([+-]?\d+)/);
+                        if (oddsMatch) {
+                            odds = parseFloat(oddsMatch[1]);
+                        }
+                        
+                        // Calculate risk for ROI
+                        if (!isNaN(odds) && !isNaN(unitValue) && unitValue !== 0) {
                             let risk = 0;
                             
                             if (grade === 'W' || grade === 'Win') {
                                 // On a win, calculate how much was risked based on the winnings
-                                if (line < 0) {
-                                    // Negative line (favorite): if you won X units, you risked X * (|line| / 100)
-                                    risk = Math.abs(unitValue) * (Math.abs(line) / 100);
+                                if (odds < 0) {
+                                    // Negative odds (favorite): if you won X units, you risked X * (|odds| / 100)
+                                    risk = Math.abs(unitValue) * (Math.abs(odds) / 100);
                                 } else {
-                                    // Positive line (underdog): if you won X units, you risked X / (line / 100)
-                                    risk = Math.abs(unitValue) / (line / 100);
+                                    // Positive odds (underdog): if you won X units, you risked X / (odds / 100)
+                                    risk = Math.abs(unitValue) / (odds / 100);
                                 }
                             } else if (grade === 'L' || grade === 'Loss') {
                                 // On a loss, the units lost IS the risk
@@ -259,13 +297,16 @@
                             // Push has 0 risk for ROI purposes
                             
                             totalRisk += risk;
+                        } else if ((grade === 'L' || grade === 'Loss') && !isNaN(unitValue)) {
+                            // If no odds available but it's a loss, count the loss as risk
+                            totalRisk += Math.abs(unitValue);
                         }
 
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${p.Date}</td>
                             <td>${p.Pick}</td>
-                            <td>${p.Line}</td>
+                            <td>${oddsValue || 'N/A'}</td>
                             <td><span class="${resultClass}">${grade}</span></td>
                             <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
                         `;
