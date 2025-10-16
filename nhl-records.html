@@ -278,20 +278,24 @@
                         }
                         
                         // Calculate risk for ROI
+                        // For ROI, we need to know how much was risked on each bet
                         if (!isNaN(odds) && !isNaN(unitValue) && unitValue !== 0) {
                             let risk = 0;
                             
                             if (grade === 'W' || grade === 'Win') {
-                                // On a win, calculate how much was risked based on the winnings
+                                // On a win, the unitValue is the PROFIT
+                                // We need to calculate how much was risked to win that profit
                                 if (odds < 0) {
-                                    // Negative odds (favorite): if you won X units, you risked X * (|odds| / 100)
+                                    // Negative odds (favorite): To win X units, you risk X * (|odds| / 100)
+                                    // Example: To win 1 unit at -175, you risk 1.75 units
                                     risk = Math.abs(unitValue) * (Math.abs(odds) / 100);
                                 } else {
-                                    // Positive odds (underdog): if you won X units, you risked X / (odds / 100)
-                                    risk = Math.abs(unitValue) / (odds / 100);
+                                    // Positive odds (underdog): To win X units at +odds, you risk X * (100 / odds)
+                                    // Example: To win 1.5 units at +150, you risk 1 unit
+                                    risk = Math.abs(unitValue) * (100 / odds);
                                 }
                             } else if (grade === 'L' || grade === 'Loss') {
-                                // On a loss, the units lost IS the risk
+                                // On a loss, the units lost IS the risk amount
                                 risk = Math.abs(unitValue);
                             }
                             // Push has 0 risk for ROI purposes
@@ -332,9 +336,15 @@
                     roiElement.textContent = `${roi >= 0 ? '+' : ''}${roi.toFixed(2)}%`;
                     roiElement.classList.add(roi >= 0 ? 'win' : 'loss');
 
-                    console.log('Total Units:', totalUnits.toFixed(2));
-                    console.log('Total Risk:', totalRisk.toFixed(2));
+                    console.log('===== ROI CALCULATION DEBUG =====');
+                    console.log('Total Units Won/Lost:', totalUnits.toFixed(2));
+                    console.log('Total Amount Risked:', totalRisk.toFixed(2));
+                    console.log('ROI Formula: (Total Units / Total Risk) × 100');
                     console.log('ROI:', roi.toFixed(2) + '%');
+                    console.log('Bet Count:', gradedPicks.length);
+                    console.log('Avg Risk per Bet:', (totalRisk / gradedPicks.length).toFixed(2));
+                    console.log('Simple Unit ROI (Units/Bets):', ((totalUnits / gradedPicks.length) * 100).toFixed(2) + '%');
+                    console.log('=================================');
 
                     // CREATE THE IMPROVED CHART AFTER DATA LOADS
                     setTimeout(createImprovedChart, 500);
