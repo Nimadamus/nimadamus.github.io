@@ -102,7 +102,7 @@
     :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
     body {
         margin: 0;
-        padding-top: 95px;
+        padding-top: 110px;
         padding-bottom: 50px;
         background-color: #000;
         background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
@@ -128,7 +128,7 @@
     /* --- ALTERNATIVE: Absolute Positioning Sidebar --- */
     .fixed-sidebar {
         position: absolute;
-        top: 220px; 
+        top: 235px; 
         left: 15px;
         z-index: 9999;
         display: flex;
@@ -177,7 +177,7 @@
     .content-wrapper {
         position: relative; z-index: 10; width: 100%; max-width: 900px;
         margin: 0 auto;
-        padding: 120px 20px 40px 20px;
+        padding: 135px 20px 40px 20px;
         box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
     }
     .header-branding { text-align: center; margin-bottom: 20px; }
@@ -267,7 +267,7 @@
     .caption a { color: var(--glow-color); }
     
     .interactive-dashboard {
-        position: fixed; top: 0; left: 0; width: 100%; height: 95px;
+        position: fixed; top: 0; left: 0; width: 100%; height: 110px;
         background: rgba(10, 15, 25, 0.8); backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(0, 224, 255, 0.4); display: grid;
         grid-template-columns: repeat(4, 1fr); z-index: 1000; box-shadow: 0 5px 30px rgba(0,0,0,0.3);
@@ -290,11 +290,11 @@
     }
 
     @media (max-width: 768px) {
-        body { padding-top: 190px; padding-bottom: 50px; }
+        body { padding-top: 205px; padding-bottom: 50px; }
         .title { font-size: 10vw; } .subtitle { font-size: 4vw; }
         .seo-content h2 { font-size: 24px; }
         .seo-content h3 { font-size: 20px; }
-        .interactive-dashboard { height: 190px; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .interactive-dashboard { height: 205px; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
         .dash-item { border-right: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2); padding: 15px 5px; }
         .dash-item:nth-child(2) { border-right: none; }
         .dash-item:nth-child(3), .dash-item:nth-child(4) { border-bottom: none; }
@@ -674,12 +674,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Get last 24 hours
+        // Get last 7 days
         const now = new Date();
-        const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+        const sevenDaysAgo = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
         
         const recentPicks = gradedPicks
-            .filter(p => parseDate(p.Date) >= yesterday)
+            .filter(p => parseDate(p.Date) >= sevenDaysAgo)
             .sort((a, b) => parseDate(b.Date) - parseDate(a.Date))
             .slice(0, 20);
         
