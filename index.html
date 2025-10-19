@@ -481,31 +481,40 @@
         <p>350% <span class="highlight">BONUS</span></p>
     </a>
 </div>
+
 <!-- PAPA PARSE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-<!-- FINAL SCRIPT - v31 - SCRIPT ERROR CORRECTED - WITH NHL ADDED -->
+
+<!-- FIXED SINGLE SCRIPT - FETCHES ALL 6 SPORTS CORRECTLY -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // --- CONFIGURATION ---
-    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
-    const cycleSpeed = 4000;
+    // --- GOOGLE SHEETS URLs FOR ALL SPORTS ---
+    const SHEET_URLS = {
+        MLB: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv',
+        NFL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv',
+        NCAAF: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv',
+        NHL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv',
+        NBA: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTxvlAT8wT5U2FqF7gGOGErlKdGOSMIqgLzEWXLHIj5dVYlwPOY_Pp56UXnMi-n3pZl3AqYiMqoS92g/pub?output=csv',
+        Soccer: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
+    };
 
     // --- ELEMENT SELECTORS ---
     const recordDashItem = document.getElementById('dash-record');
-    const recordH3 = recordDashItem.querySelector('h3');
-    const recordP = recordDashItem.querySelector('p');
+    const recordH3 = recordDashItem?.querySelector('h3');
+    const recordP = recordDashItem?.querySelector('p');
     const freePickDisplay = document.querySelector('#dash-free-pick p');
     const tickerContent = document.getElementById('ticker-content');
     
-    if (!recordDashItem || !freePickDisplay || !tickerContent) {
-        console.error("Critical dashboard elements could not be found. Aborting script.");
+    if (!recordDashItem || !recordH3 || !recordP || !freePickDisplay || !tickerContent) {
+        console.error("Critical dashboard elements missing!");
         return;
     }
     
+    // Smooth transitions
     recordH3.style.transition = 'opacity 0.4s ease-in-out';
     recordP.style.transition = 'opacity 0.4s ease-in-out';
 
-    // --- HELPER FUNCTION ---
+    // --- HELPER FUNCTIONS ---
     function parseDate(dateStr) {
         if (!dateStr || typeof dateStr !== 'string') return null;
         const parts = dateStr.trim().split(/[-/]/);
@@ -514,7 +523,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let day = parseInt(parts[1]);
             let year = parseInt(parts[2]);
             if (year < 100) year += 2000;
-
             if (year > 2000 && month >= 0 && month < 12 && day > 0 && day <= 31) {
                 return new Date(year, month, day);
             }
@@ -522,366 +530,234 @@ document.addEventListener('DOMContentLoaded', function() {
         return null;
     }
     
-    // --- MAIN EXECUTION ---
-    function run() {
-        Papa.parse(googleSheetUrl, {
-            download: true,
-            header: true,
-            skipEmptyLines: 'greedy',
-            transformHeader: header => header.trim(),
-            complete: function(results) {
-                const allPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
-
-                if (allPicks.length === 0) {
-                    displayDefaults();
-                    return;
-                }
-                
-                processAndDisplayRecords(allPicks);
-                updateDailyPick(allPicks);
-                updateTicker(allPicks);
-            },
-            error: function(error) {
-                console.error("Papa Parse Error:", error);
-                displayError(error.message);
-            }
-        });
-    }
-
-    // --- RECORD PROCESSING LOGIC WITH NHL ADDED ---
-    function processAndDisplayRecords(picks) {
-        // Fetch data from all sports
-        const mlbUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
-        const nflUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv';
-        const ncaafUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
-        const nhlUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv';
-        
-        // Calculate records for MLB (current picks)
-        const mlbRecord = calculateSportRecord(picks);
-        
-        // Fetch other sports data
-        Promise.all([
-            fetch(nflUrl).then(r => r.text()).then(csvText => {
-                const nflPicks = Papa.parse(csvText, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data.filter(p => p.Pick && p.Pick.trim() !== '');
-                return calculateSportRecord(nflPicks);
-            }).catch(() => ({ w: 0, l: 0, p: 0, units: 0.0 })),
-            
-            fetch(ncaafUrl).then(r => r.text()).then(csvText => {
-                const ncaafPicks = Papa.parse(csvText, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data.filter(p => p.Pick && p.Pick.trim() !== '');
-                return calculateSportRecord(ncaafPicks);
-            }).catch(() => ({ w: 0, l: 0, p: 0, units: 0.0 })),
-            
-            fetch(nhlUrl).then(r => r.text()).then(csvText => {
-                const nhlPicks = Papa.parse(csvText, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data.filter(p => p.Pick && p.Pick.trim() !== '');
-                return calculateSportRecord(nhlPicks);
-            }).catch(() => ({ w: 0, l: 0, p: 0, units: 0.0 }))
-        ]).then(([nflRecord, ncaafRecord, nhlRecord]) => {
-            
-            const displayData = { 
-                'MLB': mlbRecord, 
-                'NFL': nflRecord, 
-                'NCAAF': ncaafRecord,
-                'NHL': nhlRecord,
-                'Overall': {
-                    w: mlbRecord.w + nflRecord.w + ncaafRecord.w + nhlRecord.w,
-                    l: mlbRecord.l + nflRecord.l + ncaafRecord.l + nhlRecord.l,
-                    p: mlbRecord.p + nflRecord.p + ncaafRecord.p + nhlRecord.p,
-                    units: mlbRecord.units + nflRecord.units + ncaafRecord.units + nhlRecord.units
-                }
-            };
-            
-            const sportsToCycle = Object.keys(displayData);
-            let currentIndex = 0;
-            let intervalId = null;
-
-            function updateDisplay() {
-                if (sportsToCycle.length === 0) return;
-                const sportName = sportsToCycle[currentIndex];
-                const data = displayData[sportName];
-
-                const unitsString = `${data.units >= 0 ? '+' : ''}${data.units.toFixed(2)} Units`;
-                const recordString = `${data.w}-${data.l}-${data.p}`;
-
-                recordH3.style.opacity = '0';
-                recordP.style.opacity = '0';
-
-                setTimeout(() => {
-                    recordH3.textContent = `${sportName} Record`;
-                    recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
-                    recordH3.style.opacity = '1';
-                    recordP.style.opacity = '1';
-                }, 400);
-
-                currentIndex = (currentIndex + 1) % sportsToCycle.length;
-            }
-
-            if (intervalId) clearInterval(intervalId);
-            
-            updateDisplay();
-            intervalId = setInterval(updateDisplay, cycleSpeed);
-        });
-    }
-    
-    // Helper function to calculate record for any sport
-    function calculateSportRecord(picks) {
+    function calculateRecord(picks) {
         const record = { w: 0, l: 0, p: 0, units: 0.0 };
-        
-        for (const p of picks) {
-            const result = p.Result ? p.Result.trim().toUpperCase() : '';
-            const unitChange = parseFloat(p.Units);
-
-            if (result !== '' && !isNaN(unitChange)) {
+        for (const pick of picks) {
+            const result = (pick.Result || '').trim().toUpperCase();
+            const unitChange = parseFloat(pick.Units);
+            if (result && !isNaN(unitChange)) {
                 if (result === 'W' || result === 'WIN') record.w++;
                 else if (result === 'L' || result === 'LOSS') record.l++;
                 else if (result === 'P' || result === 'PUSH') record.p++;
-                
                 record.units += unitChange;
             }
         }
-        
         return record;
     }
-    
-    // --- DAILY PICK AND TICKER LOGIC ---
-    function updateDailyPick(picks) {
-        const gradedPicks = picks.filter(p => p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date));
+
+    // --- FETCH ALL SPORTS DATA ---
+    async function fetchAllSportsRecords() {
+        const sportsData = {};
+        
+        console.log("Fetching all sports data...");
+        
+        for (const [sport, url] of Object.entries(SHEET_URLS)) {
+            try {
+                const response = await fetch(url);
+                const csvText = await response.text();
+                const parsed = Papa.parse(csvText, {
+                    header: true,
+                    skipEmptyLines: 'greedy',
+                    transformHeader: h => h.trim()
+                });
+                
+                const picks = parsed.data.filter(p => p.Pick && p.Pick.trim() !== '');
+                const record = calculateRecord(picks);
+                sportsData[sport] = {
+                    record: record,
+                    picks: picks
+                };
+                
+                console.log(`${sport}: ${record.w}-${record.l}-${record.p}, ${record.units.toFixed(2)} units`);
+                
+            } catch (error) {
+                console.error(`Error fetching ${sport}:`, error);
+                sportsData[sport] = {
+                    record: { w: 0, l: 0, p: 0, units: 0.0 },
+                    picks: []
+                };
+            }
+        }
+        
+        // Calculate OVERALL record
+        const overall = { w: 0, l: 0, p: 0, units: 0.0 };
+        for (const sport of Object.values(sportsData)) {
+            overall.w += sport.record.w;
+            overall.l += sport.record.l;
+            overall.p += sport.record.p;
+            overall.units += sport.record.units;
+        }
+        
+        console.log(`OVERALL: ${overall.w}-${overall.l}-${overall.p}, ${overall.units.toFixed(2)} units`);
+        
+        sportsData['Overall'] = {
+            record: overall,
+            picks: []
+        };
+        
+        return sportsData;
+    }
+
+    // --- CYCLE THROUGH RECORDS ---
+    function startRecordCycling(sportsData) {
+        const sportNames = ['Overall', 'MLB', 'NFL', 'NCAAF', 'NHL', 'NBA', 'Soccer'];
+        let currentIndex = 0;
+
+        function updateDisplay() {
+            const sportName = sportNames[currentIndex];
+            const data = sportsData[sportName];
+            
+            if (!data) {
+                currentIndex = (currentIndex + 1) % sportNames.length;
+                return;
+            }
+            
+            const record = data.record;
+            const unitsString = `${record.units >= 0 ? '+' : ''}${record.units.toFixed(2)} Units`;
+            const recordString = `${record.w}-${record.l}-${record.p}`;
+
+            recordH3.style.opacity = '0';
+            recordP.style.opacity = '0';
+
+            setTimeout(() => {
+                recordH3.textContent = `${sportName} Record`;
+                recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
+                recordH3.style.opacity = '1';
+                recordP.style.opacity = '1';
+            }, 400);
+
+            currentIndex = (currentIndex + 1) % sportNames.length;
+        }
+
+        updateDisplay();
+        setInterval(updateDisplay, 4000);
+    }
+
+    // --- UPDATE DAILY PICK ---
+    function updateDailyPick(allPicks) {
+        const gradedPicks = allPicks.filter(p => 
+            p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date)
+        );
         
         if (gradedPicks.length > 0) {
             gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
-            const latestPick = gradedPicks[0];
-            
-            if (latestPick && latestPick.Line) {
-                freePickDisplay.textContent = `${latestPick.Pick.trim()} (${latestPick.Line.trim()})`;
-                return;
-            }
+            const latest = gradedPicks[0];
+            freePickDisplay.textContent = latest.Line ? 
+                `${latest.Pick.trim()} (${latest.Line.trim()})` : 
+                latest.Pick.trim();
+            return;
         }
-
-        // If no graded picks or fallback needed, show pending picks
-        const pendingPicks = picks.filter(p => (!p.Result || p.Result.trim() === '') && p.Date && parseDate(p.Date)).sort((a,b) => parseDate(a.Date) - parseDate(b.Date));
-        if (pendingPicks.length > 0) {
-            const nextPick = pendingPicks[0];
-            if (nextPick && nextPick.Line) {
-                freePickDisplay.textContent = `${nextPick.Pick.trim()} (${nextPick.Line.trim()})`;
-                return;
-            }
-        }
-
-        // Final fallback - show any recent pick
-        if (picks.length > 0) {
-            const recentPick = picks[picks.length - 1];
-            if (recentPick && recentPick.Pick) {
-                freePickDisplay.textContent = recentPick.Pick.trim();
-                return;
-            }
-        }
-
-        freePickDisplay.textContent = 'Loading...';
-    }
-
-    // --- TICKER LOGIC - ALL SPORTS LAST 24 HOURS ---
-    function updateTicker(picks) {
-        // Fetch all sports data
-        const mlbUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
-        const nflUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv';
-        const ncaafUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
-        const nhlUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv';
-        const soccerUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv';
         
-        Promise.all([
-            fetch(mlbUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data),
-            fetch(nflUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data),
-            fetch(ncaafUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data),
-            fetch(nhlUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data),
-            fetch(soccerUrl).then(r => r.text()).then(csv => Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() }).data)
-        ]).then(([mlbPicks, nflPicks, ncaafPicks, nhlPicks, soccerPicks]) => {
-            
-            // Combine all picks
-            const allPicks = [
-                ...mlbPicks.map(p => ({...p, sport: 'MLB'})),
-                ...nflPicks.map(p => ({...p, sport: 'NFL'})),
-                ...ncaafPicks.map(p => ({...p, sport: 'NCAAF'})),
-                ...nhlPicks.map(p => ({...p, sport: 'NHL'})),
-                ...soccerPicks.map(p => ({...p, sport: 'SOCCER'}))
-            ];
-            
-            // Filter for graded picks with dates
-            const gradedPicks = allPicks.filter(p => {
-                const hasResult = p.Result && p.Result.trim() !== '';
-                const hasDate = p.Date && parseDate(p.Date);
-                return hasResult && hasDate;
-            });
-            
-            if (gradedPicks.length === 0) {
-                tickerContent.innerHTML = '<div class="ticker__item">Loading recent results...</div>';
-                return;
+        freePickDisplay.textContent = 'Check back soon!';
+    }
+
+    // --- UPDATE TICKER ---
+    function updateTicker(sportsData) {
+        const allPicks = [];
+        
+        for (const [sport, data] of Object.entries(sportsData)) {
+            if (sport === 'Overall') continue;
+            for (const pick of data.picks) {
+                allPicks.push({ ...pick, sport });
             }
-            
-            // Filter for last 24 hours
-            const now = new Date();
-            const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-            
-            const recentPicks = gradedPicks.filter(p => {
-                const pickDate = parseDate(p.Date);
-                return pickDate && pickDate >= twentyFourHoursAgo;
-            }).sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
-            
-            // If no picks in last 24 hours, show most recent 10
-            const displayPicks = recentPicks.length > 0 ? recentPicks.slice(0, 20) : gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date)).slice(0, 10);
-            
-            let tickerHTML = '';
-            displayPicks.forEach((pick, index) => {
-                const result = pick.Result.trim().toUpperCase();
-                const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
-                const gradeText = (result === 'W' || result === 'WIN') ? 'W' : (result === 'P' || result === 'PUSH') ? 'P' : 'L';
-                
-                tickerHTML += `
-                    <div class="ticker__item">
-                        <span style="color: #00e0ff; font-weight: 600;">${pick.sport}</span>
-                        <span class="pick-text">${pick.Pick.trim()}</span>
-                        <span class="grade ${gradeClass}">${gradeText}</span>
-                    </div>
-                `;
-                
-                if (index < displayPicks.length - 1) {
-                    tickerHTML += '<span class="ticker__separator">•</span>';
-                }
-            });
-            
-            tickerContent.innerHTML = tickerHTML;
-            
-        }).catch(error => {
-            console.error('Error fetching ticker data:', error);
-            tickerContent.innerHTML = '<div class="ticker__item">Error loading results...</div>';
-        });
-    }
-
-    // --- UTILITY FUNCTIONS ---
-    function displayDefaults() {
-        recordH3.textContent = 'Verified Record';
-        recordP.innerHTML = 'Loading...';
-        freePickDisplay.textContent = 'Loading...';
-        tickerContent.innerHTML = '<div class="ticker__item">Loading recent results...</div>';
-    }
-
-    function displayError(message) {
-        recordH3.textContent = 'Error';
-        recordP.innerHTML = 'Unable to load data';
-        freePickDisplay.textContent = 'Error loading picks';
-        tickerContent.innerHTML = `<div class="ticker__item">Error: ${message}</div>`;
-    }
-
-    // --- START THE APP ---
-    run();
-});
-</script>
-
-<!-- BEGIN: BetLegend minimal enhancer (autodetect + Soccer wired) -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  function findTileByHeading(textRegex) {
-    const tiles = document.querySelectorAll('.dash-item, a.dash-item, div.dash-item');
-    for (const t of tiles) {
-      const h3 = t.querySelector('h3');
-      if (h3 && textRegex.test(h3.textContent.trim())) return t;
-    }
-    return null;
-  }
-  const recTile = document.getElementById('dash-record') || findTileByHeading(/verified\s*record/i);
-  const subTile = document.getElementById('dash-subscribe') || findTileByHeading(/subscribe/i);
-
-  (function() {
-    if (!subTile) return;
-    const labelP = subTile.querySelector('p');
-    if (!labelP) return;
-    const plans = [
-      { label:'Daily Pass',   price:'$25',  href:'https://buy.stripe.com/28E7sLdVkdye8f86m5grS04' },
-      { label:'Weekly Pass',  price:'$79',  href:'https://buy.stripe.com/6oUeVd6sSbq6gLE4dXgrS08' },
-      { label:'Monthly Pass', price:'$149', href:'https://buy.stripe.com/fZu6oH4kK1Pwbrk39TgrS07' },
-      { label:'Yearly Pass',  price:'$750', href:'https://buy.stripe.com/bJe5kD9F43XE2UOh0JgrS03' }
-    ];
-    let i = 0;
-    function rotate() {
-      const p = plans[i];
-      if (subTile.tagName.toLowerCase() === 'a') subTile.href = p.href;
-      labelP.textContent = p.label + ' ' + p.price;
-      i = (i + 1) % plans.length;
-    }
-    rotate();
-    setInterval(rotate, 4000);
-  })();
-
-  (function() {
-    if (!recTile) return;
-    const h3 = recTile.querySelector('h3');
-    const p  = recTile.querySelector('p');
-    if (!h3 || !p) return;
-    h3.style.transition = 'opacity .35s ease';
-    p.style.transition  = 'opacity .35s ease';
-
-    const FEEDS = {
-      MLB:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv',
-      NFL:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv',
-      NCAAF: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv',
-      NHL:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv',
-      SOCCER: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
-    };
-
-    function parseCSV(csv) {
-      const lines = csv.split(/\r?\n/).filter(Boolean);
-      if (!lines.length) return [];
-      const headers = lines[0].split(',').map(h => h.trim());
-      const out = [];
-      for (let i=1;i<lines.length;i++) {
-        const row = lines[i].split(',');
-        const o = {};
-        headers.forEach((h,idx)=> o[h] = (row[idx]||'').trim());
-        out.push(o);
-      }
-      return out;
-    }
-    function calcRecord(rows) {
-      const r = {w:0,l:0,p:0,units:0};
-      for (const x of rows) {
-        const res = (x.Result||'').trim().toUpperCase();
-        const u = parseFloat(x.Units);
-        if (res && !isNaN(u)) {
-          if (res==='W'||res==='WIN') r.w++;
-          else if (res==='L'||res==='LOSS') r.l++;
-          else if (res==='P'||res==='PUSH') r.p++;
-          r.units += u;
         }
-      }
-      return r;
+        
+        const gradedPicks = allPicks.filter(p => 
+            p.Result && p.Result.trim() !== '' && p.Date && parseDate(p.Date)
+        );
+        
+        if (gradedPicks.length === 0) {
+            tickerContent.innerHTML = '<div class="ticker__item">Loading recent results...</div>';
+            return;
+        }
+        
+        // Get last 24 hours
+        const now = new Date();
+        const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+        
+        const recentPicks = gradedPicks
+            .filter(p => parseDate(p.Date) >= yesterday)
+            .sort((a, b) => parseDate(b.Date) - parseDate(a.Date))
+            .slice(0, 20);
+        
+        const displayPicks = recentPicks.length > 0 ? recentPicks : 
+            gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date)).slice(0, 10);
+        
+        let html = '';
+        displayPicks.forEach((pick, i) => {
+            const result = pick.Result.trim().toUpperCase();
+            const gradeClass = (result === 'W' || result === 'WIN') ? 'win' : 'loss';
+            const gradeText = (result === 'W' || result === 'WIN') ? 'W' : 
+                             (result === 'P' || result === 'PUSH') ? 'P' : 'L';
+            
+            html += `
+                <div class="ticker__item">
+                    <span style="color: #00e0ff; font-weight: 600;">${pick.sport}</span>
+                    <span class="pick-text">${pick.Pick.trim()}</span>
+                    <span class="grade ${gradeClass}">${gradeText}</span>
+                </div>
+            `;
+            
+            if (i < displayPicks.length - 1) {
+                html += '<span class="ticker__separator">•</span>';
+            }
+        });
+        
+        tickerContent.innerHTML = html;
     }
 
-    const entries = Object.entries(FEEDS);
-    Promise.all(entries.map(([sport, url]) => url
-      ? fetch(url).then(r=>r.text()).then(csv => ({sport, rows: parseCSV(csv)})).catch(()=>({sport, rows:[]}))
-      : Promise.resolve({sport, rows:[]})
-    )).then(list => {
-      const recs = {};
-      list.forEach(d => recs[d.sport] = calcRecord(d.rows));
-      recs['Overall'] = Object.values(recs).reduce((a,r)=>({w:a.w+r.w,l:a.l+r.l,p:a.p+r.p,units:a.units+r.units}),{w:0,l:0,p:0,units:0});
+    // --- ROTATE SUBSCRIPTION PLANS ---
+    function rotateSubscriptionPlans() {
+        const subTile = document.querySelector('a[href*="stripe.com"][class*="dash-item"]');
+        if (!subTile) return;
+        
+        const labelP = subTile.querySelector('p');
+        if (!labelP) return;
+        
+        const plans = [
+            { label:'Daily Pass',   price:'$25',  href:'https://buy.stripe.com/28E7sLdVkdye8f86m5grS04' },
+            { label:'Weekly Pass',  price:'$79',  href:'https://buy.stripe.com/6oUeVd6sSbq6gLE4dXgrS08' },
+            { label:'Monthly Pass', price:'$149', href:'https://buy.stripe.com/fZu6oH4kK1Pwbrk39TgrS07' },
+            { label:'Yearly Pass',  price:'$750', href:'https://buy.stripe.com/bJe5kD9F43XE2UOh0JgrS03' }
+        ];
+        
+        let i = 0;
+        function rotate() {
+            const p = plans[i];
+            subTile.href = p.href;
+            labelP.textContent = p.label + ' ' + p.price;
+            i = (i + 1) % plans.length;
+        }
+        
+        rotate();
+        setInterval(rotate, 4000);
+    }
 
-      const order = Object.keys(recs);
-      let idx = 0;
-      function cycle() {
-        const s = order[idx];
-        const r = recs[s];
-        h3.style.opacity='0'; p.style.opacity='0';
-        setTimeout(()=>{
-          h3.textContent = s + ' Record';
-          p.innerHTML = `${r.w}-${r.l}-${r.p}<br><span class="highlight">${(r.units>=0?'+':'')}${r.units.toFixed(2)} Units</span>`;
-          h3.style.opacity='1'; p.style.opacity='1';
-        }, 300);
-        idx = (idx + 1) % order.length;
-      }
-      cycle();
-      setInterval(cycle, 4000);
-    }).catch(()=>{});
-  })();
+    // --- MAIN EXECUTION ---
+    async function init() {
+        try {
+            const sportsData = await fetchAllSportsRecords();
+            
+            startRecordCycling(sportsData);
+            
+            const allPicks = Object.values(sportsData)
+                .filter(d => d.picks)
+                .flatMap(d => d.picks);
+            updateDailyPick(allPicks);
+            
+            updateTicker(sportsData);
+            
+            rotateSubscriptionPlans();
+            
+        } catch (error) {
+            console.error("Initialization error:", error);
+            recordP.innerHTML = 'Error loading data';
+        }
+    }
+
+    init();
 });
 </script>
-<!-- END: BetLegend minimal enhancer (autodetect + Soccer wired) -->
+
 </body>
-</html>
+</html
