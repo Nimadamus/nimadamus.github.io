@@ -617,13 +617,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const record = data.record;
             const unitsString = `${record.units >= 0 ? '+' : ''}${record.units.toFixed(2)} Units`;
             const recordString = `${record.w}-${record.l}-${record.p}`;
+            const unitsColor = record.units >= 0 ? '#39FF14' : '#FF3131';
 
             recordH3.style.opacity = '0';
             recordP.style.opacity = '0';
 
             setTimeout(() => {
                 recordH3.textContent = `${sportName} Record`;
-                recordP.innerHTML = `${recordString} <br> <span class="highlight">${unitsString}</span>`;
+                recordP.innerHTML = `${recordString} <br> <span style="color: ${unitsColor}; font-family: 'Orbitron', sans-serif;">${unitsString}</span>`;
                 recordH3.style.opacity = '1';
                 recordP.style.opacity = '1';
             }, 400);
