@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BETLEGEND - The Universe of Probabilities Has Just Been Hacked</title>
+    <title>BETLEGEND - The Simulation Has Been Hacked</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,7 @@
             background-color: var(--bg-color); 
             color: var(--text-color); 
             overflow-x: hidden;
-            padding-top: 140px;
+            padding-top: 120px;
         }
         
         /* Background */
@@ -129,12 +129,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 25px;
-            padding: 15px 5%;
+            gap: 18px;
+            padding: 15px 5% 15px 25%;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0, 224, 255, 0.3);
             z-index: 999;
+            flex-wrap: nowrap;
+        }
+        
+        .nav-links a, .dropdown {
+            display: inline-flex;
+            align-items: center;
         }
         
         .nav-links a {
@@ -142,13 +148,14 @@
             text-decoration: none;
             color: var(--text-color);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             padding: 8px 10px;
             border-radius: 5px;
             transition: all 0.3s ease;
             text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            white-space: nowrap;
         }
         
         .nav-links a:hover, .nav-links a.active {
@@ -156,10 +163,88 @@
             text-shadow: 0 0 8px var(--neon-gold);
         }
 
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .dropdown .dropbtn {
+            font-family: var(--font-secondary);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            background: none;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .dropdown:hover .dropbtn {
+            color: var(--neon-gold);
+            text-shadow: 0 0 8px var(--neon-gold);
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            min-width: 200px;
+            box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+            z-index: 1000;
+            border: 2px solid rgba(0, 224, 255, 0.5);
+            border-radius: 10px;
+            padding: 15px 0;
+            margin-top: 10px;
+        }
+        
+        .dropdown-content a {
+            color: var(--neon-cyan);
+            padding: 14px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            text-align: left;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            border-left: 3px solid transparent;
+        }
+        
+        .dropdown-content a:hover {
+            background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+            color: #fff;
+            padding-left: 30px;
+            text-shadow: 0 0 10px var(--glow-color);
+            border-left-color: var(--neon-cyan);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: dropdownFade 0.3s ease;
+        }
+        
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Special Offer Box - Top Right */
         .special-offer-box {
             position: fixed;
-            top: 160px;
+            top: 200px;
             right: 30px;
             width: 280px;
             text-align: center;
@@ -199,7 +284,7 @@
         /* Subscription Plans Ticker */
         .plans-ticker {
             position: fixed;
-            top: 160px;
+            top: 200px;
             left: 30px;
             width: 280px;
             padding: 20px;
@@ -269,7 +354,7 @@
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 40px 20px;
+            padding: 10px 20px 40px;
         }
         
         .hero h1 {
@@ -279,6 +364,7 @@
             text-shadow: 0 0 20px rgba(234, 248, 255, 0.5);
             line-height: 1.2;
             text-transform: uppercase;
+            margin-top: 20px;
             margin-bottom: 1.5rem;
             color: #fff;
         }
@@ -305,7 +391,7 @@
             font-weight: 400;
             font-size: 20px;
             color: #c9fdff;
-            margin: 12px 0;
+            margin: 8px 0;
             letter-spacing: 3px;
             text-transform: uppercase;
             text-shadow:
@@ -318,7 +404,7 @@
         .curry-section {
             width: 100%;
             max-width: 600px;
-            margin: 40px auto;
+            margin: 0 auto 25px;
         }
         
         .video-container {
@@ -373,16 +459,14 @@
         /* Affiliate Banner - Sitting on ticker */
         .affiliate-banner {
             position: fixed;
-            bottom: 48px;
+            bottom: 80px;
             left: 20px;
             width: 320px;
             text-align: center;
             padding: 20px;
             background: linear-gradient(135deg, #000033, #001166, #000033);
             border: 2px solid var(--neon-cyan);
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            border-bottom: none;
+            border-radius: 12px;
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
             z-index: 1002;
         }
@@ -493,7 +577,7 @@
                 padding: 20px 0;
             }
             body {
-                padding-top: 120px;
+                padding-top: 100px;
             }
             .hero h1 { font-size: 3rem; }
             .tagline { font-size: 16px; }
@@ -506,7 +590,11 @@
                 gap: 10px;
             }
             .nav-links a {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
+                padding: 6px 8px;
+            }
+            .dropdown .dropbtn {
+                font-size: 0.8rem;
                 padding: 6px 8px;
             }
             .affiliate-banner { 
@@ -529,14 +617,54 @@
     </div>
     
     <nav class="nav-links">
-        <a href="index.html" class="active">Home</a>
-        <a href="blog-page8.html">Picks & Analysis</a>
-        <a href="betlegend-verified-records.html">Records</a>
-        <a href="sports.html">Sports</a>
+        <a href="#picks" style="color: white; text-decoration: none; transition: color 0.3s ease;">PICKS & ANALYSIS</a>
+        
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="betlegend-verified-records.html">MLB Records</a>
+                <a href="nfl-records.html">NFL Records</a>
+                <a href="ncaaf-records.html">NCAAF Records</a>
+                <a href="nhl-records.html">NHL Records</a>
+                <a href="nba-records.html">NBA Records</a>
+                <a href="soccer-records.html">Soccer Records</a>
+            </div>
+        </div>
+        
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+            </div>
+        </div>
+        
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-101.html">Betting 101</a>
+            </div>
+        </div>
+        
         <a href="proofofpicks.html">Proof</a>
         <a href="news.html">News</a>
         <a href="featured-game-of-the-day.html">Game of the Day</a>
         <a href="contact.html">Contact</a>
+        
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+            </div>
+        </div>
     </nav>
 
     <div class="special-offer-box">
@@ -556,16 +684,17 @@
         <main>
             <section class="hero">
                 <div>
-                    <h1>The Universe of Probabilities<br>Has Just Been <span>Hacked.</span></h1>
-                    <div class="tagline">Restoring Integrity to a Shady Industry</div>
-                    <div class="tagline">100% Transparency - See Every Pick Ever Made</div>
-                    <div class="tagline">Get Daily Proven +EV Picks</div>
+                    <h1>The Simulation<br>Has Just Been <span>Hacked.</span></h1>
                     
                     <div class="curry-section">
                         <div class="video-container">
                             <img src="https://nimadamus.github.io/curry.gif" alt="BetLegend" loading="lazy">
                         </div>
                     </div>
+                    
+                    <div class="tagline">Restoring Integrity to a Shady Industry</div>
+                    <div class="tagline">100% Transparency - See Every Pick Ever Made</div>
+                    <div class="tagline">Get Daily Proven +EV Picks</div>
                     
                     <a href="blog-page8.html" class="btn-primary">GET TODAY'S FREE PICK</a>
                 </div>
