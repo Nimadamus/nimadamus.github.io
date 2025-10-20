@@ -683,9 +683,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (gradedPicks.length > 0) {
             gradedPicks.sort((a, b) => parseDate(b.Date) - parseDate(a.Date));
             const latest = gradedPicks[0];
-            freePickDisplay.textContent = latest.Line ? 
-                `${latest.Pick.trim()} (${latest.Line.trim()})` : 
-                latest.Pick.trim();
+            
+            // Check for Line or Odds column
+            const odds = latest.Line || latest.Odds || latest.line || latest.odds;
+            
+            if (odds && odds.trim()) {
+                freePickDisplay.textContent = `${latest.Pick.trim()} (${odds.trim()})`;
+            } else {
+                freePickDisplay.textContent = latest.Pick.trim();
+            }
             return;
         }
         
