@@ -185,49 +185,60 @@
     .title .highlight { color: var(--glow-color); }
     .subtitle { font-size: 20px; color: #ccc; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; font-family: 'Roboto', sans-serif; }
     
-    /* NEW TAGLINES SECTION */
+    /* NEW FUTURISTIC TAGLINES WITH FLASHING NEON */
     .taglines {
         text-align: center;
-        margin: 25px 0 35px 0;
-        max-width: 800px;
+        margin: 30px 0 40px 0;
+        max-width: 900px;
     }
     .tagline {
-        font-size: 18px;
-        color: var(--glow-color);
-        font-weight: 700;
-        margin: 12px 0;
-        padding: 15px 25px;
-        border: 2px solid var(--glow-color);
-        border-radius: 8px;
-        background: rgba(0, 224, 255, 0.05);
-        text-shadow: 0 0 10px var(--glow-color);
-        box-shadow: 0 0 20px rgba(0, 224, 255, 0.3), inset 0 0 20px rgba(0, 224, 255, 0.1);
+        font-size: 24px;
+        color: #00ffff;
+        font-weight: 900;
+        margin: 18px 0;
+        padding: 0;
+        border: none;
+        background: transparent;
+        text-shadow: 
+            0 0 10px #00ffff,
+            0 0 20px #00ffff,
+            0 0 30px #00ffff,
+            0 0 40px #00ffff,
+            0 0 70px #00ffff;
         font-family: 'Orbitron', sans-serif;
-        letter-spacing: 1px;
-    }
-    .tagline.emphasis {
-        font-size: 16px;
-        border-color: rgba(0, 224, 255, 0.6);
-        background: rgba(0, 224, 255, 0.08);
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        animation: neonFlash 2s ease-in-out infinite;
+        position: relative;
     }
     
-    /* SEO Content Section */
-    .seo-content {
-        text-align: center;
-        margin-bottom: 30px;
-        max-width: 700px;
+    @keyframes neonFlash {
+        0%, 100% {
+            text-shadow: 
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 30px #00ffff,
+                0 0 40px #00ffff,
+                0 0 70px #00ffff;
+            opacity: 1;
+        }
+        50% {
+            text-shadow: 
+                0 0 5px #00ffff,
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 80px #00ffff,
+                0 0 120px #00ffff;
+            opacity: 0.9;
+        }
     }
-    .seo-content h2 {
-        font-size: 32px;
-        color: var(--glow-color);
-        margin: 20px 0 15px 0;
-        font-weight: 700;
-    }
-    .seo-content h3 {
-        font-size: 24px;
-        color: #fff;
-        margin: 15px 0;
-        font-weight: 500;
+    
+    .tagline.emphasis {
+        font-size: 20px;
+        animation: neonFlash 2.5s ease-in-out infinite;
+        animation-delay: 0.5s;
+        letter-spacing: 3px;
     }
     
     /* FAQ Section */
@@ -318,10 +329,8 @@
     @media (max-width: 768px) {
         body { padding-top: 205px; padding-bottom: 50px; }
         .title { font-size: 10vw; } .subtitle { font-size: 4vw; }
-        .seo-content h2 { font-size: 24px; }
-        .seo-content h3 { font-size: 20px; }
-        .tagline { font-size: 16px; padding: 12px 20px; }
-        .tagline.emphasis { font-size: 14px; }
+        .tagline { font-size: 18px; padding: 15px 20px; letter-spacing: 2px; }
+        .tagline.emphasis { font-size: 15px; }
         .interactive-dashboard { height: 205px; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
         .dash-item { border-right: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2); padding: 15px 5px; }
         .dash-item:nth-child(2) { border-right: none; }
@@ -401,6 +410,7 @@
     <div class="taglines">
         <div class="tagline">RESTORING INTEGRITY TO A SHADY INDUSTRY</div>
         <div class="tagline emphasis">100% TRANSPARENCY - SEE EVERY PICK THAT HAS EVER BEEN MADE IN THE ENTIRE HISTORY OF THIS SITE</div>
+        <div class="tagline">GET DAILY PROVEN +EV PICKS</div>
     </div>
     
     <nav class="nav-links" aria-label="Main Navigation">
@@ -457,12 +467,6 @@
     </div>
     <div class="caption">
         Powered by BetLegend Pro model - <a href="betlegend-verified-records.html" title="View Complete Verified Betting History">See Complete Verified Betting History</a>
-    </div>
-
-    <!-- SEO Content Section -->
-    <div class="seo-content">
-        <h2>Free NFL Picks Today | Expert MLB &amp; College Football Predictions</h2>
-        <h3>Get Today's Best Sports Betting Picks with Verified Records</h3>
     </div>
 
     <!-- FAQ Section for SEO -->
