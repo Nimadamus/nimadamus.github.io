@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"/>
-<title>BetLegend News | Latest Sports Betting Headlines & Analysis</title><meta content="Your source for the latest sports betting news. Get breaking headlines on market regulations, industry moves, game analysis, and major sports stories from around the world." name="description"/>
-<meta content="Sports Betting, News, Updates, Regulation, MLB, NFL, NBA, WNBA, NWSL, College Sports, AI Sports Betting, Player Props, Moneyball 2.0" name="keywords"/><style>
-    body {
-      background-color: #000;
-      color: white;
-      font-family: Rubik, sans-serif;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 30px 40px;
-    }
-  </style>
+<title>BetLegend News | Latest Sports Betting Headlines & Analysis</title>
+<meta content="Your source for the latest sports betting news. Get breaking headlines on market regulations, industry moves, game analysis, and major sports stories from around the world." name="description"/>
+<meta content="Sports Betting, News, Updates, Regulation, MLB, NFL, NBA, WNBA, NWSL, College Sports, AI Sports Betting, Player Props, Moneyball 2.0" name="keywords"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -31,17 +25,365 @@
   ]
 }
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+            --font-news: 'Rubik', sans-serif;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: var(--font-news);
+            background-color: var(--bg-color);
+            color: white;
+            overflow-x: hidden;
+            padding-top: 140px;
+        }
+
+        /* Logo */
+        .logo-container {
+            position: fixed;
+            top: 20px;
+            left: 40px;
+            z-index: 1000;
+        }
+        
+        .logo-container a { 
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.4);
+        }
+        
+        .logo-container span { 
+            color: var(--neon-cyan);
+            text-shadow: 
+                0 0 15px rgba(0, 255, 255, 1),
+                0 0 30px rgba(0, 255, 255, 0.8),
+                0 0 50px rgba(0, 255, 255, 0.6);
+        }
+
+        /* Navigation */
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            padding: 15px 5% 15px 5%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+            z-index: 999;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a, .dropdown {
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-family: var(--font-secondary);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            white-space: nowrap;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--neon-gold);
+            text-shadow: 0 0 8px var(--neon-gold);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .dropdown .dropbtn {
+            font-family: var(--font-secondary);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            background: none;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .dropdown:hover .dropbtn {
+            color: var(--neon-gold);
+            text-shadow: 0 0 8px var(--neon-gold);
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            min-width: 200px;
+            box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+            z-index: 1000;
+            border: 2px solid rgba(0, 224, 255, 0.5);
+            border-radius: 10px;
+            padding: 15px 0;
+            margin-top: 10px;
+        }
+        
+        .dropdown-content a {
+            color: var(--neon-cyan);
+            padding: 14px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            text-align: left;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            border-left: 3px solid transparent;
+        }
+        
+        .dropdown-content a:hover {
+            background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+            color: #fff;
+            padding-left: 30px;
+            text-shadow: 0 0 10px var(--glow-color);
+            border-left-color: var(--neon-cyan);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: dropdownFade 0.3s ease;
+        }
+        
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* News Content */
+        .news-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+
+        /* Modern Pagination */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 50px 0 30px 0;
+            padding: 20px;
+        }
+
+        .pagination-btn {
+            font-family: var(--font-primary);
+            text-decoration: none;
+            color: var(--neon-cyan);
+            background: rgba(0, 224, 255, 0.1);
+            border: 2px solid var(--neon-cyan);
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
+        }
+
+        .pagination-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.6);
+        }
+
+        .pagination-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .page-indicator {
+            font-family: var(--font-secondary);
+            color: var(--neon-gold);
+            font-size: 1rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            padding: 0 15px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .logo-container {
+                top: 10px;
+                left: 20px;
+            }
+
+            .logo-container a {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
+                padding: 10px 5px;
+            }
+            
+            .nav-links a {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+            
+            .dropdown .dropbtn {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+            
+            .dropdown-content {
+                min-width: 160px;
+                padding: 10px 0;
+            }
+            
+            .dropdown-content a {
+                font-size: 0.85rem;
+                padding: 10px 15px;
+            }
+
+            .news-container {
+                padding: 20px;
+            }
+
+            .pagination-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .pagination-btn {
+                padding: 10px 25px;
+                font-size: 0.85rem;
+                width: 200px;
+                text-align: center;
+            }
+
+            .page-indicator {
+                order: -1;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- Header Section -->
-<header style="text-align: center; padding: 40px 0 60px 0; border-bottom: 1px solid #333; margin-bottom: 50px;">
-  <a href="/" style="text-decoration: none;">
-    <img src="https://nimadamus.github.io/logo.png" alt="BetLegend Picks Logo" style="max-width: 280px; height: auto; display: block; margin: 0 auto 20px auto;" />
-  </a>
-  <h1 style="font-family: Sora, sans-serif; font-size: 32px; color: gold; margin: 0 0 10px 0; font-weight: bold;">BetLegend News</h1>
-  <p style="font-size: 16px; color: #bbb; margin: 0;">Your Source for Sports Betting News & Analysis</p>
-</header>
+
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+<nav class="nav-links">
+    <a href="index.html">HOME</a>
+    <a href="blog-page8.html">PICKS & ANALYSIS</a>
+    
+    <div class="dropdown">
+        <button class="dropbtn">Records</button>
+        <div class="dropdown-content">
+            <a href="betlegend-verified-records.html">MLB Records</a>
+            <a href="nfl-records.html">NFL Records</a>
+            <a href="ncaaf-records.html">NCAAF Records</a>
+            <a href="nhl-records.html">NHL Records</a>
+            <a href="nba-records.html">NBA Records</a>
+            <a href="soccer-records.html">Soccer Records</a>
+        </div>
+    </div>
+    
+    <div class="dropdown">
+        <button class="dropbtn">Sports</button>
+        <div class="dropdown-content">
+            <a href="nfl.html">NFL</a>
+            <a href="mlb-page2.html">MLB</a>
+            <a href="ncaaf.html">NCAAF</a>
+            <a href="nba.html">NBA</a>
+            <a href="nhl.html">NHL</a>
+        </div>
+    </div>
+    
+    <div class="dropdown">
+        <button class="dropbtn">Resources</button>
+        <div class="dropdown-content">
+            <a href="howitworks.html">How It Works</a>
+            <a href="bankroll.html">Bankroll</a>
+            <a href="screenshots.html">Screenshots</a>
+            <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+            <a href="betting-101.html">Betting 101</a>
+        </div>
+    </div>
+    
+    <a href="proofofpicks.html">Proof</a>
+    <a href="featured-game-of-the-day.html">Game of the Day</a>
+    
+    <div class="dropdown">
+        <button class="dropbtn">Community</button>
+        <div class="dropdown-content">
+            <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+            <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+        </div>
+    </div>
+</nav>
+
+<div class="news-container">
+<h2 style="text-align:center; color:#ffc107; font-weight:normal; font-size: 24px;">
+    Latest News and Headlines in the Sports and Betting World
+</h2>
+<hr style="margin-bottom:24px; border: none; height: 1px; background: #444;"/>
 
 <div class="news-post" style="border: 2px solid gold; background-color: #111; padding: 40px; border-radius: 12px; box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); margin-bottom: 50px; max-width: 900px; margin-left: auto; margin-right: auto;">
 <h2 style="font-family: Sora, sans-serif; font-size: 26px; color: #ffc107; text-align: center; margin-bottom: 10px;">Federal Authorities Arrest NBA Coach Chauncey Billups and Guard Terry Rozier in Sweeping Gambling Investigation</h2>
@@ -83,7 +425,6 @@
 </div>
 </div>
 
-
 <!-- INTERNAL LINKS: PAGE FOOTER NAV (minimal) -->
 <div class="il-footer-nav" style="text-align:center; font-size:13px; color:#bbb; margin:20px auto 10px auto;">
   <a href="/betlegend-verified-records.html" style="color:#bbb; text-decoration:none; margin:0 10px;" title="Results">Results</a>
@@ -93,12 +434,12 @@
   <a href="/news.html" style="color:#bbb; text-decoration:none; margin:0 10px;" title="Latest news">Latest news</a>
 </div>
 
+<!-- Modern Pagination -->
+<div class="pagination-container">
+  <a href="news-page2.html" class="pagination-btn">← Newer Posts</a>
+  <span class="page-indicator">Page 3 of 3</span>
+</div>
 
-
-<nav class="news-pager" aria-label="News pagination" style="text-align:center; margin:40px 0;">
-  <span style="display:inline-block; padding:8px 14px; border:1px solid gold; border-radius:8px; background:gold; color:#111; font-weight:bold;">3</span>
-  <a href="newspage2.html" style="display:inline-block; padding:8px 14px; border:1px solid gold; border-radius:8px; color:gold; text-decoration:none; margin-left:12px;">2</a>
-  <a href="news.html" style="display:inline-block; padding:8px 14px; border:1px solid gold; border-radius:8px; color:gold; text-decoration:none; margin-left:12px;">1</a>
-</nav>
+</div>
 </body>
 </html>
