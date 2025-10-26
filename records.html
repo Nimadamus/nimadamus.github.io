@@ -50,7 +50,7 @@ body {
 
 .header h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 48px;
+    font-size: 64px;
     font-weight: 900;
     color: var(--accent);
     text-shadow: 0 0 30px var(--accent);
@@ -124,7 +124,7 @@ body {
 
 .stat-value {
     font-family: 'Orbitron', sans-serif;
-    font-size: 42px;
+    font-size: 56px;
     font-weight: 900;
     color: var(--accent);
     text-shadow: 0 0 20px var(--accent);
@@ -152,7 +152,7 @@ body {
 
 .section-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 32px;
+    font-size: 42px;
     font-weight: 700;
     color: var(--gold);
     margin-bottom: 30px;
@@ -187,20 +187,20 @@ thead {
 
 th {
     font-family: 'Orbitron', sans-serif;
-    padding: 18px 15px;
+    padding: 20px 18px;
     text-align: left;
     font-weight: 700;
     color: var(--accent);
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: 16px;
     letter-spacing: 1px;
     border-bottom: 2px solid var(--accent);
 }
 
 td {
-    padding: 18px 15px;
+    padding: 20px 18px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 15px;
+    font-size: 18px;
 }
 
 tbody tr {
@@ -478,21 +478,25 @@ const SHEET_URLS = {
 let allData = [];
 
 async function fetchAllData() {
-    const promises = Object.entries(SHEET_URLS).map(async ([sport, url]) => {
+    const promises = Object.entries(SHEET_URLS).map(async ([sheetSport, url]) => {
         try {
             const response = await fetch(url);
             const csv = await response.text();
             const rows = parseCSV(csv);
-            return rows.map(row => ({ ...row, sport }));
+            // Use the sport from the sheet name as fallback
+            return rows.map(row => ({
+                ...row,
+                sport: sheetSport // This maps to the correct sheet
+            }));
         } catch (error) {
-            console.error(`Error fetching ${sport} data:`, error);
+            console.error(`Error fetching ${sheetSport} data:`, error);
             return [];
         }
     });
 
     const results = await Promise.all(promises);
     allData = results.flat();
-    console.log(`Loaded ${allData.length} total picks`);
+    console.log(`Loaded ${allData.length} total picks across all sports`);
 }
 
 function parseCSV(csvText) {
