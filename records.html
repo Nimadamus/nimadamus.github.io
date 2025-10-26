@@ -776,8 +776,13 @@ function findBestSport(data) {
 }
 
 function extractOdds(line) {
-    const match = line.match(/([+-]\d+)/);
-    return match ? parseInt(match[1]) : null;
+    // Match all numbers with +/- signs, then take the last one (which is typically the odds)
+    const matches = line.match(/([+-]\d+)/g);
+    if (!matches || matches.length === 0) return null;
+
+    // The odds are usually the last +/- number in the line
+    const lastMatch = matches[matches.length - 1];
+    return parseInt(lastMatch);
 }
 
 async function init() {
