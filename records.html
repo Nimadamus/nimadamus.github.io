@@ -578,7 +578,7 @@ function calculateOverallStats() {
 
     document.getElementById('total-record').textContent = `${wins}-${losses}${pushes > 0 ? `-${pushes}` : ''}`;
     document.getElementById('win-rate').textContent = winRate.toFixed(1) + '%';
-    document.getElementById('win-rate').className = `stat-value ${winRate >= 52.4 ? 'positive' : 'negative'}`;
+    document.getElementById('win-rate').className = `stat-value ${winRate > 50 ? 'positive' : 'negative'}`;
     document.getElementById('total-units').textContent = (totalUnits >= 0 ? '+' : '') + totalUnits.toFixed(1) + 'u';
     document.getElementById('total-units').className = `stat-value ${totalUnits >= 0 ? 'positive' : 'negative'}`;
     document.getElementById('total-roi').textContent = (roi >= 0 ? '+' : '') + roi.toFixed(1) + '%';
@@ -601,8 +601,8 @@ function calculateSportBreakdown() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><span class="badge badge-${sport.toLowerCase()}">${sport}</span></td>
-            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate >= 52.4 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
             <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
@@ -631,8 +631,8 @@ function calculateBetTypeBreakdown() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><strong>${betType}</strong></td>
-            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate >= 52.4 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
             <td>${findBestSport(typeData)}</td>
@@ -668,8 +668,8 @@ function calculateMonthlyBreakdown() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><strong>${month.name}</strong></td>
-            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate >= 52.4 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
             <td>${bestSport}</td>
@@ -704,8 +704,8 @@ function calculateUnitSizingBreakdown() {
         row.innerHTML = `
             <td><strong>${level.name}</strong></td>
             <td>${avgUnit.toFixed(1)}u</td>
-            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate >= 52.4 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
         `;
