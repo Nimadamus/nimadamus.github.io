@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
 <link href="https://www.betlegendpicks.com/records.html" rel="canonical"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <meta property="og:title" content="BetLegend Performance Records Dashboard">
 <meta property="og:description" content="Live betting analytics with complete breakdowns by sport, bet type, month, and confidence level">
 <meta property="og:url" content="https://www.betlegendpicks.com/records.html">
@@ -610,6 +611,14 @@ tbody tr:hover {
         </div>
     </div>
 
+    <!-- Performance Chart -->
+    <div class="section">
+        <h2 class="section-title">📈 Performance Visualization</h2>
+        <div style="background: rgba(26, 26, 26, 0.8); padding: 30px; border-radius: 15px;">
+            <canvas id="performanceChart" style="max-height: 400px;"></canvas>
+        </div>
+    </div>
+
     <!-- Sport Breakdown -->
     <div class="section">
         <h2 class="section-title">📊 Breakdown by Sport</h2>
@@ -695,6 +704,110 @@ tbody tr:hover {
         </div>
     </div>
 
+    <!-- Teaser Breakdown -->
+    <div class="section">
+        <h2 class="section-title">🎲 Teaser Breakdown</h2>
+        <div class="highlight-box" style="border-left-color: var(--gold);">
+            <h3>What Are Teasers?</h3>
+            <p style="margin-top: 10px; line-height: 1.8;">
+                <strong>Teasers</strong> are a type of parlay bet that allows you to adjust the point spread or total in your favor across multiple games. In exchange for better lines, teasers pay out at lower odds than traditional parlays. Common teaser options include 6-point, 6.5-point, and 7-point teasers in football, and 4-point to 5-point teasers in basketball. This breakdown shows our performance on teaser bets compared to standard straight bets, helping you understand which betting style generates better returns.
+            </p>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Record</th>
+                        <th>Win %</th>
+                        <th>Units</th>
+                        <th>ROI</th>
+                        <th>Best Sport</th>
+                    </tr>
+                </thead>
+                <tbody id="teaser-breakdown"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Teaser Type Breakdown -->
+    <div class="section">
+        <h2 class="section-title">🎯 Teaser Type Breakdown</h2>
+        <div class="highlight-box" style="border-left-color: var(--gold);">
+            <h3>Understanding Different Teaser Types</h3>
+            <p style="margin-top: 10px; line-height: 1.8;">
+                Different teaser point values offer varying risk-reward ratios. <strong>6-point teasers</strong> are the most popular in NFL betting, allowing you to move the spread 6 points in your favor on 2+ games. <strong>6.5-point and 7-point teasers</strong> provide even more cushion but at reduced payouts. <strong>10-point and 13-point "super teasers"</strong> require more legs but cross key numbers like 3, 7, and 10 in football. This section breaks down our performance across each teaser type to identify which point adjustments provide the best value.
+            </p>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Teaser Type</th>
+                        <th>Record</th>
+                        <th>Win %</th>
+                        <th>Units</th>
+                        <th>ROI</th>
+                        <th>Best Sport</th>
+                    </tr>
+                </thead>
+                <tbody id="teaser-type-breakdown"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 5 Inning Breakdown -->
+    <div class="section">
+        <h2 class="section-title">⚾ 5-Inning Bets Breakdown</h2>
+        <div class="highlight-box" style="border-left-color: var(--green);">
+            <h3>Why Bet First 5 Innings (F5)?</h3>
+            <p style="margin-top: 10px; line-height: 1.8;">
+                <strong>First 5 innings (F5) betting</strong> in baseball focuses exclusively on the starting pitcher matchup and early game performance, eliminating the bullpen variable that can make full-game bets unpredictable. F5 bets settle after 5 innings are complete, offering quicker results and more predictable outcomes based on starting pitcher analytics. This strategy is particularly effective when you have strong data on starter performance but less confidence in team bullpens. Our F5 breakdown shows performance across run lines, moneylines, and totals (over/under) specifically for the first 5 innings.
+            </p>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bet Type</th>
+                        <th>Record</th>
+                        <th>Win %</th>
+                        <th>Units</th>
+                        <th>ROI</th>
+                        <th>Avg Odds</th>
+                    </tr>
+                </thead>
+                <tbody id="five-inning-breakdown"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Total Bets Breakdown -->
+    <div class="section">
+        <h2 class="section-title">📊 Total Bets (Over/Under) Breakdown</h2>
+        <div class="highlight-box" style="border-left-color: var(--accent);">
+            <h3>Mastering Over/Under Total Bets</h3>
+            <p style="margin-top: 10px; line-height: 1.8;">
+                <strong>Total bets (Over/Under)</strong> focus on the combined score of both teams rather than which team wins. You're betting whether the final combined score will be over or under the sportsbook's posted total. Total betting removes the need to predict a winner and instead focuses on game pace, offensive/defensive matchups, weather conditions, and playing style. This breakdown analyzes our performance on all totals combined, plus separate tracking for <strong>Over bets</strong> (expecting high-scoring games) versus <strong>Under bets</strong> (expecting defensive battles or low-scoring contests). Understanding your tendencies on overs vs unders can reveal valuable insights about betting biases and help optimize total bet selection across different sports.
+            </p>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Record</th>
+                        <th>Win %</th>
+                        <th>Units</th>
+                        <th>ROI</th>
+                        <th>Best Sport</th>
+                    </tr>
+                </thead>
+                <tbody id="total-bets-breakdown"></tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- Methodology -->
     <div class="section">
         <h2 class="section-title">🧠 Methodology & Data Source</h2>
@@ -740,10 +853,26 @@ async function fetchAllData() {
             const csv = await response.text();
             const rows = parseCSV(csv);
             // Use the sport from the sheet name as fallback
-            return rows.map(row => ({
-                ...row,
-                sport: sheetSport // This maps to the correct sheet
-            }));
+            return rows.map(row => {
+                // Fix ALL incorrect dates - force year to 2025 if it's wrong
+                let dateStr = row.Date || row.date || '';
+                if (dateStr) {
+                    const date = new Date(dateStr);
+                    if (!isNaN(date)) {
+                        const year = date.getFullYear();
+                        // Fix any year that's not 2025
+                        if (year !== 2025) {
+                            const correctedDate = new Date(2025, date.getMonth(), date.getDate());
+                            row.Date = correctedDate.toISOString().split('T')[0];
+                            row.date = row.Date;
+                        }
+                    }
+                }
+                return {
+                    ...row,
+                    sport: sheetSport // This maps to the correct sheet
+                };
+            });
         } catch (error) {
             console.error(`Error fetching ${sheetSport} data:`, error);
             return [];
@@ -752,7 +881,29 @@ async function fetchAllData() {
 
     const results = await Promise.all(promises);
     allData = results.flat();
-    console.log(`Loaded ${allData.length} total picks across all sports`);
+    console.log(`✅ Loaded ${allData.length} total picks across all sports`);
+
+    // Debug: Count entries by month
+    const monthCounts = {};
+    allData.forEach(row => {
+        const date = new Date(row.Date || row.date || '');
+        if (!isNaN(date)) {
+            const key = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+            monthCounts[key] = (monthCounts[key] || 0) + 1;
+        }
+    });
+    console.log('📅 Picks by month:', monthCounts);
+
+    // Verify all dates are now 2025
+    const non2025 = allData.filter(row => {
+        const date = new Date(row.Date || row.date || '');
+        return !isNaN(date) && date.getFullYear() !== 2025;
+    });
+    if (non2025.length > 0) {
+        console.warn(`⚠️ WARNING: ${non2025.length} picks still have non-2025 dates!`);
+    } else {
+        console.log('✅ All dates corrected to 2025');
+    }
 }
 
 function parseCSV(csvText) {
@@ -806,16 +957,28 @@ function calculateOverallStats() {
         const units = parseFloat(row.Units || row.units || 0);
         const line = row.Line || row.line || '';
 
+        // Skip results that are not determined yet
+        if (!result || result === '' || result === 'pending') {
+            return;
+        }
+
         if (result.includes('win') || result.includes('w')) {
             wins++;
-            totalUnits += Math.abs(units);
-            totalRisk += Math.abs(units);
+            // Units column already contains the profit/loss, so just add it
+            totalUnits += units;
+            // Risk is the bet amount (always positive)
+            const betAmount = Math.abs(units);
+            totalRisk += betAmount;
         } else if (result.includes('loss') || result.includes('l')) {
             losses++;
-            totalUnits -= Math.abs(units);
-            totalRisk += Math.abs(units);
+            // Units column contains negative value for losses
+            totalUnits += units;
+            // Risk is the bet amount (always positive)
+            const betAmount = Math.abs(units);
+            totalRisk += betAmount;
         } else if (result.includes('push')) {
             pushes++;
+            // Pushes don't count toward risk
         }
 
         const odds = extractOdds(line);
@@ -934,23 +1097,31 @@ function calculateMonthlyBreakdown() {
 
 function calculateUnitSizingBreakdown() {
     const confidenceLevels = [
-        { name: '🔥 MAX PLAY (3u)', min: 2.5, max: 3 },
-        { name: '⭐ HIGH (2u)', min: 1.5, max: 2.5 },
-        { name: '✓ STANDARD (1u)', min: 0.5, max: 1.5 },
-        { name: '📉 SMALL (0.5u)', min: 0, max: 0.5 }
+        { name: '🔥 MAX PLAY (3u)', min: 2.9, max: 3.1 },
+        { name: '⭐ HIGH (2u)', min: 1.9, max: 2.1 },
+        { name: '✓ STANDARD (1u)', min: 0.9, max: 1.1 },
+        { name: '📉 SMALL (0.5u)', min: 0.4, max: 0.6 }
     ];
 
     const tbody = document.getElementById('unit-sizing-breakdown');
     tbody.innerHTML = '';
 
+    let totalCategorized = 0;
+
     confidenceLevels.forEach(level => {
         const levelData = allData.filter(row => {
+            const result = (row.Result || row.result || '').toLowerCase();
+            // Only include bets with results (exclude pending)
+            if (!result || result === '' || result === 'pending') {
+                return false;
+            }
             const units = Math.abs(parseFloat(row.Units || row.units || 0));
-            return units > level.min && units <= level.max;
+            return units >= level.min && units <= level.max;
         });
 
         if (levelData.length === 0) return;
 
+        totalCategorized += levelData.length;
         const stats = calculateStats(levelData);
         const avgUnit = levelData.reduce((sum, row) => sum + Math.abs(parseFloat(row.Units || row.units || 0)), 0) / levelData.length;
 
@@ -977,16 +1148,28 @@ function calculateStats(data) {
         const units = parseFloat(row.Units || row.units || 0);
         const line = row.Line || row.line || '';
 
+        // Skip results that are not determined yet
+        if (!result || result === '' || result === 'pending') {
+            return;
+        }
+
         if (result.includes('win') || result.includes('w')) {
             wins++;
-            totalUnits += Math.abs(units);
-            totalRisk += Math.abs(units);
+            // Units column already contains the profit/loss, so just add it
+            totalUnits += units;
+            // Risk is the bet amount (always positive)
+            const betAmount = Math.abs(units);
+            totalRisk += betAmount;
         } else if (result.includes('loss') || result.includes('l')) {
             losses++;
-            totalUnits -= Math.abs(units);
-            totalRisk += Math.abs(units);
+            // Units column contains negative value for losses
+            totalUnits += units;
+            // Risk is the bet amount (always positive)
+            const betAmount = Math.abs(units);
+            totalRisk += betAmount;
         } else if (result.includes('push')) {
             pushes++;
+            // Pushes don't count toward risk
         }
 
         const odds = extractOdds(line);
@@ -1029,6 +1212,358 @@ function findBestSport(data) {
     return bestSport || 'N/A';
 }
 
+function calculateTeaserBreakdown() {
+    const teaserData = allData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        return pick.includes('teaser') || betType.includes('teaser');
+    });
+
+    const nonTeaserData = allData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        return !pick.includes('teaser') && !betType.includes('teaser');
+    });
+
+    console.log(`Teaser Breakdown - Found ${teaserData.length} teaser bets and ${nonTeaserData.length} non-teaser bets`);
+    if (teaserData.length > 0) {
+        console.log('Sample teaser bet:', teaserData[0]);
+    }
+
+    const tbody = document.getElementById('teaser-breakdown');
+    tbody.innerHTML = '';
+
+    if (teaserData.length > 0) {
+        const stats = calculateStats(teaserData);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>Teaser Bets</strong></td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
+            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(teaserData)}</td>
+        `;
+        tbody.appendChild(row);
+    }
+
+    if (nonTeaserData.length > 0) {
+        const stats = calculateStats(nonTeaserData);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>Non-Teaser Bets</strong></td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
+            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(nonTeaserData)}</td>
+        `;
+        tbody.appendChild(row);
+    }
+
+    if (teaserData.length === 0 && nonTeaserData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No teaser data available</td></tr>';
+    }
+}
+
+function calculateTeaserTypeBreakdown() {
+    const teaserTypes = ['6-point', '6.5-point', '7-point', '10-point', '13-point', '6 point', '6.5 point', '7 point', '10 point', '13 point'];
+    const tbody = document.getElementById('teaser-type-breakdown');
+    tbody.innerHTML = '';
+
+    let hasData = false;
+    const processedTypes = new Set();
+
+    teaserTypes.forEach(teaserType => {
+        const normalizedType = teaserType.replace(/[- ]/g, '');
+        if (processedTypes.has(normalizedType)) return;
+        processedTypes.add(normalizedType);
+
+        const typeData = allData.filter(row => {
+            const pick = (row.Pick || row.pick || '').toLowerCase();
+            const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+            const searchText = pick + ' ' + betType;
+            return (searchText.includes('teaser')) && (searchText.includes(teaserType) || searchText.includes(teaserType.replace('-', ' ')));
+        });
+
+        if (typeData.length === 0) return;
+
+        hasData = true;
+        const stats = calculateStats(typeData);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>${teaserType.charAt(0).toUpperCase() + teaserType.slice(1)} Teaser</strong></td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
+            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(typeData)}</td>
+        `;
+        tbody.appendChild(row);
+    });
+
+    if (!hasData) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No teaser type data available</td></tr>';
+    }
+}
+
+function calculateFiveInningBreakdown() {
+    const fiveInningData = allData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        const searchText = pick + ' ' + betType;
+        return searchText.includes('5 inn') || searchText.includes('5-inn') || searchText.includes('first 5') || searchText.includes('f5');
+    });
+
+    console.log(`5-Inning Breakdown - Found ${fiveInningData.length} five-inning bets`);
+    if (fiveInningData.length > 0) {
+        console.log('Sample 5-inning bet:', fiveInningData[0]);
+    }
+
+    const tbody = document.getElementById('five-inning-breakdown');
+    tbody.innerHTML = '';
+
+    if (fiveInningData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No 5-inning data available</td></tr>';
+        return;
+    }
+
+    // Break down by bet type
+    const betTypes = [
+        { name: 'Spread/Run Line', filter: (pick) => (pick.includes('+') || pick.includes('-')) && !pick.includes('over') && !pick.includes('under') && !pick.includes('ml') && !pick.includes('moneyline') },
+        { name: 'Moneyline', filter: (pick) => pick.includes('ml') || pick.includes('moneyline') },
+        { name: 'Over', filter: (pick) => pick.includes('over') },
+        { name: 'Under', filter: (pick) => pick.includes('under') }
+    ];
+
+    betTypes.forEach(betType => {
+        const typeData = fiveInningData.filter(row => {
+            const pick = (row.Pick || row.pick || '').toLowerCase();
+            return betType.filter(pick);
+        });
+
+        if (typeData.length === 0) return;
+
+        const stats = calculateStats(typeData);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>${betType.name}</strong></td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
+            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+            <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+function calculateTotalBetsBreakdown() {
+    // Filter for all Over/Under total bets
+    const totalBetsData = allData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        const searchText = pick + ' ' + betType;
+        return searchText.includes('over') || searchText.includes('under') || searchText.includes('total');
+    });
+
+    console.log(`Total Bets Breakdown - Found ${totalBetsData.length} total bets (over/under)`);
+    if (totalBetsData.length > 0) {
+        console.log('Sample total bet:', totalBetsData[0]);
+    }
+
+    const tbody = document.getElementById('total-bets-breakdown');
+    tbody.innerHTML = '';
+
+    if (totalBetsData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No total bets data available</td></tr>';
+        return;
+    }
+
+    // Overall Totals
+    const allTotalsStats = calculateStats(totalBetsData);
+    let row = document.createElement('tr');
+    row.innerHTML = `
+        <td><strong>All Total Bets</strong></td>
+        <td class="${allTotalsStats.winRate > 50 ? 'win' : 'loss'}">${allTotalsStats.record}</td>
+        <td class="${allTotalsStats.winRate > 50 ? 'win' : ''}">${allTotalsStats.winRate.toFixed(1)}%</td>
+        <td class="${allTotalsStats.units >= 0 ? 'win' : 'loss'}">${allTotalsStats.units >= 0 ? '+' : ''}${allTotalsStats.units.toFixed(1)}u</td>
+        <td class="${allTotalsStats.roi >= 0 ? 'win' : 'loss'}">${allTotalsStats.roi >= 0 ? '+' : ''}${allTotalsStats.roi.toFixed(1)}%</td>
+        <td>${findBestSport(totalBetsData)}</td>
+    `;
+    tbody.appendChild(row);
+
+    // Over bets
+    const overData = totalBetsData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        return pick.includes('over');
+    });
+
+    if (overData.length > 0) {
+        const overStats = calculateStats(overData);
+        row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>Over Bets</strong></td>
+            <td class="${overStats.winRate > 50 ? 'win' : 'loss'}">${overStats.record}</td>
+            <td class="${overStats.winRate > 50 ? 'win' : ''}">${overStats.winRate.toFixed(1)}%</td>
+            <td class="${overStats.units >= 0 ? 'win' : 'loss'}">${overStats.units >= 0 ? '+' : ''}${overStats.units.toFixed(1)}u</td>
+            <td class="${overStats.roi >= 0 ? 'win' : 'loss'}">${overStats.roi >= 0 ? '+' : ''}${overStats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(overData)}</td>
+        `;
+        tbody.appendChild(row);
+    }
+
+    // Under bets
+    const underData = totalBetsData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        return pick.includes('under');
+    });
+
+    if (underData.length > 0) {
+        const underStats = calculateStats(underData);
+        row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>Under Bets</strong></td>
+            <td class="${underStats.winRate > 50 ? 'win' : 'loss'}">${underStats.record}</td>
+            <td class="${underStats.winRate > 50 ? 'win' : ''}">${underStats.winRate.toFixed(1)}%</td>
+            <td class="${underStats.units >= 0 ? 'win' : 'loss'}">${underStats.units >= 0 ? '+' : ''}${underStats.units.toFixed(1)}u</td>
+            <td class="${underStats.roi >= 0 ? 'win' : 'loss'}">${underStats.roi >= 0 ? '+' : ''}${underStats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(underData)}</td>
+        `;
+        tbody.appendChild(row);
+    }
+}
+
+function createPerformanceChart() {
+    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'Soccer'];
+    const sportData = sports.map(sport => {
+        const data = allData.filter(row => row.sport === sport);
+        if (data.length === 0) return null;
+        const stats = calculateStats(data);
+        return {
+            sport: sport,
+            winRate: stats.winRate,
+            units: stats.units,
+            roi: stats.roi
+        };
+    }).filter(item => item !== null);
+
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: sportData.map(d => d.sport),
+            datasets: [
+                {
+                    label: 'Win Rate (%)',
+                    data: sportData.map(d => d.winRate),
+                    backgroundColor: 'rgba(0, 224, 255, 0.6)',
+                    borderColor: 'rgba(0, 224, 255, 1)',
+                    borderWidth: 2,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'ROI (%)',
+                    data: sportData.map(d => d.roi),
+                    backgroundColor: 'rgba(255, 215, 0, 0.6)',
+                    borderColor: 'rgba(255, 215, 0, 1)',
+                    borderWidth: 2,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Units Won',
+                    data: sportData.map(d => d.units),
+                    backgroundColor: 'rgba(57, 255, 20, 0.6)',
+                    borderColor: 'rgba(57, 255, 20, 1)',
+                    borderWidth: 2,
+                    yAxisID: 'y1',
+                    type: 'line'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        color: '#ffffff',
+                        font: {
+                            size: 14,
+                            family: 'Roboto'
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Performance by Sport: Win Rate, ROI & Units',
+                    color: '#00e0ff',
+                    font: {
+                        size: 18,
+                        family: 'Orbitron',
+                        weight: 'bold'
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    type: 'linear',
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Win Rate & ROI (%)',
+                        color: '#ffffff',
+                        font: {
+                            size: 12,
+                            family: 'Roboto'
+                        }
+                    },
+                    ticks: {
+                        color: '#ffffff'
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'Units Won',
+                        color: '#ffffff',
+                        font: {
+                            size: 12,
+                            family: 'Roboto'
+                        }
+                    },
+                    ticks: {
+                        color: '#ffffff'
+                    },
+                    grid: {
+                        drawOnChartArea: false
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#ffffff',
+                        font: {
+                            size: 12,
+                            family: 'Orbitron'
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            }
+        }
+    });
+}
+
 function extractOdds(line) {
     // Match all numbers with +/- signs, then take the last one (which is typically the odds)
     const matches = line.match(/([+-]\d+)/g);
@@ -1044,10 +1579,15 @@ async function init() {
         await fetchAllData();
 
         calculateOverallStats();
+        createPerformanceChart();
         calculateSportBreakdown();
         calculateBetTypeBreakdown();
         calculateMonthlyBreakdown();
         calculateUnitSizingBreakdown();
+        calculateTeaserBreakdown();
+        calculateTeaserTypeBreakdown();
+        calculateFiveInningBreakdown();
+        calculateTotalBetsBreakdown();
 
         document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
