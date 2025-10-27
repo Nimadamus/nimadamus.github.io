@@ -1029,17 +1029,24 @@ function calculateSportBreakdown() {
 }
 
 function calculateBetTypeBreakdown() {
-    const betTypes = ['Spread', 'Moneyline', 'Total', 'Over', 'Under'];
+    const betTypes = [
+        { name: 'Spread', filter: (pick) => (pick.includes('+') || pick.includes('-')) && !pick.includes('over') && !pick.includes('under') && !pick.includes('teaser') && !pick.includes('5 inn') && !pick.includes('first 5') },
+        { name: 'Moneyline', filter: (pick) => (pick.includes('ml') || pick.includes('moneyline')) && !pick.includes('teaser') && !pick.includes('5 inn') && !pick.includes('first 5') },
+        { name: 'Over', filter: (pick) => pick.includes('over') && !pick.includes('teaser') && !pick.includes('5 inn') && !pick.includes('first 5') },
+        { name: 'Under', filter: (pick) => pick.includes('under') && !pick.includes('teaser') && !pick.includes('5 inn') && !pick.includes('first 5') },
+        { name: 'Teasers', filter: (pick) => pick.includes('teaser') },
+        { name: '5-Inning Bets', filter: (pick) => pick.includes('5 inn') || pick.includes('5-inn') || pick.includes('first 5') || pick.includes('f5') }
+    ];
+
     const tbody = document.getElementById('bet-type-breakdown');
     tbody.innerHTML = '';
 
     betTypes.forEach(betType => {
         const typeData = allData.filter(row => {
             const pick = (row.Pick || row.pick || '').toLowerCase();
-            if (betType === 'Spread') return pick.includes('+') || pick.includes('-');
-            if (betType === 'Moneyline') return pick.includes('ml') || (!pick.includes('over') && !pick.includes('under') && !pick.includes('+') && !pick.includes('-'));
-            if (betType === 'Total' || betType === 'Over' || betType === 'Under') return pick.includes(betType.toLowerCase());
-            return false;
+            const betTypeCol = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+            const searchText = pick + ' ' + betTypeCol;
+            return betType.filter(searchText);
         });
 
         if (typeData.length === 0) return;
@@ -1047,7 +1054,7 @@ function calculateBetTypeBreakdown() {
         const stats = calculateStats(typeData);
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><strong>${betType}</strong></td>
+            <td><strong>${betType.name}</strong></td>
             <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
             <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
@@ -1456,29 +1463,11 @@ function createPerformanceChart() {
             labels: sportData.map(d => d.sport),
             datasets: [
                 {
-                    label: 'Win Rate (%)',
-                    data: sportData.map(d => d.winRate),
-                    backgroundColor: 'rgba(0, 224, 255, 0.6)',
-                    borderColor: 'rgba(0, 224, 255, 1)',
-                    borderWidth: 2,
-                    yAxisID: 'y'
-                },
-                {
-                    label: 'ROI (%)',
-                    data: sportData.map(d => d.roi),
-                    backgroundColor: 'rgba(255, 215, 0, 0.6)',
-                    borderColor: 'rgba(255, 215, 0, 1)',
-                    borderWidth: 2,
-                    yAxisID: 'y'
-                },
-                {
-                    label: 'Units Won',
+                    label: 'Units Won/Lost',
                     data: sportData.map(d => d.units),
-                    backgroundColor: 'rgba(57, 255, 20, 0.6)',
-                    borderColor: 'rgba(57, 255, 20, 1)',
-                    borderWidth: 2,
-                    yAxisID: 'y1',
-                    type: 'line'
+                    backgroundColor: sportData.map(d => d.units >= 0 ? 'rgba(57, 255, 20, 0.8)' : 'rgba(255, 49, 49, 0.8)'),
+                    borderColor: sportData.map(d => d.units >= 0 ? 'rgba(57, 255, 20, 1)' : 'rgba(255, 49, 49, 1)'),
+                    borderWidth: 2
                 }
             ]
         },
@@ -1487,76 +1476,58 @@ function createPerformanceChart() {
             maintainAspectRatio: true,
             plugins: {
                 legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: '#ffffff',
-                        font: {
-                            size: 14,
-                            family: 'Roboto'
-                        }
-                    }
+                    display: false
                 },
                 title: {
                     display: true,
-                    text: 'Performance by Sport: Win Rate, ROI & Units',
+                    text: 'Units Won/Lost by Sport',
                     color: '#00e0ff',
                     font: {
-                        size: 18,
+                        size: 24,
                         family: 'Orbitron',
                         weight: 'bold'
-                    }
+                    },
+                    padding: 20
                 }
             },
             scales: {
                 y: {
-                    type: 'linear',
-                    position: 'left',
+                    beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Win Rate & ROI (%)',
+                        text: 'Units',
                         color: '#ffffff',
                         font: {
-                            size: 12,
-                            family: 'Roboto'
+                            size: 16,
+                            family: 'Roboto',
+                            weight: 'bold'
                         }
                     },
                     ticks: {
-                        color: '#ffffff'
-                    },
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
-                    }
-                },
-                y1: {
-                    type: 'linear',
-                    position: 'right',
-                    title: {
-                        display: true,
-                        text: 'Units Won',
                         color: '#ffffff',
                         font: {
-                            size: 12,
-                            family: 'Roboto'
+                            size: 14
+                        },
+                        callback: function(value) {
+                            return value >= 0 ? '+' + value + 'u' : value + 'u';
                         }
                     },
-                    ticks: {
-                        color: '#ffffff'
-                    },
                     grid: {
-                        drawOnChartArea: false
+                        color: 'rgba(255, 255, 255, 0.1)',
+                        drawBorder: false
                     }
                 },
                 x: {
                     ticks: {
                         color: '#ffffff',
                         font: {
-                            size: 12,
-                            family: 'Orbitron'
+                            size: 16,
+                            family: 'Orbitron',
+                            weight: 'bold'
                         }
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
+                        display: false
                     }
                 }
             }
