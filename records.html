@@ -613,9 +613,9 @@ tbody tr:hover {
 
     <!-- Performance Chart -->
     <div class="section">
-        <h2 class="section-title">📈 Performance Visualization</h2>
-        <div style="background: rgba(26, 26, 26, 0.8); padding: 30px; border-radius: 15px;">
-            <canvas id="performanceChart" style="max-height: 400px;"></canvas>
+        <h2 class="section-title">📈 Units Won by Sport</h2>
+        <div style="background: rgba(26, 26, 26, 0.8); padding: 40px; border-radius: 15px;">
+            <div id="unitsChart" style="display: grid; gap: 20px;"></div>
         </div>
     </div>
 
@@ -1451,87 +1451,42 @@ function createPerformanceChart() {
             sport: sport,
             winRate: stats.winRate,
             units: stats.units,
-            roi: stats.roi
+            roi: stats.roi,
+            record: stats.record
         };
     }).filter(item => item !== null);
 
-    const ctx = document.getElementById('performanceChart').getContext('2d');
+    // Find max units for scaling
+    const maxUnits = Math.max(...sportData.map(d => Math.abs(d.units)));
+    const container = document.getElementById('unitsChart');
 
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: sportData.map(d => d.sport),
-            datasets: [
-                {
-                    label: 'Units Won/Lost',
-                    data: sportData.map(d => d.units),
-                    backgroundColor: sportData.map(d => d.units >= 0 ? 'rgba(57, 255, 20, 0.8)' : 'rgba(255, 49, 49, 0.8)'),
-                    borderColor: sportData.map(d => d.units >= 0 ? 'rgba(57, 255, 20, 1)' : 'rgba(255, 49, 49, 1)'),
-                    borderWidth: 2
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                title: {
-                    display: true,
-                    text: 'Units Won/Lost by Sport',
-                    color: '#00e0ff',
-                    font: {
-                        size: 24,
-                        family: 'Orbitron',
-                        weight: 'bold'
-                    },
-                    padding: 20
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Units',
-                        color: '#ffffff',
-                        font: {
-                            size: 16,
-                            family: 'Roboto',
-                            weight: 'bold'
-                        }
-                    },
-                    ticks: {
-                        color: '#ffffff',
-                        font: {
-                            size: 14
-                        },
-                        callback: function(value) {
-                            return value >= 0 ? '+' + value + 'u' : value + 'u';
-                        }
-                    },
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)',
-                        drawBorder: false
-                    }
-                },
-                x: {
-                    ticks: {
-                        color: '#ffffff',
-                        font: {
-                            size: 16,
-                            family: 'Orbitron',
-                            weight: 'bold'
-                        }
-                    },
-                    grid: {
-                        display: false
-                    }
-                }
-            }
-        }
+    sportData.forEach(sport => {
+        const barWidth = (Math.abs(sport.units) / maxUnits) * 100;
+        const isPositive = sport.units >= 0;
+
+        const barHTML = `
+            <div style="margin-bottom: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: bold; color: #00e0ff; min-width: 100px;">${sport.sport}</span>
+                    <span style="font-size: 16px; color: #fff;">${sport.record} | ${sport.winRate.toFixed(1)}% | ${sport.roi >= 0 ? '+' : ''}${sport.roi.toFixed(1)}% ROI</span>
+                    <span style="font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: ${isPositive ? '#39FF14' : '#FF3131'}; min-width: 100px; text-align: right;">
+                        ${sport.units >= 0 ? '+' : ''}${sport.units.toFixed(1)}u
+                    </span>
+                </div>
+                <div style="width: 100%; height: 35px; background: rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; position: relative;">
+                    <div style="
+                        width: ${barWidth}%;
+                        height: 100%;
+                        background: ${isPositive ? 'linear-gradient(90deg, #39FF14, #2ecc71)' : 'linear-gradient(90deg, #FF3131, #e74c3c)'};
+                        border-radius: 8px;
+                        box-shadow: 0 0 20px ${isPositive ? 'rgba(57, 255, 20, 0.5)' : 'rgba(255, 49, 49, 0.5)'};
+                        transition: width 0.5s ease;
+                    "></div>
+                </div>
+            </div>
+        `;
+
+        container.innerHTML += barHTML;
     });
 }
 
