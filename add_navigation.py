@@ -1,98 +1,9 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+"""
+Script to add navigation to blog pages that are missing it
+"""
 
-<html lang="en">
-<head>
-
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Sora:wght@600&family=Rubik&display=swap" rel="stylesheet"/>
-<title>Bankroll Management Guide | BetLegend</title>
-    <link rel="canonical" href="https://www.betlegendpicks.com/bankroll.html">
-<style>
-        :root {
-            --bg-color: #000;
-            --text-color: #eaf8ff;
-            --glow-color: #00e0ff;
-            --neon-cyan: #00ffff;
-            --neon-gold: #FFD700;
-            --font-primary: 'Orbitron', sans-serif;
-            --font-secondary: 'Poppins', sans-serif;
-        }
-
-        
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #1e1e1e;
-      color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    
-          padding-top: 140px;}
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-      color: #ffcc00;
-    }
-
-    .tagline-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 30px;
-    }
-
-    .tagline {
-      font-size: 22px;
-      font-weight: bold;
-      color: #ffffff;
-    }
-
-    .logo {
-      width: 40px;
-      height: auto;
-    }
-
-    p {
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 20px;
-      text-align: left;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 30px 0;
-    }
-
-    th, td {
-      border: 1px solid #444;
-      padding: 12px;
-      font-size: 18px;
-    }
-
-    th {
-      background-color: #333;
-      color: #ffcc00;
-    }
-
-    tr:nth-child(even) {
-      background-color: #2c2c2c;
-    }
-
-    tr:nth-child(odd) {
-      background-color: #242424;
-    }
-  
+NAV_CSS = """
 /* Logo */
 .logo-container {
     position: fixed;
@@ -243,10 +154,6 @@
 }
 
 @media (max-width: 768px) {
-    body {
-        padding-top: 120px !important;
-    }
-
     .logo-container {
         top: 10px;
         left: 20px;
@@ -283,12 +190,9 @@
         padding: 10px 15px;
     }
 }
+"""
 
-    </style>
-<meta name="description" content="Learn professional bankroll management strategies for sports betting. Unit sizing, Kelly Criterion, and risk management fundamentals."/>
-<meta name="keywords" content="bankroll management, betting units, Kelly Criterion, risk management"/><meta content="Bet Sizing Strategy: Our Unit System Explained" property="og:title"/><meta content="Master your bankroll with BetLegend’s disciplined betting system. Learn how we assign units based on edge." property="og:description"/><script>!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');twq('config','q0zvl');</script></head>
-<body>
-
+NAV_HTML = """
 <!-- Logo -->
 <div class="logo-container">
     <a href="index.html">BET<span>LEGEND</span></a>
@@ -328,7 +232,6 @@
             <a href="live-odds.html">Live Odds</a>
             <a href="howitworks.html">How It Works</a>
             <a href="bankroll.html">Bankroll</a>
-            <a href="betting-calculators.html">Betting Calculators</a>
             <a href="screenshots.html">Screenshots</a>
             <a href="bestonlinesportsbook.html">Best Sportsbook</a>
             <a href="betting-101.html">Betting 101</a>
@@ -348,26 +251,88 @@
     </div>
 </nav>
 
+"""
 
-<div class="container">
-<h1>Bet Sizing Strategy: Our Unit System Explained</h1>
-<div class="tagline-container">
-<div class="tagline">Bet smart. Bet with discipline.</div>
-</div>
-<p>The importance of utilizing smart bankroll management can’t be overstated. Whether you’re a new bettor or a seasoned pro, your ability to <strong>withstand short-term variance</strong> while staying alive for the long game is everything.</p>
-<p>Let’s be real: even the sharpest bettors in the world go through rough stretches. You might lose six, seven, even ten bets in a row. That’s not a reflection of your strategy failing — it’s just variance doing what it does. Even legends like <strong>Billy Walters</strong> have had losing months. What separates the winners from the losers over time isn’t avoiding losses — it’s managing your bankroll so you’re <em>still standing</em> when the tide turns.</p>
-<p>We scale our bet sizes based on our perceived edge — using a strict, model-driven approach. Here's how we assign units:</p>
-<table>
-<tr><th>Edge %</th><th>Units</th></tr>
-<tr><td>Under 2.0%</td><td>0 (Pass)</td></tr>
-<tr><td>2.0% – 3.9%</td><td>1 unit</td></tr>
-<tr><td>4.0% – 5.9%</td><td>2 units</td></tr>
-<tr><td>6.0% or higher</td><td>3 units</td></tr>
-</table>
-<p>This keeps us disciplined. <strong>No chasing. No gut plays. No ego.</strong> Just math.</p>
-<p>Edge is calculated by comparing our model’s win probability on a game to the market’s implied probability. We <strong>pass on small edges</strong> and increase our bet size as the edge grows — this isn’t gambling. This is calculated <strong>investing</strong>.</p>
-<p>If you want to win in this game long-term, you have to approach it with patience, precision, and perspective. It’s a grind — but a beatable one. That’s why we use this system. It allows us to stay consistent, avoid emotional swings, and capitalize when our edge is real.</p>
-<p>Staying in the game is the only way to win it. Bet smart, stay disciplined, and trust the math.</p>
-</div>
-</body>
-</html>
+def add_navigation_to_file(filepath):
+    """Add navigation CSS and HTML to a blog page"""
+    print(f"Processing {filepath}...")
+
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Check if navigation already exists
+    if 'class="nav-links"' in content:
+        print(f"  [OK] Navigation already exists in {filepath}")
+        return False
+
+    # Add fonts if not present
+    if 'Orbitron' not in content and 'Poppins' not in content:
+        content = content.replace(
+            'family=Sora:wght@600&amp;family=Rubik&amp;display=swap',
+            'Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Sora:wght@600&family=Rubik&display=swap'
+        )
+
+    # Add CSS variables if not present
+    if ':root {' not in content:
+        css_vars = """
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+        }
+
+        """
+        content = content.replace('<style>', '<style>' + css_vars)
+
+    # Update body padding for fixed nav
+    if 'padding: 0;' in content and 'body {' in content:
+        content = content.replace(
+            'padding: 0;',
+            'padding: 140px 0 0 0;'
+        )
+    elif 'padding: 140px' not in content:
+        # Add padding if body doesn't have it
+        import re
+        content = re.sub(
+            r'(body\s*\{[^}]*)(})',
+            r'\1  padding-top: 140px;\2',
+            content,
+            flags=re.DOTALL
+        )
+
+    # Add navigation CSS before </style>
+    content = content.replace('</style>', NAV_CSS + '\n    </style>')
+
+    # Add navigation HTML after <body>
+    content = content.replace('<body>', '<body>\n' + NAV_HTML)
+
+    # Write back
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+    print(f"  [OK] Added navigation to {filepath}")
+    return True
+
+def main():
+    blog_pages = [
+        'blog.html',
+        'blog-page2.html',
+        'blog-page3.html',
+        'blog-page4.html',
+        'blog-page5.html',
+        'blog-page6.html'
+    ]
+
+    updated = 0
+    for page in blog_pages:
+        if add_navigation_to_file(page):
+            updated += 1
+
+    print(f"\nComplete! Updated {updated} blog pages with navigation.")
+
+if __name__ == '__main__':
+    main()
