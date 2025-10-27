@@ -78,7 +78,8 @@ BAD - Dry and corporate:
 <div class="post-time" style="text-align: center;">Posted: [TIME], [DATE]</div>
 ```
 - Format: `12:51 PM, October 27, 2025`
-- Use current date/time when posting
+- Get current date/time automatically using: `date '+%-I:%M %p, %B %d, %Y'`
+- Always use real-time timestamp unless user specifies otherwise
 
 #### C. Featured Image
 ```html
