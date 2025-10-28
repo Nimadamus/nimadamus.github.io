@@ -740,32 +740,6 @@ tbody tr:hover {
         </div>
     </div>
 
-    <!-- Teaser Type Breakdown -->
-    <div class="section">
-        <h2 class="section-title">🎯 Teaser Type Breakdown</h2>
-        <div class="highlight-box" style="border-left-color: var(--gold);">
-            <h3>Understanding Different Teaser Types</h3>
-            <p style="margin-top: 10px; line-height: 1.8;">
-                Different teaser point values offer varying risk-reward ratios. <strong>6-point teasers</strong> are the most popular in NFL betting, allowing you to move the spread 6 points in your favor on 2+ games. <strong>6.5-point and 7-point teasers</strong> provide even more cushion but at reduced payouts. <strong>10-point and 13-point "super teasers"</strong> require more legs but cross key numbers like 3, 7, and 10 in football. This section breaks down our performance across each teaser type to identify which point adjustments provide the best value.
-            </p>
-        </div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Teaser Type</th>
-                        <th>Record</th>
-                        <th>Win %</th>
-                        <th>Units</th>
-                        <th>ROI</th>
-                        <th>Best Sport</th>
-                    </tr>
-                </thead>
-                <tbody id="teaser-type-breakdown"></tbody>
-            </table>
-        </div>
-    </div>
-
     <!-- 5 Inning Breakdown -->
     <div class="section">
         <h2 class="section-title">⚾ 5-Inning Bets Breakdown</h2>
@@ -1337,47 +1311,6 @@ function calculateTeaserBreakdown() {
     }
 }
 
-function calculateTeaserTypeBreakdown() {
-    const teaserTypes = ['6-point', '6.5-point', '7-point', '10-point', '13-point', '6 point', '6.5 point', '7 point', '10 point', '13 point'];
-    const tbody = document.getElementById('teaser-type-breakdown');
-    tbody.innerHTML = '';
-
-    let hasData = false;
-    const processedTypes = new Set();
-
-    teaserTypes.forEach(teaserType => {
-        const normalizedType = teaserType.replace(/[- ]/g, '');
-        if (processedTypes.has(normalizedType)) return;
-        processedTypes.add(normalizedType);
-
-        const typeData = allData.filter(row => {
-            const pick = (row.Pick || row.pick || '').toLowerCase();
-            const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
-            const searchText = pick + ' ' + betType;
-            return (searchText.includes('teaser')) && (searchText.includes(teaserType) || searchText.includes(teaserType.replace('-', ' ')));
-        });
-
-        if (typeData.length === 0) return;
-
-        hasData = true;
-        const stats = calculateStats(typeData, true);
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><strong>${teaserType.charAt(0).toUpperCase() + teaserType.slice(1)} Teaser</strong></td>
-            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
-            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
-            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
-            <td>${findBestSport(typeData)}</td>
-        `;
-        tbody.appendChild(row);
-    });
-
-    if (!hasData) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No teaser type data available</td></tr>';
-    }
-}
-
 function calculateFiveInningBreakdown() {
     const fiveInningData = allData.filter(row => {
         const pick = (row.Pick || row.pick || '').toLowerCase();
@@ -1649,7 +1582,6 @@ async function init() {
         calculateMonthlyBreakdown();
         calculateUnitSizingBreakdown();
         calculateTeaserBreakdown();
-        calculateTeaserTypeBreakdown();
         calculateFiveInningBreakdown();
         calculateTotalBetsBreakdown();
 
