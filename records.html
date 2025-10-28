@@ -697,7 +697,7 @@ tbody tr:hover {
                 <thead>
                     <tr>
                         <th>Confidence</th>
-                        <th>Unit Size</th>
+                        <th># of Bets</th>
                         <th>Record</th>
                         <th>Win %</th>
                         <th>Total Units</th>
@@ -1193,7 +1193,7 @@ function calculateUnitSizingBreakdown() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><strong>${level.name}</strong></td>
-            <td>${avgBetSize.toFixed(1)}u</td>
+            <td>${levelData.length}</td>
             <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
             <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
@@ -1290,55 +1290,49 @@ function findBestSport(data) {
 }
 
 function calculateTeaserBreakdown() {
-    const teaserData = allData.filter(row => {
-        const pick = (row.Pick || row.pick || '').toLowerCase();
-        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
-        return pick.includes('teaser') || betType.includes('teaser');
-    });
-
-    const nonTeaserData = allData.filter(row => {
-        const pick = (row.Pick || row.pick || '').toLowerCase();
-        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
-        return !pick.includes('teaser') && !betType.includes('teaser');
-    });
-
-    console.log(`Teaser Breakdown - Found ${teaserData.length} teaser bets and ${nonTeaserData.length} non-teaser bets`);
-    if (teaserData.length > 0) {
-        console.log('Sample teaser bet:', teaserData[0]);
-    }
-
     const tbody = document.getElementById('teaser-breakdown');
     tbody.innerHTML = '';
 
-    if (teaserData.length > 0) {
-        const stats = calculateStats(teaserData, true);
+    // Define specific teaser types to show
+    const teaserTypes = [
+        { name: '6-Point Teaser', patterns: ['6-point', '6 point', '6pt'] },
+        { name: '6.5-Point Teaser', patterns: ['6.5-point', '6.5 point', '6.5pt'] },
+        { name: '7-Point Teaser', patterns: ['7-point', '7 point', '7pt'] },
+        { name: '10-Point Teaser', patterns: ['10-point', '10 point', '10pt'] },
+        { name: '13-Point Teaser', patterns: ['13-point', '13 point', '13pt'] }
+    ];
+
+    let hasData = false;
+
+    teaserTypes.forEach(teaserType => {
+        const typeData = allData.filter(row => {
+            const pick = (row.Pick || row.pick || '').toLowerCase();
+            const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+            const searchText = pick + ' ' + betType;
+
+            // Check if it's a teaser AND matches this specific type
+            if (!searchText.includes('teaser')) return false;
+
+            return teaserType.patterns.some(pattern => searchText.includes(pattern));
+        });
+
+        if (typeData.length === 0) return;
+
+        hasData = true;
+        const stats = calculateStats(typeData, true);
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><strong>Teaser Bets</strong></td>
+            <td><strong>${teaserType.name}</strong></td>
             <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
             <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
-            <td>${findBestSport(teaserData)}</td>
+            <td>${findBestSport(typeData)}</td>
         `;
         tbody.appendChild(row);
-    }
+    });
 
-    if (nonTeaserData.length > 0) {
-        const stats = calculateStats(nonTeaserData, true);
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><strong>Non-Teaser Bets</strong></td>
-            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
-            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
-            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
-            <td>${findBestSport(nonTeaserData)}</td>
-        `;
-        tbody.appendChild(row);
-    }
-
-    if (teaserData.length === 0 && nonTeaserData.length === 0) {
+    if (!hasData) {
         tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No teaser data available</td></tr>';
     }
 }
