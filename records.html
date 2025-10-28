@@ -1109,6 +1109,8 @@ function calculateUnitSizingBreakdown() {
 
     let totalCategorized = 0;
 
+    console.log('=== UNIT SIZING BREAKDOWN DEBUG ===');
+
     confidenceLevels.forEach(level => {
         const levelData = allData.filter(row => {
             const result = (row.Result || row.result || '').toLowerCase();
@@ -1116,21 +1118,35 @@ function calculateUnitSizingBreakdown() {
             if (!result || result === '' || result === 'pending') {
                 return false;
             }
-            const units = Math.abs(parseFloat(row.Units || row.units || 0));
+            // Extract the ACTUAL bet size from the pick text, not the profit/loss
+            const betSize = extractBetSize(row);
             // Use >= for min to include boundary values
-            return units >= level.min && (level.max === Infinity ? true : units < level.max);
+            return betSize >= level.min && (level.max === Infinity ? true : betSize < level.max);
         });
 
         if (levelData.length === 0) return;
 
         totalCategorized += levelData.length;
         const stats = calculateStats(levelData);
-        const avgUnit = levelData.reduce((sum, row) => sum + Math.abs(parseFloat(row.Units || row.units || 0)), 0) / levelData.length;
+        const avgBetSize = levelData.reduce((sum, row) => sum + extractBetSize(row), 0) / levelData.length;
+
+        console.log(`${level.name}: ${levelData.length} bets, Avg Bet Size: ${avgBetSize.toFixed(2)}u, Record: ${stats.record}, Profit: ${stats.units.toFixed(1)}u, ROI: ${stats.roi.toFixed(1)}%`);
+
+        // Sample some bets
+        if (levelData.length > 0) {
+            const samples = levelData.slice(0, 3).map(row => {
+                const betSize = extractBetSize(row);
+                const result = row.Result || row.result;
+                const pick = (row.Pick || row.pick || '').substring(0, 30);
+                return `${betSize}u "${pick}" (${result})`;
+            });
+            console.log(`  Sample bets: ${samples.join(', ')}`);
+        }
 
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><strong>${level.name}</strong></td>
-            <td>${avgUnit.toFixed(1)}u</td>
+            <td>${avgBetSize.toFixed(1)}u</td>
             <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
             <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
@@ -1138,6 +1154,9 @@ function calculateUnitSizingBreakdown() {
         `;
         tbody.appendChild(row);
     });
+
+    console.log(`Total categorized: ${totalCategorized}`);
+    console.log('===================================');
 }
 
 function calculateStats(data) {
@@ -1517,6 +1536,22 @@ function extractOdds(line) {
     return parseInt(lastMatch);
 }
 
+function extractBetSize(row) {
+    // Extract the actual bet size from the pick text (e.g., "1u", "2u", "3u")
+    const pick = (row.Pick || row.pick || '').toLowerCase();
+    const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+    const searchText = pick + ' ' + betType;
+
+    // Look for patterns like "1u", "2u", "3u", "0.5u", etc.
+    const unitMatch = searchText.match(/(\d+\.?\d*)\s*u(?:\s|$|[^n])/i);
+    if (unitMatch) {
+        return parseFloat(unitMatch[1]);
+    }
+
+    // If no explicit unit size found, assume 1u
+    return 1;
+}
+
 async function init() {
     try {
         await fetchAllData();
@@ -1566,8 +1601,8 @@ async function init() {
             const levelData = allData.filter(row => {
                 const result = (row.Result || row.result || '').toLowerCase();
                 if (!result || result === '' || result === 'pending') return false;
-                const units = Math.abs(parseFloat(row.Units || row.units || 0));
-                return units >= level.min && (level.max === Infinity ? true : units < level.max);
+                const betSize = extractBetSize(row);
+                return betSize >= level.min && (level.max === Infinity ? true : betSize < level.max);
             });
             if (levelData.length > 0) {
                 const stats = calculateStats(levelData);
