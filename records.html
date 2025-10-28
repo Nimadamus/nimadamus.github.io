@@ -1227,14 +1227,15 @@ function calculateStats(data, useActualBetSizes = false) {
         const betSize = useActualBetSizes ? extractBetSize(row) : 1;
         totalRisked += betSize;
 
-        // Count wins, losses, pushes
-        if (result.includes('win') || result === 'w') {
+        // Count wins, losses, pushes - EXACT MATCH to betlegend-verified-records.html logic
+        const resultUpper = result.toUpperCase();
+        if (resultUpper === 'W' || resultUpper === 'WIN') {
             wins++;
             totalUnits += Math.abs(units); // Add profit
-        } else if (result.includes('loss') || result === 'l') {
+        } else if (resultUpper === 'L' || resultUpper === 'LOSS') {
             losses++;
             totalUnits -= Math.abs(units); // Subtract loss
-        } else if (result.includes('push') || result === 'p') {
+        } else if (resultUpper === 'P' || resultUpper === 'PUSH') {
             pushes++;
             // Pushes are 0 profit/loss, but still risked capital
         }
