@@ -1574,7 +1574,8 @@ function extractBetSize(row) {
     // Extract the actual bet size from the pick text (e.g., "1u", "2u", "3u")
     const pick = (row.Pick || row.pick || '').toLowerCase();
     const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
-    const searchText = pick + ' ' + betType;
+    const line = (row.Line || row.line || '').toLowerCase();
+    const searchText = pick + ' ' + betType + ' ' + line;
 
     // Look for patterns like "1u", "2u", "3u", "0.5u", "1.5u", etc.
     // Pattern matches: digit(s), optional decimal, optional digit(s), then "u" not followed by "n" (to avoid "unit")
@@ -1583,14 +1584,28 @@ function extractBetSize(row) {
         return parseFloat(unitMatch[1]);
     }
 
-    // If no explicit unit size found, check if there's a "Units" or "Confidence" column with the bet size
-    // (as opposed to the profit/loss)
-    const confidence = row.Confidence || row.confidence || '';
+    // Check for "confidence" patterns like "3 unit play", "2-unit"
+    if (searchText.includes('3 unit') || searchText.includes('3-unit') || searchText.includes('max')) {
+        return 3;
+    }
+    if (searchText.includes('2 unit') || searchText.includes('2-unit') || searchText.includes('high conf')) {
+        return 2;
+    }
+    if (searchText.includes('0.5 unit') || searchText.includes('half unit') || searchText.includes('small')) {
+        return 0.5;
+    }
+
+    // If no explicit unit size found, check if there's a "Confidence" column with the bet size
+    const confidence = (row.Confidence || row.confidence || '').toLowerCase();
     if (confidence) {
         const confMatch = confidence.match(/(\d+\.?\d*)/);
         if (confMatch) {
             return parseFloat(confMatch[1]);
         }
+        // Check confidence level text
+        if (confidence.includes('max') || confidence.includes('3')) return 3;
+        if (confidence.includes('high') || confidence.includes('2')) return 2;
+        if (confidence.includes('small') || confidence.includes('0.5')) return 0.5;
     }
 
     // If still no unit size found, assume 1u (standard bet)
@@ -1600,6 +1615,23 @@ function extractBetSize(row) {
 async function init() {
     try {
         await fetchAllData();
+
+        // DEBUG: Show first 10 bets with all columns
+        console.log('=== FIRST 10 BETS IN DATASET ===');
+        allData.slice(0, 10).forEach((row, i) => {
+            console.log(`Bet #${i+1}:`, {
+                Sport: row.sport,
+                Date: row.Date || row.date,
+                Pick: (row.Pick || row.pick || '').substring(0, 40),
+                BetType: row['Bet Type'] || row.BetType || row['bet type'],
+                Line: row.Line || row.line,
+                Result: row.Result || row.result,
+                Units: row.Units || row.units,
+                Confidence: row.Confidence || row.confidence,
+                ExtractedSize: extractBetSize(row)
+            });
+        });
+        console.log('=================================');
 
         calculateOverallStats();
         calculateSportBreakdown();
