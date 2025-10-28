@@ -1117,7 +1117,8 @@ function calculateUnitSizingBreakdown() {
                 return false;
             }
             const units = Math.abs(parseFloat(row.Units || row.units || 0));
-            return units > level.min && units <= level.max;
+            // Use >= for min to include boundary values
+            return units >= level.min && (level.max === Infinity ? true : units < level.max);
         });
 
         if (levelData.length === 0) return;
@@ -1529,6 +1530,58 @@ async function init() {
         calculateTeaserTypeBreakdown();
         calculateFiveInningBreakdown();
         calculateTotalBetsBreakdown();
+
+        // COMPREHENSIVE MATH VERIFICATION
+        console.log('=== MATH VERIFICATION ===');
+
+        // Overall stats
+        const overallStats = calculateStats(allData);
+        console.log(`Overall Record: ${overallStats.record}, Units: ${overallStats.units.toFixed(1)}u, ROI: ${overallStats.roi.toFixed(1)}%`);
+
+        // Sport breakdown verification
+        const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'Soccer'];
+        let sportTotalWins = 0, sportTotalLosses = 0, sportTotalPushes = 0, sportTotalUnits = 0;
+        sports.forEach(sport => {
+            const sportData = allData.filter(row => row.sport === sport);
+            if (sportData.length > 0) {
+                const stats = calculateStats(sportData);
+                sportTotalWins += stats.wins;
+                sportTotalLosses += stats.losses;
+                sportTotalPushes += stats.pushes;
+                sportTotalUnits += stats.units;
+            }
+        });
+        console.log(`Sport Breakdown Total: ${sportTotalWins}-${sportTotalLosses}-${sportTotalPushes}, Units: ${sportTotalUnits.toFixed(1)}u`);
+        console.log(`Match Overall: ${sportTotalWins === overallStats.wins && sportTotalLosses === overallStats.losses && sportTotalPushes === overallStats.pushes ? '✓ YES' : '✗ NO'}`);
+
+        // Unit sizing verification
+        const confidenceLevels = [
+            { name: 'MAX PLAY', min: 2.5, max: Infinity },
+            { name: 'HIGH', min: 1.5, max: 2.5 },
+            { name: 'STANDARD', min: 0.75, max: 1.5 },
+            { name: 'SMALL', min: 0, max: 0.75 }
+        ];
+        let unitSizingTotalWins = 0, unitSizingTotalLosses = 0, unitSizingTotalPushes = 0, unitSizingTotalCount = 0;
+        confidenceLevels.forEach(level => {
+            const levelData = allData.filter(row => {
+                const result = (row.Result || row.result || '').toLowerCase();
+                if (!result || result === '' || result === 'pending') return false;
+                const units = Math.abs(parseFloat(row.Units || row.units || 0));
+                return units >= level.min && (level.max === Infinity ? true : units < level.max);
+            });
+            if (levelData.length > 0) {
+                const stats = calculateStats(levelData);
+                unitSizingTotalWins += stats.wins;
+                unitSizingTotalLosses += stats.losses;
+                unitSizingTotalPushes += stats.pushes;
+                unitSizingTotalCount += levelData.length;
+                console.log(`  ${level.name}: ${stats.wins}-${stats.losses}-${stats.pushes} (${levelData.length} bets)`);
+            }
+        });
+        console.log(`Unit Sizing Total: ${unitSizingTotalWins}-${unitSizingTotalLosses}-${unitSizingTotalPushes} (${unitSizingTotalCount} bets)`);
+        console.log(`Match Overall: ${unitSizingTotalWins === overallStats.wins && unitSizingTotalLosses === overallStats.losses ? '✓ YES' : '✗ NO'}`);
+
+        console.log('=========================');
 
         document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
