@@ -1111,6 +1111,36 @@ function calculateUnitSizingBreakdown() {
 
     console.log('=== UNIT SIZING BREAKDOWN DEBUG ===');
 
+    // First, test extractBetSize on all bets
+    let extractedCount = 0, defaultedCount = 0;
+    const betSizeDistribution = {};
+
+    allData.forEach(row => {
+        const result = (row.Result || row.result || '').toLowerCase();
+        if (!result || result === '' || result === 'pending') return;
+
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || '').toLowerCase();
+        const searchText = pick + ' ' + betType;
+        const unitMatch = searchText.match(/(\d+\.?\d*)\s*u(?!n)/i);
+        const betSize = extractBetSize(row);
+
+        if (unitMatch) {
+            extractedCount++;
+        } else {
+            defaultedCount++;
+            if (defaultedCount <= 5) {
+                console.log(`  Defaulted to 1u: "${pick.substring(0, 50)}..."`);
+            }
+        }
+
+        betSizeDistribution[betSize] = (betSizeDistribution[betSize] || 0) + 1;
+    });
+
+    console.log(`Bet Size Extraction: ${extractedCount} extracted, ${defaultedCount} defaulted to 1u`);
+    console.log('Bet Size Distribution:', betSizeDistribution);
+    console.log('---');
+
     confidenceLevels.forEach(level => {
         const levelData = allData.filter(row => {
             const result = (row.Result || row.result || '').toLowerCase();
@@ -1128,9 +1158,13 @@ function calculateUnitSizingBreakdown() {
 
         totalCategorized += levelData.length;
         const stats = calculateStats(levelData);
-        const avgBetSize = levelData.reduce((sum, row) => sum + extractBetSize(row), 0) / levelData.length;
+        const totalBetSize = levelData.reduce((sum, row) => sum + extractBetSize(row), 0);
+        const avgBetSize = totalBetSize / levelData.length;
 
-        console.log(`${level.name}: ${levelData.length} bets, Avg Bet Size: ${avgBetSize.toFixed(2)}u, Record: ${stats.record}, Profit: ${stats.units.toFixed(1)}u, ROI: ${stats.roi.toFixed(1)}%`);
+        // Calculate CORRECT ROI based on actual bet sizes risked
+        const correctROI = totalBetSize > 0 ? (stats.units / totalBetSize) * 100 : 0;
+
+        console.log(`${level.name}: ${levelData.length} bets, Avg Bet Size: ${avgBetSize.toFixed(2)}u, Record: ${stats.record}, Profit: ${stats.units.toFixed(1)}u, Total Risked: ${totalBetSize.toFixed(1)}u, ROI: ${correctROI.toFixed(1)}%`);
 
         // Sample some bets
         if (levelData.length > 0) {
@@ -1150,7 +1184,7 @@ function calculateUnitSizingBreakdown() {
             <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
             <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
-            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+            <td class="${correctROI >= 0 ? 'win' : 'loss'}">${correctROI >= 0 ? '+' : ''}${correctROI.toFixed(1)}%</td>
         `;
         tbody.appendChild(row);
     });
@@ -1542,13 +1576,24 @@ function extractBetSize(row) {
     const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
     const searchText = pick + ' ' + betType;
 
-    // Look for patterns like "1u", "2u", "3u", "0.5u", etc.
-    const unitMatch = searchText.match(/(\d+\.?\d*)\s*u(?:\s|$|[^n])/i);
+    // Look for patterns like "1u", "2u", "3u", "0.5u", "1.5u", etc.
+    // Pattern matches: digit(s), optional decimal, optional digit(s), then "u" not followed by "n" (to avoid "unit")
+    const unitMatch = searchText.match(/(\d+\.?\d*)\s*u(?!n)/i);
     if (unitMatch) {
         return parseFloat(unitMatch[1]);
     }
 
-    // If no explicit unit size found, assume 1u
+    // If no explicit unit size found, check if there's a "Units" or "Confidence" column with the bet size
+    // (as opposed to the profit/loss)
+    const confidence = row.Confidence || row.confidence || '';
+    if (confidence) {
+        const confMatch = confidence.match(/(\d+\.?\d*)/);
+        if (confMatch) {
+            return parseFloat(confMatch[1]);
+        }
+    }
+
+    // If still no unit size found, assume 1u (standard bet)
     return 1;
 }
 
