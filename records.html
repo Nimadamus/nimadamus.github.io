@@ -1205,10 +1205,10 @@ function calculateStats(data, useActualBetSizes = false) {
         const resultUpper = result.toUpperCase();
         if (resultUpper === 'W' || resultUpper === 'WIN') {
             wins++;
-            totalUnits += Math.abs(units); // Add profit
+            totalUnits += units; // Add units as-is (should be positive for wins)
         } else if (resultUpper === 'L' || resultUpper === 'LOSS') {
             losses++;
-            totalUnits -= Math.abs(units); // Subtract loss
+            totalUnits += units; // Add units as-is (should be negative for losses)
         } else if (resultUpper === 'P' || resultUpper === 'PUSH') {
             pushes++;
             // Pushes are 0 profit/loss, but still risked capital
