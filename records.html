@@ -1118,10 +1118,10 @@ function calculateMonthlyBreakdown() {
 
 function calculateUnitSizingBreakdown() {
     const confidenceLevels = [
-        { name: '🔥 MAX PLAY (3u)', min: 2.9, max: 3.1 },
-        { name: '⭐ HIGH (2u)', min: 1.9, max: 2.1 },
-        { name: '✓ STANDARD (1u)', min: 0.9, max: 1.1 },
-        { name: '📉 SMALL (0.5u)', min: 0.4, max: 0.6 }
+        { name: '🔥 MAX PLAY (3u+)', min: 2.5, max: Infinity },
+        { name: '⭐ HIGH (2u)', min: 1.5, max: 2.5 },
+        { name: '✓ STANDARD (1u)', min: 0.75, max: 1.5 },
+        { name: '📉 SMALL (0.5u)', min: 0, max: 0.75 }
     ];
 
     const tbody = document.getElementById('unit-sizing-breakdown');
@@ -1137,7 +1137,7 @@ function calculateUnitSizingBreakdown() {
                 return false;
             }
             const units = Math.abs(parseFloat(row.Units || row.units || 0));
-            return units >= level.min && units <= level.max;
+            return units > level.min && units <= level.max;
         });
 
         if (levelData.length === 0) return;
