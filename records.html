@@ -949,74 +949,21 @@ function parseCSVLine(line) {
 }
 
 function calculateOverallStats() {
-    let wins = 0, losses = 0, pushes = 0;
-    let totalUnits = 0, totalRisk = 0;
-    let totalOdds = 0, oddsCount = 0;
+    // Use the same calculation function for consistency
+    const stats = calculateStats(allData);
+    const totalPicks = stats.wins + stats.losses + stats.pushes;
 
-    allData.forEach(row => {
-        const result = (row.Result || row.result || '').toLowerCase();
-        const units = parseFloat(row.Units || row.units || 0);
-        const line = row.Line || row.line || '';
-
-        // Skip results that are not determined yet
-        if (!result || result === '' || result === 'pending') {
-            return;
-        }
-
-        if (result.includes('win') || result.includes('w')) {
-            wins++;
-            // Units column contains the PROFIT
-            totalUnits += units;
-
-            // Calculate risk from odds
-            const odds = extractOdds(line);
-            let risk = Math.abs(units); // Default: assume risk = profit (even odds)
-
-            if (odds && odds < 0) {
-                // American odds negative (e.g., -110)
-                // To win 'units', you risked: units * (|odds| / 100)
-                risk = Math.abs(units) * (Math.abs(odds) / 100);
-            } else if (odds && odds > 0) {
-                // American odds positive (e.g., +150)
-                // To win 'units', you risked: units / (odds / 100)
-                risk = Math.abs(units) / (odds / 100);
-            }
-            totalRisk += risk;
-
-        } else if (result.includes('loss') || result.includes('l')) {
-            losses++;
-            // Units column contains the LOSS (negative)
-            totalUnits += units; // Already negative
-            // For losses, the units value IS the amount risked
-            totalRisk += Math.abs(units);
-
-        } else if (result.includes('push')) {
-            pushes++;
-            // Pushes don't count toward anything
-        }
-
-        const odds = extractOdds(line);
-        if (odds) {
-            totalOdds += odds;
-            oddsCount++;
-        }
-    });
-
-    const totalPicks = wins + losses + pushes;
-    const winRate = totalPicks > 0 ? (wins / (wins + losses)) * 100 : 0;
-    const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
-    const avgOdds = oddsCount > 0 ? Math.round(totalOdds / oddsCount) : -110;
-
-    document.getElementById('total-record').textContent = `${wins}-${losses}${pushes > 0 ? `-${pushes}` : ''}`;
-    document.getElementById('win-rate').textContent = winRate.toFixed(1) + '%';
-    document.getElementById('win-rate').className = `stat-value ${winRate > 50 ? 'positive' : 'negative'}`;
-    document.getElementById('total-units').textContent = (totalUnits >= 0 ? '+' : '') + totalUnits.toFixed(1) + 'u';
-    document.getElementById('total-units').className = `stat-value ${totalUnits >= 0 ? 'positive' : 'negative'}`;
-    document.getElementById('total-roi').textContent = (roi >= 0 ? '+' : '') + roi.toFixed(1) + '%';
-    document.getElementById('total-roi').className = `stat-value ${roi >= 0 ? 'positive' : 'negative'}`;
-    document.getElementById('avg-odds').textContent = avgOdds > 0 ? '+' + avgOdds : avgOdds;
+    // Update display
+    document.getElementById('total-record').textContent = stats.record;
+    document.getElementById('win-rate').textContent = stats.winRate.toFixed(1) + '%';
+    document.getElementById('win-rate').className = `stat-value ${stats.winRate > 50 ? 'positive' : 'negative'}`;
+    document.getElementById('total-units').textContent = (stats.units >= 0 ? '+' : '') + stats.units.toFixed(1) + 'u';
+    document.getElementById('total-units').className = `stat-value ${stats.units >= 0 ? 'positive' : 'negative'}`;
+    document.getElementById('total-roi').textContent = (stats.roi >= 0 ? '+' : '') + stats.roi.toFixed(1) + '%';
+    document.getElementById('total-roi').className = `stat-value ${stats.roi >= 0 ? 'positive' : 'negative'}`;
+    document.getElementById('avg-odds').textContent = stats.avgOdds > 0 ? '+' + stats.avgOdds : stats.avgOdds;
     document.getElementById('total-picks').textContent = totalPicks;
-    document.getElementById('win-progress').style.width = winRate + '%';
+    document.getElementById('win-progress').style.width = stats.winRate + '%';
 }
 
 function calculateSportBreakdown() {
@@ -1161,51 +1108,33 @@ function calculateUnitSizingBreakdown() {
 
 function calculateStats(data) {
     let wins = 0, losses = 0, pushes = 0;
-    let totalUnits = 0, totalRisk = 0;
+    let totalUnits = 0;
     let totalOdds = 0, oddsCount = 0;
 
+    // Process each row
     data.forEach(row => {
-        const result = (row.Result || row.result || '').toLowerCase();
+        const result = (row.Result || row.result || '').toLowerCase().trim();
         const units = parseFloat(row.Units || row.units || 0);
         const line = row.Line || row.line || '';
 
-        // Skip results that are not determined yet
+        // Skip pending or empty results
         if (!result || result === '' || result === 'pending') {
             return;
         }
 
-        if (result.includes('win') || result.includes('w')) {
+        // Count wins, losses, pushes
+        if (result.includes('win') || result === 'w') {
             wins++;
-            // Units column contains the PROFIT
-            totalUnits += units;
-
-            // Calculate risk from odds
-            const odds = extractOdds(line);
-            let risk = Math.abs(units); // Default: assume risk = profit (even odds)
-
-            if (odds && odds < 0) {
-                // American odds negative (e.g., -110)
-                // To win 'units', you risked: units * (|odds| / 100)
-                risk = Math.abs(units) * (Math.abs(odds) / 100);
-            } else if (odds && odds > 0) {
-                // American odds positive (e.g., +150)
-                // To win 'units', you risked: units / (odds / 100)
-                risk = Math.abs(units) / (odds / 100);
-            }
-            totalRisk += risk;
-
-        } else if (result.includes('loss') || result.includes('l')) {
+            totalUnits += Math.abs(units); // Add profit
+        } else if (result.includes('loss') || result === 'l') {
             losses++;
-            // Units column contains the LOSS (negative)
-            totalUnits += units; // Already negative
-            // For losses, the units value IS the amount risked
-            totalRisk += Math.abs(units);
-
-        } else if (result.includes('push')) {
+            totalUnits -= Math.abs(units); // Subtract loss
+        } else if (result.includes('push') || result === 'p') {
             pushes++;
-            // Pushes don't count toward anything
+            // Pushes are 0 profit/loss
         }
 
+        // Track odds
         const odds = extractOdds(line);
         if (odds) {
             totalOdds += odds;
@@ -1213,13 +1142,22 @@ function calculateStats(data) {
         }
     });
 
-    const winRate = (wins + losses) > 0 ? (wins / (wins + losses)) * 100 : 0;
-    const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
+    // Calculate totals
+    const totalBets = wins + losses; // Pushes don't count in win rate
+    const winRate = totalBets > 0 ? (wins / totalBets) * 100 : 0;
+
+    // ROI = profit / total risked
+    // Simplified: assume 1 unit risked per bet on average
+    const totalRisked = totalBets;
+    const roi = totalRisked > 0 ? (totalUnits / totalRisked) * 100 : 0;
+
     const avgOdds = oddsCount > 0 ? Math.round(totalOdds / oddsCount) : -110;
 
     return {
         record: `${wins}-${losses}${pushes > 0 ? `-${pushes}` : ''}`,
-        wins, losses, pushes,
+        wins,
+        losses,
+        pushes,
         winRate,
         units: totalUnits,
         roi,
