@@ -965,21 +965,34 @@ function calculateOverallStats() {
 
         if (result.includes('win') || result.includes('w')) {
             wins++;
-            // Units column already contains the profit/loss, so just add it
+            // Units column contains the PROFIT
             totalUnits += units;
-            // Risk is the bet amount (always positive)
-            const betAmount = Math.abs(units);
-            totalRisk += betAmount;
+
+            // Calculate risk from odds
+            const odds = extractOdds(line);
+            let risk = Math.abs(units); // Default: assume risk = profit (even odds)
+
+            if (odds && odds < 0) {
+                // American odds negative (e.g., -110)
+                // To win 'units', you risked: units * (|odds| / 100)
+                risk = Math.abs(units) * (Math.abs(odds) / 100);
+            } else if (odds && odds > 0) {
+                // American odds positive (e.g., +150)
+                // To win 'units', you risked: units / (odds / 100)
+                risk = Math.abs(units) / (odds / 100);
+            }
+            totalRisk += risk;
+
         } else if (result.includes('loss') || result.includes('l')) {
             losses++;
-            // Units column contains negative value for losses
-            totalUnits += units;
-            // Risk is the bet amount (always positive)
-            const betAmount = Math.abs(units);
-            totalRisk += betAmount;
+            // Units column contains the LOSS (negative)
+            totalUnits += units; // Already negative
+            // For losses, the units value IS the amount risked
+            totalRisk += Math.abs(units);
+
         } else if (result.includes('push')) {
             pushes++;
-            // Pushes don't count toward risk
+            // Pushes don't count toward anything
         }
 
         const odds = extractOdds(line);
@@ -1163,21 +1176,34 @@ function calculateStats(data) {
 
         if (result.includes('win') || result.includes('w')) {
             wins++;
-            // Units column already contains the profit/loss, so just add it
+            // Units column contains the PROFIT
             totalUnits += units;
-            // Risk is the bet amount (always positive)
-            const betAmount = Math.abs(units);
-            totalRisk += betAmount;
+
+            // Calculate risk from odds
+            const odds = extractOdds(line);
+            let risk = Math.abs(units); // Default: assume risk = profit (even odds)
+
+            if (odds && odds < 0) {
+                // American odds negative (e.g., -110)
+                // To win 'units', you risked: units * (|odds| / 100)
+                risk = Math.abs(units) * (Math.abs(odds) / 100);
+            } else if (odds && odds > 0) {
+                // American odds positive (e.g., +150)
+                // To win 'units', you risked: units / (odds / 100)
+                risk = Math.abs(units) / (odds / 100);
+            }
+            totalRisk += risk;
+
         } else if (result.includes('loss') || result.includes('l')) {
             losses++;
-            // Units column contains negative value for losses
-            totalUnits += units;
-            // Risk is the bet amount (always positive)
-            const betAmount = Math.abs(units);
-            totalRisk += betAmount;
+            // Units column contains the LOSS (negative)
+            totalUnits += units; // Already negative
+            // For losses, the units value IS the amount risked
+            totalRisk += Math.abs(units);
+
         } else if (result.includes('push')) {
             pushes++;
-            // Pushes don't count toward risk
+            // Pushes don't count toward anything
         }
 
         const odds = extractOdds(line);
