@@ -982,29 +982,62 @@ function calculateSportBreakdown() {
 }
 
 function calculateBetTypeBreakdown() {
-    const betTypes = [
-        { name: 'Spread', filter: (pick) => (pick.includes('+') || pick.includes('-')) && !pick.includes('over') && !pick.includes('under') && !pick.includes('teaser') && !pick.includes('5 inn') && !pick.includes('first 5') },
-        { name: 'Moneyline', filter: (pick) => (pick.includes('ml') || pick.includes('moneyline')) && !pick.includes('teaser') && !pick.includes('5 inn') && !pick.includes('first 5') },
-        { name: 'Over', filter: (pick) => pick.includes('over') && !pick.includes('teaser') && !pick.includes('5 inn') && !pick.includes('first 5') },
-        { name: 'Under', filter: (pick) => pick.includes('under') && !pick.includes('teaser') && !pick.includes('5 inn') && !pick.includes('first 5') },
-        { name: 'Teasers', filter: (pick) => pick.includes('teaser') },
-        { name: '5-Inning Bets', filter: (pick) => pick.includes('5 inn') || pick.includes('5-inn') || pick.includes('first 5') || pick.includes('f5') }
-    ];
-
     const tbody = document.getElementById('bet-type-breakdown');
     tbody.innerHTML = '';
 
+    // Track which bets have been categorized
+    const categorizedIndices = new Set();
+    const allBetTypes = [];
+
+    // Filter bets by type in priority order (mutually exclusive)
+    const betTypes = [
+        { name: 'Teasers', filter: (pick) => pick.includes('teaser') },
+        { name: '5-Inning Bets', filter: (pick) => pick.includes('5 inn') || pick.includes('5-inn') || pick.includes('first 5') || pick.includes('f5') },
+        { name: 'Over', filter: (pick) => pick.includes('over') },
+        { name: 'Under', filter: (pick) => pick.includes('under') },
+        { name: 'Moneyline', filter: (pick) => pick.includes('ml') || pick.includes('moneyline') },
+        { name: 'Spread', filter: (pick) => (pick.includes('+') || pick.includes('-')) }
+    ];
+
+    // Categorize each bet type
     betTypes.forEach(betType => {
-        const typeData = allData.filter(row => {
+        const typeData = allData.filter((row, index) => {
+            if (categorizedIndices.has(index)) return false; // Skip already categorized
+
+            const result = (row.Result || row.result || '').toLowerCase().trim();
+            if (!result || result === '' || result === 'pending') return false;
+
             const pick = (row.Pick || row.pick || '').toLowerCase();
             const betTypeCol = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
             const searchText = pick + ' ' + betTypeCol;
-            return betType.filter(searchText);
+
+            if (betType.filter(searchText)) {
+                categorizedIndices.add(index);
+                return true;
+            }
+            return false;
         });
 
-        if (typeData.length === 0) return;
+        if (typeData.length > 0) {
+            allBetTypes.push({ name: betType.name, data: typeData });
+        }
+    });
 
-        const stats = calculateStats(typeData);
+    // Catch all uncategorized bets as "Other"
+    const uncategorized = allData.filter((row, index) => {
+        if (categorizedIndices.has(index)) return false;
+        const result = (row.Result || row.result || '').toLowerCase().trim();
+        return result && result !== '' && result !== 'pending';
+    });
+
+    if (uncategorized.length > 0) {
+        allBetTypes.push({ name: 'Other', data: uncategorized });
+        console.log('Uncategorized bets:', uncategorized.length, uncategorized);
+    }
+
+    // Display all bet types
+    allBetTypes.forEach(betType => {
+        const stats = calculateStats(betType.data);
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><strong>${betType.name}</strong></td>
@@ -1012,10 +1045,18 @@ function calculateBetTypeBreakdown() {
             <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
-            <td>${findBestSport(typeData)}</td>
+            <td>${findBestSport(betType.data)}</td>
         `;
         tbody.appendChild(row);
     });
+
+    // Debug: Log total categorized vs total bets
+    const totalCategorized = allBetTypes.reduce((sum, bt) => sum + bt.data.length, 0);
+    const totalBets = allData.filter(row => {
+        const result = (row.Result || row.result || '').toLowerCase().trim();
+        return result && result !== '' && result !== 'pending';
+    }).length;
+    console.log(`Bet Type Breakdown: ${totalCategorized} categorized out of ${totalBets} total bets`);
 }
 
 function calculateMonthlyBreakdown() {
