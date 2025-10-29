@@ -259,24 +259,30 @@
                             totalUnits += unitValue;
                         }
 
-                        // Calculate risk for ROI
+                        // Calculate risk for ROI - amount actually risked on each bet
                         const line = parseFloat(p.Line);
-                        if (!isNaN(line) && !isNaN(unitValue)) {
+                        if (!isNaN(line) && !isNaN(unitValue) && grade !== 'P' && grade !== 'Push') {
                             let risk = 0;
-                            if (unitValue < 0) { 
-                                risk = Math.abs(unitValue); 
+
+                            if (grade === 'L' || grade === 'Loss') {
+                                // For a loss, the risk equals the amount lost
+                                risk = Math.abs(unitValue);
                             }
-                            else if (unitValue > 0) {
-                                if (line > 0) { 
-                                    risk = (unitValue / (line / 100)); 
+                            else if (grade === 'W' || grade === 'Win') {
+                                // For a win, calculate the amount that was risked based on the line
+                                if (line >= 0) {
+                                    // Positive odds (underdog): if you win X units at +Y, you risked X/(Y/100)
+                                    // Example: win 1.5u at +150 means you risked 1.5/1.5 = 1u
+                                    risk = unitValue / (line / 100);
                                 }
-                                else { 
-                                    risk = (unitValue * (Math.abs(line) / 100)); 
+                                else {
+                                    // Negative odds (favorite): if you win X units at -Y, you risked X*(Y/100)
+                                    // Example: win 1u at -150 means you risked 1*1.5 = 1.5u
+                                    risk = unitValue * (Math.abs(line) / 100);
                                 }
                             }
-                            if (grade !== 'P' && grade !== 'Push') {
-                                totalRisk += risk;
-                            }
+
+                            totalRisk += risk;
                         }
 
                         const row = document.createElement('tr');
