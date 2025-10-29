@@ -260,7 +260,7 @@
                         }
 
                         // Calculate risk for ROI - amount actually risked on each bet
-                        const line = parseFloat(p.Line);
+                        const line = parseFloat(p.Line || p.Odds);
                         if (!isNaN(line) && !isNaN(unitValue) && grade !== 'P' && grade !== 'Push') {
                             let risk = 0;
 
@@ -289,7 +289,7 @@
                         row.innerHTML = `
                             <td>${p.Date}</td>
                             <td>${p.Pick}</td>
-                            <td>${p.Line}</td>
+                            <td>${p.Line || p.Odds}</td>
                             <td><span class="${resultClass}">${grade}</span></td>
                             <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
                         `;
