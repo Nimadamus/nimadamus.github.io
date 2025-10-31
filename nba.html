@@ -222,6 +222,145 @@
             border: 1px solid rgba(255, 107, 53, 0.3);
         }
 
+        /* Navigation Bar - Fixed */
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            padding: 15px 5% 15px 5%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+            z-index: 999;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a, .dropdown {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-family: var(--font-secondary);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--neon-gold);
+            text-shadow: 0 0 8px var(--neon-gold);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .dropdown .dropbtn {
+            font-family: var(--font-secondary);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            background: none;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .dropdown .dropbtn:hover {
+            color: var(--neon-gold);
+            text-shadow: 0 0 8px var(--neon-gold);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(10, 15, 25, 0.98);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            z-index: 1000;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            padding: 12px 0;
+            margin-top: 5px;
+        }
+
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(0, 224, 255, 0.1);
+            color: var(--neon-cyan);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
+                padding: 10px 5px;
+            }
+
+            .nav-links a {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+
+            .dropdown .dropbtn {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+
+            .dropdown-content {
+                min-width: 160px;
+                padding: 10px 0;
+            }
+
+            .dropdown-content a {
+                font-size: 0.85rem;
+                padding: 10px 15px;
+            }
+        }
+
     </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
@@ -293,19 +432,22 @@
     </nav>
 
 <div class="container">
-<header class="header">
-<h1>NBA Betting Hub</h1>
-<p>Championship basketball analysis, game breakdowns, and sharp picks powered by BetLegend's NBA model. Your edge starts here.</p>
-</header>
+<a class="back-link" href="index.html" title="Home — Free NFL & MLB Picks">← Back to Home</a>
+<div class="header">
+<h1 class="title">NBA <span class="highlight">ANALYSIS</span></h1>
+<h2 class="subtitle">Professional Basketball Game Analysis & Betting Insights</h2>
+</div>
 <main class="content-section">
 
-<article class="article">
-  <h2>Friday NBA Cup Showcase: Halloween Night Hoops</h2>
-  <p style="color: var(--text-muted); font-size: 14px;"><em>Posted: October 31, 2025, 2:30 PM ET</em></p>
+<div class="section-sep">
+<h2>Friday NBA Cup Showcase <span class="week-tag">October 31</span></h2>
+<p class="section-sub">Eight-game Halloween night slate with intriguing storylines and sharp betting angles</p>
+</div>
 
-  <p>Halloween night delivers an eight-game NBA Cup slate featuring fascinating contrasts in team form and market perception. We've got winless Indiana hosting red-hot Atlanta, the perfect 4-0 Bulls defending home court against the Knicks, and Jaylen Brown's Celtics traveling to Philadelphia's undefeated squad. The early season narratives are crystallizing, and the betting markets are starting to adjust. Some teams are getting disrespected despite strong fundamentals, while others are riding unsustainable hot streaks. Here's the complete handicapping breakdown with verified stats and angles the sharp money is watching.</p>
+<div class="game-card">
+<p style="color: #e0e0e0; line-height: 1.8; margin-bottom: 18px;">Halloween night delivers an eight-game NBA Cup slate featuring fascinating contrasts in team form and market perception. We've got winless Indiana hosting red-hot Atlanta, the perfect 4-0 Bulls defending home court against the Knicks, and Jaylen Brown's Celtics traveling to Philadelphia's undefeated squad. The early season narratives are crystallizing, and the betting markets are starting to adjust. Some teams are getting disrespected despite strong fundamentals, while others are riding unsustainable hot streaks. Here's the complete handicapping breakdown with verified stats and angles the sharp money is watching.</p>
 
-  <h3 style="color: var(--accent-color);">Celtics Without Tatum Face Perfect Sixers</h3>
+  <h3 class="section-title">🏀 Celtics Without Tatum Face Perfect Sixers</h3>
 
   <p><strong>Boston Celtics @ Philadelphia 76ers – 7:00 PM ET (NBA Cup)</strong><br/>
   <span class="odds-highlight">Line:</span> 76ers -1 | <span class="odds-highlight">Total:</span> 233.5 | <span class="odds-highlight">ATS:</span> BOS 2-3-0, PHI 3-1-0</p>
