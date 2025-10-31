@@ -159,10 +159,14 @@
     }
 
     .analysis-section p {
-        color: var(--text-secondary);
+        color: #e8eef5;
         line-height: 1.8;
         margin-bottom: 18px;
         font-size: 16px;
+    }
+
+    .game-card p {
+        color: #e8eef5;
     }
 
     .stat-highlight {
@@ -194,45 +198,67 @@
     .matchup-details strong {
         color: var(--accent-gold);
     }
-    .pick-label { color: var(--glow-color); font-weight: 700; margin-bottom: 10px; }
-    .pick-details { font-family: 'Roboto', sans-serif; font-size: 18px; margin-bottom: 10px; }
-    .confidence { color: var(--win-color); font-weight: 700; }
-    .analysis { color: #ddd; line-height: 1.6; margin-top: 15px; font-family: 'Roboto', sans-serif; }
-    .featured-game { border: 2px solid gold; box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
-    .featured-badge { background: gold; color: #000; padding: 5px 15px; border-radius: 15px; font-weight: 700; font-size: 14px; }
-    /* Week tag for quick scan */
-    .week-tag { display: inline-block; background: rgba(0,224,255,0.15); border: 1px solid var(--glow-color); padding: 4px 10px; border-radius: 999px; font-size: 13px; margin-left: 8px; }
-    /* Footer */
-    .footer { margin-top: 50px; text-align: center; color: #888; }
-    .footer a { color: var(--glow-color); }
+    .pick-label {
+        color: var(--accent-gold);
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
 
-/* Logo */
-.logo-container {
-    position: fixed;
-    top: 20px;
-    left: 40px;
-    z-index: 1000;
-}
+    .pick-details {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #e8eef5;
+    }
 
-.logo-container a {
-    color: #fff;
-    text-decoration: none;
-    font-family: var(--font-primary);
-    font-size: 2.5rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    text-shadow:
-        0 0 10px rgba(255, 255, 255, 0.8),
-        0 0 20px rgba(255, 255, 255, 0.4);
-}
+    .confidence {
+        color: var(--accent-gold);
+        font-weight: 700;
+    }
 
-.logo-container span {
-    color: var(--neon-cyan);
-    text-shadow:
-        0 0 15px rgba(0, 255, 255, 1),
-        0 0 30px rgba(0, 255, 255, 0.8),
-        0 0 50px rgba(0, 255, 255, 0.6);
-}
+    .analysis {
+        color: #e8eef5;
+        line-height: 1.8;
+        margin-top: 15px;
+    }
+
+    .featured-game {
+        border: 2px solid var(--accent-gold);
+        box-shadow: 0 0 20px rgba(244, 163, 0, 0.3);
+    }
+
+    .featured-badge {
+        background: var(--accent-gold);
+        color: #0a0e27;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 14px;
+    }
+
+    .week-tag {
+        display: inline-block;
+        background: rgba(244, 163, 0, 0.15);
+        border: 1px solid var(--accent-gold);
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+        margin-left: 8px;
+    }
+
+    .footer {
+        margin-top: 50px;
+        text-align: center;
+        color: var(--text-secondary);
+    }
+
+    .footer a {
+        color: var(--accent-gold);
+    }
+
+    p {
+        color: #e8eef5;
+        line-height: 1.8;
+    }
 
 /* Navigation */
 .nav-links {
@@ -284,17 +310,15 @@
 }
 
 .dropdown .dropbtn {
-    font-family: var(--font-secondary);
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--text-secondary);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    padding: 8px 10px;
-    border-radius: 5px;
+    padding: 10px 16px;
+    border-radius: 6px;
     transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
     background: none;
     border: none;
     cursor: pointer;
@@ -303,9 +327,9 @@
     align-items: center;
 }
 
-.dropdown:hover .dropbtn {
-    color: var(--neon-gold);
-    text-shadow: 0 0 8px var(--neon-gold);
+.dropdown .dropbtn:hover {
+    color: var(--accent-gold);
+    background: rgba(244, 163, 0, 0.1);
 }
 
 .dropdown-content {
@@ -313,61 +337,37 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(20px);
-    min-width: 200px;
-    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+    background: rgba(21, 27, 61, 0.98);
+    min-width: 220px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    border: 2px solid rgba(0, 224, 255, 0.5);
-    border-radius: 10px;
-    padding: 15px 0;
-    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    padding: 8px 0;
+    margin-top: 8px;
 }
 
 .dropdown-content a {
-    color: var(--neon-cyan);
-    padding: 14px 20px;
+    color: var(--text-secondary);
+    padding: 12px 24px;
     text-decoration: none;
     display: block;
-    font-size: 0.95rem;
     text-align: left;
+    font-size: 0.875rem;
+    font-weight: 500;
     transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-    border-left: 3px solid transparent;
 }
 
 .dropdown-content a:hover {
-    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
-    color: #fff;
-    padding-left: 30px;
-    text-shadow: 0 0 10px var(--glow-color);
-    border-left-color: var(--neon-cyan);
+    background: rgba(244, 163, 0, 0.1);
+    color: var(--accent-gold);
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
-    animation: dropdownFade 0.3s ease;
-}
-
-@keyframes dropdownFade {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 768px) {
-    body {
-        padding-top: 120px !important;
-    }
-
-    .logo-container {
-        top: 10px;
-        left: 20px;
-    }
-
-    .logo-container a {
-        font-size: 1.5rem;
-    }
-
     .nav-links {
         flex-wrap: wrap;
         gap: 8px;
@@ -393,6 +393,14 @@
     .dropdown-content a {
         font-size: 0.85rem;
         padding: 10px 15px;
+    }
+
+    .title {
+        font-size: 36px;
+    }
+
+    .subtitle {
+        font-size: 16px;
     }
 }
 
@@ -540,7 +548,7 @@
 <p>The Owls sit at <span class="stat-highlight">4-4 (1-3 AAC)</span> in year one under Scott Abell, and let's just say the offense is… a work in progress. They can't throw it consistently (bottom of the conference in passing efficiency), and they're getting torched defensively by anyone with a pulse. Facing Memphis and their 37.6 PPG? That's a recipe for disaster unless something changes.</p>
 
 <div class="matchup-details">
-<strong style="color: #FF6B35;">🛡️ Defensive Bright Spots (Yes, They Exist):</strong><br/>
+<strong style="color: var(--accent-blue);">🛡️ Defensive Bright Spots (Yes, They Exist):</strong><br/>
 • <strong>Ty Morris (Jr., OLB):</strong> 56 tackles, 8.0 TFL, team-high 4.0 sacks—this dude can play<br/>
 • <strong>Plae Wyatt (Sr., SS):</strong> Back from devastating 2024 knee injury, plays that hybrid "viper" role<br/>
 • Problem: Even with these guys ballin', Rice still gives up big plays constantly
@@ -793,8 +801,8 @@ Marshall's quarterback efficiency is the difference maker here. Del Rio-Wilson's
 </div>
 <!-- Key Games from September 6th - Analysis -->
 <div style="margin: 10px 0 30px 0; text-align: center;">
-<h3 style="color: var(--glow-color); font-size: 28px; margin-bottom: 10px;">Key Games from September 6th - Analysis</h3>
-<div style="color: #ccc;">Posted: September 05, 2025 11:14 PM</div>
+<h3 class="section-title">Key Games from September 6th - Analysis</h3>
+<div class="section-sub">Posted: September 05, 2025 11:14 PM</div>
 </div>
 <div class="game-card">
 <div class="game-header">
