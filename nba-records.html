@@ -195,7 +195,7 @@
 <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Master BetLegend Picks Tracker sheet
-            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjW2l6hBUafumAiOdJblACLIx3GTtdJDcytUcN1nu2QHJmHnUMN9_5Tp2v7VqMTZaATfdmcJ-SK4jD/pub?output=csv';
 
             const tableBody = document.getElementById('records-tbody');
             const loadingContainer = document.getElementById('loading-container');
@@ -221,7 +221,7 @@
 
                     // Filter for NBA picks only
                     const picksDatabase = allPicks.filter(p => {
-                        const sport = (p['League/Sport'] || p.Sport || '').trim();
+                        const sport = (p.Sport || p.Sport || '').trim();
                         return sport === 'NBA';
                     });
 
@@ -263,13 +263,13 @@
                         else if (grade === 'L' || grade === 'Loss') { losses++; resultClass = 'loss'; }
                         else if (grade === 'P' || grade === 'Push') { pushes++; resultClass = 'push'; }
                         
-                        const unitValue = parseFloat(p['Profit/Loss'] || p.Units || '0');
+                        const unitValue = parseFloat(p.ProfitLoss || p.Units || '0');
                         if (!isNaN(unitValue)) {
                             totalUnits += unitValue;
                         }
 
                         // Calculate risk for ROI - amount actually risked on each bet
-                        const line = parseFloat(p['Price/Odds'] || p.Line || p.Odds);
+                        const line = parseFloat(p.Odds || p.Line || p.Odds);
                         if (!isNaN(line) && !isNaN(unitValue) && grade !== 'P' && grade !== 'Push') {
                             let risk = 0;
 
@@ -297,8 +297,8 @@
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${p.Date}</td>
-                            <td>${p.Line || p.Pick || 'N/A'}</td>
-                            <td>${p['Price/Odds'] || p.Odds || 'N/A'}</td>
+                            <td>${p.Picks || p.Pick || 'N/A'}</td>
+                            <td>${p.Odds || p.Odds || 'N/A'}</td>
                             <td><span class="${resultClass}">${grade}</span></td>
                             <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
                         `;

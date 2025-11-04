@@ -189,7 +189,7 @@
 <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Master BetLegend Picks Tracker sheet
-            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjW2l6hBUafumAiOdJblACLIx3GTtdJDcytUcN1nu2QHJmHnUMN9_5Tp2v7VqMTZaATfdmcJ-SK4jD/pub?output=csv';
 
             const tableBody = document.getElementById('records-tbody');
             const loadingContainer = document.getElementById('loading-container');
@@ -236,7 +236,7 @@
 
                     // Filter for NHL picks only
                     const picksDatabase = allPicks.filter(p => {
-                        const sport = (p['League/Sport'] || p.Sport || '').trim();
+                        const sport = (p.Sport || p.Sport || '').trim();
                         return sport === 'NHL';
                     });
 
@@ -272,13 +272,13 @@
                             resultClass = 'push'; 
                         }
                         
-                        const unitValue = parseFloat(p['Profit/Loss'] || p.Units || '0');
+                        const unitValue = parseFloat(p.ProfitLoss || p.Units || '0');
                         if (!isNaN(unitValue)) {
                             totalUnits += unitValue;
                         }
 
                         // Get the odds value - using "Price/Odds" column name from master sheet
-                        let oddsValue = p['Price/Odds'] || p.Odds || p.odds || '';
+                        let oddsValue = p.Odds || p.Odds || p.odds || '';
                         
                         // Extract numeric value from odds (handles formats like "-175", "+150", etc.)
                         let odds = null;
@@ -319,7 +319,7 @@
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${p.Date}</td>
-                            <td>${p.Line || p.Pick || 'N/A'}</td>
+                            <td>${p.Picks || p.Pick || 'N/A'}</td>
                             <td>${oddsValue || 'N/A'}</td>
                             <td><span class="${resultClass}">${grade}</span></td>
                             <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
