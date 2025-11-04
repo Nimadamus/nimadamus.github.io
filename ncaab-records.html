@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>🏀 NCAAB Record - BetLegend Picks</title>
-<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
+<title>🏀 NCAAB Record - BetLegend Picks</title><link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
@@ -46,22 +45,17 @@
   gtag('js', new Date());
 
   gtag('config', 'G-QS8L5TDNLY');
-</script>
-<meta name="description" content="Verified NCAAB betting records with full graded history and cumulative units. Transparent tracking of all college basketball picks.">
-<meta name="keywords" content="NCAAB betting record, verified college basketball picks, NCAAB win loss units, graded NCAAB bets, college basketball units tracker, transparent NCAAB betting results">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
+</script><meta name="description" content="Transparent, verified betting records across all sports. Track our performance with detailed win-loss records, ROI, and unit tracking."/>
+<meta name="keywords" content="verified records, betting track record, sports betting results, ROI"/><meta property="og:type" content="website"><meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
 <meta property="og:site_name" content="BetLegend Picks">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@BetLegend2025">
 <meta name="twitter:title" content="NCAAB Record - BetLegend Picks">
-<meta name="twitter:description" content="Verified NCAAB betting records with full graded history and cumulative units.">
-<meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
-<link href="https://www.betlegendpicks.com/ncaab-records.html" rel="canonical"/>
+<meta name="twitter:description" content="Verified NCAAB betting records with full graded history and cumulative units. Transparent tracking of all college basketball picks.">
+<meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png"><link href="https://www.betlegendpicks.com/ncaab-records.html" rel="canonical"/>
 <meta property="og:title" content="NCAAB Record - BetLegend Picks">
-<meta property="og:description" content="Verified NCAAB betting records with full graded history and cumulative units.">
-<meta property="og:url" content="https://www.betlegendpicks.com/ncaab-records.html">
-<script type="application/ld+json">
+<meta property="og:description" content="Verified NCAAB betting records with full graded history and cumulative units. Transparent tracking of all college basketball picks.">
+<meta property="og:url" content="https://www.betlegendpicks.com/ncaab-records.html"><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -95,7 +89,7 @@
 <div class="dropdown">
 <button class="dropbtn" aria-label="View Verified Records">Records</button>
 <div class="dropdown-content">
-        <a href="records.html" title="Detailed Performance Breakdown">DETAILED BREAKDOWN</a>
+<a href="records.html" title="Detailed Performance Breakdown">DETAILED BREAKDOWN</a>
 <a href="betlegend-verified-records.html" title="MLB Betting Records">MLB</a>
 <a href="nfl-records.html" title="NFL Betting Records">NFL</a>
 <a href="ncaaf-records.html" title="College Football Betting Records">NCAAF</a>
@@ -164,7 +158,7 @@
     <div style="display:flex;justify-content:space-around;margin-top:20px;padding-top:20px;border-top:1px solid rgba(0,224,255,0.2)">
         <div style="text-align:center">
             <div style="font-size:12px;color:#9bb3c9;text-transform:uppercase;margin-bottom:5px">Starting Point</div>
-            <div style="font-size:18px;font-weight:700;color:#00e0ff" id="chart-start-date">--</div>
+            <div style="font-size:18px;font-weight:700;color:#00e0ff" id="chart-start-date">May 30th</div>
         </div>
         <div style="text-align:center">
             <div style="font-size:12px;color:#9bb3c9;text-transform:uppercase;margin-bottom:5px">Total Bets</div>
@@ -186,7 +180,7 @@
 <tbody id="records-tbody"></tbody>
 </table>
 <div id="loading-container">
-<p id="loading-message">Loading full NCAAB record from the official ledger...</p>
+<p id="loading-message">Loading full record from the official ledger...</p>
 </div>
 </div>
 
@@ -194,7 +188,7 @@
 
 <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const googleSheetUrl = 'YOUR_NCAAB_GOOGLE_SHEET_CSV_URL_HERE';
+            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
 
             const tableBody = document.getElementById('records-tbody');
             const loadingContainer = document.getElementById('loading-container');
@@ -217,14 +211,20 @@
                 .then(response => response.text())
                 .then(csvText => {
                     const picksDatabase = parseCSV(csvText);
-                    
-                    const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
+
+                    // Filter for NCAAB picks only
+                    const ncaabPicks = picksDatabase.filter(p => {
+                        const sport = (p['League/Sport'] || p.League || p.Sport || '').trim();
+                        return sport === 'NCAAB';
+                    });
+
+                    const gradedPicks = ncaabPicks.filter(p => p.Result && p.Result.trim() !== '');
                     if (gradedPicks.length === 0) {
                         document.getElementById('overall-record').textContent = '0-0-0';
                         document.getElementById('total-units').textContent = '+0.00';
                         document.getElementById('win-percentage').textContent = '0.0%';
                         document.getElementById('roi').textContent = '0.00%';
-                        loadingContainer.innerHTML = `<p id="loading-message">No graded picks found in the NCAAB record yet.</p>`;
+                        loadingContainer.innerHTML = `<p id="loading-message">No graded NCAAB picks found yet.</p>`;
                         return;
                     }
 
@@ -234,24 +234,11 @@
 
                     gradedPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
                     
-                    // Set starting date
-                    if (gradedPicks.length > 0) {
-                        const oldestPick = gradedPicks[gradedPicks.length - 1];
-                        const startDate = new Date(oldestPick.Date);
-                        if (!isNaN(startDate)) {
-                            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                            document.getElementById('chart-start-date').textContent = 
-                                months[startDate.getMonth()] + ' ' + startDate.getDate() + 
-                                (startDate.getDate() % 10 === 1 && startDate.getDate() !== 11 ? 'st' :
-                                 startDate.getDate() % 10 === 2 && startDate.getDate() !== 12 ? 'nd' :
-                                 startDate.getDate() % 10 === 3 && startDate.getDate() !== 13 ? 'rd' : 'th');
-                        }
-                    }
-                    
                     gradedPicks.forEach(p => {
                         let resultClass = '';
                         let grade = p.Result;
 
+                        // THIS IS THE CRITICAL FIX: It now checks for both full words and single letters.
                         if (grade === 'W' || grade === 'Win') { wins++; resultClass = 'win'; }
                         else if (grade === 'L' || grade === 'Loss') { losses++; resultClass = 'loss'; }
                         else if (grade === 'P' || grade === 'Push') { pushes++; resultClass = 'push'; }
@@ -261,37 +248,31 @@
                             totalUnits += unitValue;
                         }
 
-                        // Calculate risk for ROI - amount actually risked on each bet
-                        const line = parseFloat(p.Line || p.Odds);
-                        if (!isNaN(line) && !isNaN(unitValue) && grade !== 'P' && grade !== 'Push') {
+                        // Calculate risk for ROI (same logic as NFL/NCAAF pages)
+                        const line = parseFloat(p.Line);
+                        if (!isNaN(line) && !isNaN(unitValue)) {
                             let risk = 0;
-
-                            if (grade === 'L' || grade === 'Loss') {
-                                // For a loss, the risk equals the amount lost
-                                risk = Math.abs(unitValue);
+                            if (unitValue < 0) { 
+                                risk = Math.abs(unitValue); 
                             }
-                            else if (grade === 'W' || grade === 'Win') {
-                                // For a win, calculate the amount that was risked based on the line
-                                if (line >= 0) {
-                                    // Positive odds (underdog): if you win X units at +Y, you risked X/(Y/100)
-                                    // Example: win 1.5u at +150 means you risked 1.5/1.5 = 1u
-                                    risk = unitValue / (line / 100);
+                            else if (unitValue > 0) {
+                                if (line > 0) { 
+                                    risk = (unitValue / (line / 100)); 
                                 }
-                                else {
-                                    // Negative odds (favorite): if you win X units at -Y, you risked X*(Y/100)
-                                    // Example: win 1u at -150 means you risked 1*1.5 = 1.5u
-                                    risk = unitValue * (Math.abs(line) / 100);
+                                else { 
+                                    risk = (unitValue * (Math.abs(line) / 100)); 
                                 }
                             }
-
-                            totalRisk += risk;
+                            if (grade !== 'P' && grade !== 'Push') {
+                                totalRisk += risk;
+                            }
                         }
 
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${p.Date}</td>
                             <td>${p.Pick}</td>
-                            <td>${p.Line || p.Odds}</td>
+                            <td>${p.Line}</td>
                             <td><span class="${resultClass}">${grade}</span></td>
                             <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
                         `;
@@ -317,7 +298,7 @@
                     roiElement.textContent = `${roi >= 0 ? '+' : ''}${roi.toFixed(2)}%`;
                     roiElement.classList.add(roi >= 0 ? 'win' : 'loss');
 
-                    // CREATE THE CHART AFTER DATA LOADS
+                    // CREATE THE IMPROVED CHART AFTER DATA LOADS
                     setTimeout(createImprovedChart, 500);
 
                 }).catch(error => {
@@ -326,7 +307,7 @@
                     document.getElementById('total-units').textContent = 'Error';
                     document.getElementById('win-percentage').textContent = 'Error';
                     document.getElementById('roi').textContent = 'Error';
-                    loadingContainer.innerHTML = `<p id="loading-message">Could not load NCAAB record. Please check the Google Sheet URL and ensure it's published correctly.</p>`;
+                    loadingContainer.innerHTML = `<p id="loading-message">Could not load record. Please check the Google Sheet URL and ensure it's published correctly.</p>`;
                 });
         });
 
@@ -347,6 +328,7 @@
                 var rows = Array.from(table.querySelectorAll('tr'));
                 if(rows.length === 0) return {labels:[], units:[], dates:[]};
 
+                // Extract data - the table shows newest first, so we need to reverse it
                 var points = rows.map(function(tr){
                     var cells = tr.querySelectorAll('td');
                     if(!cells.length) return null;
@@ -355,6 +337,7 @@
                     var unitsTxt = (cells[4] || {}).textContent || "0";
                     var unitsVal = parseNumber(unitsTxt);
                     
+                    // Parse date for proper sorting
                     var dateObj = new Date(dateTxt);
                     
                     return {
@@ -365,7 +348,7 @@
                     };
                 }).filter(Boolean);
 
-                // Reverse to get chronological order
+                // CRITICAL: Since your table shows newest first, reverse it to get chronological order
                 points.reverse();
 
                 var labels = [];
@@ -373,9 +356,11 @@
                 var cumulative = 0;
                 var series = [];
                 
+                // Calculate cumulative from oldest to newest
                 points.forEach(function(p, idx){
                     cumulative += p.units;
                     
+                    // Use actual date strings for better display
                     var displayDate = p.date;
                     if(p.dateObj && !isNaN(p.dateObj)) {
                         var month = p.dateObj.getMonth() + 1;
@@ -387,6 +372,10 @@
                     dates.push(p.date);
                     series.push(Number(cumulative.toFixed(2)));
                 });
+
+                console.log('Points in chronological order:', points.length);
+                console.log('Cumulative series (should end at peak):', series);
+                console.log('Final cumulative (should be current units):', cumulative);
 
                 return {
                     labels: labels,
@@ -403,6 +392,7 @@
             }
             
             var data = getImprovedData();
+            console.log('Chart data:', data);
             
             if(data.labels.length === 0) {
                 console.log('No data found for chart');
@@ -412,6 +402,7 @@
                 return;
             }
 
+            // Update stats - ensure accuracy
             var currentUnits = data.cumulative[data.cumulative.length - 1] || 0;
             var peakUnits = Math.max(...data.cumulative);
             
@@ -420,10 +411,12 @@
             document.getElementById('chart-current-units').style.color = currentUnits >= 0 ? '#39FF14' : '#FF3131';
             document.getElementById('chart-peak-units').textContent = (peakUnits >= 0 ? '+' : '') + peakUnits.toFixed(2);
 
+            // Destroy previous chart
             if(window.__improvedUnitsChart) { 
                 window.__improvedUnitsChart.destroy(); 
             }
 
+            // Clean chart with thin line
             window.__improvedUnitsChart = new Chart(ctx.getContext('2d'), {
                 type: 'line',
                 data: {
@@ -524,6 +517,8 @@
                     }
                 }
             });
+            
+            console.log('Chart created successfully - Current units:', currentUnits, 'Peak units:', peakUnits);
         }
 </script>
 </body>

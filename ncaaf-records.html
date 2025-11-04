@@ -192,7 +192,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
+        const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
 
         async function fetchGoogleSheetData() {
             try {
@@ -252,8 +252,8 @@
         function filterNCAAFData(allData) {
             // Filter for NCAAF picks only
             return allData.filter(row => {
-                const sport = row.Sport || row.sport || '';
-                return sport.toLowerCase().includes('ncaaf') || sport.toLowerCase().includes('college football');
+                const sport = (row['League/Sport'] || row.League || row.Sport || '').trim();
+                return sport === 'NCAAF';
             });
         }
 

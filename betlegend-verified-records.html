@@ -211,14 +211,20 @@
                 .then(response => response.text())
                 .then(csvText => {
                     const picksDatabase = parseCSV(csvText);
-                    
-                    const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
+
+                    // Filter for MLB picks only
+                    const mlbPicks = picksDatabase.filter(p => {
+                        const sport = (p['League/Sport'] || p.League || p.Sport || '').trim();
+                        return sport === 'MLB';
+                    });
+
+                    const gradedPicks = mlbPicks.filter(p => p.Result && p.Result.trim() !== '');
                     if (gradedPicks.length === 0) {
                         document.getElementById('overall-record').textContent = '0-0-0';
                         document.getElementById('total-units').textContent = '+0.00';
                         document.getElementById('win-percentage').textContent = '0.0%';
                         document.getElementById('roi').textContent = '0.00%';
-                        loadingContainer.innerHTML = `<p id="loading-message">No graded picks found in the record yet.</p>`;
+                        loadingContainer.innerHTML = `<p id="loading-message">No graded MLB picks found yet.</p>`;
                         return;
                     }
 
@@ -296,7 +302,7 @@
                     setTimeout(createImprovedChart, 500);
 
                 }).catch(error => {
-                    console.error("Error fetching Verified Records:", error);
+                    console.error("Error fetching MLB Records:", error);
                     document.getElementById('overall-record').textContent = 'Error';
                     document.getElementById('total-units').textContent = 'Error';
                     document.getElementById('win-percentage').textContent = 'Error';
