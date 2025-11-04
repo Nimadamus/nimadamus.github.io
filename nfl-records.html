@@ -223,8 +223,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv';
+    // Google Sheets CSV URL - Master BetLegend Picks Tracker
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
 
     // Function to parse CSV data
     function parseCSV(csv) {
@@ -290,7 +290,14 @@
             const response = await fetch(GOOGLE_SHEETS_CSV_URL);
             const csvData = await response.text();
             const sheetData = parseCSV(csvData);
-            const mlbPicksData = convertToMLBFormat(sheetData);
+
+            // Filter for NFL picks only
+            const nflData = sheetData.filter(row => {
+                const sport = (row.Sport || '').trim();
+                return sport === 'NFL';
+            });
+
+            const mlbPicksData = convertToMLBFormat(nflData);
             
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
