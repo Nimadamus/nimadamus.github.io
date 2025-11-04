@@ -1,0 +1,22 @@
+# BetLegend 301 Redirects
+# These replace meta refresh tags for better SEO
+
+RewriteEngine On
+
+# Redirect old/alternate URLs to canonical versions
+Redirect 301 /betlegend-verified-records.htm https://www.betlegendpicks.com/betlegend-verified-records.html
+Redirect 301 /bestbook.html https://www.betlegendpicks.com/bestonlinesportsbook.html
+Redirect 301 /FreeAlerts.html https://www.betlegendpicks.com/
+Redirect 301 /smartbets.html https://www.betlegendpicks.com/betlegend-verified-records.html
+Redirect 301 /matchups.html https://www.betlegendpicks.com/betlegend-verified-records.html
+Redirect 301 /odds.html https://www.betlegendpicks.com/blog.html
+Redirect 301 /picks.html https://www.betlegendpicks.com/blog.html
+Redirect 301 /affiliates.html https://www.betlegendpicks.com/
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Force www
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

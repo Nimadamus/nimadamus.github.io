@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCAAF Verified Records - BetLegend Picks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --glow-color: #00e0ff; --win-color: #39FF14; --loss-color: #FF3131; }
+        body { margin: 0; background-color: #000; background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Orbitron', sans-serif; color: white; padding: 10px; }
+        .content-wrapper { max-width: 900px; margin: 20px auto; padding: 25px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--glow-color); border-radius: 15px; }
+        .header-branding { text-align: center; margin-bottom: 25px; }
+        .title { font-size: 64px; color: #fff; margin: 0; text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color); }
+        .title .highlight { color: var(--glow-color); }
+        .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px 30px; width: 100%; padding: 20px 0; margin-bottom: 30px; border-top: 1px solid rgba(0, 224, 255, 0.2); border-bottom: 1px solid rgba(0, 224, 255, 0.2); background: rgba(0,0,0,0.3); }
+        .nav-links a, .dropdown .dropbtn { color: var(--glow-color); text-decoration: none; font-size: 16px; font-weight: bold; transition: text-shadow 0.3s ease, color 0.3s ease; background: none; border: none; font-family: 'Orbitron', sans-serif; cursor: pointer; padding: 5px 0; }
+        .nav-links a:hover, .dropdown:hover .dropbtn { color: #fff; text-shadow: 0 0 10px var(--glow-color); }
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(5px); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 10; border: 1px solid rgba(0, 224, 255, 0.2); border-radius: 4px; padding: 10px 0; margin-top: 10px; }
+        .dropdown-content a { color: var(--glow-color); padding: 12px 16px; text-decoration: none; display: block; font-size: 14px; text-align: left; }
+        .dropdown-content a:hover { background-color: rgba(0, 224, 255, 0.1); color: #fff; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .unit-scale-notice { text-align: center; background: rgba(0, 224, 255, 0.1); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 8px; padding: 15px; margin-bottom: 25px; }
+        .unit-scale-notice p { margin: 0; font-size: 18px; color: #fff; font-family: 'Roboto', sans-serif; line-height: 1.6; font-weight: 500; }
+        .summary-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; width: 100%; padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(0, 224, 255, 0.2); }
+        .stat-box { text-align: center; }
+        .stat-box h3 { margin: 0 0 10px 0; font-size: 16px; color: var(--glow-color); text-transform: uppercase; }
+        .stat-box p { margin: 0; font-size: 28px; font-weight: 700; }
+        .stat-box p.win { color: var(--win-color); }
+        .stat-box p.loss { color: var(--loss-color); }
+        .table-container { overflow-x: auto; }
+        .records-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; }
+        .records-table th, .records-table td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(0, 224, 255, 0.2); font-family: 'Roboto', sans-serif; }
+        .records-table th { background-color: rgba(0, 224, 255, 0.1); font-family: 'Orbitron', sans-serif; }
+        .records-table td .win { color: var(--win-color); } .records-table td .loss { color: var(--loss-color); }
+        .loading { text-align: center; color: var(--glow-color); margin: 20px 0; }
+        .error { text-align: center; color: var(--loss-color); margin: 20px 0; }
+    </style><meta name="description" content="Verified betting records with full graded history and cumulative units. Transparent tracking across MLB, NFL, and college football.">
+<meta name="keywords" content="MLB betting record, verified picks record, win loss units, graded bets history, MLB units tracker, transparent betting results">
+<link href="https://www.betlegendpicks.com/ncaaf-records.html" rel="canonical"/>
+<meta property="og:title" content="NCAAF Verified Records - BetLegend Picks">
+<meta property="og:description" content="Verified betting records with full graded history and cumulative units. Transparent tracking across MLB, NFL, and college football.">
+<meta property="og:url" content="https://www.betlegendpicks.com/ncaaf-records.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
+<meta property="og:site_name" content="BetLegend Picks">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@BetLegend2025">
+<meta name="twitter:title" content="NCAAF Verified Records - BetLegend Picks">
+<meta name="twitter:description" content="Verified betting records with full graded history and cumulative units. Transparent tracking across MLB, NFL, and college football.">
+<meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png"><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.betlegendpicks.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Page",
+      "item": "https://www.betlegendpicks.com/ncaaf-records.html"
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+    <div class="content-wrapper">
+        <div class="header-branding">
+            <h1 class="title">🏈 NCAAF<span class="highlight">Records</span></h1>
+        </div>
+
+        <nav class="nav-links" aria-label="Main Navigation">
+        <a href="index.html" title="Home">Home</a>
+        <a href="blog-page8.html">Picks &amp; Analysis</a>
+
+        <div class="dropdown">
+        <button class="dropbtn" aria-label="View Verified Records">Records</button>
+        <div class="dropdown-content">
+        <a href="records.html" title="Detailed Performance Breakdown">DETAILED BREAKDOWN</a>
+        <a href="betlegend-verified-records.html" title="MLB Betting Records">MLB</a>
+        <a href="nfl-records.html" title="NFL Betting Records">NFL</a>
+        <a href="ncaaf-records.html" title="College Football Betting Records">NCAAF</a>
+        <a href="nhl-records.html" title="NHL Betting Records">NHL</a>
+        <a href="nba-records.html" title="NBA Betting Records">NBA</a>
+        <a href="soccer-records.html" title="Soccer Betting Records">Soccer</a>
+        </div>
+        </div>
+
+        <div class="dropdown">
+        <button class="dropbtn" aria-label="Sports Categories">Sports</button>
+        <div class="dropdown-content">
+        <a href="nfl.html" title="Free NFL Picks and Predictions">NFL</a>
+        <a href="mlb-page2.html" title="MLB Picks and Analysis">MLB</a>
+        <a href="ncaaf-page2.html" title="College Football Picks">NCAAF</a>
+        <a href="nba.html" title="NBA Picks and Analysis">NBA</a>
+        <a href="nhl.html" title="NHL Picks and Analysis">NHL</a>
+        </div>
+        </div>
+
+        <div class="dropdown">
+        <button class="dropbtn" aria-label="Betting Resources">Resources</button>
+        <div class="dropdown-content">
+        <a href="howitworks.html" title="How Our Picks Work">How It Works</a>
+        <a href="bankroll.html" title="Bankroll Management Guide">Bankroll</a>
+        <a href="screenshots.html" title="Pick Verification Screenshots">Screenshots</a>
+        <a href="bestonlinesportsbook.html" title="Best Online Sportsbooks">Best Sportsbook</a>
+        <a href="betting-101.html" title="Betting 101 Education">Betting 101</a>
+        </div>
+        </div>
+
+        <a href="news.html" title="Sports Betting News">News</a>
+        <a href="featured-game-of-the-day.html" title="Today's Featured Game Pick">Game of the Day</a>
+
+        <div class="dropdown">
+        <button class="dropbtn" aria-label="Join Community">Community</button>
+        <div class="dropdown-content">
+        <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener" title="Follow on Twitter">Twitter</a>
+        <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener" title="Join Discord Community">Discord</a>
+        </div>
+        </div>
+        </nav>
+
+        <div class="unit-scale-notice">
+        <p><strong>All plays are between half a unit and 3 units on a 1 to 6 scale.</strong> 6 being the highest (3 units), 1 being the lowest (half a unit).</p>
+        </div>
+
+        <div id="loading-message" class="loading">Loading records from Google Sheets...</div>
+        <div id="error-message" class="error" style="display: none;"></div>
+        <div class="summary-stats">
+            <div class="stat-box"><h3>Record</h3><p id="overall-record">--</p></div>
+            <div class="stat-box"><h3>Total Units</h3><p id="total-units">--</p></div>
+            <div class="stat-box"><h3>Win Percentage</h3><p id="win-percentage">--</p></div>
+            <div class="stat-box"><h3>ROI</h3><p id="summary-roi">--</p></div>
+        </div>
+
+        <!-- CHART SECTION -->
+        <section id="units-chart-section" style="max-width:1140px;margin:30px auto;padding:25px;background:linear-gradient(135deg, #0c1220 0%, #1a2332 100%);border-radius:15px;box-shadow:0 0 30px rgba(0,224,255,0.1),inset 0 1px 0 rgba(255,255,255,0.1);border:1px solid rgba(0,224,255,0.2)">
+            <h2 style="margin:0 0 8px 0;text-align:center;font-family:Orbitron,Arial,Helvetica,sans-serif;color:#00e0ff;font-weight:700;letter-spacing:0.5px;font-size:28px;text-shadow:0 0 10px rgba(0,224,255,0.5)">Units Won Over Time</h2>
+            <p style="margin:0 0 20px 0;text-align:center;color:#9bb3c9;font-size:14px;font-family:Roboto,sans-serif">Track your betting journey from day one - Auto-generated from verified records below</p>
+            
+            <div style="position:relative;height:500px;width:100%">
+                <canvas id="unitsChart"></canvas>
+            </div>
+            
+            <div style="display:flex;justify-content:space-around;margin-top:20px;padding-top:20px;border-top:1px solid rgba(0,224,255,0.2)">
+                <div style="text-align:center">
+                    <div style="font-size:12px;color:#9bb3c9;text-transform:uppercase;margin-bottom:5px">Starting Point</div>
+                    <div style="font-size:18px;font-weight:700;color:#00e0ff" id="chart-start-date">Aug 23rd</div>
+                </div>
+                <div style="text-align:center">
+                    <div style="font-size:12px;color:#9bb3c9;text-transform:uppercase;margin-bottom:5px">Total Bets</div>
+                    <div style="font-size:18px;font-weight:700;color:#00e0ff" id="chart-total-bets">--</div>
+                </div>
+                <div style="text-align:center">
+                    <div style="font-size:12px;color:#9bb3c9;text-transform:uppercase;margin-bottom:5px">Current Units</div>
+                    <div style="font-size:18px;font-weight:700" id="chart-current-units">--</div>
+                </div>
+                <div style="text-align:center">
+                    <div style="font-size:12px;color:#9bb3c9;text-transform:uppercase;margin-bottom:5px">Peak Units</div>
+                    <div style="font-size:18px;font-weight:700;color:#39FF14" id="chart-peak-units">--</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="table-container">
+            <table class="records-table">
+                <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
+                <tbody id="records-tbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
+
+        async function fetchGoogleSheetData() {
+            try {
+                const response = await fetch(GOOGLE_SHEET_CSV_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                return parseCSV(csvText);
+            } catch (error) {
+                console.error('Error fetching Google Sheet data:', error);
+                throw error;
+            }
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n');
+            const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                
+                const values = parseCSVLine(lines[i]);
+                if (values.length === headers.length) {
+                    const row = {};
+                    headers.forEach((header, index) => {
+                        row[header] = values[index];
+                    });
+                    data.push(row);
+                }
+            }
+            return data;
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+
+        function filterNCAAFData(allData) {
+            // Filter for NCAAF picks only
+            return allData.filter(row => {
+                const sport = row.Sport || row.sport || '';
+                return sport.toLowerCase().includes('ncaaf') || sport.toLowerCase().includes('college football');
+            });
+        }
+
+        function processRecordsData(ncaafData) {
+            let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
+            const tableBody = document.getElementById('records-tbody');
+            const loadingMessage = document.getElementById('loading-message');
+            const errorMessage = document.getElementById('error-message');
+
+            // Hide loading message
+            loadingMessage.style.display = 'none';
+
+            if (ncaafData.length === 0) {
+                document.getElementById('overall-record').textContent = '0-0-0';
+                document.getElementById('total-units').textContent = '+0.00';
+                document.getElementById('win-percentage').textContent = '0.0%';
+                document.getElementById('summary-roi').textContent = '0.00%';
+                tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No NCAAF picks found in the spreadsheet.</td></tr>`;
+                return;
+            }
+
+            // Clear existing table content
+            tableBody.innerHTML = '';
+
+            ncaafData.forEach(row => {
+                // Handle different possible column names
+                const date = row.Date || row.date || '';
+                const pick = row.Pick || row.pick || row.Game || row.game || '';
+                const line = row.Line || row.line || row.Odds || row.odds || '';
+                const result = (row.Result || row.result || '').trim().toUpperCase();
+                const units = parseFloat(row.Units || row.units || '0');
+
+                // Calculate risk
+                const lineNum = parseFloat(line.replace(/[^\d.-]/g, '')) || -110;
+                let risk = 0;
+
+                if (units < 0) { 
+                    risk = Math.abs(units); 
+                } else if (units > 0) { 
+                    risk = (lineNum > 0) ? (units / (lineNum / 100)) : (units * (Math.abs(lineNum) / 100)); 
+                }
+                
+                // Count wins/losses/pushes
+                if (result.startsWith('W')) {
+                    wins++;
+                } else if (result.startsWith('L')) {
+                    losses++;
+                } else if (result.startsWith('P')) {
+                    pushes++;
+                }
+                
+                totalUnits += units;
+                totalRisk += risk;
+
+                // Add row to table
+                const tableRow = document.createElement('tr');
+                tableRow.innerHTML = `
+                    <td>${date}</td>
+                    <td>${pick}</td>
+                    <td>${line}</td>
+                    <td><span class="${result.startsWith('W') ? 'win' : (result.startsWith('P') ? '' : 'loss')}">${result || 'TBD'}</span></td>
+                    <td><span class="${units >= 0 ? 'win' : 'loss'}">${units.toFixed(2)}</span></td>
+                `;
+                tableBody.appendChild(tableRow);
+            });
+
+            // Update summary statistics
+            const totalGames = wins + losses;
+            const winPercentage = totalGames > 0 ? ((wins / totalGames) * 100) : 0;
+            const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
+            
+            document.getElementById('overall-record').textContent = `${wins}-${losses}-${pushes}`;
+            
+            const unitsElement = document.getElementById('total-units');
+            unitsElement.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+            unitsElement.className = totalUnits >= 0 ? 'win' : 'loss';
+
+            const winPctElement = document.getElementById('win-percentage');
+            winPctElement.textContent = `${winPercentage.toFixed(1)}%`;
+            winPctElement.className = winPercentage >= 50 ? 'win' : 'loss';
+            
+            const roiElement = document.getElementById('summary-roi');
+            roiElement.textContent = `${roi >= 0 ? '+' : ''}${roi.toFixed(2)}%`;
+            roiElement.className = roi >= 0 ? 'win' : 'loss';
+
+            // CREATE THE CHART
+            setTimeout(createChart, 500);
+        }
+
+        // CHART FUNCTION
+        function createChart() {
+            function parseNumber(txt){
+                if(!txt) return 0;
+                txt = txt.replace(/,/g,'').trim();
+                var num = parseFloat(txt);
+                if(isNaN(num)) return 0;
+                return num;
+            }
+
+            function getChartData(){
+                var table = document.querySelector('#records-tbody');
+                if(!table) return {labels:[], dates:[], cumulative:[], totalBets:0};
+                
+                var rows = Array.from(table.querySelectorAll('tr'));
+                if(rows.length === 0) return {labels:[], dates:[], cumulative:[], totalBets:0};
+
+                var points = rows.map(function(tr){
+                    var cells = tr.querySelectorAll('td');
+                    if(!cells.length) return null;
+                    
+                    var dateTxt = cells[0].textContent.trim();
+                    var unitsTxt = (cells[4] || {}).textContent || "0";
+                    var unitsVal = parseNumber(unitsTxt);
+                    
+                    var dateObj = new Date(dateTxt);
+                    
+                    return {
+                        date: dateTxt,
+                        dateObj: dateObj,
+                        units: unitsVal
+                    };
+                }).filter(Boolean);
+
+                points.reverse();
+
+                var labels = [];
+                var dates = [];
+                var cumulative = 0;
+                var series = [];
+                
+                points.forEach(function(p){
+                    cumulative += p.units;
+                    
+                    var displayDate = p.date;
+                    if(p.dateObj && !isNaN(p.dateObj)) {
+                        var month = p.dateObj.getMonth() + 1;
+                        var day = p.dateObj.getDate();
+                        displayDate = month + '/' + day;
+                    }
+                    
+                    labels.push(displayDate);
+                    dates.push(p.date);
+                    series.push(Number(cumulative.toFixed(2)));
+                });
+
+                return {
+                    labels: labels,
+                    dates: dates,
+                    cumulative: series,
+                    totalBets: points.length
+                };
+            }
+
+            var ctx = document.getElementById('unitsChart');
+            if(!ctx) return;
+            
+            var data = getChartData();
+            
+            if(data.labels.length === 0) {
+                document.getElementById('chart-total-bets').textContent = '0';
+                document.getElementById('chart-current-units').textContent = '+0.00';
+                document.getElementById('chart-peak-units').textContent = '+0.00';
+                return;
+            }
+
+            var currentUnits = data.cumulative[data.cumulative.length - 1] || 0;
+            var peakUnits = Math.max(...data.cumulative);
+            
+            document.getElementById('chart-total-bets').textContent = data.totalBets;
+            document.getElementById('chart-current-units').textContent = (currentUnits >= 0 ? '+' : '') + currentUnits.toFixed(2);
+            document.getElementById('chart-current-units').style.color = currentUnits >= 0 ? '#39FF14' : '#FF3131';
+            document.getElementById('chart-peak-units').textContent = (peakUnits >= 0 ? '+' : '') + peakUnits.toFixed(2);
+
+            if(window.__ncaafUnitsChart) { 
+                window.__ncaafUnitsChart.destroy(); 
+            }
+
+            window.__ncaafUnitsChart = new Chart(ctx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Units',
+                        data: data.cumulative,
+                        borderColor: '#00e0ff',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.1,
+                        pointRadius: 0,
+                        pointHoverRadius: 4,
+                        pointHoverBackgroundColor: '#00e0ff',
+                        pointHoverBorderColor: '#ffffff',
+                        pointHoverBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    scales: {
+                        x: {
+                            ticks: { 
+                                color: '#b9c7d6',
+                                maxRotation: 0,
+                                autoSkip: false,
+                                font: {
+                                    family: 'Roboto',
+                                    size: 10
+                                }
+                            },
+                            grid: { 
+                                display: true,
+                                color: 'rgba(255,255,255,0.1)'
+                            },
+                            border: {
+                                color: 'rgba(0, 224, 255, 0.3)'
+                            }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            ticks: { 
+                                color: '#b9c7d6',
+                                font: {
+                                    family: 'Roboto',
+                                    size: 12
+                                },
+                                stepSize: 5,
+                                callback: function(value) {
+                                    return (value >= 0 ? '+' : '') + value;
+                                }
+                            },
+                            grid: { 
+                                color: 'rgba(255,255,255,0.15)'
+                            },
+                            border: {
+                                color: 'rgba(0, 224, 255, 0.3)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(12, 18, 32, 0.95)',
+                            titleColor: '#00e0ff',
+                            bodyColor: '#ffffff',
+                            borderColor: '#00e0ff',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            titleFont: {
+                                family: 'Orbitron',
+                                size: 12,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                family: 'Roboto',
+                                size: 11
+                            },
+                            callbacks: {
+                                title: function(context) {
+                                    var index = context[0].dataIndex;
+                                    return data.dates[index] || context[0].label;
+                                },
+                                label: function(context) {
+                                    var value = context.parsed.y;
+                                    return 'Total Units: ' + (value >= 0 ? '+' : '') + value.toFixed(2);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Fallback data in case Google Sheets fails
+        function loadFallbackData() {
+            const fallbackData = [
+                { Date: '8-23-2025', Sport: 'NCAAF', Pick: 'Fresno St/Kansas under 50', Line: '-110', Result: 'W', Units: '1' }
+            ];
+            processRecordsData(fallbackData);
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Page loaded, attempting to fetch data...');
+            
+            try {
+                console.log('Fetching from:', GOOGLE_SHEET_CSV_URL);
+                const allData = await fetchGoogleSheetData();
+                console.log('Raw data received:', allData.length, 'rows');
+                console.log('Sample data:', allData.slice(0, 2));
+                
+                const ncaafData = filterNCAAFData(allData);
+                console.log('Filtered NCAAF data:', ncaafData.length, 'rows');
+                
+                if (ncaafData.length === 0) {
+                    console.log('No NCAAF data found, trying with all data...');
+                    processRecordsData(allData);
+                } else {
+                    processRecordsData(ncaafData);
+                }
+            } catch (error) {
+                console.error('Error loading Google Sheets data:', error);
+                
+                document.getElementById('loading-message').style.display = 'none';
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.innerHTML = `
+                    <p>Failed to load from Google Sheets. Using fallback data.</p>
+                    <p style="font-size: 12px;">Error: ${error.message}</p>
+                `;
+                errorMessage.style.display = 'block';
+                
+                // Load fallback data so page isn't empty
+                loadFallbackData();
+            }
+        });
+    </script>
+</body>
+</html>

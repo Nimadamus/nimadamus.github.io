@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BetLegend Wins</title>
+  <link href="https://www.betlegendpicks.com/screenshots.html" rel="canonical"/>
+
+  <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+        }
+
+        
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('images/moneyview.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    
+          padding-top: 140px;}
+
+    header {
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 20px 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    header a:hover {
+      background: rgba(255, 215, 0, 0.2);
+    }
+
+    .content {
+      text-align: center;
+      padding: 40px 20px 10px;
+    }
+
+    .content h1 {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    .content p {
+      font-size: 20px;
+      color: #f0f0f0;
+      margin-bottom: 30px;
+    }
+
+    .screenshots {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 20px 60px;
+    }
+
+    .screenshots img {
+      width: 100%;
+      max-width: 350px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85);
+      border: 2px solid #ffd700;
+      transition: transform 0.2s ease;
+    }
+
+    .screenshots img:hover {
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      .content h1 {
+        font-size: 32px;
+      }
+      .content p {
+        font-size: 18px;
+      }
+    }
+  
+/* Logo */
+.logo-container {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    z-index: 1000;
+}
+
+.logo-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.logo-container span {
+    color: var(--neon-cyan);
+    text-shadow:
+        0 0 15px rgba(0, 255, 255, 1),
+        0 0 30px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(0, 255, 255, 0.6);
+}
+
+/* Navigation */
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 15px 5% 15px 5%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+    z-index: 999;
+    flex-wrap: wrap;
+}
+
+.nav-links a, .dropdown {
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown .dropbtn {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+    z-index: 1000;
+    border: 2px solid rgba(0, 224, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: var(--neon-cyan);
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+    color: #fff;
+    padding-left: 30px;
+    text-shadow: 0 0 10px var(--glow-color);
+    border-left-color: var(--neon-cyan);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px !important;
+    }
+
+    .logo-container {
+        top: 10px;
+        left: 20px;
+    }
+
+    .logo-container a {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 10px 5px;
+    }
+
+    .nav-links a {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown-content {
+        min-width: 160px;
+        padding: 10px 0;
+    }
+
+    .dropdown-content a {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+}
+
+    </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+    <nav class="nav-links">
+        <a href="blog-page8.html">PICKS & ANALYSIS</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="records.html">DETAILED BREAKDOWN</a>
+                <a href="betlegend-verified-records.html">MLB</a>
+                <a href="nfl-records.html">NFL</a>
+                <a href="ncaaf-records.html">NCAAF</a>
+                <a href="nhl-records.html">NHL</a>
+                <a href="nba-records.html">NBA</a>
+                <a href="soccer-records.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf-page2.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+                <a href="soccer.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="live-odds.html">Live Odds</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="kelly-criterion.html">Kelly Criterion</a>
+                <a href="betting-calculators.html">Betting Calculators</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-glossary.html">Betting Glossary</a>
+                <a href="betting-101.html">Betting 101</a>
+            </div>
+        </div>
+
+        <a href="proofofpicks.html">Proof</a>
+        <a href="news-page3.html">News</a>
+        <a href="featured-game-of-the-day.html">Game of the Day</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+  <header>
+    <a href="index.html">Home</a>
+    <a href="blog.html">Picks and Analysis</a>
+    <a href="https://pregame.com/game-center" target="_blank">Live Odds</a>
+    <a href="bankroll.html">Bankroll Management</a>
+    <a href="news.html">News</a>
+    <a href="howitworks.html">How It Works</a>
+    <a href="bestonlinesportsbook.html">Best Online Sportsbook</a>
+   
+  </header>
+
+  <div class="content">
+    <h1>BetLegend Wins</h1>
+    <p>Below are real screenshots from our picks and hot streaks. Check them out.</p>
+  </div>
+
+  <div class="screenshots">
+    <img src="images/proof-bet-screenshot-1000079685.jpg" alt="Bet Screenshot 1">
+    <img src="images/proof-bet-screenshot-1000079686.jpg" alt="Bet Screenshot 2">
+    <img src="images/proof-bet-screenshot-1000079687.jpg" alt="Bet Screenshot 3">
+  </div>
+  <!-- Clicky Analytics -->
+<script async data-id="101485054" src="//static.getclicky.com/js"></script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101485054ns.gif" /></p></noscript>
+
+</body>
+</html>

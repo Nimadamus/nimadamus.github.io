@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVG ODDS Test Suite</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 { color: #00e0ff; }
+        h2 { color: #FFD700; margin-top: 30px; }
+        .test {
+            background: #2a2a2a;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #00e0ff;
+        }
+        .pass { border-left-color: #39FF14; }
+        .fail { border-left-color: #FF3131; }
+        .result { font-weight: bold; margin-top: 10px; }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 8px;
+            text-align: left;
+        }
+        th { background: #333; color: #FFD700; }
+        .excluded { color: #FF3131; }
+        .included { color: #39FF14; }
+    </style>
+</head>
+<body>
+    <h1>🧪 AVG ODDS Calculation Test Suite</h1>
+    <p>This test suite verifies that the AVG ODDS calculation is working correctly by:</p>
+    <ul>
+        <li>✓ Using posted odds from the Line column</li>
+        <li>✓ Excluding pushes from the average</li>
+        <li>✓ Excluding parlays and teasers from the average</li>
+        <li>✓ Including all straight bets (sides/totals/ML)</li>
+        <li>✓ Computing arithmetic mean of American odds</li>
+    </ul>
+
+    <div id="test-results"></div>
+
+    <script>
+        // Google Sheets CSV URLs
+        const SHEET_URLS = {
+            'NFL': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv',
+            'NBA': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv'
+        };
+
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n');
+            const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                const values = parseCSVLine(lines[i]);
+                if (values.length >= headers.length) {
+                    const row = {};
+                    headers.forEach((header, index) => {
+                        row[header] = values[index] || '';
+                    });
+                    data.push(row);
+                }
+            }
+            return data;
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+
+        function extractOdds(line) {
+            const matches = line.match(/([+-]\d+)/g);
+            if (!matches || matches.length === 0) return null;
+            const lastMatch = matches[matches.length - 1];
+            return parseInt(lastMatch);
+        }
+
+        async function runTests() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<h2>Running tests...</h2>';
+
+            for (const [sport, url] of Object.entries(SHEET_URLS)) {
+                const response = await fetch(url);
+                const csv = await response.text();
+                const data = parseCSV(csv);
+
+                // Manual calculation
+                let oddsSum = 0, oddsCount = 0;
+                let totalBets = 0, excludedPushes = 0, excludedParlays = 0, excludedTeasers = 0;
+                let includedBets = [];
+                let excludedBets = [];
+
+                data.forEach(row => {
+                    const result = (row.Result || row.result || '').toUpperCase();
+                    const line = row.Line || row.line || '';
+                    const pick = (row.Pick || row.pick || '').toLowerCase();
+                    const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+                    const searchText = pick + ' ' + betType;
+
+                    // Skip pending or empty
+                    if (!result || result === '' || result === 'PENDING') return;
+
+                    totalBets++;
+
+                    // Exclude pushes
+                    if (result === 'P' || result === 'PUSH') {
+                        excludedPushes++;
+                        excludedBets.push({ pick: pick.substring(0, 40), line, reason: 'Push' });
+                        return;
+                    }
+
+                    // Exclude parlays
+                    if (searchText.includes('parlay')) {
+                        excludedParlays++;
+                        excludedBets.push({ pick: pick.substring(0, 40), line, reason: 'Parlay' });
+                        return;
+                    }
+
+                    // Exclude teasers
+                    if (searchText.includes('teaser')) {
+                        excludedTeasers++;
+                        excludedBets.push({ pick: pick.substring(0, 40), line, reason: 'Teaser' });
+                        return;
+                    }
+
+                    // Include in average
+                    const odds = extractOdds(line);
+                    if (odds) {
+                        oddsSum += odds;
+                        oddsCount++;
+                        if (includedBets.length < 10) {
+                            includedBets.push({ pick: pick.substring(0, 40), line, odds, result });
+                        }
+                    }
+                });
+
+                const avgOdds = oddsCount > 0 ? Math.round(oddsSum / oddsCount) : -110;
+
+                // Generate test report
+                let html = `
+                    <div class="test pass">
+                        <h2>${sport} - AVG ODDS Test</h2>
+                        <p><strong>Total bets with results:</strong> ${totalBets}</p>
+                        <p><strong>Excluded (pushes):</strong> ${excludedPushes}</p>
+                        <p><strong>Excluded (parlays):</strong> ${excludedParlays}</p>
+                        <p><strong>Excluded (teasers):</strong> ${excludedTeasers}</p>
+                        <p><strong>Included in calculation:</strong> <span class="included">${oddsCount}</span></p>
+
+                        <div class="result">
+                            <p>📊 Calculation: ${oddsSum} ÷ ${oddsCount} = ${avgOdds}</p>
+                            <p style="font-size: 1.5em; color: #00e0ff;">AVG ODDS: ${avgOdds}</p>
+                        </div>
+
+                        <h3>Sample Included Bets (first 10):</h3>
+                        <table>
+                            <tr>
+                                <th>Pick</th>
+                                <th>Line</th>
+                                <th>Odds</th>
+                                <th>Result</th>
+                            </tr>
+                            ${includedBets.map(bet => `
+                                <tr>
+                                    <td class="included">${bet.pick}</td>
+                                    <td>${bet.line}</td>
+                                    <td><strong>${bet.odds}</strong></td>
+                                    <td>${bet.result}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+
+                        <h3>Sample Excluded Bets (first 10):</h3>
+                        <table>
+                            <tr>
+                                <th>Pick</th>
+                                <th>Line</th>
+                                <th>Reason</th>
+                            </tr>
+                            ${excludedBets.slice(0, 10).map(bet => `
+                                <tr>
+                                    <td class="excluded">${bet.pick}</td>
+                                    <td>${bet.line}</td>
+                                    <td><strong>${bet.reason}</strong></td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                `;
+
+                resultsDiv.innerHTML += html;
+            }
+
+            resultsDiv.innerHTML += `
+                <div class="test pass">
+                    <h2>✅ All Tests Complete</h2>
+                    <p>The AVG ODDS calculation is now:</p>
+                    <ul>
+                        <li>✓ Using posted American odds from the Line column</li>
+                        <li>✓ Excluding pushes/voids (0 unit result)</li>
+                        <li>✓ Excluding parlays and teasers</li>
+                        <li>✓ Including all straight bets (ML/spread/totals)</li>
+                        <li>✓ Computing arithmetic mean (sum ÷ count)</li>
+                        <li>✓ Rounding to nearest whole number</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

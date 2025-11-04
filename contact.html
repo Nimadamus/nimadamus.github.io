@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | BetLegend Picks - Get In Touch</title>
+<link href="https://www.betlegendpicks.com/contact.html" rel="canonical"/>
+<meta name="description" content="Contact BetLegend for support, partnership inquiries, or questions about our sports betting picks and subscriptions. We're here to help."/>
+<meta name="keywords" content="contact betlegend, betting picks support, partnership inquiries, customer service"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I subscribe to BetLegend picks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Visit our homepage and click on any subscription plan. You will be redirected to Stripe for secure payment processing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do I receive picks after subscribing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Picks are posted daily on our site and shared in our private Discord channel for subscribers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer refunds?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Please contact us at betlegend2025@gmail.com to discuss refund requests on a case by case basis."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I cancel my subscription?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you can cancel anytime through your Stripe subscription portal or by contacting us directly."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+    :root {
+        --bg-color: #000;
+        --text-color: #eaf8ff;
+        --glow-color: #00e0ff;
+        --neon-cyan: #00ffff;
+        --neon-gold: #FFD700;
+        --font-primary: 'Orbitron', sans-serif;
+        --font-secondary: 'Poppins', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: var(--font-secondary);
+        background-color: var(--bg-color);
+        color: white;
+        overflow-x: hidden;
+        padding-top: 140px;
+    }
+
+    /* Logo */
+    .logo-container {
+        position: fixed;
+        top: 20px;
+        left: 40px;
+        z-index: 1000;
+    }
+
+    .logo-container a {
+        color: #fff;
+        text-decoration: none;
+        font-family: var(--font-primary);
+        font-size: 2.5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        text-shadow:
+            0 0 10px rgba(255, 255, 255, 0.8),
+            0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    .logo-container span {
+        color: var(--neon-cyan);
+        text-shadow:
+            0 0 15px rgba(0, 255, 255, 1),
+            0 0 30px rgba(0, 255, 255, 0.8),
+            0 0 50px rgba(0, 255, 255, 0.6);
+    }
+
+    /* Navigation */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 18px;
+        padding: 15px 5% 15px 5%;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+        z-index: 999;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a, .dropdown {
+        display: inline-flex;
+        align-items: center;
+        color: var(--neon-cyan);
+        text-decoration: none;
+        font-family: var(--font-primary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        padding: 8px 12px;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+        position: relative;
+    }
+
+    .nav-links a:hover {
+        color: var(--neon-gold);
+        text-shadow: 0 0 15px var(--neon-gold);
+        transform: translateY(-2px);
+    }
+
+    .dropdown {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .dropbtn {
+        background: none;
+        border: none;
+        color: var(--neon-cyan);
+        font-family: var(--font-primary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        cursor: pointer;
+        padding: 8px 12px;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+    }
+
+    .dropdown:hover .dropbtn {
+        color: var(--neon-gold);
+        text-shadow: 0 0 15px var(--neon-gold);
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(20px);
+        min-width: 200px;
+        box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+        z-index: 1000;
+        border: 2px solid rgba(0, 224, 255, 0.5);
+        border-radius: 10px;
+        padding: 15px 0;
+        margin-top: 10px;
+    }
+
+    .dropdown-content a {
+        color: var(--neon-cyan);
+        padding: 14px 20px;
+        text-decoration: none;
+        display: block;
+        font-size: 0.95rem;
+        text-align: left;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        border-left: 3px solid transparent;
+    }
+
+    .dropdown-content a:hover {
+        background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+        color: #fff;
+        padding-left: 30px;
+        text-shadow: 0 0 10px var(--glow-color);
+        border-left-color: var(--neon-cyan);
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: dropdownFade 0.3s ease;
+    }
+
+    @keyframes dropdownFade {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Contact Container */
+    .contact-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .contact-header h1 {
+        font-family: var(--font-primary);
+        font-size: 3rem;
+        color: var(--neon-gold);
+        text-shadow: 0 0 20px var(--neon-gold);
+        margin-bottom: 15px;
+    }
+
+    .contact-header p {
+        font-size: 1.2rem;
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+
+    /* Contact Methods */
+    .contact-methods {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    .contact-card {
+        background: rgba(0, 0, 0, 0.7);
+        border: 2px solid var(--neon-cyan);
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 20px rgba(0, 224, 255, 0.2);
+    }
+
+    .contact-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 30px rgba(0, 224, 255, 0.4);
+        border-color: var(--neon-gold);
+    }
+
+    .contact-card h2 {
+        font-family: var(--font-primary);
+        font-size: 1.5rem;
+        color: var(--neon-gold);
+        margin-bottom: 15px;
+        text-shadow: 0 0 10px var(--neon-gold);
+    }
+
+    .contact-card p {
+        font-size: 1rem;
+        color: var(--text-color);
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .contact-card a {
+        display: inline-block;
+        padding: 12px 30px;
+        background: var(--neon-gold);
+        color: #000;
+        text-decoration: none;
+        font-family: var(--font-primary);
+        font-weight: 700;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px var(--neon-gold);
+    }
+
+    .contact-card a:hover {
+        box-shadow: 0 0 25px var(--neon-gold);
+        transform: scale(1.05);
+    }
+
+    .contact-card .email-link {
+        color: var(--neon-cyan);
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        word-break: break-all;
+    }
+
+    .contact-card .email-link:hover {
+        color: var(--neon-gold);
+        text-shadow: 0 0 10px var(--neon-gold);
+    }
+
+    /* FAQ Section */
+    .faq-section {
+        background: rgba(0, 0, 0, 0.7);
+        border: 2px solid var(--neon-cyan);
+        border-radius: 12px;
+        padding: 40px;
+        margin-top: 60px;
+    }
+
+    .faq-section h2 {
+        font-family: var(--font-primary);
+        font-size: 2rem;
+        color: var(--neon-gold);
+        text-align: center;
+        margin-bottom: 30px;
+        text-shadow: 0 0 15px var(--neon-gold);
+    }
+
+    .faq-item {
+        margin-bottom: 25px;
+    }
+
+    .faq-item h3 {
+        font-family: var(--font-primary);
+        font-size: 1.2rem;
+        color: var(--neon-cyan);
+        margin-bottom: 10px;
+    }
+
+    .faq-item p {
+        font-size: 1rem;
+        color: var(--text-color);
+        line-height: 1.6;
+        padding-left: 20px;
+    }
+
+    /* Response Time Notice */
+    .response-notice {
+        background: rgba(255, 215, 0, 0.1);
+        border: 2px solid var(--neon-gold);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .response-notice p {
+        font-size: 1rem;
+        color: var(--text-color);
+        margin: 0;
+    }
+
+    .response-notice strong {
+        color: var(--neon-gold);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        body {
+            padding-top: 120px;
+        }
+
+        .logo-container {
+            top: 10px;
+            left: 20px;
+        }
+
+        .logo-container a {
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            padding: 10px 5px;
+        }
+
+        .nav-links a, .dropbtn {
+            font-size: 0.75rem;
+            padding: 6px 8px;
+        }
+
+        .contact-header h1 {
+            font-size: 2rem;
+        }
+
+        .contact-header p {
+            font-size: 1rem;
+        }
+
+        .contact-methods {
+            grid-template-columns: 1fr;
+        }
+
+        .faq-section {
+            padding: 25px;
+        }
+    }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+    <nav class="nav-links">
+        <a href="blog-page8.html">PICKS & ANALYSIS</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="records.html">DETAILED BREAKDOWN</a>
+                <a href="betlegend-verified-records.html">MLB</a>
+                <a href="nfl-records.html">NFL</a>
+                <a href="ncaaf-records.html">NCAAF</a>
+                <a href="nhl-records.html">NHL</a>
+                <a href="nba-records.html">NBA</a>
+                <a href="soccer-records.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf-page2.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+                <a href="soccer.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="live-odds.html">Live Odds</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="kelly-criterion.html">Kelly Criterion</a>
+                <a href="betting-calculators.html">Betting Calculators</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-glossary.html">Betting Glossary</a>
+                <a href="betting-101.html">Betting 101</a>
+            </div>
+        </div>
+
+        <a href="proofofpicks.html">Proof</a>
+        <a href="news-page3.html">News</a>
+        <a href="featured-game-of-the-day.html">Game of the Day</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+<div class="contact-container">
+    <div class="contact-header">
+        <h1>Get In Touch</h1>
+        <p>Have questions about our picks, subscriptions, or partnerships? We're here to help.</p>
+    </div>
+
+    <div class="contact-methods">
+        <div class="contact-card">
+            <h2>Email Support</h2>
+            <p>For general inquiries, subscription help, or technical support</p>
+            <a href="mailto:betlegend2025@gmail.com" class="email-link">betlegend2025@gmail.com</a>
+        </div>
+
+        <div class="contact-card">
+            <h2>Join Our Discord</h2>
+            <p>Live chat with our community and get instant updates on picks</p>
+            <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Join Discord</a>
+        </div>
+
+        <div class="contact-card">
+            <h2>Follow on Twitter</h2>
+            <p>Daily picks, analysis, and real-time updates</p>
+            <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Follow @BetLegend2025</a>
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <h2>Quick Answers</h2>
+
+        <div class="faq-item">
+            <h3>How do I subscribe?</h3>
+            <p>Visit our homepage and click on any subscription plan. You will be redirected to Stripe for secure payment processing.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Where do I receive picks after subscribing?</h3>
+            <p>Picks are posted daily on our site and shared in our private Discord channel for subscribers.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Do you offer refunds?</h3>
+            <p>Please contact us at betlegend2025@gmail.com to discuss refund requests on a case by case basis.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Can I cancel my subscription?</h3>
+            <p>Yes, you can cancel anytime through your Stripe subscription portal or by contacting us directly.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Partnership Inquiries</h3>
+            <p>Interested in partnering with BetLegend? Email us at betlegend2025@gmail.com with details about your proposal.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Media & Press</h3>
+            <p>For media inquiries or interview requests, reach out to betlegend2025@gmail.com</p>
+        </div>
+    </div>
+
+    <div class="response-notice">
+        <p><strong>Response Time:</strong> We typically respond to all inquiries within 24 hours during business days.</p>
+    </div>
+</div>
+
+</body>
+</html>

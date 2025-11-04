@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="description" content="Live sports betting odds and lines. Real-time odds for MLB, NFL, NBA, NHL. Compare sportsbook lines and find the best value."/>
+<meta property="og:title" content="Live Betting Odds - BetLegend"/>
+<meta property="og:description" content="Live sports betting odds and lines. Real-time odds for MLB, NFL, NBA, NHL. Compare sportsbook lines and find the best value."/>
+<meta property="og:url" content="https://www.betlegendpicks.com/live-odds.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png"/>
+<meta property="og:site_name" content="BetLegend Picks"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:site" content="@BetLegend2025"/>
+<meta name="twitter:title" content="Live Betting Odds - BetLegend"/>
+<meta name="twitter:description" content="Live sports betting odds and lines. Real-time odds for MLB, NFL, NBA, NHL. Compare sportsbook lines and find the best value."/>
+<meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Betting Odds - BetLegend</title>
+<meta content="Live betting odds for NFL, NBA, NHL, MLB, and NCAAF. Compare spreads, moneylines, and totals across top sportsbooks. Auto-updating odds from The Odds API." name="description"/>
+<meta content="live betting odds, NFL odds, NBA odds, NHL odds, MLB odds, NCAAF odds, sportsbook comparison, betting lines" name="keywords"/>
+<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://www.betlegendpicks.com/live-odds.html" rel="canonical"/>
+<meta property="og:title" content="Live Betting Odds - BetLegend">
+<meta property="og:description" content="Live odds comparison across major sportsbooks for all major sports">
+<meta property="og:url" content="https://www.betlegendpicks.com/live-odds.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
+<style>
+:root {
+    --primary: #0a0a0a;
+    --secondary: #1a1a1a;
+    --accent: #00e0ff;
+    --gold: #FFD700;
+    --green: #39FF14;
+    --red: #FF3131;
+    --text: #ffffff;
+    --muted: #888;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: 50px;
+
+          padding-top: 140px;}
+
+.header {
+    background: linear-gradient(135deg, rgba(0, 224, 255, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 30px var(--accent);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.header .tagline {
+    font-size: 16px;
+    color: var(--gold);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.controls {
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.sport-btn {
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(20, 20, 40, 0.95) 100%);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sport-btn:hover {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 20px var(--accent);
+}
+
+.sport-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #000;
+    box-shadow: 0 0 20px var(--gold);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 24px;
+    color: var(--accent);
+}
+
+.game-card {
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(20, 20, 40, 0.95) 100%);
+    border: 2px solid var(--accent);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+}
+
+.game-card:hover {
+    box-shadow: 0 0 30px rgba(0, 224, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 224, 255, 0.3);
+}
+
+.teams {
+    flex: 1;
+}
+
+.team {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 5px 0;
+    color: var(--text);
+}
+
+.game-time {
+    font-size: 14px;
+    color: var(--muted);
+    text-align: right;
+}
+
+.odds-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.market-section {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.market-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    color: var(--gold);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.odds-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 8px 0;
+    background: rgba(0, 224, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+}
+
+.odds-row.best {
+    background: rgba(57, 255, 20, 0.1);
+    border-left-color: var(--green);
+}
+
+.book-name {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.odds-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.odds-value.positive {
+    color: var(--green);
+}
+
+.odds-value.negative {
+    color: var(--text);
+}
+
+.best-badge {
+    background: var(--green);
+    color: #000;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 8px;
+}
+
+.no-games {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 20px;
+    color: var(--muted);
+}
+
+.last-update {
+    text-align: center;
+    padding: 20px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.api-notice {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+    color: var(--gold);
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 32px;
+    }
+
+    .odds-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .sport-btn {
+        width: 100%;
+    }
+}
+
+/* Logo */
+.logo-container {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    z-index: 1000;
+}
+
+.logo-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.logo-container span {
+    color: var(--neon-cyan);
+    text-shadow:
+        0 0 15px rgba(0, 255, 255, 1),
+        0 0 30px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(0, 255, 255, 0.6);
+}
+
+/* Navigation */
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 15px 5% 15px 5%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+    z-index: 999;
+    flex-wrap: wrap;
+}
+
+.nav-links a, .dropdown {
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown .dropbtn {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+    z-index: 1000;
+    border: 2px solid rgba(0, 224, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: var(--neon-cyan);
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+    color: #fff;
+    padding-left: 30px;
+    text-shadow: 0 0 10px var(--glow-color);
+    border-left-color: var(--neon-cyan);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px !important;
+    }
+
+    .logo-container {
+        top: 10px;
+        left: 20px;
+    }
+
+    .logo-container a {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 10px 5px;
+    }
+
+    .nav-links a {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown-content {
+        min-width: 160px;
+        padding: 10px 0;
+    }
+
+    .dropdown-content a {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+}
+
+    </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+    <nav class="nav-links">
+        <a href="blog-page8.html">PICKS & ANALYSIS</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="records.html">DETAILED BREAKDOWN</a>
+                <a href="betlegend-verified-records.html">MLB</a>
+                <a href="nfl-records.html">NFL</a>
+                <a href="ncaaf-records.html">NCAAF</a>
+                <a href="nhl-records.html">NHL</a>
+                <a href="nba-records.html">NBA</a>
+                <a href="soccer-records.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf-page2.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+                <a href="soccer.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="live-odds.html">Live Odds</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="kelly-criterion.html">Kelly Criterion</a>
+                <a href="betting-calculators.html">Betting Calculators</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-glossary.html">Betting Glossary</a>
+                <a href="betting-101.html">Betting 101</a>
+            </div>
+        </div>
+
+        <a href="proofofpicks.html">Proof</a>
+        <a href="news-page3.html">News</a>
+        <a href="featured-game-of-the-day.html">Game of the Day</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+
+<div class="header">
+    <h1>⚡ LIVE BETTING ODDS</h1>
+    <p class="tagline">Real-Time Odds from Top Sportsbooks</p>
+</div>
+
+<div class="controls">
+    <button class="sport-btn active" onclick="changeSport('americanfootball_nfl')">NFL</button>
+    <button class="sport-btn" onclick="changeSport('basketball_nba')">NBA</button>
+    <button class="sport-btn" onclick="changeSport('icehockey_nhl')">NHL</button>
+    <button class="sport-btn" onclick="changeSport('baseball_mlb')">MLB</button>
+    <button class="sport-btn" onclick="changeSport('americanfootball_ncaaf')">NCAAF</button>
+</div>
+
+<div id="loading" class="loading">
+    <p>⏳ Loading live odds...</p>
+</div>
+
+<div class="container" id="games-container" style="display: none;">
+</div>
+
+<div class="last-update" id="last-update"></div>
+
+<div style="text-align: center; margin-top: 40px;">
+    <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 700; font-size: 16px;">← Back to Home</a>
+</div>
+
+<script>
+// The Odds API Configuration
+const API_KEY = 'c405ed8a7e1f4ec945d39aeeaf647e4b';
+const API_BASE_URL = 'https://api.the-odds-api.com/v4';
+let currentSport = 'americanfootball_nfl';
+
+// Bookmakers to display (you can customize this list)
+const BOOKMAKERS = ['draftkings', 'fanduel', 'betmgm', 'caesars', 'pinnacle'];
+
+async function fetchOdds(sport) {
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/sports/${sport}/odds/?apiKey=${API_KEY}&regions=us&markets=h2h,spreads,totals&oddsFormat=american&bookmakers=${BOOKMAKERS.join(',')}`
+        );
+
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching odds:', error);
+        return [];
+    }
+}
+
+function formatBookmakerName(key) {
+    const names = {
+        'draftkings': 'DraftKings',
+        'fanduel': 'FanDuel',
+        'betmgm': 'BetMGM',
+        'caesars': 'Caesars',
+        'pinnacle': 'Pinnacle'
+    };
+    return names[key] || key;
+}
+
+function formatOdds(odds) {
+    return odds > 0 ? `+${odds}` : odds;
+}
+
+function findBestOdds(outcomes, teamName) {
+    if (!outcomes || outcomes.length === 0) return null;
+
+    const teamOutcomes = outcomes.filter(o => o.name === teamName);
+    if (teamOutcomes.length === 0) return null;
+
+    let best = teamOutcomes[0];
+    for (const outcome of teamOutcomes) {
+        if (outcome.price > best.price) {
+            best = outcome;
+        }
+    }
+    return best;
+}
+
+function renderOdds(games) {
+    const container = document.getElementById('games-container');
+    const loading = document.getElementById('loading');
+
+    if (!games || games.length === 0) {
+        loading.innerHTML = '<div class="no-games">No upcoming games available for this sport.</div>';
+        loading.style.display = 'block';
+        container.style.display = 'none';
+        return;
+    }
+
+    loading.style.display = 'none';
+    container.style.display = 'block';
+    container.innerHTML = '';
+
+    for (const game of games) {
+        const homeTeam = game.home_team;
+        const awayTeam = game.away_team;
+        const gameTime = new Date(game.commence_time).toLocaleString();
+
+        const gameCard = document.createElement('div');
+        gameCard.className = 'game-card';
+
+        let oddsHTML = '';
+
+        // Process each market type
+        const markets = ['h2h', 'spreads', 'totals'];
+        const marketTitles = {
+            'h2h': '💰 Moneyline',
+            'spreads': '📊 Spread',
+            'totals': '🎯 Total (Over/Under)'
+        };
+
+        for (const marketType of markets) {
+            const bookmakerOdds = game.bookmakers
+                .filter(b => b.markets.some(m => m.key === marketType))
+                .map(b => ({
+                    key: b.key,
+                    market: b.markets.find(m => m.key === marketType)
+                }));
+
+            if (bookmakerOdds.length === 0) continue;
+
+            let marketHTML = `<div class="market-section"><div class="market-title">${marketTitles[marketType]}</div>`;
+
+            // Find best odds for each team
+            const allOutcomes = bookmakerOdds.flatMap(b =>
+                b.market.outcomes.map(o => ({...o, bookmaker: b.key}))
+            );
+
+            const teams = marketType === 'totals' ? ['Over', 'Under'] : [awayTeam, homeTeam];
+
+            for (const team of teams) {
+                const bestOdd = findBestOdds(allOutcomes, team);
+
+                for (const bookmaker of bookmakerOdds) {
+                    const outcome = bookmaker.market.outcomes.find(o => o.name === team);
+                    if (!outcome) continue;
+
+                    const isBest = bestOdd && outcome.price === bestOdd.price && bookmaker.key === bestOdd.bookmaker;
+
+                    let displayValue = '';
+                    if (marketType === 'spreads') {
+                        displayValue = `${outcome.point > 0 ? '+' : ''}${outcome.point} (${formatOdds(outcome.price)})`;
+                    } else {
+                        displayValue = formatOdds(outcome.price);
+                        if (marketType === 'totals' && outcome.point) {
+                            displayValue = `${outcome.name} ${outcome.point} (${displayValue})`;
+                        }
+                    }
+
+                    marketHTML += `
+                        <div class="odds-row ${isBest ? 'best' : ''}">
+                            <span class="book-name">${formatBookmakerName(bookmaker.key)}</span>
+                            <span>
+                                <span class="odds-value ${outcome.price > 0 ? 'positive' : 'negative'}">${displayValue}</span>
+                                ${isBest ? '<span class="best-badge">BEST</span>' : ''}
+                            </span>
+                        </div>
+                    `;
+                }
+
+                if (marketType !== 'totals') {
+                    marketHTML += '<div style="height: 10px;"></div>';
+                }
+            }
+
+            marketHTML += '</div>';
+            oddsHTML += marketHTML;
+        }
+
+        gameCard.innerHTML = `
+            <div class="game-header">
+                <div class="teams">
+                    <div class="team">🏈 ${awayTeam}</div>
+                    <div class="team" style="color: var(--gold);">vs</div>
+                    <div class="team">🏈 ${homeTeam}</div>
+                </div>
+                <div class="game-time">
+                    <div style="font-size: 16px; font-weight: 700; color: var(--accent);">${gameTime}</div>
+                </div>
+            </div>
+            <div class="odds-grid">${oddsHTML}</div>
+        `;
+
+        container.appendChild(gameCard);
+    }
+
+    // Update last refresh time
+    document.getElementById('last-update').textContent =
+        `Last updated: ${new Date().toLocaleString()} • Auto-refresh every 60 seconds`;
+}
+
+async function loadOdds() {
+    const games = await fetchOdds(currentSport);
+    renderOdds(games);
+}
+
+function changeSport(sport) {
+    currentSport = sport;
+
+    // Update active button
+    document.querySelectorAll('.sport-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    // Show loading and fetch new odds
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('games-container').style.display = 'none';
+    loadOdds();
+}
+
+// Initial load
+loadOdds();
+
+// Auto-refresh every 60 seconds
+setInterval(loadOdds, 60000);
+</script>
+
+</body>
+</html>

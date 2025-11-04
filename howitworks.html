@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How BetLegend Works | Betting System Explained</title><meta name="description" content="Learn how BetLegend's betting system works. Our methodology, analytics, and approach to sports betting predictions explained."/>
+<meta name="keywords" content="betting system, how it works, betting methodology, prediction model"/><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+        }
+
+        
+      * {
+        text-shadow: 0 0 1px #00ffff;
+      }
+    
+    body {
+      background-color: #000;
+      color: #e0f7fa;
+      font-family: 'Orbitron', sans-serif; letter-spacing: 0.3px;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    
+          padding-top: 140px;}
+    nav {
+      padding: 20px;
+      background-color: #000;
+    }
+    nav a {
+      margin: 0 15px;
+      color: gold;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .container {
+      margin: 60px auto;
+      max-width: 800px;
+      background-color: #111;
+      border: 3px solid #00ffff;
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 0 14px #00ffff;
+    }
+    h1 {
+      color: gold;
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      color: #ffc107;
+      font-size: 22px;
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-bottom: 30px;
+    }
+    ul li {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    ul li::before {
+      content: '✅ ';
+      color: #4caf50;
+    }
+    p {
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      color: #d9ffff;
+    }
+  
+/* Logo */
+.logo-container {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    z-index: 1000;
+}
+
+.logo-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.logo-container span {
+    color: var(--neon-cyan);
+    text-shadow:
+        0 0 15px rgba(0, 255, 255, 1),
+        0 0 30px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(0, 255, 255, 0.6);
+}
+
+/* Navigation */
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 15px 5% 15px 5%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+    z-index: 999;
+    flex-wrap: wrap;
+}
+
+.nav-links a, .dropdown {
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown .dropbtn {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+    z-index: 1000;
+    border: 2px solid rgba(0, 224, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: var(--neon-cyan);
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+    color: #fff;
+    padding-left: 30px;
+    text-shadow: 0 0 10px var(--glow-color);
+    border-left-color: var(--neon-cyan);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px !important;
+    }
+
+    .logo-container {
+        top: 10px;
+        left: 20px;
+    }
+
+    .logo-container a {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 10px 5px;
+    }
+
+    .nav-links a {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown-content {
+        min-width: 160px;
+        padding: 10px 0;
+    }
+
+    .dropdown-content a {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+}
+
+    </style><link href="https://www.betlegendpicks.com/howitworks.html" rel="canonical"/>
+<meta property="og:title" content="How It Works – BetLegend">
+<meta property="og:description" content="See how BetLegend works, from our advanced statistical models to real-time scraping and transparency.">
+<meta property="og:url" content="https://www.betlegendpicks.com/howitworks.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
+<meta property="og:site_name" content="BetLegend Picks">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@BetLegend2025">
+<meta name="twitter:title" content="How It Works – BetLegend">
+<meta name="twitter:description" content="See how BetLegend works, from our advanced statistical models to real-time scraping and transparency.">
+<meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png"><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.betlegendpicks.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Page",
+      "item": "https://www.betlegendpicks.com/howitworks.html"
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+    <nav class="nav-links">
+        <a href="blog-page8.html">PICKS & ANALYSIS</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="records.html">DETAILED BREAKDOWN</a>
+                <a href="betlegend-verified-records.html">MLB</a>
+                <a href="nfl-records.html">NFL</a>
+                <a href="ncaaf-records.html">NCAAF</a>
+                <a href="nhl-records.html">NHL</a>
+                <a href="nba-records.html">NBA</a>
+                <a href="soccer-records.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf-page2.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+                <a href="soccer.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="live-odds.html">Live Odds</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="kelly-criterion.html">Kelly Criterion</a>
+                <a href="betting-calculators.html">Betting Calculators</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-glossary.html">Betting Glossary</a>
+                <a href="betting-101.html">Betting 101</a>
+            </div>
+        </div>
+
+        <a href="proofofpicks.html">Proof</a>
+        <a href="news-page3.html">News</a>
+        <a href="featured-game-of-the-day.html">Game of the Day</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+
+  <nav>
+    <a href="index.html" title="Home — Free NFL & MLB Picks">Home</a>
+    <a href="blog.html" title="Today's Free MLB Picks">Picks and Analysis</a>
+    <a href="news.html" title="Latest Sports Betting News">News</a>
+    <a href="bankroll.html" title="Bankroll Management Guide">Bankroll Management</a>
+    <a href="best-sportsbook-usa.html">Best Online Sportsbook</a>
+    <a href="betlegend-verified-records.html" title="View Our Verified Betting Results">Verified Records</a>
+    <a href="screenshots.html" title="Pick Verification Screenshots">Screenshots</a>
+  </nav>
+
+  <div class="container">
+    <h1 style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">How It Works</h1>
+    <h2 style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">Our mission was simple.</h2>
+    <ul>
+      <li>Build a model that wins</li>
+      <li>Bring integrity into a service field full of wannabes and jokers</li>
+    </ul>
+
+    <p>BetLegend is the only handicapping site in the world that is 100 percent transparent. Every single pick we've ever made is logged publicly on the site. No deletions. No edits. No tricks. Just truth.</p>
+
+    <p>Don’t believe it? Good. Check the site daily. Every pick is posted, timestamped, and even written up in a full blog post. It’s all there. We’re not hiding anything.</p>
+
+    <p>BetLegend is built on data, backed by advanced statistical models that continuously evolve. We scrape the internet daily for up-to-date player stats, team trends, injury reports, bullpen usage, weather impact, and more. Using custom-built Python scripts and automated scrapers, we gather everything needed to make predictive decisions in real time.</p>
+
+    <p>But it doesn’t stop there. We’ve run backtests on years of historical data to avoid bias and overfitting. Our model adjusts dynamically based on opponent quality, recent form, home and road splits, and even park factors. If a team crushes lefties or melts down in day games, our model catches it.</p>
+
+    <p>The result? A streamlined system that helps us find value edges before the market adjusts. It’s not magic. It’s not luck. It’s math. Welcome to BetLegend.</p>
+  </div>
+
+</body>
+</html>

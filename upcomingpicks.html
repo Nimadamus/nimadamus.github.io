@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Upcoming Betting Picks | BetLegend</title>
+    <link href="https://www.betlegendpicks.com/upcomingpicks.html" rel="canonical"/>
+    <meta content="See the upcoming sports betting picks at Betlegend. All picks listed are pending and will be graded after the games." name="description"/>
+    <meta content="Upcoming picks, sports betting, pending picks, Betlegend" name="keywords"/>
+    <meta content="index, follow" name="robots"/>
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+        }
+
+        
+        body {
+            background-color: #111;
+            color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            padding: 40px 20px;
+            margin: 0 auto;
+            max-width: 900px;
+        
+          padding-top: 140px;}
+        h1 {
+            color: gold;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+        th {
+            background-color: gold;
+            color: #111;
+            font-size: 16px;
+        }
+        td {
+            font-size: 15px;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .footer-link {
+            text-align: center;
+            font-size: 16px;
+        }
+        .footer-link a {
+            color: gold;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer-link a:hover {
+            text-decoration: underline;
+        }
+        .status-pending {
+            color: #ffc107; /* A yellow/orange color */
+            font-weight: bold;
+        }
+    
+/* Logo */
+.logo-container {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    z-index: 1000;
+}
+
+.logo-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.logo-container span {
+    color: var(--neon-cyan);
+    text-shadow:
+        0 0 15px rgba(0, 255, 255, 1),
+        0 0 30px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(0, 255, 255, 0.6);
+}
+
+/* Navigation */
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 15px 5% 15px 5%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+    z-index: 999;
+    flex-wrap: wrap;
+}
+
+.nav-links a, .dropdown {
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown .dropbtn {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+    z-index: 1000;
+    border: 2px solid rgba(0, 224, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: var(--neon-cyan);
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+    color: #fff;
+    padding-left: 30px;
+    text-shadow: 0 0 10px var(--glow-color);
+    border-left-color: var(--neon-cyan);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px !important;
+    }
+
+    .logo-container {
+        top: 10px;
+        left: 20px;
+    }
+
+    .logo-container a {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 10px 5px;
+    }
+
+    .nav-links a {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown-content {
+        min-width: 160px;
+        padding: 10px 0;
+    }
+
+    .dropdown-content a {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+}
+
+    </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+    <nav class="nav-links">
+        <a href="blog-page8.html">PICKS & ANALYSIS</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="records.html">DETAILED BREAKDOWN</a>
+                <a href="betlegend-verified-records.html">MLB</a>
+                <a href="nfl-records.html">NFL</a>
+                <a href="ncaaf-records.html">NCAAF</a>
+                <a href="nhl-records.html">NHL</a>
+                <a href="nba-records.html">NBA</a>
+                <a href="soccer-records.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf-page2.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+                <a href="soccer.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="live-odds.html">Live Odds</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="kelly-criterion.html">Kelly Criterion</a>
+                <a href="betting-calculators.html">Betting Calculators</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-glossary.html">Betting Glossary</a>
+                <a href="betting-101.html">Betting 101</a>
+            </div>
+        </div>
+
+        <a href="proofofpicks.html">Proof</a>
+        <a href="news-page3.html">News</a>
+        <a href="featured-game-of-the-day.html">Game of the Day</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <h1>Upcoming Picks</h1>
+
+    <!-- Static SEO Content Section -->
+    <section style="background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 10px; padding: 25px; margin-bottom: 30px; line-height: 1.8; color: #ddd;">
+        <h2 style="color: gold; font-size: 24px; margin-bottom: 15px; font-weight: bold;">BetLegend Upcoming Sports Betting Picks</h2>
+
+        <p style="margin-bottom: 15px; font-size: 16px;">
+            Stay ahead of the action with BetLegend's upcoming sports betting picks. This page displays all pending picks across NFL, NBA, NHL, MLB, NCAAF, and soccer that have been researched, analyzed, and released to our subscribers but haven't yet been graded. Each pick listed here represents hours of data analysis, line shopping, injury research, and situational evaluation to identify the best betting value in upcoming games.
+        </p>
+
+        <p style="margin-bottom: 15px; font-size: 16px;">
+            Our upcoming picks are posted well in advance of game time to give bettors the opportunity to shop for the best available lines across multiple sportsbooks. We typically release picks 24-48 hours before kickoff for NFL and NCAAF games, and several hours before puck drop or first pitch for NHL, NBA, and MLB contests. This advanced notice allows followers to secure optimal odds and avoid last-minute line movements.
+        </p>
+
+        <h3 style="color: gold; font-size: 20px; margin: 25px 0 15px 0; font-weight: bold;">How Our Pick Process Works</h3>
+
+        <p style="margin-bottom: 15px; font-size: 16px;">
+            Every pick goes through a rigorous vetting process before being released as an upcoming play. Our analysts examine team statistics, recent performance trends, head-to-head matchups, injury reports, weather conditions, and betting market movements. We assign confidence levels from 1 to 6, with higher-rated plays receiving larger unit allocations (ranging from 0.5 units up to 3 units on our most confident selections).
+        </p>
+
+        <p style="margin-bottom: 15px; font-size: 16px;">
+            Once games conclude, all picks are immediately graded and moved to our verified records pages where you can see complete historical performance by sport. This transparency ensures accountability - we don't hide losses or selectively report results. Every pick is tracked from release through final grading, giving bettors a complete picture of our betting performance over time.
+        </p>
+
+        <h3 style="color: gold; font-size: 20px; margin: 25px 0 15px 0; font-weight: bold;">How to Use This Page</h3>
+
+        <p style="margin-bottom: 15px; font-size: 16px;">
+            The table below updates in real-time from our official picks spreadsheet. Each upcoming pick includes the game date, matchup details, our recommended bet, the line we're playing, and current status. Picks remain on this page until games start, at which point they're automatically moved to the appropriate verified records page for grading. During busy sports seasons, you may see multiple picks across different sports listed simultaneously.
+        </p>
+
+        <p style="margin-bottom: 0; font-size: 16px;">
+            To receive instant notifications when new picks are added, subscribe to our premium service or join our Discord community. Premium subscribers get immediate access to all upcoming picks, detailed analysis write-ups, and exclusive betting strategy content. Check our verified records pages to see our complete historical performance before deciding to follow our upcoming plays.
+        </p>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Game</th>
+                <th>Pick</th>
+                <th>Line</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="picks-table-body">
+            <!-- Picks will be dynamically inserted here by JavaScript -->
+            <tr>
+                <td colspan="5">Loading Picks...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer-link">
+        For completed picks and results, visit our <a href="betlegend-verified-records.html">Verified Records</a> page.
+    </div>
+
+    <!-- PAPA PARSE LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // This is your live, published Google Sheet URL
+            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxskwayMha-DRtU9w-UXiRzy4e5uAjJsHoUfoW2edQUv__Svh6B_Wf3oyWwQFCGPCSl8BUT3qA_LJB/pub?gid=0&single=true&output=csv';
+
+            const tableBody = document.getElementById('picks-table-body');
+
+            Papa.parse(googleSheetUrl, {
+                download: true,
+                header: true,
+                skipEmptyLines: 'greedy',
+                transformHeader: header => header.trim(),
+                complete: function(results) {
+                    let tableHTML = '';
+                    const upcomingPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
+
+                    if (upcomingPicks.length === 0) {
+                        tableHTML = '<tr><td colspan="5">No upcoming picks at this time. Check back soon!</td></tr>';
+                    } else {
+                        upcomingPicks.forEach(pick => {
+                            tableHTML += `
+                                <tr>
+                                    <td>${pick.Date || '--'}</td>
+                                    <td>${pick.Game || '--'}</td>
+                                    <td>${pick.Pick || '--'}</td>
+                                    <td>${pick.Line || '--'}</td>
+                                    <td class="status-pending">${pick.Status || 'Pending'}</td>
+                                </tr>
+                            `;
+                        });
+                    }
+                    tableBody.innerHTML = tableHTML;
+                },
+                error: function(error) {
+                    tableBody.innerHTML = '<tr><td colspan="5">Could not load picks. Please try again later.</td></tr>';
+                    console.error("Error fetching or parsing data:", error);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

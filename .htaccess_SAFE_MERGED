@@ -1,0 +1,77 @@
+# --------------------------------------------------------------------
+# BetLegendPicks.com – Complete SEO-Optimized Configuration
+# SAFE VERSION - Merged from existing configs + new redirects
+# Date: October 28, 2025
+# --------------------------------------------------------------------
+
+# Use UTF-8 encoding for text
+AddDefaultCharset UTF-8
+
+# --------------------------------------------------------------------
+# Performance Optimization (SAFE - improves speed)
+# --------------------------------------------------------------------
+
+# Enable compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript
+</IfModule>
+
+# Cache static assets for 30 days
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
+
+# --------------------------------------------------------------------
+# SEO Redirects (SAFE - improves SEO, no breaking changes)
+# --------------------------------------------------------------------
+
+# Pages that are intentionally gone forever (410 = better than 404 for SEO)
+Redirect 410 /email.html
+Redirect 410 /mlb-sunday-analytics.html
+Redirect 410 /odds-live.html
+
+# Old/alternate URLs → Canonical versions (301 = permanent redirect, SEO-friendly)
+Redirect 301 /betlegend-verified-records.htm https://www.betlegendpicks.com/betlegend-verified-records.html
+Redirect 301 /bestbook.html https://www.betlegendpicks.com/bestonlinesportsbook.html
+Redirect 301 /FreeAlerts.html https://www.betlegendpicks.com/
+Redirect 301 /smartbets.html https://www.betlegendpicks.com/betlegend-verified-records.html
+Redirect 301 /matchups.html https://www.betlegendpicks.com/betlegend-verified-records.html
+Redirect 301 /odds.html https://www.betlegendpicks.com/blog.html
+Redirect 301 /picks.html https://www.betlegendpicks.com/blog.html
+Redirect 301 /affiliates.html https://www.betlegendpicks.com/
+
+# --------------------------------------------------------------------
+# Security (SAFE - blocks hackers, not visitors)
+# --------------------------------------------------------------------
+
+# Block access to hidden system files (.git, .htaccess, etc.)
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# Block directory listings (prevents hackers from seeing file structure)
+Options -Indexes
+
+# --------------------------------------------------------------------
+# HTTPS & WWW Enforcement (OPTIONAL - only enable if you want to force these)
+# Comment out these lines if you DON'T want forced HTTPS/WWW
+# --------------------------------------------------------------------
+
+# Uncomment to force HTTPS (recommended for SEO)
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Uncomment to force www (if you want www.betlegendpicks.com instead of betlegendpicks.com)
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# --------------------------------------------------------------------
+# End of file
+# --------------------------------------------------------------------

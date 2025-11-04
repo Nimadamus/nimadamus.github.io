@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Kelly Criterion Calculator | BetLegend</title>
+    <meta name="title" content="Kelly Criterion Calculator & Complete Guide | Sports Betting Strategy 2025">
+    <meta name="description" content="Free Kelly Criterion calculator for optimal bet sizing. Calculate the exact percentage of your bankroll to wager based on edge and odds."/>
+    <meta name="keywords" content="Kelly Criterion, bet sizing, bankroll calculator, optimal bets"/>
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="author" content="BetLegend Picks">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://nimadamus.github.io/kelly-criterion.html">
+    <meta property="og:title" content="Kelly Criterion Calculator - Free Sports Betting Tool">
+    <meta property="og:description" content="Calculate optimal bet sizes with the Kelly Criterion. Free calculator with examples, fractional Kelly options, and professional betting strategies.">
+    <meta property="og:image" content="https://nimadamus.github.io/newlogo.png">
+    <meta property="og:site_name" content="BetLegend Picks">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nimadamus.github.io/kelly-criterion.html">
+    <meta property="twitter:title" content="Kelly Criterion Calculator - Sports Betting Strategy">
+    <meta property="twitter:description" content="Free Kelly Criterion calculator for optimal bet sizing. Learn the formula used by professional sports bettors.">
+    <meta property="twitter:image" content="https://nimadamus.github.io/newlogo.png">
+    
+    <!-- Canonical URL -->
+    <link href="https://www.betlegendpicks.com/kelly-criterion.html" rel="canonical"/>
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Kelly Criterion Calculator & Complete Guide for Sports Betting",
+      "description": "Learn how to use the Kelly Criterion for optimal sports betting bankroll management. Includes free calculator, formula explanation, and professional strategies.",
+      "author": {
+        "@type": "Organization",
+        "name": "BetLegend Picks"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "BetLegend Picks",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://nimadamus.github.io/newlogo.png"
+        }
+      },
+      "datePublished": "2025-01-15",
+      "dateModified": "2025-01-15"
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Kelly Criterion Calculator",
+      "applicationCategory": "FinanceApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free Kelly Criterion calculator for sports betting bankroll management"
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Use the Kelly Criterion for Sports Betting",
+      "description": "Step-by-step guide to using the Kelly Criterion formula for optimal bet sizing",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Estimate Your Win Probability",
+          "text": "Determine your estimated probability of winning the bet based on your analysis"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Convert Odds to Decimal",
+          "text": "Convert the sportsbook odds to decimal format"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Apply the Kelly Formula",
+          "text": "Use the formula: (Decimal Odds × Win Probability - 1) / (Decimal Odds - 1)"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Consider Fractional Kelly",
+          "text": "Apply a fractional multiplier (0.25-0.5) to reduce volatility"
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+            --font-content: 'Rubik', sans-serif;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: var(--font-content);
+            background-color: var(--bg-color);
+            color: white;
+            overflow-x: hidden;
+            padding-top: 140px;
+            line-height: 1.7;
+        }
+
+        /* Logo */
+        .logo-container {
+            position: fixed;
+            top: 20px;
+            left: 40px;
+            z-index: 1000;
+        }
+        
+        .logo-container a { 
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.4);
+        }
+        
+        .logo-container span { 
+            color: var(--neon-cyan);
+            text-shadow: 
+                0 0 15px rgba(0, 255, 255, 1),
+                0 0 30px rgba(0, 255, 255, 0.8),
+                0 0 50px rgba(0, 255, 255, 0.6);
+        }
+
+        /* Navigation */
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            padding: 15px 5% 15px 5%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+            z-index: 999;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a, .dropdown {
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-family: var(--font-secondary);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            white-space: nowrap;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--neon-gold);
+            text-shadow: 0 0 8px var(--neon-gold);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .dropdown .dropbtn {
+            font-family: var(--font-secondary);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            white-space: nowrap;
+        }
+        
+        .dropdown:hover .dropbtn {
+            color: var(--neon-gold);
+            text-shadow: 0 0 8px var(--neon-gold);
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(17, 17, 17, 0.98);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,224,255,0.2);
+            z-index: 1000;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            top: 100%;
+            left: 0;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: rgba(0, 224, 255, 0.1);
+            color: var(--neon-cyan);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Main Content Container */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-family: var(--font-primary);
+            font-size: 2.8rem;
+            color: var(--neon-gold);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 50px;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.05) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.3);
+        }
+
+        .calculator-section h2 {
+            font-family: var(--font-primary);
+            color: var(--neon-cyan);
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .calc-input-group {
+            margin-bottom: 25px;
+        }
+
+        .calc-input-group label {
+            display: block;
+            color: var(--neon-gold);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .calc-input-group input,
+        .calc-input-group select {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 224, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            font-family: var(--font-content);
+            transition: all 0.3s ease;
+        }
+
+        .calc-input-group input:focus,
+        .calc-input-group select:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
+        }
+
+        .calc-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-gold));
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: var(--font-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calc-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.4);
+        }
+
+        .calc-results {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--neon-gold);
+            border-radius: 10px;
+        }
+
+        .calc-results.show {
+            display: block;
+        }
+
+        .result-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+        }
+
+        .result-label {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            color: var(--neon-cyan);
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: var(--font-primary);
+        }
+
+        .result-value.large {
+            font-size: 2.5rem;
+            color: var(--neon-gold);
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 60px;
+        }
+
+        .content-section h2 {
+            font-family: var(--font-primary);
+            color: var(--neon-gold);
+            font-size: 2rem;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .content-section h3 {
+            color: var(--neon-cyan);
+            font-size: 1.5rem;
+            margin: 30px 0 15px 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 12px;
+        }
+
+        .formula-box {
+            background: rgba(0, 224, 255, 0.05);
+            border-left: 4px solid var(--neon-cyan);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.3rem;
+            color: var(--neon-cyan);
+            text-align: center;
+        }
+
+        .example-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+
+        .example-box h4 {
+            color: var(--neon-gold);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .highlight {
+            color: var(--neon-gold);
+            font-weight: 600;
+        }
+
+        .warning-box {
+            background: rgba(255, 50, 50, 0.1);
+            border-left: 4px solid #ff3232;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box p {
+            color: #ffaaaa;
+            margin: 0;
+        }
+
+        .tip-box {
+            background: rgba(0, 255, 100, 0.05);
+            border-left: 4px solid #00ff66;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .tip-box p {
+            color: #aaffcc;
+            margin: 0;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: rgba(0, 224, 255, 0.2);
+            color: var(--neon-cyan);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--neon-cyan);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ddd;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0, 224, 255, 0.05);
+        }
+
+        /* Internal Links */
+        .internal-links {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        .internal-links h3 {
+            color: var(--neon-gold);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .internal-links ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 0;
+        }
+
+        .internal-links li {
+            margin: 0;
+        }
+
+        .internal-links a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .internal-links a:hover {
+            color: var(--neon-gold);
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 180px;
+            }
+
+            .logo-container a {
+                font-size: 1.8rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .calc-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .calculator-section {
+                padding: 25px;
+            }
+
+            .content-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+    <nav class="nav-links">
+        <a href="blog-page8.html">PICKS & ANALYSIS</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="records.html">DETAILED BREAKDOWN</a>
+                <a href="betlegend-verified-records.html">MLB</a>
+                <a href="nfl-records.html">NFL</a>
+                <a href="ncaaf-records.html">NCAAF</a>
+                <a href="nhl-records.html">NHL</a>
+                <a href="nba-records.html">NBA</a>
+                <a href="soccer-records.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf-page2.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+                <a href="soccer.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="live-odds.html">Live Odds</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="kelly-criterion.html">Kelly Criterion</a>
+                <a href="betting-calculators.html">Betting Calculators</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-glossary.html">Betting Glossary</a>
+                <a href="betting-101.html">Betting 101</a>
+            </div>
+        </div>
+
+        <a href="proofofpicks.html">Proof</a>
+        <a href="news-page3.html">News</a>
+        <a href="featured-game-of-the-day.html">Game of the Day</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+<div class="content-container">
+    <h1>Kelly Criterion Calculator</h1>
+    <p class="subtitle">The Professional's Guide to Smart Bet Sizing</p>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <h2>🧮 Free Kelly Criterion Calculator</h2>
+        
+        <div class="calc-grid">
+            <div class="calc-left">
+                <div class="calc-input-group">
+                    <label for="bankroll">Your Bankroll ($)</label>
+                    <input type="number" id="bankroll" placeholder="1000" min="1" step="1">
+                </div>
+
+                <div class="calc-input-group">
+                    <label for="odds">American Odds</label>
+                    <input type="number" id="odds" placeholder="-110 or +150" step="1">
+                </div>
+
+                <div class="calc-input-group">
+                    <label for="winProb">Your Estimated Win Probability (%)</label>
+                    <input type="number" id="winProb" placeholder="55" min="0" max="100" step="0.1">
+                </div>
+            </div>
+
+            <div class="calc-right">
+                <div class="calc-input-group">
+                    <label for="kellyFraction">Kelly Fraction</label>
+                    <select id="kellyFraction">
+                        <option value="1">Full Kelly (Aggressive)</option>
+                        <option value="0.5" selected>Half Kelly (Recommended)</option>
+                        <option value="0.25">Quarter Kelly (Conservative)</option>
+                        <option value="0.125">1/8 Kelly (Very Conservative)</option>
+                    </select>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button class="calc-button" onclick="calculateKelly()">Calculate Bet Size</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="calcResults" class="calc-results">
+            <div class="result-item">
+                <div class="result-label">Recommended Bet Amount</div>
+                <div class="result-value large" id="betAmount">$0.00</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div class="result-item">
+                    <div class="result-label">Percentage of Bankroll</div>
+                    <div class="result-value" id="betPercent">0%</div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-label">Full Kelly %</div>
+                    <div class="result-value" id="fullKellyPercent">0%</div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-label">Expected Value</div>
+                    <div class="result-value" id="expectedValue">$0.00</div>
+                </div>
+            </div>
+
+            <div id="warningMessage" style="margin-top: 20px;"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="content-section">
+        <h2>What Is the Kelly Criterion?</h2>
+        <p>If you've ever wondered how much you should actually bet on a game, you're not alone. Most bettors either bet the same amount every time or just pick a number that feels right. But there's a better way.</p>
+
+        <p>The Kelly Criterion is a mathematical formula that tells you exactly how much of your bankroll you should risk on a bet when you have an edge. It was developed in 1956 by John Kelly, a researcher at Bell Labs who was originally trying to solve problems with telephone signal noise. He probably didn't realize his formula would become the gold standard for bankroll management in sports betting and investing.</p>
+
+        <p>Here's the thing about Kelly: it's not some complicated theory that only works in textbooks. Professional bettors, Wall Street traders, and even Warren Buffett have used versions of this strategy. Why? Because it works. When you have an advantage, Kelly helps you maximize your long-term growth without risking everything on a single bet.</p>
+
+        <p>The beauty of the Kelly Criterion is that it prevents you from going broke. You're never betting your entire bankroll on one game, no matter how confident you feel. At the same time, you're betting enough to actually capitalize on your edge when you have one.</p>
+    </section>
+
+    <section class="content-section">
+        <h2>The Kelly Formula Explained</h2>
+        <p>Don't let the math scare you off. The Kelly formula is actually pretty straightforward once you break it down.</p>
+
+        <div class="formula-box">
+            f* = (bp - q) / b
+        </div>
+
+        <p>Let me translate that into English:</p>
+        <ul>
+            <li><span class="highlight">f*</span> = The percentage of your bankroll you should bet</li>
+            <li><span class="highlight">b</span> = The decimal odds you're getting minus 1 (for American odds, convert first)</li>
+            <li><span class="highlight">p</span> = Your probability of winning (as a decimal, so 55% = 0.55)</li>
+            <li><span class="highlight">q</span> = Your probability of losing (1 - p, so if p = 0.55, then q = 0.45)</li>
+        </ul>
+
+        <p>For sports betting with American odds, we can simplify this even more. The formula becomes:</p>
+
+        <div class="formula-box">
+            Kelly % = (Decimal Odds × Win Probability - 1) / (Decimal Odds - 1)
+        </div>
+
+        <h3>Converting American Odds to Decimal</h3>
+        <p>Before you can use the formula, you need to convert American odds to decimal format:</p>
+        <ul>
+            <li>For <strong>negative odds</strong> (favorites): Decimal Odds = 1 + (100 / Absolute Value of Odds)<br>
+                Example: -110 = 1 + (100/110) = 1.909</li>
+            <li>For <strong>positive odds</strong> (underdogs): Decimal Odds = 1 + (Odds / 100)<br>
+                Example: +150 = 1 + (150/100) = 2.50</li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>Real Examples That Actually Make Sense</h2>
+        
+        <div class="example-box">
+            <h4>Example 1: NFL Spread Bet</h4>
+            <p>Let's say the Cowboys are playing the Eagles on Monday Night Football. The Cowboys are -3.5 at -110 odds.</p>
+            <p>After doing your homework, you believe the Cowboys have a <span class="highlight">55% chance</span> of covering that spread. The sportsbook's implied probability at -110 is only about 52.4%.</p>
+            <p><strong>Step 1:</strong> Convert -110 to decimal odds = 1.909</p>
+            <p><strong>Step 2:</strong> Apply the formula:<br>
+            Kelly % = (1.909 × 0.55 - 1) / (1.909 - 1)<br>
+            Kelly % = (1.050 - 1) / 0.909<br>
+            Kelly % = 0.050 / 0.909 = 0.055 or <span class="highlight">5.5%</span></p>
+            <p><strong>Result:</strong> If you have a $1,000 bankroll, the Kelly Criterion says you should bet <span class="highlight">$55</span> on this game.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>Example 2: MLB Moneyline Underdog</h4>
+            <p>The Dodgers are underdogs at +140 against the Giants. You've crunched the numbers and believe they actually have a <span class="highlight">48% chance</span> of winning straight up.</p>
+            <p><strong>Step 1:</strong> Convert +140 to decimal odds = 2.40</p>
+            <p><strong>Step 2:</strong> Apply the formula:<br>
+            Kelly % = (2.40 × 0.48 - 1) / (2.40 - 1)<br>
+            Kelly % = (1.152 - 1) / 1.40<br>
+            Kelly % = 0.152 / 1.40 = 0.109 or <span class="highlight">10.9%</span></p>
+            <p><strong>Result:</strong> With a $1,000 bankroll, Kelly suggests betting <span class="highlight">$109</span> on the Dodgers.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>Example 3: When NOT to Bet</h4>
+            <p>The Knicks are favored at -110. You think they have a 50% chance of winning, which is actually worse than the implied probability.</p>
+            <p>Kelly % = (1.909 × 0.50 - 1) / (1.909 - 1)<br>
+            Kelly % = -0.055 or <span class="highlight">-5.5%</span></p>
+            <p><strong>Result:</strong> The negative number means <span class="highlight">don't bet</span>. You have no edge here. Walk away.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Why Nobody Uses Full Kelly (And You Shouldn't Either)</h2>
+        <p>Here's the reality: almost no professional bettor uses full Kelly. And for good reason.</p>
+
+        <p>Full Kelly is aggressive. Really aggressive. If the formula tells you to bet 15% of your bankroll on one game, that's a stomach-churning amount of money for most people. Even worse, if you slightly overestimate your edge—which happens all the time—you could be betting way too much and exposing yourself to massive swings.</p>
+
+        <p>This is why fractional Kelly exists. Most pros use either half Kelly (50% of the recommended bet) or quarter Kelly (25% of the recommended bet). This reduces volatility dramatically while still allowing you to grow your bankroll steadily when you have an edge.</p>
+
+        <h3>The Volatility Trade-Off</h3>
+        <p>Here's what the numbers look like for a bettor with a 55% win rate on even-money bets:</p>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Strategy</th>
+                    <th>Growth Rate</th>
+                    <th>Volatility</th>
+                    <th>Risk of 50% Drawdown</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Full Kelly</td>
+                    <td>Highest</td>
+                    <td>Very High</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td>Half Kelly</td>
+                    <td>75% of Full</td>
+                    <td>Much Lower</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td>Quarter Kelly</td>
+                    <td>~50% of Full</td>
+                    <td>Very Low</td>
+                    <td>Very Low</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Notice how half Kelly gives you 75% of the growth but with dramatically less volatility. That's a trade most smart bettors are willing to make. You sleep better at night, you're less likely to go on tilt after a bad streak, and you can stick with the strategy long-term.</p>
+
+        <div class="tip-box">
+            <p><strong>💡 Pro Tip:</strong> Start with quarter Kelly if you're new to this. Once you're confident in your edge calculation and you've seen positive results over a few months, you can move up to half Kelly. But never go full Kelly unless you're absolutely sure your win probability estimates are accurate.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Common Mistakes That Kill Your Bankroll</h2>
+        
+        <h3>1. Overestimating Your Win Probability</h3>
+        <p>This is the big one. It's human nature to be overly confident in your picks. You watched all the film, you read the injury reports, you know the matchup inside and out. So you think your 53% edge is actually 60%. Now you're betting twice as much as you should, and that's a fast track to going broke.</p>
+
+        <p>Bill Benter, who made millions using Kelly on horse racing, said that even the best handicapping models can overestimate the edge by a factor of two. That means if you think you have a 10% edge, you might actually have a 5% edge—or less. This is another reason to use fractional Kelly.</p>
+
+        <h3>2. Not Having Enough Data</h3>
+        <p>You can't just guess your win probability. You need a track record. If you're just starting out, track your picks on paper for at least 100 bets before you start using Kelly with real money. Once you have data showing you're actually profitable, then you can start applying the formula.</p>
+
+        <h3>3. Betting Too Much on "Sure Things"</h3>
+        <p>Heavy favorites at -300 or -400 might feel like free money, but Kelly will often tell you to bet a huge percentage of your bankroll on these. Don't do it. Even 80% favorites lose 20% of the time, and upsets happen way more often than people think. Cap your bet size at 5% of your bankroll regardless of what Kelly says.</p>
+
+        <div class="warning-box">
+            <p><strong>⚠️ Critical Rule:</strong> Never bet more than 5% of your bankroll on any single game, even if Kelly says to bet more. This is your insurance policy against bad variance and incorrect probability estimates.</p>
+        </div>
+
+        <h3>4. Not Adjusting Your Bankroll</h3>
+        <p>Your bankroll isn't static. If you start with $1,000 and grow it to $1,500, you should be betting based on that $1,500, not the original $1,000. Conversely, if you're down to $700, your bet sizes should decrease. Update your bankroll weekly at minimum.</p>
+    </section>
+
+    <section class="content-section">
+        <h2>How to Actually Use Kelly in Real Life</h2>
+        
+        <p>Theory is great, but here's how you implement this step-by-step:</p>
+
+        <h3>Step 1: Build Your Track Record</h3>
+        <p>Start tracking every bet you make. Record the odds, your reasoning, and the result. After 100+ bets, calculate your actual win percentage for different bet types. This becomes your baseline for estimating future win probabilities.</p>
+
+        <h3>Step 2: Determine Your True Bankroll</h3>
+        <p>Your betting bankroll should be money you can afford to lose completely. It's not rent money. It's not your emergency fund. It's money set aside specifically for sports betting. Be honest with yourself about this number.</p>
+
+        <h3>Step 3: Choose Your Kelly Fraction</h3>
+        <p>If you're risk-averse or new to betting: use quarter Kelly.<br>
+        If you're comfortable with some volatility: use half Kelly.<br>
+        If you're very confident in your edge and have extensive data: maybe use 60-70% Kelly, but never go full Kelly.</p>
+
+        <h3>Step 4: Calculate Before Every Bet</h3>
+        <p>Don't eyeball it. Use the calculator at the top of this page or create a spreadsheet. Input your current bankroll, the odds, your estimated win probability, and your Kelly fraction. The math doesn't lie.</p>
+
+        <h3>Step 5: Track and Adjust</h3>
+        <p>Every week, review your results. If you're consistently overestimating your edge, dial back your win probability estimates by 2-3%. If you're underestimating, you can adjust up slightly. The goal is to calibrate your estimates to reality.</p>
+
+        <div class="tip-box">
+            <p><strong>💡 Smart Move:</strong> Keep a betting journal. Note not just your picks, but WHY you made them and what your estimated win probability was. Over time, you'll get much better at estimating your true edge.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Kelly Criterion vs. Other Betting Strategies</h2>
+        
+        <h3>Flat Betting</h3>
+        <p>Flat betting means you bet the same amount every time—usually 1-2% of your bankroll. It's simple and it works, especially for beginners. The downside? You're not capitalizing on games where you have a bigger edge, and you're betting the same amount on games where you have a smaller edge. Kelly optimizes this by adjusting your bet size based on the quality of the opportunity.</p>
+
+        <h3>Martingale System</h3>
+        <p>This is the "double your bet after every loss" system. It's terrible for sports betting. Don't use it. You'll eventually hit a losing streak that wipes out your entire bankroll. Kelly does the exact opposite—it tells you to bet less after losses (because your bankroll is smaller) and more after wins (because your bankroll is larger).</p>
+
+        <h3>Confidence-Based Betting</h3>
+        <p>Some bettors bet more when they're more confident. The problem? Confidence doesn't always equal edge. You might be really confident about a -200 favorite, but that doesn't mean it's a good value bet. Kelly forces you to do the math and separate confidence from actual expected value.</p>
+    </section>
+
+    <section class="content-section">
+        <h2>Advanced Tips for Serious Bettors</h2>
+
+        <h3>Correlation Matters</h3>
+        <p>If you're betting on multiple games from the same slate, they're not independent bets. Betting on three NFL underdogs in the same week at 10% Kelly each isn't the same as three independent 10% Kelly bets—your risk is actually higher because underdogs tend to win or lose in bunches based on weather, variance, etc. Reduce your Kelly percentage when betting correlated games.</p>
+
+        <h3>Line Shopping Increases Your Edge</h3>
+        <p>Getting -105 instead of -110 might not seem like much, but it dramatically improves your Kelly calculation. If you're consistently getting better lines than the closing line, your edge is bigger than you think. Factor this into your win probability estimates.</p>
+
+        <h3>Live Betting Requires Different Calculations</h3>
+        <p>Live betting odds move fast, and your edge can change rapidly. If you're using Kelly for in-game betting, you need to recalculate quickly and be prepared for higher variance. Consider using even more conservative fractions (like 1/8 Kelly) for live betting.</p>
+
+        <h3>Bankroll Segregation for Different Sports</h3>
+        <p>If you're betting multiple sports, consider keeping separate bankrolls. Your edge in NFL might be very different from your edge in MLB. Track them separately and apply Kelly independently to each bankroll based on your actual win rate in that sport.</p>
+    </section>
+
+    <section class="content-section">
+        <h2>The Bottom Line: Should You Use Kelly?</h2>
+        
+        <p>If you're serious about sports betting and you have a genuine edge, yes, you should use some version of the Kelly Criterion. It's mathematically optimal for long-term growth while avoiding ruin.</p>
+
+        <p>But—and this is important—Kelly is not a magic bullet. It won't turn losing bets into winning bets. It won't help you if you don't actually have an edge. What it will do is maximize your growth rate when you do have an edge, and protect your bankroll from catastrophic losses.</p>
+
+        <p>Start conservative. Use quarter Kelly or even 1/8 Kelly until you've proven to yourself that you can consistently beat the closing line and maintain a profitable win rate. Track everything. Be honest about your results. And never, ever bet more than 5% of your bankroll on a single game no matter what any formula tells you.</p>
+
+        <p>The Kelly Criterion isn't about getting rich quick. It's about getting rich slowly and safely by making mathematically sound decisions over hundreds or thousands of bets. If you can stick with it and resist the urge to chase losses or bet more than you should, it's one of the most powerful tools in sports betting.</p>
+
+        <div class="tip-box">
+            <p><strong>🎯 Final Reminder:</strong> Kelly only works if you have an edge. If you're not beating the closing line consistently, no bankroll management strategy will save you. Focus on improving your handicapping first, then use Kelly to optimize your bet sizing.</p>
+        </div>
+    </section>
+
+    <!-- Internal Links -->
+    <div class="internal-links">
+        <h3>Related Resources</h3>
+        <ul>
+            <li><a href="bankroll.html">→ Complete Bankroll Management Guide</a></li>
+            <li><a href="betting-101.html">→ Betting 101: Getting Started</a></li>
+            <li><a href="howitworks.html">→ How Our System Works</a></li>
+            <li><a href="betlegend-verified-records.html">→ View Our Verified Records</a></li>
+            <li><a href="blog-page8.html">→ Today's Best Picks</a></li>
+            <li><a href="bestonlinesportsbook.html">→ Best Sportsbooks for Line Shopping</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+function calculateKelly() {
+    // Get input values
+    const bankroll = parseFloat(document.getElementById('bankroll').value);
+    const americanOdds = parseFloat(document.getElementById('odds').value);
+    const winProb = parseFloat(document.getElementById('winProb').value) / 100;
+    const kellyFraction = parseFloat(document.getElementById('kellyFraction').value);
+
+    // Validation
+    if (!bankroll || !americanOdds || !winProb) {
+        alert('Please fill in all fields');
+        return;
+    }
+
+    if (winProb <= 0 || winProb >= 1) {
+        alert('Win probability must be between 0 and 100%');
+        return;
+    }
+
+    // Convert American odds to decimal
+    let decimalOdds;
+    if (americanOdds > 0) {
+        decimalOdds = 1 + (americanOdds / 100);
+    } else {
+        decimalOdds = 1 + (100 / Math.abs(americanOdds));
+    }
+
+    // Calculate Kelly percentage
+    let kellyPercent = ((decimalOdds * winProb) - 1) / (decimalOdds - 1);
+    
+    // Store full Kelly for display
+    const fullKellyPercent = kellyPercent * 100;
+
+    // Apply Kelly fraction
+    kellyPercent = kellyPercent * kellyFraction;
+
+    // Calculate bet amount
+    const betAmount = bankroll * kellyPercent;
+
+    // Calculate expected value
+    const loseProb = 1 - winProb;
+    const winAmount = betAmount * (decimalOdds - 1);
+    const expectedValue = (winProb * winAmount) - (loseProb * betAmount);
+
+    // Display results
+    document.getElementById('betAmount').textContent = '$' + betAmount.toFixed(2);
+    document.getElementById('betPercent').textContent = (kellyPercent * 100).toFixed(2) + '%';
+    document.getElementById('fullKellyPercent').textContent = fullKellyPercent.toFixed(2) + '%';
+    document.getElementById('expectedValue').textContent = '$' + expectedValue.toFixed(2);
+
+    // Show warnings
+    let warningHtml = '';
+    if (kellyPercent < 0) {
+        warningHtml = '<div class="warning-box"><p><strong>⚠️ NO BET RECOMMENDED:</strong> Your estimated win probability suggests you have no edge on this bet. According to Kelly, you should not place this wager.</p></div>';
+    } else if (kellyPercent * 100 > 5) {
+        warningHtml = '<div class="warning-box"><p><strong>⚠️ CAUTION:</strong> This bet size is above 5% of your bankroll. Consider reducing to 5% max to manage risk, even if Kelly suggests more.</p></div>';
+    } else if (kellyPercent * 100 > 0) {
+        warningHtml = '<div class="tip-box"><p><strong>✓ BET APPROVED:</strong> You have a positive edge on this bet. The recommended bet size is within safe limits.</p></div>';
+    }
+
+    document.getElementById('warningMessage').innerHTML = warningHtml;
+
+    // Show results section
+    document.getElementById('calcResults').classList.add('show');
+
+    // Smooth scroll to results
+    document.getElementById('calcResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Allow Enter key to calculate
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateKelly();
+            }
+        });
+    });
+});
+</script>
+
+<!-- Fractional Kelly Strategy Content -->
+<section style="max-width: 1000px; margin: 40px auto 60px auto; padding: 35px; background: linear-gradient(135deg, rgba(0, 224, 255, 0.05), rgba(255, 0, 255, 0.05)); border: 2px solid rgba(0, 224, 255, 0.3); border-radius: 20px;">
+    <h2 style="color: #00e0ff; font-size: 1.9rem; margin-bottom: 20px; font-family: 'Orbitron', sans-serif;">Fractional Kelly: Why Professional Bettors Bet Less Than Full Kelly</h2>
+    <p style="font-size: 1.05rem; line-height: 1.8; color: #ddd; margin-bottom: 20px;">
+        Full Kelly betting maximizes long-term bankroll growth mathematically, but in practice, nearly all professional sports bettors use fractional Kelly—typically betting 25-50% of the Kelly recommendation. Why? Because full Kelly assumes your edge estimate is perfectly accurate. If you estimate a 5% edge but your true edge is only 3%, full Kelly will overbet and increase variance dangerously. Sports betting edges are estimates based on statistical models, injury data, and market inefficiencies—not mathematical certainties like card counting in blackjack. Fractional Kelly provides a safety buffer against edge estimation errors while still capturing most of the growth benefit.
+    </p>
+    <p style="font-size: 1.05rem; line-height: 1.8; color: #ddd; margin-bottom: 20px;">
+        Consider an NFL bettor with a $10,000 bankroll who identifies a 54% win probability on a -110 line (52.38% breakeven). Full Kelly suggests betting 3.5% of bankroll ($350). But if their win probability estimate is off by just 2% (actual 52% instead of 54%), they're now betting with minimal edge and experiencing huge swings. Half Kelly at $175 still captures significant growth when correct but reduces ruin risk dramatically if the edge estimate is overstated. Over a 16-game NFL Sunday, full Kelly might suggest betting $350 on ten different games—that's $3,500 or 35% of bankroll in action simultaneously. One bad variance day could devastate the bankroll. Half Kelly keeps action at $1,750, providing similar long-term growth with much lower volatility.
+    </p>
+    <p style="font-size: 1.05rem; line-height: 1.8; color: #ddd; margin-bottom: 0;">
+        The optimal fraction depends on your edge accuracy and risk tolerance. Professional syndicates with sophisticated models might use 50-75% Kelly because their edge estimates are battle-tested. Individual bettors with less robust modeling should consider 25-33% Kelly. Remember: Kelly Criterion prevents ruin by never suggesting bets that could bankrupt you, but fractional Kelly protects against the overconfidence that comes from overestimating edges. If this calculator suggests a $500 bet and that feels uncomfortable, you're either overestimating your edge or your bankroll is too small. Start with quarter Kelly, track results rigorously, and adjust your fraction as you prove your edge estimates are accurate over hundreds of bets.
+    </p>
+</section>
+
+</body>
+</html>

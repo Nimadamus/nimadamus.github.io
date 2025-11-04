@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Sora:wght@600&family=Rubik&display=swap" rel="stylesheet"/>
+<title>Bankroll Management Guide | BetLegend</title>
+    <link href="https://www.betlegendpicks.com/bankroll.html" rel="canonical"/>
+<style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+        }
+
+        
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1e1e1e;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    
+          padding-top: 140px;}
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #ffcc00;
+    }
+
+    .tagline-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .tagline {
+      font-size: 22px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .logo {
+      width: 40px;
+      height: auto;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 30px 0;
+    }
+
+    th, td {
+      border: 1px solid #444;
+      padding: 12px;
+      font-size: 18px;
+    }
+
+    th {
+      background-color: #333;
+      color: #ffcc00;
+    }
+
+    tr:nth-child(even) {
+      background-color: #2c2c2c;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #242424;
+    }
+  
+/* Logo */
+.logo-container {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    z-index: 1000;
+}
+
+.logo-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.logo-container span {
+    color: var(--neon-cyan);
+    text-shadow:
+        0 0 15px rgba(0, 255, 255, 1),
+        0 0 30px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(0, 255, 255, 0.6);
+}
+
+/* Navigation */
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 15px 5% 15px 5%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+    z-index: 999;
+    flex-wrap: wrap;
+}
+
+.nav-links a, .dropdown {
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown .dropbtn {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+    z-index: 1000;
+    border: 2px solid rgba(0, 224, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: var(--neon-cyan);
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+    color: #fff;
+    padding-left: 30px;
+    text-shadow: 0 0 10px var(--glow-color);
+    border-left-color: var(--neon-cyan);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px !important;
+    }
+
+    .logo-container {
+        top: 10px;
+        left: 20px;
+    }
+
+    .logo-container a {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 10px 5px;
+    }
+
+    .nav-links a {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown-content {
+        min-width: 160px;
+        padding: 10px 0;
+    }
+
+    .dropdown-content a {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+}
+
+    </style>
+<meta name="description" content="Learn professional bankroll management strategies for sports betting. Unit sizing, Kelly Criterion, and risk management fundamentals."/>
+<meta name="keywords" content="bankroll management, betting units, Kelly Criterion, risk management"/><meta content="Bet Sizing Strategy: Our Unit System Explained" property="og:title"/><meta content="Master your bankroll with BetLegend’s disciplined betting system. Learn how we assign units based on edge." property="og:description"/><script>!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');twq('config','q0zvl');</script><!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+    <nav class="nav-links">
+        <a href="blog-page8.html">PICKS & ANALYSIS</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="records.html">DETAILED BREAKDOWN</a>
+                <a href="betlegend-verified-records.html">MLB</a>
+                <a href="nfl-records.html">NFL</a>
+                <a href="ncaaf-records.html">NCAAF</a>
+                <a href="nhl-records.html">NHL</a>
+                <a href="nba-records.html">NBA</a>
+                <a href="soccer-records.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf-page2.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+                <a href="soccer.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="live-odds.html">Live Odds</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="kelly-criterion.html">Kelly Criterion</a>
+                <a href="betting-calculators.html">Betting Calculators</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-glossary.html">Betting Glossary</a>
+                <a href="betting-101.html">Betting 101</a>
+            </div>
+        </div>
+
+        <a href="proofofpicks.html">Proof</a>
+        <a href="news-page3.html">News</a>
+        <a href="featured-game-of-the-day.html">Game of the Day</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+<div class="container">
+<h1>Bet Sizing Strategy: Our Unit System Explained</h1>
+<div class="tagline-container">
+<div class="tagline">Bet smart. Bet with discipline.</div>
+</div>
+<p>The importance of utilizing smart bankroll management can’t be overstated. Whether you’re a new bettor or a seasoned pro, your ability to <strong>withstand short-term variance</strong> while staying alive for the long game is everything.</p>
+<p>Let’s be real: even the sharpest bettors in the world go through rough stretches. You might lose six, seven, even ten bets in a row. That’s not a reflection of your strategy failing — it’s just variance doing what it does. Even legends like <strong>Billy Walters</strong> have had losing months. What separates the winners from the losers over time isn’t avoiding losses — it’s managing your bankroll so you’re <em>still standing</em> when the tide turns.</p>
+<p>We scale our bet sizes based on our perceived edge — using a strict, model-driven approach. Here's how we assign units:</p>
+<table>
+<tr><th>Edge %</th><th>Units</th></tr>
+<tr><td>Under 2.0%</td><td>0 (Pass)</td></tr>
+<tr><td>2.0% – 3.9%</td><td>1 unit</td></tr>
+<tr><td>4.0% – 5.9%</td><td>2 units</td></tr>
+<tr><td>6.0% or higher</td><td>3 units</td></tr>
+</table>
+<p>This keeps us disciplined. <strong>No chasing. No gut plays. No ego.</strong> Just math.</p>
+<p>Edge is calculated by comparing our model’s win probability on a game to the market’s implied probability. We <strong>pass on small edges</strong> and increase our bet size as the edge grows — this isn’t gambling. This is calculated <strong>investing</strong>.</p>
+<p>If you want to win in this game long-term, you have to approach it with patience, precision, and perspective. It’s a grind — but a beatable one. That’s why we use this system. It allows us to stay consistent, avoid emotional swings, and capitalize when our edge is real.</p>
+<p>Staying in the game is the only way to win it. Bet smart, stay disciplined, and trust the math.</p>
+</div>
+</body>
+</html>
