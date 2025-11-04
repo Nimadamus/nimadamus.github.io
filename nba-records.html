@@ -194,7 +194,8 @@
 
 <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv';
+            // Master BetLegend Picks Tracker sheet
+            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
 
             const tableBody = document.getElementById('records-tbody');
             const loadingContainer = document.getElementById('loading-container');
@@ -216,8 +217,14 @@
             fetch(googleSheetUrl)
                 .then(response => response.text())
                 .then(csvText => {
-                    const picksDatabase = parseCSV(csvText);
-                    
+                    const allPicks = parseCSV(csvText);
+
+                    // Filter for NBA picks only
+                    const picksDatabase = allPicks.filter(p => {
+                        const sport = (p['League/Sport'] || p.Sport || '').trim();
+                        return sport === 'NBA';
+                    });
+
                     const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
                     if (gradedPicks.length === 0) {
                         document.getElementById('overall-record').textContent = '0-0-0';
@@ -256,13 +263,13 @@
                         else if (grade === 'L' || grade === 'Loss') { losses++; resultClass = 'loss'; }
                         else if (grade === 'P' || grade === 'Push') { pushes++; resultClass = 'push'; }
                         
-                        const unitValue = parseFloat(p.Units);
+                        const unitValue = parseFloat(p['Profit/Loss'] || p.Units || '0');
                         if (!isNaN(unitValue)) {
                             totalUnits += unitValue;
                         }
 
                         // Calculate risk for ROI - amount actually risked on each bet
-                        const line = parseFloat(p.Line || p.Odds);
+                        const line = parseFloat(p['Price/Odds'] || p.Line || p.Odds);
                         if (!isNaN(line) && !isNaN(unitValue) && grade !== 'P' && grade !== 'Push') {
                             let risk = 0;
 
@@ -290,8 +297,8 @@
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${p.Date}</td>
-                            <td>${p.Pick}</td>
-                            <td>${p.Line || p.Odds}</td>
+                            <td>${p.Line || p.Pick || 'N/A'}</td>
+                            <td>${p['Price/Odds'] || p.Odds || 'N/A'}</td>
                             <td><span class="${resultClass}">${grade}</span></td>
                             <td><span class="${resultClass}">${!isNaN(unitValue) ? (unitValue >= 0 ? '+' : '') + unitValue.toFixed(2) : 'N/A'}</span></td>
                         `;

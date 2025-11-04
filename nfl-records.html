@@ -277,10 +277,10 @@
         return sheetData.map(row => ({
             Date: row.Date || '',
             Sport: 'NFL',
-            Pick: row.Pick || '',
-            Line: row.Line || '',
+            Pick: row.Line || row.Pick || '',  // Line column contains the pick description
+            Line: row['Price/Odds'] || row.Line || '',  // Price/Odds contains the numeric odds
             Result: row.Result || '',
-            Units: row.Units || ''
+            Units: row['Profit/Loss'] || row.Units || ''  // Profit/Loss contains the units result
         }));
     }
 
@@ -291,9 +291,9 @@
             const csvData = await response.text();
             const sheetData = parseCSV(csvData);
 
-            // Filter for NFL picks only
+            // Filter for NFL picks only - using League/Sport column
             const nflData = sheetData.filter(row => {
-                const sport = (row.Sport || '').trim();
+                const sport = (row['League/Sport'] || row.Sport || '').trim();
                 return sport === 'NFL';
             });
 
