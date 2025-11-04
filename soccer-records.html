@@ -196,7 +196,7 @@
 
 <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv';
 
             const tableBody = document.getElementById('records-tbody');
             const loadingContainer = document.getElementById('loading-container');
@@ -219,20 +219,14 @@
                 .then(response => response.text())
                 .then(csvText => {
                     const picksDatabase = parseCSV(csvText);
-
-                    // Filter for Soccer picks only
-                    const soccerPicks = picksDatabase.filter(p => {
-                        const sport = (p['League/Sport'] || p.League || p.Sport || '').trim();
-                        return sport === 'Soccer';
-                    });
-
-                    const gradedPicks = soccerPicks.filter(p => p.Result && p.Result.trim() !== '');
+                    
+                    const gradedPicks = picksDatabase.filter(p => p.Result && p.Result.trim() !== '');
                     if (gradedPicks.length === 0) {
                         document.getElementById('overall-record').textContent = '0-0-0';
                         document.getElementById('total-units').textContent = '+0.00';
                         document.getElementById('win-percentage').textContent = '0.0%';
                         document.getElementById('roi').textContent = '0.00%';
-                        loadingContainer.innerHTML = `<p id="loading-message">No graded Soccer picks found yet.</p>`;
+                        loadingContainer.innerHTML = `<p id="loading-message">No graded picks found in the record yet.</p>`;
                         return;
                     }
 
