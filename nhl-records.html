@@ -42,19 +42,19 @@
         .result-P { font-weight: bold; color: var(--push-color); }
         .loading-message { text-align: center; color: var(--glow-color); margin: 20px 0; font-size: 18px; }
         @media (max-width: 768px) { .header h1 { font-size: 36px; } }
-    </style><meta name="description" content="Verified betting records with full graded history and cumulative units. Transparent tracking across MLB, NFL, and college Hockey.">
-<meta name="keywords" content="MLB betting record, verified picks record, win loss units, graded bets history, MLB units tracker, transparent betting results">
-<link href="https://www.betlegendpicks.com/nfl-records.html" rel="canonical"/>
+    </style><meta name="description" content="Verified betting records with full graded history and cumulative units. Transparent tracking across NHL, NFL, and college sports.">
+<meta name="keywords" content="NHL betting record, verified picks record, win loss units, graded bets history, NHL units tracker, transparent betting results, hockey picks">
+<link href="https://www.betlegendpicks.com/nhl-records.html" rel="canonical"/>
 <meta property="og:title" content="NHL Verified Records - BetLegend">
-<meta property="og:description" content="Verified betting records with full graded history and cumulative units. Transparent tracking across MLB, NFL, and college Hockey.">
-<meta property="og:url" content="https://www.betlegendpicks.com/nfl-records.html">
+<meta property="og:description" content="Verified betting records with full graded history and cumulative units. Transparent tracking across NHL, NFL, and college sports.">
+<meta property="og:url" content="https://www.betlegendpicks.com/nhl-records.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
 <meta property="og:site_name" content="BetLegend Picks">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@BetLegend2025">
 <meta name="twitter:title" content="NHL Verified Records - BetLegend">
-<meta name="twitter:description" content="Verified betting records with full graded history and cumulative units. Transparent tracking across MLB, NFL, and college Hockey.">
+<meta name="twitter:description" content="Verified betting records with full graded history and cumulative units. Transparent tracking across NHL, NFL, and college sports.">
 <meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png"><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -69,8 +69,8 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Page",
-      "item": "https://www.betlegendpicks.com/nfl-records.html"
+      "name": "NHL Records",
+      "item": "https://www.betlegendpicks.com/nhl-records.html"
     }
   ]
 }
@@ -88,7 +88,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="header"><h1>🏈 NFL<span> Verified Records</span></h1></div>
+        <div class="header"><h1>🏒 NHL<span> Verified Records</span></h1></div>
 
         <!-- Static SEO Content Section -->
         
@@ -249,7 +249,7 @@
     }
 
     // Function to convert Google Sheets data to the format expected by the original script
-    function convertToMLBFormat(sheetData) {
+    function convertToNHLFormat(sheetData) {
         return sheetData.map(row => ({
             Date: row.Date || '',
             Sport: row.Sport || 'NFL',
@@ -263,19 +263,19 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('all-records.json');
+            const response = await fetch('nhl-records.json');
             const jsonData = await response.json();
             // Filter for NFL picks only
             const filteredData = jsonData.filter(pick => pick.Sport === 'NFL');
 
 
-            const mlbPicksData = convertToMLBFormat(filteredData);
+            const nhlPicksData = convertToNHLFormat(filteredData);
             
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
             
             // Process the data using the original logic
-            processPicksData(mlbPicksData);
+            processPicksData(nhlPicksData);
             
         } catch (error) {
             console.error('Error loading data from Google Sheets:', error);
@@ -284,9 +284,9 @@
     }
 
     // Original processing logic (adapted from the original script)
-    function processPicksData(mlbPicksData) {
+    function processPicksData(nhlPicksData) {
         try {
-            const processedPicks = mlbPicksData.map(p => {
+            const processedPicks = nhlPicksData.map(p => {
                 try {
                     if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
                     const pickText = String(p.Pick).trim();
