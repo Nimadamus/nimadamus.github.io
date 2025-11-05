@@ -266,8 +266,38 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('nhl-records.json?v=' + Date.now());
-            const filteredData = await response.json();
+            // Fetch directly from Google Sheets Master Picks tab - filter for NHL sport
+            const sheetUrl = 'https://docs.google.com/spreadsheets/d/1sOTuoNv0dC9Bom_m46QgS4B4eNXTQenAVKLuCHNwHbw/gviz/tq?tqx=out:csv&sheet=Master%20Picks';
+            const response = await fetch(sheetUrl);
+            const csvText = await response.text();
+
+            // Parse CSV and filter for NHL
+            const lines = csvText.split('\n');
+            const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
+            const filteredData = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i];
+                if (!line.trim()) continue;
+
+                const values = line.match(/(".*?"|[^,]+)(?=\s*,|\s*$)/g) || [];
+                const row = values.map(v => v.replace(/^"|"$/g, '').trim());
+
+                // Check if Sport column (index 0) is NHL and Result column (index 6) is graded
+                if (row[0] === 'NHL' && (row[6] === 'W' || row[6] === 'L' || row[6] === 'P')) {
+                    filteredData.push({
+                        Sport: row[0] || '',
+                        League: row[1] || '',
+                        Date: row[2] || '',
+                        Picks: row[3] || '',
+                        Odds: row[4] || '',
+                        Units: row[5] || '',
+                        Result: row[6] || '',
+                        ProfitLoss: row[7] || '',
+                        GradedAt: row[8] || ''
+                    });
+                }
+            }
 
 
             const mlbPicksData = convertToMLBFormat(filteredData);
