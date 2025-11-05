@@ -199,7 +199,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL - NHL Sheet
+    // Google Sheets CSV URL - NHL Records Sheet
     const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv';
 
     // Function to parse CSV data
@@ -248,29 +248,25 @@
         return values;
     }
 
-    // Function to convert Google Sheets data to the format expected by the original script
+    // Function to convert JSON data to the format expected by the original script
     function convertToNHLFormat(sheetData) {
         return sheetData.map(row => ({
             Date: row.Date || '',
             Sport: 'NHL',
-            Pick: row.Pick || '',
+            Pick: row.Picks || '',
             Line: row.Odds || '',
             Result: row.Result || '',
-            Units: row.Units || ''
+            Units: row.ProfitLoss || ''
         }));
     }
 
-    // Load data from Google Sheets and process it
+    // Load data from local JSON file
     async function loadDataFromSheets() {
         try {
-            const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
-                cache: 'no-store',
-                headers: { 'Cache-Control': 'no-store' }
-            });
-            const csvText = await response.text();
-            const parsedData = parseCSV(csvText);
+            const response = await fetch('nhl-records.json?v=' + Date.now());
+            const jsonData = await response.json();
 
-            const nhlPicksData = convertToNHLFormat(parsedData);
+            const nhlPicksData = convertToNHLFormat(jsonData);
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
@@ -279,8 +275,8 @@
             processPicksData(nhlPicksData);
 
         } catch (error) {
-            console.error('Error loading data from Google Sheets:', error);
-            document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';
+            console.error('Error loading data:', error);
+            document.getElementById('loading-message').textContent = 'Error loading data. Please try again later.';
         }
     }
 
