@@ -6,7 +6,6 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <!-- v1.1 force refresh -->
     <title>NHL Records - BetLegend Picks</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -111,7 +110,7 @@
         <a href="nhl-records.html" title="NHL Betting Records">NHL</a>
         <a href="nba-records.html" title="NBA Betting Records">NBA</a>
 <a href="ncaab-records.html" title="College Basketball Betting Records">NCAAB</a>
-<a href="soccer-records.html" title="Soccer Betting Records">Soccer</a>
+<a href="nhl-records.html" title="NHL Betting Records">NHL</a>
         </div>
         </div>
 
@@ -267,8 +266,10 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('nhl-records.json?v=' + Date.now());
-            const filteredData = await response.json();
+            const response = await fetch('all-records.json?v=1762313460');
+            const jsonData = await response.json();
+            // Filter for NHL picks only
+            const filteredData = jsonData.filter(pick => pick.Sport === 'NHL');
 
 
             const mlbPicksData = convertToMLBFormat(filteredData);
