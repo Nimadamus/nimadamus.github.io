@@ -287,17 +287,12 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch(GOOGLE_SHEETS_CSV_URL);
-            const csvData = await response.text();
-            const sheetData = parseCSV(csvData);
+            const response = await fetch('nfl-records.json');
+            const jsonData = await response.json();
+            // JSON already parsed
 
-            // Filter for NFL picks only - using League/Sport column
-            const nflData = sheetData.filter(row => {
-                const sport = (row['League/Sport'] || row.Sport || '').trim();
-                return sport === 'NFL';
-            });
 
-            const mlbPicksData = convertToMLBFormat(nflData);
+            const mlbPicksData = convertToMLBFormat(jsonData);
             
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
