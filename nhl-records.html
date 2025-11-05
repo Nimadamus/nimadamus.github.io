@@ -295,23 +295,24 @@
                     const resultText = String(p.Result).trim().toUpperCase();
                     if (pickText === '' || resultText === '') return null;
 
-                    // Parse units and line, default to 0 if missing or invalid
+                    // Parse units and line for calculations, but preserve original Line for display
                     const units = p.Units ? parseFloat(p.Units) : 0;
-                    const line = p.Line ? parseFloat(p.Line) : 0;
+                    const lineValue = p.Line ? parseFloat(p.Line) : 0;
+                    const displayLine = p.Line || 'N/A';  // Preserve original value for display
 
                     let risk = 0;
                     if (!isNaN(units) && units < 0) {
                         risk = Math.abs(units);
                     }
-                    else if (!isNaN(units) && units > 0 && !isNaN(line)) {
-                        if (line > 0) {
-                            risk = (units / (line / 100));
+                    else if (!isNaN(units) && units > 0 && !isNaN(lineValue)) {
+                        if (lineValue > 0) {
+                            risk = (units / (lineValue / 100));
                         }
-                        else if (line < 0) {
-                            risk = (units * (Math.abs(line) / 100));
+                        else if (lineValue < 0) {
+                            risk = (units * (Math.abs(lineValue) / 100));
                         }
                     }
-                    return { ...p, units: isNaN(units) ? 0 : units, risk, parsedDate: new Date(p.Date) };
+                    return { ...p, Line: displayLine, units: isNaN(units) ? 0 : units, risk, parsedDate: new Date(p.Date) };
                 } catch {
                     return null;
                 }
