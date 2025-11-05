@@ -252,7 +252,7 @@
     function convertToNHLFormat(sheetData) {
         return sheetData.map(row => ({
             Date: row.Date || '',
-            Sport: row.Sport || 'NFL',
+            Sport: row.Sport || 'NHL',
             Pick: row.Picks || row.Pick || row.Line || '',
             Line: row.Odds || row['Price/Odds'] || row.Line || '',
             Result: row.Result || '',
@@ -436,11 +436,11 @@
         document.getElementById('chart-current-units').style.color = currentUnits >= 0 ? '#39FF14' : '#FF3131';
         document.getElementById('chart-peak-units').textContent = (peakUnits >= 0 ? '+' : '') + peakUnits.toFixed(2);
 
-        if(window.__nflUnitsChart) { 
-            window.__nflUnitsChart.destroy(); 
+        if(window.__nhlUnitsChart) { 
+            window.__nhlUnitsChart.destroy(); 
         }
 
-        window.__nflUnitsChart = new Chart(ctx.getContext('2d'), {
+        window.__nhlUnitsChart = new Chart(ctx.getContext('2d'), {
             type: 'line',
             data: {
                 labels: data.labels,
