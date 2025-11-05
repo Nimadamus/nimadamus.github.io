@@ -265,8 +265,8 @@
         try {
             const response = await fetch('nhl-records.json');
             const jsonData = await response.json();
-            // Filter for NFL picks only
-            const filteredData = jsonData.filter(pick => pick.Sport === 'NFL');
+            // Filter for NHL picks only
+            const filteredData = jsonData.filter(pick => pick.Sport === 'NHL');
 
 
             const nhlPicksData = convertToNHLFormat(filteredData);
