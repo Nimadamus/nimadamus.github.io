@@ -319,7 +319,7 @@
 
             document.getElementById('picks-table-body').innerHTML = processedPicks.map(p => `
                 <tr>
-                    <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
+                    <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line || 'N/A'}</td>
                     <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
                     <td class="${p.units >= 0 ? 'win' : 'loss'}">${p.units.toFixed(2)}</td>
                 </tr>`).join('');
