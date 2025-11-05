@@ -276,11 +276,11 @@
     function convertToMLBFormat(sheetData) {
         return sheetData.map(row => ({
             Date: row.Date || '',
-            Sport: 'NFL',
-            Pick: row.Line || row.Pick || '',  // Line column contains the pick description
-            Line: row['Price/Odds'] || row.Line || '',  // Price/Odds contains the numeric odds
+            Sport: row.Sport || 'NFL',
+            Pick: row.Picks || row.Pick || row.Line || '',
+            Line: row.Odds || row['Price/Odds'] || row.Line || '',
             Result: row.Result || '',
-            Units: row['Profit/Loss'] || row.Units || ''  // Profit/Loss contains the units result
+            Units: row.ProfitLoss || row['Profit/Loss'] || row.Units || ''
         }));
     }
 
