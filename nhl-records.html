@@ -202,8 +202,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL - Master BetLegend Picks Tracker
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjW2l6hBUafumAiOdJblACLIx3GTtdJDcytUcN1nu2QHJmHnUMN9_5Tp2v7VqMTZaATfdmcJ-SK4jD/pub?output=csv';
+    // Google Sheets CSV URL - Sheet1 with actual odds data
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjW2l6hBUafumAiOdJblACLIx3GTtdJDcytUcN1nu2QHJmHnUMN9_5Tp2v7VqMTZaATfdmcJ-SK4jD/pub?gid=0&single=true&output=csv';
 
     // Function to parse CSV data
     function parseCSV(csv) {
@@ -255,26 +255,35 @@
     function convertToMLBFormat(sheetData) {
         return sheetData.map(row => ({
             Date: row.Date || '',
-            Sport: row.Sport || 'NFL',
-            Pick: row.Picks || row.Pick || row.Line || '',
-            Line: row.Odds || row['Price/Odds'] || row.Line || '',
+            Sport: row['League/Sport'] || 'NHL',
+            Pick: row.Line || row.Pick || '',
+            Line: row['Price/Odds'] || row.Odds || '',
             Result: row.Result || '',
-            Units: row.ProfitLoss || row['Profit/Loss'] || row.Units || ''
+            Units: row['Profit/Loss'] || row.ProfitLoss || row.Units || ''
         }));
     }
 
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('nhl-records.json?v=' + Date.now());
-            const filteredData = await response.json();
+            const response = await fetch(GOOGLE_SHEETS_CSV_URL);
+            const csvText = await response.text();
 
+            // Parse CSV
+            const allData = parseCSV(csvText);
+
+            // Filter for NHL only and graded picks
+            const filteredData = allData.filter(row => {
+                const sport = (row['League/Sport'] || '').trim().toUpperCase();
+                const result = (row['Result'] || '').trim().toUpperCase();
+                return sport === 'NHL' && (result === 'W' || result === 'L' || result === 'P');
+            });
 
             const mlbPicksData = convertToMLBFormat(filteredData);
-            
+
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
-            
+
             // Process the data using the original logic
             processPicksData(mlbPicksData);
             
