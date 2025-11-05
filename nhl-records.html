@@ -267,10 +267,8 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('all-records.json?v=1762313460');
-            const jsonData = await response.json();
-            // Filter for NHL picks only
-            const filteredData = jsonData.filter(pick => pick.Sport === 'NHL');
+            const response = await fetch('nhl-records.json?v=' + Date.now());
+            const filteredData = await response.json();
 
 
             const mlbPicksData = convertToMLBFormat(filteredData);
