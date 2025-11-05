@@ -188,7 +188,7 @@
 
 <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjW2l6hBUafumAiOdJblACLIx3GTtdJDcytUcN1nu2QHJmHnUMN9_5Tp2v7VqMTZaATfdmcJ-SK4jD/pub?output=csv';
+            const googleSheetUrl = 'all-records.json';
 
             const tableBody = document.getElementById('records-tbody');
             const loadingContainer = document.getElementById('loading-container');
@@ -208,9 +208,9 @@
             }
 
             fetch(googleSheetUrl)
-                .then(response => response.text())
-                .then(csvText => {
-                    const picksDatabase = parseCSV(csvText);
+                .then(response => response.json())
+                .then(picksDatabase => {
+                    
 
                     // Filter for MLB picks only
                     const mlbPicks = picksDatabase.filter(p => {
@@ -243,7 +243,7 @@
                         else if (grade === 'L' || grade === 'Loss') { losses++; resultClass = 'loss'; }
                         else if (grade === 'P' || grade === 'Push') { pushes++; resultClass = 'push'; }
                         
-                        const unitValue = parseFloat(p.Units);
+                        const unitValue = parseFloat(p.ProfitLoss || p.Units || 0);
                         if (!isNaN(unitValue)) {
                             totalUnits += unitValue;
                         }
