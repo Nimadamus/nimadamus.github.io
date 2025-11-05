@@ -287,12 +287,13 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('mlb-records.json');
+            const response = await fetch('all-records.json');
             const jsonData = await response.json();
-            // JSON already parsed
+            // Filter for MLB picks only
+            const filteredData = jsonData.filter(pick => pick.Sport === 'MLB');
 
 
-            const mlbPicksData = convertToMLBFormat(jsonData);
+            const mlbPicksData = convertToMLBFormat(filteredData);
             
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
