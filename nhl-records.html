@@ -248,25 +248,29 @@
         return values;
     }
 
-    // Function to convert JSON data to the format expected by the original script
+    // Function to convert CSV data to the format expected by the original script
     function convertToNHLFormat(sheetData) {
         return sheetData.map(row => ({
             Date: row.Date || '',
             Sport: 'NHL',
-            Pick: row.Picks || '',
+            Pick: row.Pick || '',
             Line: row.Odds || '',
             Result: row.Result || '',
-            Units: row.ProfitLoss || ''
+            Units: row.Units || ''
         }));
     }
 
-    // Load data from local JSON file
+    // Load data from Google Sheets CSV
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('nhl-records.json?v=' + Date.now());
-            const jsonData = await response.json();
+            const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
+                cache: 'no-store',
+                headers: { 'Cache-Control': 'no-store' }
+            });
+            const csvText = await response.text();
+            const parsedData = parseCSV(csvText);
 
-            const nhlPicksData = convertToNHLFormat(jsonData);
+            const nhlPicksData = convertToNHLFormat(parsedData);
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
