@@ -252,31 +252,32 @@
     function convertToNHLFormat(sheetData) {
         return sheetData.map(row => ({
             Date: row.Date || '',
-            Sport: row.Sport || 'NHL',
-            Pick: row.Picks || row.Pick || row.Line || '',
-            Line: row.Odds || row['Price/Odds'] || row.Line || '',
+            Sport: 'NHL',
+            Pick: row.Pick || '',
+            Line: row.Odds || '',
             Result: row.Result || '',
-            Units: row.ProfitLoss || row['Profit/Loss'] || row.Units || ''
+            Units: row.Units || ''
         }));
     }
 
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('nhl-records.json');
-            const jsonData = await response.json();
-            // Filter for NHL picks only
-            const filteredData = jsonData.filter(pick => pick.Sport === 'NHL');
+            const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
+                cache: 'no-store',
+                headers: { 'Cache-Control': 'no-store' }
+            });
+            const csvText = await response.text();
+            const parsedData = parseCSV(csvText);
 
+            const nhlPicksData = convertToNHLFormat(parsedData);
 
-            const nhlPicksData = convertToNHLFormat(filteredData);
-            
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
-            
+
             // Process the data using the original logic
             processPicksData(nhlPicksData);
-            
+
         } catch (error) {
             console.error('Error loading data from Google Sheets:', error);
             document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';
