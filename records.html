@@ -832,69 +832,52 @@ tbody tr:hover {
 
 <script>
 // Google Sheets CSV URLs for each sport
-// Master Google Sheet - all sports in one sheet
-const MASTER_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjW2l6hBUafumAiOdJblACLIx3GTtdJDcytUcN1nu2QHJmHnUMN9_5Tp2v7VqMTZaATfdmcJ-SK4jD/pub?output=csv';
-
-// Sport mapping for filtering
-const SPORT_MAPPING = {
-    'NFL': ['NFL', 'Football'],
-    'NBA': ['NBA', 'Basketball'],
-    'NHL': ['NHL', 'Hockey'],
-    'MLB': ['MLB', 'Baseball'],
-    'NCAAF': ['NCAAF', 'College Football'],
-    'NCAAB': ['NCAAB', 'College Basketball'],
-    'Soccer': ['Soccer', 'MLS', 'EPL', 'UCL']
+const SHEET_URLS = {
+    'NFL': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv',
+    'NBA': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv',
+    'NHL': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv',
+    'MLB': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv',
+    'NCAAF': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv',
+    'Soccer': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
 };
 
 let allData = [];
 
 async function fetchAllData() {
-    try {
-        // Fetch from master sheet with cache-busting
-        const response = await fetch(MASTER_SHEET_URL + '&cache=' + Date.now(), {
-            cache: 'no-store',
-            headers: { 'Cache-Control': 'no-store' }
-        });
-        const csv = await response.text();
-        const rows = parseCSV(csv);
-
-        // Map each row to include normalized sport
-        allData = rows.map(row => {
-            // Fix dates if needed
-            let dateStr = row.Date || row.date || '';
-            if (dateStr) {
-                const date = new Date(dateStr);
-                if (!isNaN(date)) {
-                    const year = date.getFullYear();
-                    if (year !== 2025) {
-                        const correctedDate = new Date(2025, date.getMonth(), date.getDate());
-                        row.Date = correctedDate.toISOString().split('T')[0];
-                        row.date = row.Date;
+    const promises = Object.entries(SHEET_URLS).map(async ([sheetSport, url]) => {
+        try {
+            const response = await fetch(url);
+            const csv = await response.text();
+            const rows = parseCSV(csv);
+            // Use the sport from the sheet name as fallback
+            return rows.map(row => {
+                // Fix ALL incorrect dates - force year to 2025 if it's wrong
+                let dateStr = row.Date || row.date || '';
+                if (dateStr) {
+                    const date = new Date(dateStr);
+                    if (!isNaN(date)) {
+                        const year = date.getFullYear();
+                        // Fix any year that's not 2025
+                        if (year !== 2025) {
+                            const correctedDate = new Date(2025, date.getMonth(), date.getDate());
+                            row.Date = correctedDate.toISOString().split('T')[0];
+                            row.date = row.Date;
+                        }
                     }
                 }
-            }
+                return {
+                    ...row,
+                    sport: sheetSport // This maps to the correct sheet
+                };
+            });
+        } catch (error) {
+            console.error(`Error fetching ${sheetSport} data:`, error);
+            return [];
+        }
+    });
 
-            // Normalize sport field
-            const sportValue = row.Sport || row.sport || row.League || row.league || '';
-            let normalizedSport = sportValue;
-
-            // Map to standard sport names
-            for (const [sport, variations] of Object.entries(SPORT_MAPPING)) {
-                if (variations.some(v => sportValue.toUpperCase().includes(v.toUpperCase()))) {
-                    normalizedSport = sport;
-                    break;
-                }
-            }
-
-            return {
-                ...row,
-                sport: normalizedSport
-            };
-        }).filter(row => row.Pick || row.pick); // Only include rows with picks
-    } catch (error) {
-        console.error('Error fetching master sheet data:', error);
-        allData = [];
-    }
+    const results = await Promise.all(promises);
+    allData = results.flat();
     console.log(`✅ Loaded ${allData.length} total picks across all sports`);
 
     // Debug: Count entries by month
