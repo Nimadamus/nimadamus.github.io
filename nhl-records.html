@@ -270,13 +270,8 @@
             const csvText = await response.text();
             const parsedData = parseCSV(csvText);
 
-            // Filter for NHL picks only
-            const nhlOnly = parsedData.filter(row =>
-                row.Sport === 'NHL' || row.Sport === 'Hockey' ||
-                row.League === 'NHL' || row.League === 'Hockey'
-            );
-
-            const nhlPicksData = convertToNHLFormat(nhlOnly);
+            // Old NHL sheet is already NHL-only, no filtering needed
+            const nhlPicksData = convertToNHLFormat(parsedData);
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
