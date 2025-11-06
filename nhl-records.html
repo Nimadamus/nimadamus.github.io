@@ -270,7 +270,13 @@
             const csvText = await response.text();
             const parsedData = parseCSV(csvText);
 
-            const nhlPicksData = convertToNHLFormat(parsedData);
+            // Filter for NHL picks only
+            const nhlOnly = parsedData.filter(row =>
+                row.Sport === 'NHL' || row.Sport === 'Hockey' ||
+                row.League === 'NHL' || row.League === 'Hockey'
+            );
+
+            const nhlPicksData = convertToNHLFormat(nhlOnly);
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
