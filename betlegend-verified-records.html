@@ -263,18 +263,10 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            // Fetch from Google Sheets CSV with cache-busting
-            const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
-                cache: 'no-store',
-                headers: { 'Cache-Control': 'no-store' }
-            });
-            const csvText = await response.text();
-            const sheetData = parseCSV(csvText);
-
+            const response = await fetch('all-records.json');
+            const jsonData = await response.json();
             // Filter for MLB picks only
-            const filteredData = sheetData.filter(pick =>
-                pick.Sport === 'MLB' || pick.League === 'MLB' || pick.Sport === 'Baseball' || pick.League === 'Baseball'
-            );
+            const filteredData = jsonData.filter(pick => pick.Sport === 'MLB');
 
 
             const mlbPicksData = convertToMLBFormat(filteredData);
