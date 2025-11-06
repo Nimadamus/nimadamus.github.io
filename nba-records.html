@@ -198,8 +198,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL - Master BetLegend Picks Tracker
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjW2l6hBUafumAiOdJblACLIx3GTtdJDcytUcN1nu2QHJmHnUMN9_5Tp2v7VqMTZaATfdmcJ-SK4jD/pub?output=csv';
+    // Google Sheets CSV URL - Old NBA Sheet (correct data)
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv';
 
     // Function to parse CSV data
     function parseCSV(csv) {
@@ -262,10 +262,12 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('all-records.json');
-            const jsonData = await response.json();
-            // Filter for NBA picks only
-            const filteredData = jsonData.filter(pick => pick.Sport === 'NBA');
+            const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
+                cache: 'no-store',
+                headers: { 'Cache-Control': 'no-store' }
+            });
+            const csvText = await response.text();
+            const filteredData = parseCSV(csvText);
 
 
             const mlbPicksData = convertToMLBFormat(filteredData);
