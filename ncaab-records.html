@@ -263,10 +263,18 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('all-records.json');
-            const jsonData = await response.json();
+            // Fetch from Google Sheets CSV with cache-busting
+            const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
+                cache: 'no-store',
+                headers: { 'Cache-Control': 'no-store' }
+            });
+            const csvText = await response.text();
+            const sheetData = parseCSV(csvText);
+
             // Filter for NCAAB picks only
-            const filteredData = jsonData.filter(pick => pick.Sport === 'NCAAB');
+            const filteredData = sheetData.filter(pick =>
+                pick.Sport === 'NCAAB' || pick.League === 'NCAAB' || pick.Sport === 'College Basketball' || pick.League === 'College Basketball'
+            );
 
 
             const mlbPicksData = convertToMLBFormat(filteredData);
