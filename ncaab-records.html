@@ -199,8 +199,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL - Master BetLegend Picks Tracker
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjW2l6hBUafumAiOdJblACLIx3GTtdJDcytUcN1nu2QHJmHnUMN9_5Tp2v7VqMTZaATfdmcJ-SK4jD/pub?output=csv';
+    // Google Sheets CSV URL - NCAAB Records Tracker
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv';
 
     // Function to parse CSV data
     function parseCSV(csv) {
@@ -263,13 +263,11 @@
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch('all-records.json');
-            const jsonData = await response.json();
-            // Filter for NCAAB picks only
-            const filteredData = jsonData.filter(pick => pick.Sport === 'NCAAB');
+            const response = await fetch(GOOGLE_SHEETS_CSV_URL);
+            const csvText = await response.text();
+            const parsedData = parseCSV(csvText);
 
-
-            const mlbPicksData = convertToMLBFormat(filteredData);
+            const mlbPicksData = convertToMLBFormat(parsedData);
             
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
