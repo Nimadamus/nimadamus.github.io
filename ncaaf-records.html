@@ -374,9 +374,9 @@
             var points = rows.map(function(tr){
                 var cells = tr.querySelectorAll('td');
                 if(!cells.length) return null;
-                
+
                 var dateTxt = cells[0].textContent.trim();
-                var unitsTxt = (cells[5] || {}).textContent || "0";
+                var unitsTxt = (cells[4] || {}).textContent || "0";
                 var unitsVal = parseNumber(unitsTxt);
                 
                 var dateObj = new Date(dateTxt);
