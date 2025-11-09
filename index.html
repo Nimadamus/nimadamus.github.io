@@ -654,6 +654,8 @@
                 min-height: 44px;
                 display: flex;
                 align-items: center;
+                -webkit-tap-highlight-color: rgba(0, 224, 255, 0.3);
+                touch-action: manipulation;
             }
             
             .btn-primary {
@@ -1152,21 +1154,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Toggle current dropdown
                 dropdown.classList.toggle('active');
-            });
-
-            // For mobile: use touchstart on links to ensure they work
-            const links = dropdownContent.querySelectorAll('a');
-            links.forEach(link => {
-                // Make links explicitly clickable on mobile
-                link.style.pointerEvents = 'auto';
-                link.style.cursor = 'pointer';
-
-                // Handle touch events for mobile
-                link.addEventListener('touchend', function(e) {
-                    e.stopPropagation();
-                    // Allow default navigation
-                    window.location.href = this.href;
-                }, {passive: false});
             });
         }
     });
