@@ -606,9 +606,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Prevent dropdown from closing when clicking inside the content
+            // Don't prevent link clicks, only prevent closing the dropdown
             dropdownContent.addEventListener('click', function(e) {
-                e.stopPropagation();
+                // Only stop propagation if NOT clicking on a link
+                if (e.target.tagName !== 'A') {
+                    e.stopPropagation();
+                }
             });
         }
     });

@@ -257,7 +257,10 @@
 
     .dropdown-content a {
         font-size: 0.85rem;
-        padding: 10px 15px;
+        padding: 12px 15px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
     }
 }
 
@@ -580,9 +583,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Prevent dropdown from closing when clicking inside the content
+            // Don't prevent link clicks, only prevent closing the dropdown
             dropdownContent.addEventListener('click', function(e) {
-                e.stopPropagation();
+                // Only stop propagation if NOT clicking on a link
+                if (e.target.tagName !== 'A') {
+                    e.stopPropagation();
+                }
             });
         }
     });
