@@ -260,6 +260,10 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        .dropdown.active .dropdown-content {
+            display: block;
+            animation: dropdownFade 0.3s ease;
+        }
 
         /* Main Content Container */
         .content-container {
@@ -1066,7 +1070,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-</script>
+
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 
 <!-- Fractional Kelly Strategy Content -->
 <section style="max-width: 1000px; margin: 40px auto 60px auto; padding: 35px; background: linear-gradient(135deg, rgba(0, 224, 255, 0.05), rgba(255, 0, 255, 0.05)); border: 2px solid rgba(0, 224, 255, 0.3); border-radius: 20px;">

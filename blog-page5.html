@@ -223,6 +223,10 @@
     display: block;
     animation: dropdownFade 0.3s ease;
 }
+        .dropdown.active .dropdown-content {
+            display: block;
+            animation: dropdownFade 0.3s ease;
+        }
 
 @keyframes dropdownFade {
     from { opacity: 0; transform: translateY(-10px); }
@@ -288,7 +292,43 @@
     }
   }
 }
-</script>
+
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <!---  Breadcrumb Schema ---->
 <script type="application/ld+json">
 {
@@ -432,7 +472,43 @@
    "datePublished": "2025-08-13T03:47:00-05:00",
    "description": "Our official 5-play card for August 13, 2025 features two high-confidence unders, two strong moneyline spots, and a first-five inning total. All picks are backed by verified advanced stats and matchup trends."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Milwaukee Brewers team on their home field" loading="lazy" src="images/brew.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -497,7 +573,43 @@
    "datePublished": "2025-08-12T01:42:00-05:00",
    "description": "The official BetLegend card for Tuesday, August 12, 2025 is locked. Our deep dive into the advanced stats and market analytics reveals nine high-conviction plays where the data provides a clear and quantifiable edge. This is the definitive MLB betting guide for today's slate."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="A pitcher on the mound at night - the backdrop for expert MLB picks on August 12, 2025" loading="lazy" src="images/aug12.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -573,7 +685,43 @@
    "datePublished": "2025-08-11T03:15:00-05:00",
    "description": "The official BetLegend card for Monday, August 11, 2025 is locked. Our deep dive into the advanced stats and market analytics reveals nine high-conviction plays where the data provides a clear and quantifiable edge. This is the definitive MLB betting guide for today's slate."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="A baseball field at night - the backdrop for expert MLB picks on August 11, 2025" loading="lazy" src="images/aug11.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -655,7 +803,43 @@
    "datePublished": "2025-08-10T02:38:00-05:00",
    "description": "The Sunday slate for August 10, 2025 is loaded with value. Our deep dive into the advanced stats reveals nine high-conviction plays where the market has mispriced key situational trends and pitching matchups. This MLB betting guide breaks down the sharpest plays on the board."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Zack Wheeler on the mound - cornerstone of our expert MLB picks for August 10, 2025" loading="lazy" src="images/aug10.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -731,7 +915,43 @@
    "datePublished": "2025-08-08T22:06:00-05:00",
    "description": "The Saturday slate for August 9, 2025, is loaded with value. Our deep dive into the advanced stats reveals seven high-conviction plays where the market is misvaluing pitching mismatches and key situational trends. This MLB betting guide breaks down the sharpest plays on the board."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Giants pitcher Carson Whisenhunt on the mound - a key piece of our expert MLB picks for August 9, 2025" loading="lazy" src="carson.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -799,7 +1019,43 @@
    "datePublished": "2025-08-08T12:26:00-05:00",
    "description": "The Friday slate for August 8, 2025 is loaded with value. Our deep dive into the advanced stats reveals several high-conviction plays where the market is misvaluing elite pitching and key offensive matchups. This MLB betting guide breaks down the sharpest plays on the board."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Tarik Skubal pitching - cornerstone of our expert MLB picks for August 8, 2025" loading="lazy" src="images/skubal29.webp" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 <p style="font-size: 12px; color: #888; margin-top: -15px;">Image Source: skubal.png</p>
@@ -871,7 +1127,43 @@
    "datePublished": "2025-08-07T14:53:00-05:00",
    "description": "The first official NFL pick of the 2025 season is here. We've identified a massive analytical edge in the Bengals vs. Eagles preseason game. This analysis breaks down why the Bengals first half spread is the sharpest football bet on the board."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Ja'Marr Chase warming up - Expert analysis for Bengals vs Eagles NFL preseason pick, August 7 2025" loading="lazy" src="images/chase.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 <p style="font-size: 12px; color: #888; margin-top: -15px;">Image Source: chase.png</p>
@@ -928,7 +1220,43 @@
    "datePublished": "2025-08-06T23:43:00-05:00",
    "description": "The heater continues. After another profitable day on August 6th, our August record is reaching legendary status. Today, we attack again with surgical precision, targeting elite pitching and fading slumping teams."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Miami Marlins logo - Expert MLB pick analysis for August 7, 2025" loading="lazy" src="images/marlins.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -987,7 +1315,43 @@
    "datePublished": "2025-08-06T01:12:00-05:00",
    "description": "After a deep analytical dive, we've identified the market's biggest inefficiencies for the August 6th slate. We are attacking multiple high-conviction plays based on pitching mismatches and statistical outliers."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Major League Baseball stadium at night - Expert MLB pick analysis for August 6, 2025" loading="lazy" src="images/pnc10.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -1064,7 +1428,43 @@
    "datePublished": "2025-08-05T07:00:00-05:00",
    "description": "After a full analytical deep-dive, we've identified the market's biggest inefficiencies for the August 5th slate. We are attacking multiple high-conviction pitching mismatches."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="San Francisco Giants pitcher Logan Webb on the mound - MLB pick analysis for August 5, 2025" loading="lazy" src="images/webb6.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -1135,7 +1535,43 @@
    "datePublished": "2025-08-04T17:55:00-05:00",
    "description": "A deep dive into the late-night MLB slate reveals a clear analytical edge. We are fading a starting pitcher whose metrics signal a major regression against a red-hot lineup."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Padres vs Diamondbacks matchup analysis for expert MLB picks on August 4, 2025" loading="lazy" src="padres-dbacks.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -1191,7 +1627,43 @@
    "datePublished": "2025-08-04T09:26:00-05:00",
    "description": "After a final review of the board, we are adding one more play to the card for Monday. We are targeting a significant home and road split backed by a strong pitching advantage."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Detroit Tigers pitcher Casey Mize on the mound - MLB pick analysis for August 4, 2025" loading="lazy" src="images/mize.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -1243,7 +1715,43 @@
    "datePublished": "2025-08-03T20:43:00-05:00",
    "description": "While most are winding down their Sunday, we're already deep into the numbers for Monday's slate. We've identified four spots where the market has left a clear, exploitable edge."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Brewers vs Braves matchup analysis for expert MLB picks on August 4, 2025" loading="lazy" src="images/sean.jpeg" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -1366,7 +1874,43 @@
    "datePublished": "2025-08-02T15:52:00-05:00",
    "description": "After analyzing the entire MLB slate for August 2nd, one game stands out above all others. We're locking in the San Diego Padres Moneyline as our premier play of the night."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="San Diego Padres celebrating a win - analysis for Padres ML pick vs Cardinals on August 2, 2025" loading="lazy" src="images/padres.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -1653,7 +2197,43 @@
    "datePublished": "2025-07-31T11:00:00-05:00",
    "description": "Expert MLB picks and analysis for July 31, 2025. After 5 straight winning days, we target the Rays F5 (-110) and the Braves/Reds Over 9 (-140) for our top baseball bets today."
  }
- </script>
+ 
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Great American Ball Park - analysis for the Braves vs Reds over 9 pick on July 31, 2025" loading="lazy" src="images/gab.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>
@@ -1788,7 +2368,43 @@
     "datePublished": "2025-07-28T02:30:00-05:00",
     "description": "Expert MLB picks and analysis for July 28, 2025, featuring a 2-unit play on the Dodgers. Also includes in-depth analysis for Phillies -1.5, Mariners ML, Astros F5, and more."
   }
-  </script>
+  
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 <div style="text-align: center;">
 <img alt="Yoshinobu Yamamoto pitching for the Dodgers - key to our 2-unit MLB pick for July 28, 2025" loading="lazy" src="images/yy.png" style="width: 85%; margin: 30px 0; border-radius: 10px;"/>
 </div>

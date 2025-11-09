@@ -365,6 +365,10 @@ cursor: not-allowed;
     display: block;
     animation: dropdownFade 0.3s ease;
 }
+        .dropdown.active .dropdown-content {
+            display: block;
+            animation: dropdownFade 0.3s ease;
+        }
 
 @keyframes dropdownFade {
     from { opacity: 0; transform: translateY(-10px); }
@@ -2410,7 +2414,43 @@ if (nextPage) { paginationHTML += `<a href="${nextPage}">Next &#9654;</a>`; } el
 paginationHTML += '</nav>';
 container.innerHTML = paginationHTML;
 })();
-</script>
+
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script>
 
 <!-- Related Picks & Internal Links -->
 <div class="related-picks" style="max-width: 1140px; margin: 40px auto; padding: 30px; background: #1a1a1a; border-left: 4px solid gold; border-radius: 8px;">

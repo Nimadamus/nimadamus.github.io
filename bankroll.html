@@ -236,6 +236,10 @@
     display: block;
     animation: dropdownFade 0.3s ease;
 }
+        .dropdown.active .dropdown-content {
+            display: block;
+            animation: dropdownFade 0.3s ease;
+        }
 
 @keyframes dropdownFade {
     from { opacity: 0; transform: translateY(-10px); }
@@ -286,7 +290,43 @@
 
     </style>
 <meta name="description" content="Learn professional bankroll management strategies for sports betting. Unit sizing, Kelly Criterion, and risk management fundamentals."/>
-<meta name="keywords" content="bankroll management, betting units, Kelly Criterion, risk management"/><meta content="Bet Sizing Strategy: Our Unit System Explained" property="og:title"/><meta content="Master your bankroll with BetLegend’s disciplined betting system. Learn how we assign units based on edge." property="og:description"/><script>!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');twq('config','q0zvl');</script><!-- Google tag (gtag.js) -->
+<meta name="keywords" content="bankroll management, betting units, Kelly Criterion, risk management"/><meta content="Bet Sizing Strategy: Our Unit System Explained" property="og:title"/><meta content="Master your bankroll with BetLegend’s disciplined betting system. Learn how we assign units based on edge." property="og:description"/><script>!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');twq('config','q0zvl');
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+    </script><!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
