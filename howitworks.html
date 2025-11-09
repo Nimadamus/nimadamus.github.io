@@ -314,9 +314,7 @@
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
-    let isNavigating = false;
-
-    dropdowns.forEach(dropdown => {
+        dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
@@ -337,26 +335,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Handle link clicks - allow navigation, don't interfere
+            // For mobile: use touchstart on links to ensure they work
             const links = dropdownContent.querySelectorAll('a');
             links.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    // Let the link navigate normally
-                    isNavigating = true;
-                    // Don't stop propagation, don't prevent default
-                    // The browser will handle navigation
-                });
+                // Make links explicitly clickable on mobile
+                link.style.pointerEvents = 'auto';
+                link.style.cursor = 'pointer';
+
+                // Handle touch events for mobile
+                link.addEventListener('touchend', function(e) {
+                    e.stopPropagation();
+                    // Allow default navigation
+                    window.location.href = this.href;
+                }, {passive: false});
             });
         }
     });
 
-    // Close dropdowns when clicking outside (but not if navigating)
+    // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
-        if (isNavigating) {
-            isNavigating = false;
-            return;
-        }
-
         // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
