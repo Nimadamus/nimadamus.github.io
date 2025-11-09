@@ -299,12 +299,14 @@
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -320,18 +322,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -487,12 +498,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -508,18 +521,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -596,12 +618,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -617,18 +641,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -716,12 +749,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -737,18 +772,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -842,12 +886,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -863,18 +909,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -962,12 +1017,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -983,18 +1040,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -1074,12 +1140,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1095,18 +1163,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -1190,12 +1267,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1211,18 +1290,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -1291,12 +1379,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1312,18 +1402,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -1394,12 +1493,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1415,18 +1516,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -1515,12 +1625,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1536,18 +1648,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -1630,12 +1751,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1651,18 +1774,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -1730,12 +1862,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1751,18 +1885,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -1826,12 +1969,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1847,18 +1992,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -1993,12 +2147,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -2014,18 +2170,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -2324,12 +2489,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -2345,18 +2512,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -2503,12 +2679,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    let isNavigating = false;
 
     dropdowns.forEach(dropdown => {
         const dropbtn = dropdown.querySelector('.dropbtn');
         const dropdownContent = dropdown.querySelector('.dropdown-content');
 
         if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
             dropbtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -2524,18 +2702,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
 
-            // Don't prevent link clicks, only prevent closing the dropdown
-            dropdownContent.addEventListener('click', function(e) {
-                // Only stop propagation if NOT clicking on a link
-                if (e.target.tagName !== 'A') {
-                    e.stopPropagation();
-                }
+            // Handle link clicks - allow navigation, don't interfere
+            const links = dropdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Let the link navigate normally
+                    isNavigating = true;
+                    // Don't stop propagation, don't prevent default
+                    // The browser will handle navigation
+                });
             });
         }
     });
 
-    // Close dropdowns when clicking outside
+    // Close dropdowns when clicking outside (but not if navigating)
     document.addEventListener('click', function(e) {
+        if (isNavigating) {
+            isNavigating = false;
+            return;
+        }
+
+        // Check if click is outside all dropdowns
         if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
