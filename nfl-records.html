@@ -207,8 +207,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL - Old NFL Sheet (correct data)
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv';
+    // Google Sheets CSV URL - NFL Records Direct Export
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1g_EI9WcYgEFdozHvKCyj_nbFkWpQqj6b3b2L-zW5uRI/export?format=csv&gid=0';
 
     // Function to parse CSV data
     function parseCSV(csv) {
@@ -296,6 +296,9 @@
     // Original processing logic (adapted from the original script)
     function processPicksData(mlbPicksData) {
         try {
+            // DUPLICATE DETECTION: Track seen PickIDs
+            const seenPickIDs = new Set();
+
             const processedPicks = mlbPicksData.map(p => {
                 try {
                     if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
@@ -304,16 +307,27 @@
                     const units = parseFloat(p.Units);
                     const line = parseFloat(p.Line);
                     if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
+
+                    // Generate PickID: DATE|PICK|LINE|UNITS
+                    const pickID = `${p.Date}|${pickText}|${line}|${units}`;
+
+                    // DUPLICATE CHECK: Skip if already seen
+                    if (seenPickIDs.has(pickID)) {
+                        console.log(`Duplicate skipped: ${pickID}`);
+                        return null;
+                    }
+                    seenPickIDs.add(pickID);
+
                     let risk = 0;
-                    if (units < 0) { 
-                        risk = Math.abs(units); 
+                    if (units < 0) {
+                        risk = Math.abs(units);
                     }
                     else if (units > 0) {
-                        if (line > 0) { 
-                            risk = (units / (line / 100)); 
+                        if (line > 0) {
+                            risk = (units / (line / 100));
                         }
-                        else { 
-                            risk = (units * (Math.abs(line) / 100)); 
+                        else {
+                            risk = (units * (Math.abs(line) / 100));
                         }
                     }
                     // Parse date properly for M-D-YYYY or M/D/YYYY format
@@ -322,8 +336,8 @@
                         ? new Date(dateParts[2], dateParts[0] - 1, dateParts[1])
                         : new Date(p.Date);
                     return { ...p, units, risk, parsedDate };
-                } catch { 
-                    return null; 
+                } catch {
+                    return null;
                 }
             }).filter(p => p !== null).sort((a, b) => b.parsedDate - a.parsedDate);
 
