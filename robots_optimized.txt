@@ -1,0 +1,58 @@
+# robots.txt for BetLegendPicks.com
+# Optimized for maximum crawl efficiency
+
+User-agent: *
+Allow: /
+
+# Block test and development files
+Disallow: /test_
+Disallow: /*test*.html
+Disallow: /input.html
+Disallow: /email.html
+
+# Block backup files
+Disallow: /*.backup
+Disallow: /*-backup.html
+
+# Block old/deprecated pages
+Disallow: /best-online-sportsbook-old.html
+
+# Block consensus library archive/history (redundant content)
+Disallow: /consensus_library/archive/
+Disallow: /consensus_library/history/
+
+# Allow all other content
+Allow: /blog
+Allow: /news
+Allow: /mlb
+Allow: /nfl
+Allow: /nba
+Allow: /nhl
+Allow: /ncaaf
+Allow: /ncaab
+Allow: /soccer
+Allow: /consensus_library/sharp-consensus.html
+Allow: /consensus_library/live-sports-board.html
+
+# Sitemap location
+Sitemap: https://www.betlegendpicks.com/sitemap.xml
+
+# Crawl delay for aggressive bots (optional)
+User-agent: Bingbot
+Crawl-delay: 1
+
+User-agent: Googlebot
+Allow: /
+
+# Block AI scrapers (optional - adjust based on your preferences)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
