@@ -316,7 +316,12 @@
                             risk = (units * (Math.abs(line) / 100)); 
                         }
                     }
-                    return { ...p, units, risk, parsedDate: new Date(p.Date) };
+                    // Parse date properly for M-D-YYYY or M/D/YYYY format
+                    const dateParts = p.Date.split(/[-/]/);
+                    const parsedDate = dateParts.length === 3
+                        ? new Date(dateParts[2], dateParts[0] - 1, dateParts[1])
+                        : new Date(p.Date);
+                    return { ...p, units, risk, parsedDate };
                 } catch { 
                     return null; 
                 }
