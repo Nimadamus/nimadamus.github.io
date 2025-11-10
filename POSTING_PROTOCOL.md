@@ -117,17 +117,139 @@ BAD - Dry and corporate:
 
 ---
 
-## 4. SEO REQUIREMENTS
+## 4. SEO OPTIMIZATION REQUIREMENTS
 
-### Alt Text
-- Every image MUST have descriptive alt text
-- Include: sport, teams, type of content, date
-- Example: `"LA Dodgers MLB betting analysis October 27 2025"`
+### CRITICAL: Every Post MUST Include SEO Meta Tags
 
-### Content Length
-- Blog posts: Minimum 1500 words
-- News articles: Minimum 500 words
+#### A. Per-Post Meta Tags (Inside blog-post div)
+Every single post MUST include these meta tags immediately after the opening `<div class="blog-post">` tag:
+
+```html
+<div class="blog-post" id="post-[DATE]-[SLUG]">
+<meta name="title" content="[SEO-OPTIMIZED TITLE WITH KEYWORDS]"/>
+<meta name="description" content="[145-160 character meta description with keywords and value proposition]"/>
+```
+
+**Meta Title Requirements:**
+- 50-60 characters optimal length
+- Include primary keywords: team names, bet type, sport, date/context
+- Format: `[Team] [Line] [Sport] [Context] - [Value Proposition]`
+- Example: `"New York Islanders +1.5 at -195 NHL Betting Pick - November 10 Analysis"`
+- Include betting terms: "betting pick", "analysis", "prediction", "odds"
+
+**Meta Description Requirements:**
+- 145-160 characters optimal length (strict limit for Google display)
+- Include: main pick, odds, 2-3 key analysis points
+- Call to action or value statement
+- Example: `"Expert NHL betting pick for Islanders +1.5 at -195. Detailed analysis on goalie matchup, team form, special teams, defensive structure, and why the puck line offers value today."`
+
+#### B. Primary Keywords to Target
+
+**Every post should naturally incorporate:**
+- Sport name (NFL, NBA, NHL, MLB, etc.)
+- Team names (full names, not just city)
+- Bet type (spread, moneyline, over/under, puck line, etc.)
+- Odds (exact numbers with minus/plus signs)
+- Date context (today, Week 10, November 10, etc.)
+- Analysis terms (betting analysis, expert pick, prediction, odds analysis)
+- Results terms (betting insights, picks and analysis, sports betting)
+
+**Keyword Density Guidelines:**
+- Primary keyword phrase: 2-3% density
+- Secondary keywords: 1-2% density each
+- Natural placement - NEVER stuff keywords awkwardly
+- Use variations and synonyms
+
+#### C. Post ID Slug Format
+```html
+id="post-[YYYYMMDD]-[team-sport-context-slug]"
+```
+Examples:
+- `id="post-20251110-islanders-puck-line-pick"`
+- `id="post-20251109-bucs-patriots-spread-pick"`
+- `id="post-20251108-falcons-colts-berlin"`
+
+**Slug Requirements:**
+- All lowercase
+- Hyphens between words (no underscores)
+- Include key identifiers: team, sport/league, or key context
+- Keep under 50 characters
+- Make it descriptive and SEO-friendly
+
+#### D. Image Alt Text SEO
+Every image MUST have descriptive, keyword-rich alt text:
+
+**Format:**
+```
+[Team Names] [Sport/League] [content type] [bet type/context] [date]
+```
+
+**Examples:**
+- `"New York Islanders NHL betting pick puck line analysis November 10 2025"`
+- `"Tampa Bay Buccaneers New England Patriots NFL Week 10 betting pick analysis spread prediction"`
+- `"Los Angeles Dodgers MLB World Series betting analysis moneyline odds"`
+
+**Alt Text Requirements:**
+- 120-150 characters optimal
+- Include team names, sport, bet type, date
+- Natural sentence structure (not comma-separated keywords)
+- Descriptive of actual image content
+
+#### E. Header Keyword Optimization
+
+**Post Header (Title):**
+- Include primary keyword phrase
+- Format varies by post type:
+  - Betting picks: `[Team] [Line] - [Context/Hook]`
+  - News: `[Event/Player] - [Key Detail]`
+- Examples:
+  - `"New York Islanders +1.5 at -195"` (concise)
+  - `"Tampa Bay Buccaneers -2.5 vs New England Patriots - NFL Week 10 Betting Pick"` (detailed)
+
+**Section Headers (gold headers):**
+- Use semantic HTML structure (even though styled with spans)
+- Include related keywords naturally
+- Examples:
+  - "Why Tampa Bay Covers"
+  - "The Maye Factor and How Tampa Bay Defends It"
+  - "Home Field Advantage and the Spread"
+
+#### F. Content SEO Best Practices
+
+**Keyword Placement Priority:**
+1. Post title (highest weight)
+2. Meta description
+3. First paragraph (critical)
+4. Image alt text
+5. Section headers
+6. Throughout body naturally
+7. Final pick line
+
+**First Paragraph Requirements:**
+- Include primary keyword phrase in first 100 words
+- Include the exact bet and odds
+- Set context for SEO (team names, sport, situation)
+- Example: "The New York Islanders have quietly put together one of the more defensively structured teams in the Eastern Conference this season, and today's puck line at +1.5 for -195 offers solid value..."
+
+**Internal Linking Opportunities:**
+- Link to relevant past picks when appropriate
+- Link to records pages
+- Link to related analysis
+- Use descriptive anchor text with keywords
+
+### Content Length for SEO
+- Blog posts (picks): Minimum 1500 words, optimal 2000-2500 words
+- News articles: Minimum 500 words, optimal 700-1000 words
+- Longer content ranks better - be comprehensive
 - Break up long content with section headers
+
+### Semantic Keywords & LSI Terms
+
+Include related terms naturally:
+- Betting: "wager", "bet", "value", "edge", "line", "odds", "juice"
+- Analysis: "breakdown", "deep dive", "insight", "angle", "matchup"
+- Teams: Include conference, division, record when relevant
+- Sports: Include league names, season context, week numbers
 
 ---
 
@@ -222,18 +344,37 @@ git push
 
 Before pushing ANY post, verify:
 
+### Content Quality
 - [ ] Human-written tone (no AI language)
 - [ ] Timestamp included with current date/time
-- [ ] Featured image added with proper alt text
-- [ ] Image file exists in `/images/` folder
 - [ ] Verdict section included (blog posts only)
 - [ ] No plagiarism - original content
 - [ ] Proper HTML formatting
 - [ ] Post placed at TOP of page
 - [ ] Gold section headers used
 - [ ] Conversational, opinionated writing
+- [ ] Minimum word count met (1500+ for blog, 500+ for news)
+
+### SEO Optimization
+- [ ] Meta title tag included (50-60 chars, keyword-rich)
+- [ ] Meta description tag included (145-160 chars)
+- [ ] Post ID slug is SEO-friendly and descriptive
+- [ ] Image alt text is descriptive and keyword-rich
+- [ ] Primary keywords in first paragraph
+- [ ] Keywords naturally distributed throughout
+- [ ] Section headers include relevant keywords
+- [ ] Image filename is SEO-optimized (not generic)
+
+### Image Requirements
+- [ ] Featured image added with proper alt text
+- [ ] Image file exists in `/images/` folder
+- [ ] Image filename is SEO-optimized (descriptive, not generic like "1110.png")
+- [ ] Image properly sized and compressed
+
+### Technical
 - [ ] Git committed with clear message
 - [ ] Changes pushed to live site
+- [ ] Live site verified after deployment
 
 ---
 
