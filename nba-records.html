@@ -325,7 +325,7 @@
                 <tr>
                     <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
                     <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
-                    <td class="${p.units >= 0 ? 'win' : 'loss'}">${p.units.toFixed(2)}</td>
+                    <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${p.units.toFixed(2)}</td>
                 </tr>`).join('');
 
             function aggregateStats(picks) {
