@@ -24,388 +24,226 @@
 <meta content="index, follow" name="robots"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Sora:wght@600&family=Rubik&display=swap" rel="stylesheet"/>
 <style>
+        /* This style block now matches your other blog pages */
         :root {
-            --primary-dark: #0a0e27;
-            --secondary-dark: #151b3d;
-            --accent-gold: #f4a300;
-            --accent-blue: #00a8ff;
-            --text-primary: #ffffff;
-            --text-secondary: #b8c5d6;
-            --border-color: rgba(244, 163, 0, 0.3);
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background:
-                linear-gradient(135deg, rgba(10, 14, 39, 0.95) 0%, rgba(26, 31, 58, 0.95) 100%),
-                radial-gradient(circle at 20% 50%, rgba(244, 163, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 168, 255, 0.1) 0%, transparent 50%),
-                #0a0e27;
-            background-attachment: fixed;
-            font-family: 'Poppins', sans-serif;
-            color: var(--text-primary);
-            padding-top: 140px;
+          margin: 0;
+          padding: 140px 0 0 0;
+          background-color: black;
+          color: white;
+          font-family: 'Rubik', sans-serif;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        h1 {
+          text-align: center;
+          color: gold;
+          font-size: 40px;
+          margin-top: 20px;
+          font-family: 'Sora', sans-serif;
         }
-
-        /* Navigation Bar */
-        .navbar {
-            background-color: var(--secondary-color);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--accent-color);
+        .blog-post {
+          background-color: #111;
+          border-left: 4px solid gold;
+          padding: 44px;
+          border-radius: 14px;
+          box-shadow: 0 0 10px #000;
+          margin: 40px auto;
+          max-width: 1140px;
         }
-
-        .navbar .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--accent-color);
-            text-decoration: none;
+        .blog-post .post-header {
+          font-size: 30px;
+          color: gold;
+          font-weight: bold;
+          margin-bottom: 8px;
+          text-align: center;
         }
-
-        .navbar .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin-left: 25px;
-            font-weight: 400;
-            transition: color 0.3s ease;
+        .blog-post .post-time {
+          font-size: 15px;
+          color: #aaa;
+          margin-bottom: 24px;
+          text-align: center;
         }
-
-        .navbar .nav-links a:hover,
-        .navbar .nav-links a.active {
-            color: var(--accent-color);
-            font-weight: 600;
+        .blog-post p {
+          font-size: 16px;
+          line-height: 1.7;
+          color: white;
         }
-
-        /* Header Section */
-        .header {
-            text-align: center;
-            padding: 60px 20px;
-            background-color: var(--secondary-color);
-            border-radius: 8px;
-            margin-top: 30px;
-        }
-
-        .header h1 {
-            color: var(--accent-color);
-            font-size: 48px;
-            font-weight: 700;
-            margin: 0 0 10px 0;
-        }
-
-        .header p {
-            font-size: 18px;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Main Content Section */
-        .content-section {
-            padding: 40px 0;
-        }
-
-        .article {
-            background-color: var(--secondary-color);
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .article h2 {
-            font-size: 32px;
-            font-weight: 600;
-            color: #fff;
-            margin-top: 0;
-        }
-
-        .article h3 {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--accent-gold);
-            margin-top: 30px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        .article p, .article ul {
-            font-size: 16px;
-            color: #e8eef5;
-        }
-
-        .article ul {
-            padding-left: 20px;
-        }
-
-        .article li {
-            margin-bottom: 10px;
-        }
-
-        .article .odds-highlight {
-            font-weight: 700;
-            color: var(--accent-color);
-        }
-
-        /* Call to Action */
-        .cta {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            padding: 15px 30px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 700;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background-color: #fff;
-            transform: translateY(-3px);
-        }
-
-        /* Professional Design System */
-        .header {
-            text-align: center;
-            margin: 30px 0 50px 0;
-            padding: 40px 20px;
-            background: rgba(21, 27, 61, 0.6);
-            border-radius: 15px;
-            border: 1px solid var(--border-color);
-        }
-
-        .title {
-            font-size: 56px;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin: 0;
-            letter-spacing: -1px;
-        }
-
-        .title .highlight {
-            color: var(--accent-gold);
-        }
-
-        .subtitle {
-            font-size: 18px;
-            color: var(--text-secondary);
-            margin-top: 12px;
-            font-weight: 400;
-        }
-
-        .section-sep {
-            margin: 50px 0 30px 0;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .section-sep h2 {
-            color: var(--accent-gold);
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0;
-            display: inline-block;
-        }
-
-        .section-sub {
-            color: var(--text-secondary);
-            font-size: 15px;
-            margin-top: 8px;
-            font-weight: 400;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-size: 16px;
-            margin-bottom: 25px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: var(--accent-gold);
-        }
-
-        .game-card {
-            background: var(--secondary-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 35px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .section-title {
-            color: var(--accent-gold);
-            font-size: 20px;
-            font-weight: 700;
-            margin: 30px 0 18px 0;
-        }
-
-        .stat-highlight {
-            color: var(--accent-gold);
-            font-weight: 600;
-        }
-
-        .sharp-callout {
-            background: rgba(0, 168, 255, 0.08);
-            border-left: 4px solid var(--accent-blue);
+        .verdict {
+            background-color: #222;
+            border: 2px solid #D4AF37;
             padding: 25px;
-            margin: 30px 0;
-            border-radius: 8px;
+            margin-top: 40px;
+            text-align: center;
         }
-
-        .sharp-callout strong {
-            color: var(--accent-blue);
-            font-size: 18px;
-        }
-
-        .matchup-details {
-            background: rgba(244, 163, 0, 0.08);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 25px 0;
-            border-left: 3px solid var(--accent-gold);
-        }
-
-        .matchup-details strong {
-            color: var(--accent-gold);
-        }
-
-        .article p {
-            color: #e8eef5;
-            line-height: 1.8;
-            margin-bottom: 18px;
-        }
-
-        .game-card p {
-            color: #e8eef5;
-        }
-
-        /* Navigation Bar - Professional */
-        .nav-links {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            padding: 18px 5%;
-            background: rgba(10, 14, 39, 0.98);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a, .dropdown {
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 0.875rem;
+        .verdict-title {
+            font-size: 1.2em;
+            color: #AAAAAA;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 10px 16px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+        .the-pick {
+            font-size: 2.2em;
+            color: #D4AF37;
+            font-weight: bold;
+            margin: 10px 0 0 0;
         }
 
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-gold);
-            background: rgba(244, 163, 0, 0.1);
-        }
 
-        /* Dropdown */
-        .dropdown {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-        }
+/* Logo */
+.logo-container {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    z-index: 1000;
+}
 
-        .dropdown .dropbtn {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 10px 16px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            background: none;
-            border: none;
-            cursor: pointer;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-        }
+.logo-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.4);
+}
 
-        .dropdown .dropbtn:hover {
-            color: var(--accent-gold);
-            background: rgba(244, 163, 0, 0.1);
-        }
+.logo-container span {
+    color: var(--neon-cyan);
+    text-shadow:
+        0 0 15px rgba(0, 255, 255, 1),
+        0 0 30px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(0, 255, 255, 0.6);
+}
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(21, 27, 61, 0.98);
-            min-width: 220px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            padding: 8px 0;
-            margin-top: 8px;
-        }
+/* Navigation */
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 15px 5% 15px 5%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+    z-index: 999;
+    flex-wrap: wrap;
+}
 
-        .dropdown-content a {
-            color: var(--text-secondary);
-            padding: 12px 24px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
+.nav-links a, .dropdown {
+    display: inline-flex;
+    align-items: center;
+}
 
-        .dropdown-content a:hover {
-            background: rgba(244, 163, 0, 0.1);
-            color: var(--accent-gold);
-        }
+.nav-links a {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
+.nav-links a:hover, .nav-links a.active {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown .dropbtn {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+    z-index: 9999;
+    border: 2px solid rgba(0, 224, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: var(--neon-cyan);
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+    color: #fff;
+    padding-left: 30px;
+    text-shadow: 0 0 10px var(--glow-color);
+    border-left-color: var(--neon-cyan);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
         .dropdown.active .dropdown-content {
             display: block;
             animation: dropdownFade 0.3s ease;
@@ -415,37 +253,51 @@
             pointer-events: none;
         }
 
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-wrap: wrap;
-                gap: 8px;
-                justify-content: center;
-                padding: 10px 5px;
-            }
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-            .nav-links a {
-                font-size: 0.75rem;
-                padding: 6px 10px;
-            }
+@media (max-width: 768px) {
+    .logo-container {
+        top: 10px;
+        left: 20px;
+    }
 
-            .dropdown .dropbtn {
-                font-size: 0.75rem;
-                padding: 6px 10px;
-            }
+    .logo-container a {
+        font-size: 1.5rem;
+    }
 
-            .dropdown-content {
-                min-width: 160px;
-                padding: 10px 0;
-            }
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 10px 5px;
+    }
 
-            .dropdown-content a {
-                font-size: 0.85rem;
-                padding: 12px 15px;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-            }
-        }
+    .nav-links a {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown-content {
+        min-width: 160px;
+        padding: 10px 0;
+    }
+
+    .dropdown-content a {
+        font-size: 0.85rem;
+        padding: 12px 15px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    }
+}
 
     </style>
 <!-- Google tag (gtag.js) -->
@@ -460,6 +312,13 @@
 
 </head>
 <body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
     <nav class="nav-links">
         <a href="blog-page8.html">PICKS & ANALYSIS</a>
 
@@ -517,23 +376,16 @@
         </div>
     </nav>
 
-<div class="container">
-<a class="back-link" href="index.html" title="Home   Free NFL & MLB Picks">← Back to Home</a>
-<div class="header">
-<h1 class="title">NBA <span class="highlight">ANALYSIS</span></h1>
-<h2 class="subtitle">Professional Basketball Game Analysis & Betting Insights</h2>
-</div>
-<main class="content-section">
 
-<div class="section-sep">
-<h2>Tuesday's 6-Game NBA Action <span class="week-tag">November 11</span></h2>
-<p class="section-sub">Complete breakdown featuring Warriors @ Thunder West showdown, Celtics @ Sixers rivalry, and sharp betting angles across all six matchups</p>
-</div>
+<img alt="BetLegend Picks Logo" loading="lazy" src="newlogo.png" style="display: block; margin: 30px auto; width: 200px;"/>
+<h1>BetLegend NBA Picks and Analysis</h1>
 
-<div class="game-card">
+<div class="blog-post">
+<h2 style="text-align:center !important; color:#d4af37 !important;">Tuesday's 6-Game NBA Action - November 11</h2>
+<div class="post-time" style="text-align:center;">Complete breakdown featuring Warriors @ Thunder West showdown, Celtics @ Sixers rivalry, and sharp betting angles across all six matchups</div>
 <p style="color: #e0e0e0; line-height: 1.8; margin-bottom: 18px;">Tuesday night delivers a quality six-game slate headlined by Golden State traveling to Oklahoma City in what shapes up as the marquee matchup of the evening. We've got the defending champion Celtics visiting Philadelphia in a conference rivalry game, Denver laying big numbers in Sacramento, and several interesting spread situations that warrant deep analysis. The early-season narratives are solidifying Oklahoma City's elite defense, Golden State's veteran savvy, Boston's road inconsistency, and Denver's road dominance. Let's break down each game with verified data, matchup analysis, and sharp betting angles.</p>
 
-  <h3 class="section-title">🏀 DEEP DIVE: Warriors' Championship DNA Tested in Oklahoma City</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 DEEP DIVE: Warriors' Championship DNA Tested in Oklahoma City</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/gs.png" alt="Golden State" style="width:45px; height:45px; object-fit:contain;">
@@ -568,7 +420,7 @@
 
   <p><strong>THE BOTTOM LINE:</strong> This is the best game on the board Tuesday night from a pure basketball perspective. Two elite teams, contrasting styles, playoff implications in November. Both teams can defend at a high level, and Oklahoma City will likely impose their pace and defensive style. The Thunder's home dominance and defensive excellence give them the edge, while the Warriors' championship experience means they'll keep it competitive. Oklahoma City home games have averaged 214.3 total points through six contests, suggesting a lower-scoring defensive battle. This matchup offers a preview of potential playoff basketball in November.</p>
 
-  <h3 class="section-title">🏀 Raptors Travel to Brooklyn in Mismatch Spot</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Raptors Travel to Brooklyn in Mismatch Spot</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/tor.png" alt="Toronto" style="width:45px; height:45px; object-fit:contain;">
@@ -582,7 +434,7 @@
 
   <p>The spread at 10.5 is steep for a road favorite, but Brooklyn's home splits are concerning they're 2-4 at home and have lost those four games by an average of 13.5 points. When the Nets fall behind early, they struggle to mount comebacks due to their defensive issues. Toronto should control this from the opening tip. The total at 217.5 reflects both teams' pace and defensive struggles. Toronto wants to push tempo and get out in transition, while Brooklyn will try to make this an up-tempo game. The Raptors' size and talent advantage creates a significant mismatch for a Nets team struggling to defend.</p>
 
-  <h3 class="section-title">🏀 Knicks Host Grizzlies as Road Dogs at MSG</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Knicks Host Grizzlies as Road Dogs at MSG</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/mem.png" alt="Memphis" style="width:45px; height:45px; object-fit:contain;">
@@ -596,7 +448,7 @@
 
   <p>The Knicks' offense runs through Towns in the post and Jalen Brunson (27.2 PPG) in pick-and-roll. Memphis plays hard defensively, but without Morant to create easy offense in transition, they're grinding possessions and settling for tough shots. New York's home court advantage at MSG is significant the crowd brings energy, and the Knicks feed off it. At minus 9.5, the market is indicating Memphis will struggle to keep this competitive without their best player. The Grizzlies face a significant talent disadvantage with Morant sidelined, while New York's offensive firepower and home court create a tough matchup for Memphis.</p>
 
-  <h3 class="section-title">🏀 Boston Visits Philadelphia in Atlantic Division Rivalry</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Boston Visits Philadelphia in Atlantic Division Rivalry</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/bos.png" alt="Boston" style="width:45px; height:45px; object-fit:contain;">
@@ -610,7 +462,7 @@
 
   <p>Philadelphia needs this game badly. at 6-4 has been inconsistent and needs a signature win to build momentum. If Embiid plays, he gives them a dominant post presence that Boston struggles to contain. Tyrese Maxey (28.7 PPG) is playing at an All-Star level and can match Boston's guards shot for shot. The line at Sixers minus 1 suggests the market expects both teams to be healthy. This is a situation where injury news will be critical if Embiid and George both play, Philadelphia has the talent to compete at home in this rivalry game. If either sits, Boston's superior depth and overall roster talent would give them a significant advantage. The minimal spread reflects the uncertainty around Philadelphia's health.</p>
 
-  <h3 class="section-title">🏀 Pacers Look to Bounce Back in Utah</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Pacers Look to Bounce Back in Utah</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/ind.png" alt="Indiana" style="width:45px; height:45px; object-fit:contain;">
@@ -624,7 +476,7 @@
 
   <p>The spread at minus 3 is conservative given the talent disparity, but Indiana has been inconsistent on the road (3-3). The total at 233.5 is the highest on the board tonight, which makes sense given Indiana's pace and Utah's defensive struggles. Both teams will run, possessions will pile up, creating a high-scoring environment. Indiana's defense (ranked 11th) might assert itself in the second half once they establish control. The Pacers should handle Utah's young roster, but the small spread reflects Indiana's road inconsistency and Utah's unpredictability as a young, developing team.</p>
 
-  <h3 class="section-title">🏀 Nuggets Visit Sacramento Laying Big Number</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Nuggets Visit Sacramento Laying Big Number</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/den.png" alt="Denver" style="width:45px; height:45px; object-fit:contain;">
@@ -638,21 +490,25 @@
 
   <p>The Kings want to play fast and get into transition, but Denver is comfortable in any style. Jokic controls the tempo from the elbow, orchestrates the offense, and picks apart defenses with his passing and scoring. Sacramento's defensive issues (ranked 22nd in defensive efficiency) create problems when facing Jokic's craftiness. De'Aaron Fox (27.3 PPG) and Domantas Sabonis (19.6 PPG, 12.8 RPG) give the Kings offensive firepower, but they've struggled to match Denver's execution in crunch time situations. The Nuggets are 5-1 on the road and win by an average of 9.2 points in road games, showing their ability to win convincingly away from home. Denver's championship pedigree and Jokic's MVP-level play create a significant talent gap in this matchup.</p>
 
-  <h3 class="section-title">📊 Tuesday Night Summary</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">📊 Tuesday Night Summary</h3>
 
   <p style="color: #e0e0e0; line-height: 1.8;">Tuesday's six-game slate offers compelling matchups with clear talent disparities. The Warriors-Thunder game is the marquee matchup, featuring two elite teams with contrasting styles and championship aspirations. Denver's road trip to Sacramento showcases the Nuggets' championship pedigree against Sacramento's inconsistent defense. Toronto's visit to Brooklyn highlights the Raptors' size advantage against a Nets team struggling defensively. The Knicks host Memphis without Ja Morant, creating a significant talent gap favoring New York at home. Boston-Philadelphia hinges entirely on injury news regarding Embiid and George's availability. Indiana's trip to Utah features the league's second-fastest pace against its 29th-ranked defense, setting up a potential high-scoring affair. The slate features diverse styles from defensive battles to offensive showcases, with several mismatches based on current form and health.</p>
 
 </div>
 
-<div class="section-sep">
-<h2>Friday's Massive 11-Game NBA Slate <span class="week-tag">November 7</span></h2>
-<p class="section-sub">Complete breakdown of Friday night's stacked schedule featuring Celtics-Magic, Warriors-Nuggets, and elite ATS opportunities</p>
 </div>
 
-<div class="game-card">
+<div class="blog-post">
+<h2 style="text-align:center !important; color:#d4af37 !important;">Friday's Massive 11-Game NBA Slate <span class="week-tag">November 7</span></h2>
+<div class="post-time">Complete breakdown of Friday night's stacked schedule featuring Celtics-Magic, Warriors-Nuggets, and elite ATS opportunities</p>
+</div>
+
+</div>
+
+<div class="blog-post">
 <p style="color: #e0e0e0; line-height: 1.8; margin-bottom: 18px;">Friday night delivers one of the biggest slates of the young season with 11 games spanning from 7:00 PM ET tip to late night West Coast action. We've got the struggling Celtics traveling to Orlando as underdogs, Cleveland rolling into Washington as massive favorites, Golden State facing Denver in a Western Conference heavyweight bout, and Oklahoma City taking their undefeated road show to Sacramento. The market has created some fascinating spots with home underdogs, inflated spreads, and totals that scream value. Early season trends are solidifying, and the teams that cover spreads consistently are separating from the pretenders. Here's the complete breakdown with verified stats and sharp betting angles.</p>
 
-  <h3 class="section-title">🏀 Celtics' Road Struggles Continue in Orlando</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Celtics' Road Struggles Continue in Orlando</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/bos.png" alt="Boston" style="width:45px; height:45px; object-fit:contain;">
@@ -668,7 +524,7 @@
 
   <p>The total at 226.5 feels right given both teams' offensive capabilities. Boston averages 113.3 points per game while Orlando puts up 116.3. The Magic have been more consistent at home despite their 3-5 record, and the Celtics haven't shown they can win on the road against quality opponents. Orlando getting 3.5 points of home respect is justified, and if the Magic execute their game plan, they should win this game straight up. The public will be on Boston because of the name recognition, which makes Orlando the sharp play.</p>
 
-  <h3 class="section-title">🏀 Cavaliers Rolling Into Washington as Double-Digit Road Favorites</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Cavaliers Rolling Into Washington as Double-Digit Road Favorites</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/cle.png" alt="Cleveland" style="width:45px; height:45px; object-fit:contain;">
@@ -684,7 +540,7 @@
 
   <p>The total at 241.5 is the highest on the board tonight, which tells you the market expects Cleveland to score at will. This game could get ugly early if the Cavaliers establish their pace and Washington can't keep up. The public is hammering Cleveland, and rightfully so. The only question is whether 13.5 points is too many to lay on the road, but given Washington's complete lack of resistance, Cleveland should cruise. This is a spot where the better team is properly favored, and Washington offers no value even getting double digits.</p>
 
-  <h3 class="section-title">🏀 Raptors Visit Atlanta in Battle of Struggling Teams</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Raptors Visit Atlanta in Battle of Struggling Teams</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/tor.png" alt="Toronto" style="width:45px; height:45px; object-fit:contain;">
@@ -698,7 +554,7 @@
 
   <p>The total at 235.5 is elevated, which makes sense given both teams play at a faster pace and struggle defensively. Atlanta can score in bunches when they get rolling, and Toronto has shown they can keep up offensively even when they're losing games. This projects as a high-scoring affair with the Hawks having a slight edge due to home court. The small spread makes this a live bet candidate where you can watch the first quarter and gauge which team has the hot hand before committing.</p>
 
-  <h3 class="section-title">🏀 Pistons Favored Big on Road in Brooklyn</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Pistons Favored Big on Road in Brooklyn</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/det.png" alt="Detroit" style="width:45px; height:45px; object-fit:contain;">
@@ -712,7 +568,7 @@
 
   <p>The Pistons have the talent, coaching, and momentum to blow out inferior teams, and Brooklyn fits that description right now. The total at 227.5 is reasonable, but with Detroit expected to control pace and dictate tempo, this could stay under if the Pistons turn it into a blowout and both teams empty their benches in the fourth quarter. Detroit should cover, but 10.5 points is a lot to lay on the road even against a bad team.</p>
 
-  <h3 class="section-title">🏀 Rockets Road Favorites in San Antonio</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Rockets Road Favorites in San Antonio</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/hou.png" alt="Houston" style="width:45px; height:45px; object-fit:contain;">
@@ -726,7 +582,7 @@
 
   <p>San Antonio plays at a deliberate pace and tries to control tempo, while Houston has shown they can adapt to different styles. This spread feels tight, and the Spurs getting 3.5 points at home offers value if you believe they can keep it competitive. The low total makes this an under candidate if both teams execute defensively and limit transition opportunities.</p>
 
-  <h3 class="section-title">🏀 Hornets Travel to Miami as Heavy Underdogs</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Hornets Travel to Miami as Heavy Underdogs</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/cha.png" alt="Charlotte" style="width:45px; height:45px; object-fit:contain;">
@@ -740,7 +596,7 @@
 
   <p>The total at 236.5 leans over if both teams push pace and Miami gets out in transition. The Heat are at their best when they're running and creating easy baskets, and Charlotte struggles to defend in those situations. Miami should win comfortably, and the spread feels achievable if they maintain intensity for four quarters.</p>
 
-  <h3 class="section-title">🏀 Mavericks Visit Memphis in Must-Win Spot</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Mavericks Visit Memphis in Must-Win Spot</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/dal.png" alt="Dallas" style="width:45px; height:45px; object-fit:contain;">
@@ -754,7 +610,7 @@
 
   <p>The total at 232.5 is moderate, and this game could go either way depending on pace. If Memphis controls tempo and pounds the paint, the under has value. If Dallas pushes transition and both teams trade buckets, the over is in play. Memphis should win at home, but 4.5 points requires them to control the game and not let Dallas hang around.</p>
 
-  <h3 class="section-title">🏀 Bulls Visit Bucks in Central Division Battle</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Bulls Visit Bucks in Central Division Battle</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/chi.png" alt="Chicago" style="width:45px; height:45px; object-fit:contain;">
@@ -768,7 +624,7 @@
 
   <p>The total at 239.5 is elevated, which makes sense given both teams can score. Giannis Antetokounmpo should dominate inside against Chicago's frontcourt, and if the Bulls can keep pace offensively, this total flies over. Milwaukee should win at home, but the small spread indicates the market respects Chicago's ability to compete.</p>
 
-  <h3 class="section-title">🏀 Jazz Visit Minnesota in Northwest Clash</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Jazz Visit Minnesota in Northwest Clash</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/uta.png" alt="Utah" style="width:45px; height:45px; object-fit:contain;">
@@ -782,7 +638,7 @@
 
   <p>The total at 233.5 leans under if Minnesota controls pace and plays their style of defense. The Timberwolves should win big, but whether they cover 12.5 points depends on their intensity level and whether they keep their foot on the gas in the fourth quarter. Utah getting double digits offers value if you believe they can stay competitive.</p>
 
-  <h3 class="section-title">🏀 Warriors Visit Nuggets in West Coast Showdown</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Warriors Visit Nuggets in West Coast Showdown</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/gs.png" alt="Golden State" style="width:45px; height:45px; object-fit:contain;">
@@ -798,7 +654,7 @@
 
   <p>The total at 228.5 feels low given both teams' offensive firepower. If this turns into a track meet with both teams pushing pace, the over hits easily. But if Denver controls tempo and pounds the ball inside to Jokic, they can slow the game down and win comfortably without needing a shootout. The Nuggets should win at home, and 9.5 points feels achievable if they execute their game plan. Golden State has the talent to keep it close, but Denver's home court and Jokic's dominance give them a clear edge.</p>
 
-  <h3 class="section-title">🏀 Thunder Undefeated Road Show Visits Sacramento</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Thunder Undefeated Road Show Visits Sacramento</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/okc.png" alt="Oklahoma City" style="width:45px; height:45px; object-fit:contain;">
@@ -812,7 +668,7 @@
 
   <p>The total at 233.5 leans over if both teams push pace, which Sacramento loves to do. The Kings play fast and try to outscore opponents, but the Thunder have the defense to slow them down. Oklahoma City should control this game and cover the spread, but 10.5 points on the road requires them to maintain intensity for four quarters. Sacramento getting double digits at home offers some value if you believe they can keep it competitive, but OKC is the better team and should win comfortably.</p>
 
-  <h3 class="section-title">🏀 Friday Night Betting Takeaways</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Friday Night Betting Takeaways</h3>
 
   <p>Tonight's 11-game slate features clear favorites in Cleveland, Detroit, Denver, and Oklahoma City laying double digits. The market is efficient in these spots, identifying the massive talent gaps and setting lines accordingly. The value opportunities come in games like Boston at Orlando where the Celtics' name value creates inflated expectations, and Chicago at Milwaukee where the small spread suggests a competitive divisional battle.</p>
 
@@ -824,15 +680,19 @@
 
 </div>
 
-<div class="section-sep">
-<h2>Monday's Seven-Game NBA Slate <span class="week-tag">November 3</span></h2>
-<p class="section-sub">Complete breakdown of Monday night action featuring Celtics, Lakers, and key ATS trends</p>
 </div>
 
-<div class="game-card">
+<div class="blog-post">
+<h2 style="text-align:center !important; color:#d4af37 !important;">Monday's Seven-Game NBA Slate <span class="week-tag">November 3</span></h2>
+<div class="post-time">Complete breakdown of Monday night action featuring Celtics, Lakers, and key ATS trends</p>
+</div>
+
+</div>
+
+<div class="blog-post">
 <p style="color: #e0e0e0; line-height: 1.8; margin-bottom: 18px;">Monday night delivers a seven game NBA schedule spanning four time zones with sharp betting angles emerging across the board. We've got Utah's winless road show traveling to Boston where the Celtics are 1-2 at home. Washington's 1-5 disaster visits New York's perfect 3-0 home fortress. Houston hosts Dallas as a massive 12.5 point favorite despite both teams hovering around .500. Detroit and Memphis square off with the Pistons favored despite Memphis playing at home. Denver welcomes Sacramento in a battle of contrasting trajectories. The Lakers visit Portland in what should be a blowout given LA's 3-0 road dominance, and Miami closes the night at the Clippers where LA is a perfect 3-0 at home but somehow only 1-4 ATS. The early season market inefficiencies are glaring, and the ATS records are screaming which teams are properly valued and which are getting disrespected. Here's the complete breakdown with verified stats and sharp angles.</p>
 
-  <h3 class="section-title">🏀 Jazz Winless on Road Face Struggling Celtics at Home</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Jazz Winless on Road Face Struggling Celtics at Home</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/uta.png" alt="Utah" style="width:45px; height:45px; object-fit:contain;">
@@ -848,7 +708,7 @@
 
   <p>The line at Celtics minus 10.5 feels too high for a team that's 2-5 ATS and struggling to blow anyone out. Utah's 4-2-0 ATS record suggests they consistently outperform market expectations, and even if they lose this game outright, 10.5 points is a massive cushion. The total at 233.0 is relatively high, but both teams play at a decent pace. The key handicapping angle is whether you trust Boston to cover double digits at home when they've failed to cover spreads all season, or if you fade the public and back Utah's strong ATS performance. The Jazz may be winless on the road, but they're keeping games close and covering numbers. Boston's 1-2 home record and 2-5-0 ATS mark suggest continued struggles against inflated spreads.</p>
 
-  <h3 class="section-title">🏀 Wizards Disaster Road Show Visits Perfect Knicks Home Court</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Wizards Disaster Road Show Visits Perfect Knicks Home Court</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/was.png" alt="Washington" style="width:45px; height:45px; object-fit:contain;">
@@ -864,7 +724,7 @@
 
   <p>The total at 234.0 leans over if New York gets out in transition and Washington can't slow the pace. The Knicks should score at will against Washington's porous defense, and even if the Wizards struggle offensively, New York's ability to generate easy baskets could push this total. The handicapping question is whether you trust the Knicks to cover 13 points at home or if you believe Washington's desperation keeps this game closer than expected. New York's 3-0-0 ATS mark at home is perfect, but 13 points is a steep number. The Wizards are 1-5-0 ATS, which means they've been blown out or failed to cover even when getting points. This projects as a Knicks blowout with the spread in play if New York establishes dominance early.</p>
 
-  <h3 class="section-title">🏀 Rockets Massive Home Favorite Against Struggling Mavericks</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Rockets Massive Home Favorite Against Struggling Mavericks</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/dal.png" alt="Dallas" style="width:45px; height:45px; object-fit:contain;">
@@ -880,7 +740,7 @@
 
   <p>The line at Rockets minus 12.5 is steep for a 3-2 team, but it reflects Houston's home dominance and Dallas's road uncertainty. The total at 225.5 is the lowest on Monday's card, which makes sense given Houston's defensive identity. The Rockets want to slow the pace, pound the glass, and win ugly. Dallas's 2-4 record and 2-4-0 ATS mark suggest they're not overvalued, but they're also not inspiring confidence. The key handicapping angle is whether you trust Houston to blow out Dallas at home or if the Mavericks' talent keeps this within 12. Houston's 4-1-0 ATS record screams trust them to cover, but 12.5 points is a lot against an NBA team. This projects as a Rockets grinder with the spread in play if Houston dominates the glass and forces Dallas into tough halfcourt possessions.</p>
 
-  <h3 class="section-title">🏀 Pistons Favored on Road at Memphis</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Pistons Favored on Road at Memphis</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/det.png" alt="Detroit" style="width:45px; height:45px; object-fit:contain;">
@@ -896,7 +756,7 @@
 
   <p>The total at 236.0 is the highest on Monday's card, which reflects both teams' offensive capabilities and pace. Detroit scores efficiently, and Memphis plays fast when healthy. The handicapping angle centers on whether you trust Detroit to cover 4.5 points on the road or if Memphis's home court creates enough of an edge to keep this within a possession. Detroit's 4-2-0 ATS record suggests they're a sharp play, while Memphis's 2-5-0 ATS mark screams fade. This projects as a Pistons victory with the spread in play if Detroit's balanced scoring overwhelms Memphis's inconsistent defense.</p>
 
-  <h3 class="section-title">🏀 Nuggets Host Kings in Mile High Mismatch</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Nuggets Host Kings in Mile High Mismatch</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/sac.png" alt="Sacramento" style="width:45px; height:45px; object-fit:contain;">
@@ -912,7 +772,7 @@
 
   <p>The total at 237.0 is high but reflects both teams' offensive firepower when clicking. Denver's altitude speeds up possessions and affects shooting percentages for visiting teams, which could create variance in the total. The handicapping question is whether Denver blows out Sacramento by double digits at home or if the Kings' talent keeps this within 11. Denver's 2-0-0 ATS mark at home suggests trust them to cover, but 11 points requires execution throughout. This projects as a Nuggets victory with the spread depending on whether Denver's stars dominate or Sacramento keeps it competitive into the fourth quarter.</p>
 
-  <h3 class="section-title">🏀 Lakers Perfect Road Record Visits Portland</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Lakers Perfect Road Record Visits Portland</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Lakers" style="width:45px; height:45px; object-fit:contain;">
@@ -928,7 +788,7 @@
 
   <p>The handicapping angle here is whether you trust the Lakers' perfect road ATS record or Portland's near-perfect overall ATS mark. LA's 5-2-0 ATS overall and 3-0-0 ATS on the road screams sharp play, but Portland's 5-1-0 ATS overall and 3-0-0 ATS at home suggests they're just as sharp covering spreads. This is a classic market efficiency battle where both teams are properly valued. The Lakers should win outright given their road dominance, but covering 8.5 points against a Portland team that's 5-1-0 ATS creates hesitation. This projects as a Lakers victory with the spread in play depending on whether LA's talent overwhelms Portland or the Blazers keep it within single digits at home.</p>
 
-  <h3 class="section-title">🏀 Heat Visit Clippers Perfect Home Court</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Heat Visit Clippers Perfect Home Court</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/mia.png" alt="Miami" style="width:45px; height:45px; object-fit:contain;">
@@ -944,7 +804,7 @@
 
   <p>The total at 226.5 is low, reflecting both teams' defensive capabilities when locked in. The handicapping angle centers on whether you fade the Clippers' poor ATS performance or trust their 3-0 home record to finally result in a cover. Miami's 4-2-0 ATS mark and 2-2-0 road ATS record suggest backing the Heat plus the points. The Clippers are 1-4-0 ATS overall and 1-2-0 ATS at home, which means they're consistently disappointing bettors. This projects as a Clippers victory but a Miami cover, with the Heat keeping it within eight points and cashing the ticket for bettors who fade LA's poor spread performance.</p>
 
-  <h3 class="section-title">📊 Sharp Angles & Monday Market Observations</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">📊 Sharp Angles & Monday Market Observations</h3>
 
   <p>Monday's slate rewards identifying which teams are properly valued versus overvalued based on ATS performance. Boston's 2-5-0 ATS record is one of the worst in the league, yet they're laying double digits at home against a Utah team that's 4-2-0 ATS. That's a massive market inefficiency screaming fade Boston. New York's perfect 3-0-0 ATS mark at home justifies laying 13 points against Washington's 1-5-0 disaster, but that's still a steep number.</p>
 
@@ -954,15 +814,19 @@
 
 </div>
 
-<div class="section-sep">
-<h2>Saturday's Six-Game NBA Showcase <span class="week-tag">November 1</span></h2>
-<p class="section-sub">Complete breakdown of Saturday's action from Milwaukee to Mexico City</p>
 </div>
 
-<div class="game-card">
+<div class="blog-post">
+<h2 style="text-align:center !important; color:#d4af37 !important;">Saturday's Six-Game NBA Showcase <span class="week-tag">November 1</span></h2>
+<div class="post-time">Complete breakdown of Saturday's action from Milwaukee to Mexico City</p>
+</div>
+
+</div>
+
+<div class="blog-post">
 <p style="color: #e0e0e0; line-height: 1.8; margin-bottom: 18px;">Saturday delivers a six game NBA schedule with compelling storylines across multiple time zones. We've got Giannis questionable with knee soreness for Milwaukee's home matchup against struggling Sacramento. Minnesota travels to Charlotte without Anthony Edwards, while Golden State faces a depleted Indiana squad desperate for their first win. The magic number keeps growing for Washington's home winless streak as Orlando visits the capital. Houston and Boston clash in a fascinating style matchup, and the night wraps with Dallas facing Detroit in Mexico City's thin air. The early season patterns are revealing which teams can sustain their hot starts and which are headed for reality checks. Here's the complete analysis with verified stats and injury impacts.</p>
 
-  <h3 class="section-title">🏀 Kings Face Bucks Without Giannis Guarantee</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Kings Face Bucks Without Giannis Guarantee</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/sac.png" alt="Sacramento" style="width:45px; height:45px; object-fit:contain;">
@@ -978,7 +842,7 @@
 
   <p>The line opened at Bucks minus 5 but could shift significantly if Giannis is ruled out. If he plays, Milwaukee should dominate a Sacramento team that has no answer for his size and athleticism. The Bucks are outscoring opponents by 6.8 points per game while the Kings are getting blown out regularly. The total at 233.5 makes sense given Milwaukee's offensive firepower when Giannis plays. The public is backing Milwaukee at 70 percent, which is justified given Sacramento's road struggles and Milwaukee's perfect ATS record. This feels like a Bucks statement game if Giannis suits up. Monitor the injury report closely, because without him, this line should drop to a pick'em given Sacramento's desperation for any road win.</p>
 
-  <h3 class="section-title">🏀 Timberwolves Without Edwards Face LaMelo's Hornets</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Timberwolves Without Edwards Face LaMelo's Hornets</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Minnesota" style="width:45px; height:45px; object-fit:contain;">
@@ -994,7 +858,7 @@
 
   <p>The line at Timberwolves minus 5.5 feels like an overreaction to Minnesota's superior talent on paper without accounting for Edwards' absence. Minnesota is 0-5-0 ATS, which means they've been consistently overvalued by the market. Charlotte is 3-2-0 ATS at home, suggesting they're undervalued in this spot. The total at 230.5 could go under if both teams struggle with depleted rosters. The public is leaning Minnesota at 56 percent, which isn't overwhelming. This screams Charlotte home upset potential if LaMelo plays. The Hornets need this game, Minnesota can't cover spreads without Edwards, and the market hasn't fully adjusted to how much the Wolves miss their star. Charlotte plus the points offers value, and the moneyline might be worth a small shot if you believe Ball suits up.</p>
 
-  <h3 class="section-title">🏀 Warriors Face Depleted Pacers Seeking First Win</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Warriors Face Depleted Pacers Seeking First Win</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/gs.png" alt="Golden State" style="width:45px; height:45px; object-fit:contain;">
@@ -1010,7 +874,7 @@
 
   <p>The line at Warriors minus 11 is massive but justified given Indiana's injury situation. Golden State should dominate possession and generate quality looks through ball movement. The public is backing the Warriors at 63 percent, which makes sense given the talent disparity. The total at 230.0 could go under if Golden State controls tempo and grinds this into a defensive clinic. Indiana has 3-2-0 ATS, which suggests they've been competitive in losses, but this feels like the spot where they get blown out. The Warriors need to limit turnovers, as they turned it over at least 19 times in both losses this season. If Golden State protects the ball, they cover easily. The puck line offers value despite the large number. Indiana is playing with desperation for their first win, but a depleted roster against a veteran Warriors squad creates a mismatch that Golden State should exploit ruthlessly.</p>
 
-  <h3 class="section-title">🏀 Magic Visit Winless-at-Home Wizards</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Magic Visit Winless-at-Home Wizards</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/orl.png" alt="Orlando" style="width:45px; height:45px; object-fit:contain;">
@@ -1026,7 +890,7 @@
 
   <p>The line at Magic minus 9 reflects Orlando's historical dominance and Washington's defensive catastrophe. The public is split at 50-50, which creates interesting market dynamics. The total at 233.5 could go over given Washington allows the most points in the NBA. Orlando's defense should limit Washington's scoring, but the Wizards might score enough through sheer volume to push this total higher. The key handicapping question is whether Orlando's road struggles (1-2) matter against a Washington team that can't defend anyone. The Magic should win comfortably, but their 1-5-0 ATS mark suggests they don't cover large numbers even when they win. Washington is 1-4-0 ATS, meaning they're properly valued as one of the league's worst teams. This projects as a Magic win, but the spread feels large for a team that hasn't shown they can blow out opponents on the road.</p>
 
-  <h3 class="section-title">🏀 Rockets Style Clash With Depleted Celtics</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Rockets Style Clash With Depleted Celtics</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/hou.png" alt="Houston" style="width:45px; height:45px; object-fit:contain;">
@@ -1042,7 +906,7 @@
 
   <p>The line at Rockets minus 5.5 reflects Houston's size advantage and rebounding dominance against a Boston team built around three point volume. This is a fascinating style clash. The Celtics want to launch threes, while the Rockets want to pound the glass and score in the paint. The total at 225.5 is the lowest on Saturday's card, which makes sense given both teams' defensive emphasis and Houston's slower pace. The public is leaning Celtics at 52 percent despite them being underdogs, which suggests belief in Brown's ability to carry the offense at home. Houston's 3-1-0 ATS mark indicates they're properly valued, while Boston's 2-4-0 ATS suggests continued struggles. The key question is whether Boston's three point barrage can overcome Houston's size and rebounding. Fred VanVleet is out for the season with an ACL tear and Dorian Finney-Smith is out with an ankle injury, which depletes Houston's perimeter defense. Jaylen Brown should get quality looks, but the Rockets offensive rebounding could create second chance opportunities that swing the game. This projects close throughout with Houston's size advantage becoming decisive in the fourth quarter.</p>
 
-  <h3 class="section-title">🏀 Mavericks Face Pistons in Mexico City Altitude</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Mavericks Face Pistons in Mexico City Altitude</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/dal.png" alt="Dallas" style="width:45px; height:45px; object-fit:contain;">
@@ -1058,7 +922,7 @@
 
   <p>The line at Pistons minus 7.5 is significant for a team not typically favored by this much. Detroit is capitalizing on Dallas depleted frontcourt and the Mexico City altitude that favors the team with better conditioning. The total at 226.5 could stay under if the altitude affects shooting percentages and both teams grind through possessions. The public is leaning Dallas at 51 percent, which creates slight contrarian value on Detroit. The Pistons are 3-2-0 ATS at home, and while this is technically a neutral site, they should have the fresher legs. Dallas is 0-0 on the road this season with no true road games played yet, which creates uncertainty about their travel performance. The key handicapping angle is whether Dallas can overcome Anthony Davis' absence and the altitude to stay competitive. Detroit should control the paint through Jalen Duren and exploit Dallas weak interior defense. This projects as a Pistons victory with the spread in play if Detroit establishes early dominance.</p>
 
-  <h3 class="section-title">📊 Sharp Angles & Saturday Market Observations</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">📊 Sharp Angles & Saturday Market Observations</h3>
 
   <p>Saturday's NBA slate rewards identifying which teams are properly valued versus overvalued based on recent performance. Milwaukee's perfect 5-0-0 ATS record suggests the market is still catching up to how dominant they are with Giannis healthy. Minnesota's 0-5-0 ATS mark is the worst in the league, and without Anthony Edwards, they're being consistently overvalued. Golden State should cruise against depleted Indiana, but the Warriors road struggles (1-2) create slight hesitation on an 11 point spread.</p>
 
@@ -1070,15 +934,19 @@
 
 </div>
 
-<div class="section-sep">
-<h2>Friday NBA Cup Showcase <span class="week-tag">October 31</span></h2>
-<p class="section-sub">Eight-game Halloween night slate with intriguing storylines and sharp betting angles</p>
 </div>
 
-<div class="game-card">
+<div class="blog-post">
+<h2 style="text-align:center !important; color:#d4af37 !important;">Friday NBA Cup Showcase <span class="week-tag">October 31</span></h2>
+<div class="post-time">Eight-game Halloween night slate with intriguing storylines and sharp betting angles</p>
+</div>
+
+</div>
+
+<div class="blog-post">
 <p style="color: #e0e0e0; line-height: 1.8; margin-bottom: 18px;">Halloween night delivers an eight-game NBA Cup slate featuring fascinating contrasts in team form and market perception. We've got winless Indiana hosting red-hot Atlanta, the perfect 4-0 Bulls defending home court against the Knicks, and Jaylen Brown's Celtics traveling to Philadelphia's undefeated squad. The early season narratives are crystallizing, and the betting markets are starting to adjust. Some teams are getting disrespected despite strong fundamentals, while others are riding unsustainable hot streaks. Here's the complete handicapping breakdown with verified stats and angles the sharp money is watching.</p>
 
-  <h3 class="section-title">🏀 Celtics Without Tatum Face Perfect Sixers</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Celtics Without Tatum Face Perfect Sixers</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/bos.png" alt="Boston" style="width:45px; height:45px; object-fit:contain;">
@@ -1094,7 +962,7 @@
 
   <p>The line at Sixers minus 1 feels about right. Philadelphia's home court advantage and superior health give them the edge, but Boston's defense keeps them competitive in every game. The Celtics are 1-2 on the road and 2-3 ATS, which suggests they're slightly overvalued by the market early in the season. The total at 233.5 is interesting it's relatively high for a Boston game given their offensive struggles (31.9% from three), but Philadelphia's up-tempo style with Maxey pushing pace could inflate the scoring. The public is backing Philadelphia at 66%, which creates potential contrarian value on Boston if you believe their elite defense can limit Maxey and force Embiid to play heavy minutes he's trying to avoid. The key handicapping question: Can Boston score enough to stay within a possession, or does Philadelphia's balanced attack pull away late?</p>
 
-  <h3 class="section-title">🏀 Bulls Perfect Home Start Meets Knicks' Road Woes</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Bulls Perfect Home Start Meets Knicks' Road Woes</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/ny.png" alt="New York" style="width:45px; height:45px; object-fit:contain;">
@@ -1110,7 +978,7 @@
 
   <p>The line at Bulls minus 5 reflects Chicago's perfect home record and their confidence, but it's also a significant number for a team that wasn't expected to be in this position. The market is giving the Bulls respect, and rightfully so based on their 4-0 ATS performance. The public is leaning Chicago at 58%, which is lower than you'd expect for an undefeated home favorite, suggesting some sharp money might be on New York's talent level. The total at 233.5 feels inflated for a Chicago team that's been playing structured basketball and grinding out wins without their primary scorer. The handicapping angle here centers on whether New York's road struggles are variance or a genuine execution issue, and whether Chicago's perfect start is sustainable or due for regression. The Bulls have been covering, but five points against a hungry Knicks squad that knows they need to prove themselves on the road creates betting intrigue.</p>
 
-  <h3 class="section-title">🏀 Pacers Winless Without Haliburton Host Hawks</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Pacers Winless Without Haliburton Host Hawks</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/atl.png" alt="Atlanta" style="width:45px; height:45px; object-fit:contain;">
@@ -1126,7 +994,7 @@
 
   <p>The line at Pacers minus 2.5 is fascinating because Indiana is being favored at home despite being 0-4 and missing their best player. The market is respecting their home court and their 3-1-0 ATS record, suggesting oddsmakers believe the Pacers have been better than their record indicates. The public is heavy on Indiana at 70%, which creates contrarian value on Atlanta as a road dog. The total at 232.5 leans under if Indiana continues to struggle generating offense without Haliburton's creation. The handicapping decision comes down to whether you believe Indiana's ATS success is sustainable or if Atlanta's road performance (2-1) gives them the edge in a game where the Pacers desperately need their first win. Indiana's 0-4 start means they're playing with urgency, but Atlanta's 2-1 road mark suggests they thrive when pressure is off.</p>
 
-  <h3 class="section-title">🏀 Cavaliers Host Raptors in Mismatch Spot</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Cavaliers Host Raptors in Mismatch Spot</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/tor.png" alt="Toronto" style="width:45px; height:45px; object-fit:contain;">
@@ -1142,7 +1010,7 @@
 
   <p>The line at Cavaliers minus 6 feels about right for a home favorite against a struggling Raptors squad. Cleveland's 1-4-0 ATS record suggests they've been underperforming expectations, but at home against an inferior opponent, they should have the focus to execute. The total at 239.5 is the highest on Friday's card, which makes sense given both teams' pace and Cleveland's offensive firepower when Mitchell is healthy. The question is whether Mitchell's hamstring limits him or if the Cavaliers blow this game open early. Toronto's 1-4-0 ATS mark means they're not staying competitive in losses, which suggests Cleveland could cover if they come out aggressive. The value here might be on the Cavs to win big and the total to sail over if both teams push pace.</p>
 
-  <h3 class="section-title">📊 Sharp Angles & Market Observations</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">📊 Sharp Angles & Market Observations</h3>
 
   <p>Friday's NBA Cup slate offers several contrarian opportunities. Chicago's perfect 4-0 ATS run suggests the market is still catching up to their legitimacy, but regression is inevitable over a full season. The question is whether it starts Friday against the Knicks. Philadelphia's 3-1-0 ATS mark and undefeated record have them properly valued, but Boston's elite defense (2nd in opponent PPG) keeps them live in any game despite offensive limitations. Indiana's 3-1-0 ATS performance as an 0-4 team is one of the season's most interesting anomalies they're losing but covering, which creates value confusion in the market.</p>
 
@@ -1152,16 +1020,20 @@
 
 </div>
 
-<div class="section-sep">
-<h2>Thursday Night NBA: Four Games, Four Angles</h2>
-<p class="section-sub">Posted: October 30, 2025, 1:00 PM ET</p>
 </div>
 
-<div class="game-card">
+<div class="blog-post">
+<h2 style="text-align:center !important; color:#d4af37 !important;">Thursday Night NBA: Four Games, Four Angles</h2>
+<div class="post-time" style="text-align:center;">Posted: October 30, 2025, 1:00 PM ET</p>
+</div>
+
+</div>
+
+<div class="blog-post">
 
   <p>Thursday delivers a compact four game NBA slate with some fascinating narratives. We've got struggling teams trying to find their footing, a perfect Spurs squad hosting the surprising Heat, and the undefeated Thunder looking to stay flawless against a Wizards team desperately searching for answers. The market's starting to respect what's real and fade what's noise. Here's the complete breakdown with all the data you need.</p>
 
-  <h3 class="section-title">🏀 The Magic Can't Find the Magic</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 The Magic Can't Find the Magic</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/orl.png" alt="Orlando" style="width:45px; height:45px; object-fit:contain;">
@@ -1177,7 +1049,7 @@
 
   <p>The spread at Charlotte minus 2.5 feels light given Orlando's road struggles and offensive limitations. The Magic are 0 and 5 against the spread this season. That's not variance. That's a team the market consistently overrates. Charlotte's 3 and 1 ATS at home because they execute their offense and LaMelo controls tempo. The total at 209.5 is interesting. It's low for a Charlotte home game, which suggests oddsmakers expect Orlando's offensive issues to suppress scoring. That might be right if Orlando can't get to 100 points. Lean Hornets to cover and the game stays under if Orlando's shooting woes continue.</p>
 
-  <h3 class="section-title">⚡ Thunder Perfect Storm</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">⚡ Thunder Perfect Storm</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/wsh.png" alt="Washington" style="width:45px; height:45px; object-fit:contain;">
@@ -1193,7 +1065,7 @@
 
   <p>The line at Thunder minus 15.5 is massive, and here's the problem. Oklahoma City is 1 and 4 ATS despite being undefeated. They're winning games but not covering these inflated numbers. The market expects blowouts, but the Thunder sometimes coast once they build comfortable leads. Washington's bad enough that OKC could win by 20 if they stay aggressive, but 15.5 requires Oklahoma City to keep their foot on the gas for 48 minutes. The total at 231 leans under if the Thunder's defense dominates and Washington can't score. Shai and Chet will feast, but the spread feels like a trap. Thunder win easily but Washington might cover the number if Oklahoma City takes their foot off late.</p>
 
-  <h3 class="section-title">🔥 Battle of Contenders</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🔥 Battle of Contenders</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/gs.png" alt="Golden State" style="width:45px; height:45px; object-fit:contain;">
@@ -1209,7 +1081,7 @@
 
   <p>The line has Milwaukee as a 3 point home underdog, which is fascinating. The market's giving Golden State respect for their road performance and Curry's hot shooting, but Milwaukee at home with Giannis playing like this should not be getting points. This feels like a statement game for the Bucks. If they can defend Curry without overhelping and force the Warriors into contested threes, Milwaukee's size and rebounding advantage tilts the game. The total at 231.5 is high but probably accurate given both teams' offensive firepower. Lean Bucks to win outright at home. Three points with Giannis in this form is too many. The total probably stays over given the pace both teams want to play.</p>
 
-  <h3 class="section-title">🏆 The Undefeated Collision</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏆 The Undefeated Collision</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/mia.png" alt="Miami" style="width:45px; height:45px; object-fit:contain;">
@@ -1225,22 +1097,26 @@
 
   <p>The line at Spurs minus 6 respects San Antonio's home dominance and Wembanyama's impact, but Miami's been the better team against the spread. This is a fascinating matchup of styles. Miami wants to play through Bam and attack the mid range with Powell spacing the floor. San Antonio wants to run offense through Wemby's versatility and protect the rim on defense. Six points feels like the right number for a game that should be decided in the final minutes. The total at 229 projects a high scoring affair given both teams' offensive efficiency. Lean Heat plus the points on the road. Spoelstra in a big road spot with a perfect ATS record is not someone to fade. The total probably goes over if both teams execute their offensive game plans.</p>
 
-  <h3 class="section-title">Final Takeaways</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">Final Takeaways</h3>
 
   <p>Thursday's compact slate rewards matchup analysis over volume. Charlotte should handle Orlando's offensive limitations at home. Oklahoma City wins easily but might not cover the bloated number. The Milwaukee-Golden State showdown is must watch basketball with the Bucks getting disrespected as home dogs. And Miami-San Antonio features two perfect ATS teams in a game that projects as a coin flip. Don't force plays on every game. Identify the edges, trust the data, and execute with discipline. The sharpest bettors know when to load up and when to pass.</p>
 
 </div>
 
-<div class="section-sep">
-<h2>Tuesday's NBA Action: 5-Game Slate with Elite Matchups</h2>
-<p class="section-sub">Posted: October 28, 2025, 2:30 PM ET</p>
 </div>
 
-<div class="game-card">
+<div class="blog-post">
+<h2 style="text-align:center !important; color:#d4af37 !important;">Tuesday's NBA Action: 5-Game Slate with Elite Matchups</h2>
+<div class="post-time" style="text-align:center;">Posted: October 28, 2025, 2:30 PM ET</p>
+</div>
+
+</div>
+
+<div class="blog-post">
 
   <p>Tuesday night brings us a tight five-game slate highlighted by Coast 2 Coast coverage on NBC and some legitimate playoff-caliber matchups. We've got the undefeated Thunder looking to stay perfect, a clash between Giannis and Brunson, and a late-night Pacific Division showdown. The betting angles are sharp, and the early-season narratives are starting to crystalize. Here's the full breakdown with detailed analysis on every game.</p>
 
-  <h3 class="section-title">🏀 Early Tip (7:00 PM ET)</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Early Tip (7:00 PM ET)</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/phi.png" alt="Philadelphia" style="width:45px; height:45px; object-fit:contain;">
@@ -1252,7 +1128,7 @@
   <p>This is the ultimate "buyer beware" spot for anyone looking to back Philly. Joel Embiid is officially off the injury report after sitting Monday's win over Orlando, but he's still being capped at around 20 minutes as the Sixers carefully manage his workload to start the season. Paul George remains out recovering from offseason knee surgery, which means Philadelphia's relying heavily on Tyrese Maxey to carry the offensive load. The problem? Washington's been competitive at home, and with guys like Jordan Poole capable of getting hot from deep, this feels like a game the Wizards can keep close.</p>
   <p>The Sixers are 3-0, but two of those wins came against teams tanking, and the other required a fourth-quarter surge. Without Paul George's secondary scoring and with Embiid on a minutes restriction, Philly's depth gets tested. Trendon Watford is back, which helps, but Jared McCain and Dominick Barlow remain out. Meanwhile, Washington's dealing with Bilal Coulibaly being sidelined, but Tre Johnson is listed as questionable and could give them a boost. The total at 220.5 feels right neither team is lighting up the scoreboard consistently. Lean Wizards to cover at home. If Embiid sits early in the fourth quarter and Washington's within striking distance, they've got the firepower to make this interesting down the stretch.</p>
 
-  <h3 class="section-title">⭐ Prime Time (7:30 PM ET)</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">⭐ Prime Time (7:30 PM ET)</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/cha.png" alt="Charlotte" style="width:45px; height:45px; object-fit:contain;">
@@ -1264,7 +1140,7 @@
   <p>This total is sky-high, and for good reason both teams want to run. Charlotte's 2-1 and coming off a performance where LaMelo Ball went for 38 points, 13 rebounds, and 13 assists in their last outing. Ball is listed as probable with wrist soreness, which means he's playing unless something changes in warmups. The kid's been electric to start the season, and when he's clicking, the Hornets can score with anyone. The problem is Miami's home court advantage and the fact that Charlotte's missing key rotation pieces Brandon Miller, Grant Williams, and Josh Green are all out.</p>
   <p>Miami's dealing with their own issues. Terry Rozier is suspended after his gambling arrest last week, and Tyler Herro is out with injury. That's a massive blow to their backcourt depth. But here's the thing Miami still has Bam Adebayo, and they've got enough veteran savvy to exploit a young Hornets squad that struggles defensively. Erik Spoelstra knows how to scheme against inexperienced teams, and Charlotte's missing bodies on the wing will hurt them against Miami's switching defense. Five and a half feels light given the injuries on both sides, but the total is where the value sits. Both teams push pace, both are shorthanded defensively, and 239.5 might not be enough. Over is the play here, and if you're forcing a side, Miami covers if Ball's wrist bothers him late.</p>
 
-  <h3 class="section-title">🔥 Marquee Matchup (8:00 PM ET – NBC)</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🔥 Marquee Matchup (8:00 PM ET – NBC)</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/ny.png" alt="New York" style="width:45px; height:45px; object-fit:contain;">
@@ -1276,7 +1152,7 @@
   <p>This is the game of the night. Jalen Brunson versus Giannis Antetokounmpo in Milwaukee, with the Knicks getting a short number on the road. Both teams enter at 2-1 after dropping their first losses of the season, and both have something to prove. Brunson's been absolutely elite, averaging 29.8 points and shooting the ball efficiently, including 37 points in their loss to Miami on Sunday. Giannis, meanwhile, damn near dragged the Bucks to a win against Cleveland single-handedly with 40 points, 14 rebounds, and 9 assists in their last game. The man's averaging over 36 points per game to start the year and looks unstoppable.</p>
   <p>Here's the angle: New York has won five straight against Milwaukee, including a 116-107 victory in their last meeting. The Knicks match up well against the Bucks because they can slow the game down and grind possessions, which limits Giannis's transition opportunities. Milwaukee's perimeter defense has been exploitable, and guys like RJ Barrett and Donte DiVincenzo can take advantage if the Bucks overcommit to stopping Brunson. The Knicks are also deeper and less reliant on one guy to do everything. The line at Knicks -1.5 tells you the market respects New York's recent dominance in this matchup. The total at 229 feels high for a game that could turn into a halfcourt slugfest. Lean Knicks to cover, and if you're betting the total, the under is the sharper play. Milwaukee's going to try to slow Brunson down, and New York's defense has been stout enough to keep Giannis from completely taking over late.</p>
 
-  <h3 class="section-title">⚡ Thunder Roll (8:00 PM ET)</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">⚡ Thunder Roll (8:00 PM ET)</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/sac.png" alt="Sacramento" style="width:45px; height:45px; object-fit:contain;">
@@ -1288,7 +1164,7 @@
   <p>Oklahoma City is 4-0 and looks like a legitimate championship contender. Shai Gilgeous-Alexander is playing out of his mind, averaging 40 points per game on 52.7% shooting while getting to the free throw line nearly 15 times a night. The dude is unguardable right now, and he's got help Chet Holmgren and Isaiah Hartenstein have been dominant on the defensive end, holding opponents to 43.2% shooting and limiting second-chance opportunities. The Thunder's defense is suffocating, and they've got the depth to wear teams down over four quarters.</p>
   <p>Sacramento, on the other hand, is 1-2 and struggling to find consistency. De'Aaron Fox is talented enough to keep this competitive for stretches, but the Kings don't have the firepower to match OKC's offensive efficiency or the defensive discipline to slow down Shai. The real battle is going to be in the frontcourt Domantas Sabonis versus Holmgren and Hartenstein. Sabonis can pile up rebounds and facilitate from the elbow, but if the Thunder lock him up and force the Kings into tough perimeter shots, this game could get out of hand in the second half. Ten and a half is a big number, but Oklahoma City's been blowing teams out. They're not just winning they're covering. The total at 227.5 leans under if the Thunder's defense plays to form. Lean Thunder to cover at home, and don't overthink it. This team is rolling.</p>
 
-  <h3 class="section-title">🌙 West Coast Finale (11:00 PM ET – NBC)</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🌙 West Coast Finale (11:00 PM ET – NBC)</h3>
 
   <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
     <img src="https://a.espncdn.com/i/teamlogos/nba/500/lac.png" alt="LA Clippers" style="width:45px; height:45px; object-fit:contain;">
@@ -1300,22 +1176,26 @@
   <p>The nightcap brings us a Pacific Division clash with playoff implications written all over it. The Warriors are 3-1 and coming off a back-to-back after facing Memphis on Monday night. Stephen Curry's been absolutely unconscious to start the season, averaging 33.3 points on 52.5% shooting and 45.7% from three. He's made at least five threes in every game, and when Steph's in that kind of rhythm, Golden State's nearly impossible to stop at home. The problem? Fatigue. Playing on the second night of a back-to-back against a rested Clippers team is never ideal, especially when both rosters are loaded with veterans who know how to exploit tired legs.</p>
   <p>The Clippers are 2-1 and just beat Portland at home, with Kawhi Leonard dropping 30 and 10 and James Harden adding 20 and 13 assists. Kawhi looks healthy, which is terrifying for the rest of the league, and Harden's running the offense like the maestro he's always been. LA's won seven straight against the Warriors and eight of the last ten head-to-head meetings. That's not a fluke the Clippers match up well against Golden State because they can slow the pace and force the Warriors into halfcourt sets where LA's size and physicality take over. The Warriors want to run, but the Clippers are one of the slowest teams in the league and will grind this into a possession-by-possession war. Three and a half feels like the right number for a game that should be decided in the final minutes. Lean Clippers to cover on the road. The Warriors might win outright, but the back-to-back and LA's recent dominance in this series make the points too valuable to pass up. The total at 225.5 leans under given the pace LA wants to impose.</p>
 
-  <h3 class="section-title">Final Thoughts</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">Final Thoughts</h3>
 
   <p>Tonight's slate rewards patience and matchup awareness. The Thunder are the safest play if you're looking for a straight winner. The Knicks-Bucks game is must-watch basketball and feels like a coin flip that leans slightly toward New York's depth and recent success in this matchup. The Clippers-Warriors late game could be the sharpest betting opportunity of the night if you believe LA's rest advantage and historical dominance tilts the floor. And if you're chasing totals, the Hornets-Heat over is sitting there begging for action with two shorthanded teams that want to push pace. Lock in early if you like these spots sharp money tends to move these numbers quickly on quality slates like this.</p>
 
 </div>
 
-<div class="section-sep">
-<h2>Sunday's NBA Slate: 9 Games, Every Angle</h2>
-<p class="section-sub">Posted: October 26, 2025, 11:00 AM ET</p>
 </div>
 
-<div class="game-card">
+<div class="blog-post">
+<h2 style="text-align:center !important; color:#d4af37 !important;">Sunday's NBA Slate: 9 Games, Every Angle</h2>
+<div class="post-time" style="text-align:center;">Posted: October 26, 2025, 11:00 AM ET</p>
+</div>
+
+</div>
+
+<div class="blog-post">
 
   <p>Sunday brings a loaded nine-game NBA card with some legitimate must-watch matchups and a few spots where the betting market might be off. Early-season trends are starting to solidify, and we're seeing which teams have real staying power versus which ones are due for regression. Here's the full breakdown with betting context on every game.</p>
 
-  <h3 class="section-title">🏀 Afternoon Action (2:00 PM – 3:30 PM ET)</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏀 Afternoon Action (2:00 PM – 3:30 PM ET)</h3>
 
   <p><strong>Brooklyn Nets @ San Antonio Spurs</strong><br/>
   <span class="odds-highlight">Line:</span> Spurs -11.5 | <span class="odds-highlight">Total:</span> 227.5</p>
@@ -1325,7 +1205,7 @@
   <span class="odds-highlight">Line:</span> Pistons -4.5 | <span class="odds-highlight">Total:</span> 228.5</p>
   <p>Wait Detroit favored over Boston? This line tells you everything about how the Celtics' early season has gone. Injuries and inconsistent effort on the road have plagued them, while Detroit's been quietly solid at home with Cade Cunningham playing at an All-Star level. Boston still has the talent edge, but they've been sleepwalking through road games. If you believe the Celtics wake up here, there's value on the dog. If you think Detroit's home momentum is real, lay the points. The total leans over with both teams capable of scoring in bunches.</p>
 
-  <h3 class="section-title">⭐ Evening Slate (6:00 PM – 7:30 PM ET)</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">⭐ Evening Slate (6:00 PM – 7:30 PM ET)</h3>
 
   <p><strong>Milwaukee Bucks @ Cleveland Cavaliers</strong><br/>
   <span class="odds-highlight">Line:</span> Cavaliers -6.5 | <span class="odds-highlight">Total:</span> 235.5</p>
@@ -1347,7 +1227,7 @@
   <span class="odds-highlight">Line:</span> Mavericks -1.5 | <span class="odds-highlight">Total:</span> 231.5</p>
   <p>Dallas laying just a bucket and a half at home against Toronto is interesting. The Raptors have been scrappy, and the Mavericks have been inconsistent defensively without a true rim protector. Luka Dončić is always a threat to take over, but Toronto's pace-and-space approach can exploit Dallas's defensive weaknesses. This feels like a toss-up, and the short number reflects that. The total leans over if both teams execute their offensive game plans.</p>
 
-  <h3 class="section-title">🌙 Late Night (9:00 PM ET)</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🌙 Late Night (9:00 PM ET)</h3>
 
   <p><strong>Portland Trail Blazers @ LA Clippers</strong><br/>
   <span class="odds-highlight">Line:</span> Clippers -7.5 | <span class="odds-highlight">Total:</span> 225.5</p>
@@ -1357,18 +1237,22 @@
   <span class="odds-highlight">Line:</span> Lakers -2.5 | <span class="odds-highlight">Total:</span> 228.5</p>
   <p>LeBron and AD on the road against a Kings team that's been inconsistent at home. Sacramento's offense is explosive when De'Aaron Fox and Domantas Sabonis are in rhythm, but their defense has been leaky. The Lakers are favored, which tells you the market trusts LA's star power more than Sacramento's home-court energy. This one could go either way if the Kings shoot well from three, they win outright. If the Lakers control the pace and dominate the paint, they cover easily. The total feels about right for two teams that can both score in transition.</p>
 
-  <h3 class="section-title">Final Thoughts</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">Final Thoughts</h3>
   <p>Sunday's slate offers plenty of edges if you're willing to dig into the matchups. The key is separating legitimate contenders from teams coasting on early-season luck. Keep an eye on rest situations back-to-backs matter, especially late in games when legs get heavy. And don't overlook totals on games featuring weak defenses those numbers have been consistently hitting the over this season. Stay sharp, trust your process, and don't chase every game on the board.</p>
 </div>
 
-<div class="section-sep">
-<h2>2024–25 NBA Season Recap & Offseason Outlook</h2>
-<p class="section-sub">Posted: August 1, 2025</p>
 </div>
 
-<div class="game-card">
+<div class="blog-post">
+<h2 style="text-align:center !important; color:#d4af37 !important;">2024–25 NBA Season Recap & Offseason Outlook</h2>
+<div class="post-time" style="text-align:center;">Posted: August 1, 2025</p>
+</div>
 
-  <h3 class="section-title">The Elephant in the Room: Why Jonathan Kuminga is Right to Want a New Beginning</h3>
+</div>
+
+<div class="blog-post">
+
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">The Elephant in the Room: Why Jonathan Kuminga is Right to Want a New Beginning</h3>
   <p>
     Beneath the surface of every trade rumor lies a human story, and for Jonathan Kuminga, it's a story of immense potential colliding with a rigid system. The narrative that he is simply a disgruntled young player misses the point entirely. To understand why Kuminga wants a fresh start, one must look at his four-year journey in Golden State not just through the lens of a box score, but through the frustrating reality of inconsistent opportunity and a philosophical clash with head coach Steve Kerr.
   </p>
@@ -1385,7 +1269,7 @@
     This isn't just about minutes; it's about dignity and belief. Teams like the Sacramento Kings have reportedly offered Kuminga a starting role, a clear path to development, and the trust that comes with it. Golden State, in contrast, countered with short-term contract offers that included team options, signaling a lack of long-term commitment. For Kuminga, this isn't about money. It's about finding a franchise that will invest in his talent, endure his mistakes, and empower him to become the star he has the potential to be something that, for four years, the Warriors have been unwilling to fully do. He isn't just running from a team; he's running towards an opportunity to finally breathe and grow.
   </p>
 
-  <h3 class="section-title">🏆 The Thunder Capture Their First NBA Championship</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🏆 The Thunder Capture Their First NBA Championship</h3>
   <p>
     The 2024–25 NBA season has officially wrapped, and what a ride it was for basketball fans and bettors. The Oklahoma City Thunder delivered one of the most memorable playoff runs in years, claiming their first NBA championship in franchise history. Led by the breakout stardom of Shai Gilgeous-Alexander and the continued emergence of Chet Holmgren, the Thunder stormed through the Western Conference and took down the battle-tested Boston Celtics in a six-game Finals.
   </p>
@@ -1393,7 +1277,7 @@
     Oklahoma City's blend of youthful energy and veteran poise was the story of the postseason. Their defense turned up a notch in every clutch moment, with Jalen Williams and Lu Dort locking down the perimeter and Holmgren owning the paint. Mark Daigneault out-coached nearly everyone along the way, pulling the right levers at the perfect times. For bettors who stuck with OKC futures early, this run paid off big time.
   </p>
 
-  <h3 class="section-title">💼 Free Agency Rumors: An Offseason Like No Other</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">💼 Free Agency Rumors: An Offseason Like No Other</h3>
   <p>
     With the draft already behind us, NBA free agency is about to get chaotic. Teams are stacking up cap space and eyeing big names, but there's a real sense that this summer could reshape the power balance across the league. Several All-Stars could be on the move, and role players who played key minutes in the playoffs are about to get paid.
   </p>
@@ -1401,7 +1285,7 @@
     The Thunder are rumored to be looking for one more stretch forward to add shooting and depth. Meanwhile, contenders like the Lakers and Heat are desperate to get younger and more athletic. Boston is expected to keep their core together, but a surprise blockbuster is always just one tweet away this time of year.
   </p>
 
-  <h3 class="section-title">📅 The Countdown to Opening Night</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">📅 The Countdown to Opening Night</h3>
   <p>
     Believe it or not, opening night for the 2025–26 NBA season is only about four months away. Training camps will be here before you know it, and with summer league heating up, rookies and sophomores are already battling for roster spots and playing time. Every offseason goes by faster than you expect, and this one feels especially unpredictable with all the moving pieces.
   </p>
@@ -1409,7 +1293,7 @@
     Bettors, stay alert for win total markets and early futures, especially for teams that make big splashes in free agency or land key pieces in late trades. Last year's preseason favorites did not all deliver, so watch for sharp early movement and try to get ahead of the steam.
   </p>
 
-  <h3 class="section-title">🔮 What's Next for BetLegend?</h3>
+  <h3 style="text-align:center; color:gold; font-size:24px; font-weight:600; margin:30px 0 18px 0;">🔮 What's Next for BetLegend?</h3>
   <p>
     Our team is already diving into offseason analysis, prepping for all the major moves and summer league results that will shape our projections. We'll be back every day next season with sharp NBA picks, advanced trends, and in-depth analysis to keep you ahead of the market. Whether you're chasing futures, player props, or the best sides and totals on the board, BetLegend will be there with data-driven insights you can trust.
   </p>
@@ -1421,12 +1305,46 @@
   </p>
 </div>
 
-<section class="cta">
-<h2>Ready for the Season?</h2>
-<p>Our NBA model is gearing up for another championship run. All official picks will be posted on our picks board when the season begins.</p>
-<a class="cta-button" href="upcomingpicks.html">View All Upcoming Picks</a>
-</section>
-</main>
-</div>
+<script>
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+            // Handle button clicks to toggle dropdown
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            });
+
+
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        // Check if click is outside all dropdowns
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
+</script>
+
 </body>
 </html>
