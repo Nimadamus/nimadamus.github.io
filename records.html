@@ -1151,11 +1151,25 @@ function calculateUnitSizingBreakdown() {
 
     let totalCategorized = 0;
 
-    console.log('=== UNIT SIZING BREAKDOWN DEBUG ===');
+    console.log('');
+    console.log('3. QUERY AND FILTER LOGIC');
+    console.log('─────────────────────────────────────────────────────────────────');
 
     // First, test extractBetSize on all bets
     let extractedCount = 0, defaultedCount = 0;
     const betSizeDistribution = {};
+    const halfUnitBets = [];
+    const confidenceLevelDistribution = {};
+    const missingConfidence = [];
+
+    console.log('Stake Size Mapping:');
+    console.log('  • Confidence 1 → 0.5u (SMALL)');
+    console.log('  • Confidence 2 → 1.0u (STANDARD)');
+    console.log('  • Confidence 3 → 1.5u (STANDARD)');
+    console.log('  • Confidence 4 → 2.0u (HIGH)');
+    console.log('  • Confidence 5 → 2.5u (HIGH)');
+    console.log('  • Confidence 6 → 3.0u (MAX PLAY)');
+    console.log('');
 
     allData.forEach(row => {
         const result = (row.Result || row.result || '').toLowerCase();
@@ -1163,25 +1177,69 @@ function calculateUnitSizingBreakdown() {
 
         const pick = (row.Pick || row.pick || '').toLowerCase();
         const betType = (row['Bet Type'] || row['bet type'] || '').toLowerCase();
+        const confidence = row.Confidence || row.confidence || '';
         const searchText = pick + ' ' + betType;
         const unitMatch = searchText.match(/(\d+\.?\d*)\s*u(?!n)/i);
         const betSize = extractBetSize(row);
+
+        // Track confidence level distribution
+        if (confidence) {
+            confidenceLevelDistribution[confidence] = (confidenceLevelDistribution[confidence] || 0) + 1;
+        } else {
+            missingConfidence.push({
+                sport: row.sport,
+                pick: pick.substring(0, 30),
+                result: result,
+                units: row.Units || row.units
+            });
+        }
 
         if (unitMatch) {
             extractedCount++;
         } else {
             defaultedCount++;
-            if (defaultedCount <= 5) {
-                console.log(`  Defaulted to 1u: "${pick.substring(0, 50)}..."`);
+            if (defaultedCount <= 3) {
+                console.log(`  Defaulted: "${pick.substring(0, 30)}..." (Conf: ${confidence || 'MISSING'}) -> ${betSize}u`);
             }
         }
 
         betSizeDistribution[betSize] = (betSizeDistribution[betSize] || 0) + 1;
+
+        // Track 0.5u bets specifically
+        if (betSize === 0.5) {
+            halfUnitBets.push({
+                pick: pick.substring(0, 30),
+                result: result,
+                confidence: confidence || 'MISSING',
+                betSize: betSize
+            });
+        }
     });
 
-    console.log(`Bet Size Extraction: ${extractedCount} extracted, ${defaultedCount} defaulted to 1u`);
-    console.log('Bet Size Distribution:', betSizeDistribution);
+    console.log('Bet Size Extraction Results:');
+    console.log(`  • Extracted from Pick/BetType text: ${extractedCount} bets`);
+    console.log(`  • Defaulted (using confidence or fallback): ${defaultedCount} bets`);
+    console.log('');
+    console.log('Confidence Level Distribution (from Sheets):');
+    Object.keys(confidenceLevelDistribution).sort().forEach(conf => {
+        console.log(`  • Confidence ${conf}: ${confidenceLevelDistribution[conf]} bets`);
+    });
+    if (missingConfidence.length > 0) {
+        console.log(`  ⚠️ MISSING Confidence: ${missingConfidence.length} bets`);
+        console.log('    Sample bets with missing confidence:', missingConfidence.slice(0, 3));
+    }
+    console.log('');
+    console.log('Extracted Bet Size Distribution:');
+    Object.keys(betSizeDistribution).sort((a,b) => parseFloat(a) - parseFloat(b)).forEach(size => {
+        console.log(`  • ${size}u: ${betSizeDistribution[size]} bets`);
+    });
+    console.log('');
+    console.log(`Pushes Handling: Excluded from Win% denominator, included in record format only`);
     console.log('---');
+
+    console.log('');
+    console.log('4. FORMULA VERIFICATION BY CONFIDENCE BUCKET');
+    console.log('─────────────────────────────────────────────────────────────────');
 
     confidenceLevels.forEach(level => {
         const levelData = allData.filter(row => {
@@ -1196,24 +1254,53 @@ function calculateUnitSizingBreakdown() {
             return betSize >= level.min && (level.max === Infinity ? true : betSize < level.max);
         });
 
-        if (levelData.length === 0) return;
+        if (levelData.length === 0) {
+            console.log(`${level.name}:`);
+            console.log(`  ⚠️ NO DATA - 0 bets in range ${level.min}u to ${level.max === Infinity ? '∞' : level.max}u`);
+            console.log('');
+            return;
+        }
 
         totalCategorized += levelData.length;
         const stats = calculateStats(levelData, true); // Use actual bet sizes
         const avgBetSize = levelData.length > 0 ? stats.totalRisked / levelData.length : 0;
 
-        console.log(`${level.name}: ${levelData.length} bets, Avg Bet Size: ${avgBetSize.toFixed(2)}u, Record: ${stats.record}, Profit: ${stats.units.toFixed(1)}u, Total Risked: ${stats.totalRisked.toFixed(1)}u, ROI: ${stats.roi.toFixed(1)}%`);
+        console.log(`${level.name} (${level.min}u ≤ bet < ${level.max === Infinity ? '∞' : level.max}u):`);
+        console.log(`  Row Count: ${levelData.length} bets`);
+        console.log(`  Wins: ${stats.wins}, Losses: ${stats.losses}, Pushes: ${stats.pushes}`);
+        console.log(`  Record: ${stats.record}`);
+        console.log(`  Win% Formula: ${stats.wins} / (${stats.wins} + ${stats.losses}) = ${stats.winRate.toFixed(2)}%`);
+        console.log(`  Total Units: ${stats.units.toFixed(2)}u (sum of all units won/lost)`);
+        console.log(`  Total Risked: ${stats.totalRisked.toFixed(2)}u`);
+        console.log(`  ROI Formula: ${stats.units.toFixed(2)} / ${stats.totalRisked.toFixed(2)} = ${stats.roi.toFixed(2)}%`);
+        console.log(`  Avg Bet Size: ${avgBetSize.toFixed(2)}u`);
+
+        // Validation checks
+        const hasZeroDenominator = (stats.wins + stats.losses) === 0;
+        const hasNullMetric = isNaN(stats.winRate) || isNaN(stats.roi) || isNaN(stats.units);
+
+        if (hasZeroDenominator) {
+            console.log(`  ❌ VALIDATION ERROR: Zero denominator (no wins or losses)`);
+        }
+        if (hasNullMetric) {
+            console.log(`  ❌ VALIDATION ERROR: Null metric detected`);
+        }
+        if (!hasZeroDenominator && !hasNullMetric) {
+            console.log(`  ✅ VALIDATION PASSED`);
+        }
 
         // Sample some bets
         if (levelData.length > 0) {
-            const samples = levelData.slice(0, 3).map(row => {
+            const samples = levelData.slice(0, 2).map(row => {
                 const betSize = extractBetSize(row);
                 const result = row.Result || row.result;
-                const pick = (row.Pick || row.pick || '').substring(0, 30);
-                return `${betSize}u "${pick}" (${result})`;
+                const units = row.Units || row.units;
+                const pick = (row.Pick || row.pick || '').substring(0, 25);
+                return `[${betSize}u] "${pick}" = ${result} (${units}u)`;
             });
-            console.log(`  Sample bets: ${samples.join(', ')}`);
+            console.log(`  Sample: ${samples.join('; ')}`);
         }
+        console.log('');
 
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -1221,13 +1308,13 @@ function calculateUnitSizingBreakdown() {
             <td>${levelData.length}</td>
             <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
             <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
-            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
-            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
         `;
         tbody.appendChild(row);
     });
 
-    console.log(`Total categorized: ${totalCategorized}`);
+    console.log(`Total Categorized: ${totalCategorized} bets`);
     console.log('===================================');
 }
 
@@ -1580,15 +1667,29 @@ function extractBetSize(row) {
     // PARSE bet size DIRECTLY from Pick or Bet Type text (e.g., "1u", "2u", "0.5u")
     const pick = (row.Pick || row.pick || '').toLowerCase();
     const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+    const confidence = (row.Confidence || row.confidence || '');
     const searchText = pick + ' ' + betType;
 
     // Look for patterns like "0.5u", "1u", "2u", "3u", etc.
+    // More flexible regex - allows optional spaces between number and 'u'
     // Use negative lookahead (?!n) to avoid matching "un" in words like "under"
     const unitMatch = searchText.match(/(\d+\.?\d*)\s*u(?!n)/i);
     if (unitMatch) {
         const betSize = parseFloat(unitMatch[1]);
         if (!isNaN(betSize) && betSize > 0) {
             return betSize;
+        }
+    }
+
+    // Check confidence level as backup (1-6 confidence maps to unit sizes)
+    if (confidence) {
+        const confNum = parseInt(confidence);
+        if (!isNaN(confNum)) {
+            // Map confidence to typical unit sizes
+            const confMap = { 1: 0.5, 2: 1, 3: 1.5, 4: 2, 5: 2.5, 6: 3 };
+            if (confMap[confNum]) {
+                return confMap[confNum];
+            }
         }
     }
 
@@ -1609,21 +1710,63 @@ async function init() {
     try {
         await fetchAllData();
 
-        // DEBUG: Show first 10 bets with all columns
-        console.log('=== FIRST 10 BETS IN DATASET ===');
-        allData.slice(0, 10).forEach((row, i) => {
+        // TRIAGE REPORT: DATA SOURCE AND COLUMN MAPPING
+        console.log('╔══════════════════════════════════════════════════════════════════╗');
+        console.log('║           CONFIDENCE LEVEL TABLE TRIAGE REPORT                  ║');
+        console.log('╚══════════════════════════════════════════════════════════════════╝');
+        console.log('');
+        console.log('1. SOURCE OF TRUTH');
+        console.log('─────────────────────────────────────────────────────────────────');
+        console.log('Data Sources:');
+        console.log('  • NFL: Google Sheets CSV export');
+        console.log('  • NBA: Google Sheets CSV export');
+        console.log('  • NHL: Google Sheets CSV export');
+        console.log('  • MLB: Google Sheets CSV export');
+        console.log('  • NCAAF: Google Sheets CSV export');
+        console.log('  • Soccer: Google Sheets CSV export');
+        console.log('');
+
+        // Analyze column structure from first row
+        if (allData.length > 0) {
+            const firstRow = allData[0];
+            console.log('Column Mapping (case-insensitive):');
+            const columns = Object.keys(firstRow);
+            columns.forEach(col => {
+                const val = firstRow[col];
+                const display = typeof val === 'string' && val.length > 50 ? val.substring(0, 50) + '...' : val;
+                console.log(`  • ${col}: ${display}`);
+            });
+        }
+        console.log('');
+        console.log('Key Column Access Patterns:');
+        console.log('  • Confidence: row.Confidence || row.confidence');
+        console.log('  • Result: row.Result || row.result');
+        console.log('  • Units: row.Units || row.units');
+        console.log('  • Pick: row.Pick || row.pick');
+        console.log('  • Bet Type: row["Bet Type"] || row.BetType || row["bet type"] || row.betType');
+        console.log('  • Line: row.Line || row.line');
+        console.log('');
+
+        // DEBUG: Show first 10 bets with all relevant columns
+        console.log('2. SAMPLE DATA (First 10 graded bets)');
+        console.log('─────────────────────────────────────────────────────────────────');
+        const gradedBets = allData.filter(row => {
+            const result = (row.Result || row.result || '').toLowerCase();
+            return result && result !== '' && result !== 'pending';
+        });
+
+        gradedBets.slice(0, 10).forEach((row, i) => {
+            const betSize = extractBetSize(row);
             console.log(`Bet #${i+1}:`, {
                 Sport: row.sport,
-                Date: row.Date || row.date,
-                Pick: (row.Pick || row.pick || '').substring(0, 40),
-                BetType: row['Bet Type'] || row.BetType || row['bet type'],
-                Line: row.Line || row.line,
+                Pick: (row.Pick || row.pick || '').substring(0, 35),
+                Confidence: row.Confidence || row.confidence || 'MISSING',
                 Result: row.Result || row.result,
                 Units: row.Units || row.units,
-                Confidence: row.Confidence || row.confidence,
-                ExtractedSize: extractBetSize(row)
+                ExtractedBetSize: betSize + 'u'
             });
         });
+        console.log(`Total graded bets: ${gradedBets.length}`);
         console.log('=================================');
 
         // AVG ODDS VERIFICATION - Log detailed breakdown before rendering
