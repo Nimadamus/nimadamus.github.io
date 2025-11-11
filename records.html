@@ -888,8 +888,35 @@ async function fetchAllData() {
     });
 
     const results = await Promise.all(promises);
-    allData = results.flat();
-    console.log(`✅ Loaded ${allData.length} total picks across all sports`);
+    const rawData = results.flat();
+    console.log(`📥 Loaded ${rawData.length} total picks (before deduplication)`);
+
+    // DEDUPLICATION: Remove duplicate bets by unique identifier (Date + Pick + Line)
+    const seenBets = new Set();
+    const duplicates = [];
+
+    allData = rawData.filter(row => {
+        // Create unique identifier from Date, Pick, and Line
+        const dateStr = row.Date || row.date || '';
+        const pick = (row.Pick || row.pick || '').trim();
+        const line = (row.Line || row.line || '').trim();
+        const sport = row.sport || '';
+
+        const uniqueId = `${dateStr}|${sport}|${pick}|${line}`;
+
+        if (seenBets.has(uniqueId)) {
+            duplicates.push(row);
+            return false; // Filter out duplicate
+        }
+
+        seenBets.add(uniqueId);
+        return true; // Keep unique bet
+    });
+
+    console.log(`✅ Loaded ${allData.length} unique picks (${duplicates.length} duplicates removed)`);
+    if (duplicates.length > 0) {
+        console.log(`🔄 Duplicate bets removed:`, duplicates.slice(0, 5));
+    }
 
     // Debug: Count entries by month
     const monthCounts = {};
@@ -963,7 +990,7 @@ function calculateOverallStats() {
     // Update display
     document.getElementById('total-record').textContent = stats.record;
     document.getElementById('win-rate').textContent = stats.winRate.toFixed(1) + '%';
-    document.getElementById('win-rate').className = `stat-value ${stats.winRate > 50 ? 'positive' : 'negative'}`;
+    document.getElementById('win-rate').className = `stat-value ${stats.winRate >= 50 ? 'positive' : 'negative'}`;
     document.getElementById('total-units').textContent = (stats.units >= 0 ? '+' : '') + stats.units.toFixed(1) + 'u';
     document.getElementById('total-units').className = `stat-value ${stats.units >= 0 ? 'positive' : 'negative'}`;
     document.getElementById('total-roi').textContent = (stats.roi >= 0 ? '+' : '') + stats.roi.toFixed(1) + '%';
@@ -986,8 +1013,8 @@ function calculateSportBreakdown() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><span class="badge badge-${sport.toLowerCase()}">${sport}</span></td>
-            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
             <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
@@ -1056,8 +1083,8 @@ function calculateBetTypeBreakdown() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><strong>${betType.name}</strong></td>
-            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
             <td>${findBestSport(betType.data)}</td>
@@ -1101,8 +1128,8 @@ function calculateMonthlyBreakdown() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><strong>${month.name}</strong></td>
-            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
             <td>${bestSport}</td>
@@ -1192,8 +1219,8 @@ function calculateUnitSizingBreakdown() {
         row.innerHTML = `
             <td><strong>${level.name}</strong></td>
             <td>${levelData.length}</td>
-            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
             <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
             <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
         `;
@@ -1550,43 +1577,32 @@ function extractOdds(line) {
 }
 
 function extractBetSize(row) {
-    // CALCULATE bet size from profit/loss + odds (reverse engineering from juice)
-    const result = (row.Result || row.result || '').toUpperCase();
-    const units = parseFloat(row.Units || row.units || 0);
-    const lineStr = row.Line || row.line || '';
-    const odds = extractOdds(lineStr);
+    // PARSE bet size DIRECTLY from Pick or Bet Type text (e.g., "1u", "2u", "0.5u")
+    const pick = (row.Pick || row.pick || '').toLowerCase();
+    const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+    const searchText = pick + ' ' + betType;
 
-    if (!result || isNaN(units) || !odds) {
-        return 1; // Default to 1u if we can't calculate
-    }
-
-    // For LOSSES: the loss amount IS the bet size (you lose what you risked)
-    if (result === 'L' || result === 'LOSS') {
-        return Math.abs(units);
-    }
-
-    // For WINS: calculate bet size from profit + odds
-    if (result === 'W' || result === 'WIN') {
-        const profit = Math.abs(units);
-
-        if (odds < 0) {
-            // Negative odds (favorite): betSize = profit × (|odds| / 100)
-            // Example: Won 1.0u at -110 → betSize = 1.0 × (110/100) = 1.1u
-            return profit * (Math.abs(odds) / 100);
-        } else {
-            // Positive odds (underdog): betSize = profit / (odds / 100)
-            // Example: Won 1.5u at +150 → betSize = 1.5 / (150/100) = 1.0u
-            return profit / (odds / 100);
+    // Look for patterns like "0.5u", "1u", "2u", "3u", etc.
+    // Use negative lookahead (?!n) to avoid matching "un" in words like "under"
+    const unitMatch = searchText.match(/(\d+\.?\d*)\s*u(?!n)/i);
+    if (unitMatch) {
+        const betSize = parseFloat(unitMatch[1]);
+        if (!isNaN(betSize) && betSize > 0) {
+            return betSize;
         }
     }
 
-    // For PUSHES: estimate bet size from odds (assume typical 1u bet)
-    if (result === 'P' || result === 'PUSH') {
-        // Can't calculate exactly, but pushes are typically 1u
-        return 1;
+    // Fallback: Try to extract from Units column for losses
+    // (Losses show negative units = amount risked)
+    const result = (row.Result || row.result || '').toUpperCase();
+    const units = parseFloat(row.Units || row.units || 0);
+
+    if ((result === 'L' || result === 'LOSS') && !isNaN(units) && units < 0) {
+        return Math.abs(units);
     }
 
-    return 1; // Default fallback
+    // Final fallback: default to 1u
+    return 1;
 }
 
 async function init() {
