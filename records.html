@@ -1681,7 +1681,8 @@ function extractBetSize(row) {
         }
     }
 
-    // Check confidence level as backup (1-6 confidence maps to unit sizes)
+    // PRIMARY METHOD: Check confidence level (1-6 confidence maps to unit sizes)
+    // This should be the PRIMARY method since most picks use confidence levels
     if (confidence) {
         const confNum = parseInt(confidence);
         if (!isNaN(confNum)) {
@@ -1693,13 +1694,32 @@ function extractBetSize(row) {
         }
     }
 
-    // Fallback: Try to extract from Units column for losses
-    // (Losses show negative units = amount risked)
+    // Fallback: Try to extract from Units column
+    // For wins: Units column shows profit (need to reverse-calculate stake from odds)
+    // For losses: Units column shows negative amount risked
     const result = (row.Result || row.result || '').toUpperCase();
     const units = parseFloat(row.Units || row.units || 0);
+    const line = row.Line || row.line || row.Odds || row.odds || '';
 
     if ((result === 'L' || result === 'LOSS') && !isNaN(units) && units < 0) {
+        // For losses, the Units column is the negative amount risked
         return Math.abs(units);
+    }
+
+    if ((result === 'W' || result === 'WIN') && !isNaN(units) && units > 0) {
+        // For wins, try to reverse-calculate stake from profit and odds
+        const odds = extractOdds(line);
+        if (odds) {
+            // For positive odds: profit = stake * (odds/100)
+            // For negative odds: profit = stake * (100/|odds|)
+            if (odds > 0) {
+                const stake = units / (odds / 100);
+                if (stake > 0 && stake < 10) return Math.round(stake * 2) / 2; // Round to nearest 0.5
+            } else if (odds < 0) {
+                const stake = units / (100 / Math.abs(odds));
+                if (stake > 0 && stake < 10) return Math.round(stake * 2) / 2; // Round to nearest 0.5
+            }
+        }
     }
 
     // Final fallback: default to 1u
