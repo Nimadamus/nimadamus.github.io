@@ -1587,6 +1587,72 @@ function calculateTotalBetsBreakdown() {
         `;
         tbody.appendChild(row);
     }
+
+    // Team Totals (TT)
+    const teamTotalData = totalBetsData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        const searchText = pick + ' ' + betType;
+        return searchText.includes('tt') || searchText.includes('team total');
+    });
+
+    if (teamTotalData.length > 0) {
+        const ttStats = calculateStats(teamTotalData, true);
+        row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>Team Totals</strong></td>
+            <td class="${ttStats.winRate > 50 ? 'win' : 'loss'}">${ttStats.record}</td>
+            <td class="${ttStats.winRate > 50 ? 'win' : ''}">${ttStats.winRate.toFixed(1)}%</td>
+            <td class="${ttStats.units >= 0 ? 'win' : 'loss'}">${ttStats.units >= 0 ? '+' : ''}${ttStats.units.toFixed(1)}u</td>
+            <td class="${ttStats.roi >= 0 ? 'win' : 'loss'}">${ttStats.roi >= 0 ? '+' : ''}${ttStats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(teamTotalData)}</td>
+        `;
+        tbody.appendChild(row);
+    }
+
+    // Game Totals (non-team totals)
+    const gameTotalData = totalBetsData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        const searchText = pick + ' ' + betType;
+        return !searchText.includes('tt') && !searchText.includes('team total');
+    });
+
+    if (gameTotalData.length > 0) {
+        const gameStats = calculateStats(gameTotalData, true);
+        row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>Game Totals</strong></td>
+            <td class="${gameStats.winRate > 50 ? 'win' : 'loss'}">${gameStats.record}</td>
+            <td class="${gameStats.winRate > 50 ? 'win' : ''}">${gameStats.winRate.toFixed(1)}%</td>
+            <td class="${gameStats.units >= 0 ? 'win' : 'loss'}">${gameStats.units >= 0 ? '+' : ''}${gameStats.units.toFixed(1)}u</td>
+            <td class="${gameStats.roi >= 0 ? 'win' : 'loss'}">${gameStats.roi >= 0 ? '+' : ''}${gameStats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(gameTotalData)}</td>
+        `;
+        tbody.appendChild(row);
+    }
+
+    // First Half Totals
+    const firstHalfData = totalBetsData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        const searchText = pick + ' ' + betType;
+        return searchText.includes('1h') || searchText.includes('first half') || searchText.includes('1st half');
+    });
+
+    if (firstHalfData.length > 0) {
+        const fhStats = calculateStats(firstHalfData, true);
+        row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>First Half Totals</strong></td>
+            <td class="${fhStats.winRate > 50 ? 'win' : 'loss'}">${fhStats.record}</td>
+            <td class="${fhStats.winRate > 50 ? 'win' : ''}">${fhStats.winRate.toFixed(1)}%</td>
+            <td class="${fhStats.units >= 0 ? 'win' : 'loss'}">${fhStats.units >= 0 ? '+' : ''}${fhStats.units.toFixed(1)}u</td>
+            <td class="${fhStats.roi >= 0 ? 'win' : 'loss'}">${fhStats.roi >= 0 ? '+' : ''}${fhStats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(firstHalfData)}</td>
+        `;
+        tbody.appendChild(row);
+    }
 }
 
 function createPerformanceChart() {
