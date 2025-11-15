@@ -633,17 +633,7 @@ tbody tr:hover {
         </div>
 
         <div class="stat-card">
-            <div class="stat-label">Total Units</div>
-            <div class="stat-value" id="total-units">--</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-label">ROI</div>
-            <div class="stat-value" id="total-roi">--</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-label">Avg Odds</div>
+            <div class="stat-label">Average Odds</div>
             <div class="stat-value" id="avg-odds">--</div>
         </div>
 
@@ -991,10 +981,6 @@ function calculateOverallStats() {
     document.getElementById('total-record').textContent = stats.record;
     document.getElementById('win-rate').textContent = stats.winRate.toFixed(1) + '%';
     document.getElementById('win-rate').className = `stat-value ${stats.winRate >= 50 ? 'positive' : 'negative'}`;
-    document.getElementById('total-units').textContent = (stats.units >= 0 ? '+' : '') + stats.units.toFixed(1) + 'u';
-    document.getElementById('total-units').className = `stat-value ${stats.units >= 0 ? 'positive' : 'negative'}`;
-    document.getElementById('total-roi').textContent = (stats.roi >= 0 ? '+' : '') + stats.roi.toFixed(1) + '%';
-    document.getElementById('total-roi').className = `stat-value ${stats.roi >= 0 ? 'positive' : 'negative'}`;
     document.getElementById('avg-odds').textContent = stats.avgOdds > 0 ? '+' + stats.avgOdds : stats.avgOdds;
     document.getElementById('total-picks').textContent = totalPicks;
     document.getElementById('win-progress').style.width = stats.winRate + '%';
@@ -1113,7 +1099,7 @@ function calculateMonthlyBreakdown() {
         const monthName = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 
         if (!monthlyData[monthKey]) {
-            monthlyData[monthKey] = { name: monthName, data: [] };
+            monthlyData[monthKey] = { name: monthName, data: [], sortKey: monthKey };
         }
         monthlyData[monthKey].data.push(row);
     });
@@ -1121,7 +1107,22 @@ function calculateMonthlyBreakdown() {
     const tbody = document.getElementById('monthly-breakdown');
     tbody.innerHTML = '';
 
-    Object.values(monthlyData).reverse().forEach(month => {
+    // Custom chronological sort order: July, August, September, October, November
+    const customOrder = {
+        '2025-07': 1,
+        '2025-08': 2,
+        '2025-09': 3,
+        '2025-10': 4,
+        '2025-11': 5
+    };
+
+    const sortedMonths = Object.values(monthlyData).sort((a, b) => {
+        const orderA = customOrder[a.sortKey] || 999;
+        const orderB = customOrder[b.sortKey] || 999;
+        return orderA - orderB;
+    });
+
+    sortedMonths.forEach(month => {
         const stats = calculateStats(month.data, true);
         const bestSport = findBestSport(month.data);
 
