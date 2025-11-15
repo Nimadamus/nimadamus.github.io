@@ -806,6 +806,32 @@ tbody tr:hover {
         </div>
     </div>
 
+    <!-- Team Totals by Sport -->
+    <div class="section">
+        <h2 class="section-title">🎯 Team Totals by Sport</h2>
+        <div class="highlight-box" style="border-left-color: var(--gold);">
+            <h3>What Are Team Totals?</h3>
+            <p style="margin-top: 10px; line-height: 1.8;">
+                <strong>Team Totals (TT)</strong> focus on a single team's scoring output rather than the combined total of both teams. You're betting whether one specific team will score over or under their posted team total. This removes the other team's performance from the equation and allows you to target teams with explosive offenses, strong defensive matchups, or favorable game scripts. Team totals are especially valuable when you have strong conviction about one team but uncertainty about their opponent.
+            </p>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sport</th>
+                        <th>Record</th>
+                        <th>Win %</th>
+                        <th>Units</th>
+                        <th>ROI</th>
+                        <th>Avg Odds</th>
+                    </tr>
+                </thead>
+                <tbody id="team-totals-by-sport"></tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- Methodology -->
     <div class="section">
         <h2 class="section-title">🧠 Methodology & Data Source</h2>
@@ -1655,6 +1681,46 @@ function calculateTotalBetsBreakdown() {
     }
 }
 
+function calculateTeamTotalsBySport() {
+    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'Soccer'];
+    const tbody = document.getElementById('team-totals-by-sport');
+    tbody.innerHTML = '';
+
+    let hasData = false;
+
+    sports.forEach(sport => {
+        const sportData = allData.filter(row => {
+            if (row.sport !== sport) return false;
+
+            const pick = (row.Pick || row.pick || '').toLowerCase();
+            const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+            const searchText = pick + ' ' + betType;
+
+            // Filter for team totals
+            return searchText.includes('tt') || searchText.includes('team total');
+        });
+
+        if (sportData.length === 0) return;
+
+        hasData = true;
+        const stats = calculateStats(sportData, true);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><span class="badge badge-${sport.toLowerCase()}">${sport}</span></td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
+            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+            <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
+        `;
+        tbody.appendChild(row);
+    });
+
+    if (!hasData) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No team total data available</td></tr>';
+    }
+}
+
 function createPerformanceChart() {
     const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'Soccer'];
     const sportData = sports.map(sport => {
@@ -1923,6 +1989,7 @@ async function init() {
         calculateTeaserBreakdown();
         calculateFiveInningBreakdown();
         calculateTotalBetsBreakdown();
+        calculateTeamTotalsBySport();
 
         // COMPREHENSIVE MATH VERIFICATION
         console.log('=== MATH VERIFICATION ===');
