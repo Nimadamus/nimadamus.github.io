@@ -787,7 +787,6 @@
             ],
             odds: '-218',
             result: 'pending',
-            units: 0,
             note: 'Three-team ML parlay featuring elite programs in dominant spots. Lakers at home, Duke in Champions Classic at MSG vs Kansas, and Utah as massive favorites. First 3-leg parlay—stepping up the aggression with three heavy chalk plays that should all cruise. All three teams are significantly superior to their opponents.'
         },
         {
@@ -798,7 +797,6 @@
             ],
             odds: '-184',
             result: 'win',
-            units: 0.54,
             note: 'Pistons dominated Pacers 127-112 with Jalen Duren dropping 31 points, extending win streak to 10 straight games. Raptors edged Hornets 110-108 in a tight one. Both home favorites delivered as expected. Second consecutive winning ML parlay. ✓ WINNER'
         },
         {
@@ -809,7 +807,6 @@
             ],
             odds: '-225',
             result: 'win',
-            units: 0.44,
             note: 'Cavs dominated as expected. Ravens closed it out Saturday night 35-14 vs Steelers. Two heavy favorites with elite team advantages = solid parlay value. ✓ WINNER'
         }
     ];
@@ -839,10 +836,24 @@
             // Count results
             if (parlay.result === 'win') {
                 wins++;
-                totalUnits += parlay.units;
+                const odds = parseInt(parlay.odds);
+                if (odds > 0) {
+                    // Positive odds: win the odds amount (e.g., +285 wins 2.85 units)
+                    totalUnits += odds / 100;
+                } else {
+                    // Negative odds: win 1 unit
+                    totalUnits += 1;
+                }
             } else if (parlay.result === 'loss') {
                 losses++;
-                totalUnits -= 1; // Assuming 1 unit bet per parlay
+                const odds = parseInt(parlay.odds);
+                if (odds > 0) {
+                    // Positive odds: lose 1 unit
+                    totalUnits -= 1;
+                } else {
+                    // Negative odds: lose the amount risked (e.g., -218 loses 2.18 units)
+                    totalUnits -= Math.abs(odds) / 100;
+                }
             } else if (parlay.result === 'push') {
                 pushes++;
             }
@@ -980,13 +991,21 @@
                 resultBadge = `<span class="result-badge pending">PENDING</span>`;
             }
 
-            const unitsDisplay = parlay.result === 'win'
-                ? `<span style="color: var(--win-color);">+${parlay.units.toFixed(2)}</span>`
-                : parlay.result === 'loss'
-                ? `<span style="color: var(--loss-color);">-1.00</span>`
-                : parlay.result === 'push'
-                ? `<span style="color: var(--push-color);">0.00</span>`
-                : `<span style="color: var(--text-color);">TBD</span>`;
+            // Calculate units for display
+            let unitsDisplay;
+            if (parlay.result === 'win') {
+                const odds = parseInt(parlay.odds);
+                const unitsWon = odds > 0 ? (odds / 100).toFixed(2) : '1.00';
+                unitsDisplay = `<span style="color: var(--win-color);">+${unitsWon}</span>`;
+            } else if (parlay.result === 'loss') {
+                const odds = parseInt(parlay.odds);
+                const unitsLost = odds > 0 ? '1.00' : (Math.abs(odds) / 100).toFixed(2);
+                unitsDisplay = `<span style="color: var(--loss-color);">-${unitsLost}</span>`;
+            } else if (parlay.result === 'push') {
+                unitsDisplay = `<span style="color: var(--push-color);">0.00</span>`;
+            } else {
+                unitsDisplay = `<span style="color: var(--text-color);">TBD</span>`;
+            }
 
             const noteHTML = parlay.note ? `
                 <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
