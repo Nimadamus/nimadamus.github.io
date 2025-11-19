@@ -570,6 +570,7 @@ tbody tr:hover {
                 <a href="bestonlinesportsbook.html">Best Sportsbook</a>
                 <a href="betting-glossary.html">Betting Glossary</a>
                 <a href="betting-101.html">Betting 101</a>
+                <a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a>
             </div>
         </div>
 
@@ -1469,8 +1470,9 @@ function calculateTeaserBreakdown() {
             const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
             const searchText = pick + ' ' + betType;
 
-            // Check if it's a teaser AND matches this specific type
-            if (!searchText.includes('teaser')) return false;
+            // Check if it's a teaser (including abbreviations like tsr, teas, etc.)
+            const isTeaserBet = searchText.includes('teaser') || searchText.includes('tsr') || searchText.includes('teas');
+            if (!isTeaserBet) return false;
 
             return teaserType.patterns.some(pattern => searchText.includes(pattern));
         });
