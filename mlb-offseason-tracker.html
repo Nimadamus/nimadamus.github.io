@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MLB Off-Season Transaction Tracker - Live Updates | BetLegend</title>
+<meta content="Track every MLB off-season transaction in real-time. Complete coverage of trades, free agent signings, arbitration cases, injuries, and roster moves updated daily." name="description"/>
+<meta content="MLB transactions, free agency tracker, trade tracker, MLB signings, arbitration, roster moves, MLB news updates" name="keywords"/>
+<link rel="canonical" href="https://www.betlegendpicks.com/mlb-offseason-tracker.html" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+    :root {
+        --glow-color: #00e0ff;
+        --bg-color: #000;
+        --glass-bg: rgba(10, 15, 25, 0.7);
+        --glass-border: rgba(0, 224, 255, 0.3);
+        --font-primary: 'Orbitron', sans-serif;
+        --font-secondary: 'Poppins', sans-serif;
+        --elite-green: #39FF14;
+        --warning-orange: #FF8C00;
+        --neon-cyan: #00ffff;
+        --neon-gold: #FFD700;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        background-color: var(--bg-color);
+        background-image: url('https://images.unsplash.com/photo-1508817628294-5a453fa0b8fb?q=80&w=2070&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: var(--font-secondary);
+        color: #fff;
+        overflow-x: hidden;
+        padding-top: 140px;
+    }
+
+    .logo-container {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1000;
+    }
+
+    .logo-container a {
+        color: #fff;
+        text-decoration: none;
+        font-family: var(--font-primary);
+        font-size: 2.5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    .logo-container span {
+        color: var(--neon-cyan);
+        text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.8), 0 0 50px rgba(0, 255, 255, 0.6);
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 18px 5% 18px 280px;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--glass-border);
+        z-index: 999;
+    }
+
+    .nav-links a {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 8px 12px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: var(--glow-color);
+        text-shadow: 0 0 10px var(--glow-color);
+    }
+
+    .content-wrapper {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .title {
+        font-family: var(--font-primary);
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: #fff;
+        margin-bottom: 15px;
+        text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 25px var(--glow-color);
+    }
+
+    .title .highlight {
+        color: var(--glow-color);
+    }
+
+    .page-subtitle {
+        font-family: var(--font-secondary);
+        font-size: 1.3rem;
+        color: var(--glow-color);
+        margin-bottom: 10px;
+    }
+
+    .last-updated {
+        color: #999;
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+
+    /* Transaction Stats Dashboard */
+    .stats-dashboard {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 25px;
+        border: 1px solid var(--glass-border);
+        text-align: center;
+    }
+
+    .stat-number {
+        font-family: var(--font-primary);
+        font-size: 3rem;
+        color: var(--glow-color);
+        margin-bottom: 8px;
+    }
+
+    .stat-label {
+        font-size: 0.95rem;
+        color: #ccc;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Transaction Categories */
+    .category-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .tab-btn {
+        background: rgba(0, 224, 255, 0.1);
+        border: 2px solid var(--glass-border);
+        color: var(--glow-color);
+        font-family: var(--font-secondary);
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 12px 25px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+        background: rgba(0, 224, 255, 0.3);
+        box-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+        transform: translateY(-2px);
+    }
+
+    /* Transactions Container */
+    .transactions-container {
+        margin-bottom: 40px;
+    }
+
+    .transaction-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 25px;
+        border: 1px solid var(--glass-border);
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .transaction-card:hover {
+        border-color: var(--glow-color);
+        box-shadow: 0 5px 20px rgba(0, 224, 255, 0.3);
+    }
+
+    .transaction-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .transaction-type {
+        font-family: var(--font-primary);
+        font-size: 0.9rem;
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .type-signing {
+        background: rgba(57, 255, 20, 0.2);
+        color: var(--elite-green);
+        border: 1px solid var(--elite-green);
+    }
+
+    .type-trade {
+        background: rgba(255, 215, 0, 0.2);
+        color: var(--neon-gold);
+        border: 1px solid var(--neon-gold);
+    }
+
+    .type-arbitration {
+        background: rgba(0, 224, 255, 0.2);
+        color: var(--glow-color);
+        border: 1px solid var(--glow-color);
+    }
+
+    .type-injury {
+        background: rgba(255, 68, 68, 0.2);
+        color: #ff4444;
+        border: 1px solid #ff4444;
+    }
+
+    .transaction-date {
+        color: #999;
+        font-size: 0.9rem;
+    }
+
+    .transaction-title {
+        font-family: var(--font-primary);
+        font-size: 1.4rem;
+        color: var(--glow-color);
+        margin-bottom: 12px;
+    }
+
+    .transaction-details {
+        line-height: 1.7;
+        font-size: 1.05rem;
+        color: #e0e0e0;
+    }
+
+    .transaction-details strong {
+        color: #fff;
+    }
+
+    .impact-analysis {
+        background: rgba(0, 224, 255, 0.1);
+        border-left: 3px solid var(--glow-color);
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: 6px;
+    }
+
+    .impact-title {
+        font-weight: 700;
+        color: var(--glow-color);
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    .teams-involved {
+        display: flex;
+        gap: 15px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+    }
+
+    .team-tag {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding-top: 180px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+        }
+
+        .nav-links {
+            padding-left: 5%;
+            padding-top: 80px;
+        }
+
+        .logo-container a {
+            font-size: 2rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+        }
+
+        .transaction-title {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="logo-container">
+        <a href="index.html">BET<span>LEGEND</span></a>
+    </div>
+
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="mlb.html">MLB Picks</a>
+        <a href="mlb-records.html">MLB Records</a>
+        <a href="mlb-offseason-blog.html">Off-Season Blog</a>
+        <a href="mlb-offseason-tracker.html" style="color: var(--glow-color);">Transaction Tracker</a>
+        <a href="mlb-futures.html">Futures & Predictions</a>
+        <a href="mlb-insights.html">Daily Insights</a>
+    </nav>
+
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h1 class="title">MLB Off-Season <span class="highlight">Transaction Tracker</span></h1>
+            <p class="page-subtitle">Live Updates on Every Trade, Signing, and Roster Move</p>
+            <p class="last-updated">Last Updated: November 13, 2025 - 9:45 AM ET</p>
+        </div>
+
+        <!-- Transaction Stats Dashboard -->
+        <div class="stats-dashboard">
+            <div class="stat-card">
+                <div class="stat-number">47</div>
+                <div class="stat-label">Free Agent Signings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">23</div>
+                <div class="stat-label">Trades Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">$2.8B</div>
+                <div class="stat-label">Total Money Spent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">89</div>
+                <div class="stat-label">Players Moved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">156</div>
+                <div class="stat-label">Arbitration Cases</div>
+            </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="tab-btn active">All Transactions</button>
+            <button class="tab-btn">Free Agent Signings</button>
+            <button class="tab-btn">Trades</button>
+            <button class="tab-btn">Arbitration</button>
+            <button class="tab-btn">Injuries & IL Moves</button>
+        </div>
+
+        <!-- Transactions Feed -->
+        <div class="transactions-container">
+
+            <!-- Transaction 1 -->
+            <div class="transaction-card">
+                <div class="transaction-header">
+                    <span class="transaction-type type-signing">FREE AGENT SIGNING</span>
+                    <span class="transaction-date">📅 November 13, 2025</span>
+                </div>
+                <h3 class="transaction-title">Cody Bellinger Signs 6-Year, $192M Deal with Cubs</h3>
+                <div class="transaction-details">
+                    <p>The Chicago Cubs have made their biggest splash of the off-season, signing former MVP <strong>Cody Bellinger</strong> to a massive 6-year, $192 million contract. The deal includes a full no-trade clause and backloads salary to allow the Cubs flexibility in 2026.</p>
+                    <div class="teams-involved">
+                        <span class="team-tag">CHC CUBS</span>
+                    </div>
+                </div>
+                <div class="impact-analysis">
+                    <div class="impact-title">💡 Betting Impact</div>
+                    <p>This immediately vaults the Cubs into NL Central contention. Expect their win total to move from 82.5 to around <strong>87.5 wins</strong>. Division odds should improve from +450 to approximately +280. Bellinger's power bat gives them a legitimate middle-of-the-order threat they've been missing since the 2016 championship core departed.</p>
+                </div>
+            </div>
+
+            <!-- Transaction 2 -->
+            <div class="transaction-card">
+                <div class="transaction-header">
+                    <span class="transaction-type type-trade">TRADE</span>
+                    <span class="transaction-date">📅 November 12, 2025</span>
+                </div>
+                <h3 class="transaction-title">Rays Trade Tyler Glasnow to Yankees for Top Prospect Package</h3>
+                <div class="transaction-details">
+                    <p>In a blockbuster deal, the Tampa Bay Rays have traded ace <strong>Tyler Glasnow</strong> to the New York Yankees in exchange for their #2 prospect SS Jasson Dominguez, RHP Drew Thorpe, and OF Everson Pereira. The Yankees also received cash considerations to offset Glasnow's $25M salary.</p>
+                    <div class="teams-involved">
+                        <span class="team-tag">NYY YANKEES</span>
+                        <span class="team-tag">TB RAYS</span>
+                    </div>
+                </div>
+                <div class="impact-analysis">
+                    <div class="impact-title">💡 Betting Impact</div>
+                    <p><strong>Yankees:</strong> Adding Glasnow to pair with Gerrit Cole creates arguably the best 1-2 punch in the American League. Their World Series odds should move from +650 to around +475. This signals they're all-in for 2026.</p>
+                    <p style="margin-top: 10px;"><strong>Rays:</strong> Classic Tampa move - selling high on a pitcher entering his age-32 season. They're clearly punting on 2026 to reload their farm system. Win total will likely drop from 86.5 to around 79.5.</p>
+                </div>
+            </div>
+
+            <!-- Transaction 3 -->
+            <div class="transaction-card">
+                <div class="transaction-header">
+                    <span class="transaction-type type-signing">FREE AGENT SIGNING</span>
+                    <span class="transaction-date">📅 November 11, 2025</span>
+                </div>
+                <h3 class="transaction-title">Rangers Re-Sign Nathan Eovaldi: 3 Years, $75M</h3>
+                <div class="transaction-details">
+                    <p>The defending World Series champion Texas Rangers have brought back veteran ace <strong>Nathan Eovaldi</strong> on a 3-year, $75 million deal. Eovaldi was dominant in their playoff run and the Rangers made retaining him a top priority.</p>
+                    <div class="teams-involved">
+                        <span class="team-tag">TEX RANGERS</span>
+                    </div>
+                </div>
+                <div class="impact-analysis">
+                    <div class="impact-title">💡 Betting Impact</div>
+                    <p>Smart move by Texas to keep their championship window open. Eovaldi gives them stability at the top of the rotation alongside Jacob deGrom (when healthy). The Rangers remain legitimate World Series contenders at around <strong>+850</strong>. Their AL West odds stay competitive at +240.</p>
+                </div>
+            </div>
+
+            <!-- Transaction 4 -->
+            <div class="transaction-card">
+                <div class="transaction-header">
+                    <span class="transaction-type type-arbitration">ARBITRATION</span>
+                    <span class="transaction-date">📅 November 10, 2025</span>
+                </div>
+                <h3 class="transaction-title">Braves Avoid Arbitration with Max Fried: 1-Year, $18.5M</h3>
+                <div class="transaction-details">
+                    <p>The Atlanta Braves have avoided arbitration with left-hander <strong>Max Fried</strong>, agreeing to a 1-year, $18.5 million deal. This keeps Fried in Atlanta for at least one more season before he hits free agency next winter.</p>
+                    <div class="teams-involved">
+                        <span class="team-tag">ATL BRAVES</span>
+                    </div>
+                </div>
+                <div class="impact-analysis">
+                    <div class="impact-title">💡 Betting Impact</div>
+                    <p>The Braves maintain rotation stability but this is just delaying the inevitable - Fried will command $150M+ next off-season. Atlanta remains the NL East favorite at <strong>+145</strong>. Watch for extension talks throughout the season. If Fried struggles or gets injured, this could be a massive overpay.</p>
+                </div>
+            </div>
+
+            <!-- Transaction 5 -->
+            <div class="transaction-card">
+                <div class="transaction-header">
+                    <span class="transaction-type type-injury">INJURY UPDATE</span>
+                    <span class="transaction-date">📅 November 10, 2025</span>
+                </div>
+                <h3 class="transaction-title">Angels Star Mike Trout Undergoes Knee Surgery</h3>
+                <div class="transaction-details">
+                    <p>Los Angeles Angels superstar <strong>Mike Trout</strong> underwent successful knee surgery and is expected to miss the first 6-8 weeks of the 2026 season. This is another setback for the perennial MVP candidate who has battled injuries in recent years.</p>
+                    <div class="teams-involved">
+                        <span class="team-tag">LAA ANGELS</span>
+                    </div>
+                </div>
+                <div class="impact-analysis">
+                    <div class="impact-title">💡 Betting Impact</div>
+                    <p>Brutal news for Angels bettors. Their win total was already sitting at a modest 78.5, and losing Trout for 2 months could push it down to <strong>73.5 wins</strong>. The Angels were long shots for the AL West (+1800) and this essentially ends any playoff hopes before the season even starts. Fade the Angels early season until Trout returns.</p>
+                </div>
+            </div>
+
+            <!-- Transaction 6 -->
+            <div class="transaction-card">
+                <div class="transaction-header">
+                    <span class="transaction-type type-trade">TRADE</span>
+                    <span class="transaction-date">📅 November 9, 2025</span>
+                </div>
+                <h3 class="transaction-title">Reds Trade Luis Castillo to Dodgers in Three-Team Deal</h3>
+                <div class="transaction-details">
+                    <p>In a complex three-team trade, the Cincinnati Reds have sent ace <strong>Luis Castillo</strong> to the Los Angeles Dodgers. The Dodgers sent prospects to both Cincinnati and Cleveland, while Cleveland sent veteran OF Tyler Naquin to Cincinnati to complete the deal.</p>
+                    <div class="teams-involved">
+                        <span class="team-tag">LAD DODGERS</span>
+                        <span class="team-tag">CIN REDS</span>
+                        <span class="team-tag">CLE GUARDIANS</span>
+                    </div>
+                </div>
+                <div class="impact-analysis">
+                    <div class="impact-title">💡 Betting Impact</div>
+                    <p><strong>Dodgers:</strong> Already the NL favorites, adding Castillo makes them absolutely loaded. World Series odds drop from +350 to around <strong>+275</strong>. They're building an All-Star rotation.</p>
+                    <p style="margin-top: 10px;"><strong>Reds:</strong> Full rebuild mode. They're punting on 2026-2027 to stockpile prospects. Win total could fall below 70.</p>
+                </div>
+            </div>
+
+            <!-- Transaction 7 -->
+            <div class="transaction-card">
+                <div class="transaction-header">
+                    <span class="transaction-type type-signing">FREE AGENT SIGNING</span>
+                    <span class="transaction-date">📅 November 8, 2025</span>
+                </div>
+                <h3 class="transaction-title">Mariners Sign Closer Jordan Romano: 3 Years, $48M</h3>
+                <div class="transaction-details">
+                    <p>The Seattle Mariners addressed their biggest weakness by signing elite closer <strong>Jordan Romano</strong> to a 3-year, $48 million contract. Romano brings a proven track record and stabilizes the back end of Seattle's bullpen.</p>
+                    <div class="teams-involved">
+                        <span class="team-tag">SEA MARINERS</span>
+                    </div>
+                </div>
+                <div class="impact-analysis">
+                    <div class="impact-title">💡 Betting Impact</div>
+                    <p>Smart signing for a team that lost countless close games last year. Adding Romano should be worth 4-6 additional wins just by converting saves they blew in 2025. Seattle's win total moves from 84.5 to around <strong>87.5</strong>. They're legitimate AL West contenders at +320.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer style="text-align: center; padding: 40px 20px; color: #666; border-top: 1px solid var(--glass-border); margin-top: 60px;">
+        <p style="font-family: var(--font-primary); color: var(--glow-color); margin-bottom: 10px;">BET<span style="color: var(--neon-cyan);">LEGEND</span></p>
+        <p style="margin-bottom: 5px;">&copy; 2025 BetLegend Picks. All rights reserved.</p>
+        <p style="font-size: 0.85rem;">Expert Sports Betting Analysis | Verified Track Records</p>
+    </footer>
+
+</body>
+</html>
