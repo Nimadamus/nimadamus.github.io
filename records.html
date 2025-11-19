@@ -1484,13 +1484,13 @@ function calculateTeaserBreakdown() {
     const tbody = document.getElementById('teaser-breakdown');
     tbody.innerHTML = '';
 
-    // Define specific teaser types to show
+    // Define specific teaser types to show - matching "X team teaser Xpt" format
     const teaserTypes = [
-        { name: '6-Point Teaser', patterns: ['6-point', '6 point', '6pt'] },
-        { name: '6.5-Point Teaser', patterns: ['6.5-point', '6.5 point', '6.5pt'] },
-        { name: '7-Point Teaser', patterns: ['7-point', '7 point', '7pt'] },
-        { name: '10-Point Teaser', patterns: ['10-point', '10 point', '10pt'] },
-        { name: '13-Point Teaser', patterns: ['13-point', '13 point', '13pt'] }
+        { name: '6-Point Teaser', pattern: '6' },
+        { name: '6.5-Point Teaser', pattern: '6.5' },
+        { name: '7-Point Teaser', pattern: '7' },
+        { name: '10-Point Teaser', pattern: '10' },
+        { name: '13-Point Teaser', pattern: '13' }
     ];
 
     let hasData = false;
@@ -1501,11 +1501,13 @@ function calculateTeaserBreakdown() {
             const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
             const searchText = pick + ' ' + betType;
 
-            // Check if it's a teaser (including abbreviations like tsr, teas, etc.)
+            // Check if it's a teaser bet (including abbreviations)
             const isTeaserBet = searchText.includes('teaser') || searchText.includes('tsr') || searchText.includes('teas');
             if (!isTeaserBet) return false;
 
-            return teaserType.patterns.some(pattern => searchText.includes(pattern));
+            // Match the point value (e.g., "6pt", "6 pt", "6-pt", "6 point", or just "6" followed by "pt"/"point")
+            const pointPattern = new RegExp(teaserType.pattern + '\\s*(-)?\\s*(pt|point)', 'i');
+            return pointPattern.test(searchText);
         });
 
         if (typeData.length === 0) return;
@@ -1533,13 +1535,14 @@ function calculateParlayBreakdown() {
     const tbody = document.getElementById('parlay-breakdown');
     tbody.innerHTML = '';
 
-    // Define specific parlay types to show
+    // Define specific parlay types to show - matching "X team parlay" or "X leg parlay" format
     const parlayTypes = [
-        { name: '2-Leg Parlay', patterns: ['2-leg', '2 leg', '2leg'] },
-        { name: '3-Leg Parlay', patterns: ['3-leg', '3 leg', '3leg'] },
-        { name: '4-Leg Parlay', patterns: ['4-leg', '4 leg', '4leg'] },
-        { name: '5-Leg Parlay', patterns: ['5-leg', '5 leg', '5leg'] },
-        { name: '6+ Leg Parlay', patterns: ['6-leg', '6 leg', '6leg', '7-leg', '7 leg', '7leg', '8-leg', '8 leg', '8leg', '9-leg', '9 leg', '9leg', '10-leg', '10 leg', '10leg'] }
+        { name: '2-Team Parlay', pattern: '2' },
+        { name: '3-Team Parlay', pattern: '3' },
+        { name: '4-Team Parlay', pattern: '4' },
+        { name: '5-Team Parlay', pattern: '5' },
+        { name: '6-Team Parlay', pattern: '6' },
+        { name: '7+ Team Parlay', patterns: ['7', '8', '9', '10'] }
     ];
 
     let hasData = false;
@@ -1554,7 +1557,18 @@ function calculateParlayBreakdown() {
             const isParlayBet = searchText.includes('parlay') || searchText.includes('parl');
             if (!isParlayBet) return false;
 
-            return parlayType.patterns.some(pattern => searchText.includes(pattern));
+            // Match the team/leg count (e.g., "2 team", "2team", "2 leg", "2leg")
+            if (parlayType.patterns) {
+                // For 7+ Team Parlay, check multiple patterns
+                return parlayType.patterns.some(pattern => {
+                    const teamPattern = new RegExp(pattern + '\\s*(team|leg)', 'i');
+                    return teamPattern.test(searchText);
+                });
+            } else {
+                // For single pattern (2-6 team parlays)
+                const teamPattern = new RegExp(parlayType.pattern + '\\s*(team|leg)', 'i');
+                return teamPattern.test(searchText);
+            }
         });
 
         if (typeData.length === 0) return;
