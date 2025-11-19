@@ -1535,6 +1535,25 @@ function calculateParlayBreakdown() {
     const tbody = document.getElementById('parlay-breakdown');
     tbody.innerHTML = '';
 
+    // INJECT CURRENT PARLAY DATA (from moneyline-parlay-of-the-day page)
+    const currentParlayData = [
+        { Date: '11/18/2025', Pick: '3 Team Parlay: Lakers ML, Duke ML, Utah ML', Odds: '-218', Result: 'W', Units: '+1.5', sport: 'NBA' },
+        { Date: '11/17/2025', Pick: '2 Team Parlay: Pistons ML, Raptors ML', Odds: '-184', Result: 'W', Units: '+3', sport: 'NBA' },
+        { Date: '11/15/2025', Pick: '2 Team Parlay: Cavaliers ML, Ravens ML', Odds: '-225', Result: 'W', Units: '+1', sport: 'NFL' }
+    ];
+
+    // Merge current parlay data with sheet data (current data takes precedence)
+    currentParlayData.forEach(currentParlay => {
+        const existsInSheets = allData.some(row => {
+            const rowDate = row.Date || row.date || '';
+            const rowPick = (row.Pick || row.pick || '').toLowerCase();
+            return rowDate === currentParlay.Date && rowPick.includes('parlay');
+        });
+        if (!existsInSheets) {
+            allData.push(currentParlay);
+        }
+    });
+
     // Define specific parlay types to show - matching "X team parlay" or "X leg parlay" format
     const parlayTypes = [
         { name: '2-Team Parlay', pattern: '2' },
