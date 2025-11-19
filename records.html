@@ -763,6 +763,37 @@ tbody tr:hover {
         </div>
     </div>
 
+    <!-- Parlay Breakdown -->
+    <div class="section">
+        <h2 class="section-title">🎰 Parlay Breakdown</h2>
+        <div class="highlight-box" style="border-left-color: var(--accent);">
+            <h3>What Are Parlays?</h3>
+            <p style="margin-top: 10px; line-height: 1.8;">
+                <strong>Parlays</strong> combine multiple bets into a single wager where all selections must win for the bet to pay out. Parlays offer higher potential payouts than individual bets, but come with increased risk since a single loss results in the entire parlay failing. Common parlay types include 2-leg, 3-leg, 4-leg, and larger multi-leg combinations across various sports and bet types. This breakdown shows our performance on parlay bets, helping you understand the risk-reward profile of combining multiple picks into parlays versus betting them individually.
+            </p>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parlay Type</th>
+                        <th>Record</th>
+                        <th>Win %</th>
+                        <th>Units</th>
+                        <th>ROI</th>
+                        <th>Best Sport</th>
+                    </tr>
+                </thead>
+                <tbody id="parlay-breakdown"></tbody>
+            </table>
+        </div>
+        <div class="highlight-box" style="border-left-color: var(--green); margin-top: 20px;">
+            <p style="margin: 0; line-height: 1.8;">
+                <strong>Want to learn more about our moneyline parlay strategy?</strong> Read more about moneyline parlays <a href="moneyline-parlay-of-the-day.html" style="color: var(--accent); text-decoration: underline;">Here</a>
+            </p>
+        </div>
+    </div>
+
     <!-- 5 Inning Breakdown -->
     <div class="section">
         <h2 class="section-title">⚾ 5-Inning Bets Breakdown</h2>
@@ -1498,6 +1529,55 @@ function calculateTeaserBreakdown() {
     }
 }
 
+function calculateParlayBreakdown() {
+    const tbody = document.getElementById('parlay-breakdown');
+    tbody.innerHTML = '';
+
+    // Define specific parlay types to show
+    const parlayTypes = [
+        { name: '2-Leg Parlay', patterns: ['2-leg', '2 leg', '2leg'] },
+        { name: '3-Leg Parlay', patterns: ['3-leg', '3 leg', '3leg'] },
+        { name: '4-Leg Parlay', patterns: ['4-leg', '4 leg', '4leg'] },
+        { name: '5-Leg Parlay', patterns: ['5-leg', '5 leg', '5leg'] },
+        { name: '6+ Leg Parlay', patterns: ['6-leg', '6 leg', '6leg', '7-leg', '7 leg', '7leg', '8-leg', '8 leg', '8leg', '9-leg', '9 leg', '9leg', '10-leg', '10 leg', '10leg'] }
+    ];
+
+    let hasData = false;
+
+    parlayTypes.forEach(parlayType => {
+        const typeData = allData.filter(row => {
+            const pick = (row.Pick || row.pick || '').toLowerCase();
+            const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+            const searchText = pick + ' ' + betType;
+
+            // Check if it's a parlay (including abbreviations)
+            const isParlayBet = searchText.includes('parlay') || searchText.includes('parl');
+            if (!isParlayBet) return false;
+
+            return parlayType.patterns.some(pattern => searchText.includes(pattern));
+        });
+
+        if (typeData.length === 0) return;
+
+        hasData = true;
+        const stats = calculateStats(typeData, true);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>${parlayType.name}</strong></td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
+            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(typeData)}</td>
+        `;
+        tbody.appendChild(row);
+    });
+
+    if (!hasData) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No parlay data available</td></tr>';
+    }
+}
+
 function calculateFiveInningBreakdown() {
     const fiveInningData = allData.filter(row => {
         const pick = (row.Pick || row.pick || '').toLowerCase();
@@ -1997,6 +2077,7 @@ async function init() {
         calculateMonthlyBreakdown();
         calculateUnitSizingBreakdown();
         calculateTeaserBreakdown();
+        calculateParlayBreakdown();
         calculateFiveInningBreakdown();
         calculateTotalBetsBreakdown();
         calculateTeamTotalsBySport();
