@@ -1085,7 +1085,11 @@ function calculateBetTypeBreakdown() {
 
     // Filter bets by type in priority order (mutually exclusive)
     const betTypes = [
-        { name: 'Teasers', filter: (pick) => pick.includes('teaser') },
+        { name: 'Teasers', filter: (pick) => {
+            const isTeaserBet = pick.includes('teaser') || pick.includes('tsr') || pick.includes('teas');
+            if (!isTeaserBet) return false;
+            return /(6\.5|6|7|10|13)\s*(-)?\\s*(pt|point)/i.test(pick);
+        }},
         { name: '5-Inning Bets', filter: (pick) => pick.includes('5 inn') || pick.includes('5-inn') || pick.includes('first 5') || pick.includes('f5') },
         { name: 'Over', filter: (pick) => pick.includes('over') },
         { name: 'Under', filter: (pick) => pick.includes('under') },
