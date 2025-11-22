@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Common Kelly Criterion Mistakes That Kill Bankrolls | BetLegend</title>
+    <meta name="description" content="Avoid these critical Kelly Criterion mistakes in sports betting. Learn what destroys bankrolls and how to apply Kelly correctly for long-term profit."/>
+    <link href="https://www.betlegendpicks.com/kelly-criterion/mistakes.html" rel="canonical"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+            --font-content: 'Rubik', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-content);
+            background-color: var(--bg-color);
+            color: white;
+            padding-top: 140px;
+            line-height: 1.7;
+        }
+
+        .logo-container {
+            position: fixed;
+            top: 20px;
+            left: 40px;
+            z-index: 1000;
+        }
+
+        .logo-container a {
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .logo-container span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px rgba(0, 255, 255, 1);
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            padding: 15px 5%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+            z-index: 999;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a, .dropdown {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-family: var(--font-secondary);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-gold);
+            text-shadow: 0 0 8px var(--neon-gold);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown .dropbtn {
+            font-family: var(--font-secondary);
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            padding: 8px 10px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown:hover .dropbtn {
+            color: var(--neon-gold);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(17, 17, 17, 0.98);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,224,255,0.2);
+            z-index: 9999;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 224, 255, 0.3);
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            display: block;
+            font-size: 0.85rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            color: var(--neon-gold);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: var(--font-primary);
+            color: var(--neon-gold);
+            font-size: 1.8rem;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: var(--neon-cyan);
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .warning-box {
+            background: rgba(255, 50, 50, 0.1);
+            border-left: 4px solid #ff3232;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box p {
+            color: #ffaaaa;
+            margin: 0;
+        }
+
+        .tip-box {
+            background: rgba(0, 255, 100, 0.05);
+            border-left: 4px solid #00ff66;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .back-link {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: var(--neon-gold);
+        }
+    </style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+</head>
+<body>
+
+<div class="logo-container">
+    <a href="../index.html">BET<span>LEGEND</span></a>
+</div>
+
+<nav class="nav-links">
+    <a href="../blog-page9.html">PICKS & ANALYSIS</a>
+    <div class="dropdown">
+        <button class="dropbtn">Records</button>
+        <div class="dropdown-content">
+            <a href="../records.html">DETAILED BREAKDOWN</a>
+            <a href="../betlegend-verified-records.html">MLB</a>
+            <a href="../nfl-records.html">NFL</a>
+            <a href="../nhl-records.html">NHL</a>
+            <a href="../nba-records.html">NBA</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Sports</button>
+        <div class="dropdown-content">
+            <a href="../nfl.html">NFL</a>
+            <a href="../mlb-page2.html">MLB</a>
+            <a href="../nba.html">NBA</a>
+            <a href="../nhl.html">NHL</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Resources</button>
+        <div class="dropdown-content">
+            <a href="../kelly-criterion.html">Kelly Criterion</a>
+            <a href="../bankroll.html">Bankroll</a>
+            <a href="../betting-calculators.html">Betting Calculators</a>
+        </div>
+    </div>
+    <a href="../proofofpicks.html">Proof</a>
+</nav>
+
+<div class="content-container">
+    <h1>Common Kelly Criterion Mistakes That Kill Bankrolls</h1>
+
+    <p>The Kelly Criterion is mathematically sound, but most bettors still go broke using it. Why? Because they make one or more of these critical mistakes. If you're applying Kelly and your bankroll is shrinking instead of growing, you're probably doing one of these things wrong.</p>
+
+    <h2>Mistake #1: Overestimating Your Win Probability</h2>
+    <p>This is the big one. Kelly only works if your win probability estimate is accurate. If you think you've got a 58% chance of winning when your actual edge is 52%, you're overbetting by a massive margin.</p>
+
+    <p>Human nature makes us overconfident. You've watched the film, you've read the injury reports, you know the matchup inside and out. So you think your 53% edge is actually 60%. Now you're betting twice as much as you should, and that's a fast track to ruin.</p>
+
+    <div class="warning-box">
+        <p>Even professional handicapping models can overestimate the edge by a factor of two. If you think you have a 10% edge, your real edge might be 5%. Use fractional Kelly to protect yourself from this inevitable overconfidence.</p>
+    </div>
+
+    <h3>How to Fix It</h3>
+    <p>Track your actual results over at least 100 bets before trusting your win probability estimates. If you think you're hitting 56% on NFL spreads but your actual results show 52%, adjust your estimates down by 4%. Be brutally honest with yourself.</p>
+
+    <h2>Mistake #2: Using Full Kelly Instead of Fractional Kelly</h2>
+    <p>Full Kelly maximizes long-term growth mathematically, but it assumes your edge estimate is perfect. It's not. Sports betting edges are estimates based on incomplete information, not mathematical certainties like card counting.</p>
+
+    <p>Full Kelly also creates massive volatility. A 15% Kelly bet feels insane when you're actually placing it. And if you're even slightly off on your edge calculation, full Kelly will destroy your bankroll through variance.</p>
+
+    <div class="tip-box">
+        <p>Professional bettors use half Kelly or quarter Kelly. You get 75% of the growth with half Kelly but dramatically lower volatility. That's a trade worth making.</p>
+    </div>
+
+    <h2>Mistake #3: Not Updating Your Bankroll Regularly</h2>
+    <p>Your bankroll isn't static. If you start with $5,000 and grow it to $6,500, your bet sizes should increase. If you're down to $3,800, your bet sizes must decrease. Kelly is a percentage-based system. You need to recalculate constantly.</p>
+
+    <p>Most bettors set their bankroll once at the start of the season and never adjust. Three months later they're betting $100 per game when their bankroll is down to $2,000. That's 5% per bet, which is reckless.</p>
+
+    <h3>How to Fix It</h3>
+    <p>Recalculate your bankroll weekly. Every Sunday, add up your total betting funds and adjust your unit size accordingly. This is non-negotiable if you're using Kelly.</p>
+
+    <h2>Mistake #4: Betting on Games Where You Don't Have an Edge</h2>
+    <p>Kelly tells you when not to bet just as much as it tells you when to bet. If the formula spits out a negative number, that means you don't have an edge. Don't bet.</p>
+
+    <p>But most bettors ignore this. They want action. There are 12 NFL games on Sunday, so they force themselves to find 8 bets even though Kelly only says to bet 3. That's gambling, not investing.</p>
+
+    <div class="warning-box">
+        <p>If you're betting every nationally televised game just because it's on TV, you're not using Kelly correctly. Most games should be skips. Your edge is rare. Respect that.</p>
+    </div>
+
+    <h2>Mistake #5: Ignoring the 5% Cap Rule</h2>
+    <p>Even if Kelly says to bet 12% of your bankroll on a heavy favorite, don't do it. Cap your maximum bet at 5% regardless of what the formula says. This protects you from catastrophic losses when upsets happen.</p>
+
+    <p>Heavy favorites at -300 or -400 might feel like free money, but 20% favorites lose 20% of the time. If you're betting 12% of your roll on these and you hit a bad run, you're cooked.</p>
+
+    <h2>Mistake #6: Using Kelly Without Proven Results</h2>
+    <p>You can't just start using Kelly on day one. You need a track record. If you haven't proven over 100+ bets that you can beat the closing line and maintain a profitable win rate, you don't have an edge to bet on.</p>
+
+    <p>Track your picks on paper first. Calculate your actual win percentage. Only then should you start applying Kelly with real money, and even then, start with quarter Kelly until you're confident.</p>
+
+    <h2>Mistake #7: Treating All Bet Types the Same</h2>
+    <p>Your edge on NFL spreads is different from your edge on MLB totals is different from your edge on player props. You can't use the same win probability estimate for all of them.</p>
+
+    <p>Track each bet type separately. Apply Kelly independently based on your actual results in each market. If you hit 54% on NFL spreads and 58% on MLB first-five totals, bet more on the MLB spots where your edge is bigger.</p>
+
+    <h2>The Bottom Line</h2>
+    <p>Kelly Criterion isn't magic. It's a tool that only works if you use it correctly. Most bettors fail because they overestimate their edge, use full Kelly when they should use fractional Kelly, and don't track their results honestly.</p>
+
+    <p>If you're serious about long-term profit, fix these mistakes. Use conservative Kelly fractions. Update your bankroll constantly. Only bet when you have a proven edge. And track everything so you know when your process is working and when it's not.</p>
+
+    <div class="back-link">
+        <p><a href="../kelly-criterion.html">← Read the Full Kelly Criterion Guide</a></p>
+    </div>
+</div>
+
+</body>
+</html>
