@@ -159,39 +159,50 @@
         }
 
         .month-selector {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
+            text-align: center;
             margin-bottom: 30px;
         }
 
-        .month-btn {
-            padding: 12px 30px;
-            background: rgba(0, 217, 255, 0.1);
-            border: 1px solid rgba(0, 217, 255, 0.3);
-            border-radius: 8px;
-            color: #b8c5d6;
-            font-size: 1rem;
+        .month-selector label {
+            display: block;
+            font-size: 1.1rem;
+            color: #00d9ff;
+            margin-bottom: 10px;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .month-btn:hover {
-            background: rgba(0, 217, 255, 0.2);
-            border-color: #00d9ff;
-            color: #00d9ff;
+        .month-dropdown {
+            padding: 15px 40px 15px 20px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 2px solid rgba(0, 217, 255, 0.4);
+            border-radius: 10px;
+            color: #e8edf5;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            min-width: 250px;
         }
 
-        .month-btn.active {
-            background: linear-gradient(135deg, #00d9ff, #00a8cc);
+        .month-dropdown:hover {
+            background: rgba(0, 217, 255, 0.2);
             border-color: #00d9ff;
-            color: #000;
-            font-weight: 700;
-            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .month-dropdown:focus {
+            border-color: #00d9ff;
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+        }
+
+        .month-dropdown option {
+            background: #0a0e17;
+            color: #e8edf5;
+            padding: 10px;
         }
 
         .calendar-container {
@@ -358,8 +369,12 @@
 
             <!-- Month Selector -->
             <div class="month-selector">
-                <button class="month-btn active" onclick="showMonth('november')">November 2025</button>
-                <button class="month-btn" onclick="showMonth('december')">December 2025</button>
+                <label for="month-select">Select Month:</label>
+                <select id="month-select" class="month-dropdown" onchange="showMonth(this.value)">
+                    <option value="november">November 2025</option>
+                    <option value="december">December 2025</option>
+                    <option value="january">January 2026</option>
+                </select>
             </div>
 
             <!-- November Calendar -->
@@ -491,6 +506,66 @@
                 </div>
             </div>
 
+            <!-- January Calendar -->
+            <div id="january-calendar" class="calendar-container">
+                <div class="calendar-header">January 2026</div>
+                <div class="calendar-grid">
+                    <!-- Day Labels -->
+                    <div class="calendar-day-label">Sun</div>
+                    <div class="calendar-day-label">Mon</div>
+                    <div class="calendar-day-label">Tue</div>
+                    <div class="calendar-day-label">Wed</div>
+                    <div class="calendar-day-label">Thu</div>
+                    <div class="calendar-day-label">Fri</div>
+                    <div class="calendar-day-label">Sat</div>
+
+                    <!-- Week 1 (Jan 1 is Wednesday) -->
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+
+                    <!-- Week 2 -->
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div>
+                    <div class="calendar-day">11</div>
+
+                    <!-- Week 3 -->
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+
+                    <!-- Week 4 -->
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+
+                    <!-- Week 5 -->
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                    <div class="calendar-day empty"></div>
+                </div>
+            </div>
+
             <!-- Quick Links -->
             <div class="page-links">
                 <a href="sportsbettingprime-covers-consensus.html" class="page-link">
@@ -511,16 +586,8 @@
                     cal.classList.remove('active');
                 });
 
-                // Remove active class from all buttons
-                document.querySelectorAll('.month-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-
                 // Show selected calendar
                 document.getElementById(month + '-calendar').classList.add('active');
-
-                // Activate clicked button
-                event.target.classList.add('active');
             }
         </script>
         
