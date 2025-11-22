@@ -906,11 +906,10 @@
                     }
                     leagueStats[league].totalLegs++;
 
-                    // Note: Individual leg results would need to be tracked separately
-                    // This is a simplified version
-                    if (parlay.result === 'win') {
+                    // Track individual leg results
+                    if (pick.result === 'win') {
                         leagueStats[league].winningLegs++;
-                    } else if (parlay.result === 'loss') {
+                    } else if (pick.result === 'loss') {
                         leagueStats[league].losingLegs++;
                     }
                 });
