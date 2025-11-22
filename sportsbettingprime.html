@@ -158,10 +158,154 @@
             text-align: center;
         }
 
+        .month-selector {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .month-btn {
+            padding: 12px 30px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 8px;
+            color: #b8c5d6;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .month-btn:hover {
+            background: rgba(0, 217, 255, 0.2);
+            border-color: #00d9ff;
+            color: #00d9ff;
+        }
+
+        .month-btn.active {
+            background: linear-gradient(135deg, #00d9ff, #00a8cc);
+            border-color: #00d9ff;
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+        }
+
+        .calendar-container {
+            display: none;
+        }
+
+        .calendar-container.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00d9ff;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .calendar-day-label {
+            text-align: center;
+            padding: 10px;
+            font-weight: 700;
+            color: #00d9ff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 217, 255, 0.05);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #4a5568;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+            border: none;
+        }
+
+        .calendar-day.available {
+            background: rgba(0, 217, 255, 0.15);
+            border-color: rgba(0, 217, 255, 0.4);
+            color: #e8edf5;
+            cursor: pointer;
+        }
+
+        .calendar-day.available:hover {
+            background: rgba(0, 217, 255, 0.3);
+            border-color: #00d9ff;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            color: #00d9ff;
+        }
+
+        .calendar-day.current {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.2));
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            font-weight: 900;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            position: relative;
+        }
+
+        .calendar-day.current::after {
+            content: "⭐ LIVE";
+            position: absolute;
+            bottom: 3px;
+            font-size: 0.5rem;
+            color: #ffd700;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .calendar-day.archived {
+            background: rgba(0, 217, 255, 0.15);
+            border-color: rgba(0, 217, 255, 0.4);
+            color: #b8c5d6;
+        }
+
+        .calendar-day.archived:hover {
+            background: rgba(0, 217, 255, 0.25);
+            border-color: #00d9ff;
+            color: #00d9ff;
+        }
+
         .page-links {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
+            margin-top: 30px;
         }
 
         .page-link {
@@ -183,14 +327,8 @@
             box-shadow: 0 5px 20px rgba(0, 217, 255, 0.3);
         }
 
-        .page-link.current {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.3), rgba(255, 215, 0, 0.2));
-            border: 2px solid #00d9ff;
-            font-weight: 700;
-        }
-
         .page-date {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #00d9ff;
             margin-bottom: 5px;
@@ -216,26 +354,175 @@
         </div>
 
         <div class="pagination">
-            <h2>Consensus Data Archive</h2>
+            <h2>📅 Consensus Archive Calendar</h2>
+
+            <!-- Month Selector -->
+            <div class="month-selector">
+                <button class="month-btn active" onclick="showMonth('november')">November 2025</button>
+                <button class="month-btn" onclick="showMonth('december')">December 2025</button>
+            </div>
+
+            <!-- November Calendar -->
+            <div id="november-calendar" class="calendar-container active">
+                <div class="calendar-header">November 2025</div>
+                <div class="calendar-grid">
+                    <!-- Day Labels -->
+                    <div class="calendar-day-label">Sun</div>
+                    <div class="calendar-day-label">Mon</div>
+                    <div class="calendar-day-label">Tue</div>
+                    <div class="calendar-day-label">Wed</div>
+                    <div class="calendar-day-label">Thu</div>
+                    <div class="calendar-day-label">Fri</div>
+                    <div class="calendar-day-label">Sat</div>
+
+                    <!-- Week 1 (Nov 1 is Saturday) -->
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day">1</div>
+
+                    <!-- Week 2 -->
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+
+                    <!-- Week 3 -->
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day">15</div>
+
+                    <!-- Week 4 -->
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day archived" onclick="window.location.href='sportsbettingprime-covers-consensus-2025-11-20.html'">20</div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day current available" onclick="window.location.href='sportsbettingprime-covers-consensus.html'">22</div>
+
+                    <!-- Week 5 -->
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+
+                    <!-- Week 6 -->
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                </div>
+            </div>
+
+            <!-- December Calendar -->
+            <div id="december-calendar" class="calendar-container">
+                <div class="calendar-header">December 2025</div>
+                <div class="calendar-grid">
+                    <!-- Day Labels -->
+                    <div class="calendar-day-label">Sun</div>
+                    <div class="calendar-day-label">Mon</div>
+                    <div class="calendar-day-label">Tue</div>
+                    <div class="calendar-day-label">Wed</div>
+                    <div class="calendar-day-label">Thu</div>
+                    <div class="calendar-day-label">Fri</div>
+                    <div class="calendar-day-label">Sat</div>
+
+                    <!-- Week 1 (Dec 1 is Monday) -->
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+
+                    <!-- Week 2 -->
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+
+                    <!-- Week 3 -->
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+
+                    <!-- Week 4 -->
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+
+                    <!-- Week 5 -->
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
             <div class="page-links">
-                <a href="sportsbettingprime-covers-consensus.html" class="page-link current">
-                    <div class="page-date">November 22, 2025</div>
-                    <div class="page-label">⭐ CURRENT</div>
+                <a href="sportsbettingprime-covers-consensus.html" class="page-link">
+                    <div class="page-date">⭐ Current Live Picks</div>
+                    <div class="page-label">November 22, 2025</div>
                 </a>
-                <a href="sportsbettingprime-covers-consensus-2025-11-22.html" class="page-link">
-                    <div class="page-date">November 22, 2025</div>
-                    <div class="page-label">Archive</div>
-                </a>
-                <a href="sportsbettingprime-covers-consensus-2025-11-20.html" class="page-link">
-                    <div class="page-date">November 20, 2025</div>
-                    <div class="page-label">Archive</div>
-                </a>
-<a href="consensus_library/archive/index.html" class="page-link">
-                    <div class="page-date">View All Archives</div>
-                    <div class="page-label">Complete History</div>
+                <a href="consensus_library/archive/index.html" class="page-link">
+                    <div class="page-date">📚 Complete History</div>
+                    <div class="page-label">All Archives</div>
                 </a>
             </div>
         </div>
+
+        <script>
+            function showMonth(month) {
+                // Hide all calendars
+                document.querySelectorAll('.calendar-container').forEach(cal => {
+                    cal.classList.remove('active');
+                });
+
+                // Remove active class from all buttons
+                document.querySelectorAll('.month-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // Show selected calendar
+                document.getElementById(month + '-calendar').classList.add('active');
+
+                // Activate clicked button
+                event.target.classList.add('active');
+            }
+        </script>
         
         <div class="stats">
             <div class="stat">
