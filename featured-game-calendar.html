@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Featured Game Calendar | BetLegend Picks</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+    :root {
+        --primary-glow: #00e0ff;
+        --success-color: #39FF14;
+        --warning-color: #FFD700;
+        --dark-bg: #0a0a0a;
+        --card-bg: rgba(15, 20, 30, 0.95);
+        --border-color: rgba(0, 224, 255, 0.2);
+        --text-primary: #ffffff;
+        --text-secondary: #b0b0b0;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        background-attachment: fixed;
+        font-family: 'Inter', sans-serif;
+        color: var(--text-primary);
+        padding: 40px 20px;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .title {
+        font-size: 3rem;
+        font-family: 'Orbitron', sans-serif;
+        background: linear-gradient(45deg, #fff, var(--primary-glow));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+    }
+
+    .month-selector {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .month-selector label {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-right: 15px;
+    }
+
+    .month-dropdown {
+        background: var(--card-bg);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+        padding: 12px 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .calendar-container {
+        display: none;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 30px;
+        backdrop-filter: blur(20px);
+    }
+
+    .calendar-container.active {
+        display: block;
+    }
+
+    .calendar-month-title {
+        font-size: 1.8rem;
+        font-family: 'Orbitron', sans-serif;
+        color: var(--primary-glow);
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .calendar-day-header {
+        text-align: center;
+        font-weight: 600;
+        color: var(--text-secondary);
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .calendar-day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 8px;
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        transition: all 0.3s ease;
+    }
+
+    .calendar-day.available {
+        background: rgba(0, 224, 255, 0.1);
+        border-color: var(--primary-glow);
+        color: var(--primary-glow);
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .calendar-day.available:hover {
+        background: rgba(0, 224, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 224, 255, 0.3);
+    }
+
+    .calendar-day.current {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
+        border: 2px solid var(--warning-color);
+        color: var(--warning-color);
+        font-weight: 900;
+        position: relative;
+    }
+
+    .calendar-day.current::after {
+        content: 'TODAY';
+        position: absolute;
+        bottom: -8px;
+        font-size: 0.6rem;
+        color: var(--warning-color);
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .back-link {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .back-link a {
+        color: var(--primary-glow);
+        text-decoration: none;
+        font-size: 1.1rem;
+        padding: 12px 30px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .back-link a:hover {
+        background: rgba(0, 224, 255, 0.1);
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .calendar-grid {
+            gap: 5px;
+        }
+
+        .calendar-day {
+            font-size: 0.9rem;
+        }
+
+        .title {
+            font-size: 2rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1 class="title">Featured Game Calendar</h1>
+        <p class="subtitle">Browse all featured game analysis by date</p>
+    </div>
+
+    <div class="month-selector">
+        <label for="month-select">Select Month:</label>
+        <select id="month-select" class="month-dropdown" onchange="showMonth(this.value)">
+            <option value="november">November 2025</option>
+            <option value="december">December 2025</option>
+        </select>
+    </div>
+
+    <!-- November 2025 Calendar -->
+    <div id="november-calendar" class="calendar-container active">
+        <h2 class="calendar-month-title">November 2025</h2>
+
+        <div class="calendar-grid">
+            <div class="calendar-day-header">Sun</div>
+            <div class="calendar-day-header">Mon</div>
+            <div class="calendar-day-header">Tue</div>
+            <div class="calendar-day-header">Wed</div>
+            <div class="calendar-day-header">Thu</div>
+            <div class="calendar-day-header">Fri</div>
+            <div class="calendar-day-header">Sat</div>
+
+            <!-- Week 1: Nov 1-2 (Sat-Sun start) -->
+            <div class="calendar-day"></div>
+            <div class="calendar-day"></div>
+            <div class="calendar-day"></div>
+            <div class="calendar-day"></div>
+            <div class="calendar-day"></div>
+            <div class="calendar-day"></div>
+            <div class="calendar-day">1</div>
+
+            <!-- Week 2: Nov 2-8 -->
+            <div class="calendar-day">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day">4</div>
+            <div class="calendar-day">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day">7</div>
+            <div class="calendar-day">8</div>
+
+            <!-- Week 3: Nov 9-15 -->
+            <div class="calendar-day">9</div>
+            <div class="calendar-day">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day">12</div>
+            <div class="calendar-day">13</div>
+            <div class="calendar-day">14</div>
+            <div class="calendar-day">15</div>
+
+            <!-- Week 4: Nov 16-22 -->
+            <div class="calendar-day">16</div>
+            <div class="calendar-day">17</div>
+            <div class="calendar-day">18</div>
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">21</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page2.html'">22</div>
+
+            <!-- Week 5: Nov 23-30 -->
+            <div class="calendar-day current available" onclick="window.location.href='featured-game-of-the-day-page3.html'">23</div>
+            <div class="calendar-day">24</div>
+            <div class="calendar-day">25</div>
+            <div class="calendar-day">26</div>
+            <div class="calendar-day">27</div>
+            <div class="calendar-day">28</div>
+            <div class="calendar-day">29</div>
+
+            <!-- Week 6: Nov 30 -->
+            <div class="calendar-day">30</div>
+        </div>
+    </div>
+
+    <!-- December 2025 Calendar -->
+    <div id="december-calendar" class="calendar-container">
+        <h2 class="calendar-month-title">December 2025</h2>
+
+        <div class="calendar-grid">
+            <div class="calendar-day-header">Sun</div>
+            <div class="calendar-day-header">Mon</div>
+            <div class="calendar-day-header">Tue</div>
+            <div class="calendar-day-header">Wed</div>
+            <div class="calendar-day-header">Thu</div>
+            <div class="calendar-day-header">Fri</div>
+            <div class="calendar-day-header">Sat</div>
+
+            <!-- Week 1 -->
+            <div class="calendar-day"></div>
+            <div class="calendar-day">1</div>
+            <div class="calendar-day">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day">4</div>
+            <div class="calendar-day">5</div>
+            <div class="calendar-day">6</div>
+
+            <!-- Weeks 2-5 -->
+            <div class="calendar-day">7</div>
+            <div class="calendar-day">8</div>
+            <div class="calendar-day">9</div>
+            <div class="calendar-day">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day">12</div>
+            <div class="calendar-day">13</div>
+
+            <div class="calendar-day">14</div>
+            <div class="calendar-day">15</div>
+            <div class="calendar-day">16</div>
+            <div class="calendar-day">17</div>
+            <div class="calendar-day">18</div>
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+
+            <div class="calendar-day">21</div>
+            <div class="calendar-day">22</div>
+            <div class="calendar-day">23</div>
+            <div class="calendar-day">24</div>
+            <div class="calendar-day">25</div>
+            <div class="calendar-day">26</div>
+            <div class="calendar-day">27</div>
+
+            <div class="calendar-day">28</div>
+            <div class="calendar-day">29</div>
+            <div class="calendar-day">30</div>
+            <div class="calendar-day">31</div>
+        </div>
+    </div>
+
+    <div class="back-link">
+        <a href="featured-game-of-the-day-page3.html">← Back to Latest Featured Game</a>
+    </div>
+</div>
+
+<script>
+function showMonth(month) {
+    // Hide all calendars
+    document.querySelectorAll('.calendar-container').forEach(cal => {
+        cal.classList.remove('active');
+    });
+
+    // Show selected calendar
+    document.getElementById(month + '-calendar').classList.add('active');
+}
+</script>
+
+</body>
+</html>
