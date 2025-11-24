@@ -1485,6 +1485,36 @@ function calculateTeaserBreakdown() {
     const tbody = document.getElementById('teaser-breakdown');
     tbody.innerHTML = '';
 
+    // First, get ALL teasers using EXACT same logic as Bet Type Breakdown
+    const allTeasersData = allData.filter(row => {
+        const result = (row.Result || row.result || '').toLowerCase().trim();
+        if (!result || result === '' || result === 'pending') return false;
+
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betTypeCol = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        const searchText = pick + ' ' + betTypeCol;
+
+        // EXACT same filter as Bet Type Breakdown line 1089
+        return searchText.includes('teaser') || searchText.includes('tsr') || searchText.includes('teas');
+    });
+
+    // Add Total Teasers row first
+    if (allTeasersData.length > 0) {
+        const totalStats = calculateStats(allTeasersData, true);
+        const totalRow = document.createElement('tr');
+        totalRow.style.fontWeight = 'bold';
+        totalRow.style.backgroundColor = 'rgba(0, 224, 255, 0.1)';
+        totalRow.innerHTML = `
+            <td><strong>📊 TOTAL TEASERS</strong></td>
+            <td class="${totalStats.winRate > 50 ? 'win' : 'loss'}">${totalStats.record}</td>
+            <td class="${totalStats.winRate > 50 ? 'win' : ''}">${totalStats.winRate.toFixed(1)}%</td>
+            <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(1)}u</td>
+            <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(allTeasersData)}</td>
+        `;
+        tbody.appendChild(totalRow);
+    }
+
     // Define specific teaser types to show - matching "X team teaser Xpt" format
     const teaserTypes = [
         { name: '4-Point Teaser', pattern: '4' },
@@ -1497,10 +1527,15 @@ function calculateTeaserBreakdown() {
         { name: '13-Point Teaser', pattern: '13' }
     ];
 
-    let hasData = false;
+    let hasData = allTeasersData.length > 0;
+    const categorizedTeaserIndices = new Set();
 
     teaserTypes.forEach(teaserType => {
-        const typeData = allData.filter(row => {
+        const typeData = allData.filter((row, index) => {
+            // Filter out pending/empty results first (same as Bet Type Breakdown)
+            const result = (row.Result || row.result || '').toLowerCase().trim();
+            if (!result || result === '' || result === 'pending') return false;
+
             const pick = (row.Pick || row.pick || '').toLowerCase();
             const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
             const searchText = pick + ' ' + betType;
@@ -1511,7 +1546,11 @@ function calculateTeaserBreakdown() {
 
             // Match the point value (e.g., "6pt", "6 pt", "6-pt", "6 point", or just "6" followed by "pt"/"point")
             const pointPattern = new RegExp(teaserType.pattern + '\\s*(-)?\\s*(pt|point)', 'i');
-            return pointPattern.test(searchText);
+            const matches = pointPattern.test(searchText);
+            if (matches) {
+                categorizedTeaserIndices.add(index);
+            }
+            return matches;
         });
 
         if (typeData.length === 0) return;
@@ -1529,6 +1568,38 @@ function calculateTeaserBreakdown() {
         `;
         tbody.appendChild(row);
     });
+
+    // Catch any teasers that didn't match specific point values
+    const uncategorizedTeasers = allData.filter((row, index) => {
+        if (categorizedTeaserIndices.has(index)) return false;
+
+        // Filter out pending/empty results (same as Bet Type Breakdown)
+        const result = (row.Result || row.result || '').toLowerCase().trim();
+        if (!result || result === '' || result === 'pending') return false;
+
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        const searchText = pick + ' ' + betType;
+
+        // Check if it's a teaser bet but wasn't categorized
+        return searchText.includes('teaser') || searchText.includes('tsr') || searchText.includes('teas');
+    });
+
+    if (uncategorizedTeasers.length > 0) {
+        hasData = true;
+        const stats = calculateStats(uncategorizedTeasers, true);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>Other Teasers</strong></td>
+            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
+            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
+            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
+            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(uncategorizedTeasers)}</td>
+        `;
+        tbody.appendChild(row);
+        console.log(`Other Teasers found: ${uncategorizedTeasers.length} bets`);
+    }
 
     if (!hasData) {
         tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No teaser data available</td></tr>';
