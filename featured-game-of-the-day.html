@@ -603,18 +603,29 @@
     border-left-color: var(--neon-cyan);
 }
 
-.dropdown:hover .dropdown-content {
+/* Desktop only: show dropdown on hover */
+@media (hover: hover) and (pointer: fine) {
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: dropdownFade 0.3s ease;
+    }
+
+    .dropdown:hover .dropbtn {
+        color: var(--neon-gold);
+        text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Both desktop and mobile: show dropdown when active (clicked/tapped) */
+.dropdown.active .dropdown-content {
     display: block;
     animation: dropdownFade 0.3s ease;
 }
-        .dropdown.active .dropdown-content {
-            display: block;
-            animation: dropdownFade 0.3s ease;
-        }
 
-        .dropdown.active .dropbtn {
-            pointer-events: none;
-        }
+.dropdown.active .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
+}
 
 @keyframes dropdownFade {
     from { opacity: 0; transform: translateY(-10px); }
@@ -4324,7 +4335,7 @@ Despite all the Gibson revenge game hype, we're fading the narrative and backing
 <div class="pagination">
 <a href="#" class="disabled">← Previous</a>
 <span style="color: var(--text-secondary);">Page 1 (Oldest)</span>
-<a href="featured-game-of-the-day-page4.html">Next (Page 2) →</a>
+<a href="featured-game-of-the-day-page2.html">Next (Page 2) →</a>
 </div>
 
 <!-- Back navigation -->

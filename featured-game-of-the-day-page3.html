@@ -510,8 +510,21 @@
         background: rgba(0, 224, 255, 0.1);
     }
 
-    .dropdown:hover .dropdown-content {
+    /* Desktop only: show dropdown on hover */
+    @media (hover: hover) and (pointer: fine) {
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    }
+
+    /* Both desktop and mobile: show dropdown when active (clicked/tapped) */
+    .dropdown.active .dropdown-content {
         display: block;
+    }
+
+    .dropdown.active .dropbtn {
+        color: var(--neon-gold);
+        text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 </style>
 </head>
@@ -871,9 +884,9 @@ Matthew Stafford's MVP campaign continues with a statement win on Sunday Night F
 
 <!-- Pagination -->
 <div class="pagination">
-<a href="featured-game-of-the-day-page4.html">← Previous (Page 2)</a>
+<a href="featured-game-of-the-day-page2.html">← Previous (Page 2)</a>
 <span style="color: var(--text-secondary);">Page 3</span>
-<a href="#" class="disabled">Next →</a>
+<a href="featured-game-of-the-day-page4.html">Next (Page 4) →</a>
 </div>
 
 <div class="back-nav">
