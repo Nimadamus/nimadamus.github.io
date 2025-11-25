@@ -14,9 +14,12 @@ Usage:
 What it does:
 1. Scans all HTML files in the site directory
 2. Detects paginated page series (blog, featured-game, etc.)
-3. Updates "Next Page" / "Previous Page" links
-4. Updates navigation references to latest pages
-5. Reports all changes made
+3. Updates "Next" / "Previous" links correctly
+4. Reports all changes made
+
+Site convention:
+- "Previous" = older posts (higher page number)
+- "Next" = newer posts (lower page number)
 
 Author: BetLegend Automation
 """
@@ -24,24 +27,19 @@ Author: BetLegend Automation
 import os
 import re
 import glob
-from collections import defaultdict
 
 # Site directory
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Page categories with their naming patterns
+# Note: Only blog pages use the "Previous=older, Next=newer" convention
+# Featured-game pages use opposite convention and are handled separately
 PAGE_CATEGORIES = {
     'blog': {
         'pattern': r'blog(?:-page(\d+))?\.html',
         'base': 'blog.html',
         'numbered': 'blog-page{}.html',
         'title': 'Blog'
-    },
-    'featured-game': {
-        'pattern': r'featured-game-of-the-day(?:-page(\d+))?\.html',
-        'base': 'featured-game-of-the-day.html',
-        'numbered': 'featured-game-of-the-day-page{}.html',
-        'title': 'Featured Game of the Day'
     },
 }
 
@@ -83,6 +81,14 @@ def detect_page_series():
     return series
 
 
+def get_page_filename(config, page_num):
+    """Get filename for a page number"""
+    if page_num == 1:
+        return config['base']
+    else:
+        return config['numbered'].format(page_num)
+
+
 def update_pagination_links(series):
     """Update Next/Previous page links in paginated series"""
     changes = []
@@ -90,6 +96,7 @@ def update_pagination_links(series):
     for category, info in series.items():
         pages = info['pages']
         config = info['config']
+        max_page = len(pages)
 
         for i, (page_num, filename) in enumerate(pages):
             filepath = os.path.join(SITE_DIR, filename)
@@ -99,38 +106,89 @@ def update_pagination_links(series):
 
             original_content = content
 
-            # Determine prev/next pages
-            # Page 1 (latest) -> no "newer", has "older" (page 2)
-            # Page N (middle) -> has "newer" (N-1), has "older" (N+1)
-            # Page max (oldest) -> has "newer" (max-1), no "older"
+            # Site convention:
+            # "Previous" = older posts (higher page number)
+            # "Next" = newer posts (lower page number)
 
-            prev_page = None  # Newer content (lower page number)
-            next_page = None  # Older content (higher page number)
+            # Calculate correct targets
+            older_page = get_page_filename(config, page_num + 1) if page_num < max_page else None
+            newer_page = get_page_filename(config, page_num - 1) if page_num > 1 else None
 
-            if i > 0:  # Not the first (latest) page
-                prev_page = pages[i-1][1]
-            if i < len(pages) - 1:  # Not the last (oldest) page
-                next_page = pages[i+1][1]
+            # Find the pagination div
+            pagination_match = re.search(r'<div class="pagination"[^>]*>(.*?)</div>', content, re.DOTALL)
 
-            # Build patterns without backslashes in f-strings
-            base_pattern = config["base"]
-            numbered_pattern = config["numbered"].replace("{}", r"\d+")
+            if pagination_match:
+                old_pagination = pagination_match.group(0)
+                pagination_content = pagination_match.group(1)
 
-            # Update "Newer Posts" / "Previous Page" links (goes to lower page number)
-            if prev_page:
-                # Pattern: href="blog-pageX.html" where we need to update X
-                pattern = f'href="({base_pattern}|{numbered_pattern})"([^>]*>)\\s*(Newer|Previous|Prev)'
-                replacement = f'href="{prev_page}"' + r'\2\3'
-                content = re.sub(pattern, replacement, content, flags=re.IGNORECASE)
+                # Build new pagination content
+                new_pagination_inner = ''
 
-            # Update "Older Posts" / "Next Page" links (goes to higher page number)
-            if next_page:
-                pattern = f'href="({base_pattern}|{numbered_pattern})"([^>]*>)\\s*(Older|Next)'
-                replacement = f'href="{next_page}"' + r'\2\3'
-                content = re.sub(pattern, replacement, content, flags=re.IGNORECASE)
+                # Previous link (goes to older/higher page number)
+                if older_page:
+                    new_pagination_inner += f'<a href="{older_page}">[Previous]</a>'
+                else:
+                    new_pagination_inner += '<span>[Previous]</span>'
 
-            # Check for pagination div patterns and update
-            # Common pattern: <a href="blog-page2.html">Next</a>
+                new_pagination_inner += '<span>   </span>'
+
+                # Next link (goes to newer/lower page number)
+                if newer_page:
+                    new_pagination_inner += f'<a href="{newer_page}">Next [arrow]</a>'
+                else:
+                    new_pagination_inner += '<span>Next [arrow]</span>'
+
+                # Actually, let's preserve the exact arrow format from the original
+                # Just update the hrefs
+
+                new_pagination = pagination_content
+
+                # Update Previous link
+                if older_page:
+                    # Replace any existing Previous link or span
+                    new_pagination = re.sub(
+                        r'<a href="[^"]*">[^<]*Previous[^<]*</a>',
+                        f'<a href="{older_page}">[Previous]</a>',
+                        new_pagination
+                    )
+                    new_pagination = re.sub(
+                        r'<span>[^<]*Previous[^<]*</span>',
+                        f'<a href="{older_page}">[Previous]</a>',
+                        new_pagination
+                    )
+                else:
+                    # Make it a span (no link)
+                    new_pagination = re.sub(
+                        r'<a href="[^"]*">[^<]*Previous[^<]*</a>',
+                        '<span>[Previous]</span>',
+                        new_pagination
+                    )
+
+                # Update Next link
+                if newer_page:
+                    new_pagination = re.sub(
+                        r'<a href="[^"]*">[^<]*Next[^<]*</a>',
+                        f'<a href="{newer_page}">Next [arrow]</a>',
+                        new_pagination
+                    )
+                    new_pagination = re.sub(
+                        r'<span>[^<]*Next[^<]*</span>',
+                        f'<a href="{newer_page}">Next [arrow]</a>',
+                        new_pagination
+                    )
+                else:
+                    new_pagination = re.sub(
+                        r'<a href="[^"]*">[^<]*Next[^<]*</a>',
+                        '<span>Next [arrow]</span>',
+                        new_pagination
+                    )
+
+                # Restore the arrow characters
+                new_pagination = new_pagination.replace('[Previous]', '\u2190 Previous')
+                new_pagination = new_pagination.replace('Next [arrow]', 'Next \u2192')
+
+                new_div = f'<div class="pagination" style="text-align:center;margin:30px 0;">{new_pagination}</div>'
+                content = content.replace(old_pagination, new_div)
 
             if content != original_content:
                 with open(filepath, 'w', encoding='utf-8') as f:
@@ -138,106 +196,6 @@ def update_pagination_links(series):
                 changes.append(f"Updated pagination in {filename}")
 
     return changes
-
-
-def update_navigation_links():
-    """Update navigation links across all pages to point to correct destinations"""
-    changes = []
-    html_files = get_all_html_files()
-
-    # Navigation links that should exist
-    nav_links = {
-        'blog': 'blog.html',
-        'featured': 'featured-game-of-the-day.html',
-        'nba': 'nba.html',
-        'nfl': 'nfl.html',
-        'nhl': 'nhl.html',
-        'ncaab': 'ncaab.html',
-        'ncaaf': 'ncaaf.html',
-        'mlb': 'mlb.html',
-        'soccer': 'soccer.html',
-    }
-
-    for filepath in html_files:
-        filename = os.path.basename(filepath)
-
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
-
-        original_content = content
-
-        # Ensure navigation links are correct
-        # This is a safety check - most should already be correct
-
-        if content != original_content:
-            with open(filepath, 'w', encoding='utf-8') as f:
-                f.write(content)
-            changes.append(f"Updated navigation in {filename}")
-
-    return changes
-
-
-def add_new_page_to_series(category, new_page_num=None):
-    """
-    Helper function to add a new page to a series.
-
-    If new_page_num is None, it will be auto-detected as max+1.
-    This function creates the page file and updates all links.
-    """
-    series = detect_page_series()
-
-    if category not in series:
-        print(f"Category '{category}' not found")
-        return False
-
-    info = series[category]
-    config = info['config']
-
-    if new_page_num is None:
-        new_page_num = info['count'] + 1
-
-    new_filename = config['numbered'].format(new_page_num)
-    new_filepath = os.path.join(SITE_DIR, new_filename)
-
-    if os.path.exists(new_filepath):
-        print(f"Page {new_filename} already exists")
-        return False
-
-    # Create new page based on template (copy from previous page)
-    prev_page = info['oldest']
-    prev_filepath = os.path.join(SITE_DIR, prev_page)
-
-    with open(prev_filepath, 'r', encoding='utf-8') as f:
-        template = f.read()
-
-    # Update page number references in the new page
-    # Clear the content section (user needs to add new content)
-
-    print(f"Created {new_filename} - remember to add content!")
-    print(f"Run 'python update_site_links.py' after adding content to update all links")
-
-    return True
-
-
-def generate_sitemap():
-    """Generate a simple sitemap of all pages"""
-    html_files = sorted([os.path.basename(f) for f in get_all_html_files()])
-
-    sitemap = """<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-"""
-
-    base_url = "https://www.betlegendpicks.com"
-
-    for filename in html_files:
-        sitemap += f"""  <url>
-    <loc>{base_url}/{filename}</loc>
-  </url>
-"""
-
-    sitemap += "</urlset>"
-
-    return sitemap
 
 
 def print_site_structure():
@@ -293,25 +251,12 @@ def main():
     if not pagination_changes:
         print("   No pagination changes needed")
 
-    # Update navigation links
-    print("\nChecking navigation links...")
-    nav_changes = update_navigation_links()
-    for change in nav_changes:
-        print(f"   [OK] {change}")
-
-    if not nav_changes:
-        print("   All navigation links are correct")
-
     # Print site structure
     print_site_structure()
 
     # Summary
-    total_changes = len(pagination_changes) + len(nav_changes)
+    total_changes = len(pagination_changes)
     print(f"\n[COMPLETE] Made {total_changes} changes.")
-
-    if total_changes > 0:
-        print("\nRemember to commit and push changes:")
-        print("   git add . && git commit -m 'Update internal links' && git push")
 
 
 if __name__ == "__main__":
