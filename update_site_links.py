@@ -3,15 +3,10 @@
 Site-Wide Internal Link Updater for BetLegend Picks
 ====================================================
 
-Automatically updates pagination links when new pages are added.
+Automatically updates pagination links AND navigation links when new pages are added.
 
 Blog pages: Page 1 = newest, higher pages = older
-  - "Previous" = older (higher page number)
-  - "Next" = newer (lower page number)
-
 Featured Game pages: Page 1 = oldest, higher pages = newer
-  - "Next" = newer (higher page number)
-  - "Previous" = older (lower page number)
 """
 
 import os
@@ -178,6 +173,61 @@ def update_featured_game_pagination(pages):
     return changes
 
 
+def update_nav_links_sitewide(featured_pages):
+    """Update navigation links across ALL HTML files to point to the newest featured game page"""
+    changes = []
+
+    if not featured_pages:
+        return changes
+
+    # Get the newest featured game page (highest page number)
+    max_page_num = max(p[0] for p in featured_pages)
+    newest_page = get_featured_filename(max_page_num)
+
+    # Pattern to find featured game links in navigation
+    # Matches: href="featured-game-of-the-day.html" or href="featured-game-of-the-day-pageX.html"
+    old_pattern = r'href="featured-game-of-the-day(?:-page\d+)?\.html"'
+    new_link = f'href="{newest_page}"'
+
+    html_files = get_all_html_files()
+
+    for filepath in html_files:
+        filename = os.path.basename(filepath)
+
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        original = content
+
+        # Only update links that are in navigation dropdowns (Game of the Day link)
+        # Look for the pattern within dropdown-content divs
+
+        # Find all dropdown content sections and update featured game links
+        def replace_in_dropdown(match):
+            dropdown_content = match.group(0)
+            # Replace featured game link within dropdown
+            updated = re.sub(
+                r'<a href="featured-game-of-the-day(?:-page\d+)?\.html">Game of the Day</a>',
+                f'<a href="{newest_page}">Game of the Day</a>',
+                dropdown_content
+            )
+            return updated
+
+        content = re.sub(
+            r'<div class="dropdown-content">.*?</div>',
+            replace_in_dropdown,
+            content,
+            flags=re.DOTALL
+        )
+
+        if content != original:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
+            changes.append(filename)
+
+    return changes
+
+
 def main():
     print("\n=== BetLegend Site Link Updater ===")
     print("="*40)
@@ -196,14 +246,28 @@ def main():
     featured_pages = detect_featured_game_pages()
     print(f"\nFeatured Game pages: {len(featured_pages)}")
 
+    # Show newest page
+    if featured_pages:
+        max_num = max(p[0] for p in featured_pages)
+        newest = get_featured_filename(max_num)
+        print(f"  Newest: {newest}")
+
     featured_changes = update_featured_game_pagination(featured_pages)
     for f in featured_changes:
         print(f"  [OK] {f}")
     if not featured_changes:
-        print("  No changes needed")
+        print("  No pagination changes needed")
 
-    total = len(blog_changes) + len(featured_changes)
-    print(f"\n[COMPLETE] Made {total} changes.")
+    # Update navigation links site-wide
+    print(f"\nUpdating nav links site-wide...")
+    nav_changes = update_nav_links_sitewide(featured_pages)
+    print(f"  Updated {len(nav_changes)} files")
+    if nav_changes and len(nav_changes) <= 10:
+        for f in nav_changes:
+            print(f"    - {f}")
+
+    total = len(blog_changes) + len(featured_changes) + len(nav_changes)
+    print(f"\n[COMPLETE] Made {total} total changes.")
 
 
 if __name__ == "__main__":
