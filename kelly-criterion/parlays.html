@@ -21,7 +21,13 @@
         .dropdown .dropbtn{font-family:var(--font-secondary);color:var(--text-color);font-weight:600;font-size:0.9rem;text-transform:uppercase;padding:8px 10px;background:transparent;border:none;cursor:pointer}
         .dropdown-content{display:none;position:absolute;background-color:rgba(17,17,17,0.98);min-width:200px;border-radius:8px;border:1px solid rgba(0,224,255,0.3);z-index:9999}
         .dropdown-content a{padding:12px 16px;display:block;font-size:0.85rem}
-        .dropdown:hover .dropdown-content{display:block}
+        /* Desktop only: show dropdown on hover */
+        @media (hover: hover) and (pointer: fine) {
+            .dropdown:hover .dropdown-content{display:block}
+        }
+        /* Both desktop and mobile: show dropdown when active (clicked/tapped) */
+        .dropdown.active .dropdown-content{display:block}
+        .dropdown.active .dropbtn{color:var(--neon-gold)}
         .content-container{max-width:1000px;margin:0 auto;padding:40px 20px}
         h1{font-family:var(--font-primary);font-size:2.5rem;color:var(--neon-gold);margin-bottom:30px;text-align:center}
         h2{font-family:var(--font-primary);color:var(--neon-gold);font-size:1.8rem;margin:40px 0 20px 0;border-bottom:2px solid rgba(0,224,255,0.3);padding-bottom:10px}
@@ -89,5 +95,27 @@
     </div>
 </div>
 
+<script>
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        if (dropbtn) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(d => d.classList.remove('active'));
+        }
+    });
+});
+</script>
 </body>
 </html>

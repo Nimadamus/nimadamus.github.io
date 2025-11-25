@@ -186,6 +186,10 @@
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
+            -webkit-tap-highlight-color: rgba(0, 224, 255, 0.3);
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
         }
         
         .dropdown:hover .dropbtn {
@@ -198,11 +202,11 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.98);
             backdrop-filter: blur(20px);
             min-width: 200px;
             box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
-            z-index: 9999;
+            z-index: 99999;
             border: 2px solid rgba(0, 224, 255, 0.5);
             border-radius: 10px;
             padding: 15px 0;
@@ -220,7 +224,10 @@
             text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
             border-left: 3px solid transparent;
             position: relative;
-            z-index: 1001;
+            z-index: 10000;
+            -webkit-tap-highlight-color: rgba(0, 224, 255, 0.3);
+            touch-action: manipulation;
+            cursor: pointer;
         }
         
         .dropdown-content a:hover {
@@ -231,18 +238,28 @@
             border-left-color: var(--neon-cyan);
         }
         
-        .dropdown:hover .dropdown-content {
-            display: block;
-            animation: dropdownFade 0.3s ease;
+        /* Desktop only: show dropdown on hover */
+        @media (hover: hover) and (pointer: fine) {
+            .dropdown:hover .dropdown-content {
+                display: block;
+                animation: dropdownFade 0.3s ease;
+            }
+
+            .dropdown:hover .dropbtn {
+                color: var(--neon-gold);
+                text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
+            }
         }
 
+        /* Both desktop and mobile: show dropdown when active (clicked/tapped) */
         .dropdown.active .dropdown-content {
             display: block;
             animation: dropdownFade 0.3s ease;
         }
 
         .dropdown.active .dropbtn {
-            pointer-events: none;
+            color: var(--neon-gold);
+            text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         @keyframes dropdownFade {
@@ -555,7 +572,8 @@
             }
             
             .nav-links {
-                position: static;
+                position: relative;
+                z-index: 9999;
                 margin-top: 0;
                 padding: 12px 10px;
             }
@@ -861,6 +879,40 @@
         </div>
     </nav>
 
+    <script>
+    // Dropdown menu - runs immediately after nav is parsed
+    (function() {
+        var dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(function(dropdown) {
+            var btn = dropdown.querySelector('.dropbtn');
+            if (!btn) return;
+
+            function toggle(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdowns.forEach(function(d) {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
+                dropdown.classList.toggle('active');
+            }
+
+            btn.addEventListener('touchend', toggle, {passive: false});
+            btn.addEventListener('click', toggle);
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+    })();
+    </script>
+
     <div class="plans-ticker">
         <div class="plan-display" id="planDisplay">
             <h3>Daily Pass</h3>
@@ -1151,43 +1203,6 @@ function closeEmailPopup() {
     document.getElementById('email-popup').style.display = 'none';
 }
 
-// Mobile dropdown menu functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const dropdowns = document.querySelectorAll('.dropdown');
-
-    dropdowns.forEach(dropdown => {
-        const dropbtn = dropdown.querySelector('.dropbtn');
-        const dropdownContent = dropdown.querySelector('.dropdown-content');
-
-        if (dropbtn && dropdownContent) {
-            // Handle button clicks to toggle dropdown
-            dropbtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                // Close all other dropdowns
-                dropdowns.forEach(otherDropdown => {
-                    if (otherDropdown !== dropdown) {
-                        otherDropdown.classList.remove('active');
-                    }
-                });
-
-                // Toggle current dropdown
-                dropdown.classList.toggle('active');
-            });
-        }
-    });
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function(e) {
-        // Check if click is outside all dropdowns
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-        }
-    });
-});
     </script>
 
 <!-- Email Capture Pop-up -->

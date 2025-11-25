@@ -24,14 +24,18 @@
         .dropdown-content { display: none; position: absolute; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(5px); min-width: 180px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 10; border: 1px solid rgba(0, 224, 255, 0.2); border-radius: 4px; padding: 10px 0; margin-top: 10px; }
         .dropdown-content a { color: var(--glow-color); padding: 12px 16px; text-decoration: none; display: block; font-size: 14px; text-align: left; }
         .dropdown-content a:hover { background-color: rgba(0, 224, 255, 0.1); color: #fff; }
-        .dropdown:hover .dropdown-content { display: block; }
+        /* Desktop only: show dropdown on hover */
+        @media (hover: hover) and (pointer: fine) {
+            .dropdown:hover .dropdown-content { display: block; }
+        }
+        /* Both desktop and mobile: show dropdown when active (clicked/tapped) */
         .dropdown.active .dropdown-content {
             display: block;
             animation: dropdownFade 0.3s ease;
         }
-
         .dropdown.active .dropbtn {
-            pointer-events: none;
+            color: var(--neon-gold);
+            text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
         }
         .unit-scale-notice { text-align: center; background: rgba(0, 224, 255, 0.1); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 8px; padding: 15px; margin-bottom: 25px; }
         .unit-scale-notice p { margin: 0; font-size: 18px; color: #fff; font-family: 'Roboto', sans-serif; line-height: 1.6; font-weight: 500; }
