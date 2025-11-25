@@ -184,40 +184,47 @@ def update_nav_links_sitewide(featured_pages):
     max_page_num = max(p[0] for p in featured_pages)
     newest_page = get_featured_filename(max_page_num)
 
-    # Pattern to find featured game links in navigation
-    # Matches: href="featured-game-of-the-day.html" or href="featured-game-of-the-day-pageX.html"
-    old_pattern = r'href="featured-game-of-the-day(?:-page\d+)?\.html"'
-    new_link = f'href="{newest_page}"'
-
     html_files = get_all_html_files()
 
     for filepath in html_files:
         filename = os.path.basename(filepath)
+
+        # Skip the featured game pages themselves (their internal links should vary)
+        if filename.startswith('featured-game-of-the-day'):
+            continue
 
         with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
 
         original = content
 
-        # Only update links that are in navigation dropdowns (Game of the Day link)
-        # Look for the pattern within dropdown-content divs
-
-        # Find all dropdown content sections and update featured game links
-        def replace_in_dropdown(match):
-            dropdown_content = match.group(0)
-            # Replace featured game link within dropdown
-            updated = re.sub(
-                r'<a href="featured-game-of-the-day(?:-page\d+)?\.html">Game of the Day</a>',
-                f'<a href="{newest_page}">Game of the Day</a>',
-                dropdown_content
-            )
-            return updated
-
+        # Update ALL nav links that point to any featured-game page
+        # Pattern 1: "Game of the Day" links (dropdown and direct nav)
         content = re.sub(
-            r'<div class="dropdown-content">.*?</div>',
-            replace_in_dropdown,
-            content,
-            flags=re.DOTALL
+            r'<a href="featured-game-of-the-day(?:-page\d+)?\.html"([^>]*)>Game of the Day</a>',
+            f'<a href="{newest_page}"\\1>Game of the Day</a>',
+            content
+        )
+
+        # Pattern 2: "Featured Game of the Day" links (sitemap, etc.)
+        content = re.sub(
+            r'<a href="featured-game-of-the-day(?:-page\d+)?\.html"([^>]*)>Featured Game of the Day</a>',
+            f'<a href="{newest_page}"\\1>Featured Game of the Day</a>',
+            content
+        )
+
+        # Pattern 3: "Back to Latest Featured Game" links (calendar)
+        content = re.sub(
+            r'<a href="featured-game-of-the-day(?:-page\d+)?\.html"([^>]*)>([^<]*Latest Featured Game[^<]*)</a>',
+            f'<a href="{newest_page}"\\1>\\2</a>',
+            content
+        )
+
+        # Pattern 4: onclick handlers pointing to featured game pages (calendar days)
+        content = re.sub(
+            r"onclick=\"window\.location\.href='featured-game-of-the-day(?:-page\d+)?\.html'\"",
+            f"onclick=\"window.location.href='{newest_page}'\"",
+            content
         )
 
         if content != original:
