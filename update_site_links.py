@@ -3,260 +3,207 @@
 Site-Wide Internal Link Updater for BetLegend Picks
 ====================================================
 
-This script automatically updates internal links across the entire site when:
-- A new blog page is added (blog-page10.html, etc.)
-- A new featured game page is added
-- Any paginated content is expanded
+Automatically updates pagination links when new pages are added.
 
-Usage:
-    python update_site_links.py
+Blog pages: Page 1 = newest, higher pages = older
+  - "Previous" = older (higher page number)
+  - "Next" = newer (lower page number)
 
-What it does:
-1. Scans all HTML files in the site directory
-2. Detects paginated page series (blog, featured-game, etc.)
-3. Updates "Next" / "Previous" links correctly
-4. Reports all changes made
-
-Site convention:
-- "Previous" = older posts (higher page number)
-- "Next" = newer posts (lower page number)
-
-Author: BetLegend Automation
+Featured Game pages: Page 1 = oldest, higher pages = newer
+  - "Next" = newer (higher page number)
+  - "Previous" = older (lower page number)
 """
 
 import os
 import re
 import glob
 
-# Site directory
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# Page categories with their naming patterns
-# Note: Only blog pages use the "Previous=older, Next=newer" convention
-# Featured-game pages use opposite convention and are handled separately
-PAGE_CATEGORIES = {
-    'blog': {
-        'pattern': r'blog(?:-page(\d+))?\.html',
-        'base': 'blog.html',
-        'numbered': 'blog-page{}.html',
-        'title': 'Blog'
-    },
-}
-
-# Sports pages (single pages, no pagination)
-SPORTS_PAGES = ['nba.html', 'nfl.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'mlb.html', 'soccer.html']
-
-# Records pages
-RECORDS_PAGES = ['nba-records.html', 'nfl-records.html', 'nhl-records.html', 'ncaab-records.html', 'ncaaf-records.html', 'mlb-records.html', 'soccer-records.html']
 
 
 def get_all_html_files():
-    """Get all HTML files in the site directory"""
     return glob.glob(os.path.join(SITE_DIR, '*.html'))
 
 
-def detect_page_series():
-    """Detect all paginated page series and their page counts"""
+def detect_blog_pages():
+    """Detect blog pages: blog.html, blog-page2.html, etc."""
     html_files = [os.path.basename(f) for f in get_all_html_files()]
-    series = {}
+    pages = []
 
-    for category, config in PAGE_CATEGORIES.items():
-        pages = []
-        for filename in html_files:
-            match = re.match(config['pattern'], filename)
-            if match:
-                page_num = int(match.group(1)) if match.group(1) else 1
-                pages.append((page_num, filename))
+    for filename in html_files:
+        match = re.match(r'blog(?:-page(\d+))?\.html', filename)
+        if match:
+            page_num = int(match.group(1)) if match.group(1) else 1
+            pages.append((page_num, filename))
 
-        if pages:
-            pages.sort(key=lambda x: x[0])
-            series[category] = {
-                'pages': pages,
-                'count': len(pages),
-                'latest': pages[0][1],  # Page 1 is the latest (newest content)
-                'oldest': pages[-1][1],  # Highest number is oldest
-                'config': config
-            }
-
-    return series
+    pages.sort(key=lambda x: x[0])
+    return pages
 
 
-def get_page_filename(config, page_num):
-    """Get filename for a page number"""
+def detect_featured_game_pages():
+    """Detect featured game pages"""
+    html_files = [os.path.basename(f) for f in get_all_html_files()]
+    pages = []
+
+    for filename in html_files:
+        match = re.match(r'featured-game-of-the-day(?:-page(\d+))?\.html', filename)
+        if match:
+            page_num = int(match.group(1)) if match.group(1) else 1
+            pages.append((page_num, filename))
+
+    pages.sort(key=lambda x: x[0])
+    return pages
+
+
+def get_blog_filename(page_num):
     if page_num == 1:
-        return config['base']
-    else:
-        return config['numbered'].format(page_num)
+        return 'blog.html'
+    return f'blog-page{page_num}.html'
 
 
-def update_pagination_links(series):
-    """Update Next/Previous page links in paginated series"""
+def get_featured_filename(page_num):
+    if page_num == 1:
+        return 'featured-game-of-the-day.html'
+    return f'featured-game-of-the-day-page{page_num}.html'
+
+
+def update_blog_pagination(pages):
+    """Update blog pagination - Page 1 = newest"""
     changes = []
+    max_page = len(pages)
 
-    for category, info in series.items():
-        pages = info['pages']
-        config = info['config']
-        max_page = len(pages)
+    for page_num, filename in pages:
+        filepath = os.path.join(SITE_DIR, filename)
 
-        for i, (page_num, filename) in enumerate(pages):
-            filepath = os.path.join(SITE_DIR, filename)
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
 
-            with open(filepath, 'r', encoding='utf-8') as f:
-                content = f.read()
+        original = content
 
-            original_content = content
+        # Blog: Previous = older (higher #), Next = newer (lower #)
+        older_page = get_blog_filename(page_num + 1) if page_num < max_page else None
+        newer_page = get_blog_filename(page_num - 1) if page_num > 1 else None
 
-            # Site convention:
-            # "Previous" = older posts (higher page number)
-            # "Next" = newer posts (lower page number)
+        # Find pagination div
+        match = re.search(r'<div class="pagination"[^>]*>(.*?)</div>', content, re.DOTALL)
+        if match:
+            old_div = match.group(0)
 
-            # Calculate correct targets
-            older_page = get_page_filename(config, page_num + 1) if page_num < max_page else None
-            newer_page = get_page_filename(config, page_num - 1) if page_num > 1 else None
+            # Build new pagination
+            parts = []
 
-            # Find the pagination div
-            pagination_match = re.search(r'<div class="pagination"[^>]*>(.*?)</div>', content, re.DOTALL)
+            # Previous link (older = higher page number)
+            if older_page:
+                parts.append(f'<a href="{older_page}">\u2190 Previous</a>')
+            else:
+                parts.append('<span>\u2190 Previous</span>')
 
-            if pagination_match:
-                old_pagination = pagination_match.group(0)
-                pagination_content = pagination_match.group(1)
+            parts.append('<span>   </span>')
 
-                # Build new pagination content
-                new_pagination_inner = ''
+            # Next link (newer = lower page number)
+            if newer_page:
+                parts.append(f'<a href="{newer_page}">Next \u2192</a>')
+            else:
+                parts.append('<span>Next \u2192</span>')
 
-                # Previous link (goes to older/higher page number)
-                if older_page:
-                    new_pagination_inner += f'<a href="{older_page}">[Previous]</a>'
-                else:
-                    new_pagination_inner += '<span>[Previous]</span>'
+            new_div = '<div class="pagination" style="text-align:center;margin:30px 0;">' + ''.join(parts) + '</div>'
+            content = content.replace(old_div, new_div)
 
-                new_pagination_inner += '<span>   </span>'
-
-                # Next link (goes to newer/lower page number)
-                if newer_page:
-                    new_pagination_inner += f'<a href="{newer_page}">Next [arrow]</a>'
-                else:
-                    new_pagination_inner += '<span>Next [arrow]</span>'
-
-                # Actually, let's preserve the exact arrow format from the original
-                # Just update the hrefs
-
-                new_pagination = pagination_content
-
-                # Update Previous link
-                if older_page:
-                    # Replace any existing Previous link or span
-                    new_pagination = re.sub(
-                        r'<a href="[^"]*">[^<]*Previous[^<]*</a>',
-                        f'<a href="{older_page}">[Previous]</a>',
-                        new_pagination
-                    )
-                    new_pagination = re.sub(
-                        r'<span>[^<]*Previous[^<]*</span>',
-                        f'<a href="{older_page}">[Previous]</a>',
-                        new_pagination
-                    )
-                else:
-                    # Make it a span (no link)
-                    new_pagination = re.sub(
-                        r'<a href="[^"]*">[^<]*Previous[^<]*</a>',
-                        '<span>[Previous]</span>',
-                        new_pagination
-                    )
-
-                # Update Next link
-                if newer_page:
-                    new_pagination = re.sub(
-                        r'<a href="[^"]*">[^<]*Next[^<]*</a>',
-                        f'<a href="{newer_page}">Next [arrow]</a>',
-                        new_pagination
-                    )
-                    new_pagination = re.sub(
-                        r'<span>[^<]*Next[^<]*</span>',
-                        f'<a href="{newer_page}">Next [arrow]</a>',
-                        new_pagination
-                    )
-                else:
-                    new_pagination = re.sub(
-                        r'<a href="[^"]*">[^<]*Next[^<]*</a>',
-                        '<span>Next [arrow]</span>',
-                        new_pagination
-                    )
-
-                # Restore the arrow characters
-                new_pagination = new_pagination.replace('[Previous]', '\u2190 Previous')
-                new_pagination = new_pagination.replace('Next [arrow]', 'Next \u2192')
-
-                new_div = f'<div class="pagination" style="text-align:center;margin:30px 0;">{new_pagination}</div>'
-                content = content.replace(old_pagination, new_div)
-
-            if content != original_content:
-                with open(filepath, 'w', encoding='utf-8') as f:
-                    f.write(content)
-                changes.append(f"Updated pagination in {filename}")
+        if content != original:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
+            changes.append(filename)
 
     return changes
 
 
-def print_site_structure():
-    """Print the current site structure"""
-    series = detect_page_series()
+def update_featured_game_pagination(pages):
+    """Update featured game pagination - Page 1 = oldest, highest = newest"""
+    changes = []
+    max_page = len(pages)
 
-    print("\n" + "="*60)
-    print("BETLEGEND SITE STRUCTURE")
-    print("="*60)
+    for page_num, filename in pages:
+        filepath = os.path.join(SITE_DIR, filename)
 
-    print("\n[PAGINATED SERIES]")
-    for category, info in series.items():
-        print(f"\n  {info['config']['title']}:")
-        print(f"    Pages: {info['count']}")
-        print(f"    Latest (newest content): {info['latest']}")
-        print(f"    Oldest: {info['oldest']}")
-        for page_num, filename in info['pages']:
-            print(f"      - Page {page_num}: {filename}")
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
 
-    print("\n[SPORTS PAGES]")
-    for page in SPORTS_PAGES:
-        filepath = os.path.join(SITE_DIR, page)
-        status = "[OK]" if os.path.exists(filepath) else "[X]"
-        print(f"    {status} {page}")
+        original = content
 
-    print("\n[RECORDS PAGES]")
-    for page in RECORDS_PAGES:
-        filepath = os.path.join(SITE_DIR, page)
-        status = "[OK]" if os.path.exists(filepath) else "[X]"
-        print(f"    {status} {page}")
+        # Featured: Next = newer (higher #), Previous = older (lower #)
+        newer_page = get_featured_filename(page_num + 1) if page_num < max_page else None
+        older_page = get_featured_filename(page_num - 1) if page_num > 1 else None
 
-    print("\n" + "="*60)
+        # Determine label
+        if page_num == 1:
+            page_label = "Page 1 (Oldest)"
+        elif page_num == max_page:
+            page_label = f"Page {page_num} (Newest)"
+        else:
+            page_label = f"Page {page_num}"
+
+        # Find pagination div
+        match = re.search(r'<div class="pagination"[^>]*>(.*?)</div>', content, re.DOTALL)
+        if match:
+            old_div = match.group(0)
+
+            # Build new pagination (format: Next on left, label in middle, Previous on right)
+            parts = []
+
+            # Next link (newer = higher page number) - on the LEFT with left arrow
+            if newer_page:
+                next_num = page_num + 1
+                parts.append(f'<a href="{newer_page}">\u2190 Next (Page {next_num})</a>')
+            else:
+                parts.append('<a href="#" class="disabled">\u2190 Next</a>')
+
+            # Page label in middle
+            parts.append(f'\n<span style="color: var(--text-secondary);">{page_label}</span>')
+
+            # Previous link (older = lower page number) - on the RIGHT with right arrow
+            if older_page:
+                prev_num = page_num - 1
+                parts.append(f'\n<a href="{older_page}">Previous (Page {prev_num}) \u2192</a>')
+            else:
+                parts.append('\n<a href="#" class="disabled">Previous \u2192</a>')
+
+            new_div = '<div class="pagination">\n' + ''.join(parts) + '\n</div>'
+            content = content.replace(old_div, new_div)
+
+        if content != original:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
+            changes.append(filename)
+
+    return changes
 
 
 def main():
-    """Main function - run all updates"""
     print("\n=== BetLegend Site Link Updater ===")
     print("="*40)
 
-    # Detect page series
-    series = detect_page_series()
+    # Blog pages
+    blog_pages = detect_blog_pages()
+    print(f"\nBlog pages: {len(blog_pages)}")
 
-    print(f"\nFound {len(series)} paginated series:")
-    for category, info in series.items():
-        print(f"   - {category}: {info['count']} pages")
+    blog_changes = update_blog_pagination(blog_pages)
+    for f in blog_changes:
+        print(f"  [OK] {f}")
+    if not blog_changes:
+        print("  No changes needed")
 
-    # Update pagination links
-    print("\nUpdating pagination links...")
-    pagination_changes = update_pagination_links(series)
-    for change in pagination_changes:
-        print(f"   [OK] {change}")
+    # Featured game pages
+    featured_pages = detect_featured_game_pages()
+    print(f"\nFeatured Game pages: {len(featured_pages)}")
 
-    if not pagination_changes:
-        print("   No pagination changes needed")
+    featured_changes = update_featured_game_pagination(featured_pages)
+    for f in featured_changes:
+        print(f"  [OK] {f}")
+    if not featured_changes:
+        print("  No changes needed")
 
-    # Print site structure
-    print_site_structure()
-
-    # Summary
-    total_changes = len(pagination_changes)
-    print(f"\n[COMPLETE] Made {total_changes} changes.")
+    total = len(blog_changes) + len(featured_changes)
+    print(f"\n[COMPLETE] Made {total} changes.")
 
 
 if __name__ == "__main__":
