@@ -1526,23 +1526,16 @@ function calculateTeaserBreakdown() {
         tbody.appendChild(totalRow);
     }
 
-    // Define specific teaser types to show - matching "X team teaser Xpt" format
+    // Define specific teaser types to show - only 6.5pt and 7pt teasers
     const teaserTypes = [
-        { name: '4-Point Teaser', pattern: '4' },
-        { name: '6-Point Teaser', pattern: '6' },
-        { name: '6.5-Point Teaser', pattern: '6.5' },
-        { name: '7-Point Teaser', pattern: '7' },
-        { name: '8-Point Teaser', pattern: '8' },
-        { name: '9-Point Teaser', pattern: '9' },
-        { name: '10-Point Teaser', pattern: '10' },
-        { name: '13-Point Teaser', pattern: '13' }
+        { name: '6.5-Point Teaser', pattern: '6\\.5' },
+        { name: '7-Point Teaser', pattern: '7' }
     ];
 
     let hasData = allTeasersData.length > 0;
-    const categorizedTeaserIndices = new Set();
 
     teaserTypes.forEach(teaserType => {
-        const typeData = allData.filter((row, index) => {
+        const typeData = allData.filter(row => {
             // Filter out pending/empty results first (same as Bet Type Breakdown)
             const result = (row.Result || row.result || '').toLowerCase().trim();
             if (!result || result === '' || result === 'pending') return false;
@@ -1555,13 +1548,9 @@ function calculateTeaserBreakdown() {
             const isTeaserBet = searchText.includes('teaser') || searchText.includes('tsr') || searchText.includes('teas');
             if (!isTeaserBet) return false;
 
-            // Match the point value (e.g., "6pt", "6 pt", "6-pt", "6 point", or just "6" followed by "pt"/"point")
+            // Match the point value (e.g., "6.5pt", "7pt", etc.)
             const pointPattern = new RegExp(teaserType.pattern + '\\s*(-)?\\s*(pt|point)', 'i');
-            const matches = pointPattern.test(searchText);
-            if (matches) {
-                categorizedTeaserIndices.add(index);
-            }
-            return matches;
+            return pointPattern.test(searchText);
         });
 
         if (typeData.length === 0) return;
@@ -1579,38 +1568,6 @@ function calculateTeaserBreakdown() {
         `;
         tbody.appendChild(row);
     });
-
-    // Catch any teasers that didn't match specific point values
-    const uncategorizedTeasers = allData.filter((row, index) => {
-        if (categorizedTeaserIndices.has(index)) return false;
-
-        // Filter out pending/empty results (same as Bet Type Breakdown)
-        const result = (row.Result || row.result || '').toLowerCase().trim();
-        if (!result || result === '' || result === 'pending') return false;
-
-        const pick = (row.Pick || row.pick || '').toLowerCase();
-        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
-        const searchText = pick + ' ' + betType;
-
-        // Check if it's a teaser bet but wasn't categorized
-        return searchText.includes('teaser') || searchText.includes('tsr') || searchText.includes('teas');
-    });
-
-    if (uncategorizedTeasers.length > 0) {
-        hasData = true;
-        const stats = calculateStats(uncategorizedTeasers, true);
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><strong>Other Teasers</strong></td>
-            <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
-            <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
-            <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
-            <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
-            <td>${findBestSport(uncategorizedTeasers)}</td>
-        `;
-        tbody.appendChild(row);
-        console.log(`Other Teasers found: ${uncategorizedTeasers.length} bets`);
-    }
 
     if (!hasData) {
         tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No teaser data available</td></tr>';
