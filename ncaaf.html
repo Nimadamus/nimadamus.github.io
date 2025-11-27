@@ -9,173 +9,305 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0f;--bg2:#111118;--card:#16161f;--accent:#00d4ff;--gold:#f0b90b;--text:#fff;--text2:#a1a1aa;--muted:#71717a;--border:rgba(255,255,255,0.06)}
-body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.8;font-size:16px}
-/* Navigation */
-.logo-container{position:fixed;top:15px;left:30px;z-index:1001}
-.logo-container a{color:#fff;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700}
-.logo-container span{color:var(--accent)}
-.nav-links{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:12px;padding:12px 5%;background:rgba(0,0,0,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);z-index:1000;flex-wrap:wrap}
-.nav-links a{color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;padding:8px 16px;border-radius:6px;transition:.2s}
-.nav-links a:hover{color:var(--text);background:var(--card)}
+:root{
+--bg-primary:#05070a;
+--bg-secondary:#0a0d12;
+--bg-card:rgba(15,20,30,0.8);
+--bg-card-hover:rgba(20,28,45,0.9);
+--accent-cyan:#00e5ff;
+--accent-gold:#ffd54f;
+--accent-purple:#a855f7;
+--text-primary:#f0f4f8;
+--text-secondary:#94a3b8;
+--text-muted:#64748b;
+--border-subtle:rgba(255,255,255,0.06);
+--border-accent:rgba(0,229,255,0.3);
+--gradient-accent:linear-gradient(135deg,#00e5ff,#a855f7);
+--gradient-gold:linear-gradient(135deg,#ffd54f,#ff9800);
+--shadow-glow:0 0 40px rgba(0,229,255,0.15);
+--shadow-card:0 4px 24px rgba(0,0,0,0.4);
+}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;line-height:1.8;font-size:16px;min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 20%,rgba(0,229,255,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(168,85,247,0.06) 0%,transparent 50%);pointer-events:none;z-index:-1}
+
+/* Premium Navigation */
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,7,10,0.85);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border-subtle)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 32px}
+.logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:-0.5px}
+.logo span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-links>a{color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;padding:10px 18px;border-radius:8px;transition:all .25s ease}
+.nav-links>a:hover{color:var(--text-primary);background:rgba(255,255,255,0.05)}
 .dropdown{position:relative}
-.dropbtn{background:transparent;color:var(--text2);border:none;font-size:14px;font-weight:500;padding:8px 16px;border-radius:6px;cursor:pointer;font-family:inherit;transition:.2s}
-.dropbtn:hover{color:var(--text);background:var(--card)}
-.dropdown-content{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:8px;min-width:160px;padding:8px 0;z-index:1001;margin-top:4px}
-.dropdown-content a{display:block;padding:10px 20px;color:var(--text2);font-size:13px}
-.dropdown-content a:hover{background:var(--bg2);color:var(--accent)}
-.dropdown:hover .dropdown-content{display:block}
+.dropbtn{background:transparent;color:var(--text-secondary);border:none;font-size:14px;font-weight:500;padding:10px 18px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .25s ease;display:flex;align-items:center;gap:6px}
+.dropbtn::after{content:'';border:solid var(--text-muted);border-width:0 2px 2px 0;padding:3px;transform:rotate(45deg);margin-top:-3px;transition:transform .25s ease}
+.dropbtn:hover{color:var(--text-primary);background:rgba(255,255,255,0.05)}
+.dropdown-content{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-10px);background:rgba(15,20,30,0.95);backdrop-filter:blur(20px);border:1px solid var(--border-subtle);border-radius:12px;min-width:180px;padding:8px;z-index:1001;opacity:0;transition:all .25s ease;box-shadow:var(--shadow-card)}
+.dropdown-content a{display:block;padding:10px 16px;color:var(--text-secondary);font-size:13px;text-decoration:none;border-radius:8px;transition:all .2s ease}
+.dropdown-content a:hover{background:rgba(0,229,255,0.1);color:var(--accent-cyan)}
+.dropdown:hover .dropdown-content{display:block;opacity:1;transform:translateX(-50%) translateY(0)}
+.dropdown:hover .dropbtn::after{transform:rotate(-135deg);margin-top:3px}
+
 .top-space{height:70px}
-header{text-align:center;padding:48px 20px 36px;border-bottom:1px solid var(--border)}
-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:700;margin-bottom:6px}
-header h1 span{background:linear-gradient(90deg,var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-header p{color:var(--text2);font-size:16px}
-.date-bar{max-width:900px;margin:0 auto;padding:20px 16px}
-.date-bar-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
-.date-list{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
-.date-list::-webkit-scrollbar{display:none}
-.d-btn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:10px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);text-decoration:none;transition:.15s;min-width:64px}
-.d-btn:hover{background:var(--card);border-color:var(--accent);color:var(--text)}
-.d-btn.on{background:rgba(0,212,255,.08);border-color:var(--accent)}
-.d-btn .wd{font-size:10px;font-weight:700;text-transform:uppercase;opacity:.5}
-.d-btn .dy{font-size:20px;font-weight:700;line-height:1.1}
-.d-btn .mo{font-size:10px;opacity:.5}
-.d-btn.on .wd,.d-btn.on .mo{color:var(--accent);opacity:1}
-.d-btn.on .dy{color:var(--gold)}
-.today-box{text-align:center;padding:16px}
-.today-box h2{font-family:'Space Grotesk',sans-serif;font-size:24px;color:var(--gold)}
-main{max-width:880px;margin:0 auto;padding:0 16px 50px}
-.game{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:26px;margin-bottom:18px;transition:.15s}
-.game:hover{border-color:rgba(0,212,255,.25);transform:translateY(-1px)}
-.game h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin-bottom:6px;color:var(--text)}
-.game .info{font-size:13px;color:var(--muted);margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-.game p{color:var(--text2);font-size:16px;margin-bottom:10px}
-.game strong,.game b{color:var(--accent)}
-.teams{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:12px}
-.teams img{width:52px;height:52px;object-fit:contain}
-.teams .vs{color:var(--muted);font-size:14px;font-weight:600}
-.section-header{color:var(--gold);font-weight:700;font-size:18px;margin-top:16px;margin-bottom:10px}
-.day-header{background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(240,185,11,.05));border:1px solid rgba(240,185,11,.25);border-radius:10px;padding:18px;margin:26px 0 18px 0;text-align:center}
-.day-header h2{font-family:'Space Grotesk',sans-serif;font-size:24px;color:var(--gold);margin:0}
-.day-header p{color:var(--text2);font-size:14px;margin-top:6px}
-nav.pg{display:flex;justify-content:center;gap:12px;padding:30px 16px;border-top:1px solid var(--border);margin-top:30px}
-nav.pg a,nav.pg span{padding:10px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;transition:.15s}
-nav.pg a:hover{background:var(--card);border-color:var(--accent);color:var(--text)}
-nav.pg .cur{background:rgba(0,212,255,.1);border-color:var(--accent);color:var(--text)}
-nav.pg .dis{opacity:.3;pointer-events:none}
-footer{text-align:center;padding:28px 16px;color:var(--muted);font-size:13px;border-top:1px solid var(--border)}
-footer a{color:var(--accent);text-decoration:none}
-@media(max-width:600px){header{padding:36px 16px 28px}.game{padding:20px}.d-btn{min-width:56px;padding:8px 12px}.d-btn .dy{font-size:18px}.nav-links{gap:6px;padding:10px 3%}.logo-container{left:15px}}
+
+/* Hero Section */
+.hero{text-align:center;padding:60px 24px 40px;position:relative}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,255,0.1) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,255,0.1);border:1px solid var(--border-accent);padding:8px 20px;border-radius:50px;font-size:12px;font-weight:600;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
+.hero-badge::before{content:'🏈';font-size:14px}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,6vw,52px);font-weight:700;margin-bottom:12px;letter-spacing:-1px}
+.hero h1 span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text-secondary);font-size:18px;max-width:600px;margin:0 auto}
+
+/* Date Navigation Pills */
+.date-nav{max-width:1000px;margin:0 auto;padding:20px 24px}
+.date-nav-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;padding-left:4px}
+.date-pills{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.date-pills::-webkit-scrollbar{display:none}
+.date-pill{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:12px 20px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;color:var(--text-secondary);text-decoration:none;transition:all .3s ease;min-width:72px}
+.date-pill:hover{background:var(--bg-card-hover);border-color:var(--border-accent);transform:translateY(-2px)}
+.date-pill.active{background:rgba(0,229,255,0.1);border-color:var(--accent-cyan);box-shadow:0 0 20px rgba(0,229,255,0.2)}
+.date-pill .weekday{font-size:10px;font-weight:700;text-transform:uppercase;opacity:0.6}
+.date-pill .day{font-size:22px;font-weight:700;line-height:1.2}
+.date-pill .month{font-size:10px;opacity:0.6}
+.date-pill.active .weekday,.date-pill.active .month{color:var(--accent-cyan);opacity:1}
+.date-pill.active .day{color:var(--accent-gold)}
+
+/* Day Section Headers */
+.day-section{max-width:900px;margin:32px auto 20px;padding:0 24px}
+.day-header{background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(255,213,79,0.05));border:1px solid rgba(255,213,79,0.3);border-radius:16px;padding:24px;text-align:center;position:relative;overflow:hidden}
+.day-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-gold)}
+.day-header h2{font-family:'Space Grotesk',sans-serif;font-size:26px;color:var(--accent-gold);margin-bottom:6px}
+.day-header p{color:var(--text-secondary);font-size:14px}
+
+/* Main Content */
+main{max-width:900px;margin:0 auto;padding:0 24px 60px}
+
+/* Game Cards */
+.game-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:28px;margin-bottom:20px;transition:all .3s ease;position:relative;overflow:hidden}
+.game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-accent);opacity:0;transition:opacity .3s ease}
+.game-card:hover{border-color:var(--border-accent);transform:translateY(-3px);box-shadow:var(--shadow-glow)}
+.game-card:hover::before{opacity:1}
+.teams-display{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px}
+.teams-display img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
+.teams-display .vs{color:var(--text-muted);font-size:14px;font-weight:700;text-transform:uppercase}
+.game-card h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:8px;text-align:center}
+.game-meta{font-size:13px;color:var(--text-muted);text-align:center;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--border-subtle)}
+.game-card p{color:var(--text-secondary);font-size:16px;margin-bottom:12px;line-height:1.8}
+.game-card strong,.game-card b{color:var(--accent-cyan)}
+
+/* Section Headers within games */
+.section-title{color:var(--accent-gold);font-weight:700;font-size:17px;margin-top:20px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.section-title::before{content:'';width:4px;height:18px;background:var(--gradient-gold);border-radius:2px}
+
+/* Pagination */
+.pagination{display:flex;justify-content:center;align-items:center;gap:12px;padding:40px 24px;border-top:1px solid var(--border-subtle);margin-top:40px}
+.pagination a,.pagination span{padding:12px 24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;transition:all .3s ease}
+.pagination a:hover{background:var(--bg-card-hover);border-color:var(--border-accent);color:var(--text-primary);transform:translateY(-2px)}
+.pagination .current{background:rgba(0,229,255,0.1);border-color:var(--accent-cyan);color:var(--text-primary)}
+.pagination .disabled{opacity:0.3;pointer-events:none}
+
+/* Footer */
+footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
+footer a{color:var(--accent-cyan);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--accent-gold)}
+
+/* Responsive */
+@media(max-width:768px){
+.nav-inner{padding:12px 16px}
+.nav-links{gap:4px}
+.nav-links>a,.dropbtn{padding:8px 12px;font-size:13px}
+.hero{padding:40px 16px 30px}
+.hero p{font-size:16px}
+.date-nav{padding:16px}
+.date-pill{min-width:64px;padding:10px 16px}
+.date-pill .day{font-size:20px}
+.day-section{padding:0 16px}
+.day-header{padding:20px}
+.day-header h2{font-size:22px}
+main{padding:0 16px 40px}
+.game-card{padding:22px}
+.teams-display img{width:48px;height:48px}
+.game-card h3{font-size:18px}
+}
 </style>
 </head>
 <body>
-<div class="logo-container"><a href="index.html">BET<span>LEGEND</span></a></div>
-<nav class="nav-links">
+
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
 <a href="blog-page9.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="moneyline-parlay-of-the-day.html">ML Parlay</a><a href="featured-game-of-the-day-page6.html">Featured Game</a><a href="blog-page9.html">Latest Picks</a></div></div>
 <div class="dropdown"><button class="dropbtn">Community</button><div class="dropdown-content"><a href="https://discord.gg/7WYvwqHq">Discord</a><a href="https://x.com/BetLegendPicks">Twitter/X</a></div></div>
+</div>
+</div>
 </nav>
-<div class="top-space"></div>
-<header><h1>College Football <span>Picks</span></h1><p>Rivalry Week 2025 - The Biggest Games of the Year</p></header>
-<div class="date-bar"><div class="date-bar-label">Select Date</div><div class="date-list"><a href="ncaaf.html" class="d-btn on"><span class="wd">Week</span><span class="dy">14</span><span class="mo">Rivalry</span></a> <a href="ncaaf-page2.html" class="d-btn"><span class="wd">Sat</span><span class="dy">1</span><span class="mo">Nov</span></a> <a href="ncaaf-page3.html" class="d-btn"><span class="wd">Fri</span><span class="dy">31</span><span class="mo">Oct</span></a> <a href="ncaaf-page4.html" class="d-btn"><span class="wd">Wed</span><span class="dy">10</span><span class="mo">Sep</span></a> <a href="ncaaf-page5.html" class="d-btn"><span class="wd">Fri</span><span class="dy">5</span><span class="mo">Sep</span></a></div></div>
 
+<div class="top-space"></div>
+
+<section class="hero">
+<div class="hero-badge">Rivalry Week 2025</div>
+<h1>College Football <span>Picks</span></h1>
+<p>The Biggest Games of the Year - Ohio State vs Michigan, Iron Bowl, Lone Star Showdown & More</p>
+</section>
+
+<div class="date-nav">
+<div class="date-nav-label">Select Week</div>
+<div class="date-pills">
+<a href="ncaaf.html" class="date-pill active"><span class="weekday">Week</span><span class="day">14</span><span class="month">Rivalry</span></a>
+<a href="ncaaf-page2.html" class="date-pill"><span class="weekday">Sat</span><span class="day">1</span><span class="month">Nov</span></a>
+<a href="ncaaf-page3.html" class="date-pill"><span class="weekday">Fri</span><span class="day">31</span><span class="month">Oct</span></a>
+<a href="ncaaf-page4.html" class="date-pill"><span class="weekday">Wed</span><span class="day">10</span><span class="month">Sep</span></a>
+<a href="ncaaf-page5.html" class="date-pill"><span class="weekday">Fri</span><span class="day">5</span><span class="month">Sep</span></a>
+</div>
+</div>
+
+<div class="day-section">
 <div class="day-header">
 <h2>Friday, November 28, 2025</h2>
 <p>Black Friday Rivalry Games</p>
 </div>
+</div>
 
 <main>
 
-<div class="game">
-<div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/245.png" alt="Texas A&M"><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/251.png" alt="Texas"></div>
+<article class="game-card">
+<div class="teams-display">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/245.png" alt="Texas A&M">
+<span class="vs">VS</span>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/251.png" alt="Texas">
+</div>
 <h3>#3 Texas A&M Aggies vs #16 Texas Longhorns - Lone Star Showdown</h3>
-<div class="info">Friday 7:30 PM ET | ABC | DKR-Texas Memorial Stadium, Austin | A&M -2.5 | O/U 52.5</div>
+<div class="game-meta">Friday 7:30 PM ET | ABC | DKR-Texas Memorial Stadium, Austin | A&M -2.5 | O/U 52.5</div>
 <p>The Lone Star Showdown returns with massive stakes. The undefeated third-ranked Texas A&M Aggies bring an 11-0 record into Austin to face the 16th-ranked Texas Longhorns, who sit at 8-3. An A&M win clinches a spot in the SEC Championship Game for the first time ever. A Texas win keeps the Longhorns playoff hopes alive and continues their recent dominance in this rivalry.</p>
-<p class="section-header">The Line Movement Tells a Story</p>
+<p class="section-title">The Line Movement Tells a Story</p>
 <p>This line opened at Texas A&M -3 and has moved to -2.5, sometimes touching -2. Thats reverse line movement, indicating sharp money is backing the home dog. The Aggies are just 5-6 ATS this season despite being undefeated, while Texas is a brutal 3-8 ATS. However, Texas A&M is 1-4 SU in their last five games against Texas and 2-6 ATS in their last eight road games against the Longhorns. The under has hit in four of the last five meetings.</p>
-<p class="section-header">The Total Tells Another Story</p>
+<p class="section-title">The Total Tells Another Story</p>
 <p>The over has hit in five of Texas A&Ms last six games, but the under trend in this specific rivalry suggests defenses show up when bragging rights are on the line. The total of 52.5 feels about right for two teams that can score but also have the athletes to make stops in big moments.</p>
-</div>
+</article>
 
-<div class="game">
-<div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/145.png" alt="Ole Miss"><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/344.png" alt="Mississippi State"></div>
+<article class="game-card">
+<div class="teams-display">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/145.png" alt="Ole Miss">
+<span class="vs">VS</span>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/344.png" alt="Mississippi State">
+</div>
 <h3>#7 Ole Miss Rebels vs Mississippi State Bulldogs - Egg Bowl</h3>
-<div class="info">Friday 12:00 PM ET | ABC | Davis Wade Stadium, Starkville | Ole Miss favored</div>
+<div class="game-meta">Friday 12:00 PM ET | ABC | Davis Wade Stadium, Starkville | Ole Miss favored</div>
 <p>The Egg Bowl kicks off Black Friday with the seventh-ranked Ole Miss Rebels traveling to Starkville to face their in-state rivals. This game is always chaotic regardless of records, and Mississippi State will be desperate to play spoiler against an Ole Miss team with College Football Playoff aspirations. Lane Kiffins offense against a hostile Starkville crowd makes for appointment television.</p>
-</div>
+</article>
 
-<div class="game">
-<div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/61.png" alt="Georgia"><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/59.png" alt="Georgia Tech"></div>
+<article class="game-card">
+<div class="teams-display">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/61.png" alt="Georgia">
+<span class="vs">VS</span>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/59.png" alt="Georgia Tech">
+</div>
 <h3>Georgia Bulldogs vs Georgia Tech Yellow Jackets - Clean Old-Fashioned Hate</h3>
-<div class="info">Friday 3:30 PM ET | ABC | Bobby Dodd Stadium, Atlanta | Georgia favored</div>
+<div class="game-meta">Friday 3:30 PM ET | ABC | Bobby Dodd Stadium, Atlanta | Georgia favored</div>
 <p>Clean Old-Fashioned Hate brings Georgia to Atlanta to face Georgia Tech. The Bulldogs have dominated this rivalry recently, but rivalry games in the state of Georgia have a way of getting weird. Georgia Tech would love nothing more than to end their rivals season on a sour note, while Georgia needs to stay focused with bigger goals ahead.</p>
-</div>
+</article>
 
+<div class="day-section" style="padding:0;margin-top:40px">
 <div class="day-header">
 <h2>Saturday, November 29, 2025</h2>
 <p>Championship Saturday Rivalry Games</p>
 </div>
+</div>
 
-<div class="game">
-<div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/194.png" alt="Ohio State"><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/130.png" alt="Michigan"></div>
+<article class="game-card" style="margin-top:20px">
+<div class="teams-display">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/194.png" alt="Ohio State">
+<span class="vs">VS</span>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/130.png" alt="Michigan">
+</div>
 <h3>#1 Ohio State Buckeyes vs #17 Michigan Wolverines - THE GAME</h3>
-<div class="info">Saturday 12:00 PM ET | FOX | Michigan Stadium, Ann Arbor | OSU -9.5 | O/U 44.5</div>
+<div class="game-meta">Saturday 12:00 PM ET | FOX | Michigan Stadium, Ann Arbor | OSU -9.5 | O/U 44.5</div>
 <p>This is it. The biggest game of college football Rivalry Week. The top-ranked Ohio State Buckeyes bring an 11-0 record into the Big House to face the 17th-ranked Michigan Wolverines, who are 9-2 and winners of five straight. Ohio State hasnt beaten Michigan in four years. Ryan Day is 0-4 against the Wolverines and desperately needs this win to quiet the critics. But Michigan owns this rivalry right now, and Sherrone Moore has the Wolverines believing they can make it five in a row.</p>
-<p class="section-header">The Spread Movement</p>
+<p class="section-title">The Spread Movement</p>
 <p>This line has been wild. It opened at Ohio State -5.5 in May and climbed steadily as the Buckeyes dominated, peaking at -13.5 on Wednesday. Then the sharps struck. Professional bettors hammered Michigan +13.5, forcing the line back to -9.5 within 48 hours. That kind of movement screams smart money on the underdog.</p>
-<p class="section-header">The ATS Records</p>
+<p class="section-title">The ATS Records</p>
 <p>Ohio State is 9-2 ATS this season, covering at an elite rate. Michigan is just 4-7 ATS. But heres the thing: Ohio State is 1-4 ATS and 1-4 SU in their last five games against Michigan. The Wolverines have covered four straight in this rivalry. As of kickoff, Ohio State will have gone 2,192 days without beating Michigan, despite being favored by a touchdown or more in three of those four games. The low total of 44.5 reflects two elite defenses in a game where every possession matters.</p>
-</div>
+</article>
 
-<div class="game">
-<div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/333.png" alt="Alabama"><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2.png" alt="Auburn"></div>
+<article class="game-card">
+<div class="teams-display">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/333.png" alt="Alabama">
+<span class="vs">VS</span>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2.png" alt="Auburn">
+</div>
 <h3>#10 Alabama Crimson Tide vs Auburn Tigers - Iron Bowl</h3>
-<div class="info">Saturday 7:30 PM ET | ABC | Jordan-Hare Stadium, Auburn | Alabama -6 | O/U 47</div>
+<div class="game-meta">Saturday 7:30 PM ET | ABC | Jordan-Hare Stadium, Auburn | Alabama -6 | O/U 47</div>
 <p>The Iron Bowl heads to Jordan-Hare Stadium with the 10th-ranked Alabama Crimson Tide facing the Auburn Tigers. Alabama enters at 9-2 looking to finish the regular season strong, while Auburn sits at 5-6 and needs this win to become bowl eligible. The stakes are different for each team, but the Iron Bowl always delivers drama regardless of records.</p>
-<p class="section-header">Auburn's Home-Field Edge</p>
+<p class="section-title">Auburn's Home-Field Edge</p>
 <p>Heres the trend that matters: Auburn is 5-1 ATS in their last six home games against Alabama. The Tide havent won a game at Auburn by more than three points since 2015. Thats a decade of close games at Jordan-Hare. Alabama is 7-4 ATS this season, while Auburn is just 4-7 ATS. But the under has hit in seven of Alabamas last eight games, suggesting this could be a defensive struggle.</p>
-<p class="section-header">Bowl Eligibility Motivation</p>
+<p class="section-title">Bowl Eligibility Motivation</p>
 <p>Auburn needs this win to reach six wins and become bowl eligible. Thats a powerful motivator in a rivalry game. Alabama is the better team on paper, but laying six points on the road in the Iron Bowl has historically been a losing proposition.</p>
-</div>
+</article>
 
-<div class="game">
-<div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2390.png" alt="Miami"><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/221.png" alt="Pitt"></div>
+<article class="game-card">
+<div class="teams-display">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2390.png" alt="Miami">
+<span class="vs">VS</span>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/221.png" alt="Pitt">
+</div>
 <h3>#12 Miami Hurricanes vs #22 Pittsburgh Panthers</h3>
-<div class="info">Saturday 12:00 PM ET | ABC | Acrisure Stadium, Pittsburgh | Miami favored</div>
+<div class="game-meta">Saturday 12:00 PM ET | ABC | Acrisure Stadium, Pittsburgh | Miami favored</div>
 <p>Two ranked ACC teams clash in Pittsburgh with major conference championship implications. The 12th-ranked Miami Hurricanes face the 22nd-ranked Pittsburgh Panthers in a game that could determine who represents the Coastal in the ACC title game. This has become one of the more underrated rivalries in college football, and both teams have something to play for.</p>
-</div>
+</article>
 
-<div class="game">
-<div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/228.png" alt="Clemson"><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2579.png" alt="South Carolina"></div>
+<article class="game-card">
+<div class="teams-display">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/228.png" alt="Clemson">
+<span class="vs">VS</span>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2579.png" alt="South Carolina">
+</div>
 <h3>Clemson Tigers vs South Carolina Gamecocks - Palmetto Bowl</h3>
-<div class="info">Saturday 12:00 PM ET | SECN | Williams-Brice Stadium, Columbia</div>
+<div class="game-meta">Saturday 12:00 PM ET | SECN | Williams-Brice Stadium, Columbia</div>
 <p>The Palmetto Bowl brings Clemson to Columbia to face South Carolina. This in-state rivalry is always heated, and South Carolina would love to send their senior class out with a win over the Tigers. Clemson needs to keep winning to stay in the ACC Championship conversation. Williams-Brice Stadium will be rocking for this noon kickoff.</p>
-</div>
+</article>
 
-<div class="game">
-<div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/87.png" alt="FSU"><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/57.png" alt="Florida"></div>
+<article class="game-card">
+<div class="teams-display">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/87.png" alt="FSU">
+<span class="vs">VS</span>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/57.png" alt="Florida">
+</div>
 <h3>Florida State Seminoles vs Florida Gators</h3>
-<div class="info">Saturday 4:30 PM ET | ESPN2 | Ben Hill Griffin Stadium, Gainesville</div>
+<div class="game-meta">Saturday 4:30 PM ET | ESPN2 | Ben Hill Griffin Stadium, Gainesville</div>
 <p>Florida State travels to The Swamp to face Florida in one of college footballs most storied rivalries. Neither team has had the season they expected, but that makes this game even more important for pride and recruiting momentum. The winner gets bragging rights in the state of Florida for an entire offseason.</p>
-</div>
+</article>
 
-<div class="game">
-<div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/87.png" alt="Notre Dame"><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/30.png" alt="USC"></div>
+<article class="game-card">
+<div class="teams-display">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/87.png" alt="Notre Dame">
+<span class="vs">VS</span>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/30.png" alt="USC">
+</div>
 <h3>Notre Dame Fighting Irish vs USC Trojans</h3>
-<div class="info">Saturday 4:30 PM ET | NBC | LA Memorial Coliseum, Los Angeles</div>
+<div class="game-meta">Saturday 4:30 PM ET | NBC | LA Memorial Coliseum, Los Angeles</div>
 <p>The greatest intersectional rivalry in college football returns with Notre Dame facing USC in Los Angeles. This game has decided national championships and ruined undefeated seasons for over a century. Both programs are looking to end their regular seasons on a high note, and this primetime matchup on NBC will have the entire country watching.</p>
-</div>
+</article>
 
-<div class="game">
+<article class="game-card">
 <h3>More Rivalry Week Games</h3>
-<div class="info">Full slate of rivalry matchups across the country</div>
+<div class="game-meta">Full slate of rivalry matchups across the country</div>
 <p>The rest of Rivalry Week features LSU at Oklahoma, Missouri at Arkansas, Vanderbilt at Tennessee, Kentucky at Louisville, Virginia Tech at Virginia, North Carolina at NC State, Texas Tech at West Virginia, Colorado at Kansas State, Iowa State at Oklahoma State, Cincinnati at TCU, and many more. This is the most exciting weekend on the college football calendar, with every game carrying weight for bowl positioning, conference championships, and playoff implications.</p>
-</div>
+</article>
 
 </main>
-<nav class="pg"><span class="dis">&larr; Newer</span><span class="cur">1/5</span><a href="ncaaf-page2.html">Older &rarr;</a></nav>
-<footer>&copy; 2025 BetLegend <a href="index.html">Home</a> | <a href="ncaaf-records.html">NCAAF Records</a></footer>
+
+<nav class="pagination">
+<span class="disabled">&larr; Newer</span>
+<span class="current">Page 1 of 5</span>
+<a href="ncaaf-page2.html">Older &rarr;</a>
+</nav>
+
+<footer>&copy; 2025 BetLegend &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="ncaaf-records.html">NCAAF Records</a></footer>
+
 </body>
 </html>
