@@ -22,6 +22,96 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
+## 1A. MANDATORY SLATE POST VERIFICATION CHECKLIST
+
+### ⚠️ CRITICAL: COMPLETE THIS CHECKLIST BEFORE WRITING ANY SLATE POST ⚠️
+
+**This section was added after errors were made claiming "5-game slates" when there were actually 15 games. This is UNACCEPTABLE and damages credibility.**
+
+### STEP 1: VERIFY TOTAL GAME COUNT (MANDATORY)
+Before writing ANY slate post, you MUST:
+1. Search ESPN/official league schedule for the EXACT date
+2. COUNT every single game scheduled for that date
+3. WRITE DOWN the total number of games
+4. NEVER use phrases like "full slate" or "[X]-game slate" until you have verified the exact count
+5. If search results are incomplete, search AGAIN with different terms
+
+**Example Searches Required:**
+- "NBA schedule November 26 2025 all games"
+- "NHL schedule November 26 2025 complete"
+- "College basketball November 26 2025 full schedule"
+
+### STEP 2: VERIFY EVERY PLAYER-TEAM ASSOCIATION (MANDATORY)
+Before mentioning ANY player, you MUST verify they currently play for that team:
+- [ ] Search "[Player Name] [Team Name] 2025 roster"
+- [ ] Confirm they were not traded, released, or injured out for season
+- [ ] If player was traded in 2025, verify the CURRENT team
+
+**Common Errors to Avoid:**
+- Players traded mid-season (e.g., Kevin Durant to Rockets, Brandon Ingram to Raptors, Mitch Marner to Vegas)
+- Players with season-ending injuries still listed on old rosters
+- Assuming a player is still with their 2024 team
+
+### STEP 3: VERIFY ALL INJURIES (MANDATORY)
+Before mentioning ANY injury, you MUST:
+- [ ] Search "[Player Name] injury November 2025"
+- [ ] Verify the EXACT injury type (ACL vs Achilles, knee vs ankle, etc.)
+- [ ] Verify current status (out, questionable, probable)
+- [ ] Verify expected return timeline if mentioned
+
+**Recent Examples of Injury Errors:**
+- Jayson Tatum has an ACHILLES injury, NOT ACL
+- Tyrese Haliburton has an ACHILLES injury from 2025 Finals
+- Connor Hellebuyck - knee surgery, 4-6 weeks (November 2025)
+- Fred VanVleet - torn ACL, out for 2025-26 season
+
+### STEP 4: VERIFY ALL TEAM RECORDS (MANDATORY)
+Before stating ANY team record:
+- [ ] Search "[Team Name] record November 2025"
+- [ ] Cross-reference with official standings
+- [ ] If exact record unavailable, use general terms ("struggling," "hot streak") instead of specific numbers
+- [ ] NEVER guess a record - verify or omit
+
+### STEP 5: VERIFY ALL STATISTICS (MANDATORY)
+Before citing ANY player stats:
+- [ ] Search "[Player Name] stats 2025-26 season"
+- [ ] Verify PPG, RPG, APG, or other metrics from official sources
+- [ ] Round to one decimal place and use approximate language if needed
+- [ ] If stats vary by source, use the most conservative/common number
+
+### STEP 6: VERIFY CHAMPIONSHIP/HISTORICAL CLAIMS (MANDATORY)
+Before stating any championship or historical information:
+- [ ] Search "[Team Name] championship [year]"
+- [ ] Verify titles, streaks, records are accurate
+- [ ] Example: OKC Thunder ARE 2025 NBA Champions (beat Pacers in 7 games)
+- [ ] Example: Florida Panthers ARE back-to-back Stanley Cup champions (2024, 2025)
+
+### SLATE POST FINAL CHECKLIST
+
+**BEFORE hitting save/commit on ANY slate post:**
+
+- [ ] I verified the EXACT number of games on the schedule
+- [ ] I covered ALL games in the slate (not 33%, not 50% - ALL of them)
+- [ ] I verified every player mentioned is on the correct team
+- [ ] I verified every injury type and status mentioned
+- [ ] I verified every team record mentioned
+- [ ] I verified every statistic mentioned
+- [ ] I did NOT make up ANY information
+- [ ] I did NOT assume ANY information from memory
+- [ ] I searched and verified EVERYTHING
+
+### IF IN DOUBT
+
+If you cannot verify information:
+1. DO NOT INCLUDE IT
+2. Use general language instead of specific claims
+3. Ask the user to provide/verify the information
+4. It is better to have LESS content that is 100% accurate than MORE content with errors
+
+**Remember: One false claim destroys credibility. Every fact must be verified.**
+
+---
+
 ## 2. CONTENT STYLE
 
 ### Writing Tone - CRITICAL
