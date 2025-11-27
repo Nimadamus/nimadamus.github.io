@@ -63,6 +63,69 @@ body::after {
     z-index: -1;
 }
 
+/* Navigation Bar */
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(3, 5, 8, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-glow);
+    z-index: 1000;
+    padding: 0 20px;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+}
+
+.nav-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-decoration: none;
+    background: var(--gradient-cyber);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.nav-links a:hover {
+    color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.1);
+}
+
+.nav-links a.active {
+    color: var(--neon-gold);
+    background: rgba(255, 204, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+}
+
 .hero {
     text-align: center;
     padding: 100px 20px 40px;
@@ -399,6 +462,23 @@ footer a { color: var(--neon-cyan); text-decoration: none; }
 </script>
 </head>
 <body>
+
+<nav class="main-nav">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">BetLegend</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="blog-page9.html">Picks</a>
+            <a href="nfl.html" class="active">NFL</a>
+            <a href="nba.html">NBA</a>
+            <a href="nhl.html">NHL</a>
+            <a href="ncaaf.html">NCAAF</a>
+            <a href="ncaab.html">NCAAB</a>
+            <a href="mlb.html">MLB</a>
+            <a href="records.html">Records</a>
+        </div>
+    </div>
+</nav>
 
 <section class="hero">
     <h1>NFL Betting Hub</h1>
