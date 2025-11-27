@@ -354,212 +354,206 @@ h1 {
 }
 
     
-/* Date Picker Styles */
+
+/* Modern Date Navigator */
 .date-picker-container {
     max-width: 1140px;
-    margin: 30px auto 40px auto;
-    padding: 0 20px;
+    margin: 25px auto 35px auto;
+    padding: 0 15px;
 }
 
 .date-picker-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    padding: 0 5px;
 }
 
 .date-picker-title {
-    color: var(--accent-gold);
-    font-size: 18px;
-    font-weight: 600;
-    font-family: var(--font-primary);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.7;
 }
 
-.calendar-toggle {
-    background: rgba(0, 217, 255, 0.1);
-    border: 2px solid rgba(0, 217, 255, 0.3);
-    color: var(--accent-cyan);
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: var(--font-secondary);
-    font-weight: 600;
-    transition: all 0.3s ease;
+.date-nav-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.calendar-toggle:hover {
-    background: rgba(0, 217, 255, 0.2);
-    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+.scroll-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.scroll-btn:hover {
+    background: rgba(0, 217, 255, 0.15);
+    border-color: rgba(0, 217, 255, 0.4);
+    color: #00d9ff;
+}
+
+.scroll-btn svg {
+    width: 16px;
+    height: 16px;
 }
 
 .date-scroll-container {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     overflow-x: auto;
-    padding: 15px 5px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-cyan) rgba(0, 0, 0, 0.3);
+    padding: 8px 4px;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .date-scroll-container::-webkit-scrollbar {
-    height: 8px;
-}
-
-.date-scroll-container::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-}
-
-.date-scroll-container::-webkit-scrollbar-thumb {
-    background: var(--accent-cyan);
-    border-radius: 4px;
+    display: none;
 }
 
 .date-chip {
     flex-shrink: 0;
-    padding: 12px 20px;
-    background: rgba(26, 35, 50, 0.9);
-    border: 2px solid rgba(0, 217, 255, 0.2);
-    border-radius: 12px;
-    color: var(--text);
+    padding: 10px 16px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     font-family: var(--font-secondary);
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    white-space: nowrap;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
-    min-width: 120px;
+    min-width: 72px;
+    position: relative;
+    overflow: hidden;
+}
+
+.date-chip::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
 }
 
 .date-chip:hover {
-    background: rgba(0, 217, 255, 0.15);
-    border-color: var(--accent-cyan);
-    box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.12) 0%, rgba(0, 217, 255, 0.05) 100%);
+    border-color: rgba(0, 217, 255, 0.3);
     transform: translateY(-2px);
+    box-shadow: 0 8px 25px -5px rgba(0, 217, 255, 0.2);
 }
 
 .date-chip.active {
-    background: rgba(255, 215, 0, 0.15);
-    border-color: var(--accent-gold);
-    color: var(--accent-gold);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
+    border-color: rgba(255, 215, 0, 0.4);
+    box-shadow: 0 4px 20px -5px rgba(255, 215, 0, 0.3);
+}
+
+.date-chip.active .day-name,
+.date-chip.active .date-num,
+.date-chip.active .month-year {
+    color: #ffd700;
 }
 
 .date-chip .day-name {
     display: block;
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-bottom: 4px;
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
 }
 
 .date-chip .date-num {
     display: block;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
-    color: inherit;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.1;
 }
 
 .date-chip .month-year {
     display: block;
-    font-size: 10px;
-    color: var(--text-muted);
-    margin-top: 2px;
+    font-size: 9px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 1px;
+    letter-spacing: 0.5px;
 }
 
-/* Calendar Dropdown */
-.calendar-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: rgba(26, 35, 50, 0.98);
-    border: 2px solid rgba(0, 217, 255, 0.3);
-    border-radius: 15px;
-    padding: 20px;
-    z-index: 1000;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    min-width: 280px;
+.date-chip:hover .day-name,
+.date-chip:hover .month-year {
+    color: rgba(0, 217, 255, 0.7);
 }
 
-.calendar-dropdown.show {
-    display: block;
+.date-chip:hover .date-num {
+    color: #00d9ff;
 }
 
-.calendar-month-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    color: var(--accent-gold);
-    font-weight: 600;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-}
-
-.calendar-day-header {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 11px;
-    padding: 8px 0;
-    font-weight: 600;
-}
-
-.calendar-day {
-    text-align: center;
-    padding: 10px;
+/* View All Dropdown */
+.view-all-btn {
+    padding: 8px 14px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
-    color: var(--text-muted);
-    font-size: 13px;
-    transition: all 0.2s ease;
-}
-
-.calendar-day.has-content {
-    background: rgba(0, 217, 255, 0.1);
-    color: var(--accent-cyan);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+    font-weight: 500;
     cursor: pointer;
-    text-decoration: none;
-    display: block;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.calendar-day.has-content:hover {
-    background: rgba(0, 217, 255, 0.25);
-    box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+.view-all-btn:hover {
+    background: rgba(0, 217, 255, 0.1);
+    border-color: rgba(0, 217, 255, 0.3);
+    color: #00d9ff;
 }
 
-.calendar-day.current {
-    background: rgba(255, 215, 0, 0.2);
-    color: var(--accent-gold);
-    border: 1px solid var(--accent-gold);
-}
-
-.date-picker-wrapper {
-    position: relative;
+.view-all-btn svg {
+    width: 12px;
+    height: 12px;
 }
 
 /* Mobile responsive */
 @media (max-width: 768px) {
     .date-chip {
-        min-width: 100px;
-        padding: 10px 15px;
+        min-width: 62px;
+        padding: 8px 12px;
     }
 
     .date-chip .date-num {
-        font-size: 16px;
+        font-size: 18px;
     }
 
-    .calendar-dropdown {
-        right: -50px;
-        min-width: 260px;
+    .scroll-btn {
+        display: none;
+    }
+
+    .date-picker-title {
+        font-size: 11px;
     }
 }
 
@@ -660,70 +654,66 @@ h1 {
     </h2>
 </div>
 
-
-
     <div class="date-picker-container">
         <div class="date-picker-header">
-            <span class="date-picker-title">📅 SELECT DATE</span>
-            <div class="date-picker-wrapper">
-                <button class="calendar-toggle" onclick="toggleCalendar()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
-                    Calendar
-                </button>
-            </div>
+            <span class="date-picker-title">Browse by Date</span>
+            <button class="view-all-btn" onclick="document.querySelector('.date-scroll-container').scrollTo({left: 9999, behavior: 'smooth'})">
+                View All
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
         </div>
-        <div class="date-scroll-container">
-            <a href="nba.html" class="date-chip">
-            <span class="day-name">Wed</span>
-            <span class="date-num">26</span>
-            <span class="month-year">Nov 2025</span>
-        </a>
+        <div class="date-nav-wrapper">
+            <button class="scroll-btn" onclick="document.querySelector('.date-scroll-container').scrollBy({left: -200, behavior: 'smooth'})">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="date-scroll-container">
+                <a href="nba.html" class="date-chip">
+                <span class="day-name">WED</span>
+                <span class="date-num">26</span>
+                <span class="month-year">NOV</span>
+            </a>
             <a href="nba-page2.html" class="date-chip">
-            <span class="day-name">Mon</span>
-            <span class="date-num">24</span>
-            <span class="month-year">Nov 2025</span>
-        </a>
+                <span class="day-name">MON</span>
+                <span class="date-num">24</span>
+                <span class="month-year">NOV</span>
+            </a>
             <a href="nba-page3.html" class="date-chip">
-            <span class="day-name">Sat</span>
-            <span class="date-num">22</span>
-            <span class="month-year">Nov 2025</span>
-        </a>
+                <span class="day-name">SAT</span>
+                <span class="date-num">22</span>
+                <span class="month-year">NOV</span>
+            </a>
             <a href="nba-page4.html" class="date-chip">
-            <span class="day-name">Fri</span>
-            <span class="date-num">21</span>
-            <span class="month-year">Nov 2025</span>
-        </a>
+                <span class="day-name">FRI</span>
+                <span class="date-num">21</span>
+                <span class="month-year">NOV</span>
+            </a>
             <a href="nba-page5.html" class="date-chip">
-            <span class="day-name">Sat</span>
-            <span class="date-num">15</span>
-            <span class="month-year">Nov 2025</span>
-        </a>
+                <span class="day-name">SAT</span>
+                <span class="date-num">15</span>
+                <span class="month-year">NOV</span>
+            </a>
             <a href="nba-page6.html" class="date-chip active">
-            <span class="day-name">Thu</span>
-            <span class="date-num">13</span>
-            <span class="month-year">Nov 2025</span>
-        </a>
+                <span class="day-name">THU</span>
+                <span class="date-num">13</span>
+                <span class="month-year">NOV</span>
+            </a>
             <a href="nba-page7.html" class="date-chip">
-            <span class="day-name">OLDER</span>
-            <span class="date-num">Archive</span>
-            <span class="month-year">Posts</span>
-        </a>
+                <span class="day-name">ALL</span>
+                <span class="date-num">+</span>
+                <span class="month-year">Archive</span>
+            </a>
+            </div>
+            <button class="scroll-btn" onclick="document.querySelector('.date-scroll-container').scrollBy({left: 200, behavior: 'smooth'})">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
         </div>
     </div>
-    <script>
-    function toggleCalendar() {
-        // For now just scroll to show all dates
-        const container = document.querySelector('.date-scroll-container');
-        container.scrollTo({ left: 0, behavior: 'smooth' });
-    }
-    </script>
 
-<div class="blog-post">
+
+
+
+
+    <div class="blog-post">
 <meta name="title" content="Thursday NBA 3-Game Slate Analysis - Indiana Pacers at Phoenix Suns Deep Dive | November 13 Betting Breakdown"/>
 <meta name="description" content="Complete breakdown of Thursday's NBA slate featuring deep dive on Indiana's road struggles at Phoenix. Analysis on Raptors-Cavs and Hawks-Jazz with betting angles."/>
 <h2 style="text-align:center !important; color:#d4af37 !important;">Thursday's Compact 3-Game NBA Slate: Pacers' Road Nightmare in Phoenix</h2>
