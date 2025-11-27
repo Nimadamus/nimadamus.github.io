@@ -616,7 +616,7 @@ tbody tr:hover {
 
 <div id="loading-screen" class="loading">
     <p>📊 Loading all records from verified sources...</p>
-    <p style="font-size: 16px; margin-top: 20px;">Aggregating NFL, NBA, NHL, MLB, NCAAF, and Soccer data...</p>
+    <p style="font-size: 16px; margin-top: 20px;">Aggregating NFL, NBA, NHL, MLB, NCAAF, NCAAB, and Soccer data...</p>
 </div>
 
 <div class="container" id="main-content" style="display: none;">
@@ -1066,7 +1066,7 @@ function calculateOverallStats() {
 }
 
 function calculateSportBreakdown() {
-    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'Soccer'];
+    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'NCAAB', 'Soccer'];
     const tbody = document.getElementById('sport-breakdown');
     tbody.innerHTML = '';
 
@@ -1475,7 +1475,7 @@ function calculateStats(data, useActualBetSizes = false) {
 }
 
 function findBestSport(data) {
-    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'Soccer'];
+    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'NCAAB', 'Soccer'];
     let bestSport = '';
     let bestWinRate = 0;
 
@@ -1831,7 +1831,7 @@ function calculateTotalBetsBreakdown() {
 }
 
 function calculateTeamTotalsBySport() {
-    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'Soccer'];
+    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'NCAAB', 'Soccer'];
     const tbody = document.getElementById('team-totals-by-sport');
     tbody.innerHTML = '';
 
@@ -1871,7 +1871,7 @@ function calculateTeamTotalsBySport() {
 }
 
 function createPerformanceChart() {
-    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'Soccer'];
+    const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'NCAAB', 'Soccer'];
     const sportData = sports.map(sport => {
         const data = allData.filter(row => row.sport === sport);
         if (data.length === 0) return null;
@@ -2027,6 +2027,7 @@ async function init() {
         console.log('  • NHL: Google Sheets CSV export');
         console.log('  • MLB: Google Sheets CSV export');
         console.log('  • NCAAF: Google Sheets CSV export');
+        console.log('  • NCAAB: Google Sheets CSV export');
         console.log('  • Soccer: Google Sheets CSV export');
         console.log('');
 
@@ -2075,7 +2076,7 @@ async function init() {
 
         // AVG ODDS VERIFICATION - Log detailed breakdown before rendering
         console.log('=== AVG ODDS CALCULATION VERIFICATION ===');
-        const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'Soccer'];
+        const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'NCAAB', 'Soccer'];
         sports.forEach(sport => {
             const sportData = allData.filter(row => row.sport === sport);
             if (sportData.length === 0) return;
