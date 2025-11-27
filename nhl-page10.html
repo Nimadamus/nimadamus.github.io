@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NHL Betting Picks & Analysis | BetLegend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://www.betlegendpicks.com/nhl-page10.html" rel="canonical"/>
+  <meta name="description" content="Expert NHL betting picks, puck lines, totals, and prop bets. Daily hockey predictions powered by advanced analytics and goaltending matchup analysis."/>
+  <meta name="keywords" content="NHL picks, NHL predictions, hockey betting, puck line, NHL totals, goalie matchups"/>
+  <meta property="og:title" content="NHL Betting Picks & Analysis | BetLegend"/>
+  <meta property="og:description" content="Expert NHL betting picks, puck lines, totals, and prop bets. Daily hockey predictions powered by advanced analytics and goaltending matchup analysis."/>
+  <meta property="og:url" content="https://www.betlegendpicks.com/nhl.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="BetLegend"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+    --bg: linear-gradient(135deg, #0a0e17 0%, #141b2d 50%, #1a1f30 100%);
+    --card-bg: #1a2332;
+    --accent-cyan: #00d9ff;
+    --accent-gold: #ffd700;
+    --text: #e8edf5;
+    --text-muted: #8b96a8;
+    --border: rgba(0, 217, 255, 0.2);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #0a0e17 0%, #141b2d 50%, #1a1f30 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    padding-top: 80px;
+    line-height: 1.8;
+}
+
+.page-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 20px 16px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.site-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto 40px auto;
+    padding: 40px 20px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+}
+
+.logo {
+    display: block;
+    max-width: 200px;
+    height: auto;
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,.6));
+}
+
+.sitename {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent-cyan);
+    text-align: center;
+    text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+}
+
+/* Blog Posts - Each day clearly separated */
+.blog-post {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--accent-gold);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    margin: 0 auto 70px auto;
+    transition: all 0.3s ease;
+}
+
+.blog-post:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 12px 40px rgba(0, 217, 255, 0.15);
+    transform: translateY(-3px);
+}
+
+/* Post Headers - Gold and prominent */
+.post-header, .blog-post h1, .blog-post h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-align: center;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+/* Date/Time - Cyan colored badge style */
+.post-time {
+    display: inline-block;
+    font-size: 14px;
+    color: var(--accent-cyan);
+    text-align: center;
+    margin: 0 0 30px 0;
+    padding: 8px 20px;
+    background: rgba(0, 217, 255, 0.1);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+/* Post Body */
+.post-body {
+    text-align: left;
+}
+
+.post-body p, .blog-post > p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 0 0 18px 0;
+    text-align: left;
+    color: var(--text);
+}
+
+.post-body img, .blog-post img {
+    display: block;
+    width: 85%;
+    margin: 25px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Game Headers - Standout cyan */
+.game-header {
+    color: #fff;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 35px 0 15px 0;
+    text-align: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+    border-radius: 10px;
+    border-left: 4px solid var(--accent-cyan);
+}
+
+/* Dividers between games */
+.divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 35px 0;
+}
+
+.outer-frame {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+/* Logo Container */
+.logo-container {
+    position: fixed;
+    top: 5px;
+    left: 40px;
+    z-index: 1000;
+}
+
+.logo-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.logo-container span {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.8);
+}
+
+/* Navigation */
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 15px 5%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+    z-index: 999;
+    flex-wrap: wrap;
+}
+
+.nav-links a, .dropdown {
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-links a:hover {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 8px var(--accent-cyan);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown .dropbtn {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--accent-cyan);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0 8px 30px rgba(0, 224, 255, 0.3);
+    z-index: 9999;
+    border: 2px solid rgba(0, 224, 255, 0.4);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: var(--accent-cyan);
+    padding: 14px 20px;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.2), transparent);
+    border-left-color: var(--accent-cyan);
+    padding-left: 25px;
+}
+
+/* Desktop only: show dropdown on hover */
+@media (hover: hover) and (pointer: fine) {
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: dropdownFade 0.3s ease;
+    }
+}
+
+/* Both desktop and mobile: show dropdown when active (clicked/tapped) */
+.dropdown.active .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
+
+.dropdown.active .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    body { padding-top: 120px; }
+    .logo-container { top: 10px; left: 20px; }
+    .logo-container a { font-size: 1.5rem; }
+    .nav-links { gap: 8px; padding: 10px 5px; }
+    .nav-links a, .dropdown .dropbtn { font-size: 0.75rem; padding: 6px 10px; }
+    .blog-post { padding: 25px; margin-bottom: 50px; }
+    .post-header, .blog-post h1, .blog-post h2 { font-size: 22px; }
+    .sitename { font-size: 28px; }
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+    <nav class="nav-links">
+        <a href="blog-page9.html">PICKS & ANALYSIS</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="records.html">DETAILED BREAKDOWN</a>
+                <a href="betlegend-verified-records.html">MLB</a>
+                <a href="nfl-records.html">NFL</a>
+                <a href="ncaaf-records.html">NCAAF</a>
+                <a href="nhl-records.html">NHL</a>
+                <a href="nba-records.html">NBA</a>
+                <a href="soccer-records.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf-page2.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="ncaab.html">NCAAB</a>
+                <a href="nhl.html">NHL</a>
+                <a href="soccer.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="live-odds.html">Live Odds</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="kelly-criterion.html">Kelly Criterion</a>
+                <a href="betting-calculators.html">Betting Calculators</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-glossary.html">Betting Glossary</a>
+                <a href="betting-101.html">Betting 101</a>
+                <a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a>
+            </div>
+        </div>
+
+        <a href="proofofpicks.html">Proof</a>
+        <a href="news-page3.html">News</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Game of the Day</button>
+            <div class="dropdown-content">
+                <a href="featured-game-of-the-day-page6.html">Game of the Day</a>
+                <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+  <div class="page-wrap">
+    <div class="container outer-frame">
+      <header class="site-header">
+        <img class="logo" src="newlogo.png" alt="BetLegend logo">
+        <div class="sitename">BetLegend NHL</div>
+
+      
+<div style="text-align: center; margin: 30px auto 40px auto; padding: 25px 20px; max-width: 800px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%); border-radius: 15px; border: 2px solid rgba(255, 215, 0, 0.3); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+    <h2 style="color: #ffd700; font-size: 32px; margin: 0; font-weight: 700; text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);">
+        Saturday, November 01, 2025
+    </h2>
+</div>
+
+<article class="blog-post">
+        <h1 class="post-header">Saturday's Massive 12 Game Slate: Every Matchup Analyzed</h1>
+        <div class="post-time">Posted: November 1, 2025, 10:00 AM ET</div>
+        <div class="post-body">
+
+          <p>Saturday brings a packed 12 game NHL schedule spanning from early afternoon to late night Pacific action. We're a month into the season now and the data is speaking loudly about which teams have sustainable processes and which are surviving on variance. This slate features elite matchups, desperate teams seeking momentum, and several situations where the underlying numbers reveal clear edges.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/5.png" alt="Pittsburgh" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/52.png" alt="Winnipeg" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Pittsburgh Penguins @ Winnipeg Jets</div>
+          <div class="game-header">Battle of Division Leaders</div>
+          <p>The Penguins travel to Winnipeg in an elite early afternoon matchup between two of the NHL's best teams. Pittsburgh enters at 8-2-2 on an eight game point streak, sitting atop the Metropolitan Division. Evgeni Malkin is third in the NHL with 17 points while Sidney Crosby adds 15 points. The Penguins own the league's best save percentage at .921 and are shooting 13.9 percent, which is sustainable given their shot quality. Winnipeg counters at 8-3-0, second in the Central Division. Mark Scheifele has been magnificent with 9 goals and 9 assists through 11 games, and Kyle Connor adds 6 goals and 9 assists. The Jets have won three straight against Pittsburgh, outscoring them 12-5 in those meetings. This game features elite goaltending, disciplined defensive structures, and offensive firepower on both sides. The Jets have home ice and recent success in this matchup, but Pittsburgh's point streak reflects legitimate excellence rather than luck. This projects as a tight defensive game with special teams potentially deciding the outcome. Winnipeg's familiarity with Pittsburgh's system gives them a slight edge, but this stays close throughout. The total of 6.5 feels appropriate given both teams' defensive capabilities.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/20.png" alt="Calgary" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/18.png" alt="Nashville" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Calgary Flames @ Nashville Predators</div>
+          <div class="game-header">Two Struggling Franchises Search for Answers</div>
+          <p>Calgary visits Nashville in a matchup of teams desperately seeking positive momentum. The Flames are catastrophic at 2-8-2, scoring just 2.17 goals per game with a 14.6 percent power play conversion rate. They're allowing 3.2 goals against and sitting last in the Pacific Division. Nazem Kadri leads with 9 points and Blake Coleman has 5 goals, but the depth scoring has vanished completely. Nashville isn't much better at 4-6-2, having dropped three straight games while scoring only 1.7 goals per game during that stretch. The Predators are allowing 3.7 goals per game in the losing streak and rank 26th in total goals scored. Ryan O'Reilly has 9 points but needs help from the supporting cast. The Predators have home ice and the sixth best penalty kill in the league, which matters against Calgary's anemic power play. Both goaltenders have struggled, with Dustin Wolf at 2-7-1 with a 3.44 GAA and Juuse Saros at 4-4-2 with a 2.86 GAA. This game comes down to which team can execute basic defensive principles and capitalize on mistakes. Nashville's home ice and slightly better recent form gives them the edge, but neither team inspires confidence. The total should stay manageable given both offenses are struggling to generate quality looks.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/21.png" alt="Colorado" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/28.png" alt="San Jose" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Colorado Avalanche @ San Jose Sharks</div>
+          <div class="game-header">MacKinnon Hunting History</div>
+          <p>Colorado visits San Jose as massive favorites at minus 233, and that line accurately reflects this mismatch. Nathan MacKinnon is tied for first in the NHL with 9 goals and tied for second with 18 points through 12 games. The elite center has posted 55 points in 37 career regular season games against the Sharks and owns this matchup historically. Cale Makar leads NHL defensemen with 17 points and 13 assists, ranking third among all skaters in the helper category. Martin Necas adds 8 goals and 8 assists. The Avalanche are 7-1-4 and have won back to back games, most recently defeating Vegas 4-2. They've beaten San Jose in their last 10 meetings. The Sharks are 3-6-2 and coming off an impressive 5-2 win over New Jersey, but that result is an outlier rather than a sustainable trend. San Jose lacks the defensive structure to contain Colorado's transition game and offensive creativity. The Avalanche should dominate possession, generate quality scoring chances, and control this game from the opening faceoff. The only question is margin of victory. Colorado wins by multiple goals and the puck line offers value. The total of 6.5 could go over if Colorado's offense clicks early and San Jose can't defend.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/25.png" alt="Dallas" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/13.png" alt="Florida" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Dallas Stars @ Florida Panthers</div>
+          <div class="game-header">Battle of Defensive Structures</div>
+          <p>Dallas travels to Florida in an evening matchup between two teams built on defensive excellence and structured systems. The Stars are 6-3-2 with solid road results at 3-1-1. Florida sits 5-5-1 at home with a 4-1-1 record. Both teams emphasize shot suppression and limit quality scoring chances through disciplined gap control. Dallas is 3-7-0 on the over/under this season, consistently playing in low scoring affairs. Florida is 4-6-0 on totals. The total of 5.5 reflects how both teams approach games. This projects as a grinding defensive battle where special teams and goaltending determine the outcome. Dallas has the slight edge on the road given their structured system travels well, but Florida's home ice keeps them competitive. This stays tight throughout and likely gets decided in the third period or potentially overtime. The under offers value given how both teams play. Neither offense will generate easy looks and both goaltenders should have clean sightlines throughout.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/10.png" alt="Toronto" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/4.png" alt="Philadelphia" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Toronto Maple Leafs @ Philadelphia Flyers</div>
+          <div class="game-header">Zegras Leading Philly Surge</div>
+          <p>Toronto visits Philadelphia with the Flyers riding a three game winning streak powered by Trevor Zegras. The former Anaheim star has 7 points with 4 goals and 3 assists during the run and looks completely rejuvenated in Philadelphia's system. The Flyers are 6-3-1 and trying to extend their home winning streak to six games. Toronto enters at 5-5-1 and just 2-3-1 over their past six contests. The Maple Leafs are 0-3-0 on the road this season, which is a glaring red flag. Road struggles are rarely random variance, they typically reflect systematic issues with travel routines, lineup adjustments, or mental preparation. Philadelphia has home ice, momentum, and Zegras playing at an elite level. Toronto has offensive firepower but their road record suggests they're vulnerable in hostile environments. The Flyers should extend their home winning streak. Philadelphia's defensive structure at home has been solid and they're capitalizing on power play opportunities. The total of 5.5 suggests a defensive game, but both teams can score when their attacks click. Lean Flyers to win and the over might have value if Toronto's offense shows up despite the road struggles.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/23.png" alt="Vancouver" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/30.png" alt="Minnesota" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Vancouver Canucks @ Minnesota Wild</div>
+          <div class="game-header">Contrasting Trajectories</div>
+          <p>Vancouver visits Minnesota with both teams sitting at 6-6-0 records but heading in completely different directions. The Canucks are 4-3-0 on the road and have found consistency away from home. Minnesota is struggling at 1-3-2 at home and on a two game losing streak as part of a 2-5-3 stretch over their last 10 games. The Wild are allowing defensive breakdowns and can't find offensive rhythm. Vancouver brings pace and can score in transition, which exploits Minnesota's current defensive vulnerabilities. The Canucks should control tempo and generate quality chances through speed. Minnesota needs to find structure at home but their recent form suggests that's not happening. Vancouver wins this game on the road. The total of 6.0 could go either way depending on whether Minnesota's offense shows up, but lean over given the Wild's defensive issues.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/19.png" alt="St. Louis" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/29.png" alt="Columbus" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">St. Louis Blues @ Columbus Blue Jackets</div>
+          <div class="game-header">Columbus Home Comfort</div>
+          <p>St. Louis travels to Columbus with the Blue Jackets enjoying home ice advantage. Columbus is 6-4-0 overall and 2-3-0 at home, which is modest but functional. St. Louis is 3-6-2 and struggling to find consistency anywhere. The Blues are 2-2-0 on the road but their overall metrics suggest they're not a reliable team away from home. Columbus has home crowd energy and should be able to exploit St. Louis defensive lapses. The Blue Jackets win this game at home through structured play and capitalizing on Blues mistakes. The total of 6.5 could go over given both teams' defensive inconsistencies, but Columbus should control this game enough to keep scoring manageable.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/15.png" alt="Washington" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/7.png" alt="Buffalo" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Washington Capitals @ Buffalo Sabres</div>
+          <div class="game-header">Offensive Firepower Clash</div>
+          <p>Washington visits Buffalo in a game that could turn into a track meet. The Capitals are 6-5-0 and the Sabres are 4-4-3, with both teams capable of scoring in bunches. Buffalo is 4-2-1 at home and plays with energy in front of their crowd. Washington is 3-1-0 on the road, showing they can win in hostile environments. Both teams have offensive weapons and defensive questions. This game projects as high scoring given neither defense has been consistent. The total of 6.5 should go over. Buffalo has the slight edge at home with their crowd support, but Washington can score enough to make this competitive throughout.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/9.png" alt="Ottawa" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/8.png" alt="Montreal" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Ottawa Senators @ Montreal Canadiens</div>
+          <div class="game-header">Battle of Quebec</div>
+          <p>Ottawa visits Montreal in a Canadian rivalry game that brings extra intensity. The Senators are 6-5-1 and 2-3-0 on the road. Montreal is 8-3-0 overall and 3-1-0 at home, showing strong performance in front of their fans. The Canadiens have momentum and home ice, which gives them a clear edge. Montreal's 8-2-0 record over their last 10 games reflects legitimate process rather than luck. Ottawa has talent but faces a tough environment on the road against a Canadiens team playing excellent hockey. Montreal wins this game at home. The total of 6.5 could go over given both teams can score, but Montreal's defensive structure at home might keep this under control.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/1.png" alt="New Jersey" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/26.png" alt="Los Angeles" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">New Jersey Devils @ Los Angeles Kings</div>
+          <div class="game-header">Late Night Defensive Battle</div>
+          <p>New Jersey travels to Los Angeles for a late night matchup between two quality teams. The Devils are 8-3-0 and have been one of the league's best stories early. The Kings are 5-3-4 but just 0-2-2 at home, which is concerning. Los Angeles has struggled to protect home ice and New Jersey brings a structured system that travels well. The Devils are 2-4-0 on the road, which is modest, but their overall metrics suggest they're better than that record indicates. The Kings play grinding defensive hockey, which could frustrate New Jersey's attack. This projects as a low scoring game with the total of 6.0 likely staying under. The Kings have home ice but their home record is troubling. New Jersey has the slight edge given their overall form, but this stays competitive throughout. Lean Devils but the number isn't screaming value.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/3.png" alt="NY Rangers" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/55.png" alt="Seattle" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">New York Rangers @ Seattle Kraken</div>
+          <div class="game-header">West Coast Finish</div>
+          <p>The Rangers visit Seattle in the late night finale. New York is 5-5-2 overall and 5-1-1 on the road, showing they're a completely different team away from Madison Square Garden. Seattle is 5-2-3 at home with a 3-0-1 record, demonstrating strong home ice performance. The Kraken have home crowd energy and are capitalizing on playing in front of their fans. The Rangers road success makes this interesting, but Seattle's home form is impressive. This projects as a tight game with the total of 5.5 reflecting both teams' defensive capabilities. Seattle has the slight edge at home, but the Rangers road record keeps them dangerous. This could go either way and might get decided late.</p>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/16.png" alt="Chicago" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/22.png" alt="Edmonton" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Chicago Blackhawks @ Edmonton Oilers</div>
+          <div class="game-header">Bedard vs McDavid</div>
+          <p>Chicago visits Edmonton in a generational talent showcase featuring Connor Bedard against Connor McDavid. The Oilers are 5-4-3 at home with a 3-0-2 record and massive favorites at minus 275. Chicago is 5-4-2 overall and 2-2-1 on the road, showing competitive spirit. Edmonton's offense is elite when McDavid and Leon Draisaitl click, but their defensive consistency remains questionable. Chicago has Bedard developing into a legitimate star and can score in transition. The Oilers should win this game at home given their offensive firepower, but Chicago's young legs and offensive talent keep them competitive. The total of 6.5 could explode if both offenses get rolling. Edmonton wins but Chicago makes it interesting, which makes the puck line dangerous for Oilers backers.</p>
+
+          <p>Saturday's massive slate rewards selective aggression and disciplined bankroll management. The clearest edges come from identifying teams in strong situational spots facing opponents with systematic issues. Colorado over San Jose is the most lopsided matchup. Montreal at home against Ottawa offers strong value. Philadelphia's home streak against Toronto's road struggles creates a clear angle. Don't chase every game on a 12 game slate. Focus on the spots where underlying metrics align with situational dynamics and bet with conviction when you find genuine edges.</p>
+
+        </div>
+      </article>
+<style>
+.page-nav { display: flex; justify-content: center; gap: 15px; margin: 50px auto; padding: 25px; max-width: 600px; }
+.page-nav a, .page-nav span { padding: 14px 28px; background: rgba(0, 217, 255, 0.1); border: 2px solid rgba(0, 217, 255, 0.3); border-radius: 10px; color: #00d9ff; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
+.page-nav a:hover { background: rgba(0, 217, 255, 0.25); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
+.page-nav .disabled { opacity: 0.35; pointer-events: none; }
+.page-nav .current { background: rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.6); color: #ffd700; }
+</style><nav class="page-nav">
+<a href="nhl-page9.html">&#9664; Newer</a>
+<span class="current">Page 10 of 16</span>
+<a href="nhl-page11.html">Older &#9654;</a>
+</nav>
+
+    </div>
+  </div>
+</body>
+</html>

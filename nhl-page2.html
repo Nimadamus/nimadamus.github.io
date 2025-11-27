@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NHL Betting Picks & Analysis | BetLegend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://www.betlegendpicks.com/nhl-page2.html" rel="canonical"/>
+  <meta name="description" content="Expert NHL betting picks, puck lines, totals, and prop bets. Daily hockey predictions powered by advanced analytics and goaltending matchup analysis."/>
+  <meta name="keywords" content="NHL picks, NHL predictions, hockey betting, puck line, NHL totals, goalie matchups"/>
+  <meta property="og:title" content="NHL Betting Picks & Analysis | BetLegend"/>
+  <meta property="og:description" content="Expert NHL betting picks, puck lines, totals, and prop bets. Daily hockey predictions powered by advanced analytics and goaltending matchup analysis."/>
+  <meta property="og:url" content="https://www.betlegendpicks.com/nhl.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="BetLegend"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+    --bg: linear-gradient(135deg, #0a0e17 0%, #141b2d 50%, #1a1f30 100%);
+    --card-bg: #1a2332;
+    --accent-cyan: #00d9ff;
+    --accent-gold: #ffd700;
+    --text: #e8edf5;
+    --text-muted: #8b96a8;
+    --border: rgba(0, 217, 255, 0.2);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #0a0e17 0%, #141b2d 50%, #1a1f30 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    padding-top: 80px;
+    line-height: 1.8;
+}
+
+.page-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 20px 16px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.site-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto 40px auto;
+    padding: 40px 20px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+}
+
+.logo {
+    display: block;
+    max-width: 200px;
+    height: auto;
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,.6));
+}
+
+.sitename {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent-cyan);
+    text-align: center;
+    text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+}
+
+/* Blog Posts - Each day clearly separated */
+.blog-post {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--accent-gold);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    margin: 0 auto 70px auto;
+    transition: all 0.3s ease;
+}
+
+.blog-post:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 12px 40px rgba(0, 217, 255, 0.15);
+    transform: translateY(-3px);
+}
+
+/* Post Headers - Gold and prominent */
+.post-header, .blog-post h1, .blog-post h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-align: center;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+/* Date/Time - Cyan colored badge style */
+.post-time {
+    display: inline-block;
+    font-size: 14px;
+    color: var(--accent-cyan);
+    text-align: center;
+    margin: 0 0 30px 0;
+    padding: 8px 20px;
+    background: rgba(0, 217, 255, 0.1);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+/* Post Body */
+.post-body {
+    text-align: left;
+}
+
+.post-body p, .blog-post > p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 0 0 18px 0;
+    text-align: left;
+    color: var(--text);
+}
+
+.post-body img, .blog-post img {
+    display: block;
+    width: 85%;
+    margin: 25px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Game Headers - Standout cyan */
+.game-header {
+    color: #fff;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 35px 0 15px 0;
+    text-align: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+    border-radius: 10px;
+    border-left: 4px solid var(--accent-cyan);
+}
+
+/* Dividers between games */
+.divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 35px 0;
+}
+
+.outer-frame {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+/* Logo Container */
+.logo-container {
+    position: fixed;
+    top: 5px;
+    left: 40px;
+    z-index: 1000;
+}
+
+.logo-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.logo-container span {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.8);
+}
+
+/* Navigation */
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 15px 5%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+    z-index: 999;
+    flex-wrap: wrap;
+}
+
+.nav-links a, .dropdown {
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-links a:hover {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 8px var(--accent-cyan);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown .dropbtn {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--accent-cyan);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0 8px 30px rgba(0, 224, 255, 0.3);
+    z-index: 9999;
+    border: 2px solid rgba(0, 224, 255, 0.4);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: var(--accent-cyan);
+    padding: 14px 20px;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.2), transparent);
+    border-left-color: var(--accent-cyan);
+    padding-left: 25px;
+}
+
+/* Desktop only: show dropdown on hover */
+@media (hover: hover) and (pointer: fine) {
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: dropdownFade 0.3s ease;
+    }
+}
+
+/* Both desktop and mobile: show dropdown when active (clicked/tapped) */
+.dropdown.active .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
+
+.dropdown.active .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    body { padding-top: 120px; }
+    .logo-container { top: 10px; left: 20px; }
+    .logo-container a { font-size: 1.5rem; }
+    .nav-links { gap: 8px; padding: 10px 5px; }
+    .nav-links a, .dropdown .dropbtn { font-size: 0.75rem; padding: 6px 10px; }
+    .blog-post { padding: 25px; margin-bottom: 50px; }
+    .post-header, .blog-post h1, .blog-post h2 { font-size: 22px; }
+    .sitename { font-size: 28px; }
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <a href="index.html">BET<span>LEGEND</span></a>
+</div>
+
+<!-- Navigation -->
+    <nav class="nav-links">
+        <a href="blog-page9.html">PICKS & ANALYSIS</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Records</button>
+            <div class="dropdown-content">
+                <a href="records.html">DETAILED BREAKDOWN</a>
+                <a href="betlegend-verified-records.html">MLB</a>
+                <a href="nfl-records.html">NFL</a>
+                <a href="ncaaf-records.html">NCAAF</a>
+                <a href="nhl-records.html">NHL</a>
+                <a href="nba-records.html">NBA</a>
+                <a href="soccer-records.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Sports</button>
+            <div class="dropdown-content">
+                <a href="nfl.html">NFL</a>
+                <a href="mlb-page2.html">MLB</a>
+                <a href="ncaaf-page2.html">NCAAF</a>
+                <a href="nba.html">NBA</a>
+                <a href="ncaab.html">NCAAB</a>
+                <a href="nhl.html">NHL</a>
+                <a href="soccer.html">Soccer</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Resources</button>
+            <div class="dropdown-content">
+                <a href="live-odds.html">Live Odds</a>
+                <a href="howitworks.html">How It Works</a>
+                <a href="bankroll.html">Bankroll</a>
+                <a href="kelly-criterion.html">Kelly Criterion</a>
+                <a href="betting-calculators.html">Betting Calculators</a>
+                <a href="screenshots.html">Screenshots</a>
+                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                <a href="betting-glossary.html">Betting Glossary</a>
+                <a href="betting-101.html">Betting 101</a>
+                <a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a>
+            </div>
+        </div>
+
+        <a href="proofofpicks.html">Proof</a>
+        <a href="news-page3.html">News</a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Game of the Day</button>
+            <div class="dropdown-content">
+                <a href="featured-game-of-the-day-page6.html">Game of the Day</a>
+                <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Community</button>
+            <div class="dropdown-content">
+                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
+                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+  <div class="page-wrap">
+    <div class="container outer-frame">
+      <header class="site-header">
+        <img class="logo" src="newlogo.png" alt="BetLegend logo">
+        <div class="sitename">BetLegend NHL</div>
+
+      
+<div style="text-align: center; margin: 30px auto 40px auto; padding: 25px 20px; max-width: 800px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%); border-radius: 15px; border: 2px solid rgba(255, 215, 0, 0.3); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+    <h2 style="color: #ffd700; font-size: 32px; margin: 0; font-weight: 700; text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);">
+        Monday, November 24, 2025
+    </h2>
+</div>
+
+<div class="blog-post">
+        <div class="post-header">Monday NHL 7-Game Slate: November 24th - Ovechkin Record Chase Headlines</div>
+        <div class="post-time">Posted: November 24, 2025, 11:30 AM ET | Capitals-Blue Jackets, Panthers-Predators, Golden Knights-Mammoth, Rangers-Blues, Red Wings-Devils, Flyers-Lightning, Senators-Kings</div>
+
+        <p>Monday delivers a solid seven-game NHL slate with compelling storylines spanning both conferences. The marquee attraction is Alex Ovechkin continuing his historic goal-scoring record chase as the Washington Capitals host the Columbus Blue Jackets. The back-to-back Stanley Cup champion Florida Panthers visit Nashville, while the Vegas Golden Knights with newly acquired Mitch Marner head to Utah. Action starts at 7:00 PM ET and runs through the 9:00 PM West Coast window.</p>
+
+        <div class="game-header">COLUMBUS @ WASHINGTON | 7:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/29.png" alt="Columbus" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/15.png" alt="Washington" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Blue Jackets @ Capitals</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Capital One Arena | ESPN+ | WSH -165 | Total: 6.5</div>
+
+        <p>The headline matchup of the evening features Alex Ovechkin continuing his historic chase. Ovechkin has already passed Wayne Gretzky to become the NHLs all-time leader in goals, scoring his 895th on April 6, 2025 against the New York Islanders. He now has 897 total career goals. Ovechkin has found his rhythm recently, scoring seven goals over the past seven games. In November specifically, hes been on the scoresheet consistently, demonstrating the 39-year-old still has plenty left in the tank. Ovechkin scored his 30th goal of the season on a power play against the Calgary Flames, becoming the fourth player in NHL history to score 30 goals at age 39 or older. Columbus comes in as underdogs in this Metropolitan Division matchup.</p>
+
+        <div class="game-header">FLORIDA @ NASHVILLE | 8:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/13.png" alt="Florida" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/18.png" alt="Nashville" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Panthers @ Predators</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Bridgestone Arena | ESPN+ | FLA -135 | Total: 5.5</div>
+
+        <p>The back-to-back 2024 and 2025 Stanley Cup champion Florida Panthers visit Nashville. Florida sits at 11-8-1 overall with an impressive 8-2-1 home record, though this is a road contest. Captain Aleksander Barkov leads a balanced Panthers attack that has won four of their last five games. Head coach Paul Maurice has this team playing championship-caliber hockey again. Nashville sits at 6-10-4 in the Central Division and has struggled mightily to find consistency. Goaltender Juuse Saros is projected to start but has struggled behind this weak defense, posting a 6-8-3 record with a .896 save percentage.</p>
+
+        <div class="game-header">VEGAS @ UTAH | 9:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/54.png" alt="Vegas" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/utah.png" alt="Utah" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Golden Knights @ Mammoth</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Delta Center | ESPN+ | VGK -120 | Total: 5.5</div>
+
+        <p>The Vegas Golden Knights visit Utah in a rematch of last weeks matchup. Mitch Marner has been a revelation since joining Vegas in a July trade from the Toronto Maple Leafs. Marner was traded for Nicolas Roy and subsequently signed an eight-year, $96 million contract with an average annual value of $12 million. In his first 17 games with Vegas, Marner has recorded 19 points with 4 goals and 15 assists. The Golden Knights are 10-4-7 and looking to bounce back after blowing a two-goal lead in a 4-3 overtime loss against the Anaheim Ducks on Saturday. Logan Cooley leads the Mammoth offense as Utah continues building their franchise identity in their sophomore season.</p>
+
+        <div class="game-header">ST. LOUIS @ NY RANGERS | 7:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/19.png" alt="St. Louis" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/3.png" alt="NY Rangers" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Blues @ Rangers</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Madison Square Garden | NHL Network | NYR -145 | Total: 5.5</div>
+
+        <p>The Rangers host St. Louis in a cross-conference matchup at the Worlds Most Famous Arena. New York brings their Metropolitan Division pedigree against a Blues team that has been inconsistent this season. Madison Square Garden provides a significant home-ice advantage.</p>
+
+        <div class="game-header">DETROIT @ NEW JERSEY | 7:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/17.png" alt="Detroit" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/1.png" alt="New Jersey" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Red Wings @ Devils</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Prudential Center | ESPN+ | NJ -135 | Total: 5.5</div>
+
+        <p>The Red Wings visit New Jersey in a Metropolitan matchup. Patrolling the crease for the game will be John Gibson for Detroit and Jacob Markstrom for New Jersey. The Devils have been one of the leagues hottest teams, while Detroit continues their rebuild.</p>
+
+        <div class="game-header">PHILADELPHIA @ TAMPA BAY | 7:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/4.png" alt="Philadelphia" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/27.png" alt="Tampa Bay" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Flyers @ Lightning</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Amalie Arena | ESPN+ | TB -175 | Total: 5.5</div>
+
+        <p>Tampa Bay hosts their annual Hockey Fights Cancer Night presented by Moffitt Cancer Center when they take on the Philadelphia Flyers at Amalie Arena. The Lightning sit at 10-7-2 in the Atlantic Division and continue to navigate life in the post-dynasty era.</p>
+
+        <div class="game-header">OTTAWA @ LOS ANGELES | 9:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/9.png" alt="Ottawa" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/26.png" alt="Los Angeles" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Senators @ Kings</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Crypto.com Arena | Prime Monday Night Hockey | LA -145 | Total: 5.5</div>
+
+        <p>The late-night action features Ottawa traveling to Los Angeles for Prime Monday Night Hockey. The Kings (10-6-6) won four straight games but have followed that up with three straight losses (0-1-2). Ottawa brings a competitive squad looking to spoil the Kings attempt to right the ship.</p>
+
+      </div>
+<style>
+.page-nav { display: flex; justify-content: center; gap: 15px; margin: 50px auto; padding: 25px; max-width: 600px; }
+.page-nav a, .page-nav span { padding: 14px 28px; background: rgba(0, 217, 255, 0.1); border: 2px solid rgba(0, 217, 255, 0.3); border-radius: 10px; color: #00d9ff; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
+.page-nav a:hover { background: rgba(0, 217, 255, 0.25); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
+.page-nav .disabled { opacity: 0.35; pointer-events: none; }
+.page-nav .current { background: rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.6); color: #ffd700; }
+</style><nav class="page-nav">
+<a href="nhl.html">&#9664; Newer</a>
+<span class="current">Page 2 of 16</span>
+<a href="nhl-page3.html">Older &#9654;</a>
+</nav>
+
+    </div>
+  </div>
+</body>
+</html>
