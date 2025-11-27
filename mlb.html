@@ -612,7 +612,139 @@
         }
 
         .footer { text-align: center; padding: 40px; font-size: 14px; color: #888; margin-top: 50px; }
-    </style>
+    
+/* Modern Date Navigator */
+.date-picker-container {
+    max-width: 1140px;
+    margin: 25px auto 35px auto;
+    padding: 0 15px;
+}
+.date-picker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 0 5px;
+}
+.date-picker-title {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.7;
+}
+.date-nav-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.scroll-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+.scroll-btn:hover {
+    background: rgba(0, 217, 255, 0.15);
+    border-color: rgba(0, 217, 255, 0.4);
+    color: #00d9ff;
+}
+.scroll-btn svg { width: 16px; height: 16px; }
+.date-scroll-container {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px 4px;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.date-scroll-container::-webkit-scrollbar { display: none; }
+.date-chip {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    min-width: 72px;
+}
+.date-chip:hover {
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.12) 0%, rgba(0, 217, 255, 0.05) 100%);
+    border-color: rgba(0, 217, 255, 0.3);
+    transform: translateY(-2px);
+}
+.date-chip.active {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+.date-chip.active .day-name, .date-chip.active .date-num, .date-chip.active .month-year { color: #ffd700; }
+.date-chip .day-name {
+    display: block;
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+}
+.date-chip .date-num {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.1;
+}
+.date-chip .month-year {
+    display: block;
+    font-size: 9px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 1px;
+}
+.view-all-btn {
+    padding: 8px 14px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.view-all-btn:hover {
+    background: rgba(0, 217, 255, 0.1);
+    border-color: rgba(0, 217, 255, 0.3);
+    color: #00d9ff;
+}
+@media (max-width: 768px) {
+    .date-chip { min-width: 62px; padding: 8px 12px; }
+    .date-chip .date-num { font-size: 18px; }
+    .scroll-btn { display: none; }
+}
+.page-nav { display: flex; justify-content: center; gap: 15px; margin: 50px auto; padding: 25px; max-width: 600px; }
+.page-nav a, .page-nav span { padding: 14px 28px; background: rgba(0, 217, 255, 0.1); border: 2px solid rgba(0, 217, 255, 0.3); border-radius: 10px; color: #00d9ff; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
+.page-nav a:hover { background: rgba(0, 217, 255, 0.25); }
+.page-nav .disabled { opacity: 0.35; pointer-events: none; }
+.page-nav .current { background: rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.6); color: #ffd700; }
+</style>
 <!-- Google tag (gtag.js) -->
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
 <script>
@@ -697,6 +829,21 @@
 <main>
 <h2 class="page-subtitle">Complete MLB Analytics Dashboard - Verifiable Current Stats</h2>
 <div class="games-overview">
+
+<div class="date-picker-container">
+    <div class="date-picker-header">
+        <span class="date-picker-title">Browse by Date</span>
+        <button class="view-all-btn" onclick="document.querySelector('.date-scroll-container').scrollTo({left:9999,behavior:'smooth'})">View All</button>
+    </div>
+    <div class="date-nav-wrapper">
+        <button class="scroll-btn" onclick="document.querySelector('.date-scroll-container').scrollBy({left:-200,behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div class="date-scroll-container"><a href="mlb.html" class="date-chip active"><span class="day-name">TUE</span><span class="date-num">19</span><span class="month-year">AUG</span></a> <a href="mlb-page2.html" class="date-chip"><span class="day-name">MON</span><span class="date-num">18</span><span class="month-year">AUG</span></a></div>
+        <button class="scroll-btn" onclick="document.querySelector('.date-scroll-container').scrollBy({left:200,behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+</div>
+<div style="text-align: center; margin: 30px auto 40px auto; padding: 25px 20px; max-width: 800px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%); border-radius: 15px; border: 2px solid rgba(255, 215, 0, 0.3);">
+    <h2 style="color: #ffd700; font-size: 32px; margin: 0; font-weight: 700;">Tuesday, August 19, 2025</h2>
+</div>
 <div class="game-count">August 19, 2025 - 14 GAMES ON THE BOARD</div>
 <p>Comprehensive analysis covering every matchup with advanced metrics and trend analysis based on real, up-to-date statistics.</p>
 </div>
@@ -1313,760 +1460,4 @@
 </div>
 </div>
 <!-- All other games would follow the same fact-based template -->
-<h2 class="page-subtitle">Complete MLB Analytics Dashboard - August 18, 2025</h2>
-<div class="games-overview">
-<div class="game-count">13 GAMES ON THE BOARD</div>
-<p>Comprehensive analysis covering every matchup with advanced metrics, pitching breakdowns, and trend analysis</p>
-</div>
-<!-- GAME 1: Milwaukee Brewers @ Chicago Cubs -->
-<div class="game-container">
-<div class="game-header">Milwaukee Brewers @ Chicago Cubs</div>
-<div class="game-time">2:20 PM ET • Wrigley Field • Sunny, 75°F, Wind 12mph In</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Milwaukee Brewers</div>
-<div class="team-record">78-45 Overall (36-25 Road)</div>
-<div class="team-form">L10: 9-1 <span class="trend-indicator hot">Hot</span></div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Chicago Cubs</div>
-<div class="team-record">70-54 Overall (38-24 Home)</div>
-<div class="team-form">L10: 4-6 4-6 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Freddy Peralta (MIL)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value elite">2.91</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value good">3.25</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value elite">1.04</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value elite">11.6</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value elite">.198 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value elite">2.15 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Cade Horton (CHC)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value elite">2.89</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><div class="stat-value elite">2.45</div></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value elite">1.08</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value elite">10.9</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value elite">.205 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value elite">2.33 ERA</span></div>
-</div>
-</div>
-</div>
-<div class="comprehensive-analysis">
-<div class="analysis-section">
-<div class="section-title">Offensive Trends (L15 Games)</div>
-<div class="stat-row"><span class="stat-label">MIL Runs/Game:</span><span class="stat-value">5.9</span></div>
-<div class="stat-row"><span class="stat-label">MIL vs RHP:</span><span class="stat-value">.805 OPS</span></div>
-<div class="stat-row"><span class="stat-label">CHC Runs/Game:</span><span class="stat-value">4.3</span></div>
-<div class="stat-row"><span class="stat-label">CHC vs RHP:</span><span class="stat-value">.710 OPS</span></div>
-<div class="stat-row"><span class="stat-label">Road Team Adv:</span><span class="stat-value">+1.6 RPG</span></div>
-</div>
-<div class="analysis-section">
-<div class="section-title">Bullpen Analysis</div>
-<div class="stat-row"><span class="stat-label">MIL Pen ERA (L30):</span><span class="stat-value elite">3.11</span></div>
-<div class="stat-row"><span class="stat-label">MIL High Leverage:</span><span class="stat-value elite">2.85 ERA</span></div>
-<div class="stat-row"><span class="stat-label">CHC Pen ERA (L30):</span><span class="stat-value average">4.05</span></div>
-<div class="stat-row"><span class="stat-label">CHC High Leverage:</span><span class="stat-value poor">4.71 ERA</span></div>
-<div class="stat-row"><span class="stat-label">Advantage:</span><span class="stat-value">Milwaukee</span></div>
-</div>
-<div class="analysis-section">
-<div class="section-title">Key Matchup Factors</div>
-<div class="stat-row"><span class="stat-label">Adames vs CHC:</span><span class="stat-value">.280 BA, 15 HR</span></div>
-<div class="stat-row"><span class="stat-label">CHC vs Division:</span><span class="stat-value">25-18 Home</span></div>
-<div class="stat-row"><span class="stat-label">Wind Impact:</span><span class="stat-value">Strongly favors Unders</span></div>
-<div class="stat-row"><span class="stat-label">Peralta vs CHC:</span><span class="stat-value">5-2, 2.88 ERA</span></div>
-<div class="stat-row"><span class="stat-label">Edge:</span><span class="stat-value">Pitching Duel</span></div>
-</div>
-<div class="analysis-section">
-<div class="section-title">Advanced Metrics</div>
-<div class="stat-row"><span class="stat-label">MIL xwOBA (L15):</span><span class="stat-value">.345</span></div>
-<div class="stat-row"><span class="stat-label">MIL Barrel%:</span><span class="stat-value">10.2%</span></div>
-<div class="stat-row"><span class="stat-label">CHC xwOBA (L15):</span><span class="stat-value">.312</span></div>
-<div class="stat-row"><span class="stat-label">CHC Barrel%:</span><span class="stat-value">7.8%</span></div>
-<div class="stat-row"><span class="stat-label">Peralta xFIP:</span><span class="stat-value elite">2.95</span></div>
-</div>
-</div>
-<div class="ballpark-factors">
-<strong>Wrigley Field Analysis:</strong> Famous for its wind. Wind blowing in from Lake Michigan significantly suppresses runs and HRs. Today's conditions are extremely pitcher-friendly.
-<div class="weather-grid">
-<div class="weather-item"><strong>Temp:</strong><br/>75°F</div>
-<div class="weather-item"><strong>Wind:</strong><br/>12mph IN</div>
-<div class="weather-item"><strong>Humidity:</strong><br/>55%</div>
-<div class="weather-item"><strong>Run Factor:</strong><br/>-20% w/ Wind In</div>
-</div>
-</div>
-</div>
-<!-- GAME 2: Toronto Blue Jays @ Pittsburgh Pirates -->
-<div class="game-container">
-<div class="game-header">Toronto Blue Jays @ Pittsburgh Pirates</div>
-<div class="game-time">6:40 PM ET • PNC Park • Clear, 82°F, SW 5mph</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Toronto Blue Jays</div>
-<div class="team-record">73-53 Overall (31-32 Road)</div>
-<div class="team-form">L10: 5-5 5-5 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Pittsburgh Pirates</div>
-<div class="team-record">53-73 Overall (35-29 Home)</div>
-<div class="team-form">L10: 3-7-7 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Kevin Gausman (TOR)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value average">3.80</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value average">3.95</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value good">1.19</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value elite">10.8</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value good">.235 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value good">3.10 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Paul Skenes (PIT)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value elite">2.13</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value elite">1.88</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value elite">0.91</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value elite">12.5</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value elite">.195 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value elite">1.55 ERA</span></div>
-</div>
-</div>
-</div>
-<div class="comprehensive-analysis">
-<div class="analysis-section">
-<div class="section-title">Offensive Trends (L15 Games)</div>
-<div class="stat-row"><span class="stat-label">TOR Runs/Game:</span><span class="stat-value">4.8</span></div>
-<div class="stat-row"><span class="stat-label">TOR vs RHP:</span><span class="stat-value">.755 OPS</span></div>
-<div class="stat-row"><span class="stat-label">PIT Runs/Game:</span><span class="stat-value">3.4</span></div>
-<div class="stat-row"><span class="stat-label">PIT vs RHP:</span><span class="stat-value">.660 OPS</span></div>
-<div class="stat-row"><span class="stat-label">Road Team Adv:</span><span class="stat-value">+1.4 RPG</span></div>
-</div>
-<div class="analysis-section">
-<div class="section-title">Bullpen Analysis</div>
-<div class="stat-row"><span class="stat-label">TOR Pen ERA (L30):</span><span class="stat-value good">3.50</span></div>
-<div class="stat-row"><span class="stat-label">TOR High Leverage:</span><span class="stat-value average">4.10 ERA</span></div>
-<div class="stat-row"><span class="stat-label">PIT Pen ERA (L30):</span><span class="stat-value poor">4.85</span></div>
-<div class="stat-row"><span class="stat-label">PIT High Leverage:</span><span class="stat-value terrible">5.40 ERA</span></div>
-<div class="stat-row"><span class="stat-label">Advantage:</span><span class="stat-value">Toronto</span></div>
-</div>
-<div class="analysis-section">
-<div class="section-title">Key Matchup Factors</div>
-<div class="stat-row"><span class="stat-label">TOR vs Sub .500:</span><span class="stat-value">40-22</span></div>
-<div class="stat-row"><span class="stat-label">PIT vs AL East:</span><span class="stat-value">5-14</span></div>
-<div class="stat-row"><span class="stat-label">Skenes Night ERA:</span><span class="stat-value elite">1.99</span></div>
-<div class="stat-row"><span class="stat-label">Gausman FIP:</span><span class="stat-value elite">2.95</span></div>
-<div class="stat-row"><span class="stat-label">Edge:</span><span class="stat-value">Pitching / Under</span></div>
-</div>
-<div class="analysis-section">
-<div class="section-title">Advanced Metrics</div>
-<div class="stat-row"><span class="stat-label">TOR xwOBA (L15):</span><span class="stat-value">.328</span></div>
-<div class="stat-row"><span class="stat-label">TOR Barrel%:</span><span class="stat-value">9.1%</span></div>
-<div class="stat-row"><span class="stat-label">PIT xwOBA (L15):</span><span class="stat-value">.291</span></div>
-<div class="stat-row"><span class="stat-label">PIT Hard Hit%:</span><span class="stat-value">34.2%</span></div>
-<div class="stat-row"><span class="stat-label">Skenes xERA:</span><span class="stat-value elite">2.25</span></div>
-</div>
-</div>
-<div class="ballpark-factors">
-<strong>PNC Park Analysis:</strong> Generally pitcher-friendly with a deep left-center field. The Clemente Wall in right field is 21 feet high.
-<div class="weather-grid">
-<div class="weather-item"><strong>Temp:</strong><br/>82°F</div>
-<div class="weather-item"><strong>Wind:</strong><br/>SW 5mph</div>
-<div class="weather-item"><strong>Humidity:</strong><br/>60%</div>
-<div class="weather-item"><strong>Run Factor:</strong><br/>-5% vs Avg</div>
-</div>
-</div>
-</div>
-<!-- GAME 3: St. Louis Cardinals @ Miami Marlins -->
-<div class="game-container">
-<div class="game-header">St. Louis Cardinals @ Miami Marlins</div>
-<div class="game-time">6:40 PM ET • loanDepot park • Dome, 72°F</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">St. Louis Cardinals</div>
-<div class="team-record">62-64 Overall (27-34 Road)</div>
-<div class="team-form">L10: 4-6-6 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Miami Marlins</div>
-<div class="team-record">59-66 Overall (28-32 Home)</div>
-<div class="team-form">L10: 2-8 2-8 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Matthew Liberatore (STL)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value average">4.08</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value poor">4.55</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value poor">1.38</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value poor">7.2</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value poor">.280 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value average">4.15 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Eury Perez (MIA)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value good">3.60</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value good">3.10</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value good">1.15</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value elite">10.7</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value elite">.215 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value good">3.20 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 4: Houston Astros @ Detroit Tigers -->
-<div class="game-container">
-<div class="game-header">Houston Astros @ Detroit Tigers</div>
-<div class="game-time">6:40 PM ET • Comerica Park • Clear, 78°F, W 8mph</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Houston Astros</div>
-<div class="team-record">69-56 Overall (31-29 Road)</div>
-<div class="team-form">L10: 5-5-5 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Detroit Tigers</div>
-<div class="team-record">74-53 Overall (40-24 Home)</div>
-<div class="team-form">L10: 7-3-3 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Spencer Arrighetti (HOU)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value terrible">6.50</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value terrible">7.15</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value terrible">1.68</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value good">9.5</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value terrible">.310 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value terrible">7.80 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Jack Flaherty (DET)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value poor">4.79</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value average">4.20</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value poor">1.41</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value good">9.8</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value poor">.285 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value poor">5.45 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 5: Seattle Mariners @ Philadelphia Phillies -->
-<div class="game-container">
-<div class="game-header">Seattle Mariners @ Philadelphia Phillies</div>
-<div class="game-time">6:45 PM ET • Citizens Bank Park • Humid, 85°F, SW 7mph</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Seattle Mariners</div>
-<div class="team-record">68-58 Overall (31-33 Road)</div>
-<div class="team-form">L10: 5-5 5-5 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Philadelphia Phillies</div>
-<div class="team-record">72-53 Overall (38-21 Home)</div>
-<div class="team-form">L10: 6-4-4 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Logan Gilbert (SEA)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value good">3.34</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value average">3.85</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value good">1.10</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value good">9.6</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value elite">.211 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value elite">2.85 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Ranger Suárez (PHI)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value good">3.29</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value elite">2.90</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value good">1.21</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value average">8.5</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value good">.233 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value good">3.15 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 6: Baltimore Orioles @ Boston Red Sox -->
-<div class="game-container">
-<div class="game-header">Baltimore Orioles @ Boston Red Sox</div>
-<div class="game-time">7:10 PM ET • Fenway Park • Clear, 80°F, S 9mph</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Baltimore Orioles</div>
-<div class="team-record">58-67 Overall (28-37 Road)</div>
-<div class="team-form">L10: 6-4-4 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Boston Red Sox</div>
-<div class="team-record">68-58 Overall (41-24 Home)</div>
-<div class="team-form">L10: 4-6-6 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Trevor Rogers (BAL)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value elite">1.43</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value elite">1.65</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value elite">0.95</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value good">9.2</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value elite">.180 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value elite">1.10 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Dustin May (BOS)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value poor">4.87</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value poor">5.12</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value poor">1.44</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value average">8.0</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value poor">.290 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value terrible">6.25 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 7: Chicago White Sox @ Atlanta Braves -->
-<div class="game-container">
-<div class="game-header">Chicago White Sox @ Atlanta Braves</div>
-<div class="game-time">7:15 PM ET • Truist Park • Humid, 88°F, SE 6mph</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Chicago White Sox</div>
-<div class="team-record">45-80 Overall (19-44 Road)</div>
-<div class="team-form">L10: 3-7 3-7 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Atlanta Braves</div>
-<div class="team-record">56-69 Overall (30-31 Home)</div>
-<div class="team-form">L10: 8-2-2 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Yordany Gomez (CHW)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value elite">1.80</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value elite">2.10</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value elite">0.98</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value good">9.5</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value elite">.195 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value elite">1.50 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Spencer Strider (ATL)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value poor">4.71</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value poor">5.05</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value poor">1.35</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value elite">13.5</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value poor">.288 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value poor">5.60 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 8: Texas Rangers @ Kansas City Royals -->
-<div class="game-container">
-<div class="game-header">Texas Rangers @ Kansas City Royals</div>
-<div class="game-time">7:40 PM ET • Kauffman Stadium • Humid, 86°F, S 10mph</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Texas Rangers</div>
-<div class="team-record">62-64 Overall (25-38 Road)</div>
-<div class="team-form">L10: 2-8-8 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Kansas City Royals</div>
-<div class="team-record">64-61 Overall (34-29 Home)</div>
-<div class="team-form">L10: 7-3-3 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Jack Leiter (TEX)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value average">3.94</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value average">4.10</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value average">1.28</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value good">9.9</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value good">.240 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value good">3.50 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Michael Wacha (KC)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value good">3.35</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value elite">2.95</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value good">1.17</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value average">8.3</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value average">.250 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value elite">2.80 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 9: Milwaukee Brewers @ Chicago Cubs (Night Game) -->
-<div class="game-container">
-<div class="game-header">Milwaukee Brewers @ Chicago Cubs (Night)</div>
-<div class="game-time">8:05 PM ET • Wrigley Field • Clear, 72°F, Wind 10mph In</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Milwaukee Brewers</div>
-<div class="team-record">78-45 Overall (36-25 Road)</div>
-<div class="team-form">L10: 9-1 <span class="trend-indicator hot">Hot</span></div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Chicago Cubs</div>
-<div class="team-record">70-54 Overall (38-24 Home)</div>
-<div class="team-form">L10: 4-6 4-6 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">TBD</div>
-<div class="stat-row"><span class="stat-label">Analysis:</span><span class="stat-value">Likely bullpen game.</span></div>
-<div class="stat-row"><span class="stat-label">Focus:</span><span class="stat-value">Bullpen ERA (3.11)</span></div>
-<div class="stat-row"><span class="stat-label">Strategy:</span><span class="stat-value">High-leverage arms</span></div>
-<div class="stat-row"><span class="stat-label">Key Arm:</span><span class="stat-value">Devin Williams</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">TBD</div>
-<div class="stat-row"><span class="stat-label">Analysis:</span><span class="stat-value">Likely bullpen game.</span></div>
-<div class="stat-row"><span class="stat-label">Focus:</span><span class="stat-value">Bullpen ERA (4.05)</span></div>
-<div class="stat-row"><span class="stat-label">Strategy:</span><span class="stat-value">Matchup based</span></div>
-<div class="stat-row"><span class="stat-label">Key Arm:</span><span class="stat-value">Hector Neris</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 10: LA Dodgers @ Colorado Rockies -->
-<div class="game-container">
-<div class="game-header">LA Dodgers @ Colorado Rockies</div>
-<div class="game-time">8:40 PM ET • Coors Field • Clear, 75°F, W 5mph</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">LA Dodgers</div>
-<div class="team-record">71-53 Overall (30-29 Road)</div>
-<div class="team-form">L10: 5-5 <span class="trend-indicator neutral">Neutral</span></div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Colorado Rockies</div>
-<div class="team-record">36-89 Overall (20-43 Home)</div>
-<div class="team-form">L10: 6-4 6-4 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Yoshinobu Yamamoto (LAD)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value elite">2.86</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value good">3.15</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value elite">1.02</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value elite">10.9</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value elite">.200 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value elite">2.20 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Kyle Freeland (COL)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value terrible">5.20</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value terrible">6.05</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value terrible">1.54</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value poor">6.6</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value terrible">.312 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value terrible">6.95 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 11: Cincinnati Reds @ LA Angels -->
-<div class="game-container">
-<div class="game-header">Cincinnati Reds @ LA Angels</div>
-<div class="game-time">9:38 PM ET • Angel Stadium • Clear, 78°F, WSW 7mph</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Cincinnati Reds</div>
-<div class="team-record">65-60 Overall (29-31 Road)</div>
-<div class="team-form">L10: 5-5-5 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">LA Angels</div>
-<div class="team-record">60-64 Overall (33-30 Home)</div>
-<div class="team-form">L10: 5-5 <span class="trend-indicator neutral">Neutral</span></div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Brady Singer (CIN)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value average">4.32</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value poor">4.91</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value average">1.31</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value average">8.1</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value average">.265 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value poor">5.02 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Victor Mederos (LAA)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value terrible">6.75</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value terrible">7.15</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value terrible">1.71</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value poor">6.9</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value terrible">.335 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value terrible">7.88 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 12: Cleveland Guardians @ Arizona Diamondbacks -->
-<div class="game-container">
-<div class="game-header">Cleveland Guardians @ Arizona Diamondbacks</div>
-<div class="game-time">9:40 PM ET • Chase Field • Dome, 72°F</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">Cleveland Guardians</div>
-<div class="team-record">63-60 Overall (32-29 Road)</div>
-<div class="team-form">L10: 5-5-5 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">Arizona Diamondbacks</div>
-<div class="team-record">60-65 Overall (30-30 Home)</div>
-<div class="team-form">L10: 6-4-4 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Gavin Williams (CLE)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value good">3.38</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value good">3.50</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value good">1.21</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value good">9.8</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value good">.230 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value good">3.10 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Zac Gallen (AZ)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value poor">5.31</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value terrible">6.05</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value poor">1.45</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value average">8.5</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value terrible">.305 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value terrible">6.85 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<!-- GAME 13: San Francisco Giants @ San Diego Padres -->
-<div class="game-container">
-<div class="game-header">San Francisco Giants @ San Diego Padres</div>
-<div class="game-time">9:40 PM ET • Petco Park • Clear, 70°F, WNW 9mph</div>
-<div class="team-matchup">
-<div class="team-section">
-<div class="team-name">San Francisco Giants</div>
-<div class="team-record">60-64 Overall (30-31 Road)</div>
-<div class="team-form">L10: 3-7-7 </div>
-</div>
-<div class="vs-divider">@</div>
-<div class="team-section">
-<div class="team-name">San Diego Padres</div>
-<div class="team-record">69-55 Overall (38-20 Home)</div>
-<div class="team-form">L10: 6-4-4 </div>
-</div>
-</div>
-<div class="pitching-matchup">
-<div class="pitching-header">Starting Pitcher Analysis</div>
-<div class="pitcher-comparison">
-<div class="pitcher-stats">
-<div class="pitcher-name">Robbie Ray (SF)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value elite">2.98</span></div>
-<div class="stat-row"><span class="stat-label">Road ERA:</span><span class="stat-value good">3.25</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value good">1.12</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value elite">11.2</span></div>
-<div class="stat-row"><span class="stat-label">vs RHB:</span><span class="stat-value elite">.208 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value elite">2.45 ERA</span></div>
-</div>
-<div class="vs-divider">VS</div>
-<div class="pitcher-stats">
-<div class="pitcher-name">Nestor Cortes (SD)</div>
-<div class="stat-row"><span class="stat-label">Season ERA:</span><span class="stat-value terrible">5.82</span></div>
-<div class="stat-row"><span class="stat-label">Home ERA:</span><span class="stat-value terrible">6.15</span></div>
-<div class="stat-row"><span class="stat-label">WHIP:</span><span class="stat-value terrible">1.58</span></div>
-<div class="stat-row"><span class="stat-label">K/9:</span><span class="stat-value average">8.3</span></div>
-<div class="stat-row"><span class="stat-label">vs LHB:</span><span class="stat-value terrible">.315 BAA</span></div>
-<div class="stat-row"><span class="stat-label">Last 5 Starts:</span><span class="stat-value terrible">7.01 ERA</span></div>
-</div>
-</div>
-</div>
-</div>
-<div class="pagination">
-<span class="current">Page 1 - Current Analysis</span>
-<a href="mlb-historical.html">Page 2 - Historical Deep Dive</a>
-</div>
-</main>
-<div class="footer">
-Complete MLB Analytics powered by BetLegend Pro • <a href="betlegend-verified-records.html" style="color: #00e0ff;" target="_blank">Advanced Statistical Database</a>
-</div>
-</div>
-<script>
-// Mobile dropdown menu functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const dropdowns = document.querySelectorAll('.dropdown');
-        dropdowns.forEach(dropdown => {
-        const dropbtn = dropdown.querySelector('.dropbtn');
-        const dropdownContent = dropdown.querySelector('.dropdown-content');
-
-        if (dropbtn && dropdownContent) {
-            // Handle button clicks to toggle dropdown
-            dropbtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                // Close all other dropdowns
-                dropdowns.forEach(otherDropdown => {
-                    if (otherDropdown !== dropdown) {
-                        otherDropdown.classList.remove('active');
-                    }
-                });
-
-                // Toggle current dropdown
-                dropdown.classList.toggle('active');
-            });
-
-
-        }
-    });
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function(e) {
-        // Check if click is outside all dropdowns
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-        }
-    });
-});
-</script>
-<style>
-.dropdown.active .dropdown-content {
-    display: block !important;
-    animation: dropdownFade 0.3s ease;
-}
-
-        .dropdown.active .dropbtn {
-            pointer-events: none;
-        }
-@keyframes dropdownFade {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-</style>
-</body>
-<div class="footer">
-Complete MLB Analytics powered by BetLegend Pro • <a href="betlegend-verified-records.html" style="color: #00e0ff;" target="_blank">Advanced Statistical Database</a>
-</div>
-</html>
-<script>
-// Mobile dropdown menu functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const dropdowns = document.querySelectorAll('.dropdown');
-        dropdowns.forEach(dropdown => {
-        const dropbtn = dropdown.querySelector('.dropbtn');
-        const dropdownContent = dropdown.querySelector('.dropdown-content');
-
-        if (dropbtn && dropdownContent) {
-            // Handle button clicks to toggle dropdown
-            dropbtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                // Close all other dropdowns
-                dropdowns.forEach(otherDropdown => {
-                    if (otherDropdown !== dropdown) {
-                        otherDropdown.classList.remove('active');
-                    }
-                });
-
-                // Toggle current dropdown
-                dropdown.classList.toggle('active');
-            });
-
-
-        }
-    });
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function(e) {
-        // Check if click is outside all dropdowns
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-        }
-    });
-});
-</script>
-<style>
-.dropdown.active .dropdown-content {
-    display: block !important;
-    animation: dropdownFade 0.3s ease;
-}
-
-        .dropdown.active .dropbtn {
-            pointer-events: none;
-        }
-@keyframes dropdownFade {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-</style>
-</body></html>
-
+<nav class="page-nav"><span class="disabled">&#9664; Newer</span><span class="current">Page 1 of 2</span><a href="mlb-page2.html">Older &#9654;</a></nav></body></html>
