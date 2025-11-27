@@ -3,70 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MLB 2025 Season Archive | BetLegend</title>
-<meta name="description" content="MLB 2025 regular season archive - historical game coverage and analysis from the complete season.">
+<title>MLB 2025 Season Archive - Final Standings | BetLegend</title>
+<meta name="description" content="MLB 2025 season archive with final standings, playoff results, and statistical leaders.">
 <link rel="canonical" href="https://www.betlegendpicks.com/mlb-page2.html">
 <link rel="icon" href="https://www.betlegendpicks.com/newlogo.png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --bg-dark: #030508;
-    --bg-card: rgba(8, 15, 25, 0.85);
-    --bg-glass: rgba(15, 25, 40, 0.6);
-    --neon-cyan: #00f0ff;
-    --neon-blue: #0066ff;
-    --neon-gold: #ffcc00;
-    --neon-purple: #8b5cf6;
-    --text-primary: #ffffff;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --border-glow: rgba(0, 240, 255, 0.3);
-    --gradient-cyber: linear-gradient(135deg, #0066ff 0%, #00f0ff 50%, #8b5cf6 100%);
+    --bg-primary: #1a1d23;
+    --bg-secondary: #22262e;
+    --bg-card: #2a2f38;
+    --accent-red: #c41e3a;
+    --accent-blue: #002d72;
+    --accent-gold: #d4af37;
+    --accent-green: #2e8b57;
+    --text-white: #ffffff;
+    --text-light: #e0e0e0;
+    --text-gray: #a0a0a0;
+    --text-muted: #707070;
+    --border-light: rgba(255,255,255,0.1);
+    --border-accent: rgba(196,30,58,0.4);
 }
 
 body {
-    background: var(--bg-dark);
-    color: var(--text-primary);
-    font-family: 'Rajdhani', sans-serif;
+    background: linear-gradient(180deg, #1a1d23 0%, #0f1115 100%);
+    color: var(--text-light);
+    font-family: 'Open Sans', sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
+    line-height: 1.7;
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background:
-        radial-gradient(ellipse at 20% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: -1;
-}
-
-body::after {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image:
-        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* Navigation Bar */
+/* Navigation */
 .main-nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(3, 5, 8, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-glow);
+    background: rgba(26, 29, 35, 0.98);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--accent-red);
     z-index: 1000;
     padding: 0 20px;
 }
@@ -77,301 +54,374 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 65px;
 }
 
 .nav-logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
     font-weight: 800;
     text-decoration: none;
-    background: var(--gradient-cyber);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-white);
+    letter-spacing: 1px;
 }
+
+.nav-logo span { color: var(--accent-red); }
 
 .nav-links {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
     justify-content: center;
 }
 
 .nav-links a {
-    color: var(--text-secondary);
+    color: var(--text-gray);
     text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
     padding: 8px 14px;
     border-radius: 6px;
     transition: all 0.2s;
 }
 
 .nav-links a:hover {
-    color: var(--neon-cyan);
-    background: rgba(0, 240, 255, 0.1);
+    color: var(--text-white);
+    background: rgba(255,255,255,0.08);
 }
 
 .nav-links a.active {
-    color: var(--neon-gold);
-    background: rgba(255, 204, 0, 0.1);
+    color: var(--text-white);
+    background: var(--accent-red);
 }
 
+/* Hero */
 .hero {
     text-align: center;
-    padding: 100px 20px 40px;
-    position: relative;
+    padding: 110px 20px 50px;
+    background: linear-gradient(180deg, rgba(196,30,58,0.15) 0%, transparent 100%);
 }
 
 .hero h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 4px;
-    background: var(--gradient-cyber);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 10px;
-    animation: glow 3s ease-in-out infinite alternate;
+    color: var(--text-white);
+    margin-bottom: 15px;
 }
 
-@keyframes glow {
-    from { filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.3)); }
-    to { filter: drop-shadow(0 0 40px rgba(0, 240, 255, 0.6)); }
-}
+.hero h1 span { color: var(--accent-red); }
 
 .hero .subtitle {
-    font-family: 'Rajdhani', sans-serif;
     font-size: 1.1rem;
-    color: var(--text-secondary);
-    letter-spacing: 3px;
+    color: var(--text-gray);
     text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
 }
 
-.date-nav {
+/* Quick Links */
+.quick-links {
     max-width: 1000px;
     margin: 0 auto 40px;
     padding: 0 20px;
 }
 
-.date-nav-inner {
-    background: var(--bg-glass);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-glow);
-    border-radius: 20px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
+.quick-links-inner {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.date-nav-inner::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-}
-
-.date-nav-label {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--neon-cyan);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 16px;
+.quick-link {
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.date-nav-label::before {
-    content: '//';
-    opacity: 0.5;
-}
-
-.date-scroll {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 8px 0;
-    scrollbar-width: none;
-}
-
-.date-scroll::-webkit-scrollbar { display: none; }
-
-.date-chip {
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 100px;
-    padding: 16px 20px;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 15px 25px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
     border-radius: 12px;
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.date-chip:hover { border-color: var(--neon-cyan); transform: translateY(-2px); }
-
-.date-chip.active {
-    background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(0, 102, 255, 0.15));
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
-}
-
-.date-chip .day { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
-.date-chip .num { font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
-.date-chip .month { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
-.date-chip.active .day, .date-chip.active .month { color: var(--neon-cyan); }
-.date-chip.active .num { color: var(--neon-gold); }
-
-.current-date {
-    text-align: center;
-    padding: 30px 20px;
-    margin-bottom: 20px;
-}
-
-.current-date h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    color: var(--text-light);
     font-weight: 600;
-    color: var(--neon-gold);
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    transition: all 0.3s;
 }
 
+.quick-link:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent-red);
+    transform: translateY(-2px);
+}
+
+.quick-link.active {
+    background: var(--accent-red);
+    border-color: var(--accent-red);
+    color: var(--text-white);
+}
+
+.quick-link .icon { font-size: 1.3rem; }
+
+/* Container */
 .container {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 0 20px 60px;
 }
 
-.game-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 28px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+/* Section Headers */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 50px 0 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--accent-red);
 }
 
-.game-card:hover {
-    border-color: rgba(0, 240, 255, 0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 240, 255, 0.1);
+.section-header:first-child { margin-top: 0; }
+
+.section-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-white);
+    text-transform: uppercase;
 }
 
-.game-card h3 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    text-align: center;
-    margin-bottom: 8px;
-}
-
-.game-info {
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-muted);
-    padding: 12px 0;
-    margin-bottom: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.game-info span {
-    color: var(--neon-cyan);
-    font-weight: 600;
-}
-
-.game-card p {
-    color: var(--text-secondary);
-    font-size: 15px;
-    line-height: 1.8;
-    margin-bottom: 12px;
-}
-
-.archive-badge {
-    display: inline-block;
-    background: rgba(100, 116, 139, 0.2);
-    border: 1px solid rgba(100, 116, 139, 0.4);
-    color: var(--text-muted);
-    font-family: 'Orbitron', sans-serif;
+.section-header .badge {
+    background: var(--accent-red);
+    color: white;
     font-size: 11px;
-    font-weight: 600;
-    padding: 6px 14px;
+    font-weight: 700;
+    padding: 5px 12px;
     border-radius: 20px;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
+    letter-spacing: 1px;
 }
 
+/* Standings Tables */
+.standings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.division-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.division-header {
+    background: var(--accent-blue);
+    padding: 15px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.division-header.al { background: var(--accent-red); }
+.division-header.nl { background: var(--accent-blue); }
+
+.standings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.standings-table th {
+    background: rgba(255,255,255,0.05);
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.standings-table th:not(:first-child) { text-align: center; }
+
+.standings-table td {
+    padding: 14px 15px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 15px;
+}
+
+.standings-table td:not(:first-child) { text-align: center; }
+
+.standings-table tr:last-child td { border-bottom: none; }
+
+.standings-table tr:hover { background: rgba(255,255,255,0.03); }
+
+.team-name {
+    font-weight: 600;
+    color: var(--text-white);
+}
+
+.team-name.playoff { color: var(--accent-gold); }
+
+.record { color: var(--text-light); font-weight: 500; }
+
+.gb { color: var(--text-gray); font-size: 14px; }
+
+/* Playoff Bracket */
+.playoff-bracket {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.round-section {
+    margin-bottom: 30px;
+}
+
+.round-section:last-child { margin-bottom: 0; }
+
+.round-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.matchup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.matchup {
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.matchup .teams {
+    font-size: 15px;
+    color: var(--text-light);
+}
+
+.matchup .winner {
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.matchup .result {
+    font-size: 14px;
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+/* Awards Section */
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.award-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 25px;
+    border-left: 4px solid var(--accent-gold);
+}
+
+.award-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.award-winner {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 5px;
+}
+
+.award-stats {
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 16px;
+    gap: 15px;
     padding: 40px 20px;
     margin-top: 40px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--border-light);
 }
 
 .pagination a, .pagination span {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
     font-weight: 600;
     padding: 12px 24px;
-    background: var(--bg-glass);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
     border-radius: 8px;
-    color: var(--text-secondary);
+    color: var(--text-gray);
     text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 2px;
     transition: all 0.3s;
 }
 
 .pagination a:hover {
-    background: rgba(0, 240, 255, 0.1);
-    border-color: var(--neon-cyan);
-    color: var(--neon-cyan);
+    background: var(--accent-red);
+    border-color: var(--accent-red);
+    color: var(--text-white);
 }
 
 .pagination .current {
-    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 102, 255, 0.2));
-    border-color: var(--neon-cyan);
-    color: var(--neon-cyan);
+    background: var(--accent-red);
+    border-color: var(--accent-red);
+    color: var(--text-white);
 }
 
-.pagination .disabled {
-    opacity: 0.3;
-    pointer-events: none;
-}
+.pagination .disabled { opacity: 0.4; pointer-events: none; }
 
+/* Footer */
 footer {
     text-align: center;
     padding: 30px 20px;
     color: var(--text-muted);
-    font-size: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 14px;
+    border-top: 1px solid var(--border-light);
 }
 
-footer a { color: var(--neon-cyan); text-decoration: none; }
+footer a { color: var(--accent-red); text-decoration: none; }
 
 @media (max-width: 768px) {
     .nav-links { display: none; }
-    .hero { padding: 90px 16px 30px; }
+    .hero { padding: 90px 16px 40px; }
+    .standings-grid { grid-template-columns: 1fr; }
+    .standings-table td, .standings-table th { padding: 10px 12px; font-size: 14px; }
+    .quick-links-inner { flex-direction: column; }
+    .quick-link { justify-content: center; }
 }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
@@ -386,7 +436,7 @@ footer a { color: var(--neon-cyan); text-decoration: none; }
 
 <nav class="main-nav">
     <div class="nav-container">
-        <a href="index.html" class="nav-logo">BetLegend</a>
+        <a href="index.html" class="nav-logo">Bet<span>Legend</span></a>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="blog-page9.html">Picks</a>
@@ -402,89 +452,272 @@ footer a { color: var(--neon-cyan); text-decoration: none; }
 </nav>
 
 <section class="hero">
-    <h1>MLB 2025 Archive</h1>
-    <p class="subtitle">Regular Season Coverage</p>
+    <h1>MLB <span>2025</span> Season Archive</h1>
+    <p class="subtitle">Final Standings & Playoff Results</p>
 </section>
 
-<nav class="date-nav">
-    <div class="date-nav-inner">
-        <div class="date-nav-label">MLB Coverage</div>
-        <div class="date-scroll">
-            <a href="mlb.html" class="date-chip">
-                <span class="day">Current</span>
-                <span class="num">Hot Stove</span>
-                <span class="month">Offseason</span>
-            </a>
-            <a href="mlb-page2.html" class="date-chip active">
-                <span class="day">2025</span>
-                <span class="num">Season</span>
-                <span class="month">Archive</span>
-            </a>
-            <a href="mlb-records.html" class="date-chip">
-                <span class="day">All</span>
-                <span class="num">Records</span>
-                <span class="month">Stats</span>
-            </a>
-        </div>
+<nav class="quick-links">
+    <div class="quick-links-inner">
+        <a href="mlb.html" class="quick-link">
+            <span class="icon">🔥</span>
+            <span>Hot Stove</span>
+        </a>
+        <a href="mlb-page2.html" class="quick-link active">
+            <span class="icon">📊</span>
+            <span>2025 Season Archive</span>
+        </a>
+        <a href="records.html" class="quick-link">
+            <span class="icon">📈</span>
+            <span>Betting Records</span>
+        </a>
     </div>
 </nav>
 
-<div class="current-date">
-    <h2>2025 MLB Regular Season Archive</h2>
-</div>
-
 <main class="container">
 
-<article class="game-card">
-    <span class="archive-badge">Season Summary</span>
-    <h3>2025 MLB Final Standings</h3>
-    <div class="game-info">162-Game Regular Season Complete</div>
-    <p><strong>AL East:</strong> Yankees (98-64), Orioles (93-69), Blue Jays (89-73), Red Sox (85-77), Rays (78-84)</p>
-    <p><strong>AL Central:</strong> Tigers (91-71), Guardians (88-74), Twins (84-78), Royals (80-82), White Sox (47-115)</p>
-    <p><strong>AL West:</strong> Astros (94-68), Mariners (89-73), Rangers (82-80), Angels (75-87), Athletics (64-98)</p>
-    <p><strong>NL East:</strong> Phillies (95-67), Braves (90-72), Mets (86-76), Marlins (68-94), Nationals (63-99)</p>
-    <p><strong>NL Central:</strong> Brewers (96-66), Cubs (87-75), Cardinals (79-83), Reds (77-85), Pirates (70-92)</p>
-    <p><strong>NL West:</strong> Dodgers (100-62), Padres (93-69), Diamondbacks (85-77), Giants (78-84), Rockies (59-103)</p>
-</article>
+<div class="section-header">
+    <h2>American League Standings</h2>
+    <span class="badge">Final</span>
+</div>
 
-<article class="game-card">
-    <span class="archive-badge">Playoffs</span>
-    <h3>2025 Postseason Results</h3>
-    <div class="game-info">October - November 2025</div>
-    <p><strong>Wild Card Series:</strong> Tigers def. Mariners (2-0), Orioles def. Blue Jays (2-1), Padres def. Mets (2-1), Braves def. Cubs (2-0)</p>
-    <p><strong>Division Series:</strong> Yankees def. Tigers (3-2), Astros def. Orioles (3-1), Dodgers def. Padres (3-2), Phillies def. Braves (3-1)</p>
-    <p><strong>Championship Series:</strong> Yankees def. Astros (4-2), Dodgers def. Phillies (4-3)</p>
-    <p><strong>World Series:</strong> Dodgers def. Yankees (4-2)</p>
-</article>
+<div class="standings-grid">
+    <div class="division-card">
+        <div class="division-header al">AL East</div>
+        <table class="standings-table">
+            <thead>
+                <tr><th>Team</th><th>W</th><th>L</th><th>GB</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="team-name playoff">Yankees</span></td><td class="record">98</td><td class="record">64</td><td class="gb">—</td></tr>
+                <tr><td><span class="team-name playoff">Orioles</span></td><td class="record">93</td><td class="record">69</td><td class="gb">5</td></tr>
+                <tr><td><span class="team-name playoff">Blue Jays</span></td><td class="record">89</td><td class="record">73</td><td class="gb">9</td></tr>
+                <tr><td><span class="team-name">Red Sox</span></td><td class="record">85</td><td class="record">77</td><td class="gb">13</td></tr>
+                <tr><td><span class="team-name">Rays</span></td><td class="record">78</td><td class="record">84</td><td class="gb">20</td></tr>
+            </tbody>
+        </table>
+    </div>
 
-<article class="game-card">
-    <span class="archive-badge">Leaders</span>
-    <h3>2025 Statistical Leaders</h3>
-    <div class="game-info">Full season leaders</div>
-    <p><strong>AL MVP:</strong> Aaron Judge (NYY) - .312/.431/.673, 58 HR, 144 RBI</p>
-    <p><strong>NL MVP:</strong> Shohei Ohtani (LAD) - .298/.392/.654, 54 HR, 130 RBI</p>
-    <p><strong>AL Cy Young:</strong> Tarik Skubal (DET) - 18-5, 2.39 ERA, 228 K</p>
-    <p><strong>NL Cy Young:</strong> Zack Wheeler (PHI) - 17-6, 2.57 ERA, 251 K</p>
-    <p><strong>AL ROY:</strong> Colton Cowser (BAL)</p>
-    <p><strong>NL ROY:</strong> Jackson Merrill (SD)</p>
-</article>
+    <div class="division-card">
+        <div class="division-header al">AL Central</div>
+        <table class="standings-table">
+            <thead>
+                <tr><th>Team</th><th>W</th><th>L</th><th>GB</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="team-name playoff">Tigers</span></td><td class="record">91</td><td class="record">71</td><td class="gb">—</td></tr>
+                <tr><td><span class="team-name">Guardians</span></td><td class="record">88</td><td class="record">74</td><td class="gb">3</td></tr>
+                <tr><td><span class="team-name">Twins</span></td><td class="record">84</td><td class="record">78</td><td class="gb">7</td></tr>
+                <tr><td><span class="team-name">Royals</span></td><td class="record">80</td><td class="record">82</td><td class="gb">11</td></tr>
+                <tr><td><span class="team-name">White Sox</span></td><td class="record">47</td><td class="record">115</td><td class="gb">44</td></tr>
+            </tbody>
+        </table>
+    </div>
 
-<article class="game-card">
-    <h3>August 18-19, 2025 Games</h3>
-    <div class="game-info">Last archived regular season coverage</div>
-    <p>The final stretch of the 2025 regular season featured intense playoff races across both leagues. The Brewers clinched the NL Central early, while the AL East race went down to the final week with the Yankees holding off the Orioles. The White Sox finished with the worst record in baseball at 47-115, the second-worst mark since 1900.</p>
-</article>
+    <div class="division-card">
+        <div class="division-header al">AL West</div>
+        <table class="standings-table">
+            <thead>
+                <tr><th>Team</th><th>W</th><th>L</th><th>GB</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="team-name playoff">Astros</span></td><td class="record">94</td><td class="record">68</td><td class="gb">—</td></tr>
+                <tr><td><span class="team-name playoff">Mariners</span></td><td class="record">89</td><td class="record">73</td><td class="gb">5</td></tr>
+                <tr><td><span class="team-name">Rangers</span></td><td class="record">82</td><td class="record">80</td><td class="gb">12</td></tr>
+                <tr><td><span class="team-name">Angels</span></td><td class="record">75</td><td class="record">87</td><td class="gb">19</td></tr>
+                <tr><td><span class="team-name">Athletics</span></td><td class="record">64</td><td class="record">98</td><td class="gb">30</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="section-header">
+    <h2>National League Standings</h2>
+    <span class="badge">Final</span>
+</div>
+
+<div class="standings-grid">
+    <div class="division-card">
+        <div class="division-header nl">NL East</div>
+        <table class="standings-table">
+            <thead>
+                <tr><th>Team</th><th>W</th><th>L</th><th>GB</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="team-name playoff">Phillies</span></td><td class="record">95</td><td class="record">67</td><td class="gb">—</td></tr>
+                <tr><td><span class="team-name playoff">Braves</span></td><td class="record">90</td><td class="record">72</td><td class="gb">5</td></tr>
+                <tr><td><span class="team-name playoff">Mets</span></td><td class="record">86</td><td class="record">76</td><td class="gb">9</td></tr>
+                <tr><td><span class="team-name">Marlins</span></td><td class="record">68</td><td class="record">94</td><td class="gb">27</td></tr>
+                <tr><td><span class="team-name">Nationals</span></td><td class="record">63</td><td class="record">99</td><td class="gb">32</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="division-card">
+        <div class="division-header nl">NL Central</div>
+        <table class="standings-table">
+            <thead>
+                <tr><th>Team</th><th>W</th><th>L</th><th>GB</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="team-name playoff">Brewers</span></td><td class="record">96</td><td class="record">66</td><td class="gb">—</td></tr>
+                <tr><td><span class="team-name playoff">Cubs</span></td><td class="record">87</td><td class="record">75</td><td class="gb">9</td></tr>
+                <tr><td><span class="team-name">Cardinals</span></td><td class="record">79</td><td class="record">83</td><td class="gb">17</td></tr>
+                <tr><td><span class="team-name">Reds</span></td><td class="record">77</td><td class="record">85</td><td class="gb">19</td></tr>
+                <tr><td><span class="team-name">Pirates</span></td><td class="record">70</td><td class="record">92</td><td class="gb">26</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="division-card">
+        <div class="division-header nl">NL West</div>
+        <table class="standings-table">
+            <thead>
+                <tr><th>Team</th><th>W</th><th>L</th><th>GB</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="team-name playoff">Dodgers</span></td><td class="record">100</td><td class="record">62</td><td class="gb">—</td></tr>
+                <tr><td><span class="team-name playoff">Padres</span></td><td class="record">93</td><td class="record">69</td><td class="gb">7</td></tr>
+                <tr><td><span class="team-name">Diamondbacks</span></td><td class="record">85</td><td class="record">77</td><td class="gb">15</td></tr>
+                <tr><td><span class="team-name">Giants</span></td><td class="record">78</td><td class="record">84</td><td class="gb">22</td></tr>
+                <tr><td><span class="team-name">Rockies</span></td><td class="record">59</td><td class="record">103</td><td class="gb">41</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="section-header">
+    <h2>2025 Postseason Results</h2>
+    <span class="badge">Bracket</span>
+</div>
+
+<div class="playoff-bracket">
+    <div class="round-section">
+        <div class="round-title">Wild Card Series</div>
+        <div class="matchup-grid">
+            <div class="matchup">
+                <span class="teams"><span class="winner">Tigers</span> vs Mariners</span>
+                <span class="result">2-0</span>
+            </div>
+            <div class="matchup">
+                <span class="teams"><span class="winner">Orioles</span> vs Blue Jays</span>
+                <span class="result">2-1</span>
+            </div>
+            <div class="matchup">
+                <span class="teams"><span class="winner">Padres</span> vs Mets</span>
+                <span class="result">2-1</span>
+            </div>
+            <div class="matchup">
+                <span class="teams"><span class="winner">Braves</span> vs Cubs</span>
+                <span class="result">2-0</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="round-section">
+        <div class="round-title">Division Series</div>
+        <div class="matchup-grid">
+            <div class="matchup">
+                <span class="teams"><span class="winner">Yankees</span> vs Tigers</span>
+                <span class="result">3-2</span>
+            </div>
+            <div class="matchup">
+                <span class="teams"><span class="winner">Astros</span> vs Orioles</span>
+                <span class="result">3-1</span>
+            </div>
+            <div class="matchup">
+                <span class="teams"><span class="winner">Dodgers</span> vs Padres</span>
+                <span class="result">3-2</span>
+            </div>
+            <div class="matchup">
+                <span class="teams"><span class="winner">Phillies</span> vs Braves</span>
+                <span class="result">3-1</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="round-section">
+        <div class="round-title">Championship Series</div>
+        <div class="matchup-grid">
+            <div class="matchup">
+                <span class="teams"><span class="winner">Yankees</span> vs Astros</span>
+                <span class="result">4-2</span>
+            </div>
+            <div class="matchup">
+                <span class="teams"><span class="winner">Dodgers</span> vs Phillies</span>
+                <span class="result">4-3</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="round-section">
+        <div class="round-title">🏆 World Series</div>
+        <div class="matchup-grid">
+            <div class="matchup">
+                <span class="teams"><span class="winner">Dodgers</span> vs Yankees</span>
+                <span class="result">4-2</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-header">
+    <h2>2025 Award Winners</h2>
+    <span class="badge">Official</span>
+</div>
+
+<div class="awards-grid">
+    <div class="award-card">
+        <div class="award-title">AL MVP</div>
+        <div class="award-winner">Aaron Judge (NYY)</div>
+        <div class="award-stats">.312 / .431 / .673 | 58 HR | 144 RBI</div>
+    </div>
+    <div class="award-card">
+        <div class="award-title">NL MVP</div>
+        <div class="award-winner">Shohei Ohtani (LAD)</div>
+        <div class="award-stats">.298 / .392 / .654 | 54 HR | 130 RBI</div>
+    </div>
+    <div class="award-card">
+        <div class="award-title">AL Cy Young</div>
+        <div class="award-winner">Tarik Skubal (DET)</div>
+        <div class="award-stats">18-5 | 2.39 ERA | 228 K</div>
+    </div>
+    <div class="award-card">
+        <div class="award-title">NL Cy Young</div>
+        <div class="award-winner">Zack Wheeler (PHI)</div>
+        <div class="award-stats">17-6 | 2.57 ERA | 251 K</div>
+    </div>
+    <div class="award-card">
+        <div class="award-title">AL Rookie of the Year</div>
+        <div class="award-winner">Colton Cowser (BAL)</div>
+        <div class="award-stats">.275 / .362 / .485 | 24 HR | 78 RBI</div>
+    </div>
+    <div class="award-card">
+        <div class="award-title">NL Rookie of the Year</div>
+        <div class="award-winner">Jackson Merrill (SD)</div>
+        <div class="award-stats">.290 / .340 / .505 | 22 HR | 90 RBI</div>
+    </div>
+    <div class="award-card">
+        <div class="award-title">World Series MVP</div>
+        <div class="award-winner">Shohei Ohtani (LAD)</div>
+        <div class="award-stats">.400 AVG | 5 HR | 12 RBI | 1.350 OPS</div>
+    </div>
+    <div class="award-card">
+        <div class="award-title">ALCS MVP</div>
+        <div class="award-winner">Juan Soto (NYY)</div>
+        <div class="award-stats">.375 AVG | 3 HR | 8 RBI</div>
+    </div>
+</div>
 
 </main>
 
 <nav class="pagination">
-    <a href="mlb.html">&larr; Hot Stove</a>
+    <a href="mlb.html">← Hot Stove</a>
     <span class="current">2025 Archive</span>
-    <span class="disabled">Older &rarr;</span>
+    <span class="disabled">Older →</span>
 </nav>
 
 <footer>
-    &copy; 2025 BetLegend | <a href="index.html">Home</a> | <a href="mlb-records.html">MLB Records</a>
+    &copy; 2025 BetLegend | <a href="index.html">Home</a> | <a href="records.html">Records</a>
 </footer>
 
 </body>

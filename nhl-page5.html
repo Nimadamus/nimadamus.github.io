@@ -3,260 +3,274 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NHL Betting Archive - Page 5 | BetLegend</title>
-<meta name="description" content="NHL betting picks archive.">
-<link rel="canonical" href="https://www.betlegendpicks.com/nhl-page5.html">
+<title>NHL Betting Picks - Page 5 | BetLegend</title>
+<meta name="description" content="NHL betting picks and expert analysis">
+<link rel="canonical" href="https://www.betlegendpicks.com/nhl.html">
 <link rel="icon" href="https://www.betlegendpicks.com/newlogo.png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --bg-dark: #030508;
-    --bg-card: rgba(8, 15, 25, 0.85);
-    --bg-glass: rgba(15, 25, 40, 0.6);
-    --neon-cyan: #00f0ff;
-    --neon-blue: #0066ff;
-    --neon-gold: #ffcc00;
-    --neon-purple: #8b5cf6;
-    --text-primary: #ffffff;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --border-glow: rgba(0, 240, 255, 0.3);
-    --gradient-cyber: linear-gradient(135deg, #0066ff 0%, #00f0ff 50%, #8b5cf6 100%);
+    --bg-dark: #0d1117;
+    --bg-card: #161b22;
+    --bg-hover: #21262d;
+    --accent-primary: #58a6ff;
+    --accent-gold: #f0b429;
+    --accent-green: #3fb950;
+    --accent-red: #f85149;
+    --text-white: #f0f6fc;
+    --text-light: #c9d1d9;
+    --text-gray: #8b949e;
+    --border-color: #30363d;
 }
 
 body {
     background: var(--bg-dark);
-    color: var(--text-primary);
-    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-light);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
-body::before {
-    content: '';
+/* NAVIGATION - Large and Clickable */
+.main-nav {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background:
-        radial-gradient(ellipse at 20% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(13, 17, 23, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    padding: 0 24px;
 }
 
-body::after {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image:
-        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    pointer-events: none;
-    z-index: -1;
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    height: 72px;
+    gap: 40px;
 }
 
-.main-nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(3,5,8,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-glow); z-index: 1000; padding: 0 20px; }
-.nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 70px; }
-.nav-logo { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 800; text-decoration: none; background: var(--gradient-cyber); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.nav-links { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-.nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: all 0.2s; }
-.nav-links a:hover { color: var(--neon-cyan); background: rgba(0,240,255,0.1); }
-.nav-links a.active { color: var(--neon-gold); background: rgba(255,204,0,0.1); }
-@media (max-width: 768px) { .nav-links { display: none; } }
+.nav-logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text-white);
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+}
 
+.nav-logo span { color: var(--accent-primary); }
+
+.nav-links {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 1;
+}
+
+.nav-links a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 18px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.nav-links a:hover {
+    color: var(--text-white);
+    background: var(--bg-hover);
+}
+
+.nav-links a.active {
+    color: var(--text-white);
+    background: var(--accent-primary);
+}
+
+/* HERO SECTION */
 .hero {
     text-align: center;
-    padding: 100px 20px 40px;
-    position: relative;
+    padding: 120px 24px 60px;
+    background: linear-gradient(180deg, rgba(88, 166, 255, 0.08) 0%, transparent 100%);
 }
 
 .hero h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    background: var(--gradient-cyber);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 10px;
-    animation: glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-    from { filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.3)); }
-    to { filter: drop-shadow(0 0 40px rgba(0, 240, 255, 0.6)); }
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    color: var(--text-white);
+    margin-bottom: 16px;
+    letter-spacing: -1px;
 }
 
 .hero .subtitle {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 3px;
+    font-size: 1.25rem;
+    color: var(--text-gray);
+    font-weight: 500;
 }
 
+/* CONTAINER */
 .container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 24px 80px;
 }
 
-.blog-post {
+/* BLOG POSTS / GAME CARDS */
+.blog-post, .game-card {
     background: var(--bg-card);
-    border: 1px solid var(--border-glow);
-    border-radius: 16px;
-    padding: 30px;
-    margin-bottom: 30px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+    transition: border-color 0.2s ease;
 }
 
-.blog-post:hover {
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
-    transform: translateY(-2px);
+.blog-post:hover, .game-card:hover {
+    border-color: var(--accent-primary);
 }
 
-.blog-post h2, .blog-post .post-header {
-    font-family: 'Orbitron', sans-serif;
+.blog-post h2, .blog-post h3, .post-header {
     font-size: 1.5rem;
-    color: var(--neon-gold);
-    margin-bottom: 15px;
-    text-align: center;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 12px;
 }
 
-.blog-post .post-time {
-    display: block;
-    text-align: center;
-    color: var(--neon-cyan);
-    font-size: 0.9rem;
+.post-time {
+    display: inline-block;
+    font-size: 14px;
+    color: var(--accent-primary);
     margin-bottom: 20px;
-    padding: 8px 16px;
-    background: rgba(0, 240, 255, 0.1);
-    border-radius: 20px;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.blog-post h3 {
-    color: var(--neon-cyan);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2rem;
-    margin: 25px 0 15px;
+    padding: 6px 12px;
+    background: rgba(88, 166, 255, 0.1);
+    border-radius: 6px;
 }
 
 .blog-post p {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    margin-bottom: 15px;
+    font-size: 16px;
+    color: var(--text-light);
+    margin-bottom: 16px;
+    line-height: 1.7;
 }
 
-.blog-post strong {
-    color: var(--neon-gold);
-}
+.blog-post strong { color: var(--text-white); }
 
 .blog-post ul, .blog-post ol {
-    color: var(--text-secondary);
-    padding-left: 25px;
-    margin-bottom: 15px;
+    margin: 16px 0;
+    padding-left: 24px;
 }
 
 .blog-post li {
     margin-bottom: 8px;
+    color: var(--text-light);
 }
 
-.blog-post a {
-    color: var(--neon-cyan);
-    text-decoration: none;
+/* SECTION HEADERS */
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    margin: 24px 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.blog-post a:hover {
-    color: var(--neon-gold);
-}
-
-.game-card, .pick-card {
-    background: rgba(0, 240, 255, 0.05);
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 15px 0;
-}
-
+/* PAGINATION */
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    padding: 40px 20px;
+    gap: 16px;
+    padding: 48px 24px;
+    border-top: 1px solid var(--border-color);
     flex-wrap: wrap;
 }
 
-.pagination a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    padding: 12px 24px;
-    border: 1px solid var(--border-glow);
-    border-radius: 8px;
-    background: var(--bg-card);
-    font-family: 'Rajdhani', sans-serif;
+.pagination a, .pagination span {
+    font-size: 15px;
     font-weight: 600;
-    transition: all 0.3s;
+    padding: 14px 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-gray);
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .pagination a:hover {
-    border-color: var(--neon-cyan);
-    color: var(--neon-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--text-white);
 }
 
 .pagination .current {
-    color: var(--neon-gold);
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--text-white);
 }
 
+.pagination .disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* FOOTER */
 footer {
     text-align: center;
-    padding: 40px 20px;
-    border-top: 1px solid var(--border-glow);
-    margin-top: 40px;
-}
-
-footer p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
+    padding: 32px 24px;
+    color: var(--text-gray);
+    font-size: 14px;
+    border-top: 1px solid var(--border-color);
 }
 
 footer a {
-    color: var(--neon-cyan);
+    color: var(--accent-primary);
     text-decoration: none;
 }
 
-@media (max-width: 768px) {
-    .hero { padding: 90px 15px 30px; }
-    .hero h1 { font-size: 1.8rem; letter-spacing: 2px; }
-    .blog-post { padding: 20px; }
-    .container { padding: 15px; }
+footer a:hover { text-decoration: underline; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .nav-container { flex-wrap: wrap; height: auto; padding: 12px 0; }
+    .nav-links { order: 2; width: 100%; justify-content: center; padding: 8px 0; }
+    .nav-links a { font-size: 14px; padding: 10px 14px; }
+}
+
+@media (max-width: 600px) {
+    .hero { padding: 100px 16px 40px; }
+    .container { padding: 0 16px 60px; }
+    .blog-post, .game-card { padding: 20px; }
+    .nav-links a { font-size: 13px; padding: 8px 10px; }
 }
 </style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
 </head>
 <body>
+
 <nav class="main-nav">
     <div class="nav-container">
-        <a href="index.html" class="nav-logo">BetLegend</a>
+        <a href="index.html" class="nav-logo">Bet<span>Legend</span></a>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="blog-page9.html">Picks</a>
             <a href="nfl.html">NFL</a>
             <a href="nba.html">NBA</a>
-            <a href="nhl.html" class="active">NHL</a>
+            <a href="nhl.html"class="active">NHL</a>
             <a href="ncaaf.html">NCAAF</a>
             <a href="ncaab.html">NCAAB</a>
             <a href="mlb.html">MLB</a>
@@ -266,31 +280,11 @@ footer a {
 </nav>
 
 <section class="hero">
-    <h1>NHL Betting Archive</h1>
+    <h1>NHL Picks</h1>
     <p class="subtitle">Page 5 of 16</p>
 </section>
 
-<div class="container">
-<!-- Logo -->
-
-
-<!-- Navigation -->
-    
-
-
-  <div class="page-wrap">
-    <div class="container outer-frame">
-      <header class="site-header">
-        <img class="logo" src="newlogo.png" alt="BetLegend logo">
-        <div class="sitename">BetLegend NHL</div>
-
-      
-<div style="text-align: center; margin: 30px auto 40px auto; padding: 25px 20px; max-width: 800px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%); border-radius: 15px; border: 2px solid rgba(255, 215, 0, 0.3); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
-    <h2 style="color: #ffd700; font-size: 32px; margin: 0; font-weight: 700; text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);">
-        Tuesday, November 18, 2025
-    </h2>
-</div>
-
+<main class="container">
 <article class="blog-post">
         <meta name="title" content="Tuesday NHL 8-Game Breakdown - November 18 Analysis | Seattle-Detroit, NJ-Tampa, Rangers-Vegas Featured"/>
         <meta name="description" content="Complete breakdown of Tuesday's 8-game NHL slate featuring Detroit hosting Seattle, New Jersey at Tampa Bay, NY Rangers visiting Vegas, and more with verified odds, trends, and betting angles."/>
@@ -304,231 +298,16 @@ footer a {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </button>
         </div>
-        <div class="date-nav-wrapper">
-            <button class="scroll-btn" onclick="document.querySelector('.date-scroll-container').scrollBy({left: -200, behavior: 'smooth'})">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <div class="date-scroll-container">
-                <a href="nhl.html" class="date-chip">
-                <span class="day-name">WED</span>
-                <span class="date-num">26</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page2.html" class="date-chip">
-                <span class="day-name">MON</span>
-                <span class="date-num">24</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page3.html" class="date-chip">
-                <span class="day-name">SAT</span>
-                <span class="date-num">22</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page4.html" class="date-chip">
-                <span class="day-name">FRI</span>
-                <span class="date-num">21</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page5.html" class="date-chip active">
-                <span class="day-name">TUE</span>
-                <span class="date-num">18</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page6.html" class="date-chip">
-                <span class="day-name">SAT</span>
-                <span class="date-num">15</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page7.html" class="date-chip">
-                <span class="day-name">THU</span>
-                <span class="date-num">13</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page8.html" class="date-chip">
-                <span class="day-name">TUE</span>
-                <span class="date-num">11</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page9.html" class="date-chip">
-                <span class="day-name">FRI</span>
-                <span class="date-num">7</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page10.html" class="date-chip">
-                <span class="day-name">SAT</span>
-                <span class="date-num">1</span>
-                <span class="month-year">NOV</span>
-            </a>
-            <a href="nhl-page11.html" class="date-chip">
-                <span class="day-name">THU</span>
-                <span class="date-num">30</span>
-                <span class="month-year">OCT</span>
-            </a>
-            <a href="nhl-page12.html" class="date-chip">
-                <span class="day-name">SUN</span>
-                <span class="date-num">26</span>
-                <span class="month-year">OCT</span>
-            </a>
-            <a href="nhl-page13.html" class="date-chip">
-                <span class="day-name">SAT</span>
-                <span class="date-num">25</span>
-                <span class="month-year">OCT</span>
-            </a>
-            <a href="nhl-page14.html" class="date-chip">
-                <span class="day-name">SUN</span>
-                <span class="date-num">19</span>
-                <span class="month-year">OCT</span>
-            </a>
-            <a href="nhl-page15.html" class="date-chip">
-                <span class="day-name">TUE</span>
-                <span class="date-num">7</span>
-                <span class="month-year">OCT</span>
-            </a>
-            <a href="nhl-page16.html" class="date-chip">
-                <span class="day-name">ALL</span>
-                <span class="date-num">+</span>
-                <span class="month-year">Archive</span>
-            </a>
-            </div>
-            <button class="scroll-btn" onclick="document.querySelector('.date-scroll-container').scrollBy({left: 200, behavior: 'smooth'})">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-        </div>
-    </div>
+</main>
 
-
-
-    <div class="post-time">Posted: November 18, 2025</div>
-        <div class="post-body">
-
-          <p>Tuesday night brings eight compelling NHL matchups spanning from 7 PM ET through the late 10 PM ET window. The slate features playoff contenders, intriguing road favorites, and some excellent home underdogs with value. Detroit welcomes Seattle as heavy home favorites, while the Rangers head to Vegas in a near pick'em, and Columbus travels to Winnipeg as the biggest underdog of the night.</p>
-
-          <div class="game-header">SEATTLE @ DETROIT | 7:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/55.png" alt="Seattle" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/17.png" alt="Detroit" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Kraken @ Red Wings</div>
-          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Line: SEA +146 / DET -162 | Total: 6.0 | Public: 35% SEA / 65% DET</div>
-
-          <p>Detroit opens the evening as substantial home favorites with 65% public backing. The Red Wings are 11-7-1 overall with an impressive 6-3-1 home record and are solid at 11-8 ATS including 6-4 at home. Seattle comes in at 9-4-5 with a respectable 3-3-2 road record, posting a strong 14-4 ATS mark overall and 6-2 on the road. Both teams have been trending in opposite directions recently - Detroit is 5-4-1 in their last 10 while Seattle is 5-2-3. The over/under trends show Seattle at 5-4-1 O/U in their last 10 games compared to Detroit's 4-6 mark. The Kraken's elite ATS record on the road (6-2) provides value against the heavy public favorite.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">ST. LOUIS @ TORONTO | 7:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/19.png" alt="St. Louis" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/10.png" alt="Toronto" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Blues @ Maple Leafs | Consensus Picks: 2</div>
-          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Line: STL -102 / TOR -109 | Total: 6.0 | Public: 31% STL / 69% TOR</div>
-
-          <p>Two consensus picks on this near pick'em with Toronto getting heavy public backing at 69% at home. The Maple Leafs are 8-9-2 overall with a solid 7-4-2 home record but struggle ATS at 6-13 overall and 5-8 at home. St. Louis is struggling at 6-9-4 with a poor 3-4 road record and are equally bad ATS at 6-13 overall including 4-3 on the road. Toronto has been playing better lately at 4-5-1 in their last 10 compared to St. Louis' 3-4-3 mark. The total trends are interesting with Toronto going 9-1 over in their last 10 games while St. Louis is 5-5. Both teams are struggling to cover spreads, making this a difficult betting proposition despite the Leafs' home advantage.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">NEW JERSEY @ TAMPA BAY | 7:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/1.png" alt="New Jersey" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/27.png" alt="Tampa Bay" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Devils @ Lightning | Consensus Picks: 1</div>
-          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Line: NJ +146 / TB -162 | Total: 5.5 | Public: 49% NJ / 51% TB</div>
-
-          <p>One consensus pick with the public nearly split on this Metropolitan vs. Atlantic matchup. The Devils come in red-hot at 13-4-1 overall with an impressive 6-4 road record and are 8-10 ATS including 4-6 on the road. Tampa Bay is 9-7-2 overall with a respectable 4-5 home record but struggles ATS at 7-11 overall and is particularly bad at home going 0-9 ATS. New Jersey is 6-3-1 in their last 10 games while Tampa is 7-3. The total trends show New Jersey at 5-5 O/U compared to Tampa's 4-6 mark in their last 10. Tampa's abysmal 0-9 home ATS record is the key stat here - they simply haven't covered as home favorites this season.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">COLUMBUS @ WINNIPEG | 8:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/29.png" alt="Columbus" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/52.png" alt="Winnipeg" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Blue Jackets @ Jets | Consensus Picks: 1</div>
-          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Line: CLB +156 / WIN -174 | Total: 6.5 | Public: 26% CLB / 74% WIN</div>
-
-          <p>One consensus pick with Winnipeg drawing massive 74% public support at home. The Jets are 11-7 overall with a solid 5-3 home record and are 8-10 ATS including 4-4 at home. Columbus is 10-7-2 with an excellent 5-4-1 road record and is crushing it ATS at 12-7 overall including an elite 9-1 mark on the road. Both teams are 5-5 in their last 10 games, but Columbus is 5-4-1 O/U compared to Winnipeg's 6-4. The key trend here is Columbus' incredible 9-1 road ATS record - they've been consistently undervalued on the road and cover as big underdogs. The 74% public backing on Winnipeg creates even more value on Columbus.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">NY ISLANDERS @ DALLAS | 8:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/2.png" alt="NY Islanders" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/25.png" alt="Dallas" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Islanders @ Stars | Consensus Picks: 2</div>
-          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Line: NYI +148 / DAL -164 | Total: 6.0 | Public: 31% NYI / 69% DAL</div>
-
-          <p>Two consensus picks with Dallas getting 69% public backing at home. The Stars are 12-4-3 overall with an excellent 6-3-1 home record but are brutal ATS at 8-11 overall and particularly bad at home going 2-8. The Islanders are 10-7-2 with a solid 6-4-1 road record and are 9-10 ATS including 7-4 on the road. Dallas is on fire lately at 7-1-2 in their last 10 while the Islanders are 6-3-1. The total trends show Dallas at 6-4 O/U compared to New York's 4-6 mark in their last 10. Dallas' 2-8 home ATS record is alarming - they consistently fail to cover as home favorites, making the Islanders' road ATS strength (7-4) an appealing contrarian angle.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">CALGARY @ CHICAGO | 8:30 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/20.png" alt="Calgary" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/16.png" alt="Chicago" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Flames @ Blackhawks | Consensus Picks: 1</div>
-          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Line: CAL -115 / CHI +104 | Total: 6.0 | Public: 23% CAL / 77% CHI</div>
-
-          <p>One consensus pick with the public hammering Chicago at 77% despite being the home underdog. The Blackhawks are 9-5-4 overall with a solid 4-2-2 home record and are absolutely elite ATS at 15-3 overall including a perfect 7-1 at home. Calgary is struggling badly at 5-12-3 with a poor 2-8-1 road record and are 11-9 ATS overall including 5-6 on the road. Chicago is 5-3-2 in their last 10 while Calgary is 3-5-2. The total trends show Chicago at 4-5-1 O/U compared to Calgary's 4-5-1 mark. Chicago's 15-3 overall ATS record and 7-1 home ATS mark is one of the best in the NHL - they consistently cover as underdogs at home. The 77% public backing aligns with this elite trend.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">UTAH @ SAN JOSE | 10:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/utah.png" alt="Utah" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/28.png" alt="San Jose" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Hockey Club @ Sharks | Consensus Picks: 1</div>
-          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Line: UTAH -131 / SJ +119 | Total: 6.0 | Public: 37% UTAH / 63% SJ</div>
-
-          <p>One consensus pick with the public backing the home underdog San Jose at 63%. Utah is 10-7-2 overall with a strong 5-6-1 road record but struggles ATS at 8-11 overall including 4-8 on the road. San Jose is 8-8-3 with a solid 4-3-3 home record and is crushing it ATS at 13-6 overall including an elite 8-2 mark at home. Utah is 3-5-2 in their last 10 while San Jose is 6-3-1. The total trends show San Jose at 3-7 under in their last 10 games compared to Utah's 5-5 mark. San Jose's 8-2 home ATS record is elite - they consistently cover as home underdogs. The public backing of 63% on the Sharks aligns with this strong trend.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">NY RANGERS @ VEGAS | 10:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/3.png" alt="NY Rangers" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/54.png" alt="Vegas" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--gold); font-size:14px; margin-bottom:10px;">Rangers @ Golden Knights | Consensus Picks: 1</div>
-          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Line: NYR +115 / VEG -127 | Total: 6.0 | Public: 42% NYR / 58% VEG</div>
-
-          <p>One consensus pick closing out the slate with Vegas as a slight home favorite drawing 58% public support. The Golden Knights are 8-4-6 overall with a decent 4-3-3 home record but are struggling ATS at 6-12 overall including 2-8 at home. The Rangers are 10-8-2 with an outstanding 9-1-1 road record and are 10-10 ATS overall including an elite 8-3 road ATS mark. New York is 7-3 in their last 10 while Vegas is 3-3-4. The total trends show the Rangers at 3-7 under in their last 10 compared to Vegas' 4-6 mark. The Rangers' 9-1-1 road record and 8-3 road ATS mark is exceptional - they're one of the best road teams in the NHL. Vegas' 2-8 home ATS record creates significant value on the road underdog Rangers.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">TUESDAY SLATE OVERVIEW</div>
-          <p>Tonight's eight-game slate features several compelling betting angles. The standout trends include Chicago's elite 15-3 overall ATS record (7-1 at home), San Jose's 8-2 home ATS mark, and Columbus' incredible 9-1 road ATS performance. On the flip side, Tampa Bay's 0-9 home ATS record and Dallas' 2-8 home ATS mark make them dangerous home favorites to back. The Rangers bring an outstanding 9-1-1 road record into Vegas, while Seattle's 6-2 road ATS performance provides value against the heavily-backed Detroit. Multiple games feature consensus picks including St. Louis-Toronto (2), NY Islanders-Dallas (2), and five others with single picks. The evening window from 7-8:30 PM ET is loaded with six games, while the late 10 PM ET window offers two compelling West Coast matchups. Key betting strategy: fade home favorites with poor home ATS records (Tampa 0-9, Dallas 2-8, Vegas 2-8) and back road teams with elite road ATS marks (Columbus 9-1, Rangers 8-3, Seattle 6-2).</p>
-
-        </div>
-      </article>
-<style>
-.page-nav { display: flex; justify-content: center; gap: 15px; margin: 50px auto; padding: 25px; max-width: 600px; }
-.page-nav a, .page-nav span { padding: 14px 28px; background: rgba(0, 217, 255, 0.1); border: 2px solid rgba(0, 217, 255, 0.3); border-radius: 10px; color: #00d9ff; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
-.page-nav a:hover { background: rgba(0, 217, 255, 0.25); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
-.page-nav .disabled { opacity: 0.35; pointer-events: none; }
-.page-nav .current { background: rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.6); color: #ffd700; }
-</style>
-
-    </div>
-  </div>
 <nav class="pagination">
-    <a href="nhl-page4.html">← Previous</a> <span class="current">Page 5 of 16</span> <a href="nhl-page6.html">Next →</a>
+    <a href="nhl-page4.html">← Previous</a>
+    <span class="current">Page 5 of 16</span>
+    <a href="nhl-page6.html">Next →</a>
 </nav>
-</div>
 
 <footer>
-    <p>&copy; 2025 BetLegend. All Rights Reserved. | <a href="index.html">Home</a> | <a href="records.html">Records</a></p>
+    &copy; 2025 BetLegend. All rights reserved. | <a href="index.html">Home</a> | <a href="records.html">Records</a>
 </footer>
 
 </body>
