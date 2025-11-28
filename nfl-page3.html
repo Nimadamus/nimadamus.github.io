@@ -29,7 +29,6 @@
 }
 body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;line-height:1.8;font-size:16px;min-height:100vh}
 body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 20%,rgba(0,229,255,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(168,85,247,0.06) 0%,transparent 50%);pointer-events:none;z-index:-1}
-
 .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,7,10,0.85);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border-subtle)}
 .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 32px}
 .logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:-0.5px}
@@ -46,7 +45,6 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .dropdown-content a:hover{background:rgba(0,229,255,0.1);color:var(--accent-cyan)}
 .dropdown:hover .dropdown-content{display:block;opacity:1;transform:translateX(-50%) translateY(0)}
 .dropdown:hover .dropbtn::after{transform:rotate(-135deg);margin-top:3px}
-
 .top-space{height:70px}
 .hero{text-align:center;padding:60px 24px 40px;position:relative}
 .hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,255,0.1) 0%,transparent 70%);pointer-events:none}
@@ -60,56 +58,45 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .day-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-gold)}
 .day-header h2{font-family:'Space Grotesk',sans-serif;font-size:26px;color:var(--accent-gold);margin-bottom:6px}
 .day-header p{color:var(--text-secondary);font-size:14px}
-
-main,.container{max-width:900px;margin:0 auto;padding:0 24px 60px}
-
-.game-card,.blog-post{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:28px;margin-bottom:20px;transition:all .3s ease;position:relative;overflow:hidden}
-.game-card::before,.blog-post::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-accent);opacity:0;transition:opacity .3s ease}
-.game-card:hover,.blog-post:hover{border-color:var(--border-accent);transform:translateY(-3px);box-shadow:var(--shadow-glow)}
-.game-card:hover::before,.blog-post:hover::before{opacity:1}
-.teams-display{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px}
-.teams-display img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
-.teams-display .vs{color:var(--text-muted);font-size:14px;font-weight:700;text-transform:uppercase}
-.game-card h3,.blog-post h2{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--accent-gold);margin-bottom:8px;text-align:center}
-.game-meta,.post-time{font-size:13px;color:var(--text-muted);text-align:center;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--border-subtle)}
-.game-card p,.blog-post p{color:var(--text-secondary);font-size:16px;margin-bottom:12px;line-height:1.8}
-.game-card strong,.game-card b,.blog-post strong,.blog-post b{color:var(--accent-cyan)}
-
-.section-title{color:var(--accent-gold);font-weight:700;font-size:17px;margin-top:20px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
-.section-title::before{content:'';width:4px;height:18px;background:var(--gradient-gold);border-radius:2px}
-
-.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0;padding:16px;background:rgba(0,229,255,0.05);border-radius:12px;border:1px solid var(--border-accent)}
-.stat-item{text-align:center;padding:12px}
-.stat-value{font-size:24px;font-weight:700;color:var(--accent-cyan);font-family:'Space Grotesk',sans-serif}
-.stat-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:4px}
-
-.trend-box{background:rgba(255,213,79,0.08);border:1px solid rgba(255,213,79,0.3);border-radius:10px;padding:14px 18px;margin:12px 0}
-.trend-box strong{color:var(--accent-gold)}
-
-.pagination{display:flex;justify-content:center;align-items:center;gap:24px;padding:50px 24px;margin-top:50px}
-.page-arrow{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border-subtle);border-radius:50%;color:var(--text-secondary);text-decoration:none;font-size:20px;transition:all 0.3s ease}
-.page-arrow:hover:not(.disabled){border-color:var(--accent-cyan);color:var(--accent-cyan);box-shadow:0 0 20px rgba(0,229,255,0.2)}
-.page-arrow.disabled{opacity:0.2;cursor:not-allowed;pointer-events:none}
-.page-info{color:var(--text-muted);font-size:14px;font-weight:500;letter-spacing:0.5px}
-
+main{max-width:900px;margin:0 auto;padding:0 24px 60px}
+.game-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:28px;margin-bottom:20px;transition:all .3s ease;position:relative;overflow:hidden}
+.game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-accent);opacity:0;transition:opacity .3s ease}
+.game-card:hover{border-color:var(--border-accent);transform:translateY(-3px);box-shadow:var(--shadow-glow)}
+.game-card:hover::before{opacity:1}
+.game-card h2,.game-card h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:12px}
+.game-card p{color:var(--text-secondary);font-size:16px;margin-bottom:12px;line-height:1.8}
+.game-card strong,.game-card b{color:var(--accent-cyan)}
+.game-card ul,.game-card ol{margin:16px 0;padding-left:24px;color:var(--text-secondary)}
+.game-card li{margin-bottom:8px}
+.game-card img{max-width:100%;border-radius:12px;margin:16px 0}
+.section-title{color:var(--accent-gold);font-weight:700;font-size:17px;margin-top:20px;margin-bottom:10px}
+.matchup-card{background:rgba(0,229,255,0.05);border:1px solid var(--border-accent);border-radius:12px;padding:20px;margin:16px 0}
+.matchup-header{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px}
+.matchup-header .logo{width:48px;height:48px;object-fit:contain}
+.matchup-header .vs{color:var(--text-muted);font-weight:700}
+.matchup-meta h3{font-size:18px;color:var(--text-primary);margin-bottom:8px}
+.matchup-meta p{font-size:13px;color:var(--text-muted)}
+.odds-highlight{color:var(--accent-gold);font-weight:600}
+.pagination{display:flex;justify-content:center;align-items:center;gap:12px;padding:40px 24px;border-top:1px solid var(--border-subtle);margin-top:40px}
+.pagination a,.pagination span{padding:12px 24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;transition:all .3s ease}
+.pagination a:hover{background:var(--bg-card-hover);border-color:var(--border-accent);color:var(--text-primary);transform:translateY(-2px)}
+.pagination .current{background:rgba(0,229,255,0.1);border-color:var(--accent-cyan);color:var(--text-primary)}
+.pagination .disabled{opacity:0.3;pointer-events:none}
 footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
 footer a{color:var(--accent-cyan);text-decoration:none;transition:color .2s}
 footer a:hover{color:var(--accent-gold)}
-
 @media(max-width:768px){
 .nav-inner{padding:12px 16px}
 .nav-links{gap:4px}
 .nav-links>a,.dropbtn{padding:8px 12px;font-size:13px}
 .hero{padding:40px 16px 30px}
 .hero p{font-size:16px}
+
 .day-section{padding:0 16px}
 .day-header{padding:20px}
 .day-header h2{font-size:22px}
-main,.container{padding:0 16px 40px}
-.game-card,.blog-post{padding:22px}
-.teams-display img{width:48px;height:48px}
-.game-card h3,.blog-post h2{font-size:18px}
-.stat-grid{grid-template-columns:1fr 1fr}
+main{padding:0 16px 40px}
+.game-card{padding:22px}
 }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
@@ -134,19 +121,21 @@ main,.container{padding:0 16px 40px}
 </nav>
 
 <div class="top-space"></div>
+
 <section class="hero">
 <div class="hero-badge">Week 12</div>
 <h1>NFL <span>Analysis</span></h1>
 <p>Expert analysis and betting picks</p>
 </section>
+
 <div class="day-section">
 <div class="day-header">
 <h2>Monday, November 24, 2025</h2>
 <p>NFL Coverage</p>
 </div>
 </div>
-<main>
 
+<main>
 
 <article class="game-card">
   <h2>NFL Week 12 Complete Breakdown: Sunday Through Monday Night - Thirteen Games, Playoff Implications Everywhere</h2>
@@ -316,13 +305,14 @@ main,.container{padding:0 16px 40px}
 
 </article>
 
-
 </main>
-<nav class="pagination">
-<a href="nfl-page2.html" class="page-arrow" title="Newer">&#8592;</a>
-<span class="page-info">Page 3 of 13</span>
-<a href="nfl-page4.html" class="page-arrow" title="Older">&#8594;</a>
-</nav>
+
+<nav class="page-nav">
+            <a href="nfl-page2.html" class="nav-arrow newer" title="Newer">&#8592; Newer</a>
+            <span class="page-indicator">Page 11 of 13</span>
+            <a href="nfl-page4.html" class="nav-arrow older" title="Older">Older &#8594;</a>
+        </nav>
+
 <footer>&copy; 2025 BetLegend &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="nfl-records.html">NFL Records</a></footer>
 
 </body>
