@@ -1529,31 +1529,24 @@ function calculateTeaserBreakdown() {
         tbody.appendChild(totalRow);
     }
 
-    // Define specific teaser types to show
+    // Define specific teaser types - patterns match variations like "6pt", "6 pt", "6-pt", "6 point", "6 1/2 pt", etc.
     const teaserTypes = [
-        { name: '6-Point Teaser', pattern: '6(?!\\.5)' },
-        { name: '6.5-Point Teaser', pattern: '6\\.5' },
-        { name: '7-Point Teaser', pattern: '7' }
+        { name: '6-Point Teaser', pattern: '6(?![.\\d\\/])' },  // 6 but NOT followed by decimal, digit, or fraction
+        { name: '6.5-Point Teaser', pattern: '(6\\.5|6\\s*1\\/2)' },  // 6.5 OR 6 1/2
+        { name: '7-Point Teaser', pattern: '7(?![.\\d])' }  // 7 but NOT followed by decimal or digit
     ];
 
     let hasData = allTeasersData.length > 0;
 
-    // Track which teasers have been categorized to ensure subtotals add up to TOTAL
-    const categorizedTeaserIndices = new Set();
-
     teaserTypes.forEach(teaserType => {
-        const typeData = allTeasersData.filter((row, index) => {
+        const typeData = allTeasersData.filter(row => {
             const pick = (row.Pick || row.pick || '').toLowerCase();
             const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
             const searchText = pick + ' ' + betType;
 
-            // Match the point value (e.g., "6.5pt", "7pt", etc.)
+            // Match the point value with flexible spacing and "pt" or "point" suffix
             const pointPattern = new RegExp(teaserType.pattern + '\\s*(-)?\\s*(pt|point)', 'i');
-            if (pointPattern.test(searchText)) {
-                categorizedTeaserIndices.add(index);
-                return true;
-            }
-            return false;
+            return pointPattern.test(searchText);
         });
 
         if (typeData.length === 0) return;
@@ -1571,24 +1564,6 @@ function calculateTeaserBreakdown() {
         `;
         tbody.appendChild(row);
     });
-
-    // Add "Other Teasers" row for any teasers not matching specific point patterns
-    // This ensures subtotals ALWAYS add up to TOTAL TEASERS
-    const uncategorizedTeasers = allTeasersData.filter((row, index) => !categorizedTeaserIndices.has(index));
-    if (uncategorizedTeasers.length > 0) {
-        const uncatStats = calculateStats(uncategorizedTeasers, true);
-        const uncatRow = document.createElement('tr');
-        uncatRow.innerHTML = `
-            <td><strong>Other Teasers</strong></td>
-            <td class="${uncatStats.winRate > 50 ? 'win' : 'loss'}">${uncatStats.record}</td>
-            <td class="${uncatStats.winRate > 50 ? 'win' : ''}">${uncatStats.winRate.toFixed(1)}%</td>
-            <td class="${uncatStats.units >= 0 ? 'win' : 'loss'}">${uncatStats.units >= 0 ? '+' : ''}${uncatStats.units.toFixed(1)}u</td>
-            <td class="${uncatStats.roi >= 0 ? 'win' : 'loss'}">${uncatStats.roi >= 0 ? '+' : ''}${uncatStats.roi.toFixed(1)}%</td>
-            <td>${findBestSport(uncategorizedTeasers)}</td>
-        `;
-        tbody.appendChild(uncatRow);
-        console.log('Uncategorized teasers found:', uncategorizedTeasers.length, uncategorizedTeasers.map(r => r.Pick || r.pick));
-    }
 
     if (!hasData) {
         tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No teaser data available</td></tr>';
