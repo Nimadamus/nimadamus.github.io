@@ -1538,23 +1538,22 @@ function calculateTeaserBreakdown() {
 
     let hasData = allTeasersData.length > 0;
 
-    teaserTypes.forEach(teaserType => {
-        const typeData = allData.filter(row => {
-            // Filter out pending/empty results first (same as Bet Type Breakdown)
-            const result = (row.Result || row.result || '').toLowerCase().trim();
-            if (!result || result === '' || result === 'pending') return false;
+    // Track which teasers have been categorized to ensure subtotals add up to TOTAL
+    const categorizedTeaserIndices = new Set();
 
+    teaserTypes.forEach(teaserType => {
+        const typeData = allTeasersData.filter((row, index) => {
             const pick = (row.Pick || row.pick || '').toLowerCase();
             const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
             const searchText = pick + ' ' + betType;
 
-            // Check if it's a teaser bet (including abbreviations)
-            const isTeaserBet = searchText.includes('teaser') || searchText.includes('tsr') || searchText.includes('teas');
-            if (!isTeaserBet) return false;
-
             // Match the point value (e.g., "6.5pt", "7pt", etc.)
             const pointPattern = new RegExp(teaserType.pattern + '\\s*(-)?\\s*(pt|point)', 'i');
-            return pointPattern.test(searchText);
+            if (pointPattern.test(searchText)) {
+                categorizedTeaserIndices.add(index);
+                return true;
+            }
+            return false;
         });
 
         if (typeData.length === 0) return;
@@ -1572,6 +1571,24 @@ function calculateTeaserBreakdown() {
         `;
         tbody.appendChild(row);
     });
+
+    // Add "Other Teasers" row for any teasers not matching specific point patterns
+    // This ensures subtotals ALWAYS add up to TOTAL TEASERS
+    const uncategorizedTeasers = allTeasersData.filter((row, index) => !categorizedTeaserIndices.has(index));
+    if (uncategorizedTeasers.length > 0) {
+        const uncatStats = calculateStats(uncategorizedTeasers, true);
+        const uncatRow = document.createElement('tr');
+        uncatRow.innerHTML = `
+            <td><strong>Other Teasers</strong></td>
+            <td class="${uncatStats.winRate > 50 ? 'win' : 'loss'}">${uncatStats.record}</td>
+            <td class="${uncatStats.winRate > 50 ? 'win' : ''}">${uncatStats.winRate.toFixed(1)}%</td>
+            <td class="${uncatStats.units >= 0 ? 'win' : 'loss'}">${uncatStats.units >= 0 ? '+' : ''}${uncatStats.units.toFixed(1)}u</td>
+            <td class="${uncatStats.roi >= 0 ? 'win' : 'loss'}">${uncatStats.roi >= 0 ? '+' : ''}${uncatStats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(uncategorizedTeasers)}</td>
+        `;
+        tbody.appendChild(uncatRow);
+        console.log('Uncategorized teasers found:', uncategorizedTeasers.length, uncategorizedTeasers.map(r => r.Pick || r.pick));
+    }
 
     if (!hasData) {
         tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No teaser data available</td></tr>';
