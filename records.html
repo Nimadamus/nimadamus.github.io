@@ -1529,11 +1529,11 @@ function calculateTeaserBreakdown() {
         tbody.appendChild(totalRow);
     }
 
-    // Define specific teaser types - patterns match variations like "6pt", "6 pt", "6-pt", "6 point", "6 1/2 pt", etc.
+    // Define specific teaser types - match "6 point", "6pt", "6.5 point", "7 point" etc.
     const teaserTypes = [
-        { name: '6-Point Teaser', pattern: '6(?![.\\d\\/])' },  // 6 but NOT followed by decimal, digit, or fraction
-        { name: '6.5-Point Teaser', pattern: '(6\\.5|6\\s*1\\/2)' },  // 6.5 OR 6 1/2
-        { name: '7-Point Teaser', pattern: '7(?![.\\d])' }  // 7 but NOT followed by decimal or digit
+        { name: '6-Point Teaser', pattern: /6\s*(-\s*)?(point|pt)\b(?!\s*teaser\s*:?\s*(6\.5|6\s*1\/2|7))/i },
+        { name: '6.5-Point Teaser', pattern: /(6\.5|6\s*1\/2)\s*(-\s*)?(point|pt)/i },
+        { name: '7-Point Teaser', pattern: /7\s*(-\s*)?(point|pt)/i }
     ];
 
     let hasData = allTeasersData.length > 0;
@@ -1544,9 +1544,8 @@ function calculateTeaserBreakdown() {
             const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
             const searchText = pick + ' ' + betType;
 
-            // Match the point value with flexible spacing and "pt" or "point" suffix
-            const pointPattern = new RegExp(teaserType.pattern + '\\s*(-)?\\s*(pt|point)', 'i');
-            return pointPattern.test(searchText);
+            // Match the point value pattern
+            return teaserType.pattern.test(searchText);
         });
 
         if (typeData.length === 0) return;
