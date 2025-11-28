@@ -303,27 +303,23 @@
         try {
             const processedPicks = mlbPicksData.map(p => {
                 try {
+                    // Soccer records may not have Line/Odds - only require Pick, Result, Units, Date
                     if (!p.Pick || !p.Result || !p.Units || !p.Date) return null;
-                    // Line (Odds) can be empty for some records
                     const pickText = String(p.Pick).trim();
                     const resultText = String(p.Result).trim().toUpperCase();
                     const units = parseFloat(p.Units);
-                    const line = parseFloat(p.Line);
+                    const line = p.Line ? parseFloat(p.Line) : -110; // Default to -110 if no line
                     if (pickText === '' || resultText === '' || isNaN(units)) return null;
                     let risk = 0;
-                    if (units < 0) {
-                        risk = Math.abs(units);
+                    if (units < 0) { 
+                        risk = Math.abs(units); 
                     }
                     else if (units > 0) {
-                        if (isNaN(line)) {
-                            // If no odds provided, estimate risk as units won
-                            risk = units;
+                        if (line > 0) { 
+                            risk = (units / (line / 100)); 
                         }
-                        else if (line > 0) {
-                            risk = (units / (line / 100));
-                        }
-                        else {
-                            risk = (units * (Math.abs(line) / 100));
+                        else { 
+                            risk = (units * (Math.abs(line) / 100)); 
                         }
                     }
                     return { ...p, units, risk, parsedDate: new Date(p.Date) };
