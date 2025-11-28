@@ -1531,9 +1531,9 @@ function calculateTeaserBreakdown() {
 
     // Define specific teaser types - match "6 point", "6pt", "6.5 point", "7 point" etc.
     const teaserTypes = [
-        { name: '6-Point Teaser', pattern: /6\s*(-\s*)?(point|pt)\b(?!\s*teaser\s*:?\s*(6\.5|6\s*1\/2|7))/i },
-        { name: '6.5-Point Teaser', pattern: /(6\.5|6\s*1\/2)\s*(-\s*)?(point|pt)/i },
-        { name: '7-Point Teaser', pattern: /7\s*(-\s*)?(point|pt)/i }
+        { name: '6.5-Point Teaser', pattern: /(6\.5|6\s*1\/2)\s*-?\s*p/i },     // "6.5 point" or "6 1/2 pt"
+        { name: '6-Point Teaser', pattern: /\b6(?!\.5|\s*1\/2)\s*-?\s*p/i },    // "6 point" but NOT "6.5" or "6 1/2"
+        { name: '7-Point Teaser', pattern: /\b7\s*-?\s*p/i }                     // "7 point" or "7pt"
     ];
 
     let hasData = allTeasersData.length > 0;
