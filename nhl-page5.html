@@ -25,177 +25,25 @@
     --border-glow: rgba(0, 240, 255, 0.3);
     --gradient-cyber: linear-gradient(135deg, #0066ff 0%, #00f0ff 50%, #8b5cf6 100%);
 }
-/* Logo Container - Matches index.html */
-.logo-container {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1000;
-}
+/* Premium Navigation - Index Style */
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,224,255,0.3)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;position:fixed;top:15px;left:15px;z-index:1001}
+.logo a{font-family:'Orbitron',sans-serif;font-size:2.5rem;font-weight:900;color:#fff;text-decoration:none;text-transform:uppercase;text-shadow:0 0 10px rgba(255,255,255,0.8),0 0 20px rgba(255,255,255,0.4)}
+.logo a span{color:#00ffff;text-shadow:0 0 15px rgba(0,255,255,1),0 0 30px rgba(0,255,255,0.8),0 0 50px rgba(0,255,255,0.6)}
+.nav-links{display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap}
+.nav-link,.nav-links>a{font-family:'Poppins',sans-serif;color:#ffffff;text-decoration:none;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;transition:all 0.3s ease;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.nav-link:hover,.nav-links>a:hover{color:#FFD700;text-shadow:0 0 15px #FFD700,0 2px 8px rgba(0,0,0,0.8)}
+.dropdown{position:relative;display:inline-flex;align-items:center}
+.dropbtn{font-family:'Poppins',sans-serif;background:none;border:none;color:#ffffff;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.dropbtn:hover,.dropdown:hover .dropbtn{color:#FFD700;text-shadow:0 0 15px #FFD700,0 2px 8px rgba(0,0,0,0.8)}
+.dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(0,0,0,0.98);backdrop-filter:blur(20px);min-width:200px;box-shadow:0px 8px 30px rgba(0,224,255,0.4);z-index:99999;border:2px solid rgba(0,224,255,0.5);border-radius:10px;padding:15px 0;margin-top:10px}
+.dropdown-content a{color:#00ffff;padding:14px 20px;text-decoration:none;display:block;font-size:0.95rem;text-align:left;transition:all 0.3s ease;text-shadow:0 0 5px rgba(0,255,255,0.5);border-left:3px solid transparent;text-transform:none;letter-spacing:0}
+.dropdown-content a:hover{background:linear-gradient(90deg,rgba(0,224,255,0.3),rgba(0,224,255,0.1));color:#fff;padding-left:30px;text-shadow:0 0 10px #00e0ff;border-left-color:#00ffff}
+@media(hover:hover) and (pointer:fine){.dropdown:hover .dropdown-content{display:block;animation:dropdownFade 0.3s ease}}
+.dropdown.active .dropdown-content{display:block;animation:dropdownFade 0.3s ease}
+@keyframes dropdownFade{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 
-.logo-container a {
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
-}
-
-.logo-container span {
-    color: #00ffff;
-    text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.8), 0 0 50px rgba(0, 255, 255, 0.6);
-}
-
-/* Navigation - Matches index.html */
-.nav-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    padding: 18px 5% 18px 280px;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 224, 255, 0.3);
-    z-index: 999;
-    flex-wrap: wrap;
-}
-
-.nav-links a, .dropdown {
-    display: inline-flex;
-    align-items: center;
-}
-
-.nav-links a {
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    white-space: nowrap;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: #FFD700;
-    text-shadow: 0 0 15px #FFD700, 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-/* Dropdown - Matches index.html */
-.dropdown {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-}
-
-.dropdown .dropbtn {
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    background: none;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-}
-
-.dropdown:hover .dropbtn {
-    color: #FFD700;
-    text-shadow: 0 0 15px #FFD700, 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgba(0, 0, 0, 0.98);
-    backdrop-filter: blur(20px);
-    min-width: 200px;
-    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
-    z-index: 99999;
-    border: 2px solid rgba(0, 224, 255, 0.5);
-    border-radius: 10px;
-    padding: 15px 0;
-    margin-top: 10px;
-}
-
-.dropdown-content a {
-    color: #00ffff;
-    padding: 14px 20px;
-    text-decoration: none;
-    display: block;
-    font-size: 0.95rem;
-    text-align: left;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-    border-left: 3px solid transparent;
-    text-transform: none;
-    letter-spacing: 0;
-}
-
-.dropdown-content a:hover {
-    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
-    color: #fff;
-    padding-left: 30px;
-    text-shadow: 0 0 10px #00e0ff;
-    border-left-color: #00ffff;
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .dropdown:hover .dropdown-content {
-        display: block;
-        animation: dropdownFade 0.3s ease;
-    }
-}
-
-.dropdown.active .dropdown-content {
-    display: block;
-    animation: dropdownFade 0.3s ease;
-}
-
-@keyframes dropdownFade {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive nav */
-@media (max-width: 768px) {
-    .nav-links {
-        padding: 15px 10px;
-        gap: 8px;
-    }
-    .nav-links a, .dropdown .dropbtn {
-        font-size: 14px;
-        padding: 8px 12px;
-        letter-spacing: 1px;
-    }
-    .logo-container {
-        position: static;
-        text-align: center;
-        padding: 10px;
-        background: rgba(0, 0, 0, 0.9);
-    }
-}
 
 
 body {
@@ -232,9 +80,8 @@ body::after {
 }
 
 .main-nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(3,5,8,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-glow); z-index: 1000; padding: 0 20px; }
-.nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 70px; }
-.nav-logo { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 800; text-decoration: none; background: var(--gradient-cyber); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
+.nav-logo { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 800; text-decoration: none; background: var(--gradient-cyber); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
 .nav-links a.active { color: var(--neon-gold); background: rgba(255,204,0,0.1); }
 @media (max-width: 768px) {  }
@@ -420,8 +267,10 @@ footer a {
 </head>
 <body>
 
-<nav class="nav-links">
-
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
 <a href="blog-page9.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
@@ -430,7 +279,8 @@ footer a {
 <a href="news-page3.html">News</a>
 <div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page7.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 <div class="dropdown"><button class="dropbtn">Community</button><div class="dropdown-content"><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a><a href="contact.html">Contact</a></div></div>
-
+</div>
+</div>
 </nav>
 
 <nav class="main-nav">
@@ -461,8 +311,13 @@ footer a {
 <!-- Navigation -->
     
 
-  
-<div class="content-container">
+  <div class="page-wrap">
+    <div class="container outer-frame">
+      <header class="site-header">
+        <img class="logo" src="newlogo.png" alt="BetLegend logo">
+        <div class="sitename">BetLegend NHL</div>
+
+      
 <div style="text-align: center; margin: 30px auto 40px auto; padding: 25px 20px; max-width: 800px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%); border-radius: 15px; border: 2px solid rgba(255, 215, 0, 0.3); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
     <h2 style="color: #ffd700; font-size: 32px; margin: 0; font-weight: 700; text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);">
         Friday, November 21, 2025
