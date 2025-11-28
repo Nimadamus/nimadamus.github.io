@@ -57,19 +57,6 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 .hero h1 span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{color:var(--text-secondary);font-size:18px;max-width:600px;margin:0 auto}
 
-/* Date Navigation */
-.date-nav{max-width:1000px;margin:0 auto 40px;padding:0 24px}
-.date-nav-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
-.date-pills{display:flex;gap:10px;overflow-x:auto;padding:8px 0;scrollbar-width:none}
-.date-pills::-webkit-scrollbar{display:none}
-.date-pill{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:14px 20px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;color:var(--text-secondary);text-decoration:none;transition:all 0.3s ease;min-width:80px}
-.date-pill:hover{background:var(--bg-card-hover);border-color:var(--border-glow);transform:translateY(-2px);box-shadow:var(--shadow-glow)}
-.date-pill.active{background:linear-gradient(145deg,rgba(0,229,255,0.12),rgba(168,85,247,0.08));border-color:var(--accent-cyan);box-shadow:0 0 30px rgba(0,229,255,0.2)}
-.date-pill .day-name{font-size:10px;font-weight:700;text-transform:uppercase;opacity:0.6}
-.date-pill .day-num{font-size:24px;font-weight:700;font-family:'Space Grotesk',sans-serif;line-height:1.2}
-.date-pill .month{font-size:10px;opacity:0.6}
-.date-pill.active .day-name,.date-pill.active .month{color:var(--accent-cyan);opacity:1}
-.date-pill.active .day-num{color:var(--accent-gold)}
 
 /* Current Date Display */
 .current-date{text-align:center;margin-bottom:40px}
@@ -102,11 +89,11 @@ main{max-width:900px;margin:0 auto;padding:0 24px 80px}
 .game-card strong,.game-card b{color:var(--accent-cyan);font-weight:600}
 
 /* Pagination */
-.pagination{display:flex;justify-content:center;align-items:center;gap:12px;padding:40px 24px;margin-top:40px;border-top:1px solid var(--border-subtle)}
-.page-btn{padding:14px 24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:600;transition:all 0.3s ease}
-.page-btn:hover:not(.disabled){background:var(--bg-card-hover);border-color:var(--border-glow);color:var(--text-primary);transform:translateY(-2px);box-shadow:var(--shadow-glow)}
-.page-btn.current{background:linear-gradient(145deg,rgba(0,229,255,0.12),rgba(168,85,247,0.08));border-color:var(--accent-cyan);color:var(--text-primary)}
-.page-btn.disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
+.pagination{display:flex;justify-content:center;align-items:center;gap:24px;padding:50px 24px;margin-top:50px}
+.page-arrow{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border-subtle);border-radius:50%;color:var(--text-secondary);text-decoration:none;font-size:20px;transition:all 0.3s ease}
+.page-arrow:hover:not(.disabled){border-color:var(--accent-cyan);color:var(--accent-cyan);box-shadow:0 0 20px rgba(0,229,255,0.2)}
+.page-arrow.disabled{opacity:0.2;cursor:not-allowed;pointer-events:none}
+.page-info{color:var(--text-muted);font-size:14px;font-weight:500;letter-spacing:0.5px}
 
 /* Footer */
 footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle);background:rgba(5,7,10,0.5)}
@@ -149,15 +136,6 @@ footer a:hover{color:var(--accent-gold)}
 <p>20-Game Feast Week Slate - Expert Analysis & Predictions</p>
 </header>
 
-<div class="date-nav">
-<div class="date-nav-label">Select Date</div>
-<div class="date-pills">
-<a href="ncaab.html" class="date-pill active"><span class="day-name">Thu</span><span class="day-num">27</span><span class="month">Nov</span></a>
-<a href="ncaab-page2.html" class="date-pill"><span class="day-name">Wed</span><span class="day-num">26</span><span class="month">Nov</span></a>
-<a href="ncaab-page3.html" class="date-pill"><span class="day-name">Mon</span><span class="day-num">24</span><span class="month">Nov</span></a>
-<a href="ncaab-page4.html" class="date-pill"><span class="day-name">Tue</span><span class="day-num">18</span><span class="month">Nov</span></a>
-</div>
-</div>
 
 <div class="current-date"><h2>Thursday, November 27, 2025 - Thanksgiving Day</h2></div>
 
@@ -361,9 +339,9 @@ footer a:hover{color:var(--accent-gold)}
 </main>
 
 <nav class="pagination">
-<span class="page-btn disabled">← Newer</span>
-<span class="page-btn current">Page 1 of 3</span>
-<a href="ncaab-page2.html" class="page-btn">Older →</a>
+<span class="page-arrow disabled">←</span>
+<span class="page-info">Page 1 of 3</span>
+<a href="ncaab-page2.html" class="page-arrow">→</a>
 </nav>
 
 <footer>
