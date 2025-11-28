@@ -27,6 +27,179 @@
 --shadow-glow:0 0 40px rgba(0,229,255,0.15);
 --shadow-card:0 4px 24px rgba(0,0,0,0.4);
 }
+/* Logo Container - Matches index.html */
+.logo-container {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+}
+
+.logo-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.logo-container span {
+    color: #00ffff;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.8), 0 0 50px rgba(0, 255, 255, 0.6);
+}
+
+/* Navigation - Matches index.html */
+.nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 5% 18px 280px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 224, 255, 0.3);
+    z-index: 999;
+    flex-wrap: wrap;
+}
+
+.nav-links a, .dropdown {
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #FFD700;
+    text-shadow: 0 0 15px #FFD700, 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Dropdown - Matches index.html */
+.dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown .dropbtn {
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown:hover .dropbtn {
+    color: #FFD700;
+    text-shadow: 0 0 15px #FFD700, 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+    z-index: 99999;
+    border: 2px solid rgba(0, 224, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: #00ffff;
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    border-left: 3px solid transparent;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+    color: #fff;
+    padding-left: 30px;
+    text-shadow: 0 0 10px #00e0ff;
+    border-left-color: #00ffff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: dropdownFade 0.3s ease;
+    }
+}
+
+.dropdown.active .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive nav */
+@media (max-width: 768px) {
+    .nav-links {
+        padding: 15px 10px;
+        gap: 8px;
+    }
+    .nav-links a, .dropdown .dropbtn {
+        font-size: 14px;
+        padding: 8px 12px;
+        letter-spacing: 1px;
+    }
+    .logo-container {
+        position: static;
+        text-align: center;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.9);
+    }
+}
+
+
 body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;line-height:1.8;font-size:16px;min-height:100vh}
 body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 20%,rgba(0,229,255,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(168,85,247,0.06) 0%,transparent 50%);pointer-events:none;z-index:-1}
 
@@ -35,17 +208,16 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 32px}
 .logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:-0.5px}
 .logo span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-links{display:flex;align-items:center;gap:8px}
+
 .nav-links>a{color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;padding:10px 18px;border-radius:8px;transition:all .25s ease}
 .nav-links>a:hover{color:var(--text-primary);background:rgba(255,255,255,0.05)}
-.dropdown{position:relative}
+
 .dropbtn{background:transparent;color:var(--text-secondary);border:none;font-size:14px;font-weight:500;padding:10px 18px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .25s ease;display:flex;align-items:center;gap:6px}
 .dropbtn::after{content:'';border:solid var(--text-muted);border-width:0 2px 2px 0;padding:3px;transform:rotate(45deg);margin-top:-3px;transition:transform .25s ease}
 .dropbtn:hover{color:var(--text-primary);background:rgba(255,255,255,0.05)}
-.dropdown-content{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-10px);background:rgba(15,20,30,0.95);backdrop-filter:blur(20px);border:1px solid var(--border-subtle);border-radius:12px;min-width:180px;padding:8px;z-index:1001;opacity:0;transition:all .25s ease;box-shadow:var(--shadow-card)}
-.dropdown-content a{display:block;padding:10px 16px;color:var(--text-secondary);font-size:13px;text-decoration:none;border-radius:8px;transition:all .2s ease}
-.dropdown-content a:hover{background:rgba(0,229,255,0.1);color:var(--accent-cyan)}
-.dropdown:hover .dropdown-content{display:block;opacity:1;transform:translateX(-50%) translateY(0)}
+
+
+.dropdown:hover 
 .dropdown:hover .dropbtn::after{transform:rotate(-135deg);margin-top:3px}
 
 .top-space{height:70px}
@@ -103,7 +275,7 @@ footer a:hover{color:var(--accent-gold)}
 /* Responsive */
 @media(max-width:768px){
 .nav-inner{padding:12px 16px}
-.nav-links{gap:4px}
+
 .nav-links>a,.dropbtn{padding:8px 12px;font-size:13px}
 .hero{padding:40px 16px 30px}
 .hero p{font-size:16px}
@@ -120,10 +292,8 @@ main{padding:0 16px 40px}
 </head>
 <body>
 
-<nav class="nav-container">
-<div class="nav-inner">
-<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
-<div class="nav-links">
+<nav class="nav-links">
+
 <a href="blog-page9.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
@@ -132,8 +302,7 @@ main{padding:0 16px 40px}
 <a href="news-page3.html">News</a>
 <div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page7.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 <div class="dropdown"><button class="dropbtn">Community</button><div class="dropdown-content"><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a><a href="contact.html">Contact</a></div></div>
-</div>
-</div>
+
 </nav>
 
 <div class="top-space"></div>
