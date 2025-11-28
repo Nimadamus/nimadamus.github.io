@@ -478,6 +478,24 @@
 .page-nav a:hover { background: rgba(0, 217, 255, 0.25); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
 .page-nav .disabled { opacity: 0.35; pointer-events: none; }
 .page-nav .current { background: rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.6); color: #ffd700; }
+/* Premium Navigation */
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 24px;background:rgba(5,7,10,0.95);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:auto}
+.logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none}
+.logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,229,255,0.6)}
+.nav-links{display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap}
+.nav-link{color:#94a3b8;text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;transition:all 0.25s ease}
+.nav-link:hover{color:#ffd54f;text-shadow:0 0 8px #ffd54f}
+.dropdown{position:relative}
+.dropbtn{background:none;border:none;color:#94a3b8;font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;cursor:pointer;font-family:inherit;transition:all 0.25s ease;display:flex;align-items:center;gap:6px}
+.dropbtn:hover{color:#ffd54f;text-shadow:0 0 8px #ffd54f}
+.dropbtn::after{content:'';width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform 0.25s ease}
+.dropdown:hover .dropbtn::after{transform:rotate(180deg)}
+.dropdown-content{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) scale(0.95);opacity:0;visibility:hidden;background:rgba(15,23,42,0.98);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:8px;min-width:200px;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:all 0.25s ease;z-index:1001}
+.dropdown:hover .dropdown-content{transform:translateX(-50%) scale(1);opacity:1;visibility:visible}
+.dropdown-content a{display:block;padding:12px 16px;color:#94a3b8;text-decoration:none;font-size:14px;border-radius:10px;transition:all 0.2s ease}
+.dropdown-content a:hover{color:#00e5ff;background:rgba(0,229,255,0.08)}
 </style><meta name="keywords" content="college football picks, NCAAF predictions, college football betting, NCAAF spreads"/>
 <link href="https://www.betlegendpicks.com/ncaaf.html" rel="canonical"/>
 <meta property="og:title" content="NCAAF Week 1 Picks - BetLegend Expert College Football Predictions">
@@ -567,64 +585,21 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- Navigation -->
-    <nav class="nav-links">
-        <a href="blog-page9.html">PICKS & ANALYSIS</a>
-
-        <div class="dropdown">
-            <button class="dropbtn">Records</button>
-            <div class="dropdown-content">
-                <a href="records.html">DETAILED BREAKDOWN</a>
-                <a href="betlegend-verified-records.html">MLB</a>
-                <a href="nfl-records.html">NFL</a>
-                <a href="ncaaf-records.html">NCAAF</a>
-                <a href="nhl-records.html">NHL</a>
-                <a href="nba-records.html">NBA</a>
-                <a href="soccer-records.html">Soccer</a>
-            </div>
-        </div>
-
-        <div class="dropdown">
-            <button class="dropbtn">Sports</button>
-            <div class="dropdown-content">
-                <a href="nfl.html">NFL</a>
-                <a href="mlb-page2.html">MLB</a>
-                <a href="ncaaf-page2.html">NCAAF</a>
-                <a href="nba.html">NBA</a>
-                <a href="ncaab.html">NCAAB</a>
-                <a href="nhl.html">NHL</a>
-                <a href="soccer.html">Soccer</a>
-            </div>
-        </div>
-
-        <div class="dropdown">
-            <button class="dropbtn">Resources</button>
-            <div class="dropdown-content">
-                <a href="live-odds.html">Live Odds</a>
-                <a href="howitworks.html">How It Works</a>
-                <a href="bankroll.html">Bankroll</a>
-                <a href="kelly-criterion.html">Kelly Criterion</a>
-                <a href="betting-calculators.html">Betting Calculators</a>
-                <a href="screenshots.html">Screenshots</a>
-                <a href="bestonlinesportsbook.html">Best Sportsbook</a>
-                <a href="betting-glossary.html">Betting Glossary</a>
-                <a href="betting-101.html">Betting 101</a>
-                <a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a>
-            </div>
-        </div>
-
-        <a href="proofofpicks.html">Proof</a>
-        <a href="news-page3.html">News</a>
-        <a href="featured-game-of-the-day-page7.html">Game of the Day</a>
-
-        <div class="dropdown">
-            <button class="dropbtn">Community</button>
-            <div class="dropdown-content">
-                <a href="https://twitter.com/BetLegend2025" target="_blank" rel="noopener">Twitter</a>
-                <a href="https://discord.gg/NbMc3wCV" target="_blank" rel="noopener">Discord</a>
-                <a href="contact.html">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
+<a href="blog-page9.html">Picks</a>
+<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a></div></div>
+<a href="proofofpicks.html">Proof</a>
+<a href="news-page3.html">News</a>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page7.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+<div class="dropdown"><button class="dropbtn">Community</button><div class="dropdown-content"><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a><a href="contact.html">Contact</a></div></div>
+</div>
+</div>
+</nav>
 
 <div class="container">
 <a class="back-link" href="index.html" title="Home — Free NFL & MLB Picks">← Back to Home</a>
