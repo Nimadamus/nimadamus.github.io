@@ -2,240 +2,106 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>College Basketball Picks - Monday, November 24, 2025 | BetLegend</title>
 <meta name="description" content="NCAAB betting picks and analysis">
 <link rel="icon" href="https://www.betlegendpicks.com/newlogo.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0f;--bg2:#111118;--card:#16161f;--accent:#00d4ff;--gold:#f0b90b;--text:#fff;--text2:#a1a1aa;--muted:#71717a;--border:rgba(255,255,255,0.06)}
-/* Logo Container - Matches index.html */
-.logo-container {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1000;
+:root{
+  --bg-color:#01000f;
+  --text-color:#eaf8ff;
+  --glow-color:#00e0ff;
+  --neon-cyan:#00ffff;
+  --neon-gold:#FFD700;
+  --win-color:#39FF14;
+  --loss-color:#FF3131;
+  --font-primary:'Orbitron',sans-serif;
+  --font-secondary:'Poppins',sans-serif;
+  --bg-primary:#05070a;
+  --bg-secondary:#0a0d14;
+  --bg-card:rgba(15,20,30,0.8);
+  --bg-card-hover:rgba(20,28,45,0.9);
+  --accent-cyan:#00e5ff;
+  --accent-gold:#ffd54f;
+  --accent-purple:#a855f7;
+  --text-primary:#ffffff;
+  --text-secondary:#94a3b8;
+  --text-muted:#64748b;
+  --border-subtle:rgba(255,255,255,0.08);
+  --border-glow:rgba(0,229,255,0.3);
+  --gradient-card:linear-gradient(145deg,rgba(15,23,42,0.9),rgba(10,15,25,0.95));
+  --gradient-accent:linear-gradient(135deg,#00e5ff,#a855f7);
+  --shadow-card:0 4px 24px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-glow:0 0 40px rgba(0,229,255,0.15)
 }
+/* Premium Navigation - Index Style */
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,224,255,0.3)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;position:fixed;top:15px;left:15px;z-index:1001}
+.logo a{font-family:var(--font-primary);font-size:2.5rem;font-weight:900;color:#fff;text-decoration:none;text-transform:uppercase;text-shadow:0 0 10px rgba(255,255,255,0.8),0 0 20px rgba(255,255,255,0.4)}
+.logo a span{color:var(--neon-cyan);text-shadow:0 0 15px rgba(0,255,255,1),0 0 30px rgba(0,255,255,0.8),0 0 50px rgba(0,255,255,0.6)}
+.nav-links{display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap}
+.nav-link,.nav-links>a{font-family:var(--font-secondary);color:#ffffff;text-decoration:none;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;transition:all 0.3s ease;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.nav-link:hover,.nav-links>a:hover{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold),0 2px 8px rgba(0,0,0,0.8)}
+.dropdown{position:relative;display:inline-flex;align-items:center}
+.dropbtn{font-family:var(--font-secondary);background:none;border:none;color:#ffffff;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.dropbtn:hover,.dropdown:hover .dropbtn{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold),0 2px 8px rgba(0,0,0,0.8)}
+.dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(0,0,0,0.98);backdrop-filter:blur(20px);min-width:200px;box-shadow:0px 8px 30px rgba(0,224,255,0.4);z-index:99999;border:2px solid rgba(0,224,255,0.5);border-radius:10px;padding:15px 0;margin-top:10px}
+.dropdown-content a{color:var(--neon-cyan);padding:14px 20px;text-decoration:none;display:block;font-size:0.95rem;text-align:left;transition:all 0.3s ease;text-shadow:0 0 5px rgba(0,255,255,0.5);border-left:3px solid transparent;text-transform:none;letter-spacing:0}
+.dropdown-content a:hover{background:linear-gradient(90deg,rgba(0,224,255,0.3),rgba(0,224,255,0.1));color:#fff;padding-left:30px;text-shadow:0 0 10px var(--glow-color);border-left-color:var(--neon-cyan)}
+@media(hover:hover) and (pointer:fine){.dropdown:hover .dropdown-content{display:block;animation:dropdownFade 0.3s ease}}
+.dropdown.active .dropdown-content{display:block;animation:dropdownFade 0.3s ease}
+@keyframes dropdownFade{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 
-.logo-container a {
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Poppins',system-ui,-apple-system,sans-serif;line-height:1.7;font-size:16px;min-height:100vh;padding-top:80px;background-image:radial-gradient(ellipse at top,rgba(0,229,255,0.03) 0%,transparent 50%),radial-gradient(ellipse at bottom right,rgba(168,85,247,0.03) 0%,transparent 50%)}
+
+/* Content Styles */
+.container{max-width:1140px;margin:0 auto;padding:20px}
+.blog-post{background:var(--gradient-card);border:1px solid var(--border-subtle);border-left:5px solid var(--accent-gold);padding:40px;border-radius:16px;margin:0 auto 70px auto}
+.blog-post h2{font-size:28px;color:var(--accent-gold);text-align:center;margin:0 0 8px 0}
+.blog-post h3{color:var(--accent-gold);text-align:center;margin:30px 0 18px 0}
+.post-time{font-size:14px;color:var(--accent-cyan);text-align:center;margin:0 auto 30px auto;padding:8px 20px;background:rgba(0,217,255,0.1);border-radius:20px;width:fit-content}
+.blog-post p{font-size:16px;line-height:1.8;margin:0 0 18px 0;color:var(--text-secondary)}
+.blog-post strong,.blog-post b{color:var(--accent-cyan)}
+
+/* Pagination */
+.page-nav{display:flex;justify-content:center;gap:15px;padding:30px 20px}
+.page-nav a,.page-nav span{padding:12px 24px;background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-secondary);text-decoration:none}
+.page-nav a:hover{border-color:var(--accent-cyan);color:var(--accent-cyan)}
+.page-nav .disabled{opacity:0.3;pointer-events:none}
+.nav-arrow{padding:12px 24px;background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-secondary);text-decoration:none}
+.nav-arrow:hover{border-color:var(--accent-cyan);color:var(--accent-cyan)}
+.page-indicator{color:var(--text-muted);padding:12px}
+
+/* Footer */
+footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
+footer a{color:var(--accent-cyan);text-decoration:none}
+footer a:hover{color:var(--accent-gold)}
+
+/* Date Header */
+.date-header{text-align:center;margin:30px auto 40px auto;padding:25px 20px;max-width:800px;background:linear-gradient(135deg,rgba(0,217,255,0.08) 0%,rgba(255,215,0,0.05) 100%);border-radius:15px;border:2px solid rgba(255,215,0,0.3)}
+.date-header h2{color:var(--accent-gold);font-size:32px;margin:0}
+.date-header p{color:var(--accent-cyan);margin-top:10px}
+
+/* Responsive */
+@media(max-width:768px){
+  .blog-post{padding:24px}
+  .blog-post h2{font-size:22px}
+  .container{padding:15px}
 }
-
-.logo-container span {
-    color: #00ffff;
-    text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.8), 0 0 50px rgba(0, 255, 255, 0.6);
-}
-
-/* Navigation - Matches index.html */
-.nav-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    padding: 18px 5% 18px 280px;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 224, 255, 0.3);
-    z-index: 999;
-    flex-wrap: wrap;
-}
-
-.nav-links a, .dropdown {
-    display: inline-flex;
-    align-items: center;
-}
-
-.nav-links a {
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    white-space: nowrap;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: #FFD700;
-    text-shadow: 0 0 15px #FFD700, 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-/* Dropdown - Matches index.html */
-.dropdown {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-}
-
-.dropdown .dropbtn {
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    background: none;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-}
-
-.dropdown:hover .dropbtn {
-    color: #FFD700;
-    text-shadow: 0 0 15px #FFD700, 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgba(0, 0, 0, 0.98);
-    backdrop-filter: blur(20px);
-    min-width: 200px;
-    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
-    z-index: 99999;
-    border: 2px solid rgba(0, 224, 255, 0.5);
-    border-radius: 10px;
-    padding: 15px 0;
-    margin-top: 10px;
-}
-
-.dropdown-content a {
-    color: #00ffff;
-    padding: 14px 20px;
-    text-decoration: none;
-    display: block;
-    font-size: 0.95rem;
-    text-align: left;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-    border-left: 3px solid transparent;
-    text-transform: none;
-    letter-spacing: 0;
-}
-
-.dropdown-content a:hover {
-    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
-    color: #fff;
-    padding-left: 30px;
-    text-shadow: 0 0 10px #00e0ff;
-    border-left-color: #00ffff;
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .dropdown:hover .dropdown-content {
-        display: block;
-        animation: dropdownFade 0.3s ease;
-    }
-}
-
-.dropdown.active .dropdown-content {
-    display: block;
-    animation: dropdownFade 0.3s ease;
-}
-
-@keyframes dropdownFade {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive nav */
-@media (max-width: 768px) {
-    .nav-links {
-        padding: 15px 10px;
-        gap: 8px;
-    }
-    .nav-links a, .dropdown .dropbtn {
-        font-size: 14px;
-        padding: 8px 12px;
-        letter-spacing: 1px;
-    }
-    .logo-container {
-        position: static;
-        text-align: center;
-        padding: 10px;
-        background: rgba(0, 0, 0, 0.9);
-    }
-}
-
-
-body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.7}
-.top-space{height:70px}
-header{text-align:center;padding:48px 20px 36px;border-bottom:1px solid var(--border)}
-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,4.5vw,38px);font-weight:700;margin-bottom:4px}
-header h1 span{background:linear-gradient(90deg,var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-header p{color:var(--text2);font-size:14px}
-.today-box{text-align:center;padding:14px}
-.today-box h2{font-family:'Space Grotesk',sans-serif;font-size:20px;color:var(--gold)}
-main{max-width:820px;margin:0 auto;padding:0 16px 50px}
-.game{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;transition:.15s}
-.game:hover{border-color:rgba(0,212,255,.25);transform:translateY(-1px)}
-.game h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:4px;color:var(--text)}
-.game .info{font-size:11px;color:var(--muted);margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.game p{color:var(--text2);font-size:14px;margin-bottom:8px}
-.game strong,.game b{color:var(--accent)}
-.teams{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
-.teams img{width:44px;height:44px;object-fit:contain}
-.teams .vs{color:var(--muted);font-size:12px;font-weight:600}
-.pick-box{background:linear-gradient(135deg,rgba(0,212,255,.06),rgba(240,185,11,.06));border:1px solid rgba(240,185,11,.25);border-radius:8px;padding:14px;margin-top:14px;text-align:center}
-.pick-box .lbl{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
-.pick-box .val{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--gold)}
-nav.pg{display:flex;justify-content:center;align-items:center;gap:24px;padding:50px 16px;margin-top:40px}
-.page-arrow{width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:50%;color:var(--text2);text-decoration:none;font-size:18px;transition:.2s}
-.page-arrow:hover{border-color:var(--accent);color:var(--accent)}
-.page-arrow.disabled{opacity:.2;pointer-events:none}
-.page-info{color:var(--muted);font-size:14px}
-footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:11px;border-top:1px solid var(--border)}
-footer a{color:var(--accent);text-decoration:none}
-@media(max-width:600px){header{padding:36px 16px 28px}.game{padding:18px}}
-/* Premium Navigation */
-.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 24px;background:rgba(5,7,10,0.95);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(255,255,255,0.08)}
-.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px}
-.logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:auto}
-.logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none}
-.logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,229,255,0.6)}
-
-.nav-link{color:#94a3b8;text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;transition:all 0.25s ease}
-.nav-link:hover{color:#ffd54f;text-shadow:0 0 8px #ffd54f}
-
-.dropbtn{background:none;border:none;color:#94a3b8;font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;cursor:pointer;font-family:inherit;transition:all 0.25s ease;display:flex;align-items:center;gap:6px}
-.dropbtn:hover{color:#ffd54f;text-shadow:0 0 8px #ffd54f}
-.dropbtn::after{content:'';width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform 0.25s ease}
-.dropdown:hover .dropbtn::after{transform:rotate(180deg)}
-
-.dropdown:hover 
-
-
 </style>
 </head>
 <body>
 
-<nav class="nav-links">
-
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
 <a href="blog-page9.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
@@ -244,13 +110,20 @@ footer a{color:var(--accent);text-decoration:none}
 <a href="news-page3.html">News</a>
 <div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page7.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 <div class="dropdown"><button class="dropbtn">Community</button><div class="dropdown-content"><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a><a href="contact.html">Contact</a></div></div>
-
+</div>
+</div>
 </nav>
 
-<div class="top-space"></div>
-<header><h1>College Basketball <span>Analysis</span></h1><p>Expert analysis & predictions</p></header>
-<div class="today-box"><h2>Monday, November 24, 2025</h2></div><main><div class="game"><div class="teams"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/333.png" alt=""><span class="vs">VS</span><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2250.png" alt=""></div><h3>#11 Alabama Crimson Tide vs #13 Gonzaga Bulldogs</h3></div><div class="game"><h3>Tennessee vs Rutgers | 1:00 PM ET | TNT</h3><p>The Vols bring their SEC firepower to Vegas against a Big Ten opponent looking to make noise in non-conference play. Tennessee's athleticism and defensive intensity should overwhelm Rutgers in this early tipoff.</p></div><div class="game"><h3>Baylor vs Creighton | 2:00 PM ET | truTV</h3><p>Two programs with Final Four aspirations clash in an early afternoon showcase. Baylor's physicality meets Creightons shooting prowess in what should be a back-and-forth affair.</p></div><div class="game"><h3>Kansas vs Notre Dame | 3:30 PM ET | TNT</h3><p>Bill Selfs Jayhawks look to establish early season momentum against a Notre Dame team seeking statement wins. Kansas traditionally dominates early season showcases with their depth and execution.</p></div><div class="game"><h3>St. Johns vs Iowa State | 4:30 PM ET | truTV</h3><p>Two tournament-caliber teams battle in what could be a preview of a March matchup. Iowa State brings their Big 12 toughness against St. Johns Big East grit.</p></div><div class="game"><h3>Houston vs Syracuse | 6:00 PM ET | TNT</h3><p>Houstons suffocating defense faces Syracuses zone in a chess match of defensive philosophies. The Cougars disciplined approach should control tempo and limit Syracuse's transition opportunities.</p></div><div class="game"><h3>Oregon vs Auburn | 8:00 PM ET | truTV</h3><p>Pac-12 meets SEC in an intriguing cross-conference battle. Auburn brings their trademark athleticism while Oregon counters with precise execution and three-point shooting.</p></div><div class="game"><h3>Michigan vs San Diego State | 10:30 PM ET | truTV</h3><p>The late-night window features Michigan trying to establish their identity against a tough Mountain West opponent. San Diego States defensive reputation makes them a formidable foe.</p></div><div class="game"><h3>Maryland vs UNLV | 12:00 AM ET | TNT</h3><p>The midnight slot features Maryland facing the hometown Runnin Rebels. UNLV will feed off local energy in this late-night showcase.</p></div><div class="game"><h3>Game Analysis</h3></div></main><nav class="page-nav">
-            <a href="ncaab-page2.html" class="nav-arrow newer" title="Newer">&#8592; Newer</a>
-            <span class="page-indicator">Page 2 of 4</span>
-            <a href="ncaab-page4.html" class="nav-arrow older" title="Older">Older &#8594;</a>
-        </nav><footer>&copy; 2025 BetLegend <a href="index.html">Home</a></footer></body></html>
+<div class="container">
+<h1 style="text-align:center; color:#ffd700; font-size:40px; margin-bottom:30px;">BetLegend NCAAB Picks</h1>
+
+
+<nav class="page-nav">
+<a href="ncaab.html" class="nav-arrow">&#8592; Newer</a>
+<span class="page-indicator">Page 2 of 4</span>
+<a href="ncaab-page3.html" class="nav-arrow">Older &#8594;</a>
+</nav>
+</div>
+<footer><p>&copy; 2025 BetLegend | <a href="index.html">Home</a> | <a href="ncaab-records.html">NCAAB Records</a></p></footer>
+</body>
+</html>

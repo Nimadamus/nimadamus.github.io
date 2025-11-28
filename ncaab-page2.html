@@ -2,14 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>College Basketball Picks - Thanksgiving Day, November 27, 2025 | BetLegend</title>
 <meta name="description" content="NCAAB Thanksgiving betting picks and analysis. Expert predictions for Duke vs Arkansas, UNC vs Michigan State, and all 20 games on the holiday slate.">
 <link rel="icon" href="https://www.betlegendpicks.com/newlogo.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
+  --bg-color:#01000f;
+  --text-color:#eaf8ff;
+  --glow-color:#00e0ff;
+  --neon-cyan:#00ffff;
+  --neon-gold:#FFD700;
+  --win-color:#39FF14;
+  --loss-color:#FF3131;
+  --font-primary:'Orbitron',sans-serif;
+  --font-secondary:'Poppins',sans-serif;
   --bg-primary:#05070a;
   --bg-secondary:#0a0d14;
   --bg-card:rgba(15,20,30,0.8);
@@ -25,269 +36,72 @@
   --gradient-card:linear-gradient(145deg,rgba(15,23,42,0.9),rgba(10,15,25,0.95));
   --gradient-accent:linear-gradient(135deg,#00e5ff,#a855f7);
   --shadow-card:0 4px 24px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.05);
-  --shadow-glow:0 0 40px rgba(0,229,255,0.15);
+  --shadow-glow:0 0 40px rgba(0,229,255,0.15)
 }
-/* Logo Container - Matches index.html */
-.logo-container {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1000;
-}
-
-.logo-container a {
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
-}
-
-.logo-container span {
-    color: #00ffff;
-    text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.8), 0 0 50px rgba(0, 255, 255, 0.6);
-}
-
-/* Navigation - Matches index.html */
-.nav-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    padding: 18px 5% 18px 280px;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 224, 255, 0.3);
-    z-index: 999;
-    flex-wrap: wrap;
-}
-
-.nav-links a, .dropdown {
-    display: inline-flex;
-    align-items: center;
-}
-
-.nav-links a {
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    white-space: nowrap;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: #FFD700;
-    text-shadow: 0 0 15px #FFD700, 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-/* Dropdown - Matches index.html */
-.dropdown {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-}
-
-.dropdown .dropbtn {
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    background: none;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-}
-
-.dropdown:hover .dropbtn {
-    color: #FFD700;
-    text-shadow: 0 0 15px #FFD700, 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgba(0, 0, 0, 0.98);
-    backdrop-filter: blur(20px);
-    min-width: 200px;
-    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
-    z-index: 99999;
-    border: 2px solid rgba(0, 224, 255, 0.5);
-    border-radius: 10px;
-    padding: 15px 0;
-    margin-top: 10px;
-}
-
-.dropdown-content a {
-    color: #00ffff;
-    padding: 14px 20px;
-    text-decoration: none;
-    display: block;
-    font-size: 0.95rem;
-    text-align: left;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-    border-left: 3px solid transparent;
-    text-transform: none;
-    letter-spacing: 0;
-}
-
-.dropdown-content a:hover {
-    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
-    color: #fff;
-    padding-left: 30px;
-    text-shadow: 0 0 10px #00e0ff;
-    border-left-color: #00ffff;
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .dropdown:hover .dropdown-content {
-        display: block;
-        animation: dropdownFade 0.3s ease;
-    }
-}
-
-.dropdown.active .dropdown-content {
-    display: block;
-    animation: dropdownFade 0.3s ease;
-}
-
-@keyframes dropdownFade {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive nav */
-@media (max-width: 768px) {
-    .nav-links {
-        padding: 15px 10px;
-        gap: 8px;
-    }
-    .nav-links a, .dropdown .dropbtn {
-        font-size: 14px;
-        padding: 8px 12px;
-        letter-spacing: 1px;
-    }
-    .logo-container {
-        position: static;
-        text-align: center;
-        padding: 10px;
-        background: rgba(0, 0, 0, 0.9);
-    }
-}
-
+/* Premium Navigation - Index Style */
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,224,255,0.3)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;position:fixed;top:15px;left:15px;z-index:1001}
+.logo a{font-family:var(--font-primary);font-size:2.5rem;font-weight:900;color:#fff;text-decoration:none;text-transform:uppercase;text-shadow:0 0 10px rgba(255,255,255,0.8),0 0 20px rgba(255,255,255,0.4)}
+.logo a span{color:var(--neon-cyan);text-shadow:0 0 15px rgba(0,255,255,1),0 0 30px rgba(0,255,255,0.8),0 0 50px rgba(0,255,255,0.6)}
+.nav-links{display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap}
+.nav-link,.nav-links>a{font-family:var(--font-secondary);color:#ffffff;text-decoration:none;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;transition:all 0.3s ease;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.nav-link:hover,.nav-links>a:hover{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold),0 2px 8px rgba(0,0,0,0.8)}
+.dropdown{position:relative;display:inline-flex;align-items:center}
+.dropbtn{font-family:var(--font-secondary);background:none;border:none;color:#ffffff;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.dropbtn:hover,.dropdown:hover .dropbtn{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold),0 2px 8px rgba(0,0,0,0.8)}
+.dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(0,0,0,0.98);backdrop-filter:blur(20px);min-width:200px;box-shadow:0px 8px 30px rgba(0,224,255,0.4);z-index:99999;border:2px solid rgba(0,224,255,0.5);border-radius:10px;padding:15px 0;margin-top:10px}
+.dropdown-content a{color:var(--neon-cyan);padding:14px 20px;text-decoration:none;display:block;font-size:0.95rem;text-align:left;transition:all 0.3s ease;text-shadow:0 0 5px rgba(0,255,255,0.5);border-left:3px solid transparent;text-transform:none;letter-spacing:0}
+.dropdown-content a:hover{background:linear-gradient(90deg,rgba(0,224,255,0.3),rgba(0,224,255,0.1));color:#fff;padding-left:30px;text-shadow:0 0 10px var(--glow-color);border-left-color:var(--neon-cyan)}
+@media(hover:hover) and (pointer:fine){.dropdown:hover .dropdown-content{display:block;animation:dropdownFade 0.3s ease}}
+.dropdown.active .dropdown-content{display:block;animation:dropdownFade 0.3s ease}
+@keyframes dropdownFade{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 
 html{scroll-behavior:smooth}
-body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.7;font-size:16px;min-height:100vh;background-image:radial-gradient(ellipse at top,rgba(0,229,255,0.03) 0%,transparent 50%),radial-gradient(ellipse at bottom right,rgba(168,85,247,0.03) 0%,transparent 50%)}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Poppins',system-ui,-apple-system,sans-serif;line-height:1.7;font-size:16px;min-height:100vh;padding-top:80px;background-image:radial-gradient(ellipse at top,rgba(0,229,255,0.03) 0%,transparent 50%),radial-gradient(ellipse at bottom right,rgba(168,85,247,0.03) 0%,transparent 50%)}
 
-/* Premium Navigation */
-.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 24px;background:rgba(5,7,10,0.95);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border-subtle)}
-.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px}
-.logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:auto}
-.logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none}
-.logo a span{color:var(--accent-cyan);text-shadow:0 0 15px rgba(0,229,255,0.6)}
-
-.nav-link{color:var(--text-secondary);text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;transition:all 0.25s ease}
-.nav-link:hover{color:var(--accent-gold);text-shadow:0 0 8px var(--accent-gold)}
-
-.dropbtn{background:none;border:none;color:var(--text-secondary);font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;cursor:pointer;font-family:inherit;transition:all 0.25s ease;display:flex;align-items:center;gap:6px}
-.dropbtn:hover{color:var(--accent-gold);text-shadow:0 0 8px var(--accent-gold)}
-.dropbtn::after{content:'';width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform 0.25s ease}
-.dropdown:hover .dropbtn::after{transform:rotate(180deg)}
-
-.dropdown:hover 
-
-
-/* Hero Header */
-.hero{padding:120px 24px 60px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,229,255,0.08) 0%,transparent 70%);pointer-events:none}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2);padding:8px 16px;border-radius:50px;font-size:12px;font-weight:600;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
-.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,6vw,56px);font-weight:700;margin-bottom:12px;letter-spacing:-1px}
-.hero h1 span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{color:var(--text-secondary);font-size:18px;max-width:600px;margin:0 auto}
-
-
-/* Current Date Display */
-.current-date{text-align:center;margin-bottom:40px}
-.current-date h2{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:600;color:var(--accent-gold)}
-
-/* Main Content */
-main{max-width:900px;margin:0 auto;padding:0 24px 80px}
-
-/* Game Cards */
-.game-card{background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:20px;padding:32px;margin-bottom:24px;transition:all 0.4s ease;position:relative;overflow:hidden}
-.game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3),transparent);opacity:0;transition:opacity 0.4s ease}
-.game-card:hover{border-color:var(--border-glow);transform:translateY(-4px);box-shadow:var(--shadow-card),var(--shadow-glow)}
-.game-card:hover::before{opacity:1}
-
-/* Team Display */
-.teams-display{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:16px}
-.team-logo{width:60px;height:60px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));transition:transform 0.3s ease}
-.game-card:hover .team-logo{transform:scale(1.08)}
-.vs-badge{color:var(--text-muted);font-size:14px;font-weight:700;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px}
-
-/* Game Info */
-.game-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;margin-bottom:8px;color:var(--text-primary)}
-.game-meta{font-size:13px;color:var(--text-muted);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;gap:8px}
-.game-meta span{background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}
-
-/* Content Sections */
-.section-title{color:var(--accent-gold);font-weight:700;font-size:16px;margin:24px 0 12px;display:flex;align-items:center;gap:10px}
-.section-title::before{content:'';width:4px;height:20px;background:var(--gradient-accent);border-radius:2px}
-.game-card p{color:var(--text-secondary);font-size:16px;margin-bottom:12px;line-height:1.8}
-.game-card strong,.game-card b{color:var(--accent-cyan);font-weight:600}
+/* Content Styles */
+.container{max-width:1140px;margin:0 auto;padding:20px}
+.blog-post{background:var(--gradient-card);border:1px solid var(--border-subtle);border-left:5px solid var(--accent-gold);padding:40px;border-radius:16px;margin:0 auto 70px auto}
+.blog-post h2{font-size:28px;color:var(--accent-gold);text-align:center;margin:0 0 8px 0}
+.blog-post h3{color:var(--accent-gold);text-align:center;margin:30px 0 18px 0}
+.post-time{font-size:14px;color:var(--accent-cyan);text-align:center;margin:0 auto 30px auto;padding:8px 20px;background:rgba(0,217,255,0.1);border-radius:20px;width:fit-content}
+.blog-post p{font-size:16px;line-height:1.8;margin:0 0 18px 0;color:var(--text-secondary)}
+.blog-post strong,.blog-post b{color:var(--accent-cyan)}
 
 /* Pagination */
-.pagination{display:flex;justify-content:center;align-items:center;gap:24px;padding:50px 24px;margin-top:50px}
-.page-arrow{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border-subtle);border-radius:50%;color:var(--text-secondary);text-decoration:none;font-size:20px;transition:all 0.3s ease}
-.page-arrow:hover:not(.disabled){border-color:var(--accent-cyan);color:var(--accent-cyan);box-shadow:0 0 20px rgba(0,229,255,0.2)}
-.page-arrow.disabled{opacity:0.2;cursor:not-allowed;pointer-events:none}
-.page-info{color:var(--text-muted);font-size:14px;font-weight:500;letter-spacing:0.5px}
+.page-nav{display:flex;justify-content:center;gap:15px;padding:30px 20px}
+.page-nav a,.page-nav span{padding:12px 24px;background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-secondary);text-decoration:none}
+.page-nav a:hover{border-color:var(--accent-cyan);color:var(--accent-cyan)}
+.page-nav .disabled{opacity:0.3;pointer-events:none}
+.nav-arrow{padding:12px 24px;background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-secondary);text-decoration:none}
+.nav-arrow:hover{border-color:var(--accent-cyan);color:var(--accent-cyan)}
+.page-indicator{color:var(--text-muted);padding:12px}
 
 /* Footer */
-footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle);background:rgba(5,7,10,0.5)}
-footer a{color:var(--accent-cyan);text-decoration:none;transition:color 0.2s}
+footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
+footer a{color:var(--accent-cyan);text-decoration:none}
 footer a:hover{color:var(--accent-gold)}
+
+/* Date Header */
+.date-header{text-align:center;margin:30px auto 40px auto;padding:25px 20px;max-width:800px;background:linear-gradient(135deg,rgba(0,217,255,0.08) 0%,rgba(255,215,0,0.05) 100%);border-radius:15px;border:2px solid rgba(255,215,0,0.3)}
+.date-header h2{color:var(--accent-gold);font-size:32px;margin:0}
+.date-header p{color:var(--accent-cyan);margin-top:10px}
 
 /* Responsive */
 @media(max-width:768px){
-  
-  .hero{padding:100px 20px 40px}
-  .hero h1{font-size:32px}
-  .game-card{padding:24px}
-  .teams-display{gap:12px}
-  .team-logo{width:48px;height:48px}
-  .game-title{font-size:18px}
+  .blog-post{padding:24px}
+  .blog-post h2{font-size:22px}
+  .container{padding:15px}
 }
 </style>
 </head>
 <body>
 
-<nav class="nav-links">
-
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
 <a href="blog-page9.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
@@ -296,226 +110,20 @@ footer a:hover{color:var(--accent-gold)}
 <a href="news-page3.html">News</a>
 <div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page7.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 <div class="dropdown"><button class="dropbtn">Community</button><div class="dropdown-content"><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a><a href="contact.html">Contact</a></div></div>
-
+</div>
+</div>
 </nav>
 
-<header class="hero">
-<div class="hero-badge">Thanksgiving Day</div>
-<h1>College Basketball <span>Analysis</span></h1>
-<p>20-Game Feast Week Slate - Expert Analysis & Predictions</p>
-</header>
+<div class="container">
+<h1 style="text-align:center; color:#ffd700; font-size:40px; margin-bottom:30px;">BetLegend NCAAB Picks</h1>
 
-
-<div class="current-date"><h2>Thursday, November 27, 2025 - Thanksgiving Day</h2></div>
-
-<main>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/150.png" alt="Duke" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/8.png" alt="Arkansas" class="team-logo">
-</div>
-<h3 class="game-title">#4 Duke Blue Devils vs #22 Arkansas Razorbacks</h3>
-<div class="game-meta">
-<span>CBS Sports Classic</span>
-<span>8:00 PM ET</span>
-<span>CBS</span>
-<span>United Center, Chicago</span>
-<span>Duke -10.5</span>
-<span>O/U 157.5</span>
-</div>
-<p>This is the marquee game of Thanksgiving and one of the biggest nonconference matchups of the entire college basketball season. The fourth-ranked Duke Blue Devils bring a perfect 7-0 record into the United Center to face the 22nd-ranked Arkansas Razorbacks, who are 5-1 and winners of four straight. This is primetime college hoops on CBS, and both teams are loaded with talent.</p>
-<h4 class="section-title">Duke's Dominant Start</h4>
-<p>The Blue Devils have been absolutely suffocating opponents this season. Duke is scoring 93.6 points per game, ranking 16th nationally, while allowing just 57.0 points per contest, which ranks first in all of college basketball. Thats a plus-36.6 scoring differential through seven games. Cameron Boozer has been the centerpiece, averaging over 21 points per game and establishing himself as a potential top-five NBA draft pick. Duke is 5-2 ATS this season and has gone UNDER in six of their last seven games, a testament to that elite defense.</p>
-<h4 class="section-title">Arkansas Looking to Make a Statement</h4>
-<p>The Razorbacks would love nothing more than to knock off a blue blood on the national stage. Meleek Thomas leads Arkansas with 18.3 points per game and has been the offensive catalyst in their four-game winning streak. Arkansas is 3-3 ATS this season and has gone 7-3 ATS in their last ten games overall. The UNDER has hit in four of their last five, suggesting this could be a grind-it-out affair despite the offensive firepower on both sides.</p>
-<h4 class="section-title">The Betting Angle</h4>
-<p>Duke is laying 10.5 points against a ranked opponent, which is a massive spread in a neutral-site showcase game. The Blue Devils have the defense to keep this low-scoring, and Arkansas has shown they can hang with quality opponents. Duke is 6-1 ATS in their last seven games overall, but double-digit spreads against ranked teams always deserve scrutiny. The total of 157.5 feels high given both teams' recent UNDER trends.</p>
-</article>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/153.png" alt="UNC" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/127.png" alt="Michigan State" class="team-logo">
-</div>
-<h3 class="game-title">#16 North Carolina Tar Heels vs #11 Michigan State Spartans</h3>
-<div class="game-meta">
-<span>Fort Myers Tip-Off</span>
-<span>4:30 PM ET</span>
-<span>FOX</span>
-<span>Suncoast Credit Union Arena</span>
-<span>MSU -1.5</span>
-<span>O/U 150.5</span>
-</div>
-<p>Two of college basketballs most storied programs clash in what could be an NCAA Tournament preview. Both North Carolina and Michigan State enter this game with perfect 6-0 records, making this one of the best matchups of Feast Week. The Spartans are narrow 1.5-point favorites, and Michigan State won the last meeting between these teams 94-91 in overtime.</p>
-<h4 class="section-title">The UNC Injury Situation</h4>
-<p>North Carolina has a massive frontcourt anchored by superstar freshman Caleb Wilson, who is averaging 20.5 points and 10.3 rebounds per game. The 7-foot center Henri Veesar adds 16.3 points and 8.7 boards. However, the Tar Heels lost senior guard Seth Trimble to a broken arm a few weeks ago. Freshman Luka Bogavac has done a commendable job replacing him, but the backcourt depth has been significantly hurt. This is the first time this season UNC is listed as a moneyline underdog.</p>
-<h4 class="section-title">Michigan State's Balanced Attack</h4>
-<p>The Spartans already have marquee wins over Arkansas and Kentucky this month, proving they belong among the nations elite. Point guard Jeremy Fears leads the entire nation with 10.2 assists per game while also scoring in double figures. Hes one of four Spartans averaging double digits, with big man Jaxon Kohler putting up 15.3 points and 9.5 rebounds per game. Michigan State is 9-3 SU and ATS against ranked opponents since the start of last season.</p>
-<h4 class="section-title">The Betting Angle</h4>
-<p>This line screams coin flip. Michigan State has won three games ATS while failing to cover three times. UNC is 4-2 ATS and has the size advantage inside. The Spartans' experience against ranked opponents gives them an edge, but 1.5 points is essentially a pick'em. The total of 150.5 reflects two teams that can score but also defend. This game has overtime written all over it.</p>
-</article>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/252.png" alt="BYU" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2390.png" alt="Miami" class="team-logo">
-</div>
-<h3 class="game-title">#9 BYU Cougars vs Miami Hurricanes</h3>
-<div class="game-meta">
-<span>5:00 PM ET</span>
-<span>ESPN</span>
-<span>State Farm Field House, Kissimmee</span>
-<span>BYU -9.5</span>
-<span>O/U 164.5</span>
-</div>
-<p>The ninth-ranked BYU Cougars are heavy 9.5-point favorites against a Miami team thats been solid at 5-1 this season. BYU enters at 4-1 and looks to bounce back from their only loss while continuing to establish themselves as Big 12 contenders. This game features the highest projected total on the Thanksgiving slate at 164.5 points.</p>
-<h4 class="section-title">The Spread Question</h4>
-<p>BYU is 3-2 ATS this season and has a concerning trend: they are just 1-6 ATS in their last seven games played on Thursday when on the road. Miami, meanwhile, is 4-2 ATS and has covered in four of their last five games overall. The Hurricanes havent covered as a 9.5-point underdog yet this season, going 0-1 in that spot, but the sample size is small. The OVER has hit in 8 of Miamis last 11 games, supporting that lofty total.</p>
-</article>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/57.png" alt="Florida" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2628.png" alt="TCU" class="team-logo">
-</div>
-<h3 class="game-title">#10 Florida Gators vs TCU Horned Frogs</h3>
-<div class="game-meta">
-<span>3:00 PM ET</span>
-<span>FS1</span>
-<span>Jenny Craig Pavilion, San Diego</span>
-<span>Florida -13.5</span>
-<span>O/U 155.5</span>
-</div>
-<p>The tenth-ranked Florida Gators are massive 13.5-point favorites against TCU in San Diego. Florida enters at 4-1 with a plus-17.0 scoring differential, while TCU is 3-2 and looking to pull off the upset of the day. The Gators score 86.2 points per game while allowing 69.2, but this spread feels inflated.</p>
-<h4 class="section-title">The TCU Cover Spot</h4>
-<p>Here's the thing with this game: Florida is 0-3 ATS when favored by 13.5 points or more this season. Meanwhile, TCU is 5-0 ATS in their last five games played on Thursday when on the road, and the Horned Frogs have covered in their last five overall. Florida is just 1-4 ATS in their last five games. The UNDER has hit in 13 of TCUs last 20 games, and this total of 155.5 might be worth a look.</p>
-</article>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2509.png" alt="VCU" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/238.png" alt="Vanderbilt" class="team-logo">
-</div>
-<h3 class="game-title">VCU Rams vs #24 Vanderbilt Commodores</h3>
-<div class="game-meta">
-<span>Battle 4 Atlantis</span>
-<span>ESPN</span>
-<span>Imperial Arena, Nassau, Bahamas</span>
-<span>Vanderbilt favored</span>
-</div>
-<p>The Battle 4 Atlantis continues in the Bahamas with VCU taking on 24th-ranked Vanderbilt. The Commodores have been one of the surprises of the early season and look to add another quality win to their resume. VCU brings their trademark havoc defense to Nassau, making this an intriguing style matchup in paradise.</p>
-</article>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2483.png" alt="Saint Mary's" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/259.png" alt="Virginia Tech" class="team-logo">
-</div>
-<h3 class="game-title">Saint Mary's Gaels vs Virginia Tech Hokies</h3>
-<div class="game-meta">
-<span>Battle 4 Atlantis</span>
-<span>2:30 PM ET</span>
-<span>ESPN</span>
-<span>Imperial Arena, Nassau</span>
-<span>Saint Mary's -4.5</span>
-</div>
-<p>Saint Mary's continues their Bahamas trip as 4.5-point favorites against Virginia Tech. The Gaels are always a tough out in the nonconference season with their methodical, half-court offense and stingy defense. Virginia Tech is looking to build momentum heading into ACC play. The winner gets a boost to their at-large resume.</p>
-</article>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2250.png" alt="Oregon" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/156.png" alt="Creighton" class="team-logo">
-</div>
-<h3 class="game-title">Oregon Ducks vs Creighton Bluejays</h3>
-<div class="game-meta">
-<span>Players Era Festival</span>
-<span>2:00 PM ET</span>
-<span>truTV</span>
-<span>Michelob ULTRA Arena, Las Vegas</span>
-<span>Creighton -1.5</span>
-</div>
-<p>The Players Era Festival continues in Las Vegas with Oregon and Creighton meeting in what should be an entertaining Big East vs Big Ten matchup. Creighton is a narrow 1.5-point favorite in this game featuring two programs with NCAA Tournament aspirations. The Bluejays have the experience edge, but Oregon has the athleticism to make this interesting.</p>
-</article>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2439.png" alt="UNLV" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/164.png" alt="Rutgers" class="team-logo">
-</div>
-<h3 class="game-title">UNLV Rebels vs Rutgers Scarlet Knights</h3>
-<div class="game-meta">
-<span>Players Era Festival</span>
-<span>4:30 PM ET</span>
-<span>truTV</span>
-<span>Michelob ULTRA Arena, Las Vegas</span>
-<span>UNLV -4.5</span>
-</div>
-<p>UNLV is laying 4.5 points against Rutgers in Las Vegas. The Rebels have home-court advantage in their own city and look to continue building their Mountain West credentials. Rutgers is scrappy as always under Steve Pikiell but will need to play their best to hang with UNLV in this spot.</p>
-</article>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2250.png" alt="Georgetown" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2168.png" alt="Dayton" class="team-logo">
-</div>
-<h3 class="game-title">Georgetown Hoyas vs Dayton Flyers</h3>
-<div class="game-meta">
-<span>ESPN Events Invitational</span>
-<span>7:30 PM ET</span>
-<span>ESPN2</span>
-<span>State Farm Field House, Kissimmee</span>
-<span>Dayton -1.5</span>
-</div>
-<p>Georgetown and Dayton meet in the ESPN Events Invitational with Dayton as narrow 1.5-point favorites. The Flyers are always tough at neutral sites, and Georgetown is looking to find consistency under new leadership. This is essentially a pick'em game with two programs heading in different directions.</p>
-</article>
-
-<article class="game-card">
-<div class="teams-display">
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2515.png" alt="Providence" class="team-logo">
-<span class="vs-badge">VS</span>
-<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/275.png" alt="Wisconsin" class="team-logo">
-</div>
-<h3 class="game-title">Providence Friars vs Wisconsin Badgers</h3>
-<div class="game-meta">
-<span>5:30 PM ET</span>
-<span>FS1</span>
-<span>Jenny Craig Pavilion, San Diego</span>
-<span>Wisconsin -6.5</span>
-</div>
-<p>Providence heads to San Diego to face Wisconsin, who is laying 6.5 points. The Badgers play their trademark slow, methodical style that can frustrate opponents, while Providence brings Big East toughness. Wisconsin is favored to control tempo and grind out a victory in this nonconference clash.</p>
-</article>
-
-<article class="game-card">
-<h3 class="game-title">Additional Thanksgiving Games</h3>
-<div class="game-meta">
-<span>20 total games on the holiday slate</span>
-</div>
-<p>The full Thanksgiving slate features games from Fort Myers to San Diego to Las Vegas to the Bahamas. Other notable matchups include Richmond vs Furman, Charlotte vs Illinois State, San Francisco vs Colorado, Washington vs Nevada, South Florida vs Western Kentucky, Wichita State vs Colorado State, Santa Clara vs Saint Louis, Stanford vs Minnesota, and Oklahoma State vs Northwestern in the nightcap at 10:30 PM ET on BTN from the United Center.</p>
-<p>This is one of the best days on the college basketball calendar, with Feast Week tournaments wrapping up and teams jockeying for early-season positioning. Multiple ranked teams in action give bettors plenty of opportunities to find value across the board.</p>
-</article>
-
-</main>
 
 <nav class="page-nav">
-            <a href="ncaab.html" class="nav-arrow newer" title="Newer">&#8592; Newer</a>
-            <span class="page-indicator">Page 3 of 4</span>
-            <a href="ncaab-page3.html" class="nav-arrow older" title="Older">Older &#8594;</a>
-        </nav>
-
-<footer>
-<p>&copy; 2025 BetLegend &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="ncaab-records.html">NCAAB Records</a></p>
-</footer>
-
+<a href="ncaab-page2.html" class="nav-arrow">&#8592; Newer</a>
+<span class="page-indicator">Page 3 of 4</span>
+<a href="ncaab-page4.html" class="nav-arrow">Older &#8594;</a>
+</nav>
+</div>
+<footer><p>&copy; 2025 BetLegend | <a href="index.html">Home</a> | <a href="ncaab-records.html">NCAAB Records</a></p></footer>
 </body>
 </html>
