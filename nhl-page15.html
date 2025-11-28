@@ -1,380 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>NHL Betting Picks & Analysis | BetLegend</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://www.betlegendpicks.com/nhl-page14.html" rel="canonical"/>
-  <meta name="description" content="Expert NHL betting picks, puck lines, totals, and prop bets. Daily hockey predictions powered by advanced analytics and goaltending matchup analysis."/>
-  <meta name="keywords" content="NHL picks, NHL predictions, hockey betting, puck line, NHL totals, goalie matchups"/>
-  <meta property="og:title" content="NHL Betting Picks & Analysis | BetLegend"/>
-  <meta property="og:description" content="Expert NHL betting picks, puck lines, totals, and prop bets. Daily hockey predictions powered by advanced analytics and goaltending matchup analysis."/>
-  <meta property="og:url" content="https://www.betlegendpicks.com/nhl.html"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="BetLegend"/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHL Betting Picks & Analysis | BetLegend</title>
+<meta name="description" content="Expert NHL betting picks, puck lines, totals, and prop bets. Daily hockey predictions powered by advanced analytics and goaltending matchup analysis.">
+<link rel="icon" href="https://www.betlegendpicks.com/newlogo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-    --bg: linear-gradient(135deg, #0a0e17 0%, #141b2d 50%, #1a1f30 100%);
-    --card-bg: #1a2332;
-    --accent-cyan: #00d9ff;
-    --accent-gold: #ffd700;
-    --text: #e8edf5;
-    --text-muted: #8b96a8;
-    --border: rgba(0, 217, 255, 0.2);
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-primary:#05070a;
+--bg-secondary:#0a0d12;
+--bg-card:rgba(15,20,30,0.8);
+--bg-card-hover:rgba(20,28,45,0.9);
+--accent-cyan:#00e5ff;
+--accent-gold:#ffd54f;
+--accent-purple:#a855f7;
+--text-primary:#f0f4f8;
+--text-secondary:#94a3b8;
+--text-muted:#64748b;
+--border-subtle:rgba(255,255,255,0.06);
+--border-accent:rgba(0,229,255,0.3);
+--gradient-accent:linear-gradient(135deg,#00e5ff,#a855f7);
+--gradient-gold:linear-gradient(135deg,#ffd54f,#ff9800);
+--shadow-glow:0 0 40px rgba(0,229,255,0.15);
+--shadow-card:0 4px 24px rgba(0,0,0,0.4);
 }
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;line-height:1.8;font-size:16px;min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 20%,rgba(0,229,255,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(168,85,247,0.06) 0%,transparent 50%);pointer-events:none;z-index:-1}
 
-html, body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #0a0e17 0%, #141b2d 50%, #1a1f30 100%);
-    background-attachment: fixed;
-    color: var(--text);
-    font-family: 'Poppins', sans-serif;
-    padding-top: 80px;
-    line-height: 1.8;
-}
-
-.page-wrap {
-    display: flex;
-    justify-content: center;
-    padding: 20px 16px;
-}
-
-.container {
-    width: 100%;
-    max-width: 1140px;
-    margin: 0 auto;
-}
-
-.site-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin: 0 auto 40px auto;
-    padding: 40px 20px;
-    background: var(--card-bg);
-    border-radius: 20px;
-    border: 1px solid var(--border);
-}
-
-.logo {
-    display: block;
-    max-width: 200px;
-    height: auto;
-    filter: drop-shadow(0 4px 14px rgba(0,0,0,.6));
-}
-
-.sitename {
-    font-size: 42px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--accent-cyan);
-    text-align: center;
-    text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
-}
-
-/* Blog Posts - Each day clearly separated */
-.blog-post {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-left: 5px solid var(--accent-gold);
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    margin: 0 auto 70px auto;
-    transition: all 0.3s ease;
-}
-
-.blog-post:hover {
-    border-color: var(--accent-cyan);
-    box-shadow: 0 12px 40px rgba(0, 217, 255, 0.15);
-    transform: translateY(-3px);
-}
-
-/* Post Headers - Gold and prominent */
-.post-header, .blog-post h1, .blog-post h2 {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--accent-gold);
-    text-align: center;
-    margin: 0 0 8px 0;
-    line-height: 1.3;
-}
-
-/* Date/Time - Cyan colored badge style */
-.post-time {
-    display: inline-block;
-    font-size: 14px;
-    color: var(--accent-cyan);
-    text-align: center;
-    margin: 0 0 30px 0;
-    padding: 8px 20px;
-    background: rgba(0, 217, 255, 0.1);
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-
-/* Post Body */
-.post-body {
-    text-align: left;
-}
-
-.post-body p, .blog-post > p {
-    font-size: 16px;
-    line-height: 1.8;
-    margin: 0 0 18px 0;
-    text-align: left;
-    color: var(--text);
-}
-
-.post-body img, .blog-post img {
-    display: block;
-    width: 85%;
-    margin: 25px auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Game Headers - Standout cyan */
-.game-header {
-    color: #fff;
-    font-weight: 700;
-    font-size: 20px;
-    margin: 35px 0 15px 0;
-    text-align: center;
-    padding: 15px 20px;
-    background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
-    border-radius: 10px;
-    border-left: 4px solid var(--accent-cyan);
-}
-
-/* Dividers between games */
-.divider {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
-    margin: 35px 0;
-}
-
-.outer-frame {
-    border: none;
-    border-radius: 0;
-    padding: 0;
-}
-
-/* Logo Container */
-.logo-container {
-    position: fixed;
-    top: 5px;
-    left: 40px;
-    z-index: 1000;
-}
-
-.logo-container a {
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
-
-.logo-container span {
-    color: var(--accent-cyan);
-    text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.8);
-}
-
-/* Navigation */
-.nav-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 18px;
-    padding: 15px 5%;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 2px solid rgba(0, 224, 255, 0.3);
-    z-index: 999;
-    flex-wrap: wrap;
-}
-
-.nav-links a, .dropdown {
-    display: inline-flex;
-    align-items: center;
-}
-
-.nav-links a {
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    color: var(--text);
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 8px 10px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.nav-links a:hover {
-    color: var(--accent-cyan);
-    text-shadow: 0 0 8px var(--accent-cyan);
-}
-
-/* Dropdown */
-.dropdown {
-    position: relative;
-}
-
-.dropdown .dropbtn {
-    font-family: 'Poppins', sans-serif;
-    color: var(--text);
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    padding: 8px 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.dropdown:hover .dropbtn {
-    color: var(--accent-cyan);
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(20px);
-    min-width: 200px;
-    box-shadow: 0 8px 30px rgba(0, 224, 255, 0.3);
-    z-index: 9999;
-    border: 2px solid rgba(0, 224, 255, 0.4);
-    border-radius: 10px;
-    padding: 15px 0;
-    margin-top: 10px;
-}
-
-.dropdown-content a {
-    color: var(--accent-cyan);
-    padding: 14px 20px;
-    display: block;
-    font-size: 0.95rem;
-    text-align: left;
-    border-left: 3px solid transparent;
-}
-
-.dropdown-content a:hover {
-    background: linear-gradient(90deg, rgba(0, 224, 255, 0.2), transparent);
-    border-left-color: var(--accent-cyan);
-    padding-left: 25px;
-}
-
-/* Desktop only: show dropdown on hover */
-@media (hover: hover) and (pointer: fine) {
-    .dropdown:hover .dropdown-content {
-        display: block;
-        animation: dropdownFade 0.3s ease;
-    }
-}
-
-/* Both desktop and mobile: show dropdown when active (clicked/tapped) */
-.dropdown.active .dropdown-content {
-    display: block;
-    animation: dropdownFade 0.3s ease;
-}
-
-.dropdown.active .dropbtn {
-    color: var(--neon-gold);
-    text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-@keyframes dropdownFade {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    body { padding-top: 120px; }
-    .logo-container { top: 10px; left: 20px; }
-    .logo-container a { font-size: 1.5rem; }
-    .nav-links { gap: 8px; padding: 10px 5px; }
-    .nav-links a, .dropdown .dropbtn { font-size: 0.75rem; padding: 6px 10px; }
-    .blog-post { padding: 25px; margin-bottom: 50px; }
-    .post-header, .blog-post h1, .blog-post h2 { font-size: 22px; }
-    .sitename { font-size: 28px; }
-}
-
-/* Modern Date Navigator */
-
-/* View All Dropdown */
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-    
-
-    
-
-    
-
-    
-}
-
-/* Premium Navigation */
-.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 24px;background:rgba(5,7,10,0.95);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(255,255,255,0.08)}
-.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px}
-.logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:auto}
-.logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none}
-.logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,229,255,0.6)}
-.nav-links{display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap}
-.nav-link{color:#94a3b8;text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;transition:all 0.25s ease}
-.nav-link:hover{color:#ffd54f;text-shadow:0 0 8px #ffd54f}
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,7,10,0.85);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border-subtle)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 32px}
+.logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:-0.5px}
+.logo span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-links>a{color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;padding:10px 18px;border-radius:8px;transition:all .25s ease}
+.nav-links>a:hover{color:var(--text-primary);background:rgba(255,255,255,0.05)}
 .dropdown{position:relative}
-.dropbtn{background:none;border:none;color:#94a3b8;font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;cursor:pointer;font-family:inherit;transition:all 0.25s ease;display:flex;align-items:center;gap:6px}
-.dropbtn:hover{color:#ffd54f;text-shadow:0 0 8px #ffd54f}
-.dropbtn::after{content:'';width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform 0.25s ease}
-.dropdown:hover .dropbtn::after{transform:rotate(180deg)}
-.dropdown-content{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) scale(0.95);opacity:0;visibility:hidden;background:rgba(15,23,42,0.98);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:8px;min-width:200px;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:all 0.25s ease;z-index:1001}
-.dropdown:hover .dropdown-content{transform:translateX(-50%) scale(1);opacity:1;visibility:visible}
-.dropdown-content a{display:block;padding:12px 16px;color:#94a3b8;text-decoration:none;font-size:14px;border-radius:10px;transition:all 0.2s ease}
-.dropdown-content a:hover{color:#00e5ff;background:rgba(0,229,255,0.08)}
+.dropbtn{background:transparent;color:var(--text-secondary);border:none;font-size:14px;font-weight:500;padding:10px 18px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .25s ease;display:flex;align-items:center;gap:6px}
+.dropbtn::after{content:'';border:solid var(--text-muted);border-width:0 2px 2px 0;padding:3px;transform:rotate(45deg);margin-top:-3px;transition:transform .25s ease}
+.dropbtn:hover{color:var(--text-primary);background:rgba(255,255,255,0.05)}
+.dropdown-content{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-10px);background:rgba(15,20,30,0.95);backdrop-filter:blur(20px);border:1px solid var(--border-subtle);border-radius:12px;min-width:180px;padding:8px;z-index:1001;opacity:0;transition:all .25s ease;box-shadow:var(--shadow-card)}
+.dropdown-content a{display:block;padding:10px 16px;color:var(--text-secondary);font-size:13px;text-decoration:none;border-radius:8px;transition:all .2s ease}
+.dropdown-content a:hover{background:rgba(0,229,255,0.1);color:var(--accent-cyan)}
+.dropdown:hover .dropdown-content{display:block;opacity:1;transform:translateX(-50%) translateY(0)}
+.dropdown:hover .dropbtn::after{transform:rotate(-135deg);margin-top:3px}
+
+.top-space{height:70px}
+.hero{text-align:center;padding:60px 24px 40px;position:relative}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,255,0.1) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,255,0.1);border:1px solid var(--border-accent);padding:8px 20px;border-radius:50px;font-size:12px;font-weight:600;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,6vw,52px);font-weight:700;margin-bottom:12px;letter-spacing:-1px}
+.hero h1 span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text-secondary);font-size:18px;max-width:600px;margin:0 auto}
+
+.day-section{max-width:900px;margin:32px auto 20px;padding:0 24px}
+.day-header{background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(255,213,79,0.05));border:1px solid rgba(255,213,79,0.3);border-radius:16px;padding:24px;text-align:center;position:relative;overflow:hidden}
+.day-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-gold)}
+.day-header h2{font-family:'Space Grotesk',sans-serif;font-size:26px;color:var(--accent-gold);margin-bottom:6px}
+.day-header p{color:var(--text-secondary);font-size:14px}
+
+main,.container{max-width:900px;margin:0 auto;padding:0 24px 60px}
+
+.game-card,.blog-post{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:28px;margin-bottom:20px;transition:all .3s ease;position:relative;overflow:hidden}
+.game-card::before,.blog-post::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-accent);opacity:0;transition:opacity .3s ease}
+.game-card:hover,.blog-post:hover{border-color:var(--border-accent);transform:translateY(-3px);box-shadow:var(--shadow-glow)}
+.game-card:hover::before,.blog-post:hover::before{opacity:1}
+.teams-display{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px}
+.teams-display img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
+.teams-display .vs{color:var(--text-muted);font-size:14px;font-weight:700;text-transform:uppercase}
+.game-card h3,.blog-post h2{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--accent-gold);margin-bottom:8px;text-align:center}
+.game-meta,.post-time{font-size:13px;color:var(--text-muted);text-align:center;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--border-subtle)}
+.game-card p,.blog-post p{color:var(--text-secondary);font-size:16px;margin-bottom:12px;line-height:1.8}
+.game-card strong,.game-card b,.blog-post strong,.blog-post b{color:var(--accent-cyan)}
+
+.section-title{color:var(--accent-gold);font-weight:700;font-size:17px;margin-top:20px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.section-title::before{content:'';width:4px;height:18px;background:var(--gradient-gold);border-radius:2px}
+
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0;padding:16px;background:rgba(0,229,255,0.05);border-radius:12px;border:1px solid var(--border-accent)}
+.stat-item{text-align:center;padding:12px}
+.stat-value{font-size:24px;font-weight:700;color:var(--accent-cyan);font-family:'Space Grotesk',sans-serif}
+.stat-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:4px}
+
+.trend-box{background:rgba(255,213,79,0.08);border:1px solid rgba(255,213,79,0.3);border-radius:10px;padding:14px 18px;margin:12px 0}
+.trend-box strong{color:var(--accent-gold)}
+
+.pagination{display:flex;justify-content:center;align-items:center;gap:24px;padding:50px 24px;margin-top:50px}
+.page-arrow{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border-subtle);border-radius:50%;color:var(--text-secondary);text-decoration:none;font-size:20px;transition:all 0.3s ease}
+.page-arrow:hover:not(.disabled){border-color:var(--accent-cyan);color:var(--accent-cyan);box-shadow:0 0 20px rgba(0,229,255,0.2)}
+.page-arrow.disabled{opacity:0.2;cursor:not-allowed;pointer-events:none}
+.page-info{color:var(--text-muted);font-size:14px;font-weight:500;letter-spacing:0.5px}
+
+footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
+footer a{color:var(--accent-cyan);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--accent-gold)}
+
+@media(max-width:768px){
+.nav-inner{padding:12px 16px}
+.nav-links{gap:4px}
+.nav-links>a,.dropbtn{padding:8px 12px;font-size:13px}
+.hero{padding:40px 16px 30px}
+.hero p{font-size:16px}
+.day-section{padding:0 16px}
+.day-header{padding:20px}
+.day-header h2{font-size:22px}
+main,.container{padding:0 16px 40px}
+.game-card,.blog-post{padding:22px}
+.teams-display img{width:48px;height:48px}
+.game-card h3,.blog-post h2{font-size:18px}
+.stat-grid{grid-template-columns:1fr 1fr}
+}
 </style>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QS8L5TDNLY');
-</script>
-
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
 </head>
 <body>
 
-<!-- Logo -->
-<div class="logo-container">
-    <a href="index.html">BET<span>LEGEND</span></a>
-</div>
-
-<!-- Navigation -->
-    <nav class="nav-container">
+<nav class="nav-container">
 <div class="nav-inner">
 <div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
 <div class="nav-links">
@@ -390,165 +133,23 @@ html, body {
 </div>
 </nav>
 
-  <div class="page-wrap">
-    <div class="container outer-frame">
-      <header class="site-header">
-        <img class="logo" src="newlogo.png" alt="BetLegend logo">
-        <div class="sitename">BetLegend NHL</div>
-
-      
-<div style="text-align: center; margin: 30px auto 40px auto; padding: 25px 20px; max-width: 800px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%); border-radius: 15px; border: 2px solid rgba(255, 215, 0, 0.3); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
-    <h2 style="color: #ffd700; font-size: 32px; margin: 0; font-weight: 700; text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);">
-        Sunday, October 19, 2025
-    </h2>
-</div>
-
+<div class="top-space"></div>
+<section class="hero">
+<div class="hero-badge">NHL Analysis</div>
+<h1>NHL <span>Picks</span></h1>
+<p>Expert analysis and betting predictions</p>
+</section>
+<main>
 <article class="blog-post">
         <h2 class="post-header">• OLD POST - NHL Sunday Slate Analysis – October 19, 2025</h2>
         <div class="post-time">Posted: October 19, 2025</div>
-        <div class="post-body">
-          <img src="/images/nhl-oct19.png" alt="NHL October 19 Action">
+</main>
+<nav class="pagination">
+<a href="nhl-page14.html" class="page-arrow" title="Newer">&#8592;</a>
+<span class="page-info">Page 15 of 17</span>
+<a href="nhl-page16.html" class="page-arrow" title="Older">&#8594;</a>
+</nav>
+<footer>&copy; 2025 BetLegend &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="nhl-records.html">NHL Records</a></footer>
 
-          <p><strong>BetLegend NHL Picks for Sunday, October 19, 2025</strong></p>
-          <p><strong>Red Wings/Oilers UNDER 6.5 (-130) – 2 Units</strong><br>
-          <strong>Detroit Red Wings ML (+115)</strong><br>
-          <strong>Chicago Blackhawks ML (+105)</strong><br>
-          <strong>Vancouver Canucks +1.5 (-185)</strong></p>
-
-          <div class="divider"></div>
-
-          <p>Sunday's NHL slate presents four compelling matchups with exploitable market inefficiencies driven by public perception, scheduling advantages, and early season variance in team performance. After extensive film review, statistical modeling, and line movement analysis, we've identified four plays that offer significant edge against the current market.</p>
-
-          <h3 style="color:var(--gold);margin:24px 0 12px;">Edmonton Oilers at Detroit Red Wings – 3:00 PM ET</h3>
-
-          <p><strong>Primary Play: Red Wings/Oilers UNDER 6.5 (-130) – 2 Units</strong><br>
-          <strong>Secondary Play: Detroit Red Wings ML (+115)</strong></p>
-
-          <p>This is the flagship play of the Sunday card and deserves the heaviest investment. The market has installed Edmonton as a road favorite between -131 and -142 despite multiple red flags that point toward a Detroit victory in a defensive battle.</p>
-
-          <p><strong>The Back-to-Back Factor:</strong> Edmonton played Saturday night in New Jersey, absorbing a disappointing 5-3 loss to the Devils. This marks their second consecutive defeat and places them on the uncomfortable second leg of a back-to-back situation. Historical data shows road teams playing their second game in as many nights struggle significantly, particularly when facing rested opponents with momentum. Calvin Pickard started Saturday's contest, which means Stuart Skinner draws the assignment tonight, but even your starting netminder faces challenges on zero rest while the opposition is fresh off a two-day break.</p>
-
-          <p><strong>Detroit's Defensive Structure:</strong> The Red Wings have allowed just 2.4 goals per game through five contests, ranking eighth in the NHL. More importantly, their penalty kill operates at an elite 91.7% success rate, neutralizing what should be Edmonton's most dangerous weapon. Detroit coach Todd McLellan has installed a disciplined system that emphasizes gap control and shot suppression. Through four consecutive victories, the Wings have limited opponents to manageable shot totals while maintaining excellent defensive zone coverage.</p>
-
-          <p><strong>Edmonton's Offensive Struggles:</strong> Despite rostering Connor McDavid and Leon Draisaitl, the Oilers have failed to exceed three goals in any game this season. They rank 25th in goals per game at just 2.6, a shocking figure given their elite talent level. McDavid has seven assists but remains goalless through five games, while the secondary scoring has dried up completely. The Oilers rank near the bottom in shooting percentage and have struggled to generate quality looks from dangerous areas.</p>
-
-          <p><strong>Goaltending Matchup:</strong> Cam Talbot has been magnificent for Detroit, posting a 3-0 record with a 1.78 goals against average. The veteran netminder brings calm presence and technical excellence, giving Detroit confidence to play tight defensive hockey. Meanwhile, Skinner faces his toughest assignment of the young season on tired legs in a hostile road environment. The goaltending edge heavily favors the home side.</p>
-
-          <p><strong>Total Analysis:</strong> The current total of 6.5 opened at 6.0 at some books before climbing on public money expecting Oilers offense. This presents clear value on the under. Detroit is 1-3-1 on over/under propositions this season, with four of five games staying under this number. Edmonton is 2-3 on totals, and their back-to-back games historically trend lower scoring. The Oilers' inability to finish chances combined with Detroit's defensive excellence creates a perfect storm for a low-scoring affair. We project final score around 3-2 or 4-2 Detroit, comfortably landing under 6.5 goals.</p>
-
-          <p><strong>Moneyline Value:</strong> At +115 to +120, Detroit presents exceptional value. This line reflects name recognition bias favoring Edmonton's superstars rather than current form and situational dynamics. The Red Wings win this game outright approximately 55-58% of the time based on our models, making +115 a significant overlay. Dylan Larkin has recorded points in all five games (seven total), Mason Appleton provides secondary scoring, and the entire roster is firing on all cylinders. Detroit's four-game winning streak isn't fluky – they're executing McLellan's system at a high level and earning results through systematic excellence.</p>
-
-          <p><strong>Line Movement Notes:</strong> The moneyline has held relatively stable with Detroit between +115 and +120, suggesting sharp action came in early on the Wings. The total climbed from 6.0 to 6.5 at most outlets, indicating public over money, which we're fading aggressively. This movement pattern typically signals professional bettors taking the under while casual money pushes totals higher.</p>
-
-          <h3 style="color:var(--gold);margin:24px 0 12px;">Anaheim Ducks at Chicago Blackhawks – 7:00 PM ET</h3>
-
-          <p><strong>Play: Chicago Blackhawks ML (+105)</strong></p>
-
-          <p>The Blackhawks present outstanding value as home underdogs against an Anaheim squad that continues to struggle away from Honda Center. Chicago sits at 2-2-2 while Anaheim enters at 2-2, but the underlying metrics and situational factors point toward a Blackhawks victory.</p>
-
-          <p><strong>Anaheim's Road Woes:</strong> The Ducks have failed to win in regulation time on the road for nine consecutive games dating back to last season. This isn't a small sample aberration – it reflects systemic issues with travel, lineup depth, and the ability to execute coach Joel Quenneville's system in hostile environments. Anaheim allowed four goals to Carolina in their most recent outing, a 4-1 home defeat that exposed defensive vulnerabilities. Now they travel to Chicago missing key forward Ryan Strome, further depleting their scoring depth.</p>
-
-          <p><strong>Chicago's Underdog Excellence:</strong> The Blackhawks are a remarkable 6-0 against the spread when playing as underdogs this season. This pattern reveals a team that performs best when expectations are lowered and they can play loose, aggressive hockey. Connor Bedard continues developing into an elite NHL center, currently producing at a point-per-game pace. Frank Nazar provides complementary scoring, and the young core shows steady improvement in every outing.</p>
-
-          <p><strong>Home Ice Advantage:</strong> United Center brings energy that lifts Chicago's performance. The Blackhawks feed off their crowd and have shown better structure in familiar surroundings. Against a Ducks team that struggles on the road, Chicago's home comfort becomes a significant edge. The Blackhawks won 54% of faceoffs, controlled shot attempts, and generated quality power play opportunities in their most recent home contest despite a shootout loss to Vancouver.</p>
-
-          <p><strong>Goaltending Situation:</strong> Spencer Knight has been solid for Chicago with a .915 save percentage, providing stability that allows the young forwards to take calculated risks. Anaheim will likely counter with Lukas Dostal, who posted a 3.40 GAA through three starts. The Ducks' goaltending hasn't been sharp enough to steal road games, placing additional pressure on an offense that already struggles away from home.</p>
-
-          <p><strong>Special Teams Differential:</strong> Chicago's power play operates at 21.1% efficiency, while Anaheim's penalty kill sits at 70.0%, creating a significant mismatch. If Chicago draws penalties – which Anaheim's aggressive road style tends to produce – the Blackhawks possess the weaponry to capitalize. Bedard's one-timer from the left circle remains one of hockey's most dangerous weapons on the man advantage.</p>
-
-          <p><strong>Tactical Matchup:</strong> Anaheim wants to play fast transition hockey, but they've conceded first goals in all four games this season. Falling behind early against Chicago in a hostile building forces the Ducks into uncomfortable situations. The Blackhawks can then lock down defensively and use their speed to create odd-man rushes off turnovers. This stylistic dynamic favors the home side throughout sixty minutes.</p>
-
-          <p><strong>Value Assessment:</strong> Getting Chicago at +105 to +110 represents clear market inefficiency. Multiple projection models favor the Blackhawks between 52-56% to win this game outright, making plus-money odds attractive. The line opened closer to pick'em before moving toward Anaheim as public money backed the road team, creating additional value for contrarian bettors. Sharp bettors often target these situations where inferior road teams draw betting support based on recent results rather than sustainable process.</p>
-
-          <h3 style="color:var(--gold);margin:24px 0 12px;">Vancouver Canucks at Washington Capitals – 12:30 PM ET</h3>
-
-          <p><strong>Play: Vancouver Canucks +1.5 (-185)</strong></p>
-
-          <p>Washington enters this matinee matchup as heavy favorites between -162 and -170 on the moneyline, riding a four-game winning streak that has them at 4-1 to start the season. While the Capitals deserve respect, laying nearly two-to-one odds on a home favorite against a quality opponent presents questionable value. Instead, we're taking the Canucks with the puck line cushion at -185.</p>
-
-          <p><strong>Vancouver's Resilience:</strong> The Canucks have earned the nickname "Never Day Sie Squad" for their remarkable ability to overcome deficits. They've trailed 2-0 in each of their last four games yet found ways to battle back and secure victories. This mental toughness matters significantly in close games. Vancouver defeated Dallas 5-3 on Thursday and Chicago 3-2 in a shootout on Friday, showing their ability to grind out results on the road despite facing adversity.</p>
-
-          <p><strong>Elite Goaltending:</strong> Thatcher Demko enters with a .929 save percentage, ranking 16th in the NHL despite limited games. The veteran netminder gives Vancouver a chance to win every night and has been particularly sharp in recent outings. Logan Thompson counters for Washington with a .922 save percentage through four starts, marking this as an even goaltending matchup rather than the significant advantage Washington's home favoritism suggests.</p>
-
-          <p><strong>Special Teams Battle:</strong> Vancouver's power play operates at a solid clip with Quinn Hughes quarterbacking from the point. The elite defenseman has four points already, showcasing his ability to generate offense from the blue line. Washington's penalty kill sits at 63.6%, ranking 30th in the league – a glaring weakness that Vancouver can exploit if they draw power plays. This special teams mismatch could prove decisive in a tight game.</p>
-
-          <p><strong>Early Start Time Concerns:</strong> The 12:30 PM ET start time translates to 9:30 AM Pacific for Vancouver, creating circadian rhythm challenges for the West Coast travelers. This factor cannot be ignored and represents the primary reason we're avoiding the Canucks moneyline despite attractive +136 to +140 odds. However, the puck line provides crucial insurance against a slow start or defensive breakdown. If Washington builds an early lead, Vancouver has proven they don't quit and will claw back into games.</p>
-
-          <p><strong>Offensive Firepower:</strong> Vancouver possesses legitimate scoring threats throughout their lineup. Brock Boeser has four goals through five games, Filip Chytil brings speed and finish, and Conor Garland provides playmaking ability. The Canucks rank 12th in goals per game at 3.2, demonstrating they can score with anyone when their attack clicks. Against Washington's 21st-ranked offense (2.8 goals per game), this becomes a relatively even matchup rather than the significant mismatch the moneyline suggests.</p>
-
-          <p><strong>Washington's Underlying Metrics:</strong> While the Capitals have won four straight, their goal differential of +1.4 ranks just fourth in the league, and some regression should be expected. Tom Wilson's seven points lead the way, but Washington lacks the overwhelming offensive depth to consistently blow teams out. They've won games through solid defensive structure and timely goaltending rather than dominating possession or chance generation.</p>
-
-          <p><strong>Puck Line Value:</strong> The key advantage of the +1.5 puck line is it provides victory paths in multiple scenarios. Vancouver can lose by one goal in regulation and still cash the ticket. They can force overtime and lose in the extra frame. Or they can win outright as live underdogs and reward backers with plus-money moneyline odds. Historical data shows road underdogs with elite goaltending cover puck lines at rates significantly above 60%, making -185 juice acceptable given the built-in protection.</p>
-
-          <p><strong>Risk Management:</strong> This approach allows us to stay involved in a game featuring two quality teams while mitigating the early start time risk that makes the Canucks moneyline too dangerous. Washington must win by multiple goals for this bet to fail – an outcome that seems unlikely given how competitive Vancouver has been and the tight defensive structure both teams employ.</p>
-
-          <h3 style="color:var(--gold);margin:24px 0 12px;">Boston Bruins at Utah Mammoth – 7:00 PM ET</h3>
-
-          <p><strong>Analysis: No Play</strong></p>
-
-          <p>Utah enters as heavy home favorites between -196 and -218, and this number accurately reflects the matchup. The Mammoth are 3-2 with a 2-0 home record, while Boston plays on the second leg of a back-to-back after facing Colorado on Saturday. Karel Vejmelka has been outstanding in goal with a 2.00 GAA, giving Utah a significant goaltending edge if Boston turns to backup Joonas Korpisalo.</p>
-
-          <p>While Boston at +162 to +179 might tempt value seekers, the situational disadvantages are too significant. The Bruins are road underdogs on a back-to-back in a building where Utah has been dominant. Computer models project Utah winning approximately 67-68% of the time, making the current line reasonably efficient. We're passing on this contest and focusing resources on the three plays outlined above where we've identified clear edges.</p>
-
-          <div class="divider"></div>
-
-          <h3 style="color:var(--gold);margin:24px 0 12px;">Betting Summary & Bankroll Management</h3>
-
-          <p><strong>Confidence Ratings:</strong></p>
-          <p><strong>Highest Confidence:</strong> Red Wings/Oilers Under 6.5 (2 Units) – The scheduling spot, defensive metrics, and Edmonton's offensive struggles create the perfect storm for a low-scoring game. This represents our best edge of the Sunday slate.</p>
-
-          <p><strong>Strong Confidence:</strong> Detroit Red Wings ML (+115) – Excellent value on a rested home team facing a tired opponent. The four-game winning streak reflects legitimate process rather than variance.</p>
-
-          <p><strong>Strong Confidence:</strong> Chicago Blackhawks ML (+105) – Home ice against a team that cannot win on the road provides clear edge. Chicago's 6-0 ATS record as underdogs shows market inefficiency we're exploiting.</p>
-
-          <p><strong>Moderate Confidence:</strong> Vancouver Canucks +1.5 (-185) – The puck line provides insurance against early start time struggles while maintaining involvement in a competitive matchup where Vancouver's goaltending gives them upset potential.</p>
-
-          <p><strong>Parlay Opportunity:</strong> Detroit ML + Chicago ML creates approximately +350 odds for bettors seeking larger payouts. Both teams are home underdogs or near pick'em facing flawed road opponents, making this combination particularly attractive for smaller stake parlays.</p>
-
-          <p><strong>Total of the Day:</strong> The Edmonton/Detroit under deserves the most significant investment due to converging factors that suppress scoring. Back-to-backs historically trend under, Detroit's defensive excellence limits chances, and Edmonton's offense has been anemic. This total should close closer to 5.5 than 6.5 based on situational dynamics.</p>
-
-          <div class="divider"></div>
-
-          <p><strong>Final Thoughts:</strong> Sunday's NHL slate rewards disciplined bettors who identify scheduling advantages, situational spots, and teams whose underlying metrics don't match their current record. Edmonton playing their second road game in as many nights while Detroit rests represents the type of clear edge professional bettors target aggressively. Similarly, Chicago's home comfort against Anaheim's road struggles provides exploitable value in the plus-money range.</p>
-
-          <p>The key is avoiding trap lines like Utah laying heavy chalk on a back-to-back spot – while accurate, that number provides no edge for bettors. Instead, we're focusing on Detroit, Chicago, and Vancouver spots where the market has created actionable inefficiencies based on recent results rather than sustainable process.</p>
-
-          <p>Track these plays throughout the evening and observe how scheduling, goaltending, and home ice advantages materialize in NHL outcomes. These foundational concepts drive long-term profitability in hockey betting when applied consistently with proper bankroll management and selective aggression on the best spots.</p>
-
-          <p><strong>Best of luck, and let's cash these tickets.</strong></p>
-        </div>
-      </article>
-<style>
-.page-nav { display: flex; justify-content: center; gap: 15px; margin: 50px auto; padding: 25px; max-width: 600px; }
-.page-nav a, .page-nav span { padding: 14px 28px; background: rgba(0, 217, 255, 0.1); border: 2px solid rgba(0, 217, 255, 0.3); border-radius: 10px; color: #00d9ff; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
-.page-nav a:hover { background: rgba(0, 217, 255, 0.25); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
-.page-nav .disabled { opacity: 0.35; pointer-events: none; }
-.page-nav .current { background: rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.6); color: #ffd700; }
-/* Premium Navigation */
-.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 24px;background:rgba(5,7,10,0.95);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(255,255,255,0.08)}
-.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px}
-.logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:auto}
-.logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none}
-.logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,229,255,0.6)}
-.nav-links{display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap}
-.nav-link{color:#94a3b8;text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;transition:all 0.25s ease}
-.nav-link:hover{color:#ffd54f;text-shadow:0 0 8px #ffd54f}
-.dropdown{position:relative}
-.dropbtn{background:none;border:none;color:#94a3b8;font-size:15px;font-weight:500;padding:12px 16px;border-radius:10px;cursor:pointer;font-family:inherit;transition:all 0.25s ease;display:flex;align-items:center;gap:6px}
-.dropbtn:hover{color:#ffd54f;text-shadow:0 0 8px #ffd54f}
-.dropbtn::after{content:'';width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform 0.25s ease}
-.dropdown:hover .dropbtn::after{transform:rotate(180deg)}
-.dropdown-content{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) scale(0.95);opacity:0;visibility:hidden;background:rgba(15,23,42,0.98);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:8px;min-width:200px;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:all 0.25s ease;z-index:1001}
-.dropdown:hover .dropdown-content{transform:translateX(-50%) scale(1);opacity:1;visibility:visible}
-.dropdown-content a{display:block;padding:12px 16px;color:#94a3b8;text-decoration:none;font-size:14px;border-radius:10px;transition:all 0.2s ease}
-.dropdown-content a:hover{color:#00e5ff;background:rgba(0,229,255,0.08)}
-</style><nav class="page-nav">
-            <a href="nhl-page14.html" class="nav-arrow newer" title="Newer">&#8592; Newer</a>
-            <span class="page-indicator">Page 3 of 17</span>
-            <a href="nhl-page16.html" class="nav-arrow older" title="Older">Older &#8594;</a>
-        </nav>
-
-    </div>
-  </div>
 </body>
 </html>

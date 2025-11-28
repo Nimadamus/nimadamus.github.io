@@ -5,247 +5,115 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NHL Betting Archive - Page 3 | BetLegend</title>
 <meta name="description" content="NHL betting picks archive.">
-<link rel="canonical" href="https://www.betlegendpicks.com/nhl-page3.html">
 <link rel="icon" href="https://www.betlegendpicks.com/newlogo.png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-    --bg-dark: #030508;
-    --bg-card: rgba(8, 15, 25, 0.85);
-    --bg-glass: rgba(15, 25, 40, 0.6);
-    --neon-cyan: #00f0ff;
-    --neon-blue: #0066ff;
-    --neon-gold: #ffcc00;
-    --neon-purple: #8b5cf6;
-    --text-primary: #ffffff;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --border-glow: rgba(0, 240, 255, 0.3);
-    --gradient-cyber: linear-gradient(135deg, #0066ff 0%, #00f0ff 50%, #8b5cf6 100%);
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-primary:#05070a;
+--bg-secondary:#0a0d12;
+--bg-card:rgba(15,20,30,0.8);
+--bg-card-hover:rgba(20,28,45,0.9);
+--accent-cyan:#00e5ff;
+--accent-gold:#ffd54f;
+--accent-purple:#a855f7;
+--text-primary:#f0f4f8;
+--text-secondary:#94a3b8;
+--text-muted:#64748b;
+--border-subtle:rgba(255,255,255,0.06);
+--border-accent:rgba(0,229,255,0.3);
+--gradient-accent:linear-gradient(135deg,#00e5ff,#a855f7);
+--gradient-gold:linear-gradient(135deg,#ffd54f,#ff9800);
+--shadow-glow:0 0 40px rgba(0,229,255,0.15);
+--shadow-card:0 4px 24px rgba(0,0,0,0.4);
 }
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;line-height:1.8;font-size:16px;min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 20%,rgba(0,229,255,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(168,85,247,0.06) 0%,transparent 50%);pointer-events:none;z-index:-1}
 
-body {
-    background: var(--bg-dark);
-    color: var(--text-primary);
-    font-family: 'Rajdhani', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.7;
-}
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,7,10,0.85);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border-subtle)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 32px}
+.logo a{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:-0.5px}
+.logo span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-links>a{color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;padding:10px 18px;border-radius:8px;transition:all .25s ease}
+.nav-links>a:hover{color:var(--text-primary);background:rgba(255,255,255,0.05)}
+.dropdown{position:relative}
+.dropbtn{background:transparent;color:var(--text-secondary);border:none;font-size:14px;font-weight:500;padding:10px 18px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .25s ease;display:flex;align-items:center;gap:6px}
+.dropbtn::after{content:'';border:solid var(--text-muted);border-width:0 2px 2px 0;padding:3px;transform:rotate(45deg);margin-top:-3px;transition:transform .25s ease}
+.dropbtn:hover{color:var(--text-primary);background:rgba(255,255,255,0.05)}
+.dropdown-content{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-10px);background:rgba(15,20,30,0.95);backdrop-filter:blur(20px);border:1px solid var(--border-subtle);border-radius:12px;min-width:180px;padding:8px;z-index:1001;opacity:0;transition:all .25s ease;box-shadow:var(--shadow-card)}
+.dropdown-content a{display:block;padding:10px 16px;color:var(--text-secondary);font-size:13px;text-decoration:none;border-radius:8px;transition:all .2s ease}
+.dropdown-content a:hover{background:rgba(0,229,255,0.1);color:var(--accent-cyan)}
+.dropdown:hover .dropdown-content{display:block;opacity:1;transform:translateX(-50%) translateY(0)}
+.dropdown:hover .dropbtn::after{transform:rotate(-135deg);margin-top:3px}
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background:
-        radial-gradient(ellipse at 20% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: -1;
-}
+.top-space{height:70px}
+.hero{text-align:center;padding:60px 24px 40px;position:relative}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,255,0.1) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,255,0.1);border:1px solid var(--border-accent);padding:8px 20px;border-radius:50px;font-size:12px;font-weight:600;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,6vw,52px);font-weight:700;margin-bottom:12px;letter-spacing:-1px}
+.hero h1 span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text-secondary);font-size:18px;max-width:600px;margin:0 auto}
 
-body::after {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image:
-        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    pointer-events: none;
-    z-index: -1;
-}
+.day-section{max-width:900px;margin:32px auto 20px;padding:0 24px}
+.day-header{background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(255,213,79,0.05));border:1px solid rgba(255,213,79,0.3);border-radius:16px;padding:24px;text-align:center;position:relative;overflow:hidden}
+.day-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-gold)}
+.day-header h2{font-family:'Space Grotesk',sans-serif;font-size:26px;color:var(--accent-gold);margin-bottom:6px}
+.day-header p{color:var(--text-secondary);font-size:14px}
 
-.main-nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(3,5,8,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-glow); z-index: 1000; padding: 0 20px; }
-.nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 70px; }
-.nav-logo { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 800; text-decoration: none; background: var(--gradient-cyber); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.nav-links { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-.nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: all 0.2s; }
-.nav-links a:hover { color: var(--neon-cyan); background: rgba(0,240,255,0.1); }
-.nav-links a.active { color: var(--neon-gold); background: rgba(255,204,0,0.1); }
-@media (max-width: 768px) { .nav-links { display: none; } }
+main,.container{max-width:900px;margin:0 auto;padding:0 24px 60px}
 
-.hero {
-    text-align: center;
-    padding: 100px 20px 40px;
-    position: relative;
-}
+.game-card,.blog-post{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:28px;margin-bottom:20px;transition:all .3s ease;position:relative;overflow:hidden}
+.game-card::before,.blog-post::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-accent);opacity:0;transition:opacity .3s ease}
+.game-card:hover,.blog-post:hover{border-color:var(--border-accent);transform:translateY(-3px);box-shadow:var(--shadow-glow)}
+.game-card:hover::before,.blog-post:hover::before{opacity:1}
+.teams-display{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px}
+.teams-display img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
+.teams-display .vs{color:var(--text-muted);font-size:14px;font-weight:700;text-transform:uppercase}
+.game-card h3,.blog-post h2{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--accent-gold);margin-bottom:8px;text-align:center}
+.game-meta,.post-time{font-size:13px;color:var(--text-muted);text-align:center;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--border-subtle)}
+.game-card p,.blog-post p{color:var(--text-secondary);font-size:16px;margin-bottom:12px;line-height:1.8}
+.game-card strong,.game-card b,.blog-post strong,.blog-post b{color:var(--accent-cyan)}
 
-.hero h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    background: var(--gradient-cyber);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 10px;
-    animation: glow 3s ease-in-out infinite alternate;
-}
+.section-title{color:var(--accent-gold);font-weight:700;font-size:17px;margin-top:20px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.section-title::before{content:'';width:4px;height:18px;background:var(--gradient-gold);border-radius:2px}
 
-@keyframes glow {
-    from { filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.3)); }
-    to { filter: drop-shadow(0 0 40px rgba(0, 240, 255, 0.6)); }
-}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0;padding:16px;background:rgba(0,229,255,0.05);border-radius:12px;border:1px solid var(--border-accent)}
+.stat-item{text-align:center;padding:12px}
+.stat-value{font-size:24px;font-weight:700;color:var(--accent-cyan);font-family:'Space Grotesk',sans-serif}
+.stat-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:4px}
 
-.hero .subtitle {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
+.trend-box{background:rgba(255,213,79,0.08);border:1px solid rgba(255,213,79,0.3);border-radius:10px;padding:14px 18px;margin:12px 0}
+.trend-box strong{color:var(--accent-gold)}
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+.pagination{display:flex;justify-content:center;align-items:center;gap:24px;padding:50px 24px;margin-top:50px}
+.page-arrow{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border-subtle);border-radius:50%;color:var(--text-secondary);text-decoration:none;font-size:20px;transition:all 0.3s ease}
+.page-arrow:hover:not(.disabled){border-color:var(--accent-cyan);color:var(--accent-cyan);box-shadow:0 0 20px rgba(0,229,255,0.2)}
+.page-arrow.disabled{opacity:0.2;cursor:not-allowed;pointer-events:none}
+.page-info{color:var(--text-muted);font-size:14px;font-weight:500;letter-spacing:0.5px}
 
-.blog-post {
-    background: var(--bg-card);
-    border: 1px solid var(--border-glow);
-    border-radius: 16px;
-    padding: 30px;
-    margin-bottom: 30px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
+footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
+footer a{color:var(--accent-cyan);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--accent-gold)}
 
-.blog-post:hover {
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
-    transform: translateY(-2px);
-}
-
-.blog-post h2, .blog-post .post-header {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.5rem;
-    color: var(--neon-gold);
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.blog-post .post-time {
-    display: block;
-    text-align: center;
-    color: var(--neon-cyan);
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    padding: 8px 16px;
-    background: rgba(0, 240, 255, 0.1);
-    border-radius: 20px;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.blog-post h3 {
-    color: var(--neon-cyan);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2rem;
-    margin: 25px 0 15px;
-}
-
-.blog-post p {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    margin-bottom: 15px;
-}
-
-.blog-post strong {
-    color: var(--neon-gold);
-}
-
-.blog-post ul, .blog-post ol {
-    color: var(--text-secondary);
-    padding-left: 25px;
-    margin-bottom: 15px;
-}
-
-.blog-post li {
-    margin-bottom: 8px;
-}
-
-.blog-post a {
-    color: var(--neon-cyan);
-    text-decoration: none;
-}
-
-.blog-post a:hover {
-    color: var(--neon-gold);
-}
-
-.game-card, .pick-card {
-    background: rgba(0, 240, 255, 0.05);
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 15px 0;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    padding: 40px 20px;
-    flex-wrap: wrap;
-}
-
-.pagination a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    padding: 12px 24px;
-    border: 1px solid var(--border-glow);
-    border-radius: 8px;
-    background: var(--bg-card);
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.pagination a:hover {
-    border-color: var(--neon-cyan);
-    color: var(--neon-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-}
-
-.pagination .current {
-    color: var(--neon-gold);
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-}
-
-footer {
-    text-align: center;
-    padding: 40px 20px;
-    border-top: 1px solid var(--border-glow);
-    margin-top: 40px;
-}
-
-footer p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-footer a {
-    color: var(--neon-cyan);
-    text-decoration: none;
-}
-
-@media (max-width: 768px) {
-    .hero { padding: 90px 15px 30px; }
-    .hero h1 { font-size: 1.8rem; letter-spacing: 2px; }
-    .blog-post { padding: 20px; }
-    .container { padding: 15px; }
+@media(max-width:768px){
+.nav-inner{padding:12px 16px}
+.nav-links{gap:4px}
+.nav-links>a,.dropbtn{padding:8px 12px;font-size:13px}
+.hero{padding:40px 16px 30px}
+.hero p{font-size:16px}
+.day-section{padding:0 16px}
+.day-header{padding:20px}
+.day-header h2{font-size:22px}
+main,.container{padding:0 16px 40px}
+.game-card,.blog-post{padding:22px}
+.teams-display img{width:48px;height:48px}
+.game-card h3,.blog-post h2{font-size:18px}
+.stat-grid{grid-template-columns:1fr 1fr}
 }
 </style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
 </head>
 <body>
 
@@ -265,47 +133,12 @@ footer a {
 </div>
 </nav>
 
-<nav class="main-nav">
-    <div class="nav-container">
-        <a href="index.html" class="nav-logo">BetLegend</a>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="blog-page9.html">Picks</a>
-            <a href="nfl.html">NFL</a>
-            <a href="nba.html">NBA</a>
-            <a href="nhl.html" class="active">NHL</a>
-            <a href="ncaaf.html">NCAAF</a>
-            <a href="ncaab.html">NCAAB</a>
-            <a href="mlb.html">MLB</a>
-            <a href="records.html">Records</a>
-        </div>
-    </div>
-</nav>
-
+<div class="top-space"></div>
 <section class="hero">
     <h1>NHL Betting Archive</h1>
     <p class="subtitle">Page 14 of 17</p>
 </section>
-
-<div class="container">
-<!-- Logo -->
-
-<!-- Navigation -->
-    
-
-  <div class="page-wrap">
-    <div class="container outer-frame">
-      <header class="site-header">
-        <img class="logo" src="newlogo.png" alt="BetLegend logo">
-        <div class="sitename">BetLegend NHL</div>
-
-      
-<div style="text-align: center; margin: 30px auto 40px auto; padding: 25px 20px; max-width: 800px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%); border-radius: 15px; border: 2px solid rgba(255, 215, 0, 0.3); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
-    <h2 style="color: #ffd700; font-size: 32px; margin: 0; font-weight: 700; text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);">
-        Saturday, November 22, 2025
-    </h2>
-</div>
-
+<main>
 <article class="blog-post">
         <meta name="title" content="Saturday NHL 12-Game Mega Slate - November 22 Full Breakdown | Panthers-Oilers Cup Final Rematch, MacKinnon's Avalanche Dominance"/>
         <meta name="description" content="Complete analysis of Saturday's massive 12-game NHL slate featuring Florida vs Edmonton Stanley Cup Final rematch, Nathan MacKinnon leading NHL scoring race, McDavid-Draisaitl duo, and cross-conference battles with verified odds and betting data."/>
@@ -314,234 +147,13 @@ footer a {
     
 
     <div class="post-time">Posted: 9:15 AM, November 22, 2025 | Featuring Panthers-Oilers Stanley Cup Final rematch, Maple Leafs-Canadiens rivalry, and MacKinnon's record-breaking Avalanche</div>
-        <div class="post-body">
-
-          <p>Saturday delivers one of the biggest slates of the 2025-26 season with 12 NHL matchups spanning both conferences and featuring some of the league's most compelling storylines. The board is headlined by the first rematch of the 2025 Stanley Cup Final between Florida and Edmonton, plus the always-electric Maple Leafs-Canadiens rivalry at Bell Centre. We've got Nathan MacKinnon and the red-hot Colorado Avalanche continuing their dominant start at 14-1-5, Connor McDavid and Leon Draisaitl powering the Oilers at 9-9-5, and several critical divisional matchups. Action tips at 1:00 PM ET and runs through the late West Coast window at 10:00 PM ET. Let's break down every game with complete betting context and verified 2025-26 stats.</p>
-
-          <div class="game-header">🏒 COLUMBUS BLUE JACKETS @ DETROIT RED WINGS | 1:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/29.png" alt="Columbus" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/17.png" alt="Detroit" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Blue Jackets @ Red Wings</div>
-          <p><strong>Venue:</strong> Little Caesars Arena, Detroit, MI | <strong>TV:</strong> FDSNOH, FDSNDET, NHLN, SN</p>
-
-          <p>The afternoon slate kicks off with Columbus visiting Detroit in an Eastern Conference matchup. The Red Wings have been competitive at home this season, while the Blue Jackets continue their rebuild. Detroit will look to capitalize on home ice advantage in this matinee affair. The standard 1.5 puck line applies, with Detroit likely favored given their home venue and stronger roster construction. This early start provides an appetizer before the heavyweight matchups later in the day.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 ST. LOUIS BLUES @ NEW YORK ISLANDERS | 3:30 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/19.png" alt="St. Louis" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/2.png" alt="NY Islanders" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Blues @ Islanders</div>
-          <p><strong>Venue:</strong> UBS Arena, Elmont, NY | <strong>Puck Line:</strong> Blues +1.5 (-245), Islanders -1.5 (+194) | <strong>Total:</strong> 5.5 (Over -142, Under +116)</p>
-
-          <p>The Islanders host St. Louis in an afternoon matchup featuring two teams battling for playoff positioning. The Blues are road underdogs by 1.5 goals, with St. Louis at -245 to cover the puck line and the Islanders at +194. The total sits at 5.5 goals with the over at -142 and the under at +116, suggesting oddsmakers expect a moderate-scoring affair.</p>
-
-          <p>This spread indicates the Islanders are favored but not overwhelmingly so, making this a competitive matchup where the Blues could keep it close or steal a road victory. The 5.5 total is standard NHL fare, and the juice on the over suggests slight lean toward offensive production. UBS Arena provides a solid home-ice advantage for the Islanders, but St. Louis has shown they can compete on the road. This sets up as a tight divisional-style game with playoff implications for both clubs.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 EDMONTON OILERS @ FLORIDA PANTHERS | 7:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/22.png" alt="Edmonton" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/13.png" alt="Florida" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Oilers @ Panthers</div>
-          <p><strong>Venue:</strong> Amerant Bank Arena, Sunrise, FL | <strong>Moneyline:</strong> Panthers -135, Oilers +114 | <strong>Puck Line:</strong> Panthers -1.5 | <strong>Total:</strong> 5.5-6</p>
-          <p><strong>Records:</strong> Oilers 9-9-5 (5th Pacific), Panthers 11-8-1 (8-2-1 home)</p>
-
-          <p>The marquee matchup of the entire Saturday slate features the first rematch of the 2025 Stanley Cup Final, with the two-time defending champion Florida Panthers hosting the Edmonton Oilers at Amerant Bank Arena. The Panthers are -135 favorites on the moneyline with the Oilers at +114, while Florida sits at -1.5 on the puck line. The total is set around 5.5-6 goals depending on the sportsbook, and the moneyline implies approximately a 46.7% chance of victory for Edmonton.</p>
-
-          <p>The Oilers come in at 9-9-5, sitting 5th in the Pacific Division and searching for consistency. Connor McDavid is second in NHL scoring with 32 points—9 goals and 23 assists through 22 games. In November specifically, McDavid has gotten onto the scoresheet in nine of 10 games this month, producing multi-point performances in seven of them en route to six goals and 18 points. His elite playmaking has been on full display all month.</p>
-
-          <p>Leon Draisaitl complements McDavid brilliantly, recording 26 points (14 goals and 12 assists) through 22 games in the 2025-26 season. The McDavid-Draisaitl duo has combined for 58 points so far this season, accounting for roughly 33% of the Oilers' total offensive production. When these two are clicking, Edmonton can beat anyone in the league, and this game provides the perfect stage for them to showcase their chemistry.</p>
-
-          <p>Florida sits at 11-8-1 overall with an impressive 8-2-1 home record and has won four of their last five games. The Panthers captured back-to-back Stanley Cups in 2024 and 2025, establishing themselves as a modern dynasty. They're defending their home ice fiercely and will look to make a statement against the team that pushed them to the brink in the 2025 Finals. Florida's balanced attack and elite goaltending give them the edge at home, hence the -135 moneyline.</p>
-
-          <p>This game has all the ingredients of a playoff-atmosphere thriller—two elite teams, recent championship history, generational talents in McDavid and Draisaitl, and the Panthers' home dominance. The 5.5-6 goal total reflects expectations for offensive fireworks from both sides. This is must-watch hockey and the betting centerpiece of the Saturday slate. The Panthers get the nod at home, but McDavid's brilliance keeps this competitive throughout.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 NEW JERSEY DEVILS @ PHILADELPHIA FLYERS | 7:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/1.png" alt="New Jersey" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/4.png" alt="Philadelphia" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Devils @ Flyers</div>
-          <p><strong>Venue:</strong> Wells Fargo Center, Philadelphia, PA</p>
-
-          <p>The Devils continue their road trip with a visit to the City of Brotherly Love to face the Flyers in a critical Metropolitan Division matchup. These teams know each other well, and divisional games always carry extra intensity with playoff positioning implications. New Jersey brings a potent offensive attack while Philadelphia counters with gritty home-ice play. This 7:00 PM start provides quality divisional hockey before the late West Coast games tip off.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 SEATTLE KRAKEN @ PITTSBURGH PENGUINS | 7:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/55.png" alt="Seattle" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/5.png" alt="Pittsburgh" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Kraken @ Penguins</div>
-          <p><strong>Records:</strong> Kraken 10-5-5 (Pacific), Penguins 10-6-4 (Metropolitan)</p>
-          <p><strong>Puck Line:</strong> Kraken -1.5 (-265), Penguins +1.5 (+210) | <strong>Total:</strong> 5.5 (Over -122, Under +100)</p>
-
-          <p>Seattle visits Pittsburgh in an intriguing cross-conference matchup featuring two teams with identical 10-win totals. The Kraken are 10-5-5 while the Penguins sit at 10-6-4, making this an evenly-matched affair on paper. However, the Kraken are substantial -265 favorites to cover the 1.5 puck line, with Pittsburgh at +210. The total is set at 5.5 goals with the over at -122 and the under at +100.</p>
-
-          <p>The heavy juice on Seattle to cover suggests oddsmakers view them as the significantly better team despite similar records. The Kraken's Pacific Division success has been built on strong goaltending and balanced scoring, while Pittsburgh continues to rely on veteran leadership. The 5.5 total with near-even juice indicates expectations for a standard-scoring NHL game. Seattle laying this much on the road speaks to their quality, but Pittsburgh has proven dangerous at home. This sets up as a competitive battle where the Kraken are favored but the Penguins could easily keep it within one goal.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 TAMPA BAY LIGHTNING @ WASHINGTON CAPITALS | 7:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/27.png" alt="Tampa Bay" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/15.png" alt="Washington" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Lightning @ Capitals</div>
-          <p><strong>Venue:</strong> Capital One Arena, Washington, D.C. | <strong>Records:</strong> Lightning 10-7-2 (Atlantic)</p>
-
-          <p>Tampa Bay travels to the nation's capital to face Washington in an Eastern Conference showdown. The Lightning sit at 10-7-2 in the Atlantic Division and continue to navigate life in the post-dynasty era, while the Capitals look to defend home ice at Capital One Arena. Both teams feature veteran stars and playoff aspirations, making this a quality 7:00 PM matchup with divisional implications. The intensity level should be high as these familiar foes battle for crucial points.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 TORONTO MAPLE LEAFS @ MONTREAL CANADIENS | 7:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/10.png" alt="Toronto" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/8.png" alt="Montreal" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Maple Leafs @ Canadiens</div>
-          <p><strong>Venue:</strong> Bell Centre, Montreal, QC</p>
-
-          <p>One of hockey's greatest rivalries takes center stage as the Maple Leafs visit the Canadiens at the iconic Bell Centre. This matchup transcends regular-season implications—it's about pride, history, and bragging rights in one of the NHL's most storied rivalries. Toronto brings their high-powered offense to Montreal, where the Canadiens will feed off a raucous home crowd. Saturday night at the Bell Centre with the Leafs in town is must-watch television. The atmosphere will be electric, and both teams will elevate their games in this Original Six showdown.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 BOSTON BRUINS @ LOS ANGELES KINGS | 7:30 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/6.png" alt="Boston" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/26.png" alt="Los Angeles" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Bruins @ Kings</div>
-          <p><strong>Records:</strong> Bruins 12-10-0</p>
-
-          <p>Boston travels cross-country to face the Kings in a late-start East-West matchup. The Bruins sit at 12-10-0 and are searching for consistency in what's been an up-and-down season. Los Angeles provides a tough test on their home ice at Crypto.com Arena, where the Kings have been formidable. This game features two Original Six-era franchises (Boston from the Original Six, LA from the 1967 expansion) with championship pedigree. The 7:30 PM local start means a challenging late-night affair for the Bruins dealing with time zone adjustments.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 CAROLINA HURRICANES @ BUFFALO SABRES | 7:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/12.png" alt="Carolina" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/7.png" alt="Buffalo" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Hurricanes @ Sabres</div>
-          <p><strong>Records:</strong> Hurricanes 13-5-2 (Metropolitan)</p>
-
-          <p>The Metropolitan Division-leading Carolina Hurricanes visit Buffalo in an Eastern Conference clash. Carolina sits at an impressive 13-5-2 and has been one of the league's best teams through the first quarter of the season. The Hurricanes bring elite defense and balanced scoring to KeyBank Center, where the Sabres will look to play spoiler. Carolina's strong start positions them as favorites, but Buffalo has shown flashes of competitiveness at home. The Hurricanes will aim to maintain their division lead with a road victory.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 NEW YORK RANGERS @ UTAH MAMMOTH | 8:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/3.png" alt="NY Rangers" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/utah.png" alt="Utah" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Rangers @ Mammoth</div>
-
-          <p>The Rangers travel west to face Utah in an intriguing cross-conference matchup. New York brings their Metropolitan Division pedigree to Utah's building, where the home team will look to capitalize on altitude and home-ice advantage. The Rangers feature elite talent and playoff aspirations, while Utah continues building their franchise identity in their sophomore season. This mid-evening start provides quality hockey before the late West Coast games wrap up the slate.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 COLORADO AVALANCHE @ NASHVILLE PREDATORS | 8:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/21.png" alt="Colorado" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/18.png" alt="Nashville" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Avalanche @ Predators</div>
-          <p><strong>Records:</strong> Avalanche 14-1-5 (1st Central), Predators 6-10-4 (Central)</p>
-          <p><strong>MacKinnon Stats:</strong> 16 goals, 20 assists, 36 points (leads NHL) | Plus-22 rating</p>
-
-          <p>The NHL's hottest team visits Nashville as the Colorado Avalanche bring their league-best 14-1-5 record to Bridgestone Arena. Colorado has been absolutely dominant through 20 games, posting a record that marks one of the strongest starts in franchise history. Their plus-36 goal differential is more than double any other team in the league, highlighting just how thoroughly they've been dismantling opponents.</p>
-
-          <p>Nathan MacKinnon is the driving force behind Colorado's success and currently leads the entire NHL in scoring with 36 points through 20 games. MacKinnon has posted 16 goals and 20 assists, 89 shots on net, 17 hits, 15 blocked shots, 12 penalty minutes, and a plus-22 rating. His 16 goals lead the NHL, and he's been absolutely unstoppable all season. In Colorado's recent 6-3 victory over the New York Rangers on November 20th, MacKinnon recorded two goals and an assist while scoring his 1,049th career point, moving him into second place in Avalanche franchise history ahead of Peter Stastny.</p>
-
-          <p>MacKinnon is playing at an MVP level and has Colorado rolling. The Avalanche's offense is humming with Cale Makar providing elite defense and playmaking from the blue line, while their depth scoring has been consistent. Colorado's 14-1-5 start positions them as the Stanley Cup favorites, and MacKinnon's historic pace has him on track for career-best numbers across the board.</p>
-
-          <p>Nashville sits at 6-10-4 in the Central Division and has struggled mightily to find consistency. The Predators are outmatched on paper and will need a Herculean effort to hang with this Avalanche juggernaut. Colorado should be heavy favorites, likely laying significant odds on both the moneyline and puck line. The Avs' dominance makes this a potential blowout, but Nashville will feed off home-ice energy to try and keep it respectable. Expect MacKinnon to add to his NHL-leading point total and Colorado to cruise to another victory.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 DALLAS STARS @ CALGARY FLAMES | 10:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/25.png" alt="Dallas" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/20.png" alt="Calgary" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Stars @ Flames</div>
-          <p><strong>Venue:</strong> Scotiabank Saddledome, Calgary, AB | <strong>TV:</strong> CBC, SN, CITY, Victory+</p>
-          <p><strong>Puck Line:</strong> Stars -1.5 (+164), Flames +1.5 (-205) | <strong>Total:</strong> 5.5 (Over -140, Under +114)</p>
-
-          <p>The late-night action features Dallas traveling to Calgary in a Western Conference showdown. The Flames are underdogs by 1.5 goals on home ice, with Calgary at -205 to cover the puck line and Dallas at +164. The total is set at 5.5 goals with the over at -140 and the under at +114, suggesting slight lean toward offensive production.</p>
-
-          <p>This spread indicates Dallas is favored despite playing on the road, speaking to their superior roster construction and playoff pedigree. The Stars bring offensive firepower and championship experience to the Saddledome, where Calgary will need a strong goaltending performance to stay competitive. The juice on Calgary to cover +1.5 shows the market expects them to at least keep it close, making this a potentially tight game that could go either way. The 5.5 total with over juice suggests expectations for moderate scoring, and this late start provides West Coast viewers with quality hockey to close out the Saturday slate.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">🏒 VEGAS GOLDEN KNIGHTS @ ANAHEIM DUCKS | 10:00 PM ET</div>
-          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/54.png" alt="Vegas" style="width:45px; height:45px; object-fit:contain;">
-            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
-            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/24.png" alt="Anaheim" style="width:45px; height:45px; object-fit:contain;">
-          </div>
-          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Golden Knights @ Ducks</div>
-          <p><strong>Records:</strong> Ducks 13-6-1 (Pacific)</p>
-
-          <p>The nightcap features Vegas traveling down to Anaheim to face the surprising Ducks, who sit at 13-6-1 and are one of the season's biggest surprises. Anaheim has exceeded all expectations and currently holds a strong Pacific Division position. The Ducks' 13-6-1 record reflects a team that's bought into their system and is getting contributions throughout the lineup. Vegas brings playoff experience and star power, but Anaheim's home-ice advantage at Honda Center makes them dangerous. This late start wraps up a marathon 12-game Saturday, providing West Coast fans with a competitive Pacific Division battle to close the night.</p>
-
-          <div class="divider"></div>
-
-          <div class="game-header">📊 Saturday Slate Betting Takeaways</div>
-
-          <p>Saturday's massive 12-game slate is headlined by the Panthers-Oilers Stanley Cup Final rematch at 7:00 PM ET. Connor McDavid (32 points in 22 games) and Leon Draisaitl (26 points) account for 33% of Edmonton's offense and provide the firepower to challenge Florida's home dominance. The Panthers are -135 favorites with an 8-2-1 home record, but McDavid's November brilliance (18 points in 10 games) keeps this competitive. This is the betting centerpiece of the day and should deliver playoff-intensity hockey.</p>
-
-          <p>Nathan MacKinnon and the Colorado Avalanche are the story of the season at 14-1-5 with a plus-36 goal differential that's more than double any other team. MacKinnon leads the NHL with 36 points (16 goals, 20 assists) and just passed Peter Stastny for second in franchise history with 1,049 career points. Colorado visiting Nashville at 8:00 PM ET should be a rout—the Avs are rolling while the Predators sit at 6-10-4. Expect heavy favorites and a potential blowout.</p>
-
-          <p>The Maple Leafs-Canadiens rivalry at Bell Centre provides Saturday night intensity with one of hockey's greatest rivalries taking center stage. Toronto brings offensive firepower while Montreal feeds off a raucous home crowd in this Original Six-era battle. The atmosphere will be electric, and both teams will elevate their play in this nationally-televised showdown.</p>
-
-          <p>Quality matchups throughout the slate include Carolina (13-5-2) visiting Buffalo, Seattle's strong Pacific Division squad at Pittsburgh, and the Blues-Islanders afternoon affair with St. Louis as +1.5 road underdogs. The slate offers everything from potential blowouts to tight divisional battles, with action spanning 1:00 PM ET through 10:00 PM PT. This is one of the biggest Saturday slates of the season, and the betting board is loaded with opportunities across all 12 games.</p>
-
-        </div>
-      </article>
-<style>
-.page-nav { display: flex; justify-content: center; gap: 15px; margin: 50px auto; padding: 25px; max-width: 600px; }
-.page-nav a, .page-nav span { padding: 14px 28px; background: rgba(0, 217, 255, 0.1); border: 2px solid rgba(0, 217, 255, 0.3); border-radius: 10px; color: #00d9ff; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
-.page-nav a:hover { background: rgba(0, 217, 255, 0.25); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
-.page-nav .disabled { opacity: 0.35; pointer-events: none; }
-.page-nav .current { background: rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.6); color: #ffd700; }
-</style>
-
-    </div>
-  </div>
-<nav class="page-nav">
-            <a href="nhl-page3.html" class="nav-arrow newer" title="Newer">&#8592; Newer</a>
-            <span class="page-indicator">Page 14 of 17</span>
-            <a href="nhl-page5.html" class="nav-arrow older" title="Older">Older &#8594;</a>
-        </nav>
-</div>
-
-<footer>
-    <p>&copy; 2025 BetLegend. All Rights Reserved. | <a href="index.html">Home</a> | <a href="records.html">Records</a></p>
-</footer>
+</main>
+<nav class="pagination">
+<a href="nhl-page3.html" class="page-arrow" title="Newer">&#8592;</a>
+<span class="page-info">Page 4 of 17</span>
+<a href="nhl-page5.html" class="page-arrow" title="Older">&#8594;</a>
+</nav>
+<footer>&copy; 2025 BetLegend &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="nhl-records.html">NHL Records</a></footer>
 
 </body>
 </html>
