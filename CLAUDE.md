@@ -73,14 +73,39 @@ If the user asks you to create a slate post (NBA, NHL, NFL, NCAAB, MLB), you MUS
 
 ---
 
-## STEP 5: AFTER MAKING CHANGES
+## STEP 5: AFTER MAKING CHANGES - MANDATORY DEPLOYMENT CHECKLIST
 
-Always push to GitHub after completing work:
+### A. VERIFY PAGINATION LINKS (CRITICAL!)
+Before committing, verify that ALL sports pages have correct pagination:
+
+**Pagination Structure:**
+- `sport.html` = NEWEST content (e.g., Page 14 of 14)
+- `sport-page2.html` = Second newest (e.g., Page 13 of 14)
+- `sport-pageN.html` = OLDEST content (e.g., Page 1 of 14)
+
+**The "Older" link on sport.html MUST point to sport-page2.html:**
+- `nba.html` → "Older" links to `nba-page2.html`
+- `nfl.html` → "Older" links to `nfl-page2.html`
+- `nhl.html` → "Older" links to `nhl-page2.html`
+- `ncaab.html` → "Older" links to `ncaab-page2.html`
+- `soccer.html` → "Older" links to `soccer-page2.html`
+
+**NEVER link "Older" to the highest page number (e.g., nhl-page19.html) - that's the OLDEST content!**
+
+### B. ALWAYS PUSH TO GITHUB
 ```bash
 git -C "C:\Users\Nima\nimadamus.github.io" add [files]
 git -C "C:\Users\Nima\nimadamus.github.io" commit -m "[description]"
 git -C "C:\Users\Nima\nimadamus.github.io" push
 ```
+
+### C. VERIFY DEPLOYMENT IS LIVE
+After pushing, wait 1-2 minutes for GitHub Pages to deploy, then verify:
+1. The new content appears at https://www.betlegendpicks.com/[page].html
+2. Navigation links work correctly
+3. Pagination links go to the right pages
+
+**DO NOT consider the task complete until changes are pushed and verified live.**
 
 ---
 
