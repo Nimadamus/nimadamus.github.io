@@ -316,12 +316,33 @@ def generate_archive_page(sport):
                         'date': date_match.group(1)
                     })
 
-    # Also find old pagination pages
+    # Also find old pagination pages and extract their dates
     for f in os.listdir(REPO):
         if re.match(rf'{sport_lower}-page\d+\.html', f):
+            # Read the file to extract the date
+            try:
+                with open(os.path.join(REPO, f), 'r', encoding='utf-8') as file:
+                    content = file.read()
+                    # Look for date pattern in the content
+                    date_match = re.search(r'(\w+day),?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d+),?\s+(\d{4})', content)
+                    if date_match:
+                        month_names = {
+                            'January': '01', 'February': '02', 'March': '03', 'April': '04',
+                            'May': '05', 'June': '06', 'July': '07', 'August': '08',
+                            'September': '09', 'October': '10', 'November': '11', 'December': '12'
+                        }
+                        month = month_names.get(date_match.group(2), '01')
+                        day = date_match.group(3).zfill(2)
+                        year = date_match.group(4)
+                        display_date = f"{date_match.group(2)} {day}, {year}"
+                    else:
+                        display_date = f"Archive ({f})"
+            except:
+                display_date = f"Archive ({f})"
+
             archived_files.append({
                 'file': f,
-                'date': 'Archive'
+                'date': display_date
             })
 
     # Sort by date descending
