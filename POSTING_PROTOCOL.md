@@ -346,14 +346,32 @@ Include related terms naturally:
 ## 5. POSTING LOCATIONS
 
 ### Blog Posts (Picks/Analysis)
-- Add to **blog-page8.html** (current picks page)
+- Add to **blog-page10.html** (current picks page)
 - Place NEW post at the TOP, above existing posts
 - Never delete old posts - they stay on the page
+- **When page gets too large**: Create a new page (e.g., blog-page11.html), update pagination, and update ALL site navigation links
 
 ### News Articles
 - Add to **news-page3.html** (current news page)
 - Place NEW article at the TOP, above existing articles
 - Wrap in news-post div with gold border styling
+
+### Featured Game of the Day
+- Add to **featured-game-of-the-day-page10.html** (current page)
+- **IMPORTANT**: Every time you add a new Featured Game of the Day post, you MUST:
+  1. Create a NEW page (increment the page number)
+  2. Update the OLD page's pagination to link to the new page
+  3. Update ALL site navigation links to point to the new page
+  4. The new page becomes the "newest" page in the pagination
+
+### Pagination Update Process (For ALL Paginated Sections)
+When creating a new page for any section (blog, featured game, etc.):
+1. Create the new page with the next page number
+2. Update the previous page's pagination:
+   - Change "← Next" from disabled to linking to the new page
+   - Update the page number display
+3. Run a site-wide update to change ALL navigation links to point to the new page
+4. Verify all links work before pushing
 
 ---
 
