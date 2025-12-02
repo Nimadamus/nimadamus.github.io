@@ -8,17 +8,59 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ## 1. ACCURACY & VERIFICATION
 
-### CRITICAL RULE: 100% ACCURACY REQUIRED
-- Every piece of information posted MUST be 100% accurate and verified
-- Do NOT make up stats, scores, or facts
-- Do NOT fabricate player names, team records, or game details
-- If information cannot be verified, ASK USER for details
-- When in doubt, leave out specific numbers and use general statements
+### ⛔ ABSOLUTE RULE: 100% ONLINE VERIFICATION REQUIRED ⛔
 
-### Verification Sources
-- User-provided information is considered verified
-- Ask user to confirm any stats, records, or specific details before posting
-- If writing about real games/players, verify accuracy before posting
+**EFFECTIVE DECEMBER 1, 2025 - ZERO TOLERANCE POLICY**
+
+**EVERY SINGLE PIECE OF INFORMATION MUST BE VERIFIED WITH AN ONLINE SEARCH BEFORE POSTING. NO EXCEPTIONS.**
+
+This includes but is not limited to:
+- Every number (stats, records, scores, percentages, rankings)
+- Every player name and their current team
+- Every stat (PPG, APG, RPG, goals, assists, yards, touchdowns, etc.)
+- Every trend (winning streaks, ATS records, head-to-head history)
+- Every matchup detail
+- Every location (arena, stadium, city)
+- Every date and time
+- Every injury (type, status, timeline)
+- Every trade or roster move
+- Every historical claim
+- Every championship or award reference
+
+### THE VERIFICATION PROCESS
+
+**BEFORE writing ANY claim, you MUST:**
+1. Run a WebSearch to verify the information
+2. Find a reliable source confirming the fact
+3. Only THEN include it in the content
+
+**If you cannot verify something with a search:**
+- DO NOT INCLUDE IT
+- DO NOT GUESS
+- DO NOT USE MEMORY
+- Either find a verifiable alternative or leave it out entirely
+
+### WHY THIS RULE EXISTS
+
+This rule was implemented after repeated incidents of fabricated information being posted, including:
+- Fake player statistics
+- Wrong team records
+- Incorrect division standings
+- Made-up historical claims
+- Future dates presented as past events
+
+**One false claim destroys credibility. This site's reputation depends on accuracy.**
+
+### VERIFICATION SOURCES
+- WebSearch for current stats and news
+- ESPN, official league websites for schedules and standings
+- Team official websites for rosters
+- User-provided information (considered verified)
+
+### CONSEQUENCES OF VIOLATING THIS RULE
+- Content with unverified information damages the site's credibility
+- All unverified claims must be removed immediately upon discovery
+- There is NO acceptable excuse for posting fabricated information
 
 ---
 
