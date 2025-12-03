@@ -141,26 +141,32 @@
             letter-spacing: 1px;
         }
         .teams-layout {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
         }
         .team-section {
-            padding: 25px 30px;
+            padding: 20px 25px;
             border-top: 1px solid #eee;
         }
-        .team-section.away { background: #fafafa; }
-        .team-section.home { background: #fff; }
-        .team-section-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #fd5000;
+        .team-section.away {
+            grid-row: 1;
+            grid-column: 1;
+            background: #fafafa;
+            border-right: 1px solid #e0e0e0;
         }
-        /* Hide the matchup header - show teams in their own sections instead */
-        .matchup-header {
-            display: none;
+        .team-section.home {
+            grid-row: 1;
+            grid-column: 2;
+            background: #fff;
+        }
+        .team-section-header {
+            display: none; /* Teams already shown in matchup header above */
+        }
+        /* Stack offensive and defensive vertically under each team */
+        .team-stats-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         .team-section-logo { width: 50px; height: 50px; object-fit: contain; }
         .team-section-info h4 {
@@ -172,11 +178,6 @@
         .team-section-info .record {
             font-size: 14px;
             color: #666;
-        }
-        .team-stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
         }
         .stats-column {
             background: #fff;
@@ -218,6 +219,8 @@
         .stat-item .value.good { color: #16a34a; }
         .stat-item .value.bad { color: #dc2626; }
         .middle-section {
+            grid-row: 2;
+            grid-column: 1 / -1; /* Span both columns */
             background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
             padding: 25px 30px;
             border-top: 1px solid #333;
