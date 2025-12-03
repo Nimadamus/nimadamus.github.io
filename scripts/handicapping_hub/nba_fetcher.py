@@ -130,24 +130,45 @@ class NBAFetcher(BaseFetcher):
         return ''
 
     def get_team_stats(self, team_id: str) -> Dict:
-        """Fetch basic team statistics"""
+        """Fetch basic team statistics from ESPN team page"""
         if not team_id:
             return self._default_stats()
 
         cache_key = f"nba_stats_{team_id}"
 
         def fetch():
-            url = self.ESPN_TEAM_STATS.format(team_id=team_id)
+            # Try the team endpoint which has stats
+            url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/{team_id}"
             data = self._safe_request(url)
             if not data:
                 return self._default_stats()
 
+            team = data.get('team', {})
             stats = {}
-            for stat_group in data.get('splits', {}).get('categories', []):
+
+            # Get record info
+            record = team.get('record', {})
+            items = record.get('items', [])
+            for item in items:
+                if item.get('type') == 'total':
+                    for stat in item.get('stats', []):
+                        name = stat.get('name', '')
+                        value = stat.get('value', stat.get('displayValue', 'N/A'))
+                        stats[name] = value
+
+            # Get statistics from team stats endpoint
+            stats_data = team.get('statistics', [])
+            for stat_group in stats_data:
                 for stat in stat_group.get('stats', []):
-                    name = stat.get('name', '')
-                    value = stat.get('displayValue', stat.get('value', 'N/A'))
+                    name = stat.get('name', stat.get('abbreviation', ''))
+                    value = stat.get('value', stat.get('displayValue', 'N/A'))
                     stats[name] = value
+
+            # Also try to get stats from next statistics
+            next_stats = team.get('nextEvent', [{}])[0] if team.get('nextEvent') else {}
+
+            if not stats:
+                return self._default_stats()
 
             return stats
 
