@@ -150,21 +150,17 @@
         }
         .team-section.away { background: #fafafa; }
         .team-section.home { background: #fff; }
-        /* Team label shown when header is hidden */
-        .team-section::before {
-            content: attr(data-team);
-            display: block;
-            font-size: 14px;
-            font-weight: 700;
-            color: #fd5000;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
         .team-section-header {
-            display: none; /* Hide duplicate team headers - teams already shown in matchup-header */
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #fd5000;
+        }
+        /* Hide the matchup header - show teams in their own sections instead */
+        .matchup-header {
+            display: none;
         }
         .team-section-logo { width: 50px; height: 50px; object-fit: contain; }
         .team-section-info h4 {
@@ -191,7 +187,7 @@
         .team-section.away .stats-column { background: #fff; }
         .team-section.home .stats-column { background: #f8f8f8; }
         .stats-column-title {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
