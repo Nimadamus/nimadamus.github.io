@@ -154,6 +154,112 @@ If you cannot verify information:
 
 ---
 
+## 1B. MANDATORY ADVANCED STATS & BETTING TRENDS
+
+### ⚠️ CRITICAL: ALL SPORTS ARTICLES MUST INCLUDE ADVANCED ANALYTICS ⚠️
+
+**EFFECTIVE DECEMBER 3, 2025 - REQUIRED FOR ALL SLATE POSTS**
+
+Every game analysis MUST include verified advanced statistics and betting trends. This makes our content more valuable and credible than generic sports coverage.
+
+### REQUIRED STATS BY SPORT
+
+#### NHL (Hockey)
+For EVERY team mentioned, include:
+- [ ] Current record (W-L-OT) in game header
+- [ ] Goals for/against per game and league ranking
+- [ ] Power play percentage and league ranking
+- [ ] Penalty kill percentage and league ranking
+- [ ] Goaltender stats (GAA, SV%, recent record)
+- [ ] Home/road splits where relevant
+- [ ] Recent O/U trends (e.g., "OVER in 14 of last 16 games")
+- [ ] Key player stats with league rankings
+- [ ] Injury impact analysis with specific goalie/player replacements
+
+#### NBA (Basketball)
+For EVERY team mentioned, include:
+- [ ] Current record in game header
+- [ ] Offensive/defensive ratings and league rankings
+- [ ] Pace factor (possessions per game)
+- [ ] 3-point shooting % and attempts
+- [ ] ATS record (against the spread)
+- [ ] Home/road splits
+- [ ] Recent O/U trends
+- [ ] Key player advanced stats (PER, TS%, +/-)
+- [ ] Injury impact on rotations and minutes distribution
+
+#### NFL (Football)
+For EVERY team mentioned, include:
+- [ ] Current record in game header
+- [ ] Points for/against per game
+- [ ] Offensive/defensive DVOA or EPA rankings
+- [ ] Red zone efficiency (TD %)
+- [ ] Turnover differential
+- [ ] ATS record (home, road, as favorite/underdog)
+- [ ] Recent O/U trends
+- [ ] Key player stats with league context
+
+#### College Basketball (NCAAB)
+For EVERY team mentioned, include:
+- [ ] Current record and ranking
+- [ ] Conference record where applicable
+- [ ] KenPom/NET rankings if available
+- [ ] Offensive/defensive efficiency
+- [ ] Key player stats
+- [ ] ATS and O/U trends
+
+#### College Football (NCAAF)
+For EVERY team mentioned, include:
+- [ ] Current record and ranking
+- [ ] Conference record
+- [ ] Points for/against per game
+- [ ] Key offensive/defensive stats
+- [ ] ATS and O/U trends
+
+#### MLB (Baseball)
+For EVERY team mentioned, include:
+- [ ] Current record
+- [ ] Starting pitcher stats (ERA, WHIP, K/9, recent form)
+- [ ] Team batting average, OPS, runs per game
+- [ ] Bullpen ERA and save conversion rate
+- [ ] Home/road splits
+- [ ] O/U trends and run line history
+
+#### Soccer
+For EVERY team mentioned, include:
+- [ ] Current league position and record
+- [ ] Goals for/against
+- [ ] Home/away form
+- [ ] Key player availability
+- [ ] Head-to-head history
+
+### BETTING TRENDS TO INCLUDE
+
+Every article should include relevant betting trends:
+- ATS (Against The Spread) record when applicable
+- Over/Under trends (e.g., "OVER in X of last Y games")
+- Home/road betting splits
+- Situational trends (back-to-back, after rest, divisional, etc.)
+- Line movement context when relevant
+
+### VERIFICATION PROCESS FOR STATS
+
+1. Search for current team stats on ESPN, official league sites, or Sports Reference
+2. Cross-reference with betting sites (Covers, OddsShark) for trends
+3. Verify player stats are current (within last 1-2 days)
+4. Include league rankings to provide context (e.g., "25.0% PP, 5th in NHL")
+5. Note injury impacts with specific player names and replacement options
+
+### EXAMPLE OF PROPER STAT INTEGRATION
+
+**GOOD:**
+"The Stars are averaging 3.26 goals per game (10th in NHL) while allowing just 2.79 goals against (9th). Their power play is operating at a blistering 33.3%, ranking 2nd in the entire league. Casey DeSmith has been outstanding lately, posting a 5-0-1 record with a 1.46 GAA and .943 save percentage across his last six appearances."
+
+**BAD:**
+"The Stars have been playing great hockey and their offense is clicking."
+
+---
+
 ## 2. CONTENT STYLE
 
 ### Writing Tone - CRITICAL
