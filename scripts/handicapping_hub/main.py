@@ -4,6 +4,16 @@ ADVANCED HANDICAPPING HUB - MAIN ORCHESTRATION
 Coordinates all data fetchers and generates the HTML output.
 
 This is the main entry point for the daily update workflow.
+VERSION 2.0 - Integrated Advanced Analytics
+
+Features:
+- Multi-sport support (NBA, NHL, MLB, NFL, NCAAF, NCAAB)
+- Advanced statistics (wOBA, xG, EPA, etc.)
+- Killport Model V2 predictions
+- Historical performance tracking
+- ATS records and public betting %
+- Sharp money indicators
+- Power ratings and head-to-head history
 """
 
 import os
@@ -11,7 +21,7 @@ import sys
 import re
 import json
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -24,6 +34,23 @@ from handicapping_hub.base_fetcher import OddsClient
 from handicapping_hub.killport_model import KillportModel, generate_all_predictions
 from handicapping_hub.cache import cache
 
+# Import V2 modules
+try:
+    from handicapping_hub.killport_v2 import KillportModelV2
+    from handicapping_hub.historical_tracker import tracker
+    from handicapping_hub.advanced_scrapers import (
+        BaseballSavantScraper,
+        NaturalStatTrickScraper,
+        CoversScraper,
+        TeamRankingsScraper,
+        HeadToHeadScraper,
+        ActionNetworkScraper
+    )
+    ADVANCED_MODULES_AVAILABLE = True
+except ImportError as e:
+    print(f"[WARNING] Advanced modules not available: {e}")
+    ADVANCED_MODULES_AVAILABLE = False
+
 
 # Configuration
 TODAY = datetime.now()
@@ -32,12 +59,96 @@ DATE_DISPLAY = TODAY.strftime("%B %d, %Y")
 TIME_DISPLAY = TODAY.strftime("%I:%M %p")
 
 
+def fetch_advanced_data() -> Dict:
+    """
+    Fetch advanced data from scrapers (ATS, public betting, sharp money, etc.)
+    """
+    advanced_data = {
+        'ats_records': {},
+        'public_betting': {},
+        'sharp_money': {},
+        'power_ratings': {},
+        'h2h_history': {},
+        'statcast': {},
+        'nhl_advanced': {},
+    }
+
+    if not ADVANCED_MODULES_AVAILABLE:
+        print("[INFO] Advanced modules not available - using basic data only")
+        return advanced_data
+
+    print("\n[ADVANCED DATA COLLECTION]")
+
+    # Covers.com ATS and Public Betting
+    try:
+        print("  Fetching ATS records and public betting...")
+        covers = CoversScraper()
+        for sport in ['NBA', 'NHL', 'NFL', 'NCAAF', 'NCAAB']:
+            ats = covers.get_team_ats_records(sport)
+            if ats:
+                advanced_data['ats_records'][sport] = ats
+            public = covers.get_public_betting(sport)
+            if public:
+                advanced_data['public_betting'][sport] = public
+        print(f"    ✓ ATS records loaded for {len(advanced_data['ats_records'])} sports")
+    except Exception as e:
+        print(f"    ✗ Covers scraper failed: {e}")
+
+    # TeamRankings Power Ratings
+    try:
+        print("  Fetching power ratings...")
+        rankings = TeamRankingsScraper()
+        for sport in ['NBA', 'NHL', 'NFL', 'NCAAF', 'NCAAB']:
+            ratings = rankings.get_power_ratings(sport)
+            if ratings:
+                advanced_data['power_ratings'][sport] = ratings
+        print(f"    ✓ Power ratings loaded for {len(advanced_data['power_ratings'])} sports")
+    except Exception as e:
+        print(f"    ✗ TeamRankings scraper failed: {e}")
+
+    # Sharp Money Indicators (ActionNetwork)
+    try:
+        print("  Fetching sharp money indicators...")
+        action = ActionNetworkScraper()
+        for sport in ['NBA', 'NHL', 'NFL']:
+            sharp = action.get_sharp_action(sport)
+            if sharp:
+                advanced_data['sharp_money'][sport] = sharp
+        print(f"    ✓ Sharp money loaded for {len(advanced_data['sharp_money'])} sports")
+    except Exception as e:
+        print(f"    ✗ ActionNetwork scraper failed: {e}")
+
+    # Baseball Savant Statcast (MLB only)
+    try:
+        print("  Fetching Baseball Savant data...")
+        savant = BaseballSavantScraper()
+        statcast = savant.get_team_statcast()
+        if statcast:
+            advanced_data['statcast'] = statcast
+            print(f"    ✓ Statcast data loaded for {len(statcast)} teams")
+    except Exception as e:
+        print(f"    ✗ Baseball Savant failed: {e}")
+
+    # Natural Stat Trick (NHL only)
+    try:
+        print("  Fetching Natural Stat Trick data...")
+        nst = NaturalStatTrickScraper()
+        nhl_adv = nst.get_team_stats()
+        if nhl_adv:
+            advanced_data['nhl_advanced'] = nhl_adv
+            print(f"    ✓ NST data loaded for {len(nhl_adv)} teams")
+    except Exception as e:
+        print(f"    ✗ Natural Stat Trick failed: {e}")
+
+    return advanced_data
+
+
 def fetch_all_sports_data() -> Dict:
     """
     Fetch comprehensive data for all sports.
     """
     print("\n" + "=" * 60)
-    print("ADVANCED HANDICAPPING HUB - DATA COLLECTION")
+    print("ADVANCED HANDICAPPING HUB - DATA COLLECTION V2.0")
     print(f"Date: {DATE_DISPLAY}")
     print("=" * 60)
 
@@ -62,6 +173,9 @@ def fetch_all_sports_data() -> Dict:
 
     all_data = {}
 
+    # Fetch advanced data first
+    advanced_data = fetch_advanced_data()
+
     for sport, fetcher in fetchers.items():
         try:
             sport_data = fetcher.fetch_all()
@@ -71,10 +185,40 @@ def fetch_all_sports_data() -> Dict:
                 odds = odds_client.get_odds(sport)
                 for game_data in sport_data['games']:
                     game = game_data.get('game', {})
-                    away_name = game.get('away', {}).get('name', '')
-                    home_name = game.get('home', {}).get('name', '')
+                    away = game.get('away', {})
+                    home = game.get('home', {})
+                    away_name = away.get('name', '')
+                    home_name = home.get('name', '')
                     game_key = f"{away_name} @ {home_name}"
                     game_data['odds'] = odds.get(game_key, {})
+
+                    # Add ATS records
+                    sport_ats = advanced_data.get('ats_records', {}).get(sport, {})
+                    game_data['away_ats'] = sport_ats.get(away_name, sport_ats.get(away.get('abbreviation', ''), {}))
+                    game_data['home_ats'] = sport_ats.get(home_name, sport_ats.get(home.get('abbreviation', ''), {}))
+
+                    # Add public betting
+                    sport_public = advanced_data.get('public_betting', {}).get(sport, {})
+                    game_data['public_betting'] = sport_public.get(game_key, {})
+
+                    # Add sharp money
+                    sport_sharp = advanced_data.get('sharp_money', {}).get(sport, {})
+                    game_data['sharp_money'] = sport_sharp.get(game_key, {})
+
+                    # Add power ratings
+                    sport_power = advanced_data.get('power_ratings', {}).get(sport, {})
+                    game_data['away_power'] = sport_power.get(away_name, sport_power.get(away.get('abbreviation', ''), {}))
+                    game_data['home_power'] = sport_power.get(home_name, sport_power.get(home.get('abbreviation', ''), {}))
+
+                    # Add sport-specific advanced data
+                    if sport == 'MLB':
+                        statcast = advanced_data.get('statcast', {})
+                        game_data['away_statcast'] = statcast.get(away_name, {})
+                        game_data['home_statcast'] = statcast.get(home_name, {})
+                    elif sport == 'NHL':
+                        nst = advanced_data.get('nhl_advanced', {})
+                        game_data['away_nst'] = nst.get(away_name, {})
+                        game_data['home_nst'] = nst.get(home_name, {})
 
             all_data[sport] = sport_data
 
@@ -85,12 +229,27 @@ def fetch_all_sports_data() -> Dict:
     return all_data
 
 
+def generate_model_record_html() -> str:
+    """Generate the model performance record section"""
+    if not ADVANCED_MODULES_AVAILABLE:
+        return ''
+
+    try:
+        return tracker.generate_record_html()
+    except Exception as e:
+        print(f"[WARNING] Could not generate model record: {e}")
+        return ''
+
+
 def generate_html_content(all_data: Dict, predictions: Dict) -> str:
     """
     Generate the complete HTML content for the Handicapping Hub.
     """
     # Count games by sport
     game_counts = {sport: len(data.get('games', [])) for sport, data in all_data.items()}
+
+    # Generate model record
+    model_record_html = generate_model_record_html()
 
     # Generate sport sections
     sections_html = ""
@@ -109,6 +268,9 @@ def generate_html_content(all_data: Dict, predictions: Dict) -> str:
             first_sport = False
         tabs_html += f'<button class="tab {active}" onclick="showSection(\'{sport}\')">{sport} ({count})</button>\n            '
 
+    # Count total predictions
+    total_predictions = sum(len(predictions.get(s, [])) for s in predictions)
+
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,8 +286,14 @@ def generate_html_content(all_data: Dict, predictions: Dict) -> str:
         <div class="header-content">
             <a href="index.html" class="back-link">&larr; Back to BetLegend</a>
             <h1>ADVANCED HANDICAPPING <span>HUB</span></h1>
-            <p class="subtitle">Powered by the Killport Model</p>
+            <p class="subtitle">Powered by the Killport Model V2</p>
             <div class="timestamp">Last updated: {DATE_DISPLAY} at {TIME_DISPLAY} &bull; Data from ESPN + Advanced Analytics</div>
+            <div class="stats-bar">
+                <div class="stat-item"><span class="stat-num">{total_predictions}</span><span class="stat-label">Predictions</span></div>
+                <div class="stat-item"><span class="stat-num">{sum(game_counts.values())}</span><span class="stat-label">Games Today</span></div>
+                <div class="stat-item"><span class="stat-num">6</span><span class="stat-label">Sports Covered</span></div>
+            </div>
+            {model_record_html}
             <div class="tabs">
             {tabs_html}
             </div>
@@ -194,6 +362,14 @@ def generate_game_card(sport: str, game_data: Dict, prediction: Dict = None) -> 
     home_injuries = game_data.get('home_injuries', [])
     odds = game_data.get('odds', {})
 
+    # Get new advanced data
+    away_ats = game_data.get('away_ats', {})
+    home_ats = game_data.get('home_ats', {})
+    public_betting = game_data.get('public_betting', {})
+    sharp_money = game_data.get('sharp_money', {})
+    away_power = game_data.get('away_power', {})
+    home_power = game_data.get('home_power', {})
+
     # Get logos
     away_logo = away.get('logo', f"https://a.espncdn.com/i/teamlogos/{sport.lower()}/500/scoreboard/{away.get('abbreviation', '').lower()}.png")
     home_logo = home.get('logo', f"https://a.espncdn.com/i/teamlogos/{sport.lower()}/500/scoreboard/{home.get('abbreviation', '').lower()}.png")
@@ -226,6 +402,11 @@ def generate_game_card(sport: str, game_data: Dict, prediction: Dict = None) -> 
     away_last = game_data.get('away_last10', game_data.get('away_last5', []))
     home_last = game_data.get('home_last10', game_data.get('home_last5', []))
     last_games_html = generate_last_games_html(away_last, home_last, away.get('name', ''), home.get('name', ''))
+
+    # Generate ATS and Betting Intelligence section
+    betting_intel_html = generate_betting_intel_html(away.get('name', ''), home.get('name', ''),
+                                                      away_ats, home_ats, public_betting, sharp_money,
+                                                      away_power, home_power)
 
     return f'''
             <div class="game-card">
@@ -294,6 +475,8 @@ def generate_game_card(sport: str, game_data: Dict, prediction: Dict = None) -> 
 
                 {last_games_html}
 
+                {betting_intel_html}
+
                 <div class="betting-section">
                     <div class="section-title">BETTING LINES</div>
                     <div class="betting-grid">
@@ -358,6 +541,111 @@ def generate_killport_section(prediction: Dict) -> str:
                             <span class="rec-strength">[{strength}]</span>
                         </div>
                         <div class="rec-reasoning">{recommendation.get('reasoning', '')}</div>
+                    </div>
+                </div>
+'''
+
+
+def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, home_ats: Dict,
+                                 public_betting: Dict, sharp_money: Dict,
+                                 away_power: Dict, home_power: Dict) -> str:
+    """Generate the betting intelligence section with ATS, public betting, sharp money, and power ratings"""
+
+    # Format ATS records
+    away_ats_str = f"{away_ats.get('wins', 0)}-{away_ats.get('losses', 0)}" if away_ats else 'N/A'
+    home_ats_str = f"{home_ats.get('wins', 0)}-{home_ats.get('losses', 0)}" if home_ats else 'N/A'
+    away_ats_pct = away_ats.get('win_pct', 'N/A') if away_ats else 'N/A'
+    home_ats_pct = home_ats.get('win_pct', 'N/A') if home_ats else 'N/A'
+
+    # Format public betting
+    away_public = public_betting.get('away_pct', 'N/A')
+    home_public = public_betting.get('home_pct', 'N/A')
+    away_public_ml = public_betting.get('away_ml_pct', 'N/A')
+    home_public_ml = public_betting.get('home_ml_pct', 'N/A')
+
+    # Format sharp money
+    sharp_side = sharp_money.get('side', 'N/A')
+    sharp_indicator = sharp_money.get('indicator', '')
+    rlm = sharp_money.get('rlm', False)
+    steam_move = sharp_money.get('steam_move', False)
+
+    # Format power ratings
+    away_power_val = away_power.get('rating', 'N/A') if away_power else 'N/A'
+    home_power_val = home_power.get('rating', 'N/A') if home_power else 'N/A'
+    away_rank = away_power.get('rank', 'N/A') if away_power else 'N/A'
+    home_rank = home_power.get('rank', 'N/A') if home_power else 'N/A'
+
+    # Build sharp indicators HTML
+    sharp_indicators_html = ''
+    if rlm:
+        sharp_indicators_html += '<span class="sharp-indicator rlm">RLM</span>'
+    if steam_move:
+        sharp_indicators_html += '<span class="sharp-indicator steam">STEAM</span>'
+    if sharp_side and sharp_side != 'N/A':
+        sharp_indicators_html += f'<span class="sharp-side">Sharp: {sharp_side}</span>'
+
+    # Only return content if we have any data
+    has_data = (away_ats or home_ats or public_betting or sharp_money or away_power or home_power)
+    if not has_data:
+        return ''
+
+    return f'''
+                <div class="betting-intel-section">
+                    <div class="section-title">BETTING INTELLIGENCE</div>
+                    <div class="intel-grid">
+                        <div class="intel-box ats-box">
+                            <div class="intel-header">ATS RECORDS</div>
+                            <div class="intel-content">
+                                <div class="intel-row">
+                                    <span class="team-name">{away_name}</span>
+                                    <span class="ats-record">{away_ats_str}</span>
+                                    <span class="ats-pct">{away_ats_pct}%</span>
+                                </div>
+                                <div class="intel-row">
+                                    <span class="team-name">{home_name}</span>
+                                    <span class="ats-record">{home_ats_str}</span>
+                                    <span class="ats-pct">{home_ats_pct}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="intel-box public-box">
+                            <div class="intel-header">PUBLIC BETTING</div>
+                            <div class="intel-content">
+                                <div class="intel-row">
+                                    <span class="team-name">{away_name}</span>
+                                    <span class="public-pct spread">Spread: {away_public}%</span>
+                                    <span class="public-pct ml">ML: {away_public_ml}%</span>
+                                </div>
+                                <div class="intel-row">
+                                    <span class="team-name">{home_name}</span>
+                                    <span class="public-pct spread">Spread: {home_public}%</span>
+                                    <span class="public-pct ml">ML: {home_public_ml}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="intel-box sharp-box">
+                            <div class="intel-header">SHARP MONEY</div>
+                            <div class="intel-content">
+                                <div class="sharp-indicators">
+                                    {sharp_indicators_html if sharp_indicators_html else '<span class="no-data">No sharp action detected</span>'}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="intel-box power-box">
+                            <div class="intel-header">POWER RATINGS</div>
+                            <div class="intel-content">
+                                <div class="intel-row">
+                                    <span class="team-name">{away_name}</span>
+                                    <span class="power-rating">{away_power_val}</span>
+                                    <span class="power-rank">#{away_rank}</span>
+                                </div>
+                                <div class="intel-row">
+                                    <span class="team-name">{home_name}</span>
+                                    <span class="power-rating">{home_power_val}</span>
+                                    <span class="power-rank">#{home_rank}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 '''
@@ -1142,6 +1430,224 @@ def generate_css() -> str:
 
         .no-data { color: var(--text-secondary); font-size: 12px; padding: 10px; text-align: center; }
 
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 30px;
+            margin: 15px 0;
+            padding: 15px 20px;
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-item .stat-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Model Record */
+        .model-record {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 217, 255, 0.1));
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .record-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .record-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-green);
+            letter-spacing: 2px;
+        }
+
+        .streak {
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .streak.win-streak {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: #fff;
+        }
+
+        .streak.loss-streak {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: #fff;
+        }
+
+        .record-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .record-stats .stat-box {
+            text-align: center;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .record-stats .label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .record-stats .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .record-stats .value.positive { color: var(--accent-green); }
+        .record-stats .value.negative { color: var(--accent-red); }
+
+        .by-sport .sport-record {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+        }
+
+        .sport-record .sport-name { color: var(--text-secondary); }
+        .sport-record .record { font-weight: 700; color: var(--text-primary); }
+        .sport-record .win-pct { color: var(--accent-cyan); }
+        .sport-record .units.positive { color: var(--accent-green); }
+        .sport-record .units.negative { color: var(--accent-red); }
+
+        /* Betting Intelligence Section */
+        .betting-intel-section {
+            padding: 20px 25px;
+            border-top: 1px solid var(--border-color);
+            background: rgba(0, 217, 255, 0.03);
+        }
+
+        .betting-intel-section .section-title {
+            color: var(--accent-cyan);
+        }
+
+        .intel-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .intel-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .intel-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .intel-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .intel-row .team-name {
+            color: var(--text-secondary);
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .intel-row .ats-record { font-weight: 700; color: var(--text-primary); }
+        .intel-row .ats-pct { color: var(--accent-cyan); font-weight: 700; }
+
+        .intel-row .public-pct {
+            font-size: 11px;
+            color: var(--text-primary);
+        }
+
+        .intel-row .power-rating {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .intel-row .power-rank {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .sharp-indicators {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .sharp-indicator {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .sharp-indicator.rlm {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            color: #fff;
+        }
+
+        .sharp-indicator.steam {
+            background: linear-gradient(135deg, #ea580c, #c2410c);
+            color: #fff;
+        }
+
+        .sharp-side {
+            font-size: 12px;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
         @media (max-width: 900px) {
             .matchup-header { grid-template-columns: 1fr; gap: 15px; text-align: center; }
             .team-box, .team-box.home { flex-direction: column; text-align: center; }
@@ -1150,6 +1656,12 @@ def generate_css() -> str:
             .prediction-main { grid-template-columns: 1fr; }
             .injuries-grid, .recent-grid { grid-template-columns: 1fr; }
             .betting-grid { grid-template-columns: 1fr; }
+            .intel-grid { grid-template-columns: 1fr 1fr; }
+            .stats-bar { flex-wrap: wrap; justify-content: center; }
+        }
+
+        @media (max-width: 600px) {
+            .intel-grid { grid-template-columns: 1fr; }
         }
     </style>
 '''
