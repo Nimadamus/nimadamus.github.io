@@ -156,37 +156,46 @@ If you cannot verify information:
 
 ## 1B. MANDATORY ADVANCED STATS & BETTING TRENDS
 
-### ⚠️ CRITICAL: ALL SPORTS ARTICLES MUST INCLUDE ADVANCED ANALYTICS ⚠️
+### ⚠️ CRITICAL: ALL ANALYSIS MUST BE DATA-DRIVEN WITH VERIFIED NUMBERS ⚠️
 
-**EFFECTIVE DECEMBER 3, 2025 - REQUIRED FOR ALL SLATE POSTS**
+**EFFECTIVE DECEMBER 3, 2025 - ZERO TOLERANCE FOR CONJECTURE**
 
-Every game analysis MUST include verified advanced statistics and betting trends. This makes our content more valuable and credible than generic sports coverage.
+Every game analysis MUST include VERIFIED advanced statistics with SPECIFIC NUMBERS from trusted sources. NO OPINIONS OR GUESSES. ALL NUMBERS MUST BE SOURCED AND VERIFIED.
+
+**THE DIFFERENCE:**
+- **WRONG:** "The Nuggets have a great offense" ← UNACCEPTABLE
+- **RIGHT:** "The Nuggets rank 1st in offensive rating at 125.7 points per 100 possessions" ← CORRECT
+
+### VERIFICATION SOURCES (MANDATORY)
+- **NBA:** NBA.com/stats, Basketball-Reference, NBAstuffer, StatMuse, FOX Sports
+- **NHL:** MoneyPuck, Natural Stat Trick, NHL.com/stats, Hockey-Reference
+- **Betting:** Covers.com, OddsShark, TeamRankings, Action Network, VegasInsider
 
 ### REQUIRED STATS BY SPORT
 
 #### NHL (Hockey)
-For EVERY team mentioned, include:
+For EVERY team mentioned, include SPECIFIC NUMBERS:
 - [ ] Current record (W-L-OT) in game header
-- [ ] Goals for/against per game and league ranking
-- [ ] Power play percentage and league ranking
-- [ ] Penalty kill percentage and league ranking
-- [ ] Goaltender stats (GAA, SV%, recent record)
-- [ ] Home/road splits where relevant
-- [ ] Recent O/U trends (e.g., "OVER in 14 of last 16 games")
-- [ ] Key player stats with league rankings
-- [ ] Injury impact analysis with specific goalie/player replacements
+- [ ] Goals for/against per game WITH LEAGUE RANKING (e.g., "3.26 GF/G, 10th in NHL")
+- [ ] Power play % WITH LEAGUE RANKING (e.g., "23.7% PP, 10th in NHL")
+- [ ] Penalty kill % WITH LEAGUE RANKING (e.g., "81.2% PK, 15th in NHL")
+- [ ] Corsi For % at 5v5 (e.g., "52% CF%, indicating possession dominance")
+- [ ] Expected Goals % at 5v5 (e.g., "48.5% xG%, slightly underperforming possession")
+- [ ] Goaltender stats (GAA, SV%, record) - MUST be current
+- [ ] Recent form with SPECIFIC NUMBERS (e.g., "7-2-1 in last 10")
+- [ ] Key player point totals WITH LEAGUE RANKING
 
 #### NBA (Basketball)
-For EVERY team mentioned, include:
+For EVERY team mentioned, include SPECIFIC NUMBERS:
 - [ ] Current record in game header
-- [ ] Offensive/defensive ratings and league rankings
-- [ ] Pace factor (possessions per game)
-- [ ] 3-point shooting % and attempts
-- [ ] ATS record (against the spread)
-- [ ] Home/road splits
-- [ ] Recent O/U trends
-- [ ] Key player advanced stats (PER, TS%, +/-)
-- [ ] Injury impact on rotations and minutes distribution
+- [ ] Offensive rating WITH LEAGUE RANKING (e.g., "125.7 ORtg, 1st in NBA")
+- [ ] Defensive rating WITH LEAGUE RANKING (e.g., "115.9 DRtg, 18th in NBA")
+- [ ] Net rating (e.g., "+9.8 NetRtg, 3rd in NBA")
+- [ ] Pace factor (e.g., "102.3 possessions per game")
+- [ ] Points per game WITH LEAGUE RANKING
+- [ ] Points allowed per game WITH LEAGUE RANKING
+- [ ] eFG% or True Shooting % where relevant
+- [ ] Key player stats WITH CONTEXT (e.g., "Jokic: 29.0/12.8/11.1, leads league in triple-doubles")
 
 #### NFL (Football)
 For EVERY team mentioned, include:
@@ -233,30 +242,45 @@ For EVERY team mentioned, include:
 - [ ] Key player availability
 - [ ] Head-to-head history
 
-### BETTING TRENDS TO INCLUDE
+### BETTING TRENDS TO INCLUDE (WITH SPECIFIC NUMBERS)
 
-Every article should include relevant betting trends:
-- ATS (Against The Spread) record when applicable
-- Over/Under trends (e.g., "OVER in X of last Y games")
-- Home/road betting splits
-- Situational trends (back-to-back, after rest, divisional, etc.)
-- Line movement context when relevant
+Every article MUST include relevant betting trends WITH SPECIFIC RECORDS:
+- ATS record (e.g., "Nuggets are 12-7 ATS this season, 8-3 ATS as favorites")
+- Over/Under record (e.g., "OVER is 11-8 in Nuggets games this season")
+- Home/road betting splits (e.g., "7-2 ATS at home, 5-5 ATS on the road")
+- Recent ATS trend (e.g., "4-1 ATS in last 5 games")
+- Line movement if significant (e.g., "Line moved from -6.5 to -7.5")
+
+### ANALYTICAL INSIGHTS REQUIRED
+
+Every game analysis MUST include:
+1. **The Matchup Edge:** Identify specific statistical advantages (e.g., "Denver's 125.7 ORtg vs Indiana's 122.3 DRtg creates a +3.4 efficiency gap")
+2. **Key Number Analysis:** Why the spread matters (e.g., "7 is a key number in basketball, hitting X% of games")
+3. **Trend Convergence:** Multiple trends pointing same direction (e.g., "ATS record + O/U trend + head-to-head history all favor...")
+4. **Pace Analysis:** How pace affects totals (e.g., "Both teams in top 10 in pace, expect 230+ total")
+5. **Rest/Schedule Spots:** Back-to-backs, travel, rest advantages with specific context
 
 ### VERIFICATION PROCESS FOR STATS
 
-1. Search for current team stats on ESPN, official league sites, or Sports Reference
-2. Cross-reference with betting sites (Covers, OddsShark) for trends
+1. Search for current team stats on ESPN, official league sites, Sports Reference, or StatMuse
+2. Cross-reference with betting sites (Covers, OddsShark, Action Network) for trends
 3. Verify player stats are current (within last 1-2 days)
 4. Include league rankings to provide context (e.g., "25.0% PP, 5th in NHL")
 5. Note injury impacts with specific player names and replacement options
+6. **NEVER USE MEMORY** - Always search to verify even if you think you know the stat
 
-### EXAMPLE OF PROPER STAT INTEGRATION
+### EXAMPLES OF PROPER DATA-DRIVEN ANALYSIS
+
+**EXCELLENT:**
+"Denver enters with the NBA's best offensive rating at 125.7 points per 100 possessions (1st), while Indiana allows 118.6 points per 100 (22nd) - a +7.1 efficiency differential. The Nuggets are 12-7 ATS this season (63.2%), including 8-3 ATS as road favorites. The OVER has hit in 11 of Denver's 19 games (57.9%), and with Indiana's pace (99.1, 8th in NBA) creating extra possessions, the 235.5 total looks live. Jokic's 29.0/12.8/11.1 stat line leads all players in PER (32.1) and BPM (+12.4)."
 
 **GOOD:**
-"The Stars are averaging 3.26 goals per game (10th in NHL) while allowing just 2.79 goals against (9th). Their power play is operating at a blistering 33.3%, ranking 2nd in the entire league. Casey DeSmith has been outstanding lately, posting a 5-0-1 record with a 1.46 GAA and .943 save percentage across his last six appearances."
+"The Stars are averaging 3.37 goals per game (3rd in NHL, 91 GF) while allowing just 2.56 goals against (7th, 69 GA). Their power play is operating at 33.3%, ranking 2nd in the entire league. At 5v5, Dallas owns a 52.1% Corsi For and 51.8% xG%, indicating sustainable possession dominance."
 
-**BAD:**
+**UNACCEPTABLE:**
 "The Stars have been playing great hockey and their offense is clicking."
+"Denver's offense should dominate Indiana's weak defense."
+"This feels like a good spot for the Nuggets."
 
 ---
 
