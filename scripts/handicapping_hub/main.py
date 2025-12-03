@@ -84,15 +84,18 @@ def fetch_advanced_data() -> Dict:
         print("  Fetching ATS records and public betting...")
         covers = CoversScraper()
         for sport in ['NBA', 'NHL', 'NFL', 'NCAAF', 'NCAAB']:
-            ats = covers.get_team_ats_records(sport)
-            if ats:
-                advanced_data['ats_records'][sport] = ats
             public = covers.get_public_betting(sport)
             if public:
-                advanced_data['public_betting'][sport] = public
-        print(f"    ✓ ATS records loaded for {len(advanced_data['ats_records'])} sports")
+                # Convert list to dict keyed by matchup
+                for game in public:
+                    matchup = game.get('matchup', '')
+                    if matchup:
+                        if sport not in advanced_data['public_betting']:
+                            advanced_data['public_betting'][sport] = {}
+                        advanced_data['public_betting'][sport][matchup] = game
+        print(f"    [OK] Public betting loaded for {len(advanced_data['public_betting'])} sports")
     except Exception as e:
-        print(f"    ✗ Covers scraper failed: {e}")
+        print(f"    [X] Covers scraper failed: {e}")
 
     # TeamRankings Power Ratings
     try:
@@ -102,9 +105,9 @@ def fetch_advanced_data() -> Dict:
             ratings = rankings.get_power_ratings(sport)
             if ratings:
                 advanced_data['power_ratings'][sport] = ratings
-        print(f"    ✓ Power ratings loaded for {len(advanced_data['power_ratings'])} sports")
+        print(f"    [OK] Power ratings loaded for {len(advanced_data['power_ratings'])} sports")
     except Exception as e:
-        print(f"    ✗ TeamRankings scraper failed: {e}")
+        print(f"    [X] TeamRankings scraper failed: {e}")
 
     # Sharp Money Indicators (ActionNetwork)
     try:
@@ -114,31 +117,41 @@ def fetch_advanced_data() -> Dict:
             sharp = action.get_sharp_action(sport)
             if sharp:
                 advanced_data['sharp_money'][sport] = sharp
-        print(f"    ✓ Sharp money loaded for {len(advanced_data['sharp_money'])} sports")
+        print(f"    [OK] Sharp money loaded for {len(advanced_data['sharp_money'])} sports")
     except Exception as e:
-        print(f"    ✗ ActionNetwork scraper failed: {e}")
+        print(f"    [X] ActionNetwork scraper failed: {e}")
 
     # Baseball Savant Statcast (MLB only)
     try:
         print("  Fetching Baseball Savant data...")
         savant = BaseballSavantScraper()
-        statcast = savant.get_team_statcast()
+        # Get team statcast for common teams
+        statcast = {}
+        for team in ['NYY', 'BOS', 'LAD', 'CHC', 'HOU', 'ATL', 'PHI', 'SD', 'SEA', 'TB']:
+            team_data = savant.get_team_statcast(team)
+            if team_data:
+                statcast[team] = team_data
         if statcast:
             advanced_data['statcast'] = statcast
-            print(f"    ✓ Statcast data loaded for {len(statcast)} teams")
+            print(f"    [OK] Statcast data loaded for {len(statcast)} teams")
     except Exception as e:
-        print(f"    ✗ Baseball Savant failed: {e}")
+        print(f"    [X] Baseball Savant failed: {e}")
 
     # Natural Stat Trick (NHL only)
     try:
         print("  Fetching Natural Stat Trick data...")
         nst = NaturalStatTrickScraper()
-        nhl_adv = nst.get_team_stats()
+        # Get analytics for common NHL teams
+        nhl_adv = {}
+        for team in ['BOS', 'TOR', 'FLA', 'NYR', 'CAR', 'EDM', 'VGK', 'COL', 'DAL', 'WPG']:
+            team_data = nst.get_team_analytics(team)
+            if team_data:
+                nhl_adv[team] = team_data
         if nhl_adv:
             advanced_data['nhl_advanced'] = nhl_adv
-            print(f"    ✓ NST data loaded for {len(nhl_adv)} teams")
+            print(f"    [OK] NST data loaded for {len(nhl_adv)} teams")
     except Exception as e:
-        print(f"    ✗ Natural Stat Trick failed: {e}")
+        print(f"    [X] Natural Stat Trick failed: {e}")
 
     return advanced_data
 
