@@ -146,55 +146,73 @@
             gap: 0;
         }
         .team-section {
-            padding: 15px 20px;
+            padding: 20px 25px;
             border-top: 1px solid #eee;
         }
         .team-section.away {
-            background: #fafafa;
+            background: #f8f9fa;
             border-right: 1px solid #eee;
         }
         .team-section.home { background: #fff; }
         .team-section-header {
-            display: none; /* HIDE duplicate headers */
-        }
-        .team-section-logo { display: none; }
-        .team-section-info { display: none; }
-        .team-stats-grid {
             display: flex;
-            flex-direction: column;
-            gap: 0;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .team-section-logo { width: 40px; height: 40px; object-fit: contain; }
+        .team-section-info h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+        .team-section-info .record {
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+        }
+        .team-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
         .stats-column {
-            background: transparent;
-            border-radius: 0;
-            padding: 0;
-            border: none;
+            background: #fff;
+            border-radius: 6px;
+            padding: 12px;
+            border: 1px solid #e8e8e8;
         }
+        .team-section.away .stats-column { background: #fff; }
+        .team-section.home .stats-column { background: #fafafa; }
         .stats-column-title {
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: #fd5000;
-            margin-bottom: 8px;
-            padding-bottom: 5px;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
             border-bottom: 1px solid #eee;
         }
         .stat-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 0;
-            border-bottom: none;
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
+        .stat-item:last-child { border-bottom: none; }
         .stat-item .label {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
-            color: #888;
+            color: #666;
             text-transform: uppercase;
         }
         .stat-item .value {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 700;
             color: #1a1a1a;
         }
@@ -463,6 +481,35 @@
             .l10-grid { grid-template-columns: 1fr; }
         }
     
+        /* Section Line Movements - appears at bottom of each sport section */
+        .section-line-movements {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 1px solid #fca5a5;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin: 20px 0 10px 0;
+        }
+        .line-movements-header {
+            font-size: 12px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 8px;
+        }
+        .line-movements-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .lm-item {
+            background: #fff;
+            border: 1px solid #fca5a5;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #b91c1c;
+        }
+
         .alerts-container {
             margin-bottom: 15px;
         }
@@ -700,87 +747,6 @@
             </div>
         </div>
 
-
-        <div class="alerts-container">
-            <div class="alerts-banner">
-                <div class="alerts-header" onclick="toggleAlerts()">
-                    <span class="alert-icon">⚠️</span>
-                    <span class="alert-title">LINE MOVEMENTS</span>
-                    <span class="alert-count">10 alerts</span>
-                    <span class="alert-toggle" id="alertToggle">
-                        <span>View All</span>
-                        <span id="alertArrow">▼</span>
-                    </span>
-                </div>
-                <div class="alerts-scroll" id="alertsContent">
-                    <div class="alert-item">
-                        <span class="sport-tag">NBA</span>
-                        <span class="alert-text">WSH ML: 550 → 575 (vs PHI)</span>
-                        <span class="alert-time-tag">11:00 AM</span>
-                    </div>
-                    <div class="alert-item">
-                        <span class="sport-tag">NBA</span>
-                        <span class="alert-text">MIN ML: -470 → -625 (vs NOP)</span>
-                        <span class="alert-time-tag">11:00 AM</span>
-                    </div>
-                    <div class="alert-item">
-                        <span class="sport-tag">NBA</span>
-                        <span class="alert-text">MIN/NOP Total: 234.5 → 232.5</span>
-                        <span class="alert-time-tag">11:00 AM</span>
-                    </div>
-                    <div class="alert-item">
-                        <span class="sport-tag">NBA</span>
-                        <span class="alert-text">OKC ML: -625 → -600 (vs GSW)</span>
-                        <span class="alert-time-tag">11:00 AM</span>
-                    </div>
-                    <div class="alert-item">
-                        <span class="sport-tag">NFL</span>
-                        <span class="alert-text">SEA ML: -380 → -425 (vs ATL)</span>
-                        <span class="alert-time-tag">11:00 AM</span>
-                    </div>
-                    <div class="alert-item">
-                        <span class="sport-tag">NBA</span>
-                        <span class="alert-text">WSH ML: 490 → 550 (vs PHI)</span>
-                        <span class="alert-time-tag">08:00 AM</span>
-                    </div>
-                    <div class="alert-item">
-                        <span class="sport-tag">NBA</span>
-                        <span class="alert-text">MIN Spread: -8.5 → -10.5 (vs NOP)</span>
-                        <span class="alert-time-tag">08:00 AM</span>
-                    </div>
-                    <div class="alert-item">
-                        <span class="sport-tag">NBA</span>
-                        <span class="alert-text">MIN ML: -410 → -470 (vs NOP)</span>
-                        <span class="alert-time-tag">08:00 AM</span>
-                    </div>
-                    <div class="alert-item">
-                        <span class="sport-tag">NBA</span>
-                        <span class="alert-text">PHX/OKC Total: 225.5 → 223.5</span>
-                        <span class="alert-time-tag">08:00 AM</span>
-                    </div>
-                    <div class="alert-item">
-                        <span class="sport-tag">NFL</span>
-                        <span class="alert-text">DEN ML: -440 → -410 (vs LV)</span>
-                        <span class="alert-time-tag">08:00 AM</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            function toggleAlerts() {
-                const content = document.getElementById('alertsContent');
-                const arrow = document.getElementById('alertArrow');
-                const toggle = document.getElementById('alertToggle').querySelector('span:first-child');
-                content.classList.toggle('expanded');
-                if (content.classList.contains('expanded')) {
-                    arrow.textContent = '▲';
-                    toggle.textContent = 'Hide';
-                } else {
-                    arrow.textContent = '▼';
-                    toggle.textContent = 'View All';
-                }
-            }
-        </script>
 
         <div id="NBA" class="section active">
             <div class="section-header">
@@ -2438,6 +2404,19 @@
                             <div class="values"><span>OKC: 2126.9</span><span>GS: 2072.7</span></div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- NBA Line Movements -->
+            <div class="section-line-movements">
+                <div class="line-movements-header">⚠️ NBA Line Movements Today</div>
+                <div class="line-movements-list">
+                    <span class="lm-item">WSH ML: 550→575 (vs PHI)</span>
+                    <span class="lm-item">MIN ML: -470→-625 (vs NOP)</span>
+                    <span class="lm-item">MIN/NOP O/U: 234.5→232.5</span>
+                    <span class="lm-item">OKC ML: -625→-600 (vs GSW)</span>
+                    <span class="lm-item">MIN Spread: -8.5→-10.5</span>
+                    <span class="lm-item">PHX/OKC O/U: 225.5→223.5</span>
                 </div>
             </div>
         </div>
