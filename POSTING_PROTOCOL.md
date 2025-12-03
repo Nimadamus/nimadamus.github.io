@@ -284,6 +284,56 @@ Every game analysis MUST include:
 
 ---
 
+## 1C. SPORTS PAGES VS BLOG POSTS - CRITICAL DISTINCTION
+
+### ⚠️ SPORTS PAGES ARE NOT FOR PICKS - ANALYSIS ONLY ⚠️
+
+**SPORTS PAGES (nba.html, nhl.html, nfl.html, ncaab.html, ncaaf.html, mlb.html, soccer.html):**
+
+These pages are for ANALYSIS ONLY. They contain:
+- ✅ Stats and advanced stats (with specific numbers and rankings)
+- ✅ Betting trends (ATS records, O/U history, home/road splits)
+- ✅ Matchup analysis (efficiency gaps, pace analysis, key numbers)
+- ✅ Human-sounding commentary and insights
+- ✅ Injury impact analysis
+- ✅ Historical context
+
+**SPORTS PAGES DO NOT CONTAIN:**
+- ❌ Picks or predictions
+- ❌ "Take [Team]" language
+- ❌ "I'm betting..." or "My pick is..."
+- ❌ Verdict sections
+- ❌ Explicit gambling recommendations
+
+**BLOG POSTS (blog-page*.html):**
+
+These pages ARE for picks. They contain:
+- ✅ Everything from sports pages PLUS
+- ✅ Explicit picks with lines (e.g., "Lakers -4.5")
+- ✅ Verdict sections with final pick
+- ✅ "Take [Team]" language
+- ✅ Conviction and gambling recommendations
+
+### SPORTS PAGE WRITING STYLE
+
+**DO write like this:**
+"The matchup favors Denver's elite offense against Indiana's struggling defense. The efficiency gap of +7.1 points per 100 possessions is significant. Denver's 8-3 ATS record as road favorites and the OVER hitting in 11 of 19 games creates an interesting narrative for bettors to consider."
+
+**DON'T write like this:**
+"Take Denver here. The Nuggets are the play tonight. I'm betting the Nuggets -6.5."
+
+### TONE FOR SPORTS PAGES
+
+- Present data and let readers draw conclusions
+- Use analytical, informative language
+- Be enthusiastic about the matchups and stats
+- Sound human and conversational, not robotic
+- Provide context and insights without explicit picks
+- Phrases like "creates value," "interesting spot," "worth monitoring" are acceptable
+- Phrases like "my pick," "take this," "bet this" are NOT acceptable
+
+---
+
 ## 2. CONTENT STYLE
 
 ### Writing Tone - CRITICAL
