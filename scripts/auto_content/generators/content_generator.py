@@ -28,96 +28,79 @@ class ContentGenerator:
         self.model = CLAUDE_MODEL
 
     def generate_game_article(self, game_data: Dict, sport: str) -> str:
-        """Generate an ORIGINAL article - different angle every time."""
+        """Generate articles matching BetLegend's actual voice - sharp, colorful, opinionated."""
 
         home = game_data.get('home', {})
         away = game_data.get('away', {})
         odds = game_data.get('odds', {})
 
-        # Compact game data
-        game_info = f"""
-{away.get('name')} ({away.get('record', '?')}) @ {home.get('name')} ({home.get('record', '?')})
+        game_info = f"""{away.get('name')} ({away.get('record', '?')}) @ {home.get('name')} ({home.get('record', '?')})
 Away L10: {away.get('l10', '?')} | Home L10: {home.get('l10', '?')}
-Away Win%: {away.get('win_pct', 0):.0f}% | Home Win%: {home.get('win_pct', 0):.0f}%
-Line: {odds.get('spread', 'N/A')} | Total: {odds.get('total', 'N/A')}
-Venue: {game_data.get('venue', '?')}"""
+Line: {odds.get('spread', 'N/A')} | Total: {odds.get('total', 'N/A')}"""
 
-        # Sport-specific data
         if sport.lower() == 'nhl':
-            game_info += f"\nStandings Points - {home.get('name')}: {home.get('points', '?')} | {away.get('name')}: {away.get('points', '?')}"
-        elif sport.lower() == 'soccer':
-            game_info += f"\nLeague: {game_data.get('league', '?')} | Matchweek: {game_data.get('match_week', '?')}"
+            game_info += f"\nStandings: {home.get('name')} {home.get('points', '?')} pts | {away.get('name')} {away.get('points', '?')} pts"
 
-        # Pick a random angle - this is what makes each article DIFFERENT
-        angles = [
-            ("TRAP GAME ALERT", "Look for the trap. Why might the favorite stumble here? Or is the dog getting too much love?"),
-            ("FOLLOW THE MONEY", "Sharps vs squares. Where's the smart money going and why?"),
-            ("SCHEDULING SPOT", "Rest, travel, motivation - what situational factors matter most here?"),
-            ("KEY NUMBER ANALYSIS", "Is this line sitting on a key number? What's the vig telling us?"),
-            ("REVENGE NARRATIVE", "Any bad blood? Recent embarrassments? Teams with something to prove?"),
-            ("PACE & STYLE CLASH", "How do these teams' styles match up? Fast vs slow, offense vs defense?"),
-            ("HOME COOKING", "How much does home court/ice/field actually matter in this specific matchup?"),
-            ("FORM CHECK", "Forget the season record - what have these teams done in the last 2 weeks?"),
-            ("OVERREACTION TEST", "Is the market overreacting to recent results? Time to fade the public?"),
-            ("TOTAL BREAKDOWN", "Forget the side - is the total the real play here?"),
-        ]
+        # Sample of ACTUAL BetLegend writing for style reference
+        style_examples = """
+REAL EXAMPLES OF THE VOICE I WANT:
+- "The public's sleeping on Golden State here, and I'm ready to wake up with some money in my pocket."
+- "55% is barely above mediocre - that's not some fortress we're talking about."
+- "Getting 4.5 points with their experience feels like highway robbery."
+- "Philly's been fool's gold at home - they beat the teams they're supposed to beat and fold against quality opposition."
+- "Listen, kid - you're right to look at that total."
+- "Washington? They couldn't stop a nosebleed if their lives depended on it."
+- "The Wizards are giving up 118 per game at home, which is pathetic even by their rock-bottom standards."
+- "Boston's been Swiss cheese on the road."
+- "Washington desperate for any excitement to keep the dozen fans awake."
+- "Two teams that can't guard a traffic cone."
+- "**Hammer the over at 227.5. This total should be 235.**"
+- "**Lean: Warriors +4.5**"
+"""
 
-        angle_name, angle_focus = random.choice(angles)
-
-        # Pick a random voice/style
-        voices = [
-            "You're a crusty old Vegas handicapper who's seen it all. Cynical but sharp.",
-            "You're a young analytics guy who sees patterns others miss. Data-driven but not boring.",
-            "You're a former player who understands the game from inside. Real talk, no BS.",
-            "You're a contrarian who loves fading public opinion. Always looking for the other side.",
-            "You're a situational bettor who cares more about context than talent. Schedule, rest, motivation.",
-        ]
-
-        voice = random.choice(voices)
-
-        # Pick opening style
+        # Pick a unique opening style for variety
         openers = [
-            "Start with your strongest opinion about this game",
-            "Start with what everyone else is getting wrong",
-            "Start with the one stat that actually matters here",
-            "Start with a rhetorical question that frames your take",
-            "Start by calling out the line - is it right or not?",
-            "Start with what you'd tell a friend who asked about this game",
+            "Start with a bold claim about which side wins",
+            "Start by calling out what the public is getting wrong",
+            "Start with the one number that tells the whole story",
+            "Start by mocking the weaker team",
+            "Start with why this line is off",
+            "Start with the trap game angle",
+            "Start with recent form - who's hot, who's not",
+            "Start with a question that sets up your take",
+            "Start by praising the underdog's value",
+            "Start with the total being the real play",
+            "Start with a scheduling/rest angle",
+            "Start with why the favorite is overvalued",
         ]
+        chosen_opener = random.choice(openers)
 
-        opener = random.choice(openers)
+        prompt = f"""You write sharp sports betting analysis with REAL personality. Study these examples of the voice I need:
 
-        prompt = f"""VOICE: {voice}
+{style_examples}
 
-ANGLE: {angle_name}
-{angle_focus}
-
-GAME DATA:
+NOW WRITE ANALYSIS FOR THIS GAME:
 {game_info}
 
-INSTRUCTIONS:
-- {opener}
-- 120-180 words MAXIMUM. Tight. Every word earns its place.
-- Have a TAKE. Don't hedge with "could go either way" garbage
-- Reference the actual numbers but don't just list stats
-- Sound like a human with opinions, not a content algorithm
-- End with a clear lean (side or total) - make it punchy
+OPENING INSTRUCTION: {chosen_opener}
 
-BANNED PHRASES (instant fail if you use these):
-- "In this matchup"
-- "Let's dive in" / "Let's break it down"
-- "At the end of the day"
-- "It's worth noting"
-- "All things considered"
-- "That being said"
-- "Moving forward"
-- Any sentence starting with "This is"
+RULES:
+1. Write 3-4 short paragraphs (150-200 words total)
+2. Use vivid metaphors and colorful language like the examples
+3. Be OPINIONATED - take a strong stance, don't hedge
+4. Include specific numbers from the data naturally
+5. End with a bold pick line using ** like: **Lean: Team +3.5** or **Hammer the over at 220**
+6. Sound like a sharp bettor, not a robot
+7. Mock bad teams, praise good ones, call out trap games
+8. NEVER start with "Listen" or "Here's the thing" or "Look" - find a unique opening
+9. NO generic phrases like "it's worth noting" or "at the end of the day"
+10. NO emojis
 
-Write the take. No title. No headers. Just the analysis."""
+Write it now. Just the paragraphs, no title."""
 
         response = self.client.messages.create(
             model=self.model,
-            max_tokens=350,
+            max_tokens=400,
             messages=[{"role": "user", "content": prompt}]
         )
 
