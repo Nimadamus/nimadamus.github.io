@@ -1674,13 +1674,12 @@ function calculateFiveInningBreakdown() {
 }
 
 function calculateTotalBetsBreakdown() {
-    // Filter for all Over/Under total bets (including TT abbreviation for team totals)
+    // Filter for all Over/Under total bets
     const totalBetsData = allData.filter(row => {
         const pick = (row.Pick || row.pick || '').toLowerCase();
         const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
         const searchText = pick + ' ' + betType;
-        // Include 'tt' to catch team total bets that use abbreviation (e.g., "Lakers TT o112.5")
-        return searchText.includes('over') || searchText.includes('under') || searchText.includes('total') || searchText.includes('tt');
+        return searchText.includes('over') || searchText.includes('under') || searchText.includes('total');
     });
 
     console.log(`Total Bets Breakdown - Found ${totalBetsData.length} total bets (over/under)`);
