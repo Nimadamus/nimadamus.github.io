@@ -23,6 +23,15 @@ import json
 from datetime import datetime
 from typing import Dict, List, Optional
 
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    # Load from user home directory .env
+    load_dotenv(os.path.expanduser('~/.env'))
+    load_dotenv()  # Also check current directory
+except ImportError:
+    pass  # dotenv not installed, rely on system env vars
+
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -196,8 +205,8 @@ def fetch_all_sports_data() -> Dict:
         'NCAAB': NCAABFetcher(),
     }
 
-    # Initialize odds client
-    odds_api_key = os.environ.get('ODDS_API_KEY', '')
+    # Initialize odds client (check both env var names)
+    odds_api_key = os.environ.get('ODDS_API_KEY') or os.environ.get('THE_ODDS_API_KEY', '')
     odds_client = OddsClient(odds_api_key) if odds_api_key else None
 
     if odds_api_key:
@@ -230,8 +239,13 @@ def fetch_all_sports_data() -> Dict:
                     home_name = home.get('displayName', home.get('name', ''))
                     game_key = f"{away_name} @ {home_name}"
 
-                    # Add odds if available
-                    game_data['odds'] = odds.get(game_key, {})
+                    # Add odds if available - try exact match first, then normalized
+                    game_odds = odds.get(game_key, {})
+                    if not game_odds and odds_client:
+                        # Try normalized key matching
+                        normalized_key = f"{odds_client.normalize_team_name(away_name)} @ {odds_client.normalize_team_name(home_name)}"
+                        game_odds = odds.get(normalized_key, {})
+                    game_data['odds'] = game_odds
 
                     # Add ATS records
                     sport_ats = advanced_data.get('ats_records', {}).get(sport, {})

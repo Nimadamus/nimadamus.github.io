@@ -124,7 +124,7 @@ class OddsClient:
     """Fetch betting odds from The Odds API"""
 
     def __init__(self, api_key: str = None):
-        self.api_key = api_key or os.environ.get('ODDS_API_KEY', '')
+        self.api_key = api_key or os.environ.get('ODDS_API_KEY') or os.environ.get('THE_ODDS_API_KEY', '')
         self.base_url = 'https://api.the-odds-api.com/v4/sports'
         self.sport_keys = {
             'NBA': 'basketball_nba',
@@ -134,6 +134,17 @@ class OddsClient:
             'NCAAB': 'basketball_ncaab',
             'NCAAF': 'americanfootball_ncaaf',
         }
+
+    @staticmethod
+    def normalize_team_name(name: str) -> str:
+        """Normalize team name for consistent matching"""
+        if not name:
+            return ''
+        # Remove periods, extra spaces, lowercase for comparison
+        normalized = name.lower().replace('.', '').replace('-', ' ').strip()
+        # Common variations
+        normalized = normalized.replace('st ', 'st. ')  # Standardize St. Louis, St. John's etc.
+        return ' '.join(normalized.split())  # Remove extra spaces
 
     def get_odds(self, sport: str) -> Dict:
         """Fetch odds for a sport"""
@@ -163,10 +174,16 @@ class OddsClient:
             for game in data:
                 home_team = game.get('home_team', '')
                 away_team = game.get('away_team', '')
-                key = f"{away_team} @ {home_team}"
 
+                # Store with original key
+                key = f"{away_team} @ {home_team}"
                 odds_data = self._extract_odds(game, home_team, away_team)
                 odds_by_game[key] = odds_data
+
+                # Also store with normalized key for better matching
+                normalized_key = f"{self.normalize_team_name(away_team)} @ {self.normalize_team_name(home_team)}"
+                if normalized_key != key.lower():
+                    odds_by_game[normalized_key] = odds_data
 
             return odds_by_game
 
