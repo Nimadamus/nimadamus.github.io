@@ -663,22 +663,41 @@ def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, 
 
 def generate_advanced_stats_html(sport: str, advanced: Dict, side: str) -> str:
     """Generate advanced stats HTML based on sport"""
-    if not advanced or advanced.get('estimated') is None and not advanced:
+    if not advanced:
+        return '<div class="no-data">Advanced stats unavailable</div>'
+
+    # Check if we have real data (not all N/A)
+    has_data = any(v != 'N/A' and v is not None for k, v in advanced.items() if k not in ['calculated', 'estimated'])
+    if not has_data:
         return '<div class="no-data">Advanced stats unavailable</div>'
 
     if sport in ['NBA', 'NCAAB']:
+        # Format NET_RATING with +/- sign
+        net_rtg = advanced.get('net_rating', 'N/A')
+        if isinstance(net_rtg, (int, float)):
+            net_rtg = f"+{net_rtg}" if net_rtg > 0 else str(net_rtg)
+
+        # Get rankings if available
+        off_rank = advanced.get('off_rating_rank', '')
+        def_rank = advanced.get('def_rating_rank', '')
+        net_rank = advanced.get('net_rating_rank', '')
+        off_rank_html = f' <span class="rank">(#{off_rank})</span>' if off_rank else ''
+        def_rank_html = f' <span class="rank">(#{def_rank})</span>' if def_rank else ''
+        net_rank_html = f' <span class="rank">(#{net_rank})</span>' if net_rank else ''
+
         return f'''
-            <div class="advanced-stat">
+            <div class="advanced-header">ADVANCED METRICS</div>
+            <div class="advanced-stat highlight">
                 <span class="stat-label">OFF RTG</span>
-                <span class="stat-value">{advanced.get('offensive_rating', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('offensive_rating', 'N/A')}{off_rank_html}</span>
             </div>
-            <div class="advanced-stat">
+            <div class="advanced-stat highlight">
                 <span class="stat-label">DEF RTG</span>
-                <span class="stat-value">{advanced.get('defensive_rating', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('defensive_rating', 'N/A')}{def_rank_html}</span>
             </div>
             <div class="advanced-stat highlight">
                 <span class="stat-label">NET RTG</span>
-                <span class="stat-value">{advanced.get('net_rating', 'N/A')}</span>
+                <span class="stat-value">{net_rtg}{net_rank_html}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">PACE</span>
@@ -686,19 +705,31 @@ def generate_advanced_stats_html(sport: str, advanced: Dict, side: str) -> str:
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">eFG%</span>
-                <span class="stat-value">{advanced.get('efg_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('efg_pct', 'N/A')}%</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">TS%</span>
-                <span class="stat-value">{advanced.get('ts_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('ts_pct', 'N/A')}%</span>
+            </div>
+            <div class="advanced-stat">
+                <span class="stat-label">AST%</span>
+                <span class="stat-value">{advanced.get('ast_pct', 'N/A')}%</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">TOV%</span>
-                <span class="stat-value">{advanced.get('tov_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('tov_pct', 'N/A')}%</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">OREB%</span>
-                <span class="stat-value">{advanced.get('oreb_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('oreb_pct', 'N/A')}%</span>
+            </div>
+            <div class="advanced-stat">
+                <span class="stat-label">DREB%</span>
+                <span class="stat-value">{advanced.get('dreb_pct', 'N/A')}%</span>
+            </div>
+            <div class="advanced-stat">
+                <span class="stat-label">PIE</span>
+                <span class="stat-value">{advanced.get('pie', 'N/A')}</span>
             </div>
 '''
 
@@ -819,12 +850,23 @@ def generate_basic_stats_html(sport: str, stats: Dict) -> str:
         return '<div class="no-data">Stats unavailable</div>'
 
     if sport in ['NBA', 'NCAAB']:
+        # ESPN uses avgPointsFor, not avgPoints
+        ppg = stats.get('avgPointsFor', stats.get('avgPoints', 'N/A'))
+        if isinstance(ppg, float):
+            ppg = round(ppg, 1)
+        opp_ppg = stats.get('avgPointsAgainst', 'N/A')
+        if isinstance(opp_ppg, float):
+            opp_ppg = round(opp_ppg, 1)
+        diff = stats.get('differential', 'N/A')
+        if isinstance(diff, float):
+            diff = round(diff, 1)
+            diff = f"+{diff}" if diff > 0 else str(diff)
         return f'''
-            <div class="basic-stat"><span>PPG</span><span>{stats.get('avgPoints', 'N/A')}</span></div>
-            <div class="basic-stat"><span>FG%</span><span>{stats.get('avgFieldGoalPct', 'N/A')}</span></div>
-            <div class="basic-stat"><span>3P%</span><span>{stats.get('avgThreePointPct', 'N/A')}</span></div>
-            <div class="basic-stat"><span>REB</span><span>{stats.get('avgRebounds', 'N/A')}</span></div>
-            <div class="basic-stat"><span>AST</span><span>{stats.get('avgAssists', 'N/A')}</span></div>
+            <div class="basic-stat"><span>PPG</span><span>{ppg}</span></div>
+            <div class="basic-stat"><span>OPP PPG</span><span>{opp_ppg}</span></div>
+            <div class="basic-stat"><span>DIFF</span><span>{diff}</span></div>
+            <div class="basic-stat"><span>WINS</span><span>{stats.get('wins', 'N/A')}</span></div>
+            <div class="basic-stat"><span>LOSSES</span><span>{stats.get('losses', 'N/A')}</span></div>
 '''
 
     elif sport == 'NHL':
@@ -1151,6 +1193,7 @@ def generate_css() -> str:
 
         .stat-label { color: #8b949e; text-transform: uppercase; font-size: 13px; font-weight: 600; }
         .stat-value { font-weight: 700; color: #e6edf3; font-size: 16px; }
+        .stat-value .rank { color: #58a6ff; font-size: 12px; font-weight: 600; margin-left: 6px; }
 
         /* SECTIONS */
         .injuries-section, .betting-section, .recent-games-section, .betting-intel-section {

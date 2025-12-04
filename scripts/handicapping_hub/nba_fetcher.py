@@ -195,6 +195,40 @@ class NBAFetcher(BaseFetcher):
 
         return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=12)
 
+    # ESPN team ID to NBA Stats team name mapping
+    ESPN_TO_NBA_TEAM = {
+        '1': 'Atlanta Hawks',
+        '2': 'Boston Celtics',
+        '17': 'Brooklyn Nets',
+        '30': 'Charlotte Hornets',
+        '4': 'Chicago Bulls',
+        '5': 'Cleveland Cavaliers',
+        '6': 'Dallas Mavericks',
+        '7': 'Denver Nuggets',
+        '8': 'Detroit Pistons',
+        '9': 'Golden State Warriors',
+        '10': 'Houston Rockets',
+        '11': 'Indiana Pacers',
+        '12': 'LA Clippers',
+        '13': 'Los Angeles Lakers',
+        '29': 'Memphis Grizzlies',
+        '14': 'Miami Heat',
+        '15': 'Milwaukee Bucks',
+        '16': 'Minnesota Timberwolves',
+        '3': 'New Orleans Pelicans',
+        '18': 'New York Knicks',
+        '25': 'Oklahoma City Thunder',
+        '19': 'Orlando Magic',
+        '20': 'Philadelphia 76ers',
+        '21': 'Phoenix Suns',
+        '22': 'Portland Trail Blazers',
+        '23': 'Sacramento Kings',
+        '24': 'San Antonio Spurs',
+        '28': 'Toronto Raptors',
+        '26': 'Utah Jazz',
+        '27': 'Washington Wizards',
+    }
+
     def _fetch_nba_stats_api(self, team_id: str) -> Optional[Dict]:
         """Fetch from official NBA Stats API"""
         try:
@@ -205,8 +239,6 @@ class NBAFetcher(BaseFetcher):
                 'Accept-Language': 'en-US,en;q=0.9',
                 'Origin': 'https://www.nba.com',
                 'Referer': 'https://www.nba.com/',
-                'x-nba-stats-origin': 'stats',
-                'x-nba-stats-token': 'true',
             }
 
             # Get current season
@@ -223,7 +255,6 @@ class NBAFetcher(BaseFetcher):
                 'Division': '',
                 'GameScope': '',
                 'GameSegment': '',
-                'Height': '',
                 'LastNGames': '0',
                 'LeagueID': '00',
                 'Location': '',
@@ -235,17 +266,11 @@ class NBAFetcher(BaseFetcher):
                 'PaceAdjust': 'N',
                 'PerMode': 'PerGame',
                 'Period': '0',
-                'PlayerExperience': '',
-                'PlayerPosition': '',
-                'PlusMinus': 'N',
                 'Rank': 'N',
                 'Season': season,
                 'SeasonSegment': '',
                 'SeasonType': 'Regular Season',
-                'ShotClockRange': '',
-                'StarterBench': '',
                 'TeamID': '0',
-                'TwoWay': '0',
                 'VsConference': '',
                 'VsDivision': '',
             }
@@ -267,11 +292,13 @@ class NBAFetcher(BaseFetcher):
             headers_list = result_set.get('headers', [])
             rows = result_set.get('rowSet', [])
 
-            # Find team in results
-            team_id_idx = headers_list.index('TEAM_ID') if 'TEAM_ID' in headers_list else -1
+            # Get expected team name from ESPN ID
+            expected_team = self.ESPN_TO_NBA_TEAM.get(str(team_id), '')
+            team_name_idx = headers_list.index('TEAM_NAME') if 'TEAM_NAME' in headers_list else 1
 
             for row in rows:
-                if team_id_idx >= 0 and str(row[team_id_idx]) == str(team_id):
+                team_name = row[team_name_idx] if team_name_idx < len(row) else ''
+                if expected_team and expected_team.lower() in team_name.lower():
                     return self._parse_nba_stats_row(headers_list, row)
 
             return None
@@ -282,6 +309,11 @@ class NBAFetcher(BaseFetcher):
     def _parse_nba_stats_row(self, headers: List, row: List) -> Dict:
         """Parse NBA Stats API row into dict"""
         stats = {}
+
+        # Create index map for faster lookup
+        header_map = {h: i for i, h in enumerate(headers)}
+
+        # Key stats to extract
         key_mappings = {
             'OFF_RATING': 'offensive_rating',
             'DEF_RATING': 'defensive_rating',
@@ -296,60 +328,77 @@ class NBAFetcher(BaseFetcher):
             'REB_PCT': 'reb_pct',
             'TM_TOV_PCT': 'tov_pct',
             'PIE': 'pie',
+            'AST_PCT': 'ast_pct',
         }
 
-        for i, header in enumerate(headers):
-            if header in key_mappings and i < len(row):
-                value = row[i]
-                if isinstance(value, float):
-                    if 'PCT' in header or 'RATIO' in header:
-                        stats[key_mappings[header]] = round(value * 100, 1) if value < 1 else round(value, 1)
-                    else:
-                        stats[key_mappings[header]] = round(value, 1)
-                else:
-                    stats[key_mappings[header]] = value
+        # Rank fields
+        rank_mappings = {
+            'OFF_RATING_RANK': 'off_rating_rank',
+            'DEF_RATING_RANK': 'def_rating_rank',
+            'NET_RATING_RANK': 'net_rating_rank',
+            'PACE_RANK': 'pace_rank',
+        }
 
+        for header, key in key_mappings.items():
+            idx = header_map.get(header)
+            if idx is not None and idx < len(row):
+                value = row[idx]
+                if isinstance(value, (int, float)):
+                    # Convert percentages (0.549 -> 54.9%)
+                    if 'PCT' in header:
+                        stats[key] = round(value * 100, 1)
+                    else:
+                        stats[key] = round(value, 1)
+                else:
+                    stats[key] = value
+
+        for header, key in rank_mappings.items():
+            idx = header_map.get(header)
+            if idx is not None and idx < len(row):
+                stats[key] = int(row[idx]) if row[idx] else None
+
+        stats['from_nba_stats'] = True
         return stats
 
     def _calculate_advanced_from_basic(self, team_id: str) -> Dict:
         """Calculate advanced stats from basic ESPN data"""
         basic_stats = self.get_team_stats(team_id)
 
-        # Extract values
-        ppg = self._parse_stat(basic_stats.get('avgPoints', 0))
-        opp_ppg = self._parse_stat(basic_stats.get('avgPointsAgainst', ppg - 2))
-        fgm = self._parse_stat(basic_stats.get('avgFieldGoalsMade', 40))
-        fga = self._parse_stat(basic_stats.get('avgFieldGoalsAttempted', 88))
-        fg3m = self._parse_stat(basic_stats.get('avgThreePointFieldGoalsMade', 12))
-        fta = self._parse_stat(basic_stats.get('avgFreeThrowsAttempted', 22))
-        ftm = self._parse_stat(basic_stats.get('avgFreeThrowsMade', 17))
-        orb = self._parse_stat(basic_stats.get('avgOffensiveRebounds', 10))
-        drb = self._parse_stat(basic_stats.get('avgDefensiveRebounds', 34))
-        tov = self._parse_stat(basic_stats.get('avgTurnovers', 14))
-        ast = self._parse_stat(basic_stats.get('avgAssists', 25))
+        # Extract values - use avgPointsFor instead of avgPoints
+        ppg = self._parse_stat(basic_stats.get('avgPointsFor', basic_stats.get('avgPoints', 0)))
+        opp_ppg = self._parse_stat(basic_stats.get('avgPointsAgainst', 0))
+        diff = self._parse_stat(basic_stats.get('differential', 0))
 
-        # Calculate possession estimate
-        poss = 0.96 * (fga + tov + 0.44 * fta - orb)
+        # If we have no real data, return N/A values
+        if ppg == 0 and opp_ppg == 0:
+            return self._default_advanced_stats()
 
-        # Calculate advanced metrics
-        efg_pct = ((fgm + 0.5 * fg3m) / max(fga, 1)) * 100 if fga > 0 else 0
-        ts_pct = (ppg / (2 * (fga + 0.44 * fta))) * 100 if (fga + fta) > 0 else 0
+        # Use differential directly if available
+        if diff == 0 and ppg > 0 and opp_ppg > 0:
+            diff = ppg - opp_ppg
+
+        # Estimate pace based on points (NBA average is about 100 possessions)
+        avg_points = (ppg + opp_ppg) / 2
+        poss = avg_points / 1.1  # Rough estimate
+
+        # Calculate metrics using actual team data
         ortg = (ppg / max(poss, 1)) * 100 if poss > 0 else ppg
-        ast_ratio = (ast / max(poss, 1)) * 100 if poss > 0 else 0
-        tov_pct = (tov / max(poss, 1)) * 100 if poss > 0 else 0
+        drtg = (opp_ppg / max(poss, 1)) * 100 if poss > 0 else opp_ppg
 
         return {
             'offensive_rating': round(ortg, 1),
-            'defensive_rating': round((opp_ppg / max(poss, 1)) * 100, 1) if poss > 0 else opp_ppg,
-            'net_rating': round(ortg - ((opp_ppg / max(poss, 1)) * 100), 1) if poss > 0 else round(ppg - opp_ppg, 1),
+            'defensive_rating': round(drtg, 1),
+            'net_rating': round(diff, 1),  # Use actual differential from ESPN
             'pace': round(poss, 1),
-            'efg_pct': round(efg_pct, 1),
-            'ts_pct': round(ts_pct, 1),
-            'ast_ratio': round(ast_ratio, 1),
-            'tov_pct': round(tov_pct, 1),
-            'oreb_pct': round((orb / (orb + 34)) * 100, 1),  # Estimate
-            'dreb_pct': round((drb / (drb + 10)) * 100, 1),  # Estimate
-            'calculated': True,  # Flag that these are estimates
+            'efg_pct': 'N/A',  # Need more detailed stats
+            'ts_pct': 'N/A',   # Need more detailed stats
+            'ast_ratio': 'N/A',
+            'tov_pct': 'N/A',
+            'oreb_pct': 'N/A',
+            'dreb_pct': 'N/A',
+            'ppg': round(ppg, 1),
+            'opp_ppg': round(opp_ppg, 1),
+            'calculated': True,
         }
 
     def _parse_stat(self, value, default=0) -> float:
