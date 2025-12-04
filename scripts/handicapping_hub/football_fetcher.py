@@ -782,7 +782,7 @@ class NCAABFetcher(BaseFetcher):
         return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=6)
 
     def get_advanced_stats(self, team_id: str) -> Dict:
-        """Calculate advanced stats (similar to NBA)"""
+        """Calculate advanced stats (similar to NBA) - returns keys expected by main.py"""
         if not team_id:
             return {}
 
@@ -799,11 +799,6 @@ class NCAABFetcher(BaseFetcher):
             # Get opponent PPG from standings data
             opp_ppg = self._parse_stat(basic.get('avgPointsAgainst',
                       basic.get('oppPointsPerGame', 70)))
-
-            # Get point differential directly or calculate it
-            point_diff = self._parse_stat(basic.get('point_diff',
-                         basic.get('pointDifferential',
-                         basic.get('differential', ppg - opp_ppg))))
 
             # Shooting percentages
             fg_pct = self._parse_stat(basic.get('avgFieldGoalPct',
@@ -823,16 +818,71 @@ class NCAABFetcher(BaseFetcher):
             topg = self._parse_stat(basic.get('avgTurnovers',
                    basic.get('turnoversPerGame', 12)))
 
+            # Calculate advanced metrics that main.py expects
+            # College basketball pace is typically 65-72 possessions per game
+            # Estimate pace from scoring and tempo
+            combined_ppg = ppg + opp_ppg
+            pace = max(64, min(76, combined_ppg / 2.1))  # Estimate pace from scoring
+
+            # Offensive/Defensive Rating = Points per 100 possessions
+            offensive_rating = round((ppg / pace) * 100, 1) if pace > 0 else 100.0
+            defensive_rating = round((opp_ppg / pace) * 100, 1) if pace > 0 else 100.0
+            net_rating = round(offensive_rating - defensive_rating, 1)
+
+            # eFG% = (FGM + 0.5 * 3PM) / FGA
+            # Estimate: adjust FG% by 3P contribution
+            three_contribution = fg3_pct * 0.35 / 100  # Assume ~35% of shots are 3s
+            efg_pct = round(fg_pct + (three_contribution * 50), 1)  # Rough estimate
+
+            # TS% = PTS / (2 * (FGA + 0.44 * FTA))
+            # Estimate from PPG and FG%
+            est_fga = ppg / (fg_pct / 100 * 2 + 0.3) if fg_pct > 0 else 60
+            est_fta = ppg * 0.25  # Roughly 25% of points from FTs
+            ts_pct = round(ppg / (2 * (est_fga + 0.44 * est_fta)) * 100, 1) if est_fga > 0 else 54.0
+
+            # Assist % = estimate from APG / FGM
+            est_fgm = ppg / 2.2  # Rough estimate
+            ast_pct = round((apg / est_fgm) * 100, 1) if est_fgm > 0 else 50.0
+            ast_pct = min(75, max(35, ast_pct))  # Keep in reasonable range
+
+            # Turnover % = TOV / possessions
+            tov_pct = round((topg / pace) * 100, 1) if pace > 0 else 15.0
+            tov_pct = min(25, max(10, tov_pct))  # Keep in reasonable range
+
+            # Rebound rates - estimate from RPG
+            total_rebounds_available = 45  # Rough game average
+            oreb_pct = round((rpg * 0.3 / total_rebounds_available) * 100, 1)  # ~30% offensive
+            dreb_pct = round((rpg * 0.7 / total_rebounds_available) * 100, 1)  # ~70% defensive
+
+            # PIE (Player Impact Estimate) - team version
+            # Simplified: based on net rating and efficiency
+            pie = round(50 + (net_rating / 2), 1)
+            pie = min(65, max(35, pie))  # Keep in reasonable range
+
             return {
+                'offensive_rating': offensive_rating,
+                'defensive_rating': defensive_rating,
+                'net_rating': net_rating,
+                'pace': round(pace, 1),
+                'efg_pct': efg_pct,
+                'ts_pct': ts_pct,
+                'ast_pct': ast_pct,
+                'tov_pct': tov_pct,
+                'oreb_pct': oreb_pct,
+                'dreb_pct': dreb_pct,
+                'pie': pie,
+                # Also keep basic stats for reference
                 'ppg': round(ppg, 1),
                 'opp_ppg': round(opp_ppg, 1),
-                'point_diff': round(point_diff, 1),
+                'point_diff': round(ppg - opp_ppg, 1),  # For basic stats display
+                'differential': round(ppg - opp_ppg, 1),  # Alternative key
                 'fg_pct': round(fg_pct, 1),
                 'three_pct': round(fg3_pct, 1),
                 'ft_pct': round(ft_pct, 1),
                 'rpg': round(rpg, 1),
                 'apg': round(apg, 1),
                 'topg': round(topg, 1),
+                'calculated': True  # Flag that these are calculated estimates
             }
 
         return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=12)

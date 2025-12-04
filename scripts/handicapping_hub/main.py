@@ -282,24 +282,57 @@ def generate_model_record_html() -> str:
         return ''
 
 
+def is_sport_in_season(sport: str) -> bool:
+    """
+    Check if a sport is currently in season.
+    Used to prevent showing fake/test games during offseason.
+    """
+    month = datetime.now().month
+
+    seasons = {
+        'NBA': [10, 11, 12, 1, 2, 3, 4, 5, 6],  # Oct-Jun
+        'NHL': [10, 11, 12, 1, 2, 3, 4, 5, 6],  # Oct-Jun
+        'MLB': [3, 4, 5, 6, 7, 8, 9, 10, 11],   # Mar-Nov (spring training to World Series)
+        'NFL': [9, 10, 11, 12, 1, 2],           # Sep-Feb (includes playoffs/Super Bowl)
+        'NCAAF': [8, 9, 10, 11, 12, 1],         # Aug-Jan (bowl games)
+        'NCAAB': [11, 12, 1, 2, 3, 4],          # Nov-Apr (March Madness)
+    }
+
+    return month in seasons.get(sport, [])
+
+
 def generate_html_content(all_data: Dict, predictions: Dict) -> str:
     """
     Generate the complete HTML content for the Handicapping Hub.
     """
-    # Count games by sport
-    game_counts = {sport: len(data.get('games', [])) for sport, data in all_data.items()}
+    # Check which sports are in season
+    in_season_sports = [s for s in ['NBA', 'NHL', 'MLB', 'NFL', 'NCAAF', 'NCAAB'] if is_sport_in_season(s)]
+    print(f"  Sports in season: {', '.join(in_season_sports)}")
+
+    # Count games by sport - for offseason sports, count is 0
+    game_counts = {}
+    for sport, data in all_data.items():
+        if is_sport_in_season(sport):
+            game_counts[sport] = len(data.get('games', []))
+        else:
+            game_counts[sport] = 0  # Offseason = 0 games
 
     # Generate model record
     model_record_html = generate_model_record_html()
 
-    # Generate sport sections
+    # Generate sport sections (all sports, but offseason ones show "no games")
     sections_html = ""
     for sport in ['NBA', 'NHL', 'MLB', 'NFL', 'NCAAF', 'NCAAB']:
-        sport_data = all_data.get(sport, {})
-        sport_predictions = predictions.get(sport, [])
+        if is_sport_in_season(sport):
+            sport_data = all_data.get(sport, {})
+            sport_predictions = predictions.get(sport, [])
+        else:
+            # Offseason - show empty section
+            sport_data = {'games': []}
+            sport_predictions = []
         sections_html += generate_sport_section(sport, sport_data, sport_predictions)
 
-    # Generate tabs HTML
+    # Generate tabs HTML (all sports)
     tabs_html = ""
     first_sport = True
     for sport in ['NBA', 'NHL', 'MLB', 'NFL', 'NCAAF', 'NCAAB']:
@@ -698,9 +731,17 @@ def generate_game_card(sport: str, game_data: Dict, prediction: Dict = None) -> 
     away_advanced_html = generate_advanced_stats_html(sport, away_advanced, 'away')
     home_advanced_html = generate_advanced_stats_html(sport, home_advanced, 'home')
 
+    # Merge advanced stats into basic stats for fallback values (esp. for NCAAB)
+    away_stats_merged = {**away_stats}
+    home_stats_merged = {**home_stats}
+    if away_advanced:
+        away_stats_merged.update({k: v for k, v in away_advanced.items() if k not in away_stats or away_stats.get(k) in (0, 0.0, None, '')})
+    if home_advanced:
+        home_stats_merged.update({k: v for k, v in home_advanced.items() if k not in home_stats or home_stats.get(k) in (0, 0.0, None, '')})
+
     # Generate basic stats HTML
-    away_basic_html = generate_basic_stats_html(sport, away_stats)
-    home_basic_html = generate_basic_stats_html(sport, home_stats)
+    away_basic_html = generate_basic_stats_html(sport, away_stats_merged)
+    home_basic_html = generate_basic_stats_html(sport, home_stats_merged)
 
     # Generate injuries HTML
     away_injuries_html = generate_injuries_html(away_injuries, away.get('name', ''))
@@ -1178,23 +1219,42 @@ def generate_basic_stats_html(sport: str, stats: Dict) -> str:
         return '<div class="no-data">Stats unavailable</div>'
 
     if sport in ['NBA', 'NCAAB']:
-        # ESPN uses avgPointsFor, not avgPoints
-        ppg = stats.get('avgPointsFor', stats.get('avgPoints', '-'))
-        if isinstance(ppg, float):
+        # Try multiple keys for PPG - ESPN uses avgPointsFor, advanced stats uses ppg
+        ppg = stats.get('avgPointsFor', stats.get('avgPoints', stats.get('ppg', '-')))
+        if ppg == 0 or ppg == 0.0:
+            ppg = '-'  # Don't show 0.0 as that's missing data
+        elif isinstance(ppg, float):
             ppg = round(ppg, 1)
-        opp_ppg = stats.get('avgPointsAgainst', '-')
-        if isinstance(opp_ppg, float):
+
+        # OPP PPG - try multiple keys
+        opp_ppg = stats.get('avgPointsAgainst', stats.get('opp_ppg', '-'))
+        if opp_ppg == 0 or opp_ppg == 0.0:
+            opp_ppg = '-'
+        elif isinstance(opp_ppg, float):
             opp_ppg = round(opp_ppg, 1)
-        diff = stats.get('differential', '-')
-        if isinstance(diff, float):
+
+        # Point differential - try multiple keys
+        diff = stats.get('differential', stats.get('point_diff', '-'))
+        if diff == 0 and ppg == '-':  # If we have no data, show dash
+            diff = '-'
+        elif isinstance(diff, (int, float)):
             diff = round(diff, 1)
             diff = f"+{diff}" if diff > 0 else str(diff)
+
+        # Wins/Losses
+        wins = stats.get('wins', '-')
+        if wins == 0 or wins == 0.0:
+            wins = '-'
+        losses = stats.get('losses', '-')
+        if losses == 0 or losses == 0.0:
+            losses = '-'
+
         return f'''
             <div class="basic-stat"><span>PPG</span><span>{ppg}</span></div>
             <div class="basic-stat"><span>OPP PPG</span><span>{opp_ppg}</span></div>
             <div class="basic-stat"><span>DIFF</span><span>{diff}</span></div>
-            <div class="basic-stat"><span>WINS</span><span>{stats.get('wins', '-')}</span></div>
-            <div class="basic-stat"><span>LOSSES</span><span>{stats.get('losses', '-')}</span></div>
+            <div class="basic-stat"><span>WINS</span><span>{wins}</span></div>
+            <div class="basic-stat"><span>LOSSES</span><span>{losses}</span></div>
 '''
 
     elif sport == 'NHL':
