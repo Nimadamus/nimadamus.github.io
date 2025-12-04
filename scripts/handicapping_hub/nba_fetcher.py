@@ -153,7 +153,7 @@ class NBAFetcher(BaseFetcher):
                 if item.get('type') == 'total':
                     for stat in item.get('stats', []):
                         name = stat.get('name', '')
-                        value = stat.get('value', stat.get('displayValue', 'N/A'))
+                        value = stat.get('value', stat.get('displayValue', '-'))
                         stats[name] = value
 
             # Get statistics from team stats endpoint
@@ -161,7 +161,7 @@ class NBAFetcher(BaseFetcher):
             for stat_group in stats_data:
                 for stat in stat_group.get('stats', []):
                     name = stat.get('name', stat.get('abbreviation', ''))
-                    value = stat.get('value', stat.get('displayValue', 'N/A'))
+                    value = stat.get('value', stat.get('displayValue', '-'))
                     stats[name] = value
 
             # Also try to get stats from next statistics
@@ -390,12 +390,12 @@ class NBAFetcher(BaseFetcher):
             'defensive_rating': round(drtg, 1),
             'net_rating': round(diff, 1),  # Use actual differential from ESPN
             'pace': round(poss, 1),
-            'efg_pct': 'N/A',  # Need more detailed stats
-            'ts_pct': 'N/A',   # Need more detailed stats
-            'ast_ratio': 'N/A',
-            'tov_pct': 'N/A',
-            'oreb_pct': 'N/A',
-            'dreb_pct': 'N/A',
+            'efg_pct': '-',  # Need more detailed stats
+            'ts_pct': '-',   # Need more detailed stats
+            'ast_ratio': '-',
+            'tov_pct': '-',
+            'oreb_pct': '-',
+            'dreb_pct': '-',
             'ppg': round(ppg, 1),
             'opp_ppg': round(opp_ppg, 1),
             'calculated': True,
@@ -453,13 +453,13 @@ class NBAFetcher(BaseFetcher):
         """
         # Placeholder - would need Covers.com scraping or paid API
         return {
-            'ats_overall': 'N/A',
-            'ats_home': 'N/A',
-            'ats_away': 'N/A',
-            'ats_favorite': 'N/A',
-            'ats_underdog': 'N/A',
-            'ou_overall': 'N/A',
-            'ou_over_pct': 'N/A',
+            'ats_overall': '-',
+            'ats_home': '-',
+            'ats_away': '-',
+            'ats_favorite': '-',
+            'ats_underdog': '-',
+            'ou_overall': '-',
+            'ou_over_pct': '-',
         }
 
     def get_last_10_games(self, team_id: str) -> List[Dict]:
@@ -500,29 +500,29 @@ class NBAFetcher(BaseFetcher):
 
     def _default_stats(self) -> Dict:
         return {
-            'avgPoints': 'N/A',
-            'avgFieldGoalPct': 'N/A',
-            'avgThreePointPct': 'N/A',
-            'avgFreeThrowPct': 'N/A',
-            'avgRebounds': 'N/A',
-            'avgAssists': 'N/A',
-            'avgSteals': 'N/A',
-            'avgBlocks': 'N/A',
-            'avgTurnovers': 'N/A',
+            'avgPoints': '-',
+            'avgFieldGoalPct': '-',
+            'avgThreePointPct': '-',
+            'avgFreeThrowPct': '-',
+            'avgRebounds': '-',
+            'avgAssists': '-',
+            'avgSteals': '-',
+            'avgBlocks': '-',
+            'avgTurnovers': '-',
         }
 
     def _default_advanced_stats(self) -> Dict:
         return {
-            'offensive_rating': 'N/A',
-            'defensive_rating': 'N/A',
-            'net_rating': 'N/A',
-            'pace': 'N/A',
-            'efg_pct': 'N/A',
-            'ts_pct': 'N/A',
-            'ast_ratio': 'N/A',
-            'tov_pct': 'N/A',
-            'oreb_pct': 'N/A',
-            'dreb_pct': 'N/A',
+            'offensive_rating': '-',
+            'defensive_rating': '-',
+            'net_rating': '-',
+            'pace': '-',
+            'efg_pct': '-',
+            'ts_pct': '-',
+            'ast_ratio': '-',
+            'tov_pct': '-',
+            'oreb_pct': '-',
+            'dreb_pct': '-',
         }
 
     def get_complete_game_data(self, game: Dict) -> Dict:

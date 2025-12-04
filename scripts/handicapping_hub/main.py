@@ -102,7 +102,7 @@ def fetch_advanced_data() -> Dict:
                         if team_name and (sport, team_name) not in teams_fetched:
                             teams_fetched.add((sport, team_name))
                             ats = covers.get_team_ats_record(team_name, sport)
-                            if ats and ats.get('ats_overall') != 'N/A':
+                            if ats and ats.get('ats_overall') not in ('N/A', '-'):
                                 if sport not in advanced_data['ats_records']:
                                     advanced_data['ats_records'][sport] = {}
                                 advanced_data['ats_records'][sport][team_name] = ats
@@ -619,8 +619,8 @@ def generate_game_card(sport: str, game_data: Dict, prediction: Dict = None) -> 
                         <div class="team-details">
                             <h3>{away.get('name', 'Away Team')}</h3>
                             <div class="team-records">
-                                <span class="overall">{away.get('record', 'N/A')}</span>
-                                <br>Away: {away.get('away_record', 'N/A')}
+                                <span class="overall">{away.get('record', '-')}</span>
+                                <br>Away: {away.get('away_record', '-')}
                             </div>
                         </div>
                     </div>
@@ -630,8 +630,8 @@ def generate_game_card(sport: str, game_data: Dict, prediction: Dict = None) -> 
                         <div class="team-details">
                             <h3>{home.get('name', 'Home Team')}</h3>
                             <div class="team-records">
-                                <span class="overall">{home.get('record', 'N/A')}</span>
-                                <br>Home: {home.get('home_record', 'N/A')}
+                                <span class="overall">{home.get('record', '-')}</span>
+                                <br>Home: {home.get('home_record', '-')}
                             </div>
                         </div>
                     </div>
@@ -724,12 +724,12 @@ def generate_killport_section(prediction: Dict) -> str:
                         <div class="prediction-main">
                             <div class="predicted-winner">
                                 <span class="label">PREDICTION</span>
-                                <span class="winner">{prediction.get('predicted_winner', 'N/A')}</span>
+                                <span class="winner">{prediction.get('predicted_winner', '-')}</span>
                                 <span class="margin">by {prediction.get('predicted_margin', 0)} pts</span>
                             </div>
                             <div class="model-line">
                                 <span class="label">MODEL LINE</span>
-                                <span class="line">{prediction.get('model_line', 'N/A')}</span>
+                                <span class="line">{prediction.get('model_line', '-')}</span>
                             </div>
                             <div class="edge-rating">
                                 <span class="label">EDGE RATING</span>
@@ -758,9 +758,9 @@ def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, 
     away_ats_pct = away_ats.get('ats_overall_pct', '50') if away_ats else '50'
     home_ats_pct = home_ats.get('ats_overall_pct', '50') if home_ats else '50'
     # Handle N/A values from old cache
-    if away_ats_str == 'N/A':
+    if away_ats_str in ('N/A', '-'):
         away_ats_str = '6-6'
-    if home_ats_str == 'N/A':
+    if home_ats_str in ('N/A', '-'):
         home_ats_str = '6-6'
     if away_ats_pct in ['N/A', 'N/A%']:
         away_ats_pct = '50'
@@ -778,13 +778,13 @@ def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, 
     away_public_ml = public_betting.get('away_ml_pct', 45) if public_betting else 45
     home_public_ml = public_betting.get('home_ml_pct', 55) if public_betting else 55
     # Handle N/A values
-    if away_public == 'N/A':
+    if away_public in ('N/A', '-'):
         away_public = 45
-    if home_public == 'N/A':
+    if home_public in ('N/A', '-'):
         home_public = 55
-    if away_public_ml == 'N/A':
+    if away_public_ml in ('N/A', '-'):
         away_public_ml = 45
-    if home_public_ml == 'N/A':
+    if home_public_ml in ('N/A', '-'):
         home_public_ml = 55
 
     # Format sharp money - use sharp_side from ActionNetworkScraper
@@ -799,13 +799,13 @@ def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, 
     away_rank = away_power.get('rank', 50) if away_power else 50
     home_rank = home_power.get('rank', 50) if home_power else 50
     # Handle N/A values
-    if away_power_val == 'N/A':
+    if away_power_val in ('N/A', '-'):
         away_power_val = 85.0
-    if home_power_val == 'N/A':
+    if home_power_val in ('N/A', '-'):
         home_power_val = 85.0
-    if away_rank == 'N/A':
+    if away_rank in ('N/A', '-'):
         away_rank = 50
-    if home_rank == 'N/A':
+    if home_rank in ('N/A', '-'):
         home_rank = 50
 
     # Build sharp indicators HTML
@@ -814,7 +814,7 @@ def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, 
         sharp_indicators_html += '<span class="sharp-indicator rlm">RLM</span>'
     if steam_move:
         sharp_indicators_html += '<span class="sharp-indicator steam">STEAM</span>'
-    if sharp_side and sharp_side != 'N/A':
+    if sharp_side and sharp_side not in ('N/A', '-'):
         sharp_indicators_html += f'<span class="sharp-side">Sharp: {sharp_side}</span>'
 
     # Only return content if we have any data
@@ -890,13 +890,13 @@ def generate_advanced_stats_html(sport: str, advanced: Dict, side: str) -> str:
         return '<div class="no-data">Advanced stats unavailable</div>'
 
     # Check if we have real data (not all N/A)
-    has_data = any(v != 'N/A' and v is not None for k, v in advanced.items() if k not in ['calculated', 'estimated'])
+    has_data = any(v not in ('N/A', '-') and v is not None for k, v in advanced.items() if k not in ['calculated', 'estimated'])
     if not has_data:
         return '<div class="no-data">Advanced stats unavailable</div>'
 
     if sport in ['NBA', 'NCAAB']:
         # Format NET_RATING with +/- sign
-        net_rtg = advanced.get('net_rating', 'N/A')
+        net_rtg = advanced.get('net_rating', '-')
         if isinstance(net_rtg, (int, float)):
             net_rtg = f"+{net_rtg}" if net_rtg > 0 else str(net_rtg)
 
@@ -912,11 +912,11 @@ def generate_advanced_stats_html(sport: str, advanced: Dict, side: str) -> str:
             <div class="advanced-header">ADVANCED METRICS</div>
             <div class="advanced-stat highlight">
                 <span class="stat-label">OFF RTG</span>
-                <span class="stat-value">{advanced.get('offensive_rating', 'N/A')}{off_rank_html}</span>
+                <span class="stat-value">{advanced.get('offensive_rating', '-')}{off_rank_html}</span>
             </div>
             <div class="advanced-stat highlight">
                 <span class="stat-label">DEF RTG</span>
-                <span class="stat-value">{advanced.get('defensive_rating', 'N/A')}{def_rank_html}</span>
+                <span class="stat-value">{advanced.get('defensive_rating', '-')}{def_rank_html}</span>
             </div>
             <div class="advanced-stat highlight">
                 <span class="stat-label">NET RTG</span>
@@ -924,35 +924,35 @@ def generate_advanced_stats_html(sport: str, advanced: Dict, side: str) -> str:
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">PACE</span>
-                <span class="stat-value">{advanced.get('pace', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('pace', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">eFG%</span>
-                <span class="stat-value">{advanced.get('efg_pct', 'N/A')}%</span>
+                <span class="stat-value">{advanced.get('efg_pct', '-')}%</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">TS%</span>
-                <span class="stat-value">{advanced.get('ts_pct', 'N/A')}%</span>
+                <span class="stat-value">{advanced.get('ts_pct', '-')}%</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">AST%</span>
-                <span class="stat-value">{advanced.get('ast_pct', 'N/A')}%</span>
+                <span class="stat-value">{advanced.get('ast_pct', '-')}%</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">TOV%</span>
-                <span class="stat-value">{advanced.get('tov_pct', 'N/A')}%</span>
+                <span class="stat-value">{advanced.get('tov_pct', '-')}%</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">OREB%</span>
-                <span class="stat-value">{advanced.get('oreb_pct', 'N/A')}%</span>
+                <span class="stat-value">{advanced.get('oreb_pct', '-')}%</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">DREB%</span>
-                <span class="stat-value">{advanced.get('dreb_pct', 'N/A')}%</span>
+                <span class="stat-value">{advanced.get('dreb_pct', '-')}%</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">PIE</span>
-                <span class="stat-value">{advanced.get('pie', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('pie', '-')}</span>
             </div>
 '''
 
@@ -960,35 +960,35 @@ def generate_advanced_stats_html(sport: str, advanced: Dict, side: str) -> str:
         return f'''
             <div class="advanced-stat">
                 <span class="stat-label">xGF/60</span>
-                <span class="stat-value">{advanced.get('xgf_per_60', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('xgf_per_60', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">xGA/60</span>
-                <span class="stat-value">{advanced.get('xga_per_60', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('xga_per_60', '-')}</span>
             </div>
             <div class="advanced-stat highlight">
                 <span class="stat-label">xG DIFF</span>
-                <span class="stat-value">{advanced.get('xg_diff', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('xg_diff', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">CF%</span>
-                <span class="stat-value">{advanced.get('corsi_for_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('corsi_for_pct', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">FF%</span>
-                <span class="stat-value">{advanced.get('fenwick_for_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('fenwick_for_pct', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">SH%</span>
-                <span class="stat-value">{advanced.get('shooting_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('shooting_pct', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">SV%</span>
-                <span class="stat-value">{advanced.get('save_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('save_pct', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">PDO</span>
-                <span class="stat-value">{advanced.get('pdo', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('pdo', '-')}</span>
             </div>
 '''
 
@@ -996,35 +996,35 @@ def generate_advanced_stats_html(sport: str, advanced: Dict, side: str) -> str:
         return f'''
             <div class="advanced-stat highlight">
                 <span class="stat-label">wOBA</span>
-                <span class="stat-value">{advanced.get('woba', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('woba', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">wRC+</span>
-                <span class="stat-value">{advanced.get('wrc_plus', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('wrc_plus', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">BABIP</span>
-                <span class="stat-value">{advanced.get('babip', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('babip', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">ISO</span>
-                <span class="stat-value">{advanced.get('iso', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('iso', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">K%</span>
-                <span class="stat-value">{advanced.get('k_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('k_pct', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">BB%</span>
-                <span class="stat-value">{advanced.get('bb_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('bb_pct', '-')}</span>
             </div>
             <div class="advanced-stat highlight">
                 <span class="stat-label">FIP</span>
-                <span class="stat-value">{advanced.get('fip', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('fip', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">xFIP</span>
-                <span class="stat-value">{advanced.get('xfip', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('xfip', '-')}</span>
             </div>
 '''
 
@@ -1032,35 +1032,35 @@ def generate_advanced_stats_html(sport: str, advanced: Dict, side: str) -> str:
         return f'''
             <div class="advanced-stat highlight">
                 <span class="stat-label">EPA/PLAY</span>
-                <span class="stat-value">{advanced.get('epa_per_play', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('epa_per_play', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">SUCCESS%</span>
-                <span class="stat-value">{advanced.get('success_rate', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('success_rate', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">EXPLOSIVE%</span>
-                <span class="stat-value">{advanced.get('explosive_play_rate', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('explosive_play_rate', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">YDS/PLAY</span>
-                <span class="stat-value">{advanced.get('yards_per_play', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('yards_per_play', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">3RD DOWN%</span>
-                <span class="stat-value">{advanced.get('third_down_pct', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('third_down_pct', '-')}</span>
             </div>
             <div class="advanced-stat highlight">
                 <span class="stat-label">TO DIFF</span>
-                <span class="stat-value">{advanced.get('turnover_diff', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('turnover_diff', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">QB RTG</span>
-                <span class="stat-value">{advanced.get('passer_rating', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('passer_rating', '-')}</span>
             </div>
             <div class="advanced-stat">
                 <span class="stat-label">PT DIFF</span>
-                <span class="stat-value">{advanced.get('point_diff', 'N/A')}</span>
+                <span class="stat-value">{advanced.get('point_diff', '-')}</span>
             </div>
 '''
 
@@ -1074,13 +1074,13 @@ def generate_basic_stats_html(sport: str, stats: Dict) -> str:
 
     if sport in ['NBA', 'NCAAB']:
         # ESPN uses avgPointsFor, not avgPoints
-        ppg = stats.get('avgPointsFor', stats.get('avgPoints', 'N/A'))
+        ppg = stats.get('avgPointsFor', stats.get('avgPoints', '-'))
         if isinstance(ppg, float):
             ppg = round(ppg, 1)
-        opp_ppg = stats.get('avgPointsAgainst', 'N/A')
+        opp_ppg = stats.get('avgPointsAgainst', '-')
         if isinstance(opp_ppg, float):
             opp_ppg = round(opp_ppg, 1)
-        diff = stats.get('differential', 'N/A')
+        diff = stats.get('differential', '-')
         if isinstance(diff, float):
             diff = round(diff, 1)
             diff = f"+{diff}" if diff > 0 else str(diff)
@@ -1088,24 +1088,24 @@ def generate_basic_stats_html(sport: str, stats: Dict) -> str:
             <div class="basic-stat"><span>PPG</span><span>{ppg}</span></div>
             <div class="basic-stat"><span>OPP PPG</span><span>{opp_ppg}</span></div>
             <div class="basic-stat"><span>DIFF</span><span>{diff}</span></div>
-            <div class="basic-stat"><span>WINS</span><span>{stats.get('wins', 'N/A')}</span></div>
-            <div class="basic-stat"><span>LOSSES</span><span>{stats.get('losses', 'N/A')}</span></div>
+            <div class="basic-stat"><span>WINS</span><span>{stats.get('wins', '-')}</span></div>
+            <div class="basic-stat"><span>LOSSES</span><span>{stats.get('losses', '-')}</span></div>
 '''
 
     elif sport == 'NHL':
         return f'''
-            <div class="basic-stat"><span>GF/G</span><span>{stats.get('goalsFor', 'N/A')}</span></div>
-            <div class="basic-stat"><span>GA/G</span><span>{stats.get('goalsAgainst', 'N/A')}</span></div>
-            <div class="basic-stat"><span>PP%</span><span>{stats.get('powerPlayPct', 'N/A')}</span></div>
-            <div class="basic-stat"><span>PK%</span><span>{stats.get('penaltyKillPct', 'N/A')}</span></div>
+            <div class="basic-stat"><span>GF/G</span><span>{stats.get('goalsFor', '-')}</span></div>
+            <div class="basic-stat"><span>GA/G</span><span>{stats.get('goalsAgainst', '-')}</span></div>
+            <div class="basic-stat"><span>PP%</span><span>{stats.get('powerPlayPct', '-')}</span></div>
+            <div class="basic-stat"><span>PK%</span><span>{stats.get('penaltyKillPct', '-')}</span></div>
 '''
 
     elif sport in ['NFL', 'NCAAF']:
         return f'''
-            <div class="basic-stat"><span>PPG</span><span>{stats.get('avgPointsPerGame', stats.get('totalPointsPerGame', 'N/A'))}</span></div>
-            <div class="basic-stat"><span>YDS/G</span><span>{stats.get('netTotalYards', stats.get('totalYards', 'N/A'))}</span></div>
-            <div class="basic-stat"><span>RUSH</span><span>{stats.get('rushingYardsPerGame', 'N/A')}</span></div>
-            <div class="basic-stat"><span>PASS</span><span>{stats.get('netPassingYardsPerGame', stats.get('passingYardsPerGame', 'N/A'))}</span></div>
+            <div class="basic-stat"><span>PPG</span><span>{stats.get('avgPointsPerGame', stats.get('totalPointsPerGame', '-'))}</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>{stats.get('netTotalYards', stats.get('totalYards', '-'))}</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>{stats.get('rushingYardsPerGame', '-')}</span></div>
+            <div class="basic-stat"><span>PASS</span><span>{stats.get('netPassingYardsPerGame', stats.get('passingYardsPerGame', '-'))}</span></div>
 '''
 
     return ''
@@ -1122,7 +1122,7 @@ def generate_injuries_html(injuries: List, team_name: str) -> str:
         html += f'''
             <li>
                 <div class="player-info">
-                    <span class="player-name">{inj.get('name', 'Unknown')} ({inj.get('position', 'N/A')})</span>
+                    <span class="player-name">{inj.get('name', 'Unknown')} ({inj.get('position', '-')})</span>
                     <span class="injury-type">{inj.get('injury', 'Unknown')}</span>
                 </div>
                 <span class="status {status_class}">{inj.get('status', 'Unknown')}</span>
@@ -1192,8 +1192,8 @@ def get_edge_class(edge: float) -> str:
 
 def format_spread(value) -> str:
     """Format spread value"""
-    if value is None or value == 'N/A':
-        return 'N/A'
+    if value is None or value in ('N/A', '-'):
+        return '-'
     try:
         v = float(value)
         return f"+{v}" if v > 0 else str(v)
@@ -1203,8 +1203,8 @@ def format_spread(value) -> str:
 
 def format_ml(value) -> str:
     """Format moneyline value"""
-    if value is None or value == 'N/A':
-        return 'N/A'
+    if value is None or value in ('N/A', '-'):
+        return '-'
     try:
         v = int(value)
         return f"+{v}" if v > 0 else str(v)

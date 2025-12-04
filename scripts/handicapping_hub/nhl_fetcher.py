@@ -162,7 +162,7 @@ class NHLFetcher(BaseFetcher):
             for stat_group in categories:
                 for stat in stat_group.get('stats', []):
                     name = stat.get('name', '')
-                    value = stat.get('displayValue', stat.get('value', 'N/A'))
+                    value = stat.get('displayValue', stat.get('value', '-'))
                     # Also store per-game values
                     per_game = stat.get('perGameDisplayValue', stat.get('perGameValue'))
                     if per_game:
@@ -171,17 +171,17 @@ class NHLFetcher(BaseFetcher):
 
             # Map to expected keys for generate_basic_stats_html
             if 'goals' in stats:
-                stats['goalsFor'] = stats.get('goalsPerGame', stats.get('goals', 'N/A'))
+                stats['goalsFor'] = stats.get('goalsPerGame', stats.get('goals', '-'))
             if 'goalsAgainst' in stats:
-                stats['goalsAgainst'] = stats.get('goalsAgainstPerGame', stats.get('avgGoalsAgainst', 'N/A'))
+                stats['goalsAgainst'] = stats.get('goalsAgainstPerGame', stats.get('avgGoalsAgainst', '-'))
 
             # Map power play and penalty kill percentages
             # ESPN uses different key names - try various options
             pp_pct = stats.get('powerPlayPct', stats.get('powerPlayPercentage',
-                     stats.get('powerplayPct', stats.get('ppPct', 'N/A'))))
+                     stats.get('powerplayPct', stats.get('ppPct', '-'))))
 
             # Parse and validate PP%
-            if pp_pct != 'N/A':
+            if pp_pct not in ('N/A', '-'):
                 pp_pct = self._parse_stat(pp_pct, 0)
                 # If value is > 100, it might already be multiplied or need correction
                 if pp_pct > 100:
@@ -203,10 +203,10 @@ class NHLFetcher(BaseFetcher):
 
             # Map penalty kill percentage
             pk_pct = stats.get('penaltyKillPct', stats.get('penaltyKillPercentage',
-                     stats.get('pkPct', 'N/A')))
+                     stats.get('pkPct', '-')))
 
             # Parse and validate PK%
-            if pk_pct != 'N/A':
+            if pk_pct not in ('N/A', '-'):
                 pk_pct = self._parse_stat(pk_pct, 0)
                 # If value is > 100, correct it
                 if pk_pct > 100:
@@ -394,7 +394,7 @@ class NHLFetcher(BaseFetcher):
                         if goalie_stats:
                             for split in goalie_stats.get('splits', {}).get('categories', []):
                                 for stat in split.get('stats', []):
-                                    goalie_data['stats'][stat.get('name', '')] = stat.get('displayValue', 'N/A')
+                                    goalie_data['stats'][stat.get('name', '')] = stat.get('displayValue', '-')
                     goalies.append(goalie_data)
 
             if goalies:
@@ -443,37 +443,37 @@ class NHLFetcher(BaseFetcher):
 
     def _default_stats(self) -> Dict:
         return {
-            'goalsFor': 'N/A',
-            'goalsAgainst': 'N/A',
-            'shotsFor': 'N/A',
-            'shotsAgainst': 'N/A',
-            'powerPlayPct': 'N/A',
-            'penaltyKillPct': 'N/A',
-            'savePct': 'N/A',
+            'goalsFor': '-',
+            'goalsAgainst': '-',
+            'shotsFor': '-',
+            'shotsAgainst': '-',
+            'powerPlayPct': '-',
+            'penaltyKillPct': '-',
+            'savePct': '-',
         }
 
     def _default_advanced_stats(self) -> Dict:
         return {
-            'xgf_per_60': 'N/A',
-            'xga_per_60': 'N/A',
-            'xg_diff': 'N/A',
-            'corsi_for_pct': 'N/A',
-            'fenwick_for_pct': 'N/A',
-            'shooting_pct': 'N/A',
-            'save_pct': 'N/A',
-            'pdo': 'N/A',
-            'pp_pct': 'N/A',
-            'pk_pct': 'N/A',
+            'xgf_per_60': '-',
+            'xga_per_60': '-',
+            'xg_diff': '-',
+            'corsi_for_pct': '-',
+            'fenwick_for_pct': '-',
+            'shooting_pct': '-',
+            'save_pct': '-',
+            'pdo': '-',
+            'pp_pct': '-',
+            'pk_pct': '-',
         }
 
     def _default_goalie_stats(self) -> Dict:
         return {
             'name': 'Unknown',
             'stats': {
-                'savePct': 'N/A',
-                'goalsAgainstAvg': 'N/A',
-                'wins': 'N/A',
-                'losses': 'N/A',
+                'savePct': '-',
+                'goalsAgainstAvg': '-',
+                'wins': '-',
+                'losses': '-',
             }
         }
 

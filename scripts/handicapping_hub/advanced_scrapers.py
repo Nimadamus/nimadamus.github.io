@@ -116,14 +116,14 @@ class BaseballSavantScraper:
         # These are league average baselines
         # In production, you'd fetch real data from the API
         return {
-            'barrel_pct': 'N/A',
-            'hard_hit_pct': 'N/A',
-            'exit_velocity': 'N/A',
-            'launch_angle': 'N/A',
-            'xwoba': 'N/A',
-            'xba': 'N/A',
-            'xslg': 'N/A',
-            'sprint_speed': 'N/A',
+            'barrel_pct': '-',
+            'hard_hit_pct': '-',
+            'exit_velocity': '-',
+            'launch_angle': '-',
+            'xwoba': '-',
+            'xba': '-',
+            'xslg': '-',
+            'sprint_speed': '-',
             'source': 'estimated',
         }
 
@@ -147,27 +147,27 @@ class BaseballSavantScraper:
         def fetch():
             # Would implement real scraping here
             return {
-                'xera': 'N/A',
-                'xba_against': 'N/A',
-                'barrel_pct_against': 'N/A',
-                'hard_hit_pct_against': 'N/A',
-                'whiff_pct': 'N/A',
-                'chase_pct': 'N/A',
-                'k_pct': 'N/A',
-                'bb_pct': 'N/A',
+                'xera': '-',
+                'xba_against': '-',
+                'barrel_pct_against': '-',
+                'hard_hit_pct_against': '-',
+                'whiff_pct': '-',
+                'chase_pct': '-',
+                'k_pct': '-',
+                'bb_pct': '-',
             }
 
         return cache.get_or_fetch(cache_key, fetch, max_age_hours=24)
 
     def _default_statcast(self) -> Dict:
         return {
-            'barrel_pct': 'N/A',
-            'hard_hit_pct': 'N/A',
-            'exit_velocity': 'N/A',
-            'launch_angle': 'N/A',
-            'xwoba': 'N/A',
-            'xba': 'N/A',
-            'xslg': 'N/A',
+            'barrel_pct': '-',
+            'hard_hit_pct': '-',
+            'exit_velocity': '-',
+            'launch_angle': '-',
+            'xwoba': '-',
+            'xba': '-',
+            'xslg': '-',
         }
 
 
@@ -292,26 +292,26 @@ class NaturalStatTrickScraper:
 
         def fetch():
             return {
-                'gsaa': 'N/A',
-                'gsae': 'N/A',
-                'hd_sv_pct': 'N/A',
-                'md_sv_pct': 'N/A',
-                'ld_sv_pct': 'N/A',
-                'rebound_rate': 'N/A',
+                'gsaa': '-',
+                'gsae': '-',
+                'hd_sv_pct': '-',
+                'md_sv_pct': '-',
+                'ld_sv_pct': '-',
+                'rebound_rate': '-',
             }
 
         return cache.get_or_fetch(cache_key, fetch, max_age_hours=24)
 
     def _default_analytics(self) -> Dict:
         return {
-            'xgf': 'N/A',
-            'xga': 'N/A',
-            'xgf_pct': 'N/A',
-            'cf_pct': 'N/A',
-            'ff_pct': 'N/A',
-            'scf_pct': 'N/A',
-            'hdcf_pct': 'N/A',
-            'pdo': 'N/A',
+            'xgf': '-',
+            'xga': '-',
+            'xgf_pct': '-',
+            'cf_pct': '-',
+            'ff_pct': '-',
+            'scf_pct': '-',
+            'hdcf_pct': '-',
+            'pdo': '-',
         }
 
 

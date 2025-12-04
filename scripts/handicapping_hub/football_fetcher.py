@@ -174,7 +174,7 @@ class NFLFetcher(BaseFetcher):
                 category = stat_group.get('name', '')
                 for stat in stat_group.get('stats', []):
                     name = stat.get('name', '')
-                    value = stat.get('displayValue', stat.get('value', 'N/A'))
+                    value = stat.get('displayValue', stat.get('value', '-'))
                     stats[name] = value
 
             return stats if stats else self._default_stats()
@@ -261,7 +261,7 @@ class NFLFetcher(BaseFetcher):
 
             # Situational
             'third_down_pct': round(third_pct, 1),
-            'red_zone_pct': 'N/A',  # Need more detailed data
+            'red_zone_pct': '-',  # Need more detailed data
 
             # Turnovers
             'turnover_diff': round(turnover_diff, 0),
@@ -376,19 +376,19 @@ class NFLFetcher(BaseFetcher):
 
     def _default_stats(self) -> Dict:
         return {
-            'avgPointsPerGame': 'N/A',
-            'totalYards': 'N/A',
-            'rushingYardsPerGame': 'N/A',
-            'passingYardsPerGame': 'N/A',
+            'avgPointsPerGame': '-',
+            'totalYards': '-',
+            'rushingYardsPerGame': '-',
+            'passingYardsPerGame': '-',
         }
 
     def _default_advanced_stats(self) -> Dict:
         return {
-            'ppg': 'N/A',
-            'yards_per_play': 'N/A',
-            'epa_per_play': 'N/A',
-            'success_rate': 'N/A',
-            'turnover_diff': 'N/A',
+            'ppg': '-',
+            'yards_per_play': '-',
+            'epa_per_play': '-',
+            'success_rate': '-',
+            'turnover_diff': '-',
         }
 
     def get_complete_game_data(self, game: Dict) -> Dict:
@@ -479,7 +479,7 @@ class NCAAFFetcher(NFLFetcher):
                     category = stat_group.get('name', '')
                     for stat in stat_group.get('stats', []):
                         name = stat.get('name', '')
-                        value = stat.get('displayValue', stat.get('value', 'N/A'))
+                        value = stat.get('displayValue', stat.get('value', '-'))
                         stats[name] = value
 
             # Merge with standings data for avgPointsAgainst, differential, etc.
@@ -735,7 +735,7 @@ class NCAABFetcher(BaseFetcher):
                 for stat_group in categories:
                     for stat in stat_group.get('stats', []):
                         name = stat.get('name', '')
-                        value = stat.get('displayValue', stat.get('value', 'N/A'))
+                        value = stat.get('displayValue', stat.get('value', '-'))
                         stats[name] = value
 
             # Merge with standings data for avgPointsAgainst, differential, etc.

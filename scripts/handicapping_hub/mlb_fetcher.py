@@ -223,7 +223,7 @@ class MLBFetcher(BaseFetcher):
                 category = stat_group.get('name', '')
                 for stat in stat_group.get('stats', []):
                     name = stat.get('name', '')
-                    value = stat.get('displayValue', stat.get('value', 'N/A'))
+                    value = stat.get('displayValue', stat.get('value', '-'))
                     stats[f"{category}_{name}" if category else name] = value
                     # Also store without prefix for easier access
                     stats[name] = value
@@ -438,25 +438,25 @@ class MLBFetcher(BaseFetcher):
 
     def _default_stats(self) -> Dict:
         return {
-            'batting_avg': 'N/A',
-            'batting_homeRuns': 'N/A',
-            'batting_RBIs': 'N/A',
-            'batting_runs': 'N/A',
-            'pitching_ERA': 'N/A',
-            'pitching_WHIP': 'N/A',
+            'batting_avg': '-',
+            'batting_homeRuns': '-',
+            'batting_RBIs': '-',
+            'batting_runs': '-',
+            'pitching_ERA': '-',
+            'pitching_WHIP': '-',
         }
 
     def _default_advanced_stats(self) -> Dict:
         return {
-            'woba': 'N/A',
-            'wrc_plus': 'N/A',
-            'babip': 'N/A',
-            'iso': 'N/A',
-            'k_pct': 'N/A',
-            'bb_pct': 'N/A',
-            'era': 'N/A',
-            'fip': 'N/A',
-            'xfip': 'N/A',
+            'woba': '-',
+            'wrc_plus': '-',
+            'babip': '-',
+            'iso': '-',
+            'k_pct': '-',
+            'bb_pct': '-',
+            'era': '-',
+            'fip': '-',
+            'xfip': '-',
         }
 
     def get_complete_game_data(self, game: Dict) -> Dict:
