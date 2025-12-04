@@ -141,18 +141,20 @@ class BaseScraper:
 
     def _parse_odds(self, competition: Dict) -> Dict:
         """Parse betting odds from competition data."""
-        odds_data = competition.get('odds', [{}])
+        odds_data = competition.get('odds', [])
         if not odds_data:
-            return {}
+            return {'spread': '', 'over_under': '', 'home_ml': '', 'away_ml': '', 'provider': ''}
 
         odds = odds_data[0] if odds_data else {}
+        if odds is None:
+            odds = {}
 
         return {
-            'spread': odds.get('details', ''),
-            'over_under': odds.get('overUnder', ''),
+            'spread': odds.get('details', '') if odds else '',
+            'over_under': odds.get('overUnder', '') if odds else '',
             'home_ml': '',
             'away_ml': '',
-            'provider': odds.get('provider', {}).get('name', '')
+            'provider': odds.get('provider', {}).get('name', '') if odds else ''
         }
 
     def _get_broadcast(self, competition: Dict) -> str:

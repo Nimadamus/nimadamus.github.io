@@ -40,8 +40,11 @@ class SoccerScraper(BaseScraper):
             try:
                 games = self.get_todays_games(date)
 
-                # Add league info to each game
+                # Add league info to each game (filter out None values)
                 for game in games:
+                    if game is None:
+                        continue
+
                     league_info = self.LEAGUES.get(league_code, {'name': league_code, 'country': ''})
                     game['league'] = league_info['name']
                     game['league_code'] = league_code
@@ -57,27 +60,74 @@ class SoccerScraper(BaseScraper):
         return all_games
 
     def _parse_game(self, event: Dict) -> Optional[Dict]:
-        """Soccer-specific game parsing."""
-        game = super()._parse_game(event)
+        """Soccer-specific game parsing with robust error handling."""
+        try:
+            competitions = event.get('competitions', [{}])[0]
+            competitors = competitions.get('competitors', [])
 
-        if game:
+            if len(competitors) < 2:
+                return None
+
+            # Determine home/away
+            home_team = None
+            away_team = None
+            for comp in competitors:
+                if comp.get('homeAway') == 'home':
+                    home_team = comp
+                else:
+                    away_team = comp
+
+            if not home_team or not away_team:
+                return None
+
+            # Parse teams
+            home = self._parse_team(home_team)
+            away = self._parse_team(away_team)
+
+            if not home or not away:
+                return None
+
+            # Parse odds
+            odds = self._parse_odds(competitions)
+
+            # Get status
+            status = event.get('status', {})
+            status_type = status.get('type', {})
+
             name = event.get('name', '').lower()
-            season = event.get('season', {})
 
             # Competition type
             if 'champions league' in name:
-                game['competition_type'] = 'Champions League'
+                competition_type = 'Champions League'
             elif 'europa' in name:
-                game['competition_type'] = 'Europa League'
+                competition_type = 'Europa League'
             elif 'cup' in name or 'copa' in name:
-                game['competition_type'] = 'Cup'
+                competition_type = 'Cup'
             else:
-                game['competition_type'] = 'League'
+                competition_type = 'League'
 
-            # Match week/round
-            game['match_week'] = event.get('week', {}).get('number', '')
+            game = {
+                'id': event.get('id'),
+                'name': event.get('name', ''),
+                'short_name': event.get('shortName', ''),
+                'date': event.get('date'),
+                'status': status_type.get('name', 'scheduled'),
+                'status_detail': status_type.get('detail', ''),
+                'venue': competitions.get('venue', {}).get('fullName', ''),
+                'broadcast': self._get_broadcast(competitions),
+                'home_team': home,
+                'away_team': away,
+                'odds': odds,
+                'headlines': self._get_headlines(competitions),
+                'competition_type': competition_type,
+                'match_week': event.get('week', {}).get('number', '')
+            }
 
-        return game
+            return game
+
+        except Exception as e:
+            print(f"Error parsing soccer game: {e}")
+            return None
 
     def _parse_team(self, team_data: Dict) -> Dict:
         """Soccer-specific team parsing."""
