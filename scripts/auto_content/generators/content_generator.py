@@ -41,41 +41,39 @@ Line: {odds.get('spread', 'N/A')} | Total: {odds.get('total', 'N/A')}"""
         if sport.lower() == 'nhl':
             game_info += f"\nStandings: {home.get('name')} {home.get('points', '?')} pts | {away.get('name')} {away.get('points', '?')} pts"
 
-        # Sample of ACTUAL BetLegend writing for style reference
+        # Sample of ACTUAL BetLegend writing for style reference - ANALYSIS ONLY, NO PICKS
         style_examples = """
 REAL EXAMPLES OF THE VOICE I WANT:
-- "The public's sleeping on Golden State here, and I'm ready to wake up with some money in my pocket."
+- "The public's sleeping on Golden State here."
 - "55% is barely above mediocre - that's not some fortress we're talking about."
-- "Getting 4.5 points with their experience feels like highway robbery."
 - "Philly's been fool's gold at home - they beat the teams they're supposed to beat and fold against quality opposition."
-- "Listen, kid - you're right to look at that total."
 - "Washington? They couldn't stop a nosebleed if their lives depended on it."
 - "The Wizards are giving up 118 per game at home, which is pathetic even by their rock-bottom standards."
 - "Boston's been Swiss cheese on the road."
 - "Washington desperate for any excitement to keep the dozen fans awake."
 - "Two teams that can't guard a traffic cone."
-- "**Hammer the over at 227.5. This total should be 235.**"
-- "**Lean: Warriors +4.5**"
+- "This total feels inflated given how both defenses have been playing."
+- "The line here doesn't account for the scheduling disadvantage."
 """
 
         # Pick a unique opening style for variety
         openers = [
-            "Start with a bold claim about which side wins",
-            "Start by calling out what the public is getting wrong",
+            "Start with a bold observation about the matchup",
+            "Start by calling out what the public is missing",
             "Start with the one number that tells the whole story",
-            "Start by mocking the weaker team",
-            "Start with why this line is off",
-            "Start with the trap game angle",
+            "Start by highlighting the weaker team's struggles",
+            "Start with the interesting line movement angle",
+            "Start with the trap game potential",
             "Start with recent form - who's hot, who's not",
-            "Start with a question that sets up your take",
-            "Start by praising the underdog's value",
-            "Start with the total being the real play",
+            "Start with a question that frames the analysis",
+            "Start by highlighting the underdog's strengths",
+            "Start with the total and what it suggests",
             "Start with a scheduling/rest angle",
-            "Start with why the favorite is overvalued",
+            "Start with why the favorite might be overvalued",
         ]
         chosen_opener = random.choice(openers)
 
-        prompt = f"""You write sharp sports betting analysis with REAL personality. Study these examples of the voice I need:
+        prompt = f"""You write sharp sports analysis with REAL personality. Study these examples of the voice I need:
 
 {style_examples}
 
@@ -87,14 +85,17 @@ OPENING INSTRUCTION: {chosen_opener}
 RULES:
 1. Write 3-4 short paragraphs (150-200 words total)
 2. Use vivid metaphors and colorful language like the examples
-3. Be OPINIONATED - take a strong stance, don't hedge
+3. Be OPINIONATED and insightful - share strong observations
 4. Include specific numbers from the data naturally
-5. End with a bold pick line using ** like: **Lean: Team +3.5** or **Hammer the over at 220**
-6. Sound like a sharp bettor, not a robot
-7. Mock bad teams, praise good ones, call out trap games
-8. NEVER start with "Listen" or "Here's the thing" or "Look" - find a unique opening
-9. NO generic phrases like "it's worth noting" or "at the end of the day"
-10. NO emojis
+5. This is ANALYSIS ONLY - DO NOT include any picks, leans, or betting recommendations
+6. DO NOT end with "Lean:" or "Hammer the over" or any betting suggestion
+7. End with an insightful observation about what to watch for in this game
+8. Sound like a sharp analyst, not a robot
+9. Mock bad teams, praise good ones, identify key storylines
+10. NEVER start with "Listen" or "Here's the thing" or "Look" - find a unique opening
+11. NO generic phrases like "it's worth noting" or "at the end of the day"
+12. NO emojis
+13. NO PICKS - this is informational analysis only
 
 Write it now. Just the paragraphs, no title."""
 

@@ -147,7 +147,6 @@ main{{max-width:900px;margin:0 auto;padding:0 24px 80px}}
 .game-meta span{{background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}}
 .game-card p{{color:var(--text-secondary);margin-bottom:12px;line-height:1.8}}
 .game-card strong{{color:var(--accent-cyan);font-weight:700}}
-.game-card p:last-of-type strong{{display:block;background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(168,85,247,0.15));padding:12px 16px;border-radius:8px;border-left:3px solid var(--accent-cyan);margin-top:8px;font-size:1.1rem;text-shadow:0 0 10px rgba(0,229,255,0.3)}}
 .stat-row{{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}}
 .stat-item{{flex:1;min-width:100px;text-align:center;padding:8px}}
 .stat-item .value{{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;color:var(--accent-gold)}}
