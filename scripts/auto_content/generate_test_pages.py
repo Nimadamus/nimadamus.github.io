@@ -116,6 +116,12 @@ def generate_test_page(sport: str):
             padding: 20px;
         }}
 
+        .container {{
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }}
+
         header {{
             text-align: center;
             padding: 30px;
@@ -123,6 +129,14 @@ def generate_test_page(sport: str):
             border-radius: 12px;
             margin-bottom: 30px;
             border: 1px solid var(--border-subtle);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }}
+
+        main {{
+            max-width: 800px;
+            margin: 0 auto;
         }}
 
         header h1 {{
@@ -224,6 +238,9 @@ def generate_test_page(sport: str):
             background: var(--bg-card);
             border-radius: 12px;
             border: 1px solid var(--accent-cyan);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }}
 
         .summary h2 {{
