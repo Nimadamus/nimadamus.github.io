@@ -417,10 +417,139 @@ class NCAAFFetcher(NFLFetcher):
     ESPN_SCOREBOARD = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?groups=80'
     ESPN_TEAMS = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams'
     ESPN_TEAM_STATS = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/{team_id}/statistics'
+    ESPN_STANDINGS = 'https://site.web.api.espn.com/apis/v2/sports/football/college-football/standings'
+
+    _standings_cache = None
 
     @property
     def sport_name(self) -> str:
         return 'NCAAF'
+
+    def _get_standings_data(self) -> Dict:
+        """Get standings data with avgPointsFor, avgPointsAgainst, etc."""
+        if NCAAFFetcher._standings_cache is not None:
+            return NCAAFFetcher._standings_cache
+
+        cache_key = f"ncaaf_standings_{datetime.now().strftime('%Y-%m-%d')}"
+
+        def fetch():
+            data = self._safe_request(self.ESPN_STANDINGS)
+            if not data:
+                return {}
+
+            standings = {}
+            # Handle conference-based structure
+            children = data.get('children', [])
+            for conference in children:
+                entries = conference.get('standings', {}).get('entries', [])
+                for entry in entries:
+                    team = entry.get('team', {})
+                    team_id = str(team.get('id', ''))
+                    team_name = team.get('displayName', '')
+                    stats = {s.get('name'): s.get('value', s.get('displayValue', 0)) for s in entry.get('stats', [])}
+                    standings[team_id] = stats
+                    standings[team_name] = stats  # Also key by name
+
+            return standings
+
+        result = self.cache.get_or_fetch(cache_key, fetch, max_age_hours=6)
+        NCAAFFetcher._standings_cache = result
+        return result
+
+    def get_team_stats(self, team_id: str) -> Dict:
+        """Fetch basic team statistics merged with standings data"""
+        if not team_id:
+            return self._default_stats()
+
+        cache_key = f"ncaaf_stats_{team_id}"
+
+        def fetch():
+            url = self.ESPN_TEAM_STATS.format(team_id=team_id)
+            data = self._safe_request(url)
+
+            stats = {}
+            if data:
+                # ESPN API returns data at results.stats.categories
+                categories = data.get('results', {}).get('stats', {}).get('categories', [])
+                if not categories:
+                    # Fallback to old structure
+                    categories = data.get('splits', {}).get('categories', [])
+
+                for stat_group in categories:
+                    category = stat_group.get('name', '')
+                    for stat in stat_group.get('stats', []):
+                        name = stat.get('name', '')
+                        value = stat.get('displayValue', stat.get('value', 'N/A'))
+                        stats[name] = value
+
+            # Merge with standings data for avgPointsAgainst, differential, etc.
+            standings = self._get_standings_data()
+            team_standings = standings.get(str(team_id), {})
+
+            # Add standings stats that aren't in team stats
+            if team_standings:
+                for key in ['avgPointsFor', 'avgPointsAgainst', 'pointDifferential', 'differential', 'wins', 'losses']:
+                    if key in team_standings and key not in stats:
+                        stats[key] = team_standings[key]
+                # Point differential
+                if 'pointDifferential' in team_standings:
+                    stats['point_diff'] = team_standings['pointDifferential']
+                elif 'differential' in team_standings:
+                    stats['point_diff'] = team_standings['differential']
+
+            return stats if stats else self._default_stats()
+
+        return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=6)
+
+    def get_todays_games(self) -> List[Dict]:
+        """Fetch today's NCAAF games (overrides NFLFetcher to use correct cache key)"""
+        cache_key = f"ncaaf_games_{datetime.now().strftime('%Y-%m-%d')}"
+
+        def fetch():
+            data = self._safe_request(self.ESPN_SCOREBOARD)
+            if not data:
+                return []
+
+            games = []
+            for event in data.get('events', []):
+                competition = event.get('competitions', [{}])[0]
+                competitors = competition.get('competitors', [])
+
+                if len(competitors) < 2:
+                    continue
+
+                home_team = None
+                away_team = None
+
+                for comp in competitors:
+                    team_data = self._extract_team_data(comp)
+                    if comp.get('homeAway') == 'home':
+                        home_team = team_data
+                    else:
+                        away_team = team_data
+
+                if home_team and away_team:
+                    venue = competition.get('venue', {})
+                    venue_name = venue.get('fullName', '')
+
+                    games.append({
+                        'id': event.get('id'),
+                        'name': event.get('name'),
+                        'date': event.get('date'),
+                        'status': event.get('status', {}).get('type', {}).get('description', ''),
+                        'venue': venue_name,
+                        'venue_city': venue.get('address', {}).get('city', ''),
+                        'venue_state': venue.get('address', {}).get('state', ''),
+                        'is_dome': self._is_dome_stadium(venue_name),
+                        'broadcast': self._get_broadcast(competition),
+                        'home': home_team,
+                        'away': away_team,
+                        'week': event.get('week', {}).get('number', ''),
+                    })
+
+            return games
+
+        return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=1)
 
     def get_injuries(self, team_id: str) -> List[Dict]:
         """NCAAF doesn't have detailed injury data"""
@@ -462,10 +591,44 @@ class NCAABFetcher(BaseFetcher):
     ESPN_SCOREBOARD = 'https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?groups=50'
     ESPN_TEAMS = 'https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/teams'
     ESPN_TEAM_STATS = 'https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/teams/{team_id}/statistics'
+    ESPN_STANDINGS = 'https://site.web.api.espn.com/apis/v2/sports/basketball/mens-college-basketball/standings'
+
+    _standings_cache = None
 
     @property
     def sport_name(self) -> str:
         return 'NCAAB'
+
+    def _get_standings_data(self) -> Dict:
+        """Get standings data with avgPointsFor, avgPointsAgainst, etc."""
+        if NCAABFetcher._standings_cache is not None:
+            return NCAABFetcher._standings_cache
+
+        cache_key = f"ncaab_standings_{datetime.now().strftime('%Y-%m-%d')}"
+
+        def fetch():
+            data = self._safe_request(self.ESPN_STANDINGS)
+            if not data:
+                return {}
+
+            standings = {}
+            # Handle conference-based structure
+            children = data.get('children', [])
+            for conference in children:
+                entries = conference.get('standings', {}).get('entries', [])
+                for entry in entries:
+                    team = entry.get('team', {})
+                    team_id = str(team.get('id', ''))
+                    team_name = team.get('displayName', '')
+                    stats = {s.get('name'): s.get('value', s.get('displayValue', 0)) for s in entry.get('stats', [])}
+                    standings[team_id] = stats
+                    standings[team_name] = stats  # Also key by name
+
+            return standings
+
+        result = self.cache.get_or_fetch(cache_key, fetch, max_age_hours=6)
+        NCAABFetcher._standings_cache = result
+        return result
 
     def get_todays_games(self) -> List[Dict]:
         """Fetch today's NCAAB games"""
@@ -551,7 +714,7 @@ class NCAABFetcher(BaseFetcher):
         return ''
 
     def get_team_stats(self, team_id: str) -> Dict:
-        """Fetch basic team statistics"""
+        """Fetch basic team statistics merged with standings data"""
         if not team_id:
             return {}
 
@@ -560,21 +723,42 @@ class NCAABFetcher(BaseFetcher):
         def fetch():
             url = self.ESPN_TEAM_STATS.format(team_id=team_id)
             data = self._safe_request(url)
-            if not data:
-                return {}
 
             stats = {}
-            # ESPN API returns data at results.stats.categories
-            categories = data.get('results', {}).get('stats', {}).get('categories', [])
-            if not categories:
-                # Fallback to old structure
-                categories = data.get('splits', {}).get('categories', [])
+            if data:
+                # ESPN API returns data at results.stats.categories
+                categories = data.get('results', {}).get('stats', {}).get('categories', [])
+                if not categories:
+                    # Fallback to old structure
+                    categories = data.get('splits', {}).get('categories', [])
 
-            for stat_group in categories:
-                for stat in stat_group.get('stats', []):
-                    name = stat.get('name', '')
-                    value = stat.get('displayValue', stat.get('value', 'N/A'))
-                    stats[name] = value
+                for stat_group in categories:
+                    for stat in stat_group.get('stats', []):
+                        name = stat.get('name', '')
+                        value = stat.get('displayValue', stat.get('value', 'N/A'))
+                        stats[name] = value
+
+            # Merge with standings data for avgPointsAgainst, differential, etc.
+            standings = self._get_standings_data()
+            team_standings = standings.get(str(team_id), {})
+
+            # Add standings stats that aren't in team stats
+            if team_standings:
+                for key in ['avgPointsFor', 'avgPointsAgainst', 'pointDifferential', 'differential', 'wins', 'losses']:
+                    if key in team_standings and key not in stats:
+                        stats[key] = team_standings[key]
+                # Map common aliases
+                if 'avgPointsAgainst' not in stats and 'avgPointsAgainst' in team_standings:
+                    stats['avgPointsAgainst'] = team_standings['avgPointsAgainst']
+                if 'avgPointsFor' not in stats and 'avgPointsFor' in team_standings:
+                    stats['avgPointsFor'] = team_standings['avgPointsFor']
+                    if 'avgPoints' not in stats:
+                        stats['avgPoints'] = team_standings['avgPointsFor']
+                # Point differential
+                if 'pointDifferential' in team_standings:
+                    stats['point_diff'] = team_standings['pointDifferential']
+                elif 'differential' in team_standings:
+                    stats['point_diff'] = team_standings['differential']
 
             return stats
 
@@ -588,19 +772,50 @@ class NCAABFetcher(BaseFetcher):
         cache_key = f"ncaab_advanced_{team_id}"
 
         def fetch():
-            basic = self.get_team_stats(team_id)
-            # Simplified advanced stats calculation
-            ppg = self._parse_stat(basic.get('avgPoints', 72))
-            opp_ppg = self._parse_stat(basic.get('avgPointsAgainst', 70))
-            fg_pct = self._parse_stat(basic.get('avgFieldGoalPct', 44))
-            fg3_pct = self._parse_stat(basic.get('avgThreePointPct', 34))
+            basic = self.get_team_stats(team_id)  # Now includes standings data
+
+            # Get PPG - try multiple keys
+            ppg = self._parse_stat(basic.get('avgPoints',
+                   basic.get('avgPointsFor',
+                   basic.get('pointsPerGame', 72))))
+
+            # Get opponent PPG from standings data
+            opp_ppg = self._parse_stat(basic.get('avgPointsAgainst',
+                      basic.get('oppPointsPerGame', 70)))
+
+            # Get point differential directly or calculate it
+            point_diff = self._parse_stat(basic.get('point_diff',
+                         basic.get('pointDifferential',
+                         basic.get('differential', ppg - opp_ppg))))
+
+            # Shooting percentages
+            fg_pct = self._parse_stat(basic.get('avgFieldGoalPct',
+                     basic.get('fieldGoalPct', 44)))
+            fg3_pct = self._parse_stat(basic.get('avgThreePointPct',
+                      basic.get('threePointPct', 34)))
+            ft_pct = self._parse_stat(basic.get('avgFreeThrowPct',
+                     basic.get('freeThrowPct', 70)))
+
+            # Rebounds
+            rpg = self._parse_stat(basic.get('avgRebounds',
+                  basic.get('reboundsPerGame', 35)))
+
+            # Assists and turnovers
+            apg = self._parse_stat(basic.get('avgAssists',
+                  basic.get('assistsPerGame', 13)))
+            topg = self._parse_stat(basic.get('avgTurnovers',
+                   basic.get('turnoversPerGame', 12)))
 
             return {
                 'ppg': round(ppg, 1),
                 'opp_ppg': round(opp_ppg, 1),
-                'point_diff': round(ppg - opp_ppg, 1),
+                'point_diff': round(point_diff, 1),
                 'fg_pct': round(fg_pct, 1),
                 'three_pct': round(fg3_pct, 1),
+                'ft_pct': round(ft_pct, 1),
+                'rpg': round(rpg, 1),
+                'apg': round(apg, 1),
+                'topg': round(topg, 1),
             }
 
         return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=12)
