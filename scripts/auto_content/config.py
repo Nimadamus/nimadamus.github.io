@@ -10,8 +10,13 @@ from datetime import datetime
 # API CONFIGURATION
 # =============================================================================
 
-# Claude API - Set your API key as environment variable: ANTHROPIC_API_KEY
-ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
+# Claude API - Priority: secrets.py > environment variable > empty
+# Create secrets.py with ANTHROPIC_API_KEY = "your-key-here" (not committed to git)
+try:
+    from secrets import ANTHROPIC_API_KEY as _secret_key
+    ANTHROPIC_API_KEY = _secret_key
+except ImportError:
+    ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
 
 # Model to use for content generation
 CLAUDE_MODEL = "claude-sonnet-4-20250514"

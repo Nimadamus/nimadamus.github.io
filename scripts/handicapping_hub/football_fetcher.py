@@ -306,15 +306,32 @@ class NFLFetcher(BaseFetcher):
             injuries = []
             for item in data.get('items', [])[:10]:
                 try:
-                    player_ref = item.get('athlete', {}).get('$ref', '')
-                    if player_ref:
-                        player_data = self._safe_request(player_ref)
-                        if player_data:
+                    # ESPN returns items with $ref that need to be followed
+                    item_ref = item.get('$ref', '')
+                    if item_ref:
+                        # Follow the ref to get full injury data
+                        injury_data = self._safe_request(item_ref)
+                        if injury_data:
+                            # Now get athlete info by following athlete.$ref
+                            athlete_ref = injury_data.get('athlete', {}).get('$ref', '')
+                            player_name = 'Unknown'
+                            position = ''
+                            if athlete_ref:
+                                player_data = self._safe_request(athlete_ref)
+                                if player_data:
+                                    player_name = player_data.get('displayName', 'Unknown')
+                                    position = player_data.get('position', {}).get('abbreviation', '')
+
+                            # Get injury details
+                            injury_type = injury_data.get('type', {}).get('description',
+                                         injury_data.get('shortComment', 'Unknown'))
+                            status = injury_data.get('status', 'Unknown')
+
                             injuries.append({
-                                'name': player_data.get('displayName', 'Unknown'),
-                                'position': player_data.get('position', {}).get('abbreviation', ''),
-                                'injury': item.get('type', {}).get('description', 'Unknown'),
-                                'status': item.get('status', 'Unknown'),
+                                'name': player_name,
+                                'position': position,
+                                'injury': injury_type,
+                                'status': status,
                             })
                 except:
                     continue

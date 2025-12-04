@@ -513,6 +513,107 @@ def generate_html_content(all_data: Dict, predictions: Dict) -> str:
 </html>'''
 
 
+def generate_sport_glossary(sport: str) -> str:
+    """Generate sport-specific glossary HTML"""
+    glossaries = {
+        'NBA': '''
+            <div class="sport-glossary">
+                <h4>Stats Glossary</h4>
+                <div class="glossary-grid">
+                    <div class="glossary-item"><strong>OFF RTG</strong> - Offensive Rating: Points scored per 100 possessions</div>
+                    <div class="glossary-item"><strong>DEF RTG</strong> - Defensive Rating: Points allowed per 100 possessions</div>
+                    <div class="glossary-item"><strong>NET RTG</strong> - Net Rating: OFF RTG minus DEF RTG</div>
+                    <div class="glossary-item"><strong>PACE</strong> - Possessions per 48 minutes</div>
+                    <div class="glossary-item"><strong>eFG%</strong> - Effective FG%: Adjusts for 3-pointers being worth more</div>
+                    <div class="glossary-item"><strong>TS%</strong> - True Shooting%: Accounts for FGs, 3s, and FTs</div>
+                    <div class="glossary-item"><strong>AST%</strong> - Assist Percentage: Percentage of made FGs that were assisted</div>
+                    <div class="glossary-item"><strong>TOV%</strong> - Turnover Percentage: Turnovers per 100 plays</div>
+                    <div class="glossary-item"><strong>ATS</strong> - Against The Spread: Record covering point spreads</div>
+                    <div class="glossary-item"><strong>PWR</strong> - Power Rating: Team strength on 0-100 scale</div>
+                </div>
+            </div>''',
+        'NCAAB': '''
+            <div class="sport-glossary">
+                <h4>Stats Glossary</h4>
+                <div class="glossary-grid">
+                    <div class="glossary-item"><strong>OFF RTG</strong> - Offensive Rating: Points scored per 100 possessions</div>
+                    <div class="glossary-item"><strong>DEF RTG</strong> - Defensive Rating: Points allowed per 100 possessions</div>
+                    <div class="glossary-item"><strong>NET RTG</strong> - Net Rating: OFF RTG minus DEF RTG</div>
+                    <div class="glossary-item"><strong>PACE</strong> - Possessions per 40 minutes</div>
+                    <div class="glossary-item"><strong>eFG%</strong> - Effective FG%: Adjusts for 3-pointers being worth more</div>
+                    <div class="glossary-item"><strong>TS%</strong> - True Shooting%: Accounts for FGs, 3s, and FTs</div>
+                    <div class="glossary-item"><strong>ATS</strong> - Against The Spread: Record covering point spreads</div>
+                    <div class="glossary-item"><strong>PWR</strong> - Power Rating: Team strength on 0-100 scale</div>
+                </div>
+            </div>''',
+        'NHL': '''
+            <div class="sport-glossary">
+                <h4>Stats Glossary</h4>
+                <div class="glossary-grid">
+                    <div class="glossary-item"><strong>GF/G</strong> - Goals For per Game</div>
+                    <div class="glossary-item"><strong>GA/G</strong> - Goals Against per Game</div>
+                    <div class="glossary-item"><strong>PP%</strong> - Power Play Percentage</div>
+                    <div class="glossary-item"><strong>PK%</strong> - Penalty Kill Percentage</div>
+                    <div class="glossary-item"><strong>xGF/60</strong> - Expected Goals For per 60 minutes</div>
+                    <div class="glossary-item"><strong>xGA/60</strong> - Expected Goals Against per 60 minutes</div>
+                    <div class="glossary-item"><strong>CF%</strong> - Corsi For%: Shot attempts for vs total</div>
+                    <div class="glossary-item"><strong>FF%</strong> - Fenwick For%: Unblocked shot attempts</div>
+                    <div class="glossary-item"><strong>SH%</strong> - Shooting Percentage</div>
+                    <div class="glossary-item"><strong>SV%</strong> - Save Percentage</div>
+                    <div class="glossary-item"><strong>PDO</strong> - SH% + SV% (luck indicator, 100 is average)</div>
+                </div>
+            </div>''',
+        'NFL': '''
+            <div class="sport-glossary">
+                <h4>Stats Glossary</h4>
+                <div class="glossary-grid">
+                    <div class="glossary-item"><strong>EPA/PLAY</strong> - Expected Points Added per play</div>
+                    <div class="glossary-item"><strong>SUCCESS%</strong> - Percentage of plays gaining expected yards</div>
+                    <div class="glossary-item"><strong>EXPLOSIVE%</strong> - Percentage of plays gaining 20+ yards</div>
+                    <div class="glossary-item"><strong>YDS/PLAY</strong> - Average yards gained per play</div>
+                    <div class="glossary-item"><strong>3RD DOWN%</strong> - Third down conversion rate</div>
+                    <div class="glossary-item"><strong>TO DIFF</strong> - Turnover Differential (takeaways minus giveaways)</div>
+                    <div class="glossary-item"><strong>QB RTG</strong> - Quarterback Passer Rating (0-158.3 scale)</div>
+                    <div class="glossary-item"><strong>PT DIFF</strong> - Point Differential per game</div>
+                    <div class="glossary-item"><strong>ATS</strong> - Against The Spread: Record covering point spreads</div>
+                    <div class="glossary-item"><strong>PWR</strong> - Power Rating: Team strength on 0-100 scale</div>
+                </div>
+            </div>''',
+        'NCAAF': '''
+            <div class="sport-glossary">
+                <h4>Stats Glossary</h4>
+                <div class="glossary-grid">
+                    <div class="glossary-item"><strong>EPA/PLAY</strong> - Expected Points Added per play</div>
+                    <div class="glossary-item"><strong>SUCCESS%</strong> - Percentage of plays gaining expected yards</div>
+                    <div class="glossary-item"><strong>EXPLOSIVE%</strong> - Percentage of plays gaining 20+ yards</div>
+                    <div class="glossary-item"><strong>YDS/PLAY</strong> - Average yards gained per play</div>
+                    <div class="glossary-item"><strong>3RD DOWN%</strong> - Third down conversion rate</div>
+                    <div class="glossary-item"><strong>TO DIFF</strong> - Turnover Differential</div>
+                    <div class="glossary-item"><strong>QB RTG</strong> - Quarterback Passer Rating</div>
+                    <div class="glossary-item"><strong>ATS</strong> - Against The Spread: Record covering point spreads</div>
+                    <div class="glossary-item"><strong>PWR</strong> - Power Rating: Team strength on 0-100 scale</div>
+                </div>
+            </div>''',
+        'MLB': '''
+            <div class="sport-glossary">
+                <h4>Stats Glossary</h4>
+                <div class="glossary-grid">
+                    <div class="glossary-item"><strong>wOBA</strong> - Weighted On-Base Average: Measures overall offensive value</div>
+                    <div class="glossary-item"><strong>wRC+</strong> - Weighted Runs Created Plus: 100 is league average</div>
+                    <div class="glossary-item"><strong>BABIP</strong> - Batting Average on Balls In Play</div>
+                    <div class="glossary-item"><strong>ISO</strong> - Isolated Power: Extra bases per at bat</div>
+                    <div class="glossary-item"><strong>K%</strong> - Strikeout Percentage</div>
+                    <div class="glossary-item"><strong>BB%</strong> - Walk Percentage</div>
+                    <div class="glossary-item"><strong>FIP</strong> - Fielding Independent Pitching: What ERA should be</div>
+                    <div class="glossary-item"><strong>xFIP</strong> - Expected FIP: Normalizes HR/FB rate</div>
+                    <div class="glossary-item"><strong>ATS</strong> - Against The Spread: Record covering run lines</div>
+                    <div class="glossary-item"><strong>PWR</strong> - Power Rating: Team strength on 0-100 scale</div>
+                </div>
+            </div>'''
+    }
+    return glossaries.get(sport, '')
+
+
 def generate_sport_section(sport: str, sport_data: Dict, predictions: List) -> str:
     """Generate HTML section for a sport"""
     games = sport_data.get('games', [])
@@ -541,12 +642,16 @@ def generate_sport_section(sport: str, sport_data: Dict, predictions: List) -> s
         prediction = predictions[i] if i < len(predictions) else None
         cards_html += generate_game_card(sport, game_data, prediction)
 
+    # Generate sport-specific glossary
+    glossary_html = generate_sport_glossary(sport)
+
     return f'''
         <div id="{sport}" class="section {active_class}">
             <div class="section-header">
                 <h2>{sport} Games</h2><span class="count">{game_count} games today</span>
             </div>
 {cards_html}
+{glossary_html}
         </div>
 '''
 
@@ -1846,6 +1951,44 @@ def generate_css() -> str:
         .glossary-category dt::after {
             content: ' - ';
             color: #30363d;
+        }
+
+        /* Sport-Specific Glossary Styles */
+        .sport-glossary {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 25px 0 10px 0;
+        }
+        .sport-glossary h4 {
+            color: #7ee787;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #30363d;
+            font-family: 'Orbitron', monospace;
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 10px 20px;
+        }
+        .glossary-item {
+            font-size: 13px;
+            color: #8b949e;
+            padding: 5px 0;
+        }
+        .glossary-item strong {
+            color: #58a6ff;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .glossary-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 '''
