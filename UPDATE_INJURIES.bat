@@ -2,23 +2,25 @@
 cd /d C:\Users\Nima\nimadamus.github.io
 
 echo ========================================
-echo Updating Injury Reports from ESPN
+echo HANDICAPPING HUB AUTO-UPDATER
 echo ========================================
 echo.
 
+echo [1/3] Updating Injury Reports from ESPN...
 python scrape_injuries.py
 
 echo.
-echo ========================================
-echo Pushing to GitHub...
-echo ========================================
+echo [2/3] Detecting Sharp Action from Action Network...
+python scrape_sharp_action.py
 
-git add handicapping-hub.html injuries_data.json
-git commit -m "Auto-update injury reports from ESPN"
+echo.
+echo [3/3] Pushing to GitHub...
+git add handicapping-hub.html injuries_data.json sharp_action_data.json
+git commit -m "Auto-update: injuries + sharp action"
 git push
 
 echo.
 echo ========================================
-echo DONE - Injuries updated and pushed!
+echo DONE - All updates complete!
 echo ========================================
 pause
