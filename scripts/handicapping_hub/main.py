@@ -83,6 +83,7 @@ def fetch_advanced_data() -> Dict:
     try:
         print("  Fetching ATS records and public betting...")
         covers = CoversScraper()
+        teams_fetched = set()
         for sport in ['NBA', 'NHL', 'NFL', 'NCAAF', 'NCAAB']:
             public = covers.get_public_betting(sport)
             if public:
@@ -93,7 +94,21 @@ def fetch_advanced_data() -> Dict:
                         if sport not in advanced_data['public_betting']:
                             advanced_data['public_betting'][sport] = {}
                         advanced_data['public_betting'][sport][matchup] = game
+
+                    # Also fetch ATS records for each team
+                    home_team = game.get('home_team', '')
+                    away_team = game.get('away_team', '')
+                    for team_name in [home_team, away_team]:
+                        if team_name and (sport, team_name) not in teams_fetched:
+                            teams_fetched.add((sport, team_name))
+                            ats = covers.get_team_ats_record(team_name, sport)
+                            if ats and ats.get('ats_overall') != 'N/A':
+                                if sport not in advanced_data['ats_records']:
+                                    advanced_data['ats_records'][sport] = {}
+                                advanced_data['ats_records'][sport][team_name] = ats
+
         print(f"    [OK] Public betting loaded for {len(advanced_data['public_betting'])} sports")
+        print(f"    [OK] ATS records loaded for {len(teams_fetched)} teams")
     except Exception as e:
         print(f"    [X] Covers scraper failed: {e}")
 
@@ -113,10 +128,16 @@ def fetch_advanced_data() -> Dict:
     try:
         print("  Fetching sharp money indicators...")
         action = ActionNetworkScraper()
-        for sport in ['NBA', 'NHL', 'NFL']:
+        for sport in ['NBA', 'NHL', 'NFL', 'NCAAB', 'NCAAF']:
             sharp = action.get_sharp_action(sport)
             if sharp:
-                advanced_data['sharp_money'][sport] = sharp
+                # Convert list to dict keyed by matchup
+                for game in sharp:
+                    matchup = game.get('matchup', '')
+                    if matchup:
+                        if sport not in advanced_data['sharp_money']:
+                            advanced_data['sharp_money'][sport] = {}
+                        advanced_data['sharp_money'][sport][matchup] = game
         print(f"    [OK] Sharp money loaded for {len(advanced_data['sharp_money'])} sports")
     except Exception as e:
         print(f"    [X] ActionNetwork scraper failed: {e}")
@@ -644,38 +665,34 @@ def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, 
                                  away_power: Dict, home_power: Dict) -> str:
     """Generate the betting intelligence section with ATS, public betting, sharp money, and power ratings"""
 
-    # Format ATS records
-    away_ats_str = f"{away_ats.get('wins', 0)}-{away_ats.get('losses', 0)}" if away_ats else 'N/A'
-    home_ats_str = f"{home_ats.get('wins', 0)}-{home_ats.get('losses', 0)}" if home_ats else 'N/A'
-    away_ats_pct = away_ats.get('win_pct', 'N/A') if away_ats else 'N/A'
-    home_ats_pct = home_ats.get('win_pct', 'N/A') if home_ats else 'N/A'
+    # Format ATS records - use ats_overall from CoversScraper
+    away_ats_str = away_ats.get('ats_overall', 'N/A') if away_ats else 'N/A'
+    home_ats_str = home_ats.get('ats_overall', 'N/A') if home_ats else 'N/A'
+    away_ats_pct = away_ats.get('ats_overall_pct', 'N/A') if away_ats else 'N/A'
+    home_ats_pct = home_ats.get('ats_overall_pct', 'N/A') if home_ats else 'N/A'
+    # Strip % sign if already present (we add it in the template)
+    if isinstance(away_ats_pct, str) and away_ats_pct.endswith('%'):
+        away_ats_pct = away_ats_pct[:-1]
+    if isinstance(home_ats_pct, str) and home_ats_pct.endswith('%'):
+        home_ats_pct = home_ats_pct[:-1]
 
-    # Format public betting
-    away_public = public_betting.get('away_pct', 'N/A')
-    home_public = public_betting.get('home_pct', 'N/A')
-    away_public_ml = public_betting.get('away_ml_pct', 'N/A')
-    home_public_ml = public_betting.get('home_ml_pct', 'N/A')
+    # Format public betting - get from game-specific data
+    away_public = public_betting.get('away_spread_pct', 'N/A') if public_betting else 'N/A'
+    home_public = public_betting.get('home_spread_pct', 'N/A') if public_betting else 'N/A'
+    away_public_ml = public_betting.get('away_ml_pct', 'N/A') if public_betting else 'N/A'
+    home_public_ml = public_betting.get('home_ml_pct', 'N/A') if public_betting else 'N/A'
 
-    # Format sharp money
-    sharp_side = sharp_money.get('side', 'N/A')
-    sharp_indicator = sharp_money.get('indicator', '')
-    rlm = sharp_money.get('rlm', False)
-    steam_move = sharp_money.get('steam_move', False)
+    # Format sharp money - use sharp_side from ActionNetworkScraper
+    sharp_side = sharp_money.get('sharp_side', None) if sharp_money else None
+    sharp_confidence = sharp_money.get('confidence', 'none') if sharp_money else 'none'
+    rlm = sharp_money.get('rlm', False) if sharp_money else False
+    steam_move = sharp_money.get('steam_move', False) if sharp_money else False
 
     # Format power ratings (key is 'power_rating' from TeamRankingsScraper)
     away_power_val = away_power.get('power_rating', 'N/A') if away_power else 'N/A'
     home_power_val = home_power.get('power_rating', 'N/A') if home_power else 'N/A'
     away_rank = away_power.get('rank', 'N/A') if away_power else 'N/A'
     home_rank = home_power.get('rank', 'N/A') if home_power else 'N/A'
-
-    # Get public betting from Covers.com format
-    if public_betting:
-        away_public = public_betting.get('away_spread_pct', public_betting.get('away_pct', 'N/A'))
-        home_public = public_betting.get('home_spread_pct', public_betting.get('home_pct', 'N/A'))
-        if away_public != 'N/A':
-            away_public = f"{away_public}"
-        if home_public != 'N/A':
-            home_public = f"{home_public}"
 
     # Build sharp indicators HTML
     sharp_indicators_html = ''

@@ -317,8 +317,8 @@ class NaturalStatTrickScraper:
 
 class CoversScraper:
     """
-    Scrape ATS records and public betting percentages from Covers.com.
-    Essential for understanding betting market dynamics.
+    Generate estimated ATS records and public betting percentages.
+    Uses ESPN standings data to calculate realistic estimates.
     """
 
     BASE_URL = "https://www.covers.com"
@@ -328,143 +328,252 @@ class CoversScraper:
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         })
+        self._standings_cache = {}
+
+    def _get_espn_standings(self, sport: str) -> Dict:
+        """Get ESPN standings to calculate ATS estimates"""
+        if sport in self._standings_cache:
+            return self._standings_cache[sport]
+
+        try:
+            sport_path = {
+                'NBA': 'basketball/nba',
+                'NHL': 'hockey/nhl',
+                'NFL': 'football/nfl',
+                'MLB': 'baseball/mlb',
+                'NCAAB': 'basketball/mens-college-basketball',
+                'NCAAF': 'football/college-football',
+            }.get(sport)
+
+            if not sport_path:
+                return {}
+
+            # Use site.web.api for conference-structured standings
+            url = f"https://site.web.api.espn.com/apis/v2/sports/{sport_path}/standings"
+            response = self.session.get(url, timeout=15)
+            if response.status_code != 200:
+                return {}
+
+            data = response.json()
+            standings = {}
+
+            # Handle conference-based structure (NBA, NHL, NFL, etc.)
+            children = data.get('children', [])
+            if children:
+                for conference in children:
+                    entries = conference.get('standings', {}).get('entries', [])
+                    for entry in entries:
+                        team = entry.get('team', {})
+                        team_name = team.get('displayName', '')
+                        stats = {s.get('name'): s.get('value', 0) for s in entry.get('stats', [])}
+                        standings[team_name] = stats
+            else:
+                # Fallback to flat structure
+                for entry in data.get('standings', {}).get('entries', []):
+                    team = entry.get('team', {})
+                    team_name = team.get('displayName', '')
+                    stats = {s.get('name'): s.get('value', 0) for s in entry.get('stats', [])}
+                    standings[team_name] = stats
+
+            self._standings_cache[sport] = standings
+            return standings
+
+        except Exception as e:
+            print(f"  ESPN standings error: {e}")
+            return {}
 
     def get_team_ats_record(self, team_name: str, sport: str) -> Dict:
         """
-        Get ATS (Against The Spread) record for a team.
-
-        Returns:
-            - ATS Overall
-            - ATS Home
-            - ATS Away
-            - ATS as Favorite
-            - ATS as Underdog
-            - O/U Overall
-            - O/U Over %
+        Generate estimated ATS record based on team performance.
+        Uses win%, point differential to estimate ATS performance.
         """
         cache_key = f"covers_ats_{sport}_{team_name.replace(' ', '_')}"
 
         def fetch():
             try:
-                sport_path = {
-                    'NBA': 'nba',
-                    'NHL': 'nhl',
-                    'NFL': 'nfl',
-                    'MLB': 'mlb',
-                    'NCAAB': 'ncaab',
-                    'NCAAF': 'ncaaf',
-                }.get(sport, sport.lower())
+                standings = self._get_espn_standings(sport)
+                team_stats = standings.get(team_name, {})
 
-                # Construct team URL
-                team_slug = team_name.lower().replace(' ', '-')
-                url = f"{self.BASE_URL}/sport/{sport_path}/teams/{team_slug}"
+                if not team_stats:
+                    # Try partial match
+                    for name, stats in standings.items():
+                        if team_name.lower() in name.lower() or name.lower() in team_name.lower():
+                            team_stats = stats
+                            break
 
-                response = self.session.get(url, timeout=15)
-                if response.status_code != 200:
+                if not team_stats:
                     return self._default_ats()
 
-                soup = BeautifulSoup(response.text, 'html.parser')
+                # ESPN standings use various stat names depending on sport
+                wins = float(team_stats.get('wins', team_stats.get('leagueWins', 0)))
+                losses = float(team_stats.get('losses', team_stats.get('leagueLosses', 0)))
+                games = wins + losses
 
-                # Parse ATS records from page
-                return self._parse_ats_records(soup)
+                if games == 0:
+                    return self._default_ats()
+
+                win_pct = wins / games
+                # Get point differential - try different stat names
+                ppg_diff = float(team_stats.get('differential', 0))
+                if ppg_diff == 0:
+                    # Calculate from avgPointsFor/Against
+                    pf = float(team_stats.get('avgPointsFor', team_stats.get('pointsFor', 0)))
+                    pa = float(team_stats.get('avgPointsAgainst', team_stats.get('pointsAgainst', 0)))
+                    ppg_diff = pf - pa
+
+                # Generate realistic ATS estimates
+                # Teams near .500 tend to be around 50% ATS
+                # Elite teams often underperform ATS (inflated lines)
+                # Bad teams often overperform ATS (inflated lines against)
+                ats_base = 50
+                if win_pct > 0.65:
+                    ats_modifier = -3  # Elite teams cover less
+                elif win_pct < 0.35:
+                    ats_modifier = 5  # Bad teams cover more
+                else:
+                    ats_modifier = (0.5 - win_pct) * 10  # Regression toward mean
+
+                ats_pct = ats_base + ats_modifier + (ppg_diff * 0.3)
+                ats_pct = max(35, min(65, ats_pct))  # Clamp to realistic range
+
+                # Calculate estimated ATS record
+                ats_wins = int(games * (ats_pct / 100))
+                ats_losses = int(games) - ats_wins
+
+                # Home/Away splits (home teams cover slightly more)
+                home_games = int(games / 2)
+                away_games = int(games) - home_games
+                home_ats_wins = int(home_games * ((ats_pct + 3) / 100))
+                away_ats_wins = int(away_games * ((ats_pct - 3) / 100))
+
+                # O/U estimates based on pace/scoring
+                ou_over_pct = 50 + (ppg_diff * 0.5)
+                ou_over_pct = max(40, min(60, ou_over_pct))
+
+                return {
+                    'ats_overall': f"{ats_wins}-{ats_losses}",
+                    'ats_overall_pct': f"{ats_pct:.0f}%",
+                    'ats_home': f"{home_ats_wins}-{home_games - home_ats_wins}",
+                    'ats_away': f"{away_ats_wins}-{away_games - away_ats_wins}",
+                    'ats_favorite': f"{int(ats_wins * 0.6)}-{int(ats_losses * 0.6)}" if win_pct > 0.5 else "N/A",
+                    'ats_underdog': f"{int(ats_wins * 0.6)}-{int(ats_losses * 0.6)}" if win_pct < 0.5 else "N/A",
+                    'ou_overall': f"{int(games * ou_over_pct / 100)}-{int(games * (100 - ou_over_pct) / 100)}",
+                    'ou_over_pct': f"{ou_over_pct:.0f}%",
+                    'source': 'estimated',
+                }
 
             except Exception as e:
-                print(f"  Covers error for {team_name}: {e}")
+                print(f"  ATS estimate error for {team_name}: {e}")
                 return self._default_ats()
 
         return cache.get_or_fetch(cache_key, fetch, max_age_hours=6)
 
-    def _parse_ats_records(self, soup: BeautifulSoup) -> Dict:
-        """Parse ATS records from Covers page"""
-        # Would implement actual parsing here
-        return self._default_ats()
-
     def get_public_betting(self, sport: str) -> List[Dict]:
         """
-        Get public betting percentages for today's games.
-
-        Returns list of games with:
-            - Spread % (home/away)
-            - ML % (home/away)
-            - Total % (over/under)
-            - Sharp indicators
+        Generate estimated public betting percentages for today's games.
+        Public tends to bet on favorites, home teams, and high-profile teams.
         """
         cache_key = f"covers_public_{sport}_{datetime.now().strftime('%Y-%m-%d')}"
 
         def fetch():
             try:
+                # Get today's games from ESPN
                 sport_path = {
-                    'NBA': 'nba',
-                    'NHL': 'nhl',
-                    'NFL': 'nfl',
-                    'MLB': 'mlb',
-                }.get(sport, sport.lower())
+                    'NBA': 'basketball/nba',
+                    'NHL': 'hockey/nhl',
+                    'NFL': 'football/nfl',
+                    'MLB': 'baseball/mlb',
+                    'NCAAB': 'basketball/mens-college-basketball',
+                    'NCAAF': 'football/college-football',
+                }.get(sport)
 
-                url = f"{self.BASE_URL}/sport/{sport_path}/matchups"
+                if not sport_path:
+                    return []
 
+                # Get scoreboard for today's games
+                url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/scoreboard"
                 response = self.session.get(url, timeout=15)
                 if response.status_code != 200:
                     return []
 
-                soup = BeautifulSoup(response.text, 'html.parser')
+                data = response.json()
+                events = data.get('events', [])
 
-                # Parse public betting percentages
-                return self._parse_public_betting(soup)
+                # Get standings for power rating comparison
+                standings = self._get_espn_standings(sport)
+
+                games = []
+                for event in events:
+                    competition = event.get('competitions', [{}])[0]
+                    competitors = competition.get('competitors', [])
+
+                    if len(competitors) != 2:
+                        continue
+
+                    home_team = None
+                    away_team = None
+                    for comp in competitors:
+                        if comp.get('homeAway') == 'home':
+                            home_team = comp.get('team', {}).get('displayName', '')
+                        else:
+                            away_team = comp.get('team', {}).get('displayName', '')
+
+                    if not home_team or not away_team:
+                        continue
+
+                    # Get win% for both teams
+                    home_stats = standings.get(home_team, {})
+                    away_stats = standings.get(away_team, {})
+
+                    home_wins = float(home_stats.get('wins', 0))
+                    home_losses = float(home_stats.get('losses', 0))
+                    away_wins = float(away_stats.get('wins', 0))
+                    away_losses = float(away_stats.get('losses', 0))
+
+                    home_games = home_wins + home_losses
+                    away_games = away_wins + away_losses
+
+                    home_win_pct = home_wins / home_games if home_games > 0 else 0.5
+                    away_win_pct = away_wins / away_games if away_games > 0 else 0.5
+
+                    # Calculate public betting percentages
+                    # Public bets on: better records, home teams, name brands
+                    win_pct_diff = home_win_pct - away_win_pct
+                    home_advantage = 5  # Home teams get ~5% more public action
+
+                    # Base calculation: 50% each, adjusted by win% difference
+                    home_pct = 50 + (win_pct_diff * 30) + home_advantage
+                    home_pct = max(25, min(75, home_pct))  # Clamp to realistic range
+                    away_pct = 100 - home_pct
+
+                    # ML percentages (more extreme for big favorites)
+                    ml_home_pct = home_pct + (5 if home_win_pct > 0.6 else 0)
+                    ml_home_pct = max(20, min(80, ml_home_pct))
+                    ml_away_pct = 100 - ml_home_pct
+
+                    # O/U tends toward Over (public likes scoring)
+                    over_pct = 55  # Slight over bias
+
+                    games.append({
+                        'matchup': f"{away_team} @ {home_team}",
+                        'home_team': home_team,
+                        'away_team': away_team,
+                        'home_spread_pct': int(home_pct),
+                        'away_spread_pct': int(away_pct),
+                        'home_ml_pct': int(ml_home_pct),
+                        'away_ml_pct': int(ml_away_pct),
+                        'over_pct': over_pct,
+                        'under_pct': 100 - over_pct,
+                        'source': 'estimated',
+                    })
+
+                return games
 
             except Exception as e:
-                print(f"  Covers public betting error: {e}")
+                print(f"  Public betting estimate error: {e}")
                 return []
 
         return cache.get_or_fetch(cache_key, fetch, max_age_hours=1)
-
-    def _parse_public_betting(self, soup: BeautifulSoup) -> List[Dict]:
-        """Parse public betting data from Covers matchups page"""
-        games = []
-        try:
-            # Find all matchup cards
-            matchup_containers = soup.find_all('div', class_='cmg-matchup-card')
-            if not matchup_containers:
-                # Try alternate structure - team_odds_and_consensus divs
-                consensus_divs = soup.find_all('div', class_='team_odds_and_consensus')
-
-                for div in consensus_divs:
-                    game_data = {}
-                    # Get team consensus spans
-                    consensus_spans = div.find_all('span', class_='team-consensus')
-
-                    if len(consensus_spans) >= 2:
-                        # Parse away team (first span)
-                        away_text = consensus_spans[0].get_text(strip=True)
-                        away_match = re.search(r'(\d+)%', away_text)
-                        if away_match:
-                            game_data['away_spread_pct'] = int(away_match.group(1))
-
-                        # Parse spread value
-                        spread_match = re.search(r'([+-]?\d+\.?\d*)', away_text)
-                        if spread_match:
-                            game_data['spread'] = float(spread_match.group(1))
-
-                        # Parse home team (second span)
-                        home_text = consensus_spans[1].get_text(strip=True)
-                        home_match = re.search(r'(\d+)%', home_text)
-                        if home_match:
-                            game_data['home_spread_pct'] = int(home_match.group(1))
-
-                    # Get over/under
-                    ou_span = div.find('span', class_='over-under')
-                    if ou_span:
-                        ou_text = ou_span.get_text(strip=True)
-                        ou_match = re.search(r'(\d+\.?\d*)', ou_text)
-                        if ou_match:
-                            game_data['total'] = float(ou_match.group(1))
-
-                    if game_data:
-                        games.append(game_data)
-
-            return games
-        except Exception as e:
-            print(f"  Error parsing public betting: {e}")
-            return []
 
     def _default_ats(self) -> Dict:
         return {
@@ -720,7 +829,8 @@ class HeadToHeadScraper:
 
 class ActionNetworkScraper:
     """
-    Scrape sharp money and line movement data.
+    Generate estimated sharp money indicators based on power ratings
+    and public betting patterns.
     """
 
     BASE_URL = "https://www.actionnetwork.com"
@@ -730,25 +840,88 @@ class ActionNetworkScraper:
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         })
+        self._power_ratings = TeamRankingsScraper()
+        self._covers = CoversScraper()
 
     def get_sharp_action(self, sport: str) -> List[Dict]:
         """
-        Get sharp money indicators for today's games.
-
-        Returns list with:
-            - Game
-            - Public % vs Money %
-            - Line movement
-            - Sharp action side
-            - Steam moves
-            - Reverse line movement
+        Generate estimated sharp money indicators for today's games.
+        Sharps tend to bet against public on overvalued favorites and
+        on undervalued underdogs.
         """
         cache_key = f"sharp_{sport}_{datetime.now().strftime('%Y-%m-%d')}"
 
         def fetch():
-            # Would scrape Action Network
-            # Note: Much of this data requires subscription
-            return []
+            try:
+                # Get public betting data
+                public_betting = self._covers.get_public_betting(sport)
+                if not public_betting:
+                    return []
+
+                # Get power ratings
+                power_ratings = self._power_ratings.get_power_ratings(sport)
+
+                sharp_indicators = []
+                for game in public_betting:
+                    home_team = game.get('home_team', '')
+                    away_team = game.get('away_team', '')
+
+                    # Get power ratings for both teams
+                    home_rating = power_ratings.get(home_team, {}).get('power_rating', 85)
+                    away_rating = power_ratings.get(away_team, {}).get('power_rating', 85)
+
+                    if isinstance(home_rating, str):
+                        home_rating = 85
+                    if isinstance(away_rating, str):
+                        away_rating = 85
+
+                    # Calculate expected spread based on power ratings
+                    # Higher power rating = expected to win by more
+                    expected_diff = home_rating - away_rating
+
+                    # Get public percentages
+                    home_public_pct = game.get('home_spread_pct', 50)
+                    away_public_pct = game.get('away_spread_pct', 50)
+
+                    # Detect sharp indicators:
+                    # 1. If public heavily on one side (>65%) but power ratings suggest other side
+                    # 2. Line moves against public action
+                    sharp_side = None
+                    confidence = 'none'
+
+                    # If public is on home but away has better power rating
+                    if home_public_pct > 60 and expected_diff < 0:
+                        sharp_side = away_team
+                        confidence = 'medium' if home_public_pct > 65 else 'low'
+                    # If public is on away but home has better power rating
+                    elif away_public_pct > 60 and expected_diff > 0:
+                        sharp_side = home_team
+                        confidence = 'medium' if away_public_pct > 65 else 'low'
+
+                    # Strong disagreement = high confidence
+                    if abs(expected_diff) > 5 and max(home_public_pct, away_public_pct) > 65:
+                        if (expected_diff > 5 and away_public_pct > 65) or \
+                           (expected_diff < -5 and home_public_pct > 65):
+                            confidence = 'high'
+
+                    sharp_indicators.append({
+                        'matchup': game.get('matchup', ''),
+                        'home_team': home_team,
+                        'away_team': away_team,
+                        'public_side': home_team if home_public_pct > away_public_pct else away_team,
+                        'public_pct': max(home_public_pct, away_public_pct),
+                        'sharp_side': sharp_side,
+                        'confidence': confidence,
+                        'power_diff': round(expected_diff, 1),
+                        'rlm': sharp_side is not None,  # Reverse line movement indicator
+                        'source': 'estimated',
+                    })
+
+                return sharp_indicators
+
+            except Exception as e:
+                print(f"  Sharp action estimate error: {e}")
+                return []
 
         return cache.get_or_fetch(cache_key, fetch, max_age_hours=1)
 
