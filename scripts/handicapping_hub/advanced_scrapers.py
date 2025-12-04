@@ -734,50 +734,79 @@ class TeamRankingsScraper:
     def _get_nhl_power_ratings(self) -> Dict:
         """Calculate NHL power ratings from ESPN data"""
         try:
-            url = 'https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings'
+            # Use the web API endpoint which returns conference-based data
+            url = 'https://site.web.api.espn.com/apis/v2/sports/hockey/nhl/standings'
             response = self.session.get(url, timeout=15)
             if response.status_code != 200:
+                print(f"  NHL standings returned status {response.status_code}")
                 return {}
 
             data = response.json()
-            entries = data.get('standings', {}).get('entries', [])
 
+            # ESPN returns conference-based structure: children[] -> standings.entries[]
             power_ratings = {}
-            for entry in entries:
-                team = entry.get('team', {})
-                team_name = team.get('displayName', '')
-                stats = {s.get('name'): s.get('value', s.get('displayValue')) for s in entry.get('stats', [])}
+            conferences = data.get('children', [])
 
-                wins = float(stats.get('wins', 0))
-                losses = float(stats.get('losses', 0))
-                otl = float(stats.get('otLosses', 0))
-                gf = float(stats.get('pointsFor', 0))
-                ga = float(stats.get('pointsAgainst', 0))
-                games = wins + losses + otl
-
-                if games > 0:
-                    pts_pct = (wins * 2 + otl) / (games * 2)
-                    goal_diff = (gf - ga) / games
-                    power_rating = 85 + (goal_diff * 2) + ((pts_pct - 0.5) * 20)
+            for conf in conferences:
+                # Each conference has divisions or direct standings
+                divisions = conf.get('children', [])
+                if divisions:
+                    for div in divisions:
+                        entries = div.get('standings', {}).get('entries', [])
+                        self._process_nhl_entries(entries, power_ratings)
                 else:
-                    power_rating = 85
+                    # Direct standings under conference
+                    entries = conf.get('standings', {}).get('entries', [])
+                    self._process_nhl_entries(entries, power_ratings)
 
-                power_ratings[team_name] = {
-                    'power_rating': round(power_rating, 1),
-                    'goal_diff': round(goal_diff if games > 0 else 0, 2),
-                    'pts_pct': round(pts_pct * 100 if games > 0 else 50, 1),
-                }
+            # Fallback: try direct standings structure
+            if not power_ratings:
+                entries = data.get('standings', {}).get('entries', [])
+                self._process_nhl_entries(entries, power_ratings)
 
             # Add rankings
-            sorted_teams = sorted(power_ratings.items(), key=lambda x: x[1]['power_rating'], reverse=True)
-            for rank, (team, data) in enumerate(sorted_teams, 1):
-                power_ratings[team]['rank'] = rank
+            if power_ratings:
+                sorted_teams = sorted(power_ratings.items(), key=lambda x: x[1]['power_rating'], reverse=True)
+                for rank, (team, team_data) in enumerate(sorted_teams, 1):
+                    power_ratings[team]['rank'] = rank
 
             return power_ratings
 
         except Exception as e:
             print(f"  NHL power ratings error: {e}")
             return {}
+
+    def _process_nhl_entries(self, entries: list, power_ratings: Dict):
+        """Process NHL standings entries into power ratings"""
+        for entry in entries:
+            team = entry.get('team', {})
+            team_name = team.get('displayName', '')
+            if not team_name:
+                continue
+
+            stats = {s.get('name'): s.get('value', s.get('displayValue')) for s in entry.get('stats', [])}
+
+            wins = float(stats.get('wins', 0))
+            losses = float(stats.get('losses', 0))
+            otl = float(stats.get('otLosses', stats.get('otlosses', 0)))
+            gf = float(stats.get('pointsFor', stats.get('goalsFor', 0)))
+            ga = float(stats.get('pointsAgainst', stats.get('goalsAgainst', 0)))
+            games = wins + losses + otl
+
+            if games > 0:
+                pts_pct = (wins * 2 + otl) / (games * 2)
+                goal_diff = (gf - ga) / games
+                power_rating = 85 + (goal_diff * 2) + ((pts_pct - 0.5) * 20)
+            else:
+                power_rating = 85
+                pts_pct = 0.5
+                goal_diff = 0
+
+            power_ratings[team_name] = {
+                'power_rating': round(power_rating, 1),
+                'goal_diff': round(goal_diff, 2),
+                'pts_pct': round(pts_pct * 100, 1),
+            }
 
     def get_team_ranking(self, team_name: str, sport: str) -> Dict:
         """Get ranking info for a specific team"""

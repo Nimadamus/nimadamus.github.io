@@ -577,12 +577,12 @@ def generate_game_card(sport: str, game_data: Dict, prediction: Dict = None) -> 
     away_logo = away.get('logo', f"https://a.espncdn.com/i/teamlogos/{sport.lower()}/500/scoreboard/{away.get('abbreviation', '').lower()}.png")
     home_logo = home.get('logo', f"https://a.espncdn.com/i/teamlogos/{sport.lower()}/500/scoreboard/{home.get('abbreviation', '').lower()}.png")
 
-    # Format odds
-    spread_home = format_spread(odds.get('spread_home'))
-    spread_away = format_spread(odds.get('spread_away'))
-    total = odds.get('total', 'N/A')
-    ml_home = format_ml(odds.get('ml_home'))
-    ml_away = format_ml(odds.get('ml_away'))
+    # Format odds - only show real data, use dashes if not available
+    spread_home = format_spread(odds.get('spread_home')) if odds.get('spread_home') is not None else '-'
+    spread_away = format_spread(odds.get('spread_away')) if odds.get('spread_away') is not None else '-'
+    total = odds.get('total', '-') if odds.get('total') is not None else '-'
+    ml_home = format_ml(odds.get('ml_home')) if odds.get('ml_home') is not None else '-'
+    ml_away = format_ml(odds.get('ml_away')) if odds.get('ml_away') is not None else '-'
 
     # Generate Killport Model section
     killport_html = ""

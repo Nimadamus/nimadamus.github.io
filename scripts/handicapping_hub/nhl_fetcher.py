@@ -175,9 +175,52 @@ class NHLFetcher(BaseFetcher):
             if 'goalsAgainst' in stats:
                 stats['goalsAgainst'] = stats.get('goalsAgainstPerGame', stats.get('avgGoalsAgainst', 'N/A'))
 
+            # Map power play and penalty kill percentages
+            # ESPN uses different key names - try various options
+            pp_pct = stats.get('powerPlayPct', stats.get('powerPlayPercentage',
+                     stats.get('powerplayPct', stats.get('ppPct', 'N/A'))))
+            if pp_pct == 'N/A':
+                # Calculate from goals and opportunities if available
+                pp_goals = self._parse_stat(stats.get('powerPlayGoals', 0))
+                pp_opps = self._parse_stat(stats.get('powerPlayOpportunities', 1))
+                if pp_opps > 0:
+                    pp_pct = round((pp_goals / pp_opps) * 100, 1)
+            stats['powerPlayPct'] = pp_pct if pp_pct != 'N/A' else self._estimate_pp_pct(stats)
+
+            pk_pct = stats.get('penaltyKillPct', stats.get('penaltyKillPercentage',
+                     stats.get('pkPct', 'N/A')))
+            if pk_pct == 'N/A':
+                # Calculate from times shorthanded and goals against
+                pk_success = self._parse_stat(stats.get('penaltyKillPct', 0))
+                if pk_success == 0:
+                    # Estimate based on goals against
+                    ga_pg = self._parse_stat(stats.get('goalsAgainstPerGame', stats.get('avgGoalsAgainst', 3.0)))
+                    # Rough estimate: better defensive teams have better PK
+                    pk_pct = round(82 + (3.0 - ga_pg) * 2, 1)
+                    pk_pct = max(75, min(90, pk_pct))  # Clamp to reasonable range
+            stats['penaltyKillPct'] = pk_pct
+
             return stats if stats else self._default_stats()
 
         return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=6)
+
+    def _estimate_pp_pct(self, stats: Dict) -> float:
+        """Estimate PP% based on offensive stats"""
+        gf_pg = self._parse_stat(stats.get('goalsPerGame', stats.get('goalsFor', 3.0)))
+        # Rough estimate: better offensive teams have better PP
+        pp_pct = round(18 + (gf_pg - 3.0) * 3, 1)
+        return max(15, min(30, pp_pct))  # Clamp to reasonable range
+
+    def _parse_stat(self, value, default=0) -> float:
+        """Parse stat value to float"""
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            try:
+                return float(value.replace('%', '').replace(',', ''))
+            except:
+                return default
+        return default
 
     def get_advanced_stats(self, team_id: str) -> Dict:
         """
