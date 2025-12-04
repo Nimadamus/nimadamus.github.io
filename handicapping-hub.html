@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced Handicapping Hub - BetLegend</title>
     <meta name="description" content="Professional sports analytics and handicapping research center. Advanced stats, injury reports, betting lines, and Killport Model predictions.">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,50 +18,221 @@
             line-height: 1.6;
         }
 
-        /* SITE NAVIGATION */
-        .site-nav {
-            background: #161b22;
-            border-bottom: 1px solid #30363d;
-            padding: 12px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        /* SITE NAVIGATION - Matching index.html */
         .nav-container {
-            max-width: 1400px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 0 30px;
+        }
+        .nav-inner {
+            max-width: 1600px;
             margin: 0 auto;
             display: flex;
+            align-items: center;
             justify-content: space-between;
+            padding: 15px 0;
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            text-decoration: none;
+            color: #fff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+        .logo span {
+            color: #00f0ff;
+            text-shadow: 0 0 30px #00f0ff, 0 0 60px #00f0ff;
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .hub-btn {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 25px rgba(255, 107, 0, 0.5);
+            transition: all 0.3s ease;
+            margin-right: 15px;
+            animation: hubPulse 2s ease-in-out infinite;
+        }
+        .hub-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255, 107, 0, 0.7);
+        }
+        @keyframes hubPulse {
+            0%, 100% { box-shadow: 0 0 25px rgba(255, 107, 0, 0.5); }
+            50% { box-shadow: 0 0 35px rgba(255, 107, 0, 0.7); }
+        }
+        .nav-link {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .nav-link:hover {
+            color: #ffd700;
+            text-shadow: 0 0 15px #ffd700;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-flex;
             align-items: center;
         }
-        .nav-logo {
+        .dropdown .dropbtn {
             font-family: 'Orbitron', sans-serif;
-            font-weight: 800;
-            font-size: 22px;
-            color: #58a6ff;
-            text-decoration: none;
-        }
-        .nav-links {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            background: none;
+            border: none;
+            padding: 12px 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
             display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .dropdown:hover .dropbtn,
+        .dropdown.active .dropbtn {
+            color: #ffd700;
+            text-shadow: 0 0 15px #ffd700;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: rgba(0, 5, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.3);
+            z-index: 99999;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 12px 16px;
+            color: #00f0ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+        }
+        .dropdown-content a:hover {
+            background: rgba(0, 240, 255, 0.1);
+            padding-left: 22px;
+            border-left-color: #00f0ff;
+            color: #fff;
+        }
+        .sports-records-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 420px;
+            background: rgba(0, 5, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 10px;
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.3);
+            z-index: 99999;
+        }
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 25px;
         }
-        .nav-links a {
-            color: #8b949e;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
+        .column h4 {
+            color: #000;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            border-radius: 6px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: color 0.2s;
+            letter-spacing: 2px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
         }
-        .nav-links a:hover {
-            color: #58a6ff;
+        .column a {
+            display: block;
+            color: #fff;
+            padding: 10px 15px;
+            margin: 4px 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            transition: all 0.25s ease;
+        }
+        .column a:hover {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 240, 255, 0.1));
+            border-color: #00f0ff;
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .dropdown:hover .dropdown-content,
+            .dropdown:hover .sports-records-dropdown {
+                display: block;
+                animation: dropdownFade 0.3s ease;
+            }
+        }
+        .dropdown.active .dropdown-content,
+        .dropdown.active .sports-records-dropdown {
+            display: block;
+            animation: dropdownFade 0.3s ease;
+        }
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* HEADER */
         .header {
             background: #161b22;
             padding: 40px 30px;
+            padding-top: 110px; /* Account for fixed nav */
             text-align: center;
             border-bottom: 2px solid #30363d;
         }
@@ -397,7 +568,10 @@
             .intel-grid { grid-template-columns: 1fr; }
             .stats-bar { gap: 30px; flex-wrap: wrap; }
             .stat-item .stat-num { font-size: 28px; }
-            .nav-links { display: none; }
+            .nav-menu { flex-wrap: wrap; justify-content: center; gap: 5px; }
+            .hub-btn { font-size: 0.75rem; padding: 10px 16px; margin-right: 8px; }
+            .nav-link, .dropdown .dropbtn { font-size: 0.7rem; padding: 8px 10px; letter-spacing: 1px; }
+            .sports-records-dropdown { min-width: 300px; padding: 15px; left: -100px; }
             .glossary-grid { grid-template-columns: 1fr; }
         }
 
@@ -470,28 +644,120 @@
 </head>
 <body>
     <!-- SITE NAVIGATION -->
-    <nav class="site-nav">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">BETLEGEND</a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="nba.html">NBA</a>
-                <a href="nhl.html">NHL</a>
-                <a href="nfl.html">NFL</a>
-                <a href="ncaab.html">NCAAB</a>
-                <a href="ncaaf.html">NCAAF</a>
-                <a href="mlb.html">MLB</a>
-                <a href="blog.html">Blog</a>
+    <nav class="nav-container">
+        <div class="nav-inner">
+            <a href="index.html" class="logo">BET<span>LEGEND</span></a>
+            <div class="nav-menu">
+                <!-- Handicapping Hub -->
+                <a href="handicapping-hub.html" class="hub-btn">Handicapping Hub</a>
+
+                <!-- Picks & Analysis -->
+                <a href="blog-page10.html" class="nav-link">Picks & Analysis</a>
+
+                <!-- Sports & Records Dropdown -->
+                <div class="dropdown">
+                    <button class="dropbtn">Sports & Records ▾</button>
+                    <div class="sports-records-dropdown">
+                        <div class="two-columns">
+                            <div class="column">
+                                <h4>Sports</h4>
+                                <a href="nfl.html">NFL</a>
+                                <a href="mlb-page2.html">MLB</a>
+                                <a href="ncaaf-page2.html">NCAAF</a>
+                                <a href="nba.html">NBA</a>
+                                <a href="ncaab.html">NCAAB</a>
+                                <a href="nhl.html">NHL</a>
+                                <a href="soccer.html">Soccer</a>
+                            </div>
+                            <div class="column">
+                                <h4>Records</h4>
+                                <a href="records.html">DETAILED BREAKDOWN</a>
+                                <a href="mlb-records.html">MLB</a>
+                                <a href="nfl-records.html">NFL</a>
+                                <a href="ncaaf-records.html">NCAAF</a>
+                                <a href="ncaab-records.html">NCAAB</a>
+                                <a href="nhl-records.html">NHL</a>
+                                <a href="nba-records.html">NBA</a>
+                                <a href="soccer-records.html">Soccer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Dropdown -->
+                <div class="dropdown">
+                    <button class="dropbtn">Resources ▾</button>
+                    <div class="dropdown-content">
+                        <a href="proofofpicks.html">Proof of Picks</a>
+                        <a href="live-odds.html">Live Odds</a>
+                        <a href="howitworks.html">How It Works</a>
+                        <a href="bankroll.html">Bankroll</a>
+                        <a href="kelly-criterion.html">Kelly Criterion</a>
+                        <a href="betting-calculators.html">Betting Calculators</a>
+                        <a href="screenshots.html">Screenshots</a>
+                        <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                        <a href="betting-glossary.html">Betting Glossary</a>
+                        <a href="betting-101.html">Betting 101</a>
+                        <a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+
+                <!-- News -->
+                <a href="news-page3.html" class="nav-link">News</a>
+
+                <!-- Game of the Day Dropdown -->
+                <div class="dropdown">
+                    <button class="dropbtn">Game of the Day ▾</button>
+                    <div class="dropdown-content">
+                        <a href="featured-game-of-the-day-page11.html">Game of the Day</a>
+                        <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
+
+    <!-- Dropdown JavaScript -->
+    <script>
+    (function() {
+        var dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(function(dropdown) {
+            var btn = dropdown.querySelector('.dropbtn');
+            if (!btn) return;
+
+            function toggle(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdowns.forEach(function(d) {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
+                dropdown.classList.toggle('active');
+            }
+
+            btn.addEventListener('touchend', toggle, {passive: false});
+            btn.addEventListener('click', toggle);
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+    })();
+    </script>
 
     <div class="header">
         <div class="header-content">
             <a href="index.html" class="back-link">&larr; Back to BetLegend</a>
             <h1>ADVANCED HANDICAPPING <span>HUB</span></h1>
             <p class="subtitle">Powered by the Killport Model V2</p>
-            <div class="timestamp">Last updated: December 03, 2025 at 06:17 PM &bull; Data from ESPN + Advanced Analytics</div>
+            <div class="timestamp">Last updated: December 03, 2025 at 06:25 PM &bull; Data from ESPN + Advanced Analytics</div>
             <div class="tabs">
             <button class="tab active" onclick="showSection('NBA')">NBA (9)</button>
             <button class="tab " onclick="showSection('NHL')">NHL (5)</button>
