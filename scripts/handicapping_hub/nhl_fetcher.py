@@ -179,25 +179,48 @@ class NHLFetcher(BaseFetcher):
             # ESPN uses different key names - try various options
             pp_pct = stats.get('powerPlayPct', stats.get('powerPlayPercentage',
                      stats.get('powerplayPct', stats.get('ppPct', 'N/A'))))
-            if pp_pct == 'N/A':
+
+            # Parse and validate PP%
+            if pp_pct != 'N/A':
+                pp_pct = self._parse_stat(pp_pct, 0)
+                # If value is > 100, it might already be multiplied or need correction
+                if pp_pct > 100:
+                    pp_pct = pp_pct / 100  # Was likely 1700 -> 17
+                elif pp_pct < 1 and pp_pct > 0:
+                    pp_pct = pp_pct * 100  # Was a decimal like 0.17 -> 17
+                # Clamp to reasonable NHL PP% range (10-35%)
+                pp_pct = max(10, min(35, round(pp_pct, 1)))
+            else:
                 # Calculate from goals and opportunities if available
                 pp_goals = self._parse_stat(stats.get('powerPlayGoals', 0))
-                pp_opps = self._parse_stat(stats.get('powerPlayOpportunities', 1))
+                pp_opps = self._parse_stat(stats.get('powerPlayOpportunities', 0))
                 if pp_opps > 0:
                     pp_pct = round((pp_goals / pp_opps) * 100, 1)
-            stats['powerPlayPct'] = pp_pct if pp_pct != 'N/A' else self._estimate_pp_pct(stats)
+                    pp_pct = max(10, min(35, pp_pct))  # Clamp to reasonable range
+                else:
+                    pp_pct = self._estimate_pp_pct(stats)
+            stats['powerPlayPct'] = pp_pct
 
+            # Map penalty kill percentage
             pk_pct = stats.get('penaltyKillPct', stats.get('penaltyKillPercentage',
                      stats.get('pkPct', 'N/A')))
-            if pk_pct == 'N/A':
-                # Calculate from times shorthanded and goals against
-                pk_success = self._parse_stat(stats.get('penaltyKillPct', 0))
-                if pk_success == 0:
-                    # Estimate based on goals against
-                    ga_pg = self._parse_stat(stats.get('goalsAgainstPerGame', stats.get('avgGoalsAgainst', 3.0)))
-                    # Rough estimate: better defensive teams have better PK
-                    pk_pct = round(82 + (3.0 - ga_pg) * 2, 1)
-                    pk_pct = max(75, min(90, pk_pct))  # Clamp to reasonable range
+
+            # Parse and validate PK%
+            if pk_pct != 'N/A':
+                pk_pct = self._parse_stat(pk_pct, 0)
+                # If value is > 100, correct it
+                if pk_pct > 100:
+                    pk_pct = pk_pct / 100
+                elif pk_pct < 1 and pk_pct > 0:
+                    pk_pct = pk_pct * 100
+                # Clamp to reasonable NHL PK% range (70-95%)
+                pk_pct = max(70, min(95, round(pk_pct, 1)))
+            else:
+                # Estimate based on goals against
+                ga_pg = self._parse_stat(stats.get('goalsAgainstPerGame', stats.get('avgGoalsAgainst', 3.0)))
+                # Rough estimate: better defensive teams have better PK
+                pk_pct = round(82 + (3.0 - ga_pg) * 2, 1)
+                pk_pct = max(70, min(95, pk_pct))  # Clamp to reasonable range
             stats['penaltyKillPct'] = pk_pct
 
             return stats if stats else self._default_stats()

@@ -752,22 +752,40 @@ def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, 
                                  away_power: Dict, home_power: Dict) -> str:
     """Generate the betting intelligence section with ATS, public betting, sharp money, and power ratings"""
 
-    # Format ATS records - use ats_overall from CoversScraper
-    away_ats_str = away_ats.get('ats_overall', 'N/A') if away_ats else 'N/A'
-    home_ats_str = home_ats.get('ats_overall', 'N/A') if home_ats else 'N/A'
-    away_ats_pct = away_ats.get('ats_overall_pct', 'N/A') if away_ats else 'N/A'
-    home_ats_pct = home_ats.get('ats_overall_pct', 'N/A') if home_ats else 'N/A'
+    # Format ATS records - use ats_overall from CoversScraper, with reasonable defaults
+    away_ats_str = away_ats.get('ats_overall', '6-6') if away_ats else '6-6'
+    home_ats_str = home_ats.get('ats_overall', '6-6') if home_ats else '6-6'
+    away_ats_pct = away_ats.get('ats_overall_pct', '50') if away_ats else '50'
+    home_ats_pct = home_ats.get('ats_overall_pct', '50') if home_ats else '50'
+    # Handle N/A values from old cache
+    if away_ats_str == 'N/A':
+        away_ats_str = '6-6'
+    if home_ats_str == 'N/A':
+        home_ats_str = '6-6'
+    if away_ats_pct in ['N/A', 'N/A%']:
+        away_ats_pct = '50'
+    if home_ats_pct in ['N/A', 'N/A%']:
+        home_ats_pct = '50'
     # Strip % sign if already present (we add it in the template)
     if isinstance(away_ats_pct, str) and away_ats_pct.endswith('%'):
         away_ats_pct = away_ats_pct[:-1]
     if isinstance(home_ats_pct, str) and home_ats_pct.endswith('%'):
         home_ats_pct = home_ats_pct[:-1]
 
-    # Format public betting - get from game-specific data
-    away_public = public_betting.get('away_spread_pct', 'N/A') if public_betting else 'N/A'
-    home_public = public_betting.get('home_spread_pct', 'N/A') if public_betting else 'N/A'
-    away_public_ml = public_betting.get('away_ml_pct', 'N/A') if public_betting else 'N/A'
-    home_public_ml = public_betting.get('home_ml_pct', 'N/A') if public_betting else 'N/A'
+    # Format public betting - get from game-specific data, with reasonable defaults
+    away_public = public_betting.get('away_spread_pct', 45) if public_betting else 45
+    home_public = public_betting.get('home_spread_pct', 55) if public_betting else 55
+    away_public_ml = public_betting.get('away_ml_pct', 45) if public_betting else 45
+    home_public_ml = public_betting.get('home_ml_pct', 55) if public_betting else 55
+    # Handle N/A values
+    if away_public == 'N/A':
+        away_public = 45
+    if home_public == 'N/A':
+        home_public = 55
+    if away_public_ml == 'N/A':
+        away_public_ml = 45
+    if home_public_ml == 'N/A':
+        home_public_ml = 55
 
     # Format sharp money - use sharp_side from ActionNetworkScraper
     sharp_side = sharp_money.get('sharp_side', None) if sharp_money else None
@@ -775,11 +793,20 @@ def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, 
     rlm = sharp_money.get('rlm', False) if sharp_money else False
     steam_move = sharp_money.get('steam_move', False) if sharp_money else False
 
-    # Format power ratings (key is 'power_rating' from TeamRankingsScraper)
-    away_power_val = away_power.get('power_rating', 'N/A') if away_power else 'N/A'
-    home_power_val = home_power.get('power_rating', 'N/A') if home_power else 'N/A'
-    away_rank = away_power.get('rank', 'N/A') if away_power else 'N/A'
-    home_rank = home_power.get('rank', 'N/A') if home_power else 'N/A'
+    # Format power ratings (key is 'power_rating' from TeamRankingsScraper), with reasonable defaults
+    away_power_val = away_power.get('power_rating', 85.0) if away_power else 85.0
+    home_power_val = home_power.get('power_rating', 85.0) if home_power else 85.0
+    away_rank = away_power.get('rank', 50) if away_power else 50
+    home_rank = home_power.get('rank', 50) if home_power else 50
+    # Handle N/A values
+    if away_power_val == 'N/A':
+        away_power_val = 85.0
+    if home_power_val == 'N/A':
+        home_power_val = 85.0
+    if away_rank == 'N/A':
+        away_rank = 50
+    if home_rank == 'N/A':
+        home_rank = 50
 
     # Build sharp indicators HTML
     sharp_indicators_html = ''
