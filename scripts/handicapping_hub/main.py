@@ -193,16 +193,23 @@ def fetch_all_sports_data() -> Dict:
         try:
             sport_data = fetcher.fetch_all()
 
-            # Add odds data
-            if odds_client and sport_data.get('games'):
+            # Add odds data (only if we have API key)
+            odds = {}
+            if odds_client:
                 odds = odds_client.get_odds(sport)
+
+            # Add betting intelligence to each game (regardless of odds API)
+            if sport_data.get('games'):
                 for game_data in sport_data['games']:
                     game = game_data.get('game', {})
                     away = game.get('away', {})
                     home = game.get('home', {})
-                    away_name = away.get('name', '')
-                    home_name = home.get('name', '')
+                    # Use displayName for full team name (e.g., "Cleveland Cavaliers")
+                    away_name = away.get('displayName', away.get('name', ''))
+                    home_name = home.get('displayName', home.get('name', ''))
                     game_key = f"{away_name} @ {home_name}"
+
+                    # Add odds if available
                     game_data['odds'] = odds.get(game_key, {})
 
                     # Add ATS records

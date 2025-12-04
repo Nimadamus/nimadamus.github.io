@@ -18,6 +18,46 @@
             line-height: 1.6;
         }
 
+        /* SITE NAVIGATION */
+        .site-nav {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 22px;
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        .nav-links a {
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #58a6ff;
+        }
+
         /* HEADER */
         .header {
             background: #161b22;
@@ -357,17 +397,101 @@
             .intel-grid { grid-template-columns: 1fr; }
             .stats-bar { gap: 30px; flex-wrap: wrap; }
             .stat-item .stat-num { font-size: 28px; }
+            .nav-links { display: none; }
+            .glossary-grid { grid-template-columns: 1fr; }
+        }
+
+        /* GLOSSARY SECTION */
+        .glossary-section {
+            background: #161b22;
+            padding: 60px 30px;
+            border-top: 2px solid #30363d;
+            margin-top: 40px;
+        }
+        .glossary-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .glossary-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            color: #58a6ff;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .glossary-intro {
+            text-align: center;
+            color: #8b949e;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .glossary-category {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .glossary-category h3 {
+            color: #7ee787;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #30363d;
+        }
+        .glossary-category dl {
+            display: grid;
+            gap: 12px;
+        }
+        .glossary-category dt {
+            color: #58a6ff;
+            font-weight: 700;
+            font-size: 14px;
+            display: inline;
+        }
+        .glossary-category dd {
+            color: #8b949e;
+            font-size: 14px;
+            display: inline;
+            margin-left: 0;
+        }
+        .glossary-category dt::after {
+            content: ' - ';
+            color: #30363d;
         }
     </style>
 
 </head>
 <body>
+    <!-- SITE NAVIGATION -->
+    <nav class="site-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">BETLEGEND</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+                <a href="nfl.html">NFL</a>
+                <a href="ncaab.html">NCAAB</a>
+                <a href="ncaaf.html">NCAAF</a>
+                <a href="mlb.html">MLB</a>
+                <a href="blog.html">Blog</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="header">
         <div class="header-content">
             <a href="index.html" class="back-link">&larr; Back to BetLegend</a>
             <h1>ADVANCED HANDICAPPING <span>HUB</span></h1>
             <p class="subtitle">Powered by the Killport Model V2</p>
-            <div class="timestamp">Last updated: December 03, 2025 at 04:23 PM &bull; Data from ESPN + Advanced Analytics</div>
+            <div class="timestamp">Last updated: December 03, 2025 at 04:37 PM &bull; Data from ESPN + Advanced Analytics</div>
             <div class="stats-bar">
                 <div class="stat-item"><span class="stat-num">55</span><span class="stat-label">Predictions</span></div>
                 <div class="stat-item"><span class="stat-num">55</span><span class="stat-label">Games Today</span></div>
@@ -585,12 +709,12 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Portland Trail Blazers</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Cleveland Cavaliers</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                             </div>
@@ -623,13 +747,13 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Portland Trail Blazers</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">81.3</span>
+                                    <span class="power-rank">#21</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Cleveland Cavaliers</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">88.6</span>
+                                    <span class="power-rank">#13</span>
                                 </div>
                             </div>
                         </div>
@@ -855,12 +979,12 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Denver Nuggets</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Indiana Pacers</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                             </div>
@@ -893,13 +1017,13 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Denver Nuggets</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">93.4</span>
+                                    <span class="power-rank">#4</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Indiana Pacers</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">74.3</span>
+                                    <span class="power-rank">#27</span>
                                 </div>
                             </div>
                         </div>
@@ -1125,12 +1249,12 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">San Antonio Spurs</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Orlando Magic</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                             </div>
@@ -1163,13 +1287,13 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">San Antonio Spurs</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">91.3</span>
+                                    <span class="power-rank">#7</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Orlando Magic</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">89.8</span>
+                                    <span class="power-rank">#10</span>
                                 </div>
                             </div>
                         </div>
@@ -1395,12 +1519,12 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">LA Clippers</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Atlanta Hawks</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                             </div>
@@ -1433,13 +1557,13 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">LA Clippers</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">76.6</span>
+                                    <span class="power-rank">#25</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Atlanta Hawks</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">87.8</span>
+                                    <span class="power-rank">#15</span>
                                 </div>
                             </div>
                         </div>
@@ -1665,12 +1789,12 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Charlotte Hornets</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">New York Knicks</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                             </div>
@@ -1703,13 +1827,13 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Charlotte Hornets</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">78.4</span>
+                                    <span class="power-rank">#24</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">New York Knicks</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">91.3</span>
+                                    <span class="power-rank">#6</span>
                                 </div>
                             </div>
                         </div>
@@ -1935,12 +2059,12 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Brooklyn Nets</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Chicago Bulls</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                             </div>
@@ -1973,13 +2097,13 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Brooklyn Nets</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">74.2</span>
+                                    <span class="power-rank">#28</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Chicago Bulls</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">82.3</span>
+                                    <span class="power-rank">#18</span>
                                 </div>
                             </div>
                         </div>
@@ -2205,12 +2329,12 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Sacramento Kings</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Houston Rockets</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                             </div>
@@ -2243,13 +2367,13 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Sacramento Kings</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">74.6</span>
+                                    <span class="power-rank">#26</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Houston Rockets</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">94.9</span>
+                                    <span class="power-rank">#2</span>
                                 </div>
                             </div>
                         </div>
@@ -2475,12 +2599,12 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Detroit Pistons</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Milwaukee Bucks</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                             </div>
@@ -2513,13 +2637,13 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Detroit Pistons</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">94.0</span>
+                                    <span class="power-rank">#3</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Milwaukee Bucks</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">82.2</span>
+                                    <span class="power-rank">#19</span>
                                 </div>
                             </div>
                         </div>
@@ -2745,12 +2869,12 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Miami Heat</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Dallas Mavericks</span>
-                                    <span class="ats-record">0-0</span>
+                                    <span class="ats-record">N/A</span>
                                     <span class="ats-pct">N/A%</span>
                                 </div>
                             </div>
@@ -2783,13 +2907,13 @@
                             <div class="intel-content">
                                 <div class="intel-row">
                                     <span class="team-name">Miami Heat</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">91.0</span>
+                                    <span class="power-rank">#8</span>
                                 </div>
                                 <div class="intel-row">
                                     <span class="team-name">Dallas Mavericks</span>
-                                    <span class="power-rating">N/A</span>
-                                    <span class="power-rank">#N/A</span>
+                                    <span class="power-rating">79.1</span>
+                                    <span class="power-rank">#22</span>
                                 </div>
                             </div>
                         </div>
@@ -4791,7 +4915,12 @@
                     </div>
                     <div class="stats-panel home-panel">
                         <div class="panel-header">ATL STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -4921,7 +5050,12 @@
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">CIN STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -5094,7 +5228,12 @@
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">TEN STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -5267,7 +5406,12 @@
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">WSH STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -5440,7 +5584,12 @@
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">MIA STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -5483,7 +5632,12 @@
                     </div>
                     <div class="stats-panel home-panel">
                         <div class="panel-header">NYJ STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -5613,7 +5767,12 @@
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">NO STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -5656,7 +5815,12 @@
                     </div>
                     <div class="stats-panel home-panel">
                         <div class="panel-header">TB STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -5786,7 +5950,12 @@
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">IND STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -6002,7 +6171,12 @@
                     </div>
                     <div class="stats-panel home-panel">
                         <div class="panel-header">BAL STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -6132,7 +6306,12 @@
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">DEN STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -6305,7 +6484,12 @@
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">CHI STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -6478,7 +6662,12 @@
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">LAR STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -6521,7 +6710,12 @@
                     </div>
                     <div class="stats-panel home-panel">
                         <div class="panel-header">ARI STATS</div>
-                        <div class="no-data">Stats unavailable</div>
+                        
+            <div class="basic-stat"><span>PPG</span><span>N/A</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>N/A</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>N/A</span></div>
+            <div class="basic-stat"><span>PASS</span><span>N/A</span></div>
+
                         <div class="advanced-toggle" onclick="toggleAdvanced(this)">
                             <span>▼ Advanced Analytics</span>
                         </div>
@@ -10992,6 +11186,65 @@
         </div>
 
     </div>
+
+    <!-- STATS GLOSSARY -->
+    <div class="glossary-section">
+        <div class="glossary-container">
+            <h2>STATS GLOSSARY</h2>
+            <p class="glossary-intro">Understanding the advanced metrics shown in the Handicapping Hub:</p>
+            <div class="glossary-grid">
+                <div class="glossary-category">
+                    <h3>BASKETBALL STATS</h3>
+                    <dl>
+                        <dt>OFF RTG</dt><dd>Offensive Rating - Points scored per 100 possessions</dd>
+                        <dt>DEF RTG</dt><dd>Defensive Rating - Points allowed per 100 possessions (lower is better)</dd>
+                        <dt>NET RTG</dt><dd>Net Rating - OFF RTG minus DEF RTG (positive means outscoring opponents)</dd>
+                        <dt>PACE</dt><dd>Possessions per 48 minutes - measures game tempo</dd>
+                        <dt>eFG%</dt><dd>Effective Field Goal % - FG% adjusted for 3-pointers worth more</dd>
+                        <dt>TS%</dt><dd>True Shooting % - Scoring efficiency including free throws</dd>
+                        <dt>AST%</dt><dd>Assist Percentage - % of teammate field goals assisted</dd>
+                        <dt>TOV%</dt><dd>Turnover % - Turnovers per 100 plays</dd>
+                        <dt>OREB%</dt><dd>Offensive Rebound % - % of available offensive rebounds grabbed</dd>
+                        <dt>DREB%</dt><dd>Defensive Rebound % - % of available defensive rebounds grabbed</dd>
+                        <dt>PIE</dt><dd>Player Impact Estimate - Overall contribution metric (0.50 = league average)</dd>
+                    </dl>
+                </div>
+                <div class="glossary-category">
+                    <h3>BETTING TERMS</h3>
+                    <dl>
+                        <dt>ATS</dt><dd>Against The Spread - Win/loss record when factoring in point spread</dd>
+                        <dt>POWER RATING</dt><dd>Calculated team strength (70-100 scale, higher = better)</dd>
+                        <dt>PUBLIC %</dt><dd>Percentage of bets on each side from recreational bettors</dd>
+                        <dt>RLM</dt><dd>Reverse Line Movement - Line moves opposite of public betting (sharp indicator)</dd>
+                        <dt>STEAM MOVE</dt><dd>Sudden, significant line movement indicating sharp action</dd>
+                        <dt>SPREAD</dt><dd>Point handicap for betting purposes</dd>
+                        <dt>O/U</dt><dd>Over/Under total points line</dd>
+                        <dt>ML</dt><dd>Moneyline - Straight up winner odds</dd>
+                    </dl>
+                </div>
+                <div class="glossary-category">
+                    <h3>HOCKEY STATS</h3>
+                    <dl>
+                        <dt>CF%</dt><dd>Corsi For % - Shot attempts for vs against (possession proxy)</dd>
+                        <dt>xGF%</dt><dd>Expected Goals For % - Goal probability based on shot quality</dd>
+                        <dt>PDO</dt><dd>Shooting % + Save % (100 = league average, regresses to mean)</dd>
+                        <dt>GSAA</dt><dd>Goals Saved Above Average - Goalie performance vs average</dd>
+                        <dt>SV%</dt><dd>Save Percentage - Shots saved divided by shots faced</dd>
+                    </dl>
+                </div>
+                <div class="glossary-category">
+                    <h3>FOOTBALL STATS</h3>
+                    <dl>
+                        <dt>EPA</dt><dd>Expected Points Added - Value added on each play</dd>
+                        <dt>DVOA</dt><dd>Defense-adjusted Value Over Average - Efficiency vs league average</dd>
+                        <dt>PPG DIFF</dt><dd>Points per game differential (scored minus allowed)</dd>
+                        <dt>RED ZONE %</dt><dd>Touchdown percentage when inside opponent's 20-yard line</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
     
     <script>
         function showSection(sport) {
