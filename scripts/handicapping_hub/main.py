@@ -346,11 +346,6 @@ def generate_html_content(all_data: Dict, predictions: Dict) -> str:
             <h1>ADVANCED HANDICAPPING <span>HUB</span></h1>
             <p class="subtitle">Powered by the Killport Model V2</p>
             <div class="timestamp">Last updated: {DATE_DISPLAY} at {TIME_DISPLAY} &bull; Data from ESPN + Advanced Analytics</div>
-            <div class="stats-bar">
-                <div class="stat-item"><span class="stat-num">{total_predictions}</span><span class="stat-label">Predictions</span></div>
-                <div class="stat-item"><span class="stat-num">{sum(game_counts.values())}</span><span class="stat-label">Games Today</span></div>
-                <div class="stat-item"><span class="stat-num">6</span><span class="stat-label">Sports Covered</span></div>
-            </div>
             <div class="tabs">
             {tabs_html}
             </div>
