@@ -6,6 +6,55 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
+## ⚠️ CRITICAL WARNING: 100% VERIFICATION OR DON'T POST ⚠️
+
+### ONE FALSE CLAIM DESTROYS CREDIBILITY
+
+**NOTHING goes live without 100% verification. NOTHING.**
+
+Before ANY content is posted to BetLegend, you MUST verify:
+
+| Category | What to Verify | Why It Matters |
+|----------|---------------|----------------|
+| **Players** | Current team, injury status, trade history | Players change teams constantly - Kevin Durant to Rockets, Marner to Vegas, etc. |
+| **Stats** | PPG, APG, RPG, yards, TDs, goals, assists | One wrong stat makes readers question everything |
+| **Advanced Analytics** | ORtg, DRtg, DVOA, xG%, Corsi, EPA | These are the backbone of credible analysis |
+| **Records** | W-L, ATS record, home/road splits | Easy to verify, inexcusable to get wrong |
+| **Rankings** | League rankings, conference standings | Changes daily - always search current data |
+| **Trends** | Win streaks, ATS trends, O/U trends | Must have specific numbers, not guesses |
+| **Injuries** | Exact injury type (ACL vs Achilles), status | Tatum has ACHILLES not ACL - details matter |
+| **Historical Claims** | Championships, records, milestones | OKC = 2025 NBA Champs, Panthers = back-to-back |
+| **Betting Lines** | Current spread, total, moneyline | Lines move - verify before posting |
+| **Game Details** | Date, time, venue, broadcast | Simple facts that must be correct |
+
+### THE VERIFICATION RULE IS ABSOLUTE
+
+```
+IF you cannot verify it with a search → DO NOT INCLUDE IT
+IF you're "pretty sure" but can't confirm → DO NOT INCLUDE IT
+IF your memory says one thing but you can't find a source → DO NOT INCLUDE IT
+IF the information is outdated → DO NOT INCLUDE IT
+```
+
+### WHY THIS MATTERS
+
+- One wrong player-team association = readers lose trust
+- One fabricated stat = entire article becomes suspect
+- One incorrect injury detail = you look like you don't do research
+- One made-up trend = credibility destroyed permanently
+
+**The internet remembers everything. False information spreads. Your reputation is on the line with every single claim.**
+
+### VERIFICATION IS NOT OPTIONAL
+
+This is not a suggestion. This is not a guideline. This is an ABSOLUTE REQUIREMENT.
+
+Every player. Every stat. Every trend. Every record. Every injury. Every analytical claim. Every historical reference. Every betting line. Every single piece of information.
+
+**100% verified or it doesn't go live. Period.**
+
+---
+
 ## 1. ACCURACY & VERIFICATION
 
 ### ⛔ ABSOLUTE RULE: 100% ONLINE VERIFICATION REQUIRED ⛔
