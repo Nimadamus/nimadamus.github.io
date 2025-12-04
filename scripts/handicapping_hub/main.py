@@ -1266,11 +1266,35 @@ def generate_basic_stats_html(sport: str, stats: Dict) -> str:
 '''
 
     elif sport in ['NFL', 'NCAAF']:
+        # Calculate yards per game from rushing + passing (those are per-game values)
+        rush_ypg = stats.get('rushingYardsPerGame', 0)
+        pass_ypg = stats.get('netPassingYardsPerGame', stats.get('passingYardsPerGame', 0))
+
+        # Parse to float for calculation
+        try:
+            rush_val = float(str(rush_ypg).replace(',', '')) if rush_ypg not in ['-', '', None] else 0
+        except:
+            rush_val = 0
+        try:
+            pass_val = float(str(pass_ypg).replace(',', '')) if pass_ypg not in ['-', '', None] else 0
+        except:
+            pass_val = 0
+
+        # Total yards per game = rush + pass
+        if rush_val > 0 or pass_val > 0:
+            total_ypg = round(rush_val + pass_val, 1)
+        else:
+            total_ypg = '-'
+
+        # Format display values
+        rush_display = rush_ypg if rush_ypg not in [0, '', None] else '-'
+        pass_display = pass_ypg if pass_ypg not in [0, '', None] else '-'
+
         return f'''
             <div class="basic-stat"><span>PPG</span><span>{stats.get('avgPointsPerGame', stats.get('totalPointsPerGame', '-'))}</span></div>
-            <div class="basic-stat"><span>YDS/G</span><span>{stats.get('netTotalYards', stats.get('totalYards', '-'))}</span></div>
-            <div class="basic-stat"><span>RUSH</span><span>{stats.get('rushingYardsPerGame', '-')}</span></div>
-            <div class="basic-stat"><span>PASS</span><span>{stats.get('netPassingYardsPerGame', stats.get('passingYardsPerGame', '-'))}</span></div>
+            <div class="basic-stat"><span>YDS/G</span><span>{total_ypg}</span></div>
+            <div class="basic-stat"><span>RUSH</span><span>{rush_display}</span></div>
+            <div class="basic-stat"><span>PASS</span><span>{pass_display}</span></div>
 '''
 
     return ''
