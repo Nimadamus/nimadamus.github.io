@@ -153,13 +153,29 @@ class NHLFetcher(BaseFetcher):
                 return self._default_stats()
 
             stats = {}
-            for stat_group in data.get('splits', {}).get('categories', []):
+            # ESPN API returns data at results.stats.categories
+            categories = data.get('results', {}).get('stats', {}).get('categories', [])
+            if not categories:
+                # Fallback to old structure
+                categories = data.get('splits', {}).get('categories', [])
+
+            for stat_group in categories:
                 for stat in stat_group.get('stats', []):
                     name = stat.get('name', '')
                     value = stat.get('displayValue', stat.get('value', 'N/A'))
+                    # Also store per-game values
+                    per_game = stat.get('perGameDisplayValue', stat.get('perGameValue'))
+                    if per_game:
+                        stats[f"{name}PerGame"] = per_game
                     stats[name] = value
 
-            return stats
+            # Map to expected keys for generate_basic_stats_html
+            if 'goals' in stats:
+                stats['goalsFor'] = stats.get('goalsPerGame', stats.get('goals', 'N/A'))
+            if 'goalsAgainst' in stats:
+                stats['goalsAgainst'] = stats.get('goalsAgainstPerGame', stats.get('avgGoalsAgainst', 'N/A'))
+
+            return stats if stats else self._default_stats()
 
         return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=6)
 

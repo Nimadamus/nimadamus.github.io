@@ -164,14 +164,20 @@ class NFLFetcher(BaseFetcher):
                 return self._default_stats()
 
             stats = {}
-            for stat_group in data.get('splits', {}).get('categories', []):
+            # ESPN API returns data at results.stats.categories
+            categories = data.get('results', {}).get('stats', {}).get('categories', [])
+            if not categories:
+                # Fallback to old structure
+                categories = data.get('splits', {}).get('categories', [])
+
+            for stat_group in categories:
                 category = stat_group.get('name', '')
                 for stat in stat_group.get('stats', []):
                     name = stat.get('name', '')
                     value = stat.get('displayValue', stat.get('value', 'N/A'))
                     stats[name] = value
 
-            return stats
+            return stats if stats else self._default_stats()
 
         return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=6)
 
@@ -558,7 +564,13 @@ class NCAABFetcher(BaseFetcher):
                 return {}
 
             stats = {}
-            for stat_group in data.get('splits', {}).get('categories', []):
+            # ESPN API returns data at results.stats.categories
+            categories = data.get('results', {}).get('stats', {}).get('categories', [])
+            if not categories:
+                # Fallback to old structure
+                categories = data.get('splits', {}).get('categories', [])
+
+            for stat_group in categories:
                 for stat in stat_group.get('stats', []):
                     name = stat.get('name', '')
                     value = stat.get('displayValue', stat.get('value', 'N/A'))
