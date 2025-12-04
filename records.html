@@ -1748,12 +1748,12 @@ function calculateTotalBetsBreakdown() {
         tbody.appendChild(row);
     }
 
-    // Team Totals (TT)
+    // Team Totals (only match "team total", not "tt" which catches Seattle, Pittsburgh, etc.)
     const teamTotalData = totalBetsData.filter(row => {
         const pick = (row.Pick || row.pick || '').toLowerCase();
         const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
         const searchText = pick + ' ' + betType;
-        return searchText.includes('tt') || searchText.includes('team total');
+        return searchText.includes('team total');
     });
 
     if (teamTotalData.length > 0) {
@@ -1830,8 +1830,8 @@ function calculateTeamTotalsBySport() {
             const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
             const searchText = pick + ' ' + betType;
 
-            // Filter for team totals
-            return searchText.includes('tt') || searchText.includes('team total');
+            // Filter for team totals (only match "team total", not "tt" which catches Seattle, Pittsburgh, etc.)
+            return searchText.includes('team total');
         });
 
         if (sportData.length === 0) return;
