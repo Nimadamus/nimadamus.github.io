@@ -1,10 +1,11 @@
 """
 Content Generator using Claude API
-Generates human-sounding sports articles from game data
+Generates ORIGINAL, VARIED sports articles - not cookie-cutter garbage
 """
 
 import os
 import json
+import random
 from datetime import datetime
 from typing import Dict, List, Optional
 import anthropic
@@ -26,106 +27,97 @@ class ContentGenerator:
         self.client = anthropic.Anthropic(api_key=self.api_key)
         self.model = CLAUDE_MODEL
 
-    def generate_daily_slate_intro(self, sport: str, games: List[Dict], date: str = None) -> str:
-        """Generate the intro paragraph for a daily slate post."""
-        if date is None:
-            date = datetime.now().strftime("%B %d, %Y")
-
-        num_games = len(games)
-
-        prompt = f"""Write a brief, engaging 2-3 sentence introduction for a {sport} betting preview article.
-
-Date: {date}
-Number of games: {num_games}
-
-The intro should:
-- Be conversational but professional
-- Mention the number of games on the slate
-- Build excitement without being over-the-top
-- NOT include any specific picks or predictions yet
-- Be suitable for a sports betting website
-
-Write ONLY the intro paragraph, nothing else."""
-
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=200,
-            messages=[{"role": "user", "content": prompt}]
-        )
-
-        return response.content[0].text.strip()
-
     def generate_game_article(self, game_data: Dict, sport: str) -> str:
-        """Generate a conversational article for a single game."""
+        """Generate an ORIGINAL article - different angle every time."""
 
-        # Build the game context
         home = game_data.get('home', {})
         away = game_data.get('away', {})
         odds = game_data.get('odds', {})
 
-        game_context = f"""
-MATCHUP: {away.get('name', 'Away')} @ {home.get('name', 'Home')}
+        # Compact game data
+        game_info = f"""
+{away.get('name')} ({away.get('record', '?')}) @ {home.get('name')} ({home.get('record', '?')})
+Away L10: {away.get('l10', '?')} | Home L10: {home.get('l10', '?')}
+Away Win%: {away.get('win_pct', 0):.0f}% | Home Win%: {home.get('win_pct', 0):.0f}%
+Line: {odds.get('spread', 'N/A')} | Total: {odds.get('total', 'N/A')}
+Venue: {game_data.get('venue', '?')}"""
 
-HOME TEAM: {home.get('name')}
-- Record: {home.get('record', 'N/A')}
-- Last 10: {home.get('l10', home.get('l5', 'N/A'))}
-- Win %: {home.get('win_pct', 0):.1f}%
-
-AWAY TEAM: {away.get('name')}
-- Record: {away.get('record', 'N/A')}
-- Last 10: {away.get('l10', away.get('l5', 'N/A'))}
-- Win %: {away.get('win_pct', 0):.1f}%
-
-BETTING LINES:
-- Spread: {odds.get('spread', 'N/A')}
-- Total: {odds.get('total', 'N/A')}
-
-VENUE: {game_data.get('venue', 'N/A')}
-BROADCAST: {game_data.get('broadcast', 'N/A')}
-"""
-
-        # Sport-specific additions
+        # Sport-specific data
         if sport.lower() == 'nhl':
-            game_context += f"""
-HOME POINTS: {home.get('points', 'N/A')}
-AWAY POINTS: {away.get('points', 'N/A')}
-"""
-        elif sport.lower() == 'mlb':
-            game_context += f"""
-HOME PROBABLE PITCHER: {home.get('probable_pitcher', 'TBD')}
-AWAY PROBABLE PITCHER: {away.get('probable_pitcher', 'TBD')}
-"""
+            game_info += f"\nStandings Points - {home.get('name')}: {home.get('points', '?')} | {away.get('name')}: {away.get('points', '?')}"
         elif sport.lower() == 'soccer':
-            game_context += f"""
-LEAGUE: {game_data.get('league', 'N/A')}
-MATCHWEEK: {game_data.get('match_week', 'N/A')}
-"""
+            game_info += f"\nLeague: {game_data.get('league', '?')} | Matchweek: {game_data.get('match_week', '?')}"
 
-        prompt = f"""Write a betting analysis article for this {sport} game. The article should be:
+        # Pick a random angle - this is what makes each article DIFFERENT
+        angles = [
+            ("TRAP GAME ALERT", "Look for the trap. Why might the favorite stumble here? Or is the dog getting too much love?"),
+            ("FOLLOW THE MONEY", "Sharps vs squares. Where's the smart money going and why?"),
+            ("SCHEDULING SPOT", "Rest, travel, motivation - what situational factors matter most here?"),
+            ("KEY NUMBER ANALYSIS", "Is this line sitting on a key number? What's the vig telling us?"),
+            ("REVENGE NARRATIVE", "Any bad blood? Recent embarrassments? Teams with something to prove?"),
+            ("PACE & STYLE CLASH", "How do these teams' styles match up? Fast vs slow, offense vs defense?"),
+            ("HOME COOKING", "How much does home court/ice/field actually matter in this specific matchup?"),
+            ("FORM CHECK", "Forget the season record - what have these teams done in the last 2 weeks?"),
+            ("OVERREACTION TEST", "Is the market overreacting to recent results? Time to fade the public?"),
+            ("TOTAL BREAKDOWN", "Forget the side - is the total the real play here?"),
+        ]
 
-1. CONVERSATIONAL - Write like you're explaining to a friend who bets on sports
-2. ANALYTICAL - Reference the actual stats and records provided
-3. INFORMATIVE - Include relevant trends, matchup factors, situational angles
-4. BALANCED - Discuss both sides before leaning one way
-5. LENGTH: 200-300 words
+        angle_name, angle_focus = random.choice(angles)
+
+        # Pick a random voice/style
+        voices = [
+            "You're a crusty old Vegas handicapper who's seen it all. Cynical but sharp.",
+            "You're a young analytics guy who sees patterns others miss. Data-driven but not boring.",
+            "You're a former player who understands the game from inside. Real talk, no BS.",
+            "You're a contrarian who loves fading public opinion. Always looking for the other side.",
+            "You're a situational bettor who cares more about context than talent. Schedule, rest, motivation.",
+        ]
+
+        voice = random.choice(voices)
+
+        # Pick opening style
+        openers = [
+            "Start with your strongest opinion about this game",
+            "Start with what everyone else is getting wrong",
+            "Start with the one stat that actually matters here",
+            "Start with a rhetorical question that frames your take",
+            "Start by calling out the line - is it right or not?",
+            "Start with what you'd tell a friend who asked about this game",
+        ]
+
+        opener = random.choice(openers)
+
+        prompt = f"""VOICE: {voice}
+
+ANGLE: {angle_name}
+{angle_focus}
 
 GAME DATA:
-{game_context}
+{game_info}
 
-IMPORTANT GUIDELINES:
-- Use the actual stats provided - DO NOT make up numbers
-- Be specific about WHY a team has an edge
-- Mention the line/total and whether it looks right
-- Include at least one trend or angle (home/away splits, recent form, etc.)
-- End with a clear lean or pick, but keep it analytical not promotional
-- NO emojis, NO excessive hype language
-- Write naturally - vary sentence structure, use contractions
+INSTRUCTIONS:
+- {opener}
+- 120-180 words MAXIMUM. Tight. Every word earns its place.
+- Have a TAKE. Don't hedge with "could go either way" garbage
+- Reference the actual numbers but don't just list stats
+- Sound like a human with opinions, not a content algorithm
+- End with a clear lean (side or total) - make it punchy
 
-Write the article now. Do NOT include a title or headers - just the analysis paragraph(s)."""
+BANNED PHRASES (instant fail if you use these):
+- "In this matchup"
+- "Let's dive in" / "Let's break it down"
+- "At the end of the day"
+- "It's worth noting"
+- "All things considered"
+- "That being said"
+- "Moving forward"
+- Any sentence starting with "This is"
+
+Write the take. No title. No headers. Just the analysis."""
 
         response = self.client.messages.create(
             model=self.model,
-            max_tokens=600,
+            max_tokens=350,
             messages=[{"role": "user", "content": prompt}]
         )
 
@@ -137,7 +129,6 @@ Write the article now. Do NOT include a title or headers - just the analysis par
         away = game_data.get('away', {})
         odds = game_data.get('odds', {})
 
-        # Different stat grids for different sports
         if sport.lower() in ['nba', 'ncaab']:
             return self._generate_basketball_stat_grid(home, away, odds)
         elif sport.lower() == 'nhl':
@@ -152,147 +143,94 @@ Write the article now. Do NOT include a title or headers - just the analysis par
             return self._generate_generic_stat_grid(home, away, odds)
 
     def _generate_basketball_stat_grid(self, home: Dict, away: Dict, odds: Dict) -> str:
-        """Generate basketball-specific stat grid."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
             <div class="stat-value">{home.get('record', 'N/A')}</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} Record</div>
+            <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">{away.get('record', 'N/A')}</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} Record</div>
+            <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
-    </div>
-    <div class="stat-row">
         <div class="stat-item">
             <div class="stat-value">{home.get('l10', 'N/A')}</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} L10</div>
+            <div class="stat-label">L10</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">{away.get('l10', 'N/A')}</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} L10</div>
-        </div>
-    </div>
-    <div class="stat-row">
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('spread', 'N/A')}</div>
-            <div class="stat-label">Spread</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('total', 'N/A')}</div>
-            <div class="stat-label">Total</div>
+            <div class="stat-label">L10</div>
         </div>
     </div>
 </div>"""
 
     def _generate_hockey_stat_grid(self, home: Dict, away: Dict, odds: Dict) -> str:
-        """Generate hockey-specific stat grid."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
             <div class="stat-value">{home.get('record', 'N/A')}</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} Record</div>
+            <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">{away.get('record', 'N/A')}</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} Record</div>
-        </div>
-    </div>
-    <div class="stat-row">
-        <div class="stat-item">
-            <div class="stat-value">{home.get('points', 'N/A')}</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} Points</div>
+            <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('points', 'N/A')}</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} Points</div>
-        </div>
-    </div>
-    <div class="stat-row">
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('spread', 'N/A')}</div>
-            <div class="stat-label">Puck Line</div>
+            <div class="stat-value">{home.get('points', 'N/A')} pts</div>
+            <div class="stat-label">Standing</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{odds.get('total', 'N/A')}</div>
-            <div class="stat-label">Total</div>
+            <div class="stat-value">{away.get('points', 'N/A')} pts</div>
+            <div class="stat-label">Standing</div>
         </div>
     </div>
 </div>"""
 
     def _generate_football_stat_grid(self, home: Dict, away: Dict, odds: Dict) -> str:
-        """Generate football-specific stat grid."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
             <div class="stat-value">{home.get('record', 'N/A')}</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} Record</div>
+            <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">{away.get('record', 'N/A')}</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} Record</div>
+            <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
-    </div>
-    <div class="stat-row">
         <div class="stat-item">
             <div class="stat-value">{home.get('win_pct', 0):.0f}%</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} Win %</div>
+            <div class="stat-label">Win%</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">{away.get('win_pct', 0):.0f}%</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} Win %</div>
-        </div>
-    </div>
-    <div class="stat-row">
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('spread', 'N/A')}</div>
-            <div class="stat-label">Spread</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('total', 'N/A')}</div>
-            <div class="stat-label">Total</div>
+            <div class="stat-label">Win%</div>
         </div>
     </div>
 </div>"""
 
     def _generate_baseball_stat_grid(self, home: Dict, away: Dict, odds: Dict) -> str:
-        """Generate baseball-specific stat grid."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
             <div class="stat-value">{home.get('record', 'N/A')}</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} Record</div>
+            <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">{away.get('record', 'N/A')}</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} Record</div>
+            <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
-    </div>
-    <div class="stat-row">
         <div class="stat-item">
             <div class="stat-value">{home.get('probable_pitcher', 'TBD')}</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} SP</div>
+            <div class="stat-label">Starter</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">{away.get('probable_pitcher', 'TBD')}</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} SP</div>
-        </div>
-    </div>
-    <div class="stat-row">
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('spread', 'N/A')}</div>
-            <div class="stat-label">Run Line</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('total', 'N/A')}</div>
-            <div class="stat-label">Total</div>
+            <div class="stat-label">Starter</div>
         </div>
     </div>
 </div>"""
 
     def _generate_soccer_stat_grid(self, home: Dict, away: Dict, odds: Dict, game_data: Dict) -> str:
-        """Generate soccer-specific stat grid."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
@@ -303,86 +241,34 @@ Write the article now. Do NOT include a title or headers - just the analysis par
             <div class="stat-value">{away.get('record', 'N/A')}</div>
             <div class="stat-label">{away.get('abbrev', 'AWAY')} W-D-L</div>
         </div>
-    </div>
-    <div class="stat-row">
         <div class="stat-item">
             <div class="stat-value">{home.get('points', 'N/A')}</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} Points</div>
+            <div class="stat-label">Points</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">{away.get('points', 'N/A')}</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} Points</div>
-        </div>
-    </div>
-    <div class="stat-row">
-        <div class="stat-item">
-            <div class="stat-value">{game_data.get('league', 'N/A')}</div>
-            <div class="stat-label">League</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('total', 'N/A')}</div>
-            <div class="stat-label">Total Goals</div>
+            <div class="stat-label">Points</div>
         </div>
     </div>
 </div>"""
 
     def _generate_generic_stat_grid(self, home: Dict, away: Dict, odds: Dict) -> str:
-        """Generate generic stat grid for any sport."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
             <div class="stat-value">{home.get('record', 'N/A')}</div>
-            <div class="stat-label">{home.get('abbrev', 'HOME')} Record</div>
+            <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">{away.get('record', 'N/A')}</div>
-            <div class="stat-label">{away.get('abbrev', 'AWAY')} Record</div>
-        </div>
-    </div>
-    <div class="stat-row">
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('spread', 'N/A')}</div>
-            <div class="stat-label">Spread</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value">{odds.get('total', 'N/A')}</div>
-            <div class="stat-label">Total</div>
+            <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
     </div>
 </div>"""
 
-    def generate_full_game_section(self, game_data: Dict, sport: str) -> str:
-        """Generate complete HTML section for a game (stat grid + article)."""
-        home = game_data.get('home', {})
-        away = game_data.get('away', {})
-
-        matchup_title = f"{away.get('name', 'Away')} @ {home.get('name', 'Home')}"
-
-        # Generate components
-        stat_grid = self.generate_stat_grid_html(game_data, sport)
-        article = self.generate_game_article(game_data, sport)
-
-        # Build the full section
-        html = f"""
-<div class="game-section" id="game-{away.get('abbrev', 'away').lower()}-{home.get('abbrev', 'home').lower()}">
-    <h3 class="game-title">{matchup_title}</h3>
-    <div class="game-meta">
-        <span class="game-time">{game_data.get('game_time', '')}</span>
-        <span class="game-venue">{game_data.get('venue', '')}</span>
-        <span class="game-broadcast">{game_data.get('broadcast', '')}</span>
-    </div>
-    {stat_grid}
-    <div class="game-analysis">
-        <p>{article}</p>
-    </div>
-</div>
-"""
-        return html
-
 
 # Standalone test
 if __name__ == "__main__":
-    # Test with sample data
     sample_game = {
         'matchup': 'Los Angeles Lakers @ Boston Celtics',
         'game_time': '7:30 PM ET',
@@ -413,13 +299,11 @@ if __name__ == "__main__":
         print("Testing content generation...")
         print("="*60)
 
-        # Test stat grid
         stat_grid = generator.generate_stat_grid_html(sample_game, 'nba')
         print("STAT GRID HTML:")
         print(stat_grid)
         print()
 
-        # Test article generation
         print("GENERATED ARTICLE:")
         article = generator.generate_game_article(sample_game, 'nba')
         print(article)

@@ -10,10 +10,10 @@ from datetime import datetime
 # API CONFIGURATION
 # =============================================================================
 
-# Claude API - Priority: secrets.py > environment variable > empty
-# Create secrets.py with ANTHROPIC_API_KEY = "your-key-here" (not committed to git)
+# Claude API - Priority: api_keys.py > environment variable > empty
+# Create api_keys.py with ANTHROPIC_API_KEY = "your-key-here" (not committed to git)
 try:
-    from secrets import ANTHROPIC_API_KEY as _secret_key
+    from api_keys import ANTHROPIC_API_KEY as _secret_key
     ANTHROPIC_API_KEY = _secret_key
 except ImportError:
     ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
