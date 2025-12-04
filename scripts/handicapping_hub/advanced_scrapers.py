@@ -418,8 +418,53 @@ class CoversScraper:
         return cache.get_or_fetch(cache_key, fetch, max_age_hours=1)
 
     def _parse_public_betting(self, soup: BeautifulSoup) -> List[Dict]:
-        """Parse public betting data"""
-        return []
+        """Parse public betting data from Covers matchups page"""
+        games = []
+        try:
+            # Find all matchup cards
+            matchup_containers = soup.find_all('div', class_='cmg-matchup-card')
+            if not matchup_containers:
+                # Try alternate structure - team_odds_and_consensus divs
+                consensus_divs = soup.find_all('div', class_='team_odds_and_consensus')
+
+                for div in consensus_divs:
+                    game_data = {}
+                    # Get team consensus spans
+                    consensus_spans = div.find_all('span', class_='team-consensus')
+
+                    if len(consensus_spans) >= 2:
+                        # Parse away team (first span)
+                        away_text = consensus_spans[0].get_text(strip=True)
+                        away_match = re.search(r'(\d+)%', away_text)
+                        if away_match:
+                            game_data['away_spread_pct'] = int(away_match.group(1))
+
+                        # Parse spread value
+                        spread_match = re.search(r'([+-]?\d+\.?\d*)', away_text)
+                        if spread_match:
+                            game_data['spread'] = float(spread_match.group(1))
+
+                        # Parse home team (second span)
+                        home_text = consensus_spans[1].get_text(strip=True)
+                        home_match = re.search(r'(\d+)%', home_text)
+                        if home_match:
+                            game_data['home_spread_pct'] = int(home_match.group(1))
+
+                    # Get over/under
+                    ou_span = div.find('span', class_='over-under')
+                    if ou_span:
+                        ou_text = ou_span.get_text(strip=True)
+                        ou_match = re.search(r'(\d+\.?\d*)', ou_text)
+                        if ou_match:
+                            game_data['total'] = float(ou_match.group(1))
+
+                    if game_data:
+                        games.append(game_data)
+
+            return games
+        except Exception as e:
+            print(f"  Error parsing public betting: {e}")
+            return []
 
     def _default_ats(self) -> Dict:
         return {
@@ -436,7 +481,8 @@ class CoversScraper:
 
 class TeamRankingsScraper:
     """
-    Scrape power ratings and rankings from various sources.
+    Calculate power ratings from ESPN/NBA Stats data.
+    Uses Net Rating and Win % to calculate power ratings.
     """
 
     def __init__(self):
@@ -444,28 +490,200 @@ class TeamRankingsScraper:
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         })
+        self._power_ratings_cache = {}
 
     def get_power_ratings(self, sport: str) -> Dict:
         """
         Get power ratings for all teams in a sport.
+        Calculates from ESPN standings + Net Rating data.
 
-        Returns dict of team -> power rating
+        Returns dict of team_name -> {power_rating, rank}
         """
         cache_key = f"power_ratings_{sport}_{datetime.now().strftime('%Y-%m-%d')}"
 
         def fetch():
-            # Would scrape from TeamRankings, FiveThirtyEight, etc.
+            if sport == 'NBA':
+                return self._get_nba_power_ratings()
+            elif sport == 'NFL':
+                return self._get_nfl_power_ratings()
+            elif sport == 'NHL':
+                return self._get_nhl_power_ratings()
             return {}
 
-        return cache.get_or_fetch(cache_key, fetch, max_age_hours=24)
+        return cache.get_or_fetch(cache_key, fetch, max_age_hours=12)
+
+    def _get_nba_power_ratings(self) -> Dict:
+        """Calculate NBA power ratings from NBA Stats API"""
+        try:
+            # Use NBA Stats API for advanced team stats
+            now = datetime.now()
+            season = f"{now.year}-{str(now.year + 1)[2:]}" if now.month >= 10 else f"{now.year - 1}-{str(now.year)[2:]}"
+
+            url = 'https://stats.nba.com/stats/leaguedashteamstats'
+            params = {
+                'Conference': '', 'DateFrom': '', 'DateTo': '', 'Division': '',
+                'GameScope': '', 'GameSegment': '', 'LastNGames': '0', 'LeagueID': '00',
+                'Location': '', 'MeasureType': 'Advanced', 'Month': '0',
+                'OpponentTeamID': '0', 'Outcome': '', 'PORound': '0', 'PaceAdjust': 'N',
+                'PerMode': 'PerGame', 'Period': '0', 'Rank': 'N', 'Season': season,
+                'SeasonSegment': '', 'SeasonType': 'Regular Season', 'TeamID': '0',
+                'VsConference': '', 'VsDivision': '',
+            }
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                'Origin': 'https://www.nba.com',
+                'Referer': 'https://www.nba.com/',
+            }
+
+            response = self.session.get(url, params=params, headers=headers, timeout=15)
+            if response.status_code != 200:
+                return {}
+
+            data = response.json()
+            result_set = data.get('resultSets', [{}])[0]
+            headers_list = result_set.get('headers', [])
+            rows = result_set.get('rowSet', [])
+
+            # Get column indices
+            team_idx = headers_list.index('TEAM_NAME') if 'TEAM_NAME' in headers_list else 1
+            net_rtg_idx = headers_list.index('NET_RATING') if 'NET_RATING' in headers_list else -1
+            win_pct_idx = headers_list.index('W_PCT') if 'W_PCT' in headers_list else -1
+
+            power_ratings = {}
+            for row in rows:
+                team_name = row[team_idx]
+                net_rating = row[net_rtg_idx] if net_rtg_idx >= 0 else 0
+                win_pct = row[win_pct_idx] if win_pct_idx >= 0 else 0.5
+
+                # Calculate power rating: weighted combination of net rating and win %
+                # Scale to roughly 70-100 range
+                power_rating = 85 + (net_rating * 0.5) + ((win_pct - 0.5) * 20)
+                power_ratings[team_name] = {
+                    'power_rating': round(power_rating, 1),
+                    'net_rating': round(net_rating, 1),
+                    'win_pct': round(win_pct * 100, 1),
+                }
+
+            # Add rankings
+            sorted_teams = sorted(power_ratings.items(), key=lambda x: x[1]['power_rating'], reverse=True)
+            for rank, (team, data) in enumerate(sorted_teams, 1):
+                power_ratings[team]['rank'] = rank
+
+            return power_ratings
+
+        except Exception as e:
+            print(f"  Power ratings error: {e}")
+            return {}
+
+    def _get_nfl_power_ratings(self) -> Dict:
+        """Calculate NFL power ratings from ESPN data"""
+        try:
+            url = 'https://site.api.espn.com/apis/v2/sports/football/nfl/standings'
+            response = self.session.get(url, timeout=15)
+            if response.status_code != 200:
+                return {}
+
+            data = response.json()
+            entries = data.get('standings', {}).get('entries', [])
+
+            power_ratings = {}
+            for entry in entries:
+                team = entry.get('team', {})
+                team_name = team.get('displayName', '')
+                stats = {s.get('name'): s.get('value', s.get('displayValue')) for s in entry.get('stats', [])}
+
+                wins = float(stats.get('wins', 0))
+                losses = float(stats.get('losses', 0))
+                pf = float(stats.get('pointsFor', 0))
+                pa = float(stats.get('pointsAgainst', 0))
+                games = wins + losses
+
+                if games > 0:
+                    win_pct = wins / games
+                    ppg_diff = (pf - pa) / games
+                    power_rating = 85 + (ppg_diff * 0.8) + ((win_pct - 0.5) * 20)
+                else:
+                    power_rating = 85
+
+                power_ratings[team_name] = {
+                    'power_rating': round(power_rating, 1),
+                    'ppg_diff': round(ppg_diff if games > 0 else 0, 1),
+                    'win_pct': round(win_pct * 100 if games > 0 else 50, 1),
+                }
+
+            # Add rankings
+            sorted_teams = sorted(power_ratings.items(), key=lambda x: x[1]['power_rating'], reverse=True)
+            for rank, (team, data) in enumerate(sorted_teams, 1):
+                power_ratings[team]['rank'] = rank
+
+            return power_ratings
+
+        except Exception as e:
+            print(f"  NFL power ratings error: {e}")
+            return {}
+
+    def _get_nhl_power_ratings(self) -> Dict:
+        """Calculate NHL power ratings from ESPN data"""
+        try:
+            url = 'https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings'
+            response = self.session.get(url, timeout=15)
+            if response.status_code != 200:
+                return {}
+
+            data = response.json()
+            entries = data.get('standings', {}).get('entries', [])
+
+            power_ratings = {}
+            for entry in entries:
+                team = entry.get('team', {})
+                team_name = team.get('displayName', '')
+                stats = {s.get('name'): s.get('value', s.get('displayValue')) for s in entry.get('stats', [])}
+
+                wins = float(stats.get('wins', 0))
+                losses = float(stats.get('losses', 0))
+                otl = float(stats.get('otLosses', 0))
+                gf = float(stats.get('pointsFor', 0))
+                ga = float(stats.get('pointsAgainst', 0))
+                games = wins + losses + otl
+
+                if games > 0:
+                    pts_pct = (wins * 2 + otl) / (games * 2)
+                    goal_diff = (gf - ga) / games
+                    power_rating = 85 + (goal_diff * 2) + ((pts_pct - 0.5) * 20)
+                else:
+                    power_rating = 85
+
+                power_ratings[team_name] = {
+                    'power_rating': round(power_rating, 1),
+                    'goal_diff': round(goal_diff if games > 0 else 0, 2),
+                    'pts_pct': round(pts_pct * 100 if games > 0 else 50, 1),
+                }
+
+            # Add rankings
+            sorted_teams = sorted(power_ratings.items(), key=lambda x: x[1]['power_rating'], reverse=True)
+            for rank, (team, data) in enumerate(sorted_teams, 1):
+                power_ratings[team]['rank'] = rank
+
+            return power_ratings
+
+        except Exception as e:
+            print(f"  NHL power ratings error: {e}")
+            return {}
 
     def get_team_ranking(self, team_name: str, sport: str) -> Dict:
         """Get ranking info for a specific team"""
+        all_ratings = self.get_power_ratings(sport)
+        if team_name in all_ratings:
+            return all_ratings[team_name]
+
+        # Try partial match
+        for name, data in all_ratings.items():
+            if team_name.lower() in name.lower() or name.lower() in team_name.lower():
+                return data
+
         return {
             'power_rating': 'N/A',
             'rank': 'N/A',
-            'elo': 'N/A',
-            'predictive_rank': 'N/A',
         }
 
 

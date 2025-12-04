@@ -295,6 +295,23 @@ def generate_html_content(all_data: Dict, predictions: Dict) -> str:
     {generate_css()}
 </head>
 <body>
+    <!-- SITE NAVIGATION -->
+    <nav class="site-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">BETLEGEND</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+                <a href="nfl.html">NFL</a>
+                <a href="ncaab.html">NCAAB</a>
+                <a href="ncaaf.html">NCAAF</a>
+                <a href="mlb.html">MLB</a>
+                <a href="blog.html">Blog</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="header">
         <div class="header-content">
             <a href="index.html" class="back-link">&larr; Back to BetLegend</a>
@@ -317,6 +334,65 @@ def generate_html_content(all_data: Dict, predictions: Dict) -> str:
     <div class="container">
 {sections_html}
     </div>
+
+    <!-- STATS GLOSSARY -->
+    <div class="glossary-section">
+        <div class="glossary-container">
+            <h2>STATS GLOSSARY</h2>
+            <p class="glossary-intro">Understanding the advanced metrics shown in the Handicapping Hub:</p>
+            <div class="glossary-grid">
+                <div class="glossary-category">
+                    <h3>BASKETBALL STATS</h3>
+                    <dl>
+                        <dt>OFF RTG</dt><dd>Offensive Rating - Points scored per 100 possessions</dd>
+                        <dt>DEF RTG</dt><dd>Defensive Rating - Points allowed per 100 possessions (lower is better)</dd>
+                        <dt>NET RTG</dt><dd>Net Rating - OFF RTG minus DEF RTG (positive means outscoring opponents)</dd>
+                        <dt>PACE</dt><dd>Possessions per 48 minutes - measures game tempo</dd>
+                        <dt>eFG%</dt><dd>Effective Field Goal % - FG% adjusted for 3-pointers worth more</dd>
+                        <dt>TS%</dt><dd>True Shooting % - Scoring efficiency including free throws</dd>
+                        <dt>AST%</dt><dd>Assist Percentage - % of teammate field goals assisted</dd>
+                        <dt>TOV%</dt><dd>Turnover % - Turnovers per 100 plays</dd>
+                        <dt>OREB%</dt><dd>Offensive Rebound % - % of available offensive rebounds grabbed</dd>
+                        <dt>DREB%</dt><dd>Defensive Rebound % - % of available defensive rebounds grabbed</dd>
+                        <dt>PIE</dt><dd>Player Impact Estimate - Overall contribution metric (0.50 = league average)</dd>
+                    </dl>
+                </div>
+                <div class="glossary-category">
+                    <h3>BETTING TERMS</h3>
+                    <dl>
+                        <dt>ATS</dt><dd>Against The Spread - Win/loss record when factoring in point spread</dd>
+                        <dt>POWER RATING</dt><dd>Calculated team strength (70-100 scale, higher = better)</dd>
+                        <dt>PUBLIC %</dt><dd>Percentage of bets on each side from recreational bettors</dd>
+                        <dt>RLM</dt><dd>Reverse Line Movement - Line moves opposite of public betting (sharp indicator)</dd>
+                        <dt>STEAM MOVE</dt><dd>Sudden, significant line movement indicating sharp action</dd>
+                        <dt>SPREAD</dt><dd>Point handicap for betting purposes</dd>
+                        <dt>O/U</dt><dd>Over/Under total points line</dd>
+                        <dt>ML</dt><dd>Moneyline - Straight up winner odds</dd>
+                    </dl>
+                </div>
+                <div class="glossary-category">
+                    <h3>HOCKEY STATS</h3>
+                    <dl>
+                        <dt>CF%</dt><dd>Corsi For % - Shot attempts for vs against (possession proxy)</dd>
+                        <dt>xGF%</dt><dd>Expected Goals For % - Goal probability based on shot quality</dd>
+                        <dt>PDO</dt><dd>Shooting % + Save % (100 = league average, regresses to mean)</dd>
+                        <dt>GSAA</dt><dd>Goals Saved Above Average - Goalie performance vs average</dd>
+                        <dt>SV%</dt><dd>Save Percentage - Shots saved divided by shots faced</dd>
+                    </dl>
+                </div>
+                <div class="glossary-category">
+                    <h3>FOOTBALL STATS</h3>
+                    <dl>
+                        <dt>EPA</dt><dd>Expected Points Added - Value added on each play</dd>
+                        <dt>DVOA</dt><dd>Defense-adjusted Value Over Average - Efficiency vs league average</dd>
+                        <dt>PPG DIFF</dt><dd>Points per game differential (scored minus allowed)</dd>
+                        <dt>RED ZONE %</dt><dd>Touchdown percentage when inside opponent's 20-yard line</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {generate_javascript()}
 </body>
 </html>'''
@@ -579,11 +655,20 @@ def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, 
     rlm = sharp_money.get('rlm', False)
     steam_move = sharp_money.get('steam_move', False)
 
-    # Format power ratings
-    away_power_val = away_power.get('rating', 'N/A') if away_power else 'N/A'
-    home_power_val = home_power.get('rating', 'N/A') if home_power else 'N/A'
+    # Format power ratings (key is 'power_rating' from TeamRankingsScraper)
+    away_power_val = away_power.get('power_rating', 'N/A') if away_power else 'N/A'
+    home_power_val = home_power.get('power_rating', 'N/A') if home_power else 'N/A'
     away_rank = away_power.get('rank', 'N/A') if away_power else 'N/A'
     home_rank = home_power.get('rank', 'N/A') if home_power else 'N/A'
+
+    # Get public betting from Covers.com format
+    if public_betting:
+        away_public = public_betting.get('away_spread_pct', public_betting.get('away_pct', 'N/A'))
+        home_public = public_betting.get('home_spread_pct', public_betting.get('home_pct', 'N/A'))
+        if away_public != 'N/A':
+            away_public = f"{away_public}"
+        if home_public != 'N/A':
+            home_public = f"{home_public}"
 
     # Build sharp indicators HTML
     sharp_indicators_html = ''
@@ -1003,6 +1088,46 @@ def generate_css() -> str:
             line-height: 1.6;
         }
 
+        /* SITE NAVIGATION */
+        .site-nav {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 22px;
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        .nav-links a {
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #58a6ff;
+        }
+
         /* HEADER */
         .header {
             background: #161b22;
@@ -1342,6 +1467,73 @@ def generate_css() -> str:
             .intel-grid { grid-template-columns: 1fr; }
             .stats-bar { gap: 30px; flex-wrap: wrap; }
             .stat-item .stat-num { font-size: 28px; }
+            .nav-links { display: none; }
+            .glossary-grid { grid-template-columns: 1fr; }
+        }
+
+        /* GLOSSARY SECTION */
+        .glossary-section {
+            background: #161b22;
+            padding: 60px 30px;
+            border-top: 2px solid #30363d;
+            margin-top: 40px;
+        }
+        .glossary-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .glossary-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            color: #58a6ff;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .glossary-intro {
+            text-align: center;
+            color: #8b949e;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .glossary-category {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .glossary-category h3 {
+            color: #7ee787;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #30363d;
+        }
+        .glossary-category dl {
+            display: grid;
+            gap: 12px;
+        }
+        .glossary-category dt {
+            color: #58a6ff;
+            font-weight: 700;
+            font-size: 14px;
+            display: inline;
+        }
+        .glossary-category dd {
+            color: #8b949e;
+            font-size: 14px;
+            display: inline;
+            margin-left: 0;
+        }
+        .glossary-category dt::after {
+            content: ' - ';
+            color: #30363d;
         }
     </style>
 '''
