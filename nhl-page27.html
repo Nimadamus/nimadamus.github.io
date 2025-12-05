@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NHL Analysis Archive - Page 23 | BetLegend</title>
+<meta content="NHL betting picks archive page 16." name="description"/>
+<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon"/>
+<link href="https://www.betlegendpicks.com/nhl-page2.html" rel="canonical"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-color:#01000f;
+  --text-color:#eaf8ff;
+  --glow-color:#00e0ff;
+  --neon-cyan:#00ffff;
+  --neon-gold:#FFD700;
+  --win-color:#39FF14;
+  --loss-color:#FF3131;
+  --font-primary:'Orbitron',sans-serif;
+  --font-secondary:'Poppins',sans-serif;
+  --bg-primary:#05070a;
+  --bg-secondary:#0a0d14;
+  --bg-card:rgba(15,20,30,0.8);
+  --bg-card-hover:rgba(20,28,45,0.9);
+  --accent-cyan:#00e5ff;
+  --accent-gold:#ffd54f;
+  --accent-purple:#a855f7;
+  --text-primary:#ffffff;
+  --text-secondary:#94a3b8;
+  --text-muted:#64748b;
+  --border-subtle:rgba(255,255,255,0.08);
+  --border-glow:rgba(0,229,255,0.3);
+  --gradient-card:linear-gradient(145deg,rgba(15,23,42,0.9),rgba(10,15,25,0.95));
+  --gradient-accent:linear-gradient(135deg,#00e5ff,#a855f7);
+  --shadow-card:0 4px 24px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-glow:0 0 40px rgba(0,229,255,0.15)
+}
+/* Premium Navigation - Index Style */
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,224,255,0.3)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;position:fixed;top:15px;left:15px;z-index:1001}
+.logo a{font-family:var(--font-primary);font-size:2.5rem;font-weight:900;color:#fff;text-decoration:none;text-transform:uppercase;text-shadow:0 0 10px rgba(255,255,255,0.8),0 0 20px rgba(255,255,255,0.4)}
+.logo a span{color:var(--neon-cyan);text-shadow:0 0 15px rgba(0,255,255,1),0 0 30px rgba(0,255,255,0.8),0 0 50px rgba(0,255,255,0.6)}
+.nav-links{display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap}
+.nav-link,.nav-links>a{font-family:var(--font-secondary);color:#ffffff;text-decoration:none;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;transition:all 0.3s ease;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.nav-link:hover,.nav-links>a:hover{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold),0 2px 8px rgba(0,0,0,0.8)}
+.dropdown{position:relative;display:inline-flex;align-items:center}
+.dropbtn{font-family:var(--font-secondary);background:none;border:none;color:#ffffff;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all 0.3s ease;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.dropbtn:hover,.dropdown:hover .dropbtn{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold),0 2px 8px rgba(0,0,0,0.8)}
+.dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(0,0,0,0.98);backdrop-filter:blur(20px);min-width:200px;box-shadow:0px 8px 30px rgba(0,224,255,0.4);z-index:99999;border:2px solid rgba(0,224,255,0.5);border-radius:10px;padding:15px 0;margin-top:10px}
+.dropdown-content a{color:var(--neon-cyan);padding:14px 20px;text-decoration:none;display:block;font-size:0.95rem;text-align:left;transition:all 0.3s ease;text-shadow:0 0 5px rgba(0,255,255,0.5);border-left:3px solid transparent;text-transform:none;letter-spacing:0}
+.dropdown-content a:hover{background:linear-gradient(90deg,rgba(0,224,255,0.3),rgba(0,224,255,0.1));color:#fff;padding-left:30px;text-shadow:0 0 10px var(--glow-color);border-left-color:var(--neon-cyan)}
+@media(hover:hover) and (pointer:fine){.dropdown:hover .dropdown-content{display:block;animation:dropdownFade 0.3s ease}}
+.dropdown.active .dropdown-content{display:block;animation:dropdownFade 0.3s ease}
+@keyframes dropdownFade{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.7;font-size:16px;min-height:100vh;background-image:radial-gradient(ellipse at top,rgba(0,229,255,0.03) 0%,transparent 50%),radial-gradient(ellipse at bottom right,rgba(168,85,247,0.03) 0%,transparent 50%)}
+
+/* Hero Header */
+.hero{padding:140px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,229,255,0.08) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:900;text-transform:uppercase;letter-spacing:3px;background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.hero .subtitle{font-family:'Poppins',sans-serif;font-size:1rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:2px}
+
+/* Date Header */
+.date-header{text-align:center;margin:30px auto 40px auto;padding:25px 20px;max-width:800px;background:linear-gradient(135deg,rgba(0,217,255,0.08) 0%,rgba(255,215,0,0.05) 100%);border-radius:15px;border:2px solid rgba(255,215,0,0.3);box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.date-header h2{color:#ffd700;font-size:28px;margin:0;font-weight:700;text-shadow:0 0 25px rgba(255,215,0,0.5)}
+
+/* Main Content */
+main{max-width:900px;margin:0 auto;padding:0 24px 80px}
+
+/* Game Cards */
+.game-card{background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:20px;padding:32px;margin-bottom:24px;transition:all 0.4s ease;position:relative;overflow:hidden}
+.game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3),transparent);opacity:0;transition:opacity 0.4s ease}
+.game-card:hover{border-color:var(--border-glow);transform:translateY(-4px);box-shadow:var(--shadow-card),var(--shadow-glow)}
+.game-card:hover::before{opacity:1}
+
+/* Team Display */
+.teams-display{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:16px}
+.team-logo{width:60px;height:60px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));transition:transform 0.3s ease}
+.game-card:hover .team-logo{transform:scale(1.08)}
+.vs-badge{color:var(--text-muted);font-size:14px;font-weight:700;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px}
+
+/* Game Info */
+.game-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;margin-bottom:8px;color:var(--text-primary);text-align:center}
+.game-meta{font-size:13px;color:var(--text-muted);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.game-meta span{background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}
+
+/* Content Sections */
+.section-title{color:var(--accent-gold);font-weight:700;font-size:16px;margin:24px 0 12px;display:flex;align-items:center;gap:10px}
+.section-title::before{content:'';width:4px;height:20px;background:var(--gradient-accent);border-radius:2px}
+.game-card p{color:var(--text-secondary);font-size:16px;margin-bottom:12px;line-height:1.8}
+.game-card strong,.game-card b{color:var(--accent-cyan);font-weight:600}
+.game-card h3,.game-card h4{color:var(--accent-gold);font-size:18px;margin:20px 0 12px}
+
+/* Pagination */
+.pagination{display:flex;justify-content:center;align-items:center;gap:24px;padding:50px 24px;margin-top:50px}
+.page-arrow{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border-subtle);border-radius:50%;color:var(--text-secondary);text-decoration:none;font-size:20px;transition:all 0.3s ease}
+.page-arrow:hover:not(.disabled){border-color:var(--accent-cyan);color:var(--accent-cyan);box-shadow:0 0 20px rgba(0,229,255,0.2)}
+.page-arrow.disabled{opacity:0.2;cursor:not-allowed;pointer-events:none}
+.page-info{color:var(--text-muted);font-size:14px;font-weight:500;letter-spacing:0.5px}
+
+/* Footer */
+footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle);background:rgba(5,7,10,0.5)}
+footer a{color:var(--accent-cyan);text-decoration:none;transition:color 0.2s}
+footer a:hover{color:var(--accent-gold)}
+
+/* Responsive */
+@media(max-width:768px){
+  .hero{padding:120px 20px 40px}
+  .hero h1{font-size:24px;letter-spacing:2px}
+  .game-card{padding:24px}
+  .teams-display{gap:12px}
+  .team-logo{width:48px;height:48px}
+  .game-title{font-size:18px}
+  .date-header h2{font-size:22px}
+}
+</style>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-QS8L5TDNLY');</script>
+</head>
+<body>
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
+<a href="handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Hub</a>
+<a href="blog-page10.html">Picks</a>
+<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a></div></div>
+<a href="proofofpicks.html">Proof</a>
+<a href="news-page3.html">News</a>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page12.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+</div>
+</div>
+</nav>
+<header class="hero">
+<h1>NHL Betting Archive</h1>
+<p class="subtitle">Page 18 of 19</p>
+</header>
+<div class="date-header"><h2>Wednesday, November 26, 2025</h2></div>
+<main><article class="game-card">
+<div class="teams-display">
+<img alt="Chicago Blackhawks" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/chi.png"/>
+<span class="vs-badge">@</span>
+<img alt="Los Angeles Kings" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/la.png"/>
+</div>
+<h3 class="game-title">Chicago Blackhawks (11-9-6) @ Los Angeles Kings (12-7-7)</h3>
+<div class="game-meta">
+<span>2025-12-05T03:00Z</span>
+<span>crypto.com Arena</span>
+<span>ESPN+, Hulu</span>
+<span>Line: LA -225</span>
+<span>Total: 5.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">12-7-7</div>
+<div class="stat-label">LA</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">11-9-6</div>
+<div class="stat-label">CHI</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">31 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">28 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>Chicago's stumbling into LA like a boxer who forgot to duck - 3-7 in their last ten tells the whole ugly story. The Blackhawks are getting outworked, outplayed, and frankly look like they'd rather be anywhere else. Meanwhile, the Kings are humming along at 5-5 at home, which isn't spectacular but looks like championship hockey compared to Chicago's road show disaster.</p>
+<p>That -225 line screams disrespect for the visitors, and rightfully so. Chicago's been about as reliable on the road as a broken GPS, while LA sits three points ahead in the standings despite their own inconsistencies. The Kings have enough talent to exploit a Chicago team that's been softer than ice cream in July.</p>
+<p>The 5.5 total suggests oddsmakers expect a controlled Kings victory rather than some high-flying affair. Both teams have shown they can clamp down defensively when motivated, but Chicago's recent form indicates they might not have much fight left in them.</p>
+<p>The real storyline here is whether Chicago can show any pride on this West Coast trip or if they'll continue sleepwalking through games. LA needs to capitalize on home ice against a wounded opponent - anything less than a commanding performance would be concerning.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article><article class="game-card">
+<div class="teams-display">
+<img alt="St. Louis Blues" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/stl.png"/>
+<span class="vs-badge">@</span>
+<img alt="Boston Bruins" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/bos.png"/>
+</div>
+<h3 class="game-title">St. Louis Blues (9-11-7) @ Boston Bruins (15-13-0)</h3>
+<div class="game-meta">
+<span>2025-12-05T00:00Z</span>
+<span>TD Garden</span>
+<span>ESPN+, FanDuel SN MW</span>
+<span>Line: STL -142</span>
+<span>Total: 5.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">15-13-0</div>
+<div class="stat-label">BOS</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">9-11-7</div>
+<div class="stat-label">STL</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">30 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">25 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>St. Louis getting love as road favorites feels like the market buying fool's gold. The Blues are 3-7 in their last ten away from home, which tells you everything about how they handle hostile ice. Meanwhile, Boston sits five points ahead in the standings despite their own struggles - that gap exists for a reason.</p>
+<p>The Bruins' 4-6 home record screams mediocrity, but it's still better than what St. Louis has been serving up on the road. Both teams are treading water right now, but Boston's got the talent edge when they decide to show up. The Blues have been about as consistent as a broken alarm clock this season.</p>
+<p>That 5.5 total catches the eye with two squads that have been leakier than a rusty bucket defensively. Neither team has shown they can consistently lock down opponents, and desperation tends to create wide-open hockey. St. Louis needs points badly sitting five back, while Boston can't afford to keep sleepwalking at home.</p>
+<p>The real question becomes which team's goaltending decides to show up on any given night - both clubs have been getting Swiss cheese performances between the pipes lately.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article><article class="game-card">
+<div class="teams-display">
+<img alt="New York Rangers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nyr.png"/>
+<span class="vs-badge">@</span>
+<img alt="Ottawa Senators" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/ott.png"/>
+</div>
+<h3 class="game-title">New York Rangers (14-12-2) @ Ottawa Senators (13-9-4)</h3>
+<div class="game-meta">
+<span>2025-12-05T00:00Z</span>
+<span>Canadian Tire Centre</span>
+<span>ESPN+, MSG</span>
+<span>Line: OTT -148</span>
+<span>Total: 5.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">13-9-4</div>
+<div class="stat-label">OTT</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">14-12-2</div>
+<div class="stat-label">NYR</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">30 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">30 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>Both teams are treading water at .500 over their last ten, which tells you everything about this mediocre matchup. The Rangers have been fool's gold away from Madison Square Garden all season, struggling to find any consistent identity on the road. Ottawa's sitting pretty at home with that same 5-5 mark, but don't let the decent record fool you - they've been feasting on bottom-feeders while getting exposed by legitimate competition.</p>
+<p>The market's making Ottawa a -148 favorite, which feels generous for a team that's been about as reliable as a broken alarm clock. These Senators have shown flashes of competence but can't string together the kind of performances that justify laying this much chalk against a Rangers squad that, despite their road struggles, still has more playoff pedigree in their locker room than Ottawa has in their entire organization.</p>
+<p>That 5.5 total screams trap game written all over it. Both teams have been inconsistent defensively, and when you get two squads playing uninspired hockey, the goals can dry up faster than Ottawa's playoff hopes in March. The Rangers' goaltending has been shakier than a house of cards, while the Senators can't decide if they want to play run-and-gun or defensive hockey.</p>
+<p>The real story here is two franchises stuck in neutral, desperately trying to convince themselves they're playoff contenders when the underlying numbers suggest otherwise.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article><article class="game-card">
+<div class="teams-display">
+<img alt="Pittsburgh Penguins" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/pit.png"/>
+<span class="vs-badge">@</span>
+<img alt="Tampa Bay Lightning" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/tb.png"/>
+</div>
+<h3 class="game-title">Pittsburgh Penguins (13-7-5) @ Tampa Bay Lightning (16-8-2)</h3>
+<div class="game-meta">
+<span>2025-12-05T00:00Z</span>
+<span>Benchmark International Arena</span>
+<span>ESPN+, The Spot - MTN</span>
+<span>Line: TB -205</span>
+<span>Total: 6.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">16-8-2</div>
+<div class="stat-label">TB</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">13-7-5</div>
+<div class="stat-label">PIT</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">34 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">31 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>That -205 line on Tampa Bay screams trap to anyone paying attention. The Lightning opened closer to -170 but sharp money has been hammering Pittsburgh, forcing books to juice up Tampa's price to discourage more Penguins action. When you're laying over 2-to-1 on a home favorite against a team sitting just three points behind in the standings, something stinks.</p>
+<p>Pittsburgh's road struggles are real - that 4-6 record away from home tells the story of a team that can't figure out life outside their comfort zone. But Tampa Bay's been fool's gold at home lately, padding that 8-2 record by beating up on bottom-feeders while looking ordinary against legitimate competition. The Lightning's defensive lapses have been glaring, and their goaltending situation remains shakier than a house of cards.</p>
+<p>The total sitting at 6.5 feels about right given both teams' recent offensive output, but don't sleep on the under potential here. Pittsburgh's road woes often translate to conservative, grinding hockey rather than the track meets everyone expects when these two meet.</p>
+<p>Watch how Tampa responds to early pressure - they've shown a disturbing tendency to wilt when opponents match their intensity from the opening drop.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article><article class="game-card">
+<div class="teams-display">
+<img alt="Nashville Predators" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nsh.png"/>
+<span class="vs-badge">@</span>
+<img alt="Florida Panthers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/fla.png"/>
+</div>
+<h3 class="game-title">Nashville Predators (9-13-4) @ Florida Panthers (12-12-1)</h3>
+<div class="game-meta">
+<span>2025-12-05T00:00Z</span>
+<span>Amerant Bank Arena</span>
+<span>ESPN+, Scripps Sports</span>
+<span>Line: FLA -205</span>
+<span>Total: 5.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">12-12-1</div>
+<div class="stat-label">FLA</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">9-13-4</div>
+<div class="stat-label">NSH</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">25 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">22 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>Nashville's catching Florida in a scheduling sweet spot here, with the Panthers coming off their third game in five nights while the Predators had two days to prepare. That rest advantage could be the difference between two teams that have been stumbling through mediocrity like they're skating uphill.</p>
+<p>The Predators at 9-13-4 look like a team that can't decide if they want to tank or compete, while Florida's 12-12-1 record screams disappointed expectations after last season's playoff run. Nashville's 4-6 road record over their last ten tells the story of a franchise that's tougher to watch than a root canal, but they've actually been more competent away from home than their overall record suggests.</p>
+<p>Florida's 5-5 home mark isn't exactly fortress-level dominance, especially for a team laying -205 chalk. The Panthers have been inconsistent as a Nashville weather forecast, and that three-point gap in the standings between these clubs is paper-thin when you're talking about teams this close to the basement.</p>
+<p>The 5.5 total feels tight for two squads that have struggled defensively but can't score consistently enough to blow games open. Watch whether Florida's recent schedule grind shows up in their legs during the third period.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article><article class="game-card">
+<div class="teams-display">
+<img alt="Colorado Avalanche" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/col.png"/>
+<span class="vs-badge">@</span>
+<img alt="New York Islanders" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nyi.png"/>
+</div>
+<h3 class="game-title">Colorado Avalanche (19-1-6) @ New York Islanders (14-10-3)</h3>
+<div class="game-meta">
+<span>2025-12-05T00:00Z</span>
+<span>UBS Arena</span>
+<span>ESPN+, MSGSN</span>
+<span>Line: COL -218</span>
+<span>Total: 6.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">14-10-3</div>
+<div class="stat-label">NYI</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">19-1-6</div>
+<div class="stat-label">COL</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">31 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">44 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>The public's treating this like Colorado's just another road favorite, but they're missing how this Islanders team has been absolute kryptonite for elite opposition at UBS Arena. Sure, the Avs are rolling at 19-1-6, but that -218 line screams trap when you dig into the matchup dynamics.</p>
+<p>Colorado's been a buzzsaw lately with that 9-1 road record over their last ten, but the Islanders aren't your typical pushover sitting there at 14-10-3. New York's 5-5 home split tells a story - they've been picking their spots and playing spoiler when nobody expects it. The 13-point gap in the standings looks massive on paper, but divisional math doesn't always translate to cross-conference reality.</p>
+<p>This total sitting at 6.5 feels like Vegas is banking on Colorado's offensive firepower, but the Islanders have been grinding out uglier games than a construction site. They're not going to get into a track meet with an Avalanche squad that can score in bunches.</p>
+<p>What's fascinating here is whether Colorado's road dominance can overcome New York's tendency to muck up games and drag elite teams into the mud. The Islanders thrive on making pretty teams play ugly hockey.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article><article class="game-card">
+<div class="teams-display">
+<img alt="Toronto Maple Leafs" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/tor.png"/>
+<span class="vs-badge">@</span>
+<img alt="Carolina Hurricanes" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/car.png"/>
+</div>
+<h3 class="game-title">Toronto Maple Leafs (12-11-3) @ Carolina Hurricanes (16-7-2)</h3>
+<div class="game-meta">
+<span>2025-12-05T00:00Z</span>
+<span>Lenovo Center</span>
+<span>ESPN+, FanDuel SN South</span>
+<span>Line: CAR -218</span>
+<span>Total: 6.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">16-7-2</div>
+<div class="stat-label">CAR</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">12-11-3</div>
+<div class="stat-label">TOR</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">34 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">27 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>**-218.** That's the kind of line you see when Vegas thinks one team is playing beer league hockey.</p>
+<p>Toronto's road show has been a disaster movie on ice - 4-6 in their last ten away from home tells you everything about a team that wilts under pressure outside their comfort zone. The Leafs are sitting seven points behind Carolina for good reason: they're softer than hotel toilet paper when it matters. Meanwhile, the Hurricanes are rolling at 16-7-2, playing the kind of suffocating hockey that makes opposing forwards wish they'd chosen accounting instead.</p>
+<p>Carolina's been a buzzsaw at home while Toronto continues their tradition of finding creative ways to disappoint. The Maple Leafs have managed just 12 wins through 26 games, which is pathetic for a franchise that spends like they're buying championships at Costco. The Hurricanes? They've been everything Toronto pretends to be - disciplined, relentless, and actually capable of winning games that matter.</p>
+<p>The 6.5 total reflects two teams heading in opposite directions, with Carolina's defensive structure likely to frustrate Toronto's star-heavy but inconsistent attack. Watch for how quickly the Leafs fold once Carolina establishes their physical, grinding style - it usually doesn't take long.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article><article class="game-card">
+<div class="teams-display">
+<img alt="Detroit Red Wings" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/det.png"/>
+<span class="vs-badge">@</span>
+<img alt="Columbus Blue Jackets" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/cbj.png"/>
+</div>
+<h3 class="game-title">Detroit Red Wings (14-11-2) @ Columbus Blue Jackets (12-9-5)</h3>
+<div class="game-meta">
+<span>2025-12-05T00:30Z</span>
+<span>Nationwide Arena</span>
+<span>ESPN+, Hulu</span>
+<span>Line: CBJ -120</span>
+<span>Total: 6.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">12-9-5</div>
+<div class="stat-label">CBJ</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">14-11-2</div>
+<div class="stat-label">DET</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">29 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">30 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>Columbus getting home chalk here feels like the books are living in a fantasy world. The Blue Jackets have been mediocre as hosts, going 4-6 in their last 10 at home, which hardly screams "reliable favorite" material. Meanwhile, Detroit's sitting one point ahead in the standings despite their own road struggles.</p>
+<p>Both teams are spinning their wheels with identical 4-6 records over their last 10, looking more like two ships passing in the night than legitimate contenders. The Red Wings have been road kill away from Detroit, but Columbus hasn't exactly been lighting up their own building either. These are two franchises desperately searching for consistency and finding nothing but disappointment.</p>
+<p>That -120 price tag on Columbus assumes they've got some meaningful home-ice advantage, but the evidence suggests otherwise. Detroit's been competitive enough to stay ahead of the Blue Jackets in the standings despite their travel woes, and now they're getting plus money as the technically better team.</p>
+<p>The real story here is which goaltender shows up ready to steal points, because neither team has shown they can dominate possession or create consistent offensive pressure when it matters.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article><article class="game-card">
+<div class="teams-display">
+<img alt="Minnesota Wild" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/min.png"/>
+<span class="vs-badge">@</span>
+<img alt="Calgary Flames" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/cgy.png"/>
+</div>
+<h3 class="game-title">Minnesota Wild (15-7-5) @ Calgary Flames (9-15-4)</h3>
+<div class="game-meta">
+<span>2025-12-05T02:00Z</span>
+<span>Scotiabank Saddledome</span>
+<span>ESPN+, FanDuel SN North Extra</span>
+<span>Line: MIN -122</span>
+<span>Total: 5.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">9-15-4</div>
+<div class="stat-label">CGY</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">15-7-5</div>
+<div class="stat-label">MIN</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">22 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">35 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>That 5.5 total screams trap game - the books are begging you to take the under based on Calgary's offensive struggles, but Minnesota's been lighting up scoreboards even in tight defensive battles.</p>
+<p>The Flames are sitting at 22 points through 28 games, which is barely above expansion team territory. They're getting outshot, outplayed, and outclassed nightly at the Saddledome. Meanwhile, Minnesota rolls in with that pristine 8-2 road record over their last ten, looking like a team that's figured out how to win ugly away from home. The Wild have been methodical assassins on the road - they don't need fireworks to bury struggling clubs.</p>
+<p>Calgary's desperation might actually work against them here. When you're this far underwater in the standings, teams either fold completely or play with reckless abandon that opens up odd-man rushes. The Flames have shown flashes of offensive life recently, but their defensive structure crumbles the moment they face legitimate speed and skill.</p>
+<p>The most telling number? Minnesota's road dominance versus Calgary's mediocre 5-5 home split. The Flames can barely handle bottom-feeders at home, and now they're facing a legitimate playoff contender that's been surgical in hostile environments.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article><article class="game-card">
+<div class="teams-display">
+<img alt="Seattle Kraken" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/sea.png"/>
+<span class="vs-badge">@</span>
+<img alt="Edmonton Oilers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/edm.png"/>
+</div>
+<h3 class="game-title">Seattle Kraken (11-7-6) @ Edmonton Oilers (11-11-5)</h3>
+<div class="game-meta">
+<span>2025-12-05T02:00Z</span>
+<span>Rogers Place</span>
+<span>ESPN+, KONG</span>
+<span>Line: EDM -238</span>
+<span>Total: 5.5</span>
+</div>
+<div class="stat-grid">
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">11-11-5</div>
+<div class="stat-label">EDM</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">11-7-6</div>
+<div class="stat-label">SEA</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">27 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">28 pts</div>
+<div class="stat-label">Standing</div>
+</div>
+</div>
+</div>
+<p>The public's treating this like Edmonton's some powerhouse at home, but that -238 line is laughable when you dig into what's actually happening. The Oilers are 4-6 in their last ten at Rogers Place - that's not exactly the fortress casual bettors think they're backing. Meanwhile, Seattle sits a point ahead in the standings despite everyone writing them off as some expansion afterthought.</p>
+<p>Edmonton's been more jekyll and hyde than dominant force this season. Sure, they've got McDavid putting up video game numbers, but 11-11-5 screams mediocrity louder than their highlight reel goals. The Kraken aren't world-beaters either at 4-6 on the road recently, but they're not getting steamrolled like this price suggests.</p>
+<p>That 5.5 total feels about right given both teams' recent form - neither defense has been setting the world on fire. Edmonton's been leaking goals despite playing at home, while Seattle's road struggles aren't exactly built on suffocating defensive play.</p>
+<p>The real storyline here is whether Edmonton can finally string together the type of performance their talent suggests, or if they'll continue this maddening inconsistency that's defined their season. With just one point separating these clubs, this game matters more for playoff positioning than the lopsided line indicates.</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article>
+<div class="archive-link"><a href="nhl-page22.html">← Newer</a> <span>Page 2 of 24</span> <a href="nhl-page24.html">Older →</a></div>
+</main>
+<nav class="pagination">
+<a href="nhl.html" title="Newer">← Newer</a>
+<span class="current">Page 18 of 19</span>
+<a href="nhl-page3.html" title="Older">Older →</a>
+</nav>
+<footer>
+<p>© 2025 BetLegend  |  <a href="index.html">Home</a>  |  <a href="nhl-records.html">NHL Records</a></p>
+</footer>
+<!-- Clicky Analytics -->
+<a href="https://clicky.com/101485054" title="Web Analytics"><img alt="Clicky" border="0" src="//static.getclicky.com/media/links/badge.gif"/></a>
+<script async="" data-id="101485054" src="//static.getclicky.com/js"></script>
+</body>
+</html>
