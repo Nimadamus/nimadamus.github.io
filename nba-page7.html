@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -57,15 +56,26 @@ main{max-width:900px;margin:0 auto;padding:0 24px 80px}
 .stat-item{flex:1;min-width:100px;text-align:center;padding:8px}
 .stat-item .value{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;color:var(--accent-gold)}
 .stat-item .label{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
-.stat-item .rank{font-size:0.65rem;color:#39ff14;font-weight:600}
-.stat-item .rank.bad{color:#ff4444}
 .archive-link{text-align:center;margin:40px 0;padding:20px}
 .archive-link a{color:var(--accent-cyan);text-decoration:none;font-size:16px;padding:12px 24px;border:1px solid var(--border-subtle);border-radius:8px;transition:all 0.3s}
 .archive-link a:hover{background:rgba(0,229,255,0.1);border-color:var(--accent-cyan)}
 footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
 footer a{color:var(--accent-cyan);text-decoration:none}
 .data-source{font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--border-subtle)}
-@media(max-width:768px){.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}}
+.deep-analysis{margin:20px 0;padding:20px;background:rgba(0,0,0,0.2);border-radius:12px;border-left:3px solid var(--accent-cyan)}
+.analysis-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.analysis-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.analysis-section h4{color:var(--accent-gold);font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-family:var(--font-primary)}
+.analysis-section p{font-size:0.85rem;color:var(--text-secondary);margin:6px 0;line-height:1.6}
+.analysis-section ul{margin:8px 0;padding-left:20px}
+.analysis-section li{font-size:0.85rem;color:var(--text-secondary);margin:4px 0}
+.stats-comparison{display:grid;gap:8px}
+.stat-compare-row{display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px}
+.stat-compare-row .stat-label{color:var(--text-muted);font-size:0.8rem}
+.stat-compare-row .stat-away,.stat-compare-row .stat-home{font-size:0.85rem;font-weight:600}
+.stat-compare-row .stat-away{color:var(--accent-cyan)}
+.stat-compare-row .stat-home{color:var(--accent-gold)}
+@media(max-width:768px){.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}.deep-analysis{padding:15px}}
 </style>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
@@ -89,7 +99,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <header class="hero">
 <div class="hero-badge">Statistical Analysis</div>
 <h1>NBA <span>Analysis</span></h1>
-<p>9-Game Slate | Advanced Stats &amp; Betting Trends</p>
+<p>5-Game Slate | Advanced Stats &amp; Betting Trends</p>
 </header>
 <div class="current-date"><h2>December 04, 2025</h2></div>
 <main>
@@ -99,32 +109,65 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <span class="vs-badge">@</span>
 <img alt="Philadelphia 76ers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/phi.png"/>
 </div>
-<h3 class="game-title">Golden State Warriors (11-11) @ Philadelphia 76ers (11-9)</h3>
+<h3 class="game-title">Golden State Warriors @ Philadelphia 76ers</h3>
 <div class="game-meta">
-<span>2025-12-05T00:00Z</span>
+<span>12:00 AM ET</span>
+<span>11-12 vs 12-9</span>
 <span>Xfinity Mobile Arena</span>
-<span>NBC Sports BA, NBC Sports Phil</span>
 </div>
 <div class="stat-row">
-<div class="stat-item">
-<div class="value">11-9</div>
-<div class="label">PHI Record</div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">GS ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">PHI ML</span></div>
 </div>
-<div class="stat-item">
-<div class="value">11-11</div>
-<div class="label">GS Record</div>
+<div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>GS:</strong> No key injuries</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>PHI:</strong> No key injuries</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Line</div>
+<div class="deep-analysis">
+<div class="analysis-section overview">
+<h4>Game Overview</h4>
+<p>The <strong>Golden State Warriors</strong> (N/A) travel to face the <strong>Philadelphia 76ers</strong> (N/A) in what should be an intriguing NBA matchup. The line has Philadelphia 76ers as N/A favorites with the total set at N/A.</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Total</div>
+
+<div class="analysis-section form">
+<h4>Recent Form</h4>
+<p><strong>Golden State Warriors (Last 10):</strong> N/A</p>
+<p><strong>Philadelphia 76ers (Last 10):</strong> N/A</p>
+<p>Golden State Warriors is on a -2.0 while Philadelphia 76ers is on a 2.0.</p>
 </div>
+
+<div class="analysis-section stats"><h4>Key Statistics</h4><div class="stats-comparison"><div class="stat-compare-row">
+<span class="stat-label">PPG</span>
+<span class="stat-away">GS: N/A</span>
+<span class="stat-home">PHI: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Opp PPG</span>
+<span class="stat-away">GS: N/A</span>
+<span class="stat-home">PHI: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Pace</span>
+<span class="stat-away">GS: N/A</span>
+<span class="stat-home">PHI: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Off Rtg</span>
+<span class="stat-away">GS: N/A</span>
+<span class="stat-home">PHI: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Def Rtg</span>
+<span class="stat-away">GS: N/A</span>
+<span class="stat-home">PHI: N/A</span>
+</div></div></div>
+
+<div class="analysis-section injuries"><h4>Injury Report</h4><p><strong>GS:</strong> </p><p><strong>PHI:</strong> </p></div>
+
+<div class="analysis-section betting"><h4>Betting Trends</h4><p><strong>ATS Records:</strong> GS 11-12 | PHI 10-11</p><p><strong>Current Line:</strong> Spread N/A | O/U N/A</p></div>
+
+<div class="analysis-section matchup"><h4>Matchup Analysis</h4><p>Based on season averages, this projects as approximately a <strong>100</strong> total with Philadelphia 76ers favored.</p><p><strong>Key Factors:</strong></p><ul><li>Philadelphia 76ers averages more points per game</li><li>Philadelphia 76ers has the better defensive efficiency</li><li>Home court/ice advantage typically worth 2-3 points</li></ul></div>
 </div>
-<p>Matchup analysis coming soon. Golden State Warriors (11-11) visits Philadelphia 76ers (11-9).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
 <article class="game-card">
 <div class="teams-display">
@@ -132,32 +175,65 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <span class="vs-badge">@</span>
 <img alt="Washington Wizards" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/wsh.png"/>
 </div>
-<h3 class="game-title">Boston Celtics (12-9) @ Washington Wizards (3-17)</h3>
+<h3 class="game-title">Boston Celtics @ Washington Wizards</h3>
 <div class="game-meta">
-<span>2025-12-05T00:00Z</span>
+<span>12:00 AM ET</span>
+<span>13-9 vs 3-18</span>
 <span>Capital One Arena</span>
-<span>MNMT, NBC Sports BO</span>
 </div>
 <div class="stat-row">
-<div class="stat-item">
-<div class="value">3-17</div>
-<div class="label">WSH Record</div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">BOS ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">WSH ML</span></div>
 </div>
-<div class="stat-item">
-<div class="value">12-9</div>
-<div class="label">BOS Record</div>
+<div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>BOS:</strong> No key injuries</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>WSH:</strong> No key injuries</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Line</div>
+<div class="deep-analysis">
+<div class="analysis-section overview">
+<h4>Game Overview</h4>
+<p>The <strong>Boston Celtics</strong> (N/A) travel to face the <strong>Washington Wizards</strong> (N/A) in what should be an intriguing NBA matchup. The line has Washington Wizards as N/A favorites with the total set at N/A.</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Total</div>
+
+<div class="analysis-section form">
+<h4>Recent Form</h4>
+<p><strong>Boston Celtics (Last 10):</strong> N/A</p>
+<p><strong>Washington Wizards (Last 10):</strong> N/A</p>
+<p>Boston Celtics is on a 3.0 while Washington Wizards is on a -2.0.</p>
 </div>
+
+<div class="analysis-section stats"><h4>Key Statistics</h4><div class="stats-comparison"><div class="stat-compare-row">
+<span class="stat-label">PPG</span>
+<span class="stat-away">BOS: N/A</span>
+<span class="stat-home">WSH: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Opp PPG</span>
+<span class="stat-away">BOS: N/A</span>
+<span class="stat-home">WSH: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Pace</span>
+<span class="stat-away">BOS: N/A</span>
+<span class="stat-home">WSH: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Off Rtg</span>
+<span class="stat-away">BOS: N/A</span>
+<span class="stat-home">WSH: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Def Rtg</span>
+<span class="stat-away">BOS: N/A</span>
+<span class="stat-home">WSH: N/A</span>
+</div></div></div>
+
+<div class="analysis-section injuries"><h4>Injury Report</h4><p><strong>BOS:</strong> </p></div>
+
+<div class="analysis-section betting"><h4>Betting Trends</h4><p><strong>ATS Records:</strong> BOS 11-11 | WSH 10-11</p><p><strong>Current Line:</strong> Spread N/A | O/U N/A</p></div>
+
+<div class="analysis-section matchup"><h4>Matchup Analysis</h4><p>Based on season averages, this projects as approximately a <strong>100</strong> total with Washington Wizards favored.</p><p><strong>Key Factors:</strong></p><ul><li>Washington Wizards averages more points per game</li><li>Washington Wizards has the better defensive efficiency</li><li>Home court/ice advantage typically worth 2-3 points</li></ul></div>
 </div>
-<p>Matchup analysis coming soon. Boston Celtics (12-9) visits Washington Wizards (3-17).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
 <article class="game-card">
 <div class="teams-display">
@@ -165,32 +241,65 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <span class="vs-badge">@</span>
 <img alt="Brooklyn Nets" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/bkn.png"/>
 </div>
-<h3 class="game-title">Utah Jazz (7-13) @ Brooklyn Nets (5-16)</h3>
+<h3 class="game-title">Utah Jazz @ Brooklyn Nets</h3>
 <div class="game-meta">
-<span>2025-12-05T00:30Z</span>
+<span>12:30 AM ET</span>
+<span>8-13 vs 5-17</span>
 <span>Barclays Center</span>
-<span>YES, KJZZ-TV</span>
 </div>
 <div class="stat-row">
-<div class="stat-item">
-<div class="value">5-16</div>
-<div class="label">BKN Record</div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">UTAH ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">BKN ML</span></div>
 </div>
-<div class="stat-item">
-<div class="value">7-13</div>
-<div class="label">UTAH Record</div>
+<div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>UTAH:</strong> No key injuries</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>BKN:</strong> No key injuries</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Line</div>
+<div class="deep-analysis">
+<div class="analysis-section overview">
+<h4>Game Overview</h4>
+<p>The <strong>Utah Jazz</strong> (N/A) travel to face the <strong>Brooklyn Nets</strong> (N/A) in what should be an intriguing NBA matchup. The line has Brooklyn Nets as N/A favorites with the total set at N/A.</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Total</div>
+
+<div class="analysis-section form">
+<h4>Recent Form</h4>
+<p><strong>Utah Jazz (Last 10):</strong> N/A</p>
+<p><strong>Brooklyn Nets (Last 10):</strong> N/A</p>
+<p>Utah Jazz is on a 2.0 while Brooklyn Nets is on a -1.0.</p>
 </div>
+
+<div class="analysis-section stats"><h4>Key Statistics</h4><div class="stats-comparison"><div class="stat-compare-row">
+<span class="stat-label">PPG</span>
+<span class="stat-away">UTAH: N/A</span>
+<span class="stat-home">BKN: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Opp PPG</span>
+<span class="stat-away">UTAH: N/A</span>
+<span class="stat-home">BKN: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Pace</span>
+<span class="stat-away">UTAH: N/A</span>
+<span class="stat-home">BKN: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Off Rtg</span>
+<span class="stat-away">UTAH: N/A</span>
+<span class="stat-home">BKN: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Def Rtg</span>
+<span class="stat-away">UTAH: N/A</span>
+<span class="stat-home">BKN: N/A</span>
+</div></div></div>
+
+<div class="analysis-section injuries"><h4>Injury Report</h4><p><strong>UTAH:</strong> </p><p><strong>BKN:</strong> </p></div>
+
+<div class="analysis-section betting"><h4>Betting Trends</h4><p><strong>ATS Records:</strong> UTAH 10-11 | BKN 11-11</p><p><strong>Current Line:</strong> Spread N/A | O/U N/A</p></div>
+
+<div class="analysis-section matchup"><h4>Matchup Analysis</h4><p>Based on season averages, this projects as approximately a <strong>100</strong> total with Brooklyn Nets favored.</p><p><strong>Key Factors:</strong></p><ul><li>Brooklyn Nets averages more points per game</li><li>Brooklyn Nets has the better defensive efficiency</li><li>Home court/ice advantage typically worth 2-3 points</li></ul></div>
 </div>
-<p>Matchup analysis coming soon. Utah Jazz (7-13) visits Brooklyn Nets (5-16).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
 <article class="game-card">
 <div class="teams-display">
@@ -198,32 +307,65 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <span class="vs-badge">@</span>
 <img alt="Toronto Raptors" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/tor.png"/>
 </div>
-<h3 class="game-title">Los Angeles Lakers (15-5) @ Toronto Raptors (15-7)</h3>
+<h3 class="game-title">Los Angeles Lakers @ Toronto Raptors</h3>
 <div class="game-meta">
-<span>2025-12-05T00:30Z</span>
+<span>12:30 AM ET</span>
+<span>16-5 vs 15-8</span>
 <span>Scotiabank Arena</span>
-<span>Spectrum Sports Net, Spectrum Sports Net +</span>
 </div>
 <div class="stat-row">
-<div class="stat-item">
-<div class="value">15-7</div>
-<div class="label">TOR Record</div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">LAL ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">TOR ML</span></div>
 </div>
-<div class="stat-item">
-<div class="value">15-5</div>
-<div class="label">LAL Record</div>
+<div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>LAL:</strong> No key injuries</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>TOR:</strong> No key injuries</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Line</div>
+<div class="deep-analysis">
+<div class="analysis-section overview">
+<h4>Game Overview</h4>
+<p>The <strong>Los Angeles Lakers</strong> (N/A) travel to face the <strong>Toronto Raptors</strong> (N/A) in what should be an intriguing NBA matchup. The line has Toronto Raptors as N/A favorites with the total set at N/A.</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Total</div>
+
+<div class="analysis-section form">
+<h4>Recent Form</h4>
+<p><strong>Los Angeles Lakers (Last 10):</strong> N/A</p>
+<p><strong>Toronto Raptors (Last 10):</strong> N/A</p>
+<p>Los Angeles Lakers is on a 1.0 while Toronto Raptors is on a -1.0.</p>
 </div>
+
+<div class="analysis-section stats"><h4>Key Statistics</h4><div class="stats-comparison"><div class="stat-compare-row">
+<span class="stat-label">PPG</span>
+<span class="stat-away">LAL: N/A</span>
+<span class="stat-home">TOR: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Opp PPG</span>
+<span class="stat-away">LAL: N/A</span>
+<span class="stat-home">TOR: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Pace</span>
+<span class="stat-away">LAL: N/A</span>
+<span class="stat-home">TOR: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Off Rtg</span>
+<span class="stat-away">LAL: N/A</span>
+<span class="stat-home">TOR: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Def Rtg</span>
+<span class="stat-away">LAL: N/A</span>
+<span class="stat-home">TOR: N/A</span>
+</div></div></div>
+
+<div class="analysis-section injuries"><h4>Injury Report</h4><p><strong>LAL:</strong> </p><p><strong>TOR:</strong> </p></div>
+
+<div class="analysis-section betting"><h4>Betting Trends</h4><p><strong>ATS Records:</strong> LAL 10-11 | TOR 11-12</p><p><strong>Current Line:</strong> Spread N/A | O/U N/A</p></div>
+
+<div class="analysis-section matchup"><h4>Matchup Analysis</h4><p>Based on season averages, this projects as approximately a <strong>100</strong> total with Toronto Raptors favored.</p><p><strong>Key Factors:</strong></p><ul><li>Toronto Raptors averages more points per game</li><li>Toronto Raptors has the better defensive efficiency</li><li>Home court/ice advantage typically worth 2-3 points</li></ul></div>
 </div>
-<p>Matchup analysis coming soon. Los Angeles Lakers (15-5) visits Toronto Raptors (15-7).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
 <article class="game-card">
 <div class="teams-display">
@@ -231,34 +373,68 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <span class="vs-badge">@</span>
 <img alt="New Orleans Pelicans" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/no.png"/>
 </div>
-<h3 class="game-title">Minnesota Timberwolves (13-8) @ New Orleans Pelicans (3-19)</h3>
+<h3 class="game-title">Minnesota Timberwolves @ New Orleans Pelicans</h3>
 <div class="game-meta">
-<span>2025-12-05T01:00Z</span>
+<span>01:00 AM ET</span>
+<span>14-8 vs 3-20</span>
 <span>Smoothie King Center</span>
-<span>GCSEN, Pelicans.com</span>
 </div>
 <div class="stat-row">
-<div class="stat-item">
-<div class="value">3-19</div>
-<div class="label">NO Record</div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">MIN ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">NO ML</span></div>
 </div>
-<div class="stat-item">
-<div class="value">13-8</div>
-<div class="label">MIN Record</div>
+<div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>MIN:</strong> No key injuries</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>NO:</strong> No key injuries</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Line</div>
+<div class="deep-analysis">
+<div class="analysis-section overview">
+<h4>Game Overview</h4>
+<p>The <strong>Minnesota Timberwolves</strong> (N/A) travel to face the <strong>New Orleans Pelicans</strong> (N/A) in what should be an intriguing NBA matchup. The line has New Orleans Pelicans as N/A favorites with the total set at N/A.</p>
 </div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Total</div>
+
+<div class="analysis-section form">
+<h4>Recent Form</h4>
+<p><strong>Minnesota Timberwolves (Last 10):</strong> N/A</p>
+<p><strong>New Orleans Pelicans (Last 10):</strong> N/A</p>
+<p>Minnesota Timberwolves is on a 4.0 while New Orleans Pelicans is on a -5.0.</p>
 </div>
+
+<div class="analysis-section stats"><h4>Key Statistics</h4><div class="stats-comparison"><div class="stat-compare-row">
+<span class="stat-label">PPG</span>
+<span class="stat-away">MIN: N/A</span>
+<span class="stat-home">NO: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Opp PPG</span>
+<span class="stat-away">MIN: N/A</span>
+<span class="stat-home">NO: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Pace</span>
+<span class="stat-away">MIN: N/A</span>
+<span class="stat-home">NO: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Off Rtg</span>
+<span class="stat-away">MIN: N/A</span>
+<span class="stat-home">NO: N/A</span>
+</div><div class="stat-compare-row">
+<span class="stat-label">Def Rtg</span>
+<span class="stat-away">MIN: N/A</span>
+<span class="stat-home">NO: N/A</span>
+</div></div></div>
+
+<div class="analysis-section injuries"><h4>Injury Report</h4><p><strong>NO:</strong> </p></div>
+
+<div class="analysis-section betting"><h4>Betting Trends</h4><p><strong>ATS Records:</strong> MIN 11-11 | NO 11-12</p><p><strong>Current Line:</strong> Spread N/A | O/U N/A</p></div>
+
+<div class="analysis-section matchup"><h4>Matchup Analysis</h4><p>Based on season averages, this projects as approximately a <strong>100</strong> total with New Orleans Pelicans favored.</p><p><strong>Key Factors:</strong></p><ul><li>New Orleans Pelicans averages more points per game</li><li>New Orleans Pelicans has the better defensive efficiency</li><li>Home court/ice advantage typically worth 2-3 points</li></ul></div>
 </div>
-<p>Matchup analysis coming soon. Minnesota Timberwolves (13-8) visits New Orleans Pelicans (3-19).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
 
+<<<<<<< HEAD
 <article class="game-card">
 <div class="teams-display">
 <img alt="Golden State Warriors" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/gs.png"/>
@@ -434,10 +610,15 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <!-- Game 8: LA Clippers @ Atlanta Hawks -->
 <!-- Game 9: Brooklyn Nets @ Chicago Bulls -->
 <div class="archive-link"><a href="nba-page6.html">← Newer</a> <span>Page 15 of 21</span> <a href="nba-page8.html">Older →</a></div>
+=======
+>>>>>>> 507229e5aaa0b0b9ea2f19c9cd9fe13146d43a28
 </main>
+<div class="archive-link">
+<a href="nba-page2.html">← View Previous Days</a>
+</div>
 <footer>
-<p>© 2025 BetLegend Picks. All rights reserved.</p>
-<p style="margin-top:10px;"><a href="index.html">Home</a> | <a href="betting-101.html">Betting 101</a> | <a href="contact.html">Contact</a></p>
+<p>© 2025 BetLegend. For entertainment purposes only.</p>
+<p><a href="index.html">Home</a> | <a href="howitworks.html">How It Works</a></p>
 </footer>
 </body>
 </html>
