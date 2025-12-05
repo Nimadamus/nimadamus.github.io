@@ -1,0 +1,45 @@
+name: Daily Handicapping Hub Update
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run at 8 AM, 12 PM, 4 PM, and 8 PM EST (13:00, 17:00, 21:00, 01:00 UTC)
+    - cron: '0 13 * * *'
+    - cron: '0 17 * * *'
+    - cron: '0 21 * * *'
+    - cron: '0 1 * * *'
+
+jobs:
+  update-handicapping-hub:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install requests python-dotenv
+
+      - name: Run Handicapping Hub Update
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          THE_ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: |
+          cd scripts/handicapping_hub
+          python main.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.email "bot@github.com"
+          git config --global user.name "GitHub Actions Bot"
+          git add handicapping-hub.html handicapping-hub-*.html
+          git commit -m "Auto-update handicapping hub $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

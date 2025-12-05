@@ -838,31 +838,7 @@ def generate_game_card(sport: str, game_data: Dict, prediction: Dict = None) -> 
 
                 {betting_intel_html}
 
-                <div class="betting-section">
-                    <div class="section-title">BETTING LINES</div>
-                    <div class="betting-grid">
-                        <div class="line-box">
-                            <div class="line-type">SPREAD</div>
-                            <div class="line-values">
-                                <span class="line-value">{away.get('abbreviation', '')} {spread_away}</span>
-                                <span class="line-value">{home.get('abbreviation', '')} {spread_home}</span>
-                            </div>
-                        </div>
-                        <div class="line-box">
-                            <div class="line-type">TOTAL</div>
-                            <div class="line-values">
-                                <span class="line-value">O/U {total}</span>
-                            </div>
-                        </div>
-                        <div class="line-box">
-                            <div class="line-type">MONEYLINE</div>
-                            <div class="line-values">
-                                <span class="line-value">{away.get('abbreviation', '')} {ml_away}</span>
-                                <span class="line-value">{home.get('abbreviation', '')} {ml_home}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {generate_betting_lines_section(away.get('abbreviation', ''), home.get('abbreviation', ''), spread_away, spread_home, total, ml_away, ml_home)}
             </div>
 '''
 
@@ -905,6 +881,54 @@ def generate_killport_section(prediction: Dict) -> str:
                     </div>
                 </div>
 '''
+
+
+def generate_betting_lines_section(away_abbrev: str, home_abbrev: str, spread_away: str, spread_home: str, total: str, ml_away: str, ml_home: str) -> str:
+    """Generate betting lines section - show 'No lines available' if all data is missing"""
+    # Check if we have any actual betting data
+    has_spread = spread_away != '-' or spread_home != '-'
+    has_total = total != '-'
+    has_ml = ml_away != '-' or ml_home != '-'
+
+    if not has_spread and not has_total and not has_ml:
+        # No betting data available - show cleaner message
+        return '''
+                <div class="betting-section">
+                    <div class="section-title">BETTING LINES</div>
+                    <div class="betting-grid">
+                        <div class="line-box no-lines-box" style="grid-column: span 3; text-align: center;">
+                            <span class="no-lines">Lines not yet available</span>
+                        </div>
+                    </div>
+                </div>'''
+
+    # Normal display with data
+    return f'''
+                <div class="betting-section">
+                    <div class="section-title">BETTING LINES</div>
+                    <div class="betting-grid">
+                        <div class="line-box">
+                            <div class="line-type">SPREAD</div>
+                            <div class="line-values">
+                                <span class="line-value">{away_abbrev} {spread_away}</span>
+                                <span class="line-value">{home_abbrev} {spread_home}</span>
+                            </div>
+                        </div>
+                        <div class="line-box">
+                            <div class="line-type">TOTAL</div>
+                            <div class="line-values">
+                                <span class="line-value">O/U {total}</span>
+                            </div>
+                        </div>
+                        <div class="line-box">
+                            <div class="line-type">MONEYLINE</div>
+                            <div class="line-values">
+                                <span class="line-value">{away_abbrev} {ml_away}</span>
+                                <span class="line-value">{home_abbrev} {ml_home}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>'''
 
 
 def generate_betting_intel_html(away_name: str, home_name: str, away_ats: Dict, home_ats: Dict,
