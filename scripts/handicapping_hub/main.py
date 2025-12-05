@@ -42,6 +42,8 @@ from handicapping_hub.football_fetcher import NFLFetcher, NCAAFFetcher, NCAABFet
 from handicapping_hub.base_fetcher import OddsClient
 from handicapping_hub.killport_model import KillportModel, generate_all_predictions
 from handicapping_hub.cache import cache
+from handicapping_hub.injury_scraper import InjuryScraper, COLLEGE_TEAM_IDS
+from handicapping_hub.featured_game_updater import update_featured_game
 
 # Import V2 modules
 try:
@@ -183,6 +185,22 @@ def fetch_advanced_data() -> Dict:
     except Exception as e:
         print(f"    [X] Natural Stat Trick failed: {e}")
 
+    # ESPN Injuries for all sports
+    try:
+        print("  Fetching ESPN injury data...")
+        injury_scraper = InjuryScraper()
+        injuries_by_sport = {}
+        for sport in ['NBA', 'NHL', 'NFL', 'MLB']:
+            sport_injuries = injury_scraper.get_all_injuries(sport)
+            if sport_injuries:
+                injuries_by_sport[sport] = sport_injuries
+        advanced_data['injuries'] = injuries_by_sport
+        total_teams = sum(len(teams) for teams in injuries_by_sport.values())
+        print(f"    [OK] Injuries loaded for {total_teams} teams across {len(injuries_by_sport)} sports")
+    except Exception as e:
+        print(f"    [X] Injury scraper failed: {e}")
+        advanced_data['injuries'] = {}
+
     return advanced_data
 
 
@@ -274,6 +292,37 @@ def fetch_all_sports_data() -> Dict:
                         nst = advanced_data.get('nhl_advanced', {})
                         game_data['away_nst'] = nst.get(away_name, {})
                         game_data['home_nst'] = nst.get(home_name, {})
+
+                    # Add injury data from ESPN
+                    sport_injuries = advanced_data.get('injuries', {}).get(sport, {})
+                    away_injuries_raw = sport_injuries.get(away_name, [])
+                    home_injuries_raw = sport_injuries.get(home_name, [])
+
+                    # If no exact match, try partial match on team name
+                    if not away_injuries_raw:
+                        away_lower = away_name.lower()
+                        for team_key, injuries in sport_injuries.items():
+                            if away_lower in team_key.lower() or team_key.lower() in away_lower:
+                                away_injuries_raw = injuries
+                                break
+                    if not home_injuries_raw:
+                        home_lower = home_name.lower()
+                        for team_key, injuries in sport_injuries.items():
+                            if home_lower in team_key.lower() or team_key.lower() in home_lower:
+                                home_injuries_raw = injuries
+                                break
+
+                    # Convert to expected format (name, position, injury, status)
+                    game_data['away_injuries'] = [
+                        {'name': inj.get('player', ''), 'position': inj.get('position', ''),
+                         'injury': inj.get('injury', ''), 'status': inj.get('status', '')}
+                        for inj in away_injuries_raw
+                    ]
+                    game_data['home_injuries'] = [
+                        {'name': inj.get('player', ''), 'position': inj.get('position', ''),
+                         'injury': inj.get('injury', ''), 'status': inj.get('status', '')}
+                        for inj in home_injuries_raw
+                    ]
 
             all_data[sport] = sport_data
 
@@ -2195,6 +2244,13 @@ def main():
 
         # Save files
         update_handicapping_hub(html_content)
+
+        # Update index.html featured game with real injuries
+        try:
+            update_featured_game(all_data)
+            print("  - index.html featured game (with injuries)")
+        except Exception as e:
+            print(f"  [WARN] Featured game update failed: {e}")
 
         # Summary
         print("\n" + "=" * 70)
