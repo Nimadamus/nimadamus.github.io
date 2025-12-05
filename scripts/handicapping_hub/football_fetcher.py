@@ -50,10 +50,13 @@ class NFLFetcher(BaseFetcher):
 
     def get_todays_games(self) -> List[Dict]:
         """Fetch today's/this week's NFL games"""
-        cache_key = f"nfl_games_{datetime.now().strftime('%Y-%m-%d')}"
+        today = datetime.now().strftime('%Y%m%d')
+        cache_key = f"nfl_games_{today}"
 
         def fetch():
-            data = self._safe_request(self.ESPN_SCOREBOARD)
+            # Include date parameter to get today's scheduled games
+            url = f"{self.ESPN_SCOREBOARD}?dates={today}"
+            data = self._safe_request(url)
             if not data:
                 return []
 
@@ -520,10 +523,13 @@ class NCAAFFetcher(NFLFetcher):
 
     def get_todays_games(self) -> List[Dict]:
         """Fetch today's NCAAF games (overrides NFLFetcher to use correct cache key)"""
-        cache_key = f"ncaaf_games_{datetime.now().strftime('%Y-%m-%d')}"
+        today = datetime.now().strftime('%Y%m%d')
+        cache_key = f"ncaaf_games_{today}"
 
         def fetch():
-            data = self._safe_request(self.ESPN_SCOREBOARD)
+            # Include date parameter to get today's scheduled games
+            url = f"{self.ESPN_SCOREBOARD}&dates={today}"
+            data = self._safe_request(url)
             if not data:
                 return []
 
@@ -649,10 +655,13 @@ class NCAABFetcher(BaseFetcher):
 
     def get_todays_games(self) -> List[Dict]:
         """Fetch today's NCAAB games"""
-        cache_key = f"ncaab_games_{datetime.now().strftime('%Y-%m-%d')}"
+        today = datetime.now().strftime('%Y%m%d')
+        cache_key = f"ncaab_games_{today}"
 
         def fetch():
-            data = self._safe_request(self.ESPN_SCOREBOARD)
+            # Include date parameter to get today's scheduled games
+            url = f"{self.ESPN_SCOREBOARD}&dates={today}"
+            data = self._safe_request(url)
             if not data:
                 return []
 

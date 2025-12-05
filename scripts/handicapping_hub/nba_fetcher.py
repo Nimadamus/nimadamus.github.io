@@ -43,10 +43,13 @@ class NBAFetcher(BaseFetcher):
 
     def get_todays_games(self) -> List[Dict]:
         """Fetch today's NBA games"""
-        cache_key = f"nba_games_{datetime.now().strftime('%Y-%m-%d')}"
+        today = datetime.now().strftime('%Y%m%d')
+        cache_key = f"nba_games_{today}"
 
         def fetch():
-            data = self._safe_request(self.ESPN_SCOREBOARD)
+            # Include date parameter to get today's scheduled games
+            url = f"{self.ESPN_SCOREBOARD}?dates={today}"
+            data = self._safe_request(url)
             if not data:
                 return []
 
