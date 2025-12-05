@@ -390,35 +390,61 @@ class NHLFetcher(BaseFetcher):
         cache_key = f"nhl_goalie_{team_id}"
 
         def fetch():
-            url = self.ESPN_ROSTER.format(team_id=team_id)
-            data = self._safe_request(url)
-            if not data:
+            try:
+                url = self.ESPN_ROSTER.format(team_id=team_id)
+                data = self._safe_request(url)
+                if not data or not isinstance(data, dict):
+                    return self._default_goalie_stats()
+
+                # Find goalies - with robust type checking throughout
+                goalies = []
+                athletes_list = data.get('athletes', [])
+                if not isinstance(athletes_list, list):
+                    return self._default_goalie_stats()
+
+                for athlete in athletes_list:
+                    # Skip if athlete is not a dict (could be a $ref string)
+                    if not isinstance(athlete, dict):
+                        continue
+                    # Handle position being either a dict or string
+                    position_data = athlete.get('position', {})
+                    if isinstance(position_data, dict):
+                        pos = position_data.get('abbreviation', '')
+                    elif isinstance(position_data, str):
+                        pos = 'G' if 'goal' in position_data.lower() else position_data
+                    else:
+                        pos = ''
+                    if pos == 'G':
+                        goalie_data = {
+                            'name': athlete.get('displayName', ''),
+                            'stats': {}
+                        }
+                        # Get individual stats if available - with robust type checking
+                        try:
+                            statistics = athlete.get('statistics', {})
+                            stats_ref = statistics.get('$ref', '') if isinstance(statistics, dict) else ''
+                            if stats_ref:
+                                goalie_stats = self._safe_request(stats_ref)
+                                if goalie_stats and isinstance(goalie_stats, dict):
+                                    splits = goalie_stats.get('splits', {})
+                                    categories = splits.get('categories', []) if isinstance(splits, dict) else []
+                                    for split in categories:
+                                        if isinstance(split, dict):
+                                            for stat in split.get('stats', []):
+                                                if isinstance(stat, dict):
+                                                    goalie_data['stats'][stat.get('name', '')] = stat.get('displayValue', '-')
+                        except Exception:
+                            pass  # Silently handle parsing errors, use defaults
+                        goalies.append(goalie_data)
+
+                if goalies:
+                    # Return first (assumed starter) goalie
+                    return goalies[0]
+
                 return self._default_goalie_stats()
-
-            # Find goalies
-            goalies = []
-            for athlete in data.get('athletes', []):
-                pos = athlete.get('position', {}).get('abbreviation', '')
-                if pos == 'G':
-                    goalie_data = {
-                        'name': athlete.get('displayName', ''),
-                        'stats': {}
-                    }
-                    # Get individual stats if available
-                    stats_ref = athlete.get('statistics', {}).get('$ref', '')
-                    if stats_ref:
-                        goalie_stats = self._safe_request(stats_ref)
-                        if goalie_stats:
-                            for split in goalie_stats.get('splits', {}).get('categories', []):
-                                for stat in split.get('stats', []):
-                                    goalie_data['stats'][stat.get('name', '')] = stat.get('displayValue', '-')
-                    goalies.append(goalie_data)
-
-            if goalies:
-                # Return first (assumed starter) goalie
-                return goalies[0]
-
-            return self._default_goalie_stats()
+            except Exception:
+                # Any parsing error returns safe defaults
+                return self._default_goalie_stats()
 
         return self.cache.get_or_fetch(cache_key, fetch, max_age_hours=12)
 

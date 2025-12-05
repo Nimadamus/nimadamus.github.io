@@ -45,6 +45,10 @@ from handicapping_hub.cache import cache
 from handicapping_hub.injury_scraper import InjuryScraper, COLLEGE_TEAM_IDS
 from handicapping_hub.featured_game_updater import update_featured_game
 
+# Import data reliability modules
+from handicapping_hub.data_validator import validator, format_stat, validate_and_fill
+from handicapping_hub.espn_comprehensive import espn_fetcher, get_complete_team_stats, get_standings
+
 # Import V2 modules
 try:
     from handicapping_hub.killport_v2 import KillportModelV2
@@ -323,6 +327,30 @@ def fetch_all_sports_data() -> Dict:
                          'injury': inj.get('injury', ''), 'status': inj.get('status', '')}
                         for inj in home_injuries_raw
                     ]
+
+                    # ENRICHMENT: Fill missing stats with comprehensive ESPN data
+                    away_id = away.get('id')
+                    home_id = home.get('id')
+                    if away_id:
+                        espn_away_stats = get_complete_team_stats(sport, away_id, away_name)
+                        # Merge ESPN stats into existing stats (don't overwrite non-empty values)
+                        for key, val in espn_away_stats.items():
+                            existing = game_data.get('away_stats', {}).get(key)
+                            if existing in (None, '', '-', 'N/A', 0, 0.0):
+                                if 'away_stats' not in game_data:
+                                    game_data['away_stats'] = {}
+                                game_data['away_stats'][key] = val
+                    if home_id:
+                        espn_home_stats = get_complete_team_stats(sport, home_id, home_name)
+                        for key, val in espn_home_stats.items():
+                            existing = game_data.get('home_stats', {}).get(key)
+                            if existing in (None, '', '-', 'N/A', 0, 0.0):
+                                if 'home_stats' not in game_data:
+                                    game_data['home_stats'] = {}
+                                game_data['home_stats'][key] = val
+
+                    # VALIDATION: Ensure all required fields are populated
+                    game_data = validate_and_fill(sport, game_data)
 
             all_data[sport] = sport_data
 
