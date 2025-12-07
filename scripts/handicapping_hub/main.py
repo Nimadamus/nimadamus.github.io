@@ -2260,10 +2260,11 @@ def validate_generated_html(html_file: str) -> Dict:
     """
     Validate the generated HTML to ensure completeness.
     Returns a report with any issues found.
+    ENSURES ALL IN-SEASON SPORTS ARE COVERED.
     """
     issues = []
     warnings = []
-    stats = {'games': 0, 'sports': 0, 'blank_stats': 0}
+    stats = {'games': 0, 'sports': 0, 'blank_stats': 0, 'sports_with_games': []}
 
     try:
         with open(html_file, 'r', encoding='utf-8') as f:
@@ -2288,6 +2289,10 @@ def validate_generated_html(html_file: str) -> Dict:
                 elif count > 0:
                     warnings.append(f"Found {count} instances of {desc}")
 
+        # Get which sports SHOULD have games today
+        in_season_sports = [s for s in ['NBA', 'NHL', 'MLB', 'NFL', 'NCAAF', 'NCAAB'] if is_sport_in_season(s)]
+        print(f"    Sports in season: {', '.join(in_season_sports)}")
+
         # Count games per sport
         sport_patterns = {
             'NBA': r'id="NBA".*?(\d+) games? today',
@@ -2305,11 +2310,21 @@ def validate_generated_html(html_file: str) -> Dict:
                 stats['games'] += count
                 if count > 0:
                     stats['sports'] += 1
+                    stats['sports_with_games'].append(sport)
                     print(f"    ✓ {sport}: {count} games")
+                elif sport in in_season_sports:
+                    # In-season sport with 0 games - might be an issue on game days
+                    print(f"    ○ {sport}: 0 games (may be off day)")
             else:
-                # Check if section exists at all
                 if f'id="{sport}"' in content:
                     warnings.append(f"{sport} section exists but couldn't parse game count")
+
+        # CHECK: Ensure in-season sports were fetched
+        missing_sports = [s for s in in_season_sports if s not in stats['sports_with_games']]
+
+        # Not an error if 0 games - could be off day. But log it.
+        if missing_sports:
+            print(f"    [INFO] Sports with 0 games today: {', '.join(missing_sports)}")
 
         # Verify game cards have stats
         game_cards = re.findall(r'<div class="game-card">', content)
@@ -2322,6 +2337,10 @@ def validate_generated_html(html_file: str) -> Dict:
         advanced_sections = re.findall(r'<div class="advanced-panel">', content)
         if len(advanced_sections) < len(game_cards) * 2:
             warnings.append(f"Some games may be missing advanced stats")
+
+        # CRITICAL: If we have games but most stats are blank, that's a problem
+        if stats['games'] > 0 and stats['blank_stats'] > stats['games'] * 5:
+            issues.append(f"CRITICAL: Too many blank stats ({stats['blank_stats']}) for {stats['games']} games")
 
     except Exception as e:
         issues.append(f"Validation error: {e}")

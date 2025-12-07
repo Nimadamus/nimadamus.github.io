@@ -36,14 +36,13 @@ jobs:
 
       - name: Validate Generated Page
         run: |
-          echo "## Handicapping Hub Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "## 🏈 Handicapping Hub Validation Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Date:** $(date +'%Y-%m-%d %H:%M %Z')" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           # Check for critical issues
           BLANK_COUNT=$(grep -c '>-</span>\|>-%</span>\|>N/A</span>' handicapping-hub.html || true)
-          GAME_COUNT=$(grep -oP '\d+ games? today' handicapping-hub.html | head -6 || true)
 
           if [ "$BLANK_COUNT" -gt 20 ]; then
             echo "❌ **CRITICAL:** Found $BLANK_COUNT blank/N/A values" >> $GITHUB_STEP_SUMMARY
@@ -55,10 +54,34 @@ jobs:
           fi
 
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Games by Sport" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          grep -oP 'id="(NBA|NHL|NFL|MLB|NCAAB|NCAAF)".*?\d+ games? today' handicapping-hub.html | sed 's/.*id="\([^"]*\)".*\([0-9]* games\? today\)/\1: \2/' >> $GITHUB_STEP_SUMMARY || echo "Could not parse game counts" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Games by Sport (ALL SPORTS)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Sport | Games | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|--------|" >> $GITHUB_STEP_SUMMARY
+
+          TOTAL_GAMES=0
+          SPORTS_WITH_GAMES=0
+
+          for SPORT in NBA NHL NFL NCAAB NCAAF MLB; do
+            COUNT=$(grep -oP "id=\"$SPORT\"[^>]*>.*?(\d+) games? today" handicapping-hub.html | grep -oP '\d+(?= games?)' | head -1 || echo "0")
+            if [ -z "$COUNT" ]; then COUNT=0; fi
+            TOTAL_GAMES=$((TOTAL_GAMES + COUNT))
+            if [ "$COUNT" -gt 0 ]; then
+              SPORTS_WITH_GAMES=$((SPORTS_WITH_GAMES + 1))
+              echo "| $SPORT | $COUNT | ✅ |" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "| $SPORT | 0 | ○ (off day) |" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Total:** $TOTAL_GAMES games across $SPORTS_WITH_GAMES sports" >> $GITHUB_STEP_SUMMARY
+
+          # Warn if very few games (might indicate fetch failure)
+          if [ "$TOTAL_GAMES" -lt 5 ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **Low game count** - verify this is correct for today's schedule" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Commit and Push
         run: |
