@@ -34,6 +34,32 @@ jobs:
           cd scripts/handicapping_hub
           python main.py
 
+      - name: Validate Generated Page
+        run: |
+          echo "## Handicapping Hub Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date +'%Y-%m-%d %H:%M %Z')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Check for critical issues
+          BLANK_COUNT=$(grep -c '>-</span>\|>-%</span>\|>N/A</span>' handicapping-hub.html || true)
+          GAME_COUNT=$(grep -oP '\d+ games? today' handicapping-hub.html | head -6 || true)
+
+          if [ "$BLANK_COUNT" -gt 20 ]; then
+            echo "❌ **CRITICAL:** Found $BLANK_COUNT blank/N/A values" >> $GITHUB_STEP_SUMMARY
+            echo "::error::Critical: Too many blank values ($BLANK_COUNT)"
+          elif [ "$BLANK_COUNT" -gt 0 ]; then
+            echo "⚠️ **Warning:** Found $BLANK_COUNT minor blank values" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ **All stats populated** - No blank values found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Games by Sport" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          grep -oP 'id="(NBA|NHL|NFL|MLB|NCAAB|NCAAF)".*?\d+ games? today' handicapping-hub.html | sed 's/.*id="\([^"]*\)".*\([0-9]* games\? today\)/\1: \2/' >> $GITHUB_STEP_SUMMARY || echo "Could not parse game counts" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
       - name: Commit and Push
         run: |
           git config --global user.email "bot@github.com"
@@ -43,3 +69,12 @@ jobs:
           git push
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Final Status Check
+        run: |
+          BLANK_COUNT=$(grep -c '>-</span>\|>-%</span>\|>N/A</span>' handicapping-hub.html || true)
+          if [ "$BLANK_COUNT" -gt 50 ]; then
+            echo "::error::Page has too many incomplete stats ($BLANK_COUNT blank values)"
+            exit 1
+          fi
+          echo "✓ Handicapping Hub updated successfully with minimal/no blank values"

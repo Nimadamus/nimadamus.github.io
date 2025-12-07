@@ -2256,6 +2256,84 @@ def update_handicapping_hub(html_content: str):
     print(f"[SAVED] handicapping-hub-{DATE_STR}.html (archive)")
 
 
+def validate_generated_html(html_file: str) -> Dict:
+    """
+    Validate the generated HTML to ensure completeness.
+    Returns a report with any issues found.
+    """
+    issues = []
+    warnings = []
+    stats = {'games': 0, 'sports': 0, 'blank_stats': 0}
+
+    try:
+        with open(html_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # Check for blank/N/A values that shouldn't exist
+        bad_patterns = [
+            (r'>-</span>', 'Blank dash value'),
+            (r'>-%</span>', 'Dash-percent value'),
+            (r'>N/A</span>', 'N/A value'),
+            (r'>NA</span>', 'NA value'),
+            (r'>\s*</span>', 'Empty span'),
+        ]
+
+        for pattern, desc in bad_patterns:
+            matches = re.findall(pattern, content)
+            if matches:
+                count = len(matches)
+                stats['blank_stats'] += count
+                if count > 10:
+                    issues.append(f"CRITICAL: Found {count} instances of {desc}")
+                elif count > 0:
+                    warnings.append(f"Found {count} instances of {desc}")
+
+        # Count games per sport
+        sport_patterns = {
+            'NBA': r'id="NBA".*?(\d+) games? today',
+            'NHL': r'id="NHL".*?(\d+) games? today',
+            'NFL': r'id="NFL".*?(\d+) games? today',
+            'NCAAB': r'id="NCAAB".*?(\d+) games? today',
+            'NCAAF': r'id="NCAAF".*?(\d+) games? today',
+            'MLB': r'id="MLB".*?(\d+) games? today',
+        }
+
+        for sport, pattern in sport_patterns.items():
+            match = re.search(pattern, content, re.DOTALL)
+            if match:
+                count = int(match.group(1))
+                stats['games'] += count
+                if count > 0:
+                    stats['sports'] += 1
+                    print(f"    ✓ {sport}: {count} games")
+            else:
+                # Check if section exists at all
+                if f'id="{sport}"' in content:
+                    warnings.append(f"{sport} section exists but couldn't parse game count")
+
+        # Verify game cards have stats
+        game_cards = re.findall(r'<div class="game-card">', content)
+        stats_panels = re.findall(r'<div class="stats-panel', content)
+
+        if len(game_cards) > 0 and len(stats_panels) < len(game_cards) * 2:
+            warnings.append(f"Some games may be missing stats panels ({len(stats_panels)} panels for {len(game_cards)} games)")
+
+        # Check for advanced stats sections
+        advanced_sections = re.findall(r'<div class="advanced-panel">', content)
+        if len(advanced_sections) < len(game_cards) * 2:
+            warnings.append(f"Some games may be missing advanced stats")
+
+    except Exception as e:
+        issues.append(f"Validation error: {e}")
+
+    return {
+        'issues': issues,
+        'warnings': warnings,
+        'stats': stats,
+        'is_valid': len(issues) == 0
+    }
+
+
 def main():
     """Main entry point"""
     print("\n" + "=" * 70)
@@ -2284,6 +2362,30 @@ def main():
 
         # Save files
         update_handicapping_hub(html_content)
+
+        # VALIDATION: Check the generated file for completeness
+        print("\n[VALIDATION]")
+        print("  Checking generated page for completeness...")
+        hub_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "handicapping-hub.html")
+        validation = validate_generated_html(hub_file)
+
+        if validation['warnings']:
+            print("\n  ⚠️  Warnings:")
+            for w in validation['warnings']:
+                print(f"      - {w}")
+
+        if validation['issues']:
+            print("\n  ❌ Issues Found:")
+            for issue in validation['issues']:
+                print(f"      - {issue}")
+            print("\n  [!] Page has issues but was still generated")
+        else:
+            print(f"\n  ✓ Validation PASSED")
+            print(f"    - {validation['stats']['games']} total games across {validation['stats']['sports']} sports")
+            if validation['stats']['blank_stats'] == 0:
+                print(f"    - No blank or N/A values found")
+            else:
+                print(f"    - {validation['stats']['blank_stats']} minor blank values (acceptable)")
 
         # Update index.html featured game with real injuries
         try:
