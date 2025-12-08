@@ -38,6 +38,7 @@
 .dropdown-content a{color:var(--neon-cyan);padding:14px 20px;display:block;text-decoration:none}
 .dropdown-content a:hover{background:rgba(0,224,255,0.2);color:#fff}
 .dropdown:hover .dropdown-content{display:block}
+.dropdown-content.show{display:block}
 body{background:var(--bg-primary);color:var(--text-primary);font-family:system-ui,sans-serif;line-height:1.7}
 .hero{padding:160px 24px 60px;text-align:center}
 .hero-badge{display:inline-block;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2);padding:8px 16px;border-radius:50px;font-size:12px;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
@@ -78,10 +79,43 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .slate-note h3{color:var(--accent-gold);font-size:1rem;margin-bottom:8px}
 .slate-note p{font-size:0.85rem;color:var(--text-secondary)}
 .venue-badge{background:linear-gradient(135deg,rgba(139,69,19,0.3),rgba(160,82,45,0.2));color:#daa520;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600}
-@media(max-width:768px){.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}.deep-analysis{padding:15px}}
+@media(max-width:768px){
+.hero{padding:140px 20px 40px}
+.game-card{padding:24px}
+.team-logo{width:48px;height:48px}
+.stat-row{flex-direction:column}
+.deep-analysis{padding:15px}
+.nav-inner{padding:12px 10px 12px 10px;flex-wrap:wrap;justify-content:flex-start}
+.logo{position:relative;top:0;left:0}
+.logo a{font-size:1.5rem}
+.nav-links{width:100%;justify-content:flex-start;gap:8px;margin-top:10px}
+.nav-links>a,.dropbtn{font-size:12px;padding:8px 10px;letter-spacing:0.5px}
+.dropdown-content{position:fixed;top:auto;left:10px;right:10px;width:auto;max-height:60vh;overflow-y:auto;z-index:2000}
+.dropdown-content a{padding:12px 16px;font-size:14px;border-bottom:1px solid rgba(0,224,255,0.1)}
+}
 </style>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var dropbtns=document.querySelectorAll('.dropbtn');
+  dropbtns.forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var content=this.nextElementSibling;
+      var wasOpen=content.classList.contains('show');
+      document.querySelectorAll('.dropdown-content').forEach(function(d){d.classList.remove('show')});
+      if(!wasOpen)content.classList.add('show');
+    });
+  });
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.dropdown')){
+      document.querySelectorAll('.dropdown-content').forEach(function(d){d.classList.remove('show')});
+    }
+  });
+});
+</script>
 </head>
 <body>
 <nav class="nav-container">
