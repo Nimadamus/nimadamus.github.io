@@ -684,12 +684,73 @@ Include related terms naturally:
 - Wrap in news-post div with gold border styling
 
 ### Featured Game of the Day
-- Add to **featured-game-of-the-day-page10.html** (current page)
+- Add to **featured-game-of-the-day-page15.html** (current page - December 8, 2025)
 - **IMPORTANT**: Every time you add a new Featured Game of the Day post, you MUST:
   1. Create a NEW page (increment the page number)
   2. Update the OLD page's pagination to link to the new page
-  3. Update ALL site navigation links to point to the new page
+  3. **⚠️ CRITICAL: Update ALL site navigation links to point to the new page (see 1D below)**
   4. The new page becomes the "newest" page in the pagination
+
+---
+
+## 1D. MANDATORY DAILY FEATURED GAME LINK UPDATE
+
+### ⚠️ CRITICAL: EVERY PAGE ON THE SITE MUST LINK TO THE CURRENT FEATURED GAME ⚠️
+
+**EFFECTIVE DECEMBER 8, 2025 - MANDATORY DAILY TASK**
+
+When a new Featured Game of the Day is posted, ALL links across the ENTIRE site must be updated to point to the new page. This includes:
+- Every sport page (nba.html, nfl.html, nhl.html, ncaab.html, etc.)
+- Every archive page (nba-page2.html, nfl-page3.html, etc.)
+- Every navigation dropdown on every page
+- Every featured game archive page itself
+
+### WHY THIS MATTERS
+- Broken or outdated links destroy user experience
+- Users clicking "Featured Game" should ALWAYS see TODAY's featured game
+- Old links (e.g., page12 when page15 is current) make the site look unmaintained
+- **This happened December 8, 2025: Links pointed to Detroit vs Dallas (Dec 4) instead of Eagles vs Chargers (Dec 8)**
+
+### DAILY UPDATE PROCESS
+
+**Every time a new Featured Game of the Day is created:**
+
+1. **Note the new page number** (e.g., `featured-game-of-the-day-page16.html`)
+
+2. **Run a batch update script** to replace ALL old links:
+   ```python
+   import os, re
+   REPO_PATH = r'C:\Users\Nima\nimadamus.github.io'
+   NEW_PAGE = 'featured-game-of-the-day-page16.html'  # Update this number
+
+   for root, dirs, files in os.walk(REPO_PATH):
+       dirs[:] = [d for d in dirs if d != '.git']  # Skip .git
+       for f in files:
+           if f.endswith('.html'):
+               path = os.path.join(root, f)
+               with open(path, 'r', encoding='utf-8', errors='ignore') as file:
+                   content = file.read()
+               original = content
+               content = re.sub(r'featured-game-of-the-day-page\d+\.html', NEW_PAGE, content)
+               content = re.sub(r'featured-game-of-the-day\.html', NEW_PAGE, content)
+               if content != original:
+                   with open(path, 'w', encoding='utf-8') as file:
+                       file.write(content)
+                   print(f'Fixed: {f}')
+   ```
+
+3. **Commit and push** the changes immediately
+
+4. **Verify** by clicking the Featured Game link on the live site
+
+### AUTOMATION REMINDER
+
+This update MUST happen EVERY TIME a new Featured Game is posted. Add this to the end-of-day checklist:
+
+- [ ] New Featured Game created
+- [ ] ALL site links updated to point to new page
+- [ ] Changes committed and pushed
+- [ ] Live site verified
 
 ### Pagination Update Process (For ALL Paginated Sections)
 When creating a new page for any section (blog, featured game, etc.):
