@@ -118,16 +118,26 @@ class ESPNScraper:
                         away_team = team_data
 
                 if home_team and away_team:
+                    # Get game status
+                    status_type = event.get('status', {}).get('type', {})
+                    status_desc = status_type.get('description', '')
+                    status_completed = status_type.get('completed', False)
+                    status_state = status_type.get('state', '')
+
+                    # Skip completed games - only show scheduled/in-progress
+                    if status_completed or status_state == 'post' or status_desc.lower() in ['final', 'final/ot', 'final/2ot', 'final/so', 'postponed', 'canceled', 'cancelled']:
+                        continue
+
                     games.append({
                         'id': event.get('id'),
                         'name': event.get('name'),
                         'date': event.get('date'),
-                        'status': event.get('status', {}).get('type', {}).get('description', ''),
+                        'status': status_desc,
                         'home': home_team,
                         'away': away_team,
                     })
 
-            print(f"  {sport}: Found {len(games)} games")
+            print(f"  {sport}: Found {len(games)} upcoming games")
             return games
 
         except Exception as e:
