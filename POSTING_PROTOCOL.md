@@ -333,21 +333,77 @@ Every game analysis MUST include:
 
 ---
 
-## 1C. SPORTS PAGES VS BLOG POSTS - CRITICAL DISTINCTION
+## 1C. CONTENT TYPES - HANDICAPPING HUB VS SPORTS PAGES VS BLOG
 
-### ⚠️ SPORTS PAGES ARE NOT FOR PICKS - ANALYSIS ONLY ⚠️
+### ⚠️ UNDERSTAND THE DIFFERENCE BETWEEN PAGE TYPES ⚠️
 
-**SPORTS PAGES (nba.html, nhl.html, nfl.html, ncaab.html, ncaaf.html, mlb.html, soccer.html):**
+---
 
-These pages are for ANALYSIS ONLY. They contain:
-- ✅ Stats and advanced stats (with specific numbers and rankings)
-- ✅ Betting trends (ATS records, O/U history, home/road splits)
-- ✅ Matchup analysis (efficiency gaps, pace analysis, key numbers)
-- ✅ Human-sounding commentary and insights
-- ✅ Injury impact analysis
-- ✅ Historical context
+### HANDICAPPING HUB (handicapping-hub.html)
+**Purpose:** Stats dashboard for quick reference and data lookup
 
-**SPORTS PAGES DO NOT CONTAIN:**
+The Handicapping Hub is a DATA-FOCUSED page containing:
+- ✅ Power ratings (calculated from win %, point differential, efficiency)
+- ✅ Team statistics (offensive and defensive stats side by side)
+- ✅ Betting lines (spread, moneyline, totals)
+- ✅ Injury reports (names and status)
+- ✅ Quick comparison data
+
+**The Hub is NOT for:**
+- ❌ Written analysis or commentary
+- ❌ Picks or recommendations
+- ❌ Long-form content
+
+---
+
+### SPORTS PAGES (nba.html, nhl.html, nfl.html, ncaab.html, ncaaf.html, mlb.html, soccer.html)
+**Purpose:** Human-written article-style analysis for each game
+
+**SPORTS PAGES MUST HAVE FOR EACH GAME:**
+- ✅ **Article-style writeup** (3-5 paragraphs per game, conversational tone)
+- ✅ **Human-sounding commentary** - Write like a real sports analyst, not a robot
+- ✅ **Narrative and storytelling** - What's the storyline of this matchup?
+- ✅ **Key matchup breakdown** - What to watch for
+- ✅ **Injury impact analysis** - How injuries affect the game
+- ✅ **Betting angles** - ATS trends, O/U tendencies, sharp money indicators
+- ✅ **Stats WITH context** - Don't just list numbers, explain why they matter
+- ✅ **Historical context** - Relevant head-to-head history
+
+**EXAMPLE SPORTS PAGE ARTICLE FORMAT:**
+```
+### [Team] @ [Team] - [Time] ET
+
+The [Away Team] head into [City] riding a [X]-game winning streak,
+but they'll face a tough test against a [Home Team] squad that's
+been dominant at home this season.
+
+**The Matchup:** [Away Team] ranks [X]th in offensive efficiency (115.2 ORtg),
+but [Home Team]'s defense has been suffocating opponents, holding them to
+just [X] points per game at home. This is a classic strength vs. strength
+matchup that could go either way.
+
+**Injury Impact:** [Player] being out hurts the [Team]'s spacing, as they'll
+miss his 18.5 PPG and floor-stretching ability. Look for [Other Player] to
+see increased usage.
+
+**The Angle:** [Team] is 7-2 ATS as home favorites this season, and the sharp
+money has been hammering them early. The line moved from -3 to -5 since open.
+
+**The Verdict:** This feels like a grind-it-out game that stays Under the total.
+The pace will be slow, and both defenses are clicking.
+```
+
+**SPORTS PAGES ARE NOT:**
+- ❌ Just a list of stats (that's what the Handicapping Hub is for)
+- ❌ Robotic or template-sounding content
+- ❌ Generic analysis that could apply to any game
+
+---
+
+### BLOG POSTS (blog-pageX.html)
+**Purpose:** Official picks with specific recommendations
+
+Blog posts contain:
 - ❌ Picks or predictions
 - ❌ "Take [Team]" language
 - ❌ "I'm betting..." or "My pick is..."
