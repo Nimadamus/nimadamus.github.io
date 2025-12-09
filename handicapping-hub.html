@@ -11,16 +11,16 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #0a0a0a;
+            background: #f5f5f5;
             font-family: 'Inter', -apple-system, sans-serif;
-            color: #e0e0e0;
+            color: #1a1a1a;
             min-height: 100vh;
         }
 
         .header {
-            background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+            background: linear-gradient(180deg, #1a365d 0%, #0d1b30 100%);
             padding: 20px 30px;
-            border-bottom: 1px solid #222;
+            border-bottom: 3px solid #fd5000;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -28,21 +28,21 @@
         .header-inner { max-width: 1600px; margin: 0 auto; }
         .header h1 { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 5px; }
         .header h1 span { color: #fd5000; }
-        .timestamp { color: #666; font-size: 13px; margin-bottom: 15px; }
+        .timestamp { color: #a0aec0; font-size: 13px; margin-bottom: 15px; }
 
         .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
         .tab {
-            background: #1a1a1a;
-            border: 1px solid #333;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             padding: 10px 24px;
             border-radius: 6px;
-            color: #888;
+            color: #fff;
             cursor: pointer;
             font-weight: 600;
             font-size: 14px;
             transition: all 0.2s;
         }
-        .tab:hover { background: #252525; color: #fff; border-color: #444; }
+        .tab:hover { background: rgba(255,255,255,0.2); }
         .tab.active { background: #fd5000; border-color: #fd5000; color: #fff; }
 
         .container { max-width: 1600px; margin: 0 auto; padding: 30px; }
@@ -53,26 +53,27 @@
             gap: 15px;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #222;
+            border-bottom: 2px solid #ddd;
         }
-        .section-header h2 { font-size: 22px; font-weight: 700; color: #fff; }
+        .section-header h2 { font-size: 22px; font-weight: 700; color: #1a365d; }
         .game-count { color: #666; font-size: 14px; }
 
         .game-card {
-            background: #111;
-            border: 1px solid #222;
+            background: #fff;
+            border: 1px solid #ddd;
             border-radius: 8px;
             margin-bottom: 20px;
             overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .game-header {
-            background: linear-gradient(90deg, #1a1a1a, #111);
+            background: linear-gradient(90deg, #1a365d, #2d4a7c);
             padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #222;
+            border-bottom: 2px solid #fd5000;
         }
         .game-time {
             color: #fd5000;
@@ -91,15 +92,15 @@
             font-size: 13px;
         }
         .stats-table th {
-            background: #0d0d0d;
-            color: #888;
+            background: #e8eef5;
+            color: #1a365d;
             font-size: 10px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             padding: 10px 8px;
             text-align: center;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 2px solid #ddd;
         }
         .stats-table th.team-col {
             text-align: left;
@@ -107,23 +108,26 @@
             min-width: 100px;
         }
         .stats-table th.section-divider {
-            color: #333;
+            color: #ccc;
             padding: 0 2px;
             width: 10px;
+            background: #f0f0f0;
         }
         .stats-table td {
             padding: 10px 8px;
             text-align: center;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid #eee;
+            color: #333;
         }
         .stats-table td.team-col {
             text-align: left;
             padding-left: 15px;
         }
         .stats-table td.section-divider {
-            color: #333;
+            color: #ccc;
             padding: 0;
             width: 10px;
+            background: #fafafa;
         }
 
         .team-logo {
@@ -135,22 +139,22 @@
         }
         .abbr {
             font-weight: 700;
-            color: #fff;
+            color: #1a365d;
             font-size: 14px;
         }
 
-        .away-row { background: #0d0d0d; }
-        .home-row { background: #111; }
-        .away-row:hover, .home-row:hover { background: #151515; }
+        .away-row { background: #fff; }
+        .home-row { background: #f8fafc; }
+        .away-row:hover, .home-row:hover { background: #f0f4f8; }
 
-        .rec { color: #888; font-size: 12px; }
+        .rec { color: #666; font-size: 12px; font-weight: 600; }
         .pwr { font-weight: 700; font-size: 14px; }
-        .pwr.elite { color: #22c55e; }
-        .pwr.good { color: #3b82f6; }
-        .pwr.avg { color: #eab308; }
-        .pwr.poor { color: #ef4444; }
+        .pwr.elite { color: #059669; }
+        .pwr.good { color: #2563eb; }
+        .pwr.avg { color: #ca8a04; }
+        .pwr.poor { color: #dc2626; }
 
-        .spread, .ml { font-weight: 600; color: #fff; }
+        .spread, .ml { font-weight: 600; color: #1a1a1a; }
         .total {
             font-weight: 700;
             color: #fd5000;
@@ -158,25 +162,41 @@
             vertical-align: middle;
         }
 
+        .info-section {
+            border-top: 1px solid #eee;
+        }
         .injury-bar {
-            background: #0a0a0a;
-            padding: 10px 15px;
+            background: #fff8f0;
+            padding: 8px 15px;
             font-size: 11px;
             color: #666;
-            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #f0e8e0;
         }
-        .inj-label { color: #ef4444; font-weight: 600; margin-right: 8px; }
-        .inj-team { color: #888; font-weight: 600; margin-left: 5px; }
-        .inj-sep { color: #333; margin: 0 10px; }
+        .inj-label { color: #dc2626; font-weight: 700; margin-right: 8px; }
+        .inj-team { color: #1a365d; font-weight: 600; margin-left: 5px; }
+        .inj-sep { color: #ccc; margin: 0 10px; }
+
+        .trends-bar {
+            background: #f0f5fa;
+            padding: 8px 15px;
+            font-size: 11px;
+            color: #333;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .trend-item { margin-right: 5px; }
+        .trend-item b { color: #1a365d; }
+        .trend-sep { color: #ccc; margin: 0 5px; }
 
         .no-games {
             text-align: center;
             padding: 60px 20px;
             color: #666;
             font-size: 16px;
-            background: #111;
+            background: #fff;
             border-radius: 8px;
-            border: 1px solid #222;
+            border: 1px solid #ddd;
         }
 
         .back-link {
@@ -188,8 +208,9 @@
             text-decoration: none;
             font-size: 14px;
             padding: 10px 20px;
-            border: 1px solid #333;
+            border: 1px solid #ddd;
             border-radius: 6px;
+            background: #fff;
             transition: all 0.2s;
         }
         .back-link a:hover {
@@ -214,7 +235,7 @@
     <header class="header">
         <div class="header-inner">
             <h1>HANDICAPPING <span>HUB</span></h1>
-            <div class="timestamp">Updated: 06:16 PM ET • December 08, 2025 • Advanced Stats & Power Ratings</div>
+            <div class="timestamp">Updated: 06:30 PM ET • December 08, 2025 • Advanced Stats & Power Ratings</div>
             <div class="tabs">
                 <button class="tab active" onclick="showTab('NBA')">NBA</button>
 <button class="tab " onclick="showTab('NFL')">NFL</button>
@@ -245,9 +266,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -260,39 +281,52 @@
                                     <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/sac.png" alt="SAC" class="team-logo" onerror="this.style.display='none'">
                                     <span class="abbr">SAC</span>
                                 </td>
-                                <td class="rec">6-17</td>
+                                <td class="rec">6-18</td>
                                 <td class="pwr poor">20</td>
                                 <td class="section-divider">|</td>
-                                <td>111.7</td><td>46.6%</td><td>35.5%</td><td>39.6</td><td>25.7</td>
+                                <td>111.7</td><td>46.6%</td><td>35.5%</td><td>75.4%</td><td>39.6</td><td>25.7</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>9.0</td><td>3.8</td><td>13.2</td>
+                                <td>122.3</td><td>9.0</td><td>3.8</td><td>13.2</td><td>30.4</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">+6.5</td>
-                                <td class="ml">+900</td>
-                                <td class="total" rowspan="2">228.5</td>
+                                <td class="spread">+8.5</td>
+                                <td class="ml">N/A</td>
+                                <td class="total" rowspan="2">N/A</td>
                             </tr>
                             <tr class="home-row">
                                 <td class="team-col">
                                     <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ind.png" alt="IND" class="team-logo" onerror="this.style.display='none'">
                                     <span class="abbr">IND</span>
                                 </td>
-                                <td class="rec">5-18</td>
-                                <td class="pwr poor">22</td>
+                                <td class="rec">6-18</td>
+                                <td class="pwr poor">25</td>
                                 <td class="section-divider">|</td>
-                                <td>111.0</td><td>43.4%</td><td>32.9%</td><td>44.1</td><td>23.4</td>
+                                <td>111.0</td><td>43.4%</td><td>32.9%</td><td>76.8%</td><td>44.1</td><td>23.4</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>7.1</td><td>5.5</td><td>13.6</td>
+                                <td>118.8</td><td>7.1</td><td>5.5</td><td>13.6</td><td>32.1</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">-6.5</td>
-                                <td class="ml">-2500</td>
+                                <td class="spread">-8.5</td>
+                                <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">SAC:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">IND:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">SAC:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">IND:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> 1-0</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS SAC:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS IND:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -308,9 +342,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -326,13 +360,13 @@
                                 <td class="rec">13-10</td>
                                 <td class="pwr good">57</td>
                                 <td class="section-divider">|</td>
-                                <td>116.2</td><td>46.8%</td><td>36.8%</td><td>42.5</td><td>25.4</td>
+                                <td>116.2</td><td>46.8%</td><td>36.8%</td><td>79.4%</td><td>42.5</td><td>25.4</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>10.9</td><td>4.1</td><td>15.2</td>
+                                <td>113.8</td><td>10.9</td><td>4.1</td><td>15.2</td><td>29.7</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">+4.5</td>
-                                <td class="ml">+164</td>
-                                <td class="total" rowspan="2">229.5</td>
+                                <td class="spread">+6.5</td>
+                                <td class="ml">+265</td>
+                                <td class="total" rowspan="2">226.5</td>
                             </tr>
                             <tr class="home-row">
                                 <td class="team-col">
@@ -342,20 +376,33 @@
                                 <td class="rec">15-8</td>
                                 <td class="pwr elite">66</td>
                                 <td class="section-divider">|</td>
-                                <td>120.3</td><td>48.6%</td><td>38.9%</td><td>43.2</td><td>26.5</td>
+                                <td>120.3</td><td>48.6%</td><td>38.9%</td><td>77.9%</td><td>43.2</td><td>26.5</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>8.3</td><td>5.1</td><td>14.4</td>
+                                <td>115.0</td><td>8.3</td><td>5.1</td><td>14.4</td><td>32.4</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">-4.5</td>
-                                <td class="ml">-215</td>
+                                <td class="spread">-6.5</td>
+                                <td class="ml">-370</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">PHX:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">MIN:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">PHX:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">MIN:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> 1-0</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: -9.5 → Close: -8.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 228.5 → O 225.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS PHX:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS MIN:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -371,9 +418,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -389,13 +436,13 @@
                                 <td class="rec">15-7</td>
                                 <td class="pwr elite">66</td>
                                 <td class="section-divider">|</td>
-                                <td>118.9</td><td>48.5%</td><td>36.1%</td><td>44.6</td><td>25.8</td>
+                                <td>118.9</td><td>48.5%</td><td>36.1%</td><td>79.6%</td><td>44.6</td><td>25.8</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>8.6</td><td>5.0</td><td>14.2</td>
+                                <td>114.5</td><td>8.6</td><td>5.0</td><td>14.2</td><td>33.2</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">-17.5</td>
-                                <td class="ml">-7000</td>
-                                <td class="total" rowspan="2">248.5</td>
+                                <td class="spread">-11.5</td>
+                                <td class="ml">-1200</td>
+                                <td class="total" rowspan="2">254.5</td>
                             </tr>
                             <tr class="home-row">
                                 <td class="team-col">
@@ -405,20 +452,33 @@
                                 <td class="rec">3-21</td>
                                 <td class="pwr poor">13</td>
                                 <td class="section-divider">|</td>
-                                <td>112.2</td><td>45.3%</td><td>34.9%</td><td>42.3</td><td>23.9</td>
+                                <td>112.2</td><td>45.3%</td><td>34.9%</td><td>77.6%</td><td>42.3</td><td>23.9</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>9.1</td><td>3.3</td><td>13.8</td>
+                                <td>123.2</td><td>9.1</td><td>3.3</td><td>13.8</td><td>29.6</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">+17.5</td>
-                                <td class="ml">+1500</td>
+                                <td class="spread">+11.5</td>
+                                <td class="ml">+630</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">SA:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">NO:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">SA:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">NO:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> 2-0</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: +9.5 → Close: +8.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 237.5 → O 238.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS SA:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS NO:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -442,9 +502,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -460,12 +520,12 @@
                                 <td class="rec">8-4</td>
                                 <td class="pwr good">63</td>
                                 <td class="section-divider">|</td>
-                                <td>22.5</td><td>-</td><td>196</td><td>108</td>
+                                <td>22.5</td><td>-</td><td>196</td><td>108</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>24</td><td>8</td><td>5</td>
+                                <td>20.8</td><td>24</td><td>8</td><td>5</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">+4.5</td>
-                                <td class="ml">+180</td>
+                                <td class="spread">+2.5</td>
+                                <td class="ml">+120</td>
                                 <td class="total" rowspan="2">39.5</td>
                             </tr>
                             <tr class="home-row">
@@ -476,20 +536,33 @@
                                 <td class="rec">8-4</td>
                                 <td class="pwr good">64</td>
                                 <td class="section-divider">|</td>
-                                <td>23.1</td><td>-</td><td>225</td><td>122</td>
+                                <td>23.1</td><td>-</td><td>225</td><td>122</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>34</td><td>11</td><td>2</td>
+                                <td>21.0</td><td>34</td><td>11</td><td>2</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">-4.5</td>
-                                <td class="ml">-238</td>
+                                <td class="spread">-2.5</td>
+                                <td class="ml">-154</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">PHI:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">LAC:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">PHI:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">LAC:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: +1.5 → Close: +1.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 42.5 → O 41.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS PHI:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS LAC:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -505,9 +578,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -523,9 +596,9 @@
                                 <td class="rec">6-6-1</td>
                                 <td class="pwr avg">49</td>
                                 <td class="section-divider">|</td>
-                                <td>29.3</td><td>-</td><td>275</td><td>119</td>
+                                <td>29.3</td><td>-</td><td>275</td><td>119</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>29</td><td>5</td><td>5</td>
+                                <td>29.7</td><td>29</td><td>5</td><td>5</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -539,20 +612,33 @@
                                 <td class="rec">8-5</td>
                                 <td class="pwr elite">73</td>
                                 <td class="section-divider">|</td>
-                                <td>30.3</td><td>-</td><td>243</td><td>136</td>
+                                <td>30.3</td><td>-</td><td>243</td><td>136</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>37</td><td>11</td><td>5</td>
+                                <td>23.4</td><td>37</td><td>11</td><td>5</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">DAL:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">DET:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">DAL:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">DET:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS DAL:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS DET:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -568,9 +654,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -586,9 +672,9 @@
                                 <td class="rec">10-3</td>
                                 <td class="pwr elite">88</td>
                                 <td class="section-divider">|</td>
-                                <td>29.8</td><td>-</td><td>236</td><td>118</td>
+                                <td>29.8</td><td>-</td><td>236</td><td>118</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>41</td><td>15</td><td>6</td>
+                                <td>17.4</td><td>41</td><td>15</td><td>6</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -602,20 +688,33 @@
                                 <td class="rec">4-9</td>
                                 <td class="pwr poor">29</td>
                                 <td class="section-divider">|</td>
-                                <td>19.4</td><td>-</td><td>206</td><td>124</td>
+                                <td>19.4</td><td>-</td><td>206</td><td>124</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>43</td><td>10</td><td>6</td>
+                                <td>24.1</td><td>43</td><td>10</td><td>6</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">SEA:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">ATL:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">SEA:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">ATL:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS SEA:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS ATL:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -631,9 +730,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -649,9 +748,9 @@
                                 <td class="rec">4-9</td>
                                 <td class="pwr poor">21</td>
                                 <td class="section-divider">|</td>
-                                <td>24.2</td><td>-</td><td>229</td><td>86</td>
+                                <td>24.2</td><td>-</td><td>229</td><td>86</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>20</td><td>10</td><td>6</td>
+                                <td>31.8</td><td>20</td><td>10</td><td>6</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -665,20 +764,33 @@
                                 <td class="rec">9-4</td>
                                 <td class="pwr elite">76</td>
                                 <td class="section-divider">|</td>
-                                <td>28.9</td><td>-</td><td>226</td><td>158</td>
+                                <td>28.9</td><td>-</td><td>226</td><td>158</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>28</td><td>10</td><td>7</td>
+                                <td>22.5</td><td>28</td><td>10</td><td>7</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">CIN:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">BUF:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">CIN:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">BUF:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS CIN:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS BUF:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -694,9 +806,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -712,9 +824,9 @@
                                 <td class="rec">2-11</td>
                                 <td class="pwr poor">8</td>
                                 <td class="section-divider">|</td>
-                                <td>15.5</td><td>-</td><td>161</td><td>85</td>
+                                <td>15.5</td><td>-</td><td>161</td><td>85</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>32</td><td>6</td><td>6</td>
+                                <td>27.5</td><td>32</td><td>6</td><td>6</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">+12.5</td>
                                 <td class="ml">+625</td>
@@ -728,20 +840,33 @@
                                 <td class="rec">3-10</td>
                                 <td class="pwr poor">22</td>
                                 <td class="section-divider">|</td>
-                                <td>17.2</td><td>-</td><td>174</td><td>96</td>
+                                <td>17.2</td><td>-</td><td>174</td><td>96</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>44</td><td>10</td><td>6</td>
+                                <td>23.2</td><td>44</td><td>10</td><td>6</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">-12.5</td>
                                 <td class="ml">-950</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">TEN:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">CLE:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">TEN:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">CLE:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS TEN:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS CLE:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -757,9 +882,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -775,9 +900,9 @@
                                 <td class="rec">3-10</td>
                                 <td class="pwr poor">19</td>
                                 <td class="section-divider">|</td>
-                                <td>20.2</td><td>-</td><td>191</td><td>136</td>
+                                <td>20.2</td><td>-</td><td>191</td><td>136</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>30</td><td>6</td><td>1</td>
+                                <td>27.2</td><td>30</td><td>6</td><td>1</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">+2.5</td>
                                 <td class="ml">+110</td>
@@ -791,20 +916,33 @@
                                 <td class="rec">5-8</td>
                                 <td class="pwr poor">39</td>
                                 <td class="section-divider">|</td>
-                                <td>19.6</td><td>-</td><td>171</td><td>104</td>
+                                <td>19.6</td><td>-</td><td>171</td><td>104</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>33</td><td>5</td><td>9</td>
+                                <td>21.6</td><td>33</td><td>5</td><td>9</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">-2.5</td>
                                 <td class="ml">-130</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">WSH:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">MIN:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">WSH:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">MIN:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS WSH:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS MIN:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -820,9 +958,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -838,9 +976,9 @@
                                 <td class="rec">6-7</td>
                                 <td class="pwr avg">45</td>
                                 <td class="section-divider">|</td>
-                                <td>21.6</td><td>-</td><td>178</td><td>126</td>
+                                <td>21.6</td><td>-</td><td>178</td><td>126</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>31</td><td>7</td><td>10</td>
+                                <td>22.8</td><td>31</td><td>7</td><td>10</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">+3.0</td>
                                 <td class="ml">+145</td>
@@ -854,20 +992,33 @@
                                 <td class="rec">3-10</td>
                                 <td class="pwr poor">19</td>
                                 <td class="section-divider">|</td>
-                                <td>19.7</td><td>-</td><td>146</td><td>128</td>
+                                <td>19.7</td><td>-</td><td>146</td><td>128</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>22</td><td>0</td><td>2</td>
+                                <td>26.8</td><td>22</td><td>0</td><td>2</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">-3.0</td>
                                 <td class="ml">-175</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">MIA:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">NYJ:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">MIA:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">NYJ:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS MIA:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS NYJ:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -883,9 +1034,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -901,9 +1052,9 @@
                                 <td class="rec">3-10</td>
                                 <td class="pwr poor">16</td>
                                 <td class="section-divider">|</td>
-                                <td>15.8</td><td>-</td><td>199</td><td>94</td>
+                                <td>15.8</td><td>-</td><td>199</td><td>94</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>28</td><td>8</td><td>7</td>
+                                <td>24.2</td><td>28</td><td>8</td><td>7</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">+4.5</td>
                                 <td class="ml">+195</td>
@@ -917,20 +1068,33 @@
                                 <td class="rec">7-6</td>
                                 <td class="pwr avg">47</td>
                                 <td class="section-divider">|</td>
-                                <td>23.0</td><td>-</td><td>200</td><td>115</td>
+                                <td>23.0</td><td>-</td><td>200</td><td>115</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>32</td><td>12</td><td>7</td>
+                                <td>25.0</td><td>32</td><td>12</td><td>7</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">-4.5</td>
                                 <td class="ml">-238</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">NO:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">TB:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">NO:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">TB:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS NO:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS TB:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -946,9 +1110,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -964,9 +1128,9 @@
                                 <td class="rec">8-5</td>
                                 <td class="pwr elite">73</td>
                                 <td class="section-divider">|</td>
-                                <td>28.9</td><td>-</td><td>238</td><td>131</td>
+                                <td>28.9</td><td>-</td><td>238</td><td>131</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>35</td><td>12</td><td>6</td>
+                                <td>21.9</td><td>35</td><td>12</td><td>6</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">+12.5</td>
                                 <td class="ml">+500</td>
@@ -980,20 +1144,33 @@
                                 <td class="rec">9-4</td>
                                 <td class="pwr elite">70</td>
                                 <td class="section-divider">|</td>
-                                <td>25.2</td><td>-</td><td>206</td><td>122</td>
+                                <td>25.2</td><td>-</td><td>206</td><td>122</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>25</td><td>15</td><td>8</td>
+                                <td>20.9</td><td>25</td><td>15</td><td>8</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">-12.5</td>
                                 <td class="ml">-700</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">IND:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">JAX:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">IND:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">JAX:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS IND:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS JAX:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1009,9 +1186,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1027,9 +1204,9 @@
                                 <td class="rec">7-6</td>
                                 <td class="pwr avg">51</td>
                                 <td class="section-divider">|</td>
-                                <td>23.7</td><td>-</td><td>195</td><td>89</td>
+                                <td>23.7</td><td>-</td><td>195</td><td>89</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>36</td><td>11</td><td>12</td>
+                                <td>23.9</td><td>36</td><td>11</td><td>12</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -1043,20 +1220,33 @@
                                 <td class="rec">6-7</td>
                                 <td class="pwr avg">46</td>
                                 <td class="section-divider">|</td>
-                                <td>23.9</td><td>-</td><td>182</td><td>143</td>
+                                <td>23.9</td><td>-</td><td>182</td><td>143</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>19</td><td>7</td><td>7</td>
+                                <td>24.6</td><td>19</td><td>7</td><td>7</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">PIT:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">BAL:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">PIT:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">BAL:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS PIT:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS BAL:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1072,9 +1262,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1090,9 +1280,9 @@
                                 <td class="rec">11-2</td>
                                 <td class="pwr elite">81</td>
                                 <td class="section-divider">|</td>
-                                <td>23.7</td><td>-</td><td>220</td><td>122</td>
+                                <td>23.7</td><td>-</td><td>220</td><td>122</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>55</td><td>7</td><td>3</td>
+                                <td>18.1</td><td>55</td><td>7</td><td>3</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -1106,20 +1296,33 @@
                                 <td class="rec">2-11</td>
                                 <td class="pwr poor">8</td>
                                 <td class="section-divider">|</td>
-                                <td>15.1</td><td>-</td><td>184</td><td>73</td>
+                                <td>15.1</td><td>-</td><td>184</td><td>73</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>26</td><td>8</td><td>6</td>
+                                <td>25.5</td><td>26</td><td>8</td><td>6</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">DEN:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">LV:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">DEN:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">LV:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS DEN:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS LV:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1135,9 +1338,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1153,9 +1356,9 @@
                                 <td class="rec">9-4</td>
                                 <td class="pwr good">59</td>
                                 <td class="section-divider">|</td>
-                                <td>25.7</td><td>-</td><td>217</td><td>153</td>
+                                <td>25.7</td><td>-</td><td>217</td><td>153</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>24</td><td>18</td><td>9</td>
+                                <td>25.8</td><td>24</td><td>18</td><td>9</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -1169,20 +1372,33 @@
                                 <td class="rec">9-3-1</td>
                                 <td class="pwr elite">76</td>
                                 <td class="section-divider">|</td>
-                                <td>24.8</td><td>-</td><td>223</td><td>117</td>
+                                <td>24.8</td><td>-</td><td>223</td><td>117</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>33</td><td>7</td><td>5</td>
+                                <td>19.0</td><td>33</td><td>7</td><td>5</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">CHI:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">GB:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">CHI:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">GB:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS CHI:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS GB:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1198,9 +1414,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1216,9 +1432,9 @@
                                 <td class="rec">10-3</td>
                                 <td class="pwr elite">88</td>
                                 <td class="section-divider">|</td>
-                                <td>29.2</td><td>-</td><td>249</td><td>124</td>
+                                <td>29.2</td><td>-</td><td>249</td><td>124</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>36</td><td>13</td><td>8</td>
+                                <td>17.5</td><td>36</td><td>13</td><td>8</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -1232,20 +1448,33 @@
                                 <td class="rec">3-10</td>
                                 <td class="pwr poor">24</td>
                                 <td class="section-divider">|</td>
-                                <td>21.7</td><td>-</td><td>239</td><td>97</td>
+                                <td>21.7</td><td>-</td><td>239</td><td>97</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>24</td><td>9</td><td>8</td>
+                                <td>26.8</td><td>24</td><td>9</td><td>8</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">LAR:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">ARI:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">LAR:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">ARI:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS LAR:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS ARI:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1261,9 +1490,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th>
+                                <th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th>
+                                <th>OPP</th><th>SACK</th><th>INT</th><th>FUM</th><th>DYDS</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1279,9 +1508,9 @@
                                 <td class="rec">8-5</td>
                                 <td class="pwr elite">70</td>
                                 <td class="section-divider">|</td>
-                                <td>21.8</td><td>-</td><td>217</td><td>106</td>
+                                <td>21.8</td><td>-</td><td>217</td><td>106</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>36</td><td>15</td><td>7</td>
+                                <td>16.0</td><td>36</td><td>15</td><td>7</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -1295,20 +1524,33 @@
                                 <td class="rec">6-7</td>
                                 <td class="pwr good">60</td>
                                 <td class="section-divider">|</td>
-                                <td>24.2</td><td>-</td><td>248</td><td>119</td>
+                                <td>24.2</td><td>-</td><td>248</td><td>119</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>25</td><td>7</td><td>3</td>
+                                <td>19.4</td><td>25</td><td>7</td><td>3</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">HOU:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">KC:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">HOU:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">KC:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS HOU:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS KC:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1332,9 +1574,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th>
+                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th><th>HITS</th>
                                 <th class="section-divider">|</th>
-                                <th>GA</th><th>PK%</th><th>SV%</th>
+                                <th>GA</th><th>PK%</th><th>SV%</th><th>BLK</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1350,12 +1592,12 @@
                                 <td class="rec">16-10-2</td>
                                 <td class="pwr good">65</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>2.61</td><td>-</td><td>90.9%</td>
+                                <td>2.61</td><td>-</td><td>90.9%</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">+1.5</td>
-                                <td class="ml">+240</td>
+                                <td class="ml">+235</td>
                                 <td class="total" rowspan="2">3.5</td>
                             </tr>
                             <tr class="home-row">
@@ -1366,20 +1608,33 @@
                                 <td class="rec">13-11-4</td>
                                 <td class="pwr avg">53</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>3.29</td><td>-</td><td>90.0%</td>
+                                <td>3.29</td><td>-</td><td>90.0%</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">-1.5</td>
-                                <td class="ml">-330</td>
+                                <td class="ml">-320</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">TB:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">TOR:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">TB:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">TOR:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> 0-0</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: -1.5 → Close: +1.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 5.5 → O 6.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS TB:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS TOR:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1395,9 +1650,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th>
+                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th><th>HITS</th>
                                 <th class="section-divider">|</th>
-                                <th>GA</th><th>PK%</th><th>SV%</th>
+                                <th>GA</th><th>PK%</th><th>SV%</th><th>BLK</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1413,13 +1668,13 @@
                                 <td class="rec">13-8-7</td>
                                 <td class="pwr good">55</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>2.50</td><td>-</td><td>90.8%</td>
+                                <td>2.50</td><td>-</td><td>90.8%</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">-1.5</td>
-                                <td class="ml">-118</td>
-                                <td class="total" rowspan="2">5.5</td>
+                                <td class="spread">-2.5</td>
+                                <td class="ml">-520</td>
+                                <td class="total" rowspan="2">6.5</td>
                             </tr>
                             <tr class="home-row">
                                 <td class="team-col">
@@ -1429,20 +1684,33 @@
                                 <td class="rec">14-13-3</td>
                                 <td class="pwr avg">54</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>2.87</td><td>-</td><td>88.9%</td>
+                                <td>2.87</td><td>-</td><td>88.9%</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">+1.5</td>
-                                <td class="ml">-108</td>
+                                <td class="spread">+2.5</td>
+                                <td class="ml">+350</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">LA:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">UTA:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">LA:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">UTA:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> 0-0</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS LA:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS UTA:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1458,9 +1726,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th>
+                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th><th>HITS</th>
                                 <th class="section-divider">|</th>
-                                <th>GA</th><th>PK%</th><th>SV%</th>
+                                <th>GA</th><th>PK%</th><th>SV%</th><th>BLK</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1476,13 +1744,13 @@
                                 <td class="rec">11-13-4</td>
                                 <td class="pwr poor">40</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>3.43</td><td>-</td><td>89.6%</td>
+                                <td>3.43</td><td>-</td><td>89.6%</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">-1.5</td>
-                                <td class="ml">-113</td>
-                                <td class="total" rowspan="2">5.5</td>
+                                <td class="spread">+1.5</td>
+                                <td class="ml">+168</td>
+                                <td class="total" rowspan="2">6.5</td>
                             </tr>
                             <tr class="home-row">
                                 <td class="team-col">
@@ -1492,20 +1760,33 @@
                                 <td class="rec">11-15-4</td>
                                 <td class="pwr poor">36</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>2.87</td><td>-</td><td>90.5%</td>
+                                <td>2.87</td><td>-</td><td>90.5%</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">+1.5</td>
-                                <td class="ml">-113</td>
+                                <td class="spread">-1.5</td>
+                                <td class="ml">-220</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">BUF:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">CGY:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">BUF:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">CGY:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> 1-0</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: -1.5 → Close: -1.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 5.5 → O 6.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS BUF:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS CGY:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1521,9 +1802,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th>
+                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th><th>HITS</th>
                                 <th class="section-divider">|</th>
-                                <th>GA</th><th>PK%</th><th>SV%</th>
+                                <th>GA</th><th>PK%</th><th>SV%</th><th>BLK</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1539,9 +1820,9 @@
                                 <td class="rec">15-11-3</td>
                                 <td class="pwr avg">46</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>3.45</td><td>-</td><td>87.7%</td>
+                                <td>3.45</td><td>-</td><td>87.7%</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">-1.5</td>
                                 <td class="ml">-129</td>
@@ -1555,20 +1836,33 @@
                                 <td class="rec">11-15-3</td>
                                 <td class="pwr poor">34</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>3.59</td><td>-</td><td>88.8%</td>
+                                <td>3.59</td><td>-</td><td>88.8%</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">+1.5</td>
                                 <td class="ml">+104</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">DET:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">VAN:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">DET:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">VAN:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> 0-0</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: +1.5 → Close: +1.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 5.5 → O 6.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS DET:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS VAN:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1584,9 +1878,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th>
+                                <th>GF</th><th>SOG</th><th>PP%</th><th>FO%</th><th>HITS</th>
                                 <th class="section-divider">|</th>
-                                <th>GA</th><th>PK%</th><th>SV%</th>
+                                <th>GA</th><th>PK%</th><th>SV%</th><th>BLK</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1602,9 +1896,9 @@
                                 <td class="rec">15-9-5</td>
                                 <td class="pwr good">56</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>2.72</td><td>-</td><td>91.7%</td>
+                                <td>2.72</td><td>-</td><td>91.7%</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">-1.5</td>
                                 <td class="ml">-134</td>
@@ -1618,20 +1912,33 @@
                                 <td class="rec">11-9-6</td>
                                 <td class="pwr poor">41</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
                                 <td class="section-divider">|</td>
-                                <td>2.92</td><td>-</td><td>89.6%</td>
+                                <td>2.92</td><td>-</td><td>89.6%</td><td>-</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">+1.5</td>
                                 <td class="ml">+112</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">MIN:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">SEA:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">MIN:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">SEA:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> 0-0</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: +1.5 → Close: +1.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 5.5 → O 5.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS MIN:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS SEA:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1655,9 +1962,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1673,13 +1980,13 @@
                                 <td class="rec">3-5</td>
                                 <td class="pwr poor">39</td>
                                 <td class="section-divider">|</td>
-                                <td>70.6</td><td>44.9%</td><td>30.7%</td><td>30.5</td><td>11.2</td>
+                                <td>70.6</td><td>44.9%</td><td>30.7%</td><td>71.6%</td><td>30.5</td><td>11.2</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>8.6</td><td>3.5</td><td>15.0</td>
+                                <td>73.4</td><td>8.6</td><td>3.5</td><td>15.0</td><td>21.4</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">+3.5</td>
-                                <td class="ml">+172</td>
-                                <td class="total" rowspan="2">131.5</td>
+                                <td class="spread">+5.5</td>
+                                <td class="ml">+370</td>
+                                <td class="total" rowspan="2">129.5</td>
                             </tr>
                             <tr class="home-row">
                                 <td class="team-col">
@@ -1689,20 +1996,33 @@
                                 <td class="rec">5-4</td>
                                 <td class="pwr good">61</td>
                                 <td class="section-divider">|</td>
-                                <td>79.0</td><td>47.4%</td><td>31.6%</td><td>39.4</td><td>13.8</td>
+                                <td>79.0</td><td>47.4%</td><td>31.6%</td><td>71.3%</td><td>39.4</td><td>13.8</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>8.0</td><td>3.9</td><td>12.7</td>
+                                <td>73.9</td><td>8.0</td><td>3.9</td><td>12.7</td><td>26.7</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">-3.5</td>
-                                <td class="ml">-225</td>
+                                <td class="spread">-5.5</td>
+                                <td class="ml">-560</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">GRAM:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">USM:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">GRAM:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">USM:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: -7.5 → Close: -8.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 139.5 → O 142.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS GRAM:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS USM:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1718,9 +2038,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1736,13 +2056,13 @@
                                 <td class="rec">4-4</td>
                                 <td class="pwr elite">74</td>
                                 <td class="section-divider">|</td>
-                                <td>92.2</td><td>49.8%</td><td>37.1%</td><td>40.0</td><td>18.4</td>
+                                <td>92.2</td><td>49.8%</td><td>37.1%</td><td>67.2%</td><td>40.0</td><td>18.4</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>12.1</td><td>3.9</td><td>13.2</td>
+                                <td>78.0</td><td>12.1</td><td>3.9</td><td>13.2</td><td>27.8</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">+25.5</td>
+                                <td class="spread">+32.5</td>
                                 <td class="ml">N/A</td>
-                                <td class="total" rowspan="2">156.5</td>
+                                <td class="total" rowspan="2">162.5</td>
                             </tr>
                             <tr class="home-row">
                                 <td class="team-col">
@@ -1752,20 +2072,33 @@
                                 <td class="rec">6-3</td>
                                 <td class="pwr elite">83</td>
                                 <td class="section-divider">|</td>
-                                <td>88.4</td><td>50.0%</td><td>34.4%</td><td>43.0</td><td>14.3</td>
+                                <td>88.4</td><td>50.0%</td><td>34.4%</td><td>69.6%</td><td>43.0</td><td>14.3</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>6.0</td><td>3.3</td><td>11.4</td>
+                                <td>73.7</td><td>6.0</td><td>3.3</td><td>11.4</td><td>29.4</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">-25.5</td>
+                                <td class="spread">-32.5</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">SOU:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">TEX:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">SOU:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">TEX:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: -22.5 → Close: -22.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 154.5 → O 158.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS SOU:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS TEX:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1781,9 +2114,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1799,9 +2132,9 @@
                                 <td class="rec">1-8</td>
                                 <td class="pwr poor">6</td>
                                 <td class="section-divider">|</td>
-                                <td>69.1</td><td>41.3%</td><td>29.9%</td><td>33.2</td><td>12.9</td>
+                                <td>69.1</td><td>41.3%</td><td>29.9%</td><td>76.7%</td><td>33.2</td><td>12.9</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>7.6</td><td>3.3</td><td>16.8</td>
+                                <td>88.4</td><td>7.6</td><td>3.3</td><td>16.8</td><td>23.4</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -1815,20 +2148,33 @@
                                 <td class="rec">5-4</td>
                                 <td class="pwr good">59</td>
                                 <td class="section-divider">|</td>
-                                <td>84.3</td><td>48.0%</td><td>38.3%</td><td>35.6</td><td>18.1</td>
+                                <td>84.3</td><td>48.0%</td><td>38.3%</td><td>68.9%</td><td>35.6</td><td>18.1</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>6.0</td><td>3.9</td><td>13.7</td>
+                                <td>80.3</td><td>6.0</td><td>3.9</td><td>13.7</td><td>24.3</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">MVSU:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">KSU:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">MVSU:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">KSU:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: -29.5 → Close: -38.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 154.5 → O 160.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS MVSU:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS KSU:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1844,9 +2190,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1862,13 +2208,13 @@
                                 <td class="rec">5-4</td>
                                 <td class="pwr elite">70</td>
                                 <td class="section-divider">|</td>
-                                <td>84.4</td><td>47.9%</td><td>38.8%</td><td>38.0</td><td>13.2</td>
+                                <td>84.4</td><td>47.9%</td><td>38.8%</td><td>71.4%</td><td>38.0</td><td>13.2</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>5.9</td><td>1.9</td><td>10.3</td>
+                                <td>73.9</td><td>5.9</td><td>1.9</td><td>10.3</td><td>24.3</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">+9.5</td>
-                                <td class="ml">+560</td>
-                                <td class="total" rowspan="2">142.5</td>
+                                <td class="spread">+6.5</td>
+                                <td class="ml">+300</td>
+                                <td class="total" rowspan="2">153.5</td>
                             </tr>
                             <tr class="home-row">
                                 <td class="team-col">
@@ -1878,20 +2224,33 @@
                                 <td class="rec">2-7</td>
                                 <td class="pwr poor">20</td>
                                 <td class="section-divider">|</td>
-                                <td>72.2</td><td>41.4%</td><td>34.0%</td><td>36.8</td><td>13.4</td>
+                                <td>72.2</td><td>41.4%</td><td>34.0%</td><td>71.6%</td><td>36.8</td><td>13.4</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>6.0</td><td>3.6</td><td>14.6</td>
+                                <td>82.1</td><td>6.0</td><td>3.6</td><td>14.6</td><td>25.0</td>
                                 <td class="section-divider">|</td>
-                                <td class="spread">-9.5</td>
-                                <td class="ml">-1200</td>
+                                <td class="spread">-6.5</td>
+                                <td class="ml">-425</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">UIW:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">UNO:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">UIW:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">UNO:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> Open: +1.5 → Close: +1.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> O 150.5 → O 148.5</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS UIW:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS UNO:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1907,9 +2266,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1925,9 +2284,9 @@
                                 <td class="rec">0-0</td>
                                 <td class="pwr avg">50</td>
                                 <td class="section-divider">|</td>
-                                <td>63.0</td><td>36.7%</td><td>15.8%</td><td>35.0</td><td>4.0</td>
+                                <td>63.0</td><td>36.7%</td><td>15.8%</td><td>53.3%</td><td>35.0</td><td>4.0</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>8.0</td><td>1.0</td><td>13.0</td>
+                                <td>-</td><td>8.0</td><td>1.0</td><td>13.0</td><td>27.0</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -1941,20 +2300,33 @@
                                 <td class="rec">8-2</td>
                                 <td class="pwr elite">90</td>
                                 <td class="section-divider">|</td>
-                                <td>94.6</td><td>47.6%</td><td>35.6%</td><td>47.7</td><td>15.3</td>
+                                <td>94.6</td><td>47.6%</td><td>35.6%</td><td>66.1%</td><td>47.7</td><td>15.3</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>7.8</td><td>5.1</td><td>13.8</td>
+                                <td>75.2</td><td>7.8</td><td>5.1</td><td>13.8</td><td>31.8</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">SWES:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">KENN:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">SWES:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">KENN:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS SWES:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS KENN:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1970,9 +2342,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -1988,9 +2360,9 @@
                                 <td class="rec">3-8</td>
                                 <td class="pwr poor">30</td>
                                 <td class="section-divider">|</td>
-                                <td>69.3</td><td>40.7%</td><td>35.8%</td><td>33.6</td><td>12.1</td>
+                                <td>69.3</td><td>40.7%</td><td>35.8%</td><td>71.6%</td><td>33.6</td><td>12.1</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>5.9</td><td>2.3</td><td>12.5</td>
+                                <td>74.9</td><td>5.9</td><td>2.3</td><td>12.5</td><td>23.4</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -2004,20 +2376,33 @@
                                 <td class="rec">6-4</td>
                                 <td class="pwr good">57</td>
                                 <td class="section-divider">|</td>
-                                <td>79.8</td><td>44.8%</td><td>41.0%</td><td>38.4</td><td>15.2</td>
+                                <td>79.8</td><td>44.8%</td><td>41.0%</td><td>69.8%</td><td>38.4</td><td>15.2</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>6.6</td><td>3.3</td><td>12.6</td>
+                                <td>77.9</td><td>6.6</td><td>3.3</td><td>12.6</td><td>25.6</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">LAF:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">PENN:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">LAF:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">PENN:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS LAF:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS PENN:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -2033,9 +2418,9 @@
                                 <th>REC</th>
                                 <th>PWR</th>
                                 <th class="section-divider">|</th>
-                                <th>PPG</th><th>FG%</th><th>3P%</th><th>RPG</th><th>APG</th>
+                                <th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>RPG</th><th>APG</th>
                                 <th class="section-divider">|</th>
-                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th>
+                                <th>OPP</th><th>STL</th><th>BLK</th><th>TO/G</th><th>DREB</th>
                                 <th class="section-divider">|</th>
                                 <th>SPREAD</th>
                                 <th>ML</th>
@@ -2051,9 +2436,9 @@
                                 <td class="rec">0-10</td>
                                 <td class="pwr poor">0</td>
                                 <td class="section-divider">|</td>
-                                <td>65.7</td><td>37.4%</td><td>30.7%</td><td>32.7</td><td>10.4</td>
+                                <td>65.7</td><td>37.4%</td><td>30.7%</td><td>66.0%</td><td>32.7</td><td>10.4</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>7.1</td><td>3.4</td><td>15.2</td>
+                                <td>88.2</td><td>7.1</td><td>3.4</td><td>15.2</td><td>20.0</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
@@ -2067,20 +2452,33 @@
                                 <td class="rec">7-5</td>
                                 <td class="pwr elite">70</td>
                                 <td class="section-divider">|</td>
-                                <td>84.1</td><td>44.1%</td><td>36.1%</td><td>45.5</td><td>19.5</td>
+                                <td>84.1</td><td>44.1%</td><td>36.1%</td><td>65.0%</td><td>45.5</td><td>19.5</td>
                                 <td class="section-divider">|</td>
-                                <td>-</td><td>4.3</td><td>3.8</td><td>13.6</td>
+                                <td>74.8</td><td>4.3</td><td>3.8</td><td>13.6</td><td>31.9</td>
                                 <td class="section-divider">|</td>
                                 <td class="spread">N/A</td>
                                 <td class="ml">N/A</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">SCST:</span> None reported
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">CHSO:</span> None reported
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">SCST:</span> None reported
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">CHSO:</span> None reported
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> First meeting</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> N/A → </span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS SCST:</b> N/A</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS CHSO:</b> N/A</span>
+                        </div>
                     </div>
                 </div>
                 

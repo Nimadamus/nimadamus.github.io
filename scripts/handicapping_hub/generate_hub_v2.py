@@ -107,7 +107,7 @@ def get_team_stats(sport, team_id):
                     value = stat.get('value', 0)
                     display = stat.get('displayValue', str(value))
 
-                    # NBA stats
+                    # NBA stats - EXPANDED
                     if sport in ['NBA', 'NCAAB']:
                         if name == 'avgPoints': stats['offense']['PPG'] = f"{value:.1f}"
                         elif name == 'fieldGoalPct': stats['offense']['FG%'] = f"{value:.1f}%"
@@ -119,29 +119,51 @@ def get_team_stats(sport, team_id):
                         elif name == 'avgSteals': stats['defense']['STL'] = f"{value:.1f}"
                         elif name == 'avgBlocks': stats['defense']['BLK'] = f"{value:.1f}"
                         elif name == 'avgPointsOpponent': stats['defense']['OPP'] = f"{value:.1f}"
+                        elif name == 'avgDefensiveRebounds': stats['defense']['DREB'] = f"{value:.1f}"
+                        elif name == 'avgOffensiveRebounds': stats['offense']['OREB'] = f"{value:.1f}"
 
-                    # NFL stats
+                    # NFL stats - EXPANDED
                     elif sport == 'NFL':
                         if name == 'totalPointsPerGame': stats['offense']['PPG'] = f"{value:.1f}"
                         elif name == 'netPassingYardsPerGame': stats['offense']['PASS'] = f"{value:.0f}"
                         elif name == 'rushingYardsPerGame': stats['offense']['RUSH'] = f"{value:.0f}"
                         elif name == 'totalYardsPerGame': stats['offense']['YPG'] = f"{value:.0f}"
+                        elif name == 'thirdDownConversionPct': stats['offense']['3RD%'] = f"{value:.1f}%"
                         elif name == 'sacks': stats['defense']['SACK'] = f"{int(value)}"
                         elif name == 'interceptions': stats['defense']['INT'] = f"{int(value)}"
                         elif name == 'fumblesRecovered': stats['defense']['FUM'] = f"{int(value)}"
                         elif name == 'avgPointsAllowed': stats['defense']['OPP'] = f"{value:.1f}"
+                        elif name == 'totalYardsAllowedPerGame': stats['defense']['DYDS'] = f"{value:.0f}"
+                        elif name == 'yardsAllowedPerGame': stats['defense']['DYDS'] = f"{value:.0f}"
 
-                    # NHL stats
+                    # NHL stats - EXPANDED
                     elif sport == 'NHL':
                         if name == 'avgGoals': stats['offense']['GF'] = f"{value:.2f}"
                         elif name == 'avgShots': stats['offense']['SOG'] = f"{value:.1f}"
                         elif name == 'powerPlayPct': stats['offense']['PP%'] = f"{value:.1f}%"
                         elif name == 'faceoffWinPct': stats['offense']['FO%'] = f"{value:.1f}%"
+                        elif name == 'avgHits': stats['offense']['HITS'] = f"{value:.1f}"
+                        elif name == 'hits': stats['offense']['HITS'] = f"{value:.0f}"
                         elif name == 'avgGoalsAgainst': stats['defense']['GA'] = f"{value:.2f}"
                         elif name == 'penaltyKillPct': stats['defense']['PK%'] = f"{value:.1f}%"
                         elif name == 'savePct': stats['defense']['SV%'] = f"{value*100:.1f}%"
+                        elif name == 'avgBlockedShots': stats['defense']['BLK'] = f"{value:.1f}"
+                        elif name == 'blockedShots': stats['defense']['BLK'] = f"{value:.0f}"
     except:
         pass
+
+    # Copy oppg from record to defense if not already set
+    if stats['record'].get('oppg') and not stats['defense'].get('OPP'):
+        games = stats['record'].get('wins', 0) + stats['record'].get('losses', 0) + stats['record'].get('ties', 0)
+        oppg = stats['record']['oppg']
+        # Convert to per-game if it looks like a total
+        if sport in ['NBA', 'NCAAB'] and oppg > 50 and games > 0:
+            oppg = oppg / games
+        elif sport == 'NFL' and oppg > 50 and games > 0:
+            oppg = oppg / games
+        elif sport == 'NHL' and oppg > 10 and games > 0:
+            oppg = oppg / games
+        stats['defense']['OPP'] = f"{oppg:.1f}"
 
     return stats
 
@@ -169,6 +191,83 @@ def get_injuries(sport, team_id):
     except:
         pass
     return []
+
+def get_game_trends(sport, game_id):
+    """Get betting trends, season series, and pickcenter from ESPN game summary"""
+    sport_map = {
+        'NBA': 'basketball/nba',
+        'NFL': 'football/nfl',
+        'NHL': 'hockey/nhl',
+        'NCAAB': 'basketball/mens-college-basketball',
+        'NCAAF': 'football/college-football'
+    }
+    trends = {
+        'h2h': '',           # Head-to-head record
+        'open_spread': '',   # Opening spread
+        'close_spread': '',  # Closing spread
+        'open_total': '',    # Opening total
+        'close_total': '',   # Closing total
+        'open_ml_home': '',
+        'open_ml_away': '',
+        'ats_away': '',      # Away team ATS record
+        'ats_home': ''       # Home team ATS record
+    }
+    if sport not in sport_map:
+        return trends
+    try:
+        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_map[sport]}/summary?event={game_id}"
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+
+            # Get season series (head-to-head)
+            series = data.get('seasonseries', [])
+            if series:
+                ser = series[0]
+                trends['h2h'] = ser.get('seriesScore', '')
+
+            # Get pickcenter (betting lines)
+            pickcenter = data.get('pickcenter', [])
+            if pickcenter:
+                pc = pickcenter[0]
+                # Opening and closing lines
+                ps = pc.get('pointSpread', {})
+                if ps:
+                    home_open = ps.get('home', {}).get('open', {}).get('line', '')
+                    home_close = ps.get('home', {}).get('close', {}).get('line', '')
+                    trends['open_spread'] = f"Open: {home_open}" if home_open else ''
+                    trends['close_spread'] = f"Close: {home_close}" if home_close else ''
+
+                total = pc.get('total', {})
+                if total:
+                    over_open = total.get('over', {}).get('open', {}).get('line', '')
+                    over_close = total.get('over', {}).get('close', {}).get('line', '')
+                    trends['open_total'] = over_open.replace('o', 'O ') if over_open else ''
+                    trends['close_total'] = over_close.replace('o', 'O ') if over_close else ''
+
+                ml = pc.get('moneyline', {})
+                if ml:
+                    trends['open_ml_home'] = ml.get('home', {}).get('open', {}).get('odds', '')
+                    trends['open_ml_away'] = ml.get('away', {}).get('open', {}).get('odds', '')
+
+            # Get ATS records
+            ats = data.get('againstTheSpread', [])
+            for team_ats in ats:
+                team_id = team_ats.get('team', {}).get('id', '')
+                records = team_ats.get('records', [])
+                ats_rec = ''
+                for rec in records:
+                    if rec.get('type') == 'ats':
+                        ats_rec = rec.get('summary', '')
+                        break
+                if ats_rec:
+                    # Store by abbreviation for matching
+                    abbr = team_ats.get('team', {}).get('abbreviation', '')
+                    if abbr:
+                        trends[f'ats_{abbr}'] = ats_rec
+    except:
+        pass
+    return trends
 
 def find_odds_for_game(odds_data, away_name, home_name):
     """Find odds for a specific game"""
@@ -249,31 +348,31 @@ def generate_html():
     date_str = now.strftime("%B %d, %Y")
     time_str = now.strftime("%I:%M %p ET")
 
-    # Sport configurations with their stat columns
+    # Sport configurations with their stat columns - EXPANDED STATS
     sports_config = [
         {
             'name': 'NBA',
             'key': 'basketball_nba',
-            'off_cols': ['PPG', 'FG%', '3P%', 'RPG', 'APG'],
-            'def_cols': ['OPP', 'STL', 'BLK', 'TO/G']
+            'off_cols': ['PPG', 'FG%', '3P%', 'FT%', 'RPG', 'APG'],
+            'def_cols': ['OPP', 'STL', 'BLK', 'TO/G', 'DREB']
         },
         {
             'name': 'NFL',
             'key': 'americanfootball_nfl',
-            'off_cols': ['PPG', 'YPG', 'PASS', 'RUSH'],
-            'def_cols': ['OPP', 'SACK', 'INT', 'FUM']
+            'off_cols': ['PPG', 'YPG', 'PASS', 'RUSH', '3RD%'],
+            'def_cols': ['OPP', 'SACK', 'INT', 'FUM', 'DYDS']
         },
         {
             'name': 'NHL',
             'key': 'icehockey_nhl',
-            'off_cols': ['GF', 'SOG', 'PP%', 'FO%'],
-            'def_cols': ['GA', 'PK%', 'SV%']
+            'off_cols': ['GF', 'SOG', 'PP%', 'FO%', 'HITS'],
+            'def_cols': ['GA', 'PK%', 'SV%', 'BLK']
         },
         {
             'name': 'NCAAB',
             'key': 'basketball_ncaab',
-            'off_cols': ['PPG', 'FG%', '3P%', 'RPG', 'APG'],
-            'def_cols': ['OPP', 'STL', 'BLK', 'TO/G']
+            'off_cols': ['PPG', 'FG%', '3P%', 'FT%', 'RPG', 'APG'],
+            'def_cols': ['OPP', 'STL', 'BLK', 'TO/G', 'DREB']
         },
     ]
 
@@ -323,6 +422,10 @@ def generate_html():
 
                 # Get odds
                 odds = find_odds_for_game(odds_data, away_name, home_name)
+
+                # Get game ID for trends
+                game_id = game.get('id', '')
+                trends = get_game_trends(sport['name'], game_id) if game_id else {}
 
                 # Calculate power
                 away_power = calculate_power(away_stats, sport['name'])
@@ -410,11 +513,24 @@ def generate_html():
                             </tr>
                         </tbody>
                     </table>
-                    <div class="injury-bar">
-                        <span class="inj-label">🏥 INJURIES:</span>
-                        <span class="inj-team">{away_abbr}:</span> {away_inj}
-                        <span class="inj-sep">|</span>
-                        <span class="inj-team">{home_abbr}:</span> {home_inj}
+                    <div class="info-section">
+                        <div class="injury-bar">
+                            <span class="inj-label">INJURIES:</span>
+                            <span class="inj-team">{away_abbr}:</span> {away_inj}
+                            <span class="inj-sep">|</span>
+                            <span class="inj-team">{home_abbr}:</span> {home_inj}
+                        </div>
+                        <div class="trends-bar">
+                            <span class="trend-item"><b>H2H:</b> {trends.get('h2h', 'N/A') or 'First meeting'}</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Line:</b> {trends.get('open_spread', '') or 'N/A'} → {trends.get('close_spread', '') or ''}</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>Total:</b> {trends.get('open_total', '') or 'N/A'} → {trends.get('close_total', '') or ''}</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS {away_abbr}:</b> {trends.get(f'ats_{away_abbr}', 'N/A') or 'N/A'}</span>
+                            <span class="trend-sep">|</span>
+                            <span class="trend-item"><b>ATS {home_abbr}:</b> {trends.get(f'ats_{home_abbr}', 'N/A') or 'N/A'}</span>
+                        </div>
                     </div>
                 </div>
                 '''
@@ -443,16 +559,16 @@ def generate_html():
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         body {{
-            background: #0a0a0a;
+            background: #f5f5f5;
             font-family: 'Inter', -apple-system, sans-serif;
-            color: #e0e0e0;
+            color: #1a1a1a;
             min-height: 100vh;
         }}
 
         .header {{
-            background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+            background: linear-gradient(180deg, #1a365d 0%, #0d1b30 100%);
             padding: 20px 30px;
-            border-bottom: 1px solid #222;
+            border-bottom: 3px solid #fd5000;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -460,21 +576,21 @@ def generate_html():
         .header-inner {{ max-width: 1600px; margin: 0 auto; }}
         .header h1 {{ font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 5px; }}
         .header h1 span {{ color: #fd5000; }}
-        .timestamp {{ color: #666; font-size: 13px; margin-bottom: 15px; }}
+        .timestamp {{ color: #a0aec0; font-size: 13px; margin-bottom: 15px; }}
 
         .tabs {{ display: flex; gap: 8px; flex-wrap: wrap; }}
         .tab {{
-            background: #1a1a1a;
-            border: 1px solid #333;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             padding: 10px 24px;
             border-radius: 6px;
-            color: #888;
+            color: #fff;
             cursor: pointer;
             font-weight: 600;
             font-size: 14px;
             transition: all 0.2s;
         }}
-        .tab:hover {{ background: #252525; color: #fff; border-color: #444; }}
+        .tab:hover {{ background: rgba(255,255,255,0.2); }}
         .tab.active {{ background: #fd5000; border-color: #fd5000; color: #fff; }}
 
         .container {{ max-width: 1600px; margin: 0 auto; padding: 30px; }}
@@ -485,26 +601,27 @@ def generate_html():
             gap: 15px;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #222;
+            border-bottom: 2px solid #ddd;
         }}
-        .section-header h2 {{ font-size: 22px; font-weight: 700; color: #fff; }}
+        .section-header h2 {{ font-size: 22px; font-weight: 700; color: #1a365d; }}
         .game-count {{ color: #666; font-size: 14px; }}
 
         .game-card {{
-            background: #111;
-            border: 1px solid #222;
+            background: #fff;
+            border: 1px solid #ddd;
             border-radius: 8px;
             margin-bottom: 20px;
             overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }}
 
         .game-header {{
-            background: linear-gradient(90deg, #1a1a1a, #111);
+            background: linear-gradient(90deg, #1a365d, #2d4a7c);
             padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #222;
+            border-bottom: 2px solid #fd5000;
         }}
         .game-time {{
             color: #fd5000;
@@ -523,15 +640,15 @@ def generate_html():
             font-size: 13px;
         }}
         .stats-table th {{
-            background: #0d0d0d;
-            color: #888;
+            background: #e8eef5;
+            color: #1a365d;
             font-size: 10px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             padding: 10px 8px;
             text-align: center;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 2px solid #ddd;
         }}
         .stats-table th.team-col {{
             text-align: left;
@@ -539,23 +656,26 @@ def generate_html():
             min-width: 100px;
         }}
         .stats-table th.section-divider {{
-            color: #333;
+            color: #ccc;
             padding: 0 2px;
             width: 10px;
+            background: #f0f0f0;
         }}
         .stats-table td {{
             padding: 10px 8px;
             text-align: center;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid #eee;
+            color: #333;
         }}
         .stats-table td.team-col {{
             text-align: left;
             padding-left: 15px;
         }}
         .stats-table td.section-divider {{
-            color: #333;
+            color: #ccc;
             padding: 0;
             width: 10px;
+            background: #fafafa;
         }}
 
         .team-logo {{
@@ -567,22 +687,22 @@ def generate_html():
         }}
         .abbr {{
             font-weight: 700;
-            color: #fff;
+            color: #1a365d;
             font-size: 14px;
         }}
 
-        .away-row {{ background: #0d0d0d; }}
-        .home-row {{ background: #111; }}
-        .away-row:hover, .home-row:hover {{ background: #151515; }}
+        .away-row {{ background: #fff; }}
+        .home-row {{ background: #f8fafc; }}
+        .away-row:hover, .home-row:hover {{ background: #f0f4f8; }}
 
-        .rec {{ color: #888; font-size: 12px; }}
+        .rec {{ color: #666; font-size: 12px; font-weight: 600; }}
         .pwr {{ font-weight: 700; font-size: 14px; }}
-        .pwr.elite {{ color: #22c55e; }}
-        .pwr.good {{ color: #3b82f6; }}
-        .pwr.avg {{ color: #eab308; }}
-        .pwr.poor {{ color: #ef4444; }}
+        .pwr.elite {{ color: #059669; }}
+        .pwr.good {{ color: #2563eb; }}
+        .pwr.avg {{ color: #ca8a04; }}
+        .pwr.poor {{ color: #dc2626; }}
 
-        .spread, .ml {{ font-weight: 600; color: #fff; }}
+        .spread, .ml {{ font-weight: 600; color: #1a1a1a; }}
         .total {{
             font-weight: 700;
             color: #fd5000;
@@ -590,25 +710,41 @@ def generate_html():
             vertical-align: middle;
         }}
 
+        .info-section {{
+            border-top: 1px solid #eee;
+        }}
         .injury-bar {{
-            background: #0a0a0a;
-            padding: 10px 15px;
+            background: #fff8f0;
+            padding: 8px 15px;
             font-size: 11px;
             color: #666;
-            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #f0e8e0;
         }}
-        .inj-label {{ color: #ef4444; font-weight: 600; margin-right: 8px; }}
-        .inj-team {{ color: #888; font-weight: 600; margin-left: 5px; }}
-        .inj-sep {{ color: #333; margin: 0 10px; }}
+        .inj-label {{ color: #dc2626; font-weight: 700; margin-right: 8px; }}
+        .inj-team {{ color: #1a365d; font-weight: 600; margin-left: 5px; }}
+        .inj-sep {{ color: #ccc; margin: 0 10px; }}
+
+        .trends-bar {{
+            background: #f0f5fa;
+            padding: 8px 15px;
+            font-size: 11px;
+            color: #333;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }}
+        .trend-item {{ margin-right: 5px; }}
+        .trend-item b {{ color: #1a365d; }}
+        .trend-sep {{ color: #ccc; margin: 0 5px; }}
 
         .no-games {{
             text-align: center;
             padding: 60px 20px;
             color: #666;
             font-size: 16px;
-            background: #111;
+            background: #fff;
             border-radius: 8px;
-            border: 1px solid #222;
+            border: 1px solid #ddd;
         }}
 
         .back-link {{
@@ -620,8 +756,9 @@ def generate_html():
             text-decoration: none;
             font-size: 14px;
             padding: 10px 20px;
-            border: 1px solid #333;
+            border: 1px solid #ddd;
             border-radius: 6px;
+            background: #fff;
             transition: all 0.2s;
         }}
         .back-link a:hover {{
