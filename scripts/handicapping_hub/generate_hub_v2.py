@@ -86,6 +86,11 @@ def get_team_stats(sport, team_id):
                         elif name in ['pointsFor', 'avgPointsFor']: stats['record']['ppg'] = float(value)
                         elif name in ['pointsAgainst', 'avgPointsAgainst']: stats['record']['oppg'] = float(value)
                         elif name == 'streak': stats['record']['streak'] = stat.get('displayValue', '')
+                        # NHL special team stats from record section
+                        elif name == 'powerPlayPct':
+                            stats['offense']['PP%'] = f"{value:.1f}%"
+                        elif name == 'penaltyKillPct':
+                            stats['defense']['PK%'] = f"{value:.1f}%"
                 elif item_type == 'home':
                     stats['record']['home'] = item.get('summary', '')
                 elif item_type == 'road':
@@ -122,33 +127,44 @@ def get_team_stats(sport, team_id):
                         elif name == 'avgDefensiveRebounds': stats['defense']['DREB'] = f"{value:.1f}"
                         elif name == 'avgOffensiveRebounds': stats['offense']['OREB'] = f"{value:.1f}"
 
-                    # NFL stats - EXPANDED
+                    # NFL stats - EXPANDED (fixed stat names)
                     elif sport == 'NFL':
                         if name == 'totalPointsPerGame': stats['offense']['PPG'] = f"{value:.1f}"
                         elif name == 'netPassingYardsPerGame': stats['offense']['PASS'] = f"{value:.0f}"
                         elif name == 'rushingYardsPerGame': stats['offense']['RUSH'] = f"{value:.0f}"
-                        elif name == 'totalYardsPerGame': stats['offense']['YPG'] = f"{value:.0f}"
-                        elif name == 'thirdDownConversionPct': stats['offense']['3RD%'] = f"{value:.1f}%"
+                        elif name == 'yardsPerGame': stats['offense']['YPG'] = f"{value:.0f}"
+                        elif name == 'thirdDownConvPct': stats['offense']['3RD%'] = f"{value:.1f}%"
                         elif name == 'sacks': stats['defense']['SACK'] = f"{int(value)}"
                         elif name == 'interceptions': stats['defense']['INT'] = f"{int(value)}"
                         elif name == 'fumblesRecovered': stats['defense']['FUM'] = f"{int(value)}"
                         elif name == 'avgPointsAllowed': stats['defense']['OPP'] = f"{value:.1f}"
-                        elif name == 'totalYardsAllowedPerGame': stats['defense']['DYDS'] = f"{value:.0f}"
-                        elif name == 'yardsAllowedPerGame': stats['defense']['DYDS'] = f"{value:.0f}"
+                        elif name == 'tacklesForLoss': stats['defense']['TFL'] = f"{int(value)}"
 
-                    # NHL stats - EXPANDED
+                    # NHL stats - EXPANDED (fixed stat names)
                     elif sport == 'NHL':
-                        if name == 'avgGoals': stats['offense']['GF'] = f"{value:.2f}"
-                        elif name == 'avgShots': stats['offense']['SOG'] = f"{value:.1f}"
-                        elif name == 'powerPlayPct': stats['offense']['PP%'] = f"{value:.1f}%"
-                        elif name == 'faceoffWinPct': stats['offense']['FO%'] = f"{value:.1f}%"
-                        elif name == 'avgHits': stats['offense']['HITS'] = f"{value:.1f}"
-                        elif name == 'hits': stats['offense']['HITS'] = f"{value:.0f}"
+                        if name == 'goals':
+                            games = stats['record'].get('wins', 0) + stats['record'].get('losses', 0) + stats['record'].get('ties', 0)
+                            if games > 0:
+                                stats['offense']['GF'] = f"{value/games:.2f}"
+                        elif name == 'shotsTotal':
+                            games = stats['record'].get('wins', 0) + stats['record'].get('losses', 0) + stats['record'].get('ties', 0)
+                            if games > 0:
+                                stats['offense']['SOG'] = f"{value/games:.1f}"
+                        elif name == 'powerPlayGoals':
+                            stats['advanced']['ppGoals'] = value
+                        elif name == 'powerPlayOpportunities':
+                            stats['advanced']['ppOpps'] = value
+                        elif name == 'powerPlayPct':
+                            stats['offense']['PP%'] = f"{value:.1f}%"
+                        elif name == 'penaltyKillPct':
+                            stats['defense']['PK%'] = f"{value:.1f}%"
+                        elif name == 'faceoffPercent': stats['offense']['FO%'] = f"{value:.1f}%"
+                        elif name == 'faceoffsWon':
+                            stats['advanced']['foWon'] = value
+                        elif name == 'faceoffsLost':
+                            stats['advanced']['foLost'] = value
                         elif name == 'avgGoalsAgainst': stats['defense']['GA'] = f"{value:.2f}"
-                        elif name == 'penaltyKillPct': stats['defense']['PK%'] = f"{value:.1f}%"
                         elif name == 'savePct': stats['defense']['SV%'] = f"{value*100:.1f}%"
-                        elif name == 'avgBlockedShots': stats['defense']['BLK'] = f"{value:.1f}"
-                        elif name == 'blockedShots': stats['defense']['BLK'] = f"{value:.0f}"
     except:
         pass
 
@@ -164,6 +180,14 @@ def get_team_stats(sport, team_id):
         elif sport == 'NHL' and oppg > 10 and games > 0:
             oppg = oppg / games
         stats['defense']['OPP'] = f"{oppg:.1f}"
+
+    # Calculate PP% if we have goals and opportunities but not percentage
+    if sport == 'NHL' and not stats['offense'].get('PP%'):
+        pp_goals = stats['advanced'].get('ppGoals', 0)
+        pp_opps = stats['advanced'].get('ppOpps', 0)
+        if pp_opps > 0:
+            pp_pct = (pp_goals / pp_opps) * 100
+            stats['offense']['PP%'] = f"{pp_pct:.1f}%"
 
     return stats
 
@@ -190,7 +214,115 @@ def get_injuries(sport, team_id):
             return injuries[:3]
     except:
         pass
-    return []
+
+def get_team_trends(sport, team_id, team_abbr):
+    """Get significant trends for a team from recent games"""
+    sport_map = {
+        'NBA': 'basketball/nba',
+        'NFL': 'football/nfl',
+        'NHL': 'hockey/nhl',
+        'NCAAB': 'basketball/mens-college-basketball'
+    }
+    trends = []
+    if sport not in sport_map:
+        return trends
+
+    try:
+        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_map[sport]}/teams/{team_id}/schedule"
+        response = requests.get(url, timeout=10)
+        if response.status_code != 200:
+            return trends
+
+        data = response.json()
+        events = data.get('events', [])
+
+        # Filter completed games only
+        completed = []
+        for e in events:
+            status = e.get('competitions', [{}])[0].get('status', {}).get('type', {}).get('completed', False)
+            if status:
+                completed.append(e)
+
+        if len(completed) < 5:
+            return trends
+
+        last_10 = completed[:10]
+
+        # Calculate O/U trend
+        over_count = 0
+        win_count = 0
+        home_record = [0, 0]  # wins, losses
+        away_record = [0, 0]
+
+        for game in last_10:
+            comps = game.get('competitions', [{}])[0]
+            competitors = comps.get('competitors', [])
+
+            # Get total score
+            total_score = 0
+            is_home = False
+            team_won = False
+
+            for c in competitors:
+                score_val = c.get('score', {}).get('displayValue', '0')
+                try:
+                    total_score += int(score_val)
+                except:
+                    pass
+
+                if c.get('team', {}).get('id') == str(team_id):
+                    is_home = c.get('homeAway') == 'home'
+                    team_won = c.get('winner', False)
+
+            # Estimate O/U threshold based on sport
+            if sport == 'NBA':
+                ou_line = 220
+            elif sport == 'NCAAB':
+                ou_line = 140
+            elif sport == 'NHL':
+                ou_line = 6
+            elif sport == 'NFL':
+                ou_line = 45
+            else:
+                ou_line = 0
+
+            if total_score > ou_line:
+                over_count += 1
+            if team_won:
+                win_count += 1
+                if is_home:
+                    home_record[0] += 1
+                else:
+                    away_record[0] += 1
+            else:
+                if is_home:
+                    home_record[1] += 1
+                else:
+                    away_record[1] += 1
+
+        games_checked = len(last_10)
+
+        # Generate trend strings
+        if over_count >= 7:
+            trends.append(f"OVER {over_count} of last {games_checked}")
+        elif over_count <= 3:
+            trends.append(f"UNDER {games_checked - over_count} of last {games_checked}")
+
+        if win_count >= 7:
+            trends.append(f"Won {win_count} of last {games_checked}")
+        elif win_count <= 3:
+            trends.append(f"Lost {games_checked - win_count} of last {games_checked}")
+
+        # Home/Away trend
+        if away_record[0] >= 4:
+            trends.append(f"{away_record[0]}-{away_record[1]} on road (L10)")
+        elif home_record[0] >= 4:
+            trends.append(f"{home_record[0]}-{home_record[1]} at home (L10)")
+
+    except:
+        pass
+
+    return trends[:2]  # Return max 2 trends
 
 def get_game_trends(sport, game_id):
     """Get betting trends, season series, and pickcenter from ESPN game summary"""
@@ -377,13 +509,13 @@ def generate_html():
             'name': 'NFL',
             'key': 'americanfootball_nfl',
             'off_cols': ['PPG', 'YPG', 'PASS', 'RUSH', '3RD%'],
-            'def_cols': ['OPP', 'SACK', 'INT', 'FUM', 'DYDS']
+            'def_cols': ['OPP', 'SACK', 'INT', 'FUM', 'TFL']
         },
         {
             'name': 'NHL',
             'key': 'icehockey_nhl',
-            'off_cols': ['GF', 'SOG', 'PP%', 'FO%', 'HITS'],
-            'def_cols': ['GA', 'PK%', 'SV%', 'BLK']
+            'off_cols': ['GF', 'SOG', 'PP%', 'FO%'],
+            'def_cols': ['GA', 'PK%', 'SV%']
         },
         {
             'name': 'NCAAB',
@@ -436,6 +568,10 @@ def generate_html():
                 # Get injuries
                 away_injuries = get_injuries(sport['name'], away_id)
                 home_injuries = get_injuries(sport['name'], home_id)
+
+                # Get team-specific trends (O/U, win streak, etc.)
+                away_team_trends = get_team_trends(sport['name'], away_id, away_abbr)
+                home_team_trends = get_team_trends(sport['name'], home_id, home_abbr)
 
                 # Get odds
                 odds = find_odds_for_game(odds_data, away_name, home_name)
@@ -540,9 +676,9 @@ def generate_html():
                         <div class="trends-bar">
                             <span class="trend-item"><b>H2H:</b> {trends.get('h2h') or 'First meeting'}</span>
                             <span class="trend-sep">|</span>
-                            <span class="trend-item"><b>Line:</b> {trends.get('open_spread') or '-'} → {trends.get('close_spread') or '-'}</span>
+                            <span class="trend-item"><b>{away_abbr}:</b> {', '.join(away_team_trends) if away_team_trends else 'No sig. trend'}</span>
                             <span class="trend-sep">|</span>
-                            <span class="trend-item"><b>Total:</b> {trends.get('open_total') or '-'} → {trends.get('close_total') or '-'}</span>
+                            <span class="trend-item"><b>{home_abbr}:</b> {', '.join(home_team_trends) if home_team_trends else 'No sig. trend'}</span>
                         </div>
                     </div>
                 </div>
