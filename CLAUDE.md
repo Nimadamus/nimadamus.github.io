@@ -63,13 +63,44 @@ If the user asks you to create a slate post (NBA, NHL, NFL, NCAAB, MLB), you MUS
 
 ## STEP 4: POSTING LOCATIONS
 
-- **Blog picks/analysis**: blog-page9.html (add to TOP)
+- **Blog picks/analysis**: blog-page10.html (add to TOP)
 - **NBA slate posts**: nba.html (add to TOP)
 - **NHL slate posts**: nhl.html (add to TOP)
 - **NCAAB posts**: ncaab.html (add to TOP)
 - **NFL posts**: nfl.html (add to TOP)
-- **Featured Game of the Day**: featured-game-of-the-day-page6.html (current)
+- **Featured Game of the Day**: featured-game-of-the-day-page15.html (current - Dec 8, 2025)
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
+
+### ⛔ CRITICAL: FEATURED GAME LINK UPDATE REQUIRED ⛔
+
+**EVERY TIME you create a new Featured Game of the Day:**
+
+1. Create the new page (increment page number)
+2. **IMMEDIATELY run this script to update ALL 300+ pages:**
+
+```python
+import os, re
+REPO = r'C:\Users\Nima\nimadamus.github.io'
+NEW = 'featured-game-of-the-day-pageXX.html'  # ← UPDATE NUMBER
+
+for root, dirs, files in os.walk(REPO):
+    dirs[:] = [d for d in dirs if d != '.git']
+    for f in files:
+        if f.endswith('.html'):
+            path = os.path.join(root, f)
+            with open(path, 'r', encoding='utf-8', errors='ignore') as file:
+                c = file.read()
+            orig = c
+            c = re.sub(r'featured-game-of-the-day-page\d+\.html', NEW, c)
+            if c != orig:
+                with open(path, 'w', encoding='utf-8') as file:
+                    file.write(c)
+```
+
+3. Push changes immediately
+4. Verify on live site
+
+**DO NOT skip this step. On Dec 8, 2025, users saw a 4-day-old game because links weren't updated.**
 
 ---
 

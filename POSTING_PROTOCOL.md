@@ -55,6 +55,60 @@ Every player. Every stat. Every trend. Every record. Every injury. Every analyti
 
 ---
 
+## ⛔ CRITICAL WARNING: FEATURED GAME LINKS MUST BE UPDATED DAILY ⛔
+
+### BROKEN LINKS = BROKEN SITE
+
+**EVERY TIME a new Featured Game of the Day is posted, ALL 300+ pages on the site MUST be updated.**
+
+This is NOT optional. This is NOT something to "get around to later." This happens IMMEDIATELY.
+
+### THE DECEMBER 8, 2025 INCIDENT
+
+On December 8, 2025, users clicking "Featured Game of the Day" were taken to the Detroit vs Dallas game from December 4th - FOUR DAYS OLD. The actual featured game was Eagles vs Chargers. This is UNACCEPTABLE.
+
+### THE RULE
+
+```
+NEW Featured Game posted → IMMEDIATELY run batch update script → PUSH → VERIFY LIVE
+```
+
+**There is NO excuse for outdated Featured Game links. NONE.**
+
+### HOW TO UPDATE (Takes 30 seconds)
+
+```python
+# Run this EVERY TIME a new Featured Game is created
+import os, re
+REPO = r'C:\Users\Nima\nimadamus.github.io'
+NEW = 'featured-game-of-the-day-pageXX.html'  # ← UPDATE THIS NUMBER
+
+for root, dirs, files in os.walk(REPO):
+    dirs[:] = [d for d in dirs if d != '.git']
+    for f in files:
+        if f.endswith('.html'):
+            path = os.path.join(root, f)
+            with open(path, 'r', encoding='utf-8', errors='ignore') as file:
+                c = file.read()
+            orig = c
+            c = re.sub(r'featured-game-of-the-day-page\d+\.html', NEW, c)
+            c = re.sub(r'featured-game-of-the-day\.html', NEW, c)
+            if c != orig:
+                with open(path, 'w', encoding='utf-8') as file:
+                    file.write(c)
+```
+
+### DAILY CHECKLIST
+
+- [ ] New Featured Game created? → Run script immediately
+- [ ] Script updated all files? → Verify count
+- [ ] Pushed to GitHub? → Do it NOW
+- [ ] Checked live site? → Click the link yourself
+
+**If the Featured Game link ever shows an old game, someone screwed up. Don't let it be you.**
+
+---
+
 ## 1. ACCURACY & VERIFICATION
 
 ### ⛔ ABSOLUTE RULE: 100% ONLINE VERIFICATION REQUIRED ⛔
