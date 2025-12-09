@@ -29,7 +29,7 @@ def get_odds(sport_key):
     return []
 
 def get_espn_scoreboard(sport):
-    """Get scoreboard data from ESPN"""
+    """Get scoreboard data from ESPN for TODAY only"""
     sport_map = {
         'NBA': 'basketball/nba',
         'NFL': 'football/nfl',
@@ -39,7 +39,9 @@ def get_espn_scoreboard(sport):
         'MLB': 'baseball/mlb'
     }
     try:
-        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_map.get(sport, '')}/scoreboard"
+        # Use today's date to get only today's games
+        today = datetime.now().strftime('%Y%m%d')
+        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_map.get(sport, '')}/scoreboard?dates={today}"
         response = requests.get(url, timeout=10)
         if response.status_code == 200:
             return response.json()
@@ -864,8 +866,8 @@ def generate_html():
         }}
         .injury-bar {{
             background: #fff8f0;
-            padding: 8px 15px;
-            font-size: 11px;
+            padding: 10px 15px;
+            font-size: 13px;
             color: #666;
             border-bottom: 1px solid #f0e8e0;
         }}
@@ -875,12 +877,12 @@ def generate_html():
 
         .trends-bar {{
             background: #f0f5fa;
-            padding: 8px 15px;
-            font-size: 11px;
+            padding: 12px 15px;
+            font-size: 14px;
             color: #333;
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 8px;
         }}
         .trend-item {{ margin-right: 5px; }}
         .trend-item b {{ color: #1a365d; }}
