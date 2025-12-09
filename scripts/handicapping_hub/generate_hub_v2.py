@@ -207,8 +207,11 @@ def get_game_trends(sport, game_id):
         'close_spread': '',  # Closing spread
         'open_total': '',    # Opening total
         'close_total': '',   # Closing total
-        'open_ml_home': '',
-        'open_ml_away': '',
+        'spread_home': '',   # Current home spread
+        'spread_away': '',   # Current away spread
+        'ml_home': '',       # Current home ML
+        'ml_away': '',       # Current away ML
+        'total': '',         # Current total
         'ats_away': '',      # Away team ATS record
         'ats_home': ''       # Home team ATS record
     }
@@ -226,11 +229,32 @@ def get_game_trends(sport, game_id):
                 ser = series[0]
                 trends['h2h'] = ser.get('seriesScore', '')
 
-            # Get pickcenter (betting lines)
+            # Get pickcenter (betting lines) - USE THIS FOR MAIN ODDS
             pickcenter = data.get('pickcenter', [])
             if pickcenter:
                 pc = pickcenter[0]
-                # Opening and closing lines
+
+                # Get current spread and total
+                spread = pc.get('spread', 0)
+                if spread:
+                    trends['spread_home'] = f"{spread:+.1f}" if spread < 0 else f"{spread:+.1f}"
+                    trends['spread_away'] = f"{-spread:+.1f}"
+
+                over_under = pc.get('overUnder', 0)
+                if over_under:
+                    trends['total'] = f"{over_under}"
+
+                # Get moneylines
+                home_odds = pc.get('homeTeamOdds', {})
+                away_odds = pc.get('awayTeamOdds', {})
+                if home_odds.get('moneyLine'):
+                    ml = home_odds['moneyLine']
+                    trends['ml_home'] = f"{ml:+d}" if isinstance(ml, int) else str(ml)
+                if away_odds.get('moneyLine'):
+                    ml = away_odds['moneyLine']
+                    trends['ml_away'] = f"{ml:+d}" if isinstance(ml, int) else str(ml)
+
+                # Opening and closing lines for trends
                 ps = pc.get('pointSpread', {})
                 if ps:
                     home_open = ps.get('home', {}).get('open', {}).get('line', '')
@@ -245,15 +269,9 @@ def get_game_trends(sport, game_id):
                     trends['open_total'] = over_open.replace('o', 'O ') if over_open else ''
                     trends['close_total'] = over_close.replace('o', 'O ') if over_close else ''
 
-                ml = pc.get('moneyline', {})
-                if ml:
-                    trends['open_ml_home'] = ml.get('home', {}).get('open', {}).get('odds', '')
-                    trends['open_ml_away'] = ml.get('away', {}).get('open', {}).get('odds', '')
-
             # Get ATS records
             ats = data.get('againstTheSpread', [])
             for team_ats in ats:
-                team_id = team_ats.get('team', {}).get('id', '')
                 records = team_ats.get('records', [])
                 ats_rec = ''
                 for rec in records:
@@ -261,7 +279,6 @@ def get_game_trends(sport, game_id):
                         ats_rec = rec.get('summary', '')
                         break
                 if ats_rec:
-                    # Store by abbreviation for matching
                     abbr = team_ats.get('team', {}).get('abbreviation', '')
                     if abbr:
                         trends[f'ats_{abbr}'] = ats_rec
@@ -272,9 +289,9 @@ def get_game_trends(sport, game_id):
 def find_odds_for_game(odds_data, away_name, home_name):
     """Find odds for a specific game"""
     result = {
-        'spread_away': 'N/A', 'spread_home': 'N/A',
-        'ml_away': 'N/A', 'ml_home': 'N/A',
-        'total': 'N/A'
+        'spread_away': '-', 'spread_home': '-',
+        'ml_away': '-', 'ml_home': '-',
+        'total': '-'
     }
     for game in odds_data:
         game_away = game.get('away_team', '').lower()
@@ -492,9 +509,9 @@ def generate_html():
                                 <td class="section-divider">|</td>
                                 {away_def_cells}
                                 <td class="section-divider">|</td>
-                                <td class="spread">{odds['spread_away']}</td>
-                                <td class="ml">{odds['ml_away']}</td>
-                                <td class="total" rowspan="2">{odds['total']}</td>
+                                <td class="spread">{trends.get('spread_away') or odds['spread_away']}</td>
+                                <td class="ml">{trends.get('ml_away') or odds['ml_away']}</td>
+                                <td class="total" rowspan="2">{trends.get('total') or odds['total']}</td>
                             </tr>
                             <tr class="home-row">
                                 <td class="team-col">
@@ -508,8 +525,8 @@ def generate_html():
                                 <td class="section-divider">|</td>
                                 {home_def_cells}
                                 <td class="section-divider">|</td>
-                                <td class="spread">{odds['spread_home']}</td>
-                                <td class="ml">{odds['ml_home']}</td>
+                                <td class="spread">{trends.get('spread_home') or odds['spread_home']}</td>
+                                <td class="ml">{trends.get('ml_home') or odds['ml_home']}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -521,15 +538,11 @@ def generate_html():
                             <span class="inj-team">{home_abbr}:</span> {home_inj}
                         </div>
                         <div class="trends-bar">
-                            <span class="trend-item"><b>H2H:</b> {trends.get('h2h', 'N/A') or 'First meeting'}</span>
+                            <span class="trend-item"><b>H2H:</b> {trends.get('h2h') or 'First meeting'}</span>
                             <span class="trend-sep">|</span>
-                            <span class="trend-item"><b>Line:</b> {trends.get('open_spread', '') or 'N/A'} → {trends.get('close_spread', '') or ''}</span>
+                            <span class="trend-item"><b>Line:</b> {trends.get('open_spread') or '-'} → {trends.get('close_spread') or '-'}</span>
                             <span class="trend-sep">|</span>
-                            <span class="trend-item"><b>Total:</b> {trends.get('open_total', '') or 'N/A'} → {trends.get('close_total', '') or ''}</span>
-                            <span class="trend-sep">|</span>
-                            <span class="trend-item"><b>ATS {away_abbr}:</b> {trends.get(f'ats_{away_abbr}', 'N/A') or 'N/A'}</span>
-                            <span class="trend-sep">|</span>
-                            <span class="trend-item"><b>ATS {home_abbr}:</b> {trends.get(f'ats_{home_abbr}', 'N/A') or 'N/A'}</span>
+                            <span class="trend-item"><b>Total:</b> {trends.get('open_total') or '-'} → {trends.get('close_total') or '-'}</span>
                         </div>
                     </div>
                 </div>
