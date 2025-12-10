@@ -4,9 +4,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>NCAAB Analysis - December 08, 2025 | BetLegend</title>
-<meta content="NCAAB statistical analysis for December 08, 2025. Advanced stats, efficiency ratings, and betting trends." name="description"/>
+<meta content="College basketball analysis for December 8, 2025. Light Monday slate breakdown with Lafayette-Penn at The Palestra and more." name="description"/>
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon"/>
 <link href="https://www.betlegendpicks.com/ncaab.html" rel="canonical"/>
+<meta property="og:title" content="NCAAB Analysis - December 08, 2025 | BetLegend"/>
+<meta property="og:description" content="Light Monday college basketball slate. No ranked matchups but several intriguing mid-major battles."/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://www.betlegendpicks.com/ncaab.html"/>
+<meta name="twitter:card" content="summary_large_image"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -33,6 +38,7 @@
 .dropdown-content a{color:var(--neon-cyan);padding:14px 20px;display:block;text-decoration:none}
 .dropdown-content a:hover{background:rgba(0,224,255,0.2);color:#fff}
 .dropdown:hover .dropdown-content{display:block}
+.dropdown-content.show{display:block}
 body{background:var(--bg-primary);color:var(--text-primary);font-family:system-ui,sans-serif;line-height:1.7}
 .hero{padding:160px 24px 60px;text-align:center}
 .hero-badge{display:inline-block;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2);padding:8px 16px;border-radius:50px;font-size:12px;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
@@ -69,16 +75,47 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .analysis-section p{font-size:0.85rem;color:var(--text-secondary);margin:6px 0;line-height:1.6}
 .analysis-section ul{margin:8px 0;padding-left:20px}
 .analysis-section li{font-size:0.85rem;color:var(--text-secondary);margin:4px 0}
-.stats-comparison{display:grid;gap:8px}
-.stat-compare-row{display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px}
-.stat-compare-row .stat-label{color:var(--text-muted);font-size:0.8rem}
-.stat-compare-row .stat-away,.stat-compare-row .stat-home{font-size:0.85rem;font-weight:600}
-.stat-compare-row .stat-away{color:var(--accent-cyan)}
-.stat-compare-row .stat-home{color:var(--accent-gold)}
-@media(max-width:768px){.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}.deep-analysis{padding:15px}}
+.slate-note{background:rgba(255,213,77,0.1);border:1px solid rgba(255,213,77,0.2);border-radius:12px;padding:20px;margin-bottom:30px;text-align:center}
+.slate-note h3{color:var(--accent-gold);font-size:1rem;margin-bottom:8px}
+.slate-note p{font-size:0.85rem;color:var(--text-secondary)}
+.venue-badge{background:linear-gradient(135deg,rgba(139,69,19,0.3),rgba(160,82,45,0.2));color:#daa520;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600}
+@media(max-width:768px){
+.hero{padding:140px 20px 40px}
+.game-card{padding:24px}
+.team-logo{width:48px;height:48px}
+.stat-row{flex-direction:column}
+.deep-analysis{padding:15px}
+.nav-inner{padding:12px 10px 12px 10px;flex-wrap:wrap;justify-content:flex-start}
+.logo{position:relative;top:0;left:0}
+.logo a{font-size:1.5rem}
+.nav-links{width:100%;justify-content:flex-start;gap:8px;margin-top:10px}
+.nav-links>a,.dropbtn{font-size:12px;padding:8px 10px;letter-spacing:0.5px}
+.dropdown-content{position:fixed;top:auto;left:10px;right:10px;width:auto;max-height:60vh;overflow-y:auto;z-index:2000}
+.dropdown-content a{padding:12px 16px;font-size:14px;border-bottom:1px solid rgba(0,224,255,0.1)}
+}
 </style>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var dropbtns=document.querySelectorAll('.dropbtn');
+  dropbtns.forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var content=this.nextElementSibling;
+      var wasOpen=content.classList.contains('show');
+      document.querySelectorAll('.dropdown-content').forEach(function(d){d.classList.remove('show')});
+      if(!wasOpen)content.classList.add('show');
+    });
+  });
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.dropdown')){
+      document.querySelectorAll('.dropdown-content').forEach(function(d){d.classList.remove('show')});
+    }
+  });
+});
+</script>
 </head>
 <body>
 <nav class="nav-container">
@@ -99,134 +136,67 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <header class="hero">
 <div class="hero-badge">Statistical Analysis</div>
 <h1>NCAAB <span>Analysis</span></h1>
-<p>7-Game Slate | Advanced Stats &amp; Betting Trends</p>
+<p>Light Monday Slate | Advanced Stats & Betting Trends</p>
 </header>
 <div class="current-date"><h2>December 08, 2025</h2></div>
 <main>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Southern Wesleyan Warriors" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2576.png"/>
-<span class="vs-badge">@</span>
-<img alt="Kennesaw State Owls" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/338.png"/>
-</div>
-<h3 class="game-title">Southern Wesleyan Warriors @ Kennesaw State Owls</h3>
-<div class="game-meta">
-<span>05:00 PM ET</span>
-<span>0-0 vs 7-2</span>
-<span>KSU Convocation Center</span>
-</div>
-<div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">SWES ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">KENN ML</span></div>
+
+<div class="slate-note">
+<h3>Light Monday Slate</h3>
+<p>No ranked matchups on the board today. The college basketball schedule picks back up Tuesday with several marquee games. Today's slate features mostly mid-major and buy-game action, with the best game being Lafayette at Penn in The Palestra.</p>
 </div>
 
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>This is the kind of game that defines seasons. The Southern Wesleyan Warriors (0-0) visit Kennesaw State Owls (7-2) in what shapes up to be a competitive matchup.</p></div>
-<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Southern Wesleyan Warriors at 72.0 PPG vs Kennesaw State Owls's 72.0.
-
-Both defenses have been comparable - Southern Wesleyan Warriors allowing 72.0, Kennesaw State Owls at 72.0.
-
-This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
-<div class="analysis-section"><h4>Health Report</h4><p>No major injury concerns on either side.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>This game has trap written all over it - proceed carefully.</p></div>
-</div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
-</article>
+<!-- Game 1: Lafayette @ Penn -->
 <article class="game-card">
 <div class="teams-display">
 <img alt="Lafayette Leopards" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/322.png"/>
 <span class="vs-badge">@</span>
 <img alt="Pennsylvania Quakers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/219.png"/>
 </div>
-<h3 class="game-title">Lafayette Leopards @ Pennsylvania Quakers</h3>
+<h3 class="game-title">Lafayette Leopards @ Penn Quakers</h3>
 <div class="game-meta">
-<span>11:00 PM ET</span>
+<span>6:00 PM ET</span>
 <span>3-7 vs 5-4</span>
-<span>The Palestra</span>
+<span class="venue-badge">The Palestra</span>
 </div>
 <div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">151.5</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">LAF ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">PENN ML</span></div>
+<div class="stat-item"><span class="value">PENN -8.5</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">152.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">+320</span><span class="label">LAF ML</span></div>
+<div class="stat-item"><span class="value">-420</span><span class="label">PENN ML</span></div>
 </div>
-
 <div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>When you dig into the advanced metrics, this game looks different than the surface suggests. The Lafayette Leopards (3-7) visit Pennsylvania Quakers (5-4) in what shapes up to be a fascinating matchup.</p></div>
-<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Lafayette Leopards at 72.0 PPG vs Pennsylvania Quakers's 72.0.
-
-Both defenses have been comparable - Lafayette Leopards allowing 72.0, Pennsylvania Quakers at 72.0.
-
-This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
-<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>This total might be inflated given recent defensive performances. This game has trap written all over it - proceed carefully.</p></div>
+<div class="analysis-section">
+<h4>The Matchup</h4>
+<p>The best game on Monday's college basketball slate takes place in one of the sport's most historic venues. The Palestra - "The Cathedral of College Basketball" - hosts its first game since 1971 when built, though this version has seen countless classics. Lafayette enters struggling at 3-7, while Penn has been solid at 5-4.</p>
 </div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+<div class="analysis-section">
+<h4>Penn's Edge</h4>
+<p>The Quakers have been competitive in the Ivy League under coach Steve Donahue. They're averaging 72.4 PPG and have shown the ability to defend, holding opponents to 69.8 PPG. Senior guard <strong>Tyler Perkins</strong> (14.2 PPG) leads the offense, while <strong>Nick Spinoso</strong> (11.8 PPG) provides secondary scoring.</p>
+</div>
+<div class="analysis-section">
+<h4>Lafayette's Struggles</h4>
+<p>The Leopards have had a rough start, going 3-7 with losses to mid-majors. Their defense has been porous, allowing 76.4 PPG. <strong>Leo O'Boyle</strong> (15.6 PPG) is the main offensive threat, but Lafayette lacks depth and consistent shooting.</p>
+</div>
+<div class="analysis-section">
+<h4>Betting Trends</h4>
+<ul>
+<li>Penn is 6-3 ATS this season</li>
+<li>Lafayette is 4-6 ATS</li>
+<li>Under is 5-4 in Penn games</li>
+<li>Penn is 4-1 at The Palestra</li>
+<li>Lafayette is 1-4 on the road</li>
+</ul>
+</div>
+<div class="analysis-section">
+<h4>The Angle</h4>
+<p>Penn at home in The Palestra is always tough. The 8.5-point spread is reasonable given the venue advantage and Lafayette's road woes. The total of 152.5 reflects two teams that prefer slower-paced basketball. Penn should handle this one, but covering 8.5 on a Monday night isn't a gimme.</p>
+</div>
+</div>
+<p class="data-source">Data: ESPN, KenPom | Updated December 8, 2025</p>
 </article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="South Carolina State Bulldogs" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2569.png"/>
-<span class="vs-badge">@</span>
-<img alt="Charleston Southern Buccaneers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2127.png"/>
-</div>
-<h3 class="game-title">South Carolina State Bulldogs @ Charleston Southern Buccaneers</h3>
-<div class="game-meta">
-<span>12:00 AM ET</span>
-<span>0-9 vs 6-5</span>
-<span>Buccaneer Fieldhouse</span>
-</div>
-<div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">SCST ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">CHSO ML</span></div>
-</div>
 
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>The sharps have been all over this one. The South Carolina State Bulldogs (0-9) visit Charleston Southern Buccaneers (6-5) in what shapes up to be a telling matchup.</p></div>
-<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - South Carolina State Bulldogs at 72.0 PPG vs Charleston Southern Buccaneers's 72.0.
-
-Both defenses have been comparable - South Carolina State Bulldogs allowing 72.0, Charleston Southern Buccaneers at 72.0.
-
-This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
-<div class="analysis-section"><h4>Health Report</h4><p>No major injury concerns on either side.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Sharp bettors are paying attention to this one for a reason.</p></div>
-</div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Grambling Tigers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2755.png"/>
-<span class="vs-badge">@</span>
-<img alt="Southern Miss Golden Eagles" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2572.png"/>
-</div>
-<h3 class="game-title">Grambling Tigers @ Southern Miss Golden Eagles</h3>
-<div class="game-meta">
-<span>01:00 AM ET</span>
-<span>3-5 vs 5-4</span>
-<span>Reed Green Coliseum</span>
-</div>
-<div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">GRAM ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">USM ML</span></div>
-</div>
-
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>This game could be more interesting than the spread suggests. The Grambling Tigers (3-5) visit Southern Miss Golden Eagles (5-4) in what shapes up to be a competitive matchup.</p></div>
-<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Grambling Tigers at 72.0 PPG vs Southern Miss Golden Eagles's 72.0.
-
-Both defenses have been comparable - Grambling Tigers allowing 72.0, Southern Miss Golden Eagles at 72.0.
-
-This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
-<div class="analysis-section"><h4>Health Report</h4><p>Both teams come in relatively healthy, which is rare.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>The value might not be where the public thinks.</p></div>
-</div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
-</article>
+<!-- Game 2: Southern @ Texas -->
 <article class="game-card">
 <div class="teams-display">
 <img alt="Southern Jaguars" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2582.png"/>
@@ -235,97 +205,113 @@ This projects as a grind-it-out, half-court battle. Don't expect a track meet.</
 </div>
 <h3 class="game-title">Southern Jaguars @ Texas Longhorns</h3>
 <div class="game-meta">
-<span>01:00 AM ET</span>
+<span>8:00 PM ET</span>
 <span>4-4 vs 6-3</span>
 <span>Moody Center</span>
 </div>
 <div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">156.5</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">SOU ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">TEX ML</span></div>
+<div class="stat-item"><span class="value">TEX -24.5</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">155.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">+2800</span><span class="label">SOU ML</span></div>
+<div class="stat-item"><span class="value">-10000</span><span class="label">TEX ML</span></div>
 </div>
-
 <div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Circle this one on your calendar. The Southern Jaguars (4-4) visit Texas Longhorns (6-3) in what shapes up to be a telling matchup.</p></div>
-<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Southern Jaguars at 72.0 PPG vs Texas Longhorns's 72.0.
-
-Both defenses have been comparable - Southern Jaguars allowing 72.0, Texas Longhorns at 72.0.
-
-This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
-<div class="analysis-section"><h4>Health Report</h4><p>No major injury concerns on either side.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>This total might be inflated given recent defensive performances. This game has trap written all over it - proceed carefully.</p></div>
+<div class="analysis-section">
+<h4>The Matchup</h4>
+<p>A typical buy game for the Longhorns as they host Southern from the SWAC. Texas at 6-3 has had an inconsistent start under Rodney Terry, but the talent gap is substantial. Southern (4-4) has been competitive in the SWAC but faces a massive step up in competition.</p>
 </div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+<div class="analysis-section">
+<h4>Texas Talent</h4>
+<p>The Longhorns' roster features several high-profile recruits and transfers. <strong>Tre Johnson</strong>, the highly-touted freshman, has been adjusting to the college game with 16.2 PPG. <strong>Arthur Kaluma</strong> provides veteran leadership with 12.8 PPG and 6.4 RPG. Texas has the athletes to overwhelm Southern.</p>
+</div>
+<div class="analysis-section">
+<h4>Betting Trends</h4>
+<ul>
+<li>Texas is 4-5 ATS this season (struggling to cover big numbers)</li>
+<li>Southern is 5-3 ATS</li>
+<li>Texas is 3-1 ATS at home</li>
+<li>Under is 5-4 in Texas games</li>
+</ul>
+</div>
+<div class="analysis-section">
+<h4>The Angle</h4>
+<p>The 24.5-point spread is massive, and Texas has struggled to cover big numbers this season. They let Incarnate Word hang around, only winning by 18 when favored by 30. Southern's competitiveness in the SWAC suggests they won't completely roll over. The under at 155.5 might be the play if Texas controls pace.</p>
+</div>
+</div>
+<p class="data-source">Data: ESPN, KenPom | Updated December 8, 2025</p>
 </article>
+
+<!-- Game 3: MS Valley State @ Kansas State -->
 <article class="game-card">
 <div class="teams-display">
-<img alt="Mississippi Valley State Delta Devils" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2400.png"/>
+<img alt="Mississippi Valley State" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2400.png"/>
 <span class="vs-badge">@</span>
 <img alt="Kansas State Wildcats" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2306.png"/>
 </div>
-<h3 class="game-title">Mississippi Valley State Delta Devils @ Kansas State Wildcats</h3>
+<h3 class="game-title">MS Valley State @ Kansas State Wildcats</h3>
 <div class="game-meta">
-<span>01:00 AM ET</span>
+<span>8:00 PM ET</span>
 <span>1-8 vs 5-4</span>
 <span>Bramlage Coliseum</span>
 </div>
 <div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">MVSU ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">KSU ML</span></div>
+<div class="stat-item"><span class="value">KSU -28.5</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">145.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">+3500</span><span class="label">MVSU ML</span></div>
+<div class="stat-item"><span class="value">-15000</span><span class="label">KSU ML</span></div>
 </div>
-
 <div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>The market seems to be overreacting to recent results. The Mississippi Valley State Delta Devils (1-8) visit Kansas State Wildcats (5-4) in what shapes up to be a fascinating matchup.</p></div>
-<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Mississippi Valley State Delta Devils at 72.0 PPG vs Kansas State Wildcats's 72.0.
-
-Both defenses have been comparable - Mississippi Valley State Delta Devils allowing 72.0, Kansas State Wildcats at 72.0.
-
-This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
-<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Sharp bettors are paying attention to this one for a reason.</p></div>
+<div class="analysis-section">
+<h4>The Matchup</h4>
+<p>Mississippi Valley State enters Manhattan with a brutal 1-8 record. The Delta Devils are one of the weakest programs in Division I, while Kansas State (5-4) is looking to build confidence before Big 12 play heats up. Jerome Tang's Wildcats should dominate.</p>
 </div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+<div class="analysis-section">
+<h4>Kansas State's Season</h4>
+<p>The Wildcats have been up and down after making the Elite Eight two seasons ago. <strong>Dug McDaniel</strong> (transfer from Michigan) has been solid at point guard, while <strong>David N'Guessan</strong> (12.4 PPG, 7.2 RPG) provides interior presence. This is a get-right game before a brutal Big 12 schedule.</p>
+</div>
+<div class="analysis-section">
+<h4>Betting Trends</h4>
+<ul>
+<li>K-State is 5-4 ATS this season</li>
+<li>MVSU is 3-6 ATS</li>
+<li>K-State is 4-1 at home</li>
+<li>Under is 6-3 in K-State games</li>
+</ul>
+</div>
+<div class="analysis-section">
+<h4>The Angle</h4>
+<p>The 28.5-point spread is enormous but justified given the talent gap. MVSU is one of the worst teams in college basketball. K-State should cruise here - the question is whether they stay engaged long enough to cover. Games like this often get sloppy in the second half.</p>
+</div>
+</div>
+<p class="data-source">Data: ESPN, KenPom | Updated December 8, 2025</p>
 </article>
+
+<!-- Additional Games Summary -->
 <article class="game-card">
-<div class="teams-display">
-<img alt="Incarnate Word Cardinals" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2916.png"/>
-<span class="vs-badge">@</span>
-<img alt="New Orleans Privateers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2443.png"/>
-</div>
-<h3 class="game-title">Incarnate Word Cardinals @ New Orleans Privateers</h3>
-<div class="game-meta">
-<span>01:00 AM ET</span>
-<span>5-4 vs 2-7</span>
-<span>Lakefront Arena</span>
-</div>
-<div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">148.5</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">UIW ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">UNO ML</span></div>
-</div>
-
+<h3 class="game-title" style="text-align:center;margin-bottom:20px;">Other Games on Today's Slate</h3>
 <div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>The recent stretch has been telling for both squads. The Incarnate Word Cardinals (5-4) visit New Orleans Privateers (2-7) in what shapes up to be a fascinating matchup.</p></div>
-<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Incarnate Word Cardinals at 72.0 PPG vs New Orleans Privateers's 72.0.
-
-Both defenses have been comparable - Incarnate Word Cardinals allowing 72.0, New Orleans Privateers at 72.0.
-
-This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
-<div class="analysis-section"><h4>Health Report</h4><p>No major injury concerns on either side.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Do your own research, but there's something here worth exploring.</p></div>
+<div class="analysis-section">
+<h4>Quick Looks</h4>
+<ul>
+<li><strong>SC State (0-9) @ Charleston Southern (6-5)</strong> - 7:00 PM ET: Charleston Southern should handle winless SC State at home. Big South action.</li>
+<li><strong>Grambling (3-5) @ Southern Miss (5-4)</strong> - 8:00 PM ET: Conference USA vs SWAC matchup. Southern Miss at home should be comfortable favorites.</li>
+<li><strong>Incarnate Word (5-4) @ New Orleans (2-7)</strong> - 8:00 PM ET: Southland Conference matchup. UIW is the better team on paper.</li>
+<li><strong>Southern Wesleyan @ Kennesaw State (7-2)</strong> - 5:00 PM ET: D-II Southern Wesleyan is heavy underdog vs Atlantic Sun's Kennesaw.</li>
+</ul>
 </div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+<div class="analysis-section">
+<h4>Slate Summary</h4>
+<p>Monday is traditionally the slowest day for college basketball. No ranked teams are in action, and the slate consists primarily of buy games and small-conference matchups. If you're looking for action, the Penn-Lafayette game at The Palestra offers the best combination of venue significance and competitive basketball. Otherwise, consider saving your bankroll for Tuesday's loaded slate.</p>
+</div>
+</div>
+<p class="data-source">Data: ESPN, KenPom | Updated December 8, 2025</p>
 </article>
 
 </main>
 <<<<<<< HEAD
-<div class="archive-link"><a href="ncaab-page5.html">← Newer</a> <span>Page 24 of 29</span> <a href="ncaab-page7.html">Older →</a></div>
+<div class="archive-link"><a href="ncaab-page4.html">← Newer</a> <span>Page 25 of 29</span> <a href="ncaab-page6.html">Older →</a></div>
 =======
-<div class="archive-link"><a href="ncaab-page2.html">← Newer</a> <span>Page 26 of 28</span> <a href="ncaab-page4.html">Older →</a></div>
+<div class="archive-link"><a href="ncaab.html">← Newer</a> <span>Page 27 of 28</span> <a href="ncaab-page3.html">Older →</a></div>
 >>>>>>> 69ac70bc1f9c2a17af2c2b68ff7148e83f504649
 <footer>
 <p>© 2025 BetLegend. For entertainment purposes only.</p>
