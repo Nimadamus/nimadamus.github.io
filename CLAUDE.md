@@ -68,8 +68,24 @@ If the user asks you to create a slate post (NBA, NHL, NFL, NCAAB, MLB), you MUS
 - **NHL slate posts**: nhl.html (add to TOP)
 - **NCAAB posts**: ncaab.html (add to TOP)
 - **NFL posts**: nfl.html (add to TOP)
-- **Featured Game of the Day**: featured-game-of-the-day-page15.html (current - Dec 8, 2025)
+- **Featured Game of the Day**: featured-game-of-the-day-page17.html (current - Dec 11, 2025)
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
+
+### ⛔ CRITICAL: FEATURED GAME OF THE DAY = ANALYSIS ONLY, NO PICKS ⛔
+
+**Featured Game pages are STATS and ANALYSIS only. NEVER give picks.**
+
+**DO NOT include:**
+- ❌ "BetLegend's Pick" or verdict sections
+- ❌ "Take [Team]" language
+- ❌ Any explicit betting recommendation
+
+**MUST include:**
+- ✅ Team logos next to team names (ESPN CDN: https://a.espncdn.com/i/teamlogos/nfl/500/[abbrev].png)
+- ✅ Deep stats analysis with verified numbers
+- ✅ Injury reports, betting lines, trends
+- ✅ "Final Thoughts" section (analysis only, no picks)
+- ✅ "Keys To Victory" for both teams
 
 ### ⛔ CRITICAL: FEATURED GAME LINK UPDATE REQUIRED ⛔
 

@@ -738,12 +738,35 @@ Include related terms naturally:
 - Wrap in news-post div with gold border styling
 
 ### Featured Game of the Day
-- Add to **featured-game-of-the-day-page15.html** (current page - December 8, 2025)
+- Add to **featured-game-of-the-day-page17.html** (current page - December 11, 2025)
 - **IMPORTANT**: Every time you add a new Featured Game of the Day post, you MUST:
   1. Create a NEW page (increment the page number)
   2. Update the OLD page's pagination to link to the new page
   3. **⚠️ CRITICAL: Update ALL site navigation links to point to the new page (see 1D below)**
   4. The new page becomes the "newest" page in the pagination
+
+### ⛔ FEATURED GAME OF THE DAY - NO PICKS RULE ⛔
+
+**CRITICAL: Featured Game of the Day pages are ANALYSIS and STATS ONLY. NO PICKS.**
+
+**These pages MUST NOT include:**
+- ❌ "BetLegend's Pick" or any pick section
+- ❌ "The Verdict" with a specific pick
+- ❌ "Take [Team]" language
+- ❌ Any explicit betting recommendation
+- ❌ "My pick is..." or similar
+
+**These pages MUST include:**
+- ✅ Team logos next to team names (use ESPN CDN: https://a.espncdn.com/i/teamlogos/nfl/500/[abbrev].png)
+- ✅ Deep statistical analysis with verified numbers
+- ✅ Injury reports (verified current status)
+- ✅ Betting lines (spread, total, moneyline)
+- ✅ Key matchup breakdowns
+- ✅ ATS trends and betting trends (with specific numbers)
+- ✅ "Final Thoughts" section analyzing the matchup (no picks)
+- ✅ "Keys To Victory" for both teams
+
+**Purpose:** Featured Game pages are DATA and ANALYSIS resources for bettors to make their own decisions. They are NOT for giving explicit picks.
 
 ---
 
