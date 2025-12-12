@@ -118,13 +118,20 @@ class HTMLUpdater:
         return '\n'.join(content_parts)
 
     def insert_content_to_main_page(self, sport: str, new_content: str,
-                                     date: str = None) -> Tuple[str, List[str]]:
+                                     date: str = None, clear_existing: bool = True) -> Tuple[str, List[str]]:
         """Insert new content at the top of main sport page.
+
+        IMPORTANT: By default, this now CLEARS all existing game cards before
+        adding new ones. This prevents stale games from previous days being
+        shown alongside today's games.
 
         Args:
             sport: Sport code
             new_content: HTML content to insert
             date: Date for the new content
+            clear_existing: If True (default), removes ALL existing game cards
+                           before adding new content. Set to False only if you
+                           explicitly want to keep old games (not recommended).
 
         Returns:
             Tuple of (updated HTML, list of archived content if any)
@@ -148,6 +155,14 @@ class HTMLUpdater:
         # Get existing game cards
         existing_cards = main_elem.find_all('article', class_='game-card')
 
+        # Archive existing cards before clearing (if clear_existing is True)
+        archived_content = []
+        if clear_existing and existing_cards:
+            print(f"[{sport.upper()}] Clearing {len(existing_cards)} old game cards before adding new content")
+            for card in existing_cards:
+                archived_content.append(str(card))
+                card.decompose()
+
         # Insert new content at the beginning of main
         new_soup = BeautifulSoup(new_content, 'html.parser')
         new_elements = list(new_soup.children)
@@ -156,16 +171,15 @@ class HTMLUpdater:
         for elem in reversed(new_elements):
             main_elem.insert(0, elem)
 
-        # Check if we need to archive old content
-        archived_content = []
-        all_cards = main_elem.find_all('article', class_='game-card')
-
-        if len(all_cards) > POSTS_PER_PAGE * 3:  # Keep 3 days on main page
-            # Archive oldest cards
-            cards_to_archive = all_cards[POSTS_PER_PAGE * 3:]
-            for card in cards_to_archive:
-                archived_content.append(str(card))
-                card.decompose()
+        # If we didn't clear existing, check if we need to archive old content
+        if not clear_existing:
+            all_cards = main_elem.find_all('article', class_='game-card')
+            if len(all_cards) > POSTS_PER_PAGE * 3:  # Keep 3 days on main page
+                # Archive oldest cards
+                cards_to_archive = all_cards[POSTS_PER_PAGE * 3:]
+                for card in cards_to_archive:
+                    archived_content.append(str(card))
+                    card.decompose()
 
         return str(soup), archived_content
 
