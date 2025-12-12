@@ -83,11 +83,75 @@ jobs:
             echo "⚠️ **Low game count** - verify this is correct for today's schedule" >> $GITHUB_STEP_SUMMARY
           fi
 
+      - name: Update Handicapping Hub Calendar
+        run: |
+          python3 << 'EOF'
+          import os
+          import re
+          from datetime import datetime
+
+          # Find all archive files
+          archives = []
+          for f in os.listdir('.'):
+              match = re.match(r'handicapping-hub-(\d{4})-(\d{2})-(\d{2})\.html', f)
+              if match:
+                  year, month, day = int(match.group(1)), int(match.group(2)), int(match.group(3))
+                  archives.append((year, month, day, f))
+
+          archives.sort()
+          total_days = len(archives)
+
+          # Read calendar file
+          with open('handicapping-hub-calendar.html', 'r') as f:
+              content = f.read()
+
+          # Update total days count
+          content = re.sub(r'(<div class="stat-value" id="total-days">)\d+(</div>)',
+                          f'\\g<1>{total_days}\\2', content)
+
+          # Get today's date
+          today = datetime.now()
+          today_day = today.day
+          today_month = today.month
+          today_year = today.year
+
+          # Process December 2025 calendar section
+          dec_pattern = r'(<!-- Week 2: Dec 7-13 -->.*?<div class="calendar-day"><span class="day-number">13</span></div>)'
+
+          def generate_week2_dec():
+              week2 = '<!-- Week 2: Dec 7-13 -->\n'
+              for day in range(7, 14):
+                  archive_exists = (2025, 12, day, f'handicapping-hub-2025-12-{day:02d}.html') in [(a[0], a[1], a[2], a[3]) for a in archives] or os.path.exists(f'handicapping-hub-2025-12-{day:02d}.html')
+                  is_today = (today_year == 2025 and today_month == 12 and today_day == day)
+
+                  if is_today:
+                      week2 += f'''            <div class="calendar-day current available" onclick="window.location.href='handicapping-hub.html'">
+                  <span class="day-number">{day}</span>
+                  <span class="game-count">Today</span>
+              </div>\n'''
+                  elif archive_exists:
+                      week2 += f'''            <div class="calendar-day available" onclick="window.location.href='handicapping-hub-2025-12-{day:02d}.html'">
+                  <span class="day-number">{day}</span>
+                  <span class="game-count">Archived</span>
+              </div>\n'''
+                  else:
+                      week2 += f'            <div class="calendar-day"><span class="day-number">{day}</span></div>\n'
+              return week2.rstrip()
+
+          content = re.sub(dec_pattern, generate_week2_dec(), content, flags=re.DOTALL)
+
+          # Write updated calendar
+          with open('handicapping-hub-calendar.html', 'w') as f:
+              f.write(content)
+
+          print(f"✓ Calendar updated with {total_days} archived days")
+          EOF
+
       - name: Commit and Push
         run: |
           git config --global user.email "bot@github.com"
           git config --global user.name "GitHub Actions Bot"
-          git add handicapping-hub.html handicapping-hub-*.html
+          git add handicapping-hub.html handicapping-hub-*.html handicapping-hub-calendar.html
           git commit -m "Auto-update handicapping hub $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
           git push
         env:
