@@ -60,6 +60,19 @@
         .warning-box { background: rgba(255, 215, 0, 0.1); border: 2px solid var(--warning-color); border-radius: 10px; padding: 20px; margin-top: 20px; }
         .warning-box p { color: var(--text-secondary); margin: 0; }
         @media (max-width: 768px) {
+            /* Mobile dropdown fix - full width */
+            .dropdown-content,
+            .sports-records-dropdown {
+                position: fixed;
+                left: 10px !important;
+                right: 10px !important;
+                top: auto;
+                width: calc(100% - 20px);
+                min-width: unset;
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+
             h1 { font-size: 2rem; }
             .calculator-section { padding: 25px; }
             .leg-item { flex-direction: column; align-items: stretch; }

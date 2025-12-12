@@ -1031,10 +1031,21 @@
                 letter-spacing: 1px;
             }
 
+            /* Mobile dropdown fix - full width */
+            .dropdown-content,
             .sports-records-dropdown {
-                min-width: 300px;
+                position: fixed;
+                left: 10px !important;
+                right: 10px !important;
+                top: auto;
+                width: calc(100% - 20px);
+                min-width: unset;
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+
+            .sports-records-dropdown {
                 padding: 15px;
-                left: -100px;
             }
 
             .two-columns {
@@ -1179,16 +1190,7 @@
                 font-size: 0.85rem;
             }
 
-            .dropdown-content {
-                min-width: 180px;
-                left: -50px;
-            }
-
-            .sports-records-dropdown {
-                min-width: 280px;
-                left: -120px;
-            }
-
+            /* Mobile dropdown - stacks to single column */
             .two-columns {
                 grid-template-columns: 1fr;
                 gap: 15px;
