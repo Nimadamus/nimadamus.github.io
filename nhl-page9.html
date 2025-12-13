@@ -4,9 +4,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>NHL Analysis - December 08, 2025 | BetLegend</title>
-<meta content="NHL statistical analysis for December 08, 2025. Advanced stats, efficiency ratings, and betting trends." name="description"/>
+<meta content="NHL analysis for December 8, 2025. Five-game slate breakdown featuring Lightning-Leafs, Kings-Utah, Sabres-Flames, Red Wings-Canucks, and Wild-Kraken." name="description"/>
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon"/>
 <link href="https://www.betlegendpicks.com/nhl.html" rel="canonical"/>
+<meta property="og:title" content="NHL Analysis - December 08, 2025 | BetLegend"/>
+<meta property="og:description" content="Five-game NHL slate analysis with comprehensive matchup breakdowns and goaltender reports."/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://www.betlegendpicks.com/nhl.html"/>
+<meta name="twitter:card" content="summary_large_image"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -33,6 +38,7 @@
 .dropdown-content a{color:var(--neon-cyan);padding:14px 20px;display:block;text-decoration:none}
 .dropdown-content a:hover{background:rgba(0,224,255,0.2);color:#fff}
 .dropdown:hover .dropdown-content{display:block}
+.dropdown-content.show{display:block}
 body{background:var(--bg-primary);color:var(--text-primary);font-family:system-ui,sans-serif;line-height:1.7}
 .hero{padding:160px 24px 60px;text-align:center}
 .hero-badge{display:inline-block;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2);padding:8px 16px;border-radius:50px;font-size:12px;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
@@ -75,6 +81,9 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .stat-compare-row .stat-away,.stat-compare-row .stat-home{font-size:0.85rem;font-weight:600}
 .stat-compare-row .stat-away{color:var(--accent-cyan)}
 .stat-compare-row .stat-home{color:var(--accent-gold)}
+.goalie-box{background:rgba(0,100,255,0.1);border:1px solid rgba(0,150,255,0.2);border-radius:8px;padding:12px;margin:12px 0}
+.goalie-box h5{color:var(--accent-cyan);font-size:0.8rem;margin-bottom:8px}
+.goalie-box p{font-size:0.8rem;margin:4px 0}
 @media(max-width:768px){
             /* Mobile dropdown fix - full width centered */
             .dropdown-content,
@@ -91,10 +100,43 @@ footer a{color:var(--accent-cyan);text-decoration:none}
                 -webkit-overflow-scrolling: touch;
                 z-index: 999999 !important;
             }
-.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}.deep-analysis{padding:15px}}
+
+.hero{padding:140px 20px 40px}
+.game-card{padding:24px}
+.team-logo{width:48px;height:48px}
+.stat-row{flex-direction:column}
+.deep-analysis{padding:15px}
+.nav-inner{padding:12px 10px 12px 10px;flex-wrap:wrap;justify-content:flex-start}
+.logo{position:relative;top:0;left:0}
+.logo a{font-size:1.5rem}
+.nav-links{width:100%;justify-content:flex-start;gap:8px;margin-top:10px}
+.nav-links>a,.dropbtn{font-size:12px;padding:8px 10px;letter-spacing:0.5px}
+.dropdown-content{position:fixed;top:auto;left:10px;right:10px;width:auto;max-height:60vh;overflow-y:auto;z-index:2000}
+.dropdown-content a{padding:12px 16px;font-size:14px;border-bottom:1px solid rgba(0,224,255,0.1)}
+}
 </style>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var dropbtns=document.querySelectorAll('.dropbtn');
+  dropbtns.forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var content=this.nextElementSibling;
+      var wasOpen=content.classList.contains('show');
+      document.querySelectorAll('.dropdown-content').forEach(function(d){d.classList.remove('show')});
+      if(!wasOpen)content.classList.add('show');
+    });
+  });
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.dropdown')){
+      document.querySelectorAll('.dropdown-content').forEach(function(d){d.classList.remove('show')});
+    }
+  });
+});
+</script>
 </head>
 <body>
 <nav class="nav-container">
@@ -115,10 +157,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <header class="hero">
 <div class="hero-badge">Statistical Analysis</div>
 <h1>NHL <span>Analysis</span></h1>
-<p>5-Game Slate | Advanced Stats &amp; Betting Trends</p>
+<p>5-Game Slate | Advanced Stats & Betting Trends</p>
 </header>
 <div class="current-date"><h2>December 08, 2025</h2></div>
 <main>
+
+<!-- Game 1: Lightning @ Maple Leafs -->
 <article class="game-card">
 <div class="teams-display">
 <img alt="Tampa Bay Lightning" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/tb.png"/>
@@ -127,56 +171,155 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </div>
 <h3 class="game-title">Tampa Bay Lightning @ Toronto Maple Leafs</h3>
 <div class="game-meta">
-<span>12:30 AM ET</span>
-<span>16-10-2 vs 13-11-4</span>
+<span>7:30 PM ET</span>
+<span>16-10-2 vs 15-10-2</span>
 <span>Scotiabank Arena</span>
 </div>
 <div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">6.0</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">TB ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">TOR ML</span></div>
+<div class="stat-item"><span class="value">TOR -145</span><span class="label">Puck Line</span></div>
+<div class="stat-item"><span class="value">6.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">+125</span><span class="label">TB ML</span></div>
+<div class="stat-item"><span class="value">-150</span><span class="label">TOR ML</span></div>
 </div>
 <div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
-<p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>TB:</strong> No key injuries</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>TOR:</strong> No key injuries</p>
+<p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">CRITICAL INJURIES</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>TB:</strong> Andrei Vasilevskiy (lower body) - OUT | Mikhail Sergachev (leg) - OUT</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>TOR:</strong> Mitch Marner (traded to VGK) | Calle Jarnkrok (groin) - OUT</p>
 </div>
 <div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>There's real value hiding in this line. The Tampa Bay Lightning (16-10-2) visit Toronto Maple Leafs (13-11-4) in what shapes up to be a competitive matchup.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>The total feels low based on how these offenses have been playing. The value might not be where the public thinks.</p></div>
+<div class="analysis-section">
+<h4>The Matchup</h4>
+<p>A major Atlantic Division clash with significant goaltending implications. Tampa Bay is without Andrei Vasilevskiy, who has been the backbone of their franchise for years. Meanwhile, Toronto plays their first full season without Mitch Marner, who was traded to Vegas in July 2025.</p>
 </div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+<div class="goalie-box">
+<h5>Goaltending Matchup</h5>
+<p><strong>TB:</strong> Jonas Johansson (likely) - 6-4-1, 2.78 GAA, .908 SV%</p>
+<p><strong>TOR:</strong> Joseph Woll (likely) - 10-4-0, 2.42 GAA, .918 SV%</p>
+</div>
+<div class="analysis-section">
+<h4>Star Watch</h4>
+<p><strong>Nikita Kucherov</strong> leads Tampa with 42 points (14G, 28A) in 28 games, continuing his elite production. <strong>Brayden Point</strong> (18G) provides the goal-scoring punch. For Toronto, <strong>Auston Matthews</strong> has 18 goals and 32 points, while <strong>William Nylander</strong> (38 points) has stepped up in Marner's absence.</p>
+</div>
+<div class="analysis-section">
+<h4>By The Numbers</h4>
+<div class="stats-comparison">
+<div class="stat-compare-row">
+<span class="stat-away">TB: 3.32</span>
+<span class="stat-label">Goals/Game</span>
+<span class="stat-home">TOR: 3.26</span>
+</div>
+<div class="stat-compare-row">
+<span class="stat-away">TB: 2.89</span>
+<span class="stat-label">Goals Against/G</span>
+<span class="stat-home">TOR: 2.74</span>
+</div>
+<div class="stat-compare-row">
+<span class="stat-away">TB: 24.2%</span>
+<span class="stat-label">Power Play %</span>
+<span class="stat-home">TOR: 26.8%</span>
+</div>
+<div class="stat-compare-row">
+<span class="stat-away">TB: 79.4%</span>
+<span class="stat-label">Penalty Kill %</span>
+<span class="stat-home">TOR: 81.2%</span>
+</div>
+</div>
+</div>
+<div class="analysis-section">
+<h4>Betting Trends</h4>
+<ul>
+<li>Maple Leafs are 8-4 at home this season</li>
+<li>Lightning are 4-6 on the road</li>
+<li>Over is 16-12 in combined games</li>
+<li>Tampa is 2-4 without Vasilevskiy this season</li>
+<li>Head-to-head: Split last 4 meetings</li>
+</ul>
+</div>
+<div class="analysis-section">
+<h4>The Angle</h4>
+<p>The Vasilevskiy absence is massive. Jonas Johansson has been serviceable but lacks the game-stealing ability that makes Tampa so dangerous. Toronto's offense should feast on a backup goalie, and Woll has been excellent at home. The total of 6.5 could go either way - Toronto's offense is potent, but their defense has tightened up recently.</p>
+</div>
+</div>
+<p class="data-source">Data: ESPN, Natural Stat Trick | Updated December 8, 2025</p>
 </article>
+
+<!-- Game 2: Kings @ Utah -->
 <article class="game-card">
 <div class="teams-display">
 <img alt="Los Angeles Kings" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/la.png"/>
 <span class="vs-badge">@</span>
-<img alt="Utah Mammoth" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/uta.png"/>
+<img alt="Utah Hockey Club" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/uta.png"/>
 </div>
-<h3 class="game-title">Los Angeles Kings @ Utah Mammoth</h3>
+<h3 class="game-title">Los Angeles Kings @ Utah Hockey Club</h3>
 <div class="game-meta">
-<span>02:00 AM ET</span>
-<span>13-8-7 vs 14-13-3</span>
+<span>9:00 PM ET</span>
+<span>15-8-5 vs 12-12-4</span>
 <span>Delta Center</span>
 </div>
 <div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">LA -125</span><span class="label">Puck Line</span></div>
 <div class="stat-item"><span class="value">5.5</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">LA ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">UTA ML</span></div>
+<div class="stat-item"><span class="value">-130</span><span class="label">LA ML</span></div>
+<div class="stat-item"><span class="value">+110</span><span class="label">UTA ML</span></div>
 </div>
 <div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
 <p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>LA:</strong> No key injuries</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>UTA:</strong> No key injuries</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>LA:</strong> Arthur Kaliyev (shoulder) - IR | Brandt Clarke (upper body) - Day-to-day</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>UTA:</strong> Sean Durzi (shoulder) - OUT | Barrett Hayton (lower body) - Questionable</p>
 </div>
 <div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Both teams come into this with something to prove. The Los Angeles Kings (13-8-7) visit Utah Mammoth (14-13-3) in what shapes up to be a competitive matchup.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>The total feels low based on how these offenses have been playing. Sometimes the obvious play is the right one. Sometimes it isn't.</p></div>
+<div class="analysis-section">
+<h4>The Matchup</h4>
+<p>The Kings visit Utah in just the franchise's first season after relocating from Arizona. Utah has struggled to find consistency in their new home, while LA has been one of the steadiest teams in the Western Conference with their veteran core leading the way.</p>
 </div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+<div class="goalie-box">
+<h5>Goaltending Matchup</h5>
+<p><strong>LA:</strong> Darcy Kuemper (likely) - 10-5-3, 2.58 GAA, .912 SV%</p>
+<p><strong>UTA:</strong> Karel Vejmelka (likely) - 8-8-2, 2.94 GAA, .902 SV%</p>
+</div>
+<div class="analysis-section">
+<h4>Star Watch</h4>
+<p><strong>Anze Kopitar</strong> continues to defy age at 38 with 28 points (9G, 19A). <strong>Adrian Kempe</strong> leads the team with 12 goals. For Utah, <strong>Clayton Keller</strong> (32 points) and <strong>Nick Schmaltz</strong> (24 points) carry the offensive load in their new market.</p>
+</div>
+<div class="analysis-section">
+<h4>By The Numbers</h4>
+<div class="stats-comparison">
+<div class="stat-compare-row">
+<span class="stat-away">LA: 2.86</span>
+<span class="stat-label">Goals/Game</span>
+<span class="stat-home">UTA: 2.71</span>
+</div>
+<div class="stat-compare-row">
+<span class="stat-away">LA: 2.54</span>
+<span class="stat-label">Goals Against/G</span>
+<span class="stat-home">UTA: 3.07</span>
+</div>
+<div class="stat-compare-row">
+<span class="stat-away">LA: 50.8%</span>
+<span class="stat-label">Corsi For %</span>
+<span class="stat-home">UTA: 48.2%</span>
+</div>
+</div>
+</div>
+<div class="analysis-section">
+<h4>Betting Trends</h4>
+<ul>
+<li>Kings are 8-4 on the road this season</li>
+<li>Utah is 6-6-2 at home</li>
+<li>Under is 16-12 in Kings games</li>
+<li>LA is 5-1 in their last 6 vs former Arizona</li>
+<li>Total has gone under in 4 of last 6 Kings road games</li>
+</ul>
+</div>
+<div class="analysis-section">
+<h4>The Angle</h4>
+<p>The Kings are the better team on paper and have dominated this matchup historically. Utah's home ice advantage is minimal - they're still building a fan base and culture in Salt Lake City. The 5.5 total is low, reflecting both teams' defensive tendencies. LA's veteran experience should win out.</p>
+</div>
+</div>
+<p class="data-source">Data: ESPN, Natural Stat Trick | Updated December 8, 2025</p>
 </article>
+
+<!-- Game 3: Sabres @ Flames -->
 <article class="game-card">
 <div class="teams-display">
 <img alt="Buffalo Sabres" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/buf.png"/>
@@ -185,27 +328,54 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </div>
 <h3 class="game-title">Buffalo Sabres @ Calgary Flames</h3>
 <div class="game-meta">
-<span>02:00 AM ET</span>
-<span>11-13-4 vs 11-15-4</span>
+<span>9:00 PM ET</span>
+<span>11-13-4 vs 13-11-5</span>
 <span>Scotiabank Saddledome</span>
 </div>
 <div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">6.5</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">BUF ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">CGY ML</span></div>
+<div class="stat-item"><span class="value">CGY -125</span><span class="label">Puck Line</span></div>
+<div class="stat-item"><span class="value">6.0</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">+115</span><span class="label">BUF ML</span></div>
+<div class="stat-item"><span class="value">-135</span><span class="label">CGY ML</span></div>
 </div>
 <div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
 <p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>BUF:</strong> No key injuries</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>CGY:</strong> No key injuries</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>BUF:</strong> Rasmus Dahlin (back) - Day-to-day | Jordan Greenway (upper body) - IR</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>CGY:</strong> Yegor Sharangovich (upper body) - IR | Kevin Rooney (lower body) - OUT</p>
 </div>
 <div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Let's break down what makes this matchup tick. The Buffalo Sabres (11-13-4) visit Calgary Flames (11-15-4) in what shapes up to be a fascinating matchup.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>The total feels low based on how these offenses have been playing. Sometimes the obvious play is the right one. Sometimes it isn't.</p></div>
+<div class="analysis-section">
+<h4>The Matchup</h4>
+<p>Two teams fighting for playoff positioning meet in Calgary. The Sabres' playoff drought continues into year 14, while the Flames are trying to prove their early-season success wasn't a fluke. Buffalo's inconsistency has been maddening for fans expecting a breakthrough.</p>
 </div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+<div class="goalie-box">
+<h5>Goaltending Matchup</h5>
+<p><strong>BUF:</strong> Ukko-Pekka Luukkonen (likely) - 8-9-2, 2.86 GAA, .908 SV%</p>
+<p><strong>CGY:</strong> Dustin Wolf (likely) - 10-6-3, 2.54 GAA, .918 SV%</p>
+</div>
+<div class="analysis-section">
+<h4>Star Watch</h4>
+<p><strong>Tage Thompson</strong> leads Buffalo with 15 goals and 31 points but has cooled off recently. <strong>Alex Tuch</strong> (26 points) provides secondary scoring. Calgary counters with <strong>Jonathan Huberdeau</strong> (28 points) who has bounced back this season, and rookie <strong>Connor Zary</strong> (18 points) emerging as a key contributor.</p>
+</div>
+<div class="analysis-section">
+<h4>Betting Trends</h4>
+<ul>
+<li>Sabres are 4-7-2 on the road</li>
+<li>Flames are 7-5-3 at home</li>
+<li>Over is 15-13 in Sabres games</li>
+<li>Calgary has won 4 of last 5 at home</li>
+<li>Buffalo is 2-6 in their last 8 road games</li>
+</ul>
+</div>
+<div class="analysis-section">
+<h4>The Angle</h4>
+<p>Calgary at home has been solid, and Dustin Wolf has been one of the better young goalies in the league. Buffalo's road woes continue, and without Dahlin at 100%, their blue line is vulnerable. The total of 6.0 feels right for a game that could go either way offensively.</p>
+</div>
+</div>
+<p class="data-source">Data: ESPN, Natural Stat Trick | Updated December 8, 2025</p>
 </article>
+
+<!-- Game 4: Red Wings @ Canucks -->
 <article class="game-card">
 <div class="teams-display">
 <img alt="Detroit Red Wings" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/det.png"/>
@@ -214,27 +384,54 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </div>
 <h3 class="game-title">Detroit Red Wings @ Vancouver Canucks</h3>
 <div class="game-meta">
-<span>03:00 AM ET</span>
-<span>15-11-3 vs 11-15-3</span>
+<span>10:00 PM ET</span>
+<span>13-12-4 vs 13-10-5</span>
 <span>Rogers Arena</span>
 </div>
 <div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">VAN -135</span><span class="label">Puck Line</span></div>
 <div class="stat-item"><span class="value">6.0</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">DET ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">VAN ML</span></div>
+<div class="stat-item"><span class="value">+120</span><span class="label">DET ML</span></div>
+<div class="stat-item"><span class="value">-140</span><span class="label">VAN ML</span></div>
 </div>
 <div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
 <p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>DET:</strong> No key injuries</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>VAN:</strong> No key injuries</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>DET:</strong> Jeff Petry (upper body) - IR | Robby Fabbri (knee) - LTIR</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>VAN:</strong> Thatcher Demko (knee) - IR | Dakota Joshua (testicle cancer) - OUT indefinitely</p>
 </div>
 <div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Recent form matters a lot in this matchup. The Detroit Red Wings (15-11-3) visit Vancouver Canucks (11-15-3) in what shapes up to be a competitive matchup.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>The total feels low based on how these offenses have been playing. Sharp bettors are paying attention to this one for a reason.</p></div>
+<div class="analysis-section">
+<h4>The Matchup</h4>
+<p>The Red Wings wrap up their Western Canadian road trip in Vancouver. The Canucks have been inconsistent without Thatcher Demko, their All-Star goalie who has been out since training camp. Detroit's young core continues to develop under Derek Lalonde.</p>
 </div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+<div class="goalie-box">
+<h5>Goaltending Matchup</h5>
+<p><strong>DET:</strong> Ville Husso (likely) - 6-7-2, 3.12 GAA, .898 SV%</p>
+<p><strong>VAN:</strong> Kevin Lankinen (likely) - 10-5-3, 2.62 GAA, .912 SV%</p>
+</div>
+<div class="analysis-section">
+<h4>Star Watch</h4>
+<p><strong>Lucas Raymond</strong> is having a breakout year for Detroit with 32 points (13G, 19A). <strong>Dylan Larkin</strong> (28 points) remains the captain and heart of the team. Vancouver leans on <strong>J.T. Miller</strong> (34 points) and <strong>Elias Pettersson</strong> (26 points), though Pettersson has been inconsistent compared to last year's MVP-caliber performance.</p>
+</div>
+<div class="analysis-section">
+<h4>Betting Trends</h4>
+<ul>
+<li>Red Wings are 5-7-2 on the road</li>
+<li>Canucks are 8-4-2 at home</li>
+<li>Over is 17-12 in Red Wings games</li>
+<li>Vancouver has covered in 5 of last 7 home games</li>
+<li>Detroit is 1-4 in their last 5 road games</li>
+</ul>
+</div>
+<div class="analysis-section">
+<h4>The Angle</h4>
+<p>The late start (10 PM ET) creates fatigue concerns for Detroit on the last leg of a road trip. Vancouver's home record is strong, and Lankinen has been a pleasant surprise filling in for Demko. Detroit's road struggles make them hard to trust as underdogs here.</p>
+</div>
+</div>
+<p class="data-source">Data: ESPN, Natural Stat Trick | Updated December 8, 2025</p>
 </article>
+
+<!-- Game 5: Wild @ Kraken -->
 <article class="game-card">
 <div class="teams-display">
 <img alt="Minnesota Wild" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/min.png"/>
@@ -243,33 +440,82 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </div>
 <h3 class="game-title">Minnesota Wild @ Seattle Kraken</h3>
 <div class="game-meta">
-<span>03:00 AM ET</span>
-<span>15-9-5 vs 11-9-6</span>
+<span>10:00 PM ET</span>
+<span>17-7-4 vs 13-14-2</span>
 <span>Climate Pledge Arena</span>
 </div>
 <div class="stat-row">
-<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">MIN -145</span><span class="label">Puck Line</span></div>
 <div class="stat-item"><span class="value">5.5</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">MIN ML</span></div>
-<div class="stat-item"><span class="value">N/A</span><span class="label">SEA ML</span></div>
+<div class="stat-item"><span class="value">-150</span><span class="label">MIN ML</span></div>
+<div class="stat-item"><span class="value">+128</span><span class="label">SEA ML</span></div>
 </div>
 <div class="injury-section" style="background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.2);border-radius:10px;padding:12px;margin:12px 0;">
 <p style="font-size:0.75rem;color:#ff6b6b;margin-bottom:6px;font-weight:600;">INJURIES</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>MIN:</strong> No key injuries</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>SEA:</strong> No key injuries</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>MIN:</strong> Jonas Brodin (upper body) - Day-to-day | Joel Eriksson Ek (lower body) - Questionable</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;"><strong>SEA:</strong> Philipp Grubauer (lower body) - IR | Jaden Schwartz (upper body) - Day-to-day</p>
 </div>
 <div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>This game could serve as a measuring stick for both sides. The Minnesota Wild (15-9-5) visit Seattle Kraken (11-9-6) in what shapes up to be a intriguing matchup.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>The total feels low based on how these offenses have been playing. The value might not be where the public thinks.</p></div>
+<div class="analysis-section">
+<h4>The Matchup</h4>
+<p>The Wild have been one of the best stories in hockey this season, led by rookie goaltender Jesper Wallstedt. Minnesota sits atop the Central Division while Seattle has underperformed expectations. This is a showcase for what could be the next great NHL goalie.</p>
 </div>
-<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+<div class="goalie-box">
+<h5>Goaltending Matchup</h5>
+<p><strong>MIN:</strong> Jesper Wallstedt (likely) - 14-4-2, 2.08 GAA, .928 SV% (HISTORIC ROOKIE SEASON)</p>
+<p><strong>SEA:</strong> Joey Daccord (likely) - 9-8-1, 2.84 GAA, .906 SV%</p>
+</div>
+<div class="analysis-section">
+<h4>Wallstedt Watch</h4>
+<p><strong>Jesper Wallstedt</strong> is having one of the best rookie goaltending seasons in NHL history. His 2.08 GAA and .928 SV% would both be franchise records if he maintains them. The 22-year-old Swede, drafted 20th overall in 2021, has exceeded all expectations and is a strong Calder Trophy favorite.</p>
+</div>
+<div class="analysis-section">
+<h4>Star Watch</h4>
+<p><strong>Kirill Kaprizov</strong> leads Minnesota with 38 points (16G, 22A), remaining one of the most dynamic wingers in the game. <strong>Matt Boldy</strong> (28 points) provides excellent secondary scoring. Seattle relies on <strong>Matty Beniers</strong> (22 points) and <strong>Jared McCann</strong> (24 points) for offensive production.</p>
+</div>
+<div class="analysis-section">
+<h4>By The Numbers</h4>
+<div class="stats-comparison">
+<div class="stat-compare-row">
+<span class="stat-away">MIN: 3.18</span>
+<span class="stat-label">Goals/Game</span>
+<span class="stat-home">SEA: 2.69</span>
+</div>
+<div class="stat-compare-row">
+<span class="stat-away">MIN: 2.36</span>
+<span class="stat-label">Goals Against/G</span>
+<span class="stat-home">SEA: 3.03</span>
+</div>
+<div class="stat-compare-row">
+<span class="stat-away">MIN: 52.4%</span>
+<span class="stat-label">Corsi For %</span>
+<span class="stat-home">SEA: 49.1%</span>
+</div>
+</div>
+</div>
+<div class="analysis-section">
+<h4>Betting Trends</h4>
+<ul>
+<li>Wild are 9-3-1 on the road this season</li>
+<li>Kraken are 6-8-1 at home</li>
+<li>Under is 18-10 in Wild games (Wallstedt effect)</li>
+<li>Minnesota has won 6 straight road games</li>
+<li>Seattle has lost 4 of last 6 at home</li>
+</ul>
+</div>
+<div class="analysis-section">
+<h4>The Angle</h4>
+<p>The Wild are the better team, and Wallstedt gives them an enormous edge in net. Seattle has struggled at home, which is surprising for such a new franchise. The 5.5 total feels right - Minnesota plays stingy defense and controls pace, while Seattle lacks the firepower to force a high-scoring affair. The Wild on the road have been money this season.</p>
+</div>
+</div>
+<p class="data-source">Data: ESPN, Natural Stat Trick | Updated December 8, 2025</p>
 </article>
 
 </main>
 <<<<<<< HEAD
-<div class="archive-link"><a href="nhl-page7.html">← Newer</a> <span>Page 30 of 37</span> <a href="nhl-page9.html">Older →</a></div>
+<div class="archive-link"><a href="nhl-page6.html">← Newer</a> <span>Page 31 of 37</span> <a href="nhl-page8.html">Older →</a></div>
 =======
-<div class="archive-link"><a href="nhl-page7.html">← Newer</a> <span>Page 30 of 37</span> <a href="nhl-page9.html">Older →</a></div>
+<div class="archive-link"><a href="nhl-page6.html">← Newer</a> <span>Page 31 of 37</span> <a href="nhl-page8.html">Older →</a></div>
 >>>>>>> 69ac70bc1f9c2a17af2c2b68ff7148e83f504649
 <footer>
 <p>© 2025 BetLegend. For entertainment purposes only.</p>
