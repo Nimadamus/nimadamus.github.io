@@ -102,10 +102,29 @@ for root, dirs, files in os.walk(REPO):
 
 - [ ] New Featured Game created? → Run script immediately
 - [ ] Script updated all files? → Verify count
+- [ ] **Calendar data updated?** → Add entry to `featured-games-data.js`
 - [ ] Pushed to GitHub? → Do it NOW
 - [ ] Checked live site? → Click the link yourself
 
 **If the Featured Game link ever shows an old game, someone screwed up. Don't let it be you.**
+
+### CALENDAR AUTO-UPDATE (NEW - December 2025)
+
+The Featured Game Calendar now auto-populates from `featured-games-data.js`. When creating a new featured game:
+
+**Add ONE line to `featured-games-data.js`:**
+```javascript
+{ date: "2025-12-14", page: "featured-game-of-the-day-page19.html", title: "Game Title" },
+```
+
+The calendar will automatically:
+- Show the new date as clickable
+- Link to the correct page
+- Display the game title on hover
+- Update "Today" marker based on current date
+- Show the latest game in stats bar
+
+**NO MORE manual calendar HTML editing required!**
 
 ---
 

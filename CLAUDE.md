@@ -68,7 +68,7 @@ If the user asks you to create a slate post (NBA, NHL, NFL, NCAAB, MLB), you MUS
 - **NHL slate posts**: nhl.html (add to TOP)
 - **NCAAB posts**: ncaab.html (add to TOP)
 - **NFL posts**: nfl.html (add to TOP)
-- **Featured Game of the Day**: featured-game-of-the-day-page17.html (current - Dec 11, 2025)
+- **Featured Game of the Day**: featured-game-of-the-day-page18.html (current - Dec 13, 2025)
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
 
 ### ⛔ CRITICAL: FEATURED GAME OF THE DAY = ANALYSIS ONLY, NO PICKS ⛔
@@ -113,10 +113,16 @@ for root, dirs, files in os.walk(REPO):
                     file.write(c)
 ```
 
-3. Push changes immediately
-4. Verify on live site
+3. **UPDATE CALENDAR DATA** - Add entry to `featured-games-data.js`:
+```javascript
+{ date: "YYYY-MM-DD", page: "featured-game-of-the-day-pageXX.html", title: "Game Title" },
+```
+4. Push changes immediately
+5. Verify on live site
 
-**DO NOT skip this step. On Dec 8, 2025, users saw a 4-day-old game because links weren't updated.**
+**The calendar now auto-populates from the data file - no manual HTML editing needed!**
+
+**DO NOT skip these steps. On Dec 8, 2025, users saw a 4-day-old game because links weren't updated.**
 
 ---
 

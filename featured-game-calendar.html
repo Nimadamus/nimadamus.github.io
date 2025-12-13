@@ -118,6 +118,7 @@
     .calendar-day {
         aspect-ratio: 1;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         background: rgba(0,0,0,0.3);
@@ -126,6 +127,7 @@
         font-size: 1.1rem;
         color: var(--text-secondary);
         transition: all 0.3s ease;
+        position: relative;
     }
 
     .calendar-day.available {
@@ -142,22 +144,42 @@
         box-shadow: 0 5px 15px rgba(0, 224, 255, 0.3);
     }
 
-    .calendar-day.current {
+    .calendar-day.today {
         background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
         border: 2px solid var(--warning-color);
         color: var(--warning-color);
         font-weight: 900;
-        position: relative;
     }
 
-    .calendar-day.current::after {
+    .calendar-day.today::after {
         content: 'TODAY';
         position: absolute;
-        bottom: -8px;
-        font-size: 0.5rem;
+        bottom: 2px;
+        font-size: 0.45rem;
         color: var(--warning-color);
         font-weight: 700;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
+    }
+
+    .game-tooltip {
+        display: none;
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.95);
+        color: var(--primary-glow);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        z-index: 100;
+        border: 1px solid var(--primary-glow);
+        margin-bottom: 5px;
+    }
+
+    .calendar-day.available:hover .game-tooltip {
+        display: block;
     }
 
     .back-link {
@@ -214,6 +236,24 @@
         border: 1px solid var(--warning-color);
     }
 
+    .stats-bar {
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: rgba(0,224,255,0.05);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+    }
+
+    .stats-bar span {
+        margin: 0 20px;
+        font-size: 0.95rem;
+    }
+
+    .stats-bar strong {
+        color: var(--primary-glow);
+    }
+
     @media (max-width: 768px) {
         .calendar-grid {
             gap: 5px;
@@ -227,9 +267,13 @@
             font-size: 2rem;
         }
 
-        .calendar-day.current::after {
-            font-size: 0.4rem;
-            bottom: -6px;
+        .calendar-day.today::after {
+            font-size: 0.35rem;
+            bottom: 1px;
+        }
+
+        .game-tooltip {
+            display: none !important;
         }
     }
 </style>
@@ -242,161 +286,183 @@
         <p class="subtitle">Browse all featured game analysis by date</p>
     </div>
 
+    <div class="stats-bar" id="stats-bar">
+        Loading...
+    </div>
+
     <div class="month-selector">
         <label for="month-select">Select Month:</label>
         <select id="month-select" class="month-dropdown" onchange="showMonth(this.value)">
-            <option value="november">November 2025</option>
-            <option value="december" selected>December 2025</option>
+            <!-- Options will be auto-generated -->
         </select>
     </div>
 
-    <!-- November 2025 Calendar -->
-    <div id="november-calendar" class="calendar-container">
-        <h2 class="calendar-month-title">November 2025</h2>
-
-        <div class="calendar-grid">
-            <div class="calendar-day-header">Sun</div>
-            <div class="calendar-day-header">Mon</div>
-            <div class="calendar-day-header">Tue</div>
-            <div class="calendar-day-header">Wed</div>
-            <div class="calendar-day-header">Thu</div>
-            <div class="calendar-day-header">Fri</div>
-            <div class="calendar-day-header">Sat</div>
-
-            <!-- Week 1: Nov starts on Saturday -->
-            <div class="calendar-day"></div>
-            <div class="calendar-day"></div>
-            <div class="calendar-day"></div>
-            <div class="calendar-day"></div>
-            <div class="calendar-day"></div>
-            <div class="calendar-day"></div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">1</div>
-
-            <!-- Week 2: Nov 2-8 -->
-            <div class="calendar-day">2</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">3</div>
-            <div class="calendar-day">4</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">5</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">6</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">7</div>
-            <div class="calendar-day">8</div>
-
-            <!-- Week 3: Nov 9-15 -->
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">9</div>
-            <div class="calendar-day">10</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">11</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">12</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">13</div>
-            <div class="calendar-day">14</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">15</div>
-
-            <!-- Week 4: Nov 16-22 -->
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">16</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">17</div>
-            <div class="calendar-day">18</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">19</div>
-            <div class="calendar-day">20</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">21</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">22</div>
-
-            <!-- Week 5: Nov 23-29 -->
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">23</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">24</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">25</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">26</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">27</div>
-            <div class="calendar-day">28</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">29</div>
-
-            <!-- Week 6: Nov 30 -->
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">30</div>
-        </div>
-
-        <div class="legend">
-            <span class="legend-item"><span class="legend-dot available"></span> Game Available</span>
-            <span class="legend-item"><span class="legend-dot today"></span> Today</span>
-        </div>
+    <div id="calendars-container">
+        <!-- Calendars will be auto-generated -->
     </div>
 
-    <!-- December 2025 Calendar -->
-    <div id="december-calendar" class="calendar-container active">
-        <h2 class="calendar-month-title">December 2025</h2>
-
-        <div class="calendar-grid">
-            <div class="calendar-day-header">Sun</div>
-            <div class="calendar-day-header">Mon</div>
-            <div class="calendar-day-header">Tue</div>
-            <div class="calendar-day-header">Wed</div>
-            <div class="calendar-day-header">Thu</div>
-            <div class="calendar-day-header">Fri</div>
-            <div class="calendar-day-header">Sat</div>
-
-            <!-- Week 1: Dec starts on Monday -->
-            <div class="calendar-day"></div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">1</div>
-            <div class="calendar-day">2</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">3</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">4</div>
-            <div class="calendar-day">5</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">6</div>
-
-            <!-- Week 2: Dec 7-13 -->
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">7</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">8</div>
-            <div class="calendar-day">9</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">10</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">11</div>
-            <div class="calendar-day">12</div>
-            <div class="calendar-day current available" onclick="window.location.href='featured-game-of-the-day-page18.html'">13</div>
-
-            <!-- Week 3: Dec 14-20 -->
-            <div class="calendar-day">14</div>
-            <div class="calendar-day">15</div>
-            <div class="calendar-day">16</div>
-            <div class="calendar-day">17</div>
-            <div class="calendar-day">18</div>
-            <div class="calendar-day">19</div>
-            <div class="calendar-day">20</div>
-
-            <!-- Week 4: Dec 21-27 -->
-            <div class="calendar-day">21</div>
-            <div class="calendar-day">22</div>
-            <div class="calendar-day">23</div>
-            <div class="calendar-day">24</div>
-            <div class="calendar-day">25</div>
-            <div class="calendar-day">26</div>
-            <div class="calendar-day">27</div>
-
-            <!-- Week 5: Dec 28-31 -->
-            <div class="calendar-day">28</div>
-            <div class="calendar-day">29</div>
-            <div class="calendar-day">30</div>
-            <div class="calendar-day">31</div>
-        </div>
-
-        <div class="legend">
-            <span class="legend-item"><span class="legend-dot available"></span> Game Available</span>
-            <span class="legend-item"><span class="legend-dot today"></span> Today</span>
-        </div>
-    </div>
-
-    <div class="back-link">
-        <a href="featured-game-of-the-day-page18.html">Back to Latest Featured Game</a>
+    <div class="back-link" id="back-link">
+        <a href="#">Back to Latest Featured Game</a>
     </div>
 </div>
 
+<!-- Load featured games data -->
+<script src="featured-games-data.js"></script>
+
 <script>
-function showMonth(month) {
-    // Hide all calendars
+// Build a lookup map for quick date checking
+const gamesMap = {};
+FEATURED_GAMES.forEach(game => {
+    gamesMap[game.date] = game;
+});
+
+// Get today's date in YYYY-MM-DD format
+const today = new Date();
+const todayStr = today.toISOString().split('T')[0];
+
+// Find the latest game for the back link
+const sortedGames = [...FEATURED_GAMES].sort((a, b) => b.date.localeCompare(a.date));
+const latestGame = sortedGames[0];
+document.querySelector('#back-link a').href = latestGame.page;
+
+// Update stats
+const totalGames = FEATURED_GAMES.length;
+const uniqueDates = new Set(FEATURED_GAMES.map(g => g.date)).size;
+document.getElementById('stats-bar').innerHTML = `
+    <span>Total Featured Games: <strong>${totalGames}</strong></span>
+    <span>Days with Games: <strong>${uniqueDates}</strong></span>
+    <span>Latest: <strong>${latestGame.title}</strong></span>
+`;
+
+// Get all unique months from the data
+const months = new Set();
+FEATURED_GAMES.forEach(game => {
+    const [year, month] = game.date.split('-');
+    months.add(`${year}-${month}`);
+});
+
+// Add current month if not in data
+const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+months.add(currentMonth);
+
+// Sort months
+const sortedMonths = Array.from(months).sort();
+
+// Month names
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Generate month selector options
+const monthSelect = document.getElementById('month-select');
+sortedMonths.forEach(monthKey => {
+    const [year, month] = monthKey.split('-');
+    const monthName = monthNames[parseInt(month) - 1];
+    const option = document.createElement('option');
+    option.value = monthKey;
+    option.textContent = `${monthName} ${year}`;
+    if (monthKey === currentMonth) {
+        option.selected = true;
+    }
+    monthSelect.appendChild(option);
+});
+
+// Generate calendars for each month
+const calendarsContainer = document.getElementById('calendars-container');
+
+sortedMonths.forEach(monthKey => {
+    const [year, month] = monthKey.split('-');
+    const monthName = monthNames[parseInt(month) - 1];
+
+    // Create calendar container
+    const calendarDiv = document.createElement('div');
+    calendarDiv.id = `calendar-${monthKey}`;
+    calendarDiv.className = 'calendar-container' + (monthKey === currentMonth ? ' active' : '');
+
+    // Create month title
+    const titleH2 = document.createElement('h2');
+    titleH2.className = 'calendar-month-title';
+    titleH2.textContent = `${monthName} ${year}`;
+    calendarDiv.appendChild(titleH2);
+
+    // Create calendar grid
+    const grid = document.createElement('div');
+    grid.className = 'calendar-grid';
+
+    // Add day headers
+    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day-header';
+        header.textContent = day;
+        grid.appendChild(header);
+    });
+
+    // Get first day of month and number of days
+    const firstDay = new Date(year, parseInt(month) - 1, 1);
+    const lastDay = new Date(year, parseInt(month), 0);
+    const daysInMonth = lastDay.getDate();
+    const startDayOfWeek = firstDay.getDay();
+
+    // Add empty cells for days before the 1st
+    for (let i = 0; i < startDayOfWeek; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day';
+        grid.appendChild(emptyDay);
+    }
+
+    // Add days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${month}-${String(day).padStart(2, '0')}`;
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'calendar-day';
+
+        // Check if this date has a featured game
+        const game = gamesMap[dateStr];
+        if (game) {
+            dayDiv.className += ' available';
+            dayDiv.onclick = () => window.location.href = game.page;
+
+            // Add tooltip with game title
+            const tooltip = document.createElement('span');
+            tooltip.className = 'game-tooltip';
+            tooltip.textContent = game.title;
+            dayDiv.appendChild(tooltip);
+        }
+
+        // Check if this is today
+        if (dateStr === todayStr) {
+            dayDiv.className += ' today';
+        }
+
+        // Add the day number
+        const dayNum = document.createElement('span');
+        dayNum.textContent = day;
+        dayDiv.appendChild(dayNum);
+
+        grid.appendChild(dayDiv);
+    }
+
+    calendarDiv.appendChild(grid);
+
+    // Add legend
+    const legend = document.createElement('div');
+    legend.className = 'legend';
+    legend.innerHTML = `
+        <span class="legend-item"><span class="legend-dot available"></span> Game Available</span>
+        <span class="legend-item"><span class="legend-dot today"></span> Today</span>
+    `;
+    calendarDiv.appendChild(legend);
+
+    calendarsContainer.appendChild(calendarDiv);
+});
+
+// Show selected month
+function showMonth(monthKey) {
     document.querySelectorAll('.calendar-container').forEach(cal => {
         cal.classList.remove('active');
     });
-
-    // Show selected calendar
-    document.getElementById(month + '-calendar').classList.add('active');
+    document.getElementById(`calendar-${monthKey}`).classList.add('active');
 }
 </script>
-
 
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
