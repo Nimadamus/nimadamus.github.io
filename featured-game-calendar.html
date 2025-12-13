@@ -154,7 +154,7 @@
         content: 'TODAY';
         position: absolute;
         bottom: -8px;
-        font-size: 0.6rem;
+        font-size: 0.5rem;
         color: var(--warning-color);
         font-weight: 700;
         letter-spacing: 1px;
@@ -181,6 +181,39 @@
         transform: translateY(-2px);
     }
 
+    .legend {
+        text-align: center;
+        margin-top: 20px;
+        padding: 15px;
+        background: rgba(0,0,0,0.2);
+        border-radius: 8px;
+    }
+
+    .legend-item {
+        display: inline-flex;
+        align-items: center;
+        margin: 0 15px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+
+    .legend-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        margin-right: 8px;
+    }
+
+    .legend-dot.available {
+        background: rgba(0, 224, 255, 0.3);
+        border: 1px solid var(--primary-glow);
+    }
+
+    .legend-dot.today {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
+        border: 1px solid var(--warning-color);
+    }
+
     @media (max-width: 768px) {
         .calendar-grid {
             gap: 5px;
@@ -192,6 +225,11 @@
 
         .title {
             font-size: 2rem;
+        }
+
+        .calendar-day.current::after {
+            font-size: 0.4rem;
+            bottom: -6px;
         }
     }
 </style>
@@ -208,12 +246,12 @@
         <label for="month-select">Select Month:</label>
         <select id="month-select" class="month-dropdown" onchange="showMonth(this.value)">
             <option value="november">November 2025</option>
-            <option value="december">December 2025</option>
+            <option value="december" selected>December 2025</option>
         </select>
     </div>
 
     <!-- November 2025 Calendar -->
-    <div id="november-calendar" class="calendar-container active">
+    <div id="november-calendar" class="calendar-container">
         <h2 class="calendar-month-title">November 2025</h2>
 
         <div class="calendar-grid">
@@ -225,58 +263,63 @@
             <div class="calendar-day-header">Fri</div>
             <div class="calendar-day-header">Sat</div>
 
-            <!-- Week 1: Nov 1-2 (Sat-Sun start) -->
+            <!-- Week 1: Nov starts on Saturday -->
             <div class="calendar-day"></div>
             <div class="calendar-day"></div>
             <div class="calendar-day"></div>
             <div class="calendar-day"></div>
             <div class="calendar-day"></div>
             <div class="calendar-day"></div>
-            <div class="calendar-day">1</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">1</div>
 
             <!-- Week 2: Nov 2-8 -->
             <div class="calendar-day">2</div>
-            <div class="calendar-day">3</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">3</div>
             <div class="calendar-day">4</div>
-            <div class="calendar-day">5</div>
-            <div class="calendar-day">6</div>
-            <div class="calendar-day">7</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">5</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">6</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">7</div>
             <div class="calendar-day">8</div>
 
             <!-- Week 3: Nov 9-15 -->
-            <div class="calendar-day">9</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">9</div>
             <div class="calendar-day">10</div>
-            <div class="calendar-day">11</div>
-            <div class="calendar-day">12</div>
-            <div class="calendar-day">13</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">11</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">12</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">13</div>
             <div class="calendar-day">14</div>
-            <div class="calendar-day">15</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">15</div>
 
             <!-- Week 4: Nov 16-22 -->
-            <div class="calendar-day">16</div>
-            <div class="calendar-day">17</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">16</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">17</div>
             <div class="calendar-day">18</div>
-            <div class="calendar-day">19</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">19</div>
             <div class="calendar-day">20</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">21</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">22</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day.html'">21</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page2.html'">22</div>
 
-            <!-- Week 5: Nov 23-30 -->
-            <div class="calendar-day current available" onclick="window.location.href='featured-game-of-the-day-page18.html'">23</div>
-            <div class="calendar-day">24</div>
-            <div class="calendar-day">25</div>
-            <div class="calendar-day">26</div>
-            <div class="calendar-day">27</div>
+            <!-- Week 5: Nov 23-29 -->
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page3.html'">23</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page4.html'">24</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page5.html'">25</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page6.html'">26</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page7.html'">27</div>
             <div class="calendar-day">28</div>
-            <div class="calendar-day">29</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page8.html'">29</div>
 
             <!-- Week 6: Nov 30 -->
-            <div class="calendar-day">30</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page9.html'">30</div>
+        </div>
+
+        <div class="legend">
+            <span class="legend-item"><span class="legend-dot available"></span> Game Available</span>
+            <span class="legend-item"><span class="legend-dot today"></span> Today</span>
         </div>
     </div>
 
     <!-- December 2025 Calendar -->
-    <div id="december-calendar" class="calendar-container">
+    <div id="december-calendar" class="calendar-container active">
         <h2 class="calendar-month-title">December 2025</h2>
 
         <div class="calendar-grid">
@@ -288,24 +331,25 @@
             <div class="calendar-day-header">Fri</div>
             <div class="calendar-day-header">Sat</div>
 
-            <!-- Week 1 -->
+            <!-- Week 1: Dec starts on Monday -->
             <div class="calendar-day"></div>
-            <div class="calendar-day">1</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page10.html'">1</div>
             <div class="calendar-day">2</div>
-            <div class="calendar-day">3</div>
-            <div class="calendar-day">4</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page11.html'">3</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page12.html'">4</div>
             <div class="calendar-day">5</div>
-            <div class="calendar-day">6</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page13.html'">6</div>
 
-            <!-- Weeks 2-5 -->
-            <div class="calendar-day">7</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">8</div>
+            <!-- Week 2: Dec 7-13 -->
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page14.html'">7</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page15.html'">8</div>
             <div class="calendar-day">9</div>
-            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page18.html'">10</div>
-            <div class="calendar-day current available" onclick="window.location.href='featured-game-of-the-day-page18.html'">11</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page16.html'">10</div>
+            <div class="calendar-day available" onclick="window.location.href='featured-game-of-the-day-page17.html'">11</div>
             <div class="calendar-day">12</div>
-            <div class="calendar-day">13</div>
+            <div class="calendar-day current available" onclick="window.location.href='featured-game-of-the-day-page18.html'">13</div>
 
+            <!-- Week 3: Dec 14-20 -->
             <div class="calendar-day">14</div>
             <div class="calendar-day">15</div>
             <div class="calendar-day">16</div>
@@ -314,6 +358,7 @@
             <div class="calendar-day">19</div>
             <div class="calendar-day">20</div>
 
+            <!-- Week 4: Dec 21-27 -->
             <div class="calendar-day">21</div>
             <div class="calendar-day">22</div>
             <div class="calendar-day">23</div>
@@ -322,15 +367,21 @@
             <div class="calendar-day">26</div>
             <div class="calendar-day">27</div>
 
+            <!-- Week 5: Dec 28-31 -->
             <div class="calendar-day">28</div>
             <div class="calendar-day">29</div>
             <div class="calendar-day">30</div>
             <div class="calendar-day">31</div>
         </div>
+
+        <div class="legend">
+            <span class="legend-item"><span class="legend-dot available"></span> Game Available</span>
+            <span class="legend-item"><span class="legend-dot today"></span> Today</span>
+        </div>
     </div>
 
     <div class="back-link">
-        <a href="featured-game-of-the-day-page18.html">← Back to Latest Featured Game</a>
+        <a href="featured-game-of-the-day-page18.html">Back to Latest Featured Game</a>
     </div>
 </div>
 
