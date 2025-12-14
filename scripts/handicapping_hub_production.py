@@ -880,6 +880,10 @@ def fetch_all_games() -> Dict[str, List]:
                 away_abbr = away_team.get('abbreviation', 'TBD')
                 home_abbr = home_team.get('abbreviation', 'TBD')
 
+                # CRITICAL: Skip games with TBD teams - NO PLACEHOLDER DATA EVER
+                if 'TBD' in away_name or 'TBD' in home_name or away_abbr == 'TBD' or home_abbr == 'TBD':
+                    continue
+
                 away_record = away_comp.get('records', [{}])[0].get('summary', '0-0') if away_comp.get('records') else '0-0'
                 home_record = home_comp.get('records', [{}])[0].get('summary', '0-0') if home_comp.get('records') else '0-0'
 
@@ -901,12 +905,12 @@ def fetch_all_games() -> Dict[str, List]:
                     dt = datetime.fromisoformat(game_date.replace('Z', '+00:00'))
                     game_time = dt.strftime("%I:%M %p ET")
                 except:
-                    game_time = "TBD"
+                    game_time = ""
 
                 # Venue and network
-                venue = comps.get('venue', {}).get('fullName', 'TBD')
+                venue = comps.get('venue', {}).get('fullName', '')
                 broadcasts = comps.get('broadcasts', [])
-                network = broadcasts[0].get('names', ['TBD'])[0] if broadcasts else 'TBD'
+                network = broadcasts[0].get('names', [''])[0] if broadcasts else ''
 
                 # Logo URLs
                 logo_base = f"https://a.espncdn.com/i/teamlogos/{config['logo_path']}/500/scoreboard"
