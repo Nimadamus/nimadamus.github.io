@@ -471,6 +471,48 @@ The pace will be slow, and both defenses are clicking.
 - ❌ Robotic or template-sounding content
 - ❌ Generic analysis that could apply to any game
 
+### ⛔ BANNED TEMPLATE PHRASES - NEVER USE THESE ⛔
+
+**EFFECTIVE DECEMBER 14, 2025 - ZERO TOLERANCE**
+
+The following phrases are BANNED from all sports page content. They are lazy, template garbage that makes content sound robotic:
+
+**NEVER WRITE:**
+- ❌ "This is essentially a pick'em" (ESPECIALLY with a 3-point spread - 3 is the most common margin of victory in NFL)
+- ❌ "Sharp money has been moving on this game"
+- ❌ "This matchup has trap game written all over it"
+- ❌ "Vegas sees these teams as evenly matched"
+- ❌ "Line movement closer to game time could reveal additional value"
+- ❌ "Sometimes the obvious play is the right one. Sometimes it isn't."
+- ❌ "Circle this matchup on your calendar"
+- ❌ "This game could be more interesting than the spread suggests"
+- ❌ "The numbers tell an interesting story"
+- ❌ "Here's a game that deserves your attention"
+- ❌ "Both teams come into this with something to prove"
+- ❌ "The value might not be where the public thinks"
+- ❌ "This game deserves a deeper look before making any decisions"
+- ❌ "Sharp bettors are paying attention to this one for a reason"
+- ❌ Any generic placeholder that could apply to any game
+
+**INSTEAD, WRITE:**
+- ✅ Specific analysis about THIS matchup with real details
+- ✅ Human-sounding observations that show you actually watched/know these teams
+- ✅ Commentary that could ONLY apply to this specific game
+- ✅ Actual opinions and analysis, not filler phrases
+- ✅ Stats with context explaining why they matter for THIS game
+
+**EXAMPLE OF BANNED CONTENT:**
+```
+"This is essentially a pick'em with the spread at -3. Vegas sees these teams as evenly matched. Sharp money has been moving on this game. Line movement closer to game time could reveal additional value."
+```
+
+**EXAMPLE OF ACCEPTABLE CONTENT:**
+```
+"Baltimore laying 3 on the road is significant - 3 is the most common margin of victory in the NFL (field goal). This spread says the Ravens should win, but only by a score. With Lamar Jackson and the Ravens' rushing attack facing a Giants defense that's allowed 4.8 yards per carry, Baltimore controls the clock and grinds this out. But can they cover 3 on the road? That's the $64,000 question."
+```
+
+**THE STANDARD:** Every game analysis must be written as if a knowledgeable sports fan is explaining the matchup to a friend. It must sound HUMAN, be SPECIFIC to the game, and contain REAL ANALYSIS - not template filler.
+
 ---
 
 ### BLOG POSTS (blog-pageX.html)
@@ -1003,9 +1045,12 @@ If user provides conflicting instructions, ALWAYS:
 ---
 
 ## PROTOCOL VERSION
-Version: 1.0
-Last Updated: October 27, 2025
+Version: 1.1
+Last Updated: December 14, 2025
 Created by: Claude Code for BetLegend
+
+### CHANGELOG:
+- v1.1 (Dec 14, 2025): Added "BANNED TEMPLATE PHRASES" section to enforce human-sounding commentary on sports pages
 
 ---
 
