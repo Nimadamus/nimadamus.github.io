@@ -291,7 +291,7 @@ def get_power_rating(record):
         pass
     return '-'
 
-def format_top(val):
+def format_top(val, games_played=1):
     """Format Time of Possession - handles seconds or MM:SS string"""
     if val is None or val == '' or val == '-':
         return '-'
@@ -302,8 +302,8 @@ def format_top(val):
         # If it's seconds (could be total or avg per game)
         seconds = float(val)
         # If very large, it's probably total seconds for season - convert to per-game avg
-        if seconds > 3600:  # More than 1 hour means it's season total
-            return '-'  # We'd need games played to calculate
+        if seconds > 3600 and games_played > 0:  # More than 1 hour means season total
+            seconds = seconds / games_played
         minutes = int(seconds // 60)
         secs = int(seconds % 60)
         return f"{minutes}:{secs:02d}"
@@ -344,8 +344,19 @@ def extract_nba_stats(raw: Dict, record: str) -> Dict:
         'pwr': get_power_rating(record),
     }
 
+def get_nfl_games_played(record: str) -> int:
+    """Calculate games played from NFL record (W-L or W-L-T)"""
+    try:
+        parts = record.replace(' ', '').split('-')
+        return sum(int(p) for p in parts if p.isdigit())
+    except:
+        return 1  # Avoid division by zero
+
 def extract_nfl_stats(raw: Dict, record: str) -> Dict:
     """Extract comprehensive NFL stats"""
+    # Calculate games played for per-game stats
+    games = get_nfl_games_played(record)
+
     # Calculate yards per play if not provided
     total_yards = raw.get('totalYards', 0)
     total_plays = raw.get('totalOffensivePlays', 1)
@@ -355,6 +366,9 @@ def extract_nfl_stats(raw: Dict, record: str) -> Dict:
             ypp_calc = f"{float(total_yards) / float(total_plays):.2f}"
     except:
         pass
+
+    # Get TOP - ESPN provides possessionTimeSeconds as season total
+    top_val = raw.get('avgTimeOfPossession', raw.get('possessionTime', raw.get('possessionTimeSeconds')))
 
     return {
         # Offense
@@ -383,7 +397,7 @@ def extract_nfl_stats(raw: Dict, record: str) -> Dict:
         'rz_pct': safe_pct(raw.get('redzoneTouchdownPct', raw.get('redzoneEfficiencyPct'))),
         'rz_score': safe_pct(raw.get('redzoneScoringPct')),  # RZ Scoring %
         'to_diff': raw.get('turnOverDifferential', raw.get('takeawayGiveawayDiff', '-')),
-        'top': format_top(raw.get('avgTimeOfPossession', raw.get('possessionTime'))),
+        'top': format_top(top_val, games),
         # Special Teams
         'fg_pct': safe_pct(raw.get('fieldGoalPct')),
         'punt_avg': safe_num(raw.get('grossAvgPuntYards'), 1),
