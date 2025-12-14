@@ -502,8 +502,8 @@ def extract_ncaaf_stats(raw: Dict, record: str) -> Dict:
 # HTML GENERATION - 4-Section Layout
 # =============================================================================
 
-def generate_game_card_nfl(game: Dict) -> str:
-    """Generate NFL game card with 4-section layout"""
+def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
+    """Generate NFL/NCAAF game card with 4-section layout"""
     away = game['away']
     home = game['home']
     odds = game['odds']
@@ -511,6 +511,10 @@ def generate_game_card_nfl(game: Dict) -> str:
     # Format injuries
     away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
     home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
+
+    # Get correct logo URLs based on sport
+    away_logo = get_logo_url(sport, away['abbr'], away.get('team_id', ''))
+    home_logo = get_logo_url(sport, home['abbr'], home.get('team_id', ''))
 
     return f'''
     <div class="game-card">
@@ -535,7 +539,7 @@ def generate_game_card_nfl(game: Dict) -> str:
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
-                            <img src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/{away['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{away['abbr']}</span>
                             <span class="team-record">{away['record']}</span>
                         </td>
@@ -545,7 +549,7 @@ def generate_game_card_nfl(game: Dict) -> str:
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
-                            <img src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/{home['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{home['abbr']}</span>
                             <span class="team-record">{home['record']}</span>
                         </td>
@@ -620,8 +624,8 @@ def generate_game_card_nfl(game: Dict) -> str:
     </div>
     '''
 
-def generate_game_card_nba(game: Dict) -> str:
-    """Generate NBA game card with 4-section layout"""
+def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
+    """Generate NBA/NCAAB game card with 4-section layout"""
     away = game['away']
     home = game['home']
     odds = game['odds']
@@ -629,6 +633,10 @@ def generate_game_card_nba(game: Dict) -> str:
     # Format injuries
     away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
     home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
+
+    # Get correct logo URLs based on sport
+    away_logo = get_logo_url(sport, away['abbr'], away.get('team_id', ''))
+    home_logo = get_logo_url(sport, home['abbr'], home.get('team_id', ''))
 
     return f'''
     <div class="game-card">
@@ -653,7 +661,7 @@ def generate_game_card_nba(game: Dict) -> str:
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
-                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/{away['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{away['abbr']}</span>
                             <span class="team-record">{away['record']}</span>
                         </td>
@@ -663,7 +671,7 @@ def generate_game_card_nba(game: Dict) -> str:
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
-                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/{home['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{home['abbr']}</span>
                             <span class="team-record">{home['record']}</span>
                         </td>
@@ -856,12 +864,37 @@ def generate_game_card_nhl(game: Dict) -> str:
     </div>
     '''
 
+def get_logo_url(sport: str, abbr: str, team_id: str = '') -> str:
+    """Get correct ESPN logo URL for team based on sport"""
+    abbr_lower = abbr.lower()
+    if sport == 'NFL':
+        return f"https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/{abbr_lower}.png"
+    elif sport == 'NBA':
+        return f"https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/{abbr_lower}.png"
+    elif sport == 'NHL':
+        return f"https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{abbr_lower}.png"
+    elif sport == 'NCAAF':
+        # College football uses team ID for logos
+        if team_id:
+            return f"https://a.espncdn.com/i/teamlogos/ncaa/500/{team_id}.png"
+        return f"https://a.espncdn.com/i/teamlogos/ncaa/500/{abbr_lower}.png"
+    elif sport == 'NCAAB':
+        # College basketball uses team ID for logos
+        if team_id:
+            return f"https://a.espncdn.com/i/teamlogos/ncaa/500/{team_id}.png"
+        return f"https://a.espncdn.com/i/teamlogos/ncaa/500/{abbr_lower}.png"
+    return ""
+
 def generate_game_card(game: Dict, sport: str) -> str:
     """Route to sport-specific card generator"""
-    if sport == 'NFL' or sport == 'NCAAF':
-        return generate_game_card_nfl(game)
-    elif sport == 'NBA' or sport == 'NCAAB':
-        return generate_game_card_nba(game)
+    if sport == 'NFL':
+        return generate_game_card_nfl(game, 'NFL')
+    elif sport == 'NCAAF':
+        return generate_game_card_nfl(game, 'NCAAF')
+    elif sport == 'NBA':
+        return generate_game_card_nba(game, 'NBA')
+    elif sport == 'NCAAB':
+        return generate_game_card_nba(game, 'NCAAB')
     elif sport == 'NHL':
         return generate_game_card_nhl(game)
     return ''
@@ -1318,6 +1351,7 @@ def fetch_all_games() -> Dict[str, List]:
                         'record': away_record,
                         'stats': away_stats,
                         'injuries': away_injuries,
+                        'team_id': away_id,
                     },
                     'home': {
                         'name': home_name,
@@ -1325,6 +1359,7 @@ def fetch_all_games() -> Dict[str, List]:
                         'record': home_record,
                         'stats': home_stats,
                         'injuries': home_injuries,
+                        'team_id': home_id,
                     },
                 }
 
