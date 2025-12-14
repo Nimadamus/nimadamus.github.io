@@ -10,47 +10,62 @@
 
 **DO NOT CHANGE THE HANDICAPPING HUB DESIGN. EVER.**
 
-The Handicapping Hub (`handicapping-hub.html`) has a LOCKED design. If the user asks to update it, ONLY run the production script - DO NOT modify the HTML structure or CSS.
-
 ### The ONLY Script to Use:
 ```
 python C:\Users\Nima\nimadamus.github.io\scripts\handicapping_hub_production.py
 ```
 
-**OLD SCRIPTS HAVE BEEN DELETED - DO NOT RECREATE THEM:**
-- ~~generate_handicapping_hub.py~~ - DELETED
-- ~~github_handicapping_hub.py~~ - DELETED
+### LOCKED 4-SECTION LAYOUT (December 14, 2025):
 
-### LOCKED Visual Design (DO NOT CHANGE):
+Each game card has exactly 4 sections:
+
+**SECTION 1: BETTING LINES**
+```
+| TEAM              | SPREAD | ML   | O/U     |
+| Logo + Abbr + Rec | +/-X.X | +XXX | O XX.X  |
+| Logo + Abbr + Rec | +/-X.X | -XXX | U XX.X  |
+```
+
+**SECTION 2: OFFENSE vs DEFENSE (side-by-side grid)**
+```
+OFFENSE                          | DEFENSE
+NFL: PPG|YPG|PASS|RUSH|3RD%     | OPP|OYPG|SACK|INT|TFL
+NBA: PPG|FG%|3P%|FT%|AST        | OPP|REB|STL|BLK|DREB
+NHL: GF|SOG|PP%|PPG|S%          | GA|GD|PK%|SV%|SA
+```
+
+**SECTION 3: EFFICIENCY vs SITUATIONAL (side-by-side grid)**
+```
+EFFICIENCY                       | SITUATIONAL/POWER
+NFL: YPP|COMP%|YPA|YPR|QBR      | RZ%|4TH%|TO+/-|TOP|PWR
+NBA: TO|A/TO|OREB|2P%|PF        | PWR|PPG|OPP|DIFF|REC
+NHL: FO%|PIM|SHG|GWG|OTL        | PWR|GF|GA|GD|REC
+```
+
+**SECTION 4: TRENDS BAR**
+- Light blue background (#e3f2fd)
+- Injury alerts for both teams
+
+### LOCKED Visual Design:
 - **Background**: Light gray (#f0f2f5)
 - **Header**: Dark blue gradient (#1a365d to #2d4a7c)
-- **Content panels**: White (#fff)
-- **Accent**: Orange (#fd5000)
+- **Game Cards**: White (#fff), rounded corners, shadow
+- **Section Titles**: Orange underline (#fd5000)
 - **Font**: Inter
+- **5 Sport Tabs**: NBA, NFL, NHL, NCAAB, NCAAF
 
-### LOCKED Structure (DO NOT CHANGE):
-- **5 Sport Tabs**: NBA, NFL, NHL, NCAAB, NCAAF (in that order)
-- **Game Cards**: White background, rounded corners
-- **Game Time Header**: Dark blue (#1a365d)
-- **Stats Table**: Horizontal layout with columns
-- **Injury Bar**: Yellow (#fff3cd) below each game
-- **Trends Bar**: Light blue (#e3f2fd) below injury bar
-
-### LOCKED Stats Per Sport:
-- **NBA**: PWR, PPG, OPP, PACE, ORTG, DRTG, NET, FG%, 3P%, FT%, eFG%, TS%, REB, AST, TO, STL, BLK
-- **NFL**: PWR, PPG, OPP, YPP, PASS, RUSH, RZ%, TOP, TO+/-, 3RD%, SACK, INT
-- **NHL**: PWR, GF, GA, GD, PP%, PK%, SOG, SV%, FOW%, PIM
-- **NCAAB/NCAAF**: Similar comprehensive stats
-
-### WHY THIS MATTERS:
-Previous sessions kept changing the design between dark theme and light theme. This caused user frustration. The design is now PERMANENTLY LOCKED.
+### DAILY AUTOMATION:
+- GitHub Actions runs daily at 10:00 AM ET
+- Generates fresh data from ESPN + Odds API
+- Auto-commits and pushes to main branch
+- Old days are archived automatically
 
 ### IF USER ASKS TO UPDATE THE HUB:
 1. Run `handicapping_hub_production.py` - that's it
 2. DO NOT create new scripts
-3. DO NOT modify the CSS
-4. DO NOT change the layout
-5. DO NOT switch to dark theme
+3. DO NOT modify the CSS or HTML structure
+4. DO NOT change the 4-section layout
+5. DO NOT remove any stat columns
 
 ---
 

@@ -1,167 +1,48 @@
 name: Daily Handicapping Hub Update
 
 on:
-  workflow_dispatch:
   schedule:
-    # Run at 8 AM, 12 PM, 4 PM, and 8 PM EST (13:00, 17:00, 21:00, 01:00 UTC)
-    - cron: '0 13 * * *'
-    - cron: '0 17 * * *'
-    - cron: '0 21 * * *'
-    - cron: '0 1 * * *'
+    # Run at 10:00 AM ET (15:00 UTC) every day
+    - cron: '0 15 * * *'
+  workflow_dispatch:  # Allow manual trigger
 
 jobs:
   update-handicapping-hub:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
-          pip install requests python-dotenv beautifulsoup4 lxml
+          pip install requests
 
-      - name: Run Handicapping Hub Update
-        env:
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-          THE_ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: Archive previous day hub
         run: |
-          cd scripts/handicapping_hub
-          python generate_hub_v2.py
-
-      - name: Validate Generated Page
-        run: |
-          echo "## 🏈 Handicapping Hub Validation Report" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Date:** $(date +'%Y-%m-%d %H:%M %Z')" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-          # Check for critical issues
-          BLANK_COUNT=$(grep -c '>-</span>\|>-%</span>\|>N/A</span>' handicapping-hub.html || true)
-
-          if [ "$BLANK_COUNT" -gt 20 ]; then
-            echo "❌ **CRITICAL:** Found $BLANK_COUNT blank/N/A values" >> $GITHUB_STEP_SUMMARY
-            echo "::error::Critical: Too many blank values ($BLANK_COUNT)"
-          elif [ "$BLANK_COUNT" -gt 0 ]; then
-            echo "⚠️ **Warning:** Found $BLANK_COUNT minor blank values" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "✅ **All stats populated** - No blank values found" >> $GITHUB_STEP_SUMMARY
+          DATE=$(date -d "yesterday" +%Y-%m-%d)
+          if [ -f "handicapping-hub.html" ]; then
+            mkdir -p handicapping-hub-archive
+            cp handicapping-hub.html "handicapping-hub-archive/hub-${DATE}.html"
+            echo "Archived to handicapping-hub-archive/hub-${DATE}.html"
           fi
 
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📊 Games by Sport (ALL SPORTS)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Sport | Games | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|-------|-------|--------|" >> $GITHUB_STEP_SUMMARY
-
-          TOTAL_GAMES=0
-          SPORTS_WITH_GAMES=0
-
-          for SPORT in NBA NHL NFL NCAAB NCAAF MLB; do
-            COUNT=$(grep -oP "id=\"$SPORT\"[^>]*>.*?(\d+) games? today" handicapping-hub.html | grep -oP '\d+(?= games?)' | head -1 || echo "0")
-            if [ -z "$COUNT" ]; then COUNT=0; fi
-            TOTAL_GAMES=$((TOTAL_GAMES + COUNT))
-            if [ "$COUNT" -gt 0 ]; then
-              SPORTS_WITH_GAMES=$((SPORTS_WITH_GAMES + 1))
-              echo "| $SPORT | $COUNT | ✅ |" >> $GITHUB_STEP_SUMMARY
-            else
-              echo "| $SPORT | 0 | ○ (off day) |" >> $GITHUB_STEP_SUMMARY
-            fi
-          done
-
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Total:** $TOTAL_GAMES games across $SPORTS_WITH_GAMES sports" >> $GITHUB_STEP_SUMMARY
-
-          # Warn if very few games (might indicate fetch failure)
-          if [ "$TOTAL_GAMES" -lt 5 ]; then
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "⚠️ **Low game count** - verify this is correct for today's schedule" >> $GITHUB_STEP_SUMMARY
-          fi
-
-      - name: Update Handicapping Hub Calendar
+      - name: Run Handicapping Hub Production Script
         run: |
-          python3 << 'EOF'
-          import os
-          import re
-          from datetime import datetime
+          python scripts/handicapping_hub_production.py
 
-          # Find all archive files
-          archives = []
-          for f in os.listdir('.'):
-              match = re.match(r'handicapping-hub-(\d{4})-(\d{2})-(\d{2})\.html', f)
-              if match:
-                  year, month, day = int(match.group(1)), int(match.group(2)), int(match.group(3))
-                  archives.append((year, month, day, f))
-
-          archives.sort()
-          total_days = len(archives)
-
-          # Read calendar file
-          with open('handicapping-hub-calendar.html', 'r') as f:
-              content = f.read()
-
-          # Update total days count
-          content = re.sub(r'(<div class="stat-value" id="total-days">)\d+(</div>)',
-                          f'\\g<1>{total_days}\\2', content)
-
-          # Get today's date
-          today = datetime.now()
-          today_day = today.day
-          today_month = today.month
-          today_year = today.year
-
-          # Process December 2025 calendar section
-          dec_pattern = r'(<!-- Week 2: Dec 7-13 -->.*?<div class="calendar-day"><span class="day-number">13</span></div>)'
-
-          def generate_week2_dec():
-              week2 = '<!-- Week 2: Dec 7-13 -->\n'
-              for day in range(7, 14):
-                  archive_exists = (2025, 12, day, f'handicapping-hub-2025-12-{day:02d}.html') in [(a[0], a[1], a[2], a[3]) for a in archives] or os.path.exists(f'handicapping-hub-2025-12-{day:02d}.html')
-                  is_today = (today_year == 2025 and today_month == 12 and today_day == day)
-
-                  if is_today:
-                      week2 += f'''            <div class="calendar-day current available" onclick="window.location.href='handicapping-hub.html'">
-                  <span class="day-number">{day}</span>
-                  <span class="game-count">Today</span>
-              </div>\n'''
-                  elif archive_exists:
-                      week2 += f'''            <div class="calendar-day available" onclick="window.location.href='handicapping-hub-2025-12-{day:02d}.html'">
-                  <span class="day-number">{day}</span>
-                  <span class="game-count">Archived</span>
-              </div>\n'''
-                  else:
-                      week2 += f'            <div class="calendar-day"><span class="day-number">{day}</span></div>\n'
-              return week2.rstrip()
-
-          content = re.sub(dec_pattern, generate_week2_dec(), content, flags=re.DOTALL)
-
-          # Write updated calendar
-          with open('handicapping-hub-calendar.html', 'w') as f:
-              f.write(content)
-
-          print(f"✓ Calendar updated with {total_days} archived days")
-          EOF
-
-      - name: Commit and Push
+      - name: Commit and push changes
         run: |
-          git config --global user.email "bot@github.com"
-          git config --global user.name "GitHub Actions Bot"
-          git add handicapping-hub.html handicapping-hub-*.html handicapping-hub-calendar.html
-          git commit -m "Auto-update handicapping hub $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          DATE=$(date +%Y-%m-%d)
+          git diff --staged --quiet || git commit -m "Auto-update handicapping hub ${DATE}"
           git push
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Final Status Check
-        run: |
-          BLANK_COUNT=$(grep -c '>-</span>\|>-%</span>\|>N/A</span>' handicapping-hub.html || true)
-          if [ "$BLANK_COUNT" -gt 50 ]; then
-            echo "::error::Page has too many incomplete stats ($BLANK_COUNT blank values)"
-            exit 1
-          fi
-          echo "✓ Handicapping Hub updated successfully with minimal/no blank values"
