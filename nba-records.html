@@ -223,21 +223,23 @@
     const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv';
 
     // Function to parse CSV data
+    // NBA Sheet columns: Date, Pick, Odds, Result (blank header), Units
     function parseCSV(csv) {
         const lines = csv.split('\n');
-        const headers = lines[0].split(',').map(header => header.trim().replace(/"/g, ''));
+        // Force correct column names since Result header is blank in sheet
+        const headers = ['Date', 'Pick', 'Odds', 'Result', 'Units'];
         const records = [];
 
         for (let i = 1; i < lines.length; i++) {
             const line = lines[i].trim();
             if (line) {
                 const values = parseCSVLine(line);
-                if (values.length >= headers.length) {
+                if (values.length >= 4) {
                     const record = {};
                     headers.forEach((header, index) => {
                         record[header] = values[index] ? values[index].replace(/"/g, '').trim() : '';
                     });
-                    
+
                     // Only add records that have actual data
                     if (record.Date && record.Pick) {
                         records.push(record);
@@ -272,11 +274,11 @@
     function convertToMLBFormat(sheetData) {
         return sheetData.map(row => ({
             Date: row.Date || '',
-            Sport: row.Sport || 'NFL',
-            Pick: row.Picks || row.Pick || row.Line || '',
-            Line: row.Odds || row['Price/Odds'] || row.Line || '',
+            Sport: 'NBA',
+            Pick: row.Pick || '',
+            Line: row.Odds || '',
             Result: row.Result || '',
-            Units: row.ProfitLoss || row['Profit/Loss'] || row.Units || ''
+            Units: row.Units || ''
         }));
     }
 
