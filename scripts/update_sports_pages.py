@@ -1,0 +1,510 @@
+#!/usr/bin/env python3
+"""
+Update sports pages with accurate data from ESPN and The Odds API
+Generates complete game analysis pages for NFL, NBA, NHL, NCAAB, NCAAF
+Includes article/analysis content for each game
+"""
+import requests
+import json
+import random
+from datetime import datetime
+import os
+import sys
+
+ODDS_API_KEY = "deeac7e7af6a8f1a5ac84c625e04973a"
+REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+SPORT_CONFIG = {
+    'NFL': {
+        'espn_path': 'football/nfl',
+        'odds_key': 'americanfootball_nfl',
+        'output': 'nfl.html'
+    },
+    'NBA': {
+        'espn_path': 'basketball/nba',
+        'odds_key': 'basketball_nba',
+        'output': 'nba.html'
+    },
+    'NHL': {
+        'espn_path': 'hockey/nhl',
+        'odds_key': 'icehockey_nhl',
+        'output': 'nhl.html'
+    },
+    'NCAAB': {
+        'espn_path': 'basketball/mens-college-basketball',
+        'odds_key': 'basketball_ncaab',
+        'output': 'ncaab.html'
+    },
+    'NCAAF': {
+        'espn_path': 'football/college-football',
+        'odds_key': 'americanfootball_ncaaf',
+        'output': 'ncaaf.html'
+    }
+}
+
+# ============================================
+# ANALYSIS GENERATION - Natural Language Articles
+# ============================================
+
+OPENINGS = [
+    "This one has all the makings of a competitive battle.",
+    "Circle this matchup on your calendar.",
+    "Here's a game that deserves your attention.",
+    "Don't sleep on this one.",
+    "This game could be more interesting than the spread suggests.",
+    "Let's break down what makes this matchup tick.",
+    "Both teams come into this with something to prove.",
+    "Two teams heading in different directions meet here.",
+    "The numbers tell an interesting story in this one.",
+    "Sharp money has been moving on this game, and there's a reason why.",
+]
+
+TREND_PHRASES = {
+    'hot': ['rolling', 'on fire', 'clicking on all cylinders', 'playing their best ball', 'surging'],
+    'cold': ['struggling', 'in a slump', 'searching for answers', 'trying to find their footing', 'ice cold'],
+    'mixed': ['inconsistent', 'up and down', 'hard to read', 'unpredictable', 'a mixed bag'],
+}
+
+def parse_record(record_str):
+    """Parse W-L record string into wins, losses"""
+    try:
+        parts = record_str.replace(' ', '').split('-')
+        return int(parts[0]), int(parts[1])
+    except:
+        return 0, 0
+
+def get_team_trend(record):
+    """Determine team trend based on record"""
+    wins, losses = parse_record(record)
+    total = wins + losses
+    if total == 0:
+        return 'mixed'
+    pct = wins / total
+    if pct >= 0.6:
+        return 'hot'
+    elif pct <= 0.4:
+        return 'cold'
+    return 'mixed'
+
+def generate_game_analysis(sport, away_name, home_name, away_record, home_record, odds, venue):
+    """Generate human-sounding analysis article for a game"""
+
+    away_trend = get_team_trend(away_record)
+    home_trend = get_team_trend(home_record)
+
+    sections = []
+
+    # Opening paragraph
+    opening = random.choice(OPENINGS)
+    away_desc = random.choice(TREND_PHRASES.get(away_trend, TREND_PHRASES['mixed']))
+    home_desc = random.choice(TREND_PHRASES.get(home_trend, TREND_PHRASES['mixed']))
+
+    if away_trend == 'hot' and home_trend == 'cold':
+        context = f"The {away_name} come in {away_desc} at {away_record}, while the {home_name} ({home_record}) have been {home_desc}. That disparity in form is the headline here."
+    elif home_trend == 'hot' and away_trend == 'cold':
+        context = f"Home cooking could be the difference as the {home_name} ({home_record}) have been {home_desc}, facing a {away_name} team ({away_record}) that's been {away_desc} lately."
+    elif away_trend == 'hot' and home_trend == 'hot':
+        context = f"Both teams enter this one playing well. The {away_name} ({away_record}) take on the {home_name} ({home_record}) in what promises to be a competitive matchup."
+    else:
+        context = f"The {away_name} ({away_record}) visit the {home_name} ({home_record}) at {venue}."
+
+    sections.append(f'<div class="analysis-section"><h4>The Matchup</h4><p>{opening} {context}</p></div>')
+
+    # Betting lines analysis
+    spread = odds.get('spread', '-')
+    total = odds.get('total', '-')
+    ml_away = odds.get('ml_away', '-')
+    ml_home = odds.get('ml_home', '-')
+
+    if spread != '-' and total != '-':
+        try:
+            spread_val = float(spread.replace('+', ''))
+            total_val = float(total)
+
+            if spread_val <= -10:
+                line_analysis = f"The {home_name} are heavy favorites laying {abs(spread_val)} points. That's a lot of chalk, but the market clearly expects a blowout."
+            elif spread_val >= 10:
+                line_analysis = f"The {away_name} are substantial favorites getting {abs(spread_val)} points on the road. That kind of line movement suggests sharp confidence."
+            elif abs(spread_val) <= 3:
+                line_analysis = f"This is essentially a pick'em with the spread at {spread}. Vegas sees these teams as evenly matched."
+            else:
+                fav = home_name if spread_val < 0 else away_name
+                dog = away_name if spread_val < 0 else home_name
+                line_analysis = f"The {fav} are laying {abs(spread_val)} points here. The {dog} will need to keep this close or pull the upset outright."
+
+            total_analysis = f"The total sits at {total}. "
+            if total_val > 230 and sport == 'NBA':
+                total_analysis += "That's a high number, suggesting an up-tempo game with limited defensive stops."
+            elif total_val < 210 and sport == 'NBA':
+                total_analysis += "That's a relatively low total, indicating expectations of a defensive battle."
+            elif total_val > 48 and sport == 'NFL':
+                total_analysis += "Vegas expects points in this one."
+            elif total_val < 40 and sport == 'NFL':
+                total_analysis += "A low total suggests a grind-it-out affair."
+            elif total_val > 6 and sport == 'NHL':
+                total_analysis += "That's on the higher side for hockey, pointing to potential offensive fireworks."
+
+            sections.append(f'<div class="analysis-section"><h4>The Lines</h4><p>{line_analysis} {total_analysis}</p></div>')
+        except:
+            pass
+
+    # Moneyline analysis
+    if ml_away != '-' and ml_home != '-':
+        try:
+            ml_away_val = int(ml_away.replace('+', ''))
+            ml_home_val = int(ml_home.replace('+', ''))
+
+            if ml_away_val > 200:
+                ml_analysis = f"The {away_name} are substantial underdogs at {ml_away}. There could be value if you believe in an upset."
+            elif ml_home_val > 200:
+                ml_analysis = f"The {home_name} sit as significant underdogs at {ml_home}. Road favorites this heavy don't always deliver."
+            elif abs(ml_away_val) < 130 and abs(ml_home_val) < 130:
+                ml_analysis = f"The moneylines ({away_name} {ml_away}, {home_name} {ml_home}) reflect how close this game is expected to be."
+            else:
+                ml_analysis = f"Moneyline: {away_name} {ml_away}, {home_name} {ml_home}."
+
+            sections.append(f'<div class="analysis-section"><h4>Moneyline Angle</h4><p>{ml_analysis}</p></div>')
+        except:
+            pass
+
+    # Closing angle
+    closers = [
+        "Line movement closer to game time could reveal additional value.",
+        "This matchup has trap game written all over it - proceed with caution.",
+        "Sharp bettors are paying attention to this one for a reason.",
+        "The value might not be where the public thinks.",
+        "Sometimes the obvious play is the right one. Sometimes it isn't.",
+        "This game deserves a deeper look before making any decisions.",
+    ]
+
+    sections.append(f'<div class="analysis-section"><h4>The Angle</h4><p>{random.choice(closers)}</p></div>')
+
+    return '\n'.join(sections)
+
+# ============================================
+# ESPN & ODDS API FUNCTIONS
+# ============================================
+
+def get_espn_scoreboard(sport_path, date_str=None):
+    """Get today's games from ESPN"""
+    if date_str is None:
+        date_str = datetime.now().strftime('%Y%m%d')
+    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/scoreboard?dates={date_str}"
+    try:
+        resp = requests.get(url, timeout=15)
+        if resp.status_code == 200:
+            return resp.json()
+    except Exception as e:
+        print(f"ESPN error: {e}")
+    return None
+
+def get_odds(sport_key):
+    """Get current odds from The Odds API"""
+    url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds"
+    params = {
+        'apiKey': ODDS_API_KEY,
+        'regions': 'us',
+        'markets': 'spreads,h2h,totals',
+        'oddsFormat': 'american'
+    }
+    try:
+        resp = requests.get(url, params=params, timeout=15)
+        if resp.status_code == 200:
+            return resp.json()
+    except Exception as e:
+        print(f"Odds API error: {e}")
+    return []
+
+def match_odds_to_game(odds_data, away_name, home_name):
+    """Find odds for a specific game"""
+    result = {'spread': '-', 'total': '-', 'ml_away': '-', 'ml_home': '-'}
+
+    for game in odds_data:
+        api_away = game.get('away_team', '').lower()
+        api_home = game.get('home_team', '').lower()
+
+        # Match by partial name
+        if (away_name.lower() in api_away or api_away in away_name.lower()) and \
+           (home_name.lower() in api_home or api_home in home_name.lower()):
+
+            for bm in game.get('bookmakers', [])[:1]:
+                for market in bm.get('markets', []):
+                    if market['key'] == 'spreads':
+                        for o in market['outcomes']:
+                            if home_name.lower() in o['name'].lower():
+                                spread = o['point']
+                                result['spread'] = f"{spread:+.1f}" if spread >= 0 else f"{spread:.1f}"
+                    elif market['key'] == 'totals':
+                        for o in market['outcomes']:
+                            if o['name'] == 'Over':
+                                result['total'] = str(o['point'])
+                    elif market['key'] == 'h2h':
+                        for o in market['outcomes']:
+                            ml = o['price']
+                            ml_str = f"{ml:+d}" if isinstance(ml, int) else str(ml)
+                            if home_name.lower() in o['name'].lower():
+                                result['ml_home'] = ml_str
+                            else:
+                                result['ml_away'] = ml_str
+            break
+
+    return result
+
+# ============================================
+# HTML GENERATION
+# ============================================
+
+def generate_game_card(away_name, home_name, away_abbr, home_abbr, away_record, home_record,
+                       game_time, venue, network, odds, sport):
+    """Generate HTML for a single game card with analysis article"""
+
+    # Determine spread display
+    try:
+        spread_val = float(odds['spread'].replace('+', ''))
+        if spread_val < 0:
+            spread_display = f"{home_abbr} {odds['spread']}"
+        else:
+            spread_display = f"{away_abbr} {-spread_val:+.1f}"
+    except:
+        spread_display = odds['spread']
+
+    # Generate analysis article for this game
+    analysis_html = generate_game_analysis(sport, away_name, home_name, away_record, home_record, odds, venue)
+
+    # Fix logo path for college sports
+    logo_sport = sport.lower()
+    if sport == 'NCAAB':
+        logo_sport = 'ncaab'
+    elif sport == 'NCAAF':
+        logo_sport = 'ncaa'
+
+    return f'''
+<article class="game-card">
+<div class="teams-display">
+<img alt="{away_name}" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/{logo_sport}/500/scoreboard/{away_abbr.lower()}.png"/>
+<span class="vs-badge">@</span>
+<img alt="{home_name}" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/{logo_sport}/500/scoreboard/{home_abbr.lower()}.png"/>
+</div>
+<h3 class="game-title">{away_name} @ {home_name}</h3>
+<div class="game-meta">
+<span>{game_time}</span>
+<span>{away_record} vs {home_record}</span>
+<span>{venue}</span>
+<span>{network}</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">{spread_display}</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">{odds['total']}</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">{odds['ml_away']}</span><span class="label">{away_abbr} ML</span></div>
+<div class="stat-item"><span class="value">{odds['ml_home']}</span><span class="label">{home_abbr} ML</span></div>
+</div>
+<div class="game-analysis">
+{analysis_html}
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+'''
+
+def update_sport_page(sport):
+    """Update a sport page with current accurate data"""
+    config = SPORT_CONFIG[sport]
+
+    print(f"\n=== Updating {sport} ===")
+
+    # Get today's games
+    espn_data = get_espn_scoreboard(config['espn_path'])
+    if not espn_data:
+        print(f"Failed to get ESPN data for {sport}")
+        return False
+
+    events = espn_data.get('events', [])
+    print(f"Found {len(events)} games")
+
+    if not events:
+        print("No games today")
+        return True
+
+    # Get odds
+    odds_data = get_odds(config['odds_key'])
+    print(f"Found odds for {len(odds_data)} games")
+
+    # Generate game cards
+    game_cards = []
+    for event in events:
+        comps = event.get('competitions', [{}])[0]
+        competitors = comps.get('competitors', [])
+
+        if len(competitors) < 2:
+            continue
+
+        away = [c for c in competitors if c.get('homeAway') == 'away'][0]
+        home = [c for c in competitors if c.get('homeAway') == 'home'][0]
+
+        away_team = away.get('team', {})
+        home_team = home.get('team', {})
+
+        away_name = away_team.get('displayName', '')
+        home_name = home_team.get('displayName', '')
+        away_abbr = away_team.get('abbreviation', '')
+        home_abbr = home_team.get('abbreviation', '')
+
+        away_record = away.get('records', [{}])[0].get('summary', '0-0') if away.get('records') else '0-0'
+        home_record = home.get('records', [{}])[0].get('summary', '0-0') if home.get('records') else '0-0'
+
+        # Game details
+        venue = comps.get('venue', {}).get('fullName', 'TBD')
+        broadcasts = comps.get('broadcasts', [{}])
+        network = broadcasts[0].get('names', ['TBD'])[0] if broadcasts else 'TBD'
+
+        game_date = event.get('date', '')
+        try:
+            dt = datetime.fromisoformat(game_date.replace('Z', '+00:00'))
+            game_time = dt.strftime("%I:%M %p ET")
+        except:
+            game_time = "TBD"
+
+        # Get odds for this game
+        odds = match_odds_to_game(odds_data, away_name, home_name)
+
+        card = generate_game_card(
+            away_name, home_name, away_abbr, home_abbr,
+            away_record, home_record, game_time, venue, network,
+            odds, sport
+        )
+        game_cards.append(card)
+        print(f"  {away_name} @ {home_name}: Spread {odds['spread']}, O/U {odds['total']}")
+
+    # Generate full page HTML
+    today = datetime.now()
+    date_str = today.strftime("%B %d, %Y")
+
+    html = generate_page_html(sport, date_str, len(events), ''.join(game_cards))
+
+    # Write to file
+    output_path = os.path.join(REPO_PATH, config['output'])
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+
+    print(f"Updated {config['output']}")
+    return True
+
+def generate_page_html(sport, date_str, game_count, game_cards):
+    """Generate full page HTML with analysis styling"""
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>{sport} Analysis - {date_str} | BetLegend</title>
+<meta content="{sport} statistical analysis for {date_str}. Advanced stats and betting lines for all {game_count} games." name="description"/>
+<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon"/>
+<link href="https://www.betlegendpicks.com/{sport.lower()}.html" rel="canonical"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+:root{{
+  --bg-primary:#05070a;--bg-card:rgba(15,20,30,0.8);
+  --accent-cyan:#00e5ff;--accent-gold:#ffd54f;--accent-purple:#a855f7;
+  --text-primary:#ffffff;--text-secondary:#94a3b8;--text-muted:#64748b;
+  --border-subtle:rgba(255,255,255,0.08);--border-glow:rgba(0,229,255,0.3);
+  --gradient-card:linear-gradient(145deg,rgba(15,23,42,0.9),rgba(10,15,25,0.95));
+  --gradient-accent:linear-gradient(135deg,#00e5ff,#a855f7);
+  --neon-cyan:#00ffff;--neon-gold:#FFD700;
+  --font-primary:'Orbitron',sans-serif;--font-secondary:'Poppins',sans-serif
+}}
+.nav-container{{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,224,255,0.3)}}
+.nav-inner{{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}}
+.logo{{position:fixed;top:15px;left:15px;z-index:1001}}
+.logo a{{font-family:var(--font-primary);font-size:2.5rem;font-weight:900;color:#fff;text-decoration:none;text-shadow:0 0 10px rgba(255,255,255,0.8)}}
+.logo a span{{color:var(--neon-cyan);text-shadow:0 0 15px rgba(0,255,255,1)}}
+.nav-links{{display:flex;align-items:center;gap:15px;flex-wrap:wrap}}
+.nav-links>a,.dropbtn{{font-family:var(--font-secondary);color:#fff;text-decoration:none;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:1.5px}}
+.nav-links>a:hover,.dropbtn:hover{{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold)}}
+.dropdown{{position:relative}}
+.dropdown-content{{display:none;position:absolute;top:100%;left:0;background:rgba(0,0,0,0.98);min-width:200px;border:2px solid rgba(0,224,255,0.5);border-radius:10px;padding:15px 0;margin-top:10px}}
+.dropdown-content a{{color:var(--neon-cyan);padding:14px 20px;display:block;text-decoration:none}}
+.dropdown-content a:hover{{background:rgba(0,224,255,0.2);color:#fff}}
+.dropdown:hover .dropdown-content{{display:block}}
+body{{background:var(--bg-primary);color:var(--text-primary);font-family:system-ui,sans-serif;line-height:1.7}}
+.hero{{padding:160px 24px 60px;text-align:center}}
+.hero-badge{{display:inline-block;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2);padding:8px 16px;border-radius:50px;font-size:12px;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}}
+.hero h1{{font-size:clamp(36px,6vw,56px);font-weight:700;margin-bottom:12px}}
+.hero h1 span{{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}}
+.hero p{{color:var(--text-secondary);font-size:18px}}
+.current-date{{text-align:center;margin-bottom:40px}}
+.current-date h2{{font-size:28px;color:var(--accent-gold)}}
+main{{max-width:900px;margin:0 auto;padding:0 24px 80px}}
+.game-card{{background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:20px;padding:32px;margin-bottom:24px;transition:all 0.3s}}
+.game-card:hover{{border-color:var(--border-glow);transform:translateY(-4px);box-shadow:0 4px 24px rgba(0,0,0,0.4)}}
+.teams-display{{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:16px}}
+.team-logo{{width:60px;height:60px;object-fit:contain}}
+.vs-badge{{color:var(--text-muted);font-size:14px;font-weight:700;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px}}
+.game-title{{font-size:22px;font-weight:600;margin-bottom:8px;text-align:center}}
+.game-meta{{font-size:13px;color:var(--text-muted);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;gap:8px;justify-content:center}}
+.game-meta span{{background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}}
+.stat-row{{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}}
+.stat-item{{flex:1;min-width:100px;text-align:center;padding:8px}}
+.stat-item .value{{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;color:var(--accent-gold)}}
+.stat-item .label{{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}}
+/* Analysis Section Styles */
+.game-analysis{{margin-top:20px;padding-top:20px;border-top:1px solid var(--border-subtle)}}
+.analysis-section{{margin-bottom:16px}}
+.analysis-section h4{{font-family:var(--font-primary);font-size:0.85rem;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}}
+.analysis-section p{{color:var(--text-secondary);font-size:0.95rem;line-height:1.7}}
+.archive-link{{text-align:center;margin:40px 0;padding:20px}}
+.archive-link a{{color:var(--accent-cyan);text-decoration:none;font-size:16px;padding:12px 24px;border:1px solid var(--border-subtle);border-radius:8px;transition:all 0.3s}}
+.archive-link a:hover{{background:rgba(0,229,255,0.1);border-color:var(--accent-cyan)}}
+footer{{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}}
+footer a{{color:var(--accent-cyan);text-decoration:none}}
+.data-source{{font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--border-subtle)}}
+@media(max-width:768px){{.hero{{padding:160px 20px 40px}}.game-card{{padding:24px}}.team-logo{{width:48px;height:48px}}.stat-row{{flex-direction:column}}}}
+</style>
+</head>
+<body>
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
+<a href="handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Handicapping Hub</a>
+<a href="blog-page10.html">Picks</a>
+<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a></div></div>
+<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a></div></div>
+<a href="proofofpicks.html">Proof</a>
+</div>
+</div>
+</nav>
+<header class="hero">
+<div class="hero-badge">{sport}</div>
+<h1>{sport} <span>Analysis</span></h1>
+<p>{game_count}-Game Slate | Real-Time Odds & Stats</p>
+</header>
+<div class="current-date"><h2>{date_str}</h2></div>
+<main>
+{game_cards}
+</main>
+<div class="archive-link">
+<a href="{sport.lower()}-page2.html">View Previous Analysis</a>
+</div>
+<footer>
+<p>&copy; 2025 BetLegend. All rights reserved. | <a href="index.html">Home</a></p>
+<p style="margin-top:10px">Data sourced from ESPN and The Odds API. Lines subject to change.</p>
+</footer>
+</body>
+</html>'''
+
+def main():
+    print("=" * 50)
+    print("SPORTS PAGE UPDATER WITH ANALYSIS")
+    print(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    print("=" * 50)
+
+    # Update each sport that has games today
+    for sport in ['NFL', 'NBA', 'NHL', 'NCAAB', 'NCAAF']:
+        update_sport_page(sport)
+
+    print("\n" + "=" * 50)
+    print("UPDATE COMPLETE - All pages now include analysis articles")
+    print("=" * 50)
+
+if __name__ == "__main__":
+    main()
