@@ -1022,18 +1022,54 @@ async function fetchAllData() {
 
 function parseCSV(csvText) {
     const lines = csvText.split('\n');
-    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    let headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
     const data = [];
+
+    // Fix known sheet header issues - replace empty headers based on expected structure
+    // Expected columns: Date, Pick, Line/Odds, Result, Units
+    // Some sheets have blank headers or extra columns
+
+    // Normalize headers - fix empty and variant names
+    headers = headers.map((h, idx) => {
+        const lower = h.toLowerCase();
+        if (lower === 'odds') return 'Line'; // Normalize Odds to Line
+        if (h === '' || h === undefined) {
+            // Fill in blank headers based on position and context
+            // Check what columns exist to determine what's missing
+            const existingHeaders = headers.filter(x => x && x !== '');
+            if (!existingHeaders.includes('Result') && !existingHeaders.includes('result')) {
+                // If Result is missing, the blank is probably Result
+                return 'Result';
+            }
+            return `Column${idx}`; // Fallback name
+        }
+        return h;
+    });
 
     for (let i = 1; i < lines.length; i++) {
         if (lines[i].trim() === '') continue;
 
         const values = parseCSVLine(lines[i]);
-        if (values.length >= headers.length) {
+        if (values.length >= 4) { // Minimum: Date, Pick, Line, Result
             const row = {};
             headers.forEach((header, index) => {
-                row[header] = values[index] || '';
+                if (header && values[index] !== undefined) {
+                    row[header] = values[index] || '';
+                }
             });
+
+            // Ensure Result is populated - check for single letter in column 3 or empty header column
+            if (!row.Result || row.Result === '') {
+                // Look for W, L, or P in any column that might be Result
+                for (let j = 0; j < values.length; j++) {
+                    const val = (values[j] || '').trim().toUpperCase();
+                    if (val === 'W' || val === 'L' || val === 'P' || val === 'WIN' || val === 'LOSS' || val === 'PUSH') {
+                        row.Result = val;
+                        break;
+                    }
+                }
+            }
+
             data.push(row);
         }
     }
