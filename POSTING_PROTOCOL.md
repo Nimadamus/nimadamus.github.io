@@ -6,6 +6,49 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
+## ⛔ ABSOLUTE RULE: NO PLACEHOLDER DATA. EVER. ⛔
+
+### ZERO TOLERANCE FOR PLACEHOLDER DATA
+
+**"N/A", "{variable}", "TBD", "TBA", blank values, or ANY placeholder text is FORBIDDEN.**
+
+This is NON-NEGOTIABLE. There are NO exceptions.
+
+| NEVER USE | WHAT IT MEANS |
+|-----------|---------------|
+| N/A | You don't have the data - DON'T PUBLISH |
+| {player_name} | Template variable not replaced - DON'T PUBLISH |
+| TBD/TBA | Information not available - DON'T PUBLISH |
+| - or blank | Missing data - DON'T PUBLISH |
+| "Placeholder" | Lazy incomplete work - DON'T PUBLISH |
+
+### THE RULE IS SIMPLE
+
+```
+IF you don't have REAL, VERIFIED data → DO NOT CREATE THE PAGE
+IF a template field can't be filled → DO NOT CREATE THE PAGE
+IF information is unavailable → DO NOT CREATE THE PAGE
+```
+
+**Better to have NO page than a page with placeholder data.**
+
+### WHY THIS IS ABSOLUTE
+
+- Placeholder data destroys credibility INSTANTLY
+- Readers see "N/A" and know you're not doing the work
+- One placeholder makes every other stat on the page suspect
+- This is a BUSINESS - placeholder data is unprofessional and unacceptable
+
+### ENFORCEMENT
+
+Any page containing placeholder data MUST be:
+1. Immediately fixed with real data, OR
+2. Immediately deleted
+
+**There is no third option. Placeholder data does not exist on this website.**
+
+---
+
 ## ⚠️ CRITICAL WARNING: 100% VERIFICATION OR DON'T POST ⚠️
 
 ### ONE FALSE CLAIM DESTROYS CREDIBILITY
