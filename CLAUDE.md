@@ -225,27 +225,35 @@ After pushing, wait 1-2 minutes for GitHub Pages to deploy, then verify:
 
 ---
 
-## ⛔⛔⛔ LOCKED: GAME RESULT FORMAT (December 14, 2025) ⛔⛔⛔
+## ⛔⛔⛔ LOCKED: CALENDAR STYLE ARCHIVE PAGES (December 14, 2025) ⛔⛔⛔
 
-**When adding game results to archive pages, use this EXACT format:**
+**ALL archive pages MUST match the main sports page format (nba.html style).**
 
+### REQUIRED FORMAT:
 ```html
-<!-- WIN (green) -->
-<div class="result-section" style="background:rgba(0,200,100,0.15);border:1px solid rgba(0,200,100,0.3);border-radius:10px;padding:12px;margin:12px 0;">
-<p style="font-size:0.85rem;color:#00ff88;margin-bottom:6px;font-weight:700;">FINAL: [WINNER] [SCORE], [LOSER] [SCORE]</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;">[Spread result] | [O/U result] | [Key note]</p>
-</div>
-
-<!-- LOSS/DID NOT COVER (orange) -->
-<div class="result-section" style="background:rgba(255,165,0,0.15);border:1px solid rgba(255,165,0,0.3);border-radius:10px;padding:12px;margin:12px 0;">
-<p style="font-size:0.85rem;color:#ffa500;margin-bottom:6px;font-weight:700;">FINAL: [WINNER] [SCORE], [LOSER] [SCORE]</p>
-<p style="font-size:0.8rem;color:#ccc;margin:4px 0;">[Spread result] | [O/U result] | [Key note]</p>
-</div>
+<article class="game-preview">
+  <div class="game-header">
+    <img class="team-logo" src="ESPN_CDN_URL"/>
+    <div class="matchup-info">
+      <h2>Away @ Home</h2>
+      <span class="game-time">Day, Time ET | Venue</span>
+    </div>
+    <img class="team-logo" src="ESPN_CDN_URL"/>
+  </div>
+  <!-- For completed games: result section here (green/orange) -->
+  <div class="preview-content">
+    <p>[3-5 paragraphs of REAL written content]</p>
+  </div>
+</article>
 ```
 
-**Placement:** AFTER game-meta div, BEFORE stat-row div. NO EXCEPTIONS.
+### BANNED - NEVER USE:
+- ❌ stat-row divs with spread/ML boxes
+- ❌ deep-analysis sections
+- ❌ game-card class (use game-preview)
+- ❌ "Both defenses have been comparable..."
 
-**Full documentation:** See POSTING_PROTOCOL.md "LOCKED: GAME RESULT SECTION FORMAT"
+**Full documentation:** See POSTING_PROTOCOL.md
 
 ---
 

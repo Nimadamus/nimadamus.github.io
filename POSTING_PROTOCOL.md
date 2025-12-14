@@ -1170,13 +1170,82 @@ If user provides conflicting instructions, ALWAYS:
 
 ---
 
+## ⛔⛔⛔ LOCKED: SPORTS ARCHIVE PAGE FORMAT (CALENDAR STYLE) ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 14, 2025
+
+**ALL sports archive pages (nba-pageX.html, nhl-pageX.html, nfl.html, etc.) MUST use the SAME FORMAT as the main sports page (nba.html).**
+
+**The archive pages feed into the calendar. They MUST be consistent.**
+
+---
+
+### REQUIRED GAME CARD STRUCTURE
+
+```html
+<article class="game-preview">
+  <div class="game-header">
+    <img alt="[Away Team]" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/[abbrev].png"/>
+    <div class="matchup-info">
+      <h2>[Away Team] @ [Home Team]</h2>
+      <span class="game-time">[Day], [Time] ET | [Venue]</span>
+    </div>
+    <img alt="[Home Team]" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/[abbrev].png"/>
+  </div>
+
+  <!-- FOR COMPLETED GAMES ONLY: Add result section here -->
+  <div class="result-section" style="...">...</div>
+
+  <div class="preview-content">
+    <p>[3-5 paragraphs of ACTUAL written content - NOT template garbage]</p>
+    <p class="section-header">What to Watch</p>
+    <p>[More written content]</p>
+  </div>
+</article>
+```
+
+---
+
+### CONTENT REQUIREMENTS
+
+**MUST HAVE:**
+- ✅ Team logos from ESPN CDN
+- ✅ Human-written paragraphs (3-5 per game minimum)
+- ✅ Actual analysis about THIS specific game
+- ✅ Section headers where appropriate
+- ✅ Real team records and stats
+
+**BANNED - NEVER USE:**
+- ❌ stat-row divs with spread/ML/O-U boxes
+- ❌ deep-analysis sections with template garbage
+- ❌ "Both defenses have been comparable..."
+- ❌ "Sharp bettors are paying attention..."
+- ❌ Fake placeholder stats (114.0 everywhere)
+- ❌ game-card class (use game-preview class)
+
+---
+
+### THE OLD FORMAT IS PERMANENTLY BANNED
+
+```html
+<!-- ❌ BANNED - This garbage format is NEVER allowed ❌ -->
+<article class="game-card">
+  <div class="stat-row">...</div>
+  <div class="deep-analysis">
+    <p>This game could be more interesting than the spread suggests...</p>
+  </div>
+</article>
+```
+
+**USE THE CLEAN ARTICLE FORMAT ONLY.**
+
 ---
 
 ## ⛔⛔⛔ LOCKED: GAME RESULT SECTION FORMAT ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - DECEMBER 14, 2025
 
-**When adding game results to archive pages (nba-pageX.html, nfl.html, nhl-pageX.html, etc.), you MUST use this EXACT format. No variations.**
+**When adding game results to archive pages, use this EXACT format.**
 
 ---
 
@@ -1202,25 +1271,22 @@ If user provides conflicting instructions, ALWAYS:
 
 ### PLACEMENT RULES
 
-1. **Place the result section AFTER the game-meta div and BEFORE the stat-row div**
-2. The result section goes between the matchup header and the betting lines
+1. **Place the result section AFTER the game-header div and BEFORE the preview-content div**
+2. The result section goes between the header and the written content
 3. NEVER place it at the bottom of the game card
-4. NEVER place it inside the deep-analysis section
 
 **Correct placement:**
 ```html
-<div class="game-meta">
-  <span>7:00 PM ET</span>
-  <span>12-5 vs 8-9</span>
-  <span>Arena Name</span>
-</div>
-<!-- RESULT SECTION GOES HERE -->
-<div class="result-section" style="...">
-  ...
-</div>
-<div class="stat-row">
-  ...
-</div>
+<article class="game-preview">
+  <div class="game-header">...</div>
+
+  <!-- RESULT SECTION GOES HERE -->
+  <div class="result-section" style="...">...</div>
+
+  <div class="preview-content">
+    <p>Written content...</p>
+  </div>
+</article>
 ```
 
 ---
@@ -1288,11 +1354,12 @@ If user provides conflicting instructions, ALWAYS:
 ---
 
 ## PROTOCOL VERSION
-Version: 1.2
+Version: 1.3
 Last Updated: December 14, 2025
 Created by: Claude Code for BetLegend
 
 ### CHANGELOG:
+- v1.3 (Dec 14, 2025): Added LOCKED "Sports Archive Page Format (Calendar Style)" - ALL archive pages MUST use game-preview article format with written content, NO stat-row/deep-analysis garbage
 - v1.2 (Dec 14, 2025): Added LOCKED "Game Result Section Format" with exact HTML, colors, and placement rules
 - v1.1 (Dec 14, 2025): Added "BANNED TEMPLATE PHRASES" section to enforce human-sounding commentary on sports pages
 
