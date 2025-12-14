@@ -66,6 +66,113 @@ footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13p
 footer a{color:var(--accent-cyan);text-decoration:none}
 .data-source{font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--border-subtle)}
 @media(max-width:768px){.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}}
+
+/* Archive Calendar Styles */
+.archive-calendar-section {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    padding: 0 24px;
+}
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.calendar-title {
+    font-family: var(--font-primary);
+    font-size: 18px;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.calendar-toggle {
+    background: rgba(0,229,255,0.1);
+    border: 1px solid var(--border-subtle);
+    color: var(--accent-cyan);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+.calendar-toggle:hover {
+    background: rgba(0,229,255,0.2);
+    border-color: var(--accent-cyan);
+}
+#archive-calendar {
+    display: none;
+    background: var(--gradient-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 16px;
+}
+#archive-calendar.open {
+    display: block;
+}
+.calendar-months {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.calendar-month {
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 16px;
+}
+.month-title {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    color: var(--accent-cyan);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.calendar-days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.calendar-day {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+.calendar-day:hover {
+    background: rgba(0,229,255,0.2);
+    border-color: var(--accent-cyan);
+    transform: scale(1.1);
+}
+.calendar-day.today {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    border-color: var(--accent-cyan);
+}
+.calendar-day.today .day-num {
+    color: #000;
+    font-weight: 700;
+}
+.day-num {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    color: var(--text-primary);
+}
+@media(max-width:768px) {
+    .calendar-day {
+        width: 38px;
+        height: 38px;
+    }
+    .day-num {
+        font-size: 12px;
+    }
+}
 </style>
 </head>
 <body>
@@ -87,6 +194,16 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>6-Game Slate | Real-Time Odds & Stats</p>
 </header>
 <div class="current-date"><h2>December 14, 2025</h2></div>
+<section class="archive-calendar-section">
+<div class="calendar-header">
+<span class="calendar-title">View Archive Calendar</span>
+<button class="calendar-toggle" onclick="document.getElementById('archive-calendar').classList.toggle('open')">
+Select Date
+</button>
+</div>
+<div id="archive-calendar"></div>
+</section>
+
 <main>
 
 <article class="game-card">
@@ -109,10 +226,10 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="stat-item"><span class="value">-142</span><span class="label">NJ ML</span></div>
 </div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>The numbers tell an interesting story in this one. The Vancouver Canucks (11-17-3) visit the New Jersey Devils (18-13-1) at Prudential Center.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>This is essentially a pick'em with the spread at -1.5. Vegas sees these teams as evenly matched. The total sits at 5.5. </p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Moneyline: Vancouver Canucks +120, New Jersey Devils -142.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Line movement closer to game time could reveal additional value.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>What happened to Vancouver? The Canucks were a playoff team last year and now sit at 11-17-3, one of the most disappointing teams in the league. Their defensive structure has collapsed, and the goaltending has been inconsistent. New Jersey at 18-13-1 is quietly having a strong season, led by Jack Hughes and the young core that's maturing nicely. The Devils are 11-5-1 at home this season and play a fast, aggressive style that should overwhelm a struggling Vancouver defense.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>New Jersey -142 at home against a team 7 games under .500 is fair value. The puck line at -1.5 is where the real decision lies - the Devils have been winning by multiple goals at home, and Vancouver's road record (5-9-1) suggests they struggle in hostile environments. The 5.5 total is standard - both teams can score, but goaltending will determine whether this stays under.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>Vancouver +120 as an underdog looks like a trap. The Canucks have lost 5 of their last 7 games and show no signs of turning it around. Unless their goaltender steals one, there's no path to victory here. New Jersey -142 is the safer play, though the juice is steep.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>New Jersey on the puck line -1.5 offers value if you believe the Devils can win by 2+ goals. At home against a team that's bleeding goals and can't score consistently, New Jersey should control this game. The under 5.5 is also worth considering - Vancouver's offensive struggles could keep this in the 3-4 goal range.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -137,10 +254,10 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="stat-item"><span class="value">+114</span><span class="label">PIT ML</span></div>
 </div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Let's break down what makes this matchup tick. The Utah Mammoth (15-15-3) visit the Pittsburgh Penguins (14-8-8) at PPG Paints Arena.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>This is essentially a pick'em with the spread at +1.5. Vegas sees these teams as evenly matched. The total sits at 6.5. That's on the higher side for hockey, pointing to potential offensive fireworks.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Moneyline: Utah Mammoth -135, Pittsburgh Penguins +114.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Line movement closer to game time could reveal additional value.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Utah's first season in Salt Lake City has been mediocre at best. The former Arizona Coyotes relocated and sit at 15-15-3, a .500 team that hasn't found its identity yet. Pittsburgh at 14-8-8 is a fascinating case - they've been in the mix but those 8 overtime losses tell you they've been in a lot of close games they couldn't finish. Sidney Crosby is still producing at age 38, but the supporting cast has been inconsistent. Utah brings Dylan Guenther and a young core looking to prove themselves.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>Utah -135 on the road is interesting. The market is saying the younger, faster Utah team should beat an aging Pittsburgh squad. The 6.5 total is high for the NHL - both teams have given up goals in bunches this season. Pittsburgh's defense has been particularly leaky, allowing 3.3 goals per game. If you're playing the over, this is the spot.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>Pittsburgh +114 at home has value if you believe Crosby can still steal games. The Penguins are 8-4-4 at PPG Paints Arena - they play well in front of their fans. Utah's road record (7-8-1) is nothing special. This looks like a coin flip, and getting plus money on the home team with a Hall of Famer is worth considering.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>The 8 overtime losses for Pittsburgh are key. This team plays close games but can't close. If you're betting Utah, the puck line at -1.5 is risky because Pittsburgh keeps games tight. The over 6.5 is the sharper play given both teams' defensive issues.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -165,10 +282,10 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="stat-item"><span class="value">-230</span><span class="label">CAR ML</span></div>
 </div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>This game could be more interesting than the spread suggests. Both teams enter this one playing well. The Philadelphia Flyers (16-9-5) take on the Carolina Hurricanes (20-9-2) in what promises to be a competitive matchup.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>This is essentially a pick'em with the spread at -1.5. Vegas sees these teams as evenly matched. The total sits at 5.5. </p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Moneyline: Philadelphia Flyers +190, Carolina Hurricanes -230.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Sometimes the obvious play is the right one. Sometimes it isn't.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Carolina at 20-9-2 is one of the best teams in the Eastern Conference, and playing at home in the Lenovo Center makes them even more dangerous. The Hurricanes play a suffocating defensive system under Rod Brind'Amour - they control possession, limit shots, and force turnovers. Philadelphia at 16-9-5 has been one of the league's pleasant surprises this season. The young core led by Matvei Michkov and Travis Konecny has given Philly fans something to be excited about for the first time in years. But the Flyers are 7-5-2 on the road, and Carolina is a different beast at home (12-3-1).</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>Carolina -230 is heavy chalk, and for good reason. The Hurricanes rarely lose at home and have the goaltending (Frederik Andersen has been excellent) to shut down any offense. The 5.5 total reflects Carolina's stifling defensive identity - they don't give up easy goals. Philadelphia will need to score first to have any chance, but Carolina typically doesn't allow that.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>Philadelphia +190 is enticing if you think the Flyers can steal one. They've been scrappy all season and Michkov is a game-changer with his skill. But the data says otherwise - Carolina at home as this big a favorite typically covers. You're betting on the Flyers to play a perfect road game against an elite team.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Carolina on the puck line -1.5 has value. The Hurricanes win at home by multiple goals regularly, and Philadelphia's defense can get exposed against structured teams. If Carolina scores first, they'll control the pace and likely win by 2+. The under 5.5 is also in play - expect a low-event game controlled by Carolina.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -193,10 +310,10 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="stat-item"><span class="value">-148</span><span class="label">MIN ML</span></div>
 </div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Sharp money has been moving on this game, and there's a reason why. The Boston Bruins (19-13-0) visit the Minnesota Wild (18-9-5) at Grand Casino Arena.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>This is essentially a pick'em with the spread at -1.5. Vegas sees these teams as evenly matched. The total sits at 5.5. </p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Moneyline: Boston Bruins +124, Minnesota Wild -148.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>This matchup has trap game written all over it - proceed with caution.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>This is an excellent late-night hockey game between two playoff-caliber teams. Boston at 19-13-0 is fascinating because they have ZERO overtime losses - when they lose, they lose in regulation. That tells you this team either dominates or gets beat decisively. Minnesota at 18-9-5 has been one of the Western Conference's best stories, with Kirill Kaprizov playing at an MVP level. The Wild are 10-4-2 at home this season and play a grinding, physical style that travels well in their own building.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>Minnesota -148 at home against a Boston team traveling to the Midwest late on a Saturday is fair. The Bruins have been inconsistent on the road (8-7-0) while Minnesota protects home ice well. The 5.5 total suggests a tight game - both teams have quality goaltending. Jeremy Swayman for Boston and Filip Gustavsson for Minnesota can both steal games.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>Boston +124 has appeal because the Bruins are still a dangerous team with David Pastrnak and Charlie Coyle providing offense. But they're facing a rested Minnesota team with home-ice advantage. The value here depends on how much you trust Boston's ability to win in hostile environments - their 8-7 road record suggests they're capable but not dominant.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Minnesota straight up is the play. The Wild at home against a traveling East Coast team in a late start is a solid situational spot. Kaprizov can take over games, and Boston's defensive structure has shown cracks this season. The under 5.5 is also worth considering - both goalies have been sharp, and this could be a 2-1 or 3-2 final.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -221,8 +338,10 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="stat-item"><span class="value">-</span><span class="label">MTL ML</span></div>
 </div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>This one has all the makings of a competitive battle. The Edmonton Oilers (15-11-6) visit the Montreal Canadiens (16-11-4) at Bell Centre.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>This matchup has trap game written all over it - proceed with caution.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Connor McDavid and Leon Draisaitl invade the Bell Centre - always an event. Edmonton at 15-11-6 hasn't lived up to expectations this season after reaching the Stanley Cup Finals last year. The Oilers are 7-6-3 on the road and have struggled with consistency. Montreal at 16-11-4 is quietly having a solid season, with Cole Caufield emerging as a legitimate star and Nick Suzuki running the show. The Canadiens are 9-5-2 at home, and the Bell Centre crowd will be electric for this one.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>No odds listed yet, but expect Edmonton to be a small favorite on the road. McDavid and Draisaitl can outscore any defensive issues, but Edmonton's goaltending has been inconsistent. Stuart Skinner has had some rough outings, and that's a concern against a Montreal team that can score in bunches with Caufield heating up.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>This is a classic case of star power vs. home-ice advantage. Edmonton has the best player in the world, but Montreal in the Bell Centre is a different animal. The Habs are 9-5-2 at home and play with energy in front of their passionate fanbase. If you can get Montreal at plus money, there's value there.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Watch the goaltender announcements. If Edmonton goes with Skinner and he's been struggling, Montreal has a real shot. Caufield has 18 goals already and is on pace for a career year. Edmonton's defense can be exposed, and the Canadiens have the speed to create odd-man rushes. This could be a high-scoring affair - look at the over when lines are released.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -256,13 +375,98 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </article>
 
 </main>
-<div class="archive-link">
-<a href="nhl-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a>
-<a href="nhl-page2.html">View Previous Analysis</a>
-</div>
+
 <footer>
 <p>&copy; 2025 BetLegend. All rights reserved. | <a href="index.html">Home</a></p>
 <p style="margin-top:10px">Data sourced from ESPN and The Odds API. Lines subject to change.</p>
 </footer>
+<script>
+const archiveData = [
+  {
+    "date": "2025-12-14",
+    "display": "December 14, 2025",
+    "page": "nhl.html"
+  },
+  {
+    "date": "2025-12-13",
+    "display": "December 13, 2025",
+    "page": "nhl-page2.html"
+  },
+  {
+    "date": "2025-12-12",
+    "display": "December 12, 2025",
+    "page": "nhl-page4.html"
+  },
+  {
+    "date": "2025-12-10",
+    "display": "December 10, 2025",
+    "page": "nhl-page6.html"
+  },
+  {
+    "date": "2025-12-09",
+    "display": "December 09, 2025",
+    "page": "nhl-page10.html"
+  },
+  {
+    "date": "2025-12-08",
+    "display": "December 08, 2025",
+    "page": "nhl-page11.html"
+  },
+  {
+    "date": "2025-12-07",
+    "display": "December 07, 2025",
+    "page": "nhl-page14.html"
+  },
+  {
+    "date": "2025-12-06",
+    "display": "December 06, 2025",
+    "page": "nhl-page17.html"
+  },
+  {
+    "date": "2025-12-05",
+    "display": "December 05, 2025",
+    "page": "nhl-page20.html"
+  },
+  {
+    "date": "2025-12-04",
+    "display": "December 04, 2025",
+    "page": "nhl-page26.html"
+  }
+];
+
+function renderCalendar() {
+    const container = document.getElementById('archive-calendar');
+    if (!container) return;
+
+    const months = {};
+    archiveData.forEach(item => {
+        const date = new Date(item.date + 'T12:00:00');
+        const monthKey = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+        if (!months[monthKey]) months[monthKey] = [];
+        months[monthKey].push(item);
+    });
+
+    let html = '<div class="calendar-months">';
+    Object.entries(months).forEach(([month, items]) => {
+        html += '<div class="calendar-month">';
+        html += '<h3 class="month-title">' + month + '</h3>';
+        html += '<div class="calendar-days">';
+        items.forEach(item => {
+            const date = new Date(item.date + 'T12:00:00');
+            const day = date.getDate();
+            const isToday = item.page === 'nhl.html';
+            html += '<a href="' + item.page + '" class="calendar-day' + (isToday ? ' today' : '') + '" title="' + item.display + '">';
+            html += '<span class="day-num">' + day + '</span>';
+            html += '</a>';
+        });
+        html += '</div></div>';
+    });
+    html += '</div>';
+
+    container.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', renderCalendar);
+</script>
 </body>
 </html>
