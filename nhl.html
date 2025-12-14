@@ -77,6 +77,19 @@ footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13p
 footer a{color:var(--accent-cyan);text-decoration:none}
 .data-source{font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--border-subtle)}
 @media(max-width:768px){.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}}
+
+/* Archive Calendar */
+.archive-cal{max-width:900px;margin:0 auto 30px;padding:0 24px}
+.cal-btn{display:block;margin:0 auto;background:linear-gradient(135deg,var(--accent-cyan),var(--accent-purple));color:#000;font-family:var(--font-primary);font-size:14px;font-weight:700;padding:12px 24px;border:none;border-radius:8px;cursor:pointer;text-transform:uppercase;letter-spacing:1px}
+.cal-btn:hover{transform:scale(1.05)}
+.cal-grid{display:none;margin-top:20px;background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:16px;padding:20px}
+.cal-grid.open{display:block}
+.cal-month{margin-bottom:20px}
+.cal-month h4{font-family:var(--font-primary);font-size:13px;color:var(--accent-gold);margin-bottom:12px;text-transform:uppercase}
+.cal-days{display:flex;flex-wrap:wrap;gap:8px}
+.cal-day{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid var(--border-subtle);border-radius:8px;color:#fff;font-family:var(--font-primary);font-size:13px;text-decoration:none;transition:all 0.2s}
+.cal-day:hover{background:rgba(0,229,255,0.3);border-color:var(--accent-cyan);transform:scale(1.1)}
+.cal-day.today{background:var(--accent-cyan);color:#000;font-weight:700}
 </style>
 </head>
 <body>
@@ -98,6 +111,10 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>6-Game Slate | Real-Time Odds & Stats</p>
 </header>
 <div class="current-date"><h2>December 14, 2025</h2></div>
+<div class="archive-cal">
+<button class="cal-btn" onclick="document.getElementById('nhl-cal').classList.toggle('open')">View Archive Calendar</button>
+<div class="cal-grid" id="nhl-cal"></div>
+</div>
 <main>
 
 <article class="game-card">
@@ -539,12 +556,22 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </article>
 
 </main>
-<div class="archive-link">
-<a href="nhl-page2.html">View Previous Analysis</a>
-</div>
+
 <footer>
 <p>&copy; 2025 BetLegend. All rights reserved. | <a href="index.html">Home</a></p>
 <p style="margin-top:10px">Data sourced from ESPN and The Odds API. Lines subject to change.</p>
 </footer>
+<script>
+(function(){
+const data=[{"date": "2025-12-14", "display": "December 14, 2025", "page": "nhl.html"}, {"date": "2025-12-13", "display": "December 13, 2025", "page": "nhl-page2.html"}, {"date": "2025-12-12", "display": "December 12, 2025", "page": "nhl-page4.html"}, {"date": "2025-12-10", "display": "December 10, 2025", "page": "nhl-page6.html"}, {"date": "2025-12-09", "display": "December 09, 2025", "page": "nhl-page9.html"}, {"date": "2025-12-08", "display": "December 08, 2025", "page": "nhl-page11.html"}, {"date": "2025-12-07", "display": "December 07, 2025", "page": "nhl-page14.html"}, {"date": "2025-12-06", "display": "December 06, 2025", "page": "nhl-page17.html"}, {"date": "2025-12-05", "display": "December 05, 2025", "page": "nhl-page20.html"}, {"date": "2025-12-04", "display": "December 04, 2025", "page": "nhl-page26.html"}];
+const el=document.getElementById('nhl-cal');
+if(!el||!data.length)return;
+const months={};
+data.forEach(d=>{const dt=new Date(d.date+'T12:00:00');const m=dt.toLocaleDateString('en-US',{year:'numeric',month:'long'});if(!months[m])months[m]=[];months[m].push(d);});
+let h='';
+Object.entries(months).forEach(([m,items])=>{h+='<div class="cal-month"><h4>'+m+'</h4><div class="cal-days">';items.forEach(i=>{const dt=new Date(i.date+'T12:00:00');const today=i.page==='nhl.html';h+='<a href="'+i.page+'" class="cal-day'+(today?' today':'')+'" title="'+i.display+'">'+dt.getDate()+'</a>';});h+='</div></div>';});
+el.innerHTML=h;
+})();
+</script>
 </body>
 </html>
