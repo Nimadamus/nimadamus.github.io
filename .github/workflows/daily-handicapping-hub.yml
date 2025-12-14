@@ -25,18 +25,34 @@ jobs:
         run: |
           pip install requests
 
-      - name: Archive previous day hub
+      - name: Archive previous day hub and update calendar
         run: |
-          DATE=$(date -d "yesterday" +%Y-%m-%d)
+          YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)
           if [ -f "handicapping-hub.html" ]; then
             mkdir -p handicapping-hub-archive
-            cp handicapping-hub.html "handicapping-hub-archive/hub-${DATE}.html"
-            echo "Archived to handicapping-hub-archive/hub-${DATE}.html"
+            ARCHIVE_FILE="hub-${YESTERDAY}.html"
+            cp handicapping-hub.html "handicapping-hub-archive/${ARCHIVE_FILE}"
+            echo "Archived to handicapping-hub-archive/${ARCHIVE_FILE}"
+
+            # Update archive calendar data
+            if [ -f "handicapping-hub-archive.html" ]; then
+              sed -i "s|const archiveData = {|const archiveData = {\n            \"${YESTERDAY}\": \"${ARCHIVE_FILE}\",|" handicapping-hub-archive.html
+              echo "Updated archive calendar with ${YESTERDAY}"
+            fi
           fi
 
       - name: Run Handicapping Hub Production Script
         run: |
           python scripts/handicapping_hub_production.py
+
+      - name: Update today in archive calendar
+        run: |
+          TODAY=$(date +%Y-%m-%d)
+          if [ -f "handicapping-hub-archive.html" ]; then
+            if ! grep -q "\"${TODAY}\":" handicapping-hub-archive.html; then
+              sed -i "s|const archiveData = {|const archiveData = {\n            \"${TODAY}\": \"handicapping-hub.html\",|" handicapping-hub-archive.html
+            fi
+          fi
 
       - name: Commit and push changes
         run: |

@@ -125,6 +125,89 @@ def fetch_odds(sport_key: str) -> List[Dict]:
         print(f"  [ERROR] Odds API fetch failed: {e}")
     return []
 
+def fetch_team_injuries(sport_path: str, team_id: str) -> List[Dict]:
+    """Fetch team injuries from ESPN"""
+    injuries = []
+    try:
+        # Try the injuries endpoint
+        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/injuries"
+        resp = requests.get(url, timeout=10)
+        if resp.status_code == 200:
+            data = resp.json()
+            for item in data.get('items', []):
+                athlete = item.get('athlete', {})
+                name = athlete.get('displayName', athlete.get('shortName', 'Unknown'))
+                position = athlete.get('position', {}).get('abbreviation', '')
+                status = item.get('status', 'Unknown')
+                injury_type = item.get('type', {}).get('text', item.get('details', {}).get('type', ''))
+
+                # Only include significant injuries (Out, Doubtful, Questionable)
+                status_lower = status.lower() if status else ''
+                if status_lower in ['out', 'doubtful', 'questionable', 'injured reserve', 'ir', 'day-to-day']:
+                    injuries.append({
+                        'name': name,
+                        'position': position,
+                        'status': status,
+                        'type': injury_type
+                    })
+
+        # Also try the roster endpoint for injury info
+        if not injuries:
+            url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/roster"
+            resp = requests.get(url, timeout=10)
+            if resp.status_code == 200:
+                data = resp.json()
+                for athlete in data.get('athletes', []):
+                    for player in athlete.get('items', []):
+                        injury = player.get('injuries', [])
+                        if injury:
+                            inj = injury[0]
+                            status = inj.get('status', '')
+                            if status.lower() in ['out', 'doubtful', 'questionable', 'day-to-day']:
+                                injuries.append({
+                                    'name': player.get('displayName', 'Unknown'),
+                                    'position': player.get('position', {}).get('abbreviation', ''),
+                                    'status': status,
+                                    'type': inj.get('type', {}).get('text', '')
+                                })
+    except Exception as e:
+        pass  # Silently fail - injuries are supplemental
+
+    return injuries[:5]  # Limit to top 5 injuries per team
+
+def format_injuries_html(injuries: List[Dict], abbr: str) -> str:
+    """Format injuries for display in trends bar"""
+    if not injuries:
+        return f"{abbr}: No reported injuries"
+
+    injury_strs = []
+    for inj in injuries[:3]:  # Show max 3 per team
+        name = inj.get('name', 'Unknown')
+        # Shorten name to first initial + last name
+        parts = name.split()
+        if len(parts) > 1:
+            short_name = f"{parts[0][0]}. {parts[-1]}"
+        else:
+            short_name = name
+
+        pos = inj.get('position', '')
+        status = inj.get('status', '')
+
+        # Abbreviate status
+        status_abbr = status
+        if status.lower() == 'questionable':
+            status_abbr = 'Q'
+        elif status.lower() == 'doubtful':
+            status_abbr = 'D'
+        elif status.lower() in ['out', 'injured reserve', 'ir']:
+            status_abbr = 'OUT'
+        elif status.lower() == 'day-to-day':
+            status_abbr = 'DTD'
+
+        injury_strs.append(f"{short_name} ({pos}) - {status_abbr}")
+
+    return f"{abbr}: {', '.join(injury_strs)}"
+
 def match_game_odds(odds_data: List[Dict], away_name: str, home_name: str) -> Dict:
     """Match odds to a specific game with full details"""
     result = {
@@ -208,13 +291,32 @@ def get_power_rating(record):
         pass
     return '-'
 
+def format_top(val):
+    """Format Time of Possession - handles seconds or MM:SS string"""
+    if val is None or val == '' or val == '-':
+        return '-'
+    # If already in MM:SS format
+    if isinstance(val, str) and ':' in val:
+        return val
+    try:
+        # If it's seconds (could be total or avg per game)
+        seconds = float(val)
+        # If very large, it's probably total seconds for season - convert to per-game avg
+        if seconds > 3600:  # More than 1 hour means it's season total
+            return '-'  # We'd need games played to calculate
+        minutes = int(seconds // 60)
+        secs = int(seconds % 60)
+        return f"{minutes}:{secs:02d}"
+    except:
+        return str(val) if val else '-'
+
 def extract_nba_stats(raw: Dict, record: str) -> Dict:
     """Extract comprehensive NBA stats"""
     return {
         # Offense
         'ppg': safe_num(raw.get('avgPoints', raw.get('pointsPerGame'))),
         'fg_pct': safe_pct(raw.get('fieldGoalPct')),
-        'three_pct': safe_pct(raw.get('threePointFieldGoalPct')),
+        'three_pct': safe_pct(raw.get('threePointPct', raw.get('threePointFieldGoalPct'))),  # ESPN uses threePointPct
         'ft_pct': safe_pct(raw.get('freeThrowPct')),
         'ast': safe_num(raw.get('avgAssists', raw.get('assistsPerGame'))),
         'reb': safe_num(raw.get('avgRebounds', raw.get('reboundsPerGame'))),
@@ -228,21 +330,40 @@ def extract_nba_stats(raw: Dict, record: str) -> Dict:
         'to': safe_num(raw.get('avgTurnovers', raw.get('turnoversPerGame'))),
         'ast_to': safe_num(raw.get('assistTurnoverRatio')),
         'pf': safe_num(raw.get('avgFouls', raw.get('foulsPerGame'))),
-        # Situational
+        # Shooting - Advanced
         'two_pct': safe_pct(raw.get('twoPointFieldGoalPct')),
+        'efg': safe_pct(raw.get('shootingEfficiency')),  # Effective FG%
+        'ts': safe_pct(raw.get('scoringEfficiency')),    # True Shooting proxy
+        # Per Game
+        'fgm': safe_num(raw.get('avgFieldGoalsMade')),
+        'fga': safe_num(raw.get('avgFieldGoalsAttempted')),
+        '3pm': safe_num(raw.get('avgThreePointFieldGoalsMade')),
+        '3pa': safe_num(raw.get('avgThreePointFieldGoalsAttempted')),
+        'ftm': safe_num(raw.get('avgFreeThrowsMade')),
+        'fta': safe_num(raw.get('avgFreeThrowsAttempted')),
         'pwr': get_power_rating(record),
     }
 
 def extract_nfl_stats(raw: Dict, record: str) -> Dict:
     """Extract comprehensive NFL stats"""
+    # Calculate yards per play if not provided
+    total_yards = raw.get('totalYards', 0)
+    total_plays = raw.get('totalOffensivePlays', 1)
+    ypp_calc = '-'
+    try:
+        if total_yards and total_plays:
+            ypp_calc = f"{float(total_yards) / float(total_plays):.2f}"
+    except:
+        pass
+
     return {
         # Offense
-        'ppg': safe_num(raw.get('avgPoints', raw.get('totalPointsPerGame'))),
-        'ypg': safe_num(raw.get('totalYardsPerGame', raw.get('netTotalYards')), 0),
+        'ppg': safe_num(raw.get('totalPointsPerGame', raw.get('avgPoints'))),
+        'ypg': safe_num(raw.get('yardsPerGame', raw.get('totalYardsPerGame')), 0),
         'pass_ypg': safe_num(raw.get('netPassingYardsPerGame', raw.get('passingYardsPerGame')), 0),
         'rush_ypg': safe_num(raw.get('rushingYardsPerGame'), 0),
         'comp_pct': safe_pct(raw.get('completionPct')),
-        'qbr': safe_num(raw.get('QBRating', raw.get('QBRating'))),
+        'qbr': safe_num(raw.get('QBRating')),
         # Defense
         'opp_ppg': safe_num(raw.get('avgPointsAgainst', raw.get('pointsAgainstPerGame'))),
         'opp_ypg': safe_num(raw.get('yardsAllowedPerGame'), 0),
@@ -250,23 +371,56 @@ def extract_nfl_stats(raw: Dict, record: str) -> Dict:
         'ints': safe_num(raw.get('interceptions'), 0),
         'tfl': safe_num(raw.get('tacklesForLoss'), 0),
         'ff': safe_num(raw.get('fumblesForced'), 0),
+        'pd': safe_num(raw.get('passesDefended'), 0),  # Passes Defended
         # Efficiency
-        'ypp': safe_num(raw.get('yardsPerPlay'), 2),
-        'ypa': safe_num(raw.get('yardsPerPassAttempt'), 2),
-        'ypr': safe_num(raw.get('yardsPerRushAttempt'), 2),
+        'ypp': safe_num(raw.get('yardsPerPlay')) if raw.get('yardsPerPlay') else ypp_calc,
+        'ypa': safe_num(raw.get('yardsPerPassAttempt'), 1),
+        'ypr': safe_num(raw.get('yardsPerRushAttempt'), 1),
+        'ypc': safe_num(raw.get('yardsPerReception'), 1),  # Yards Per Catch
         # Situational
         'third_pct': safe_pct(raw.get('thirdDownConvPct')),
         'fourth_pct': safe_pct(raw.get('fourthDownConvPct')),
         'rz_pct': safe_pct(raw.get('redzoneTouchdownPct', raw.get('redzoneEfficiencyPct'))),
+        'rz_score': safe_pct(raw.get('redzoneScoringPct')),  # RZ Scoring %
         'to_diff': raw.get('turnOverDifferential', raw.get('takeawayGiveawayDiff', '-')),
-        'top': raw.get('avgTimeOfPossession', raw.get('possessionTime', '-')),
+        'top': format_top(raw.get('avgTimeOfPossession', raw.get('possessionTime'))),
+        # Special Teams
+        'fg_pct': safe_pct(raw.get('fieldGoalPct')),
+        'punt_avg': safe_num(raw.get('grossAvgPuntYards'), 1),
+        'kr_avg': safe_num(raw.get('yardsPerKickReturn'), 1),
+        # First Downs
+        'first_downs': safe_num(raw.get('firstDowns'), 0),
+        'rush_td': safe_num(raw.get('rushingTouchdowns'), 0),
+        'pass_td': safe_num(raw.get('passingTouchdowns'), 0),
+        'penalties': safe_num(raw.get('totalPenalties'), 0),
+        'pen_yds': safe_num(raw.get('totalPenaltyYards'), 0),
         'pwr': get_power_rating(record),
     }
 
+def get_games_played(record: str) -> int:
+    """Calculate games played from record (W-L or W-L-OTL)"""
+    try:
+        parts = record.replace(' ', '').split('-')
+        return sum(int(p) for p in parts if p.isdigit())
+    except:
+        return 1  # Avoid division by zero
+
 def extract_nhl_stats(raw: Dict, record: str) -> Dict:
     """Extract comprehensive NHL stats"""
-    gf = safe_num(raw.get('goalsFor', raw.get('goalsPerGame')))
-    ga = safe_num(raw.get('goalsAgainst', raw.get('goalsAgainstPerGame')))
+    games = get_games_played(record)
+
+    # Goals - ESPN returns total, convert to per-game
+    gf_total = raw.get('goals', raw.get('goalsFor', 0))
+    ga_total = raw.get('goalsAgainst', 0)
+    try:
+        gf = f"{float(gf_total) / games:.1f}" if games > 0 else '-'
+    except:
+        gf = safe_num(raw.get('goalsPerGame', raw.get('avgGoals')))
+
+    try:
+        ga = f"{float(ga_total) / games:.1f}" if games > 0 else '-'
+    except:
+        ga = safe_num(raw.get('avgGoalsAgainst', raw.get('goalsAgainstPerGame')))
 
     # Calculate goal differential
     gd = '-'
@@ -276,26 +430,63 @@ def extract_nhl_stats(raw: Dict, record: str) -> Dict:
     except:
         pass
 
+    # Shots - may be total, convert to per-game
+    sog_total = raw.get('shotsTotal', raw.get('shots', 0))
+    try:
+        sog = f"{float(sog_total) / games:.1f}" if games > 0 and sog_total else '-'
+    except:
+        sog = safe_num(raw.get('shotsPerGame', raw.get('avgShotsPerGame')))
+
+    # Shots against
+    sa_total = raw.get('shotsAgainst', 0)
+    try:
+        sa = f"{float(sa_total) / games:.1f}" if games > 0 and sa_total else '-'
+    except:
+        sa = safe_num(raw.get('shotsAgainstPerGame'))
+
+    # PIM - total, convert to per-game
+    pim_total = raw.get('penaltyMinutes', 0)
+    try:
+        pim = f"{float(pim_total) / games:.1f}" if games > 0 and pim_total else '-'
+    except:
+        pim = safe_num(raw.get('penaltyMinutesPerGame', raw.get('pimPerGame')))
+
+    # Additional calculations
+    points = raw.get('points', 0)
+    try:
+        pts_pg = f"{float(points) / games:.1f}" if games > 0 and points else '-'
+    except:
+        pts_pg = '-'
+
     return {
         # Offense
         'gf': gf,
-        'sog': safe_num(raw.get('shotsPerGame', raw.get('avgShotsPerGame'))),
+        'sog': sog if sog != '-' else safe_num(raw.get('shotsPerGame')),
         'ppg': safe_num(raw.get('powerPlayGoals'), 0),
         'pp_pct': safe_pct(raw.get('powerPlayPct')),
-        'shoot_pct': safe_pct(raw.get('shootingPctg', raw.get('shootingPct'))),
-        'fow_pct': safe_pct(raw.get('faceoffWinPct')),
+        'shoot_pct': safe_pct(raw.get('shootingPct', raw.get('shootingPctg'))),  # ESPN uses shootingPct
+        'fow_pct': safe_pct(raw.get('faceoffPercent', raw.get('faceoffWinPct'))),  # ESPN uses faceoffPercent
+        'assists': safe_num(raw.get('assists'), 0),
+        'pts_total': safe_num(raw.get('points'), 0),  # Total team points
         # Defense
         'ga': ga,
         'gd': gd,
         'pk_pct': safe_pct(raw.get('penaltyKillPct')),
-        'sv_pct': raw.get('savePct', '-'),
-        'sa': safe_num(raw.get('shotsAgainstPerGame'), 0),
+        'sv_pct': safe_pct(raw.get('savePct')),
+        'sa': sa if sa != '-' else safe_num(raw.get('shotsAgainstPerGame'), 0),
         'shg': safe_num(raw.get('shortHandedGoals'), 0),
+        'sha': safe_num(raw.get('shortHandedAssists'), 0),
         # Situational
-        'pim': safe_num(raw.get('penaltyMinutesPerGame', raw.get('pimPerGame'))),
+        'pim': pim,
         'plus_minus': raw.get('plusMinus', '-'),
         'gwg': safe_num(raw.get('gameWinningGoals'), 0),
-        'otl': safe_num(raw.get('otLosses'), 0),
+        'otl': safe_num(raw.get('overtimeLosses', raw.get('otLosses')), 0),
+        # Shootout
+        'so_pct': safe_pct(raw.get('shootoutShotPct')),
+        'so_sv_pct': safe_pct(raw.get('shootoutSavePct')),
+        # Face-offs
+        'fow': safe_num(raw.get('faceoffsWon'), 0),
+        'fol': safe_num(raw.get('faceoffsLost'), 0),
         'pwr': get_power_rating(record),
     }
 
@@ -316,6 +507,10 @@ def generate_game_card_nfl(game: Dict) -> str:
     away = game['away']
     home = game['home']
     odds = game['odds']
+
+    # Format injuries
+    away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
+    home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
 
     return f'''
     <div class="game-card">
@@ -368,11 +563,11 @@ def generate_game_card_nfl(game: Dict) -> str:
                 <div class="section-title">OFFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th></tr>
+                        <tr><th></th><th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>1stD</th><th>3RD%</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['ypg']}</td><td>{away['stats']['pass_ypg']}</td><td>{away['stats']['rush_ypg']}</td><td>{away['stats']['third_pct']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['ypg']}</td><td>{home['stats']['pass_ypg']}</td><td>{home['stats']['rush_ypg']}</td><td>{home['stats']['third_pct']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['ypg']}</td><td>{away['stats']['pass_ypg']}</td><td>{away['stats']['rush_ypg']}</td><td>{away['stats']['first_downs']}</td><td>{away['stats']['third_pct']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['ypg']}</td><td>{home['stats']['pass_ypg']}</td><td>{home['stats']['rush_ypg']}</td><td>{home['stats']['first_downs']}</td><td>{home['stats']['third_pct']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -380,11 +575,11 @@ def generate_game_card_nfl(game: Dict) -> str:
                 <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>OPP</th><th>OYPG</th><th>SACK</th><th>INT</th><th>TFL</th></tr>
+                        <tr><th></th><th>OPP</th><th>OYPG</th><th>SACK</th><th>INT</th><th>TFL</th><th>FF</th><th>PD</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['opp_ypg']}</td><td>{away['stats']['sacks']}</td><td>{away['stats']['ints']}</td><td>{away['stats']['tfl']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['opp_ypg']}</td><td>{home['stats']['sacks']}</td><td>{home['stats']['ints']}</td><td>{home['stats']['tfl']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['opp_ypg']}</td><td>{away['stats']['sacks']}</td><td>{away['stats']['ints']}</td><td>{away['stats']['tfl']}</td><td>{away['stats']['ff']}</td><td>{away['stats']['pd']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['opp_ypg']}</td><td>{home['stats']['sacks']}</td><td>{home['stats']['ints']}</td><td>{home['stats']['tfl']}</td><td>{home['stats']['ff']}</td><td>{home['stats']['pd']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -396,11 +591,11 @@ def generate_game_card_nfl(game: Dict) -> str:
                 <div class="section-title">EFFICIENCY</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>YPP</th><th>COMP%</th><th>YPA</th><th>YPR</th><th>QBR</th></tr>
+                        <tr><th></th><th>YPP</th><th>CMP%</th><th>YPA</th><th>YPC</th><th>YPR</th><th>QBR</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ypp']}</td><td>{away['stats']['comp_pct']}</td><td>{away['stats']['ypa']}</td><td>{away['stats']['ypr']}</td><td>{away['stats']['qbr']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ypp']}</td><td>{home['stats']['comp_pct']}</td><td>{home['stats']['ypa']}</td><td>{home['stats']['ypr']}</td><td>{home['stats']['qbr']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ypp']}</td><td>{away['stats']['comp_pct']}</td><td>{away['stats']['ypa']}</td><td>{away['stats']['ypc']}</td><td>{away['stats']['ypr']}</td><td>{away['stats']['qbr']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ypp']}</td><td>{home['stats']['comp_pct']}</td><td>{home['stats']['ypa']}</td><td>{home['stats']['ypc']}</td><td>{home['stats']['ypr']}</td><td>{home['stats']['qbr']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -408,11 +603,11 @@ def generate_game_card_nfl(game: Dict) -> str:
                 <div class="section-title">SITUATIONAL</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>RZ%</th><th>4TH%</th><th>TO+/-</th><th>TOP</th><th>PWR</th></tr>
+                        <tr><th></th><th>RZ%</th><th>4TH%</th><th>TO+/-</th><th>TOP</th><th>FG%</th><th>PWR</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['rz_pct']}</td><td>{away['stats']['fourth_pct']}</td><td>{away['stats']['to_diff']}</td><td>{away['stats']['top']}</td><td>{away['stats']['pwr']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['rz_pct']}</td><td>{home['stats']['fourth_pct']}</td><td>{home['stats']['to_diff']}</td><td>{home['stats']['top']}</td><td>{home['stats']['pwr']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['rz_pct']}</td><td>{away['stats']['fourth_pct']}</td><td>{away['stats']['to_diff']}</td><td>{away['stats']['top']}</td><td>{away['stats']['fg_pct']}</td><td>{away['stats']['pwr']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['rz_pct']}</td><td>{home['stats']['fourth_pct']}</td><td>{home['stats']['to_diff']}</td><td>{home['stats']['top']}</td><td>{home['stats']['fg_pct']}</td><td>{home['stats']['pwr']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -420,7 +615,7 @@ def generate_game_card_nfl(game: Dict) -> str:
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
-            <span class="trend-item">🏥 {away['abbr']}: Check injuries | {home['abbr']}: Check injuries</span>
+            <span class="trend-item">🏥 {away_inj_html} | {home_inj_html}</span>
         </div>
     </div>
     '''
@@ -430,6 +625,10 @@ def generate_game_card_nba(game: Dict) -> str:
     away = game['away']
     home = game['home']
     odds = game['odds']
+
+    # Format injuries
+    away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
+    home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
 
     return f'''
     <div class="game-card">
@@ -482,11 +681,11 @@ def generate_game_card_nba(game: Dict) -> str:
                 <div class="section-title">OFFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th></tr>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['fg_pct']}</td><td>{away['stats']['three_pct']}</td><td>{away['stats']['ft_pct']}</td><td>{away['stats']['ast']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['fg_pct']}</td><td>{home['stats']['three_pct']}</td><td>{home['stats']['ft_pct']}</td><td>{home['stats']['ast']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['fg_pct']}</td><td>{away['stats']['three_pct']}</td><td>{away['stats']['ft_pct']}</td><td>{away['stats']['ast']}</td><td>{away['stats']['reb']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['fg_pct']}</td><td>{home['stats']['three_pct']}</td><td>{home['stats']['ft_pct']}</td><td>{home['stats']['ast']}</td><td>{home['stats']['reb']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -494,39 +693,39 @@ def generate_game_card_nba(game: Dict) -> str:
                 <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>OPP</th><th>REB</th><th>STL</th><th>BLK</th><th>DREB</th></tr>
+                        <tr><th></th><th>OPP</th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>PF</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['reb']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td><td>{away['stats']['dreb']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['reb']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td><td>{home['stats']['dreb']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td><td>{away['stats']['dreb']}</td><td>{away['stats']['oreb']}</td><td>{away['stats']['pf']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td><td>{home['stats']['dreb']}</td><td>{home['stats']['oreb']}</td><td>{home['stats']['pf']}</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- SECTION 3: EFFICIENCY vs SITUATIONAL -->
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
         <div class="stats-grid">
             <div class="section efficiency">
-                <div class="section-title">EFFICIENCY</div>
+                <div class="section-title">SHOOTING</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>TO</th><th>A/TO</th><th>OREB</th><th>2P%</th><th>PF</th></tr>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['to']}</td><td>{away['stats']['ast_to']}</td><td>{away['stats']['oreb']}</td><td>{away['stats']['two_pct']}</td><td>{away['stats']['pf']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['to']}</td><td>{home['stats']['ast_to']}</td><td>{home['stats']['oreb']}</td><td>{home['stats']['two_pct']}</td><td>{home['stats']['pf']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['fgm']}</td><td>{away['stats']['fga']}</td><td>{away['stats']['3pm']}</td><td>{away['stats']['3pa']}</td><td>{away['stats']['two_pct']}</td><td>{away['stats']['efg']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['fgm']}</td><td>{home['stats']['fga']}</td><td>{home['stats']['3pm']}</td><td>{home['stats']['3pa']}</td><td>{home['stats']['two_pct']}</td><td>{home['stats']['efg']}</td></tr>
                     </tbody>
                 </table>
             </div>
             <div class="section situational">
-                <div class="section-title">POWER</div>
+                <div class="section-title">EFFICIENCY</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>PWR</th><th>PPG</th><th>OPP</th><th>DIFF</th><th>REC</th></tr>
+                        <tr><th></th><th>TO</th><th>A/TO</th><th>FTM</th><th>FTA</th><th>TS%</th><th>PWR</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['pwr']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['opp_ppg']}</td><td>-</td><td>{away['record']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['pwr']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['opp_ppg']}</td><td>-</td><td>{home['record']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['to']}</td><td>{away['stats']['ast_to']}</td><td>{away['stats']['ftm']}</td><td>{away['stats']['fta']}</td><td>{away['stats']['ts']}</td><td>{away['stats']['pwr']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['to']}</td><td>{home['stats']['ast_to']}</td><td>{home['stats']['ftm']}</td><td>{home['stats']['fta']}</td><td>{home['stats']['ts']}</td><td>{home['stats']['pwr']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -534,7 +733,7 @@ def generate_game_card_nba(game: Dict) -> str:
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
-            <span class="trend-item">🏥 {away['abbr']}: Check injuries | {home['abbr']}: Check injuries</span>
+            <span class="trend-item">🏥 {away_inj_html} | {home_inj_html}</span>
         </div>
     </div>
     '''
@@ -544,6 +743,10 @@ def generate_game_card_nhl(game: Dict) -> str:
     away = game['away']
     home = game['home']
     odds = game['odds']
+
+    # Format injuries
+    away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
+    home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
 
     return f'''
     <div class="game-card">
@@ -596,11 +799,11 @@ def generate_game_card_nhl(game: Dict) -> str:
                 <div class="section-title">OFFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>GF</th><th>SOG</th><th>PP%</th><th>PPG</th><th>S%</th></tr>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PP%</th><th>PPG</th><th>PTS</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['gf']}</td><td>{away['stats']['sog']}</td><td>{away['stats']['pp_pct']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['shoot_pct']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['gf']}</td><td>{home['stats']['sog']}</td><td>{home['stats']['pp_pct']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['shoot_pct']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['gf']}</td><td>{away['stats']['sog']}</td><td>{away['stats']['shoot_pct']}</td><td>{away['stats']['pp_pct']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['pts_total']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['gf']}</td><td>{home['stats']['sog']}</td><td>{home['stats']['shoot_pct']}</td><td>{home['stats']['pp_pct']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['pts_total']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -608,11 +811,11 @@ def generate_game_card_nhl(game: Dict) -> str:
                 <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>GA</th><th>GD</th><th>PK%</th><th>SV%</th><th>SA</th></tr>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>PK%</th><th>SHG</th><th>GD</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ga']}</td><td>{away['stats']['gd']}</td><td>{away['stats']['pk_pct']}</td><td>{away['stats']['sv_pct']}</td><td>{away['stats']['sa']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ga']}</td><td>{home['stats']['gd']}</td><td>{home['stats']['pk_pct']}</td><td>{home['stats']['sv_pct']}</td><td>{home['stats']['sa']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ga']}</td><td>{away['stats']['sa']}</td><td>{away['stats']['sv_pct']}</td><td>{away['stats']['pk_pct']}</td><td>{away['stats']['shg']}</td><td>{away['stats']['gd']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ga']}</td><td>{home['stats']['sa']}</td><td>{home['stats']['sv_pct']}</td><td>{home['stats']['pk_pct']}</td><td>{home['stats']['shg']}</td><td>{home['stats']['gd']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -621,26 +824,26 @@ def generate_game_card_nhl(game: Dict) -> str:
         <!-- SECTION 3: SITUATIONAL -->
         <div class="stats-grid">
             <div class="section efficiency">
-                <div class="section-title">SITUATIONAL</div>
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>FO%</th><th>PIM</th><th>SHG</th><th>GWG</th><th>OTL</th></tr>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>PIM</th><th>SO%</th><th>SOSV%</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['fow_pct']}</td><td>{away['stats']['pim']}</td><td>{away['stats']['shg']}</td><td>{away['stats']['gwg']}</td><td>{away['stats']['otl']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['fow_pct']}</td><td>{home['stats']['pim']}</td><td>{home['stats']['shg']}</td><td>{home['stats']['gwg']}</td><td>{home['stats']['otl']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['fow_pct']}</td><td>{away['stats']['fow']}</td><td>{away['stats']['fol']}</td><td>{away['stats']['pim']}</td><td>{away['stats']['so_pct']}</td><td>{away['stats']['so_sv_pct']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['fow_pct']}</td><td>{home['stats']['fow']}</td><td>{home['stats']['fol']}</td><td>{home['stats']['pim']}</td><td>{home['stats']['so_pct']}</td><td>{home['stats']['so_sv_pct']}</td></tr>
                     </tbody>
                 </table>
             </div>
             <div class="section situational">
-                <div class="section-title">POWER</div>
+                <div class="section-title">CLUTCH & POWER</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>PWR</th><th>GF</th><th>GA</th><th>GD</th><th>REC</th></tr>
+                        <tr><th></th><th>GWG</th><th>OTL</th><th>+/-</th><th>PWR</th><th>REC</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['pwr']}</td><td>{away['stats']['gf']}</td><td>{away['stats']['ga']}</td><td>{away['stats']['gd']}</td><td>{away['record']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['pwr']}</td><td>{home['stats']['gf']}</td><td>{home['stats']['ga']}</td><td>{home['stats']['gd']}</td><td>{home['record']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['gwg']}</td><td>{away['stats']['otl']}</td><td>{away['stats']['plus_minus']}</td><td>{away['stats']['pwr']}</td><td>{away['record']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['gwg']}</td><td>{home['stats']['otl']}</td><td>{home['stats']['plus_minus']}</td><td>{home['stats']['pwr']}</td><td>{home['record']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -648,7 +851,7 @@ def generate_game_card_nhl(game: Dict) -> str:
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
-            <span class="trend-item">🏥 {away['abbr']}: Check injuries | {home['abbr']}: Check injuries</span>
+            <span class="trend-item">🏥 {away_inj_html} | {home_inj_html}</span>
         </div>
     </div>
     '''
@@ -983,6 +1186,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             <a href="index.html" class="logo">BET<span>LEGEND</span></a>
             <div class="nav-links">
                 <a href="handicapping-hub.html">Hub</a>
+                <a href="handicapping-hub-archive.html">Archive</a>
                 <a href="blog-page10.html">Picks</a>
                 <a href="nfl.html">NFL</a>
                 <a href="nba.html">NBA</a>
@@ -1004,7 +1208,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     </div>
 
     <footer>
-        <p>&copy; 2025 BetLegend | Data: ESPN, The Odds API | <a href="index.html">Home</a></p>
+        <p>&copy; 2025 BetLegend | Data: ESPN, The Odds API | <a href="index.html">Home</a> | <a href="handicapping-hub-archive.html">Hub Archive</a></p>
     </footer>
 
     <script>
@@ -1064,11 +1268,15 @@ def fetch_all_games() -> Dict[str, List]:
                 away_record = away_comp.get('records', [{}])[0].get('summary', '0-0') if away_comp.get('records') else '0-0'
                 home_record = home_comp.get('records', [{}])[0].get('summary', '0-0') if home_comp.get('records') else '0-0'
 
-                # Fetch team stats
+                # Fetch team stats and injuries
                 away_id = away_team.get('id', '')
                 home_id = home_team.get('id', '')
                 away_raw = fetch_team_statistics(config['espn_path'], away_id) if away_id else {}
                 home_raw = fetch_team_statistics(config['espn_path'], home_id) if home_id else {}
+
+                # Fetch injuries
+                away_injuries = fetch_team_injuries(config['espn_path'], away_id) if away_id else []
+                home_injuries = fetch_team_injuries(config['espn_path'], home_id) if home_id else []
 
                 # Extract stats based on sport
                 if sport in ['NFL', 'NCAAF']:
@@ -1109,12 +1317,14 @@ def fetch_all_games() -> Dict[str, List]:
                         'abbr': away_abbr,
                         'record': away_record,
                         'stats': away_stats,
+                        'injuries': away_injuries,
                     },
                     'home': {
                         'name': home_name,
                         'abbr': home_abbr,
                         'record': home_record,
                         'stats': home_stats,
+                        'injuries': home_injuries,
                     },
                 }
 

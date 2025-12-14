@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handicapping Hub Archive | BetLegend</title>
+    <meta name="description" content="Historical archive of BetLegend's Handicapping Hub - access past days' stats, betting lines, and analysis for NBA, NFL, NHL, NCAAB, and NCAAF.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+            line-height: 1.4;
+        }
+
+        /* Navigation */
+        .nav {
+            background: #1a365d;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 3px solid #fd5000;
+        }
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+        .logo span { color: #fd5000; }
+        .nav-links { display: flex; gap: 15px; }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a365d 0%, #2d4a7c 100%);
+            color: white;
+            padding: 80px 20px 25px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+        .header h1 span { color: #fd5000; }
+        .header .subtitle { opacity: 0.9; font-size: 0.95rem; }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Current Hub Link */
+        .current-hub {
+            background: linear-gradient(135deg, #fd5000, #ff7b3d);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(253, 80, 0, 0.3);
+        }
+        .current-hub h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .current-hub a {
+            display: inline-block;
+            background: white;
+            color: #fd5000;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+        .current-hub a:hover {
+            transform: scale(1.05);
+        }
+
+        /* Calendar */
+        .calendar-wrapper {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .calendar-header {
+            background: #1a365d;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calendar-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .calendar-nav button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .calendar-nav button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .calendar-day-header {
+            background: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+
+        .calendar-day {
+            min-height: 80px;
+            padding: 8px;
+            border: 1px solid #eee;
+            position: relative;
+            background: white;
+        }
+
+        .calendar-day.other-month {
+            background: #f8f9fa;
+            color: #ccc;
+        }
+
+        .calendar-day.today {
+            background: #fff3e0;
+        }
+
+        .calendar-day.has-archive {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .calendar-day.has-archive:hover {
+            background: #e3f2fd;
+        }
+
+        .day-number {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .day-link {
+            display: block;
+            background: #1a365d;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-decoration: none;
+            margin-top: 5px;
+        }
+
+        .day-link:hover {
+            background: #fd5000;
+        }
+
+        /* Archive List */
+        .archive-list {
+            margin-top: 30px;
+        }
+
+        .archive-list h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #1a365d;
+        }
+
+        .archive-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .archive-item:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .archive-date {
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .archive-link {
+            background: #fd5000;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .archive-link:hover {
+            background: #e64500;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        footer a { color: #1a365d; text-decoration: none; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .calendar-day {
+                min-height: 50px;
+                padding: 4px;
+            }
+            .day-number {
+                font-size: 0.75rem;
+            }
+            .day-link {
+                font-size: 0.6rem;
+                padding: 2px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="logo">BET<span>LEGEND</span></a>
+            <div class="nav-links">
+                <a href="handicapping-hub.html">Hub</a>
+                <a href="blog-page10.html">Picks</a>
+                <a href="nfl.html">NFL</a>
+                <a href="nba.html">NBA</a>
+                <a href="nhl.html">NHL</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="header">
+        <h1>Hub <span>Archive</span></h1>
+        <p class="subtitle">Historical Handicapping Hub Data</p>
+    </header>
+
+    <div class="container">
+        <!-- Current Hub Link -->
+        <div class="current-hub">
+            <h2>Today's Handicapping Hub</h2>
+            <a href="handicapping-hub.html">View Today's Stats & Lines</a>
+        </div>
+
+        <!-- Calendar -->
+        <div class="calendar-wrapper">
+            <div class="calendar-header">
+                <button class="prev-month" onclick="changeMonth(-1)">&larr; Prev</button>
+                <span class="calendar-title" id="calendar-title">December 2025</span>
+                <button class="next-month" onclick="changeMonth(1)">Next &rarr;</button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- Days will be generated by JS -->
+            </div>
+        </div>
+
+        <!-- Archive List -->
+        <div class="archive-list" id="archive-list">
+            <h2>Recent Archives</h2>
+            <!-- Will be populated by JS -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 BetLegend | <a href="index.html">Home</a> | <a href="handicapping-hub.html">Today's Hub</a></p>
+    </footer>
+
+    <script>
+        // Archive data - will grow over time as archives are created
+        const archiveData = {
+            // Format: "YYYY-MM-DD": "filename.html"
+            "2025-12-14": "handicapping-hub.html",  // Today - main file
+            // Add more as archives are created
+        };
+
+        let currentDate = new Date();
+        let displayMonth = new Date().getMonth();
+        let displayYear = new Date().getFullYear();
+
+        const months = ["January", "February", "March", "April", "May", "June",
+                       "July", "August", "September", "October", "November", "December"];
+        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            const title = document.getElementById('calendar-title');
+
+            title.textContent = `${months[displayMonth]} ${displayYear}`;
+
+            let html = '';
+
+            // Day headers
+            days.forEach(day => {
+                html += `<div class="calendar-day-header">${day}</div>`;
+            });
+
+            // Get first day of month and total days
+            const firstDay = new Date(displayYear, displayMonth, 1).getDay();
+            const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
+            const daysInPrevMonth = new Date(displayYear, displayMonth, 0).getDate();
+
+            // Previous month days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                html += `<div class="calendar-day other-month"><div class="day-number">${day}</div></div>`;
+            }
+
+            // Current month days
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${displayYear}-${String(displayMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const isToday = day === today.getDate() && displayMonth === today.getMonth() && displayYear === today.getFullYear();
+                const hasArchive = archiveData[dateStr];
+
+                let classes = 'calendar-day';
+                if (isToday) classes += ' today';
+                if (hasArchive) classes += ' has-archive';
+
+                let content = `<div class="day-number">${day}</div>`;
+                if (hasArchive) {
+                    const linkHref = isToday ? 'handicapping-hub.html' : `handicapping-hub-archive/${archiveData[dateStr]}`;
+                    content += `<a href="${linkHref}" class="day-link">View Hub</a>`;
+                }
+
+                html += `<div class="${classes}">${content}</div>`;
+            }
+
+            // Next month days
+            const totalCells = firstDay + daysInMonth;
+            const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+            for (let day = 1; day <= remaining; day++) {
+                html += `<div class="calendar-day other-month"><div class="day-number">${day}</div></div>`;
+            }
+
+            grid.innerHTML = html;
+        }
+
+        function changeMonth(delta) {
+            displayMonth += delta;
+            if (displayMonth > 11) {
+                displayMonth = 0;
+                displayYear++;
+            } else if (displayMonth < 0) {
+                displayMonth = 11;
+                displayYear--;
+            }
+            renderCalendar();
+        }
+
+        function renderArchiveList() {
+            const list = document.getElementById('archive-list');
+            const sortedDates = Object.keys(archiveData).sort().reverse();
+
+            let html = '<h2>Recent Archives</h2>';
+
+            sortedDates.slice(0, 14).forEach(dateStr => {
+                const date = new Date(dateStr + 'T00:00:00');
+                const formatted = date.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                const today = new Date().toISOString().split('T')[0];
+                const isToday = dateStr === today;
+                const href = isToday ? 'handicapping-hub.html' : `handicapping-hub-archive/${archiveData[dateStr]}`;
+
+                html += `
+                    <div class="archive-item">
+                        <span class="archive-date">${formatted}${isToday ? ' (Today)' : ''}</span>
+                        <a href="${href}" class="archive-link">View Hub</a>
+                    </div>
+                `;
+            });
+
+            list.innerHTML = html;
+        }
+
+        // Initialize
+        renderCalendar();
+        renderArchiveList();
+    </script>
+</body>
+</html>
