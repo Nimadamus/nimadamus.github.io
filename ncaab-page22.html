@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NCAAB Analysis - December 05, 2025 | BetLegend</title>
+<meta content="NCAAB statistical analysis for December 05, 2025. Advanced stats, efficiency ratings, and betting trends." name="description"/>
+<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon"/>
+<link href="https://www.betlegendpicks.com/ncaab.html" rel="canonical"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-primary:#05070a;--bg-card:rgba(15,20,30,0.8);
+  --accent-cyan:#00e5ff;--accent-gold:#ffd54f;--accent-purple:#a855f7;
+  --text-primary:#ffffff;--text-secondary:#94a3b8;--text-muted:#64748b;
+  --border-subtle:rgba(255,255,255,0.08);--border-glow:rgba(0,229,255,0.3);
+  --gradient-card:linear-gradient(145deg,rgba(15,23,42,0.9),rgba(10,15,25,0.95));
+  --gradient-accent:linear-gradient(135deg,#00e5ff,#a855f7);
+  --neon-cyan:#00ffff;--neon-gold:#FFD700;
+  --font-primary:'Orbitron',sans-serif;--font-secondary:'Poppins',sans-serif
+}
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,224,255,0.3)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
+.logo{position:fixed;top:15px;left:15px;z-index:1001}
+.logo a{font-family:var(--font-primary);font-size:2.5rem;font-weight:900;color:#fff;text-decoration:none;text-shadow:0 0 10px rgba(255,255,255,0.8)}
+.logo a span{color:var(--neon-cyan);text-shadow:0 0 15px rgba(0,255,255,1)}
+.nav-links{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.nav-links>a,.dropbtn{font-family:var(--font-secondary);color:#fff;text-decoration:none;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:1.5px}
+.nav-links>a:hover,.dropbtn:hover{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold)}
+.dropdown{position:relative}
+.dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(0,0,0,0.98);min-width:200px;border:2px solid rgba(0,224,255,0.5);border-radius:10px;padding:15px 0;margin-top:10px}
+.dropdown-content a{color:var(--neon-cyan);padding:14px 20px;display:block;text-decoration:none}
+.dropdown-content a:hover{background:rgba(0,224,255,0.2);color:#fff}
+.dropdown:hover .dropdown-content{display:block}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:system-ui,sans-serif;line-height:1.7}
+.hero{padding:160px 24px 60px;text-align:center}
+.hero-badge{display:inline-block;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2);padding:8px 16px;border-radius:50px;font-size:12px;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
+.hero h1{font-size:clamp(36px,6vw,56px);font-weight:700;margin-bottom:12px}
+.hero h1 span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text-secondary);font-size:18px}
+.current-date{text-align:center;margin-bottom:40px}
+.current-date h2{font-size:28px;color:var(--accent-gold)}
+main{max-width:900px;margin:0 auto;padding:0 24px 80px}
+.game-card{background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:20px;padding:32px;margin-bottom:24px;transition:all 0.3s}
+.game-card:hover{border-color:var(--border-glow);transform:translateY(-4px);box-shadow:0 4px 24px rgba(0,0,0,0.4)}
+.teams-display{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:16px}
+.team-logo{width:60px;height:60px;object-fit:contain}
+.vs-badge{color:var(--text-muted);font-size:14px;font-weight:700;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px}
+.game-title{font-size:22px;font-weight:600;margin-bottom:8px;text-align:center}
+.game-meta{font-size:13px;color:var(--text-muted);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.game-meta span{background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}
+.game-card p{color:var(--text-secondary);margin-bottom:12px;line-height:1.8}
+.game-card strong{color:var(--accent-cyan)}
+.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}
+.stat-item{flex:1;min-width:100px;text-align:center;padding:8px}
+.stat-item .value{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;color:var(--accent-gold)}
+.stat-item .label{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+.archive-link{text-align:center;margin:40px 0;padding:20px}
+.archive-link a{color:var(--accent-cyan);text-decoration:none;font-size:16px;padding:12px 24px;border:1px solid var(--border-subtle);border-radius:8px;transition:all 0.3s}
+.archive-link a:hover{background:rgba(0,229,255,0.1);border-color:var(--accent-cyan)}
+footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
+footer a{color:var(--accent-cyan);text-decoration:none}
+.data-source{font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--border-subtle)}
+.deep-analysis{margin:20px 0;padding:20px;background:rgba(0,0,0,0.2);border-radius:12px;border-left:3px solid var(--accent-cyan)}
+.analysis-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.analysis-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.analysis-section h4{color:var(--accent-gold);font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-family:var(--font-primary)}
+.analysis-section p{font-size:0.85rem;color:var(--text-secondary);margin:6px 0;line-height:1.6}
+.analysis-section ul{margin:8px 0;padding-left:20px}
+.analysis-section li{font-size:0.85rem;color:var(--text-secondary);margin:4px 0}
+.stats-comparison{display:grid;gap:8px}
+.stat-compare-row{display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px}
+.stat-compare-row .stat-label{color:var(--text-muted);font-size:0.8rem}
+.stat-compare-row .stat-away,.stat-compare-row .stat-home{font-size:0.85rem;font-weight:600}
+.stat-compare-row .stat-away{color:var(--accent-cyan)}
+.stat-compare-row .stat-home{color:var(--accent-gold)}
+@media(max-width:768px){
+            /* Mobile dropdown fix - full width centered */
+            .dropdown-content,
+            .sports-records-dropdown {
+                position: fixed !important;
+                left: 5% !important;
+                right: 5% !important;
+                top: 120px !important;
+                width: 90% !important;
+                min-width: unset !important;
+                max-width: none !important;
+                max-height: 65vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                z-index: 999999 !important;
+            }
+.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}.deep-analysis{padding:15px}}
+</style>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
+</head>
+<body>
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
+<a href="handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Handicapping Hub</a>
+<a href="blog-page10.html">Picks</a>
+<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a></div></div>
+<a href="proofofpicks.html">Proof</a>
+<a href="news-page3.html">News</a>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page18.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+</div>
+</div>
+</nav>
+<header class="hero">
+<div class="hero-badge">Statistical Analysis</div>
+<h1>NCAAB <span>Analysis</span></h1>
+<p>12-Game Slate | Advanced Stats &amp; Betting Trends</p>
+</header>
+<div class="current-date"><h2>December 05, 2025</h2></div>
+<main>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Gonzaga Bulldogs" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/gonz.png"/>
+<span class="vs-badge">@</span>
+<img alt="Kentucky Wildcats" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/uk.png"/>
+</div>
+<h3 class="game-title">Gonzaga Bulldogs (7-1) @ Kentucky Wildcats (5-3)</h3>
+<div class="game-meta">
+<span>2025-12-06T00:00Z</span>
+<span>Rupp Arena</span>
+<span>ESPN2</span>
+<span>Line: GONZ -4.5</span>
+<span>Total: 159.5</span>
+</div>
+<div class="stat-row">
+<div class="stat-item">
+<div class="value">5-3</div>
+<div class="label">UK Record</div>
+</div>
+<div class="stat-item">
+<div class="value">7-1</div>
+<div class="label">GONZ Record</div>
+</div>
+<div class="stat-item">
+<div class="value">GONZ -4.5</div>
+<div class="label">Line</div>
+</div>
+<div class="stat-item">
+<div class="value">159.5</div>
+<div class="label">Total</div>
+</div>
+</div>
+<p>Matchup analysis coming soon. Gonzaga Bulldogs (7-1) visits Kentucky Wildcats (5-3).</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="East Texas A&amp;M Lions" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/etam.png"/>
+<span class="vs-badge">@</span>
+<img alt="UConn Huskies" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/conn.png"/>
+</div>
+<h3 class="game-title">East Texas A&amp;M Lions (4-3) @ UConn Huskies (7-1)</h3>
+<div class="game-meta">
+<span>2025-12-06T00:30Z</span>
+<span>Gampel Pavilion</span>
+<span>Peacock, NBCSN</span>
+</div>
+<div class="stat-row">
+<div class="stat-item">
+<div class="value">7-1</div>
+<div class="label">CONN Record</div>
+</div>
+<div class="stat-item">
+<div class="value">4-3</div>
+<div class="label">ETAM Record</div>
+</div>
+<div class="stat-item">
+<div class="value"></div>
+<div class="label">Line</div>
+</div>
+<div class="stat-item">
+<div class="value"></div>
+<div class="label">Total</div>
+</div>
+</div>
+<p>Matchup analysis coming soon. East Texas A&amp;M Lions (4-3) visits UConn Huskies (7-1).</p>
+<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</article>
+
+<article class="game-card">
+<div class="teams-display">
+<img alt="Manor College Blue Jays" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/130196.png"/>
+<span class="vs-badge">@</span>
+<img alt="Florida A&M Rattlers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/50.png"/>
+</div>
+<h3 class="game-title">Barber Scotia BARBER SCOTIA @ Florida A&M Rattlers</h3>
+<div class="game-meta">
+<span>10:00 PM ET</span>
+<span>0-0 vs 0-5</span>
+<span>State Farm Field House</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">BASC ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">FAMU ML</span></div>
+</div>
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>The recent stretch has been telling for both squads. The Barber Scotia BARBER SCOTIA (0-0) visit Florida A&M Rattlers (0-5) in what shapes up to be a fascinating matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Barber Scotia BARBER SCOTIA at 72.0 PPG vs Florida A&M Rattlers's 72.0.
+
+Both defenses have been comparable - Barber Scotia BARBER SCOTIA allowing 72.0, Florida A&M Rattlers at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Sometimes the obvious play is the right one. Sometimes it isn't.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Gonzaga Bulldogs" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2250.png"/>
+<span class="vs-badge">@</span>
+<img alt="Kentucky Wildcats" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/96.png"/>
+</div>
+<h3 class="game-title">Gonzaga Bulldogs @ Kentucky Wildcats</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>7-1 vs 5-3</span>
+<span>Rupp Arena</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">159.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">GONZ ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">UK ML</span></div>
+</div>
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>Two teams heading in opposite directions meet tonight. The Gonzaga Bulldogs (7-1) visit Kentucky Wildcats (5-3) in what shapes up to be a competitive matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Gonzaga Bulldogs at 72.0 PPG vs Kentucky Wildcats's 72.0.
+
+Both defenses have been comparable - Gonzaga Bulldogs allowing 72.0, Kentucky Wildcats at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Both teams come in relatively healthy, which is rare.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This total might be inflated given recent defensive performances. The value might not be where the public thinks.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="South Carolina State Bulldogs" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2569.png"/>
+<span class="vs-badge">@</span>
+<img alt="Bethune-Cookman Wildcats" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2065.png"/>
+</div>
+<h3 class="game-title">South Carolina State Bulldogs @ Bethune-Cookman Wildcats</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>0-8 vs 2-6</span>
+<span>Moore Gymnasium (FL)</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">SCST ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">BCU ML</span></div>
+</div>
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>This game could serve as a measuring stick for both sides. The South Carolina State Bulldogs (0-8) visit Bethune-Cookman Wildcats (2-6) in what shapes up to be a intriguing matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - South Carolina State Bulldogs at 72.0 PPG vs Bethune-Cookman Wildcats's 72.0.
+
+Both defenses have been comparable - South Carolina State Bulldogs allowing 72.0, Bethune-Cookman Wildcats at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>No major injury concerns on either side.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This game has trap written all over it - proceed carefully.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="NJIT Highlanders" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2885.png"/>
+<span class="vs-badge">@</span>
+<img alt="High Point Panthers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2272.png"/>
+</div>
+<h3 class="game-title">NJIT Highlanders @ High Point Panthers</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>3-6 vs 7-2</span>
+<span>Qubein Center</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">155.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">NJIT ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">HPU ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>Here's a matchup that deserves your attention. The NJIT Highlanders (3-6) visit High Point Panthers (7-2) in what shapes up to be a intriguing matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - NJIT Highlanders at 72.0 PPG vs High Point Panthers's 72.0.
+
+Both defenses have been comparable - NJIT Highlanders allowing 72.0, High Point Panthers at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This total might be inflated given recent defensive performances. This game has trap written all over it - proceed carefully.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="South Alabama Jaguars" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/6.png"/>
+<span class="vs-badge">@</span>
+<img alt="East Tennessee State Buccaneers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2193.png"/>
+</div>
+<h3 class="game-title">South Alabama Jaguars @ East Tennessee State Buccaneers</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>8-1 vs 6-2</span>
+<span>Freedom Hall (TN)</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">USA ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">ETSU ML</span></div>
+</div>
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>Recent form matters a lot in this matchup. The South Alabama Jaguars (8-1) visit East Tennessee State Buccaneers (6-2) in what shapes up to be a intriguing matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - South Alabama Jaguars at 72.0 PPG vs East Tennessee State Buccaneers's 72.0.
+
+Both defenses have been comparable - South Alabama Jaguars allowing 72.0, East Tennessee State Buccaneers at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Sometimes the obvious play is the right one. Sometimes it isn't.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+
+
+
+=======
+<article class="game-card">
+<div class="teams-display">
+<img alt="Samford Bulldogs" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2535.png"/>
+<span class="vs-badge">@</span>
+<img alt="VCU Rams" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2670.png"/>
+</div>
+<h3 class="game-title">Samford Bulldogs @ VCU Rams</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>4-5 vs 5-3</span>
+<span>Siegel Center</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">150.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">SAM ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">VCU ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>Here's a matchup that deserves your attention. The Samford Bulldogs (4-5) visit VCU Rams (5-3) in what shapes up to be a intriguing matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Samford Bulldogs at 72.0 PPG vs VCU Rams's 72.0.
+
+Both defenses have been comparable - Samford Bulldogs allowing 72.0, VCU Rams at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This total might be inflated given recent defensive performances. Do your own research, but there's something here worth exploring.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Quinnipiac Bobcats" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2514.png"/>
+<span class="vs-badge">@</span>
+<img alt="Iona Gaels" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/314.png"/>
+</div>
+<h3 class="game-title">Quinnipiac Bobcats @ Iona Gaels</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>5-3 vs 6-2</span>
+<span>Hynes Athletics Center</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">163.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">QUIN ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">IONA ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>Circle this one on your calendar. The Quinnipiac Bobcats (5-3) visit Iona Gaels (6-2) in what shapes up to be a telling matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Quinnipiac Bobcats at 72.0 PPG vs Iona Gaels's 72.0.
+
+Both defenses have been comparable - Quinnipiac Bobcats allowing 72.0, Iona Gaels at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This total might be inflated given recent defensive performances. Sometimes the obvious play is the right one. Sometimes it isn't.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Mercyhurst Lakers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2385.png"/>
+<span class="vs-badge">@</span>
+<img alt="Lafayette Leopards" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/322.png"/>
+</div>
+<h3 class="game-title">Mercyhurst Lakers @ Lafayette Leopards</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>3-5 vs 2-7</span>
+<span>Kirby Sports Center</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">127.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">MERC ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">LAF ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>This is the kind of game that defines seasons. The Mercyhurst Lakers (3-5) visit Lafayette Leopards (2-7) in what shapes up to be a telling matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Mercyhurst Lakers at 72.0 PPG vs Lafayette Leopards's 72.0.
+
+Both defenses have been comparable - Mercyhurst Lakers allowing 72.0, Lafayette Leopards at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>The total feels low based on how these offenses have been playing. Sharp bettors are paying attention to this one for a reason.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Bryant Bulldogs" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2803.png"/>
+<span class="vs-badge">@</span>
+<img alt="Brown Bears" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/225.png"/>
+</div>
+<h3 class="game-title">Bryant Bulldogs @ Brown Bears</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>3-6 vs 3-6</span>
+<span>Pizzitola Sports Center</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">126.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">BRY ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">BRWN ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>The market seems to be overreacting to recent results. The Bryant Bulldogs (3-6) visit Brown Bears (3-6) in what shapes up to be a intriguing matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Bryant Bulldogs at 72.0 PPG vs Brown Bears's 72.0.
+
+Both defenses have been comparable - Bryant Bulldogs allowing 72.0, Brown Bears at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>The total feels low based on how these offenses have been playing. Sharp bettors are paying attention to this one for a reason.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Niagara Purple Eagles" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/315.png"/>
+<span class="vs-badge">@</span>
+<img alt="Siena Saints" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2561.png"/>
+</div>
+<h3 class="game-title">Niagara Purple Eagles @ Siena Saints</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>2-5 vs 7-2</span>
+<span>MVP Arena</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">130.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">NIA ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">SIE ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>When you dig into the advanced metrics, this game looks different than the surface suggests. The Niagara Purple Eagles (2-5) visit Siena Saints (7-2) in what shapes up to be a telling matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Niagara Purple Eagles at 72.0 PPG vs Siena Saints's 72.0.
+
+Both defenses have been comparable - Niagara Purple Eagles allowing 72.0, Siena Saints at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Both teams come in relatively healthy, which is rare.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>The total feels low based on how these offenses have been playing. Sharp bettors are paying attention to this one for a reason.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Canisius Golden Griffins" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2099.png"/>
+<span class="vs-badge">@</span>
+<img alt="Saint Peter's Peacocks" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2612.png"/>
+</div>
+<h3 class="game-title">Canisius Golden Griffins @ Saint Peter's Peacocks</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>4-4 vs 2-4</span>
+<span>Yanitelli Center</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">133.5</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">CAN ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">SPU ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>The sharps have been all over this one. The Canisius Golden Griffins (4-4) visit Saint Peter's Peacocks (2-4) in what shapes up to be a fascinating matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Canisius Golden Griffins at 72.0 PPG vs Saint Peter's Peacocks's 72.0.
+
+Both defenses have been comparable - Canisius Golden Griffins allowing 72.0, Saint Peter's Peacocks at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>The total feels low based on how these offenses have been playing. Sharp bettors are paying attention to this one for a reason.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Mount St. Mary's Mountaineers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/116.png"/>
+<span class="vs-badge">@</span>
+<img alt="Marist Red Foxes" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2368.png"/>
+</div>
+<h3 class="game-title">Mount St. Mary's Mountaineers @ Marist Red Foxes</h3>
+<div class="game-meta">
+<span>12:00 AM ET</span>
+<span>2-7 vs 4-2</span>
+<span>McCann Arena</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">MSM ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">MRST ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>Sharp money has been moving this line, and there's a reason why. The Mount St. Mary's Mountaineers (2-7) visit Marist Red Foxes (4-2) in what shapes up to be a competitive matchup.</p></div>
+<div class="analysis-section"><h4>By The Numbers</h4><p>Offensively, these teams are evenly matched - Mount St. Mary's Mountaineers at 72.0 PPG vs Marist Red Foxes's 72.0.
+
+Both defenses have been comparable - Mount St. Mary's Mountaineers allowing 72.0, Marist Red Foxes at 72.0.
+
+This projects as a grind-it-out, half-court battle. Don't expect a track meet.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>No major injury concerns on either side.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>The value might not be where the public thinks.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Cal State Bakersfield Roadrunners" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2934.png"/>
+<span class="vs-badge">@</span>
+<img alt="Cal State Northridge Matadors" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2463.png"/>
+</div>
+<h3 class="game-title">Cal State Bakersfield Roadrunners @ Cal State Northridge Matadors</h3>
+<div class="game-meta">
+<span>03:00 AM ET</span>
+<span>4-5 vs 4-4</span>
+<span>Premier America Credit Union Arena</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">CSUB ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">CSUN ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>Coming off {away_context}, {away_team} heads into {venue} looking to {away_goal}. The Cal State Bakersfield Roadrunners (4-5) visit Cal State Northridge Matadors (4-4) in what shapes up to be a telling matchup.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Cal State Bakersfield Roadrunners are 0-1 while Cal State Northridge Matadors sit at 0-1. </p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Do your own research, but there's something here worth exploring.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="Cal Poly Mustangs" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/13.png"/>
+<span class="vs-badge">@</span>
+<img alt="Cal State Fullerton Titans" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/2239.png"/>
+</div>
+<h3 class="game-title">Cal Poly Mustangs @ Cal State Fullerton Titans</h3>
+<div class="game-meta">
+<span>03:00 AM ET</span>
+<span>5-5 vs 3-6</span>
+<span>Titan Gym</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">CP ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">CSUF ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>The market seems to be overreacting to recent results. The Cal Poly Mustangs (5-5) visit Cal State Fullerton Titans (3-6) in what shapes up to be a intriguing matchup.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Health advantage goes to neither team here.</p></div>
+<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Cal Poly Mustangs are 0-1 while Cal State Fullerton Titans sit at 0-1. </p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This game has trap written all over it - proceed carefully.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="UC Riverside Highlanders" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/27.png"/>
+<span class="vs-badge">@</span>
+<img alt="UC Irvine Anteaters" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/300.png"/>
+</div>
+<h3 class="game-title">UC Riverside Highlanders @ UC Irvine Anteaters</h3>
+<div class="game-meta">
+<span>03:00 AM ET</span>
+<span>4-5 vs 6-4</span>
+<span>Bren Events Center</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">UCR ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">UCI ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>The sharps have been all over this one. The UC Riverside Highlanders (4-5) visit UC Irvine Anteaters (6-4) in what shapes up to be a fascinating matchup.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Both teams come in relatively healthy, which is rare.</p></div>
+<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, UC Riverside Highlanders are 0-1 while UC Irvine Anteaters sit at 0-1. </p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Sharp bettors are paying attention to this one for a reason.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+<article class="game-card">
+<div class="teams-display">
+<img alt="UC Davis Aggies" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/302.png"/>
+<span class="vs-badge">@</span>
+<img alt="Hawai'i Rainbow Warriors" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaa/500/62.png"/>
+</div>
+<h3 class="game-title">UC Davis Aggies @ Hawai'i Rainbow Warriors</h3>
+<div class="game-meta">
+<span>04:59 AM ET</span>
+<span>5-3 vs 7-2</span>
+<span>Stan Sheriff Center</span>
+</div>
+<div class="stat-row">
+<div class="stat-item"><span class="value">N/A</span><span class="label">Spread</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">O/U</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">UCD ML</span></div>
+<div class="stat-item"><span class="value">N/A</span><span class="label">HAW ML</span></div>
+</div>
+
+<div class="deep-analysis">
+<div class="analysis-section"><h4>The Matchup</h4><p>Desperation meets opportunity tonight. The UC Davis Aggies (5-3) visit Hawai'i Rainbow Warriors (7-2) in what shapes up to be a competitive matchup.</p></div>
+<div class="analysis-section"><h4>Health Report</h4><p>Both teams come in relatively healthy, which is rare.</p></div>
+<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, UC Davis Aggies are 6-6 while Hawai'i Rainbow Warriors sit at 6-6. </p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Sharp bettors are paying attention to this one for a reason.</p></div>
+</div>
+<p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
+</article>
+
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page20.html">← Newer</a> <span>Page 14 of 34</span> <a href="ncaab-page22.html">Older →</a></div>
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page20.html">← Newer</a> <span>Page 14 of 34</span> <a href="ncaab-page22.html">Older →</a></div>
+=======
+
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page20.html">← Newer</a> <span>Page 14 of 34</span> <a href="ncaab-page22.html">Older →</a></div>
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page20.html">← Newer</a> <span>Page 14 of 34</span> <a href="ncaab-page22.html">Older →</a></div>
+=======
+
+
+
+
+
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page17.html">← Newer</a> <span>Page 16 of 33</span> <a href="ncaab-page19.html">Older →</a></div>
+=======
+
+
+
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page20.html">← Newer</a> <span>Page 14 of 34</span> <a href="ncaab-page22.html">Older →</a></div>
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page17.html">← Newer</a> <span>Page 16 of 33</span> <a href="ncaab-page19.html">Older →</a></div>
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page17.html">← Newer</a> <span>Page 16 of 33</span> <a href="ncaab-page19.html">Older →</a></div>
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page17.html">← Newer</a> <span>Page 16 of 33</span> <a href="ncaab-page19.html">Older →</a></div>
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page17.html">← Newer</a> <span>Page 16 of 33</span> <a href="ncaab-page19.html">Older →</a></div>
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page20.html">← Newer</a> <span>Page 14 of 34</span> <a href="ncaab-page22.html">Older →</a></div>
+>>>>>>> 507229e5aaa0b0b9ea2f19c9cd9fe13146d43a28
+
+</main>
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page20.html">← Newer</a> <span>Page 14 of 34</span> <a href="ncaab-page22.html">Older →</a></div>
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page17.html">← Newer</a> <span>Page 16 of 33</span> <a href="ncaab-page19.html">Older →</a></div>
+=======
+<div class="archive-link">
+<a href="ncaab-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none;">View Calendar</a><a href="ncaab-page17.html">← Newer</a> <span>Page 16 of 33</span> <a href="ncaab-page19.html">Older →</a></div>
+>>>>>>> 69ac70bc1f9c2a17af2c2b68ff7148e83f504649
+<footer>
+<p>© 2025 BetLegend. For entertainment purposes only.</p>
+<p><a href="index.html">Home</a> | <a href="howitworks.html">How It Works</a></p>
+</footer>
+</body>
+</html>
