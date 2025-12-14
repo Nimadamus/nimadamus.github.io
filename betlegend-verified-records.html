@@ -223,26 +223,42 @@
     // Google Sheets CSV URL - Old MLB Sheet (correct data)
     const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
 
-    // Function to parse CSV data
+    // Function to parse CSV data - handles blank headers and normalizes column names
     function parseCSV(csv) {
         const lines = csv.split('\n');
-        const headers = lines[0].split(',').map(header => header.trim().replace(/"/g, ''));
+        let headers = lines[0].split(',').map(header => header.trim().replace(/"/g, ''));
         const records = [];
+
+        headers = headers.map((h, idx) => {
+            if (h.toLowerCase() === 'odds') return 'Line';
+            if (h === '' || h === undefined) {
+                const existingHeaders = headers.filter(x => x && x !== '');
+                if (!existingHeaders.includes('Result') && !existingHeaders.includes('result')) return 'Result';
+                return `Column${idx}`;
+            }
+            return h;
+        });
 
         for (let i = 1; i < lines.length; i++) {
             const line = lines[i].trim();
             if (line) {
                 const values = parseCSVLine(line);
-                if (values.length >= headers.length) {
+                if (values.length >= 4) {
                     const record = {};
                     headers.forEach((header, index) => {
-                        record[header] = values[index] ? values[index].replace(/"/g, '').trim() : '';
+                        if (header && values[index] !== undefined) {
+                            record[header] = values[index] ? values[index].replace(/"/g, '').trim() : '';
+                        }
                     });
-                    
-                    // Only add records that have actual data
-                    if (record.Date && record.Pick) {
-                        records.push(record);
+
+                    if (!record.Result || record.Result === '') {
+                        for (let j = 0; j < values.length; j++) {
+                            const val = (values[j] || '').trim().toUpperCase();
+                            if (val === 'W' || val === 'L' || val === 'P') { record.Result = val; break; }
+                        }
                     }
+
+                    if (record.Date && record.Pick) records.push(record);
                 }
             }
         }
