@@ -406,70 +406,154 @@ Every game analysis MUST include:
 
 ---
 
-## 1C. CONTENT TYPES - HANDICAPPING HUB VS SPORTS PAGES VS BLOG
+## 1C. CONTENT TYPES - PAGE HIERARCHY (LOCKED - DEC 14, 2025)
 
-### ⚠️ UNDERSTAND THE DIFFERENCE BETWEEN PAGE TYPES ⚠️
+### ⛔⛔⛔ THIS SECTION IS PERMANENTLY LOCKED - DO NOT CHANGE ⛔⛔⛔
+
+**There are THREE distinct page types on BetLegend. Each has a specific purpose. NEVER mix them.**
 
 ---
 
-### HANDICAPPING HUB (handicapping-hub.html)
-**Purpose:** Stats dashboard for quick reference and data lookup
+### PAGE TYPE 1: HANDICAPPING HUB (handicapping-hub.html)
+**Purpose:** STATS DASHBOARD for odds and data lookup
 
-The Handicapping Hub is a DATA-FOCUSED page containing:
-- ✅ Power ratings (calculated from win %, point differential, efficiency)
-- ✅ Team statistics (offensive and defensive stats side by side)
+**The Hub contains:**
 - ✅ Betting lines (spread, moneyline, totals)
+- ✅ Team statistics displayed in tables
+- ✅ Power ratings
 - ✅ Injury reports (names and status)
+- ✅ Line movement data
 - ✅ Quick comparison data
+- ✅ Tab-based sport switching
 
 **The Hub is NOT for:**
-- ❌ Written analysis or commentary
+- ❌ Written articles or commentary
 - ❌ Picks or recommendations
-- ❌ Long-form content
+- ❌ Long-form text content
+
+**Design:** Light gray background, white cards, tab navigation, horizontal stats tables
 
 ---
 
-### SPORTS PAGES (nba.html, nhl.html, nfl.html, ncaab.html, ncaaf.html, mlb.html, soccer.html)
-**Purpose:** Human-written article-style analysis for each game
+### PAGE TYPE 2: SPORTS PAGES (nba.html, nhl.html, nfl.html, ncaab.html, ncaaf.html, mlb.html, soccer.html)
+**Purpose:** TEXT-BASED GAME PREVIEWS - Editorial content in article format
 
-**SPORTS PAGES MUST HAVE FOR EACH GAME:**
-- ✅ **Article-style writeup** (3-5 paragraphs per game, conversational tone)
-- ✅ **Human-sounding commentary** - Write like a real sports analyst, not a robot
-- ✅ **Narrative and storytelling** - What's the storyline of this matchup?
-- ✅ **Key matchup breakdown** - What to watch for
-- ✅ **Injury impact analysis** - How injuries affect the game
-- ✅ **Betting angles** - ATS trends, O/U tendencies, sharp money indicators
-- ✅ **Stats WITH context** - Don't just list numbers, explain why they matter
-- ✅ **Historical context** - Relevant head-to-head history
+### ⛔ CRITICAL: SPORTS PAGES ARE TEXT ARTICLES, NOT STATS DASHBOARDS ⛔
 
-**EXAMPLE SPORTS PAGE ARTICLE FORMAT:**
-```
-### [Team] @ [Team] - [Time] ET
+**SPORTS PAGES MUST HAVE:**
+- ✅ **Written game preview for EACH game** (3-5 paragraphs minimum per game)
+- ✅ **Human-sounding editorial commentary** - Write like a sports journalist
+- ✅ **Narrative and storytelling** - What's the story of this matchup?
+- ✅ **Team context** - Season storyline, recent form, key players
+- ✅ **Historical matchup context** - Head-to-head history when relevant
+- ✅ **Game-specific insights** - What makes THIS game interesting?
+- ✅ **Clean typography** - Professional, readable text layout
 
-The [Away Team] head into [City] riding a [X]-game winning streak,
-but they'll face a tough test against a [Home Team] squad that's
-been dominant at home this season.
-
-**The Matchup:** [Away Team] ranks [X]th in offensive efficiency (115.2 ORtg),
-but [Home Team]'s defense has been suffocating opponents, holding them to
-just [X] points per game at home. This is a classic strength vs. strength
-matchup that could go either way.
-
-**Injury Impact:** [Player] being out hurts the [Team]'s spacing, as they'll
-miss his 18.5 PPG and floor-stretching ability. Look for [Other Player] to
-see increased usage.
-
-**The Angle:** [Team] is 7-2 ATS as home favorites this season, and the sharp
-money has been hammering them early. The line moved from -3 to -5 since open.
-
-**The Verdict:** This feels like a grind-it-out game that stays Under the total.
-The pace will be slow, and both defenses are clicking.
-```
-
-**SPORTS PAGES ARE NOT:**
-- ❌ Just a list of stats (that's what the Handicapping Hub is for)
-- ❌ Robotic or template-sounding content
+**SPORTS PAGES MUST NOT HAVE:**
+- ❌ Betting lines displayed in boxes/tables (Handicapping Hub has those)
+- ❌ Stat grids or data tables (Handicapping Hub has those)
+- ❌ Power ratings (Handicapping Hub has those)
+- ❌ Spread/Moneyline/O-U displayed prominently (Handicapping Hub has those)
+- ❌ Template phrases or robotic filler text
 - ❌ Generic analysis that could apply to any game
+
+### SPORTS PAGE FORMAT (REQUIRED):
+
+```html
+<article class="game-preview">
+  <div class="game-header">
+    <img src="[AWAY_LOGO]" alt="[AWAY_TEAM]" class="team-logo"/>
+    <div class="matchup-info">
+      <h2>[Away Team] @ [Home Team]</h2>
+      <span class="game-time">[Day], [Time] ET | [Venue]</span>
+    </div>
+    <img src="[HOME_LOGO]" alt="[HOME_TEAM]" class="team-logo"/>
+  </div>
+
+  <div class="preview-content">
+    [3-5 paragraphs of written game preview - HUMAN-SOUNDING, EDITORIAL STYLE]
+
+    Paragraph 1: Set the scene - What makes this matchup compelling?
+    Paragraph 2: Away team analysis - Season story, form, key players
+    Paragraph 3: Home team analysis - Season story, form, key players
+    Paragraph 4: Historical context or key storyline
+    Paragraph 5: What to watch for in this game
+  </div>
+</article>
+```
+
+### EXAMPLE SPORTS PAGE ARTICLE (NBA):
+
+```
+Lakers @ Celtics - Sunday, 3:30 PM ET | TD Garden
+
+This is the rivalry that defines NBA history. The Lakers roll into Boston
+riding a three-game winning streak, with LeBron James looking like he's
+turned back the clock. At 40 years old, the man is averaging 25 points
+and 8 assists over his last five games. Classic LeBron.
+
+The Lakers have been dominant on the road lately, going 5-2 in their
+last seven away games. Their defensive intensity has improved since
+the coaching staff made adjustments to their switching scheme. Anthony
+Davis anchoring the paint has been the difference.
+
+Boston comes in as the defending champions with a chip on their shoulder.
+The Celtics lost their last two home games and need to make a statement.
+Jaylen Brown has been sensational, averaging 27 points over his last
+ten games, while the supporting cast has stepped up with consistent
+three-point shooting.
+
+These two franchises have met 312 times, with Boston holding a slight
+edge historically. But in the modern era, it's anyone's game when these
+two juggernauts collide. The last three meetings have been decided by
+single digits.
+
+Watch for the battle on the boards. Whoever controls the glass will
+likely control the game. The Lakers have been out-rebounding opponents
+by 4.5 per game lately, but Boston's small-ball lineup creates mismatches
+that can offset that advantage.
+```
+
+**NOTE:** Stats can be mentioned IN the text naturally, but should NOT be displayed in tables/grids on sports pages. That's what Handicapping Hub is for.
+
+---
+
+### PAGE TYPE 3: BLOG POSTS (blog-pageX.html)
+**Purpose:** OFFICIAL PICKS with specific recommendations
+
+**Blog posts contain:**
+- ✅ Everything from sports pages PLUS
+- ✅ Explicit picks with lines (e.g., "Lakers -4.5")
+- ✅ Verdict sections with final pick
+- ✅ "Take [Team]" language
+- ✅ Conviction and gambling recommendations
+
+---
+
+### PAGE TYPE SUMMARY TABLE
+
+| Feature | Handicapping Hub | Sports Pages | Blog Posts |
+|---------|------------------|--------------|------------|
+| Betting lines displayed | ✅ YES | ❌ NO | ✅ In verdict |
+| Stat tables/grids | ✅ YES | ❌ NO | ❌ NO |
+| Written previews | ❌ NO | ✅ YES (required) | ✅ YES |
+| Picks/recommendations | ❌ NO | ❌ NO | ✅ YES |
+| Editorial commentary | ❌ NO | ✅ YES (required) | ✅ YES |
+| Dark theme | ❌ Light gray | ✅ Dark | ✅ Dark |
+
+---
+
+### WHY THIS STRUCTURE EXISTS
+
+1. **Handicapping Hub** = Quick reference for bettors who want to see lines/stats at a glance
+2. **Sports Pages** = In-depth reading for fans who want game context and storylines
+3. **Blog Posts** = Action picks for those ready to bet
+
+**Users should NOT see the same information displayed the same way on multiple pages.**
+
+**If someone wants odds → Handicapping Hub**
+**If someone wants game previews → Sports dropdown pages**
+**If someone wants picks → Blog**
 
 ### ⛔ BANNED TEMPLATE PHRASES - NEVER USE THESE ⛔
 
