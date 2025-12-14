@@ -246,6 +246,12 @@ class IntelligentAnalysisGenerator:
         away_record = away_stats.get('record', '')
         home_record = home_stats.get('record', '')
 
+        # Validate records - don't display 0-0 or empty
+        if away_record in ('', '0-0', 'N/A', None):
+            away_record = ''
+        if home_record in ('', '0-0', 'N/A', None):
+            home_record = ''
+
         paragraphs = [opening]
 
         # Add context about the matchup
@@ -255,10 +261,28 @@ class IntelligentAnalysisGenerator:
             paragraphs.append(f"Home cooking could be the difference as {home_name} have been {home_trend_desc}, facing a {away_name} team that's been {away_trend_desc} lately.")
         elif away_trend == 'hot' and home_trend == 'hot':
             paragraphs.append(f"Both teams enter this one {away_trend_desc}. When two hot teams collide, something has to give.")
-        else:
+        elif away_record and home_record:
+            # Only include records if they're valid
             paragraphs.append(f"The {away_name} ({away_record}) visit {home_name} ({home_record}) in what shapes up to be a {random.choice(['competitive', 'intriguing', 'telling', 'fascinating'])} matchup.")
+        else:
+            # No valid records - generic opening
+            paragraphs.append(f"The {away_name} visit {home_name} in what shapes up to be a {random.choice(['competitive', 'intriguing', 'telling', 'fascinating'])} matchup.")
 
         return ' '.join(paragraphs)
+
+    def _is_valid_stat(self, value, default_values=None) -> bool:
+        """Check if a stat is valid (not a placeholder default)"""
+        if value is None or value == 0 or value == '' or value == 'N/A':
+            return False
+        try:
+            val = float(value)
+            # Common default values used in the system - reject these
+            defaults = default_values or [72.0, 110.0, 22.0, 28.0, 3.0, 0.0, 100.0, 105.0]
+            if val in defaults:
+                return False
+            return True
+        except:
+            return False
 
     def _generate_stats_analysis(self, sport: str, away_name: str, home_name: str,
                                   away_stats: Dict, home_stats: Dict,
@@ -273,8 +297,16 @@ class IntelligentAnalysisGenerator:
         away_oppg = away_stats.get('oppg', 0)
         home_oppg = home_stats.get('oppg', 0)
 
-        # Offensive comparison
-        if away_ppg and home_ppg:
+        # CRITICAL: Check if stats are real before generating text
+        # Skip if both teams have identical PPG (clear sign of defaults)
+        try:
+            if float(away_ppg) == float(home_ppg):
+                return ""  # Don't generate fake analysis
+        except:
+            pass
+
+        # Offensive comparison - only if we have valid, different values
+        if self._is_valid_stat(away_ppg) and self._is_valid_stat(home_ppg):
             if float(away_ppg) > float(home_ppg) + 5:
                 para = f"{away_name} bring the firepower, {self._get_random_phrase('stat', 'offense_good', ppg=away_ppg)}. "
                 para += f"Meanwhile, {home_name} have been more modest offensively at {home_ppg} PPG."
@@ -285,8 +317,8 @@ class IntelligentAnalysisGenerator:
                 para = f"Offensively, these teams are evenly matched - {away_name} at {away_ppg} PPG vs {home_name}'s {home_ppg}."
             paragraphs.append(para)
 
-        # Defensive comparison
-        if away_oppg and home_oppg:
+        # Defensive comparison - only if we have valid values
+        if self._is_valid_stat(away_oppg) and self._is_valid_stat(home_oppg):
             if float(away_oppg) < float(home_oppg) - 3:
                 para = f"Defensively, {away_name} have the clear advantage, {self._get_random_phrase('stat', 'defense_good', oppg=away_oppg)}. "
                 para += f"{home_name} have been more vulnerable, allowing {home_oppg}."
@@ -296,11 +328,12 @@ class IntelligentAnalysisGenerator:
                 para = f"Both defenses have been comparable - {away_name} allowing {away_oppg}, {home_name} at {home_oppg}."
             paragraphs.append(para)
 
-        # Pace/style analysis for NBA/NCAAB
+        # Pace/style analysis for NBA/NCAAB - only with valid data
         if sport in ['NBA', 'NCAAB']:
             away_pace = away_stats.get('pace', 0)
             home_pace = home_stats.get('pace', 0)
-            if away_pace and home_pace:
+            # Skip if pace values are defaults (100.0, 68.0 are common defaults)
+            if self._is_valid_stat(away_pace, [100.0, 68.0, 0.0]) and self._is_valid_stat(home_pace, [100.0, 68.0, 0.0]):
                 if float(away_pace) > 100 and float(home_pace) > 100:
                     paragraphs.append("Both teams like to push the pace, so expect an up-tempo affair with plenty of possessions.")
                 elif float(away_pace) < 98 and float(home_pace) < 98:
@@ -418,16 +451,30 @@ class IntelligentAnalysisGenerator:
         away_trend = self._get_team_trend(away_stats)
         home_trend = self._get_team_trend(home_stats)
 
-        # Trend-based angle
-        if away_trend == 'hot' and home_trend == 'cold':
-            angles.append(f"Momentum clearly favors {away_name}, and that tends to matter on the road.")
-        elif home_trend == 'hot' and away_trend == 'cold':
-            angles.append(f"Home court plus hot play is a powerful combination for {home_name}.")
+        # Trend-based angle - only if we have real trend data
+        if away_trend in ['hot', 'cold'] or home_trend in ['hot', 'cold']:
+            if away_trend == 'hot' and home_trend == 'cold':
+                angles.append(f"Momentum clearly favors {away_name}, and that tends to matter on the road.")
+            elif home_trend == 'hot' and away_trend == 'cold':
+                angles.append(f"Home court plus hot play is a powerful combination for {home_name}.")
 
-        # Statistical angle
-        away_ppg = float(away_stats.get('ppg', 100) or 100)
+        # Statistical angle - ONLY if we have valid stats (not defaults)
+        away_ppg_raw = away_stats.get('ppg', 0)
+        home_ppg_raw = home_stats.get('ppg', 0)
+
+        # Skip projection if stats appear to be defaults
+        if not self._is_valid_stat(away_ppg_raw) or not self._is_valid_stat(home_ppg_raw):
+            # Skip statistical projections entirely
+            closers = [
+                "Check back closer to game time for updated analysis.",
+                "Line movement closer to tip could reveal value.",
+                "This matchup deserves a deeper look as more data becomes available.",
+            ]
+            return random.choice(closers)
+
+        away_ppg = float(away_ppg_raw or 100)
         home_oppg = float(home_stats.get('oppg', 100) or 100)
-        home_ppg = float(home_stats.get('ppg', 100) or 100)
+        home_ppg = float(home_ppg_raw or 100)
         away_oppg = float(away_stats.get('oppg', 100) or 100)
 
         away_proj = (away_ppg + home_oppg) / 2

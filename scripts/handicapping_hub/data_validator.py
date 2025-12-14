@@ -159,9 +159,9 @@ class DataValidator:
 
     def _validate_record(self, record: str, context: str) -> str:
         """Validate a W-L record string"""
-        if not record or record in ('', '-', 'N/A', None):
-            logger.debug(f"Missing {context}, using placeholder")
-            return '0-0'
+        if not record or record in ('', '-', 'N/A', None, '0-0'):
+            logger.debug(f"Missing {context}, leaving empty (NO fake data)")
+            return ''  # Return empty string instead of fake 0-0
 
         # Validate format (should be like "15-10" or "15-10-2" for NHL)
         parts = str(record).split('-')
@@ -169,13 +169,14 @@ class DataValidator:
             try:
                 wins = int(parts[0])
                 losses = int(parts[1])
-                if wins >= 0 and losses >= 0 and wins + losses <= 162:  # Max games in a season
+                # Only accept if there are actual games played
+                if wins >= 0 and losses >= 0 and (wins + losses) >= 1 and wins + losses <= 162:
                     return record
             except (ValueError, TypeError):
                 pass
 
         logger.warning(f"Invalid {context}: {record}")
-        return '0-0'
+        return ''  # Return empty instead of fake data
 
     def _fill_missing_stats(self, sport: str, stats: Dict, context: str, issues: List) -> Dict:
         """Fill in missing stats with smart defaults"""

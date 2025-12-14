@@ -82,6 +82,49 @@ TEAM_ABBREVS = {
 }
 
 
+def is_valid_record(record: str) -> bool:
+    """Check if a record is valid (not 0-0, not empty, has real values)"""
+    if not record or record in ('', '-', 'N/A', '0-0', None):
+        return False
+    try:
+        parts = str(record).split('-')
+        if len(parts) >= 2:
+            wins = int(parts[0])
+            losses = int(parts[1])
+            # A valid season record should have some games played
+            return (wins + losses) >= 1
+    except:
+        pass
+    return False
+
+
+def has_real_data(sport: str, away_stats: dict, home_stats: dict) -> bool:
+    """
+    Check if stats contain real data vs placeholder defaults.
+    Returns False if data appears to be fake/placeholder.
+    """
+    # Check records first - most important indicator
+    away_record = away_stats.get('record', '')
+    home_record = home_stats.get('record', '')
+
+    if not is_valid_record(away_record) or not is_valid_record(home_record):
+        return False
+
+    # Check for identical PPG (a sign of defaults being used)
+    away_ppg = away_stats.get('ppg', 0)
+    home_ppg = home_stats.get('ppg', 0)
+
+    # If both teams have exactly the same PPG, likely defaults
+    if away_ppg and home_ppg:
+        try:
+            if float(away_ppg) == float(home_ppg) and float(away_ppg) in [72.0, 110.0, 22.0, 28.0, 3.0]:
+                return False
+        except:
+            pass
+
+    return True
+
+
 class SportsPageGenerator:
     """Generates daily sports pages with comprehensive game analysis"""
 
@@ -149,14 +192,26 @@ class SportsPageGenerator:
         away_record = away_stats.get('record', away.get('record', ''))
         home_record = home_stats.get('record', home.get('record', ''))
 
+        # CRITICAL: Validate data is real before displaying
+        if not is_valid_record(away_record):
+            away_record = ''  # Show nothing instead of fake 0-0
+        if not is_valid_record(home_record):
+            home_record = ''
+
         # Get injuries
         away_injuries = injuries.get(away_name, [])
         home_injuries = injuries.get(home_name, [])
 
         injury_html = self._format_injuries(away_injuries, home_injuries, away_abbrev, home_abbrev)
 
-        # Generate comprehensive analysis
-        analysis_html = self.analysis_generator.generate_analysis(sport, game_data)
+        # CRITICAL: Only generate analysis if we have REAL data
+        # Skip templated analysis if data is fake/placeholder
+        if has_real_data(sport, away_stats, home_stats):
+            analysis_html = self.analysis_generator.generate_analysis(sport, game_data)
+        else:
+            # Minimal card - no fake templated analysis
+            analysis_html = '<div class="analysis-section"><p style="color:#ff6b6b;font-style:italic;">Live statistics unavailable - check back closer to game time.</p></div>'
+            print(f"    [SKIP ANALYSIS] {away_name} @ {home_name} - insufficient real data")
 
         return f'''<article class="game-card">
 <div class="teams-display">
@@ -167,7 +222,7 @@ class SportsPageGenerator:
 <h3 class="game-title">{away_name} @ {home_name}</h3>
 <div class="game-meta">
 <span>{game_time}</span>
-<span>{away_record} vs {home_record}</span>
+{f'<span>{away_record} vs {home_record}</span>' if away_record and home_record else ''}
 {f'<span>{venue_name}</span>' if venue_name else ''}
 </div>
 <div class="stat-row">
