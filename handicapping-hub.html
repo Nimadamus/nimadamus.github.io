@@ -512,6 +512,173 @@
 
         .no-data { color: #8b949e; font-size: 15px; padding: 15px; text-align: center; }
 
+        /* GAME CONTEXT BAR - Weather, Rest, Time */
+        .game-context-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, #1a1f2e 0%, #161b22 100%);
+            border-top: 2px solid #30363d;
+        }
+        .context-item {
+            text-align: center;
+            padding: 12px;
+            background: rgba(88, 166, 255, 0.08);
+            border-radius: 10px;
+            border: 1px solid #30363d;
+        }
+        .context-icon { font-size: 20px; margin-bottom: 6px; }
+        .context-label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .context-value { font-size: 15px; font-weight: 700; color: #e6edf3; }
+        .context-value.hot { color: #f85149; }
+        .context-value.cold { color: #58a6ff; }
+        .context-value.rest-good { color: #3fb950; }
+        .context-value.rest-bad { color: #f85149; }
+
+        /* HEAD-TO-HEAD SECTION */
+        .h2h-section {
+            padding: 25px 30px;
+            border-top: 2px solid #30363d;
+        }
+        .h2h-section .section-title { color: #a371f7; }
+        .h2h-summary {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .h2h-team {
+            text-align: center;
+        }
+        .h2h-team.away { text-align: right; }
+        .h2h-team.home { text-align: left; }
+        .h2h-wins {
+            font-size: 36px;
+            font-weight: 800;
+            color: #58a6ff;
+        }
+        .h2h-record-label {
+            font-size: 12px;
+            color: #8b949e;
+            text-transform: uppercase;
+        }
+        .h2h-vs {
+            font-size: 14px;
+            color: #8b949e;
+            padding: 10px 20px;
+            background: #21262d;
+            border-radius: 8px;
+        }
+        .h2h-games {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .h2h-game {
+            display: grid;
+            grid-template-columns: 80px 1fr 60px 1fr 80px;
+            gap: 10px;
+            align-items: center;
+            padding: 12px 15px;
+            background: #21262d;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .h2h-date { color: #8b949e; text-align: left; }
+        .h2h-away-score, .h2h-home-score {
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+        .h2h-away-score { text-align: right; }
+        .h2h-home-score { text-align: left; }
+        .h2h-score.winner { background: #3fb950; color: #fff; }
+        .h2h-score.loser { background: #30363d; color: #8b949e; }
+        .h2h-at { text-align: center; color: #8b949e; }
+
+        /* SITUATIONAL STATS SECTION */
+        .situational-section {
+            padding: 25px 30px;
+            border-top: 2px solid #30363d;
+        }
+        .situational-section .section-title { color: #7ee787; }
+        .situational-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .situational-column h5 {
+            font-size: 16px;
+            color: #e6edf3;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #30363d;
+        }
+        .situational-stats {
+            display: grid;
+            gap: 8px;
+        }
+        .sit-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: #21262d;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .sit-stat-label { color: #8b949e; }
+        .sit-stat-value { font-weight: 700; color: #e6edf3; }
+        .sit-stat-value.good { color: #3fb950; }
+        .sit-stat-value.bad { color: #f85149; }
+
+        /* STREAKS SECTION */
+        .streaks-section {
+            padding: 25px 30px;
+            border-top: 2px solid #30363d;
+        }
+        .streaks-section .section-title { color: #d29922; }
+        .streaks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .streak-column h5 {
+            font-size: 16px;
+            color: #e6edf3;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #30363d;
+        }
+        .streak-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .streak-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: #21262d;
+            border-radius: 8px;
+        }
+        .streak-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            min-width: 50px;
+            text-align: center;
+        }
+        .streak-badge.win { background: #3fb950; color: #fff; }
+        .streak-badge.loss { background: #f85149; color: #fff; }
+        .streak-badge.ats { background: #58a6ff; color: #fff; }
+        .streak-badge.ou { background: #d29922; color: #000; }
+        .streak-text { color: #e6edf3; font-size: 14px; }
+
         /* Betting Intelligence */
         .intel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
 
@@ -562,6 +729,11 @@
             .injuries-grid, .recent-grid { grid-template-columns: 1fr; }
             .betting-grid { grid-template-columns: 1fr; }
             .intel-grid { grid-template-columns: 1fr 1fr; }
+            .game-context-bar { grid-template-columns: 1fr 1fr; }
+            .h2h-summary { grid-template-columns: 1fr; gap: 15px; }
+            .h2h-team.away, .h2h-team.home { text-align: center; }
+            .h2h-game { grid-template-columns: 1fr; gap: 8px; text-align: center; }
+            .situational-grid, .streaks-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 600px) {
@@ -573,6 +745,7 @@
             .nav-link, .dropdown .dropbtn { font-size: 0.7rem; padding: 8px 10px; letter-spacing: 1px; }
             .sports-records-dropdown { min-width: 300px; padding: 15px; left: -100px; }
             .glossary-grid { grid-template-columns: 1fr; }
+            .game-context-bar { grid-template-columns: 1fr; }
         }
 
         /* GLOSSARY SECTION */
@@ -5098,6 +5271,30 @@
                     </div>
                 </div>
 
+                <!-- GAME CONTEXT BAR -->
+                <div class="game-context-bar">
+                    <div class="context-item">
+                        <div class="context-icon">🏟️</div>
+                        <div class="context-label">Venue</div>
+                        <div class="context-value">Husky Stadium</div>
+                    </div>
+                    <div class="context-item">
+                        <div class="context-icon">🌡️</div>
+                        <div class="context-label">Weather</div>
+                        <div class="context-value cold">48°F / Rain</div>
+                    </div>
+                    <div class="context-item">
+                        <div class="context-icon">📅</div>
+                        <div class="context-label">Rest (Away)</div>
+                        <div class="context-value rest-good">7 Days</div>
+                    </div>
+                    <div class="context-item">
+                        <div class="context-icon">📅</div>
+                        <div class="context-label">Rest (Home)</div>
+                        <div class="context-value rest-good">7 Days</div>
+                    </div>
+                </div>
+
                 <div class="stats-grid">
                     <div class="stats-panel away-panel">
                         <div class="panel-header">BOIS STATS</div>
@@ -5211,9 +5408,156 @@
                     </div>
                 </div>
 
-                
+                <!-- HEAD-TO-HEAD HISTORY -->
+                <div class="h2h-section">
+                    <div class="section-title">HEAD-TO-HEAD HISTORY</div>
+                    <div class="h2h-summary">
+                        <div class="h2h-team away">
+                            <div class="h2h-wins">2</div>
+                            <div class="h2h-record-label">Boise State Wins</div>
+                        </div>
+                        <div class="h2h-vs">Last 5 Games</div>
+                        <div class="h2h-team home">
+                            <div class="h2h-wins">3</div>
+                            <div class="h2h-record-label">Washington Wins</div>
+                        </div>
+                    </div>
+                    <div class="h2h-games">
+                        <div class="h2h-game">
+                            <span class="h2h-date">Sep 2019</span>
+                            <span class="h2h-away-score h2h-score loser">31</span>
+                            <span class="h2h-at">@</span>
+                            <span class="h2h-home-score h2h-score winner">38</span>
+                            <span class="h2h-date">UW Win</span>
+                        </div>
+                        <div class="h2h-game">
+                            <span class="h2h-date">Sep 2015</span>
+                            <span class="h2h-away-score h2h-score winner">16</span>
+                            <span class="h2h-at">@</span>
+                            <span class="h2h-home-score h2h-score loser">13</span>
+                            <span class="h2h-date">BSU Win</span>
+                        </div>
+                    </div>
+                </div>
 
-                
+                <!-- RECENT FORM -->
+                <div class="recent-games-section">
+                    <div class="section-title">RECENT FORM</div>
+                    <div class="recent-grid">
+                        <div class="recent-column">
+                            <h5>Boise State Broncos</h5>
+                            <div class="game-results">
+                                <span class="game-result win">W</span>
+                                <span class="game-result win">W</span>
+                                <span class="game-result loss">L</span>
+                                <span class="game-result win">W</span>
+                                <span class="game-result win">W</span>
+                            </div>
+                        </div>
+                        <div class="recent-column">
+                            <h5>Washington Huskies</h5>
+                            <div class="game-results">
+                                <span class="game-result win">W</span>
+                                <span class="game-result loss">L</span>
+                                <span class="game-result win">W</span>
+                                <span class="game-result win">W</span>
+                                <span class="game-result loss">L</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SITUATIONAL STATS -->
+                <div class="situational-section">
+                    <div class="section-title">SITUATIONAL SPLITS</div>
+                    <div class="situational-grid">
+                        <div class="situational-column">
+                            <h5>Boise State Broncos</h5>
+                            <div class="situational-stats">
+                                <div class="sit-stat">
+                                    <span class="sit-stat-label">Home Record</span>
+                                    <span class="sit-stat-value good">5-1</span>
+                                </div>
+                                <div class="sit-stat">
+                                    <span class="sit-stat-label">Away Record</span>
+                                    <span class="sit-stat-value">4-3</span>
+                                </div>
+                                <div class="sit-stat">
+                                    <span class="sit-stat-label">Conference</span>
+                                    <span class="sit-stat-value">7-1 MW</span>
+                                </div>
+                                <div class="sit-stat">
+                                    <span class="sit-stat-label">vs Ranked</span>
+                                    <span class="sit-stat-value bad">0-2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="situational-column">
+                            <h5>Washington Huskies</h5>
+                            <div class="situational-stats">
+                                <div class="sit-stat">
+                                    <span class="sit-stat-label">Home Record</span>
+                                    <span class="sit-stat-value good">5-2</span>
+                                </div>
+                                <div class="sit-stat">
+                                    <span class="sit-stat-label">Away Record</span>
+                                    <span class="sit-stat-value">3-2</span>
+                                </div>
+                                <div class="sit-stat">
+                                    <span class="sit-stat-label">Conference</span>
+                                    <span class="sit-stat-value">5-4 Big Ten</span>
+                                </div>
+                                <div class="sit-stat">
+                                    <span class="sit-stat-label">vs Ranked</span>
+                                    <span class="sit-stat-value bad">1-3</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STREAKS -->
+                <div class="streaks-section">
+                    <div class="section-title">CURRENT STREAKS</div>
+                    <div class="streaks-grid">
+                        <div class="streak-column">
+                            <h5>Boise State Broncos</h5>
+                            <div class="streak-items">
+                                <div class="streak-item">
+                                    <span class="streak-badge win">W4</span>
+                                    <span class="streak-text">Won last 4 games straight</span>
+                                </div>
+                                <div class="streak-item">
+                                    <span class="streak-badge ats">3-2</span>
+                                    <span class="streak-text">ATS last 5 games</span>
+                                </div>
+                                <div class="streak-item">
+                                    <span class="streak-badge ou">O3</span>
+                                    <span class="streak-text">Over hit in last 3</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="streak-column">
+                            <h5>Washington Huskies</h5>
+                            <div class="streak-items">
+                                <div class="streak-item">
+                                    <span class="streak-badge win">W2</span>
+                                    <span class="streak-text">Won last 2 games straight</span>
+                                </div>
+                                <div class="streak-item">
+                                    <span class="streak-badge ats">2-3</span>
+                                    <span class="streak-text">ATS last 5 games</span>
+                                </div>
+                                <div class="streak-item">
+                                    <span class="streak-badge ou">U2</span>
+                                    <span class="streak-text">Under hit in last 2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="betting-intel-section">
                     <div class="section-title">BETTING INTELLIGENCE</div>
                     <div class="intel-grid">
