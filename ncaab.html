@@ -50,10 +50,21 @@ main{max-width:900px;margin:0 auto;padding:0 24px 80px}
 .game-title{font-size:22px;font-weight:600;margin-bottom:8px;text-align:center}
 .game-meta{font-size:13px;color:var(--text-muted);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .game-meta span{background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}
-.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}
-.stat-item{flex:1;min-width:100px;text-align:center;padding:8px}
-.stat-item .value{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;color:var(--accent-gold)}
-.stat-item .label{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+.stat-row,.lines-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}
+.stat-item{flex:1;min-width:80px;text-align:center;padding:8px}
+.stat-item .value{font-family:var(--font-primary);font-size:1.1rem;font-weight:700;color:var(--accent-gold)}
+.stat-item .label{font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+.stat-item.off .value{color:var(--accent-cyan)}
+/* Team Stats Section */
+.team-stats-section{margin:20px 0;padding:20px;background:rgba(0,20,40,0.5);border-radius:12px;border:1px solid rgba(0,229,255,0.2)}
+.stats-header{font-family:var(--font-primary);font-size:0.75rem;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:2px;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid var(--border-subtle);text-align:center}
+.team-stats-row{display:flex;align-items:center;gap:15px;padding:12px;margin-bottom:8px;background:rgba(0,0,0,0.3);border-radius:10px;border:1px solid var(--border-subtle)}
+.team-stats-row:last-child{margin-bottom:0}
+.team-info{display:flex;align-items:center;gap:10px;min-width:120px}
+.team-logo-small{width:36px;height:36px;object-fit:contain}
+.team-abbr{font-family:var(--font-primary);font-size:1rem;font-weight:700;color:#fff}
+.team-label{font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;padding:2px 6px;background:rgba(255,255,255,0.1);border-radius:4px}
+.team-stats-grid{display:flex;flex-wrap:wrap;flex:1;gap:8px;justify-content:space-around}
 /* Analysis Section Styles */
 .game-analysis{margin-top:20px;padding-top:20px;border-top:1px solid var(--border-subtle)}
 .analysis-section{margin-bottom:16px}
@@ -66,113 +77,6 @@ footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13p
 footer a{color:var(--accent-cyan);text-decoration:none}
 .data-source{font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--border-subtle)}
 @media(max-width:768px){.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}}
-
-/* Archive Calendar Styles */
-.archive-calendar-section {
-    max-width: 900px;
-    margin: 0 auto 40px;
-    padding: 0 24px;
-}
-.calendar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-.calendar-title {
-    font-family: var(--font-primary);
-    font-size: 18px;
-    color: var(--accent-gold);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-.calendar-toggle {
-    background: rgba(0,229,255,0.1);
-    border: 1px solid var(--border-subtle);
-    color: var(--accent-cyan);
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s;
-}
-.calendar-toggle:hover {
-    background: rgba(0,229,255,0.2);
-    border-color: var(--accent-cyan);
-}
-#archive-calendar {
-    display: none;
-    background: var(--gradient-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 16px;
-    padding: 24px;
-    margin-top: 16px;
-}
-#archive-calendar.open {
-    display: block;
-}
-.calendar-months {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.calendar-month {
-    background: rgba(0,0,0,0.2);
-    border-radius: 12px;
-    padding: 16px;
-}
-.month-title {
-    font-family: var(--font-primary);
-    font-size: 14px;
-    color: var(--accent-cyan);
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.calendar-days {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-.calendar-day {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-.calendar-day:hover {
-    background: rgba(0,229,255,0.2);
-    border-color: var(--accent-cyan);
-    transform: scale(1.1);
-}
-.calendar-day.today {
-    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-    border-color: var(--accent-cyan);
-}
-.calendar-day.today .day-num {
-    color: #000;
-    font-weight: 700;
-}
-.day-num {
-    font-family: var(--font-primary);
-    font-size: 14px;
-    color: var(--text-primary);
-}
-@media(max-width:768px) {
-    .calendar-day {
-        width: 38px;
-        height: 38px;
-    }
-    .day-num {
-        font-size: 12px;
-    }
-}
 </style>
 </head>
 <body>
@@ -194,16 +98,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>1-Game Slate | Real-Time Odds & Stats</p>
 </header>
 <div class="current-date"><h2>December 14, 2025</h2></div>
-<section class="archive-calendar-section">
-<div class="calendar-header">
-<span class="calendar-title">View Archive Calendar</span>
-<button class="calendar-toggle" onclick="document.getElementById('archive-calendar').classList.toggle('open')">
-Select Date
-</button>
-</div>
-<div id="archive-calendar"></div>
-</section>
-
 <main>
 
 <article class="game-card">
@@ -219,123 +113,76 @@ Select Date
 <span>Hilton Coliseum</span>
 <span>ESPN+</span>
 </div>
-<div class="stat-row">
-<div class="stat-item"><span class="value">ISU -41.0</span><span class="label">Spread</span></div>
+<div class="lines-row">
+<div class="stat-item"><span class="value">ISU -41.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">144.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">-</span><span class="label">EIU ML</span></div>
 <div class="stat-item"><span class="value">-</span><span class="label">ISU ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Eastern Illinois Panthers" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaab/500/scoreboard/eiu.png"/>
+        <span class="team-abbr">EIU</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">22.2</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">61.8</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">40.9</span><span class="label">FG%</span></div>
+        <div class="stat-item"><span class="value">28.2</span><span class="label">3P%</span></div>
+        <div class="stat-item"><span class="value">29.7</span><span class="label">REB</span></div>
+        <div class="stat-item"><span class="value">11.3</span><span class="label">AST</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">5.7</span><span class="label">STL</span></div>
+        <div class="stat-item off"><span class="value">3.1</span><span class="label">BLK</span></div>
+        <div class="stat-item off"><span class="value">13.6</span><span class="label">TO</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Iowa State Cyclones" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/ncaab/500/scoreboard/isu.png"/>
+        <span class="team-abbr">ISU</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">100.0</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">91.7</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">53.8</span><span class="label">FG%</span></div>
+        <div class="stat-item"><span class="value">43.1</span><span class="label">3P%</span></div>
+        <div class="stat-item"><span class="value">35.1</span><span class="label">REB</span></div>
+        <div class="stat-item"><span class="value">18.3</span><span class="label">AST</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">11.1</span><span class="label">STL</span></div>
+        <div class="stat-item off"><span class="value">3.4</span><span class="label">BLK</span></div>
+        <div class="stat-item off"><span class="value">10.0</span><span class="label">TO</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Two teams heading in different directions meet here. Home cooking could be the difference as the Iowa State Cyclones (10-0) have been playing their best ball, facing a Eastern Illinois Panthers team (2-7) that's been trying to find their footing lately.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>The Iowa State Cyclones are heavy favorites laying 41.0 points. That's a lot of chalk, but the market clearly expects a blowout. The total sits at 144.5. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Line movement closer to game time could reveal additional value.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>This is what's known as a "buy game" - a scheduling cupcake for a ranked team. Iowa State at 10-0 is one of the best teams in the country, ranked in the top 5 and a legitimate Big 12 title contender. Eastern Illinois at 2-7 is an Ohio Valley Conference team getting a nice paycheck to come to Hilton Coliseum and take a beating. The Panthers are averaging just 68 points per game and allowing 78 - that's a negative-10 point differential against mediocre competition. Iowa State, meanwhile, has been winning by an average of 22 points per game.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>41 points is an absurd spread, but that's what happens when a top-5 team hosts a bottom-tier OVC squad. Iowa State has been crushing inferior opponents all season - they beat North Alabama by 31, Lipscomb by 27, and Jackson State by 25. Eastern Illinois is not better than any of those teams. The 144.5 total suggests the Cyclones will put up around 90+ while holding EIU to 50-55.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Here's the question: can Iowa State cover 41? That means winning by 42+. Even dominant teams struggle to cover 40+ spreads because they pull starters in the second half and let the bench mop up. Iowa State coach T.J. Otzelberger typically rests his guys once a game is out of reach. If the starters sit with 10 minutes left, the spread is in jeopardy. If you're betting this, you're betting Iowa State keeps their foot on the gas or Eastern Illinois is so bad that even the bench can blow them out.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
 
 </main>
-
+<div class="archive-link">
+<a href="ncaab-page2.html">View Previous Analysis</a>
+</div>
 <footer>
 <p>&copy; 2025 BetLegend. All rights reserved. | <a href="index.html">Home</a></p>
 <p style="margin-top:10px">Data sourced from ESPN and The Odds API. Lines subject to change.</p>
 </footer>
-<script>
-const archiveData = [
-  {
-    "date": "2025-12-14",
-    "display": "December 14, 2025",
-    "page": "ncaab.html"
-  },
-  {
-    "date": "2025-12-13",
-    "display": "December 13, 2025",
-    "page": "ncaab-page2.html"
-  },
-  {
-    "date": "2025-12-12",
-    "display": "December 12, 2025",
-    "page": "ncaab-page4.html"
-  },
-  {
-    "date": "2025-12-10",
-    "display": "December 10, 2025",
-    "page": "ncaab-page6.html"
-  },
-  {
-    "date": "2025-12-09",
-    "display": "December 09, 2025",
-    "page": "ncaab-page10.html"
-  },
-  {
-    "date": "2025-12-08",
-    "display": "December 08, 2025",
-    "page": "ncaab-page11.html"
-  },
-  {
-    "date": "2025-12-07",
-    "display": "December 07, 2025",
-    "page": "ncaab-page14.html"
-  },
-  {
-    "date": "2025-12-06",
-    "display": "December 06, 2025",
-    "page": "ncaab-page17.html"
-  },
-  {
-    "date": "2025-12-05",
-    "display": "December 05, 2025",
-    "page": "ncaab-page20.html"
-  },
-  {
-    "date": "2025-12-04",
-    "display": "December 04, 2025",
-    "page": "ncaab-page26.html"
-  },
-  {
-    "date": "2025-11-27",
-    "display": "November 27, 2025",
-    "page": "ncaab-page29.html"
-  },
-  {
-    "date": "2025-11-24",
-    "display": "November 24, 2025",
-    "page": "ncaab-page31.html"
-  }
-];
-
-function renderCalendar() {
-    const container = document.getElementById('archive-calendar');
-    if (!container) return;
-
-    const months = {};
-    archiveData.forEach(item => {
-        const date = new Date(item.date + 'T12:00:00');
-        const monthKey = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-        if (!months[monthKey]) months[monthKey] = [];
-        months[monthKey].push(item);
-    });
-
-    let html = '<div class="calendar-months">';
-    Object.entries(months).forEach(([month, items]) => {
-        html += '<div class="calendar-month">';
-        html += '<h3 class="month-title">' + month + '</h3>';
-        html += '<div class="calendar-days">';
-        items.forEach(item => {
-            const date = new Date(item.date + 'T12:00:00');
-            const day = date.getDate();
-            const isToday = item.page === 'ncaab.html';
-            html += '<a href="' + item.page + '" class="calendar-day' + (isToday ? ' today' : '') + '" title="' + item.display + '">';
-            html += '<span class="day-num">' + day + '</span>';
-            html += '</a>';
-        });
-        html += '</div></div>';
-    });
-    html += '</div>';
-
-    container.innerHTML = html;
-}
-
-document.addEventListener('DOMContentLoaded', renderCalendar);
-</script>
 </body>
 </html>

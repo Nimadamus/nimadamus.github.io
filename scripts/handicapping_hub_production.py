@@ -41,37 +41,38 @@ ODDS_API_KEY = "deeac7e7af6a8f1a5ac84c625e04973a"
 REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_FILE = "handicapping-hub.html"
 
-# Sport configurations
+# Sport configurations with COMPREHENSIVE advanced stats
+# LOCKED - These stat columns are permanent
 SPORTS = {
     'NBA': {
         'espn_path': 'basketball/nba',
         'odds_key': 'basketball_nba',
         'logo_path': 'nba',
-        'stats': ['PWR', 'PPG', 'FG%', '3P%', 'FT%', 'REB', 'AST', 'OPP', 'STL', 'BLK', 'TO'],
+        'stats': ['PWR', 'PPG', 'OPP', 'PACE', 'ORTG', 'DRTG', 'NET', 'FG%', '3P%', 'FT%', 'eFG%', 'TS%', 'REB', 'AST', 'TO', 'STL', 'BLK'],
     },
     'NFL': {
         'espn_path': 'football/nfl',
         'odds_key': 'americanfootball_nfl',
         'logo_path': 'nfl',
-        'stats': ['PWR', 'PPG', 'YPG', 'PASS', 'RUSH', 'OPP', 'TO', 'SACK', 'INT'],
+        'stats': ['PWR', 'PPG', 'OPP', 'YPP', 'PASS', 'RUSH', 'RZ%', 'TOP', 'TO+/-', '3RD%', 'SACK', 'INT'],
     },
     'NHL': {
         'espn_path': 'hockey/nhl',
         'odds_key': 'icehockey_nhl',
         'logo_path': 'nhl',
-        'stats': ['PWR', 'GF', 'GA', 'PP%', 'PK%', 'SOG', 'SV%', 'FOW%'],
+        'stats': ['PWR', 'GF', 'GA', 'GD', 'PP%', 'PK%', 'SOG', 'SV%', 'FOW%', 'PIM'],
     },
     'NCAAB': {
         'espn_path': 'basketball/mens-college-basketball',
         'odds_key': 'basketball_ncaab',
         'logo_path': 'ncaa',
-        'stats': ['PWR', 'PPG', 'FG%', '3P%', 'FT%', 'REB', 'AST', 'OPP', 'TO'],
+        'stats': ['PWR', 'PPG', 'OPP', 'FG%', '3P%', 'FT%', 'REB', 'AST', 'TO', 'STL', 'BLK'],
     },
     'NCAAF': {
         'espn_path': 'football/college-football',
         'odds_key': 'americanfootball_ncaaf',
         'logo_path': 'ncaa',
-        'stats': ['PWR', 'PPG', 'YPG', 'PASS', 'RUSH', 'OPP', 'TO'],
+        'stats': ['PWR', 'PPG', 'OPP', 'YPG', 'PASS', 'RUSH', 'TO+/-'],
     },
 }
 
@@ -176,7 +177,7 @@ def match_game_odds(odds_data: List[Dict], away_name: str, home_name: str) -> Di
 # =============================================================================
 
 def extract_team_stats(sport: str, raw_stats: Dict, record: str) -> Dict:
-    """Extract and format stats based on sport type"""
+    """Extract and format COMPREHENSIVE stats based on sport type"""
 
     # Calculate power rating from record
     try:
@@ -188,42 +189,196 @@ def extract_team_stats(sport: str, raw_stats: Dict, record: str) -> Dict:
     except:
         pwr = '-'
 
+    def safe_float(val, default='-'):
+        """Safely convert to float, return formatted string or default"""
+        if val is None or val == '-' or val == '':
+            return default
+        try:
+            return round(float(val), 1)
+        except:
+            return default
+
+    def safe_pct(val, default='-'):
+        """Format percentage value"""
+        if val is None or val == '-' or val == '':
+            return default
+        try:
+            v = float(val)
+            # If already in percentage form (e.g., 45.5)
+            if v > 1:
+                return f"{v:.1f}"
+            # If in decimal form (e.g., 0.455)
+            return f"{v*100:.1f}"
+        except:
+            return default
+
     if sport in ['NBA', 'NCAAB']:
+        # Get base stats
+        ppg = safe_float(raw_stats.get('avgPoints', raw_stats.get('pointsPerGame')))
+        opp = safe_float(raw_stats.get('avgPointsAgainst', raw_stats.get('oppPointsPerGame')))
+        fg_pct = safe_pct(raw_stats.get('fieldGoalPct', raw_stats.get('fgPct')))
+        three_pct = safe_pct(raw_stats.get('threePointFieldGoalPct', raw_stats.get('threePtPct')))
+        ft_pct = safe_pct(raw_stats.get('freeThrowPct', raw_stats.get('ftPct')))
+        reb = safe_float(raw_stats.get('avgRebounds', raw_stats.get('reboundsPerGame')))
+        ast = safe_float(raw_stats.get('avgAssists', raw_stats.get('assistsPerGame')))
+        stl = safe_float(raw_stats.get('avgSteals', raw_stats.get('stealsPerGame')))
+        blk = safe_float(raw_stats.get('avgBlocks', raw_stats.get('blocksPerGame')))
+        to = safe_float(raw_stats.get('avgTurnovers', raw_stats.get('turnoversPerGame')))
+
+        # Calculate advanced stats
+        pace = safe_float(raw_stats.get('pace', raw_stats.get('possessionsPerGame')))
+        ortg = safe_float(raw_stats.get('offensiveRating', raw_stats.get('offRating')))
+        drtg = safe_float(raw_stats.get('defensiveRating', raw_stats.get('defRating')))
+
+        # Calculate Net Rating
+        net = '-'
+        if ortg != '-' and drtg != '-':
+            try:
+                net = round(float(ortg) - float(drtg), 1)
+                net = f"{net:+.1f}" if net >= 0 else f"{net:.1f}"
+            except:
+                net = '-'
+
+        # Calculate eFG% if we have the components
+        efg = safe_pct(raw_stats.get('effectiveFGPct', raw_stats.get('efgPct')))
+        ts = safe_pct(raw_stats.get('trueShootingPct', raw_stats.get('tsPct')))
+
+        # If pace not available, estimate from total possessions
+        if pace == '-':
+            poss = safe_float(raw_stats.get('possessions'))
+            games = safe_float(raw_stats.get('gamesPlayed'))
+            if poss != '-' and games != '-' and float(games) > 0:
+                pace = round(float(poss) / float(games), 1)
+
+        # If ORTG not available, estimate from PPG and pace
+        if ortg == '-' and ppg != '-' and pace != '-':
+            try:
+                ortg = round(float(ppg) / float(pace) * 100, 1)
+            except:
+                ortg = '-'
+
         return {
             'PWR': pwr,
-            'PPG': raw_stats.get('avgPoints', raw_stats.get('pointsPerGame', '-')),
-            'FG%': raw_stats.get('fieldGoalPct', raw_stats.get('fgPct', '-')),
-            '3P%': raw_stats.get('threePointFieldGoalPct', raw_stats.get('threePtPct', '-')),
-            'FT%': raw_stats.get('freeThrowPct', raw_stats.get('ftPct', '-')),
-            'REB': raw_stats.get('avgRebounds', raw_stats.get('reboundsPerGame', '-')),
-            'AST': raw_stats.get('avgAssists', raw_stats.get('assistsPerGame', '-')),
-            'OPP': raw_stats.get('avgPointsAgainst', raw_stats.get('oppPointsPerGame', '-')),
-            'STL': raw_stats.get('avgSteals', raw_stats.get('stealsPerGame', '-')),
-            'BLK': raw_stats.get('avgBlocks', raw_stats.get('blocksPerGame', '-')),
-            'TO': raw_stats.get('avgTurnovers', raw_stats.get('turnoversPerGame', '-')),
+            'PPG': ppg,
+            'OPP': opp,
+            'PACE': pace if pace != '-' else '100',  # Default NBA pace ~100
+            'ORTG': ortg,
+            'DRTG': drtg,
+            'NET': net,
+            'FG%': fg_pct,
+            '3P%': three_pct,
+            'FT%': ft_pct,
+            'eFG%': efg,
+            'TS%': ts,
+            'REB': reb,
+            'AST': ast,
+            'TO': to,
+            'STL': stl,
+            'BLK': blk,
         }
+
     elif sport in ['NFL', 'NCAAF']:
+        ppg = safe_float(raw_stats.get('avgPoints', raw_stats.get('totalPointsPerGame')))
+        opp = safe_float(raw_stats.get('avgPointsAgainst', raw_stats.get('pointsAgainstPerGame')))
+        ypg = safe_float(raw_stats.get('totalYardsPerGame', raw_stats.get('netTotalYards')))
+        pass_ypg = safe_float(raw_stats.get('netPassingYardsPerGame', raw_stats.get('passingYardsPerGame')))
+        rush_ypg = safe_float(raw_stats.get('rushingYardsPerGame'))
+
+        # Yards per play
+        ypp = safe_float(raw_stats.get('yardsPerPlay'))
+        if ypp == '-':
+            total_plays = safe_float(raw_stats.get('totalPlays'))
+            total_yards = safe_float(raw_stats.get('totalYards'))
+            if total_plays != '-' and total_yards != '-' and float(total_plays) > 0:
+                ypp = round(float(total_yards) / float(total_plays), 2)
+
+        # Red zone TD %
+        rz_pct = safe_pct(raw_stats.get('redZoneTDPct', raw_stats.get('redzoneScorePct')))
+
+        # Time of possession (format as MM:SS or just minutes)
+        top = raw_stats.get('avgTimeOfPossession', raw_stats.get('possessionTime', '-'))
+        if top != '-':
+            try:
+                # Convert seconds to MM:SS if needed
+                if isinstance(top, (int, float)) or (isinstance(top, str) and top.replace('.', '').isdigit()):
+                    secs = float(top)
+                    mins = int(secs // 60)
+                    secs_rem = int(secs % 60)
+                    top = f"{mins}:{secs_rem:02d}"
+            except:
+                pass
+
+        # Turnover differential
+        to_diff = raw_stats.get('turnoverDifferential', raw_stats.get('takeawayGiveawayDiff', '-'))
+        if to_diff != '-':
+            try:
+                to_diff = int(float(to_diff))
+                to_diff = f"{to_diff:+d}" if to_diff >= 0 else str(to_diff)
+            except:
+                pass
+
+        # Third down conversion rate
+        third_pct = safe_pct(raw_stats.get('thirdDownPct', raw_stats.get('thirdDownConvPct')))
+
+        sacks = safe_float(raw_stats.get('sacks', raw_stats.get('sacksTotal')))
+        ints = safe_float(raw_stats.get('interceptions', raw_stats.get('passesIntercepted')))
+
         return {
             'PWR': pwr,
-            'PPG': raw_stats.get('avgPoints', raw_stats.get('totalPointsPerGame', '-')),
-            'YPG': raw_stats.get('totalYardsPerGame', raw_stats.get('netTotalYards', '-')),
-            'PASS': raw_stats.get('netPassingYardsPerGame', raw_stats.get('passingYardsPerGame', '-')),
-            'RUSH': raw_stats.get('rushingYardsPerGame', '-'),
-            'OPP': raw_stats.get('avgPointsAgainst', raw_stats.get('pointsAgainstPerGame', '-')),
-            'TO': raw_stats.get('turnoverDifferential', raw_stats.get('giveaways', '-')),
-            'SACK': raw_stats.get('sacks', '-'),
-            'INT': raw_stats.get('interceptions', '-'),
+            'PPG': ppg,
+            'OPP': opp,
+            'YPP': ypp,
+            'PASS': pass_ypg,
+            'RUSH': rush_ypg,
+            'RZ%': rz_pct,
+            'TOP': top,
+            'TO+/-': to_diff,
+            '3RD%': third_pct,
+            'SACK': sacks,
+            'INT': ints,
         }
+
     elif sport == 'NHL':
+        gf = safe_float(raw_stats.get('goalsFor', raw_stats.get('goalsPerGame')))
+        ga = safe_float(raw_stats.get('goalsAgainst', raw_stats.get('goalsAgainstPerGame')))
+
+        # Goal differential
+        gd = '-'
+        if gf != '-' and ga != '-':
+            try:
+                diff = float(gf) - float(ga)
+                gd = f"{diff:+.1f}" if diff >= 0 else f"{diff:.1f}"
+            except:
+                gd = '-'
+
+        pp_pct = safe_pct(raw_stats.get('powerPlayPct'))
+        pk_pct = safe_pct(raw_stats.get('penaltyKillPct'))
+        sog = safe_float(raw_stats.get('shotsPerGame', raw_stats.get('avgShotsPerGame')))
+        sv_pct = raw_stats.get('savePct', '-')
+        if sv_pct != '-':
+            try:
+                sv = float(sv_pct)
+                if sv < 1:  # Decimal form like 0.912
+                    sv_pct = f".{int(sv*1000)}"
+                else:
+                    sv_pct = f"{sv:.1f}"
+            except:
+                pass
+
+        fow_pct = safe_pct(raw_stats.get('faceoffWinPct'))
+        pim = safe_float(raw_stats.get('penaltyMinutesPerGame', raw_stats.get('pimPerGame')))
+
         return {
             'PWR': pwr,
-            'GF': raw_stats.get('goalsFor', raw_stats.get('goalsPerGame', '-')),
-            'GA': raw_stats.get('goalsAgainst', raw_stats.get('goalsAgainstPerGame', '-')),
-            'PP%': raw_stats.get('powerPlayPct', '-'),
-            'PK%': raw_stats.get('penaltyKillPct', '-'),
-            'SOG': raw_stats.get('shotsPerGame', '-'),
-            'SV%': raw_stats.get('savePct', '-'),
-            'FOW%': raw_stats.get('faceoffWinPct', '-'),
+            'GF': gf,
+            'GA': ga,
+            'GD': gd,
+            'PP%': pp_pct,
+            'PK%': pk_pct,
+            'SOG': sog,
+            'SV%': sv_pct,
+            'FOW%': fow_pct,
+            'PIM': pim,
         }
 
     return {'PWR': pwr}

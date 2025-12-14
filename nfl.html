@@ -50,10 +50,21 @@ main{max-width:900px;margin:0 auto;padding:0 24px 80px}
 .game-title{font-size:22px;font-weight:600;margin-bottom:8px;text-align:center}
 .game-meta{font-size:13px;color:var(--text-muted);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .game-meta span{background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}
-.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}
-.stat-item{flex:1;min-width:100px;text-align:center;padding:8px}
-.stat-item .value{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;color:var(--accent-gold)}
-.stat-item .label{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+.stat-row,.lines-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}
+.stat-item{flex:1;min-width:80px;text-align:center;padding:8px}
+.stat-item .value{font-family:var(--font-primary);font-size:1.1rem;font-weight:700;color:var(--accent-gold)}
+.stat-item .label{font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+.stat-item.off .value{color:var(--accent-cyan)}
+/* Team Stats Section */
+.team-stats-section{margin:20px 0;padding:20px;background:rgba(0,20,40,0.5);border-radius:12px;border:1px solid rgba(0,229,255,0.2)}
+.stats-header{font-family:var(--font-primary);font-size:0.75rem;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:2px;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid var(--border-subtle);text-align:center}
+.team-stats-row{display:flex;align-items:center;gap:15px;padding:12px;margin-bottom:8px;background:rgba(0,0,0,0.3);border-radius:10px;border:1px solid var(--border-subtle)}
+.team-stats-row:last-child{margin-bottom:0}
+.team-info{display:flex;align-items:center;gap:10px;min-width:120px}
+.team-logo-small{width:36px;height:36px;object-fit:contain}
+.team-abbr{font-family:var(--font-primary);font-size:1rem;font-weight:700;color:#fff}
+.team-label{font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;padding:2px 6px;background:rgba(255,255,255,0.1);border-radius:4px}
+.team-stats-grid{display:flex;flex-wrap:wrap;flex:1;gap:8px;justify-content:space-around}
 /* Analysis Section Styles */
 .game-analysis{margin-top:20px;padding-top:20px;border-top:1px solid var(--border-subtle)}
 .analysis-section{margin-bottom:16px}
@@ -66,113 +77,6 @@ footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13p
 footer a{color:var(--accent-cyan);text-decoration:none}
 .data-source{font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--border-subtle)}
 @media(max-width:768px){.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}}
-
-/* Archive Calendar Styles */
-.archive-calendar-section {
-    max-width: 900px;
-    margin: 0 auto 40px;
-    padding: 0 24px;
-}
-.calendar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-.calendar-title {
-    font-family: var(--font-primary);
-    font-size: 18px;
-    color: var(--accent-gold);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-.calendar-toggle {
-    background: rgba(0,229,255,0.1);
-    border: 1px solid var(--border-subtle);
-    color: var(--accent-cyan);
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s;
-}
-.calendar-toggle:hover {
-    background: rgba(0,229,255,0.2);
-    border-color: var(--accent-cyan);
-}
-#archive-calendar {
-    display: none;
-    background: var(--gradient-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 16px;
-    padding: 24px;
-    margin-top: 16px;
-}
-#archive-calendar.open {
-    display: block;
-}
-.calendar-months {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.calendar-month {
-    background: rgba(0,0,0,0.2);
-    border-radius: 12px;
-    padding: 16px;
-}
-.month-title {
-    font-family: var(--font-primary);
-    font-size: 14px;
-    color: var(--accent-cyan);
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.calendar-days {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-.calendar-day {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-.calendar-day:hover {
-    background: rgba(0,229,255,0.2);
-    border-color: var(--accent-cyan);
-    transform: scale(1.1);
-}
-.calendar-day.today {
-    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-    border-color: var(--accent-cyan);
-}
-.calendar-day.today .day-num {
-    color: #000;
-    font-weight: 700;
-}
-.day-num {
-    font-family: var(--font-primary);
-    font-size: 14px;
-    color: var(--text-primary);
-}
-@media(max-width:768px) {
-    .calendar-day {
-        width: 38px;
-        height: 38px;
-    }
-    .day-num {
-        font-size: 12px;
-    }
-}
 </style>
 </head>
 <body>
@@ -194,16 +98,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>14-Game Slate | Real-Time Odds & Stats</p>
 </header>
 <div class="current-date"><h2>December 14, 2025</h2></div>
-<section class="archive-calendar-section">
-<div class="calendar-header">
-<span class="calendar-title">View Archive Calendar</span>
-<button class="calendar-toggle" onclick="document.getElementById('archive-calendar').classList.toggle('open')">
-Select Date
-</button>
-</div>
-<div id="archive-calendar"></div>
-</section>
-
 <main>
 
 <article class="game-card">
@@ -219,17 +113,66 @@ Select Date
 <span>Soldier Field</span>
 <span>FOX</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">CHI -7.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">38.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">+310</span><span class="label">CLE ML</span></div>
 <div class="stat-item"><span class="value">-395</span><span class="label">CHI ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Cleveland Browns" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png"/>
+        <span class="team-abbr">CLE</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">23.1</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">17.2</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">174.3</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">95.6</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">44.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">10.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Chicago Bears" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/chi.png"/>
+        <span class="team-abbr">CHI</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">69.2</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">25.7</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">217.1</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">152.6</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">24.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">18.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>The Browns' season has been a disaster since Deshaun Watson went down, cycling through backup quarterbacks while posting one of the NFL's worst offenses. Cleveland ranks dead last in scoring at 14.8 PPG and 31st in total offense. Meanwhile, Chicago has emerged as a legitimate playoff contender behind Caleb Williams' development and a defense that's allowed just 18.2 PPG since Week 6. The Bears are 6-1 at Soldier Field and playing their best football of the season.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>Chicago laying 7.5 at home against a team with no offensive identity is about right. The 38.5 total is the second-lowest on the board this week, reflecting Cleveland's inability to score and the Bears' methodical offensive approach. This number has held steady, suggesting sharp money agrees with the opener. The key number here is 7 - the Bears need a two-score win to cover.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>At +310, Cleveland offers minimal value. The Browns have won just once since Week 3 and that was against Jacksonville. Chicago's home dominance and Cleveland's road struggles (1-5 away) make an upset highly unlikely. The -395 chalk is steep but reflects the talent disparity.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Cleveland's defense has quietly been respectable, allowing 21.3 PPG. If they can limit Chicago's offense early, they could keep this within a touchdown. But the Bears' ground game with D'Andre Swift should control the clock and the Browns simply can't score enough to stay competitive. Lean Bears -7.5, but monitor if the line moves to -8 before game time.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Circle this matchup on your calendar. Home cooking could be the difference as the Chicago Bears (9-4) have been clicking on all cylinders, facing a Cleveland Browns team (3-10) that's been ice cold lately.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>The Chicago Bears are laying 7.5 points here. The Cleveland Browns will need to keep this close or pull the upset outright. The total sits at 38.5. A low total suggests a grind-it-out affair.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>The Cleveland Browns are substantial underdogs at +310. There could be value if you believe in an upset.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Sharp bettors are paying attention to this one for a reason.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -247,17 +190,66 @@ Select Date
 <span>Paycor Stadium</span>
 <span>CBS</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">BAL -3.0</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">51.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">-162</span><span class="label">BAL ML</span></div>
 <div class="stat-item"><span class="value">+136</span><span class="label">CIN ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Baltimore Ravens" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/bal.png"/>
+        <span class="team-abbr">BAL</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">46.2</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">23.9</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">182.2</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">142.9</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">19.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">7.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Cincinnati Bengals" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cin.png"/>
+        <span class="team-abbr">CIN</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">30.8</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">24.2</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">228.8</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">86.5</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">20.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">10.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>AFC North bloodbath between two teams that know each other intimately. Lamar Jackson has struggled against Cincinnati's defense historically, but the Bengals' secondary has been decimated by injuries. Joe Burrow is playing some of his best football despite the team's record, throwing for 300+ yards in 5 of his last 6 games. The Ravens' run defense ranks 28th against the pass but 8th against the run - expect Cincy to air it out.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>Baltimore -3 on the road in a divisional game is significant. Three is the most common margin of victory in the NFL, and laying it on the road against a desperate Bengals team suggests Vegas sees a clear talent edge. The 51.5 total is one of the highest on the board - both teams can score, and the Bengals' porous run defense against Derrick Henry could push this over.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Cincinnati +136 at home is interesting value. The Bengals are 3-2 at Paycor this season and Burrow owns a 5-3 career record against Baltimore. The Ravens are just 3-4 on the road. For a rivalry game with playoff implications for Baltimore, +136 is worth considering.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Divisional games in December tend to be close regardless of record. The Bengals have nothing to lose and Burrow has historically risen for big moments. Baltimore needs this win for playoff positioning, which could create pressure. The over 51.5 looks solid given both offenses' capabilities and defensive vulnerabilities. This has the makings of a 31-28 type game.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>This one has all the makings of a competitive battle. The Baltimore Ravens (6-7) visit the Cincinnati Bengals (4-9) at Paycor Stadium.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>This is essentially a pick'em with the spread at +3.0. Vegas sees these teams as evenly matched. The total sits at 51.5. Vegas expects points in this one.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>Moneyline: Baltimore Ravens -162, Cincinnati Bengals +136.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This matchup has trap game written all over it - proceed with caution.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -275,17 +267,66 @@ Select Date
 <span>GEHA Field at Arrowhead Stadium</span>
 <span>CBS</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">KC -6.0</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">41.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">+210</span><span class="label">LAC ML</span></div>
 <div class="stat-item"><span class="value">-258</span><span class="label">KC ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Los Angeles Chargers" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lac.png"/>
+        <span class="team-abbr">LAC</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">69.2</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">23.0</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">215.5</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">125.7</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">35.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">15.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Kansas City Chiefs" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/kc.png"/>
+        <span class="team-abbr">KC</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">46.2</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">24.2</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">248.2</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">118.9</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">25.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">7.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Jim Harbaugh's Chargers are the AFC West's best team right now, but Kansas City at Arrowhead remains a daunting environment. The Chiefs' struggles this season have been well-documented - the three-peat dream is fading fast at 6-7. Patrick Mahomes has thrown more interceptions (14) than touchdown passes (12) over his last 8 games. LA's defense is elite, allowing just 17.2 PPG (3rd in NFL), and Justin Herbert has been efficient if not spectacular.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>Kansas City -6 at home despite being 3 games worse than LA tells you how much Arrowhead still scares bettors. The Chiefs are 5-1 at home but have covered just twice in those games. The 41.5 total reflects LA's defensive dominance and KC's offensive struggles. This opened at KC -5.5 and moved to -6, indicating some Chiefs money despite their form.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>The Chargers at +210 is intriguing value for a team with playoff aspirations and the NFL's third-best defense. LA is 4-2 on the road this season. However, Harbaugh is 0-4 against Kansas City in his coaching career, and the Chiefs have won 8 straight regular season home games against the Chargers. History favors KC despite the records.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>This feels like a low-scoring, grind-it-out divisional game. LA's pass rush will pressure Mahomes, and the Chargers' methodical offense won't gift Kansas City easy points. The under 41.5 is the play here. If taking a side, the Chargers +6 offers value - this should be closer to a field goal game given the talent disparity this season.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Two teams heading in different directions meet here. The Los Angeles Chargers (9-4) visit the Kansas City Chiefs (6-7) at GEHA Field at Arrowhead Stadium.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>The Kansas City Chiefs are laying 6.0 points here. The Los Angeles Chargers will need to keep this close or pull the upset outright. The total sits at 41.5. </p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>The Los Angeles Chargers are substantial underdogs at +210. There could be value if you believe in an upset.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Sharp bettors are paying attention to this one for a reason.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -303,17 +344,66 @@ Select Date
 <span>Gillette Stadium</span>
 <span>CBS</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">BUF -1.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">48.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">-125</span><span class="label">BUF ML</span></div>
 <div class="stat-item"><span class="value">+105</span><span class="label">NE ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Buffalo Bills" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/buf.png"/>
+        <span class="team-abbr">BUF</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">69.2</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">28.9</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">225.9</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">157.8</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">28.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">10.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="New England Patriots" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ne.png"/>
+        <span class="team-abbr">NE</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">84.6</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">27.0</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">249.7</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">112.9</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">27.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">8.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>The AFC East has been flipped on its head. New England at 11-2 has been the NFL's most surprising team, with Drake Maye developing into a legitimate franchise quarterback and Bill Belichick's successor finding a winning formula. Buffalo's 9-4 is solid but they've lost the division lead. Josh Allen is still Josh Allen, but the Bills' defense has regressed and allowed 24+ points in 4 of their last 6 games. This is a massive game for playoff seeding.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>Buffalo -1.5 as a road favorite against an 11-2 team is remarkable disrespect for New England. The market still doesn't believe in the Patriots' turnaround. The 48.5 total suggests a shootout is expected - both teams have capable offenses and both defenses have shown vulnerability lately. Home-field advantage at Gillette in December is typically worth 3 points alone.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>New England +105 at home with the better record is one of the most interesting lines of the week. The Patriots are 6-1 at home and have won 5 straight. Buffalo is 4-3 on the road. The market is banking on Josh Allen's talent over New England's record, but that's a dangerous assumption against a Belichick-mentored coaching staff in December.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>This screams Patriots. At home, better record, underdog line, revenge narrative after years of Buffalo dominance. Drake Maye doesn't make the mistakes rookies typically make, and New England's ball control offense will limit Allen's possessions. The Patriots +1.5 is the sharp side here. If you believe in New England's resurgence, the +105 moneyline offers value.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>The numbers tell an interesting story in this one. Both teams enter this one playing well. The Buffalo Bills (9-4) take on the New England Patriots (11-2) in what promises to be a competitive matchup.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>This is essentially a pick'em with the spread at +1.5. Vegas sees these teams as evenly matched. The total sits at 48.5. Vegas expects points in this one.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>The moneylines (Buffalo Bills -125, New England Patriots +105) reflect how close this game is expected to be.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>The value might not be where the public thinks.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -331,17 +421,66 @@ Select Date
 <span>MetLife Stadium</span>
 <span>FOX</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">NYG -2.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">46.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">+120</span><span class="label">WSH ML</span></div>
 <div class="stat-item"><span class="value">-142</span><span class="label">NYG ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Washington Commanders" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png"/>
+        <span class="team-abbr">WSH</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">23.1</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">20.2</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">191.0</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">136.5</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">30.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">6.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="New York Giants" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyg.png"/>
+        <span class="team-abbr">NYG</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">15.4</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">21.5</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">216.6</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">123.5</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">29.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">5.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>The toilet bowl of the week. Both teams are playing out the string, but there's intrigue here. Washington's Jayden Daniels has been the lone bright spot of their dismal season, showing the flashes that made him the #2 overall pick. New York's Jaxson Dart has struggled in his rookie campaign behind a porous offensive line. Neither defense can stop anyone - both rank bottom-5 in points allowed.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>New York -2.5 at home is slight home-field advantage and nothing more. The Giants are 1-5 at MetLife. The 46.5 total reflects both defenses being terrible - this could easily turn into a shootout between two teams with nothing to play for. The line has bounced between NYG -2 and -3 all week.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Washington +120 is reasonable value if you believe in Daniels. He's been the better quarterback this season by a significant margin. The Commanders have actually been competitive in losses while the Giants have been blown out repeatedly. For a rivalry game, +120 on the road isn't bad.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>This is a game to avoid for serious bettors. Both teams are tanking for draft position. But if forced to pick, lean Washington +2.5. Daniels gives them a chance in every game, and the Giants have been one of the worst home teams in the NFL. The over 46.5 is also in play given neither defense can stop a nosebleed.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>This game could be more interesting than the spread suggests. The Washington Commanders (3-10) visit the New York Giants (2-11) at MetLife Stadium.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>This is essentially a pick'em with the spread at -2.5. Vegas sees these teams as evenly matched. The total sits at 46.5. </p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>Moneyline: Washington Commanders +120, New York Giants -142.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>The value might not be where the public thinks.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -359,17 +498,66 @@ Select Date
 <span>Lincoln Financial Field</span>
 <span>FOX</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">PHI -12.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">38.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">+650</span><span class="label">LV ML</span></div>
 <div class="stat-item"><span class="value">-1000</span><span class="label">PHI ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Las Vegas Raiders" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lv.png"/>
+        <span class="team-abbr">LV</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">15.4</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">15.1</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">184.5</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">72.7</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">26.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">8.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Philadelphia Eagles" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/phi.png"/>
+        <span class="team-abbr">PHI</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">61.5</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">22.2</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">198.9</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">110.5</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">31.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">9.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Don't sleep on this one. Home cooking could be the difference as the Philadelphia Eagles (8-5) have been clicking on all cylinders, facing a Las Vegas Raiders team (2-11) that's been searching for answers lately.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Here's a game that deserves your attention. Home cooking could be the difference as the Philadelphia Eagles (8-5) have been on fire, facing a Las Vegas Raiders team (2-11) that's been searching for answers lately.</p></div>
 <div class="analysis-section"><h4>The Lines</h4><p>The Philadelphia Eagles are heavy favorites laying 12.5 points. That's a lot of chalk, but the market clearly expects a blowout. The total sits at 38.5. A low total suggests a grind-it-out affair.</p></div>
 <div class="analysis-section"><h4>Moneyline Angle</h4><p>The Las Vegas Raiders are substantial underdogs at +650. There could be value if you believe in an upset.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Sometimes the obvious play is the right one. Sometimes it isn't.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Line movement closer to game time could reveal additional value.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -387,17 +575,66 @@ Select Date
 <span>EverBank Stadium</span>
 <span>CBS</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">JAX -13.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">40.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">+675</span><span class="label">NYJ ML</span></div>
 <div class="stat-item"><span class="value">-1050</span><span class="label">JAX ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="New York Jets" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyj.png"/>
+        <span class="team-abbr">NYJ</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">23.1</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">19.7</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">146.5</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">128.4</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">22.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">0.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Jacksonville Jaguars" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/jax.png"/>
+        <span class="team-abbr">JAX</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">69.2</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">25.2</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">206.2</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">121.7</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">25.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">15.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Don't sleep on this one. Home cooking could be the difference as the Jacksonville Jaguars (9-4) have been on fire, facing a New York Jets team (3-10) that's been ice cold lately.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Here's a game that deserves your attention. Home cooking could be the difference as the Jacksonville Jaguars (9-4) have been on fire, facing a New York Jets team (3-10) that's been searching for answers lately.</p></div>
 <div class="analysis-section"><h4>The Lines</h4><p>The Jacksonville Jaguars are heavy favorites laying 13.5 points. That's a lot of chalk, but the market clearly expects a blowout. The total sits at 40.5. </p></div>
 <div class="analysis-section"><h4>Moneyline Angle</h4><p>The New York Jets are substantial underdogs at +675. There could be value if you believe in an upset.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Sometimes the obvious play is the right one. Sometimes it isn't.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Sharp bettors are paying attention to this one for a reason.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -415,17 +652,66 @@ Select Date
 <span>NRG Stadium</span>
 <span>FOX</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">HOU -10.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">42.5</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">+470</span><span class="label">ARI ML</span></div>
-<div class="stat-item"><span class="value">-650</span><span class="label">HOU ML</span></div>
+<div class="stat-item"><span class="value">+455</span><span class="label">ARI ML</span></div>
+<div class="stat-item"><span class="value">-625</span><span class="label">HOU ML</span></div>
+</div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Arizona Cardinals" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png"/>
+        <span class="team-abbr">ARI</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">23.1</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">21.7</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">238.7</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">96.8</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">24.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">9.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Houston Texans" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/hou.png"/>
+        <span class="team-abbr">HOU</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">61.5</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">21.8</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">216.5</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">105.7</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">36.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">15.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
 </div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Don't sleep on this one. Home cooking could be the difference as the Houston Texans (8-5) have been on fire, facing a Arizona Cardinals team (3-10) that's been searching for answers lately.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Let's break down what makes this matchup tick. Home cooking could be the difference as the Houston Texans (8-5) have been rolling, facing a Arizona Cardinals team (3-10) that's been searching for answers lately.</p></div>
 <div class="analysis-section"><h4>The Lines</h4><p>The Houston Texans are heavy favorites laying 10.5 points. That's a lot of chalk, but the market clearly expects a blowout. The total sits at 42.5. </p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>The Arizona Cardinals are substantial underdogs at +470. There could be value if you believe in an upset.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>This matchup has trap game written all over it - proceed with caution.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>The Arizona Cardinals are substantial underdogs at +455. There could be value if you believe in an upset.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This game deserves a deeper look before making any decisions.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -443,17 +729,66 @@ Select Date
 <span>Empower Field at Mile High</span>
 <span>CBS</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">GB -1.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">42.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">-122</span><span class="label">GB ML</span></div>
 <div class="stat-item"><span class="value">+102</span><span class="label">DEN ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Green Bay Packers" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/gb.png"/>
+        <span class="team-abbr">GB</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">75.0</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">24.8</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">223.2</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">117.2</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">33.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">7.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Denver Broncos" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/den.png"/>
+        <span class="team-abbr">DEN</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">84.6</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">23.7</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">220.2</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">121.8</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">55.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">7.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Two of the NFL's best stories this season collide at Mile High. Denver at 11-2 has been the league's biggest surprise - Sean Payton has turned Bo Nix into a competent starting quarterback and the defense is playing at an elite level. Green Bay's 9-3-1 record includes a tie but Jordan Love has matured into a top-10 QB. The Packers have won 5 of 6 while Denver has won 7 straight. Something's gotta give.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>Green Bay -1.5 as a road favorite at Mile High against an 11-2 team mirrors the Bills-Patriots dynamic. The market doesn't fully trust Denver's record. At altitude, the Broncos typically get 3+ points of home-field advantage. The 42.5 total reflects both teams' defensive capabilities - this should be a grind. Denver's defense has allowed just 16.8 PPG over their winning streak.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Denver +102 at home with the NFL's best record is disrespectful, but the market sees the Broncos as smoke and mirrors. Nix has thrown for 200+ yards just twice in his last 7 games - he manages games rather than wins them. Jordan Love has more explosive play potential. The moneylines suggest this is a true coin flip.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>The altitude factor gets underestimated. Green Bay will tire in the second half at Mile High, and Denver's ball-control offense keeps games close. The Broncos haven't lost since October. Take Denver +1.5 at home and lean under 42.5 - both defenses are legitimate and neither offense is explosive enough to push this game into the high 40s.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Both teams come into this with something to prove. Both teams enter this one playing well. The Green Bay Packers (9-3-1) take on the Denver Broncos (11-2) in what promises to be a competitive matchup.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>This is essentially a pick'em with the spread at +1.5. Vegas sees these teams as evenly matched. The total sits at 42.5. </p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>The moneylines (Green Bay Packers -122, Denver Broncos +102) reflect how close this game is expected to be.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This matchup has trap game written all over it - proceed with caution.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -471,17 +806,66 @@ Select Date
 <span>SoFi Stadium</span>
 <span>FOX</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">LAR -6.0</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">54.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">+205</span><span class="label">DET ML</span></div>
 <div class="stat-item"><span class="value">-250</span><span class="label">LAR ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Detroit Lions" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/det.png"/>
+        <span class="team-abbr">DET</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">61.5</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">30.3</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">242.8</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">135.8</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">37.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">11.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Los Angeles Rams" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lar.png"/>
+        <span class="team-abbr">LAR</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">76.9</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">29.2</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">249.2</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">123.9</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">36.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">13.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>This is the game of the week. The Rams at 10-3 are playing the best football in the NFC under Matthew Stafford's MVP-caliber season. Detroit's 8-5 has been disappointing given preseason expectations, but Jared Goff returns to face his former team with something to prove. Both offenses rank in the top 5 in scoring. Both defenses have vulnerabilities. The 54.5 total is the highest on the board this week for a reason.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>LA -6 at home reflects Stafford's dominance and Detroit's inconsistency. The Rams are 6-1 at SoFi and have covered 5 of those games. The Lions are just 3-4 on the road and have struggled against elite passing attacks. The 54.5 total suggests 28-27 or 31-24 type outcomes. This should be a shootout.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Detroit +205 offers value if you believe in Goff's revenge game narrative. The Lions have the offensive firepower to hang with anyone, and their run game with David Montgomery and Jahmyr Gibbs can control the clock. But Stafford at home with playoff positioning on the line is dangerous to fade.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>The over 54.5 is the best bet on the board. These offenses will score. Neither defense can consistently stop the other team's attack. Stafford vs. Goff is the best QB duel of the week. Take the over and enjoy the fireworks. If forced to pick a side, the Rams -6 is the safer play given home-field advantage and recent form.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Two teams heading in different directions meet here. Both teams enter this one playing well. The Detroit Lions (8-5) take on the Los Angeles Rams (10-3) in what promises to be a competitive matchup.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>The Los Angeles Rams are laying 6.0 points here. The Detroit Lions will need to keep this close or pull the upset outright. The total sits at 54.5. Vegas expects points in this one.</p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>The Detroit Lions are substantial underdogs at +205. There could be value if you believe in an upset.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Sharp bettors are paying attention to this one for a reason.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -499,17 +883,66 @@ Select Date
 <span>Caesars Superdome</span>
 <span>FOX</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">CAR -2.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">40.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">-155</span><span class="label">CAR ML</span></div>
 <div class="stat-item"><span class="value">+130</span><span class="label">NO ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Carolina Panthers" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/car.png"/>
+        <span class="team-abbr">CAR</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">53.8</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">19.0</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">185.7</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">125.5</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">18.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">12.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="New Orleans Saints" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/no.png"/>
+        <span class="team-abbr">NO</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">23.1</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">15.8</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">199.4</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">94.4</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">28.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">8.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Carolina's turnaround under Dave Canales has been remarkable. The Panthers at 7-6 are in playoff contention behind Bryce Young's development and a surprisingly competent defense. New Orleans at 3-10 is limping to the finish line with injuries piling up and Derek Carr struggling behind an awful offensive line. The Saints have lost 6 straight and show no signs of life.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>Carolina -2.5 on the road in the Superdome is a small ask. The Panthers are 4-2 away from home while the Saints are just 2-4 in New Orleans. The 40.5 total is low, reflecting both teams' offensive limitations. This should be a defensive slugfest with neither team capable of explosive scoring drives.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Carolina -155 is reasonable chalk for a road favorite with momentum. New Orleans +130 offers some value if you believe in home-field advantage and the Saints' pride, but there's been no evidence this team can win games right now. Their offense has been among the league's worst since the injuries piled up.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Carolina -2.5 is the right side. The Panthers are playing meaningful football and the Saints are playing out the string. Young has matured significantly and the Panthers' defense will limit New Orleans' already anemic offense. The under 40.5 is also appealing - neither team has shown the ability to put up big numbers consistently.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Here's a game that deserves your attention. The Carolina Panthers (7-6) visit the New Orleans Saints (3-10) at Caesars Superdome.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>This is essentially a pick'em with the spread at +2.5. Vegas sees these teams as evenly matched. The total sits at 40.5. </p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>Moneyline: Carolina Panthers -155, New Orleans Saints +130.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>Sharp bettors are paying attention to this one for a reason.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -527,14 +960,63 @@ Select Date
 <span>Levi's Stadium</span>
 <span>FOX</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">SF -12.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">44.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">+600</span><span class="label">TEN ML</span></div>
 <div class="stat-item"><span class="value">-900</span><span class="label">SF ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Tennessee Titans" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ten.png"/>
+        <span class="team-abbr">TEN</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">15.4</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">15.5</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">161.3</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">84.9</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">32.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">6.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="San Francisco 49ers" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png"/>
+        <span class="team-abbr">SF</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">69.2</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">23.6</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">242.6</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">98.5</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">16.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">5.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Circle this matchup on your calendar. Home cooking could be the difference as the San Francisco 49ers (9-4) have been on fire, facing a Tennessee Titans team (2-11) that's been ice cold lately.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>This game could be more interesting than the spread suggests. Home cooking could be the difference as the San Francisco 49ers (9-4) have been surging, facing a Tennessee Titans team (2-11) that's been struggling lately.</p></div>
 <div class="analysis-section"><h4>The Lines</h4><p>The San Francisco 49ers are heavy favorites laying 12.5 points. That's a lot of chalk, but the market clearly expects a blowout. The total sits at 44.5. </p></div>
 <div class="analysis-section"><h4>Moneyline Angle</h4><p>The Tennessee Titans are substantial underdogs at +600. There could be value if you believe in an upset.</p></div>
 <div class="analysis-section"><h4>The Angle</h4><p>This game deserves a deeper look before making any decisions.</p></div>
@@ -555,17 +1037,66 @@ Select Date
 <span>Lumen Field</span>
 <span>CBS</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">SEA -13.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">41.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">+700</span><span class="label">IND ML</span></div>
 <div class="stat-item"><span class="value">-1100</span><span class="label">SEA ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Indianapolis Colts" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ind.png"/>
+        <span class="team-abbr">IND</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">61.5</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">28.9</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">237.5</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">130.9</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">35.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">12.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Seattle Seahawks" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sea.png"/>
+        <span class="team-abbr">SEA</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">76.9</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">29.8</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">235.6</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">117.8</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">41.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">15.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>THIS IS THE PHILIP RIVERS GAME. The 43-year-old is coming out of a five-year retirement to start for the Colts after their QB situation imploded. Rivers hasn't taken an NFL snap since January 2021. He's been coaching high school football in Alabama. Now he's walking into Lumen Field against one of the league's most aggressive defenses. Seattle's pass rush has been terrorizing quarterbacks all season, and their secondary features playmakers who can turn a rusty throw into a pick-six.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>Seattle -13.5 reflects the absurdity of what Indianapolis is attempting. The line opened at -10 and has been bet up significantly since the Rivers news broke. The 41.5 total dropped from 44.5 as the market expects the Colts' offense to be abysmal. Rivers has had 36 hours of practice with this team. He doesn't know the playbook. He doesn't have timing with his receivers. This spread might not be enough.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Indianapolis +700 is a lottery ticket, nothing more. The Colts need Rivers to somehow channel 2018 form after five years away from football. The -1100 on Seattle is prohibitive, but this might be one of those rare games where laying that juice makes sense. The Seahawks should dominate this game from start to finish.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Seattle -13.5 is the play. Rivers will face immediate pressure he hasn't experienced in half a decade. His arm strength is questionable. His timing is nonexistent. The Colts' offensive line will struggle to protect a statue in the pocket. Seattle's defense should feast. If you can find Seattle -13.5 first half at a reasonable price, that's even better. This could get ugly early and never look back.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Circle this matchup on your calendar. Both teams enter this one playing well. The Indianapolis Colts (8-5) take on the Seattle Seahawks (10-3) in what promises to be a competitive matchup.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>The Seattle Seahawks are heavy favorites laying 13.5 points. That's a lot of chalk, but the market clearly expects a blowout. The total sits at 41.5. </p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>The Indianapolis Colts are substantial underdogs at +700. There could be value if you believe in an upset.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This matchup has trap game written all over it - proceed with caution.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
@@ -583,89 +1114,77 @@ Select Date
 <span>AT&T Stadium</span>
 <span>NBC</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">DAL -5.5</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">47.5</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">+225</span><span class="label">MIN ML</span></div>
 <div class="stat-item"><span class="value">-278</span><span class="label">DAL ML</span></div>
 </div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Minnesota Vikings" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/min.png"/>
+        <span class="team-abbr">MIN</span>
+        <span class="team-label">AWAY</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">38.5</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">19.6</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">171.5</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">104.2</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">33.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">5.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="Dallas Cowboys" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/dal.png"/>
+        <span class="team-abbr">DAL</span>
+        <span class="team-label">HOME</span>
+    </div>
+    <div class="team-stats-grid">
+        
+        <div class="stat-item"><span class="value">50.0</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">29.3</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">-</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">275.5</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">119.5</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">-</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">29.0</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">5.0</span><span class="label">INT</span></div>
+        
+    </div>
+</div>
+
+</div>
 <div class="game-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Sunday Night Football features two teams with disappointing seasons trying to salvage playoff hopes. Dallas at 6-6-1 has underperformed all year - their offensive line has been a disaster and Dak Prescott has been under constant pressure. Minnesota's 5-8 record doesn't reflect their talent level, and Sam Darnold has shown flashes of competence. The Vikings' receiving corps with Justin Jefferson is still dangerous.</p></div>
-<div class="analysis-section"><h4>The Lines</h4><p>Dallas -5.5 at home against a team with a worse record feels right, but the Cowboys haven't been reliable favorites all season. They're just 4-5-1 ATS at home. The 47.5 total is moderate - both offenses can score but neither has been consistent. This number has bounced between 46.5 and 48 all week, indicating sharp disagreement.</p></div>
-<div class="analysis-section"><h4>Moneyline Angle</h4><p>Minnesota +225 is interesting value for a primetime road dog. The Vikings have covered 4 of their last 5 games and Darnold plays better in big moments than his career record suggests. Dallas' inability to protect Prescott makes them vulnerable to Minnesota's pass rush. If you believe in a Vikings upset, +225 offers solid return.</p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Dallas has been a fade all season when laying points. The Cowboys talk a big game but haven't backed it up. Minnesota is healthier now than they were earlier and Jefferson can take over a game at any moment. Take Vikings +5.5 and consider a sprinkle on the +225 moneyline. This should be closer than the line suggests. Sunday night primetime tends to produce competitive games.</p></div>
+<div class="analysis-section"><h4>The Matchup</h4><p>Both teams come into this with something to prove. The Minnesota Vikings (5-8) visit the Dallas Cowboys (6-6-1) at AT&T Stadium.</p></div>
+<div class="analysis-section"><h4>The Lines</h4><p>The Dallas Cowboys are laying 5.5 points here. The Minnesota Vikings will need to keep this close or pull the upset outright. The total sits at 47.5. </p></div>
+<div class="analysis-section"><h4>Moneyline Angle</h4><p>The Minnesota Vikings are substantial underdogs at +225. There could be value if you believe in an upset.</p></div>
+<div class="analysis-section"><h4>The Angle</h4><p>This game deserves a deeper look before making any decisions.</p></div>
 </div>
 <p class="data-source">Data: ESPN, The Odds API | Lines subject to change</p>
 </article>
 
 </main>
-
+<div class="archive-link">
+<a href="nfl-page2.html">View Previous Analysis</a>
+</div>
 <footer>
 <p>&copy; 2025 BetLegend. All rights reserved. | <a href="index.html">Home</a></p>
 <p style="margin-top:10px">Data sourced from ESPN and The Odds API. Lines subject to change.</p>
 </footer>
-<script>
-const archiveData = [
-  {
-    "date": "2025-12-14",
-    "display": "December 14, 2025",
-    "page": "nfl.html"
-  },
-  {
-    "date": "2025-12-08",
-    "display": "December 08, 2025",
-    "page": "nfl-page2.html"
-  },
-  {
-    "date": "2025-12-07",
-    "display": "December 07, 2025",
-    "page": "nfl-page6.html"
-  },
-  {
-    "date": "2025-12-05",
-    "display": "December 05, 2025",
-    "page": "nfl-page10.html"
-  },
-  {
-    "date": "2025-12-04",
-    "display": "December 04, 2025",
-    "page": "nfl-page12.html"
-  }
-];
-
-function renderCalendar() {
-    const container = document.getElementById('archive-calendar');
-    if (!container) return;
-
-    const months = {};
-    archiveData.forEach(item => {
-        const date = new Date(item.date + 'T12:00:00');
-        const monthKey = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-        if (!months[monthKey]) months[monthKey] = [];
-        months[monthKey].push(item);
-    });
-
-    let html = '<div class="calendar-months">';
-    Object.entries(months).forEach(([month, items]) => {
-        html += '<div class="calendar-month">';
-        html += '<h3 class="month-title">' + month + '</h3>';
-        html += '<div class="calendar-days">';
-        items.forEach(item => {
-            const date = new Date(item.date + 'T12:00:00');
-            const day = date.getDate();
-            const isToday = item.page === 'nfl.html';
-            html += '<a href="' + item.page + '" class="calendar-day' + (isToday ? ' today' : '') + '" title="' + item.display + '">';
-            html += '<span class="day-num">' + day + '</span>';
-            html += '</a>';
-        });
-        html += '</div></div>';
-    });
-    html += '</div>';
-
-    container.innerHTML = html;
-}
-
-document.addEventListener('DOMContentLoaded', renderCalendar);
-</script>
 </body>
 </html>

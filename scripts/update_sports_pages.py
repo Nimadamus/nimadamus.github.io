@@ -215,6 +215,97 @@ def get_odds(sport_key):
         print(f"Odds API error: {e}")
     return []
 
+def get_team_statistics(sport_path, team_id):
+    """Fetch team statistics from ESPN API"""
+    stats = {}
+    try:
+        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/statistics"
+        resp = requests.get(url, timeout=10)
+        if resp.status_code == 200:
+            data = resp.json()
+            # Parse stats from ESPN response
+            for cat in data.get('results', {}).get('stats', {}).get('categories', []):
+                for stat in cat.get('stats', []):
+                    name = stat.get('name', '')
+                    value = stat.get('displayValue', stat.get('value', '-'))
+                    stats[name] = value
+            # Also check splits format
+            for split in data.get('results', {}).get('splits', {}).get('categories', []):
+                for stat in split.get('stats', []):
+                    name = stat.get('name', '')
+                    value = stat.get('displayValue', stat.get('value', '-'))
+                    stats[name] = value
+    except Exception as e:
+        pass  # Fail gracefully
+    return stats
+
+def format_stat(val, default='-'):
+    """Format a stat value safely"""
+    if val is None or val == '' or val == '-':
+        return default
+    try:
+        return round(float(val), 1)
+    except:
+        return val
+
+def get_nfl_team_stats(raw_stats, record):
+    """Extract NFL offensive and defensive stats"""
+    wins, losses = parse_record(record)
+    total = wins + losses
+    pwr = round((wins / total * 100), 1) if total > 0 else 50.0
+
+    return {
+        'pwr': pwr,
+        'ppg': format_stat(raw_stats.get('avgPoints', raw_stats.get('totalPointsPerGame'))),
+        'ypg': format_stat(raw_stats.get('totalYardsPerGame')),
+        'pass_ypg': format_stat(raw_stats.get('netPassingYardsPerGame')),
+        'rush_ypg': format_stat(raw_stats.get('rushingYardsPerGame')),
+        'opp_ppg': format_stat(raw_stats.get('avgPointsAgainst', raw_stats.get('pointsAgainstPerGame'))),
+        'opp_ypg': format_stat(raw_stats.get('yardsAllowedPerGame')),
+        'to_diff': raw_stats.get('turnoverDifferential', '-'),
+        'sacks': format_stat(raw_stats.get('sacks')),
+        'ints': format_stat(raw_stats.get('interceptions')),
+    }
+
+def get_nba_team_stats(raw_stats, record):
+    """Extract NBA offensive and defensive stats"""
+    wins, losses = parse_record(record)
+    total = wins + losses
+    pwr = round((wins / total * 100), 1) if total > 0 else 50.0
+
+    return {
+        'pwr': pwr,
+        'ppg': format_stat(raw_stats.get('avgPoints', raw_stats.get('pointsPerGame'))),
+        'opp_ppg': format_stat(raw_stats.get('avgPointsAgainst', raw_stats.get('oppPointsPerGame'))),
+        'fg_pct': format_stat(raw_stats.get('fieldGoalPct')),
+        'three_pct': format_stat(raw_stats.get('threePointFieldGoalPct')),
+        'reb': format_stat(raw_stats.get('avgRebounds')),
+        'ast': format_stat(raw_stats.get('avgAssists')),
+        'to': format_stat(raw_stats.get('avgTurnovers')),
+        'stl': format_stat(raw_stats.get('avgSteals')),
+        'blk': format_stat(raw_stats.get('avgBlocks')),
+    }
+
+def get_nhl_team_stats(raw_stats, record):
+    """Extract NHL offensive and defensive stats"""
+    wins, losses = parse_record(record)
+    total = wins + losses
+    pwr = round((wins / total * 100), 1) if total > 0 else 50.0
+
+    gf = format_stat(raw_stats.get('goalsFor', raw_stats.get('goalsPerGame')))
+    ga = format_stat(raw_stats.get('goalsAgainst', raw_stats.get('goalsAgainstPerGame')))
+
+    return {
+        'pwr': pwr,
+        'gf': gf,
+        'ga': ga,
+        'pp_pct': format_stat(raw_stats.get('powerPlayPct')),
+        'pk_pct': format_stat(raw_stats.get('penaltyKillPct')),
+        'sog': format_stat(raw_stats.get('shotsPerGame')),
+        'sv_pct': raw_stats.get('savePct', '-'),
+        'fow_pct': format_stat(raw_stats.get('faceoffWinPct')),
+    }
+
 def match_odds_to_game(odds_data, away_name, home_name):
     """Find odds for a specific game"""
     result = {'spread': '-', 'total': '-', 'ml_away': '-', 'ml_home': '-'}
@@ -254,9 +345,67 @@ def match_odds_to_game(odds_data, away_name, home_name):
 # HTML GENERATION
 # ============================================
 
+def generate_team_stats_html(team_name, team_abbr, stats, sport, logo_sport, is_away=True):
+    """Generate HTML for a team's stats row with logo"""
+
+    if sport in ['NFL', 'NCAAF']:
+        stats_html = f'''
+        <div class="stat-item"><span class="value">{stats.get('pwr', '-')}</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">{stats.get('ppg', '-')}</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">{stats.get('ypg', '-')}</span><span class="label">YPG</span></div>
+        <div class="stat-item"><span class="value">{stats.get('pass_ypg', '-')}</span><span class="label">PASS</span></div>
+        <div class="stat-item"><span class="value">{stats.get('rush_ypg', '-')}</span><span class="label">RUSH</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('opp_ppg', '-')}</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('opp_ypg', '-')}</span><span class="label">OPP YPG</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('to_diff', '-')}</span><span class="label">TO+/-</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('sacks', '-')}</span><span class="label">SACKS</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('ints', '-')}</span><span class="label">INT</span></div>
+        '''
+    elif sport in ['NBA', 'NCAAB']:
+        stats_html = f'''
+        <div class="stat-item"><span class="value">{stats.get('pwr', '-')}</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">{stats.get('ppg', '-')}</span><span class="label">PPG</span></div>
+        <div class="stat-item"><span class="value">{stats.get('fg_pct', '-')}</span><span class="label">FG%</span></div>
+        <div class="stat-item"><span class="value">{stats.get('three_pct', '-')}</span><span class="label">3P%</span></div>
+        <div class="stat-item"><span class="value">{stats.get('reb', '-')}</span><span class="label">REB</span></div>
+        <div class="stat-item"><span class="value">{stats.get('ast', '-')}</span><span class="label">AST</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('opp_ppg', '-')}</span><span class="label">OPP PPG</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('stl', '-')}</span><span class="label">STL</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('blk', '-')}</span><span class="label">BLK</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('to', '-')}</span><span class="label">TO</span></div>
+        '''
+    elif sport == 'NHL':
+        stats_html = f'''
+        <div class="stat-item"><span class="value">{stats.get('pwr', '-')}</span><span class="label">PWR</span></div>
+        <div class="stat-item"><span class="value">{stats.get('gf', '-')}</span><span class="label">GF</span></div>
+        <div class="stat-item"><span class="value">{stats.get('ga', '-')}</span><span class="label">GA</span></div>
+        <div class="stat-item"><span class="value">{stats.get('pp_pct', '-')}</span><span class="label">PP%</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('pk_pct', '-')}</span><span class="label">PK%</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('sog', '-')}</span><span class="label">SOG</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('sv_pct', '-')}</span><span class="label">SV%</span></div>
+        <div class="stat-item off"><span class="value">{stats.get('fow_pct', '-')}</span><span class="label">FOW%</span></div>
+        '''
+    else:
+        stats_html = '<div class="stat-item"><span class="value">-</span><span class="label">-</span></div>'
+
+    label = "AWAY" if is_away else "HOME"
+
+    return f'''
+<div class="team-stats-row">
+    <div class="team-info">
+        <img alt="{team_name}" class="team-logo-small" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/{logo_sport}/500/scoreboard/{team_abbr.lower()}.png"/>
+        <span class="team-abbr">{team_abbr}</span>
+        <span class="team-label">{label}</span>
+    </div>
+    <div class="team-stats-grid">
+        {stats_html}
+    </div>
+</div>
+'''
+
 def generate_game_card(away_name, home_name, away_abbr, home_abbr, away_record, home_record,
-                       game_time, venue, network, odds, sport):
-    """Generate HTML for a single game card with analysis article"""
+                       game_time, venue, network, odds, sport, away_stats=None, home_stats=None):
+    """Generate HTML for a single game card with analysis article and team stats"""
 
     # Determine spread display
     try:
@@ -278,6 +427,15 @@ def generate_game_card(away_name, home_name, away_abbr, home_abbr, away_record, 
     elif sport == 'NCAAF':
         logo_sport = 'ncaa'
 
+    # Generate team stats rows if available
+    if away_stats is None:
+        away_stats = {'pwr': '-'}
+    if home_stats is None:
+        home_stats = {'pwr': '-'}
+
+    away_stats_html = generate_team_stats_html(away_name, away_abbr, away_stats, sport, logo_sport, is_away=True)
+    home_stats_html = generate_team_stats_html(home_name, home_abbr, home_stats, sport, logo_sport, is_away=False)
+
     return f'''
 <article class="game-card">
 <div class="teams-display">
@@ -292,11 +450,16 @@ def generate_game_card(away_name, home_name, away_abbr, home_abbr, away_record, 
 <span>{venue}</span>
 <span>{network}</span>
 </div>
-<div class="stat-row">
+<div class="lines-row">
 <div class="stat-item"><span class="value">{spread_display}</span><span class="label">Spread</span></div>
 <div class="stat-item"><span class="value">{odds['total']}</span><span class="label">O/U</span></div>
 <div class="stat-item"><span class="value">{odds['ml_away']}</span><span class="label">{away_abbr} ML</span></div>
 <div class="stat-item"><span class="value">{odds['ml_home']}</span><span class="label">{home_abbr} ML</span></div>
+</div>
+<div class="team-stats-section">
+<div class="stats-header">TEAM STATISTICS</div>
+{away_stats_html}
+{home_stats_html}
 </div>
 <div class="game-analysis">
 {analysis_html}
@@ -348,8 +511,29 @@ def update_sport_page(sport):
         away_abbr = away_team.get('abbreviation', '')
         home_abbr = home_team.get('abbreviation', '')
 
+        # Fetch team statistics
+        away_id = away_team.get('id', '')
+        home_id = home_team.get('id', '')
+
+        away_raw_stats = get_team_statistics(config['espn_path'], away_id) if away_id else {}
+        home_raw_stats = get_team_statistics(config['espn_path'], home_id) if home_id else {}
+
         away_record = away.get('records', [{}])[0].get('summary', '0-0') if away.get('records') else '0-0'
         home_record = home.get('records', [{}])[0].get('summary', '0-0') if home.get('records') else '0-0'
+
+        # Extract formatted stats based on sport
+        if sport in ['NFL', 'NCAAF']:
+            away_stats = get_nfl_team_stats(away_raw_stats, away_record)
+            home_stats = get_nfl_team_stats(home_raw_stats, home_record)
+        elif sport in ['NBA', 'NCAAB']:
+            away_stats = get_nba_team_stats(away_raw_stats, away_record)
+            home_stats = get_nba_team_stats(home_raw_stats, home_record)
+        elif sport == 'NHL':
+            away_stats = get_nhl_team_stats(away_raw_stats, away_record)
+            home_stats = get_nhl_team_stats(home_raw_stats, home_record)
+        else:
+            away_stats = {'pwr': '-'}
+            home_stats = {'pwr': '-'}
 
         # Game details
         venue = comps.get('venue', {}).get('fullName', 'TBD')
@@ -369,7 +553,7 @@ def update_sport_page(sport):
         card = generate_game_card(
             away_name, home_name, away_abbr, home_abbr,
             away_record, home_record, game_time, venue, network,
-            odds, sport
+            odds, sport, away_stats, home_stats
         )
         game_cards.append(card)
         print(f"  {away_name} @ {home_name}: Spread {odds['spread']}, O/U {odds['total']}")
@@ -442,10 +626,21 @@ main{{max-width:900px;margin:0 auto;padding:0 24px 80px}}
 .game-title{{font-size:22px;font-weight:600;margin-bottom:8px;text-align:center}}
 .game-meta{{font-size:13px;color:var(--text-muted);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;gap:8px;justify-content:center}}
 .game-meta span{{background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}}
-.stat-row{{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}}
-.stat-item{{flex:1;min-width:100px;text-align:center;padding:8px}}
-.stat-item .value{{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;color:var(--accent-gold)}}
-.stat-item .label{{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}}
+.stat-row,.lines-row{{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}}
+.stat-item{{flex:1;min-width:80px;text-align:center;padding:8px}}
+.stat-item .value{{font-family:var(--font-primary);font-size:1.1rem;font-weight:700;color:var(--accent-gold)}}
+.stat-item .label{{font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}}
+.stat-item.off .value{{color:var(--accent-cyan)}}
+/* Team Stats Section */
+.team-stats-section{{margin:20px 0;padding:20px;background:rgba(0,20,40,0.5);border-radius:12px;border:1px solid rgba(0,229,255,0.2)}}
+.stats-header{{font-family:var(--font-primary);font-size:0.75rem;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:2px;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid var(--border-subtle);text-align:center}}
+.team-stats-row{{display:flex;align-items:center;gap:15px;padding:12px;margin-bottom:8px;background:rgba(0,0,0,0.3);border-radius:10px;border:1px solid var(--border-subtle)}}
+.team-stats-row:last-child{{margin-bottom:0}}
+.team-info{{display:flex;align-items:center;gap:10px;min-width:120px}}
+.team-logo-small{{width:36px;height:36px;object-fit:contain}}
+.team-abbr{{font-family:var(--font-primary);font-size:1rem;font-weight:700;color:#fff}}
+.team-label{{font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;padding:2px 6px;background:rgba(255,255,255,0.1);border-radius:4px}}
+.team-stats-grid{{display:flex;flex-wrap:wrap;flex:1;gap:8px;justify-content:space-around}}
 /* Analysis Section Styles */
 .game-analysis{{margin-top:20px;padding-top:20px;border-top:1px solid var(--border-subtle)}}
 .analysis-section{{margin-bottom:16px}}
