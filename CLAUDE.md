@@ -6,6 +6,54 @@
 
 ---
 
+## ⛔⛔⛔ HANDICAPPING HUB - PERMANENTLY LOCKED DESIGN ⛔⛔⛔
+
+**DO NOT CHANGE THE HANDICAPPING HUB DESIGN. EVER.**
+
+The Handicapping Hub (`handicapping-hub.html`) has a LOCKED design. If the user asks to update it, ONLY run the production script - DO NOT modify the HTML structure or CSS.
+
+### The ONLY Script to Use:
+```
+python C:\Users\Nima\nimadamus.github.io\scripts\handicapping_hub_production.py
+```
+
+**OLD SCRIPTS HAVE BEEN DELETED - DO NOT RECREATE THEM:**
+- ~~generate_handicapping_hub.py~~ - DELETED
+- ~~github_handicapping_hub.py~~ - DELETED
+
+### LOCKED Visual Design (DO NOT CHANGE):
+- **Background**: Light gray (#f0f2f5)
+- **Header**: Dark blue gradient (#1a365d to #2d4a7c)
+- **Content panels**: White (#fff)
+- **Accent**: Orange (#fd5000)
+- **Font**: Inter
+
+### LOCKED Structure (DO NOT CHANGE):
+- **5 Sport Tabs**: NBA, NFL, NHL, NCAAB, NCAAF (in that order)
+- **Game Cards**: White background, rounded corners
+- **Game Time Header**: Dark blue (#1a365d)
+- **Stats Table**: Horizontal layout with columns
+- **Injury Bar**: Yellow (#fff3cd) below each game
+- **Trends Bar**: Light blue (#e3f2fd) below injury bar
+
+### LOCKED Stats Per Sport:
+- **NBA**: PWR, PPG, OPP, PACE, ORTG, DRTG, NET, FG%, 3P%, FT%, eFG%, TS%, REB, AST, TO, STL, BLK
+- **NFL**: PWR, PPG, OPP, YPP, PASS, RUSH, RZ%, TOP, TO+/-, 3RD%, SACK, INT
+- **NHL**: PWR, GF, GA, GD, PP%, PK%, SOG, SV%, FOW%, PIM
+- **NCAAB/NCAAF**: Similar comprehensive stats
+
+### WHY THIS MATTERS:
+Previous sessions kept changing the design between dark theme and light theme. This caused user frustration. The design is now PERMANENTLY LOCKED.
+
+### IF USER ASKS TO UPDATE THE HUB:
+1. Run `handicapping_hub_production.py` - that's it
+2. DO NOT create new scripts
+3. DO NOT modify the CSS
+4. DO NOT change the layout
+5. DO NOT switch to dark theme
+
+---
+
 ## STEP 1: ALWAYS READ THE PROTOCOL FIRST
 
 Before creating ANY content for this website, you MUST read:
