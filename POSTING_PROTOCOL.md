@@ -1170,12 +1170,130 @@ If user provides conflicting instructions, ALWAYS:
 
 ---
 
+---
+
+## ⛔⛔⛔ LOCKED: GAME RESULT SECTION FORMAT ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 14, 2025
+
+**When adding game results to archive pages (nba-pageX.html, nfl.html, nhl-pageX.html, etc.), you MUST use this EXACT format. No variations.**
+
+---
+
+### RESULT SECTION HTML FORMAT
+
+**For WINS (green background):**
+```html
+<div class="result-section" style="background:rgba(0,200,100,0.15);border:1px solid rgba(0,200,100,0.3);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.85rem;color:#00ff88;margin-bottom:6px;font-weight:700;">FINAL: [WINNER] [SCORE], [LOSER] [SCORE]</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;">[Spread result] | [O/U result] | [Key stat or note]</p>
+</div>
+```
+
+**For LOSSES or DID NOT COVER (orange background):**
+```html
+<div class="result-section" style="background:rgba(255,165,0,0.15);border:1px solid rgba(255,165,0,0.3);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.85rem;color:#ffa500;margin-bottom:6px;font-weight:700;">FINAL: [WINNER] [SCORE], [LOSER] [SCORE]</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;">[Spread result] | [O/U result] | [Key stat or note]</p>
+</div>
+```
+
+---
+
+### PLACEMENT RULES
+
+1. **Place the result section AFTER the game-meta div and BEFORE the stat-row div**
+2. The result section goes between the matchup header and the betting lines
+3. NEVER place it at the bottom of the game card
+4. NEVER place it inside the deep-analysis section
+
+**Correct placement:**
+```html
+<div class="game-meta">
+  <span>7:00 PM ET</span>
+  <span>12-5 vs 8-9</span>
+  <span>Arena Name</span>
+</div>
+<!-- RESULT SECTION GOES HERE -->
+<div class="result-section" style="...">
+  ...
+</div>
+<div class="stat-row">
+  ...
+</div>
+```
+
+---
+
+### CONTENT FORMAT RULES
+
+**Line 1 (Score):**
+- Format: `FINAL: [WINNING TEAM] [SCORE], [LOSING TEAM] [SCORE]`
+- Team names in ALL CAPS
+- Winner listed first
+- Examples:
+  - `FINAL: THUNDER 132, MAVERICKS 111`
+  - `FINAL: CELTICS 126, LAKERS 105`
+  - `FINAL: GRIZZLIES 107, CLIPPERS 98`
+
+**Line 2 (Analysis):**
+- Three pieces separated by pipes: `[Spread] | [O/U] | [Key note]`
+- Examples:
+  - `OKC won by 21 | OVER 229.5 (243 total) | SGA 33 pts in 3 quarters`
+  - `BOS -4.5 covered | UNDER 226.5 (231 total) | Celtics dominated 4th quarter`
+  - `MEM won outright | UNDER 220.5 (205 total) | Memphis solid at home`
+
+---
+
+### COLOR CODES (DO NOT CHANGE)
+
+| Situation | Background | Border | Text Color |
+|-----------|------------|--------|------------|
+| Win/Covered | `rgba(0,200,100,0.15)` | `rgba(0,200,100,0.3)` | `#00ff88` |
+| Loss/Did Not Cover | `rgba(255,165,0,0.15)` | `rgba(255,165,0,0.3)` | `#ffa500` |
+| Push | `rgba(100,100,100,0.15)` | `rgba(100,100,100,0.3)` | `#aaaaaa` |
+
+---
+
+### EXAMPLES
+
+**Example 1 - Win (Green):**
+```html
+<div class="result-section" style="background:rgba(0,200,100,0.15);border:1px solid rgba(0,200,100,0.3);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.85rem;color:#00ff88;margin-bottom:6px;font-weight:700;">FINAL: THUNDER 132, MAVERICKS 111</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;">OKC won by 21 | OVER 229.5 (243 total) | SGA 33 pts in 3 quarters, 14th straight W</p>
+</div>
+```
+
+**Example 2 - Did Not Cover (Orange):**
+```html
+<div class="result-section" style="background:rgba(255,165,0,0.15);border:1px solid rgba(255,165,0,0.3);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.85rem;color:#ffa500;margin-bottom:6px;font-weight:700;">FINAL: SPURS 135, PELICANS 132</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;">SA won but FAILED to cover -8.5 | OVER 231.5 (267 total) | Wembanyama 31 pts</p>
+</div>
+```
+
+---
+
+### THIS FORMAT IS LOCKED
+
+- DO NOT change the inline styles
+- DO NOT change the color values
+- DO NOT change the font sizes
+- DO NOT change the border-radius or padding
+- DO NOT change the structure
+
+**Use this EXACT format every single time. No exceptions.**
+
+---
+
 ## PROTOCOL VERSION
-Version: 1.1
+Version: 1.2
 Last Updated: December 14, 2025
 Created by: Claude Code for BetLegend
 
 ### CHANGELOG:
+- v1.2 (Dec 14, 2025): Added LOCKED "Game Result Section Format" with exact HTML, colors, and placement rules
 - v1.1 (Dec 14, 2025): Added "BANNED TEMPLATE PHRASES" section to enforce human-sounding commentary on sports pages
 
 ---

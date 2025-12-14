@@ -225,6 +225,30 @@ After pushing, wait 1-2 minutes for GitHub Pages to deploy, then verify:
 
 ---
 
+## ⛔⛔⛔ LOCKED: GAME RESULT FORMAT (December 14, 2025) ⛔⛔⛔
+
+**When adding game results to archive pages, use this EXACT format:**
+
+```html
+<!-- WIN (green) -->
+<div class="result-section" style="background:rgba(0,200,100,0.15);border:1px solid rgba(0,200,100,0.3);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.85rem;color:#00ff88;margin-bottom:6px;font-weight:700;">FINAL: [WINNER] [SCORE], [LOSER] [SCORE]</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;">[Spread result] | [O/U result] | [Key note]</p>
+</div>
+
+<!-- LOSS/DID NOT COVER (orange) -->
+<div class="result-section" style="background:rgba(255,165,0,0.15);border:1px solid rgba(255,165,0,0.3);border-radius:10px;padding:12px;margin:12px 0;">
+<p style="font-size:0.85rem;color:#ffa500;margin-bottom:6px;font-weight:700;">FINAL: [WINNER] [SCORE], [LOSER] [SCORE]</p>
+<p style="font-size:0.8rem;color:#ccc;margin:4px 0;">[Spread result] | [O/U result] | [Key note]</p>
+</div>
+```
+
+**Placement:** AFTER game-meta div, BEFORE stat-row div. NO EXCEPTIONS.
+
+**Full documentation:** See POSTING_PROTOCOL.md "LOCKED: GAME RESULT SECTION FORMAT"
+
+---
+
 ## CRITICAL REMINDERS
 
 1. **ACCURACY OVER SPEED** - It's better to take time and verify than to publish errors
