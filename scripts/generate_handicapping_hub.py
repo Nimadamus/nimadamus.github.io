@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Generate Handicapping Hub with:
-- Light gray background (#f5f5f5) with white game cards
-- Tabs for sport switching
-- Full stats displayed horizontally (left to right)
-- Real data from ESPN and Odds API
+Generate Handicapping Hub with FULL ADVANCED STATS displayed horizontally
+- Light gray background, white cards
+- Tabs for sports
+- ALL stats displayed horizontally across each game card
 """
 import requests
 import json
@@ -23,7 +22,7 @@ SPORT_CONFIG = {
 }
 
 def get_espn_games(sport_path):
-    """Get today's games from ESPN"""
+    """Get today's games from ESPN with team stats"""
     date_str = datetime.now().strftime('%Y%m%d')
     url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/scoreboard?dates={date_str}"
     try:
@@ -35,20 +34,19 @@ def get_espn_games(sport_path):
     return []
 
 def get_team_stats(sport_path, team_id):
-    """Get team statistics from ESPN"""
+    """Get detailed team statistics"""
+    stats = {}
     try:
         url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/statistics"
         resp = requests.get(url, timeout=10)
         if resp.status_code == 200:
             data = resp.json()
-            stats = {}
-            for cat in data.get('results', {}).get('stats', {}).get('categories', []):
-                for stat in cat.get('stats', []):
-                    stats[stat.get('name', '')] = stat.get('value', 0)
-            return stats
+            for split in data.get('results', {}).get('splits', {}).get('categories', []):
+                for stat in split.get('stats', []):
+                    stats[stat.get('name', '')] = stat.get('displayValue', stat.get('value', '-'))
     except:
         pass
-    return {}
+    return stats
 
 def get_odds(sport_key):
     """Get current odds from The Odds API"""
@@ -105,7 +103,7 @@ def match_odds(odds_data, away_name, home_name):
     return result
 
 def generate_game_card(sport, game_data, odds):
-    """Generate a game card with full stats displayed horizontally"""
+    """Generate a game card with FULL horizontal stats"""
 
     away_name = game_data['away_name']
     home_name = game_data['home_name']
@@ -116,6 +114,8 @@ def generate_game_card(sport, game_data, odds):
     game_time = game_data['game_time']
     venue = game_data['venue']
     network = game_data['network']
+    away_stats = game_data.get('away_stats', {})
+    home_stats = game_data.get('home_stats', {})
 
     # Logo URLs
     logo_base = "https://a.espncdn.com/i/teamlogos"
@@ -138,6 +138,77 @@ def generate_game_card(sport, game_data, odds):
     ml_away = odds.get('ml_away', '-')
     ml_home = odds.get('ml_home', '-')
 
+    # Get stats based on sport
+    if sport in ['NBA', 'NCAAB']:
+        away_ppg = away_stats.get('avgPoints', away_stats.get('pointsPerGame', '-'))
+        home_ppg = home_stats.get('avgPoints', home_stats.get('pointsPerGame', '-'))
+        away_opp_ppg = away_stats.get('avgPointsAgainst', away_stats.get('oppPointsPerGame', '-'))
+        home_opp_ppg = home_stats.get('avgPointsAgainst', home_stats.get('oppPointsPerGame', '-'))
+        away_rpg = away_stats.get('avgRebounds', away_stats.get('reboundsPerGame', '-'))
+        home_rpg = home_stats.get('avgRebounds', home_stats.get('reboundsPerGame', '-'))
+        away_apg = away_stats.get('avgAssists', away_stats.get('assistsPerGame', '-'))
+        home_apg = home_stats.get('avgAssists', home_stats.get('assistsPerGame', '-'))
+
+        stats_html = f'''
+            <div class="stats-row">
+                <div class="stat-box"><div class="stat-label">RECORD</div><div class="stat-values"><span>{away_record}</span><span>{home_record}</span></div></div>
+                <div class="stat-box"><div class="stat-label">PPG</div><div class="stat-values"><span>{away_ppg}</span><span>{home_ppg}</span></div></div>
+                <div class="stat-box"><div class="stat-label">OPP PPG</div><div class="stat-values"><span>{away_opp_ppg}</span><span>{home_opp_ppg}</span></div></div>
+                <div class="stat-box"><div class="stat-label">RPG</div><div class="stat-values"><span>{away_rpg}</span><span>{home_rpg}</span></div></div>
+                <div class="stat-box"><div class="stat-label">APG</div><div class="stat-values"><span>{away_apg}</span><span>{home_apg}</span></div></div>
+                <div class="stat-box"><div class="stat-label">SPREAD</div><div class="stat-values"><span>{spread_away}</span><span>{spread}</span></div></div>
+                <div class="stat-box"><div class="stat-label">ML</div><div class="stat-values"><span>{ml_away}</span><span>{ml_home}</span></div></div>
+                <div class="stat-box"><div class="stat-label">O/U</div><div class="stat-values"><span colspan="2">{total}</span></div></div>
+            </div>
+        '''
+    elif sport in ['NFL', 'NCAAF']:
+        away_ppg = away_stats.get('avgPoints', away_stats.get('pointsPerGame', '-'))
+        home_ppg = home_stats.get('avgPoints', home_stats.get('pointsPerGame', '-'))
+        away_opp_ppg = away_stats.get('avgPointsAgainst', away_stats.get('oppPointsPerGame', '-'))
+        home_opp_ppg = home_stats.get('avgPointsAgainst', home_stats.get('oppPointsPerGame', '-'))
+        away_ypg = away_stats.get('totalYardsPerGame', away_stats.get('yardsPerGame', '-'))
+        home_ypg = home_stats.get('totalYardsPerGame', home_stats.get('yardsPerGame', '-'))
+        away_rush = away_stats.get('rushingYardsPerGame', '-')
+        home_rush = home_stats.get('rushingYardsPerGame', '-')
+        away_pass = away_stats.get('passingYardsPerGame', '-')
+        home_pass = home_stats.get('passingYardsPerGame', '-')
+
+        stats_html = f'''
+            <div class="stats-row">
+                <div class="stat-box"><div class="stat-label">RECORD</div><div class="stat-values"><span>{away_record}</span><span>{home_record}</span></div></div>
+                <div class="stat-box"><div class="stat-label">PPG</div><div class="stat-values"><span>{away_ppg}</span><span>{home_ppg}</span></div></div>
+                <div class="stat-box"><div class="stat-label">OPP PPG</div><div class="stat-values"><span>{away_opp_ppg}</span><span>{home_opp_ppg}</span></div></div>
+                <div class="stat-box"><div class="stat-label">YPG</div><div class="stat-values"><span>{away_ypg}</span><span>{home_ypg}</span></div></div>
+                <div class="stat-box"><div class="stat-label">RUSH YPG</div><div class="stat-values"><span>{away_rush}</span><span>{home_rush}</span></div></div>
+                <div class="stat-box"><div class="stat-label">PASS YPG</div><div class="stat-values"><span>{away_pass}</span><span>{home_pass}</span></div></div>
+                <div class="stat-box"><div class="stat-label">SPREAD</div><div class="stat-values"><span>{spread_away}</span><span>{spread}</span></div></div>
+                <div class="stat-box"><div class="stat-label">ML</div><div class="stat-values"><span>{ml_away}</span><span>{ml_home}</span></div></div>
+                <div class="stat-box"><div class="stat-label">O/U</div><div class="stat-values"><span>{total}</span></div></div>
+            </div>
+        '''
+    else:  # NHL
+        away_gpg = away_stats.get('goalsFor', away_stats.get('goalsPerGame', '-'))
+        home_gpg = home_stats.get('goalsFor', home_stats.get('goalsPerGame', '-'))
+        away_gapg = away_stats.get('goalsAgainst', away_stats.get('goalsAgainstPerGame', '-'))
+        home_gapg = home_stats.get('goalsAgainst', home_stats.get('goalsAgainstPerGame', '-'))
+        away_pp = away_stats.get('powerPlayPct', '-')
+        home_pp = home_stats.get('powerPlayPct', '-')
+        away_pk = away_stats.get('penaltyKillPct', '-')
+        home_pk = home_stats.get('penaltyKillPct', '-')
+
+        stats_html = f'''
+            <div class="stats-row">
+                <div class="stat-box"><div class="stat-label">RECORD</div><div class="stat-values"><span>{away_record}</span><span>{home_record}</span></div></div>
+                <div class="stat-box"><div class="stat-label">GF/G</div><div class="stat-values"><span>{away_gpg}</span><span>{home_gpg}</span></div></div>
+                <div class="stat-box"><div class="stat-label">GA/G</div><div class="stat-values"><span>{away_gapg}</span><span>{home_gapg}</span></div></div>
+                <div class="stat-box"><div class="stat-label">PP%</div><div class="stat-values"><span>{away_pp}</span><span>{home_pp}</span></div></div>
+                <div class="stat-box"><div class="stat-label">PK%</div><div class="stat-values"><span>{away_pk}</span><span>{home_pk}</span></div></div>
+                <div class="stat-box"><div class="stat-label">SPREAD</div><div class="stat-values"><span>{spread_away}</span><span>{spread}</span></div></div>
+                <div class="stat-box"><div class="stat-label">ML</div><div class="stat-values"><span>{ml_away}</span><span>{ml_home}</span></div></div>
+                <div class="stat-box"><div class="stat-label">O/U</div><div class="stat-values"><span>{total}</span></div></div>
+            </div>
+        '''
+
     return f'''
         <div class="game-card">
             <div class="game-header">
@@ -145,40 +216,22 @@ def generate_game_card(sport, game_data, odds):
                 <div class="game-info">{venue} • {network}</div>
             </div>
 
-            <div class="teams-container">
-                <div class="team-row away">
+            <div class="teams-header">
+                <div class="team-col away">
                     <img src="{away_logo}" alt="{away_abbr}" class="team-logo" onerror="this.style.display='none'">
-                    <div class="team-name">{away_name}</div>
-                    <div class="team-record">{away_record}</div>
+                    <span class="team-name">{away_name}</span>
                 </div>
-                <div class="team-row home">
+                <div class="vs-col">@</div>
+                <div class="team-col home">
                     <img src="{home_logo}" alt="{home_abbr}" class="team-logo" onerror="this.style.display='none'">
-                    <div class="team-name">{home_name}</div>
-                    <div class="team-record">{home_record}</div>
+                    <span class="team-name">{home_name}</span>
                 </div>
             </div>
 
-            <div class="stats-table">
-                <div class="stats-header">
-                    <div class="stat-col">SPREAD</div>
-                    <div class="stat-col">MONEYLINE</div>
-                    <div class="stat-col">TOTAL</div>
-                </div>
-                <div class="stats-row away-stats">
-                    <div class="stat-col"><span class="stat-value">{spread_away}</span></div>
-                    <div class="stat-col"><span class="stat-value">{ml_away}</span></div>
-                    <div class="stat-col"><span class="stat-value">O {total}</span></div>
-                </div>
-                <div class="stats-row home-stats">
-                    <div class="stat-col"><span class="stat-value">{spread}</span></div>
-                    <div class="stat-col"><span class="stat-value">{ml_home}</span></div>
-                    <div class="stat-col"><span class="stat-value">U {total}</span></div>
-                </div>
-            </div>
+            {stats_html}
 
             <div class="line-movement">
-                <span class="movement-icon">📊</span>
-                <span class="movement-text">Line Movement: Opening {spread} → Current {spread}</span>
+                <span>📊 Line Movement: {spread} (current)</span>
             </div>
         </div>
 '''
@@ -189,7 +242,6 @@ def generate_page():
     today = datetime.now()
     date_str = today.strftime("%B %d, %Y")
 
-    # Collect all games by sport
     all_games = {}
 
     for sport, config in SPORT_CONFIG.items():
@@ -211,6 +263,18 @@ def generate_page():
             away_team = away.get('team', {})
             home_team = home.get('team', {})
 
+            # Get team stats
+            away_id = away_team.get('id', '')
+            home_id = home_team.get('id', '')
+            away_stats = get_team_stats(config['espn_path'], away_id) if away_id else {}
+            home_stats = get_team_stats(config['espn_path'], home_id) if home_id else {}
+
+            # Also get stats from the event if available
+            for stat in away.get('statistics', []):
+                away_stats[stat.get('name', '')] = stat.get('displayValue', stat.get('value', '-'))
+            for stat in home.get('statistics', []):
+                home_stats[stat.get('name', '')] = stat.get('displayValue', stat.get('value', '-'))
+
             game_data = {
                 'away_name': away_team.get('displayName', ''),
                 'home_name': home_team.get('displayName', ''),
@@ -220,7 +284,9 @@ def generate_page():
                 'home_record': home.get('records', [{}])[0].get('summary', '0-0') if home.get('records') else '0-0',
                 'venue': comps.get('venue', {}).get('fullName', 'TBD'),
                 'network': comps.get('broadcasts', [{}])[0].get('names', ['TBD'])[0] if comps.get('broadcasts') else 'TBD',
-                'game_time': 'TBD'
+                'game_time': 'TBD',
+                'away_stats': away_stats,
+                'home_stats': home_stats,
             }
 
             game_date = event.get('date', '')
@@ -236,7 +302,7 @@ def generate_page():
         all_games[sport] = games
         print(f"  Found {len(games)} {sport} games")
 
-    # Generate HTML for each sport section
+    # Generate HTML
     sport_sections = ""
     tab_buttons = ""
 
@@ -244,31 +310,20 @@ def generate_page():
         games = all_games.get(sport, [])
         active_class = "active" if i == 0 else ""
 
-        # Tab button
-        tab_buttons += f'<button class="tab-btn {active_class}" data-sport="{sport.lower()}">{sport} <span class="count">({len(games)})</span></button>\n'
+        tab_buttons += f'<button class="tab-btn {active_class}" data-sport="{sport.lower()}">{sport} ({len(games)})</button>\n'
 
         if not games:
-            sport_sections += f'''
-            <div class="sport-section {active_class}" id="{sport.lower()}-section">
-                <div class="no-games">No {sport} games scheduled for today</div>
-            </div>
-            '''
+            sport_sections += f'<div class="sport-section {active_class}" id="{sport.lower()}-section"><div class="no-games">No {sport} games today</div></div>'
             continue
 
-        # Generate game cards
         cards_html = ""
         for game_data, odds in games:
             cards_html += generate_game_card(sport, game_data, odds)
 
         sport_sections += f'''
         <div class="sport-section {active_class}" id="{sport.lower()}-section">
-            <div class="section-header">
-                <h2>{sport} Games</h2>
-                <span class="game-count">{len(games)} Games Today</span>
-            </div>
-            <div class="games-grid">
-                {cards_html}
-            </div>
+            <div class="section-header"><h2>{sport}</h2><span class="game-count">{len(games)} Games</span></div>
+            <div class="games-grid">{cards_html}</div>
         </div>
         '''
 
@@ -278,292 +333,69 @@ def generate_page():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Handicapping Hub - {date_str} | BetLegend</title>
-    <meta name="description" content="Advanced sports handicapping with real-time odds, spreads, and betting lines for NFL, NBA, NHL, NCAAB, and NCAAF.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{ background: #f5f5f5; font-family: 'Inter', sans-serif; color: #1a1a2e; }}
 
-        body {{
-            background: #f5f5f5;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #1a1a2e;
-            line-height: 1.5;
-        }}
-
-        /* Navigation */
-        .nav {{
-            background: #1a365d;
-            padding: 15px 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-bottom: 3px solid #fd5000;
-        }}
-        .nav-inner {{
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }}
-        .logo {{
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: white;
-            text-decoration: none;
-        }}
+        .nav {{ background: #1a365d; padding: 15px 20px; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; border-bottom: 3px solid #fd5000; }}
+        .nav-inner {{ max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }}
+        .logo {{ font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; }}
         .logo span {{ color: #fd5000; }}
-        .nav-links {{
-            display: flex;
-            gap: 20px;
-        }}
-        .nav-links a {{
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }}
-        .nav-links a:hover {{ color: #fd5000; }}
+        .nav-links {{ display: flex; gap: 20px; }}
+        .nav-links a {{ color: white; text-decoration: none; font-weight: 600; }}
 
-        /* Header */
-        .header {{
-            background: linear-gradient(135deg, #1a365d 0%, #2d4a7c 100%);
-            color: white;
-            padding: 100px 20px 40px;
-            text-align: center;
-        }}
-        .header h1 {{
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }}
+        .header {{ background: #1a365d; color: white; padding: 90px 20px 30px; text-align: center; }}
+        .header h1 {{ font-size: 2rem; font-weight: 800; }}
         .header h1 span {{ color: #fd5000; }}
-        .header .date {{
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }}
 
-        /* Main Container */
-        .container {{
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }}
+        .container {{ max-width: 1400px; margin: 0 auto; padding: 20px; }}
 
-        /* Sport Tabs */
-        .tabs {{
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }}
-        .tab-btn {{
-            padding: 12px 24px;
-            background: #f0f0f0;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: #333;
-        }}
-        .tab-btn:hover {{
-            background: #e0e0e0;
-        }}
-        .tab-btn.active {{
-            background: #1a365d;
-            color: white;
-        }}
-        .tab-btn .count {{
-            opacity: 0.7;
-            font-weight: 500;
-        }}
+        .tabs {{ display: flex; gap: 10px; margin-bottom: 20px; background: white; padding: 15px; border-radius: 10px; flex-wrap: wrap; }}
+        .tab-btn {{ padding: 12px 20px; background: #eee; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }}
+        .tab-btn.active {{ background: #1a365d; color: white; }}
 
-        /* Sport Section */
-        .sport-section {{
-            display: none;
-        }}
-        .sport-section.active {{
-            display: block;
-        }}
-        .section-header {{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }}
-        .section-header h2 {{
-            font-size: 1.5rem;
-            color: #1a365d;
-        }}
-        .game-count {{
-            background: #fd5000;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.85rem;
-        }}
-        .no-games {{
-            background: white;
-            padding: 40px;
-            text-align: center;
-            border-radius: 12px;
-            color: #666;
-            font-size: 1.1rem;
-        }}
+        .sport-section {{ display: none; }}
+        .sport-section.active {{ display: block; }}
+        .section-header {{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }}
+        .section-header h2 {{ color: #1a365d; }}
+        .game-count {{ background: #fd5000; color: white; padding: 6px 14px; border-radius: 15px; font-weight: 700; font-size: 0.85rem; }}
+        .no-games {{ background: white; padding: 40px; text-align: center; border-radius: 10px; color: #666; }}
 
-        /* Games Grid */
-        .games-grid {{
-            display: grid;
-            gap: 20px;
-        }}
+        .games-grid {{ display: flex; flex-direction: column; gap: 15px; }}
 
-        /* Game Card - Full Width */
-        .game-card {{
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            overflow: hidden;
-            width: 100%;
-        }}
+        .game-card {{ background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }}
 
-        .game-header {{
-            background: #f8f9fa;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-        }}
-        .game-time {{
-            font-weight: 700;
-            color: #1a365d;
-            font-size: 0.95rem;
-        }}
-        .game-info {{
-            color: #666;
-            font-size: 0.85rem;
-        }}
+        .game-header {{ background: #f8f9fa; padding: 10px 15px; display: flex; justify-content: space-between; border-bottom: 1px solid #eee; font-size: 0.85rem; }}
+        .game-time {{ font-weight: 700; color: #1a365d; }}
+        .game-info {{ color: #666; }}
 
-        /* Teams Container */
-        .teams-container {{
-            padding: 15px 20px;
-        }}
-        .team-row {{
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 10px 0;
-        }}
-        .team-row.away {{
-            border-bottom: 1px solid #eee;
-        }}
-        .team-logo {{
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-        }}
-        .team-name {{
-            font-weight: 700;
-            font-size: 1rem;
-            flex: 1;
-        }}
-        .team-record {{
-            color: #666;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }}
+        .teams-header {{ display: flex; align-items: center; justify-content: center; padding: 15px; gap: 20px; border-bottom: 1px solid #eee; }}
+        .team-col {{ display: flex; align-items: center; gap: 10px; flex: 1; }}
+        .team-col.away {{ justify-content: flex-end; }}
+        .team-col.home {{ justify-content: flex-start; }}
+        .team-logo {{ width: 50px; height: 50px; object-fit: contain; }}
+        .team-name {{ font-weight: 700; font-size: 1.1rem; }}
+        .vs-col {{ font-weight: 700; color: #999; font-size: 1rem; }}
 
-        /* Stats Table - Horizontal Layout */
-        .stats-table {{
-            background: #f8f9fa;
-            border-top: 1px solid #eee;
-        }}
-        .stats-header {{
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            background: #1a365d;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }}
-        .stats-header .stat-col {{
-            padding: 10px;
-            text-align: center;
-        }}
-        .stats-row {{
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            border-bottom: 1px solid #eee;
-        }}
-        .stats-row:last-child {{
-            border-bottom: none;
-        }}
-        .stats-row .stat-col {{
-            padding: 12px 10px;
-            text-align: center;
-        }}
-        .stat-value {{
-            font-weight: 700;
-            font-size: 1rem;
-            color: #1a1a2e;
-        }}
-        .away-stats {{
-            background: #fff;
-        }}
-        .home-stats {{
-            background: #fafafa;
-        }}
+        /* HORIZONTAL STATS ROW */
+        .stats-row {{ display: flex; overflow-x: auto; background: #fafafa; border-bottom: 1px solid #eee; }}
+        .stat-box {{ flex: 1; min-width: 80px; padding: 10px 8px; text-align: center; border-right: 1px solid #eee; }}
+        .stat-box:last-child {{ border-right: none; }}
+        .stat-label {{ font-size: 0.7rem; font-weight: 700; color: #666; text-transform: uppercase; margin-bottom: 5px; }}
+        .stat-values {{ display: flex; flex-direction: column; gap: 3px; }}
+        .stat-values span {{ font-weight: 700; font-size: 0.9rem; color: #1a1a2e; }}
+        .stat-values span:first-child {{ color: #1a365d; }}
+        .stat-values span:last-child {{ color: #333; }}
 
-        /* Line Movement */
-        .line-movement {{
-            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: #5d4e37;
-            border-top: 1px solid #ffe082;
-        }}
-        .movement-icon {{
-            font-size: 1rem;
-        }}
-        .movement-text {{
-            font-weight: 500;
-        }}
+        .line-movement {{ background: #fff8e1; padding: 8px 15px; font-size: 0.8rem; color: #5d4e37; }}
 
-        /* Footer */
-        footer {{
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 40px;
-            border-top: 1px solid #ddd;
-        }}
-        footer a {{
-            color: #1a365d;
-            text-decoration: none;
-        }}
+        footer {{ text-align: center; padding: 30px; color: #666; margin-top: 30px; }}
 
-        /* Responsive */
         @media (max-width: 768px) {{
-            .header h1 {{ font-size: 1.8rem; }}
-            .tabs {{ gap: 8px; }}
-            .tab-btn {{ padding: 10px 16px; font-size: 0.85rem; }}
-            .game-header {{ flex-direction: column; gap: 5px; text-align: center; }}
-            .team-name {{ font-size: 0.9rem; }}
+            .teams-header {{ flex-direction: column; gap: 10px; }}
+            .team-col {{ justify-content: center !important; }}
+            .stat-box {{ min-width: 70px; }}
         }}
     </style>
 </head>
@@ -577,40 +409,31 @@ def generate_page():
                 <a href="nfl.html">NFL</a>
                 <a href="nba.html">NBA</a>
                 <a href="nhl.html">NHL</a>
-                <a href="records.html">Records</a>
             </div>
         </div>
     </nav>
 
     <header class="header">
         <h1>Handicapping <span>Hub</span></h1>
-        <p class="date">{date_str} • Real-Time Odds & Stats</p>
+        <p>{date_str}</p>
     </header>
 
     <div class="container">
-        <div class="tabs">
-            {tab_buttons}
-        </div>
-
+        <div class="tabs">{tab_buttons}</div>
         {sport_sections}
     </div>
 
     <footer>
-        <p>&copy; 2025 BetLegend. All rights reserved. | <a href="index.html">Home</a></p>
-        <p style="margin-top:10px">Data sourced from ESPN and The Odds API. Lines subject to change.</p>
+        <p>&copy; 2025 BetLegend | Data from ESPN & The Odds API</p>
     </footer>
 
     <script>
-        // Tab switching
         document.querySelectorAll('.tab-btn').forEach(btn => {{
             btn.addEventListener('click', function() {{
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.sport-section').forEach(s => s.classList.remove('active'));
-
                 this.classList.add('active');
-                const sport = this.dataset.sport;
-                const section = document.getElementById(sport + '-section');
-                if (section) section.classList.add('active');
+                document.getElementById(this.dataset.sport + '-section').classList.add('active');
             }});
         }});
     </script>
@@ -621,7 +444,7 @@ def generate_page():
 
 def main():
     print("=" * 50)
-    print("GENERATING HANDICAPPING HUB")
+    print("GENERATING HANDICAPPING HUB WITH FULL STATS")
     print(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print("=" * 50)
 
