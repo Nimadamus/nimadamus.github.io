@@ -6,6 +6,48 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
+## ⛔⛔⛔ CRITICAL: COVER ALL GAMES ON THE BOARD ⛔⛔⛔
+
+### FULL SLATE COVERAGE IS MANDATORY
+
+**When creating a slate post (NFL, NBA, NHL, NCAAB, MLB), you MUST cover EVERY SINGLE GAME scheduled for that date.**
+
+| Sport | Typical Full Slate |
+|-------|-------------------|
+| **NFL** | 14-16 games (Thursday + Sunday + Monday) |
+| **NBA** | 8-15 games depending on the day |
+| **NHL** | 8-14 games depending on the day |
+| **NCAAB** | 50-100+ games (cover at least all ranked matchups + conference games) |
+| **MLB** | 15 games during regular season |
+
+### THE RULE IS ABSOLUTE
+
+```
+IF the NFL has 16 games on Sunday → YOU COVER ALL 16 GAMES
+IF the NBA has 12 games tonight → YOU COVER ALL 12 GAMES
+IF the NHL has 10 games → YOU COVER ALL 10 GAMES
+```
+
+### WHY THIS MATTERS
+
+- Users come to BetLegend for COMPLETE coverage
+- Partial slates (7 out of 16 games) look LAZY and UNPROFESSIONAL
+- Competitors cover full slates - we must do the same
+- One missing game could be the game a user is looking for
+
+### VERIFICATION PROCESS
+
+1. **FIRST**: Search ESPN/official schedule for the EXACT date
+2. **COUNT**: Every single game scheduled
+3. **LIST**: All games before starting to write
+4. **VERIFY**: You have analysis for EVERY game before publishing
+
+### NO PARTIAL SLATES. EVER.
+
+**If you cannot cover ALL games, DO NOT publish until you can.**
+
+---
+
 ## ⚠️ CRITICAL WARNING: 100% VERIFICATION OR DON'T POST ⚠️
 
 ### ONE FALSE CLAIM DESTROYS CREDIBILITY
