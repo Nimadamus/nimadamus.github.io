@@ -28,7 +28,7 @@ import requests
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 
 # =============================================================================
@@ -109,7 +109,7 @@ def fetch_team_statistics(sport_path: str, team_id: str) -> Dict:
     return stats
 
 def fetch_odds(sport_key: str) -> List[Dict]:
-    """Fetch betting odds from The Odds API"""
+    """Fetch betting odds from The Odds API - filtered to today's games only"""
     url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds"
     params = {
         'apiKey': ODDS_API_KEY,
@@ -120,7 +120,32 @@ def fetch_odds(sport_key: str) -> List[Dict]:
     try:
         resp = requests.get(url, params=params, timeout=15)
         if resp.status_code == 200:
-            return resp.json()
+            all_odds = resp.json()
+
+            # Filter to only include games happening TODAY (in Eastern Time)
+            # Odds API returns UTC times, so we need to convert
+            today = datetime.now()
+            today_date = today.date()
+
+            filtered = []
+            for game in all_odds:
+                commence = game.get('commence_time', '')
+                if commence:
+                    try:
+                        # Parse ISO format datetime (UTC)
+                        game_dt = datetime.fromisoformat(commence.replace('Z', '+00:00'))
+                        # Convert UTC to Eastern (UTC - 5 hours for EST)
+                        game_est = game_dt.replace(tzinfo=None) - timedelta(hours=5)
+                        game_date = game_est.date()
+
+                        # Include games from today
+                        if game_date == today_date:
+                            filtered.append(game)
+                    except Exception as e:
+                        pass
+
+            print(f"  [ODDS] Filtered from {len(all_odds)} to {len(filtered)} today's games")
+            return filtered
     except Exception as e:
         print(f"  [ERROR] Odds API fetch failed: {e}")
     return []
@@ -208,8 +233,122 @@ def format_injuries_html(injuries: List[Dict], abbr: str) -> str:
 
     return f"{abbr}: {', '.join(injury_strs)}"
 
+def get_team_nickname(full_name: str) -> str:
+    """Extract team nickname from full name (e.g., 'San Francisco 49ers' -> '49ers')"""
+    # Handle common patterns
+    full_lower = full_name.lower().strip()
+
+    # Team nickname mappings for exact matching
+    nickname_map = {
+        # NFL
+        '49ers': '49ers', 'niners': '49ers', 'san francisco': '49ers',
+        'titans': 'titans', 'tennessee titans': 'titans',
+        'colts': 'colts', 'indianapolis colts': 'colts',
+        'chiefs': 'chiefs', 'kansas city chiefs': 'chiefs',
+        'cowboys': 'cowboys', 'dallas cowboys': 'cowboys',
+        'vikings': 'vikings', 'minnesota vikings': 'vikings',
+        'bears': 'bears', 'chicago bears': 'bears',
+        'browns': 'browns', 'cleveland browns': 'browns',
+        'ravens': 'ravens', 'baltimore ravens': 'ravens',
+        'bengals': 'bengals', 'cincinnati bengals': 'bengals',
+        'chargers': 'chargers', 'los angeles chargers': 'chargers',
+        'bills': 'bills', 'buffalo bills': 'bills',
+        'patriots': 'patriots', 'new england patriots': 'patriots',
+        'commanders': 'commanders', 'washington commanders': 'commanders',
+        'giants': 'giants', 'new york giants': 'giants',
+        'raiders': 'raiders', 'las vegas raiders': 'raiders',
+        'eagles': 'eagles', 'philadelphia eagles': 'eagles',
+        'jets': 'jets', 'new york jets': 'jets',
+        'jaguars': 'jaguars', 'jacksonville jaguars': 'jaguars',
+        'cardinals': 'cardinals', 'arizona cardinals': 'cardinals',
+        'texans': 'texans', 'houston texans': 'texans',
+        'packers': 'packers', 'green bay packers': 'packers',
+        'broncos': 'broncos', 'denver broncos': 'broncos',
+        'lions': 'lions', 'detroit lions': 'lions',
+        'rams': 'rams', 'los angeles rams': 'rams',
+        'panthers': 'panthers', 'carolina panthers': 'panthers',
+        'saints': 'saints', 'new orleans saints': 'saints',
+        'seahawks': 'seahawks', 'seattle seahawks': 'seahawks',
+        'buccaneers': 'buccaneers', 'bucs': 'buccaneers', 'tampa bay buccaneers': 'buccaneers',
+        'falcons': 'falcons', 'atlanta falcons': 'falcons',
+        'dolphins': 'dolphins', 'miami dolphins': 'dolphins',
+        'steelers': 'steelers', 'pittsburgh steelers': 'steelers',
+        # NBA
+        'lakers': 'lakers', 'los angeles lakers': 'lakers',
+        'celtics': 'celtics', 'boston celtics': 'celtics',
+        'warriors': 'warriors', 'golden state warriors': 'warriors',
+        'cavaliers': 'cavaliers', 'cavs': 'cavaliers', 'cleveland cavaliers': 'cavaliers',
+        'pacers': 'pacers', 'indiana pacers': 'pacers',
+        'wizards': 'wizards', 'washington wizards': 'wizards',
+        'hornets': 'hornets', 'charlotte hornets': 'hornets',
+        'hawks': 'hawks', 'atlanta hawks': 'hawks',
+        '76ers': '76ers', 'sixers': '76ers', 'philadelphia 76ers': '76ers',
+        'heat': 'heat', 'miami heat': 'heat',
+        'magic': 'magic', 'orlando magic': 'magic',
+        'pistons': 'pistons', 'detroit pistons': 'pistons',
+        'bulls': 'bulls', 'chicago bulls': 'bulls',
+        'bucks': 'bucks', 'milwaukee bucks': 'bucks',
+        'raptors': 'raptors', 'toronto raptors': 'raptors',
+        'knicks': 'knicks', 'new york knicks': 'knicks',
+        'nets': 'nets', 'brooklyn nets': 'nets',
+        'thunder': 'thunder', 'oklahoma city thunder': 'thunder',
+        'mavericks': 'mavericks', 'mavs': 'mavericks', 'dallas mavericks': 'mavericks',
+        'rockets': 'rockets', 'houston rockets': 'rockets',
+        'spurs': 'spurs', 'san antonio spurs': 'spurs',
+        'grizzlies': 'grizzlies', 'memphis grizzlies': 'grizzlies',
+        'pelicans': 'pelicans', 'new orleans pelicans': 'pelicans',
+        'nuggets': 'nuggets', 'denver nuggets': 'nuggets',
+        'timberwolves': 'timberwolves', 'wolves': 'timberwolves', 'minnesota timberwolves': 'timberwolves',
+        'trail blazers': 'trail blazers', 'blazers': 'trail blazers', 'portland trail blazers': 'trail blazers',
+        'jazz': 'jazz', 'utah jazz': 'jazz',
+        'suns': 'suns', 'phoenix suns': 'suns',
+        'clippers': 'clippers', 'la clippers': 'clippers', 'los angeles clippers': 'clippers',
+        'kings': 'kings', 'sacramento kings': 'kings',
+        # NHL
+        'bruins': 'bruins', 'boston bruins': 'bruins',
+        'canadiens': 'canadiens', 'habs': 'canadiens', 'montreal canadiens': 'canadiens',
+        'maple leafs': 'maple leafs', 'leafs': 'maple leafs', 'toronto maple leafs': 'maple leafs',
+        'senators': 'senators', 'sens': 'senators', 'ottawa senators': 'senators',
+        'sabres': 'sabres', 'buffalo sabres': 'sabres',
+        'red wings': 'red wings', 'detroit red wings': 'red wings',
+        'lightning': 'lightning', 'bolts': 'lightning', 'tampa bay lightning': 'lightning',
+        'blue jackets': 'blue jackets', 'columbus blue jackets': 'blue jackets',
+        'hurricanes': 'hurricanes', 'canes': 'hurricanes', 'carolina hurricanes': 'hurricanes',
+        'flyers': 'flyers', 'philadelphia flyers': 'flyers',
+        'penguins': 'penguins', 'pens': 'penguins', 'pittsburgh penguins': 'penguins',
+        'capitals': 'capitals', 'caps': 'capitals', 'washington capitals': 'capitals',
+        'islanders': 'islanders', 'isles': 'islanders', 'new york islanders': 'islanders',
+        'rangers': 'rangers', 'new york rangers': 'rangers',
+        'devils': 'devils', 'new jersey devils': 'devils',
+        'blackhawks': 'blackhawks', 'hawks': 'blackhawks', 'chicago blackhawks': 'blackhawks',
+        'blues': 'blues', 'st. louis blues': 'blues', 'st louis blues': 'blues',
+        'predators': 'predators', 'preds': 'predators', 'nashville predators': 'predators',
+        'stars': 'stars', 'dallas stars': 'stars',
+        'wild': 'wild', 'minnesota wild': 'wild',
+        'avalanche': 'avalanche', 'avs': 'avalanche', 'colorado avalanche': 'avalanche',
+        'jets': 'jets', 'winnipeg jets': 'jets',
+        'coyotes': 'coyotes', 'arizona coyotes': 'coyotes', 'utah hockey club': 'utah',
+        'flames': 'flames', 'calgary flames': 'flames',
+        'oilers': 'oilers', 'edmonton oilers': 'oilers',
+        'canucks': 'canucks', 'vancouver canucks': 'canucks',
+        'kraken': 'kraken', 'seattle kraken': 'kraken',
+        'sharks': 'sharks', 'san jose sharks': 'sharks',
+        'ducks': 'ducks', 'anaheim ducks': 'ducks',
+        'golden knights': 'golden knights', 'knights': 'golden knights', 'vegas golden knights': 'golden knights',
+    }
+
+    # Try to find nickname in the name
+    for key, nickname in nickname_map.items():
+        if key in full_lower:
+            return nickname
+
+    # Fallback: return last word (usually the nickname)
+    parts = full_name.split()
+    return parts[-1].lower() if parts else full_lower
+
+
 def match_game_odds(odds_data: List[Dict], away_name: str, home_name: str) -> Dict:
-    """Match odds to a specific game with full details"""
+    """Match odds to a specific game with strict team matching"""
     result = {
         'spread_away': '-', 'spread_home': '-',
         'ml_away': '-', 'ml_home': '-',
@@ -217,20 +356,26 @@ def match_game_odds(odds_data: List[Dict], away_name: str, home_name: str) -> Di
         'open_spread': '-', 'spread_move': '-'
     }
 
+    # Get nicknames for matching
+    away_nick = get_team_nickname(away_name)
+    home_nick = get_team_nickname(home_name)
+
     for game in odds_data:
-        api_away = game.get('away_team', '').lower()
-        api_home = game.get('home_team', '').lower()
+        api_away = game.get('away_team', '')
+        api_home = game.get('home_team', '')
+        api_away_nick = get_team_nickname(api_away)
+        api_home_nick = get_team_nickname(api_home)
 
-        if (away_name.lower() in api_away or api_away in away_name.lower()) and \
-           (home_name.lower() in api_home or api_home in home_name.lower()):
-
+        # Strict matching: both away AND home nicknames must match
+        if api_away_nick == away_nick and api_home_nick == home_nick:
             for bm in game.get('bookmakers', [])[:1]:
                 for market in bm.get('markets', []):
                     if market['key'] == 'spreads':
                         for o in market['outcomes']:
                             spread = o['point']
                             spread_str = f"{spread:+.1f}" if spread >= 0 else f"{spread:.1f}"
-                            if home_name.lower() in o['name'].lower():
+                            outcome_nick = get_team_nickname(o['name'])
+                            if outcome_nick == home_nick:
                                 result['spread_home'] = spread_str
                             else:
                                 result['spread_away'] = spread_str
@@ -242,7 +387,8 @@ def match_game_odds(odds_data: List[Dict], away_name: str, home_name: str) -> Di
                         for o in market['outcomes']:
                             ml = o['price']
                             ml_str = f"{ml:+d}" if isinstance(ml, int) else str(ml)
-                            if home_name.lower() in o['name'].lower():
+                            outcome_nick = get_team_nickname(o['name'])
+                            if outcome_nick == home_nick:
                                 result['ml_home'] = ml_str
                             else:
                                 result['ml_away'] = ml_str
@@ -310,13 +456,48 @@ def format_top(val, games_played=1):
     except:
         return str(val) if val else '-'
 
+def calculate_ts_pct(ppg, fga, fta):
+    """Calculate True Shooting Percentage: TS% = PTS / (2 * (FGA + 0.44 * FTA))"""
+    try:
+        pts = float(ppg)
+        fga_val = float(fga)
+        fta_val = float(fta)
+        if fga_val + fta_val > 0:
+            ts = pts / (2 * (fga_val + 0.44 * fta_val)) * 100
+            return f"{ts:.1f}%"
+    except:
+        pass
+    return '-'
+
+
+def calculate_efg_pct(fgm, fga, three_pm):
+    """Calculate Effective FG%: eFG% = (FGM + 0.5 * 3PM) / FGA"""
+    try:
+        fgm_val = float(fgm)
+        fga_val = float(fga)
+        three_val = float(three_pm)
+        if fga_val > 0:
+            efg = (fgm_val + 0.5 * three_val) / fga_val * 100
+            return f"{efg:.1f}%"
+    except:
+        pass
+    return '-'
+
+
 def extract_nba_stats(raw: Dict, record: str) -> Dict:
     """Extract comprehensive NBA stats"""
+    # Get base stats for calculations
+    ppg = raw.get('avgPoints', raw.get('pointsPerGame', 0))
+    fga = raw.get('avgFieldGoalsAttempted', 0)
+    fta = raw.get('avgFreeThrowsAttempted', 0)
+    fgm = raw.get('avgFieldGoalsMade', 0)
+    three_pm = raw.get('avgThreePointFieldGoalsMade', 0)
+
     return {
         # Offense
-        'ppg': safe_num(raw.get('avgPoints', raw.get('pointsPerGame'))),
+        'ppg': safe_num(ppg),
         'fg_pct': safe_pct(raw.get('fieldGoalPct')),
-        'three_pct': safe_pct(raw.get('threePointPct', raw.get('threePointFieldGoalPct'))),  # ESPN uses threePointPct
+        'three_pct': safe_pct(raw.get('threePointPct', raw.get('threePointFieldGoalPct'))),
         'ft_pct': safe_pct(raw.get('freeThrowPct')),
         'ast': safe_num(raw.get('avgAssists', raw.get('assistsPerGame'))),
         'reb': safe_num(raw.get('avgRebounds', raw.get('reboundsPerGame'))),
@@ -330,10 +511,10 @@ def extract_nba_stats(raw: Dict, record: str) -> Dict:
         'to': safe_num(raw.get('avgTurnovers', raw.get('turnoversPerGame'))),
         'ast_to': safe_num(raw.get('assistTurnoverRatio')),
         'pf': safe_num(raw.get('avgFouls', raw.get('foulsPerGame'))),
-        # Shooting - Advanced
+        # Shooting - Advanced (calculated)
         'two_pct': safe_pct(raw.get('twoPointFieldGoalPct')),
-        'efg': safe_pct(raw.get('shootingEfficiency')),  # Effective FG%
-        'ts': safe_pct(raw.get('scoringEfficiency')),    # True Shooting proxy
+        'efg': calculate_efg_pct(fgm, fga, three_pm),
+        'ts': calculate_ts_pct(ppg, fga, fta),
         # Per Game
         'fgm': safe_num(raw.get('avgFieldGoalsMade')),
         'fga': safe_num(raw.get('avgFieldGoalsAttempted')),
