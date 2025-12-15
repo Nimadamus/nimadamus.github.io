@@ -951,7 +951,7 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
         </div>'''
 
     return f'''
-    <div class="game-card">
+    <div class="game-card" data-event-id="{game.get('event_id', '')}" data-sport="{sport.lower()}">
         <div class="game-header">
             <span class="game-time">{game['time']}</span>
             <span class="game-venue">{game['venue']}</span>
@@ -1109,7 +1109,7 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
         </div>'''
 
     return f'''
-    <div class="game-card">
+    <div class="game-card" data-event-id="{game.get('event_id', '')}" data-sport="{sport.lower()}">
         <div class="game-header">
             <span class="game-time">{game['time']}</span>
             <span class="game-venue">{game['venue']}</span>
@@ -1263,7 +1263,7 @@ def generate_game_card_nhl(game: Dict) -> str:
         </div>'''
 
     return f'''
-    <div class="game-card">
+    <div class="game-card" data-event-id="{game.get('event_id', '')}" data-sport="nhl">
         <div class="game-header">
             <span class="game-time">{game['time']}</span>
             <span class="game-venue">{game['venue']}</span>
@@ -1861,6 +1861,84 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         function calNav(delta) {{ calDate.setMonth(calDate.getMonth() + delta); renderCal(); }}
         renderCal();
     </script>
+
+    <!-- Live Game Status Check - Removes finished games automatically -->
+    <script>
+    (function() {{
+        const ESPN_ENDPOINTS = {{
+            'nba': 'basketball/nba',
+            'nfl': 'football/nfl',
+            'nhl': 'hockey/nhl',
+            'ncaab': 'basketball/mens-college-basketball',
+            'ncaaf': 'football/college-football'
+        }};
+
+        async function checkGameStatus() {{
+            const cards = document.querySelectorAll('.game-card[data-event-id]');
+            const sportCounts = {{}};
+
+            for (const card of cards) {{
+                const eventId = card.getAttribute('data-event-id');
+                const sport = card.getAttribute('data-sport');
+
+                if (!eventId || !sport) continue;
+
+                const endpoint = ESPN_ENDPOINTS[sport];
+                if (!endpoint) continue;
+
+                try {{
+                    const resp = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${{endpoint}}/scoreboard/${{eventId}}`);
+                    if (resp.ok) {{
+                        const data = await resp.json();
+                        const status = data?.competitions?.[0]?.status?.type?.name || data?.status?.type?.name;
+
+                        if (status === 'STATUS_FINAL' || status === 'STATUS_POSTPONED' || status === 'STATUS_CANCELED') {{
+                            card.style.transition = 'opacity 0.5s, max-height 0.5s';
+                            card.style.opacity = '0';
+                            card.style.maxHeight = '0';
+                            card.style.overflow = 'hidden';
+                            card.style.margin = '0';
+                            card.style.padding = '0';
+                            setTimeout(() => card.remove(), 500);
+                            console.log(`Removed finished game: ${{eventId}}`);
+                        }} else {{
+                            if (!sportCounts[sport]) sportCounts[sport] = 0;
+                            sportCounts[sport]++;
+                        }}
+                    }}
+                }} catch (e) {{
+                    // On error, keep the card and count it
+                    if (!sportCounts[sport]) sportCounts[sport] = 0;
+                    sportCounts[sport]++;
+                }}
+            }}
+
+            // Update tab counts
+            for (const [sport, count] of Object.entries(sportCounts)) {{
+                const btn = document.querySelector(`.tab-btn[data-sport="${{sport}}"] .count`);
+                if (btn) btn.textContent = `(${{count}})`;
+            }}
+
+            // Check for empty sections and show "no games" message
+            ['nba', 'nfl', 'nhl', 'ncaab', 'ncaaf'].forEach(sport => {{
+                const section = document.getElementById(`${{sport}}-section`);
+                if (section) {{
+                    const cards = section.querySelectorAll('.game-card');
+                    if (cards.length === 0 && !section.querySelector('.no-games')) {{
+                        const noGames = document.createElement('div');
+                        noGames.className = 'no-games';
+                        noGames.textContent = `No ${{sport.toUpperCase()}} games currently in progress`;
+                        section.appendChild(noGames);
+                    }}
+                }}
+            }});
+        }}
+
+        // Initial check after 10 seconds, then every 60 seconds
+        setTimeout(checkGameStatus, 10000);
+        setInterval(checkGameStatus, 60000);
+    }})();
+    </script>
 </body>
 </html>'''
 
@@ -1998,7 +2076,11 @@ def fetch_all_games() -> Dict[str, List]:
                         print(f"  [SKIP] Missing stats for: {away_abbr} vs {home_abbr}")
                         continue
 
+                # Get ESPN event ID for live status checking
+                event_id = event.get('id', '')
+
                 game = {
+                    'event_id': event_id,
                     'time': game_time,
                     'venue': venue,
                     'network': network,
