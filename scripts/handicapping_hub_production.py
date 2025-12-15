@@ -1860,12 +1860,16 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         <div class="nav-inner">
             <a href="index.html" class="logo">BET<span>LEGEND</span></a>
             <div class="nav-links">
+                <a href="index.html">Home</a>
                 <a href="handicapping-hub.html">Hub</a>
                 <a href="handicapping-hub-archive.html">Archive</a>
                 <a href="blog-page10.html">Picks</a>
+                <a href="featured-game-of-the-day-page18.html">Featured</a>
                 <a href="nfl.html">NFL</a>
                 <a href="nba.html">NBA</a>
                 <a href="nhl.html">NHL</a>
+                <a href="ncaab.html">NCAAB</a>
+                <a href="ncaaf.html">NCAAF</a>
             </div>
         </div>
     </nav>
