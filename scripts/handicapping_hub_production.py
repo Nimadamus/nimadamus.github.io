@@ -397,6 +397,37 @@ def match_game_odds(odds_data: List[Dict], away_name: str, home_name: str) -> Di
     return result
 
 # =============================================================================
+# VALIDATION FUNCTIONS
+# =============================================================================
+
+def is_valid_value(val) -> bool:
+    """Check if a value is valid (not a placeholder)"""
+    if val is None:
+        return False
+    if isinstance(val, str):
+        val_str = val.strip()
+        if val_str in ['', '-', 'TBD', 'N/A', 'null', 'None']:
+            return False
+    return True
+
+
+def has_valid_odds(odds: dict) -> bool:
+    """Check if odds dictionary has all required valid values"""
+    required = ['spread_away', 'spread_home', 'ml_away', 'ml_home', 'total']
+    for key in required:
+        if not is_valid_value(odds.get(key)):
+            return False
+    return True
+
+
+def validate_stat(val) -> str:
+    """Return validated stat or empty string (for hiding)"""
+    if not is_valid_value(val):
+        return ''
+    return str(val)
+
+
+# =============================================================================
 # STAT EXTRACTION - Comprehensive stats for each sport
 # =============================================================================
 
@@ -711,14 +742,10 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
     away_logo = get_logo_url(sport, away['abbr'], away.get('team_id', ''))
     home_logo = get_logo_url(sport, home['abbr'], home.get('team_id', ''))
 
-    return f'''
-    <div class="game-card">
-        <div class="game-header">
-            <span class="game-time">{game['time']}</span>
-            <span class="game-venue">{game['venue']}</span>
-            <span class="game-network">{game['network']}</span>
-        </div>
-
+    # Only include betting lines section if we have valid odds (NO PLACEHOLDERS)
+    betting_lines_html = ''
+    if has_valid_odds(odds):
+        betting_lines_html = f'''
         <!-- SECTION 1: BETTING LINES -->
         <div class="section betting-lines">
             <div class="section-title">BETTING LINES</div>
@@ -754,7 +781,47 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
                     </tr>
                 </tbody>
             </table>
+        </div>'''
+    else:
+        # Show teams info without betting lines
+        betting_lines_html = f'''
+        <!-- TEAMS INFO (No betting lines available) -->
+        <div class="section teams-info">
+            <div class="section-title">MATCHUP</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>RECORD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{away['abbr']}</span>
+                        </td>
+                        <td>{away['record']}</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{home['abbr']}</span>
+                        </td>
+                        <td>{home['record']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>'''
+
+    return f'''
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">{game['time']}</span>
+            <span class="game-venue">{game['venue']}</span>
+            <span class="game-network">{game['network']}</span>
         </div>
+        {betting_lines_html}
 
         <!-- SECTION 2: OFFENSE vs DEFENSE -->
         <div class="stats-grid">
@@ -774,11 +841,11 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
                 <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>OPP</th><th>OYPG</th><th>SACK</th><th>INT</th><th>TFL</th><th>FF</th><th>PD</th></tr>
+                        <tr><th></th><th>SACK</th><th>INT</th><th>TFL</th><th>FF</th><th>PD</th><th>PEN</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['opp_ypg']}</td><td>{away['stats']['sacks']}</td><td>{away['stats']['ints']}</td><td>{away['stats']['tfl']}</td><td>{away['stats']['ff']}</td><td>{away['stats']['pd']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['opp_ypg']}</td><td>{home['stats']['sacks']}</td><td>{home['stats']['ints']}</td><td>{home['stats']['tfl']}</td><td>{home['stats']['ff']}</td><td>{home['stats']['pd']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['sacks']}</td><td>{away['stats']['ints']}</td><td>{away['stats']['tfl']}</td><td>{away['stats']['ff']}</td><td>{away['stats']['pd']}</td><td>{away['stats']['penalties']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['sacks']}</td><td>{home['stats']['ints']}</td><td>{home['stats']['tfl']}</td><td>{home['stats']['ff']}</td><td>{home['stats']['pd']}</td><td>{home['stats']['penalties']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -790,11 +857,11 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
                 <div class="section-title">EFFICIENCY</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>YPP</th><th>CMP%</th><th>YPA</th><th>YPC</th><th>YPR</th><th>QBR</th></tr>
+                        <tr><th></th><th>CMP%</th><th>YPA</th><th>YPC</th><th>YPR</th><th>QBR</th><th>FG%</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ypp']}</td><td>{away['stats']['comp_pct']}</td><td>{away['stats']['ypa']}</td><td>{away['stats']['ypc']}</td><td>{away['stats']['ypr']}</td><td>{away['stats']['qbr']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ypp']}</td><td>{home['stats']['comp_pct']}</td><td>{home['stats']['ypa']}</td><td>{home['stats']['ypc']}</td><td>{home['stats']['ypr']}</td><td>{home['stats']['qbr']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['comp_pct']}</td><td>{away['stats']['ypa']}</td><td>{away['stats']['ypc']}</td><td>{away['stats']['ypr']}</td><td>{away['stats']['qbr']}</td><td>{away['stats']['fg_pct']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['comp_pct']}</td><td>{home['stats']['ypa']}</td><td>{home['stats']['ypc']}</td><td>{home['stats']['ypr']}</td><td>{home['stats']['qbr']}</td><td>{home['stats']['fg_pct']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -833,14 +900,10 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
     away_logo = get_logo_url(sport, away['abbr'], away.get('team_id', ''))
     home_logo = get_logo_url(sport, home['abbr'], home.get('team_id', ''))
 
-    return f'''
-    <div class="game-card">
-        <div class="game-header">
-            <span class="game-time">{game['time']}</span>
-            <span class="game-venue">{game['venue']}</span>
-            <span class="game-network">{game['network']}</span>
-        </div>
-
+    # Only include betting lines section if we have valid odds (NO PLACEHOLDERS)
+    betting_lines_html = ''
+    if has_valid_odds(odds):
+        betting_lines_html = f'''
         <!-- SECTION 1: BETTING LINES -->
         <div class="section betting-lines">
             <div class="section-title">BETTING LINES</div>
@@ -876,7 +939,47 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
                     </tr>
                 </tbody>
             </table>
+        </div>'''
+    else:
+        # Show teams info without betting lines
+        betting_lines_html = f'''
+        <!-- TEAMS INFO (No betting lines available) -->
+        <div class="section teams-info">
+            <div class="section-title">MATCHUP</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>RECORD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{away['abbr']}</span>
+                        </td>
+                        <td>{away['record']}</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{home['abbr']}</span>
+                        </td>
+                        <td>{home['record']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>'''
+
+    return f'''
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">{game['time']}</span>
+            <span class="game-venue">{game['venue']}</span>
+            <span class="game-network">{game['network']}</span>
         </div>
+        {betting_lines_html}
 
         <!-- SECTION 2: OFFENSE vs DEFENSE -->
         <div class="stats-grid">
@@ -896,11 +999,11 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
                 <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>OPP</th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>PF</th></tr>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td><td>{away['stats']['dreb']}</td><td>{away['stats']['oreb']}</td><td>{away['stats']['pf']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td><td>{home['stats']['dreb']}</td><td>{home['stats']['oreb']}</td><td>{home['stats']['pf']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td><td>{away['stats']['dreb']}</td><td>{away['stats']['oreb']}</td><td>{away['stats']['to']}</td><td>{away['stats']['pf']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td><td>{home['stats']['dreb']}</td><td>{home['stats']['oreb']}</td><td>{home['stats']['to']}</td><td>{home['stats']['pf']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -924,11 +1027,11 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
                 <div class="section-title">EFFICIENCY</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>TO</th><th>A/TO</th><th>FTM</th><th>FTA</th><th>TS%</th><th>PWR</th></tr>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['to']}</td><td>{away['stats']['ast_to']}</td><td>{away['stats']['ftm']}</td><td>{away['stats']['fta']}</td><td>{away['stats']['ts']}</td><td>{away['stats']['pwr']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['to']}</td><td>{home['stats']['ast_to']}</td><td>{home['stats']['ftm']}</td><td>{home['stats']['fta']}</td><td>{home['stats']['ts']}</td><td>{home['stats']['pwr']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ast_to']}</td><td>{away['stats']['ftm']}</td><td>{away['stats']['fta']}</td><td>{away['stats']['efg']}</td><td>{away['stats']['ts']}</td><td>{away['stats']['pwr']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ast_to']}</td><td>{home['stats']['ftm']}</td><td>{home['stats']['fta']}</td><td>{home['stats']['efg']}</td><td>{home['stats']['ts']}</td><td>{home['stats']['pwr']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -951,14 +1054,10 @@ def generate_game_card_nhl(game: Dict) -> str:
     away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
     home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
 
-    return f'''
-    <div class="game-card">
-        <div class="game-header">
-            <span class="game-time">{game['time']}</span>
-            <span class="game-venue">{game['venue']}</span>
-            <span class="game-network">{game['network']}</span>
-        </div>
-
+    # Only include betting lines section if we have valid odds (NO PLACEHOLDERS)
+    betting_lines_html = ''
+    if has_valid_odds(odds):
+        betting_lines_html = f'''
         <!-- SECTION 1: BETTING LINES -->
         <div class="section betting-lines">
             <div class="section-title">BETTING LINES</div>
@@ -994,7 +1093,47 @@ def generate_game_card_nhl(game: Dict) -> str:
                     </tr>
                 </tbody>
             </table>
+        </div>'''
+    else:
+        # Show teams info without betting lines
+        betting_lines_html = f'''
+        <!-- TEAMS INFO (No betting lines available) -->
+        <div class="section teams-info">
+            <div class="section-title">MATCHUP</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>RECORD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{away['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{away['abbr']}</span>
+                        </td>
+                        <td>{away['record']}</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{home['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{home['abbr']}</span>
+                        </td>
+                        <td>{home['record']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>'''
+
+    return f'''
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">{game['time']}</span>
+            <span class="game-venue">{game['venue']}</span>
+            <span class="game-network">{game['network']}</span>
         </div>
+        {betting_lines_html}
 
         <!-- SECTION 2: OFFENSE vs DEFENSE -->
         <div class="stats-grid">
@@ -1002,11 +1141,11 @@ def generate_game_card_nhl(game: Dict) -> str:
                 <div class="section-title">OFFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PP%</th><th>PPG</th><th>PTS</th></tr>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['gf']}</td><td>{away['stats']['sog']}</td><td>{away['stats']['shoot_pct']}</td><td>{away['stats']['pp_pct']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['pts_total']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['gf']}</td><td>{home['stats']['sog']}</td><td>{home['stats']['shoot_pct']}</td><td>{home['stats']['pp_pct']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['pts_total']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['gf']}</td><td>{away['stats']['sog']}</td><td>{away['stats']['shoot_pct']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['assists']}</td><td>{away['stats']['pts_total']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['gf']}</td><td>{home['stats']['sog']}</td><td>{home['stats']['shoot_pct']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['assists']}</td><td>{home['stats']['pts_total']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1014,11 +1153,11 @@ def generate_game_card_nhl(game: Dict) -> str:
                 <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>PK%</th><th>SHG</th><th>GD</th></tr>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ga']}</td><td>{away['stats']['sa']}</td><td>{away['stats']['sv_pct']}</td><td>{away['stats']['pk_pct']}</td><td>{away['stats']['shg']}</td><td>{away['stats']['gd']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ga']}</td><td>{home['stats']['sa']}</td><td>{home['stats']['sv_pct']}</td><td>{home['stats']['pk_pct']}</td><td>{home['stats']['shg']}</td><td>{home['stats']['gd']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ga']}</td><td>{away['stats']['sa']}</td><td>{away['stats']['sv_pct']}</td><td>{away['stats']['shg']}</td><td>{away['stats']['gd']}</td><td>{away['stats']['pim']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ga']}</td><td>{home['stats']['sa']}</td><td>{home['stats']['sv_pct']}</td><td>{home['stats']['shg']}</td><td>{home['stats']['gd']}</td><td>{home['stats']['pim']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1030,11 +1169,11 @@ def generate_game_card_nhl(game: Dict) -> str:
                 <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>PIM</th><th>SO%</th><th>SOSV%</th></tr>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['fow_pct']}</td><td>{away['stats']['fow']}</td><td>{away['stats']['fol']}</td><td>{away['stats']['pim']}</td><td>{away['stats']['so_pct']}</td><td>{away['stats']['so_sv_pct']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['fow_pct']}</td><td>{home['stats']['fow']}</td><td>{home['stats']['fol']}</td><td>{home['stats']['pim']}</td><td>{home['stats']['so_pct']}</td><td>{home['stats']['so_sv_pct']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['fow_pct']}</td><td>{away['stats']['fow']}</td><td>{away['stats']['fol']}</td><td>{away['stats']['sha']}</td><td>{away['stats']['plus_minus']}</td><td>{away['stats']['otl']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['fow_pct']}</td><td>{home['stats']['fow']}</td><td>{home['stats']['fol']}</td><td>{home['stats']['sha']}</td><td>{home['stats']['plus_minus']}</td><td>{home['stats']['otl']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1042,11 +1181,11 @@ def generate_game_card_nhl(game: Dict) -> str:
                 <div class="section-title">CLUTCH & POWER</div>
                 <table class="stats-table">
                     <thead>
-                        <tr><th></th><th>GWG</th><th>OTL</th><th>+/-</th><th>PWR</th><th>REC</th></tr>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['gwg']}</td><td>{away['stats']['otl']}</td><td>{away['stats']['plus_minus']}</td><td>{away['stats']['pwr']}</td><td>{away['record']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['gwg']}</td><td>{home['stats']['otl']}</td><td>{home['stats']['plus_minus']}</td><td>{home['stats']['pwr']}</td><td>{home['record']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['gwg']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['shg']}</td><td>{away['stats']['pwr']}</td><td>{away['record']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['gwg']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['shg']}</td><td>{home['stats']['pwr']}</td><td>{home['record']}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1482,6 +1621,14 @@ def fetch_all_games() -> Dict[str, List]:
                 if len(competitors) < 2:
                     continue
 
+                # VALIDATION: Skip completed/final games - only show scheduled/in-progress
+                game_status = event.get('status', {}).get('type', {}).get('name', '')
+                if game_status in ['STATUS_FINAL', 'STATUS_POSTPONED', 'STATUS_CANCELED']:
+                    away_team = competitors[0].get('team', {})
+                    home_team = competitors[1].get('team', {})
+                    print(f"  [SKIP] Game is {game_status}: {away_team.get('abbreviation')} vs {home_team.get('abbreviation')}")
+                    continue
+
                 away_comp = next((c for c in competitors if c.get('homeAway') == 'away'), competitors[0])
                 home_comp = next((c for c in competitors if c.get('homeAway') == 'home'), competitors[1])
 
@@ -1534,6 +1681,35 @@ def fetch_all_games() -> Dict[str, List]:
                 venue = comps.get('venue', {}).get('fullName', 'TBD')
                 broadcasts = comps.get('broadcasts', [])
                 network = broadcasts[0].get('names', ['TBD'])[0] if broadcasts else 'TBD'
+
+                # VALIDATION: Skip games with invalid/placeholder data
+                # Check for TBD team names or abbreviations
+                if away_abbr == 'TBD' or home_abbr == 'TBD':
+                    print(f"  [SKIP] Game has TBD team: {away_abbr} vs {home_abbr}")
+                    continue
+                if away_name == 'TBD' or home_name == 'TBD':
+                    print(f"  [SKIP] Game has TBD team name")
+                    continue
+                if game_time == 'TBD':
+                    print(f"  [SKIP] Game has TBD time: {away_abbr} vs {home_abbr}")
+                    continue
+
+                # For college sports, verify we have real stats (not just PPG)
+                if sport == 'NCAAF':
+                    # NCAAF needs more robust validation - check key offensive stats
+                    key_stats = ['ppg', 'ypg', 'pass_ypg', 'rush_ypg', 'comp_pct', 'ypa']
+                    away_missing = sum(1 for s in key_stats if away_stats.get(s, '-') == '-')
+                    home_missing = sum(1 for s in key_stats if home_stats.get(s, '-') == '-')
+                    if away_missing > 2 or home_missing > 2:
+                        print(f"  [SKIP] Incomplete stats ({away_missing}/{home_missing} missing): {away_abbr} vs {home_abbr}")
+                        continue
+                elif sport == 'NCAAB':
+                    # Check if we have any real stats (at least PPG should be available)
+                    away_ppg = away_stats.get('ppg', '-')
+                    home_ppg = home_stats.get('ppg', '-')
+                    if away_ppg == '-' or home_ppg == '-':
+                        print(f"  [SKIP] Missing stats for: {away_abbr} vs {home_abbr}")
+                        continue
 
                 game = {
                     'time': game_time,
