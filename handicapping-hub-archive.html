@@ -326,8 +326,21 @@
         // Archive data - will grow over time as archives are created
         const archiveData = {
             // Format: "YYYY-MM-DD": "filename.html"
-            "2025-12-14": "handicapping-hub.html",  // Today - main file
-            // Add more as archives are created
+            "2025-11-30": "handicapping-hub-2025-11-30.html",
+            "2025-12-01": "handicapping-hub-2025-12-01.html",
+            "2025-12-02": "handicapping-hub-2025-12-02.html",
+            "2025-12-03": "handicapping-hub-2025-12-03.html",
+            "2025-12-04": "handicapping-hub-2025-12-04.html",
+            "2025-12-05": "handicapping-hub-2025-12-05.html",
+            "2025-12-06": "handicapping-hub-2025-12-06.html",
+            "2025-12-07": "handicapping-hub-2025-12-07.html",
+            "2025-12-08": "handicapping-hub-2025-12-08.html",
+            "2025-12-09": "handicapping-hub-2025-12-09.html",
+            "2025-12-10": "handicapping-hub-2025-12-10.html",
+            "2025-12-11": "handicapping-hub-2025-12-11.html",
+            "2025-12-12": "handicapping-hub-2025-12-12.html",
+            "2025-12-13": "handicapping-hub-2025-12-13.html",
+            "2025-12-14": "handicapping-hub-2025-12-14.html"
         };
 
         let currentDate = new Date();
@@ -375,7 +388,7 @@
 
                 let content = `<div class="day-number">${day}</div>`;
                 if (hasArchive) {
-                    const linkHref = isToday ? 'handicapping-hub.html' : `handicapping-hub-archive/${archiveData[dateStr]}`;
+                    const linkHref = isToday ? 'handicapping-hub.html' : archiveData[dateStr];
                     content += `<a href="${linkHref}" class="day-link">View Hub</a>`;
                 }
 
@@ -420,7 +433,7 @@
                 });
                 const today = new Date().toISOString().split('T')[0];
                 const isToday = dateStr === today;
-                const href = isToday ? 'handicapping-hub.html' : `handicapping-hub-archive/${archiveData[dateStr]}`;
+                const href = isToday ? 'handicapping-hub.html' : archiveData[dateStr];
 
                 html += `
                     <div class="archive-item">

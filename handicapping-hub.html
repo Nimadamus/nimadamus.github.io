@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Handicapping Hub - December 14, 2025 | BetLegend</title>
     <meta name="description" content="The best handicapping hub on the internet. Advanced stats, betting lines, and analysis for NBA, NFL, NHL, NCAAB, and NCAAF.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -17,36 +17,132 @@
         }
 
         /* Navigation */
-        .nav {
-            background: #1a365d;
-            padding: 12px 20px;
+        .nav-container {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            border-bottom: 3px solid #fd5000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 2px solid #fd5000;
+            padding: 0 30px;
         }
         .nav-inner {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
         }
         .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: white;
+            font-family: 'Orbitron', 'Inter', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
             text-decoration: none;
+            color: #fff;
+            letter-spacing: 2px;
         }
-        .logo span { color: #fd5000; }
-        .nav-links { display: flex; gap: 15px; }
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
+        .logo span { color: #00f0ff; text-shadow: 0 0 20px #00f0ff; }
+        .nav-menu { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .hub-btn {
+            font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+            margin-right: 10px;
+        }
+        .nav-link {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover { color: #ffd700; }
+        .dropdown { position: relative; display: inline-flex; align-items: center; }
+        .dropdown .dropbtn {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            background: none;
+            border: none;
+            padding: 10px 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dropdown:hover .dropbtn { color: #ffd700; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            background: rgba(0, 5, 20, 0.98);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 8px;
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.3);
+            z-index: 99999;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 10px 14px;
+            color: #00f0ff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .dropdown-content a:hover { background: rgba(0, 240, 255, 0.1); color: #fff; }
+        .sports-records-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 400px;
+            background: rgba(0, 5, 20, 0.98);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 8px;
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.3);
+            z-index: 99999;
+        }
+        .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .column h4 { color: #ffd700; font-size: 0.75rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .column a { display: block; padding: 8px 12px; color: #00f0ff; text-decoration: none; font-size: 0.85rem; border-radius: 6px; }
+        .column a:hover { background: rgba(0, 240, 255, 0.1); color: #fff; }
+        .dropdown:hover .dropdown-content,
+        .dropdown:hover .sports-records-dropdown { display: block; }
+        @media (max-width: 900px) {
+            .nav-menu { gap: 4px; }
+            .nav-link, .dropdown .dropbtn { padding: 8px 10px; font-size: 0.75rem; }
+            .hub-btn { padding: 8px 14px; font-size: 0.75rem; }
+            .sports-records-dropdown { min-width: 300px; }
+        }
+        @media (max-width: 600px) {
+            .nav-container { padding: 0 10px; }
+            .logo { font-size: 1.2rem; }
+            .nav-menu { gap: 2px; }
+            .nav-link, .dropdown .dropbtn { padding: 6px 8px; font-size: 0.7rem; }
+            .hub-btn { padding: 6px 10px; font-size: 0.7rem; margin-right: 5px; }
         }
 
         /* Header */
@@ -316,16 +412,65 @@
     </style>
 </head>
 <body>
-    <nav class="nav">
+    <nav class="nav-container">
         <div class="nav-inner">
             <a href="index.html" class="logo">BET<span>LEGEND</span></a>
-            <div class="nav-links">
-                <a href="handicapping-hub.html">Hub</a>
-                <a href="handicapping-hub-archive.html">Archive</a>
-                <a href="blog-page10.html">Picks</a>
-                <a href="nfl.html">NFL</a>
-                <a href="nba.html">NBA</a>
-                <a href="nhl.html">NHL</a>
+            <div class="nav-menu">
+                <a href="handicapping-hub.html" class="hub-btn">Handicapping Hub</a>
+                <a href="blog-page10.html" class="nav-link">Picks & Analysis</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Sports & Records &#9660;</button>
+                    <div class="sports-records-dropdown">
+                        <div class="two-columns">
+                            <div class="column">
+                                <h4>Sports</h4>
+                                <a href="nfl.html">NFL</a>
+                                <a href="mlb-page2.html">MLB</a>
+                                <a href="ncaaf.html">NCAAF</a>
+                                <a href="nba.html">NBA</a>
+                                <a href="ncaab.html">NCAAB</a>
+                                <a href="nhl.html">NHL</a>
+                                <a href="soccer.html">Soccer</a>
+                            </div>
+                            <div class="column">
+                                <h4>Records</h4>
+                                <a href="records.html">DETAILED BREAKDOWN</a>
+                                <a href="mlb-records.html">MLB</a>
+                                <a href="nfl-records.html">NFL</a>
+                                <a href="ncaaf-records.html">NCAAF</a>
+                                <a href="ncaab-records.html">NCAAB</a>
+                                <a href="nhl-records.html">NHL</a>
+                                <a href="nba-records.html">NBA</a>
+                                <a href="soccer-records.html">Soccer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">Resources &#9660;</button>
+                    <div class="dropdown-content">
+                        <a href="proofofpicks.html">Proof of Picks</a>
+                        <a href="live-odds.html">Live Odds</a>
+                        <a href="howitworks.html">How It Works</a>
+                        <a href="bankroll.html">Bankroll</a>
+                        <a href="kelly-criterion.html">Kelly Criterion</a>
+                        <a href="betting-calculators.html">Betting Calculators</a>
+                        <a href="screenshots.html">Screenshots</a>
+                        <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                        <a href="betting-glossary.html">Betting Glossary</a>
+                        <a href="betting-101.html">Betting 101</a>
+                        <a href="handicapping-hub-archive.html">Hub Archive</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+                <a href="news-page3.html" class="nav-link">News</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Game of the Day &#9660;</button>
+                    <div class="dropdown-content">
+                        <a href="featured-game-of-the-day-page18.html">Game of the Day</a>
+                        <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>

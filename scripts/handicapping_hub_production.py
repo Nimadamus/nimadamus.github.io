@@ -28,6 +28,8 @@ import requests
 import json
 import os
 import sys
+import shutil
+import re
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 
@@ -66,6 +68,115 @@ SPORTS = {
         'logo_path': 'ncaa',
     },
 }
+
+# Top 50 NCAAB teams to show (by ranking/brand)
+TOP_NCAAB_TEAMS = {
+    'kansas', 'duke', 'north carolina', 'kentucky', 'gonzaga', 'villanova',
+    'uconn', 'connecticut', 'michigan state', 'auburn', 'tennessee', 'alabama',
+    'purdue', 'houston', 'iowa state', 'baylor', 'arizona', 'marquette',
+    'creighton', 'texas', 'louisville', 'indiana', 'wisconsin', 'michigan',
+    'oregon', 'florida', 'ohio state', 'illinois', 'ucla', 'usc',
+    'arkansas', 'cincinnati', 'memphis', 'providence', 'st. johns', 'xavier',
+    'butler', 'san diego state', 'clemson', 'oklahoma', 'iowa', 'texas tech',
+    'kansas state', 'mississippi state', 'ole miss', 'vanderbilt', 'lsu',
+    'colorado', 'pittsburgh', 'dayton'
+}
+
+# =============================================================================
+# ARCHIVE SYSTEM
+# =============================================================================
+
+def archive_current_hub():
+    """
+    Archive the current handicapping-hub.html before generating a new one.
+    Creates a dated copy and updates the archive calendar.
+    """
+    today = datetime.now().strftime('%Y-%m-%d')
+    hub_path = os.path.join(REPO_PATH, OUTPUT_FILE)
+    archive_filename = f"handicapping-hub-{today}.html"
+    archive_path = os.path.join(REPO_PATH, archive_filename)
+
+    # Only archive if source exists and archive doesn't already exist
+    if os.path.exists(hub_path) and not os.path.exists(archive_path):
+        print(f"\n[ARCHIVE] Creating archive: {archive_filename}")
+        shutil.copy2(hub_path, archive_path)
+
+        # Update the archive calendar
+        update_archive_calendar(today, archive_filename)
+        print(f"[ARCHIVE] Archive created successfully")
+    elif os.path.exists(archive_path):
+        print(f"\n[ARCHIVE] Archive already exists for {today}, skipping...")
+    else:
+        print(f"\n[ARCHIVE] No existing hub to archive, first run")
+
+def update_archive_calendar(date_str: str, filename: str):
+    """Update the archive calendar page with the new archive entry"""
+    archive_page = os.path.join(REPO_PATH, 'handicapping-hub-archive.html')
+
+    if not os.path.exists(archive_page):
+        print(f"  [ARCHIVE] Archive page not found, skipping calendar update")
+        return
+
+    try:
+        with open(archive_page, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # Check if this date is already in the archive
+        if f'"{date_str}"' in content:
+            print(f"  [ARCHIVE] Date {date_str} already in calendar")
+            return
+
+        # Find the archiveData object and add the new entry
+        # Pattern: Find the last entry before the closing brace
+        pattern = r'("20\d{2}-\d{2}-\d{2}":\s*"[^"]+"\s*)\n(\s*\};)'
+        match = re.search(pattern, content)
+
+        if match:
+            new_entry = f'{match.group(1)},\n            "{date_str}": "{filename}"\n{match.group(2)}'
+            content = content[:match.start()] + new_entry + content[match.end():]
+
+            with open(archive_page, 'w', encoding='utf-8') as f:
+                f.write(content)
+            print(f"  [ARCHIVE] Added {date_str} to archive calendar")
+    except Exception as e:
+        print(f"  [ARCHIVE] Error updating calendar: {e}")
+
+def is_game_completed(game: Dict) -> bool:
+    """Check if a game has already been completed"""
+    status = game.get('status', {})
+    state = status.get('type', {}).get('state', '')
+    return state.lower() == 'post'
+
+def is_important_ncaab_game(game: Dict) -> bool:
+    """Check if an NCAAB game involves top teams (ranked/major programs)"""
+    competitors = game.get('competitions', [{}])[0].get('competitors', [])
+    for team in competitors:
+        team_name = team.get('team', {}).get('displayName', '').lower()
+        # Check if team is ranked (has a current rank)
+        if team.get('curatedRank', {}).get('current'):
+            return True
+        # Check if team is in our top teams list
+        for top_team in TOP_NCAAB_TEAMS:
+            if top_team in team_name:
+                return True
+    return False
+
+def is_bowl_game(game: Dict) -> bool:
+    """Check if an NCAAF game is a bowl game"""
+    game_name = game.get('name', '').lower()
+    short_name = game.get('shortName', '').lower()
+    notes = game.get('competitions', [{}])[0].get('notes', [{}])
+    headline = notes[0].get('headline', '').lower() if notes else ''
+
+    bowl_keywords = ['bowl', 'playoff', 'championship', 'fiesta', 'rose', 'sugar',
+                     'orange', 'cotton', 'peach', 'alamo', 'citrus', 'music city',
+                     'liberty', 'holiday', 'sun', 'gator', 'duke', 'mayo', 'pop-tarts',
+                     'tax act', 'go bowling', 'las vegas', 'fenway', 'pinstripe']
+
+    for keyword in bowl_keywords:
+        if keyword in game_name or keyword in short_name or keyword in headline:
+            return True
+    return False
 
 # =============================================================================
 # DATA FETCHING
@@ -1629,6 +1740,20 @@ def fetch_all_games() -> Dict[str, List]:
                     print(f"  [SKIP] Game is {game_status}: {away_team.get('abbreviation')} vs {home_team.get('abbreviation')}")
                     continue
 
+                # NCAAB: Only show important games (ranked teams or major programs)
+                if sport == 'NCAAB' and not is_important_ncaab_game(event):
+                    away_team = competitors[0].get('team', {})
+                    home_team = competitors[1].get('team', {})
+                    print(f"  [SKIP] NCAAB not important: {away_team.get('displayName', 'TBD')} vs {home_team.get('displayName', 'TBD')}")
+                    continue
+
+                # NCAAF: Only show bowl games during bowl season (Dec-Jan)
+                if sport == 'NCAAF' and not is_bowl_game(event):
+                    away_team = competitors[0].get('team', {})
+                    home_team = competitors[1].get('team', {})
+                    print(f"  [SKIP] NCAAF not a bowl: {away_team.get('displayName', 'TBD')} vs {home_team.get('displayName', 'TBD')}")
+                    continue
+
                 away_comp = next((c for c in competitors if c.get('homeAway') == 'away'), competitors[0])
                 home_comp = next((c for c in competitors if c.get('homeAway') == 'home'), competitors[1])
 
@@ -1750,6 +1875,9 @@ def main():
     print("HANDICAPPING HUB - ULTIMATE PRODUCTION SYSTEM")
     print(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
+
+    # Archive current hub before generating new one
+    archive_current_hub()
 
     date_str = datetime.now().strftime("%B %d, %Y")
     all_games = fetch_all_games()
