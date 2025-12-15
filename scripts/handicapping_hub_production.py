@@ -183,6 +183,197 @@ def get_archive_dates_json() -> str:
 
     return json.dumps(archive_dict)
 
+# =============================================================================
+# SPORT PAGE ARCHIVE SYSTEM
+# =============================================================================
+# Ensures all sport pages (NBA, NFL, NHL, NCAAB, NCAAF) are tracked in archive data files
+
+SPORT_ARCHIVE_CONFIG = {
+    'NBA': {
+        'main_page': 'nba.html',
+        'page_pattern': 'nba-page',
+        'data_file': 'nba-archive-data.js',
+        'array_name': 'NBA_ARCHIVE',
+    },
+    'NFL': {
+        'main_page': 'nfl.html',
+        'page_pattern': 'nfl-page',
+        'data_file': 'nfl-archive-data.js',
+        'array_name': 'NFL_ARCHIVE',
+    },
+    'NHL': {
+        'main_page': 'nhl.html',
+        'page_pattern': 'nhl-page',
+        'data_file': 'nhl-archive-data.js',
+        'array_name': 'NHL_ARCHIVE',
+    },
+    'NCAAB': {
+        'main_page': 'ncaab.html',
+        'page_pattern': 'ncaab-',
+        'data_file': 'ncaab-archive-data.js',
+        'array_name': 'NCAAB_ARCHIVE',
+    },
+    'NCAAF': {
+        'main_page': 'ncaaf.html',
+        'page_pattern': 'ncaaf-page',
+        'data_file': 'ncaaf-archive-data.js',
+        'array_name': 'NCAAF_ARCHIVE',
+    },
+}
+
+def extract_date_from_sport_page(filepath: str) -> Optional[str]:
+    """Extract the date from a sport page's content or filename"""
+    filename = os.path.basename(filepath)
+
+    month_map = {
+        'January': '01', 'February': '02', 'March': '03', 'April': '04',
+        'May': '05', 'June': '06', 'July': '07', 'August': '08',
+        'September': '09', 'October': '10', 'November': '11', 'December': '12',
+        'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04',
+        'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08',
+        'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12',
+        'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04',
+        'may': '05', 'jun': '06', 'jul': '07', 'aug': '08',
+        'sep': '09', 'oct': '10', 'nov': '11', 'dec': '12',
+    }
+
+    # First, try to extract date from filename (e.g., ncaab-nov4-2025.html)
+    filename_date_pattern = r'-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(\d{1,2})-(\d{4})\.html'
+    match = re.search(filename_date_pattern, filename, re.IGNORECASE)
+    if match:
+        month = month_map.get(match.group(1).lower(), '01')
+        day = match.group(2).zfill(2)
+        year = match.group(3)
+        return f"{year}-{month}-{day}"
+
+    try:
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read(20000)  # Read first 20K chars
+
+        # Look for common date patterns in the content
+        date_patterns = [
+            # "December 14, 2025" format
+            r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})',
+            # "Nov 14, 2025" format
+            r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2}),?\s+(\d{4})',
+        ]
+
+        for pattern in date_patterns:
+            match = re.search(pattern, content)
+            if match:
+                month = month_map.get(match.group(1), '01')
+                day = match.group(2).zfill(2)
+                year = match.group(3)
+                return f"{year}-{month}-{day}"
+
+        return None
+    except Exception as e:
+        print(f"  [ARCHIVE] Error reading {filepath}: {e}")
+        return None
+
+def scan_sport_pages(sport: str) -> List[Dict]:
+    """Scan for all pages of a given sport and extract their dates"""
+    import glob
+
+    config = SPORT_ARCHIVE_CONFIG.get(sport)
+    if not config:
+        return []
+
+    pages = []
+
+    # Add main page
+    main_page_path = os.path.join(REPO_PATH, config['main_page'])
+    if os.path.exists(main_page_path):
+        date = extract_date_from_sport_page(main_page_path)
+        if date:
+            pages.append({
+                'date': date,
+                'page': config['main_page'],
+                'title': datetime.strptime(date, '%Y-%m-%d').strftime('%B %d, %Y').replace(' 0', ' ')
+            })
+
+    # Scan for numbered pages
+    pattern = os.path.join(REPO_PATH, f"{config['page_pattern']}*.html")
+    for filepath in glob.glob(pattern):
+        filename = os.path.basename(filepath)
+        # Skip non-content pages
+        if any(skip in filename for skip in ['archive', 'calendar', 'records']):
+            continue
+
+        date = extract_date_from_sport_page(filepath)
+        if date:
+            # Create a nice title
+            try:
+                dt = datetime.strptime(date, '%Y-%m-%d')
+                title = dt.strftime('%B %d, %Y').replace(' 0', ' ')
+            except:
+                title = date
+
+            pages.append({
+                'date': date,
+                'page': filename,
+                'title': title
+            })
+
+    # Sort by date descending (newest first)
+    pages.sort(key=lambda x: x['date'], reverse=True)
+    return pages
+
+def update_sport_archive_data(sport: str):
+    """Update the archive data file for a specific sport"""
+    config = SPORT_ARCHIVE_CONFIG.get(sport)
+    if not config:
+        return
+
+    data_file = os.path.join(REPO_PATH, config['data_file'])
+    pages = scan_sport_pages(sport)
+
+    if not pages:
+        print(f"  [ARCHIVE] No pages found for {sport}")
+        return
+
+    # Read existing data file to preserve any manual entries/notes
+    existing_entries = {}
+    if os.path.exists(data_file):
+        try:
+            with open(data_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            # Extract existing entries to preserve titles
+            for match in re.finditer(r'\{\s*date:\s*"([^"]+)",\s*page:\s*"([^"]+)",\s*title:\s*"([^"]+)"', content):
+                existing_entries[match.group(2)] = match.group(3)  # page -> title
+        except:
+            pass
+
+    # Build entries, preserving existing titles where available
+    entries = []
+    for page in pages:
+        title = existing_entries.get(page['page'], page['title'])
+        entries.append(f'    {{ date: "{page["date"]}", page: "{page["page"]}", title: "{title}" }}')
+
+    # Generate the data file content with proper formatting
+    entries_str = ',\n'.join(entries)
+    content = f'''// {sport} Archive Data - Auto-updated by production script
+const {config['array_name']} = [
+{entries_str},
+];
+'''
+    # Clean up trailing comma issues
+    content = content.replace(',\n];', '\n];')
+
+    try:
+        with open(data_file, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print(f"  [ARCHIVE] Updated {config['data_file']} with {len(pages)} pages")
+    except Exception as e:
+        print(f"  [ARCHIVE] Error writing {config['data_file']}: {e}")
+
+def sync_all_sport_archives():
+    """Sync archive data files for all sports"""
+    print("\n[ARCHIVE] Syncing sport archive data files...")
+    for sport in SPORT_ARCHIVE_CONFIG.keys():
+        update_sport_archive_data(sport)
+    print("[ARCHIVE] Sport archives synced successfully")
+
 def is_game_completed(game: Dict) -> bool:
     """Check if a game has already been completed"""
     status = game.get('status', {})
@@ -2236,6 +2427,10 @@ def main():
     output_path = os.path.join(REPO_PATH, OUTPUT_FILE)
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(html)
+
+    # Sync sport archive data files (NBA, NFL, NHL, NCAAB, NCAAF)
+    # This ensures all existing sport pages are in the archive calendars
+    sync_all_sport_archives()
 
     print("\n" + "=" * 60)
     print(f"SUCCESS: Generated {OUTPUT_FILE}")
