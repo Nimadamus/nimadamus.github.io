@@ -2117,12 +2117,26 @@ def fetch_all_games() -> Dict[str, List]:
                 # Get odds
                 odds = match_game_odds(odds_data, away_name, home_name)
 
-                # Game time
+                # Game time - PROPERLY convert from UTC to Eastern Time
                 game_date = event.get('date', '')
                 try:
-                    dt = datetime.fromisoformat(game_date.replace('Z', '+00:00'))
-                    game_time = dt.strftime("%I:%M %p ET")
-                except:
+                    # Parse UTC time from ESPN (ends with 'Z' for UTC)
+                    dt_utc = datetime.fromisoformat(game_date.replace('Z', '+00:00'))
+
+                    # Convert to Eastern Time
+                    if EASTERN:
+                        dt_eastern = dt_utc.astimezone(EASTERN)
+                        game_time = dt_eastern.strftime("%I:%M %p ET")
+                    else:
+                        # Fallback: manually subtract 5 hours for EST (approximate)
+                        dt_eastern = dt_utc - timedelta(hours=5)
+                        game_time = dt_eastern.strftime("%I:%M %p ET")
+
+                    # Remove leading zero from hour (e.g., "07:00 PM" -> "7:00 PM")
+                    if game_time.startswith('0'):
+                        game_time = game_time[1:]
+                except Exception as e:
+                    print(f"  [WARN] Could not parse time '{game_date}': {e}")
                     game_time = "TBD"
 
                 venue = comps.get('venue', {}).get('fullName', 'TBD')
