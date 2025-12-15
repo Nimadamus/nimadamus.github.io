@@ -2,6 +2,7 @@
 const NFL_ARCHIVE = [
     { date: "2025-12-14", page: "nfl.html", title: "Week 15 - December 14, 2025" },
     { date: "2025-11-27", page: "nfl-page2.html", title: "November 27, 2025" },
+    { date: "2025-11-27", page: "nfl-page10.html", title: "Thanksgiving 2025" },
     { date: "2025-11-23", page: "nfl-page3.html", title: "November 23, 2025" },
     { date: "2025-11-16", page: "nfl-page4.html", title: "November 16, 2025" },
     { date: "2025-11-01", page: "nfl-page5.html", title: "November 1, 2025" },
