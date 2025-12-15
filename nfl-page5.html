@@ -106,6 +106,19 @@ footer a:hover{color:var(--accent-gold)}
 main{padding:0 16px 40px}
 .game-card{padding:22px}
 }
+
+/* Archive Calendar */
+.archive-cal{max-width:900px;margin:0 auto 30px;padding:0 24px}
+.cal-btn{display:block;margin:0 auto;background:linear-gradient(135deg,#fd5000,#ff8c00);color:#fff;font-family:inherit;font-size:14px;font-weight:600;padding:12px 28px;border:none;border-radius:8px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:transform 0.2s}
+.cal-btn:hover{transform:scale(1.03)}
+.cal-grid{display:none;margin-top:20px;background:rgba(15,20,30,0.9);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px}
+.cal-grid.open{display:block}
+.cal-month{margin-bottom:20px}
+.cal-month h4{font-size:13px;color:#ffd54f;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.cal-days{display:flex;flex-wrap:wrap;gap:8px}
+.cal-day{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:#fff;font-size:14px;text-decoration:none;transition:all 0.2s}
+.cal-day:hover{background:rgba(253,80,0,0.3);border-color:#fd5000;transform:scale(1.05)}
+.cal-day.today{background:#fd5000;color:#fff;font-weight:700}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
@@ -133,6 +146,12 @@ main{padding:0 16px 40px}
 <h1>NFL <span>Analysis</span></h1>
 <p>Expert analysis and betting picks</p>
 </section>
+
+<div class="archive-cal">
+<button class="cal-btn" onclick="document.getElementById('nfl-cal').classList.toggle('open')">View Archive Calendar</button>
+<div class="cal-grid" id="nfl-cal"></div>
+</div>
+
 
 <div class="day-section">
 <div class="day-header">
@@ -309,5 +328,17 @@ main{padding:0 16px 40px}
 
 <footer>&copy; 2025 BetLegend &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="nfl-records.html">NFL Records</a></footer>
 
+<script>
+(function(){
+const data=[{"date": "2025-12-14", "display": "December 14, 2025", "page": "nfl.html"}, {"date": "2025-12-08", "display": "December 08, 2025", "page": "nfl-page2.html"}, {"date": "2025-12-01", "display": "December 01, 2025", "page": "nfl-page3.html"}, {"date": "2025-11-27", "display": "November 27, 2025", "page": "nfl-page4.html"}, {"date": "2025-11-24", "display": "November 24, 2025", "page": "nfl-page5.html"}, {"date": "2025-11-17", "display": "November 17, 2025", "page": "nfl-page6.html"}, {"date": "2025-11-10", "display": "November 10, 2025", "page": "nfl-page7.html"}, {"date": "2025-11-03", "display": "November 03, 2025", "page": "nfl-page8.html"}, {"date": "2025-10-27", "display": "October 27, 2025", "page": "nfl-page9.html"}];
+const el=document.getElementById('nfl-cal');
+if(!el||!data.length)return;
+const months={};
+data.forEach(d=>{const dt=new Date(d.date+'T12:00:00');const m=dt.toLocaleDateString('en-US',{year:'numeric',month:'long'});if(!months[m])months[m]=[];months[m].push(d);});
+let h='';
+Object.entries(months).forEach(([m,items])=>{h+='<div class="cal-month"><h4>'+m+'</h4><div class="cal-days">';items.forEach(i=>{const dt=new Date(i.date+'T12:00:00');const today=i.page==='nfl-page5.html';h+='<a href="'+i.page+'" class="cal-day'+(today?' today':'')+'" title="'+i.display+'">'+dt.getDate()+'</a>';});h+='</div></div>';});
+el.innerHTML=h;
+})();
+</script>
 </body>
 </html>

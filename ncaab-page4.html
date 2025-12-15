@@ -112,6 +112,19 @@ footer a:hover{color:var(--accent-gold)}
   .team-logo{width:48px;height:48px}
   .game-title{font-size:18px}
 }
+
+/* Archive Calendar */
+.archive-cal{max-width:900px;margin:0 auto 30px;padding:0 24px}
+.cal-btn{display:block;margin:0 auto;background:linear-gradient(135deg,#fd5000,#ff8c00);color:#fff;font-family:inherit;font-size:14px;font-weight:600;padding:12px 28px;border:none;border-radius:8px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:transform 0.2s}
+.cal-btn:hover{transform:scale(1.03)}
+.cal-grid{display:none;margin-top:20px;background:rgba(15,20,30,0.9);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px}
+.cal-grid.open{display:block}
+.cal-month{margin-bottom:20px}
+.cal-month h4{font-size:13px;color:#ffd54f;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.cal-days{display:flex;flex-wrap:wrap;gap:8px}
+.cal-day{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:#fff;font-size:14px;text-decoration:none;transition:all 0.2s}
+.cal-day:hover{background:rgba(253,80,0,0.3);border-color:#fd5000;transform:scale(1.05)}
+.cal-day.today{background:#fd5000;color:#fff;font-weight:700}
 </style>
 </head>
 <body>
@@ -140,6 +153,10 @@ footer a:hover{color:var(--accent-gold)}
 
 <div class="current-date"><h2>Wednesday, November 26, 2025</h2></div>
 
+<div class="archive-cal">
+<button class="cal-btn" onclick="document.getElementById('ncaab-cal').classList.toggle('open')">View Archive Calendar</button>
+<div class="cal-grid" id="ncaab-cal"></div>
+</div>
 <main>
 
 <article class="game-card">
@@ -230,5 +247,17 @@ footer a:hover{color:var(--accent-gold)}
 <p>&copy; 2025 BetLegend &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="ncaab-records.html">NCAAB Records</a></p>
 </footer>
 
+<script>
+(function(){
+const data=[{"date": "2025-12-14", "display": "December 14, 2025", "page": "ncaab.html"}, {"date": "2025-12-13", "display": "December 13, 2025", "page": "ncaab-page2.html"}, {"date": "2025-12-12", "display": "December 12, 2025", "page": "ncaab-page3.html"}];
+const el=document.getElementById('ncaab-cal');
+if(!el||!data.length)return;
+const months={};
+data.forEach(d=>{const dt=new Date(d.date+'T12:00:00');const m=dt.toLocaleDateString('en-US',{year:'numeric',month:'long'});if(!months[m])months[m]=[];months[m].push(d);});
+let h='';
+Object.entries(months).forEach(([m,items])=>{h+='<div class="cal-month"><h4>'+m+'</h4><div class="cal-days">';items.forEach(i=>{const dt=new Date(i.date+'T12:00:00');const today=i.page==='ncaab-page4.html';h+='<a href="'+i.page+'" class="cal-day'+(today?' today':'')+'" title="'+i.display+'">'+dt.getDate()+'</a>';});h+='</div></div>';});
+el.innerHTML=h;
+})();
+</script>
 </body>
 </html>
