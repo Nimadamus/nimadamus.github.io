@@ -660,6 +660,71 @@ def calculate_efg_pct(fgm, fga, three_pm):
     return '-'
 
 
+def are_stats_duplicate(away_stats: Dict, home_stats: Dict, sport: str) -> bool:
+    """
+    Check if two teams have suspiciously identical stats.
+    Returns True if stats appear to be duplicates (fake/placeholder data).
+
+    Rules:
+    - If 5 or more numeric stats are IDENTICAL, it's suspicious
+    - Key stats like PPG, YPG should NEVER be identical between real teams
+    """
+    # Define key stats to check per sport
+    key_stats_by_sport = {
+        'NBA': ['ppg', 'fg_pct', 'three_pct', 'ast', 'reb', 'opp_ppg', 'stl', 'blk'],
+        'NFL': ['ppg', 'ypg', 'pass_ypg', 'rush_ypg', 'opp_ppg', 'opp_ypg', 'sacks', 'ints'],
+        'NHL': ['gf', 'ga', 'sog', 'pp_pct', 'pk_pct', 'sv_pct', 'pim'],
+        'NCAAB': ['ppg', 'fg_pct', 'three_pct', 'ast', 'reb', 'opp_ppg'],
+        'NCAAF': ['ppg', 'ypg', 'pass_ypg', 'rush_ypg', 'opp_ppg', 'comp_pct'],
+    }
+
+    stats_to_check = key_stats_by_sport.get(sport, [])
+    if not stats_to_check:
+        return False
+
+    identical_count = 0
+    valid_comparisons = 0
+
+    for stat in stats_to_check:
+        away_val = away_stats.get(stat, '-')
+        home_val = home_stats.get(stat, '-')
+
+        # Skip if either value is missing
+        if away_val == '-' or home_val == '-':
+            continue
+
+        valid_comparisons += 1
+
+        # Compare values (handle both string and numeric)
+        try:
+            # Try numeric comparison
+            away_num = float(str(away_val).replace('%', '').replace(',', ''))
+            home_num = float(str(home_val).replace('%', '').replace(',', ''))
+            if abs(away_num - home_num) < 0.01:  # Essentially identical
+                identical_count += 1
+        except:
+            # String comparison
+            if str(away_val) == str(home_val):
+                identical_count += 1
+
+    # If we have enough valid comparisons and too many are identical, flag as duplicate
+    if valid_comparisons >= 3 and identical_count >= 3:
+        return True
+
+    # Extra check: PPG should almost NEVER be identical between two teams
+    away_ppg = away_stats.get('ppg', '-')
+    home_ppg = home_stats.get('ppg', '-')
+    if away_ppg != '-' and home_ppg != '-':
+        try:
+            if abs(float(away_ppg) - float(home_ppg)) < 0.01:
+                # Identical PPG is very suspicious
+                return True
+        except:
+            pass
+
+    return False
+
+
 def extract_nba_stats(raw: Dict, record: str) -> Dict:
     """Extract comprehensive NBA stats"""
     # Get base stats for calculations
@@ -2084,6 +2149,12 @@ def fetch_all_games() -> Dict[str, List]:
                     if away_ppg == '-' or home_ppg == '-':
                         print(f"  [SKIP] Missing stats for: {away_abbr} vs {home_abbr}")
                         continue
+
+                # CRITICAL: Check for duplicate/identical stats between teams
+                # This catches fake/placeholder data that destroys credibility
+                if are_stats_duplicate(away_stats, home_stats, sport):
+                    print(f"  [SKIP] DUPLICATE STATS DETECTED: {away_abbr} vs {home_abbr} - stats are suspiciously identical!")
+                    continue
 
                 # Get ESPN event ID for live status checking
                 event_id = event.get('id', '')
