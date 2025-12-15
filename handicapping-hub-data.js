@@ -1,0 +1,18 @@
+// Handicapping Hub Archive Data
+const HUB_ARCHIVE = [
+    { date: "2025-12-14", page: "handicapping-hub-2025-12-14.html", title: "December 14, 2025" },
+    { date: "2025-12-13", page: "handicapping-hub-2025-12-13.html", title: "December 13, 2025" },
+    { date: "2025-12-12", page: "handicapping-hub-2025-12-12.html", title: "December 12, 2025" },
+    { date: "2025-12-11", page: "handicapping-hub-2025-12-11.html", title: "December 11, 2025" },
+    { date: "2025-12-10", page: "handicapping-hub-2025-12-10.html", title: "December 10, 2025" },
+    { date: "2025-12-09", page: "handicapping-hub-2025-12-09.html", title: "December 9, 2025" },
+    { date: "2025-12-08", page: "handicapping-hub-2025-12-08.html", title: "December 8, 2025" },
+    { date: "2025-12-07", page: "handicapping-hub-2025-12-07.html", title: "December 7, 2025" },
+    { date: "2025-12-06", page: "handicapping-hub-2025-12-06.html", title: "December 6, 2025" },
+    { date: "2025-12-05", page: "handicapping-hub-2025-12-05.html", title: "December 5, 2025" },
+    { date: "2025-12-04", page: "handicapping-hub-2025-12-04.html", title: "December 4, 2025" },
+    { date: "2025-12-03", page: "handicapping-hub-2025-12-03.html", title: "December 3, 2025" },
+    { date: "2025-12-02", page: "handicapping-hub-2025-12-02.html", title: "December 2, 2025" },
+    { date: "2025-12-01", page: "handicapping-hub-2025-12-01.html", title: "December 1, 2025" },
+    { date: "2025-11-30", page: "handicapping-hub-2025-11-30.html", title: "November 30, 2025" },
+];
