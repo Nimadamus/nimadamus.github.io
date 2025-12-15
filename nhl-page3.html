@@ -1,596 +1,252 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>NHL Analysis - December 13, 2025 | BetLegend</title>
-<meta content="NHL statistical analysis for December 13, 2025. Advanced stats, efficiency ratings, and betting trends." name="description"/>
-<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon"/>
-<link href="https://www.betlegendpicks.com/nhl.html" rel="canonical"/>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHL Betting Archive - Page 15 | BetLegend</title>
+<meta name="description" content="NHL betting picks archive page 15.">
+<link rel="icon" href="https://www.betlegendpicks.com/newlogo.png">
+<link rel="canonical" href="https://www.betlegendpicks.com/nhl-page3.html">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg-primary:#05070a;--bg-card:rgba(15,20,30,0.8);
-  --accent-cyan:#00e5ff;--accent-gold:#ffd54f;--accent-purple:#a855f7;
-  --text-primary:#ffffff;--text-secondary:#94a3b8;--text-muted:#64748b;
-  --border-subtle:rgba(255,255,255,0.08);--border-glow:rgba(0,229,255,0.3);
+  --bg-color:#01000f;
+  --text-color:#eaf8ff;
+  --glow-color:#00e0ff;
+  --neon-cyan:#00ffff;
+  --neon-gold:#FFD700;
+  --win-color:#39FF14;
+  --loss-color:#FF3131;
+  --font-primary:'Orbitron',sans-serif;
+  --font-secondary:'Poppins',sans-serif;
+  --bg-primary:#05070a;
+  --bg-secondary:#0a0d14;
+  --bg-card:rgba(15,20,30,0.8);
+  --bg-card-hover:rgba(20,28,45,0.9);
+  --accent-cyan:#00e5ff;
+  --accent-gold:#ffd54f;
+  --accent-purple:#a855f7;
+  --text-primary:#ffffff;
+  --text-secondary:#94a3b8;
+  --text-muted:#64748b;
+  --border-subtle:rgba(255,255,255,0.08);
+  --border-glow:rgba(0,229,255,0.3);
   --gradient-card:linear-gradient(145deg,rgba(15,23,42,0.9),rgba(10,15,25,0.95));
   --gradient-accent:linear-gradient(135deg,#00e5ff,#a855f7);
-  --neon-cyan:#00ffff;--neon-gold:#FFD700;
-  --font-primary:'Orbitron',sans-serif;--font-secondary:'Poppins',sans-serif
+  --shadow-card:0 4px 24px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-glow:0 0 40px rgba(0,229,255,0.15)
 }
-.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,224,255,0.3)}
+/* Premium Navigation - Index Style */
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,224,255,0.3)}
 .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
-.logo{position:fixed;top:15px;left:15px;z-index:1001}
-.logo a{font-family:var(--font-primary);font-size:2.5rem;font-weight:900;color:#fff;text-decoration:none;text-shadow:0 0 10px rgba(255,255,255,0.8)}
-.logo a span{color:var(--neon-cyan);text-shadow:0 0 15px rgba(0,255,255,1)}
-.nav-links{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
-.nav-links>a,.dropbtn{font-family:var(--font-secondary);color:#fff;text-decoration:none;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:1.5px}
-.nav-links>a:hover,.dropbtn:hover{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold)}
-.dropdown{position:relative}
-.dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(0,0,0,0.98);min-width:200px;border:2px solid rgba(0,224,255,0.5);border-radius:10px;padding:15px 0;margin-top:10px}
-.dropdown-content a{color:var(--neon-cyan);padding:14px 20px;display:block;text-decoration:none}
-.dropdown-content a:hover{background:rgba(0,224,255,0.2);color:#fff}
-.dropdown:hover .dropdown-content{display:block}
-body{background:var(--bg-primary);color:var(--text-primary);font-family:system-ui,sans-serif;line-height:1.7}
-.hero{padding:160px 24px 60px;text-align:center}
-.hero-badge{display:inline-block;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2);padding:8px 16px;border-radius:50px;font-size:12px;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
-.hero h1{font-size:clamp(36px,6vw,56px);font-weight:700;margin-bottom:12px}
-.hero h1 span{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{color:var(--text-secondary);font-size:18px}
-.current-date{text-align:center;margin-bottom:40px}
-.current-date h2{font-size:28px;color:var(--accent-gold)}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;position:fixed;top:15px;left:15px;z-index:1001}
+.logo a{font-family:var(--font-primary);font-size:2.5rem;font-weight:900;color:#fff;text-decoration:none;text-transform:uppercase;text-shadow:0 0 10px rgba(255,255,255,0.8),0 0 20px rgba(255,255,255,0.4)}
+.logo a span{color:var(--neon-cyan);text-shadow:0 0 15px rgba(0,255,255,1),0 0 30px rgba(0,255,255,0.8),0 0 50px rgba(0,255,255,0.6)}
+.nav-links{display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap}
+.nav-link,.nav-links>a{font-family:var(--font-secondary);color:#ffffff;text-decoration:none;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;transition:all 0.3s ease;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.nav-link:hover,.nav-links>a:hover{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold),0 2px 8px rgba(0,0,0,0.8)}
+.dropdown{position:relative;display:inline-flex;align-items:center}
+.dropbtn{font-family:var(--font-secondary);background:none;border:none;color:#ffffff;font-size:18px;font-weight:600;padding:12px 20px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all 0.3s ease;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 0 5px rgba(0,0,0,0.8);white-space:nowrap}
+.dropbtn:hover,.dropdown:hover .dropbtn{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold),0 2px 8px rgba(0,0,0,0.8)}
+.dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(0,0,0,0.98);backdrop-filter:blur(20px);min-width:200px;box-shadow:0px 8px 30px rgba(0,224,255,0.4);z-index:99999;border:2px solid rgba(0,224,255,0.5);border-radius:10px;padding:15px 0;margin-top:10px}
+.dropdown-content a{color:var(--neon-cyan);padding:14px 20px;text-decoration:none;display:block;font-size:0.95rem;text-align:left;transition:all 0.3s ease;text-shadow:0 0 5px rgba(0,255,255,0.5);border-left:3px solid transparent;text-transform:none;letter-spacing:0}
+.dropdown-content a:hover{background:linear-gradient(90deg,rgba(0,224,255,0.3),rgba(0,224,255,0.1));color:#fff;padding-left:30px;text-shadow:0 0 10px var(--glow-color);border-left-color:var(--neon-cyan)}
+@media(hover:hover) and (pointer:fine){.dropdown:hover .dropdown-content{display:block;animation:dropdownFade 0.3s ease}}
+.dropdown.active .dropdown-content{display:block;animation:dropdownFade 0.3s ease}
+@keyframes dropdownFade{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.7;font-size:16px;min-height:100vh;background-image:radial-gradient(ellipse at top,rgba(0,229,255,0.03) 0%,transparent 50%),radial-gradient(ellipse at bottom right,rgba(168,85,247,0.03) 0%,transparent 50%)}
+
+/* Hero Header */
+.hero{padding:140px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,229,255,0.08) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:900;text-transform:uppercase;letter-spacing:3px;background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.hero .subtitle{font-family:'Poppins',sans-serif;font-size:1rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:2px}
+
+/* Date Header */
+.date-header{text-align:center;margin:30px auto 40px auto;padding:25px 20px;max-width:800px;background:linear-gradient(135deg,rgba(0,217,255,0.08) 0%,rgba(255,215,0,0.05) 100%);border-radius:15px;border:2px solid rgba(255,215,0,0.3);box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.date-header h2{color:#ffd700;font-size:28px;margin:0;font-weight:700;text-shadow:0 0 25px rgba(255,215,0,0.5)}
+
+/* Main Content */
 main{max-width:900px;margin:0 auto;padding:0 24px 80px}
-.game-card{background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:20px;padding:32px;margin-bottom:24px;transition:all 0.3s}
-.game-card:hover{border-color:var(--border-glow);transform:translateY(-4px);box-shadow:0 4px 24px rgba(0,0,0,0.4)}
+
+/* Game Cards */
+.game-card{background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:20px;padding:32px;margin-bottom:24px;transition:all 0.4s ease;position:relative;overflow:hidden}
+.game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3),transparent);opacity:0;transition:opacity 0.4s ease}
+.game-card:hover{border-color:var(--border-glow);transform:translateY(-4px);box-shadow:var(--shadow-card),var(--shadow-glow)}
+.game-card:hover::before{opacity:1}
+
+/* Team Display */
 .teams-display{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:16px}
-.team-logo{width:60px;height:60px;object-fit:contain}
+.team-logo{width:60px;height:60px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));transition:transform 0.3s ease}
+.game-card:hover .team-logo{transform:scale(1.08)}
 .vs-badge{color:var(--text-muted);font-size:14px;font-weight:700;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px}
-.game-title{font-size:22px;font-weight:600;margin-bottom:8px;text-align:center}
+
+/* Game Info */
+.game-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;margin-bottom:8px;color:var(--text-primary);text-align:center}
 .game-meta{font-size:13px;color:var(--text-muted);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .game-meta span{background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}
-.game-card p{color:var(--text-secondary);margin-bottom:12px;line-height:1.8}
-.game-card strong{color:var(--accent-cyan)}
-.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--border-subtle)}
-.stat-item{flex:1;min-width:100px;text-align:center;padding:8px}
-.stat-item .value{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;color:var(--accent-gold)}
-.stat-item .label{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
-.archive-link{text-align:center;margin:40px 0;padding:20px}
-.archive-link a{color:var(--accent-cyan);text-decoration:none;font-size:16px;padding:12px 24px;border:1px solid var(--border-subtle);border-radius:8px;transition:all 0.3s}
-.archive-link a:hover{background:rgba(0,229,255,0.1);border-color:var(--accent-cyan)}
-footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
-footer a{color:var(--accent-cyan);text-decoration:none}
-.data-source{font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--border-subtle)}
-.deep-analysis{margin:20px 0;padding:20px;background:rgba(0,0,0,0.2);border-radius:12px;border-left:3px solid var(--accent-cyan)}
-.analysis-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05)}
-.analysis-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-.analysis-section h4{color:var(--accent-gold);font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-family:var(--font-primary)}
-.analysis-section p{font-size:0.85rem;color:var(--text-secondary);margin:6px 0;line-height:1.6}
-.analysis-section ul{margin:8px 0;padding-left:20px}
-.analysis-section li{font-size:0.85rem;color:var(--text-secondary);margin:4px 0}
-.stats-comparison{display:grid;gap:8px}
-.stat-compare-row{display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px}
-.stat-compare-row .stat-label{color:var(--text-muted);font-size:0.8rem}
-.stat-compare-row .stat-away,.stat-compare-row .stat-home{font-size:0.85rem;font-weight:600}
-.stat-compare-row .stat-away{color:var(--accent-cyan)}
-.stat-compare-row .stat-home{color:var(--accent-gold)}
-@media(max-width:768px){.hero{padding:160px 20px 40px}.game-card{padding:24px}.team-logo{width:48px;height:48px}.stat-row{flex-direction:column}.deep-analysis{padding:15px}}
+
+/* Content Sections */
+.section-title{color:var(--accent-gold);font-weight:700;font-size:16px;margin:24px 0 12px;display:flex;align-items:center;gap:10px}
+.section-title::before{content:'';width:4px;height:20px;background:var(--gradient-accent);border-radius:2px}
+.game-card p{color:var(--text-secondary);font-size:16px;margin-bottom:12px;line-height:1.8}
+.game-card strong,.game-card b{color:var(--accent-cyan);font-weight:600}
+.game-card h3,.game-card h4{color:var(--accent-gold);font-size:18px;margin:20px 0 12px}
+
+/* Pagination */
+.pagination{display:flex;justify-content:center;align-items:center;gap:24px;padding:50px 24px;margin-top:50px}
+.page-arrow{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border-subtle);border-radius:50%;color:var(--text-secondary);text-decoration:none;font-size:20px;transition:all 0.3s ease}
+.page-arrow:hover:not(.disabled){border-color:var(--accent-cyan);color:var(--accent-cyan);box-shadow:0 0 20px rgba(0,229,255,0.2)}
+.page-arrow.disabled{opacity:0.2;cursor:not-allowed;pointer-events:none}
+.page-info{color:var(--text-muted);font-size:14px;font-weight:500;letter-spacing:0.5px}
+
+/* Footer */
+footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle);background:rgba(5,7,10,0.5)}
+footer a{color:var(--accent-cyan);text-decoration:none;transition:color 0.2s}
+footer a:hover{color:var(--accent-gold)}
+
+/* Responsive */
+@media(max-width:768px){
+  .hero{padding:120px 20px 40px}
+  .hero h1{font-size:24px;letter-spacing:2px}
+  .game-card{padding:24px}
+  .teams-display{gap:12px}
+  .team-logo{width:48px;height:48px}
+  .game-title{font-size:18px}
+  .date-header h2{font-size:22px}
+}
 </style>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-QS8L5TDNLY');</script>
 </head>
 <body>
+
 <nav class="nav-container">
 <div class="nav-inner">
 <div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
 <div class="nav-links">
-<a href="handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Handicapping Hub</a>
 <a href="blog-page10.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a></div></div>
 <a href="proofofpicks.html">Proof</a>
 <a href="news-page3.html">News</a>
-<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page18.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page10.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+<div class="dropdown"><button class="dropbtn">Community</button><div class="dropdown-content"><a href="https://twitter.com/BetLegend2025" target="_blank">Twitter</a><a href="https://discord.gg/NbMc3wCV" target="_blank">Discord</a><a href="contact.html">Contact</a></div></div>
 </div>
 </div>
 </nav>
+
 <header class="hero">
-<div class="hero-badge">Statistical Analysis</div>
-<h1>NHL <span>Analysis</span></h1>
-<p>12-Game Slate | Advanced Stats &amp; Betting Trends</p>
+<h1>NHL Betting Archive</h1>
+<p class="subtitle">Page 17 of 19</p>
 </header>
-<div class="current-date"><h2>December 13, 2025</h2></div>
+
+<div class="date-header"><h2>Monday, November 24, 2025</h2></div>
+
 <main>
 <article class="game-card">
-<div class="teams-display">
-<img alt="Anaheim Ducks" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/ana.png"/>
-<span class="vs-badge">@</span>
-<img alt="New Jersey Devils" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nj.png"/>
-</div>
-<h3 class="game-title">Anaheim Ducks (19-11-1) @ New Jersey Devils (17-13-1)</h3>
-<div class="game-meta">
-<span>2025-12-13T17:30Z</span>
-<span>Prudential Center</span>
-<span>KCOP, Victory+</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">17-13-1</div>
-<div class="label">NJ Record</div>
-</div>
-<div class="stat-item">
-<div class="value">19-11-1</div>
-<div class="label">ANA Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Here's the breakdown for this matchup. The Anaheim Ducks (19-11-1) visit New Jersey Devils (17-13-1) in what shapes up to be a competitive matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Anaheim Ducks are 14-16 while New Jersey Devils sit at 14-16. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. Check the injury reports and recent form before betting.</p></div>
-</div>
-<div class="stat-item">
-<div class="value"></div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Anaheim Ducks (19-11-1) visits New Jersey Devils (17-13-1).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+
+        <div class="post-header">Monday NHL 7-Game Slate: November 24th - Ovechkin Record Chase Headlines</div>
+        <div class="post-time">Posted: November 24, 2025, 11:30 AM ET | Capitals-Blue Jackets, Panthers-Predators, Golden Knights-Mammoth, Rangers-Blues, Red Wings-Devils, Flyers-Lightning, Senators-Kings</div>
+
+        <p>Monday delivers a solid seven-game NHL slate with compelling storylines spanning both conferences. The marquee attraction is Alex Ovechkin continuing his historic goal-scoring record chase as the Washington Capitals host the Columbus Blue Jackets. The back-to-back Stanley Cup champion Florida Panthers visit Nashville, while the Vegas Golden Knights with newly acquired Mitch Marner head to Utah. Action starts at 7:00 PM ET and runs through the 9:00 PM West Coast window.</p>
+
+        <div class="game-header">COLUMBUS @ WASHINGTON | 7:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/29.png" alt="Columbus" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/15.png" alt="Washington" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Blue Jackets @ Capitals</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Capital One Arena | ESPN+ | WSH -165 | Total: 6.5</div>
+
+        <p>The headline matchup of the evening features Alex Ovechkin continuing his historic chase. Ovechkin has already passed Wayne Gretzky to become the NHLs all-time leader in goals, scoring his 895th on April 6, 2025 against the New York Islanders. He now has 897 total career goals. Ovechkin has found his rhythm recently, scoring seven goals over the past seven games. In November specifically, hes been on the scoresheet consistently, demonstrating the 39-year-old still has plenty left in the tank. Ovechkin scored his 30th goal of the season on a power play against the Calgary Flames, becoming the fourth player in NHL history to score 30 goals at age 39 or older. Columbus comes in as underdogs in this Metropolitan Division matchup.</p>
+
+        <div class="game-header">FLORIDA @ NASHVILLE | 8:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/13.png" alt="Florida" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/18.png" alt="Nashville" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Panthers @ Predators</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Bridgestone Arena | ESPN+ | FLA -135 | Total: 5.5</div>
+
+        <p>The back-to-back 2024 and 2025 Stanley Cup champion Florida Panthers visit Nashville. Florida sits at 11-8-1 overall with an impressive 8-2-1 home record, though this is a road contest. Captain Aleksander Barkov leads a balanced Panthers attack that has won four of their last five games. Head coach Paul Maurice has this team playing championship-caliber hockey again. Nashville sits at 6-10-4 in the Central Division and has struggled mightily to find consistency. Goaltender Juuse Saros is projected to start but has struggled behind this weak defense, posting a 6-8-3 record with a .896 save percentage.</p>
+
+        <div class="game-header">VEGAS @ UTAH | 9:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/54.png" alt="Vegas" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/utah.png" alt="Utah" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Golden Knights @ Mammoth</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Delta Center | ESPN+ | VGK -120 | Total: 5.5</div>
+
+        <p>The Vegas Golden Knights visit Utah in a rematch of last weeks matchup. Mitch Marner has been a revelation since joining Vegas in a July trade from the Toronto Maple Leafs. Marner was traded for Nicolas Roy and subsequently signed an eight-year, $96 million contract with an average annual value of $12 million. In his first 17 games with Vegas, Marner has recorded 19 points with 4 goals and 15 assists. The Golden Knights are 10-4-7 and looking to bounce back after blowing a two-goal lead in a 4-3 overtime loss against the Anaheim Ducks on Saturday. Logan Cooley leads the Mammoth offense as Utah continues building their franchise identity in their sophomore season.</p>
+
+        <div class="game-header">ST. LOUIS @ NY RANGERS | 7:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/19.png" alt="St. Louis" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/3.png" alt="NY Rangers" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Blues @ Rangers</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Madison Square Garden | NHL Network | NYR -145 | Total: 5.5</div>
+
+        <p>The Rangers host St. Louis in a cross-conference matchup at the Worlds Most Famous Arena. New York brings their Metropolitan Division pedigree against a Blues team that has been inconsistent this season. Madison Square Garden provides a significant home-ice advantage.</p>
+
+        <div class="game-header">DETROIT @ NEW JERSEY | 7:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/17.png" alt="Detroit" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/1.png" alt="New Jersey" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Red Wings @ Devils</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Prudential Center | ESPN+ | NJ -135 | Total: 5.5</div>
+
+        <p>The Red Wings visit New Jersey in a Metropolitan matchup. Patrolling the crease for the game will be John Gibson for Detroit and Jacob Markstrom for New Jersey. The Devils have been one of the leagues hottest teams, while Detroit continues their rebuild.</p>
+
+        <div class="game-header">PHILADELPHIA @ TAMPA BAY | 7:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/4.png" alt="Philadelphia" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/27.png" alt="Tampa Bay" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Flyers @ Lightning</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Amalie Arena | ESPN+ | TB -175 | Total: 5.5</div>
+
+        <p>Tampa Bay hosts their annual Hockey Fights Cancer Night presented by Moffitt Cancer Center when they take on the Philadelphia Flyers at Amalie Arena. The Lightning sit at 10-7-2 in the Atlantic Division and continue to navigate life in the post-dynasty era.</p>
+
+        <div class="game-header">OTTAWA @ LOS ANGELES | 9:00 PM ET</div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin:15px 0 10px 0;">
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/9.png" alt="Ottawa" style="width:45px; height:45px; object-fit:contain;">
+            <span style="color:#888; font-size:20px; font-weight:bold;">@</span>
+            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/26.png" alt="Los Angeles" style="width:45px; height:45px; object-fit:contain;">
+          </div>
+          <div style="text-align:center; color:var(--accent-gold); font-size:14px; margin-bottom:10px;">Senators @ Kings</div>
+          <div style="text-align:center; font-size:14px; color:#aaa; margin-bottom:15px;">Crypto.com Arena | Prime Monday Night Hockey | LA -145 | Total: 5.5</div>
+
+        <p>The late-night action features Ottawa traveling to Los Angeles for Prime Monday Night Hockey. The Kings (10-6-6) won four straight games but have followed that up with three straight losses (0-1-2). Ottawa brings a competitive squad looking to spoil the Kings attempt to right the ship.</p>
+
+      
 </article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Ottawa Senators" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/ott.png"/>
-<span class="vs-badge">@</span>
-<img alt="Minnesota Wild" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/min.png"/>
-</div>
-<h3 class="game-title">Ottawa Senators (14-12-4) @ Minnesota Wild (17-9-5)</h3>
-<div class="game-meta">
-<span>2025-12-13T19:00Z</span>
-<span>Grand Casino Arena</span>
-<span>ESPN+, FanDuel SN North</span>
-<span>Line: MIN -120</span>
-<span>Total: 5.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">17-9-5</div>
-<div class="label">MIN Record</div>
-</div>
-<div class="stat-item">
-<div class="value">14-12-4</div>
-<div class="label">OTT Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Here's the breakdown for this matchup. The Ottawa Senators (14-12-4) visit Minnesota Wild (17-9-5) in what shapes up to be a fascinating matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Ottawa Senators are 12-14 while Minnesota Wild sit at 12-14. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. Do your research before placing any bets.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">5.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Ottawa Senators (14-12-4) visits Minnesota Wild (17-9-5).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="San Jose Sharks" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/sj.png"/>
-<span class="vs-badge">@</span>
-<img alt="Pittsburgh Penguins" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/pit.png"/>
-</div>
-<h3 class="game-title">San Jose Sharks (15-14-3) @ Pittsburgh Penguins (14-8-7)</h3>
-<div class="game-meta">
-<span>2025-12-13T20:00Z</span>
-<span>PPG Paints Arena</span>
-<span>ESPN+, NBC Sports BA</span>
-<span>Line: PIT -175</span>
-<span>Total: 6.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">14-8-7</div>
-<div class="label">PIT Record</div>
-</div>
-<div class="stat-item">
-<div class="value">15-14-3</div>
-<div class="label">SJ Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Here's the breakdown for this matchup. The San Jose Sharks (15-14-3) visit Pittsburgh Penguins (14-8-7) in what shapes up to be a fascinating matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, San Jose Sharks are 14-15 while Pittsburgh Penguins sit at 10-12. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. Look at the full picture before placing your bets.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">6.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. San Jose Sharks (15-14-3) visits Pittsburgh Penguins (14-8-7).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Tampa Bay Lightning" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/tb.png"/>
-<span class="vs-badge">@</span>
-<img alt="New York Islanders" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nyi.png"/>
-</div>
-<h3 class="game-title">Tampa Bay Lightning (18-11-2) @ New York Islanders (18-11-3)</h3>
-<div class="game-meta">
-<span>2025-12-13T20:30Z</span>
-<span>UBS Arena</span>
-<span>ESPN+, MSGSN</span>
-<span>Line: TB -125</span>
-<span>Total: 5.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">18-11-3</div>
-<div class="label">NYI Record</div>
-</div>
-<div class="stat-item">
-<div class="value">18-11-2</div>
-<div class="label">TB Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Here's the breakdown for this matchup. The Tampa Bay Lightning (18-11-2) visit New York Islanders (18-11-3) in what shapes up to be a intriguing matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Tampa Bay Lightning are 14-15 while New York Islanders sit at 14-15. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. This game has potential for value on either side.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">5.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Tampa Bay Lightning (18-11-2) visits New York Islanders (18-11-3).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Edmonton Oilers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/edm.png"/>
-<span class="vs-badge">@</span>
-<img alt="Toronto Maple Leafs" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/tor.png"/>
-</div>
-<h3 class="game-title">Edmonton Oilers (14-11-6) @ Toronto Maple Leafs (14-11-5)</h3>
-<div class="game-meta">
-<span>2025-12-14T00:00Z</span>
-<span>Scotiabank Arena</span>
-<span>ESPN+</span>
-<span>Line: EDM -135</span>
-<span>Total: 6.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">14-11-5</div>
-<div class="label">TOR Record</div>
-</div>
-<div class="stat-item">
-<div class="value">14-11-6</div>
-<div class="label">EDM Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Here's the breakdown for this matchup. The Edmonton Oilers (14-11-6) visit Toronto Maple Leafs (14-11-5) in what shapes up to be a intriguing matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Edmonton Oilers are 12-13 while Toronto Maple Leafs sit at 12-13. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. Review the stats and trends before making your decision.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">6.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Edmonton Oilers (14-11-6) visits Toronto Maple Leafs (14-11-5).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Montreal Canadiens" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/mtl.png"/>
-<span class="vs-badge">@</span>
-<img alt="New York Rangers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nyr.png"/>
-</div>
-<h3 class="game-title">Montreal Canadiens (16-11-3) @ New York Rangers (15-13-4)</h3>
-<div class="game-meta">
-<span>2025-12-14T00:00Z</span>
-<span>Madison Square Garden</span>
-<span>ESPN+, MSG</span>
-<span>Line: NYR -135</span>
-<span>Total: 5.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">15-13-4</div>
-<div class="label">NYR Record</div>
-</div>
-<div class="stat-item">
-<div class="value">16-11-3</div>
-<div class="label">MTL Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Here's the breakdown for this matchup. The Montreal Canadiens (16-11-3) visit New York Rangers (15-13-4) in what shapes up to be a intriguing matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Montreal Canadiens are 13-14 while New York Rangers sit at 13-15. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Do your research before placing any bets.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">5.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Montreal Canadiens (16-11-3) visits New York Rangers (15-13-4).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Carolina Hurricanes" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/car.png"/>
-<span class="vs-badge">@</span>
-<img alt="Philadelphia Flyers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/phi.png"/>
-</div>
-<h3 class="game-title">Carolina Hurricanes (19-9-2) @ Philadelphia Flyers (16-9-4)</h3>
-<div class="game-meta">
-<span>2025-12-14T00:00Z</span>
-<span>Xfinity Mobile Arena</span>
-<span>ESPN+, FanDuel SN South</span>
-<span>Line: CAR -170</span>
-<span>Total: 5.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">16-9-4</div>
-<div class="label">PHI Record</div>
-</div>
-<div class="stat-item">
-<div class="value">19-9-2</div>
-<div class="label">CAR Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>The recent stretch has been telling for both squads. The Carolina Hurricanes (19-9-2) visit Philadelphia Flyers (16-9-4) in what shapes up to be a intriguing matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Carolina Hurricanes are 13-15 while Philadelphia Flyers sit at 12-13. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. Look at the full picture before placing your bets.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">5.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Carolina Hurricanes (19-9-2) visits Philadelphia Flyers (16-9-4).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Vegas Golden Knights" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/vgk.png"/>
-<span class="vs-badge">@</span>
-<img alt="Columbus Blue Jackets" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/cbj.png"/>
-</div>
-<h3 class="game-title">Vegas Golden Knights (15-6-9) @ Columbus Blue Jackets (13-12-6)</h3>
-<div class="game-meta">
-<span>2025-12-14T00:00Z</span>
-<span>Nationwide Arena</span>
-<span>ESPN+, Scripps Sports</span>
-<span>Line: VGK -148</span>
-<span>Total: 6.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item"><span class="value">VGK -148.0</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">6.0</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">-3060</span><span class="label">VGK ML</span></div>
-<div class="stat-item"><span class="value">+2764</span><span class="label">CBJ ML</span></div>
-</div>
-
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Here's the breakdown for this matchup. The Vegas Golden Knights (15-6-9) visit Columbus Blue Jackets (13-12-6) in what shapes up to be a fascinating matchup.</p></div>
-<div class="analysis-section"><h4>Health Report</h4><p>No major injury concerns on either side.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Vegas Golden Knights are 9-12 while Columbus Blue Jackets sit at 12-13. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. Do your research before placing any bets.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">6.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Vegas Golden Knights (15-6-9) visits Columbus Blue Jackets (13-12-6).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Washington Capitals" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/wsh.png"/>
-<span class="vs-badge">@</span>
-<img alt="Winnipeg Jets" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/wpg.png"/>
-</div>
-<h3 class="game-title">Washington Capitals (18-9-4) @ Winnipeg Jets (14-15-1)</h3>
-<div class="game-meta">
-<span>2025-12-14T00:00Z</span>
-<span>Canada Life Centre</span>
-<span>ESPN+, MNMT</span>
-<span>Line: WSH -125</span>
-<span>Total: 6.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">14-15-1</div>
-<div class="label">WPG Record</div>
-</div>
-<div class="stat-item">
-<div class="value">18-9-4</div>
-<div class="label">WSH Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Both teams come into this with something to prove. The Washington Capitals (18-9-4) visit Winnipeg Jets (14-15-1) in what shapes up to be a competitive matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Washington Capitals are 12-15 while Winnipeg Jets sit at 14-15. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. Do your research before placing any bets.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">6.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Washington Capitals (18-9-4) visits Winnipeg Jets (14-15-1).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Detroit Red Wings" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/det.png"/>
-<span class="vs-badge">@</span>
-<img alt="Chicago Blackhawks" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/chi.png"/>
-</div>
-<h3 class="game-title">Detroit Red Wings (17-12-3) @ Chicago Blackhawks (13-12-6)</h3>
-<div class="game-meta">
-<span>01:00 AM ET</span>
-<span>17-12-3 vs 13-12-6</span>
-<span>United Center</span>
-<span>ESPN+, CHSN</span>
-<span>Line: DET -192</span>
-<span>Total: 6.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">13-12-6</div>
-<div class="label">CHI Record</div>
-</div>
-<div class="stat-item">
-<div class="value">17-12-3</div>
-<div class="label">DET Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Two teams heading in opposite directions meet tonight. The Detroit Red Wings (17-12-3) visit Chicago Blackhawks (13-12-6) in what shapes up to be a intriguing matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Detroit Red Wings are 14-15 while Chicago Blackhawks sit at 12-13. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. Do your research before placing any bets.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">6.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Detroit Red Wings (17-12-3) visits Chicago Blackhawks (13-12-6).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Florida Panthers" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/fla.png"/>
-<span class="vs-badge">@</span>
-<img alt="Dallas Stars" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/dal.png"/>
-</div>
-<h3 class="game-title">Florida Panthers (15-13-2) @ Dallas Stars (21-6-5)</h3>
-<div class="game-meta">
-<span>2025-12-14T01:00Z</span>
-<span>American Airlines Center</span>
-<span>ESPN+, Scripps Sports</span>
-<span>Line: DAL -135</span>
-<span>Total: 5.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item"><span class="value">DAL -135.0</span><span class="label">Spread</span></div>
-<div class="stat-item"><span class="value">6.0</span><span class="label">O/U</span></div>
-<div class="stat-item"><span class="value">+2530</span><span class="label">FLA ML</span></div>
-<div class="stat-item"><span class="value">-2800</span><span class="label">DAL ML</span></div>
-</div>
-<div class="stat-item">
-<div class="value">15-13-2</div>
-<div class="label">FLA Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Let's break down what makes this matchup tick. The Florida Panthers (15-13-2) visit Dallas Stars (21-6-5) in what shapes up to be a fascinating matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Florida Panthers are 13-15 while Dallas Stars sit at 12-15. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. This game has potential for value on either side.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">5.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Florida Panthers (15-13-2) visits Dallas Stars (21-6-5).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Nashville Predators" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nsh.png"/>
-<span class="vs-badge">@</span>
-<img alt="Colorado Avalanche" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/col.png"/>
-</div>
-<h3 class="game-title">Nashville Predators (12-14-4) @ Colorado Avalanche (22-2-7)</h3>
-<div class="game-meta">
-<span>2025-12-14T02:00Z</span>
-<span>Ball Arena</span>
-<span>ESPN+, Altitude Sports</span>
-<span>Line: COL -355</span>
-<span>Total: 6.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">22-2-7</div>
-<div class="label">COL Record</div>
-</div>
-<div class="stat-item">
-<div class="value">12-14-4</div>
-<div class="label">NSH Record</div>
-</div>
-<div class="deep-analysis">
-<div class="analysis-section"><h4>The Matchup</h4><p>Here's a matchup that deserves your attention. The Nashville Predators (12-14-4) visit Colorado Avalanche (22-2-7) in what shapes up to be a intriguing matchup.</p></div>
-<div class="analysis-section"><h4>Betting Trends</h4><p>Against the spread, Nashville Predators are 13-13 while Colorado Avalanche sit at 11-13. </p></div>
-<div class="analysis-section"><h4>The Angle</h4><p>Consider both teams' recent scoring trends when evaluating totals. Check the injury reports and recent form before betting.</p></div>
-</div>
-<div class="stat-item">
-<div class="value">6.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Nashville Predators (12-14-4) visits Colorado Avalanche (22-2-7).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-<article class="game-card">
-<div class="teams-display">
-<img alt="Calgary Flames" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/cgy.png"/>
-<span class="vs-badge">@</span>
-<img alt="Los Angeles Kings" class="team-logo" onerror="this.style.display='none'" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/la.png"/>
-</div>
-<h3 class="game-title">Calgary Flames (12-16-4) @ Los Angeles Kings (14-8-8)</h3>
-<div class="game-meta">
-<span>2025-12-14T03:00Z</span>
-<span>crypto.com Arena</span>
-<span>ESPN+, KCAL</span>
-<span>Line: LA -175</span>
-<span>Total: 5.5</span>
-</div>
-<div class="stat-row">
-<div class="stat-item">
-<div class="value">14-8-8</div>
-<div class="label">LA Record</div>
-</div>
-<div class="stat-item">
-<div class="value">12-16-4</div>
-<div class="label">CGY Record</div>
-</div>
-<div class="stat-item">
-<div class="value">LA -175</div>
-<div class="label">Line</div>
-</div>
-<div class="stat-item">
-<div class="value">5.5</div>
-<div class="label">Total</div>
-</div>
-</div>
-<p>Matchup analysis coming soon. Calgary Flames (12-16-4) visits Los Angeles Kings (14-8-8).</p>
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
-</article>
-
-
-
-
-
-
-
-
-
-
-
-
-
 </main>
-<div class="archive-link">
-<a href="nhl-calendar.html" style="background: linear-gradient(135deg, #003087, #00e5ff); color: #fff; border: none; padding: 15px 30px; font-size: 1.1rem;">View Full NHL Calendar</a>
-<a href="nhl.html" style="margin-left: 15px;">Latest NHL Analysis</a>
-</div>
+
+<nav class="pagination">
+<a href="nhl-page2.html" title="Newer">&#8592; Newer</a>
+<span class="current">Page 17 of 19</span>
+<a href="nhl-page4.html" title="Older">Older &#8594;</a>
+</nav>
+
 <footer>
-<p>© 2025 BetLegend. For entertainment purposes only.</p>
-<p><a href="index.html">Home</a> | <a href="howitworks.html">How It Works</a></p>
+<p>&copy; 2025 BetLegend &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="nhl-records.html">NHL Records</a></p>
 </footer>
+
 </body>
 </html>
