@@ -1,4 +1,4 @@
-// Handicapping Hub Archive Data
+// Handicapping Hub Archive Data - Auto-generated
 const HUB_ARCHIVE = [
     { date: "2025-12-14", page: "handicapping-hub-2025-12-14.html", title: "December 14, 2025" },
     { date: "2025-12-13", page: "handicapping-hub-2025-12-13.html", title: "December 13, 2025" },

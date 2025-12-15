@@ -110,36 +110,45 @@ def archive_current_hub():
         print(f"\n[ARCHIVE] No existing hub to archive, first run")
 
 def update_archive_calendar(date_str: str, filename: str):
-    """Update the archive calendar page with the new archive entry"""
-    archive_page = os.path.join(REPO_PATH, 'handicapping-hub-archive.html')
+    """Update the archive data JS file with the new archive entry"""
+    data_file = os.path.join(REPO_PATH, 'handicapping-hub-data.js')
 
-    if not os.path.exists(archive_page):
-        print(f"  [ARCHIVE] Archive page not found, skipping calendar update")
-        return
+    # Format the title nicely
+    try:
+        dt = datetime.strptime(date_str, '%Y-%m-%d')
+        title = dt.strftime('%B %d, %Y').replace(' 0', ' ')  # Remove leading zero from day
+    except:
+        title = date_str
 
     try:
-        with open(archive_page, 'r', encoding='utf-8') as f:
-            content = f.read()
+        # Read existing data file or create new one
+        if os.path.exists(data_file):
+            with open(data_file, 'r', encoding='utf-8') as f:
+                content = f.read()
 
-        # Check if this date is already in the archive
-        if f'"{date_str}"' in content:
-            print(f"  [ARCHIVE] Date {date_str} already in calendar")
-            return
+            # Check if this date is already in the archive
+            if f'"{date_str}"' in content:
+                print(f"  [ARCHIVE] Date {date_str} already in data file")
+                return
 
-        # Find the archiveData object and add the new entry
-        # Pattern: Find the last entry before the closing brace
-        pattern = r'("20\d{2}-\d{2}-\d{2}":\s*"[^"]+"\s*)\n(\s*\};)'
-        match = re.search(pattern, content)
+            # Add new entry at the top of the array (after the opening bracket)
+            new_entry = f'    {{ date: "{date_str}", page: "{filename}", title: "{title}" }},'
+            pattern = r'(const HUB_ARCHIVE = \[\n)'
+            content = re.sub(pattern, f'\\1{new_entry}\n', content)
+        else:
+            # Create new data file
+            content = f'''// Handicapping Hub Archive Data - Auto-generated
+const HUB_ARCHIVE = [
+    {{ date: "{date_str}", page: "{filename}", title: "{title}" }},
+];
+'''
 
-        if match:
-            new_entry = f'{match.group(1)},\n            "{date_str}": "{filename}"\n{match.group(2)}'
-            content = content[:match.start()] + new_entry + content[match.end():]
+        with open(data_file, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print(f"  [ARCHIVE] Added {date_str} to handicapping-hub-data.js")
 
-            with open(archive_page, 'w', encoding='utf-8') as f:
-                f.write(content)
-            print(f"  [ARCHIVE] Added {date_str} to archive calendar")
     except Exception as e:
-        print(f"  [ARCHIVE] Error updating calendar: {e}")
+        print(f"  [ARCHIVE] Error updating data file: {e}")
 
 def get_archive_dates_json() -> str:
     """
