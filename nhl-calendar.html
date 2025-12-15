@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NHL Analysis Calendar | BetLegend Picks</title>
-<meta name="description" content="Browse all NHL analysis and game breakdowns by date. Complete archive of BetLegend NHL coverage.">
-<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
+<title>NHL Archive Calendar | BetLegend</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
@@ -40,154 +38,70 @@
     .month-selector { text-align: center; margin-bottom: 30px; }
     .month-selector label { font-size: 1.1rem; color: var(--text-secondary); margin-right: 15px; }
     .month-dropdown {
-        background: var(--card-bg);
-        color: var(--text-primary);
-        border: 1px solid var(--border-color);
-        padding: 12px 20px;
-        font-size: 1rem;
-        border-radius: 8px;
-        cursor: pointer;
+        background: var(--card-bg); color: var(--text-primary);
+        border: 1px solid var(--border-color); padding: 12px 20px;
+        font-size: 1rem; border-radius: 8px; cursor: pointer;
     }
-    .calendar-container {
-        display: none;
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 15px;
-        padding: 30px;
-    }
+    .calendar-container { display: none; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 30px; }
     .calendar-container.active { display: block; }
-    .calendar-month-title {
-        font-size: 1.8rem;
-        font-family: 'Orbitron', sans-serif;
-        color: var(--primary-glow);
-        text-align: center;
-        margin-bottom: 25px;
-    }
-    .calendar-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-    .calendar-day-header {
-        text-align: center;
-        font-weight: 600;
-        color: var(--text-secondary);
-        padding: 10px;
-        font-size: 0.9rem;
-    }
+    .calendar-month-title { font-size: 1.8rem; font-family: 'Orbitron', sans-serif; color: var(--primary-glow); text-align: center; margin-bottom: 25px; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 20px; }
+    .calendar-day-header { text-align: center; font-weight: 600; color: var(--text-secondary); padding: 10px; font-size: 0.9rem; }
     .calendar-day {
-        aspect-ratio: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0,0,0,0.3);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 8px;
-        font-size: 1.1rem;
-        color: var(--text-secondary);
-        transition: all 0.3s ease;
-        position: relative;
+        aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+        font-size: 1.1rem; color: var(--text-secondary); transition: all 0.3s ease; position: relative;
     }
     .calendar-day.available {
-        background: rgba(0, 0, 0, 0.5);
-        border-color: var(--primary-glow);
-        color: var(--primary-glow);
-        cursor: pointer;
-        font-weight: 600;
+        background: rgba(0, 224, 255, 0.1); border-color: var(--primary-glow);
+        color: var(--primary-glow); cursor: pointer; font-weight: 600;
     }
     .calendar-day.available:hover {
-        background: rgba(0, 224, 255, 0.2);
-        transform: translateY(-2px);
+        background: rgba(0, 224, 255, 0.2); transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(0, 224, 255, 0.3);
     }
     .calendar-day.today {
         background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
-        border: 2px solid var(--warning-color);
-        color: var(--warning-color);
-        font-weight: 900;
+        border: 2px solid var(--warning-color); color: var(--warning-color); font-weight: 900;
     }
     .calendar-day.today::after {
-        content: 'TODAY';
-        position: absolute;
-        bottom: 2px;
-        font-size: 0.45rem;
-        color: var(--warning-color);
-        font-weight: 700;
+        content: 'TODAY'; position: absolute; bottom: 2px; font-size: 0.45rem;
+        color: var(--warning-color); font-weight: 700;
     }
     .game-tooltip {
-        display: none;
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0,0,0,0.95);
-        color: var(--primary-glow);
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-size: 0.75rem;
-        white-space: nowrap;
-        z-index: 100;
-        border: 1px solid var(--primary-glow);
-        margin-bottom: 5px;
+        display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+        background: rgba(0,0,0,0.95); color: var(--primary-glow); padding: 8px 12px;
+        border-radius: 6px; font-size: 0.75rem; white-space: nowrap; z-index: 100;
+        border: 1px solid var(--primary-glow); margin-bottom: 5px;
     }
     .calendar-day.available:hover .game-tooltip { display: block; }
-    .multi-game-indicator {
-        position: absolute;
-        top: 2px;
-        right: 2px;
-        background: var(--warning-color);
-        color: #000;
-        font-size: 0.6rem;
-        font-weight: 700;
-        padding: 2px 4px;
-        border-radius: 3px;
-    }
     .back-link { text-align: center; margin-top: 40px; }
     .back-link a {
-        color: var(--primary-glow);
-        text-decoration: none;
-        font-size: 1.1rem;
-        padding: 12px 30px;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        display: inline-block;
-        transition: all 0.3s ease;
-        margin: 0 10px;
+        color: var(--primary-glow); text-decoration: none; font-size: 1.1rem;
+        padding: 12px 30px; border: 1px solid var(--border-color); border-radius: 8px;
+        display: inline-block; transition: all 0.3s ease;
     }
-    .back-link a:hover { background: rgba(0, 224, 255, 0.1); transform: translateY(-2px); }
+    .back-link a:hover { background: rgba(0, 224, 255, 0.1); }
     .legend { text-align: center; margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; }
     .legend-item { display: inline-flex; align-items: center; margin: 0 15px; font-size: 0.85rem; color: var(--text-secondary); }
     .legend-dot { width: 12px; height: 12px; border-radius: 3px; margin-right: 8px; }
-    .legend-dot.available { background: rgba(0, 0, 0, 0.5); border: 1px solid var(--primary-glow); }
+    .legend-dot.available { background: rgba(0, 224, 255, 0.3); border: 1px solid var(--primary-glow); }
     .legend-dot.today { background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3)); border: 1px solid var(--warning-color); }
-    .stats-bar {
-        text-align: center;
-        margin-bottom: 20px;
-        padding: 15px;
-        background: rgba(0,0,0,0.2);
-        border-radius: 8px;
-        border: 1px solid var(--border-color);
-    }
+    .stats-bar { text-align: center; margin-bottom: 20px; padding: 15px; background: rgba(0,224,255,0.05); border-radius: 8px; border: 1px solid var(--border-color); }
     .stats-bar span { margin: 0 20px; font-size: 0.95rem; }
     .stats-bar strong { color: var(--primary-glow); }
-    .sport-logo { width: 60px; height: 60px; margin-bottom: 15px; }
     @media (max-width: 768px) {
         .calendar-grid { gap: 5px; }
         .calendar-day { font-size: 0.9rem; }
         .title { font-size: 2rem; }
-        .game-tooltip { display: none !important; }
-        .back-link a { display: block; margin: 10px auto; max-width: 200px; }
     }
 </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nhl.png" alt="NHL" class="sport-logo">
-        <h1 class="title">NHL Calendar</h1>
-        <p class="subtitle">Browse all NHL analysis by date</p>
+        <h1 class="title">NHL Archive</h1>
+        <p class="subtitle">Browse past picks and analysis by date</p>
     </div>
     <div class="stats-bar" id="stats-bar">Loading...</div>
     <div class="month-selector">
@@ -196,105 +110,115 @@
     </div>
     <div id="calendars-container"></div>
     <div class="back-link">
-        <a href="nhl.html">Latest NHL Analysis</a>
-        <a href="index.html">Back to Home</a>
+        <a href="nhl.html">Back to Today's NHL</a>
     </div>
 </div>
-<script src="nhl-games-data.js"></script>
+<script src="nhl-archive-data.js"></script>
 <script>
-const GAMES = NHL_GAMES;
+const DATA = NHL_ARCHIVE;
 const gamesMap = {};
-const multiGameDates = {};
-GAMES.forEach(game => {
-    if (gamesMap[game.date]) {
-        if (!multiGameDates[game.date]) multiGameDates[game.date] = [gamesMap[game.date]];
-        multiGameDates[game.date].push(game);
-    }
-    gamesMap[game.date] = game;
-});
+DATA.forEach(game => { gamesMap[game.date] = game; });
+
 const today = new Date();
 const todayStr = today.toISOString().split('T')[0];
-const totalPages = GAMES.length;
-const uniqueDates = new Set(GAMES.map(g => g.date)).size;
-const latestGame = [...GAMES].sort((a, b) => b.date.localeCompare(a.date))[0];
-document.getElementById('stats-bar').innerHTML = `<span>Total Pages: <strong>${totalPages}</strong></span><span>Days Covered: <strong>${uniqueDates}</strong></span><span>Latest: <strong>${latestGame.title}</strong></span>`;
+const sortedGames = [...DATA].sort((a, b) => b.date.localeCompare(a.date));
+const latestGame = sortedGames[0];
+
+document.getElementById('stats-bar').innerHTML =
+    '<span>Total Archive Dates: <strong>' + DATA.length + '</strong></span>' +
+    '<span>Latest: <strong>' + (latestGame ? latestGame.title : 'N/A') + '</strong></span>';
+
 const months = new Set();
-GAMES.forEach(game => { const [year, month] = game.date.split('-'); months.add(`${year}-${month}`); });
-const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+DATA.forEach(game => {
+    const [year, month] = game.date.split('-');
+    months.add(year + '-' + month);
+});
+const currentMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
 months.add(currentMonth);
-const sortedMonths = Array.from(months).sort();
-const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+const sortedMonths = Array.from(months).sort().reverse();
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 const monthSelect = document.getElementById('month-select');
-sortedMonths.forEach(monthKey => {
+sortedMonths.forEach((monthKey, idx) => {
     const [year, month] = monthKey.split('-');
     const option = document.createElement('option');
     option.value = monthKey;
-    option.textContent = `${monthNames[parseInt(month)-1]} ${year}`;
-    if (monthKey === currentMonth) option.selected = true;
+    option.textContent = monthNames[parseInt(month) - 1] + ' ' + year;
+    if (idx === 0) option.selected = true;
     monthSelect.appendChild(option);
 });
+
 const calendarsContainer = document.getElementById('calendars-container');
-sortedMonths.forEach(monthKey => {
+
+sortedMonths.forEach((monthKey, idx) => {
     const [year, month] = monthKey.split('-');
     const calendarDiv = document.createElement('div');
-    calendarDiv.id = `calendar-${monthKey}`;
-    calendarDiv.className = 'calendar-container' + (monthKey === currentMonth ? ' active' : '');
+    calendarDiv.id = 'calendar-' + monthKey;
+    calendarDiv.className = 'calendar-container' + (idx === 0 ? ' active' : '');
+
     const titleH2 = document.createElement('h2');
     titleH2.className = 'calendar-month-title';
-    titleH2.textContent = `${monthNames[parseInt(month)-1]} ${year}`;
+    titleH2.textContent = monthNames[parseInt(month) - 1] + ' ' + year;
     calendarDiv.appendChild(titleH2);
+
     const grid = document.createElement('div');
     grid.className = 'calendar-grid';
-    ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(day => {
+
+    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
         const header = document.createElement('div');
         header.className = 'calendar-day-header';
         header.textContent = day;
         grid.appendChild(header);
     });
-    const firstDay = new Date(year, parseInt(month)-1, 1);
+
+    const firstDay = new Date(year, parseInt(month) - 1, 1);
     const lastDay = new Date(year, parseInt(month), 0);
-    for (let i = 0; i < firstDay.getDay(); i++) {
-        const emptyDay = document.createElement('div');
-        emptyDay.className = 'calendar-day';
-        grid.appendChild(emptyDay);
+    const daysInMonth = lastDay.getDate();
+    const startDayOfWeek = firstDay.getDay();
+
+    for (let i = 0; i < startDayOfWeek; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'calendar-day';
+        grid.appendChild(empty);
     }
-    for (let day = 1; day <= lastDay.getDate(); day++) {
-        const dateStr = `${year}-${month}-${String(day).padStart(2,'0')}`;
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = year + '-' + month + '-' + String(day).padStart(2, '0');
         const dayDiv = document.createElement('div');
         dayDiv.className = 'calendar-day';
+
         const game = gamesMap[dateStr];
         if (game) {
             dayDiv.className += ' available';
-            dayDiv.onclick = () => window.location.href = game.page;
+            dayDiv.onclick = function() { window.location.href = game.page; };
             const tooltip = document.createElement('span');
             tooltip.className = 'game-tooltip';
-            if (multiGameDates[dateStr]) {
-                tooltip.textContent = (multiGameDates[dateStr].length + 1) + ' articles';
-                const indicator = document.createElement('span');
-                indicator.className = 'multi-game-indicator';
-                indicator.textContent = (multiGameDates[dateStr].length + 1);
-                dayDiv.appendChild(indicator);
-            } else {
-                tooltip.textContent = game.title;
-            }
+            tooltip.textContent = game.title;
             dayDiv.appendChild(tooltip);
         }
+
         if (dateStr === todayStr) dayDiv.className += ' today';
+
         const dayNum = document.createElement('span');
         dayNum.textContent = day;
         dayDiv.appendChild(dayNum);
         grid.appendChild(dayDiv);
     }
+
     calendarDiv.appendChild(grid);
+
     const legend = document.createElement('div');
     legend.className = 'legend';
-    legend.innerHTML = '<span class="legend-item"><span class="legend-dot available"></span> Analysis Available</span><span class="legend-item"><span class="legend-dot today"></span> Today</span>';
+    legend.innerHTML = '<span class="legend-item"><span class="legend-dot available"></span> Archive Available</span>' +
+        '<span class="legend-item"><span class="legend-dot today"></span> Today</span>';
     calendarDiv.appendChild(legend);
     calendarsContainer.appendChild(calendarDiv);
 });
+
 function showMonth(monthKey) {
     document.querySelectorAll('.calendar-container').forEach(cal => cal.classList.remove('active'));
-    document.getElementById(`calendar-${monthKey}`).classList.add('active');
+    document.getElementById('calendar-' + monthKey).classList.add('active');
 }
 </script>
 </body>
