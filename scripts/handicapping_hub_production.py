@@ -141,6 +141,31 @@ def update_archive_calendar(date_str: str, filename: str):
     except Exception as e:
         print(f"  [ARCHIVE] Error updating calendar: {e}")
 
+def get_archive_dates_json() -> str:
+    """
+    Scan for existing archive files and return a JSON object mapping dates to filenames.
+    Today's date maps to handicapping-hub.html (the current page).
+    """
+    import glob
+
+    archive_dict = {}
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # Scan for archive files first
+    pattern = os.path.join(REPO_PATH, 'handicapping-hub-20*.html')
+    for filepath in glob.glob(pattern):
+        filename = os.path.basename(filepath)
+        # Extract date from filename: handicapping-hub-YYYY-MM-DD.html
+        match = re.match(r'handicapping-hub-(\d{4}-\d{2}-\d{2})\.html', filename)
+        if match:
+            date = match.group(1)
+            archive_dict[date] = filename
+
+    # Today's date always maps to current hub (overwrites archive if exists)
+    archive_dict[today] = 'handicapping-hub.html'
+
+    return json.dumps(archive_dict)
+
 def is_game_completed(game: Dict) -> bool:
     """Check if a game has already been completed"""
     status = game.get('status', {})
@@ -1351,6 +1376,9 @@ def generate_game_card(game: Dict, sport: str) -> str:
 def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     """Generate complete HTML page"""
 
+    # Get archive dates for calendar
+    archive_dates_json = get_archive_dates_json()
+
     # Build tabs and sections
     tab_buttons = ""
     sport_sections = ""
@@ -1656,6 +1684,93 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
                 font-size: 0.7rem;
             }}
         }}
+
+        /* Archive Calendar Dropdown */
+        .archive-btn {{
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 999;
+            background: linear-gradient(135deg, #fd5000, #ff7b3d);
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(253, 80, 0, 0.4);
+        }}
+        .archive-btn:hover {{ transform: scale(1.05); }}
+        .archive-dropdown {{
+            position: fixed;
+            top: 115px;
+            right: 20px;
+            z-index: 998;
+            background: rgba(13, 27, 42, 0.98);
+            border: 2px solid #fd5000;
+            border-radius: 12px;
+            padding: 15px;
+            width: 300px;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }}
+        .archive-dropdown.open {{ display: block; }}
+        .cal-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }}
+        .cal-title {{ color: #fff; font-weight: 700; font-size: 0.85rem; }}
+        .cal-nav {{ display: flex; gap: 6px; align-items: center; }}
+        .cal-nav-btn {{
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }}
+        .cal-nav-btn:hover {{ background: #fd5000; }}
+        .cal-month {{ color: #fd5000; font-weight: 700; font-size: 0.8rem; min-width: 90px; text-align: center; }}
+        .cal-grid {{
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+        }}
+        .cal-day-hdr {{ text-align: center; color: #ffd700; font-size: 0.55rem; font-weight: 700; padding: 4px 0; }}
+        .cal-day {{
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            color: #555;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }}
+        .cal-day.has-data {{
+            background: rgba(253, 80, 0, 0.25);
+            border-color: rgba(253, 80, 0, 0.5);
+            color: #fff;
+            cursor: pointer;
+        }}
+        .cal-day.has-data:hover {{ background: #fd5000; transform: scale(1.1); }}
+        .cal-day.today {{ background: #fd5000; color: #fff; font-weight: 800; }}
+        .cal-day.other {{ opacity: 0.3; }}
+        @media (max-width: 600px) {{
+            .archive-btn {{ top: 60px; right: 10px; padding: 8px 12px; font-size: 0.7rem; }}
+            .archive-dropdown {{ right: 10px; width: 260px; top: 100px; }}
+        }}
     </style>
 </head>
 <body>
@@ -1678,6 +1793,22 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         <p class="subtitle">{date_str} | Advanced Stats & Betting Lines</p>
     </header>
 
+    <!-- Archive Calendar Button & Dropdown -->
+    <button class="archive-btn" onclick="document.getElementById('archiveCal').classList.toggle('open')">
+        📅 Archive
+    </button>
+    <div class="archive-dropdown" id="archiveCal">
+        <div class="cal-header">
+            <span class="cal-title">View Past Days</span>
+            <div class="cal-nav">
+                <button class="cal-nav-btn" onclick="calNav(-1)">◀</button>
+                <span class="cal-month" id="calMonth">Dec 2025</span>
+                <button class="cal-nav-btn" onclick="calNav(1)">▶</button>
+            </div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+    </div>
+
     <div class="container">
         <div class="tabs">
             {tab_buttons}
@@ -1698,6 +1829,37 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
                 document.getElementById(this.dataset.sport + '-section').classList.add('active');
             }});
         }});
+
+        // Archive Calendar
+        const archiveData = {archive_dates_json};
+        let calDate = new Date();
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+        function renderCal() {{
+            const y = calDate.getFullYear(), m = calDate.getMonth();
+            document.getElementById('calMonth').textContent = months[m] + ' ' + y;
+            const first = new Date(y, m, 1).getDay();
+            const days = new Date(y, m + 1, 0).getDate();
+            const prev = new Date(y, m, 0).getDate();
+            let h = '<div class="cal-day-hdr">S</div><div class="cal-day-hdr">M</div><div class="cal-day-hdr">T</div><div class="cal-day-hdr">W</div><div class="cal-day-hdr">T</div><div class="cal-day-hdr">F</div><div class="cal-day-hdr">S</div>';
+            for (let i = first - 1; i >= 0; i--) h += '<div class="cal-day other">' + (prev - i) + '</div>';
+            const today = new Date();
+            for (let d = 1; d <= days; d++) {{
+                const key = y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+                const isToday = y === today.getFullYear() && m === today.getMonth() && d === today.getDate();
+                const hasData = archiveData[key];
+                let cls = 'cal-day';
+                if (isToday) cls += ' today';
+                else if (hasData) cls += ' has-data';
+                if (hasData) h += '<div class="' + cls + '" onclick="location.href=\\'' + hasData + '\\'">' + d + '</div>';
+                else h += '<div class="' + cls + '">' + d + '</div>';
+            }}
+            const rem = (first + days) % 7;
+            if (rem > 0) for (let d = 1; d <= 7 - rem; d++) h += '<div class="cal-day other">' + d + '</div>';
+            document.getElementById('calGrid').innerHTML = h;
+        }}
+        function calNav(delta) {{ calDate.setMonth(calDate.getMonth() + delta); renderCal(); }}
+        renderCal();
     </script>
 </body>
 </html>'''
