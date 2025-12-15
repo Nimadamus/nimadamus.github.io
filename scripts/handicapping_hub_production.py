@@ -30,8 +30,16 @@ import os
 import sys
 import shutil
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Tuple
+
+# Timezone handling - convert UTC to Eastern Time
+try:
+    from zoneinfo import ZoneInfo
+    EASTERN = ZoneInfo('America/New_York')
+except ImportError:
+    # Fallback for older Python versions
+    EASTERN = None
 
 # =============================================================================
 # CONFIGURATION
