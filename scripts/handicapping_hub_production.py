@@ -2411,6 +2411,169 @@ def fetch_all_games() -> Dict[str, List]:
 
     return all_games
 
+def update_index_featured_game(all_games: Dict) -> bool:
+    """Update the featured game on index.html with today's most notable game"""
+    print("\n[INDEX] Updating featured game on index.html...")
+
+    index_path = os.path.join(REPO_PATH, 'index.html')
+    if not os.path.exists(index_path):
+        print("  [ERROR] index.html not found")
+        return False
+
+    # Find the best game to feature (priority: NCAAF bowl, NFL, NBA, NHL, NCAAB)
+    featured_game = None
+    featured_sport = None
+
+    # During bowl season, prioritize college football
+    for sport in ['NCAAF', 'NFL', 'NBA', 'NHL', 'NCAAB']:
+        games = all_games.get(sport, [])
+        if games:
+            # Get first game (usually most prominent)
+            featured_game = games[0]
+            featured_sport = sport
+            break
+
+    if not featured_game:
+        print("  [INFO] No games found for today")
+        return False
+
+    try:
+        with open(index_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # Extract game info
+        away_team = featured_game.get('away_team', {})
+        home_team = featured_game.get('home_team', {})
+        game_info = featured_game.get('game_info', {})
+        betting = featured_game.get('betting', {})
+
+        away_name = away_team.get('abbrev', 'AWAY')
+        home_name = home_team.get('abbrev', 'HOME')
+        away_record = away_team.get('record', '0-0')
+        home_record = home_team.get('record', '0-0')
+
+        # Get spread
+        spread = betting.get('spread', {})
+        away_spread = spread.get('away', 'PK')
+        home_spread = spread.get('home', 'PK')
+        total = betting.get('total', 'N/A')
+
+        # Format time
+        game_time = game_info.get('time', 'TBD')
+        venue = game_info.get('venue', 'TBD')
+        broadcast = game_info.get('broadcast', '')
+
+        # Determine day of week
+        today = datetime.now()
+        day_name = today.strftime('%A')
+        date_str = today.strftime('%b %d, %Y')
+
+        # Build the featured game title
+        if featured_sport == 'NCAAF':
+            title = f"{away_name} vs {home_name}"
+            subtitle = "College Football"
+        elif featured_sport == 'NFL':
+            title = f"{away_name} @ {home_name}"
+            subtitle = "NFL Football"
+        elif featured_sport == 'NBA':
+            title = f"{away_name} @ {home_name}"
+            subtitle = "NBA Basketball"
+        elif featured_sport == 'NHL':
+            title = f"{away_name} @ {home_name}"
+            subtitle = "NHL Hockey"
+        else:
+            title = f"{away_name} vs {home_name}"
+            subtitle = featured_sport
+
+        # Create the replacement HTML
+        new_featured = f'''                <div class="featured-header">
+                    <h3>{title}</h3>
+                    <div class="live-badge">{game_time} ET</div>
+                </div>
+
+                <div class="matchup-display">
+                    <div class="matchup-teams">
+                        <span class="team-name">{away_name}</span>
+                        <span class="matchup-vs">vs</span>
+                        <span class="team-name">{home_name}</span>
+                    </div>
+                    <div class="matchup-time">{day_name} {game_time} ET • {subtitle} • {broadcast}</div>
+                </div>
+
+                <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="stat-card">
+                        <div class="label">Record</div>
+                        <div class="values">
+                            <span class="home">{away_record}</span>
+                            <span class="away">{home_record}</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Spread</div>
+                        <div class="values">
+                            <span class="home">{away_spread}</span>
+                            <span class="away">{home_spread}</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Total</div>
+                        <div class="values">
+                            <span class="home" style="font-size: 0.85rem;">O/U {total}</span>
+                            <span class="away"></span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Sport</div>
+                        <div class="values">
+                            <span class="home" style="font-size: 0.85rem;">{featured_sport}</span>
+                            <span class="away"></span>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 0.65rem; color: #888; margin-bottom: 12px; text-align: right;">{venue} • {date_str}</p>
+
+                <div class="injury-alert">
+                    <h4>Game Notes</h4>
+                    <div class="injury-item">Check Handicapping Hub for full analysis</div>
+                    <div class="injury-item">Line movement and injury updates available</div>
+                </div>'''
+
+        # Find and replace the featured game section
+        # Match from featured-header to injury-alert closing div
+        import re
+        pattern = r'<div class="featured-header">.*?</div>\s*\n\s*</div>\s*\n\s*<div class="matchup-display">.*?</div>\s*\n\s*</div>\s*\n\s*<div class="stats-grid".*?>.*?</div>\s*\n\s*<p style="font-size: 0.65rem.*?</p>\s*\n\s*<div class="injury-alert">.*?</div>\s*\n\s*</div>'
+
+        # Simpler approach - find markers and replace between them
+        start_marker = '<div class="featured-header">'
+        end_marker = '</div>\n\n            </div>\n\n            </div>'
+
+        start_idx = content.find(start_marker)
+        if start_idx == -1:
+            print("  [ERROR] Could not find featured-header in index.html")
+            return False
+
+        # Find the injury-alert section end
+        injury_end = content.find('</div>\n\n            </div>', start_idx + 100)
+        if injury_end == -1:
+            injury_end = content.find('</div>\n            </div>', start_idx + 100)
+
+        if injury_end == -1:
+            print("  [ERROR] Could not find featured section end in index.html")
+            return False
+
+        # Replace the section
+        new_content = content[:start_idx] + new_featured + content[injury_end:]
+
+        with open(index_path, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+
+        print(f"  [OK] Updated featured game: {away_name} vs {home_name} ({featured_sport})")
+        return True
+
+    except Exception as e:
+        print(f"  [ERROR] Failed to update index.html: {e}")
+        return False
+
 def main():
     print("=" * 60)
     print("HANDICAPPING HUB - ULTIMATE PRODUCTION SYSTEM")
@@ -2431,6 +2594,9 @@ def main():
     # Sync sport archive data files (NBA, NFL, NHL, NCAAB, NCAAF)
     # This ensures all existing sport pages are in the archive calendars
     sync_all_sport_archives()
+
+    # Update the featured game on the index page
+    update_index_featured_game(all_games)
 
     print("\n" + "=" * 60)
     print(f"SUCCESS: Generated {OUTPUT_FILE}")
