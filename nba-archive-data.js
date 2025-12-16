@@ -1,6 +1,7 @@
 // NBA Archive Data - Auto-updated by production script
 const NBA_ARCHIVE = [
-    { date: "2025-12-15", page: "nba.html", title: "December 15, 2025" },
+    { date: "2025-12-16", page: "nba.html", title: "NBA Cup Championship - Spurs vs Knicks" },
+    { date: "2025-12-15", page: "nba-page8.html", title: "December 15, 2025" },
     { date: "2025-12-14", page: "nba-page2.html", title: "December 14, 2025" },
     { date: "2025-11-26", page: "nba-page7.html", title: "November 26, 2025 - 9-Game Slate" },
     { date: "2025-11-24", page: "nba-page3.html", title: "November 24, 2025" },

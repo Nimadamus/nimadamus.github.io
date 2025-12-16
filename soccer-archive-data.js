@@ -1,0 +1,25 @@
+// Soccer Archive Data - Auto-updated by production script
+const SOCCER_ARCHIVE = [
+    { date: "2025-12-16", page: "soccer.html", title: "Carabao Cup QF - Cardiff vs Chelsea" },
+    { date: "2025-12-15", page: "soccer-page22.html", title: "December 15, 2025" },
+    { date: "2025-12-14", page: "soccer-page21.html", title: "December 14, 2025" },
+    { date: "2025-12-13", page: "soccer-page20.html", title: "December 13, 2025" },
+    { date: "2025-12-12", page: "soccer-page19.html", title: "December 12, 2025" },
+    { date: "2025-12-11", page: "soccer-page18.html", title: "December 11, 2025" },
+    { date: "2025-12-10", page: "soccer-page17.html", title: "December 10, 2025" },
+    { date: "2025-12-09", page: "soccer-page16.html", title: "December 9, 2025" },
+    { date: "2025-12-08", page: "soccer-page15.html", title: "December 8, 2025" },
+    { date: "2025-12-07", page: "soccer-page14.html", title: "December 7, 2025" },
+    { date: "2025-12-06", page: "soccer-page13.html", title: "December 6, 2025" },
+    { date: "2025-12-05", page: "soccer-page12.html", title: "December 5, 2025" },
+    { date: "2025-12-04", page: "soccer-page11.html", title: "December 4, 2025" },
+    { date: "2025-12-03", page: "soccer-page10.html", title: "December 3, 2025" },
+    { date: "2025-12-02", page: "soccer-page9.html", title: "December 2, 2025" },
+    { date: "2025-12-01", page: "soccer-page8.html", title: "December 1, 2025" },
+    { date: "2025-11-30", page: "soccer-page7.html", title: "November 30, 2025" },
+    { date: "2025-11-29", page: "soccer-page6.html", title: "November 29, 2025" },
+    { date: "2025-11-28", page: "soccer-page5.html", title: "November 28, 2025" },
+    { date: "2025-11-27", page: "soccer-page4.html", title: "November 27, 2025" },
+    { date: "2025-11-26", page: "soccer-page3.html", title: "November 26, 2025" },
+    { date: "2025-11-25", page: "soccer-page2.html", title: "November 25, 2025" }
+];
