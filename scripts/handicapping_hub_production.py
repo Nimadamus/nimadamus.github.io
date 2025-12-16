@@ -452,6 +452,22 @@ def fetch_team_statistics(sport_path: str, team_id: str) -> Dict:
         pass
     return stats
 
+def fetch_team_record(sport_path: str, team_id: str) -> str:
+    """Fetch team win-loss record from ESPN team endpoint"""
+    try:
+        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}"
+        resp = requests.get(url, timeout=10)
+        if resp.status_code == 200:
+            data = resp.json()
+            team = data.get('team', {})
+            record = team.get('record', {})
+            items = record.get('items', [])
+            if items:
+                return items[0].get('summary', '0-0')
+    except:
+        pass
+    return '0-0'
+
 def fetch_odds(sport_key: str) -> List[Dict]:
     """Fetch betting odds from The Odds API - filtered to today's games only"""
     url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds"
@@ -2281,13 +2297,20 @@ def fetch_all_games() -> Dict[str, List]:
                 home_name = home_team.get('displayName', 'TBD')
                 away_abbr = away_team.get('abbreviation', 'TBD')
                 home_abbr = home_team.get('abbreviation', 'TBD')
-
-                away_record = away_comp.get('records', [{}])[0].get('summary', '0-0') if away_comp.get('records') else '0-0'
-                home_record = home_comp.get('records', [{}])[0].get('summary', '0-0') if home_comp.get('records') else '0-0'
-
-                # Fetch team stats and injuries
                 away_id = away_team.get('id', '')
                 home_id = home_team.get('id', '')
+
+                # Try to get record from competitor first, then fallback to team endpoint
+                away_records = away_comp.get('records', [])
+                home_records = home_comp.get('records', [])
+                away_record = away_records[0].get('summary', '0-0') if away_records else '0-0'
+                home_record = home_records[0].get('summary', '0-0') if home_records else '0-0'
+
+                # If records are 0-0, try fetching from team endpoint
+                if away_record == '0-0' and away_id:
+                    away_record = fetch_team_record(config['espn_path'], away_id)
+                if home_record == '0-0' and home_id:
+                    home_record = fetch_team_record(config['espn_path'], home_id)
                 away_raw = fetch_team_statistics(config['espn_path'], away_id) if away_id else {}
                 home_raw = fetch_team_statistics(config['espn_path'], home_id) if home_id else {}
 
