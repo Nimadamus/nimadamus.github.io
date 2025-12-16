@@ -2,7 +2,7 @@
 const NHL_ARCHIVE = [
     { date: "2025-12-16", page: "nhl.html", title: "10-Game NHL Slate" },
     { date: "2025-12-15", page: "nhl-page10.html", title: "December 15, 2025" },
-    { date: "2025-12-14", page: "nhl-page2.html", title: "December 14, 2025" },
+    { date: "2025-12-15", page: "nhl-page2.html", title: "December 14, 2025" },
     { date: "2025-11-26", page: "nhl-page4.html", title: "November 26, 2025 - Extended" },
     { date: "2025-11-24", page: "nhl-page3.html", title: "Monday, November 24, 2025" },
     { date: "2025-11-21", page: "nhl-page5.html", title: "Friday, November 21, 2025" },
