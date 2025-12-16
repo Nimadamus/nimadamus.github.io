@@ -2434,7 +2434,7 @@ def update_index_featured_game(all_games: Dict) -> bool:
             break
 
     if not featured_game:
-        print("  [INFO] No games found for today")
+        print("  [INFO] No games found for today - keeping existing featured game")
         return False
 
     try:
@@ -2447,21 +2447,39 @@ def update_index_featured_game(all_games: Dict) -> bool:
         game_info = featured_game.get('game_info', {})
         betting = featured_game.get('betting', {})
 
-        away_name = away_team.get('abbrev', 'AWAY')
-        home_name = home_team.get('abbrev', 'HOME')
-        away_record = away_team.get('record', '0-0')
-        home_record = home_team.get('record', '0-0')
+        # Get values - NO PLACEHOLDERS ALLOWED
+        away_name = away_team.get('abbrev', '')
+        home_name = home_team.get('abbrev', '')
+        away_record = away_team.get('record', '')
+        home_record = home_team.get('record', '')
 
-        # Get spread
+        # CRITICAL: Validate that we have REAL data, not placeholders
+        # If any critical field is missing or placeholder, skip the update
+        if not away_name or not home_name:
+            print("  [SKIP] Missing team names - keeping existing featured game")
+            return False
+        if away_name in ['AWAY', 'TBD', 'N/A', ''] or home_name in ['HOME', 'TBD', 'N/A', '']:
+            print("  [SKIP] Placeholder team names detected - keeping existing featured game")
+            return False
+        if not away_record or not home_record or away_record == '0-0' and home_record == '0-0':
+            print("  [SKIP] Missing or invalid records - keeping existing featured game")
+            return False
+
+        # Get spread - use reasonable defaults for betting data
         spread = betting.get('spread', {})
-        away_spread = spread.get('away', 'PK')
-        home_spread = spread.get('home', 'PK')
-        total = betting.get('total', 'N/A')
+        away_spread = spread.get('away', 'PK') if spread.get('away') else 'PK'
+        home_spread = spread.get('home', 'PK') if spread.get('home') else 'PK'
+        total = betting.get('total', 'TBD') if betting.get('total') else 'TBD'
 
-        # Format time
-        game_time = game_info.get('time', 'TBD')
-        venue = game_info.get('venue', 'TBD')
+        # Format time - also validate
+        game_time = game_info.get('time', '')
+        venue = game_info.get('venue', '')
         broadcast = game_info.get('broadcast', '')
+
+        # Validate game time - don't show TBD
+        if not game_time or game_time in ['TBD', 'N/A', '']:
+            print("  [SKIP] Missing game time - keeping existing featured game")
+            return False
 
         # Determine day of week
         today = datetime.now()
