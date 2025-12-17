@@ -43,6 +43,7 @@ const FEATURED_GAMES = [
     { date: "2025-12-10", page: "featured-game-of-the-day-page16.html", title: "Lakers vs Spurs NBA Cup" },
     { date: "2025-12-11", page: "featured-game-of-the-day-page17.html", title: "Falcons vs Buccaneers TNF" },
     { date: "2025-12-13", page: "featured-game-of-the-day-page18.html", title: "Army vs Navy" },
+    { date: "2025-12-17", page: "featured-game-of-the-day-page19.html", title: "South Florida vs Old Dominion Cure Bowl" },
 
     // ADD NEW FEATURED GAMES HERE
     // Example: { date: "2025-12-14", page: "featured-game-of-the-day-page19.html", title: "Game Title" },
