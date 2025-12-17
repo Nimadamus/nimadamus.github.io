@@ -680,6 +680,72 @@ These pages ARE for picks. They contain:
 
 ---
 
+## 1B. MANDATORY POST-CREATION PROOFREADING
+
+### ⛔ NEVER SKIP THIS STEP ⛔
+
+**After creating ANY content, you MUST proofread and verify:**
+
+### Verification Checklist:
+
+1. **Every Stat Must Be Verified**
+   - Team records (W-L)
+   - Player statistics (PPG, RPG, APG, etc.)
+   - Betting records (ATS, O/U percentages)
+   - Historical claims ("first since...", "best in franchise history", etc.)
+   - Search ESPN/official sources to confirm each stat
+
+2. **Every Player-Team Association Must Be Verified**
+   - Confirm player is CURRENTLY on the team mentioned
+   - Check for 2025 trades (many players changed teams)
+   - Never assume - always search to confirm
+
+3. **Every Trend Must Be Verified**
+   - "X team is 0-12 since..." - verify exact record
+   - "Y player has scored 30+ in Z straight games" - confirm count
+   - Historical context claims - verify accuracy
+
+4. **Every Injury Must Be Verified**
+   - Injury TYPE matters (ACL vs Achilles vs ankle)
+   - Current status (out, questionable, probable)
+   - Search for latest updates before publishing
+
+5. **Every Record/Historical Claim Must Be Verified**
+   - "Tied the NHL record" vs "Broke the NHL record" - which is it?
+   - "First player since..." - who was the previous?
+   - Franchise records, league records, personal bests
+
+### Common Errors to Catch:
+
+| Error Type | Example | Fix |
+|------------|---------|-----|
+| Wrong Season Context | "0-12 since 15-0 start" (15-0 was LAST season) | Clarify which season |
+| Outdated Roster | "Durant to Mobley" (Durant is on Rockets now) | Verify current team |
+| Wrong Injury Type | "Tatum ACL" (It's actually ACHILLES) | Verify exact injury |
+| Wrong Loss Attribution | "Lost to Arizona State" (Actually lost to Gonzaga) | Verify opponent |
+| Tied vs Broke Records | "Tied NHL record" (Actually BROKE it) | Verify record status |
+
+### Proofreading Process:
+
+1. **Read the entire content** - Don't skim
+2. **Flag every factual claim** - Stats, records, trends, player mentions
+3. **Search to verify each claim** - Use WebSearch for current info
+4. **Fix errors immediately** - Don't leave for later
+5. **Re-read after fixes** - Ensure corrections are accurate
+
+### ⛔ IMPORTANT: Fix Before Pushing ⛔
+
+**NEVER push content with known errors. Fix everything FIRST.**
+
+If you find errors after pushing:
+1. Fix immediately
+2. Push correction
+3. Note the error for future reference
+
+**Credibility is built on accuracy. One false claim destroys trust.**
+
+---
+
 ## 2. CONTENT STYLE
 
 ### Writing Tone - CRITICAL
