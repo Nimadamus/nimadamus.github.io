@@ -93,6 +93,110 @@
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 20px;
+        display: flex;
+        gap: 30px;
+    }
+    .calendar-sidebar {
+        width: 260px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+    }
+    .calendar-box {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 20px;
+    }
+    .calendar-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 13px;
+        color: var(--primary-glow);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    .year-display {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 18px;
+        color: var(--warning-color);
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .month-select {
+        width: 100%;
+        background: rgba(0,0,0,0.4);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+        padding: 10px 15px;
+        font-size: 13px;
+        font-family: 'Inter', sans-serif;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-bottom: 15px;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2300e0ff' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+    }
+    .month-select:focus {
+        outline: none;
+        border-color: var(--primary-glow);
+    }
+    .calendar-weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        margin-bottom: 5px;
+    }
+    .calendar-weekdays span {
+        text-align: center;
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--text-muted);
+        padding: 5px 0;
+    }
+    .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 3px;
+    }
+    .cal-day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        color: var(--text-muted);
+        background: rgba(0,0,0,0.3);
+        border-radius: 4px;
+        cursor: default;
+    }
+    .cal-day.empty { background: transparent; }
+    .cal-day.has-content {
+        background: rgba(0,224,255,0.15);
+        color: var(--primary-glow);
+        cursor: pointer;
+        font-weight: 600;
+        border: 1px solid rgba(0,224,255,0.3);
+    }
+    .cal-day.has-content:hover {
+        background: rgba(0,224,255,0.3);
+        transform: scale(1.1);
+    }
+    .cal-day.today {
+        background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(0,224,255,0.3));
+        color: var(--warning-color);
+        font-weight: 700;
+        border: 1px solid var(--warning-color);
+    }
+    .main-content { flex: 1; min-width: 0; }
+    @media (max-width: 900px) {
+        .content-wrapper { flex-direction: column; }
+        .calendar-sidebar { width: 100%; position: static; order: -1; }
+        .calendar-box { max-width: 300px; margin: 0 auto 20px; }
     }
 
     .game-card {
@@ -598,10 +702,21 @@
 <div class="header-section">
 <h1 class="main-title">Featured Game of the Day</h1>
 <p class="subtitle">NHL Western Conference Showdown</p>
-<p style="margin-top: 20px;"><a href="featured-game-calendar.html" style="color: var(--primary-glow); text-decoration: none; font-size: 1rem; padding: 10px 20px; border: 1px solid var(--border-color); border-radius: 8px; display: inline-block; transition: all 0.3s ease;">View Calendar</a></p>
 </div>
 
 <div class="content-wrapper">
+<aside class="calendar-sidebar">
+<div class="calendar-box">
+<div class="calendar-title">Featured Games</div>
+<div class="year-display" id="cal-year">2025</div>
+<select class="month-select" id="month-select"></select>
+<div class="calendar-weekdays">
+<span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+</div>
+<div class="calendar-days" id="calendar-days"></div>
+</div>
+</aside>
+<main class="main-content">
 <!-- Dallas Stars vs San Jose Sharks - December 18, 2025 -->
 <div class="game-card">
 <div class="game-header">
@@ -752,6 +867,8 @@
 
 </div>
 </div>
+</main>
+</div>
 
 <!-- Back navigation -->
 <div class="back-nav">
@@ -780,6 +897,81 @@ document.addEventListener('click', function(e) {
         });
     }
 });
+</script>
+
+<!-- Calendar JS -->
+<script>
+const ARCHIVE_DATA = [
+    { date: "2025-12-18", page: "featured-game-of-the-day-page20.html", title: "Stars vs Sharks" },
+    { date: "2025-12-17", page: "featured-game-of-the-day-page19.html", title: "USF vs Old Dominion Cure Bowl" },
+    { date: "2025-12-13", page: "featured-game-of-the-day-page18.html", title: "Army vs Navy" },
+    { date: "2025-12-11", page: "featured-game-of-the-day-page17.html", title: "Falcons vs Buccaneers TNF" },
+    { date: "2025-12-10", page: "featured-game-of-the-day-page16.html", title: "Lakers vs Spurs NBA Cup" },
+    { date: "2025-12-08", page: "featured-game-of-the-day-page15.html", title: "Eagles vs Chargers MNF" },
+    { date: "2025-12-07", page: "featured-game-of-the-day-page14.html", title: "Bengals vs Bills" },
+    { date: "2025-12-06", page: "featured-game-of-the-day-page13.html", title: "Georgia vs Alabama SEC" },
+    { date: "2025-12-04", page: "featured-game-of-the-day-page12.html", title: "Cowboys vs Lions TNF" },
+    { date: "2025-12-03", page: "featured-game-of-the-day-page11.html", title: "Pistons vs Bucks" },
+    { date: "2025-12-01", page: "featured-game-of-the-day-page10.html", title: "Giants vs Patriots MNF" },
+    { date: "2025-11-30", page: "featured-game-of-the-day-page9.html", title: "Texans vs Colts" },
+    { date: "2025-11-29", page: "featured-game-of-the-day-page8.html", title: "Vanderbilt vs Tennessee" },
+    { date: "2025-11-27", page: "featured-game-of-the-day-page7.html", title: "Steelers vs Browns" },
+    { date: "2025-11-26", page: "featured-game-of-the-day-page6.html", title: "Rockets vs Warriors" },
+    { date: "2025-11-25", page: "featured-game-of-the-day-page5.html", title: "Clippers vs Lakers" },
+    { date: "2025-11-24", page: "featured-game-of-the-day-page4.html", title: "Panthers vs 49ers MNF" },
+    { date: "2025-11-23", page: "featured-game-of-the-day-page3.html", title: "Rams vs Buccaneers SNF" },
+    { date: "2025-11-22", page: "featured-game-of-the-day-page2.html", title: "USC vs Oregon" }
+];
+const dateMap = {};
+ARCHIVE_DATA.forEach(item => { dateMap[item.date] = item; });
+const months = new Set();
+ARCHIVE_DATA.forEach(item => {
+    const [y, m] = item.date.split('-');
+    months.add(`${y}-${m}`);
+});
+const today = new Date();
+const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+months.add(currentMonth);
+const sortedMonths = Array.from(months).sort().reverse();
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const monthSelect = document.getElementById('month-select');
+sortedMonths.forEach(m => {
+    const [year, month] = m.split('-');
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = `${monthNames[parseInt(month) - 1]} ${year}`;
+    if (m === currentMonth) opt.selected = true;
+    monthSelect.appendChild(opt);
+});
+function renderCalendar(yearMonth) {
+    const [year, month] = yearMonth.split('-').map(Number);
+    document.getElementById('cal-year').textContent = year;
+    const firstDay = new Date(year, month - 1, 1).getDay();
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const todayStr = today.toISOString().split('T')[0];
+    const container = document.getElementById('calendar-days');
+    container.innerHTML = '';
+    for (let i = 0; i < firstDay; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day empty';
+        container.appendChild(cell);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const cell = document.createElement('div');
+        cell.className = 'cal-day';
+        cell.textContent = d;
+        if (dateStr === todayStr) cell.classList.add('today');
+        if (dateMap[dateStr]) {
+            cell.classList.add('has-content');
+            cell.title = dateMap[dateStr].title;
+            cell.onclick = () => { window.location.href = dateMap[dateStr].page; };
+        }
+        container.appendChild(cell);
+    }
+}
+renderCalendar(currentMonth);
+monthSelect.addEventListener('change', (e) => { renderCalendar(e.target.value); });
 </script>
 
 <!-- Clicky Analytics -->
