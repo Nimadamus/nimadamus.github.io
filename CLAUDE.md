@@ -131,7 +131,7 @@ If the user asks you to create a slate post (NBA, NHL, NFL, NCAAB, MLB), you MUS
 - **NHL slate posts**: nhl.html (add to TOP)
 - **NCAAB posts**: ncaab.html (add to TOP)
 - **NFL posts**: nfl.html (add to TOP)
-- **Featured Game of the Day**: featured-game-of-the-day-page18.html (current - Dec 13, 2025)
+- **Featured Game of the Day**: featured-game-of-the-day-page20.html (current - Dec 18, 2025)
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
 
 ### ⛔ CRITICAL: FEATURED GAME OF THE DAY = ANALYSIS ONLY, NO PICKS ⛔
