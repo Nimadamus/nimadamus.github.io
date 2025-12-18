@@ -51,8 +51,8 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .hero-badge{display:inline-block;background:rgba(253,80,0,0.15);border:1px solid rgba(253,80,0,0.3);padding:8px 20px;border-radius:50px;font-size:13px;font-weight:600;color:var(--accent-orange);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
 .hero h1{font-family:var(--font-display);font-size:clamp(32px,5vw,48px);font-weight:700;margin-bottom:12px;color:#fff}
 .hero p{color:var(--text-secondary);font-size:17px;max-width:600px;margin:0 auto}
-.page-wrapper{display:flex;max-width:1200px;margin:0 auto;padding:0 24px 80px;gap:30px}
-.calendar-sidebar{width:280px;flex-shrink:0;position:sticky;top:100px;height:fit-content}
+.page-wrapper{display:flex;max-width:1400px;margin:0 auto;padding:0 24px 80px;gap:40px;justify-content:center}
+.calendar-sidebar{width:260px;flex-shrink:0;position:sticky;top:80px;height:fit-content}
 .calendar-box{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:20px;margin-bottom:20px}
 .calendar-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:15px;text-align:center}
 .year-display{font-family:var(--font-display);font-size:20px;color:var(--accent-gold);text-align:center;margin-bottom:10px}
@@ -67,7 +67,7 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .cal-day.has-content:hover{background:rgba(253,80,0,0.3);transform:scale(1.1)}
 .cal-day.today{background:linear-gradient(135deg,rgba(255,215,0,0.3),rgba(0,229,255,0.3));color:var(--accent-gold);font-weight:700;border:1px solid var(--accent-gold)}
 .cal-day.today.has-content{border:2px solid var(--accent-gold)}
-.main-content{flex:1;min-width:0}
+.main-content{flex:1;min-width:0;max-width:850px}
 .game-preview{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:32px;margin-bottom:32px;transition:all 0.3s}
 .game-preview:hover{background:var(--bg-card-hover);border-color:rgba(253,80,0,0.3);transform:translateY(-2px)}
 .game-header{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border-subtle)}
@@ -331,17 +331,19 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </footer>
 
 <script>
-// NHL Archive Data
+// NHL Archive Data - Complete
 const ARCHIVE_DATA = [
-    { date: "2025-12-18", page: "nhl.html", title: "Crosby 1pt from Lemieux Record, McDavid vs Bruins" },
-    { date: "2025-12-17", page: "nhl.html", title: "10-Game NHL Slate" },
-    { date: "2025-12-15", page: "nhl-page10.html", title: "December 15, 2025" },
-    { date: "2025-12-14", page: "nhl-page7.html", title: "December 14, 2025" },
-    { date: "2025-11-26", page: "nhl-page4.html", title: "November 26, 2025 - Extended" },
-    { date: "2025-11-24", page: "nhl-page3.html", title: "Monday, November 24, 2025" },
-    { date: "2025-11-21", page: "nhl-page5.html", title: "Friday, November 21, 2025" },
-    { date: "2025-11-18", page: "nhl-page6.html", title: "Tuesday, November 18, 2025" },
-    { date: "2025-11-11", page: "nhl-page9.html", title: "Tuesday, November 11, 2025" }
+    { date: "2025-12-18", page: "nhl.html", title: "Crosby 1pt from Lemieux" },
+    { date: "2025-12-17", page: "nhl.html", title: "10-Game Slate" },
+    { date: "2025-12-15", page: "nhl-page10.html", title: "December 15" },
+    { date: "2025-12-14", page: "nhl-page7.html", title: "December 14" },
+    { date: "2025-12-08", page: "nhl-page8.html", title: "December 8" },
+    { date: "2025-12-03", page: "nhl-page2.html", title: "December 3" },
+    { date: "2025-11-26", page: "nhl-page4.html", title: "November 26" },
+    { date: "2025-11-24", page: "nhl-page3.html", title: "November 24" },
+    { date: "2025-11-21", page: "nhl-page5.html", title: "November 21" },
+    { date: "2025-11-18", page: "nhl-page6.html", title: "November 18" },
+    { date: "2025-11-11", page: "nhl-page9.html", title: "November 11" }
 ];
 
 // Build date map
