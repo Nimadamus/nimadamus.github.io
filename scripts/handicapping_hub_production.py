@@ -2603,17 +2603,16 @@ def update_index_featured_game(all_games: Dict) -> bool:
         with open(index_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        # Extract game info
-        away_team = featured_game.get('away_team', {})
-        home_team = featured_game.get('home_team', {})
-        game_info = featured_game.get('game_info', {})
-        betting = featured_game.get('betting', {})
+        # Extract game info - FIXED: use correct field names from game dict
+        away_data = featured_game.get('away', {})
+        home_data = featured_game.get('home', {})
+        odds = featured_game.get('odds', {})
 
         # Get values - NO PLACEHOLDERS ALLOWED
-        away_name = away_team.get('abbrev', '')
-        home_name = home_team.get('abbrev', '')
-        away_record = away_team.get('record', '')
-        home_record = home_team.get('record', '')
+        away_name = away_data.get('abbr', '')
+        home_name = home_data.get('abbr', '')
+        away_record = away_data.get('record', '')
+        home_record = home_data.get('record', '')
 
         # CRITICAL: Validate that we have REAL data, not placeholders
         # If any critical field is missing or placeholder, skip the update
@@ -2623,20 +2622,20 @@ def update_index_featured_game(all_games: Dict) -> bool:
         if away_name in ['AWAY', 'TBD', 'N/A', ''] or home_name in ['HOME', 'TBD', 'N/A', '']:
             print("  [SKIP] Placeholder team names detected - keeping existing featured game")
             return False
-        if not away_record or not home_record or away_record == '0-0' and home_record == '0-0':
+        if not away_record or not home_record or (away_record == '0-0' and home_record == '0-0'):
             print("  [SKIP] Missing or invalid records - keeping existing featured game")
             return False
 
-        # Get spread - use reasonable defaults for betting data
-        spread = betting.get('spread', {})
+        # Get spread from odds - use reasonable defaults for betting data
+        spread = odds.get('spread', {})
         away_spread = spread.get('away', 'PK') if spread.get('away') else 'PK'
         home_spread = spread.get('home', 'PK') if spread.get('home') else 'PK'
-        total = betting.get('total', 'TBD') if betting.get('total') else 'TBD'
+        total = odds.get('total', 'TBD') if odds.get('total') else 'TBD'
 
-        # Format time - also validate
-        game_time = game_info.get('time', '')
-        venue = game_info.get('venue', '')
-        broadcast = game_info.get('broadcast', '')
+        # Format time - FIXED: use top-level fields from game dict
+        game_time = featured_game.get('time', '')
+        venue = featured_game.get('venue', '')
+        broadcast = featured_game.get('network', '')
 
         # Validate game time - don't show TBD
         if not game_time or game_time in ['TBD', 'N/A', '']:
