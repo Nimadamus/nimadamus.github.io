@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
 """
-Update sports pages with accurate data from ESPN and The Odds API
-Generates complete game analysis pages for NFL, NBA, NHL, NCAAB, NCAAF
-Includes article/analysis content for each game
+!!! DEPRECATED - DO NOT USE FOR SPORTS PAGES !!!
+
+This script generates game-card format with stats which is WRONG for sports pages.
+Sports pages (nba.html, nfl.html, etc.) should have WRITTEN ARTICLES using
+the game-preview format, not auto-generated stats.
+
+Use this ONLY for:
+- Handicapping Hub updates (which use stats)
+- Testing/development
+
+For sports pages, write proper articles manually with game-preview class.
+
+See: html_updater.py generate_game_card_html() for the correct format.
 """
 import requests
 import json

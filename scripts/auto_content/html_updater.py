@@ -64,18 +64,21 @@ class HTMLUpdater:
         return page_num - 1 if page_num > 2 else 1
 
     def extract_game_cards(self, html_content: str) -> List[str]:
-        """Extract all game card articles from HTML."""
+        """Extract all game articles from HTML (both game-card and game-preview)."""
         soup = BeautifulSoup(html_content, 'html.parser')
         main_elem = soup.find('main')
 
         if not main_elem:
             return []
 
+        # Find both old game-card and correct game-preview articles
         game_cards = main_elem.find_all('article', class_='game-card')
-        return [str(card) for card in game_cards]
+        game_previews = main_elem.find_all('article', class_='game-preview')
+        all_articles = game_cards + game_previews
+        return [str(card) for card in all_articles]
 
     def count_game_cards(self, html_content: str) -> int:
-        """Count number of game cards in HTML."""
+        """Count number of game articles in HTML."""
         return len(self.extract_game_cards(html_content))
 
     def generate_daily_post_html(self, sport: str, date: str, games_html: List[str],
@@ -152,14 +155,16 @@ class HTMLUpdater:
         if not main_elem:
             raise ValueError(f"Could not find <main> element in {main_page_path}")
 
-        # Get existing game cards
+        # Get existing game articles (both old game-card and correct game-preview)
         existing_cards = main_elem.find_all('article', class_='game-card')
+        existing_previews = main_elem.find_all('article', class_='game-preview')
+        all_existing = existing_cards + existing_previews
 
-        # Archive existing cards before clearing (if clear_existing is True)
+        # Archive existing articles before clearing (if clear_existing is True)
         archived_content = []
-        if clear_existing and existing_cards:
-            print(f"[{sport.upper()}] Clearing {len(existing_cards)} old game cards before adding new content")
-            for card in existing_cards:
+        if clear_existing and all_existing:
+            print(f"[{sport.upper()}] Clearing {len(all_existing)} old articles before adding new content")
+            for card in all_existing:
                 archived_content.append(str(card))
                 card.decompose()
 
@@ -353,16 +358,19 @@ class HTMLUpdater:
 
     def generate_game_card_html(self, game_data: Dict, sport: str,
                                   stat_grid_html: str, article_text: str) -> str:
-        """Generate a complete game card HTML.
+        """Generate a complete game-preview article HTML.
+
+        IMPORTANT: This generates the CORRECT game-preview format with written
+        article content. DO NOT use game-card class or raw stat dumps.
 
         Args:
             game_data: Formatted game data dict
             sport: Sport code
-            stat_grid_html: Pre-generated stat grid HTML
-            article_text: Pre-generated article text
+            stat_grid_html: IGNORED - we don't use stat grids in articles
+            article_text: Written article content (3-5 paragraphs)
 
         Returns:
-            Complete game card HTML string
+            Complete game-preview HTML string
         """
         home = game_data.get('home', {})
         away = game_data.get('away', {})
@@ -390,42 +398,54 @@ class HTMLUpdater:
         home_logo = f"{logo_base}/{home_abbrev}.png" if logo_base else ""
         away_logo = f"{logo_base}/{away_abbrev}.png" if logo_base else ""
 
-        # Build meta line
-        meta_parts = []
+        # Build game time string
+        game_time_parts = []
         if game_data.get('game_time'):
-            meta_parts.append(f"<span>{game_data['game_time']}</span>")
+            game_time_parts.append(game_data['game_time'])
         if game_data.get('venue'):
-            meta_parts.append(f"<span>{game_data['venue']}</span>")
+            game_time_parts.append(game_data['venue'])
         if game_data.get('broadcast'):
-            meta_parts.append(f"<span>{game_data['broadcast']}</span>")
+            game_time_parts.append(game_data['broadcast'])
+        game_time_str = ' | '.join(game_time_parts)
+
+        # Build betting line string
+        betting_parts = []
         if odds.get('spread'):
-            meta_parts.append(f"<span>Line: {odds['spread']}</span>")
+            betting_parts.append(f"<strong>Line:</strong> {odds['spread']}")
         if odds.get('total'):
-            meta_parts.append(f"<span>Total: {odds['total']}</span>")
+            betting_parts.append(f"<strong>O/U:</strong> {odds['total']}")
+        if away.get('record'):
+            betting_parts.append(f"<strong>{away_abbrev.upper()}:</strong> {away['record']}")
+        if home.get('record'):
+            betting_parts.append(f"<strong>{home_abbrev.upper()}:</strong> {home['record']}")
+        betting_line_str = ' | '.join(betting_parts)
 
-        meta_html = '\n'.join(meta_parts)
-
-        # Build article paragraphs
+        # Build article paragraphs - MUST have real written content
         paragraphs = article_text.split('\n\n')
         article_html = '\n'.join(f'<p>{p.strip()}</p>' for p in paragraphs if p.strip())
 
-        # Complete game card HTML
+        # Matchup title (Away @ Home format)
+        away_short = away.get('name', 'Away').split()[-1]  # Get last word (team name)
+        home_short = home.get('name', 'Home').split()[-1]
+        matchup_title = f"{away_short} @ {home_short}"
+
+        # CORRECT game-preview format - NO stat grids, NO raw data dumps
         return f"""
-<article class="game-card">
-<div class="teams-display">
-<img src="{away_logo}" alt="{away.get('name', 'Away')}" class="team-logo" onerror="this.style.display='none'">
-<span class="vs-badge">@</span>
-<img src="{home_logo}" alt="{home.get('name', 'Home')}" class="team-logo" onerror="this.style.display='none'">
+<article class="game-preview">
+<div class="game-header">
+<img alt="{away.get('name', 'Away')}" class="team-logo" src="{away_logo}"/>
+<div class="matchup-info">
+<h2>{matchup_title}</h2>
+<span class="game-time">{game_time_str}</span>
 </div>
-<h3 class="game-title">{away.get('name', 'Away')} ({away.get('record', '')}) @ {home.get('name', 'Home')} ({home.get('record', '')})</h3>
-<div class="game-meta">
-{meta_html}
+<img alt="{home.get('name', 'Home')}" class="team-logo" src="{home_logo}"/>
 </div>
-
-{stat_grid_html}
-
+<div class="betting-line">
+{betting_line_str}
+</div>
+<div class="preview-content">
 {article_html}
-<div class="data-source">Sources: ESPN, Team Stats, Official League Data</div>
+</div>
 </article>
 """
 

@@ -451,30 +451,33 @@ class DailyUpdater:
                 injuries_by_sport[sport] = injuries
                 print(f"    {sport}: {len(injuries)} teams with injuries")
 
-        # Step 3: Update sports pages
-        print("\n[STEP 3] Updating sports pages...")
-        for sport in ['NBA', 'NHL', 'NFL', 'NCAAF', 'NCAAB']:
-            sport_data = all_data.get(sport, {})
-            games = sport_data.get('games', [])
-
-            if not games:
-                print(f"    {sport}: No games today, skipping")
-                continue
-
-            print(f"    {sport}: {len(games)} games")
-
-            # Rotate archives first
-            self.page_generator.rotate_archives(sport)
-
-            # Generate new page
-            injuries = injuries_by_sport.get(sport, {})
-            html_content = self.page_generator.generate_sport_page(sport, games, injuries)
-
-            # Save to file
-            page_path = os.path.join(self.repo_path, f'{sport.lower()}.html')
-            with open(page_path, 'w', encoding='utf-8') as f:
-                f.write(html_content)
-            print(f"    Saved {sport.lower()}.html")
+        # Step 3: DISABLED - Sports pages should have WRITTEN ARTICLES not auto-generated stats
+        # The Handicapping Hub is for stats. Sports pages are for articles.
+        # DO NOT auto-update sports pages with game-card content!
+        print("\n[STEP 3] Sports pages - SKIPPED (manual update with written articles)")
+        # DISABLED - DO NOT ENABLE THIS CODE
+        # for sport in ['NBA', 'NHL', 'NFL', 'NCAAF', 'NCAAB']:
+        #     sport_data = all_data.get(sport, {})
+        #     games = sport_data.get('games', [])
+        #
+        #     if not games:
+        #         print(f"    {sport}: No games today, skipping")
+        #         continue
+        #
+        #     print(f"    {sport}: {len(games)} games")
+        #
+        #     # Rotate archives first
+        #     self.page_generator.rotate_archives(sport)
+        #
+        #     # Generate new page
+        #     injuries = injuries_by_sport.get(sport, {})
+        #     html_content = self.page_generator.generate_sport_page(sport, games, injuries)
+        #
+        #     # Save to file
+        #     page_path = os.path.join(self.repo_path, f'{sport.lower()}.html')
+        #     with open(page_path, 'w', encoding='utf-8') as f:
+        #         f.write(html_content)
+        #     print(f"    Saved {sport.lower()}.html")
 
         # Step 4: Update handicapping hub
         print("\n[STEP 4] Updating handicapping hub...")
