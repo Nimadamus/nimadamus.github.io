@@ -593,6 +593,29 @@ def format_injuries_html(injuries: List[Dict], abbr: str) -> str:
 
     return f"{abbr}: {', '.join(injury_strs)}"
 
+
+def format_line_movements_html(odds: Dict) -> str:
+    """Generate HTML for line movement alerts within a game card"""
+    movements = odds.get('line_movements', [])
+    if not movements:
+        return ''
+
+    items_html = ''
+    for m in movements:
+        move_type = m.get('type', '')
+        desc = m.get('desc', '')
+        icon = '📊' if move_type == 'SPREAD' else ('💰' if move_type == 'ML' else '🎯')
+        items_html += f'<span class="movement-item"><span class="move-icon">{icon}</span> {desc}</span>'
+
+    return f'''
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            {items_html}
+        </div>'''
+
+
+
 def get_team_nickname(full_name: str) -> str:
     """Extract team nickname from full name (e.g., 'San Francisco 49ers' -> '49ers')"""
     # Handle common patterns
@@ -708,12 +731,15 @@ def get_team_nickname(full_name: str) -> str:
 
 
 def match_game_odds(odds_data: List[Dict], away_name: str, home_name: str) -> Dict:
-    """Match odds to a specific game with strict team matching"""
+    """Match odds to a specific game with strict team matching and line movement tracking"""
     result = {
         'spread_away': '-', 'spread_home': '-',
         'ml_away': '-', 'ml_home': '-',
         'total': '-',
-        'open_spread': '-', 'spread_move': '-'
+        # Line movement tracking
+        'open_spread_home': None, 'open_ml_away': None, 'open_ml_home': None, 'open_total': None,
+        'spread_move': None, 'ml_away_move': None, 'ml_home_move': None, 'total_move': None,
+        'line_movements': []  # List of detected movements for this game
     }
 
     # Get nicknames for matching
@@ -728,37 +754,101 @@ def match_game_odds(odds_data: List[Dict], away_name: str, home_name: str) -> Di
 
         # Strict matching: both away AND home nicknames must match
         if api_away_nick == away_nick and api_home_nick == home_nick:
-            for bm in game.get('bookmakers', [])[:1]:
-                for market in bm.get('markets', []):
-                    if market['key'] == 'spreads':
-                        for o in market['outcomes']:
-                            spread = o['point']
-                            spread_str = f"{spread:+.1f}" if spread >= 0 else f"{spread:.1f}"
-                            outcome_nick = get_team_nickname(o['name'])
-                            if outcome_nick == home_nick:
-                                result['spread_home'] = spread_str
-                            else:
-                                result['spread_away'] = spread_str
-                    elif market['key'] == 'totals':
-                        for o in market['outcomes']:
-                            if o['name'] == 'Over':
-                                result['total'] = str(o['point'])
-                    elif market['key'] == 'h2h':
-                        for o in market['outcomes']:
-                            ml = o['price']
-                            ml_str = f"{ml:+d}" if isinstance(ml, int) else str(ml)
-                            outcome_nick = get_team_nickname(o['name'])
-                            if outcome_nick == home_nick:
-                                result['ml_home'] = ml_str
-                            else:
-                                result['ml_away'] = ml_str
+            bookmakers = game.get('bookmakers', [])
+            if not bookmakers:
+                break
+
+            # Use first bookmaker as "opening" line, last as "current"
+            first_bm = bookmakers[0]
+            last_bm = bookmakers[-1] if len(bookmakers) > 1 else bookmakers[0]
+
+            # Get opening lines from first bookmaker
+            for market in first_bm.get('markets', []):
+                if market['key'] == 'spreads':
+                    for o in market['outcomes']:
+                        spread = o.get('point', 0)
+                        outcome_nick = get_team_nickname(o['name'])
+                        if outcome_nick == home_nick:
+                            result['open_spread_home'] = spread
+                elif market['key'] == 'totals':
+                    for o in market['outcomes']:
+                        if o['name'] == 'Over':
+                            result['open_total'] = o.get('point', 0)
+                elif market['key'] == 'h2h':
+                    for o in market['outcomes']:
+                        ml = o.get('price', 0)
+                        outcome_nick = get_team_nickname(o['name'])
+                        if outcome_nick == home_nick:
+                            result['open_ml_home'] = ml
+                        else:
+                            result['open_ml_away'] = ml
+
+            # Get current lines from last bookmaker
+            for market in last_bm.get('markets', []):
+                if market['key'] == 'spreads':
+                    for o in market['outcomes']:
+                        spread = o.get('point', 0)
+                        spread_str = f"{spread:+.1f}" if spread >= 0 else f"{spread:.1f}"
+                        outcome_nick = get_team_nickname(o['name'])
+                        if outcome_nick == home_nick:
+                            result['spread_home'] = spread_str
+                            # Calculate spread movement
+                            if result['open_spread_home'] is not None:
+                                move = spread - result['open_spread_home']
+                                if abs(move) >= 0.5:  # Significant movement
+                                    result['spread_move'] = move
+                                    direction = "+" if move > 0 else ""
+                                    result['line_movements'].append({
+                                        'type': 'SPREAD',
+                                        'desc': f"Spread: {result['open_spread_home']:+.1f} -> {spread:+.1f} ({direction}{move:.1f})"
+                                    })
+                        else:
+                            result['spread_away'] = spread_str
+                elif market['key'] == 'totals':
+                    for o in market['outcomes']:
+                        if o['name'] == 'Over':
+                            total = o.get('point', 0)
+                            result['total'] = str(total)
+                            # Calculate total movement
+                            if result['open_total'] is not None:
+                                move = total - result['open_total']
+                                if abs(move) >= 1.0:  # Significant movement
+                                    result['total_move'] = move
+                                    direction = "+" if move > 0 else ""
+                                    result['line_movements'].append({
+                                        'type': 'TOTAL',
+                                        'desc': f"Total: {result['open_total']} -> {total} ({direction}{move:.1f})"
+                                    })
+                elif market['key'] == 'h2h':
+                    for o in market['outcomes']:
+                        ml = o.get('price', 0)
+                        ml_str = f"{ml:+d}" if isinstance(ml, int) else str(ml)
+                        outcome_nick = get_team_nickname(o['name'])
+                        if outcome_nick == home_nick:
+                            result['ml_home'] = ml_str
+                            # Calculate ML movement
+                            if result['open_ml_home'] is not None:
+                                move = ml - result['open_ml_home']
+                                if abs(move) >= 15:  # Significant ML movement
+                                    result['ml_home_move'] = move
+                                    result['line_movements'].append({
+                                        'type': 'ML',
+                                        'desc': f"Home ML: {result['open_ml_home']:+d} -> {ml:+d}"
+                                    })
+                        else:
+                            result['ml_away'] = ml_str
+                            # Calculate ML movement
+                            if result['open_ml_away'] is not None:
+                                move = ml - result['open_ml_away']
+                                if abs(move) >= 15:  # Significant ML movement
+                                    result['ml_away_move'] = move
+                                    result['line_movements'].append({
+                                        'type': 'ML',
+                                        'desc': f"Away ML: {result['open_ml_away']:+d} -> {ml:+d}"
+                                    })
             break
 
     return result
-
-# =============================================================================
-# VALIDATION FUNCTIONS
-# =============================================================================
 
 def is_valid_value(val) -> bool:
     """Check if a value is valid (not a placeholder)"""
@@ -1162,6 +1252,9 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
     # Format injuries
     away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
     home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
+    
+    # Format line movements
+    line_movements_html = format_line_movements_html(odds)
 
     # Get correct logo URLs based on sport
     away_logo = get_logo_url(sport, away['abbr'], away.get('team_id', ''))
@@ -1304,6 +1397,8 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
             </div>
         </div>
 
+        {line_movements_html}
+
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
             <span class="trend-item">🏥 {away_inj_html} | {home_inj_html}</span>
@@ -1320,6 +1415,9 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
     # Format injuries
     away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
     home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
+    
+    # Format line movements
+    line_movements_html = format_line_movements_html(odds)
 
     # Get correct logo URLs based on sport
     away_logo = get_logo_url(sport, away['abbr'], away.get('team_id', ''))
@@ -1462,6 +1560,8 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
             </div>
         </div>
 
+        {line_movements_html}
+
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
             <span class="trend-item">🏥 {away_inj_html} | {home_inj_html}</span>
@@ -1478,6 +1578,9 @@ def generate_game_card_nhl(game: Dict) -> str:
     # Format injuries
     away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
     home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
+    
+    # Format line movements
+    line_movements_html = format_line_movements_html(odds)
 
     # Only include betting lines section if we have valid odds (NO PLACEHOLDERS)
     betting_lines_html = ''
@@ -1615,6 +1718,8 @@ def generate_game_card_nhl(game: Dict) -> str:
                 </table>
             </div>
         </div>
+
+        {line_movements_html}
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
@@ -1928,6 +2033,40 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
 
         .away-row {{ background: #fff; }}
         .home-row {{ background: #f8f9fa; }}
+
+        /* Line Movements Bar */
+        .line-movements-bar {{
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            color: #e65100;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-left: 4px solid #ff9800;
+        }}
+        .movements-label {{
+            font-weight: 700;
+            color: #bf360c;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+        }}
+        .movement-item {{
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #bf360c;
+        }}
+        .move-icon {{
+            font-size: 0.85rem;
+        }}
 
         /* Trends Bar */
         .trends-bar {{
