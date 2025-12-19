@@ -90,19 +90,16 @@
     }
 
     .content-wrapper {
-        max-width: 1400px;
+        max-width: 900px;
         margin: 0 auto;
         padding: 0 20px;
-        display: flex;
-        gap: 40px;
-        justify-content: center;
     }
     .calendar-sidebar {
-        width: 260px;
-        flex-shrink: 0;
-        position: sticky;
-        top: 80px;
-        height: fit-content;
+        position: fixed;
+        left: 20px;
+        top: 160px;
+        width: 280px;
+        z-index: 100;
     }
     .calendar-box {
         background: var(--card-bg);
@@ -193,11 +190,9 @@
         font-weight: 700;
         border: 1px solid var(--warning-color);
     }
-    .main-content { flex: 1; min-width: 0; max-width: 850px; }
-    @media (max-width: 900px) {
-        .content-wrapper { flex-direction: column; }
-        .calendar-sidebar { width: 100%; position: static; order: -1; }
-        .calendar-box { max-width: 300px; margin: 0 auto 20px; }
+    .main-content { max-width: 900px; margin: 0 auto; }
+    @media(max-width:1200px) {
+        .calendar-sidebar { display: none; }
     }
 
     .game-card {
@@ -705,7 +700,6 @@
 <p class="subtitle">NHL Western Conference Showdown</p>
 </div>
 
-<div class="content-wrapper">
 <aside class="calendar-sidebar">
 <div class="calendar-box">
 <div class="calendar-title">Featured Games</div>
@@ -717,6 +711,7 @@
 <div class="calendar-days" id="calendar-days"></div>
 </div>
 </aside>
+<div class="content-wrapper">
 <main class="main-content">
 <!-- Dallas Stars vs San Jose Sharks - December 18, 2025 -->
 <div class="game-card">
