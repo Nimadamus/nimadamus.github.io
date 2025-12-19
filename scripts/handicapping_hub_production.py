@@ -77,8 +77,9 @@ SPORTS = {
     },
 }
 
-# Top 50 NCAAB teams to show (by ranking/brand)
+# Top 100+ NCAAB teams to show (ranked, major conferences, prominent programs)
 TOP_NCAAB_TEAMS = {
+    # Traditional powerhouses
     'kansas', 'duke', 'north carolina', 'kentucky', 'gonzaga', 'villanova',
     'uconn', 'connecticut', 'michigan state', 'auburn', 'tennessee', 'alabama',
     'purdue', 'houston', 'iowa state', 'baylor', 'arizona', 'marquette',
@@ -87,7 +88,31 @@ TOP_NCAAB_TEAMS = {
     'arkansas', 'cincinnati', 'memphis', 'providence', 'st. johns', 'xavier',
     'butler', 'san diego state', 'clemson', 'oklahoma', 'iowa', 'texas tech',
     'kansas state', 'mississippi state', 'ole miss', 'vanderbilt', 'lsu',
-    'colorado', 'pittsburgh', 'dayton'
+    'colorado', 'pittsburgh', 'dayton',
+    # Big 12
+    'west virginia', 'tcu', 'byu', 'ucf', 'cincinnati',
+    # Big Ten
+    'penn state', 'maryland', 'nebraska', 'northwestern', 'rutgers', 'minnesota',
+    # SEC
+    'south carolina', 'missouri', 'georgia', 'texas a&m',
+    # ACC
+    'virginia', 'nc state', 'wake forest', 'boston college', 'georgia tech', 'syracuse', 'notre dame', 'miami',
+    # Pac-12 remnants / Big 12 additions
+    'arizona state', 'washington', 'utah', 'stanford', 'california', 'cal',
+    # Big East
+    'seton hall', 'depaul', 'georgetown',
+    # American
+    'smu', 'tulane', 'uab', 'temple', 'east carolina', 'charlotte', 'wichita state',
+    # Mountain West
+    'new mexico', 'unlv', 'nevada', 'boise state', 'colorado state', 'fresno state', 'wyoming', 'air force',
+    # WCC
+    'saint mary\'s', 'san francisco', 'santa clara', 'loyola marymount', 'pepperdine',
+    # A-10
+    'vcu', 'saint louis', 'george mason', 'richmond', 'la salle', 'fordham', 'umass',
+    # MVC
+    'drake', 'bradley', 'southern illinois', 'indiana state', 'missouri state',
+    # Other notable
+    'new mexico', 'utep', 'hawaii', 'san jose state'
 }
 
 # =============================================================================
@@ -542,19 +567,32 @@ def fetch_team_injuries(sport_path: str, team_id: str) -> List[Dict]:
             resp = requests.get(url, timeout=10)
             if resp.status_code == 200:
                 data = resp.json()
-                for athlete in data.get('athletes', []):
-                    for player in athlete.get('items', []):
-                        injury = player.get('injuries', [])
-                        if injury:
-                            inj = injury[0]
-                            status = inj.get('status', '')
-                            if status.lower() in ['out', 'doubtful', 'questionable', 'day-to-day']:
-                                injuries.append({
-                                    'name': player.get('displayName', 'Unknown'),
-                                    'position': player.get('position', {}).get('abbreviation', ''),
-                                    'status': status,
-                                    'type': inj.get('type', {}).get('text', '')
-                                })
+                # ESPN roster structure: athletes is directly a list of players
+                athletes_list = data.get('athletes', [])
+                # Handle both formats: direct list or nested groups
+                for athlete in athletes_list:
+                    # Check if this is a player directly or a group with items
+                    if isinstance(athlete, dict):
+                        players_to_check = []
+                        if 'items' in athlete:
+                            # Grouped format (by position)
+                            players_to_check = athlete.get('items', [])
+                        elif 'displayName' in athlete:
+                            # Direct player format
+                            players_to_check = [athlete]
+
+                        for player in players_to_check:
+                            injury_list = player.get('injuries', [])
+                            if injury_list:
+                                inj = injury_list[0]
+                                status = inj.get('status', '')
+                                if status.lower() in ['out', 'doubtful', 'questionable', 'day-to-day', 'injured reserve']:
+                                    injuries.append({
+                                        'name': player.get('displayName', 'Unknown'),
+                                        'position': player.get('position', {}).get('abbreviation', ''),
+                                        'status': status,
+                                        'type': inj.get('type', {}).get('text', inj.get('description', ''))
+                                    })
     except Exception as e:
         pass  # Silently fail - injuries are supplemental
 
@@ -2664,10 +2702,50 @@ def update_index_featured_game(all_games: Dict) -> bool:
             title = f"{away_name} vs {home_name}"
             subtitle = featured_sport
 
+        # Get moneyline values
+        ml = odds.get('moneyline', {})
+        away_ml = ml.get('away', 'TBD') if ml.get('away') else 'TBD'
+        home_ml = ml.get('home', 'TBD') if ml.get('home') else 'TBD'
+        # Format moneyline (add + if positive)
+        if isinstance(away_ml, (int, float)) and away_ml > 0:
+            away_ml = f"+{int(away_ml)}"
+        elif isinstance(away_ml, (int, float)):
+            away_ml = str(int(away_ml))
+        if isinstance(home_ml, (int, float)) and home_ml > 0:
+            home_ml = f"+{int(home_ml)}"
+        elif isinstance(home_ml, (int, float)):
+            home_ml = str(int(home_ml))
+
+        # Get injury info for featured preview
+        away_injuries = away_data.get('injuries', [])
+        home_injuries = home_data.get('injuries', [])
+
+        # Format injury strings
+        if away_injuries:
+            away_inj_str = ", ".join([f"{i['name']} ({i['status']})" for i in away_injuries[:2]])
+        else:
+            away_inj_str = "No key injuries reported"
+
+        if home_injuries:
+            home_inj_str = ", ".join([f"{i['name']} ({i['status']})" for i in home_injuries[:2]])
+        else:
+            home_inj_str = "No key injuries reported"
+
+        # Build spread line info for subtitle
+        if home_spread and home_spread not in ['PK', 'TBD', '']:
+            spread_info = f"{home_name} {home_spread}"
+        elif away_spread and away_spread not in ['PK', 'TBD', '']:
+            spread_info = f"{away_name} {away_spread}"
+        else:
+            spread_info = "Pick'em"
+
         # Create the replacement HTML
+        # Remove ET from game_time if present (we'll add it ourselves)
+        game_time_clean = game_time.replace(' ET', '').strip()
+
         new_featured = f'''                <div class="featured-header">
                     <h3>{title}</h3>
-                    <div class="live-badge">{game_time} ET</div>
+                    <div class="live-badge">{game_time_clean} ET</div>
                 </div>
 
                 <div class="matchup-display">
@@ -2676,7 +2754,7 @@ def update_index_featured_game(all_games: Dict) -> bool:
                         <span class="matchup-vs">vs</span>
                         <span class="team-name">{home_name}</span>
                     </div>
-                    <div class="matchup-time">{day_name} {game_time} ET • {subtitle} • {broadcast}</div>
+                    <div class="matchup-time">{day_name} {game_time_clean} ET • {subtitle} • {broadcast}</div>
                 </div>
 
                 <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
@@ -2702,46 +2780,64 @@ def update_index_featured_game(all_games: Dict) -> bool:
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="label">Sport</div>
+                        <div class="label">ML</div>
                         <div class="values">
-                            <span class="home" style="font-size: 0.85rem;">{featured_sport}</span>
-                            <span class="away"></span>
+                            <span class="home">{away_ml}</span>
+                            <span class="away">{home_ml}</span>
                         </div>
                     </div>
                 </div>
-                <p style="font-size: 0.65rem; color: #888; margin-bottom: 12px; text-align: right;">{venue} • {date_str}</p>
+                <p style="font-size: 0.65rem; color: #888; margin-bottom: 12px; text-align: right;">{spread_info} • {date_str}</p>
 
                 <div class="injury-alert">
-                    <h4>Game Notes</h4>
-                    <div class="injury-item">Check Handicapping Hub for full analysis</div>
-                    <div class="injury-item">Line movement and injury updates available</div>
+                    <h4>Key Injuries</h4>
+                    <div class="injury-item"><strong>{away_name}:</strong> {away_inj_str}</div>
+                    <div class="injury-item"><strong>{home_name}:</strong> {home_inj_str}</div>
                 </div>'''
 
-        # Find and replace the featured game section
-        # Match from featured-header to injury-alert closing div
+        # Find and replace the featured game section using regex
         import re
-        pattern = r'<div class="featured-header">.*?</div>\s*\n\s*</div>\s*\n\s*<div class="matchup-display">.*?</div>\s*\n\s*</div>\s*\n\s*<div class="stats-grid".*?>.*?</div>\s*\n\s*<p style="font-size: 0.65rem.*?</p>\s*\n\s*<div class="injury-alert">.*?</div>\s*\n\s*</div>'
 
-        # Simpler approach - find markers and replace between them
-        start_marker = '<div class="featured-header">'
-        end_marker = '</div>\n\n            </div>\n\n            </div>'
+        # Use regex with DOTALL to match across lines
+        # Pattern matches from featured-header to end of injury-alert section
+        pattern = r'(<div class="featured-header">.*?<div class="injury-alert">.*?</div>\s*</div>)'
 
-        start_idx = content.find(start_marker)
-        if start_idx == -1:
-            print("  [ERROR] Could not find featured-header in index.html")
-            return False
+        # First try regex approach
+        match = re.search(pattern, content, re.DOTALL)
+        if match:
+            new_content = content[:match.start()] + new_featured + content[match.end():]
+        else:
+            # Fallback: find markers manually
+            start_marker = '<div class="featured-header">'
+            start_idx = content.find(start_marker)
+            if start_idx == -1:
+                print("  [ERROR] Could not find featured-header in index.html")
+                return False
 
-        # Find the injury-alert section end
-        injury_end = content.find('</div>\n\n            </div>', start_idx + 100)
-        if injury_end == -1:
-            injury_end = content.find('</div>\n            </div>', start_idx + 100)
+            # Find the injury-alert closing - look for </div> after injury-alert followed by section close
+            injury_start = content.find('<div class="injury-alert">', start_idx)
+            if injury_start == -1:
+                print("  [ERROR] Could not find injury-alert section")
+                return False
 
-        if injury_end == -1:
-            print("  [ERROR] Could not find featured section end in index.html")
-            return False
+            # Find the closing </div></div> after injury-alert (3 closing divs for injury content + injury-alert + parent)
+            # Count divs to find correct closing
+            search_pos = injury_start + 25  # Skip past opening div
+            div_count = 1
+            end_pos = search_pos
+            while div_count > 0 and end_pos < len(content):
+                next_open = content.find('<div', end_pos)
+                next_close = content.find('</div>', end_pos)
+                if next_close == -1:
+                    break
+                if next_open != -1 and next_open < next_close:
+                    div_count += 1
+                    end_pos = next_open + 4
+                else:
+                    div_count -= 1
+                    end_pos = next_close + 6
 
-        # Replace the section
-        new_content = content[:start_idx] + new_featured + content[injury_end:]
+            new_content = content[:start_idx] + new_featured + content[end_pos:]
 
         with open(index_path, 'w', encoding='utf-8') as f:
             f.write(new_content)
