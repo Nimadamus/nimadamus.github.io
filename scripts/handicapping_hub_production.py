@@ -87,7 +87,8 @@ def fetch_with_retry(url: str, params: dict = None, timeout: int = 15, max_retri
 # CONFIGURATION
 # =============================================================================
 
-ODDS_API_KEY = "deeac7e7af6a8f1a5ac84c625e04973a"
+# Use environment variable for API key (fallback to hardcoded for local dev)
+ODDS_API_KEY = os.environ.get('ODDS_API_KEY', 'deeac7e7af6a8f1a5ac84c625e04973a')
 REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_FILE = "handicapping-hub.html"
 
@@ -192,7 +193,7 @@ def update_archive_calendar(date_str: str, filename: str):
     try:
         dt = datetime.strptime(date_str, '%Y-%m-%d')
         title = dt.strftime('%B %d, %Y').replace(' 0', ' ')  # Remove leading zero from day
-    except:
+    except ValueError:
         title = date_str
 
     try:
@@ -373,7 +374,7 @@ def scan_sport_pages(sport: str) -> List[Dict]:
             try:
                 dt = datetime.strptime(date, '%Y-%m-%d')
                 title = dt.strftime('%B %d, %Y').replace(' 0', ' ')
-            except:
+            except ValueError:
                 title = date
 
             pages.append({
@@ -408,8 +409,8 @@ def update_sport_archive_data(sport: str):
             # Extract existing entries to preserve titles
             for match in re.finditer(r'\{\s*date:\s*"([^"]+)",\s*page:\s*"([^"]+)",\s*title:\s*"([^"]+)"', content):
                 existing_entries[match.group(2)] = match.group(3)  # page -> title
-        except:
-            pass
+        except (IOError, OSError) as e:
+            print(f"  [WARN] Could not read existing archive file: {e}")
 
     # Build entries, preserving existing titles where available
     entries = []
@@ -435,11 +436,20 @@ const {config['array_name']} = [
         print(f"  [ARCHIVE] Error writing {config['data_file']}: {e}")
 
 def sync_all_sport_archives():
-    """Sync archive data files for all sports"""
+    """Sync archive data files for all sports with error handling"""
     print("\n[ARCHIVE] Syncing sport archive data files...")
+    errors = []
     for sport in SPORT_ARCHIVE_CONFIG.keys():
-        update_sport_archive_data(sport)
-    print("[ARCHIVE] Sport archives synced successfully")
+        try:
+            update_sport_archive_data(sport)
+        except Exception as e:
+            errors.append(f"{sport}: {e}")
+            print(f"  [ERROR] Failed to sync {sport} archive: {e}")
+
+    if errors:
+        print(f"[ARCHIVE] Completed with {len(errors)} errors")
+    else:
+        print("[ARCHIVE] Sport archives synced successfully")
 
 def is_game_completed(game: Dict) -> bool:
     """Check if a game has already been completed"""
@@ -447,8 +457,12 @@ def is_game_completed(game: Dict) -> bool:
     state = status.get('type', {}).get('state', '')
     return state.lower() == 'post'
 
-def is_important_ncaab_game(game: Dict) -> bool:
-    """Check if an NCAAB game involves top teams (ranked/major programs)"""
+def is_important_ncaab_game(game: Dict, has_odds: bool = False) -> bool:
+    """Check if an NCAAB game is worth showing (ranked teams, major programs, or has betting odds)"""
+    # If the game has betting odds, it's notable enough to show
+    if has_odds:
+        return True
+
     competitors = game.get('competitions', [{}])[0].get('competitors', [])
     for team in competitors:
         team_name = team.get('team', {}).get('displayName', '').lower()
@@ -981,7 +995,7 @@ def safe_num(val, decimals=1):
         if decimals == 0:
             return str(int(num))
         return f"{num:.{decimals}f}"
-    except:
+    except (ValueError, TypeError):
         return str(val) if val else '-'
 
 def safe_pct(val):
@@ -993,7 +1007,7 @@ def safe_pct(val):
         if v <= 1:
             return f"{v*100:.1f}%"
         return f"{v:.1f}%"
-    except:
+    except (ValueError, TypeError):
         return str(val) if val else '-'
 
 def get_power_rating(record):
@@ -1005,7 +1019,7 @@ def get_power_rating(record):
         total = wins + losses
         if total > 0:
             return f"{(wins/total)*100:.1f}"
-    except:
+    except (ValueError, IndexError):
         pass
     return '-'
 
@@ -1025,7 +1039,7 @@ def format_top(val, games_played=1):
         minutes = int(seconds // 60)
         secs = int(seconds % 60)
         return f"{minutes}:{secs:02d}"
-    except:
+    except (ValueError, TypeError):
         return str(val) if val else '-'
 
 def calculate_ts_pct(ppg, fga, fta):
@@ -1037,7 +1051,7 @@ def calculate_ts_pct(ppg, fga, fta):
         if fga_val + fta_val > 0:
             ts = pts / (2 * (fga_val + 0.44 * fta_val)) * 100
             return f"{ts:.1f}%"
-    except:
+    except (ValueError, TypeError):
         pass
     return '-'
 
@@ -1051,7 +1065,7 @@ def calculate_efg_pct(fgm, fga, three_pm):
         if fga_val > 0:
             efg = (fgm_val + 0.5 * three_val) / fga_val * 100
             return f"{efg:.1f}%"
-    except:
+    except (ValueError, TypeError):
         pass
     return '-'
 
@@ -1098,7 +1112,7 @@ def are_stats_duplicate(away_stats: Dict, home_stats: Dict, sport: str) -> bool:
             home_num = float(str(home_val).replace('%', '').replace(',', ''))
             if abs(away_num - home_num) < 0.01:  # Essentially identical
                 identical_count += 1
-        except:
+        except (ValueError, TypeError):
             # String comparison
             if str(away_val) == str(home_val):
                 identical_count += 1
@@ -1115,7 +1129,7 @@ def are_stats_duplicate(away_stats: Dict, home_stats: Dict, sport: str) -> bool:
             if abs(float(away_ppg) - float(home_ppg)) < 0.01:
                 # Identical PPG is very suspicious
                 return True
-        except:
+        except (ValueError, TypeError):
             pass
 
     return False
@@ -1167,7 +1181,7 @@ def get_nfl_games_played(record: str) -> int:
     try:
         parts = record.replace(' ', '').split('-')
         return sum(int(p) for p in parts if p.isdigit())
-    except:
+    except (ValueError, AttributeError):
         return 1  # Avoid division by zero
 
 def extract_nfl_stats(raw: Dict, record: str) -> Dict:
@@ -1182,7 +1196,7 @@ def extract_nfl_stats(raw: Dict, record: str) -> Dict:
     try:
         if total_yards and total_plays:
             ypp_calc = f"{float(total_yards) / float(total_plays):.2f}"
-    except:
+    except (ValueError, TypeError, ZeroDivisionError):
         pass
 
     # Get TOP - ESPN provides possessionTimeSeconds as season total
@@ -1234,7 +1248,7 @@ def get_games_played(record: str) -> int:
     try:
         parts = record.replace(' ', '').split('-')
         return sum(int(p) for p in parts if p.isdigit())
-    except:
+    except (ValueError, AttributeError):
         return 1  # Avoid division by zero
 
 def extract_nhl_stats(raw: Dict, record: str) -> Dict:
@@ -1246,12 +1260,12 @@ def extract_nhl_stats(raw: Dict, record: str) -> Dict:
     ga_total = raw.get('goalsAgainst', 0)
     try:
         gf = f"{float(gf_total) / games:.1f}" if games > 0 else '-'
-    except:
+    except (ValueError, TypeError, ZeroDivisionError):
         gf = safe_num(raw.get('goalsPerGame', raw.get('avgGoals')))
 
     try:
         ga = f"{float(ga_total) / games:.1f}" if games > 0 else '-'
-    except:
+    except (ValueError, TypeError, ZeroDivisionError):
         ga = safe_num(raw.get('avgGoalsAgainst', raw.get('goalsAgainstPerGame')))
 
     # Calculate goal differential
@@ -1259,35 +1273,35 @@ def extract_nhl_stats(raw: Dict, record: str) -> Dict:
     try:
         gd_val = float(gf) - float(ga)
         gd = f"{gd_val:+.1f}"
-    except:
+    except (ValueError, TypeError):
         pass
 
     # Shots - may be total, convert to per-game
     sog_total = raw.get('shotsTotal', raw.get('shots', 0))
     try:
         sog = f"{float(sog_total) / games:.1f}" if games > 0 and sog_total else '-'
-    except:
+    except (ValueError, TypeError, ZeroDivisionError):
         sog = safe_num(raw.get('shotsPerGame', raw.get('avgShotsPerGame')))
 
     # Shots against
     sa_total = raw.get('shotsAgainst', 0)
     try:
         sa = f"{float(sa_total) / games:.1f}" if games > 0 and sa_total else '-'
-    except:
+    except (ValueError, TypeError, ZeroDivisionError):
         sa = safe_num(raw.get('shotsAgainstPerGame'))
 
     # PIM - total, convert to per-game
     pim_total = raw.get('penaltyMinutes', 0)
     try:
         pim = f"{float(pim_total) / games:.1f}" if games > 0 and pim_total else '-'
-    except:
+    except (ValueError, TypeError, ZeroDivisionError):
         pim = safe_num(raw.get('penaltyMinutesPerGame', raw.get('pimPerGame')))
 
     # Additional calculations
     points = raw.get('points', 0)
     try:
         pts_pg = f"{float(points) / games:.1f}" if games > 0 and points else '-'
-    except:
+    except (ValueError, TypeError, ZeroDivisionError):
         pts_pg = '-'
 
     return {
@@ -2503,12 +2517,21 @@ def fetch_all_games() -> Dict[str, List]:
                     print(f"  [SKIP] Game is {game_status}: {away_team.get('abbreviation')} vs {home_team.get('abbreviation')}")
                     continue
 
-                # NCAAB: Only show important games (ranked teams or major programs)
-                if sport == 'NCAAB' and not is_important_ncaab_game(event):
-                    away_team = competitors[0].get('team', {})
-                    home_team = competitors[1].get('team', {})
-                    print(f"  [SKIP] NCAAB not important: {away_team.get('displayName', 'TBD')} vs {home_team.get('displayName', 'TBD')}")
-                    continue
+                # NCAAB: Only show important games (ranked teams, major programs, or has betting odds)
+                if sport == 'NCAAB':
+                    away_team_temp = competitors[0].get('team', {})
+                    home_team_temp = competitors[1].get('team', {})
+                    away_name_temp = away_team_temp.get('displayName', '').lower()
+                    home_name_temp = home_team_temp.get('displayName', '').lower()
+                    # Check if this game has odds
+                    game_has_odds = any(
+                        away_name_temp in o.get('away_team', '').lower() or
+                        home_name_temp in o.get('home_team', '').lower()
+                        for o in odds_data
+                    )
+                    if not is_important_ncaab_game(event, has_odds=game_has_odds):
+                        print(f"  [SKIP] NCAAB not important: {away_team_temp.get('displayName', 'TBD')} vs {home_team_temp.get('displayName', 'TBD')}")
+                        continue
 
                 # NCAAF: Only show bowl games during bowl season (Dec-Jan)
                 if sport == 'NCAAF' and not is_bowl_game(event):

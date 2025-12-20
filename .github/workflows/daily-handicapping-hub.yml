@@ -9,12 +9,15 @@ on:
 jobs:
   update-handicapping-hub:
     runs-on: ubuntu-latest
+    env:
+      TZ: America/New_York  # Use Eastern timezone for all date operations
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # Get full history for proper rebasing
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -25,7 +28,7 @@ jobs:
         run: |
           pip install requests
 
-      - name: Archive previous day hub and update calendar
+      - name: Archive previous day hub
         run: |
           YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)
           if [ -f "handicapping-hub.html" ]; then
@@ -33,26 +36,34 @@ jobs:
             ARCHIVE_FILE="hub-${YESTERDAY}.html"
             cp handicapping-hub.html "handicapping-hub-archive/${ARCHIVE_FILE}"
             echo "Archived to handicapping-hub-archive/${ARCHIVE_FILE}"
-
-            # Update archive calendar data
-            if [ -f "handicapping-hub-archive.html" ]; then
-              sed -i "s|const archiveData = {|const archiveData = {\n            \"${YESTERDAY}\": \"${ARCHIVE_FILE}\",|" handicapping-hub-archive.html
-              echo "Updated archive calendar with ${YESTERDAY}"
-            fi
           fi
 
       - name: Run Handicapping Hub Production Script
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: |
           python scripts/handicapping_hub_production.py
 
-      - name: Update today in archive calendar
+      - name: Validate output file
         run: |
-          TODAY=$(date +%Y-%m-%d)
-          if [ -f "handicapping-hub-archive.html" ]; then
-            if ! grep -q "\"${TODAY}\":" handicapping-hub-archive.html; then
-              sed -i "s|const archiveData = {|const archiveData = {\n            \"${TODAY}\": \"handicapping-hub.html\",|" handicapping-hub-archive.html
-            fi
+          if [ ! -f "handicapping-hub.html" ]; then
+            echo "ERROR: handicapping-hub.html was not created!"
+            exit 1
           fi
+
+          # Check file size (should be at least 10KB)
+          FILE_SIZE=$(stat -c%s "handicapping-hub.html")
+          if [ $FILE_SIZE -lt 10000 ]; then
+            echo "ERROR: handicapping-hub.html is too small ($FILE_SIZE bytes) - likely corrupted"
+            exit 1
+          fi
+
+          # Check for game cards (at least one game should exist)
+          if ! grep -q "game-card" handicapping-hub.html; then
+            echo "WARNING: No game cards found in output - may be an off day or API failure"
+          fi
+
+          echo "Validation passed: handicapping-hub.html is $FILE_SIZE bytes"
 
       - name: Commit and push changes
         run: |
@@ -64,7 +75,13 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Auto-update handicapping hub ${DATE}"
-            # Pull latest changes to avoid conflicts with other workflows
-            git pull --rebase origin main || true
+            # Pull latest and rebase to handle concurrent commits
+            for i in 1 2 3; do
+              if git pull --rebase origin main; then
+                break
+              fi
+              echo "Rebase attempt $i failed, retrying..."
+              sleep 5
+            done
             git push
           fi
