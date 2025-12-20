@@ -87,6 +87,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 @media(max-width:1200px){
   .calendar-sidebar{display:none}
 }
+.mobile-archive{display:none;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;padding:16px 20px;margin-bottom:32px}
+.mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
+@media(max-width:1200px){
+  .mobile-archive{display:block}
+}
 @media(max-width:768px){
   .hero{padding:130px 20px 40px}
   .game-preview{padding:24px}
@@ -128,6 +134,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="calendar-days" id="calendar-days"></div>
 </div>
 </aside>
+<div class="mobile-archive" id="mobile-archive">
+<div class="mobile-archive-title">📅 NFL Archive</div>
+<select class="mobile-archive-select" id="mobile-archive-select">
+<option value="">Jump to date...</option>
+</select>
+</div>
 <main class="main-content">
 <article class="game-preview">
 <div class="game-header">
@@ -271,6 +283,20 @@ renderCalendar(currentMonth);
 // Month change handler
 monthSelect.addEventListener('change', (e) => {
     renderCalendar(e.target.value);
+});
+
+// Mobile archive dropdown
+const mobileSelect = document.getElementById('mobile-archive-select');
+ARCHIVE_DATA.forEach(item => {
+    const opt = document.createElement('option');
+    opt.value = item.page;
+    const dateObj = new Date(item.date + 'T12:00:00');
+    const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    opt.textContent = `${dateLabel} - ${item.title}`;
+    mobileSelect.appendChild(opt);
+});
+mobileSelect.addEventListener('change', (e) => {
+    if (e.target.value) window.location.href = e.target.value;
 });
 </script>
 </body>
