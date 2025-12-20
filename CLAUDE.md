@@ -162,6 +162,45 @@ EVERY post should feel like expert analysis, not AI-generated content
 
 ---
 
+## ⛔⛔⛔ MANDATORY PRE-COMMIT CHECK: NO PLACEHOLDERS ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 20, 2025
+
+**BEFORE pushing ANY sports page to GitHub, you MUST run this check:**
+
+```bash
+# Run this BEFORE every commit to a sports page:
+grep -r "coming soon\|analysis coming\|Matchup analysis\|preview coming\|TBD\|TBA\|N/A" [filename].html
+```
+
+**If ANY matches are found:**
+1. DO NOT COMMIT
+2. Replace ALL placeholder content with real analysis
+3. Re-run the check until it returns ZERO matches
+4. Only then commit and push
+
+### THE SYSTEM:
+```
+EVERY EDIT to a sports page MUST include:
+1. Grep check for placeholder patterns
+2. If found → FIX THEM FIRST
+3. Only push when grep returns ZERO matches
+4. This is NON-NEGOTIABLE
+```
+
+### BANNED PLACEHOLDER PATTERNS:
+- "coming soon" (any variation)
+- "Matchup analysis coming"
+- "Preview coming"
+- "Analysis coming"
+- "TBD", "TBA", "N/A"
+- Single-sentence game descriptions
+- Any generic text that doesn't include specific stats/players
+
+**One placeholder = entire page is REJECTED. Fix it first.**
+
+---
+
 ## STEP 1: ALWAYS READ THE PROTOCOL FIRST
 
 Before creating ANY content for this website, you MUST read:
