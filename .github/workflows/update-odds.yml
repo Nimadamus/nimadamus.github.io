@@ -3,7 +3,7 @@ name: Update Odds Page Daily
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 14 * * *' # Runs daily at 7AM PST
+    - cron: '0 13 * * *' # Runs daily at 6AM PST (staggered to prevent conflicts)
 
 jobs:
   update-odds:
@@ -24,12 +24,17 @@ jobs:
       - name: Run odds fetcher
         run: node scripts/fetchOdds.js
 
-      - name: Commit odds-live.html
+      - name: Commit and push odds-live.html
         run: |
           git config --global user.email "bot@github.com"
           git config --global user.name "GitHub Actions Bot"
           git add odds-live.html
-          git commit -m "Auto-update odds-live.html" || echo "No changes to commit"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update odds-live.html"
+            git pull --rebase origin main || true
+            git push
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

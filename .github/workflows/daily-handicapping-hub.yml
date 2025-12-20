@@ -60,5 +60,11 @@ jobs:
           git config --local user.name "GitHub Action"
           git add -A
           DATE=$(date +%Y-%m-%d)
-          git diff --staged --quiet || git commit -m "Auto-update handicapping hub ${DATE}"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update handicapping hub ${DATE}"
+            # Pull latest changes to avoid conflicts with other workflows
+            git pull --rebase origin main || true
+            git push
+          fi

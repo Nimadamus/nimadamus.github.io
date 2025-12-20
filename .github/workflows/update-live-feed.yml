@@ -2,7 +2,7 @@ name: Update Live Feed Daily
 
 on:
   schedule:
-    - cron: '0 14 * * *'  # Runs every day at 7 AM Pacific
+    - cron: '30 13 * * *'  # Runs every day at 6:30 AM Pacific (staggered to prevent conflicts)
   workflow_dispatch:       # Allows manual run in Actions tab
 
 jobs:
@@ -24,10 +24,15 @@ jobs:
       - name: Run update script
         run: python scripts/update_feed.py
 
-      - name: Commit updated JSON
+      - name: Commit and push updated JSON
         run: |
           git config user.name "BetLegend Bot"
           git config user.email "bot@betlegend.com"
           git add data/live_feed.json
-          git commit -m "🔄 Auto-update live feed"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update live feed"
+            git pull --rebase origin main || true
+            git push
+          fi

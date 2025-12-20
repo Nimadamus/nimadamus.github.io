@@ -38,8 +38,50 @@ try:
     from zoneinfo import ZoneInfo
     EASTERN = ZoneInfo('America/New_York')
 except ImportError:
-    # Fallback for older Python versions
-    EASTERN = None
+    # Fallback for older Python versions - use UTC offset
+    from datetime import timezone as tz
+    # This is a simplified fallback - always uses EST (-5)
+    # For production, this handles most cases correctly
+    EASTERN = tz(timedelta(hours=-5))
+
+import time
+import random
+
+def fetch_with_retry(url: str, params: dict = None, timeout: int = 15, max_retries: int = 3) -> Optional[requests.Response]:
+    """
+    Fetch URL with exponential backoff retry logic.
+    Returns Response object on success, None on failure.
+    """
+    for attempt in range(max_retries):
+        try:
+            if params:
+                resp = requests.get(url, params=params, timeout=timeout)
+            else:
+                resp = requests.get(url, timeout=timeout)
+
+            if resp.status_code == 200:
+                return resp
+            elif resp.status_code == 429:  # Rate limited
+                wait_time = (2 ** attempt) + random.uniform(0, 1)
+                print(f"  [RATE LIMIT] Waiting {wait_time:.1f}s before retry...")
+                time.sleep(wait_time)
+            elif resp.status_code >= 500:  # Server error - retry
+                wait_time = (2 ** attempt) + random.uniform(0, 1)
+                print(f"  [SERVER ERROR {resp.status_code}] Retry {attempt + 1}/{max_retries}...")
+                time.sleep(wait_time)
+            else:
+                # Client error (4xx except 429) - don't retry
+                return None
+        except requests.exceptions.Timeout:
+            wait_time = (2 ** attempt) + random.uniform(0, 1)
+            print(f"  [TIMEOUT] Retry {attempt + 1}/{max_retries} after {wait_time:.1f}s...")
+            time.sleep(wait_time)
+        except requests.exceptions.RequestException as e:
+            print(f"  [REQUEST ERROR] {e}")
+            if attempt < max_retries - 1:
+                wait_time = (2 ** attempt) + random.uniform(0, 1)
+                time.sleep(wait_time)
+    return None
 
 # =============================================================================
 # CONFIGURATION
@@ -441,28 +483,25 @@ def is_bowl_game(game: Dict) -> bool:
 # =============================================================================
 
 def fetch_espn_scoreboard(sport_path: str) -> List[Dict]:
-    """Fetch today's games from ESPN Scoreboard API"""
+    """Fetch today's games from ESPN Scoreboard API with retry logic"""
     date_str = datetime.now().strftime('%Y%m%d')
     url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/scoreboard?dates={date_str}"
-    try:
-        resp = requests.get(url, timeout=15)
-        if resp.status_code == 200:
-            return resp.json().get('events', [])
-    except Exception as e:
-        print(f"  [ERROR] ESPN scoreboard fetch failed: {e}")
+    resp = fetch_with_retry(url, timeout=15, max_retries=3)
+    if resp:
+        return resp.json().get('events', [])
+    print(f"  [ERROR] ESPN scoreboard fetch failed after retries")
     return []
 
 def fetch_team_statistics(sport_path: str, team_id: str) -> Dict:
-    """Fetch comprehensive team statistics from ESPN"""
+    """Fetch comprehensive team statistics from ESPN with retry logic"""
     stats = {}
-    try:
-        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/statistics"
-        resp = requests.get(url, timeout=10)
-        if resp.status_code == 200:
+    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/statistics"
+    resp = fetch_with_retry(url, timeout=10, max_retries=2)
+    if resp:
+        try:
             data = resp.json()
             # Parse all stats from ESPN response
             for cat in data.get('results', {}).get('stats', {}).get('categories', []):
-                cat_name = cat.get('name', '')
                 for stat in cat.get('stats', []):
                     name = stat.get('name', '')
                     value = stat.get('displayValue', stat.get('value', ''))
@@ -473,28 +512,28 @@ def fetch_team_statistics(sport_path: str, team_id: str) -> Dict:
                     name = stat.get('name', '')
                     value = stat.get('displayValue', stat.get('value', ''))
                     stats[name] = value
-    except:
-        pass
+        except json.JSONDecodeError as e:
+            print(f"  [JSON ERROR] Failed to parse team stats: {e}")
     return stats
 
 def fetch_team_record(sport_path: str, team_id: str) -> str:
-    """Fetch team win-loss record from ESPN team endpoint"""
-    try:
-        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}"
-        resp = requests.get(url, timeout=10)
-        if resp.status_code == 200:
+    """Fetch team win-loss record from ESPN team endpoint with retry logic"""
+    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}"
+    resp = fetch_with_retry(url, timeout=10, max_retries=2)
+    if resp:
+        try:
             data = resp.json()
             team = data.get('team', {})
             record = team.get('record', {})
             items = record.get('items', [])
             if items:
                 return items[0].get('summary', '0-0')
-    except:
-        pass
+        except json.JSONDecodeError as e:
+            print(f"  [JSON ERROR] Failed to parse team record: {e}")
     return '0-0'
 
 def fetch_odds(sport_key: str) -> List[Dict]:
-    """Fetch betting odds from The Odds API - filtered to today's games only"""
+    """Fetch betting odds from The Odds API - filtered to today's games only with retry logic"""
     url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds"
     params = {
         'apiKey': ODDS_API_KEY,
@@ -502,15 +541,19 @@ def fetch_odds(sport_key: str) -> List[Dict]:
         'markets': 'spreads,h2h,totals',
         'oddsFormat': 'american'
     }
-    try:
-        resp = requests.get(url, params=params, timeout=15)
-        if resp.status_code == 200:
+    resp = fetch_with_retry(url, params=params, timeout=15, max_retries=3)
+    if resp:
+        try:
             all_odds = resp.json()
 
             # Filter to only include games happening TODAY (in Eastern Time)
-            # Odds API returns UTC times, so we need to convert
-            today = datetime.now()
-            today_date = today.date()
+            # Get current time in Eastern timezone (handles DST automatically)
+            if EASTERN:
+                now_eastern = datetime.now(EASTERN)
+            else:
+                # Fallback: approximate Eastern time
+                now_eastern = datetime.now() - timedelta(hours=5)
+            today_date = now_eastern.date() if hasattr(now_eastern, 'date') else now_eastern
 
             filtered = []
             for game in all_odds:
@@ -519,30 +562,37 @@ def fetch_odds(sport_key: str) -> List[Dict]:
                     try:
                         # Parse ISO format datetime (UTC)
                         game_dt = datetime.fromisoformat(commence.replace('Z', '+00:00'))
-                        # Convert UTC to Eastern (UTC - 5 hours for EST)
-                        game_est = game_dt.replace(tzinfo=None) - timedelta(hours=5)
-                        game_date = game_est.date()
+                        # Convert UTC to Eastern timezone (handles DST automatically)
+                        if EASTERN:
+                            game_eastern = game_dt.astimezone(EASTERN)
+                            game_date = game_eastern.date()
+                        else:
+                            # Fallback without timezone support
+                            game_date = (game_dt.replace(tzinfo=None) - timedelta(hours=5)).date()
 
                         # Include games from today
                         if game_date == today_date:
                             filtered.append(game)
                     except Exception as e:
-                        pass
+                        print(f"  [WARN] Could not parse game time: {e}")
 
             print(f"  [ODDS] Filtered from {len(all_odds)} to {len(filtered)} today's games")
             return filtered
-    except Exception as e:
-        print(f"  [ERROR] Odds API fetch failed: {e}")
+        except json.JSONDecodeError as e:
+            print(f"  [JSON ERROR] Failed to parse odds data: {e}")
+    else:
+        print(f"  [ERROR] Odds API fetch failed after retries")
     return []
 
 def fetch_team_injuries(sport_path: str, team_id: str) -> List[Dict]:
-    """Fetch team injuries from ESPN"""
+    """Fetch team injuries from ESPN with retry logic"""
     injuries = []
-    try:
-        # Try the injuries endpoint
-        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/injuries"
-        resp = requests.get(url, timeout=10)
-        if resp.status_code == 200:
+
+    # Try the injuries endpoint first
+    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/injuries"
+    resp = fetch_with_retry(url, timeout=10, max_retries=2)
+    if resp:
+        try:
             data = resp.json()
             for item in data.get('items', []):
                 athlete = item.get('athlete', {})
@@ -560,12 +610,15 @@ def fetch_team_injuries(sport_path: str, team_id: str) -> List[Dict]:
                         'status': status,
                         'type': injury_type
                     })
+        except json.JSONDecodeError:
+            pass  # Injuries are supplemental, continue if parsing fails
 
-        # Also try the roster endpoint for injury info
-        if not injuries:
-            url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/roster"
-            resp = requests.get(url, timeout=10)
-            if resp.status_code == 200:
+    # Also try the roster endpoint for injury info if no injuries found
+    if not injuries:
+        url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/roster"
+        resp = fetch_with_retry(url, timeout=10, max_retries=2)
+        if resp:
+            try:
                 data = resp.json()
                 # ESPN roster structure: athletes is directly a list of players
                 athletes_list = data.get('athletes', [])
@@ -593,8 +646,8 @@ def fetch_team_injuries(sport_path: str, team_id: str) -> List[Dict]:
                                         'status': status,
                                         'type': inj.get('type', {}).get('text', inj.get('description', ''))
                                     })
-    except Exception as e:
-        pass  # Silently fail - injuries are supplemental
+            except json.JSONDecodeError:
+                pass  # Injuries are supplemental
 
     return injuries[:5]  # Limit to top 5 injuries per team
 

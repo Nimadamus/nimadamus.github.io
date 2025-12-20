@@ -30,12 +30,8 @@ jobs:
         run: |
           pip install requests beautifulsoup4 lxml anthropic
 
-      - name: Run Handicapping Hub Update
-        continue-on-error: true
-        env:
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: |
-          python scripts/handicapping_hub/main.py
+      # NOTE: Handicapping Hub is handled by daily-handicapping-hub.yml at 15:00 UTC
+      # Removed duplicate here to prevent merge conflicts
 
       - name: Run Auto-Content for NBA
         continue-on-error: true
