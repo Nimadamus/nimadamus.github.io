@@ -115,6 +115,53 @@ BETTER to have fewer games with quality content than all games with placeholder 
 
 ---
 
+## ⛔⛔⛔ MANDATORY WRITING STYLE: HUMAN, CONVERSATIONAL, ANALYTICAL ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 20, 2025
+
+**ALL blog posts and sports content MUST be written like a passionate, knowledgeable sports fan talking to a friend.**
+
+### THE WRITING STANDARD:
+- ✅ **HUMAN-SOUNDING** - Write like a real person, not a robot
+- ✅ **CONVERSATIONAL** - Use natural language, contractions, casual transitions
+- ✅ **ANALYTICAL** - Back up opinions with real stats and verified data
+- ✅ **INFORMATIVE** - Provide genuine insight, not filler content
+- ✅ **PASSIONATE** - Show emotion and conviction about picks
+
+### REQUIRED WRITING ELEMENTS:
+- Use contractions naturally ("don't", "it's", "you're", "here's")
+- Casual transitions ("Look", "Here's the thing", "Let me tell you")
+- Show emotion ("This is huge", "I love this spot", "This line is a gift")
+- Vary sentence length - mix short punchy sentences with longer analytical ones
+- Take strong stances - be opinionated, not wishy-washy
+- Include specific verified stats to support analysis
+
+### WHAT GOOD WRITING LOOKS LIKE:
+```
+"Look, I get it. Laying 17 points in the playoff feels steep. But
+sometimes the market gets it exactly right. Ole Miss already destroyed
+Tulane 45-10 in September, and I don't care how much they've improved.
+You don't overcome a 35-point beatdown in three months."
+```
+
+### WHAT BAD WRITING LOOKS LIKE:
+```
+"The Ole Miss Rebels present a compelling betting opportunity against
+the Tulane Green Wave. Analysis indicates favorable conditions for the
+home team. Several factors support this thesis."
+```
+
+### THE RULE:
+```
+EVERY sentence should sound like a human wrote it
+EVERY paragraph should have personality and conviction
+EVERY post should feel like expert analysis, not AI-generated content
+```
+
+**If it sounds robotic, rewrite it. No exceptions.**
+
+---
+
 ## STEP 1: ALWAYS READ THE PROTOCOL FIRST
 
 Before creating ANY content for this website, you MUST read:
