@@ -6,6 +6,54 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
+## ⛔⛔⛔ ZERO TOLERANCE: NO PLACEHOLDER CONTENT. EVER. ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 20, 2025
+
+**EVERY GAME on sports pages MUST have REAL, substantive written analysis.**
+
+### BANNED PLACEHOLDER CONTENT (ABSOLUTE BAN):
+- ❌ "Matchup analysis coming soon"
+- ❌ "Analysis coming soon"
+- ❌ "Preview coming soon"
+- ❌ "[Team] vs [Team]" with no analysis
+- ❌ Single-sentence game descriptions
+- ❌ ANY one-liner placeholder text
+- ❌ Template filler content
+- ❌ Generic text that could apply to any game
+
+### MINIMUM REQUIREMENTS PER GAME:
+- ✅ **2-3 paragraphs minimum** of substantive written analysis
+- ✅ Specific details about THIS matchup (players, stats, storylines)
+- ✅ Real context (team records, recent form, key injuries)
+- ✅ Something unique that makes this game interesting
+- ✅ Human-sounding editorial content, not robotic filler
+
+### THE RULE IS ABSOLUTE:
+```
+IF a game exists on the page → IT MUST HAVE REAL WRITTEN ANALYSIS
+IF you cannot write real analysis → DO NOT ADD THE GAME
+BETTER to have fewer games with quality content than all games with placeholder garbage
+```
+
+### WHAT HAPPENED (December 19, 2025):
+Sports pages were published with one-liner placeholders like "Matchup analysis coming soon" for every game. This is UNACCEPTABLE. Users saw empty content shells instead of real analysis. This destroyed the professional appearance of the site.
+
+### THE FIX:
+Every game MUST have substantive content. If time constraints exist:
+1. Cover fewer games with real analysis rather than all games with placeholders
+2. Research and write genuine content for each game included
+3. Add remaining games later with proper analysis
+
+### ENFORCEMENT:
+- Any page found with placeholder content must be fixed IMMEDIATELY
+- The "coming soon" pattern is PERMANENTLY BANNED
+- This rule overrides any time pressure to publish quickly
+
+**Quality over quantity. Always.**
+
+---
+
 ## ⛔⛔⛔ CRITICAL: COVER ALL GAMES ON THE BOARD ⛔⛔⛔
 
 ### FULL SLATE COVERAGE IS MANDATORY

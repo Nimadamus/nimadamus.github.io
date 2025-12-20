@@ -69,6 +69,52 @@ NHL: FO%|PIM|SHG|GWG|OTL        | PWR|GF|GA|GD|REC
 
 ---
 
+## ⛔⛔⛔ ZERO TOLERANCE: NO PLACEHOLDER CONTENT. EVER. ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 20, 2025
+
+**EVERY GAME on sports pages MUST have REAL, substantive written analysis.**
+
+### BANNED PLACEHOLDER CONTENT (NEVER USE):
+- ❌ "Matchup analysis coming soon"
+- ❌ "Analysis coming soon"
+- ❌ "Preview coming soon"
+- ❌ "[Team] vs [Team]" with no analysis
+- ❌ Single-sentence game descriptions
+- ❌ ANY one-liner that isn't real analysis
+- ❌ Template filler content
+- ❌ Generic text that could apply to any game
+
+### MINIMUM REQUIREMENTS PER GAME:
+- ✅ **2-3 paragraphs minimum** of substantive written analysis
+- ✅ Specific details about THIS matchup (players, stats, storylines)
+- ✅ Real context (team records, recent form, key injuries)
+- ✅ Something unique that makes this game interesting
+- ✅ Human-sounding editorial content
+
+### THE RULE IS ABSOLUTE:
+```
+IF a game exists on the page → IT MUST HAVE REAL WRITTEN ANALYSIS
+IF you cannot write real analysis → DO NOT ADD THE GAME
+BETTER to have fewer games with quality content than all games with placeholder garbage
+```
+
+### WHY THIS MATTERS:
+- Placeholder content makes the site look LAZY and UNPROFESSIONAL
+- Users come to BetLegend for ANALYSIS, not empty shells
+- One page of placeholders destroys credibility for the entire site
+- This happened December 19, 2025 - NEVER AGAIN
+
+### IF YOU'RE ABOUT TO WRITE "Coming soon" - STOP:
+1. Research the actual matchup
+2. Find real storylines, stats, and context
+3. Write 2-3 paragraphs of genuine analysis
+4. If you can't do that, don't add the game at all
+
+**ZERO TOLERANCE. NO EXCEPTIONS. EVER.**
+
+---
+
 ## STEP 1: ALWAYS READ THE PROTOCOL FIRST
 
 Before creating ANY content for this website, you MUST read:
