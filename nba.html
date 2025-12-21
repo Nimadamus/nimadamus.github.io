@@ -391,19 +391,16 @@ function renderCalendar(yearMonth) {
     // Day cells
     for (let d = 1; d <= daysInMonth; d++) {
         const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const cell = document.createElement('div');
-        cell.className = 'cal-day';
-        cell.textContent = d;
+        const hasData = dateMap[dateStr];
+        let classes = 'cal-day';
+        if (dateStr === todayStr) classes += ' today';
+        if (hasData) classes += ' has-content';
 
-        if (dateStr === todayStr) cell.classList.add('today');
-
-        if (dateMap[dateStr]) {
-            cell.classList.add('has-content');
-            cell.title = dateMap[dateStr].title;
-            cell.onclick = () => { window.location.href = dateMap[dateStr].page; };
+        if (hasData) {
+            container.innerHTML += `<div class="${classes}" title="${hasData.title}" onclick="window.location.href='${hasData.page}'">${d}</div>`;
+        } else {
+            container.innerHTML += `<div class="${classes}">${d}</div>`;
         }
-
-        container.appendChild(cell);
     }
 }
 
