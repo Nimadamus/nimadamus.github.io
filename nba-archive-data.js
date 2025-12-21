@@ -1,19 +1,15 @@
 // NBA Archive Data - Auto-updated by production script
 const NBA_ARCHIVE = [
     { date: "2025-12-20", page: "nba.html", title: "NBA Cup Championship - Spurs vs Knicks" },
-    { date: "2025-12-18", page: "nba-page2-backup.html", title: "December 18, 2025" },
-    { date: "2025-12-15", page: "nba-page2.html", title: "December 14, 2025" },
+    { date: "2025-12-20", page: "nba-page10.html", title: "December 14, 2025" },
+    { date: "2025-12-20", page: "nba-page11.html", title: "December 14, 2025" },
+    { date: "2025-12-17", page: "nba-page9.html", title: "December 14, 2025" },
     { date: "2025-12-15", page: "nba-page8.html", title: "December 15, 2025" },
-    { date: "2025-12-14", page: "nba-page10.html", title: "December 14, 2025" },
-    { date: "2025-12-14", page: "nba-page11.html", title: "December 14, 2025" },
-    { date: "2025-12-14", page: "nba-page12.html", title: "December 14, 2025" },
-    { date: "2025-12-14", page: "nba-page13.html", title: "December 14, 2025" },
-    { date: "2025-12-14", page: "nba-page14.html", title: "December 14, 2025" },
-    { date: "2025-12-14", page: "nba-page15.html", title: "December 14, 2025" },
-    { date: "2025-12-14", page: "nba-page9.html", title: "December 14, 2025" },
-    { date: "2025-11-26", page: "nba-page7.html", title: "November 26, 2025 - 9-Game Slate" },
-    { date: "2025-11-24", page: "nba-page3.html", title: "November 24, 2025" },
-    { date: "2025-11-22", page: "nba-page4.html", title: "November 22, 2025" },
-    { date: "2025-11-21", page: "nba-page5.html", title: "November 21, 2025" },
-    { date: "2025-11-15", page: "nba-page6.html", title: "November 15, 2025" }
+    { date: "2025-12-15", page: "nba-page2.html", title: "December 14, 2025" },
+    { date: "2025-12-14", page: "nba-page16.html", title: "December 14, 2025" },
+    { date: "2025-12-13", page: "nba-page15.html", title: "December 14, 2025" },
+    { date: "2025-12-12", page: "nba-page14.html", title: "December 14, 2025" },
+    { date: "2025-12-11", page: "nba-page13.html", title: "December 14, 2025" },
+    { date: "2025-12-10", page: "nba-page12.html", title: "December 14, 2025" },
+    { date: "2025-11-24", page: "nba-page3.html", title: "November 24, 2025" }
 ];
