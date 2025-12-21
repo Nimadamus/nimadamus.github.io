@@ -294,6 +294,22 @@ function renderCalendar(yearMonth) {
 
 renderCalendar(currentMonth);
 monthSelect.addEventListener('change', (e) => renderCalendar(e.target.value));
+
+// Mobile archive dropdown
+const mobileSelect = document.getElementById('mobile-archive-select');
+if (mobileSelect) {
+    ARCHIVE_DATA.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item.page;
+        const dateObj = new Date(item.date + 'T12:00:00');
+        const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        opt.textContent = `${dateLabel} - ${item.title}`;
+        mobileSelect.appendChild(opt);
+    });
+    mobileSelect.addEventListener('change', (e) => {
+        if (e.target.value) window.location.href = e.target.value;
+    });
+}
 </script>
 </body>
 </html>

@@ -83,8 +83,12 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .section-header{color:var(--accent-gold);font-weight:700;font-size:18px;margin-top:24px;margin-bottom:12px}
 footer{text-align:center;padding:50px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
 footer a{color:var(--accent-cyan);text-decoration:none}
+.mobile-archive{display:none;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;padding:16px 20px;margin-bottom:32px}
+.mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
 @media(max-width:1200px){
   .calendar-sidebar{display:none}
+  .mobile-archive{display:block}
 }
 @media(max-width:768px){
   .hero{padding:130px 20px 40px}
@@ -106,7 +110,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a></div></div>
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a></div></div>
 <a href="news-page3.html">News</a>
-<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page20.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page21.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 </div>
 </div>
 </nav>
@@ -304,6 +308,22 @@ renderCalendar(currentMonth);
 monthSelect.addEventListener('change', (e) => {
     renderCalendar(e.target.value);
 });
+
+// Mobile archive dropdown
+const mobileSelect = document.getElementById('mobile-archive-select');
+if (mobileSelect) {
+    ARCHIVE_DATA.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item.page;
+        const dateObj = new Date(item.date + 'T12:00:00');
+        const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        opt.textContent = `${dateLabel} - ${item.title}`;
+        mobileSelect.appendChild(opt);
+    });
+    mobileSelect.addEventListener('change', (e) => {
+        if (e.target.value) window.location.href = e.target.value;
+    });
+}
 </script>
 </body>
 </html>
