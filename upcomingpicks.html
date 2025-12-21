@@ -407,7 +407,7 @@
         </p>
 
         <p style="margin-bottom: 15px; font-size: 16px;">
-            Once games conclude, all picks are immediately graded and moved to our verified records pages where you can see complete historical performance by sport. This transparency ensures accountability - we don't hide losses or selectively report results. Every pick is tracked from release through final grading, giving bettors a complete picture of our betting performance over time.
+            Once games conclude, picks are graded and moved to our verified records pages where you can see complete historical performance by sport. Grading typically occurs within 24 hours of game completion. This transparency ensures accountability - we don't hide losses or selectively report results. Every pick is tracked from release through final grading, giving bettors a complete picture of our betting performance over time.
         </p>
 
         <h3 style="color: gold; font-size: 20px; margin: 25px 0 15px 0; font-weight: bold;">How to Use This Page</h3>
@@ -447,35 +447,229 @@
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // This is your live, published Google Sheet URL
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Google Sheet URL for upcoming picks
             const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxskwayMha-DRtU9w-UXiRzy4e5uAjJsHoUfoW2edQUv__Svh6B_Wf3oyWwQFCGPCSl8BUT3qA_LJB/pub?gid=0&single=true&output=csv';
 
             const tableBody = document.getElementById('picks-table-body');
 
+            // Team name mappings for matching ESPN data
+            const teamMappings = {
+                // NBA
+                'lakers': 'LAL', 'celtics': 'BOS', 'warriors': 'GSW', 'nets': 'BKN',
+                'knicks': 'NYK', 'heat': 'MIA', 'bucks': 'MIL', 'suns': 'PHX',
+                'mavericks': 'DAL', 'nuggets': 'DEN', 'clippers': 'LAC', 'sixers': 'PHI',
+                '76ers': 'PHI', 'bulls': 'CHI', 'hawks': 'ATL', 'cavaliers': 'CLE',
+                'cavs': 'CLE', 'pistons': 'DET', 'pacers': 'IND', 'grizzlies': 'MEM',
+                'timberwolves': 'MIN', 'wolves': 'MIN', 'pelicans': 'NOP', 'thunder': 'OKC',
+                'magic': 'ORL', 'raptors': 'TOR', 'jazz': 'UTA', 'wizards': 'WAS',
+                'hornets': 'CHA', 'rockets': 'HOU', 'kings': 'SAC', 'spurs': 'SAS',
+                'blazers': 'POR', 'trail blazers': 'POR',
+                // NFL
+                'chiefs': 'KC', 'eagles': 'PHI', 'bills': 'BUF', 'cowboys': 'DAL',
+                '49ers': 'SF', 'niners': 'SF', 'ravens': 'BAL', 'dolphins': 'MIA',
+                'lions': 'DET', 'bengals': 'CIN', 'jaguars': 'JAX', 'jets': 'NYJ',
+                'giants': 'NYG', 'seahawks': 'SEA', 'vikings': 'MIN', 'packers': 'GB',
+                'chargers': 'LAC', 'rams': 'LAR', 'broncos': 'DEN', 'raiders': 'LV',
+                'patriots': 'NE', 'browns': 'CLE', 'steelers': 'PIT', 'texans': 'HOU',
+                'titans': 'TEN', 'colts': 'IND', 'saints': 'NO', 'falcons': 'ATL',
+                'panthers': 'CAR', 'buccaneers': 'TB', 'bucs': 'TB', 'cardinals': 'ARI',
+                'commanders': 'WAS', 'bears': 'CHI',
+                // NHL
+                'bruins': 'BOS', 'sabres': 'BUF', 'red wings': 'DET', 'panthers': 'FLA',
+                'canadiens': 'MTL', 'habs': 'MTL', 'senators': 'OTT', 'lightning': 'TBL',
+                'maple leafs': 'TOR', 'leafs': 'TOR', 'hurricanes': 'CAR', 'canes': 'CAR',
+                'blue jackets': 'CBJ', 'devils': 'NJD', 'islanders': 'NYI', 'rangers': 'NYR',
+                'flyers': 'PHI', 'penguins': 'PIT', 'pens': 'PIT', 'capitals': 'WSH',
+                'caps': 'WSH', 'blackhawks': 'CHI', 'avalanche': 'COL', 'avs': 'COL',
+                'stars': 'DAL', 'wild': 'MIN', 'predators': 'NSH', 'preds': 'NSH',
+                'blues': 'STL', 'jets': 'WPG', 'flames': 'CGY', 'oilers': 'EDM',
+                'kings': 'LAK', 'ducks': 'ANA', 'sharks': 'SJS', 'kraken': 'SEA',
+                'golden knights': 'VGK', 'canucks': 'VAN', 'coyotes': 'ARI', 'utah': 'UTA'
+            };
+
+            // Parse pick to understand bet type
+            function parsePick(pickText, game) {
+                const pick = pickText.toLowerCase().trim();
+                const result = { type: null, team: null, line: null, overUnder: null };
+
+                // Check for Over/Under
+                if (pick.includes('over') || pick.includes('o ')) {
+                    result.type = 'total';
+                    result.overUnder = 'over';
+                    const num = pick.match(/[\d.]+/);
+                    if (num) result.line = parseFloat(num[0]);
+                    return result;
+                }
+                if (pick.includes('under') || pick.includes('u ')) {
+                    result.type = 'total';
+                    result.overUnder = 'under';
+                    const num = pick.match(/[\d.]+/);
+                    if (num) result.line = parseFloat(num[0]);
+                    return result;
+                }
+
+                // Check for moneyline
+                if (pick.includes('ml') || pick.includes('moneyline')) {
+                    result.type = 'moneyline';
+                    // Find team name
+                    for (const [name, abbr] of Object.entries(teamMappings)) {
+                        if (pick.includes(name)) {
+                            result.team = abbr;
+                            break;
+                        }
+                    }
+                    return result;
+                }
+
+                // Check for spread (has +/- number)
+                const spreadMatch = pick.match(/([+-]?\d+\.?\d*)/);
+                if (spreadMatch) {
+                    result.type = 'spread';
+                    result.line = parseFloat(spreadMatch[1]);
+                    // Find team name before the spread
+                    for (const [name, abbr] of Object.entries(teamMappings)) {
+                        if (pick.includes(name)) {
+                            result.team = abbr;
+                            break;
+                        }
+                    }
+                    return result;
+                }
+
+                return result;
+            }
+
+            // Parse game date
+            function parseDate(dateStr) {
+                if (!dateStr) return null;
+                const parts = dateStr.trim().split(/[-/]/);
+                if (parts.length >= 2) {
+                    let month = parseInt(parts[0]) - 1;
+                    let day = parseInt(parts[1]);
+                    let year = parts[2] ? parseInt(parts[2]) : 2025;
+                    if (year < 100) year += 2000;
+                    return new Date(year, month, day);
+                }
+                return new Date(dateStr);
+            }
+
+            // Check if game has started/finished
+            function isGamePast(dateStr) {
+                const gameDate = parseDate(dateStr);
+                if (!gameDate || isNaN(gameDate)) return false;
+                const now = new Date();
+                // Add buffer hours for game to finish (4 hours after midnight)
+                gameDate.setHours(23, 59, 59);
+                return now > gameDate;
+            }
+
+            // Determine pick result based on score
+            function gradePick(pickInfo, homeScore, awayScore, homeTeam, awayTeam) {
+                if (homeScore === null || awayScore === null) return null;
+
+                const totalScore = homeScore + awayScore;
+
+                if (pickInfo.type === 'total') {
+                    if (pickInfo.overUnder === 'over') {
+                        if (totalScore > pickInfo.line) return 'W';
+                        if (totalScore < pickInfo.line) return 'L';
+                        return 'P'; // Push
+                    } else {
+                        if (totalScore < pickInfo.line) return 'W';
+                        if (totalScore > pickInfo.line) return 'L';
+                        return 'P';
+                    }
+                }
+
+                if (pickInfo.type === 'moneyline') {
+                    const pickedTeamIsHome = pickInfo.team === homeTeam;
+                    if (pickedTeamIsHome) {
+                        return homeScore > awayScore ? 'W' : 'L';
+                    } else {
+                        return awayScore > homeScore ? 'W' : 'L';
+                    }
+                }
+
+                if (pickInfo.type === 'spread') {
+                    const pickedTeamIsHome = pickInfo.team === homeTeam;
+                    let pickedTeamScore = pickedTeamIsHome ? homeScore : awayScore;
+                    let otherTeamScore = pickedTeamIsHome ? awayScore : homeScore;
+
+                    // Add spread to picked team's score
+                    const adjustedScore = pickedTeamScore + pickInfo.line;
+
+                    if (adjustedScore > otherTeamScore) return 'W';
+                    if (adjustedScore < otherTeamScore) return 'L';
+                    return 'P';
+                }
+
+                return null;
+            }
+
+            // Get status display HTML
+            function getStatusHTML(pick, result) {
+                if (result === 'W') {
+                    return '<span style="color: #39ff14; font-weight: bold;">✓ WIN</span>';
+                } else if (result === 'L') {
+                    return '<span style="color: #ff3131; font-weight: bold;">✗ LOSS</span>';
+                } else if (result === 'P') {
+                    return '<span style="color: #ffc107; font-weight: bold;">⟳ PUSH</span>';
+                } else if (pick.Result && pick.Result.trim().toUpperCase() !== 'PENDING') {
+                    // Use result from sheet if available
+                    const sheetResult = pick.Result.trim().toUpperCase();
+                    if (sheetResult === 'W' || sheetResult === 'WIN') {
+                        return '<span style="color: #39ff14; font-weight: bold;">✓ WIN</span>';
+                    } else if (sheetResult === 'L' || sheetResult === 'LOSS') {
+                        return '<span style="color: #ff3131; font-weight: bold;">✗ LOSS</span>';
+                    } else if (sheetResult === 'P' || sheetResult === 'PUSH') {
+                        return '<span style="color: #ffc107; font-weight: bold;">⟳ PUSH</span>';
+                    }
+                }
+
+                // Check if game is past - show "Grading..." or "Pending"
+                if (isGamePast(pick.Date)) {
+                    return '<span style="color: #00e0ff;">⏳ Grading...</span>';
+                }
+
+                return '<span class="status-pending">⏱️ Pending</span>';
+            }
+
+            // Fetch and process picks
             Papa.parse(googleSheetUrl, {
                 download: true,
                 header: true,
                 skipEmptyLines: 'greedy',
                 transformHeader: header => header.trim(),
-                complete: function(results) {
+                complete: async function(results) {
                     let tableHTML = '';
                     const upcomingPicks = results.data.filter(p => p.Pick && p.Pick.trim() !== '');
 
                     if (upcomingPicks.length === 0) {
                         tableHTML = '<tr><td colspan="5">No upcoming picks at this time. Check back soon!</td></tr>';
                     } else {
-                        upcomingPicks.forEach(pick => {
+                        for (const pick of upcomingPicks) {
+                            // Check if sheet already has a result
+                            let result = null;
+                            if (pick.Result && pick.Result.trim()) {
+                                const r = pick.Result.trim().toUpperCase();
+                                if (r === 'W' || r === 'WIN') result = 'W';
+                                else if (r === 'L' || r === 'LOSS') result = 'L';
+                                else if (r === 'P' || r === 'PUSH') result = 'P';
+                            }
+
+                            const statusHTML = getStatusHTML(pick, result);
+
                             tableHTML += `
                                 <tr>
                                     <td>${pick.Date || '--'}</td>
                                     <td>${pick.Game || '--'}</td>
                                     <td>${pick.Pick || '--'}</td>
                                     <td>${pick.Line || '--'}</td>
-                                    <td class="status-pending">${pick.Status || 'Pending'}</td>
+                                    <td>${statusHTML}</td>
                                 </tr>
                             `;
-                        });
+                        }
                     }
                     tableBody.innerHTML = tableHTML;
                 },
