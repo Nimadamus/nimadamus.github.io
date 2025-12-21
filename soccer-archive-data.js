@@ -1,5 +1,11 @@
-// Soccer Archive Data - Auto-updated by production script
+// Soccer Archive Data - Complete list of all Soccer pages
 const SOCCER_ARCHIVE = [
+    { date: "2025-12-21", page: "soccer-page28.html", title: "December 21, 2025" },
+    { date: "2025-12-20", page: "soccer-page27.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "soccer-page26.html", title: "December 20, 2025" },
+    { date: "2025-12-19", page: "soccer-page25.html", title: "December 19, 2025" },
+    { date: "2025-12-19", page: "soccer-page24.html", title: "December 19, 2025" },
+    { date: "2025-12-18", page: "soccer-page23.html", title: "December 18, 2025" },
     { date: "2025-12-16", page: "soccer.html", title: "Carabao Cup QF - Cardiff vs Chelsea" },
     { date: "2025-12-15", page: "soccer-page22.html", title: "December 15, 2025" },
     { date: "2025-12-14", page: "soccer-page21.html", title: "December 14, 2025" },

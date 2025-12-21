@@ -1,6 +1,7 @@
-// NCAAF Archive Data - Auto-updated by production script
+// NCAAF Archive Data - Complete list of all NCAAF pages
 const NCAAF_ARCHIVE = [
     { date: "2025-12-20", page: "ncaaf.html", title: "Bowl Season - Troy vs Jacksonville State" },
+    { date: "2025-12-19", page: "ncaaf-page4.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page11.html", title: "November 28, 2025" },
     { date: "2025-12-19", page: "ncaaf-page10.html", title: "November 28, 2025" },
     { date: "2025-12-19", page: "ncaaf-page2.html", title: "November 28, 2025" },
@@ -11,9 +12,9 @@ const NCAAF_ARCHIVE = [
     { date: "2025-12-19", page: "ncaaf-page13.html", title: "November 28, 2025" },
     { date: "2025-12-19", page: "ncaaf-page12.html", title: "November 28, 2025" },
     { date: "2025-12-15", page: "ncaaf-page9.html", title: "December 15, 2025" },
-    { date: "2025-12-10", page: "ncaaf-page14.html", title: "November 28, 2025" },
-    { date: "2025-12-08", page: "ncaaf-page15.html", title: "November 28, 2025" },
-    { date: "2025-12-06", page: "ncaaf-page16.html", title: "November 28, 2025" },
+    { date: "2025-12-10", page: "ncaaf-page14.html", title: "December 10, 2025" },
+    { date: "2025-12-08", page: "ncaaf-page15.html", title: "December 8, 2025" },
+    { date: "2025-12-06", page: "ncaaf-page16.html", title: "December 6, 2025" },
     { date: "2025-12-04", page: "ncaaf-page17.html", title: "December 4, 2025" },
     { date: "2025-11-01", page: "ncaaf-page3.html", title: "November 1, 2025" }
 ];
