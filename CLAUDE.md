@@ -6,6 +6,40 @@
 
 ---
 
+## ⛔⛔⛔ NEVER RESTORE PAGES TO PREVIOUS VERSIONS ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 20, 2025
+
+**DO NOT EVER restore, revert, or replace a page with a previous version unless the user EXPLICITLY asks you to.**
+
+This has caused repeated issues where pages with real analysis get replaced with older versions containing placeholder content.
+
+### THE RULE:
+```
+WHEN EDITING A PAGE:
+- Read the CURRENT version first
+- Make ONLY the specific changes needed
+- NEVER overwrite good content with old placeholder versions
+- If you see real analysis, KEEP IT
+- If you see placeholders, REPLACE them with new content
+```
+
+### WHAT KEEPS HAPPENING (AND MUST STOP):
+1. Page has real analysis (good)
+2. Claude reads an old cached/summarized version with placeholders
+3. Claude "fixes" the page by restoring the old placeholder version
+4. User sees placeholders again and gets frustrated
+
+### THE FIX:
+- Always read the LIVE file before editing
+- Never use content from conversation history/summaries
+- When fixing issues, ADD or MODIFY - don't wholesale replace
+- If unsure, ask the user before making major changes
+
+**ZERO TOLERANCE. This destroys the site.**
+
+---
+
 ## ⛔⛔⛔ HANDICAPPING HUB - PERMANENTLY LOCKED DESIGN ⛔⛔⛔
 
 **DO NOT CHANGE THE HANDICAPPING HUB DESIGN. EVER.**
