@@ -746,6 +746,33 @@
                     <p>Hold open legs. Wait for elite spots. Beat the book with discipline.</p>
                 </div>
             </div>
+
+            <!-- Staking Reference Table -->
+            <div style="margin-top: 40px;">
+                <h3 style="font-family: var(--font-primary); color: var(--neon-gold); font-size: 1.3rem; margin-bottom: 20px; text-align: center;">STAKING REFERENCE</h3>
+                <table style="width: 100%; max-width: 500px; margin: 0 auto; border-collapse: collapse; background: rgba(0,0,0,0.3); border-radius: 10px; overflow: hidden;">
+                    <thead>
+                        <tr style="background: rgba(0, 224, 255, 0.1);">
+                            <th style="padding: 15px; text-align: center; color: var(--neon-cyan); font-family: var(--font-primary); border-bottom: 1px solid var(--border-color);">PLAY SIZE</th>
+                            <th style="padding: 15px; text-align: center; color: var(--neon-cyan); font-family: var(--font-primary); border-bottom: 1px solid var(--border-color);">RISK</th>
+                            <th style="padding: 15px; text-align: center; color: var(--neon-cyan); font-family: var(--font-primary); border-bottom: 1px solid var(--border-color);">TO WIN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 12px; text-align: center; color: var(--text-color); border-bottom: 1px solid var(--border-color);">1 Unit</td>
+                            <td style="padding: 12px; text-align: center; color: var(--neon-gold); font-weight: 600;">2.38 units</td>
+                            <td style="padding: 12px; text-align: center; color: var(--win-color); font-weight: 600;">1.00 unit</td>
+                        </tr>
+                        <tr style="background: rgba(255, 215, 0, 0.1);">
+                            <td style="padding: 12px; text-align: center; color: var(--neon-gold); font-weight: 700; border-bottom: 1px solid var(--border-color);">2 Units ⭐</td>
+                            <td style="padding: 12px; text-align: center; color: var(--neon-gold); font-weight: 700;">4.76 units</td>
+                            <td style="padding: 12px; text-align: center; color: var(--win-color); font-weight: 700;">2.00 units</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="text-align: center; margin-top: 15px; color: var(--text-color); opacity: 0.7; font-size: 0.9rem;">Based on today's parlay odds of -238</p>
+            </div>
         </section>
 
         <!-- Stats Dashboard -->
@@ -803,6 +830,17 @@
     <script>
     // Parlay data structure - newest entries at the top
     const parlayData = [
+        {
+            date: 'December 21, 2025',
+            picks: [
+                { team: 'Notre Dame Fighting Irish ML -900', league: 'NCAAB', result: 'pending' },
+                { team: 'Detroit Lions ML -360', league: 'NFL', result: 'pending' }
+            ],
+            odds: '-238',
+            result: 'pending',
+            units: 2,
+            note: '2-UNIT PLAY. Cross-sport parlay combining NCAAB and NFL. Notre Dame should handle business at home as massive favorites, and the Lions are rolling into this one as heavy favorites. Risking 4.76 units to win 2.00 units.'
+        },
         {
             date: 'December 20, 2025',
             picks: [
@@ -1249,8 +1287,17 @@
                 </div>
             ` : '';
 
+            // Unit size badge for multi-unit plays
+            const unitSizeBadge = parlay.units && parlay.units > 1 ? `
+                <div class="meta-item">
+                    <span class="meta-label">Play Size</span>
+                    <span class="meta-value" style="color: var(--neon-gold); background: rgba(255,215,0,0.15); padding: 5px 12px; border-radius: 5px; border: 1px solid var(--neon-gold);">${parlay.units} UNITS</span>
+                </div>
+            ` : '';
+
             entry.innerHTML = `
                 <div class="parlay-date">${parlay.date}</div>
+                ${parlay.units && parlay.units > 1 ? '<div style="display: inline-block; background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; padding: 5px 15px; border-radius: 5px; font-family: var(--font-primary); font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">⭐ ' + parlay.units + '-UNIT PLAY</div>' : ''}
                 <div class="parlay-picks">
                     ${picksHTML}
                 </div>
