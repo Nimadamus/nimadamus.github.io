@@ -16,7 +16,6 @@ const NCAAF_GAMES = [
     { date: "2025-12-05", page: "ncaaf-page8.html", title: "Statistical Analysis" },
     { date: "2025-12-05", page: "ncaaf-page9.html", title: "Statistical Analysis" },
     { date: "2025-12-06", page: "ncaaf-page14.html", title: "Championship Weekend" },
-    { date: "2025-12-06", page: "ncaaf-page4.html", title: "Statistical Analysis" },
     { date: "2025-12-06", page: "ncaaf-page5.html", title: "Statistical Analysis" },
     { date: "2025-12-06", page: "ncaaf-page6.html", title: "Statistical Analysis" },
     { date: "2025-12-13", page: "ncaaf-page2.html", title: "Statistical Analysis" },
