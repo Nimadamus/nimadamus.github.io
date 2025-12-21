@@ -1,17 +1,21 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>NHL Results - December 19, 2025 | BetLegend</title>
-<meta content="NHL December 19, 2025 - 5-game slate results: Panthers stun Hurricanes with epic 4-3 comeback, Stars demolish Ducks 8-3, Canucks-Islanders rookie showdown." name="description"/>
-<link href="https://betlegendpicks.com/nhl-dec19.html" rel="canonical"/>
+<meta content="NHL December 20, 2025 - 13-game slate featuring Hurricanes at Lightning, McDavid's Oilers vs Wild, back-to-back champion Panthers host Blues." name="description"/>
+<link href="https://betlegendpicks.com/nhl.html" rel="canonical"/>
 <meta content="index, follow" name="robots"/>
-<meta content="NHL December 19 Results | BetLegend Picks" property="og:title"/>
-<meta content="Panthers complete historic comeback vs Hurricanes, Stars dominate Ducks, Buium vs Schaefer rookie battle." property="og:description"/>
+<meta content="NHL December 20 Preview | BetLegend Picks" property="og:title"/>
+<meta content="13-game NHL slate with Hurricanes at Lightning, McDavid's Oilers face Wild, Panthers host Blues." property="og:description"/>
 <meta content="website" property="og:type"/>
-<meta content="https://betlegendpicks.com/nhl-dec19.html" property="og:url"/>
+<meta content="https://betlegendpicks.com/nhl.html" property="og:url"/>
 <meta content="BetLegend Picks" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="NHL December 20 Preview | BetLegend Picks" name="twitter:title"/>
+<meta content="13-game slate: Hurricanes-Lightning, Oilers-Wild, back-to-back champion Panthers, Celebrini's surging Sharks." name="twitter:description"/>
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -49,6 +53,21 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .hero h1{font-family:var(--font-display);font-size:clamp(32px,5vw,48px);font-weight:700;margin-bottom:12px;color:#fff}
 .hero p{color:var(--text-secondary);font-size:17px;max-width:600px;margin:0 auto}
 .page-wrapper{max-width:900px;margin:0 auto;padding:0 24px 80px}
+.calendar-sidebar{position:fixed;left:20px;top:120px;width:280px;z-index:100}
+.calendar-box{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:24px;margin-bottom:20px}
+.calendar-title{font-family:var(--font-display);font-size:16px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;text-align:center}
+.year-display{font-family:var(--font-display);font-size:24px;color:var(--accent-gold);text-align:center;margin-bottom:12px}
+.month-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 18px;font-size:15px;font-family:var(--font-body);border-radius:8px;cursor:pointer;margin-bottom:18px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23b0b8c4' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.month-select:focus{outline:none;border-color:var(--accent-cyan)}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
+.calendar-weekdays span{text-align:center;font-size:12px;font-weight:600;color:var(--text-muted);padding:6px 0}
+.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-muted);background:rgba(0,0,0,0.2);border-radius:6px;cursor:default;position:relative}
+.cal-day.empty{background:transparent}
+.cal-day.has-content{background:rgba(253,80,0,0.15);color:var(--accent-orange);cursor:pointer;font-weight:600;border:1px solid rgba(253,80,0,0.3)}
+.cal-day.has-content:hover{background:rgba(253,80,0,0.3);transform:scale(1.1)}
+.cal-day.today{background:linear-gradient(135deg,rgba(255,215,0,0.3),rgba(0,229,255,0.3));color:var(--accent-gold);font-weight:700;border:1px solid var(--accent-gold)}
+.cal-day.today.has-content{border:2px solid var(--accent-gold)}
 .main-content{max-width:900px;margin:0 auto}
 .game-preview{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:32px;margin-bottom:32px;transition:all 0.3s}
 .game-preview:hover{background:var(--bg-card-hover);border-color:rgba(253,80,0,0.3);transform:translateY(-2px)}
@@ -57,14 +76,22 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .matchup-info{text-align:center}
 .matchup-info h2{font-family:var(--font-display);font-size:20px;font-weight:600;color:#fff;margin-bottom:6px}
 .game-time{font-size:13px;color:var(--text-muted)}
-.final-score{text-align:center;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.3);border-radius:10px;padding:12px 20px;margin-bottom:20px;font-size:16px;font-weight:700;color:var(--accent-cyan)}
+.betting-line{text-align:center;background:rgba(253,80,0,0.1);border:1px solid rgba(253,80,0,0.2);border-radius:10px;padding:12px 20px;margin-bottom:20px;font-size:14px;color:var(--accent-gold)}
 .preview-content{color:var(--text-secondary);font-size:16px;line-height:1.85}
 .preview-content p{margin-bottom:18px}
 .preview-content p:last-child{margin-bottom:0}
+.section-header{color:var(--accent-gold);font-weight:700;font-size:18px;margin-top:24px;margin-bottom:12px}
 footer{text-align:center;padding:50px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
 footer a{color:var(--accent-cyan);text-decoration:none}
-.archive-link{text-align:center;margin:40px 0;padding:20px;background:var(--bg-card);border-radius:12px}
-.archive-link a{color:var(--accent-cyan);text-decoration:none;font-weight:600}
+@media(max-width:1200px){
+  .calendar-sidebar{display:none}
+}
+.mobile-archive{display:none;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;padding:16px 20px;margin-bottom:32px}
+.mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
+@media(max-width:1200px){
+  .mobile-archive{display:block}
+}
 @media(max-width:768px){
   .hero{padding:130px 20px 40px}
   .game-preview{padding:24px}
@@ -83,19 +110,36 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <a href="blog-page10.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a></div></div>
+<div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a></div></div>
 <a href="news-page3.html">News</a>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page21.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 </div>
 </div>
 </nav>
 <header class="hero">
 <div class="hero-badge">5-Game Slate - Final Results</div>
 <h1>NHL December 19, 2025</h1>
-<p>Panthers complete historic comeback over Hurricanes, Stars demolish Ducks, Calder Trophy contenders Buium and Schaefer clash</p>
+<p>Hurricanes visit Lightning in Sunshine State finale, McDavid's Oilers face Wild, Panthers host Blues as back-to-back champs roll on</p>
 </header>
 <div class="page-wrapper">
-<main class="main-content">
-
-<article class="game-preview">
+<aside class="calendar-sidebar">
+<div class="calendar-box">
+<div class="calendar-title">NHL Archive</div>
+<div class="year-display" id="cal-year">2025</div>
+<select class="month-select" id="month-select"></select>
+<div class="calendar-weekdays">
+<span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+</div>
+<div class="calendar-days" id="calendar-days"></div>
+</div>
+</aside>
+<div class="mobile-archive" id="mobile-archive">
+<div class="mobile-archive-title">📅 NHL Archive</div>
+<select class="mobile-archive-select" id="mobile-archive-select">
+<option value="">Jump to date...</option>
+</select>
+</div>
+<main class="main-content"><article class="game-preview">
 <div class="game-header">
 <img alt="Carolina Hurricanes" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/car.png"/>
 <div class="matchup-info">
@@ -110,7 +154,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>With Sergei Bobrovsky pulled for the extra attacker with about 4:40 remaining, Sam Bennett scored quickly to cut the lead to 3-2. Then Sam Reinhart connected with just 41.8 seconds left in regulation to tie the game at 3-3, sending Amerant Bank Arena into a frenzy. Brad Marchand also scored in the comeback. Sebastian Aho scored two third-period goals for Carolina in the second consecutive game, but it wasn't enough. Jordan Staal also scored for the Hurricanes, whose five-game winning streak was snapped in heartbreaking fashion. Goaltender Brandon Bussi made 38 saves but suffered just his second loss in 13 starts this season.</p>
 </div>
 </article>
-
 <article class="game-preview">
 <div class="game-header">
 <img alt="Dallas Stars" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/dal.png"/>
@@ -126,7 +169,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>Jason Robertson stole the show with a hat trick, netting his 21st and 22nd goals of the season among his three tallies. Mikko Rantanen contributed multiple assists in another multi-point performance. The Stars' power play clicked at a high rate, and their depth scoring was on full display. Anaheim's young core showed flashes but couldn't contain Dallas's firepower. The eight-goal outburst continued the Stars' strong offensive run as they position themselves for another deep playoff push.</p>
 </div>
 </article>
-
 <article class="game-preview">
 <div class="game-header">
 <img alt="Vancouver Canucks" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/van.png"/>
@@ -142,7 +184,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>Zeev Buium was playing just his third game for Vancouver since being acquired from the Minnesota Wild in the blockbuster trade for Quinn Hughes on December 12. He had recorded a goal and an assist in his first two games with the Canucks and continued his strong play. Matthew Schaefer, the No. 1 pick in the 2025 NHL Draft, has been outstanding in his first season with 23 points (nine goals, 14 assists) in 34 games, but couldn't break through against Vancouver's stingy defense in this matchup of future stars.</p>
 </div>
 </article>
-
 <article class="game-preview">
 <div class="game-header">
 <img alt="Winnipeg Jets" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/wpg.png"/>
@@ -158,7 +199,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>Nathan MacKinnon, with 58 points (28 goals, 30 assists) in 33 games, was in action for the Avalanche, continuing his Hart Trophy-caliber season. Colorado's high-powered offense featuring MacKinnon, Mikko Rantanen, and Cale Makar faced a stiff test against Connor Hellebuyck and the Jets' stingy defense. Both teams entered with playoff positioning implications, making every point critical as the season approaches the midway point.</p>
 </div>
 </article>
-
 <article class="game-preview">
 <div class="game-header">
 <img alt="New Jersey Devils" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/njd.png"/>
@@ -174,14 +214,113 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>The Devils continued their push for playoff positioning in the competitive Metropolitan Division, led by Jack Hughes and their talented young core. Utah has exceeded expectations in their first season, drawing enthusiastic crowds at the Delta Center and establishing themselves as a competitive franchise. The matchup featured two teams with playoff aspirations and young talent looking to make a statement.</p>
 </div>
 </article>
-
-<div class="archive-link">
-<a href="nhl.html">← Back to Latest NHL Coverage</a>
-</div>
 </main>
 </div>
 <footer>
-<p>&copy; 2025 BetLegend Picks | <a href="index.html">Home</a> | <a href="handicapping-hub.html">Handicapping Hub</a></p>
+<p>© 2025 BetLegend Picks | <a href="index.html">Home</a> | <a href="handicapping-hub.html">Handicapping Hub</a></p>
 </footer>
+<script>
+// NHL Archive Data - Complete
+const ARCHIVE_DATA = [
+    { date: "2025-12-20", page: "nhl.html", title: "13-Game Slate: Hurricanes-Lightning, Oilers-Wild" },
+    { date: "2025-12-19", page: "nhl-dec19.html", title: "5-Game Slate: Panthers epic comeback, Stars demolish Ducks 8-3" },
+    { date: "2025-11-24", page: "nhl-page3.html", title: "November 24" },
+    { date: "2025-11-21", page: "nhl-page5.html", title: "November 21" },
+    { date: "2025-11-18", page: "nhl-page6.html", title: "November 18" },
+    { date: "2025-11-11", page: "nhl-page9.html", title: "November 11" },
+    { date: "2025-10-15", page: "nhl-page16.html", title: "October 15" }
+];
+
+// Build date map
+const dateMap = {};
+ARCHIVE_DATA.forEach(item => { dateMap[item.date] = item; });
+
+// Get available months
+const months = new Set();
+ARCHIVE_DATA.forEach(item => {
+    const [y, m] = item.date.split('-');
+    months.add(`${y}-${m}`);
+});
+
+// Add current month
+const today = new Date();
+const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+months.add(currentMonth);
+
+// Sort months descending
+const sortedMonths = Array.from(months).sort().reverse();
+
+// Month names
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Populate month dropdown
+const monthSelect = document.getElementById('month-select');
+sortedMonths.forEach(m => {
+    const [year, month] = m.split('-');
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = `${monthNames[parseInt(month) - 1]} ${year}`;
+    if (m === currentMonth) opt.selected = true;
+    monthSelect.appendChild(opt);
+});
+
+// Render calendar
+function renderCalendar(yearMonth) {
+    const [year, month] = yearMonth.split('-').map(Number);
+    document.getElementById('cal-year').textContent = year;
+
+    const firstDay = new Date(year, month - 1, 1).getDay();
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const todayStr = today.toISOString().split('T')[0];
+
+    const container = document.getElementById('calendar-days');
+    container.innerHTML = '';
+
+    // Empty cells before first day
+    for (let i = 0; i < firstDay; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day empty';
+        container.appendChild(cell);
+    }
+
+    // Day cells
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const hasData = dateMap[dateStr];
+        let classes = 'cal-day';
+        if (dateStr === todayStr) classes += ' today';
+        if (hasData) classes += ' has-content';
+
+        if (hasData) {
+            container.innerHTML += `<div class="${classes}" title="${hasData.title}" onclick="window.location.href='${hasData.page}'">${d}</div>`;
+        } else {
+            container.innerHTML += `<div class="${classes}">${d}</div>`;
+        }
+    }
+}
+
+// Initial render
+renderCalendar(currentMonth);
+
+// Month change handler
+monthSelect.addEventListener('change', (e) => {
+    renderCalendar(e.target.value);
+});
+
+// Mobile archive dropdown
+const mobileSelect = document.getElementById('mobile-archive-select');
+ARCHIVE_DATA.forEach(item => {
+    const opt = document.createElement('option');
+    opt.value = item.page;
+    const dateObj = new Date(item.date + 'T12:00:00');
+    const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    opt.textContent = `${dateLabel} - ${item.title}`;
+    mobileSelect.appendChild(opt);
+});
+mobileSelect.addEventListener('change', (e) => {
+    if (e.target.value) window.location.href = e.target.value;
+});
+</script>
 </body>
 </html>
