@@ -82,8 +82,12 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .section-header{color:var(--accent-gold);font-weight:700;font-size:18px;margin-top:24px;margin-bottom:12px}
 footer{text-align:center;padding:50px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
 footer a{color:var(--accent-cyan);text-decoration:none}
+.mobile-archive{display:none;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;padding:16px 20px;margin-bottom:32px}
+.mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
 @media(max-width:1200px){
   .calendar-sidebar{display:none}
+  .mobile-archive{display:block}
 }
 @media(max-width:768px){
   .hero{padding:130px 20px 40px}
@@ -120,10 +124,16 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="calendar-title">NCAAF Archive</div>
 <div class="year-display" id="cal-year">2025</div>
 <select class="month-select" id="month-select"></select>
-<div class="calendar-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+<div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
 <div class="calendar-days" id="calendar-days"></div>
 </div>
 </aside>
+<div class="mobile-archive" id="mobile-archive">
+<div class="mobile-archive-title">NCAAF Archive</div>
+<select class="mobile-archive-select" id="mobile-archive-select">
+<option value="">Jump to date...</option>
+</select>
+</div>
 <main class="main-content">
 
 <article class="game-preview">
