@@ -52,6 +52,32 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .archive-link{text-align:center;margin:40px 0;padding:20px;color:var(--text-muted)}
 .archive-link a{color:var(--accent-cyan);text-decoration:none;padding:8px 16px;border:1px solid var(--border-subtle);border-radius:6px;margin:0 8px}
 @media(max-width:768px){.hero{padding:130px 20px 40px}.game-preview{padding:24px}.team-logo{width:44px;height:44px}.matchup-info h2{font-size:17px}}
+
+.page-wrapper{max-width:900px;margin:0 auto;padding:0 24px 80px}
+.calendar-sidebar{position:fixed;left:20px;top:120px;width:280px;z-index:100}
+.calendar-box{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:24px;margin-bottom:20px}
+.calendar-title{font-family:var(--font-display);font-size:16px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;text-align:center}
+.year-display{font-family:var(--font-display);font-size:24px;color:var(--accent-gold);text-align:center;margin-bottom:12px}
+.month-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 18px;font-size:15px;font-family:var(--font-body);border-radius:8px;cursor:pointer;margin-bottom:18px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23b0b8c4' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.month-select:focus{outline:none;border-color:var(--accent-cyan)}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
+.calendar-weekdays span{text-align:center;font-size:12px;font-weight:600;color:var(--text-muted);padding:6px 0}
+.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-muted);background:rgba(0,0,0,0.2);border-radius:6px;cursor:default;position:relative}
+.cal-day.empty{background:transparent}
+.cal-day.has-content{background:rgba(253,80,0,0.15);color:var(--accent-orange);cursor:pointer;font-weight:600;border:1px solid rgba(253,80,0,0.3)}
+.cal-day.has-content:hover{background:rgba(253,80,0,0.3);transform:scale(1.1)}
+.cal-day.today{background:linear-gradient(135deg,rgba(255,215,0,0.3),rgba(0,229,255,0.3));color:var(--accent-gold);font-weight:700;border:1px solid var(--accent-gold)}
+.cal-day.today.has-content{border:2px solid var(--accent-gold)}
+.main-content{max-width:900px;margin:0 auto}
+.mobile-archive{display:none;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;padding:16px 20px;margin-bottom:32px}
+.mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
+@media(max-width:1200px){
+  .calendar-sidebar{display:none}
+  .mobile-archive{display:block}
+}
+
 </style>
 </head>
 <body>
@@ -72,13 +98,25 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <h1>Tonight's Soccer</h1>
 <p>League One leaders Cardiff City host Premier League giants Chelsea in a David vs Goliath Carabao Cup Quarter-Final</p>
 </header>
-<div class="date-section">
-<h2>December 16, 2025</h2>
+<div class="page-wrapper">
+<aside class="calendar-sidebar">
+<div class="calendar-box">
+<div class="calendar-title">Soccer Archive</div>
+<div class="year-display" id="cal-year">2025</div>
+<select class="month-select" id="month-select"></select>
+<div class="calendar-weekdays">
+<span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
 </div>
-<div class="archive-cal">
-<a class="cal-btn" href="soccer-calendar.html">View Full Archive Calendar</a>
+<div class="calendar-days" id="calendar-days"></div>
 </div>
-<main>
+</aside>
+<div class="mobile-archive" id="mobile-archive">
+<div class="mobile-archive-title">📅 Soccer Archive</div>
+<select class="mobile-archive-select" id="mobile-archive-select">
+<option value="">Jump to date...</option>
+</select>
+</div>
+<main class="main-content">
 <article class="game-preview">
 <div class="game-header">
 <img alt="Chelsea" class="team-logo" src=""/>
@@ -464,8 +502,132 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <!-- Upcoming QF -->
 <div class="archive-link"><span>Page 27 of 27</span> <a href="soccer-page2.html">Older →</a></div>
 </main>
+</div>
 <footer>
 <p>© 2025 BetLegend Picks | <a href="index.html">Home</a> | <a href="handicapping-hub.html">Handicapping Hub</a></p>
 </footer>
+<script>
+// Archive Data
+const ARCHIVE_DATA = [
+    { date: "2025-12-20", page: "soccer.html", title: "Premier League, La Liga, Bundesliga, Serie A" },
+    { date: "2025-12-16", page: "soccer-page2.html", title: "Carabao Cup Quarter-Final" },
+    { date: "2025-12-14", page: "soccer-page3.html", title: "Premier League Saturday" },
+    { date: "2025-12-12", page: "soccer-page4.html", title: "December 12" },
+    { date: "2025-12-10", page: "soccer-page5.html", title: "December 10" },
+    { date: "2025-12-08", page: "soccer-page6.html", title: "December 8" },
+    { date: "2025-12-06", page: "soccer-page7.html", title: "December 6" },
+    { date: "2025-12-04", page: "soccer-page8.html", title: "December 4" },
+    { date: "2025-12-02", page: "soccer-page9.html", title: "December 2" },
+    { date: "2025-11-30", page: "soccer-page10.html", title: "November 30" },
+    { date: "2025-11-28", page: "soccer-page11.html", title: "November 28" },
+    { date: "2025-11-26", page: "soccer-page12.html", title: "November 26" },
+    { date: "2025-11-24", page: "soccer-page13.html", title: "November 24" },
+    { date: "2025-11-22", page: "soccer-page14.html", title: "November 22" },
+    { date: "2025-11-20", page: "soccer-page15.html", title: "November 20" },
+    { date: "2025-11-18", page: "soccer-page16.html", title: "November 18" },
+    { date: "2025-11-16", page: "soccer-page17.html", title: "November 16" },
+    { date: "2025-11-14", page: "soccer-page18.html", title: "November 14" },
+    { date: "2025-11-12", page: "soccer-page19.html", title: "November 12" },
+    { date: "2025-11-10", page: "soccer-page20.html", title: "November 10" },
+    { date: "2025-11-08", page: "soccer-page21.html", title: "November 8" },
+    { date: "2025-11-06", page: "soccer-page22.html", title: "November 6" },
+    { date: "2025-11-04", page: "soccer-page23.html", title: "November 4" },
+    { date: "2025-11-02", page: "soccer-page24.html", title: "November 2" },
+    { date: "2025-10-31", page: "soccer-page25.html", title: "October 31" },
+    { date: "2025-10-29", page: "soccer-page26.html", title: "October 29" },
+    { date: "2025-10-27", page: "soccer-page27.html", title: "October 27" }
+];
+
+// Build date map
+const dateMap = {};
+ARCHIVE_DATA.forEach(item => { dateMap[item.date] = item; });
+
+// Get available months
+const months = new Set();
+ARCHIVE_DATA.forEach(item => {
+    const [y, m] = item.date.split('-');
+    months.add(`${y}-${m}`);
+});
+
+// Add current month
+const today = new Date();
+const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+months.add(currentMonth);
+
+// Sort months descending
+const sortedMonths = Array.from(months).sort().reverse();
+
+// Month names
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Populate month dropdown
+const monthSelect = document.getElementById('month-select');
+sortedMonths.forEach(m => {
+    const [year, month] = m.split('-');
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = `${monthNames[parseInt(month) - 1]} ${year}`;
+    if (m === currentMonth) opt.selected = true;
+    monthSelect.appendChild(opt);
+});
+
+// Render calendar
+function renderCalendar(yearMonth) {
+    const [year, month] = yearMonth.split('-').map(Number);
+    document.getElementById('cal-year').textContent = year;
+
+    const firstDay = new Date(year, month - 1, 1).getDay();
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const todayStr = today.toISOString().split('T')[0];
+
+    const container = document.getElementById('calendar-days');
+    container.innerHTML = '';
+
+    // Empty cells before first day
+    for (let i = 0; i < firstDay; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day empty';
+        container.appendChild(cell);
+    }
+
+    // Day cells
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const hasData = dateMap[dateStr];
+        let classes = 'cal-day';
+        if (dateStr === todayStr) classes += ' today';
+        if (hasData) classes += ' has-content';
+
+        if (hasData) {
+            container.innerHTML += `<div class="${classes}" title="${hasData.title}" onclick="window.location.href='${hasData.page}'">${d}</div>`;
+        } else {
+            container.innerHTML += `<div class="${classes}">${d}</div>`;
+        }
+    }
+}
+
+// Initial render
+renderCalendar(currentMonth);
+
+// Month change handler
+monthSelect.addEventListener('change', (e) => {
+    renderCalendar(e.target.value);
+});
+
+// Mobile archive dropdown
+const mobileSelect = document.getElementById('mobile-archive-select');
+ARCHIVE_DATA.forEach(item => {
+    const opt = document.createElement('option');
+    opt.value = item.page;
+    const dateObj = new Date(item.date + 'T12:00:00');
+    const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    opt.textContent = `${dateLabel} - ${item.title}`;
+    mobileSelect.appendChild(opt);
+});
+mobileSelect.addEventListener('change', (e) => {
+    if (e.target.value) window.location.href = e.target.value;
+});
+</script>
 </body>
 </html>

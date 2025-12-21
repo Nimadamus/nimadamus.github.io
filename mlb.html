@@ -162,6 +162,32 @@ footer a:hover{color:var(--accent-gold)}
   .game-title{font-size:18px}
   .stats-grid{grid-template-columns:1fr}
 }
+
+.page-wrapper{max-width:900px;margin:0 auto;padding:0 24px 80px}
+.calendar-sidebar{position:fixed;left:20px;top:120px;width:280px;z-index:100}
+.calendar-box{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:24px;margin-bottom:20px}
+.calendar-title{font-family:var(--font-display);font-size:16px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;text-align:center}
+.year-display{font-family:var(--font-display);font-size:24px;color:var(--accent-gold);text-align:center;margin-bottom:12px}
+.month-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 18px;font-size:15px;font-family:var(--font-body);border-radius:8px;cursor:pointer;margin-bottom:18px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23b0b8c4' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.month-select:focus{outline:none;border-color:var(--accent-cyan)}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
+.calendar-weekdays span{text-align:center;font-size:12px;font-weight:600;color:var(--text-muted);padding:6px 0}
+.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-muted);background:rgba(0,0,0,0.2);border-radius:6px;cursor:default;position:relative}
+.cal-day.empty{background:transparent}
+.cal-day.has-content{background:rgba(253,80,0,0.15);color:var(--accent-orange);cursor:pointer;font-weight:600;border:1px solid rgba(253,80,0,0.3)}
+.cal-day.has-content:hover{background:rgba(253,80,0,0.3);transform:scale(1.1)}
+.cal-day.today{background:linear-gradient(135deg,rgba(255,215,0,0.3),rgba(0,229,255,0.3));color:var(--accent-gold);font-weight:700;border:1px solid var(--accent-gold)}
+.cal-day.today.has-content{border:2px solid var(--accent-gold)}
+.main-content{max-width:900px;margin:0 auto}
+.mobile-archive{display:none;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;padding:16px 20px;margin-bottom:32px}
+.mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
+@media(max-width:1200px){
+  .calendar-sidebar{display:none}
+  .mobile-archive{display:block}
+}
+
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
 <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-QS8L5TDNLY');</script>
@@ -190,12 +216,27 @@ footer a:hover{color:var(--accent-gold)}
 <h1>MLB Picks & <span>Analysis</span></h1>
 <p>Complete Baseball Analytics Dashboard</p>
 </header>
+<div class="page-wrapper">
+<aside class="calendar-sidebar">
+<div class="calendar-box">
+<div class="calendar-title">MLB Archive</div>
+<div class="year-display" id="cal-year">2025</div>
+<select class="month-select" id="month-select"></select>
+<div class="calendar-weekdays">
+<span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+</div>
+<div class="calendar-days" id="calendar-days"></div>
+</div>
+</aside>
+<div class="mobile-archive" id="mobile-archive">
+<div class="mobile-archive-title">📅 MLB Archive</div>
+<select class="mobile-archive-select" id="mobile-archive-select">
+<option value="">Jump to date...</option>
+</select>
+</div>
+<main class="main-content">
 
-<div class="current-date"><h2>August 2025 Archive</h2></div>
-
-<main>
-
-<article class="game-card">
+<article class="game-preview">
 <h3 class="game-title">Toronto Blue Jays @ Pittsburgh Pirates</h3>
 <div class="game-meta">
 <span>3:40 PM ET</span>
@@ -221,7 +262,7 @@ footer a:hover{color:var(--accent-gold)}
 </div></div>
 </article>
 
-<article class="game-card">
+<article class="game-preview">
 <h3 class="game-title">St. Louis Cardinals @ Miami Marlins</h3>
 <div class="game-meta">
 <span>3:40 PM ET</span>
@@ -247,7 +288,7 @@ footer a:hover{color:var(--accent-gold)}
 </div></div>
 </article>
 
-<article class="game-card">
+<article class="game-preview">
 <h3 class="game-title">Seattle Mariners @ Philadelphia Phillies</h3>
 <div class="game-meta">
 <span>3:45 PM ET</span>
@@ -289,7 +330,7 @@ footer a:hover{color:var(--accent-gold)}
 </div></div>
 </article>
 
-<article class="game-card">
+<article class="game-preview">
 <h3 class="game-title">Chicago White Sox @ Atlanta Braves</h3>
 <div class="game-meta">
 <span>4:15 PM ET</span>
@@ -331,7 +372,7 @@ footer a:hover{color:var(--accent-gold)}
 </div></div>
 </article>
 
-<article class="game-card">
+<article class="game-preview">
 <h3 class="game-title">Oakland Athletics @ Minnesota Twins</h3>
 <div class="game-meta">
 <span>4:40 PM ET</span>
@@ -358,7 +399,7 @@ footer a:hover{color:var(--accent-gold)}
 </article>
 
 </main>
-
+</div>
 <nav class="pagination">
 <span class="disabled">&#8592; Newer</span>
 <span class="current">Page 2 of 2</span>
@@ -373,5 +414,103 @@ footer a:hover{color:var(--accent-gold)}
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script async data-id="101485054" src="//static.getclicky.com/js"></script>
+<script>
+// Archive Data
+const ARCHIVE_DATA = [
+    { date: "2025-08-25", page: "mlb.html", title: "August 2025 Games" },
+    { date: "2025-08-20", page: "mlb-page2.html", title: "August 20 Games" }
+];
+
+// Build date map
+const dateMap = {};
+ARCHIVE_DATA.forEach(item => { dateMap[item.date] = item; });
+
+// Get available months
+const months = new Set();
+ARCHIVE_DATA.forEach(item => {
+    const [y, m] = item.date.split('-');
+    months.add(`${y}-${m}`);
+});
+
+// Add current month
+const today = new Date();
+const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+months.add(currentMonth);
+
+// Sort months descending
+const sortedMonths = Array.from(months).sort().reverse();
+
+// Month names
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Populate month dropdown
+const monthSelect = document.getElementById('month-select');
+sortedMonths.forEach(m => {
+    const [year, month] = m.split('-');
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = `${monthNames[parseInt(month) - 1]} ${year}`;
+    if (m === currentMonth) opt.selected = true;
+    monthSelect.appendChild(opt);
+});
+
+// Render calendar
+function renderCalendar(yearMonth) {
+    const [year, month] = yearMonth.split('-').map(Number);
+    document.getElementById('cal-year').textContent = year;
+
+    const firstDay = new Date(year, month - 1, 1).getDay();
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const todayStr = today.toISOString().split('T')[0];
+
+    const container = document.getElementById('calendar-days');
+    container.innerHTML = '';
+
+    // Empty cells before first day
+    for (let i = 0; i < firstDay; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day empty';
+        container.appendChild(cell);
+    }
+
+    // Day cells
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const hasData = dateMap[dateStr];
+        let classes = 'cal-day';
+        if (dateStr === todayStr) classes += ' today';
+        if (hasData) classes += ' has-content';
+
+        if (hasData) {
+            container.innerHTML += `<div class="${classes}" title="${hasData.title}" onclick="window.location.href='${hasData.page}'">${d}</div>`;
+        } else {
+            container.innerHTML += `<div class="${classes}">${d}</div>`;
+        }
+    }
+}
+
+// Initial render
+renderCalendar(currentMonth);
+
+// Month change handler
+monthSelect.addEventListener('change', (e) => {
+    renderCalendar(e.target.value);
+});
+
+// Mobile archive dropdown
+const mobileSelect = document.getElementById('mobile-archive-select');
+ARCHIVE_DATA.forEach(item => {
+    const opt = document.createElement('option');
+    opt.value = item.page;
+    const dateObj = new Date(item.date + 'T12:00:00');
+    const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    opt.textContent = `${dateLabel} - ${item.title}`;
+    mobileSelect.appendChild(opt);
+});
+mobileSelect.addEventListener('change', (e) => {
+    if (e.target.value) window.location.href = e.target.value;
+});
+</script>
 </body>
 </html>
