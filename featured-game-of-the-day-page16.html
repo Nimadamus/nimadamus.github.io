@@ -731,6 +731,8 @@
         .calendar-sidebar { display: none; }
     }
 
+.cal-day.current-page{background:linear-gradient(135deg,#ffd700,#ffb300);color:#000;font-weight:700;border:2px solid #ffd700;box-shadow:0 0 8px rgba(255,215,0,0.6)}
+.cal-day.current-page:hover{transform:scale(1.15)}
 </style>
 </head>
 <body>
@@ -1070,6 +1072,15 @@ const ARCHIVE_DATA = [
 const dateMap = {};
 ARCHIVE_DATA.forEach(item => { dateMap[item.date] = item; });
 
+// Get current page filename and find its date
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+let currentPageDate = null;
+ARCHIVE_DATA.forEach(item => {
+    if (item.page === currentPage) {
+        currentPageDate = item.date;
+    }
+});
+
 // Get available months
 const months = new Set();
 ARCHIVE_DATA.forEach(item => {
@@ -1113,9 +1124,7 @@ function renderCalendar(yearMonth) {
 
     const firstDay = new Date(year, month - 1, 1).getDay();
     const daysInMonth = new Date(year, month, 0).getDate();
-    const todayStr = today.toISOString().split('T')[0];
-
-    const container = document.getElementById('calendar-days');
+        const container = document.getElementById('calendar-days');
     if (!container) return;
     container.innerHTML = '';
 
@@ -1133,8 +1142,8 @@ function renderCalendar(yearMonth) {
         cell.className = 'cal-day';
         cell.textContent = d;
 
-        if (dateStr === todayStr) {
-            cell.classList.add('today');
+        if (dateStr === currentPageDate) {
+            cell.classList.add('current-page');
         }
 
         if (dateMap[dateStr]) {

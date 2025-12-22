@@ -25,8 +25,10 @@ CLAUDE_MODEL = "claude-sonnet-4-20250514"
 # PATHS
 # =============================================================================
 
-# Base repository path
-REPO_PATH = r"C:\Users\Nima\nimadamus.github.io"
+# Base repository path - dynamically determine based on script location
+# This works on both Windows (local) and Linux (GitHub Actions)
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+REPO_PATH = os.path.dirname(os.path.dirname(_script_dir))  # Go up from scripts/auto_content to repo root
 
 # Scripts path
 SCRIPTS_PATH = os.path.join(REPO_PATH, "scripts", "auto_content")

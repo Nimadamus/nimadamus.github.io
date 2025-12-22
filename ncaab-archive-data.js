@@ -1,14 +1,15 @@
-// NCAAB Archive Data - Complete list of all NCAAB pages
+// NCAAB Archive Data - Auto-updated by production script
 const NCAAB_ARCHIVE = [
-    { date: "2025-12-21", page: "ncaab-page17.html", title: "December 21, 2025" },
-    { date: "2025-12-20", page: "ncaab.html", title: "11 Ranked Teams in Action" },
-    { date: "2025-12-20", page: "ncaab-page16.html", title: "December 20, 2025" },
-    { date: "2025-12-20", page: "ncaab-page9.html", title: "December 20, 2025" },
-    { date: "2025-12-20", page: "ncaab-page8.html", title: "December 20, 2025" },
+    { date: "2025-12-21", page: "ncaab.html", title: "11 Ranked Teams in Action" },
     { date: "2025-12-20", page: "ncaab-page11.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "ncaab-page16.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "ncaab-page17.html", title: "December 21, 2025" },
+    { date: "2025-12-20", page: "ncaab-page18.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page4.html", title: "November 26, 2025" },
-    { date: "2025-12-20", page: "ncaab-page7.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page5.html", title: "November 28, 2025 - Feast Week" },
+    { date: "2025-12-20", page: "ncaab-page7.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "ncaab-page8.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "ncaab-page9.html", title: "December 20, 2025" },
     { date: "2025-12-19", page: "ncaab-page10.html", title: "December 19, 2025" },
     { date: "2025-12-15", page: "ncaab-page2.html", title: "December 15, 2025" },
     { date: "2025-12-15", page: "ncaab-page6.html", title: "December 15, 2025" },
