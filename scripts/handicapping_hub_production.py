@@ -2509,13 +2509,10 @@ def fetch_all_games() -> Dict[str, List]:
                 if len(competitors) < 2:
                     continue
 
-                # VALIDATION: Skip completed/final games - only show scheduled/in-progress
+                # NOTE: We no longer skip finished games at generation time.
+                # The client-side JavaScript handles removal of finished games dynamically.
+                # This ensures all scheduled games are visible when the page first loads.
                 game_status = event.get('status', {}).get('type', {}).get('name', '')
-                if game_status in ['STATUS_FINAL', 'STATUS_POSTPONED', 'STATUS_CANCELED']:
-                    away_team = competitors[0].get('team', {})
-                    home_team = competitors[1].get('team', {})
-                    print(f"  [SKIP] Game is {game_status}: {away_team.get('abbreviation')} vs {home_team.get('abbreviation')}")
-                    continue
 
                 # NCAAB: Only show important games (ranked teams, major programs, or has betting odds)
                 if sport == 'NCAAB':
