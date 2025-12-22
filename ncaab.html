@@ -48,6 +48,8 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .dropdown-content a{color:var(--accent-cyan);padding:12px 18px;display:block;text-decoration:none;font-size:14px}
 .dropdown-content a:hover{background:rgba(0,229,255,0.1);color:#fff}
 .dropdown:hover .dropdown-content{display:block}
+.dropdown.active .dropdown-content{display:block}
+.dropdown.active .dropbtn{color:var(--accent-gold)}
 .hero{padding:140px 24px 50px;text-align:center;background:linear-gradient(180deg,rgba(253,80,0,0.08) 0%,transparent 100%)}
 .hero-badge{display:inline-block;background:rgba(253,80,0,0.15);border:1px solid rgba(253,80,0,0.3);padding:8px 20px;border-radius:50px;font-size:13px;font-weight:600;color:var(--accent-orange);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
 .hero h1{font-family:var(--font-display);font-size:clamp(32px,5vw,48px);font-weight:700;margin-bottom:12px;color:#fff}
@@ -451,6 +453,35 @@ ARCHIVE_DATA.forEach(item => {
 mobileSelect.addEventListener('change', (e) => {
     if (e.target.value) window.location.href = e.target.value;
 });
+
+// Dropdown click/touch handler for mobile
+(function() {
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dropdown) {
+        var btn = dropdown.querySelector('.dropbtn');
+        if (!btn) return;
+        function toggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdowns.forEach(function(d) {
+                if (d !== dropdown) d.classList.remove('active');
+            });
+            dropdown.classList.toggle('active');
+        }
+        btn.addEventListener('touchend', toggle, {passive: false});
+        btn.addEventListener('click', toggle);
+    });
+    document.addEventListener('touchend', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+})();
 </script>
 </body>
 </html>
