@@ -964,13 +964,20 @@ const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padS
 months.add(currentMonth);
 const sortedMonths = Array.from(months).sort().reverse();
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Determine which month to display - prefer the current page's month if available
+let displayMonth = currentMonth;
+if (currentPageDate) {
+    const [pageYear, pageMonth] = currentPageDate.split('-');
+    displayMonth = `${pageYear}-${pageMonth}`;
+}
 const monthSelect = document.getElementById('month-select');
 sortedMonths.forEach(m => {
     const [year, month] = m.split('-');
     const opt = document.createElement('option');
     opt.value = m;
     opt.textContent = `${monthNames[parseInt(month) - 1]} ${year}`;
-    if (m === currentMonth) opt.selected = true;
+    if (m === displayMonth) opt.selected = true;
     monthSelect.appendChild(opt);
 });
 function renderCalendar(yearMonth) {
@@ -999,7 +1006,7 @@ function renderCalendar(yearMonth) {
         container.appendChild(cell);
     }
 }
-renderCalendar(currentMonth);
+renderCalendar(displayMonth);
 monthSelect.addEventListener('change', (e) => { renderCalendar(e.target.value); });
 </script>
 
