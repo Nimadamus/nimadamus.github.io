@@ -6,6 +6,25 @@
 
 ---
 
+## ⛔⛔⛔ SPORTS PAGES = PREGAME ANALYSIS ONLY ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 21, 2025
+
+**ALL sports page articles are PREGAME ANALYSIS. NEVER post-game recaps.**
+
+### THE RULE:
+```
+- Write PREGAME previews and analysis for upcoming games
+- NEVER write post-game recaps or results
+- Even if a game has already been played, write it as a preview
+- Focus on: matchup analysis, betting lines, key players, storylines
+- DO NOT include final scores or game outcomes
+```
+
+**Sports pages are for handicapping and betting analysis BEFORE games happen.**
+
+---
+
 ## ⛔⛔⛔ NEVER RESTORE PAGES TO PREVIOUS VERSIONS ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - DECEMBER 20, 2025
