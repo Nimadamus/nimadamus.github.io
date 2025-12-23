@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 BETLEGEND DAILY COVERS CONSENSUS UPDATE - GitHub Actions Version
-================================================================
 Runs on GitHub's servers to update the Covers consensus page daily.
 
 WHAT THIS SCRIPT DOES:

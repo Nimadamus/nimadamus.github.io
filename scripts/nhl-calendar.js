@@ -3,27 +3,27 @@
 // Last updated: December 22, 2025
 
 const ARCHIVE_DATA = [
-{ date: "2025-12-23", page: "nhl.html", title: "NHL Analysis - December 22, 2025" },
-    { date: "2025-12-23", page: "nhl-page21.html", title: "NHL Analysis Archive - Page 21" },
-    { date: "2025-12-22", page: "nhl-page18.html", title: "NHL Analysis Archive - Page 18" },
-    { date: "2025-12-22", page: "nhl-page19.html", title: "NHL Analysis Archive - Page 19" },
-    { date: "2025-12-22", page: "nhl-page20.html", title: "NHL Analysis Archive - Page 20" },
-    { date: "2025-12-21", page: "nhl-page17.html", title: "NHL Analysis Archive - Page 17" },
-    { date: "2025-12-20", page: "nhl-page3.html", title: "NHL Betting Archive - Page 15" },
-    { date: "2025-12-19", page: "nhl-page9.html", title: "NHL Betting Archive - Page 9" },
-    { date: "2025-12-19", page: "nhl-page11.html", title: "NHL Analysis Archive - Page 11" },
-    { date: "2025-12-18", page: "nhl-page6.html", title: "NHL Betting Archive - Page 12" },
-    { date: "2025-12-18", page: "nhl-page8.html", title: "NHL Analysis Archive - Page 8" },
-    { date: "2025-12-17", page: "nhl-page5.html", title: "NHL Betting Archive - Page 13" },
-    { date: "2025-12-17", page: "nhl-page7.html", title: "NHL Analysis Archive - Page 7" },
-    { date: "2025-12-16", page: "nhl-page4.html", title: "NHL Analysis Archive - Page 4" },
-    { date: "2025-12-15", page: "nhl-page2.html", title: "NHL Analysis - December 15, 2025" },
-    { date: "2025-12-15", page: "nhl-page10.html", title: "NHL Analysis - December 15, 2025" },
-    { date: "2025-12-14", page: "nhl-page12.html", title: "NHL Analysis Archive - Page 12" },
-    { date: "2025-12-13", page: "nhl-page16.html", title: "NHL December 13, 2025" },
-    { date: "2025-12-12", page: "nhl-page15.html", title: "NHL December 12, 2025" },
-    { date: "2025-12-11", page: "nhl-page14.html", title: "NHL December 11, 2025" },
-    { date: "2025-12-10", page: "nhl-page13.html", title: "NHL December 10, 2025" }
+    { date: "2025-12-22", page: "nhl.html", title: "NHL Analysis - December 22, 2025" },
+    { date: "2025-12-21", page: "nhl-page21.html", title: "NHL Analysis - December 21, 2025" },
+    { date: "2025-12-20", page: "nhl-page20.html", title: "NHL Analysis - December 20, 2025" },
+    { date: "2025-12-19", page: "nhl-page19.html", title: "NHL Analysis - December 19, 2025" },
+    { date: "2025-12-18", page: "nhl-page18.html", title: "NHL Analysis - December 18, 2025" },
+    { date: "2025-12-17", page: "nhl-page17.html", title: "NHL Analysis - December 17, 2025" },
+    { date: "2025-12-16", page: "nhl-page16.html", title: "NHL Analysis - December 16, 2025" },
+    { date: "2025-12-15", page: "nhl-page15.html", title: "NHL Analysis - December 15, 2025" },
+    { date: "2025-12-14", page: "nhl-page14.html", title: "NHL Analysis - December 14, 2025" },
+    { date: "2025-12-13", page: "nhl-page13.html", title: "NHL Analysis - December 13, 2025" },
+    { date: "2025-12-12", page: "nhl-page12.html", title: "NHL Analysis - December 12, 2025" },
+    { date: "2025-12-11", page: "nhl-page11.html", title: "NHL Analysis - December 11, 2025" },
+    { date: "2025-12-10", page: "nhl-page10.html", title: "NHL Analysis - December 10, 2025" },
+    { date: "2025-12-09", page: "nhl-page9.html", title: "NHL Analysis - December 9, 2025" },
+    { date: "2025-12-08", page: "nhl-page8.html", title: "NHL Analysis - December 8, 2025" },
+    { date: "2025-12-07", page: "nhl-page7.html", title: "NHL Analysis - December 7, 2025" },
+    { date: "2025-12-06", page: "nhl-page6.html", title: "NHL Analysis - December 6, 2025" },
+    { date: "2025-12-05", page: "nhl-page5.html", title: "NHL Analysis - December 5, 2025" },
+    { date: "2025-12-04", page: "nhl-page4.html", title: "NHL Analysis - December 4, 2025" },
+    { date: "2025-12-03", page: "nhl-page3.html", title: "NHL Analysis - December 3, 2025" },
+    { date: "2025-12-02", page: "nhl-page2.html", title: "NHL Analysis - December 2, 2025" }
 ];
 
 // Build date map for quick lookups (first entry for each date wins for linking)

@@ -3,7 +3,7 @@
 // Last updated: December 22, 2025
 
 const ARCHIVE_DATA = [
-{ date: "2025-12-23", page: "ncaab.html", title: "NCAAB Analysis - December 22, 2025" },
+{ date: "2025-12-22", page: "ncaab.html", title: "NCAAB Analysis - December 22, 2025" },
     { date: "2025-12-23", page: "ncaab-page20.html", title: "NCAAB Analysis Archive - Page 20" },
     { date: "2025-12-21", page: "ncaab-page17.html", title: "NCAAB Analysis Archive - Page 17" },
     { date: "2025-12-21", page: "ncaab-page18.html", title: "NCAAB Analysis Archive - Page 18" },

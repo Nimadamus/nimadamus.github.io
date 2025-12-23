@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
-================================================================================
 HANDICAPPING HUB - ULTIMATE PRODUCTION SYSTEM
-================================================================================
 THE BEST HANDICAPPING HUB ON THE INTERNET
 
 Layout: 4-Section Game Cards
@@ -21,7 +19,6 @@ Visual Style (LOCKED):
 Sport Tabs: NBA, NFL, NHL, NCAAB, NCAAF
 
 This runs DAILY with ZERO manual intervention required.
-================================================================================
 """
 
 import requests

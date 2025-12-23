@@ -270,7 +270,6 @@ def print_usage():
     """Print usage information."""
     print("""
 BETLEGEND SPORTS PAGE MANAGEMENT SYSTEM
-========================================
 
 USAGE:
   python update_sports_pages.py <command> [options]

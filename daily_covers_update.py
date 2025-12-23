@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 BETLEGEND DAILY COVERS CONSENSUS UPDATE
-========================================
 Fully automated daily update for SportsBettingPrime Covers Consensus
 
 WHAT THIS SCRIPT DOES:

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 BETLEGEND DAILY SPORTS UPDATE SYSTEM
-=====================================
 Fully automated daily content management for BetLegendPicks.com
 
 WHAT THIS SCRIPT DOES:

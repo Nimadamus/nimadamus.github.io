@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 Site-Wide Internal Link Updater for BetLegend Picks
-====================================================
 
 Automatically updates pagination links AND navigation links when new pages are added.
 

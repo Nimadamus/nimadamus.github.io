@@ -1,6 +1,5 @@
 """
 BETLEGEND DAILY UPDATE SYSTEM
-=============================
 Master script that runs all daily updates:
 1. Handicapping Hub (with injuries)
 2. Sports pages (NBA, NHL, NFL, NCAAF, NCAAB)
