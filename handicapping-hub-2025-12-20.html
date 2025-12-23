@@ -388,7 +388,9 @@
             cursor: pointer;
         }
         .cal-day.has-data:hover { background: #fd5000; transform: scale(1.1); }
-        .cal-day.today { background: #fd5000; color: #fff; font-weight: 800; }
+        .cal-day.today { position: relative; }
+        .cal-day.today::after { content: ''; position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; background: #ffd700; border-radius: 50%; }
+        .cal-day.active { background: linear-gradient(135deg, rgba(0, 212, 255, 0.4), rgba(0, 150, 255, 0.4)); border: 2px solid #00d4ff; color: #00d4ff; font-weight: 800; box-shadow: 0 0 10px rgba(0, 212, 255, 0.5); cursor: pointer; }
         .cal-day.other { opacity: 0.3; }
         @media (max-width: 600px) {
             .archive-btn { top: 60px; right: 10px; padding: 8px 12px; font-size: 0.7rem; }
@@ -7296,10 +7298,27 @@
             });
         });
 
-        // Archive Calendar
-        const archiveData = {"2025-11-30": "handicapping-hub-2025-11-30.html", "2025-12-01": "handicapping-hub-2025-12-01.html", "2025-12-02": "handicapping-hub-2025-12-02.html", "2025-12-03": "handicapping-hub-2025-12-03.html", "2025-12-04": "handicapping-hub-2025-12-04.html", "2025-12-05": "handicapping-hub-2025-12-05.html", "2025-12-06": "handicapping-hub-2025-12-06.html", "2025-12-07": "handicapping-hub-2025-12-07.html", "2025-12-08": "handicapping-hub-2025-12-08.html", "2025-12-09": "handicapping-hub-2025-12-09.html", "2025-12-10": "handicapping-hub-2025-12-10.html", "2025-12-11": "handicapping-hub-2025-12-11.html", "2025-12-12": "handicapping-hub-2025-12-12.html", "2025-12-13": "handicapping-hub-2025-12-13.html", "2025-12-14": "handicapping-hub-2025-12-14.html", "2025-12-15": "handicapping-hub-2025-12-15.html", "2025-12-16": "handicapping-hub-2025-12-16.html", "2025-12-17": "handicapping-hub-2025-12-17.html", "2025-12-18": "handicapping-hub-2025-12-18.html", "2025-12-19": "handicapping-hub-2025-12-19.html", "2025-12-20": "handicapping-hub.html"};
+        // Archive Calendar - Updated Dec 22, 2025
+        const archiveData = {
+            "2025-12-14": "handicapping-hub-archive/hub-2025-12-14.html",
+            "2025-12-15": "handicapping-hub-archive/hub-2025-12-15.html",
+            "2025-12-16": "handicapping-hub-archive/hub-2025-12-16.html",
+            "2025-12-17": "handicapping-hub-archive/hub-2025-12-17.html",
+            "2025-12-18": "handicapping-hub-archive/hub-2025-12-18.html",
+            "2025-12-19": "handicapping-hub-archive/hub-2025-12-19.html",
+            "2025-12-20": "handicapping-hub-2025-12-20.html",
+            "2025-12-21": "handicapping-hub-archive/hub-2025-12-21.html",
+            "2025-12-22": "handicapping-hub.html"
+        };
         let calDate = new Date();
         const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+        // Detect current page for active highlighting
+        const currentPage = window.location.pathname.split('/').pop() || '';
+        const currentDateKey = Object.keys(archiveData).find(key => {
+            const page = archiveData[key];
+            return currentPage === page || currentPage.includes(page.split('/').pop());
+        });
 
         function renderCal() {
             const y = calDate.getFullYear(), m = calDate.getMonth();
@@ -7313,10 +7332,12 @@
             for (let d = 1; d <= days; d++) {
                 const key = y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
                 const isToday = y === today.getFullYear() && m === today.getMonth() && d === today.getDate();
+                const isActive = key === currentDateKey;
                 const hasData = archiveData[key];
                 let cls = 'cal-day';
+                if (isActive) cls += ' active';
+                else if (hasData) cls += ' has-data';
                 if (isToday) cls += ' today';
-                if (hasData) cls += ' has-data';
                 if (hasData) h += '<div class="' + cls + '" onclick="location.href=\'' + hasData + '\'">' + d + '</div>';
                 else h += '<div class="' + cls + '">' + d + '</div>';
             }
@@ -7325,6 +7346,7 @@
             document.getElementById('calGrid').innerHTML = h;
         }
         function calNav(delta) { calDate.setMonth(calDate.getMonth() + delta); renderCal(); }
+        renderCal(); }
         renderCal();
     </script>
 
