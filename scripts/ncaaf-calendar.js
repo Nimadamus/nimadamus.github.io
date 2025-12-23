@@ -1,10 +1,10 @@
 // NCAAF Archive Calendar Data - CENTRALIZED FILE
 // All ncaaf pages should reference this file for consistent calendar highlighting
-// Last updated: December 22, 2025
+// Last updated: December 23, 2025
 
 const ARCHIVE_DATA = [
+{ date: "2025-12-23", page: "ncaaf.html", title: "NCAAF Bowl Games - December 23, 2025" },
 { date: "2025-12-21", page: "ncaaf-page13.html", title: "NCAAF Analysis Archive - Page 13" },
-    { date: "2025-12-20", page: "ncaaf.html", title: "NCAAF Analysis - December 22, 2025" },
     { date: "2025-12-20", page: "ncaaf-page4.html", title: "NCAAF Analysis Archive - Page 4" },
     { date: "2025-12-20", page: "ncaaf-page18.html", title: "NCAAF Analysis Archive - Page 18" },
     { date: "2025-12-20", page: "ncaaf-page19.html", title: "NCAAF Analysis Archive - Page 19" },

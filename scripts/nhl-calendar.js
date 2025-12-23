@@ -1,9 +1,9 @@
 // NHL Archive Calendar Data - CENTRALIZED FILE
 // All nhl pages should reference this file for consistent calendar highlighting
-// Last updated: December 22, 2025
+// Last updated: December 23, 2025
 
 const ARCHIVE_DATA = [
-    { date: "2025-12-22", page: "nhl.html", title: "NHL Analysis - December 22, 2025" },
+    { date: "2025-12-23", page: "nhl.html", title: "NHL Analysis - December 23, 2025" },
     { date: "2025-12-21", page: "nhl-page21.html", title: "NHL Analysis - December 21, 2025" },
     { date: "2025-12-20", page: "nhl-page20.html", title: "NHL Analysis - December 20, 2025" },
     { date: "2025-12-19", page: "nhl-page19.html", title: "NHL Analysis - December 19, 2025" },
