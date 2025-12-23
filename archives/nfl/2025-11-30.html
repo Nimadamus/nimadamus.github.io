@@ -135,6 +135,7 @@ main{padding:0 16px 40px}
 <div class="nav-inner">
 <div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
 <div class="nav-links">
+<a href="handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;padding:10px 18px;font-weight:600;">Handicapping Hub</a>
 <a href="blog-page10.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Overview</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
@@ -418,5 +419,34 @@ main{padding:0 16px 40px}
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script async data-id="101485054" src="//static.getclicky.com/js"></script>
+<script>
+(function() {
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dropdown) {
+        var btn = dropdown.querySelector('.dropbtn');
+        if (!btn) return;
+        function toggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdowns.forEach(function(d) {
+                if (d !== dropdown) d.classList.remove('active');
+            });
+            dropdown.classList.toggle('active');
+        }
+        btn.addEventListener('touchend', toggle, {passive: false});
+        btn.addEventListener('click', toggle);
+    });
+    document.addEventListener('touchend', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+})();
+</script>
 </body>
 </html>

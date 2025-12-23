@@ -79,6 +79,8 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
 @media(max-width:1200px){.mobile-archive{display:block}}
 @media(max-width:768px){.hero{padding:130px 20px 40px}.game-preview{padding:24px}.team-logo{width:44px;height:44px}.matchup-info h2{font-size:17px}.game-header{gap:14px}}
+.dropdown.active .dropdown-content{display:block}
+.dropdown.active .dropbtn{color:var(--accent-gold)}
 </style>
 </head>
 <body>
@@ -286,6 +288,35 @@ monthSelect.addEventListener('change', (e) => { renderCalendar(e.target.value); 
 const mobileSelect = document.getElementById('mobile-archive-select');
 ARCHIVE_DATA.forEach(item => { const opt = document.createElement('option'); opt.value = item.page; const dateObj = new Date(item.date + 'T12:00:00'); const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }); opt.textContent = `${dateLabel} - ${item.title}`; mobileSelect.appendChild(opt); });
 mobileSelect.addEventListener('change', (e) => { if (e.target.value) window.location.href = e.target.value; });
+</script>
+<script>
+(function() {
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dropdown) {
+        var btn = dropdown.querySelector('.dropbtn');
+        if (!btn) return;
+        function toggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdowns.forEach(function(d) {
+                if (d !== dropdown) d.classList.remove('active');
+            });
+            dropdown.classList.toggle('active');
+        }
+        btn.addEventListener('touchend', toggle, {passive: false});
+        btn.addEventListener('click', toggle);
+    });
+    document.addEventListener('touchend', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+})();
 </script>
 </body>
 </html>

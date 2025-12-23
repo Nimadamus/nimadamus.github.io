@@ -1224,5 +1224,34 @@ function renderCalendar(yearMonth) {
 renderCalendar(displayMonth);
 </script>
 
+<script>
+(function() {
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dropdown) {
+        var btn = dropdown.querySelector('.dropbtn');
+        if (!btn) return;
+        function toggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdowns.forEach(function(d) {
+                if (d !== dropdown) d.classList.remove('active');
+            });
+            dropdown.classList.toggle('active');
+        }
+        btn.addEventListener('touchend', toggle, {passive: false});
+        btn.addEventListener('click', toggle);
+    });
+    document.addEventListener('touchend', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+})();
+</script>
 </body>
 </html>

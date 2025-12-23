@@ -112,6 +112,8 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .stat-item .label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
 .data-source{font-size:11px;color:var(--text-muted);text-align:right;margin-top:16px;padding-top:12px;border-top:1px solid var(--border-subtle);font-style:italic}
 @media(max-width:600px){.stat-row{grid-template-columns:repeat(2,1fr)}}
+.dropdown.active .dropdown-content{display:block}
+.dropdown.active .dropbtn{color:var(--accent-gold)}
 </style>
 </head>
 <body>
@@ -701,6 +703,35 @@ ARCHIVE_DATA.forEach(item => {
 mobileSelect.addEventListener('change', (e) => {
     if (e.target.value) window.location.href = e.target.value;
 });
+</script>
+<script>
+(function() {
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dropdown) {
+        var btn = dropdown.querySelector('.dropbtn');
+        if (!btn) return;
+        function toggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdowns.forEach(function(d) {
+                if (d !== dropdown) d.classList.remove('active');
+            });
+            dropdown.classList.toggle('active');
+        }
+        btn.addEventListener('touchend', toggle, {passive: false});
+        btn.addEventListener('click', toggle);
+    });
+    document.addEventListener('touchend', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+})();
 </script>
 </body>
 </html>

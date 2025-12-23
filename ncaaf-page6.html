@@ -97,6 +97,8 @@ footer a{color:var(--accent-cyan);text-decoration:none}
   .matchup-info h2{font-size:17px}
   .game-header{gap:14px}
 }
+.dropdown.active .dropdown-content{display:block}
+.dropdown.active .dropbtn{color:var(--accent-gold)}
 </style>
 </head>
 <body>
@@ -731,6 +733,35 @@ if (mobileSelect) {
         if (e.target.value) window.location.href = e.target.value;
     });
 }
+</script>
+<script>
+(function() {
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dropdown) {
+        var btn = dropdown.querySelector('.dropbtn');
+        if (!btn) return;
+        function toggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdowns.forEach(function(d) {
+                if (d !== dropdown) d.classList.remove('active');
+            });
+            dropdown.classList.toggle('active');
+        }
+        btn.addEventListener('touchend', toggle, {passive: false});
+        btn.addEventListener('click', toggle);
+    });
+    document.addEventListener('touchend', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+})();
 </script>
 </body>
 </html>
