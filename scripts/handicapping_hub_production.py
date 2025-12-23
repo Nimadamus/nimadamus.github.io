@@ -2682,7 +2682,11 @@ def fetch_all_games() -> Dict[str, List]:
     return all_games
 
 def update_index_featured_game(all_games: Dict) -> bool:
-    """Update the featured game on index.html with today's most notable game"""
+    """Update the featured game on index.html with today's most notable game.
+
+    This function updates the homepage preview panel to show the best game of the day.
+    It uses the actual HTML structure with inline styles that matches the BetLegend homepage.
+    """
     print("\n[INDEX] Updating featured game on index.html...")
 
     index_path = os.path.join(REPO_PATH, 'index.html')
@@ -2690,18 +2694,32 @@ def update_index_featured_game(all_games: Dict) -> bool:
         print("  [ERROR] index.html not found")
         return False
 
-    # Find the best game to feature (priority: NCAAF bowl, NFL, NBA, NHL, NCAAB)
+    # Find the best game to feature
+    # Priority: NFL primetime > NBA primetime > NHL > NCAAF bowl > NCAAB
     featured_game = None
     featured_sport = None
 
-    # During bowl season, prioritize college football
-    for sport in ['NCAAF', 'NFL', 'NBA', 'NHL', 'NCAAB']:
+    # Check for primetime games first (games after 7 PM ET)
+    for sport in ['NFL', 'NBA', 'NHL', 'NCAAF', 'NCAAB']:
         games = all_games.get(sport, [])
-        if games:
-            # Get first game (usually most prominent)
-            featured_game = games[0]
-            featured_sport = sport
+        for game in games:
+            game_time = game.get('time', '')
+            # Look for late games (primetime)
+            if any(t in game_time for t in ['7:', '8:', '9:', '10:']):
+                featured_game = game
+                featured_sport = sport
+                break
+        if featured_game:
             break
+
+    # If no primetime, get first available game
+    if not featured_game:
+        for sport in ['NFL', 'NBA', 'NHL', 'NCAAF', 'NCAAB']:
+            games = all_games.get(sport, [])
+            if games:
+                featured_game = games[0]
+                featured_sport = sport
+                break
 
     if not featured_game:
         print("  [INFO] No games found for today - keeping existing featured game")
@@ -2711,212 +2729,236 @@ def update_index_featured_game(all_games: Dict) -> bool:
         with open(index_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        # Extract game info - FIXED: use correct field names from game dict
+        # Extract game info
         away_data = featured_game.get('away', {})
         home_data = featured_game.get('home', {})
         odds = featured_game.get('odds', {})
 
-        # Get values - NO PLACEHOLDERS ALLOWED
-        away_name = away_data.get('abbr', '')
-        home_name = home_data.get('abbr', '')
-        away_record = away_data.get('record', '')
-        home_record = home_data.get('record', '')
+        # Get team info
+        away_abbr = away_data.get('abbr', '')
+        home_abbr = home_data.get('abbr', '')
+        away_name = away_data.get('name', away_abbr)
+        home_name = home_data.get('name', home_abbr)
+        away_record = away_data.get('record', '0-0')
+        home_record = home_data.get('record', '0-0')
 
-        # CRITICAL: Validate that we have REAL data, not placeholders
-        # If any critical field is missing or placeholder, skip the update
-        if not away_name or not home_name:
-            print("  [SKIP] Missing team names - keeping existing featured game")
-            return False
-        if away_name in ['AWAY', 'TBD', 'N/A', ''] or home_name in ['HOME', 'TBD', 'N/A', '']:
-            print("  [SKIP] Placeholder team names detected - keeping existing featured game")
-            return False
-        if not away_record or not home_record or (away_record == '0-0' and home_record == '0-0'):
-            print("  [SKIP] Missing or invalid records - keeping existing featured game")
+        # Validate data
+        if not away_abbr or not home_abbr:
+            print("  [SKIP] Missing team abbreviations - keeping existing featured game")
             return False
 
-        # Get spread from odds - use reasonable defaults for betting data
+        # Get betting lines
         spread = odds.get('spread', {})
-        away_spread = spread.get('away', 'PK') if spread.get('away') else 'PK'
-        home_spread = spread.get('home', 'PK') if spread.get('home') else 'PK'
-        total = odds.get('total', 'TBD') if odds.get('total') else 'TBD'
+        away_spread = spread.get('away', 'PK')
+        home_spread = spread.get('home', 'PK')
+        total = odds.get('total', 'N/A')
 
-        # Format time - FIXED: use top-level fields from game dict
-        game_time = featured_game.get('time', '')
-        venue = featured_game.get('venue', '')
-        broadcast = featured_game.get('network', '')
-
-        # Validate game time - don't show TBD
-        if not game_time or game_time in ['TBD', 'N/A', '']:
-            print("  [SKIP] Missing game time - keeping existing featured game")
-            return False
-
-        # Determine day of week
-        today = datetime.now()
-        day_name = today.strftime('%A')
-        date_str = today.strftime('%b %d, %Y')
-
-        # Build the featured game title
-        if featured_sport == 'NCAAF':
-            title = f"{away_name} vs {home_name}"
-            subtitle = "College Football"
-        elif featured_sport == 'NFL':
-            title = f"{away_name} @ {home_name}"
-            subtitle = "NFL Football"
-        elif featured_sport == 'NBA':
-            title = f"{away_name} @ {home_name}"
-            subtitle = "NBA Basketball"
-        elif featured_sport == 'NHL':
-            title = f"{away_name} @ {home_name}"
-            subtitle = "NHL Hockey"
-        else:
-            title = f"{away_name} vs {home_name}"
-            subtitle = featured_sport
-
-        # Get moneyline values
         ml = odds.get('moneyline', {})
-        away_ml = ml.get('away', 'TBD') if ml.get('away') else 'TBD'
-        home_ml = ml.get('home', 'TBD') if ml.get('home') else 'TBD'
-        # Format moneyline (add + if positive)
-        if isinstance(away_ml, (int, float)) and away_ml > 0:
-            away_ml = f"+{int(away_ml)}"
-        elif isinstance(away_ml, (int, float)):
-            away_ml = str(int(away_ml))
-        if isinstance(home_ml, (int, float)) and home_ml > 0:
-            home_ml = f"+{int(home_ml)}"
-        elif isinstance(home_ml, (int, float)):
-            home_ml = str(int(home_ml))
+        away_ml = ml.get('away', 'N/A')
+        home_ml = ml.get('home', 'N/A')
 
-        # Get injury info for featured preview
+        # Format moneyline
+        if isinstance(away_ml, (int, float)):
+            away_ml = f"+{int(away_ml)}" if away_ml > 0 else str(int(away_ml))
+        if isinstance(home_ml, (int, float)):
+            home_ml = f"+{int(home_ml)}" if home_ml > 0 else str(int(home_ml))
+
+        # Format spread
+        if isinstance(away_spread, (int, float)):
+            away_spread = f"+{away_spread}" if away_spread > 0 else str(away_spread)
+        if isinstance(home_spread, (int, float)):
+            home_spread = f"+{home_spread}" if home_spread > 0 else str(home_spread)
+
+        # Get game details
+        game_time = featured_game.get('time', 'TBD')
+        venue = featured_game.get('venue', 'TBD')
+        broadcast = featured_game.get('network', 'TBD')
+
+        # Clean up game time
+        game_time_clean = game_time.replace(' ET', '').strip() if game_time else 'TBD'
+
+        # Get today's date
+        today = datetime.now()
+        date_str = today.strftime('%B %d')
+
+        # Determine logo path based on sport
+        if featured_sport == 'NBA':
+            logo_path = 'nba'
+        elif featured_sport == 'NFL':
+            logo_path = 'nfl'
+        elif featured_sport == 'NHL':
+            logo_path = 'nhl'
+        else:
+            logo_path = 'ncaa'
+
+        # Get stats for comparison
+        away_stats = away_data.get('stats', {})
+        home_stats = home_data.get('stats', {})
+
+        # Get PPG and defensive stats based on sport
+        if featured_sport in ['NBA']:
+            away_ppg = away_stats.get('ppg', 'N/A')
+            home_ppg = home_stats.get('ppg', 'N/A')
+            away_opp = away_stats.get('opp_ppg', 'N/A')
+            home_opp = home_stats.get('opp_ppg', 'N/A')
+        elif featured_sport in ['NFL', 'NCAAF']:
+            away_ppg = away_stats.get('ppg', 'N/A')
+            home_ppg = home_stats.get('ppg', 'N/A')
+            away_opp = away_stats.get('opp_ppg', 'N/A')
+            home_opp = home_stats.get('opp_ppg', 'N/A')
+        else:
+            away_ppg = away_stats.get('gf_per_game', 'N/A')
+            home_ppg = home_stats.get('gf_per_game', 'N/A')
+            away_opp = away_stats.get('ga_per_game', 'N/A')
+            home_opp = home_stats.get('ga_per_game', 'N/A')
+
+        # Get injury info
         away_injuries = away_data.get('injuries', [])
         home_injuries = home_data.get('injuries', [])
 
-        # Format injury strings
         if away_injuries:
-            away_inj_str = ", ".join([f"{i['name']} ({i['status']})" for i in away_injuries[:2]])
+            away_inj_str = ", ".join([f"{i.get('name', 'Player')} ({i.get('status', 'Q')})" for i in away_injuries[:2]])
         else:
-            away_inj_str = "No key injuries reported"
+            away_inj_str = "No key injuries"
 
         if home_injuries:
-            home_inj_str = ", ".join([f"{i['name']} ({i['status']})" for i in home_injuries[:2]])
+            home_inj_str = ", ".join([f"{i.get('name', 'Player')} ({i.get('status', 'Q')})" for i in home_injuries[:2]])
         else:
-            home_inj_str = "No key injuries reported"
+            home_inj_str = "No key injuries"
 
-        # Build spread line info for subtitle
-        if home_spread and home_spread not in ['PK', 'TBD', '']:
-            spread_info = f"{home_name} {home_spread}"
-        elif away_spread and away_spread not in ['PK', 'TBD', '']:
-            spread_info = f"{away_name} {away_spread}"
-        else:
-            spread_info = "Pick'em"
-
-        # Create the replacement HTML
-        # Remove ET from game_time if present (we'll add it ourselves)
-        game_time_clean = game_time.replace(' ET', '').strip()
-
-        new_featured = f'''                <div class="featured-header">
-                    <h3>{title}</h3>
-                    <div class="live-badge">{game_time_clean} ET</div>
+        # Build the new featured game HTML matching BetLegend homepage style
+        new_featured = f'''            <!-- RIGHT: Featured Game Preview -->
+            <div class="hero-right" style="padding: 0; overflow: hidden;">
+                <!-- Header Banner -->
+                <div style="background: linear-gradient(135deg, #1a365d 0%, #2d4a7c 100%); padding: 18px 20px; border-bottom: 3px solid #ff6b00;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-family: var(--font-primary); font-size: 0.75rem; color: #ff6b00; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Tonight's Featured Game</span>
+                        <span style="background: #39FF14; color: #000; font-family: var(--font-primary); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; text-transform: uppercase;">{featured_sport} {game_time_clean} ET</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                        <div style="text-align: center;">
+                            <img src="https://a.espncdn.com/i/teamlogos/{logo_path}/500/{away_abbr.lower()}.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
+                            <div style="font-family: var(--font-primary); font-size: 1.1rem; color: #fff; font-weight: 700;">{away_name}</div>
+                            <div style="font-size: 0.85rem; color: #aaa;">({away_record})</div>
+                        </div>
+                        <div style="font-family: var(--font-primary); font-size: 1.5rem; color: #ff6b00; font-weight: 900;">@</div>
+                        <div style="text-align: center;">
+                            <img src="https://a.espncdn.com/i/teamlogos/{logo_path}/500/{home_abbr.lower()}.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
+                            <div style="font-family: var(--font-primary); font-size: 1.1rem; color: #fff; font-weight: 700;">{home_name}</div>
+                            <div style="font-size: 0.85rem; color: #aaa;">({home_record})</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px; font-size: 0.8rem; color: #8ab4f8;">{date_str} • {venue} • {broadcast}</div>
                 </div>
 
-                <div class="matchup-display">
-                    <div class="matchup-teams">
-                        <span class="team-name">{away_name}</span>
-                        <span class="matchup-vs">vs</span>
-                        <span class="team-name">{home_name}</span>
-                    </div>
-                    <div class="matchup-time">{day_name} {game_time_clean} ET • {subtitle} • {broadcast}</div>
+                <!-- Betting Lines Table -->
+                <div style="padding: 15px 20px; background: rgba(0,0,0,0.3);">
+                    <table style="width: 100%; border-collapse: collapse; font-family: var(--font-secondary);">
+                        <thead>
+                            <tr style="border-bottom: 2px solid rgba(255,107,0,0.5);">
+                                <th style="text-align: left; padding: 8px 5px; font-size: 0.75rem; color: #888; text-transform: uppercase; font-weight: 600;">Team</th>
+                                <th style="text-align: center; padding: 8px 5px; font-size: 0.75rem; color: #888; text-transform: uppercase; font-weight: 600;">Spread</th>
+                                <th style="text-align: center; padding: 8px 5px; font-size: 0.75rem; color: #888; text-transform: uppercase; font-weight: 600;">ML</th>
+                                <th style="text-align: center; padding: 8px 5px; font-size: 0.75rem; color: #888; text-transform: uppercase; font-weight: 600;">O/U</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 10px 5px; display: flex; align-items: center; gap: 8px;">
+                                    <img src="https://a.espncdn.com/i/teamlogos/{logo_path}/500/{away_abbr.lower()}.png" style="width: 24px; height: 24px;">
+                                    <span style="font-weight: 600; color: #fff; font-size: 0.95rem;">{away_abbr}</span>
+                                </td>
+                                <td style="text-align: center; padding: 10px 5px; font-weight: 700; color: {'#39FF14' if str(away_spread).startswith('-') else '#ff6b6b'}; font-size: 1rem;">{away_spread}</td>
+                                <td style="text-align: center; padding: 10px 5px; font-weight: 700; color: {'#39FF14' if str(away_ml).startswith('-') else '#ff6b6b'}; font-size: 1rem;">{away_ml}</td>
+                                <td style="text-align: center; padding: 10px 5px; font-weight: 600; color: #fff; font-size: 0.95rem;">O {total}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 5px; display: flex; align-items: center; gap: 8px;">
+                                    <img src="https://a.espncdn.com/i/teamlogos/{logo_path}/500/{home_abbr.lower()}.png" style="width: 24px; height: 24px;">
+                                    <span style="font-weight: 600; color: #fff; font-size: 0.95rem;">{home_abbr}</span>
+                                </td>
+                                <td style="text-align: center; padding: 10px 5px; font-weight: 700; color: {'#39FF14' if str(home_spread).startswith('-') else '#ff6b6b'}; font-size: 1rem;">{home_spread}</td>
+                                <td style="text-align: center; padding: 10px 5px; font-weight: 700; color: {'#39FF14' if str(home_ml).startswith('-') else '#ff6b6b'}; font-size: 1rem;">{home_ml}</td>
+                                <td style="text-align: center; padding: 10px 5px; font-weight: 600; color: #fff; font-size: 0.95rem;">U {total}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
-                    <div class="stat-card">
-                        <div class="label">Record</div>
-                        <div class="values">
-                            <span class="home">{away_record}</span>
-                            <span class="away">{home_record}</span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="label">Spread</div>
-                        <div class="values">
-                            <span class="home">{away_spread}</span>
-                            <span class="away">{home_spread}</span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="label">Total</div>
-                        <div class="values">
-                            <span class="home" style="font-size: 0.85rem;">O/U {total}</span>
-                            <span class="away"></span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="label">ML</div>
-                        <div class="values">
-                            <span class="home">{away_ml}</span>
-                            <span class="away">{home_ml}</span>
-                        </div>
+                <!-- Key Stats Comparison -->
+                <div style="padding: 15px 20px; background: rgba(0,0,0,0.2);">
+                    <div style="font-family: var(--font-primary); font-size: 0.75rem; color: #ff6b00; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; font-weight: 600;">Key Stats</div>
+                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center;">
+                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 1rem;">{away_ppg}</div>
+                        <div style="text-align: center; font-size: 0.7rem; color: #888; text-transform: uppercase; padding: 0 10px;">PPG</div>
+                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 1rem;">{home_ppg}</div>
+
+                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 1rem;">{away_opp}</div>
+                        <div style="text-align: center; font-size: 0.7rem; color: #888; text-transform: uppercase; padding: 0 10px;">Opp PPG</div>
+                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 1rem;">{home_opp}</div>
+
+                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 1rem;">{away_record}</div>
+                        <div style="text-align: center; font-size: 0.7rem; color: #888; text-transform: uppercase; padding: 0 10px;">Record</div>
+                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 1rem;">{home_record}</div>
                     </div>
                 </div>
-                <p style="font-size: 0.65rem; color: #888; margin-bottom: 12px; text-align: right;">{spread_info} • {date_str}</p>
 
-                <div class="injury-alert">
-                    <h4>Key Injuries</h4>
-                    <div class="injury-item"><strong>{away_name}:</strong> {away_inj_str}</div>
-                    <div class="injury-item"><strong>{home_name}:</strong> {home_inj_str}</div>
-                </div>'''
+                <!-- Trends & Injuries -->
+                <div style="padding: 15px 20px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,107,0,0.1)); border-top: 1px solid rgba(255,215,0,0.3);">
+                    <div style="font-family: var(--font-primary); font-size: 0.75rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 600;">Injuries</div>
+                    <div style="font-size: 0.85rem; color: #ddd; line-height: 1.6;">
+                        <div style="margin-bottom: 6px;"><span style="color: #ff6b00; font-weight: 600;">{away_abbr}:</span> {away_inj_str}</div>
+                        <div><span style="color: #ff6b00; font-weight: 600;">{home_abbr}:</span> {home_inj_str}</div>
+                    </div>
+                </div>
 
-        # Find and replace the featured game section using regex
-        import re
+                <!-- CTA Button -->
+                <a href="handicapping-hub.html" style="display: block; text-align: center; padding: 14px 20px; background: linear-gradient(135deg, #ff6b00, #ff8c00); color: #fff; text-decoration: none; font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; transition: all 0.3s ease;">
+                    View Full Handicapping Hub →
+                </a>
+            </div>'''
 
-        # Use regex with DOTALL to match across lines
-        # Pattern matches from featured-header to end of injury-alert section
-        pattern = r'(<div class="featured-header">.*?<div class="injury-alert">.*?</div>\s*</div>)'
+        # Find and replace the featured game section
+        # Look for the comment marker and hero-right div
+        start_marker = '<!-- RIGHT: Featured Game Preview -->'
+        start_idx = content.find(start_marker)
 
-        # First try regex approach
-        match = re.search(pattern, content, re.DOTALL)
-        if match:
-            new_content = content[:match.start()] + new_featured + content[match.end():]
-        else:
-            # Fallback: find markers manually
-            start_marker = '<div class="featured-header">'
-            start_idx = content.find(start_marker)
-            if start_idx == -1:
-                print("  [ERROR] Could not find featured-header in index.html")
-                return False
+        if start_idx == -1:
+            print("  [ERROR] Could not find '<!-- RIGHT: Featured Game Preview -->' marker in index.html")
+            return False
 
-            # Find the injury-alert closing - look for </div> after injury-alert followed by section close
-            injury_start = content.find('<div class="injury-alert">', start_idx)
-            if injury_start == -1:
-                print("  [ERROR] Could not find injury-alert section")
-                return False
+        # Find the end of the hero-right div (the View Full Handicapping Hub link is at the end)
+        end_marker = 'View Full Handicapping Hub'
+        end_search_start = start_idx
+        end_idx = content.find(end_marker, end_search_start)
 
-            # Find the closing </div></div> after injury-alert (3 closing divs for injury content + injury-alert + parent)
-            # Count divs to find correct closing
-            search_pos = injury_start + 25  # Skip past opening div
-            div_count = 1
-            end_pos = search_pos
-            while div_count > 0 and end_pos < len(content):
-                next_open = content.find('<div', end_pos)
-                next_close = content.find('</div>', end_pos)
-                if next_close == -1:
-                    break
-                if next_open != -1 and next_open < next_close:
-                    div_count += 1
-                    end_pos = next_open + 4
-                else:
-                    div_count -= 1
-                    end_pos = next_close + 6
+        if end_idx == -1:
+            print("  [ERROR] Could not find end of featured game section")
+            return False
 
-            new_content = content[:start_idx] + new_featured + content[end_pos:]
+        # Find the closing </a></div> after the CTA button
+        close_a = content.find('</a>', end_idx)
+        close_div = content.find('</div>', close_a)
+
+        if close_div == -1:
+            print("  [ERROR] Could not find closing tags")
+            return False
+
+        end_idx = close_div + 6  # Include the </div>
+
+        # Replace the section
+        new_content = content[:start_idx] + new_featured + content[end_idx:]
 
         with open(index_path, 'w', encoding='utf-8') as f:
             f.write(new_content)
 
-        print(f"  [OK] Updated featured game: {away_name} vs {home_name} ({featured_sport})")
+        print(f"  [OK] Updated featured game: {away_abbr} @ {home_abbr} ({featured_sport})")
         return True
 
     except Exception as e:
         print(f"  [ERROR] Failed to update index.html: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
 def main():
