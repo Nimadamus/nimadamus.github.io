@@ -1,12 +1,11 @@
 // NHL Archive Data - Auto-updated by production script
 const NHL_ARCHIVE = [
-    { date: "2025-12-22", page: "nhl.html", title: "10-Game NHL Slate" },
+    { date: "2025-12-23", page: "nhl.html", title: "10-Game NHL Slate" },
     { date: "2025-12-20", page: "nhl-page18.html", title: "December 21, 2025" },
-    { date: "2025-12-20", page: "nhl-page3.html", title: "December 20, 2025" },
-    { date: "2025-12-20", page: "nhl-page5.html", title: "December 20, 2025" },
-    { date: "2025-12-20", page: "nhl-page6.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "nhl-page21.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page7.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page4.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "nhl-page22.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page8.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page19.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page11.html", title: "December 20, 2025" },
@@ -14,10 +13,13 @@ const NHL_ARCHIVE = [
     { date: "2025-12-20", page: "nhl-page12.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page20.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page17.html", title: "December 20, 2025" },
+    { date: "2025-12-18", page: "nhl-page6.html", title: "December 20, 2025" },
+    { date: "2025-12-17", page: "nhl-page5.html", title: "December 20, 2025" },
     { date: "2025-12-15", page: "nhl-page10.html", title: "December 15, 2025" },
     { date: "2025-12-15", page: "nhl-page2.html", title: "December 15, 2025" },
     { date: "2025-12-13", page: "nhl-page16.html", title: "December 13, 2025" },
     { date: "2025-12-12", page: "nhl-page15.html", title: "December 12, 2025" },
     { date: "2025-12-11", page: "nhl-page14.html", title: "December 11, 2025" },
-    { date: "2025-12-10", page: "nhl-page13.html", title: "December 10, 2025" }
+    { date: "2025-12-10", page: "nhl-page13.html", title: "December 10, 2025" },
+    { date: "2025-11-24", page: "nhl-page3.html", title: "December 20, 2025" }
 ];
