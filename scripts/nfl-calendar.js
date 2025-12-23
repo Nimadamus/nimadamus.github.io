@@ -3,10 +3,8 @@
 // Last updated: December 22, 2025
 
 const ARCHIVE_DATA = [
-    { date: "2025-12-23", page: "nfl.html", title: "NFL Analysis - December 22, 2025" },
-    { date: "2025-12-23", page: "nfl-page19.html", title: "NFL Analysis Archive - Page 19" },
-    { date: "2025-12-22", page: "nfl-page18.html", title: "NFL Analysis Archive - Page 18" },
-    { date: "2025-12-21", page: "nfl-page2.html", title: "NFL Analysis - December 21, 2025" },
+    { date: "2025-12-23", page: "nfl.html", title: "Monday Night Football - 49ers @ Colts" },
+    { date: "2025-12-21", page: "nfl-page2.html", title: "NFL Week 16 Sunday" },
     { date: "2025-12-21", page: "nfl-page15.html", title: "NFL Analysis Archive - Page 15" },
     { date: "2025-12-21", page: "nfl-page16.html", title: "NFL Analysis Archive - Page 16" },
     { date: "2025-12-21", page: "nfl-page17.html", title: "NFL Analysis Archive - Page 17" },
