@@ -3,7 +3,7 @@
 // Last updated: December 22, 2025
 
 const ARCHIVE_DATA = [
-    { date: "2025-12-23", page: "nba.html", title: "NBA Analysis - December 22, 2025" },
+{ date: "2025-12-23", page: "nba.html", title: "NBA Analysis - December 22, 2025" },
     { date: "2025-12-23", page: "nba-page17.html", title: "NBA Analysis Archive - Page 17" },
     { date: "2025-12-21", page: "nba-page4.html", title: "NBA Analysis Archive - Page 4" },
     { date: "2025-12-21", page: "nba-page5.html", title: "NBA Analysis Archive - Page 5" },
@@ -30,13 +30,11 @@ ARCHIVE_DATA.forEach(item => {
     }
 });
 
-// Build page-to-date map - CRITICAL for correct highlighting
-// Each page gets its FIRST matching date
+// Build page-to-date map (uses LAST/most recent date for pages with multiple entries)
 const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => {
-    if (!pageToDateMap[item.page]) {
-        pageToDateMap[item.page] = item.date;
-    }
+    // Always overwrite - last entry wins (most recent date for pages with multiple dates)
+    pageToDateMap[item.page] = item.date;
 });
 
 // Get current page filename and find its date

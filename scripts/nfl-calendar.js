@@ -3,7 +3,7 @@
 // Last updated: December 22, 2025
 
 const ARCHIVE_DATA = [
-    { date: "2025-12-22", page: "nfl.html", title: "Monday Night Football - 49ers @ Colts" },
+{ date: "2025-12-22", page: "nfl.html", title: "Monday Night Football - 49ers @ Colts" },
     { date: "2025-12-21", page: "nfl-page2.html", title: "NFL Week 16 Sunday" },
     { date: "2025-12-21", page: "nfl-page15.html", title: "NFL Analysis Archive - Page 15" },
     { date: "2025-12-21", page: "nfl-page16.html", title: "NFL Analysis Archive - Page 16" },
@@ -27,16 +27,14 @@ const dateMap = {};
 ARCHIVE_DATA.forEach(item => {
     if (!dateMap[item.date]) {
         dateMap[item.date] = item;
-// (removed conditional)
+    }
 });
 
 // Build page-to-date map (uses LAST/most recent date for pages with multiple entries)
-// Always overwrite - last entry wins (most recent date)
 const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => {
-    // Always overwrite - last entry wins
+    // Always overwrite - last entry wins (most recent date for pages with multiple dates)
     pageToDateMap[item.page] = item.date;
-// (removed conditional)
 });
 
 // Get current page filename and find its date
@@ -88,7 +86,7 @@ function renderCalendar(yearMonth) {
         const cell = document.createElement('div');
         cell.className = 'cal-day empty';
         container.appendChild(cell);
-// (removed conditional)
+    }
 
     // Day cells
     for (let d = 1; d <= daysInMonth; d++) {
@@ -107,10 +105,10 @@ function renderCalendar(yearMonth) {
         if (hasData) {
             cell.title = hasData.title;
             cell.onclick = () => window.location.href = hasData.page;
-    // (removed conditional)
+        }
 
         container.appendChild(cell);
-// (removed conditional)
+    }
 }
 
 // Initialize calendar when DOM is ready
@@ -126,11 +124,11 @@ function initSportCalendar() {
             opt.textContent = `${monthNames[parseInt(month) - 1]} ${year}`;
             if (m === displayMonth) opt.selected = true;
             monthSelect.appendChild(opt);
-    // (removed conditional));
+        });
         monthSelect.addEventListener('change', function() {
             renderCalendar(this.value);
-    // (removed conditional));
-// (removed conditional)
+        });
+    }
 
     // Initial render - show the current page's month
     renderCalendar(displayMonth);
@@ -147,11 +145,11 @@ function initSportCalendar() {
             opt.textContent = `${dateLabel} - ${item.title}`;
             if (item.page === currentPage) opt.selected = true;
             mobileSelect.appendChild(opt);
-    // (removed conditional));
+        });
         mobileSelect.addEventListener('change', (e) => {
             if (e.target.value) window.location.href = e.target.value;
-    // (removed conditional));
-// (removed conditional)
+        });
+    }
 }
 
 // Auto-initialize when DOM is ready

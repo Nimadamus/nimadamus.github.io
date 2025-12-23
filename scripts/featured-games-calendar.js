@@ -49,12 +49,11 @@ const ARCHIVE_DATA = [
 const dateMap = {};
 ARCHIVE_DATA.forEach(item => { dateMap[item.date] = item; });
 
-// Build page-to-date map (uses FIRST matching date for pages with multiple entries)
+// Build page-to-date map (uses LAST/most recent matching date for pages with multiple entries)
 const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => {
-    if (!pageToDateMap[item.page]) {
-        pageToDateMap[item.page] = item.date;
-    }
+    // Always overwrite - last entry wins (most recent date for pages with multiple dates)
+    pageToDateMap[item.page] = item.date;
 });
 
 // Get current page filename and find its date

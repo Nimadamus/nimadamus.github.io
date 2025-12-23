@@ -3,7 +3,7 @@
 // Last updated: December 22, 2025
 
 const ARCHIVE_DATA = [
-    { date: "2025-12-23", page: "ncaab.html", title: "NCAAB Analysis - December 22, 2025" },
+{ date: "2025-12-23", page: "ncaab.html", title: "NCAAB Analysis - December 22, 2025" },
     { date: "2025-12-23", page: "ncaab-page20.html", title: "NCAAB Analysis Archive - Page 20" },
     { date: "2025-12-21", page: "ncaab-page17.html", title: "NCAAB Analysis Archive - Page 17" },
     { date: "2025-12-21", page: "ncaab-page18.html", title: "NCAAB Analysis Archive - Page 18" },
@@ -33,13 +33,11 @@ ARCHIVE_DATA.forEach(item => {
     }
 });
 
-// Build page-to-date map - CRITICAL for correct highlighting
-// Each page gets its FIRST matching date
+// Build page-to-date map (uses LAST/most recent date for pages with multiple entries)
 const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => {
-    if (!pageToDateMap[item.page]) {
-        pageToDateMap[item.page] = item.date;
-    }
+    // Always overwrite - last entry wins (most recent date for pages with multiple dates)
+    pageToDateMap[item.page] = item.date;
 });
 
 // Get current page filename and find its date
