@@ -67,8 +67,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .cal-day.empty{background:transparent}
 .cal-day.has-content{background:rgba(253,80,0,0.15);color:var(--accent-orange);cursor:pointer;font-weight:600;border:1px solid rgba(253,80,0,0.3)}
 .cal-day.has-content:hover{background:rgba(253,80,0,0.3);transform:scale(1.1)}
-.cal-day.today{background:linear-gradient(135deg,rgba(255,215,0,0.3),rgba(0,229,255,0.3));color:var(--accent-gold);font-weight:700;border:1px solid var(--accent-gold)}
-.cal-day.today.has-content{border:2px solid var(--accent-gold)}
 .main-content{max-width:900px;margin:0 auto}
 .mobile-archive{display:none;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;padding:16px 20px;margin-bottom:32px}
 .mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
@@ -89,6 +87,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="nav-inner">
 <div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
 <div class="nav-links">
+<a href="index.html">Home</a>
 <a href="handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Handicapping Hub</a>
 <a href="blog-page10.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
@@ -308,7 +307,6 @@ function renderCalendar(yearMonth) {
         const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         const hasData = dateMap[dateStr];
         let classes = 'cal-day';
-        if (dateStr === todayStr) classes += ' today';
         if (dateStr === currentPageDate) classes += ' current-page';
         if (hasData) classes += ' has-content';
 
