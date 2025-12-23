@@ -1,6 +1,6 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file for consistent calendar highlighting
-// Last updated: December 22, 2025
+// Last updated: December 23, 2025
 
 const ARCHIVE_DATA = [
     { date: "2025-10-25", page: "featured-game-of-the-day.html", title: "Archive" },
@@ -42,7 +42,8 @@ const ARCHIVE_DATA = [
     { date: "2025-12-18", page: "featured-game-of-the-day-page20.html", title: "Stars vs Sharks" },
     { date: "2025-12-19", page: "featured-game-of-the-day-page21.html", title: "Alabama vs Oklahoma CFP" },
     { date: "2025-12-21", page: "featured-game-of-the-day-page22.html", title: "Buccaneers vs Panthers" },
-    { date: "2025-12-22", page: "featured-game-of-the-day-page23.html", title: "49ers vs Colts MNF" }
+    { date: "2025-12-22", page: "featured-game-of-the-day-page23.html", title: "49ers vs Colts MNF" },
+    { date: "2025-12-23", page: "featured-game-of-the-day-page24.html", title: "WKU vs Southern Miss" }
 ];
 
 // Build date map for quick lookups
