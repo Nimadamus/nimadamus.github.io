@@ -3,8 +3,7 @@
 // Last updated: December 22, 2025
 
 const ARCHIVE_DATA = [
-{ date: "2025-12-22", page: "nba.html", title: "NBA Analysis - December 22, 2025" },
-    { date: "2025-12-23", page: "nba-page17.html", title: "NBA Analysis Archive - Page 17" },
+    { date: "2025-12-22", page: "nba.html", title: "NBA Analysis - December 22, 2025" },
     { date: "2025-12-21", page: "nba-page4.html", title: "NBA Analysis Archive - Page 4" },
     { date: "2025-12-21", page: "nba-page5.html", title: "NBA Analysis Archive - Page 5" },
     { date: "2025-12-21", page: "nba-page15.html", title: "NBA Analysis Archive - Page 15" },
