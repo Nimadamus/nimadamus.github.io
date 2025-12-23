@@ -10,6 +10,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-20", page: "ncaaf-page19.html", title: "NCAAF Analysis Archive - Page 19" },
     { date: "2025-12-20", page: "ncaaf-page20.html", title: "NCAAF Analysis Archive - Page 20" },
     { date: "2025-12-19", page: "ncaaf-page10.html", title: "NCAAF Analysis Archive - Page 10" },
+    { date: "2025-12-19", page: "ncaaf-page21.html", title: "NCAAF Analysis Archive - Page 21" },
     { date: "2025-12-18", page: "ncaaf-page5.html", title: "NCAAF Analysis Archive - Page 5" },
     { date: "2025-12-17", page: "ncaaf-page6.html", title: "NCAAF Analysis Archive - Page 6" },
     { date: "2025-12-16", page: "ncaaf-page7.html", title: "NCAAF Analysis Archive - Page 7" },

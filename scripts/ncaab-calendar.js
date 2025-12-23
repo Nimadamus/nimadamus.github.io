@@ -9,6 +9,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-21", page: "ncaab-page18.html", title: "NCAAB Analysis Archive - Page 18" },
     { date: "2025-12-21", page: "ncaab-page19.html", title: "NCAAB Analysis Archive - Page 19" },
     { date: "2025-12-20", page: "ncaab-page16.html", title: "NCAAB Analysis Archive - Page 16" },
+    { date: "2025-12-20", page: "ncaab-page21.html", title: "NCAAB Analysis Archive - Page 21" },
     { date: "2025-12-19", page: "ncaab-page4.html", title: "College Basketball Picks - Champions Classic 2025" },
     { date: "2025-12-19", page: "ncaab-page10.html", title: "NCAAB Analysis - December 19, 2025" },
     { date: "2025-12-18", page: "ncaab-page9.html", title: "NCAAB Analysis Archive - Page 9" },
