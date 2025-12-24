@@ -10,7 +10,12 @@ import os
 import re
 from pathlib import Path
 
-REPO_DIR = Path(r'C:\Users\Nima\nimadamus.github.io')
+# Auto-detect repo directory (works on Windows locally and Linux in GitHub Actions)
+import sys
+if sys.platform == 'win32':
+    REPO_DIR = Path(r'C:\Users\Nima\nimadamus.github.io')
+else:
+    REPO_DIR = Path(__file__).parent.parent  # scripts/ -> repo root
 
 # ESPN Team ID mapping for college teams
 # Format: abbreviated code -> ESPN numeric ID

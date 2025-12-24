@@ -10,7 +10,12 @@ import re
 from datetime import datetime
 from pathlib import Path
 
-REPO_DIR = Path(r'C:\Users\Nima\nimadamus.github.io')
+# Auto-detect repo directory (works on Windows locally and Linux in GitHub Actions)
+import sys
+if sys.platform == 'win32':
+    REPO_DIR = Path(r'C:\Users\Nima\nimadamus.github.io')
+else:
+    REPO_DIR = Path(__file__).parent.parent  # scripts/ -> repo root
 SCRIPTS_DIR = REPO_DIR / 'scripts'
 
 # Sport configurations

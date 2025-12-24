@@ -1,0 +1,59 @@
+name: Auto-Fix Content Issues
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.html'
+      - 'scripts/**'
+
+jobs:
+  fix-content:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fix college logos (convert abbreviations to numeric IDs)
+        run: |
+          python scripts/college_logo_ids.py
+
+      - name: Sync all calendars
+        run: |
+          python scripts/sync_calendars.py
+
+      - name: Check for placeholder content
+        id: placeholder_check
+        run: |
+          echo "Checking for placeholder content..."
+          PLACEHOLDERS=$(grep -rl "coming soon\|Matchup analysis coming\|TBD\|TBA" --include="*.html" . 2>/dev/null | grep -v node_modules || true)
+          if [ -n "$PLACEHOLDERS" ]; then
+            echo "⚠️ WARNING: Placeholder content found in:"
+            echo "$PLACEHOLDERS"
+            echo "placeholder_found=true" >> $GITHUB_OUTPUT
+          else
+            echo "✅ No placeholder content found"
+            echo "placeholder_found=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push fixes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🤖 Auto-fix: Sync calendars and fix college logos"
+            git push
+          fi
