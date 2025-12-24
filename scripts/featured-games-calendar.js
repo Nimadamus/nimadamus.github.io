@@ -37,10 +37,39 @@ const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });
 
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-const currentPageDate = pageToDateMap[currentPage] || null;
+
+// Auto-detect date from page title (format: "... - December 24, 2025 | BetLegend")
+function extractDateFromTitle() {
+    const title = document.title || '';
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+    // Match patterns like "December 24, 2025" or "Dec 24, 2025"
+    const dateMatch = title.match(/(\w+)\s+(\d{1,2}),?\s+(\d{4})/);
+    if (dateMatch) {
+        const monthStr = dateMatch[1];
+        const day = parseInt(dateMatch[2]);
+        const year = parseInt(dateMatch[3]);
+        // Find month index
+        let monthIdx = monthNames.findIndex(m => m.toLowerCase().startsWith(monthStr.toLowerCase()));
+        if (monthIdx !== -1) {
+            return year + '-' + String(monthIdx + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+        }
+    }
+    return null;
+}
+
+// Try to get date from title first, then fall back to ARCHIVE_DATA lookup
+const currentPageDate = extractDateFromTitle() || pageToDateMap[currentPage] || null;
+
+// Auto-add current page to dateMap if not already there (makes it clickable)
+if (currentPageDate && !dateMap[currentPageDate]) {
+    dateMap[currentPageDate] = { date: currentPageDate, page: currentPage, title: document.title.split('|')[0].trim() };
+}
 
 const months = new Set();
 ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });
+// Also add current page's month
+if (currentPageDate) { const [y, m] = currentPageDate.split('-'); months.add(y + '-' + m); }
 
 const today = new Date();
 const currentMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
