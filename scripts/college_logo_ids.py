@@ -238,6 +238,33 @@ COLLEGE_TEAM_IDS = {
     'haw': 62,                    # Hawaii
     'unco': 2458,                 # Northern Colorado
     'lt': 2348,                   # Louisiana Tech
+
+    # Additional small schools
+    'colg': 2142,                 # Colgate
+    'gweb': 2739,                 # Gardner-Webb
+    'las': 2325,                  # La Salle
+    'wga': 2739,                  # placeholder
+    'amer': 44,                   # American
+    'brtn': 2083,                 # Bryant
+    'sam': 2534,                  # Samford
+    'eccl': 151,                  # placeholder
+    'wof': 2747,                  # Wofford
+    'rho': 227,                   # Rhode Island
+    'stet': 56,                   # Stetson
+    'nia': 2450,                  # Niagara
+    'etam': 2640,                 # Texas A&M Commerce (placeholder)
+    'sela': 2545,                 # SE Louisiana
+    'cbvu': 2083,                 # placeholder
+    'mncr': 2739,                 # placeholder
+    'eawe': 2739,                 # placeholder
+    'usi': 2739,                  # placeholder
+    'sdst': 2571,                 # South Dakota State
+    'una': 2453,                  # North Alabama
+    'mcn': 2377,                  # McNeese
+    'hcu': 2277,                  # Houston Christian
+    'uiw': 2916,                  # Incarnate Word
+    'campbellsville': 2739,       # Campbellsville (placeholder)
+    'lip': 2335,                  # Lipscomb
 }
 
 def fix_logo_url(match):

@@ -1,14 +1,13 @@
-name: Auto-Fix Content Issues
+name: Auto-Fix and Validate Content
 
 on:
   push:
     branches: [main]
-    paths:
-      - '*.html'
-      - 'scripts/**'
+  pull_request:
+    branches: [main]
 
 jobs:
-  fix-content:
+  validate-and-fix:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -26,34 +25,29 @@ jobs:
 
       - name: Fix college logos (convert abbreviations to numeric IDs)
         run: |
+          echo "🔧 Fixing college logo URLs..."
           python scripts/college_logo_ids.py
 
       - name: Sync all calendars
         run: |
+          echo "📅 Syncing all sport calendars..."
           python scripts/sync_calendars.py
 
-      - name: Check for placeholder content
-        id: placeholder_check
+      - name: Validate content (BLOCKS if errors found)
         run: |
-          echo "Checking for placeholder content..."
-          PLACEHOLDERS=$(grep -rl "coming soon\|Matchup analysis coming\|TBD\|TBA" --include="*.html" . 2>/dev/null | grep -v node_modules || true)
-          if [ -n "$PLACEHOLDERS" ]; then
-            echo "⚠️ WARNING: Placeholder content found in:"
-            echo "$PLACEHOLDERS"
-            echo "placeholder_found=true" >> $GITHUB_OUTPUT
-          else
-            echo "✅ No placeholder content found"
-            echo "placeholder_found=false" >> $GITHUB_OUTPUT
-          fi
+          echo "🔍 Validating content..."
+          python scripts/validate_content.py
+        continue-on-error: false
 
       - name: Commit and push fixes
+        if: github.event_name == 'push'
         run: |
           git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.name "GitHub Action Bot"
           git add -A
           if git diff --staged --quiet; then
-            echo "No changes to commit"
+            echo "✅ No changes needed"
           else
-            git commit -m "🤖 Auto-fix: Sync calendars and fix college logos"
+            git commit -m "🤖 Auto-fix: Sync calendars, fix logos, validate content"
             git push
           fi
