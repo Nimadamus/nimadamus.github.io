@@ -13,17 +13,17 @@ const ARCHIVE_DATA = [
     { date: "2025-12-05", page: "nfl-page14.html", title: "NFL Week 14 TNF - December 5, 2025" }
 ];
 
-const dateMap = {{}};
-ARCHIVE_DATA.forEach(item => {{ if (!dateMap[item.date]) dateMap[item.date] = item; }});
+const dateMap = {};
+ARCHIVE_DATA.forEach(item => { if (!dateMap[item.date]) dateMap[item.date] = item; });
 
-const pageToDateMap = {{}};
-ARCHIVE_DATA.forEach(item => {{ pageToDateMap[item.page] = item.date; }});
+const pageToDateMap = {};
+ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });
 
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 const currentPageDate = pageToDateMap[currentPage] || null;
 
 const months = new Set();
-ARCHIVE_DATA.forEach(item => {{ const [y, m] = item.date.split('-'); months.add(y + '-' + m); }});
+ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });
 
 const today = new Date();
 const currentMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
@@ -34,9 +34,9 @@ const sortedMonths = Array.from(months).sort().reverse();
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 let displayMonth = currentMonth;
-if (currentPageDate) {{ const [py, pm] = currentPageDate.split('-'); displayMonth = py + '-' + pm; }}
+if (currentPageDate) { const [py, pm] = currentPageDate.split('-'); displayMonth = py + '-' + pm; }
 
-function renderCalendar(yearMonth) {{
+function renderCalendar(yearMonth) {
     const [year, month] = yearMonth.split('-').map(Number);
     const yearEl = document.getElementById('cal-year');
     if (yearEl) yearEl.textContent = year;
@@ -45,8 +45,8 @@ function renderCalendar(yearMonth) {{
     const container = document.getElementById('calendar-days');
     if (!container) return;
     container.innerHTML = '';
-    for (let i = 0; i < firstDay; i++) {{ const cell = document.createElement('div'); cell.className = 'cal-day empty'; container.appendChild(cell); }}
-    for (let d = 1; d <= daysInMonth; d++) {{
+    for (let i = 0; i < firstDay; i++) { const cell = document.createElement('div'); cell.className = 'cal-day empty'; container.appendChild(cell); }
+    for (let d = 1; d <= daysInMonth; d++) {
         const dateStr = year + '-' + String(month).padStart(2, '0') + '-' + String(d).padStart(2, '0');
         const hasData = dateMap[dateStr];
         let classes = 'cal-day';
@@ -56,40 +56,40 @@ function renderCalendar(yearMonth) {{
         const cell = document.createElement('div');
         cell.className = classes;
         cell.textContent = d;
-        if (hasData) {{ cell.title = hasData.title; cell.onclick = () => window.location.href = hasData.page; }}
+        if (hasData) { cell.title = hasData.title; cell.onclick = () => window.location.href = hasData.page; }
         container.appendChild(cell);
-    }}
-}}
+    }
+}
 
-function initSportCalendar() {{
+function initSportCalendar() {
     const monthSelect = document.getElementById('month-select');
-    if (monthSelect) {{
+    if (monthSelect) {
         monthSelect.innerHTML = '';
-        sortedMonths.forEach(m => {{
+        sortedMonths.forEach(m => {
             const [year, month] = m.split('-');
             const opt = document.createElement('option');
             opt.value = m;
             opt.textContent = monthNames[parseInt(month) - 1] + ' ' + year;
             if (m === displayMonth) opt.selected = true;
             monthSelect.appendChild(opt);
-        }});
-        monthSelect.addEventListener('change', function() {{ renderCalendar(this.value); }});
-    }}
+        });
+        monthSelect.addEventListener('change', function() { renderCalendar(this.value); });
+    }
     renderCalendar(displayMonth);
     const mobileSelect = document.getElementById('mobile-archive-select');
-    if (mobileSelect) {{
+    if (mobileSelect) {
         mobileSelect.innerHTML = '<option value="">Select a date...</option>';
-        ARCHIVE_DATA.forEach(item => {{
+        ARCHIVE_DATA.forEach(item => {
             const opt = document.createElement('option');
             opt.value = item.page;
             const dateObj = new Date(item.date + 'T12:00:00');
-            const dateLabel = dateObj.toLocaleDateString('en-US', {{ weekday: 'short', month: 'short', day: 'numeric' }});
+            const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
             opt.textContent = dateLabel + ' - ' + item.title;
             if (item.page === currentPage) opt.selected = true;
             mobileSelect.appendChild(opt);
-        }});
-        mobileSelect.addEventListener('change', (e) => {{ if (e.target.value) window.location.href = e.target.value; }});
-    }}
-}}
+        });
+        mobileSelect.addEventListener('change', (e) => { if (e.target.value) window.location.href = e.target.value; });
+    }
+}
 
-if (document.readyState === 'loading') {{ document.addEventListener('DOMContentLoaded', initSportCalendar); }} else {{ initSportCalendar(); }}
+if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initSportCalendar); } else { initSportCalendar(); }
