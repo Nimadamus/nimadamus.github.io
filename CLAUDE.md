@@ -6,6 +6,55 @@
 
 ---
 
+## ⛔⛔⛔ MANDATORY POSTING WORKFLOW - FOLLOW EVERY TIME ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 23, 2025
+
+**EVERY time I create or edit sports content, I MUST follow this workflow:**
+
+### BEFORE WRITING:
+```
+1. SEARCH to verify current info (team records, injuries, rosters)
+2. COUNT all games on the schedule for that date
+3. VERIFY every player is on the correct team
+4. NEVER rely on memory - ALWAYS search first
+```
+
+### WHILE WRITING:
+```
+1. Write 2-3 paragraphs MINIMUM per game
+2. Include SPECIFIC stats, players, storylines
+3. Use CONVERSATIONAL tone (contractions, opinions)
+4. NEVER write "coming soon", "TBD", "TBA", or any placeholder
+5. Use NUMERIC ESPN IDs for college logos (not abbreviations)
+```
+
+### BEFORE COMMITTING:
+```
+1. RUN: python scripts/pre_post_check.py
+2. RUN: python scripts/validate_content.py
+3. FIX any errors found
+4. ONLY commit when both scripts pass
+```
+
+### AFTER COMMITTING:
+```
+1. RUN: python scripts/sync_calendars.py
+2. COMMIT the calendar updates
+3. PUSH to GitHub
+4. VERIFY on live site
+```
+
+### THE PRE-COMMIT HOOK:
+A git pre-commit hook is now installed that will BLOCK commits containing:
+- Placeholder text ("coming soon", etc.)
+- Non-numeric college logos
+- Wrong navigation text
+
+**If a commit is blocked, FIX the issues before trying again.**
+
+---
+
 ## ⛔⛔⛔ SPORTS PAGES = PREGAME ANALYSIS ONLY ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - DECEMBER 21, 2025
