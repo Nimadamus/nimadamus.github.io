@@ -144,6 +144,7 @@
         <a href="nba-records.html" title="NBA Betting Records">NBA</a>
 <a href="ncaab-records.html" title="College Basketball Betting Records">NCAAB</a>
 <a href="soccer-records.html" title="Soccer Betting Records">Soccer</a>
+<a href="crosssport-parlays-records.html" title="Cross-Sport Parlay Records">Cross-Sport Parlays</a>
         </div>
         </div>
 
@@ -240,6 +241,38 @@
     // Global storage for all picks (for year filtering)
     let allProcessedPicks = [];
     let currentYearFilter = '2025'; // Default to 2025
+
+    // Team arrays for cross-sport parlay detection
+    const NFL_TEAMS = ['49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jags', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings', 'washington'];
+    const CFB_TEAMS = ['crimson tide', 'alabama', 'tigers', 'auburn', 'bulldogs', 'georgia', 'gators', 'florida', 'volunteers', 'tennessee', 'gamecocks', 'south carolina', 'commodores', 'vanderbilt', 'wildcats', 'kentucky', 'razorbacks', 'arkansas', 'rebels', 'ole miss', 'aggies', 'texas a&m', 'longhorns', 'texas', 'sooners', 'oklahoma', 'buckeyes', 'ohio state', 'wolverines', 'michigan', 'spartans', 'michigan state', 'nittany lions', 'penn state', 'hawkeyes', 'iowa', 'badgers', 'wisconsin', 'gophers', 'minnesota', 'cornhuskers', 'nebraska', 'fighting irish', 'notre dame', 'trojans', 'usc', 'bruins', 'ucla', 'ducks', 'oregon', 'huskies', 'washington', 'cougars', 'washington state', 'beavers', 'oregon state', 'sun devils', 'arizona state', 'buffaloes', 'colorado', 'utes', 'utah', 'seminoles', 'florida state', 'hurricanes', 'miami', 'hokies', 'virginia tech', 'cavaliers', 'virginia', 'tar heels', 'north carolina', 'blue devils', 'duke', 'demon deacons', 'wake forest', 'wolfpack', 'nc state', 'cardinals', 'louisville', 'orange', 'syracuse', 'panthers', 'pitt', 'yellow jackets', 'georgia tech', 'hoosiers', 'indiana', 'boilermakers', 'purdue', 'terrapins', 'maryland', 'scarlet knights', 'rutgers', 'illini', 'illinois', 'wildcats', 'northwestern', 'mustangs', 'smu', 'horned frogs', 'tcu', 'red raiders', 'texas tech', 'jayhawks', 'kansas', 'cyclones', 'iowa state', 'mountaineers', 'west virginia', 'bearcats', 'cincinnati', 'cougars', 'houston', 'knights', 'ucf', 'bulls', 'usf', 'owls', 'temple', 'midshipmen', 'navy', 'black knights', 'army', 'falcons', 'air force', 'bulldogs', 'fresno state', 'aztecs', 'san diego state', 'wolf pack', 'nevada', 'rebels', 'unlv', 'broncos', 'boise state', 'cowboys', 'wyoming', 'rams', 'colorado state', 'aggies', 'utah state', 'lobos', 'new mexico', 'rainbow warriors', 'hawaii', 'spartans', 'san jose state', 'cfb', 'college football', 'ncaaf'];
+    const NBA_TEAMS = ['lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat', 'bulls', 'mavericks', 'mavs', 'spurs', 'rockets', 'suns', 'bucks', 'sixers', '76ers', 'raptors', 'thunder', 'okc', 'jazz', 'nuggets', 'trail blazers', 'blazers', 'timberwolves', 'wolves', 'pelicans', 'grizzlies', 'kings', 'clippers', 'hawks', 'hornets', 'magic', 'pistons', 'pacers', 'cavaliers', 'cavs', 'wizards'];
+    const NHL_TEAMS = ['bruins', 'sabres', 'red wings', 'panthers', 'canadiens', 'habs', 'senators', 'sens', 'lightning', 'bolts', 'maple leafs', 'leafs', 'hurricanes', 'canes', 'blue jackets', 'jackets', 'devils', 'islanders', 'isles', 'rangers', 'flyers', 'penguins', 'pens', 'capitals', 'caps', 'blackhawks', 'hawks', 'avalanche', 'avs', 'stars', 'wild', 'predators', 'preds', 'blues', 'jets', 'ducks', 'flames', 'oilers', 'kings', 'sharks', 'kraken', 'canucks', 'golden knights', 'knights', 'coyotes'];
+    const MLB_TEAMS = ['yankees', 'red sox', 'blue jays', 'rays', 'orioles', 'white sox', 'guardians', 'tigers', 'royals', 'twins', 'astros', 'angels', 'athletics', 'mariners', 'rangers', 'mets', 'phillies', 'braves', 'marlins', 'nationals', 'cubs', 'cardinals', 'brewers', 'reds', 'pirates', 'dodgers', 'giants', 'padres', 'diamondbacks', 'd-backs', 'rockies'];
+
+    // Detect which sports are in a pick
+    function detectSports(pickText) {
+        const text = pickText.toLowerCase();
+        const sports = new Set();
+        if (text.includes('(nfl)') || text.includes('nfl ')) sports.add('NFL');
+        if (text.includes('(cfb)') || text.includes('(ncaaf)') || text.includes('college football') || text.includes('cfb ') || text.includes('ncaaf ')) sports.add('CFB');
+        if (text.includes('(nba)') || text.includes('nba ')) sports.add('NBA');
+        if (text.includes('(nhl)') || text.includes('nhl ')) sports.add('NHL');
+        if (text.includes('(mlb)') || text.includes('mlb ')) sports.add('MLB');
+        for (const team of NFL_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('NFL'); break; } }
+        for (const team of CFB_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('CFB'); break; } }
+        for (const team of NBA_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('NBA'); break; } }
+        for (const team of NHL_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('NHL'); break; } }
+        for (const team of MLB_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('MLB'); break; } }
+        return Array.from(sports);
+    }
+
+    // Check if a pick is a cross-sport parlay (should be excluded from single-sport pages)
+    function isCrossSportParlay(pickText) {
+        const text = pickText.toLowerCase();
+        if (!text.includes('parlay')) return false;
+        const sports = detectSports(pickText);
+        return sports.length > 1;
+    }
 
     // Function to parse CSV data - handles blank headers and normalizes column names
     function parseCSV(csv) {
@@ -430,7 +463,9 @@
                 }
             }).filter(p => p !== null).sort((a, b) => b.parsedDate - a.parsedDate);
 
-            allProcessedPicks = processedPicks;
+            // Filter out cross-sport parlays (they go on the cross-sport parlays page)
+            const singleSportPicks = processedPicks.filter(p => !isCrossSportParlay(p.Pick));
+            allProcessedPicks = singleSportPicks;
             displayFilteredPicks(currentYearFilter);
 
         } catch (e) {
