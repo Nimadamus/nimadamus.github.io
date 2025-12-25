@@ -287,75 +287,46 @@
         return values;
     }
 
-    // Detect which sports are in a pick
-    function detectSports(pickText) {
+    // Detect sports ONLY from explicit tags in parentheses
+    // This prevents false positives from team name overlaps (e.g., "Bears" matching both NFL and CFB)
+    function detectSportsFromTags(pickText) {
         const text = pickText.toLowerCase();
         const sports = new Set();
 
-        // Check for NFL teams
-        for (const team of NFL_TEAMS) {
-            if (text.includes(team)) {
-                sports.add('NFL');
-                break;
-            }
-        }
-
-        // Check for CFB teams
-        for (const team of CFB_TEAMS) {
-            if (text.includes(team)) {
-                sports.add('CFB');
-                break;
-            }
-        }
-
-        // Check for NBA teams
-        for (const team of NBA_TEAMS) {
-            if (text.includes(team)) {
-                sports.add('NBA');
-                break;
-            }
-        }
-
-        // Check for NHL teams
-        for (const team of NHL_TEAMS) {
-            if (text.includes(team)) {
-                sports.add('NHL');
-                break;
-            }
-        }
-
-        // Also check for explicit sport mentions in parentheses
-        if (text.includes('(nfl)') || text.includes('nfl ')) sports.add('NFL');
-        if (text.includes('(cfb)') || text.includes('(ncaaf)') || text.includes('cfb ') || text.includes('ncaaf ')) sports.add('CFB');
-        if (text.includes('(nba)') || text.includes('nba ')) sports.add('NBA');
-        if (text.includes('(nhl)') || text.includes('nhl ')) sports.add('NHL');
-        if (text.includes('(mlb)') || text.includes('mlb ')) sports.add('MLB');
-        if (text.includes('(ncaab)') || text.includes('(cbb)') || text.includes('ncaab ') || text.includes('college basketball')) sports.add('NCAAB');
-        if (text.includes('(soccer)') || text.includes('(mls)') || text.includes('soccer ')) sports.add('Soccer');
+        // ONLY check for explicit sport tags in parentheses - no team name matching
+        if (text.includes('(nfl)')) sports.add('NFL');
+        if (text.includes('(cfb)') || text.includes('(ncaaf)')) sports.add('CFB');
+        if (text.includes('(nba)')) sports.add('NBA');
+        if (text.includes('(nhl)')) sports.add('NHL');
+        if (text.includes('(mlb)')) sports.add('MLB');
+        if (text.includes('(ncaab)') || text.includes('(cbb)')) sports.add('NCAAB');
+        if (text.includes('(soccer)') || text.includes('(mls)')) sports.add('Soccer');
 
         return Array.from(sports);
     }
 
     // Check if a pick is a cross-sport parlay
+    // ONLY uses explicit sport tags to avoid false positives
     function isCrossSportParlay(pickText) {
         const text = pickText.toLowerCase();
         // Must be a parlay (not a teaser)
         if (!text.includes('parlay')) return false;
         if (text.includes('teaser')) return false;
 
-        const sports = detectSports(pickText);
-        // Must involve more than one sport
+        const sports = detectSportsFromTags(pickText);
+        // Must have explicit tags for 2+ different sports
         return sports.length > 1;
     }
 
     // Check if a pick is a cross-sport teaser
+    // ONLY uses explicit sport tags to avoid false positives
     function isCrossSportTeaser(pickText) {
         const text = pickText.toLowerCase();
         // Must be a teaser
         if (!text.includes('teaser')) return false;
 
-        const sports = detectSports(pickText);
-        // Must involve more than one sport
+        const sports = detectSportsFromTags(pickText);
+        // Must have explicit tags for 2+ different sports
         return sports.length > 1;
     }
 
@@ -452,7 +423,7 @@
                 }
             }
 
-            const sports = detectSports(pickText);
+            const sports = detectSportsFromTags(pickText);
             const dateParts = p.Date.split(/[-/]/);
             const parsedDate = dateParts.length === 3
                 ? new Date(dateParts[2], dateParts[0] - 1, dateParts[1])
