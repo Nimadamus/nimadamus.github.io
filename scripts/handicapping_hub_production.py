@@ -2681,11 +2681,132 @@ def fetch_all_games() -> Dict[str, List]:
 
     return all_games
 
+def score_game_importance(game: Dict, sport: str) -> int:
+    """Score a game's importance for featured game selection.
+    Higher score = more important game.
+    """
+    score = 0
+
+    # Get game info
+    network = game.get('network', '').upper()
+    game_time = game.get('time', '')
+    away_data = game.get('away', {})
+    home_data = game.get('home', {})
+    odds = game.get('odds', {})
+
+    # National TV bonus (major networks)
+    if any(n in network for n in ['ESPN', 'ABC', 'FOX', 'NBC', 'CBS', 'TNT', 'NBCSN']):
+        score += 50
+    if 'MNF' in network or 'SNF' in network or 'TNF' in network:
+        score += 30  # Primetime NFL
+
+    # Primetime bonus (games after 7 PM ET)
+    if any(t in game_time for t in ['7:', '8:', '9:', '10:']):
+        score += 25
+
+    # Sport priority
+    sport_priority = {'NFL': 40, 'NCAAF': 35, 'NBA': 30, 'NHL': 25, 'NCAAB': 20}
+    score += sport_priority.get(sport, 10)
+
+    # Close spread = competitive game
+    spread = odds.get('spread', {})
+    home_spread = spread.get('home', 0)
+    if isinstance(home_spread, (int, float)):
+        if abs(home_spread) <= 3:
+            score += 20  # Pick'em or close game
+        elif abs(home_spread) <= 7:
+            score += 10  # Competitive spread
+
+    # Good teams bonus (winning records)
+    away_record = away_data.get('record', '0-0')
+    home_record = home_data.get('record', '0-0')
+    try:
+        away_wins = int(away_record.split('-')[0])
+        home_wins = int(home_record.split('-')[0])
+        if away_wins >= 8 and home_wins >= 8:
+            score += 25  # Both teams winning
+        elif away_wins >= 6 and home_wins >= 6:
+            score += 15
+    except:
+        pass
+
+    # Bowl game bonus for NCAAF
+    if sport == 'NCAAF':
+        game_name = game.get('name', '').lower()
+        if any(b in game_name for b in ['bowl', 'playoff', 'championship']):
+            score += 40
+
+    return score
+
+def generate_quick_take(away_data: Dict, home_data: Dict, odds: Dict, sport: str) -> str:
+    """Generate a quick analysis take for the featured game."""
+    away_abbr = away_data.get('abbr', 'AWAY')
+    home_abbr = home_data.get('abbr', 'HOME')
+    away_stats = away_data.get('stats', {})
+    home_stats = home_data.get('stats', {})
+
+    spread = odds.get('spread', {})
+    home_spread = spread.get('home', 0)
+    total = odds.get('total', 0)
+
+    takes = []
+
+    # Analyze scoring
+    if sport in ['NBA', 'NFL', 'NCAAF', 'NCAAB']:
+        away_ppg = away_stats.get('ppg', 0)
+        home_ppg = home_stats.get('ppg', 0)
+        try:
+            away_ppg_val = float(away_ppg) if away_ppg and away_ppg != '-' else 0
+            home_ppg_val = float(home_ppg) if home_ppg and home_ppg != '-' else 0
+            total_val = float(total) if total and total != 'N/A' else 0
+
+            combined_ppg = away_ppg_val + home_ppg_val
+            if total_val > 0 and combined_ppg > total_val + 5:
+                takes.append(f"Combined PPG ({combined_ppg:.1f}) suggests value on the OVER {total_val}")
+            elif total_val > 0 and combined_ppg < total_val - 5:
+                takes.append(f"Combined PPG ({combined_ppg:.1f}) points to the UNDER {total_val}")
+        except:
+            pass
+
+    # Analyze spread
+    try:
+        home_spread_val = float(home_spread) if isinstance(home_spread, (int, float)) else 0
+        if abs(home_spread_val) <= 2.5:
+            takes.append(f"Pick'em game - expect a close contest")
+        elif home_spread_val < -10:
+            takes.append(f"{home_abbr} heavy favorite at home by double digits")
+        elif home_spread_val > 10:
+            takes.append(f"{away_abbr} road favorite by double digits - upset alert?")
+    except:
+        pass
+
+    # Analyze efficiency (NFL/NCAAF)
+    if sport in ['NFL', 'NCAAF']:
+        away_ypg = away_stats.get('ypg', '-')
+        home_ypg = home_stats.get('ypg', '-')
+        try:
+            if away_ypg != '-' and home_ypg != '-':
+                away_ypg_val = float(away_ypg)
+                home_ypg_val = float(home_ypg)
+                if away_ypg_val > home_ypg_val + 50:
+                    takes.append(f"{away_abbr} offense averaging {away_ypg} YPG - significant edge")
+                elif home_ypg_val > away_ypg_val + 50:
+                    takes.append(f"{home_abbr} offense rolling at {home_ypg} YPG")
+        except:
+            pass
+
+    # Default take
+    if not takes:
+        takes.append("Marquee matchup - check the Handicapping Hub for full analysis")
+
+    return takes[0]
+
 def update_index_featured_game(all_games: Dict) -> bool:
     """Update the featured game on index.html with today's most notable game.
 
     This function updates the homepage preview panel to show the best game of the day.
     It uses the actual HTML structure with inline styles that matches the BetLegend homepage.
+    Enhanced: More detailed stats, ATS/O-U info, quick take analysis.
     """
     print("\n[INDEX] Updating featured game on index.html...")
 
@@ -2694,32 +2815,22 @@ def update_index_featured_game(all_games: Dict) -> bool:
         print("  [ERROR] index.html not found")
         return False
 
-    # Find the best game to feature
-    # Priority: NFL primetime > NBA primetime > NHL > NCAAF bowl > NCAAB
+    # Find the best game to feature using importance scoring
     featured_game = None
     featured_sport = None
+    best_score = -1
 
-    # Check for primetime games first (games after 7 PM ET)
     for sport in ['NFL', 'NBA', 'NHL', 'NCAAF', 'NCAAB']:
         games = all_games.get(sport, [])
         for game in games:
-            game_time = game.get('time', '')
-            # Look for late games (primetime)
-            if any(t in game_time for t in ['7:', '8:', '9:', '10:']):
+            score = score_game_importance(game, sport)
+            if score > best_score:
+                best_score = score
                 featured_game = game
                 featured_sport = sport
-                break
-        if featured_game:
-            break
 
-    # If no primetime, get first available game
-    if not featured_game:
-        for sport in ['NFL', 'NBA', 'NHL', 'NCAAF', 'NCAAB']:
-            games = all_games.get(sport, [])
-            if games:
-                featured_game = games[0]
-                featured_sport = sport
-                break
+    if featured_game:
+        print(f"  [SELECT] Best game score: {best_score}")
 
     if not featured_game:
         print("  [INFO] No games found for today - keeping existing featured game")
@@ -2826,6 +2937,33 @@ def update_index_featured_game(all_games: Dict) -> bool:
         else:
             home_inj_str = "No key injuries"
 
+        # Get additional stats for enhanced display
+        # Yards per game for football, FG% for basketball, goals for hockey
+        if featured_sport in ['NFL', 'NCAAF']:
+            away_extra1 = away_stats.get('ypg', '-')
+            home_extra1 = home_stats.get('ypg', '-')
+            extra1_label = 'YPG'
+            away_extra2 = away_stats.get('rush_ypg', '-')
+            home_extra2 = home_stats.get('rush_ypg', '-')
+            extra2_label = 'Rush YPG'
+        elif featured_sport in ['NBA', 'NCAAB']:
+            away_extra1 = away_stats.get('fg_pct', '-')
+            home_extra1 = home_stats.get('fg_pct', '-')
+            extra1_label = 'FG%'
+            away_extra2 = away_stats.get('three_pct', '-')
+            home_extra2 = home_stats.get('three_pct', '-')
+            extra2_label = '3P%'
+        else:  # NHL
+            away_extra1 = away_stats.get('gf', '-')
+            home_extra1 = home_stats.get('gf', '-')
+            extra1_label = 'GF'
+            away_extra2 = away_stats.get('ga', '-')
+            home_extra2 = home_stats.get('ga', '-')
+            extra2_label = 'GA'
+
+        # Generate quick take analysis
+        quick_take = generate_quick_take(away_data, home_data, odds, featured_sport)
+
         # Build the new featured game HTML matching BetLegend homepage style
         new_featured = f'''            <!-- RIGHT: Featured Game Preview -->
             <div class="hero-right" style="padding: 0; overflow: hidden;">
@@ -2888,26 +3026,42 @@ def update_index_featured_game(all_games: Dict) -> bool:
                 <!-- Key Stats Comparison -->
                 <div style="padding: 15px 20px; background: rgba(0,0,0,0.2);">
                     <div style="font-family: var(--font-primary); font-size: 0.75rem; color: #ff6b00; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; font-weight: 600;">Key Stats</div>
-                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center;">
-                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 1rem;">{away_ppg}</div>
-                        <div style="text-align: center; font-size: 0.7rem; color: #888; text-transform: uppercase; padding: 0 10px;">PPG</div>
-                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 1rem;">{home_ppg}</div>
+                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 6px; align-items: center;">
+                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 0.95rem;">{away_ppg}</div>
+                        <div style="text-align: center; font-size: 0.65rem; color: #888; text-transform: uppercase; padding: 0 8px;">PPG</div>
+                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 0.95rem;">{home_ppg}</div>
 
-                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 1rem;">{away_opp}</div>
-                        <div style="text-align: center; font-size: 0.7rem; color: #888; text-transform: uppercase; padding: 0 10px;">Opp PPG</div>
-                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 1rem;">{home_opp}</div>
+                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 0.95rem;">{away_opp}</div>
+                        <div style="text-align: center; font-size: 0.65rem; color: #888; text-transform: uppercase; padding: 0 8px;">Opp PPG</div>
+                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 0.95rem;">{home_opp}</div>
 
-                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 1rem;">{away_record}</div>
-                        <div style="text-align: center; font-size: 0.7rem; color: #888; text-transform: uppercase; padding: 0 10px;">Record</div>
-                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 1rem;">{home_record}</div>
+                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 0.95rem;">{away_extra1}</div>
+                        <div style="text-align: center; font-size: 0.65rem; color: #888; text-transform: uppercase; padding: 0 8px;">{extra1_label}</div>
+                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 0.95rem;">{home_extra1}</div>
+
+                        <div style="text-align: right; font-weight: 700; color: #fff; font-size: 0.95rem;">{away_extra2}</div>
+                        <div style="text-align: center; font-size: 0.65rem; color: #888; text-transform: uppercase; padding: 0 8px;">{extra2_label}</div>
+                        <div style="text-align: left; font-weight: 700; color: #fff; font-size: 0.95rem;">{home_extra2}</div>
+
+                        <div style="text-align: right; font-weight: 700; color: #39FF14; font-size: 0.95rem;">{away_record}</div>
+                        <div style="text-align: center; font-size: 0.65rem; color: #888; text-transform: uppercase; padding: 0 8px;">Record</div>
+                        <div style="text-align: left; font-weight: 700; color: #39FF14; font-size: 0.95rem;">{home_record}</div>
                     </div>
                 </div>
 
-                <!-- Trends & Injuries -->
-                <div style="padding: 15px 20px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,107,0,0.1)); border-top: 1px solid rgba(255,215,0,0.3);">
-                    <div style="font-family: var(--font-primary); font-size: 0.75rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 600;">Injuries</div>
-                    <div style="font-size: 0.85rem; color: #ddd; line-height: 1.6;">
-                        <div style="margin-bottom: 6px;"><span style="color: #ff6b00; font-weight: 600;">{away_abbr}:</span> {away_inj_str}</div>
+                <!-- Quick Take Analysis -->
+                <div style="padding: 12px 20px; background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(0,200,100,0.1)); border-top: 1px solid rgba(57,255,20,0.3);">
+                    <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #39FF14; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 600;">Quick Take</div>
+                    <div style="font-size: 0.85rem; color: #ddd; line-height: 1.5; font-style: italic;">
+                        "{quick_take}"
+                    </div>
+                </div>
+
+                <!-- Injuries -->
+                <div style="padding: 12px 20px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,107,0,0.1)); border-top: 1px solid rgba(255,215,0,0.3);">
+                    <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 600;">Injuries</div>
+                    <div style="font-size: 0.8rem; color: #ddd; line-height: 1.5;">
+                        <div style="margin-bottom: 4px;"><span style="color: #ff6b00; font-weight: 600;">{away_abbr}:</span> {away_inj_str}</div>
                         <div><span style="color: #ff6b00; font-weight: 600;">{home_abbr}:</span> {home_inj_str}</div>
                     </div>
                 </div>
