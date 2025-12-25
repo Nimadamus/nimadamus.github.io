@@ -250,22 +250,17 @@
     const MLB_TEAMS = ['yankees', 'red sox', 'blue jays', 'rays', 'orioles', 'white sox', 'guardians', 'tigers', 'royals', 'twins', 'astros', 'angels', 'athletics', 'mariners', 'rangers', 'mets', 'phillies', 'braves', 'marlins', 'nationals', 'cubs', 'cardinals', 'brewers', 'reds', 'pirates', 'dodgers', 'giants', 'padres', 'diamondbacks', 'd-backs', 'rockies'];
     const NCAAB_TEAMS = ['blue devils', 'duke', 'tar heels', 'north carolina', 'unc', 'wolfpack', 'nc state', 'demon deacons', 'wake forest', 'cavaliers', 'virginia', 'hokies', 'virginia tech', 'orange', 'syracuse', 'cardinals', 'louisville', 'panthers', 'pitt', 'hurricanes', 'miami', 'seminoles', 'florida state', 'yellow jackets', 'georgia tech', 'wildcats', 'kentucky', 'volunteers', 'tennessee', 'gators', 'florida', 'bulldogs', 'georgia', 'crimson tide', 'alabama', 'tigers', 'auburn', 'gamecocks', 'south carolina', 'razorbacks', 'arkansas', 'rebels', 'ole miss', 'aggies', 'texas a&m', 'commodores', 'vanderbilt', 'longhorns', 'texas', 'sooners', 'oklahoma', 'jayhawks', 'kansas', 'bears', 'baylor', 'red raiders', 'texas tech', 'horned frogs', 'tcu', 'cyclones', 'iowa state', 'mountaineers', 'west virginia', 'wildcats', 'kansas state', 'cowboys', 'oklahoma state', 'buckeyes', 'ohio state', 'wolverines', 'michigan', 'spartans', 'michigan state', 'hoosiers', 'indiana', 'boilermakers', 'purdue', 'hawkeyes', 'iowa', 'badgers', 'wisconsin', 'gophers', 'minnesota', 'nittany lions', 'penn state', 'terrapins', 'maryland', 'scarlet knights', 'rutgers', 'illini', 'illinois', 'wildcats', 'northwestern', 'cornhuskers', 'nebraska', 'bruins', 'ucla', 'trojans', 'usc', 'sun devils', 'arizona state', 'wildcats', 'arizona', 'buffaloes', 'colorado', 'utes', 'utah', 'ducks', 'oregon', 'beavers', 'oregon state', 'huskies', 'washington', 'cougars', 'washington state', 'cardinal', 'stanford', 'golden bears', 'cal', 'zags', 'gonzaga', 'gaels', 'st marys', 'pilots', 'portland', 'dons', 'san francisco', 'waves', 'pepperdine', 'lions', 'loyola marymount', 'toreros', 'san diego', 'broncos', 'santa clara', 'tigers', 'pacific', 'bluejays', 'creighton', 'pirates', 'seton hall', 'red storm', 'st johns', 'friars', 'providence', 'wildcats', 'villanova', 'hoyas', 'georgetown', 'musketeers', 'xavier', 'bulldogs', 'butler', 'golden eagles', 'marquette', 'huskies', 'uconn'];
 
-    // Detect which sports are in a pick
+    // Detect sports ONLY from explicit tags in parentheses
     function detectSports(pickText) {
         const text = pickText.toLowerCase();
         const sports = new Set();
-        if (text.includes('(nfl)') || text.includes('nfl ')) sports.add('NFL');
-        if (text.includes('(cfb)') || text.includes('(ncaaf)') || text.includes('college football') || text.includes('cfb ') || text.includes('ncaaf ')) sports.add('CFB');
-        if (text.includes('(nba)') || text.includes('nba ')) sports.add('NBA');
-        if (text.includes('(nhl)') || text.includes('nhl ')) sports.add('NHL');
-        if (text.includes('(mlb)') || text.includes('mlb ')) sports.add('MLB');
-        if (text.includes('(ncaab)') || text.includes('(cbb)') || text.includes('ncaab ') || text.includes('college basketball')) sports.add('NCAAB');
-        if (text.includes('(soccer)') || text.includes('(mls)') || text.includes('soccer ')) sports.add('Soccer');
-        for (const team of NFL_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('NFL'); break; } }
-        for (const team of CFB_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('CFB'); break; } }
-        for (const team of NBA_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('NBA'); break; } }
-        for (const team of NHL_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('NHL'); break; } }
-        for (const team of MLB_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('MLB'); break; } }
+        if (text.includes('(nfl)')) sports.add('NFL');
+        if (text.includes('(cfb)') || text.includes('(ncaaf)')) sports.add('CFB');
+        if (text.includes('(nba)')) sports.add('NBA');
+        if (text.includes('(nhl)')) sports.add('NHL');
+        if (text.includes('(mlb)')) sports.add('MLB');
+        if (text.includes('(ncaab)') || text.includes('(cbb)')) sports.add('NCAAB');
+        if (text.includes('(soccer)') || text.includes('(mls)')) sports.add('Soccer');
         return Array.from(sports);
     }
 

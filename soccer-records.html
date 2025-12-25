@@ -252,22 +252,17 @@
     const NHL_TEAMS = ['bruins', 'sabres', 'red wings', 'panthers', 'canadiens', 'habs', 'senators', 'sens', 'lightning', 'bolts', 'maple leafs', 'leafs', 'hurricanes', 'canes', 'blue jackets', 'jackets', 'devils', 'islanders', 'isles', 'rangers', 'flyers', 'penguins', 'pens', 'capitals', 'caps', 'blackhawks', 'hawks', 'avalanche', 'avs', 'stars', 'wild', 'predators', 'preds', 'blues', 'jets', 'ducks', 'flames', 'oilers', 'kings', 'sharks', 'kraken', 'canucks', 'golden knights', 'knights', 'coyotes'];
     const MLB_TEAMS = ['yankees', 'red sox', 'blue jays', 'rays', 'orioles', 'white sox', 'guardians', 'tigers', 'royals', 'twins', 'astros', 'angels', 'athletics', 'mariners', 'rangers', 'mets', 'phillies', 'braves', 'marlins', 'nationals', 'cubs', 'cardinals', 'brewers', 'reds', 'pirates', 'dodgers', 'giants', 'padres', 'diamondbacks', 'd-backs', 'rockies'];
 
-    // Detect which sports are in a pick
+    // Detect sports ONLY from explicit tags in parentheses
     function detectSports(pickText) {
         const text = pickText.toLowerCase();
         const sports = new Set();
-        if (text.includes('(nfl)') || text.includes('nfl ')) sports.add('NFL');
-        if (text.includes('(cfb)') || text.includes('(ncaaf)') || text.includes('college football') || text.includes('cfb ') || text.includes('ncaaf ')) sports.add('CFB');
-        if (text.includes('(nba)') || text.includes('nba ')) sports.add('NBA');
-        if (text.includes('(nhl)') || text.includes('nhl ')) sports.add('NHL');
-        if (text.includes('(mlb)') || text.includes('mlb ')) sports.add('MLB');
-        if (text.includes('(ncaab)') || text.includes('(cbb)') || text.includes('ncaab ') || text.includes('college basketball')) sports.add('NCAAB');
-        if (text.includes('(soccer)') || text.includes('soccer ') || text.includes('(mls)') || text.includes('premier league') || text.includes('la liga') || text.includes('bundesliga') || text.includes('serie a') || text.includes('ligue 1')) sports.add('Soccer');
-        for (const team of NFL_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('NFL'); break; } }
-        for (const team of CFB_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('CFB'); break; } }
-        for (const team of NBA_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('NBA'); break; } }
-        for (const team of NHL_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('NHL'); break; } }
-        for (const team of MLB_TEAMS) { if (text.includes(team.toLowerCase())) { sports.add('MLB'); break; } }
+        if (text.includes('(nfl)')) sports.add('NFL');
+        if (text.includes('(cfb)') || text.includes('(ncaaf)')) sports.add('CFB');
+        if (text.includes('(nba)')) sports.add('NBA');
+        if (text.includes('(nhl)')) sports.add('NHL');
+        if (text.includes('(mlb)')) sports.add('MLB');
+        if (text.includes('(ncaab)') || text.includes('(cbb)')) sports.add('NCAAB');
+        if (text.includes('(soccer)') || text.includes('(mls)')) sports.add('Soccer');
         return Array.from(sports);
     }
 
