@@ -513,6 +513,11 @@ tbody tr:hover {
 .dropdown:hover .dropdown-content{display:block}
 .dropdown.active .dropdown-content{display:block}
 .dropdown.active .dropbtn{color:#FFD700}
+/* Year Filter Tabs */
+.year-filter-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+.year-filter-btn { background: rgba(26, 26, 26, 0.9); border: 2px solid rgba(0, 224, 255, 0.3); color: #9bb3c9; padding: 15px 35px; font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; border-radius: 10px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
+.year-filter-btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 20px rgba(0, 224, 255, 0.3); transform: translateY(-2px); }
+.year-filter-btn.active { background: linear-gradient(135deg, rgba(0, 224, 255, 0.2), rgba(255, 215, 0, 0.1)); border-color: var(--gold); color: #fff; box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); text-shadow: 0 0 10px var(--gold); }
 @media(max-width:768px){
 .dropdown-content{position:fixed!important;left:5%!important;right:5%!important;top:120px!important;width:90%!important;min-width:unset!important;max-height:65vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .nav-inner{padding:18px 5% 18px 5%;flex-wrap:wrap;justify-content:center}
@@ -579,6 +584,13 @@ tbody tr:hover {
         <p style="font-size: 16px; line-height: 1.8; margin-bottom: 0;">
             Finally, <strong style="color: var(--red);">Confidence 6 plays are our MAX BET selections at 3 units</strong>—these represent the absolute highest conviction picks where we've identified exceptional value through comprehensive statistical modeling, situational analysis, and market inefficiencies. This tiered unit system allows bettors to scale their risk appropriately while maximizing returns on our most thoroughly researched picks across NFL, NBA, NHL, MLB, NCAAF, and Soccer betting markets.
         </p>
+    </div>
+
+    <!-- Year Filter Tabs -->
+    <div class="year-filter-container">
+        <button class="year-filter-btn active" data-year="2025">2025</button>
+        <button class="year-filter-btn" data-year="2026">2026</button>
+        <button class="year-filter-btn" data-year="all">All Time</button>
     </div>
 
     <!-- Overall Summary Cards -->
@@ -865,6 +877,37 @@ const SHEET_URLS = {
 };
 
 let allData = [];
+let filteredData = []; // Data filtered by year
+let currentYearFilter = '2025'; // Default to 2025
+
+// Extract year from date string
+function extractYear(dateStr) {
+    if (!dateStr) return null;
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return null;
+    return date.getFullYear();
+}
+
+// Filter data by year
+function filterDataByYear(data, yearFilter) {
+    if (yearFilter === 'all') return data;
+    const targetYear = parseInt(yearFilter, 10);
+    return data.filter(row => {
+        const dateStr = row.Date || row.date || '';
+        const year = extractYear(dateStr);
+        return year === targetYear;
+    });
+}
+
+// Re-render all stats with filtered data
+function renderAllStats() {
+    filteredData = filterDataByYear(allData, currentYearFilter);
+    calculateOverallStats();
+    calculateSportBreakdown();
+    calculateBetTypeBreakdown();
+    calculateMonthlyBreakdown();
+    calculateUnitSizingBreakdown();
+}
 
 async function fetchAllData() {
     const promises = Object.entries(SHEET_URLS).map(async ([sheetSport, url]) => {
@@ -1032,7 +1075,7 @@ function parseCSVLine(line) {
 
 function calculateOverallStats() {
     // Use actual bet sizes for accurate ROI calculation
-    const stats = calculateStats(allData, true);
+    const stats = calculateStats(filteredData, true);
     const totalPicks = stats.wins + stats.losses + stats.pushes;
 
     // Update display
@@ -1050,7 +1093,7 @@ function calculateSportBreakdown() {
     tbody.innerHTML = '';
 
     sports.forEach(sport => {
-        const sportData = allData.filter(row => row.sport === sport);
+        const sportData = filteredData.filter(row => row.sport === sport);
         if (sportData.length === 0) return;
 
         const stats = calculateStats(sportData, true);
@@ -1087,7 +1130,7 @@ function calculateBetTypeBreakdown() {
 
     // Categorize each bet type
     betTypes.forEach(betType => {
-        const typeData = allData.filter((row, index) => {
+        const typeData = filteredData.filter((row, index) => {
             if (categorizedIndices.has(index)) return false; // Skip already categorized
 
             const result = (row.Result || row.result || '').toLowerCase().trim();
@@ -1110,7 +1153,7 @@ function calculateBetTypeBreakdown() {
     });
 
     // Catch all uncategorized bets as "Other"
-    const uncategorized = allData.filter((row, index) => {
+    const uncategorized = filteredData.filter((row, index) => {
         if (categorizedIndices.has(index)) return false;
         const result = (row.Result || row.result || '').toLowerCase().trim();
         return result && result !== '' && result !== 'pending';
@@ -1138,7 +1181,7 @@ function calculateBetTypeBreakdown() {
 
     // Debug: Log total categorized vs total bets
     const totalCategorized = allBetTypes.reduce((sum, bt) => sum + bt.data.length, 0);
-    const totalBets = allData.filter(row => {
+    const totalBets = filteredData.filter(row => {
         const result = (row.Result || row.result || '').toLowerCase().trim();
         return result && result !== '' && result !== 'pending';
     }).length;
@@ -1148,7 +1191,7 @@ function calculateBetTypeBreakdown() {
 function calculateMonthlyBreakdown() {
     const monthlyData = {};
 
-    allData.forEach(row => {
+    filteredData.forEach(row => {
         const dateStr = row.Date || row.date || '';
         const date = new Date(dateStr);
         if (isNaN(date)) return;
@@ -1303,7 +1346,7 @@ function calculateUnitSizingBreakdown() {
     console.log('─────────────────────────────────────────────────────────────────');
 
     confidenceLevels.forEach(level => {
-        const levelData = allData.filter(row => {
+        const levelData = filteredData.filter(row => {
             const result = (row.Result || row.result || '').toLowerCase();
             // Only include bets with results (exclude pending)
             if (!result || result === '' || result === 'pending') {
@@ -1477,7 +1520,7 @@ function calculateTeaserBreakdown() {
     tbody.innerHTML = '';
 
     // First, get ALL teasers using EXACT same logic as Bet Type Breakdown
-    const allTeasersData = allData.filter(row => {
+    const allTeasersData = filteredData.filter(row => {
         const result = (row.Result || row.result || '').toLowerCase().trim();
         if (!result || result === '' || result === 'pending') return false;
 
@@ -1563,7 +1606,7 @@ function calculateParlayBreakdown() {
     let hasData = false;
 
     parlayTypes.forEach(parlayType => {
-        const typeData = allData.filter(row => {
+        const typeData = filteredData.filter(row => {
             const pick = (row.Pick || row.pick || '').toLowerCase();
             const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
             const searchText = pick + ' ' + betType;
@@ -1608,7 +1651,7 @@ function calculateParlayBreakdown() {
 }
 
 function calculateFiveInningBreakdown() {
-    const fiveInningData = allData.filter(row => {
+    const fiveInningData = filteredData.filter(row => {
         const pick = (row.Pick || row.pick || '').toLowerCase();
         const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
         const searchText = pick + ' ' + betType;
@@ -1660,7 +1703,7 @@ function calculateFiveInningBreakdown() {
 
 function calculateTotalBetsBreakdown() {
     // Filter for all Over/Under total bets
-    const totalBetsData = allData.filter(row => {
+    const totalBetsData = filteredData.filter(row => {
         const pick = (row.Pick || row.pick || '').toLowerCase();
         const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
         const searchText = pick + ' ' + betType;
@@ -2101,11 +2144,19 @@ async function init() {
         });
         console.log('==========================================\n');
 
-        calculateOverallStats();
-        calculateSportBreakdown();
-        calculateBetTypeBreakdown();
-        calculateMonthlyBreakdown();
-        calculateUnitSizingBreakdown();
+        // Initialize filtered data and render stats
+        renderAllStats();
+
+        // Year filter button event listeners
+        const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
+        yearFilterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                yearFilterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentYearFilter = this.getAttribute('data-year');
+                renderAllStats();
+            });
+        });
         calculateTeaserBreakdown();
         calculateParlayBreakdown();
         calculateFiveInningBreakdown();
@@ -2143,7 +2194,7 @@ async function init() {
         ];
         let unitSizingTotalWins = 0, unitSizingTotalLosses = 0, unitSizingTotalPushes = 0, unitSizingTotalCount = 0;
         confidenceLevels.forEach(level => {
-            const levelData = allData.filter(row => {
+            const levelData = filteredData.filter(row => {
                 const result = (row.Result || row.result || '').toLowerCase();
                 if (!result || result === '' || result === 'pending') return false;
                 const betSize = extractBetSize(row);
