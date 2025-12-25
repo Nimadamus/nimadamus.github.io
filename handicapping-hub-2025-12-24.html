@@ -389,6 +389,8 @@
         }
         .cal-day.has-data:hover { background: #fd5000; transform: scale(1.1); }
         .cal-day.today { background: #fd5000; color: #fff; font-weight: 800; }
+        .cal-day.current-page { background: #ffd700; color: #1a1a2e; font-weight: 800; box-shadow: 0 0 10px #ffd700; border: 2px solid #ffd700; }
+        .cal-day.current-page:hover { background: #ffc800; transform: scale(1.1); }
         .cal-day.other { opacity: 0.3; }
         @media (max-width: 600px) {
             .archive-btn { top: 60px; right: 10px; padding: 8px 12px; font-size: 0.7rem; }
@@ -8962,8 +8964,22 @@
             });
         });
 
-        // Archive Calendar
-        const archiveData = {"2025-12-20": "handicapping-hub-2025-12-20.html", "2025-12-21": "handicapping-hub-2025-12-21.html", "2025-12-22": "handicapping-hub-2025-12-22.html", "2025-12-23": "handicapping-hub.html"};
+        // Archive Calendar - Updated Dec 24, 2025
+        const archiveData = {
+            "2025-12-14": "handicapping-hub-archive/hub-2025-12-14.html",
+            "2025-12-15": "handicapping-hub-archive/hub-2025-12-15.html",
+            "2025-12-16": "handicapping-hub-archive/hub-2025-12-16.html",
+            "2025-12-17": "handicapping-hub-archive/hub-2025-12-17.html",
+            "2025-12-18": "handicapping-hub-archive/hub-2025-12-18.html",
+            "2025-12-19": "handicapping-hub-archive/hub-2025-12-19.html",
+            "2025-12-20": "handicapping-hub-2025-12-20.html",
+            "2025-12-21": "handicapping-hub-2025-12-21.html",
+            "2025-12-22": "handicapping-hub-2025-12-22.html",
+            "2025-12-23": "handicapping-hub-2025-12-23.html",
+            "2025-12-24": "handicapping-hub.html"
+        };
+        // Detect current page to highlight in calendar
+        const currentPage = window.location.pathname.split('/').pop() || 'handicapping-hub.html';
         let calDate = new Date();
         const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
@@ -8980,8 +8996,10 @@
                 const key = y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
                 const isToday = y === today.getFullYear() && m === today.getMonth() && d === today.getDate();
                 const hasData = archiveData[key];
+                const isCurrentPage = hasData && (currentPage === hasData || currentPage === hasData.split('/').pop());
                 let cls = 'cal-day';
-                if (isToday) cls += ' today';
+                if (isCurrentPage) cls += ' current-page';
+                else if (isToday) cls += ' today';
                 else if (hasData) cls += ' has-data';
                 if (hasData) h += '<div class="' + cls + '" onclick="location.href=\'' + hasData + '\'">' + d + '</div>';
                 else h += '<div class="' + cls + '">' + d + '</div>';

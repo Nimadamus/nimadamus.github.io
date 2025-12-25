@@ -4729,8 +4729,10 @@
                 const key = y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
                 const isToday = y === today.getFullYear() && m === today.getMonth() && d === today.getDate();
                 const hasData = archiveData[key];
+                const isCurrentPage = hasData && (currentPage === hasData || currentPage === hasData.split('/').pop());
                 let cls = 'cal-day';
-                if (isToday) cls += ' today';
+                if (isCurrentPage) cls += ' current-page';
+                else if (isToday) cls += ' today';
                 else if (hasData) cls += ' has-data';
                 if (hasData) h += '<div class="' + cls + '" onclick="location.href=\'' + hasData + '\'">' + d + '</div>';
                 else h += '<div class="' + cls + '">' + d + '</div>';
