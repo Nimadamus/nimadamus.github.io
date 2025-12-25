@@ -44,6 +44,12 @@ jobs:
         run: |
           python scripts/handicapping_hub_production.py
 
+      - name: Update Index Page Preview
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: |
+          python scripts/update_index_preview.py
+
       - name: Validate output file
         run: |
           if [ ! -f "handicapping-hub.html" ]; then
