@@ -69,18 +69,59 @@ def fetch_espn_scoreboard(sport_path: str) -> Optional[Dict]:
 def fetch_team_stats(sport_path: str, team_id: str) -> Dict:
     """Fetch detailed team statistics from ESPN"""
     stats = {}
-    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/statistics"
+
+    # Try the team endpoint first (has season stats)
+    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}"
     try:
         resp = requests.get(url, timeout=10)
         if resp.status_code == 200:
             data = resp.json()
-            # Parse stats based on sport
-            if 'stats' in data:
-                for cat in data.get('stats', {}).get('categories', []):
-                    for stat in cat.get('stats', []):
-                        stats[stat.get('name', '')] = stat.get('displayValue', '-')
+            team_data = data.get('team', {})
+
+            # Get record
+            if 'record' in team_data:
+                rec = team_data['record']
+                if 'items' in rec:
+                    for item in rec['items']:
+                        if item.get('type') == 'total':
+                            for stat in item.get('stats', []):
+                                stats[stat.get('name', '')] = stat.get('displayValue', stat.get('value', '-'))
+
+            # Get next event stats if available
+            if 'nextEvent' in team_data and team_data['nextEvent']:
+                event = team_data['nextEvent'][0]
+                for comp in event.get('competitions', [{}])[0].get('competitors', []):
+                    if str(comp.get('id')) == str(team_id):
+                        for stat in comp.get('statistics', []):
+                            stats[stat.get('name', '')] = stat.get('displayValue', '-')
+
+            # Try to get season statistics
+            if 'statistics' in team_data:
+                for stat in team_data.get('statistics', []):
+                    stats[stat.get('name', '')] = stat.get('displayValue', '-')
+
     except Exception as e:
-        print(f"  Error fetching team stats: {e}")
+        print(f"  Error fetching team info: {e}")
+
+    # Try statistics endpoint as backup
+    if not stats:
+        url2 = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/statistics"
+        try:
+            resp = requests.get(url2, timeout=10)
+            if resp.status_code == 200:
+                data = resp.json()
+                # Handle different response structures
+                if 'results' in data:
+                    for result in data.get('results', {}).get('stats', {}).get('categories', []):
+                        for stat in result.get('stats', []):
+                            stats[stat.get('name', '')] = stat.get('displayValue', '-')
+                elif 'splits' in data:
+                    for cat in data.get('splits', {}).get('categories', []):
+                        for stat in cat.get('stats', []):
+                            stats[stat.get('name', '')] = stat.get('displayValue', '-')
+        except Exception as e:
+            print(f"  Error fetching team stats: {e}")
+
     return stats
 
 
@@ -258,59 +299,93 @@ def generate_preview_html(game_data: Dict) -> str:
     game_key = f"{away_name} @ {home_name}"
     odds = parse_odds_for_game(odds_data.get(game_key, {}), home_name, away_name)
 
-    # Fetch team stats
+    # Fetch team stats from API
     home_stats = fetch_team_stats(config['espn_path'], home_id)
     away_stats = fetch_team_stats(config['espn_path'], away_id)
 
-    # Get relevant stats based on sport
+    # Also extract stats from scoreboard competitor data
+    def extract_competitor_stats(competitor):
+        stats = {}
+        for stat in competitor.get('statistics', []):
+            name = stat.get('name', stat.get('abbreviation', ''))
+            stats[name] = stat.get('displayValue', '-')
+        # Also check records for stats
+        for rec in competitor.get('records', []):
+            if rec.get('type') == 'total':
+                stats['record'] = rec.get('summary', '-')
+        return stats
+
+    home_comp_stats = extract_competitor_stats(home_team)
+    away_comp_stats = extract_competitor_stats(away_team)
+
+    # Merge stats (prefer API stats, fallback to competitor stats)
+    def get_stat(api_stats, comp_stats, *keys):
+        for key in keys:
+            if api_stats.get(key) and api_stats.get(key) != '-':
+                return str(api_stats.get(key))
+            if comp_stats.get(key) and comp_stats.get(key) != '-':
+                return str(comp_stats.get(key))
+        return '-'
+
+    # Helper to format stat values (round floats, clean up)
+    def format_stat(val):
+        if val == '-' or val is None:
+            return '-'
+        try:
+            num = float(val)
+            if num == int(num):
+                return str(int(num))
+            return f"{num:.1f}"
+        except:
+            return str(val)
+
+    # Get relevant stats based on sport with multiple key variants
     if sport in ['NFL', 'NCAAF']:
-        stat_labels = ['PPG', 'YPG', '3rd%', 'TO+/-', 'RZ%']
+        stat_labels = ['PPG', 'OPP', 'DIFF', 'REC']
         home_stat_values = [
-            home_stats.get('pointsPerGame', '-'),
-            home_stats.get('totalYards', '-'),
-            home_stats.get('thirdDownConversionPct', '-'),
-            home_stats.get('turnoverDifferential', '-'),
-            home_stats.get('redZoneEfficiency', '-'),
+            format_stat(get_stat(home_stats, home_comp_stats, 'avgPointsFor', 'pointsPerGame', 'pointsFor')),
+            format_stat(get_stat(home_stats, home_comp_stats, 'avgPointsAgainst', 'pointsAgainst')),
+            format_stat(get_stat(home_stats, home_comp_stats, 'differential', 'pointDifferential')),
+            home_record,
         ]
         away_stat_values = [
-            away_stats.get('pointsPerGame', '-'),
-            away_stats.get('totalYards', '-'),
-            away_stats.get('thirdDownConversionPct', '-'),
-            away_stats.get('turnoverDifferential', '-'),
-            away_stats.get('redZoneEfficiency', '-'),
+            format_stat(get_stat(away_stats, away_comp_stats, 'avgPointsFor', 'pointsPerGame', 'pointsFor')),
+            format_stat(get_stat(away_stats, away_comp_stats, 'avgPointsAgainst', 'pointsAgainst')),
+            format_stat(get_stat(away_stats, away_comp_stats, 'differential', 'pointDifferential')),
+            away_record,
         ]
     elif sport in ['NBA', 'NCAAB']:
-        stat_labels = ['PPG', 'FG%', '3P%', 'REB', 'AST']
+        stat_labels = ['PPG', 'OPP', 'DIFF', 'REC']
         home_stat_values = [
-            home_stats.get('avgPoints', '-'),
-            home_stats.get('fieldGoalPct', '-'),
-            home_stats.get('threePointPct', '-'),
-            home_stats.get('avgRebounds', '-'),
-            home_stats.get('avgAssists', '-'),
+            format_stat(get_stat(home_stats, home_comp_stats, 'avgPointsFor', 'avgPoints', 'pointsPerGame')),
+            format_stat(get_stat(home_stats, home_comp_stats, 'avgPointsAgainst', 'pointsAgainst')),
+            format_stat(get_stat(home_stats, home_comp_stats, 'differential', 'pointDifferential')),
+            home_record,
         ]
         away_stat_values = [
-            away_stats.get('avgPoints', '-'),
-            away_stats.get('fieldGoalPct', '-'),
-            away_stats.get('threePointPct', '-'),
-            away_stats.get('avgRebounds', '-'),
-            away_stats.get('avgAssists', '-'),
+            format_stat(get_stat(away_stats, away_comp_stats, 'avgPointsFor', 'avgPoints', 'pointsPerGame')),
+            format_stat(get_stat(away_stats, away_comp_stats, 'avgPointsAgainst', 'pointsAgainst')),
+            format_stat(get_stat(away_stats, away_comp_stats, 'differential', 'pointDifferential')),
+            away_record,
         ]
     else:  # NHL
-        stat_labels = ['GF', 'GA', 'PP%', 'PK%', 'SV%']
+        stat_labels = ['GF', 'GA', 'DIFF', 'REC']
         home_stat_values = [
-            home_stats.get('goalsFor', '-'),
-            home_stats.get('goalsAgainst', '-'),
-            home_stats.get('powerPlayPct', '-'),
-            home_stats.get('penaltyKillPct', '-'),
-            home_stats.get('savePct', '-'),
+            format_stat(get_stat(home_stats, home_comp_stats, 'avgPointsFor', 'goalsFor', 'goalsPerGame')),
+            format_stat(get_stat(home_stats, home_comp_stats, 'avgPointsAgainst', 'goalsAgainst')),
+            format_stat(get_stat(home_stats, home_comp_stats, 'differential', 'goalDifferential')),
+            home_record,
         ]
         away_stat_values = [
-            away_stats.get('goalsFor', '-'),
-            away_stats.get('goalsAgainst', '-'),
-            away_stats.get('powerPlayPct', '-'),
-            away_stats.get('penaltyKillPct', '-'),
-            away_stats.get('savePct', '-'),
+            format_stat(get_stat(away_stats, away_comp_stats, 'avgPointsFor', 'goalsFor', 'goalsPerGame')),
+            format_stat(get_stat(away_stats, away_comp_stats, 'avgPointsAgainst', 'goalsAgainst')),
+            format_stat(get_stat(away_stats, away_comp_stats, 'differential', 'goalDifferential')),
+            away_record,
         ]
+
+    # Debug: print what stats we found
+    print(f"  Home stats keys: {list(home_stats.keys())[:10]}")
+    print(f"  Away stats keys: {list(away_stats.keys())[:10]}")
 
     # Build stats rows HTML
     stats_rows_html = ""
