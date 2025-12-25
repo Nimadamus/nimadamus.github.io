@@ -53,6 +53,11 @@
         .result-L, .loss { font-weight: bold; color: var(--loss-color); }
         .result-P { font-weight: bold; color: var(--push-color); }
         .loading-message { text-align: center; color: var(--glow-color); margin: 20px 0; font-size: 18px; }
+        /* Year Filter Tabs */
+        .year-filter-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        .year-filter-btn { background: rgba(17, 17, 17, 0.8); border: 1px solid rgba(0, 224, 255, 0.3); color: #9bb3c9; padding: 12px 28px; font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: all 0.3s ease; text-transform: uppercase; }
+        .year-filter-btn:hover { border-color: var(--glow-color); color: var(--glow-color); box-shadow: 0 0 15px rgba(0, 224, 255, 0.3); }
+        .year-filter-btn.active { background: linear-gradient(135deg, rgba(0, 224, 255, 0.2), rgba(0, 224, 255, 0.1)); border-color: var(--glow-color); color: #fff; box-shadow: 0 0 20px rgba(0, 224, 255, 0.4); text-shadow: 0 0 10px var(--glow-color); }
         @media (max-width: 768px) {
             /* Mobile dropdown fix - full width centered */
             .dropdown-content,
@@ -173,6 +178,13 @@
         <p><strong>All plays are between half a unit and 3 units on a 1 to 6 scale.</strong> 6 being the highest (3 units), 1 being the lowest (half a unit).</p>
         </div>
 
+        <!-- Year Filter Tabs -->
+        <div class="year-filter-container">
+            <button class="year-filter-btn active" data-year="2025">2025</button>
+            <button class="year-filter-btn" data-year="2026">2026</button>
+            <button class="year-filter-btn" data-year="all">All Time</button>
+        </div>
+
         <div class="stats-container">
             <div class="stat-box"><h3>Overall Record</h3><p id="summary-record">--</p></div>
             <div class="stat-box"><h3>Total Units</h3><p id="summary-units">--</p></div>
@@ -224,6 +236,10 @@
 <script>
     // Google Sheets CSV URL - Old MLB Sheet (correct data)
     const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+
+    // Global storage for all picks (for year filtering)
+    let allProcessedPicks = [];
+    let currentYearFilter = '2025'; // Default to 2025
 
     // Function to parse CSV data - handles blank headers and normalizes column names
     function parseCSV(csv) {
@@ -324,6 +340,67 @@
         }
     }
 
+    // Extract year from date string (handles M/D/YYYY and M-D-YYYY formats)
+    function extractYear(dateStr) {
+        if (!dateStr) return null;
+        const parts = dateStr.split(/[-/]/);
+        if (parts.length === 3) {
+            return parseInt(parts[2], 10);
+        }
+        const d = new Date(dateStr);
+        return isNaN(d.getTime()) ? null : d.getFullYear();
+    }
+
+    // Filter picks by year
+    function filterPicksByYear(picks, yearFilter) {
+        if (yearFilter === 'all') return picks;
+        const targetYear = parseInt(yearFilter, 10);
+        return picks.filter(p => {
+            const pickYear = extractYear(p.Date);
+            return pickYear === targetYear;
+        });
+    }
+
+    // Display filtered picks and recalculate stats
+    function displayFilteredPicks(yearFilter) {
+        currentYearFilter = yearFilter;
+        const filteredPicks = filterPicksByYear(allProcessedPicks, yearFilter);
+
+        document.getElementById('picks-table-body').innerHTML = filteredPicks.map(p => `
+            <tr>
+                <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
+                <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
+                <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${p.units.toFixed(2)}</td>
+            </tr>`).join('');
+
+        const summaryStats = aggregateStats(filteredPicks);
+        document.getElementById('summary-record').textContent = `${summaryStats.wins}-${summaryStats.losses}-${summaryStats.pushes}`;
+        const unitsEl = document.getElementById('summary-units');
+        unitsEl.textContent = `${summaryStats.totalUnits >= 0 ? '+' : ''}${summaryStats.totalUnits.toFixed(2)}`;
+        unitsEl.className = summaryStats.totalUnits >= 0 ? 'units-win' : 'units-loss';
+        document.getElementById('summary-win-pct').textContent = summaryStats.wins + summaryStats.losses > 0 ? `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%` : 'N/A';
+        const roiEl = document.getElementById('summary-roi');
+        roiEl.textContent = `${summaryStats.roi >= 0 ? '+' : ''}${summaryStats.roi.toFixed(2)}%`;
+        roiEl.className = summaryStats.roi >= 0 ? 'roi-win' : 'roi-loss';
+
+        setTimeout(createChart, 100);
+    }
+
+    // Aggregate stats function
+    function aggregateStats(picks) {
+        let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
+        picks.forEach(p => {
+            const result = p.Result.trim().toUpperCase();
+            if (result.startsWith('W')) wins++;
+            else if (result.startsWith('L')) losses++;
+            else if (result.startsWith('P')) pushes++;
+            totalUnits += p.units;
+            if(!result.startsWith('P')) totalRisk += p.risk;
+        });
+        const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
+        return { wins, losses, pushes, totalUnits, roi };
+    }
+
     // Original processing logic (adapted from the original script)
     function processPicksData(mlbPicksData) {
         try {
@@ -336,56 +413,25 @@
                     const line = parseFloat(p.Line);
                     if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
                     let risk = 0;
-                    if (units < 0) { 
-                        risk = Math.abs(units); 
+                    if (units < 0) {
+                        risk = Math.abs(units);
                     }
                     else if (units > 0) {
-                        if (line > 0) { 
-                            risk = (units / (line / 100)); 
+                        if (line > 0) {
+                            risk = (units / (line / 100));
                         }
-                        else { 
-                            risk = (units * (Math.abs(line) / 100)); 
+                        else {
+                            risk = (units * (Math.abs(line) / 100));
                         }
                     }
                     return { ...p, units, risk, parsedDate: new Date(p.Date) };
-                } catch { 
-                    return null; 
+                } catch {
+                    return null;
                 }
             }).filter(p => p !== null).sort((a, b) => b.parsedDate - a.parsedDate);
 
-            document.getElementById('picks-table-body').innerHTML = processedPicks.map(p => `
-                <tr>
-                    <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
-                    <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
-                    <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${p.units.toFixed(2)}</td>
-                </tr>`).join('');
-
-            function aggregateStats(picks) {
-                let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
-                picks.forEach(p => {
-                    const result = p.Result.trim().toUpperCase();
-                    if (result.startsWith('W')) wins++; 
-                    else if (result.startsWith('L')) losses++; 
-                    else if (result.startsWith('P')) pushes++;
-                    totalUnits += p.units;
-                    if(!result.startsWith('P')) totalRisk += p.risk;
-                });
-                const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
-                return { wins, losses, pushes, totalUnits, roi };
-            }
-
-            const summaryStats = aggregateStats(processedPicks);
-            document.getElementById('summary-record').textContent = `${summaryStats.wins}-${summaryStats.losses}-${summaryStats.pushes}`;
-            const unitsEl = document.getElementById('summary-units');
-            unitsEl.textContent = `${summaryStats.totalUnits >= 0 ? '+' : ''}${summaryStats.totalUnits.toFixed(2)}`;
-            unitsEl.className = summaryStats.totalUnits >= 0 ? 'units-win' : 'units-loss';
-            document.getElementById('summary-win-pct').textContent = summaryStats.wins + summaryStats.losses > 0 ? `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%` : 'N/A';
-            const roiEl = document.getElementById('summary-roi');
-            roiEl.textContent = `${summaryStats.roi >= 0 ? '+' : ''}${summaryStats.roi.toFixed(2)}%`;
-            roiEl.className = summaryStats.roi >= 0 ? 'roi-win' : 'roi-loss';
-
-            // CREATE THE CHART
-            setTimeout(createChart, 500);
+            allProcessedPicks = processedPicks;
+            displayFilteredPicks(currentYearFilter);
 
         } catch (e) {
             console.error("A critical error occurred:", e);
@@ -586,6 +632,17 @@
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
         loadDataFromSheets();
+
+        // Year filter button event listeners
+        const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
+        yearFilterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                yearFilterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const selectedYear = this.getAttribute('data-year');
+                displayFilteredPicks(selectedYear);
+            });
+        });
     });
 
     // Optional: Refresh data every 5 minutes
