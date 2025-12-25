@@ -305,12 +305,14 @@
             }
         }
 
-        // Also check for explicit sport mentions
-        if (text.includes('(nfl)')) sports.add('NFL');
-        if (text.includes('(cfb)') || text.includes('(ncaaf)')) sports.add('CFB');
-        if (text.includes('(nba)')) sports.add('NBA');
-        if (text.includes('(nhl)')) sports.add('NHL');
-        if (text.includes('(mlb)')) sports.add('MLB');
+        // Also check for explicit sport mentions in parentheses
+        if (text.includes('(nfl)') || text.includes('nfl ')) sports.add('NFL');
+        if (text.includes('(cfb)') || text.includes('(ncaaf)') || text.includes('cfb ') || text.includes('ncaaf ')) sports.add('CFB');
+        if (text.includes('(nba)') || text.includes('nba ')) sports.add('NBA');
+        if (text.includes('(nhl)') || text.includes('nhl ')) sports.add('NHL');
+        if (text.includes('(mlb)') || text.includes('mlb ')) sports.add('MLB');
+        if (text.includes('(ncaab)') || text.includes('(cbb)') || text.includes('ncaab ') || text.includes('college basketball')) sports.add('NCAAB');
+        if (text.includes('(soccer)') || text.includes('(mls)') || text.includes('soccer ')) sports.add('Soccer');
 
         return Array.from(sports);
     }
