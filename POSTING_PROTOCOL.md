@@ -1467,9 +1467,61 @@ If user provides conflicting instructions, ALWAYS:
 
 ---
 
+---
+
+## ⛔⛔⛔ UPDATING RECORD SHEETS FROM PICK TRACKER ⛔⛔⛔
+
+### PERMANENTLY LOCKED - DECEMBER 25, 2025
+
+**When user says "update the record sheets from the pick tracker", follow this process:**
+
+### STEP 1: Read the Pick Tracker
+- The pick tracker contains all graded picks with results and unit calculations
+- Each pick shows: Date, Sport, Pick, Odds, Units, Result (W/L/P), Unit P/L
+
+### STEP 2: Identify Which Record Sheet to Update
+Based on the "Sport" column in the tracker:
+- **NFL** → `nfl-records.html`
+- **NBA** → `nba-records.html`
+- **NHL** → `nhl-records.html`
+- **NCAAB** → `ncaab-records.html`
+- **NCAAF** → `ncaaf-records.html`
+- **MLB** → `mlb-records.html`
+- **Soccer** → `soccer-records.html`
+- **Cross-Sport** or **Parlay** → `crosssport-parlays-records.html`
+
+### STEP 3: Add Each Graded Pick to Its Record Sheet
+For each graded pick:
+1. Open the appropriate record sheet
+2. Add a new row to the picks table with:
+   - Date
+   - Pick (team, line, odds)
+   - Result (W/L/P)
+   - Units (+X.XX or -X.XX)
+3. Update the running totals at the top of the page
+
+### STEP 4: Update Summary Stats
+After adding all picks, recalculate and update:
+- Total Record (W-L-P)
+- Win Percentage
+- Total Units (+/-)
+- ROI
+
+### UNIT CALCULATION REMINDER (From CLAUDE.md):
+- **FAVORITE WIN:** +UNITS (you win what you were trying to win)
+- **FAVORITE LOSS:** -UNITS × (|ODDS| / 100)
+- **UNDERDOG WIN:** +UNITS × (ODDS / 100)
+- **UNDERDOG LOSS:** -UNITS (you lose what you risked)
+
+### AFTER UPDATING:
+1. Push all changes to GitHub
+2. Verify on live site
+
+---
+
 ## PROTOCOL VERSION
-Version: 1.3
-Last Updated: December 14, 2025
+Version: 1.4
+Last Updated: December 25, 2025
 Created by: Claude Code for BetLegend
 
 ### CHANGELOG:

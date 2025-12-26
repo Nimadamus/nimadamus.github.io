@@ -626,7 +626,7 @@
         </div></div>
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="screenshots.html">Screenshots</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a></div></div>
 <a href="news-page3.html">News</a>
-<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page26.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page27.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 </div>
 </div>
 </nav>
@@ -1052,30 +1052,40 @@
         const leagueStats = {};
 
         parlayData.forEach(parlay => {
-            // Count results
+            // Get unit size (default to 1 if not specified)
+            const unitSize = parlay.units || 1;
+            const odds = parseInt(parlay.odds);
+
+            // CLAUDE.md Unit Calculation Formula:
+            // - Units column = what you're trying to WIN, not what you risk
+            // - FAVORITE WIN (negative odds): +UNITS (you win what you were trying to win)
+            // - FAVORITE LOSS (negative odds): -UNITS × (|ODDS| / 100) (you lose what you risked)
+            // - UNDERDOG WIN (positive odds): +UNITS × (ODDS / 100) (you win more than risked)
+            // - UNDERDOG LOSS (positive odds): -UNITS (you lose what you risked)
+
             if (parlay.result === 'win') {
                 wins++;
-                const odds = parseInt(parlay.odds);
                 if (odds > 0) {
-                    // Positive odds: risk 1 unit to win the odds amount (e.g., +285 wins 2.85 units)
-                    totalRisked += 1;
-                    totalUnits += odds / 100;
-                } else {
-                    // Negative odds: risk the amount to win 1 unit (e.g., -218 risks 2.18 to win 1)
-                    const riskAmount = Math.abs(odds) / 100;
+                    // Underdog WIN: win UNITS × (ODDS / 100)
+                    const riskAmount = unitSize;
+                    const winAmount = unitSize * (odds / 100);
                     totalRisked += riskAmount;
-                    totalUnits += 1;
+                    totalUnits += winAmount;
+                } else {
+                    // Favorite WIN: win exactly UNITS
+                    const riskAmount = unitSize * (Math.abs(odds) / 100);
+                    totalRisked += riskAmount;
+                    totalUnits += unitSize;
                 }
             } else if (parlay.result === 'loss') {
                 losses++;
-                const odds = parseInt(parlay.odds);
                 if (odds > 0) {
-                    // Positive odds: lose 1 unit risked
-                    totalRisked += 1;
-                    totalUnits -= 1;
+                    // Underdog LOSS: lose UNITS (what you risked)
+                    totalRisked += unitSize;
+                    totalUnits -= unitSize;
                 } else {
-                    // Negative odds: lose the amount risked (e.g., -218 loses 2.18 units)
-                    const riskAmount = Math.abs(odds) / 100;
+                    // Favorite LOSS: lose UNITS × (|ODDS| / 100)
+                    const riskAmount = unitSize * (Math.abs(odds) / 100);
                     totalRisked += riskAmount;
                     totalUnits -= riskAmount;
                 }
@@ -1215,15 +1225,32 @@
                 resultBadge = `<span class="result-badge pending">PENDING</span>`;
             }
 
-            // Calculate units for display
+            // Calculate units for display using CLAUDE.md formula
+            // Units column = what you're trying to WIN
+            // FAVORITE WIN: +UNITS | FAVORITE LOSS: -UNITS × (|ODDS| / 100)
+            // UNDERDOG WIN: +UNITS × (ODDS / 100) | UNDERDOG LOSS: -UNITS
+            const unitSize = parlay.units || 1;
+            const odds = parseInt(parlay.odds);
             let unitsDisplay;
             if (parlay.result === 'win') {
-                const odds = parseInt(parlay.odds);
-                const unitsWon = odds > 0 ? (odds / 100).toFixed(2) : '1.00';
+                let unitsWon;
+                if (odds > 0) {
+                    // Underdog WIN: win UNITS × (ODDS / 100)
+                    unitsWon = (unitSize * (odds / 100)).toFixed(2);
+                } else {
+                    // Favorite WIN: win exactly UNITS
+                    unitsWon = unitSize.toFixed(2);
+                }
                 unitsDisplay = `<span style="color: var(--win-color);">+${unitsWon}</span>`;
             } else if (parlay.result === 'loss') {
-                const odds = parseInt(parlay.odds);
-                const unitsLost = odds > 0 ? '1.00' : (Math.abs(odds) / 100).toFixed(2);
+                let unitsLost;
+                if (odds > 0) {
+                    // Underdog LOSS: lose UNITS (what you risked)
+                    unitsLost = unitSize.toFixed(2);
+                } else {
+                    // Favorite LOSS: lose UNITS × (|ODDS| / 100)
+                    unitsLost = (unitSize * (Math.abs(odds) / 100)).toFixed(2);
+                }
                 unitsDisplay = `<span style="color: var(--loss-color);">-${unitsLost}</span>`;
             } else if (parlay.result === 'push') {
                 unitsDisplay = `<span style="color: var(--push-color);">0.00</span>`;
