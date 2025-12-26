@@ -1,14 +1,16 @@
 // NBA Archive Data - Auto-updated by production script
 const NBA_ARCHIVE = [
-    { date: "2025-12-25", page: "nba.html", title: "NBA Cup Championship - Spurs vs Knicks" },
+    { date: "2025-12-26", page: "nba.html", title: "NBA Cup Championship - Spurs vs Knicks" },
     { date: "2025-12-20", page: "nba-page9.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page20.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page17.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page4.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page8.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page16.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "nba-page21.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page19.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page15.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "nba-page22.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page18.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page5.html", title: "December 21, 2025" },
     { date: "2025-12-17", page: "nba-page7.html", title: "December 17, 2025" },

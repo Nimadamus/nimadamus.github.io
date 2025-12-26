@@ -1,6 +1,7 @@
 // NCAAF Archive Data - Auto-updated by production script
 const NCAAF_ARCHIVE = [
-    { date: "2025-12-25", page: "ncaaf.html", title: "Bowl Season - Troy vs Jacksonville State" },
+    { date: "2025-12-26", page: "ncaaf.html", title: "Bowl Season - Troy vs Jacksonville State" },
+    { date: "2025-12-19", page: "ncaaf-page27.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page23.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page25.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page4.html", title: "December 19, 2025" },
@@ -12,6 +13,7 @@ const NCAAF_ARCHIVE = [
     { date: "2025-12-19", page: "ncaaf-page8.html", title: "November 28, 2025" },
     { date: "2025-12-19", page: "ncaaf-page24.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page7.html", title: "November 28, 2025 - Extended" },
+    { date: "2025-12-19", page: "ncaaf-page26.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page19.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page5.html", title: "November 28, 2025 - Rivalry Week" },
     { date: "2025-12-19", page: "ncaaf-page6.html", title: "November 28, 2025 - Black Friday" },
