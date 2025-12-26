@@ -4,6 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2025-12-25", page: "nfl.html", title: "NFL Analysis - December 25, 2025" },
+    { date: "2025-12-25", page: "nfl-page21.html", title: "NFL Analysis Archive - Page 21" },
+    { date: "2025-12-21", page: "nfl-page20.html", title: "NFL Analysis Archive - Page 20" },
     { date: "2025-12-21", page: "nfl-page2.html", title: "NFL Analysis - December 21, 2025" },
     { date: "2025-12-21", page: "nfl-page19.html", title: "NFL Analysis Archive - Page 19" },
     { date: "2025-12-21", page: "nfl-page18.html", title: "NFL Analysis Archive - Page 18" },
