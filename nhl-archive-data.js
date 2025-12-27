@@ -1,9 +1,10 @@
 // NHL Archive Data - Auto-updated by production script
 const NHL_ARCHIVE = [
-    { date: "2025-12-23", page: "nhl.html", title: "10-Game NHL Slate" },
+    { date: "2025-12-27", page: "nhl.html", title: "10-Game NHL Slate" },
     { date: "2025-12-20", page: "nhl-page18.html", title: "December 21, 2025" },
     { date: "2025-12-20", page: "nhl-page23.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page21.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "nhl-page24.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page7.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page4.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page22.html", title: "December 20, 2025" },

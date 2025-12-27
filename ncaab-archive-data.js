@@ -1,6 +1,6 @@
 // NCAAB Archive Data - Auto-updated by production script
 const NCAAB_ARCHIVE = [
-    { date: "2025-12-23", page: "ncaab.html", title: "11 Ranked Teams in Action" },
+    { date: "2025-12-27", page: "ncaab.html", title: "11 Ranked Teams in Action" },
     { date: "2025-12-20", page: "ncaab-page9.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page20.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page8.html", title: "December 20, 2025" },
@@ -11,6 +11,7 @@ const NCAAB_ARCHIVE = [
     { date: "2025-12-20", page: "ncaab-page21.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page11.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page4.html", title: "November 26, 2025" },
+    { date: "2025-12-20", page: "ncaab-page23.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page7.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page5.html", title: "November 28, 2025 - Feast Week" },
     { date: "2025-12-20", page: "ncaab-page17.html", title: "December 21, 2025" },
