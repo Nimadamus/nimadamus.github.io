@@ -26,6 +26,9 @@ const ARCHIVE_DATA = [
     { date: "2025-12-05", page: "ncaab-page14.html", title: "NCAAB Analysis Archive - Page 14" },
     { date: "2025-12-04", page: "ncaab-page4.html", title: "College Basketball Picks - Champions Classic 2025" },
     { date: "2025-12-03", page: "ncaab-page15.html", title: "NCAAB Analysis Archive - Page 15" },
+    { date: "2025-12-01", page: "archives/ncaab/2025-12-01.html", title: "NCAAB Archive - 2025-12-01" },
+    { date: "2025-11-30", page: "archives/ncaab/2025-11-30.html", title: "NCAAB Archive - 2025-11-30" },
+    { date: "2025-11-29", page: "archives/ncaab/2025-11-29.html", title: "NCAAB Archive - 2025-11-29" },
     { date: "2025-11-27", page: "ncaab-page3.html", title: "College Basketball Picks - Thanksgiving Day, November 27, 2025" },
 ];
 

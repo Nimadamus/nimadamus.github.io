@@ -1,7 +1,7 @@
 // NFL Archive Data - Auto-synced from calendar
 // Last updated: December 27, 2025
 const NFL_ARCHIVE = [
-{ date: "2025-12-27", page: "nfl.html", title: "NFL Analysis - December 27, 2025" },
+    { date: "2025-12-27", page: "nfl.html", title: "NFL Analysis - December 27, 2025" },
     { date: "2025-12-26", page: "nfl-page22.html", title: "NFL Analysis Archive - Page 22" },
     { date: "2025-12-25", page: "nfl-page21.html", title: "NFL Analysis Archive - Page 21" },
     { date: "2025-12-21", page: "nfl-page23.html", title: "NFL Analysis Archive - Page 23" },
@@ -17,6 +17,9 @@ const NFL_ARCHIVE = [
     { date: "2025-12-18", page: "nfl-dec19.html", title: "NFL Week 16 TNF: Rams @ Seahawks Preview" },
     { date: "2025-12-07", page: "nfl-page13.html", title: "NFL Week 14 Preview - December 7, 2025" },
     { date: "2025-12-05", page: "nfl-page14.html", title: "NFL Week 14 TNF - December 5, 2025" },
+    { date: "2025-12-01", page: "archives/nfl/2025-12-01.html", title: "NFL Archive - 2025-12-01" },
+    { date: "2025-11-30", page: "archives/nfl/2025-11-30.html", title: "NFL Archive - 2025-11-30" },
+    { date: "2025-11-29", page: "archives/nfl/2025-11-29.html", title: "NFL Archive - 2025-11-29" },
     { date: "2025-11-28", page: "nfl-page10.html", title: "NFL Analysis Archive - Page 10" },
     { date: "2025-11-23", page: "nfl-page3.html", title: "NFL Analysis - Page 2" },
     { date: "2025-11-16", page: "nfl-page4.html", title: "NFL Analysis - Page 3" },
@@ -24,5 +27,5 @@ const NFL_ARCHIVE = [
     { date: "2025-10-30", page: "nfl-page6.html", title: "NFL Analysis - Page 5" },
     { date: "2025-10-28", page: "nfl-page7.html", title: "NFL Analysis - Page 6" },
     { date: "2025-10-26", page: "nfl-page8.html", title: "NFL Analysis - Page 7" },
-    { date: "2025-09-10", page: "nfl-page9.html", title: "NFL Analysis - Page 8" },
+    { date: "2025-09-10", page: "nfl-page9.html", title: "NFL Analysis - Page 8" }
 ];

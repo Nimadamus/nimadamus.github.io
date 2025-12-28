@@ -233,6 +233,7 @@ def get_sport_pages(sport_config):
     prefix = sport_config['prefix']
     pages = []
 
+    # Scan main directory for sport pages
     for filepath in REPO_DIR.glob(f'{prefix}*.html'):
         filename = filepath.name
 
@@ -256,6 +257,23 @@ def get_sport_pages(sport_config):
                 'title': title
             })
             print(f"    {filename}: {date}")
+
+    # Also scan archives folder for this sport (e.g., archives/nba/)
+    archives_dir = REPO_DIR / 'archives' / prefix
+    if archives_dir.exists():
+        for filepath in archives_dir.glob('*.html'):
+            filename = filepath.name
+            # Archive files use date format like 2025-12-01.html
+            date_match = re.match(r'(\d{4}-\d{2}-\d{2})\.html', filename)
+            if date_match:
+                date = date_match.group(1)
+                relative_path = f'archives/{prefix}/{filename}'
+                pages.append({
+                    'date': date,
+                    'page': relative_path,
+                    'title': f'{prefix.upper()} Archive - {date}'
+                })
+                print(f"    {relative_path}: {date}")
 
     # Sort by date (newest first) then by page name
     pages.sort(key=lambda x: (x['date'], x['page']), reverse=True)

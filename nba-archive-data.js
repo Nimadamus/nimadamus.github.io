@@ -1,7 +1,7 @@
 // NBA Archive Data - Auto-synced from calendar
 // Last updated: December 27, 2025
 const NBA_ARCHIVE = [
-{ date: "2025-12-27", page: "nba.html", title: "NBA Analysis - December 27, 2025" },
+    { date: "2025-12-27", page: "nba.html", title: "NBA Analysis - December 27, 2025" },
     { date: "2025-12-27", page: "nba-page23.html", title: "NBA Analysis Archive - Page 23" },
     { date: "2025-12-25", page: "nba-page21.html", title: "NBA Analysis Archive - Page 21" },
     { date: "2025-12-20", page: "nba-page24.html", title: "NBA Analysis Archive - Page 24" },
@@ -25,5 +25,8 @@ const NBA_ARCHIVE = [
     { date: "2025-12-08", page: "nba-page8.html", title: "NBA Analysis Archive - Page 10" },
     { date: "2025-12-05", page: "nba-page5.html", title: "NBA Analysis Archive - Page 5" },
     { date: "2025-12-04", page: "nba-page4.html", title: "NBA Analysis Archive - Page 4" },
-    { date: "2025-11-24", page: "nba-page3.html", title: "NBA November 24, 2025 Preview" },
+    { date: "2025-12-01", page: "archives/nba/2025-12-01.html", title: "NBA Archive - 2025-12-01" },
+    { date: "2025-11-30", page: "archives/nba/2025-11-30.html", title: "NBA Archive - 2025-11-30" },
+    { date: "2025-11-29", page: "archives/nba/2025-11-29.html", title: "NBA Archive - 2025-11-29" },
+    { date: "2025-11-24", page: "nba-page3.html", title: "NBA November 24, 2025 Preview" }
 ];

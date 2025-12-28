@@ -1,7 +1,7 @@
 // NCAAF Archive Data - Auto-synced from calendar
 // Last updated: December 27, 2025
 const NCAAF_ARCHIVE = [
-{ date: "2025-12-27", page: "ncaaf.html", title: "NCAAF Analysis - December 27, 2025" },
+    { date: "2025-12-27", page: "ncaaf.html", title: "NCAAF Analysis - December 27, 2025" },
     { date: "2025-12-24", page: "ncaaf-page24.html", title: "NCAAF Analysis Archive - Page 24" },
     { date: "2025-12-23", page: "ncaaf-page23.html", title: "NCAAF Analysis Archive - Page 23" },
     { date: "2025-12-22", page: "ncaaf-page22.html", title: "NCAAF Analysis Archive - Page 22" },
@@ -28,6 +28,9 @@ const NCAAF_ARCHIVE = [
     { date: "2025-12-05", page: "ncaaf-page5.html", title: "NCAAF Analysis Archive - Page 5" },
     { date: "2025-12-04", page: "ncaaf-page4.html", title: "NCAAF Analysis Archive - Page 4" },
     { date: "2025-12-04", page: "ncaaf-page17.html", title: "NCAAF Analysis - December 4, 2025" },
+    { date: "2025-12-01", page: "archives/ncaaf/2025-12-01.html", title: "NCAAF Archive - 2025-12-01" },
+    { date: "2025-11-30", page: "archives/ncaaf/2025-11-30.html", title: "NCAAF Archive - 2025-11-30" },
+    { date: "2025-11-29", page: "archives/ncaaf/2025-11-29.html", title: "NCAAF Archive - 2025-11-29" },
     { date: "2025-11-28", page: "ncaaf-page2.html", title: "College Football Rivalry Week Nov 28 2025" },
-    { date: "2025-11-01", page: "ncaaf-page3.html", title: "College Football Picks - Week 1, November 1, 2025" },
+    { date: "2025-11-01", page: "ncaaf-page3.html", title: "College Football Picks - Week 1, November 1, 2025" }
 ];

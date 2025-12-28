@@ -1,7 +1,7 @@
 // NHL Archive Data - Auto-synced from calendar
 // Last updated: December 27, 2025
 const NHL_ARCHIVE = [
-{ date: "2025-12-27", page: "nhl.html", title: "NHL Analysis - December 27, 2025" },
+    { date: "2025-12-27", page: "nhl.html", title: "NHL Analysis - December 27, 2025" },
     { date: "2025-12-23", page: "nhl-page24.html", title: "NHL Analysis Archive - Page 24" },
     { date: "2025-12-23", page: "nhl-page23.html", title: "NHL Analysis Archive - Page 23" },
     { date: "2025-12-22", page: "nhl-page22.html", title: "NHL Analysis Archive - Page 22" },
@@ -26,5 +26,8 @@ const NHL_ARCHIVE = [
     { date: "2025-12-11", page: "nhl-page14.html", title: "NHL December 11, 2025" },
     { date: "2025-12-10", page: "nhl-page13.html", title: "NHL December 10, 2025" },
     { date: "2025-12-09", page: "nhl-page9.html", title: "NHL Betting Archive - Page 9" },
-    { date: "2025-11-24", page: "nhl-page3.html", title: "NHL November 24, 2025 - 7-Game Slate" },
+    { date: "2025-12-01", page: "archives/nhl/2025-12-01.html", title: "NHL Archive - 2025-12-01" },
+    { date: "2025-11-30", page: "archives/nhl/2025-11-30.html", title: "NHL Archive - 2025-11-30" },
+    { date: "2025-11-29", page: "archives/nhl/2025-11-29.html", title: "NHL Archive - 2025-11-29" },
+    { date: "2025-11-24", page: "nhl-page3.html", title: "NHL November 24, 2025 - 7-Game Slate" }
 ];
