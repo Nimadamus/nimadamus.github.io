@@ -53,16 +53,22 @@ MANUAL_DATE_OVERRIDES = {
     'nfl-page17.html': '2025-12-21',  # Week 16 Sunday games (duplicate)
     'nfl-page18.html': '2025-12-21',  # Week 16 Sunday games
     'nfl-page19.html': '2025-12-21',  # Week 16 Sunday games
-    # NBA archive pages
-    'nba-page4.html': '2025-12-04',   # December 4 NBA
-    'nba-page5.html': '2025-12-05',   # December 5 NBA
-    'nba-page8.html': '2025-12-08',   # December 8 NBA
-    'nba-page9.html': '2025-12-09',   # December 9 NBA
-    'nba-page15.html': '2025-12-15',  # December 15 NBA
-    'nba-page16.html': '2025-12-16',  # December 16 NBA
-    'nba-page17.html': '2025-12-17',  # December 17 NBA
-    'nba-page18.html': '2025-12-18',  # December 18 NBA
-    'nba-page19.html': '2025-12-19',  # December 19 NBA (continuation)
+    # NBA archive pages - CORRECTED based on actual game-time spans
+    'nba-page2.html': '2025-12-15',   # December 15 NBA (title confirms)
+    'nba-page4.html': '2025-12-20',   # December 20 NBA (game-time)
+    'nba-page5.html': '2025-12-21',   # December 21 NBA (game-time)
+    'nba-page6.html': '2025-12-15',   # December 15 NBA (title confirms)
+    'nba-page8.html': '2025-12-18',   # December 18 NBA (game-time)
+    'nba-page9.html': '2025-12-19',   # December 19 NBA (game-time)
+    'nba-page15.html': '2025-12-21',  # December 21 NBA (game-time)
+    'nba-page16.html': '2025-12-22',  # December 22 NBA
+    'nba-page17.html': '2025-12-22',  # December 22 NBA (game-time 23T = 22 ET)
+    'nba-page18.html': '2025-12-22',  # December 22 NBA (game-time 23T = 22 ET)
+    'nba-page19.html': '2025-12-23',  # December 23 NBA (game-time 24T = 23 ET)
+    'nba-page20.html': '2025-12-26',  # December 26 NBA
+    'nba-page22.html': '2025-12-21',  # December 21 NBA
+    'nba-page24.html': '2025-12-28',  # December 28 NBA
+    'nba-page25.html': '2025-12-28',  # December 28 NBA (duplicate/same day)
     # NHL archive pages
     'nhl-page9.html': '2025-12-09',   # December 9 NHL
     'nhl-page17.html': '2025-12-17',  # December 17 NHL
