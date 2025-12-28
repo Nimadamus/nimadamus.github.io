@@ -34,6 +34,7 @@ SPORTS = {
     'ncaaf': {'prefix': 'ncaaf', 'main': 'ncaaf.html', 'calendar_js': 'ncaaf-calendar.js'},
     'nfl': {'prefix': 'nfl', 'main': 'nfl.html', 'calendar_js': 'nfl-calendar.js'},
     'mlb': {'prefix': 'mlb', 'main': 'mlb.html', 'calendar_js': 'mlb-calendar.js'},
+    'soccer': {'prefix': 'soccer', 'main': 'soccer.html', 'calendar_js': 'soccer-calendar.js'},
 }
 
 # Pages to exclude from calendar (utility pages, not content pages)
