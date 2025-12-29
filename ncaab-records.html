@@ -251,6 +251,43 @@
         return !nbaTeams.some(team => pick.includes(team));
     }
 
+    // CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md - December 24, 2025)
+    // Units column = what you're trying to WIN, not what you're risking
+    // FAVORITE WIN (negative odds): UNIT_RESULT = +UNITS (win what you tried to win)
+    // UNDERDOG WIN (positive odds): UNIT_RESULT = +UNITS × (ODDS / 100) (win more)
+    // FAVORITE LOSS (negative odds): UNIT_RESULT = -UNITS × (|ODDS| / 100) (lose more because you risked more)
+    // UNDERDOG LOSS (positive odds): UNIT_RESULT = -UNITS (lose what you risked)
+    function calculateUnitResult(unitsStake, odds, result) {
+        const stake = parseFloat(unitsStake);
+        const oddsNum = parseFloat(odds);
+        const resultUpper = (result || '').toUpperCase().trim();
+
+        if (isNaN(stake) || isNaN(oddsNum)) return 0;
+
+        if (resultUpper.startsWith('W')) {
+            // WIN
+            if (oddsNum < 0) {
+                // Favorite win: you win exactly the units (what you were trying to win)
+                return stake;
+            } else {
+                // Underdog win: you win units × (odds/100)
+                return stake * (oddsNum / 100);
+            }
+        } else if (resultUpper.startsWith('L')) {
+            // LOSS
+            if (oddsNum < 0) {
+                // Favorite loss: you lose units × (|odds|/100) because you risked more
+                return -stake * (Math.abs(oddsNum) / 100);
+            } else {
+                // Underdog loss: you lose exactly the units (what you risked)
+                return -stake;
+            }
+        } else {
+            // Push or other
+            return 0;
+        }
+    }
+
     // Global storage for all picks (for year filtering)
     let allProcessedPicks = [];
     let currentYearFilter = '2025'; // Default to 2025
@@ -379,14 +416,20 @@
                 });
                 const trackerCsv = await trackerResponse.text();
                 const allTrackerData = parseCSV(trackerCsv);
-                // Filter for NCAAB picks only
-                trackerData = allTrackerData.filter(row => isNCAABPick(row)).map(row => ({
-                    Date: row.Date || '',
-                    Pick: row.Pick || row.Picks || '',
-                    Odds: row.Odds || '',
-                    Result: row.Result || '',
-                    Units: row['Profit/Loss'] || row.ProfitLoss || ''
-                }));
+                // Filter for NCAAB picks only and use correct unit calculation
+                trackerData = allTrackerData.filter(row => isNCAABPick(row)).map(row => {
+                    const rawUnits = row.Units || '3'; // Default to 3 units if missing
+                    const odds = row.Odds || '';
+                    const result = row.Result || '';
+                    const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
+                    return {
+                        Date: row.Date || '',
+                        Pick: row.Pick || row.Picks || '',
+                        Odds: odds,
+                        Result: result,
+                        Units: calculatedUnits.toString()
+                    };
+                });
             } catch (e) {
                 console.log('Pick tracker fetch failed, using original data only');
             }
