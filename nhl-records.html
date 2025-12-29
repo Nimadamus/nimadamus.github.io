@@ -235,8 +235,14 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL - NHL Records Sheet
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv';
+    // Google Sheets CSV URL - Master Pick Tracker
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
+    // Filter for NHL picks only (Sport = "Hockey")
+    function isNHLPick(row) {
+        const sport = (row.Sport || '').toLowerCase();
+        return sport === 'hockey';
+    }
 
     // Global storage for all picks (for year filtering)
     let allProcessedPicks = [];
@@ -346,10 +352,10 @@
         return sheetData.map(row => ({
             Date: row.Date || '',
             Sport: 'NHL',
-            Pick: row.Pick || '',
-            Line: row.Line || row.Odds || '',
+            Pick: row.Pick || row.Picks || '',
+            Line: row.Odds || row.Line || '',
             Result: row.Result || '',
-            Units: row.Units || ''
+            Units: row['Profit/Loss'] || row.ProfitLoss || row.Units || ''
         }));
     }
 
@@ -361,9 +367,10 @@
                 headers: { 'Cache-Control': 'no-store' }
             });
             const csvText = await response.text();
-            const parsedData = parseCSV(csvText);
+            const allData = parseCSV(csvText);
 
-            // Old NHL sheet is already NHL-only, no filtering needed
+            // Filter for NHL picks only
+            const parsedData = allData.filter(row => isNHLPick(row));
             const nhlPicksData = convertToNHLFormat(parsedData);
 
             // Hide loading message

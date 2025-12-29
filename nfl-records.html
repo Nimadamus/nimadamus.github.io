@@ -235,8 +235,18 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL - NFL Records Direct Export
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv';
+    // Google Sheets CSV URL - Master Pick Tracker
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
+    // Filter for NFL picks only (Sport = "Football" AND contains NFL team name)
+    function isNFLPick(row) {
+        const sport = (row.Sport || '').toLowerCase();
+        const pick = (row.Pick || row.Picks || '').toLowerCase();
+        if (sport !== 'football') return false;
+        // Check for NFL team names
+        const nflTeams = ['49ers', 'niners', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jags', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
+        return nflTeams.some(team => pick.includes(team));
+    }
 
     // Global storage for all picks (for year filtering)
     let allProcessedPicks = [];
@@ -357,8 +367,10 @@
                 headers: { 'Cache-Control': 'no-store' }
             });
             const csvText = await response.text();
-            const filteredData = parseCSV(csvText);
+            const allData = parseCSV(csvText);
 
+            // Filter for NFL picks only
+            const filteredData = allData.filter(row => isNFLPick(row));
 
             const mlbPicksData = convertToMLBFormat(filteredData);
             

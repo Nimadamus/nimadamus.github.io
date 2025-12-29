@@ -235,8 +235,19 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL - NCAAB Records Tracker
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv';
+    // Google Sheets CSV URL - Master Pick Tracker
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
+    // Filter for NCAAB picks only (Sport = "Basketball" AND NOT NBA team names)
+    function isNCAABPick(row) {
+        const sport = (row.Sport || '').toLowerCase();
+        const pick = (row.Pick || row.Picks || '').toLowerCase();
+        if (sport !== 'basketball') return false;
+        // Exclude NBA team names - if it has NBA teams, it's not NCAAB
+        const nbaTeams = ['lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat', 'bulls', 'mavericks', 'mavs', 'spurs', 'rockets', 'suns', 'bucks', 'sixers', '76ers', 'raptors', 'thunder', 'okc', 'jazz', 'nuggets', 'blazers', 'timberwolves', 'wolves', 'pelicans', 'grizzlies', 'kings', 'clippers', 'hawks', 'hornets', 'magic', 'pistons', 'pacers', 'cavaliers', 'cavs', 'wizards'];
+        const hasNBATeam = nbaTeams.some(team => pick.includes(team));
+        return !hasNBATeam;
+    }
 
     // Global storage for all picks (for year filtering)
     let allProcessedPicks = [];
@@ -338,20 +349,26 @@
     function convertToMLBFormat(sheetData) {
         return sheetData.map(row => ({
             Date: row.Date || '',
-            Sport: row.Sport || 'NFL',
-            Pick: row.Picks || row.Pick || row.Line || '',
-            Line: row.Line || row.Odds || row['Price/Odds'] || row.Line || '',
+            Sport: 'NCAAB',
+            Pick: row.Pick || row.Picks || '',
+            Line: row.Odds || row.Line || '',
             Result: row.Result || '',
-            Units: row.ProfitLoss || row['Profit/Loss'] || row.Units || ''
+            Units: row['Profit/Loss'] || row.ProfitLoss || row.Units || ''
         }));
     }
 
     // Load data from Google Sheets and process it
     async function loadDataFromSheets() {
         try {
-            const response = await fetch(GOOGLE_SHEETS_CSV_URL);
+            const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
+                cache: 'no-store',
+                headers: { 'Cache-Control': 'no-store' }
+            });
             const csvText = await response.text();
-            const parsedData = parseCSV(csvText);
+            const allData = parseCSV(csvText);
+
+            // Filter for NCAAB picks only
+            const parsedData = allData.filter(row => isNCAABPick(row));
 
             const mlbPicksData = convertToMLBFormat(parsedData);
             
