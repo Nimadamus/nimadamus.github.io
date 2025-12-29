@@ -178,12 +178,12 @@ class SportsPageGenerator:
         venue = game.get('venue', {})
         venue_name = venue.get('fullName', '') if isinstance(venue, dict) else str(venue)
 
-        # Get odds
+        # Get odds - NEVER use placeholders, use empty string if no data
         odds = game_data.get('odds', {})
-        spread = odds.get('spread', 'N/A')
-        total = odds.get('total', 'N/A')
-        away_ml = odds.get('away_ml', 'N/A')
-        home_ml = odds.get('home_ml', 'N/A')
+        spread = odds.get('spread', '')
+        total = odds.get('total', '')
+        away_ml = odds.get('away_ml', '')
+        home_ml = odds.get('home_ml', '')
 
         # Get team stats
         away_stats = game_data.get('away_stats', {})
@@ -204,13 +204,13 @@ class SportsPageGenerator:
         injury_html = self._format_injuries(away_injuries, home_injuries, away_abbrev, home_abbrev)
 
         # CRITICAL: Only generate analysis if we have REAL data
-        # Skip templated analysis if data is fake/placeholder
+        # Skip games entirely if data is fake/placeholder - NO PLACEHOLDERS EVER
         if has_real_data(sport, away_stats, home_stats):
             analysis_html = self.analysis_generator.generate_analysis(sport, game_data)
         else:
-            # Minimal card - no fake templated analysis
-            analysis_html = '<div class="analysis-section"><p style="color:#ff6b6b;font-style:italic;">Live statistics unavailable - check back closer to game time.</p></div>'
-            print(f"    [SKIP ANALYSIS] {away_name} @ {home_name} - insufficient real data")
+            # SKIP THIS GAME - return empty string to exclude from output
+            print(f"    [SKIP GAME] {away_name} @ {home_name} - insufficient real data, NOT including in output")
+            return ''  # Return empty string to skip this game entirely
 
         return f'''<article class="game-card">
 <div class="teams-display">

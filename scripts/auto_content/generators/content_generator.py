@@ -39,7 +39,7 @@ class ContentGenerator:
 {away.get('name')} ({away.get('record', '?')}) @ {home.get('name')} ({home.get('record', '?')})
 Away L10: {away.get('l10', '?')} | Home L10: {home.get('l10', '?')}
 Away Win%: {away.get('win_pct', 0):.0f}% | Home Win%: {home.get('win_pct', 0):.0f}%
-Line: {odds.get('spread', 'N/A')} | Total: {odds.get('total', 'N/A')}
+Line: {odds.get('spread', '')} | Total: {odds.get('total', '')}
 Venue: {game_data.get('venue', '?')}"""
 
         # Sport-specific data
@@ -146,19 +146,19 @@ Write the take. No title. No headers. Just the analysis."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
-            <div class="stat-value">{home.get('record', 'N/A')}</div>
+            <div class="stat-value">{home.get('record', '')}</div>
             <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('record', 'N/A')}</div>
+            <div class="stat-value">{away.get('record', '')}</div>
             <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{home.get('l10', 'N/A')}</div>
+            <div class="stat-value">{home.get('l10', '')}</div>
             <div class="stat-label">L10</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('l10', 'N/A')}</div>
+            <div class="stat-value">{away.get('l10', '')}</div>
             <div class="stat-label">L10</div>
         </div>
     </div>
@@ -168,19 +168,19 @@ Write the take. No title. No headers. Just the analysis."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
-            <div class="stat-value">{home.get('record', 'N/A')}</div>
+            <div class="stat-value">{home.get('record', '')}</div>
             <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('record', 'N/A')}</div>
+            <div class="stat-value">{away.get('record', '')}</div>
             <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{home.get('points', 'N/A')} pts</div>
+            <div class="stat-value">{home.get('points', '')} pts</div>
             <div class="stat-label">Standing</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('points', 'N/A')} pts</div>
+            <div class="stat-value">{away.get('points', '')} pts</div>
             <div class="stat-label">Standing</div>
         </div>
     </div>
@@ -190,11 +190,11 @@ Write the take. No title. No headers. Just the analysis."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
-            <div class="stat-value">{home.get('record', 'N/A')}</div>
+            <div class="stat-value">{home.get('record', '')}</div>
             <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('record', 'N/A')}</div>
+            <div class="stat-value">{away.get('record', '')}</div>
             <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
         <div class="stat-item">
@@ -212,19 +212,19 @@ Write the take. No title. No headers. Just the analysis."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
-            <div class="stat-value">{home.get('record', 'N/A')}</div>
+            <div class="stat-value">{home.get('record', '')}</div>
             <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('record', 'N/A')}</div>
+            <div class="stat-value">{away.get('record', '')}</div>
             <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{home.get('probable_pitcher', 'TBD')}</div>
+            <div class="stat-value">{home.get('probable_pitcher', '')}</div>
             <div class="stat-label">Starter</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('probable_pitcher', 'TBD')}</div>
+            <div class="stat-value">{away.get('probable_pitcher', '')}</div>
             <div class="stat-label">Starter</div>
         </div>
     </div>
@@ -234,19 +234,19 @@ Write the take. No title. No headers. Just the analysis."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
-            <div class="stat-value">{home.get('record', 'N/A')}</div>
+            <div class="stat-value">{home.get('record', '')}</div>
             <div class="stat-label">{home.get('abbrev', 'HOME')} W-D-L</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('record', 'N/A')}</div>
+            <div class="stat-value">{away.get('record', '')}</div>
             <div class="stat-label">{away.get('abbrev', 'AWAY')} W-D-L</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{home.get('points', 'N/A')}</div>
+            <div class="stat-value">{home.get('points', '')}</div>
             <div class="stat-label">Points</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('points', 'N/A')}</div>
+            <div class="stat-value">{away.get('points', '')}</div>
             <div class="stat-label">Points</div>
         </div>
     </div>
@@ -256,11 +256,11 @@ Write the take. No title. No headers. Just the analysis."""
         return f"""<div class="stat-grid">
     <div class="stat-row">
         <div class="stat-item">
-            <div class="stat-value">{home.get('record', 'N/A')}</div>
+            <div class="stat-value">{home.get('record', '')}</div>
             <div class="stat-label">{home.get('abbrev', 'HOME')}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">{away.get('record', 'N/A')}</div>
+            <div class="stat-value">{away.get('record', '')}</div>
             <div class="stat-label">{away.get('abbrev', 'AWAY')}</div>
         </div>
     </div>

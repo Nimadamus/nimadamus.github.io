@@ -67,11 +67,11 @@ def generate_test_page(sport: str):
 <article class="game-card">
     <h3 class="game-title">{away.get('name', 'Away')} ({away.get('record', '')}) @ {home.get('name', 'Home')} ({home.get('record', '')})</h3>
     <div class="game-meta">
-        <span>Time: {formatted.get('game_time', 'TBD')}</span>
-        <span>Venue: {formatted.get('venue', 'TBD')}</span>
-        <span>TV: {formatted.get('broadcast', 'TBD')}</span>
-        <span>Line: {odds.get('spread', 'N/A')}</span>
-        <span>Total: {odds.get('total', 'N/A')}</span>
+        <span>Time: {formatted.get('game_time', '')}</span>
+        <span>Venue: {formatted.get('venue', '')}</span>
+        <span>TV: {formatted.get('broadcast', '')}</span>
+        <span>Line: {odds.get('spread', '')}</span>
+        <span>Total: {odds.get('total', '')}</span>
     </div>
 
     {stat_grid}
