@@ -145,15 +145,18 @@ class AutoContentOrchestrator:
 
                     except Exception as e:
                         print(f"    Error generating content: {e}")
-                        # Generate fallback content without API
-                        fallback_card = self._generate_fallback_card(game, sport_lower)
-                        game_cards_html.append(fallback_card)
+                        print(f"    SKIPPING {matchup} - NO PLACEHOLDER CONTENT ALLOWED")
+                        # DO NOT use fallback - skip games that can't get real content
             else:
-                # No API key - generate basic cards without articles
-                print("  (Generating basic cards without AI articles)")
-                for game in formatted_games:
-                    fallback_card = self._generate_fallback_card(game, sport_lower)
-                    game_cards_html.append(fallback_card)
+                # No API key - CANNOT generate content without API
+                print("  ERROR: No API key available - cannot generate content")
+                print("  Set ANTHROPIC_API_KEY environment variable to enable content generation")
+                print("  NO PLACEHOLDER CONTENT WILL BE GENERATED")
+                return {
+                    'success': False,
+                    'games': 0,
+                    'message': f"No API key - cannot generate {sport_name} content (placeholders not allowed)"
+                }
 
             if not game_cards_html:
                 return {
@@ -210,37 +213,14 @@ class AutoContentOrchestrator:
             }
 
     def _generate_fallback_card(self, game: Dict, sport: str) -> str:
-        """Generate a basic game card without AI-generated content."""
-        home = game.get('home', {})
-        away = game.get('away', {})
-        odds = game.get('odds', {})
+        """Generate a game card - REQUIRES real content, NO placeholders.
 
-        # Basic stat grid
-        stat_grid = f"""<div class="stat-row">
-    <div class="stat-item">
-        <div class="value">{home.get('record', 'N/A')}</div>
-        <div class="label">{home.get('abbrev', 'HOME')} Record</div>
-    </div>
-    <div class="stat-item">
-        <div class="value">{away.get('record', 'N/A')}</div>
-        <div class="label">{away.get('abbrev', 'AWAY')} Record</div>
-    </div>
-    <div class="stat-item">
-        <div class="value">{odds.get('spread', 'N/A')}</div>
-        <div class="label">Line</div>
-    </div>
-    <div class="stat-item">
-        <div class="value">{odds.get('total', 'N/A')}</div>
-        <div class="label">Total</div>
-    </div>
-</div>"""
-
-        # Basic article placeholder
-        article = f"Matchup analysis coming soon. {away.get('name', 'Away')} ({away.get('record', '')}) visits {home.get('name', 'Home')} ({home.get('record', '')})."
-
-        return self.html_updater.generate_game_card_html(
-            game, sport, stat_grid, article
-        )
+        Returns None if content cannot be generated - the game will be skipped.
+        NEVER use placeholder text like 'coming soon' or 'analysis pending'.
+        """
+        # NO PLACEHOLDERS ALLOWED - return None to skip this game
+        # The calling code must handle None and skip games without content
+        return None
 
     def run_all_sports(self, date: str = None) -> Dict[str, Dict]:
         """Run the pipeline for all active sports.
