@@ -238,6 +238,19 @@
     // Google Sheets CSV URL - Old NCAAF Sheet (correct data)
     const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
 
+    // Master Pick Tracker (new picks)
+    const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
+    // Filter for NCAAF picks from the tracker (Sport = "Football" AND NOT NFL teams)
+    function isNCAAFPick(row) {
+        const sport = (row.Sport || '').toLowerCase();
+        const pick = (row.Pick || row.Picks || '').toLowerCase();
+        if (sport !== 'football') return false;
+        // Exclude NFL teams
+        const nflTeams = ['49ers', 'niners', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jags', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
+        return !nflTeams.some(team => pick.includes(team));
+    }
+
     // Global storage for all picks (for year filtering)
     let allProcessedPicks = [];
     let currentYearFilter = '2025'; // Default to 2025
@@ -355,25 +368,58 @@
         }));
     }
 
-    // Load data from Google Sheets and process it
+    // Load data from BOTH Google Sheets and combine them
     async function loadDataFromSheets() {
         try {
-            const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
+            // Fetch from original NCAAF sheet
+            const originalResponse = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
                 cache: 'no-store',
                 headers: { 'Cache-Control': 'no-store' }
             });
-            const csvText = await response.text();
-            const filteredData = parseCSV(csvText);
+            const originalCsv = await originalResponse.text();
+            const originalData = parseCSV(originalCsv);
 
+            // Fetch from pick tracker
+            let trackerData = [];
+            try {
+                const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
+                    cache: 'no-store',
+                    headers: { 'Cache-Control': 'no-store' }
+                });
+                const trackerCsv = await trackerResponse.text();
+                const allTrackerData = parseCSV(trackerCsv);
+                // Filter for NCAAF picks only
+                trackerData = allTrackerData.filter(row => isNCAAFPick(row)).map(row => ({
+                    Date: row.Date || '',
+                    Pick: row.Pick || row.Picks || '',
+                    Odds: row.Odds || '',
+                    Result: row.Result || '',
+                    Units: row['Profit/Loss'] || row.ProfitLoss || ''
+                }));
+            } catch (e) {
+                console.log('Pick tracker fetch failed, using original data only');
+            }
 
-            const mlbPicksData = convertToMLBFormat(filteredData);
-            
+            // Combine both datasets
+            const combinedData = [...originalData, ...trackerData];
+
+            // Deduplicate by Date + Pick
+            const seen = new Set();
+            const uniqueData = combinedData.filter(row => {
+                const key = `${row.Date}|${row.Pick}`;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+
+            const mlbPicksData = convertToMLBFormat(uniqueData);
+
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
-            
+
             // Process the data using the original logic
             processPicksData(mlbPicksData);
-            
+
         } catch (error) {
             console.error('Error loading data from Google Sheets:', error);
             document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';
