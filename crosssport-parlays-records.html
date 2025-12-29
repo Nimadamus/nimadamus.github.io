@@ -201,30 +201,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Master Pick Tracker URL
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
-
-    // Filter for cross-sport parlays (parlay picks that mention teams from different sports)
-    function isCrossSportParlay(row) {
-        const pick = (row.Pick || row.Picks || '').toLowerCase();
-        if (!pick.includes('parlay') && !pick.includes('teaser')) return false;
-
-        // Check for NFL teams
-        const nflTeams = ['49ers', 'niners', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
-        const nbaTeams = ['lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat', 'bulls', 'mavericks', 'mavs', 'spurs', 'rockets', 'suns', 'bucks', 'sixers', '76ers', 'raptors', 'thunder', 'okc', 'jazz', 'nuggets', 'blazers', 'wolves', 'pelicans', 'grizzlies', 'kings', 'clippers', 'hawks', 'hornets', 'magic', 'pistons', 'pacers', 'cavaliers', 'cavs', 'wizards'];
-
-        const hasNFL = nflTeams.some(t => pick.includes(t));
-        const hasNBA = nbaTeams.some(t => pick.includes(t));
-
-        // Cross-sport = has teams from more than one sport
-        return hasNFL && hasNBA;
-    }
-
-    // Also include single-sport teasers (from the Football category)
-    function isTeaser(row) {
-        const pick = (row.Pick || row.Picks || '').toLowerCase();
-        return pick.includes('teaser');
-    }
+    // All sport sheet URLs
+    const SHEET_URLS = {
+        'NFL': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv',
+        'NBA': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv',
+        'NHL': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv',
+        'MLB': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv',
+        'NCAAF': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv',
+        'NCAAB': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv'
+    };
 
     // NFL teams for detection
     const NFL_TEAMS = ['49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jags', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
@@ -350,18 +335,35 @@
 
     async function loadDataFromSheets() {
         try {
-            const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
-                cache: 'no-store',
-                headers: { 'Cache-Control': 'no-store' }
+            const promises = Object.entries(SHEET_URLS).map(async ([sheetSport, url]) => {
+                try {
+                    const response = await fetch(url);
+                    const csv = await response.text();
+                    const rows = parseCSV(csv);
+                    return rows.map(row => ({
+                        ...row,
+                        sourceSport: sheetSport
+                    }));
+                } catch (error) {
+                    console.error(`Error fetching ${sheetSport} data:`, error);
+                    return [];
+                }
             });
-            const csv = await response.text();
-            const allData = parseCSV(csv);
+
+            const results = await Promise.all(promises);
+            const allData = results.flat();
 
             // Filter for cross-sport parlays
-            const crossSportParlays = allData.filter(row => isCrossSportParlay(row));
+            const crossSportParlays = allData.filter(row => {
+                const pick = row.Pick || row.pick || '';
+                return isCrossSportParlay(pick);
+            });
 
-            // Filter for teasers (single-sport or cross-sport)
-            const crossSportTeasers = allData.filter(row => isTeaser(row) && !isCrossSportParlay(row));
+            // Filter for cross-sport teasers
+            const crossSportTeasers = allData.filter(row => {
+                const pick = row.Pick || row.pick || '';
+                return isCrossSportTeaser(pick);
+            });
 
             // Deduplicate parlays
             const seenParlays = new Set();
@@ -403,14 +405,11 @@
 
     function processPick(p) {
         try {
-            const pickVal = p.Pick || p.Picks || '';
-            const unitsVal = p['Profit/Loss'] || p.ProfitLoss || p.Units || '';
-            const lineVal = p.Odds || p.Line || '';
-            if (!pickVal || !p.Result || !unitsVal || !p.Date) return null;
-            const pickText = String(pickVal).trim();
+            if (!p.Pick || !p.Result || !p.Units || !p.Date) return null;
+            const pickText = String(p.Pick).trim();
             const resultText = String(p.Result).trim().toUpperCase();
-            const units = parseFloat(unitsVal);
-            const line = parseFloat(lineVal) || -110;
+            const units = parseFloat(p.Units);
+            const line = parseFloat(p.Line) || -110;
             if (pickText === '' || resultText === '' || isNaN(units)) return null;
 
             let risk = 0;

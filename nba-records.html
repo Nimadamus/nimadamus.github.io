@@ -234,19 +234,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // Google Sheets CSV URL - Master Pick Tracker
-    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
-
-    // Filter for NBA picks only (Sport = "Basketball" AND NOT a cross-sport parlay)
-    function isNBAPick(row) {
-        const sport = (row.Sport || '').toLowerCase();
-        const pick = (row.Pick || row.Picks || '').toLowerCase();
-        if (sport !== 'basketball') return false;
-        // Exclude cross-sport parlays (those mentioning NFL teams)
-        const nflTeams = ['49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'bucs', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
-        const hasCrossSport = nflTeams.some(team => pick.includes(team));
-        return !hasCrossSport;
-    }
+    // Google Sheets CSV URL - Old NBA Sheet (correct data)
+    const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv';
 
     // Global storage for all picks (for year filtering)
     let allProcessedPicks = [];
@@ -334,10 +323,10 @@
         return sheetData.map(row => ({
             Date: row.Date || '',
             Sport: 'NBA',
-            Pick: row.Pick || row.Picks || '',
-            Line: row.Odds || row.Line || '',
+            Pick: row.Pick || '',
+            Line: row.Line || row.Odds || '',
             Result: row.Result || '',
-            Units: row['Profit/Loss'] || row.ProfitLoss || row.Units || ''
+            Units: row.Units || ''
         }));
     }
 
@@ -349,10 +338,8 @@
                 headers: { 'Cache-Control': 'no-store' }
             });
             const csvText = await response.text();
-            const allData = parseCSV(csvText);
+            const filteredData = parseCSV(csvText);
 
-            // Filter for NBA picks only
-            const filteredData = allData.filter(row => isNBAPick(row));
 
             const mlbPicksData = convertToMLBFormat(filteredData);
             
