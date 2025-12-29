@@ -1507,11 +1507,95 @@ After adding all picks, recalculate and update:
 - Total Units (+/-)
 - ROI
 
-### UNIT CALCULATION REMINDER (From CLAUDE.md):
-- **FAVORITE WIN:** +UNITS (you win what you were trying to win)
-- **FAVORITE LOSS:** -UNITS × (|ODDS| / 100)
-- **UNDERDOG WIN:** +UNITS × (ODDS / 100)
-- **UNDERDOG LOSS:** -UNITS (you lose what you risked)
+### ⛔⛔⛔ UNIT CALCULATION FORMULA - PERMANENTLY LOCKED ⛔⛔⛔
+
+**THIS IS THE CORRECT WAY TO CALCULATE UNIT PROFIT/LOSS. NO EXCEPTIONS.**
+
+#### THE CORE CONCEPT:
+The "Units" column = **what you're trying to WIN**, not what you're risking.
+
+- **FAVORITES (negative odds):** You risk MORE to win the units listed
+- **UNDERDOGS (positive odds):** You risk the units listed to win MORE
+
+---
+
+#### FORMULA FOR WINS:
+
+**FAVORITE WIN (negative odds like -110, -150, -255):**
+```
+UNIT_RESULT = +UNITS (you win exactly what you were trying to win)
+```
+Examples:
+- -110 odds, 3 units, WIN → +3.00 units
+- -150 odds, 2 units, WIN → +2.00 units
+- -255 odds, 3 units, WIN → +3.00 units
+
+**UNDERDOG WIN (positive odds like +120, +145, +200):**
+```
+UNIT_RESULT = +UNITS × (ODDS / 100)
+```
+Examples:
+- +120 odds, 2 units, WIN → +2.00 × 1.20 = **+2.40 units**
+- +145 odds, 1 unit, WIN → +1.00 × 1.45 = **+1.45 units**
+- +200 odds, 1.5 units, WIN → +1.50 × 2.00 = **+3.00 units**
+
+---
+
+#### FORMULA FOR LOSSES:
+
+**FAVORITE LOSS (negative odds like -110, -150, -255):**
+```
+UNIT_RESULT = -UNITS × (|ODDS| / 100)
+```
+Examples:
+- -110 odds, 3 units, LOSS → -3.00 × 1.10 = **-3.30 units**
+- -105 odds, 3 units, LOSS → -3.00 × 1.05 = **-3.15 units**
+- -150 odds, 2 units, LOSS → -2.00 × 1.50 = **-3.00 units**
+- -155 odds, 3 units, LOSS → -3.00 × 1.55 = **-4.65 units**
+- -165 odds, 3 units, LOSS → -3.00 × 1.65 = **-4.95 units**
+
+**UNDERDOG LOSS (positive odds like +120, +145, +200):**
+```
+UNIT_RESULT = -UNITS (you lose exactly what you risked)
+```
+Examples:
+- +120 odds, 2 units, LOSS → **-2.00 units**
+- +145 odds, 1 unit, LOSS → **-1.00 units**
+- +115 odds, 1.5 units, LOSS → **-1.50 units**
+
+---
+
+#### QUICK REFERENCE TABLE:
+
+| Odds | Units | Result | Calculation | UNIT_RESULT |
+|------|-------|--------|-------------|-------------|
+| -110 | 3 | WIN | 3 | +3.00 |
+| -110 | 3 | LOSS | 3 × 1.10 | -3.30 |
+| -105 | 3 | WIN | 3 | +3.00 |
+| -105 | 3 | LOSS | 3 × 1.05 | -3.15 |
+| -150 | 2 | WIN | 2 | +2.00 |
+| -150 | 2 | LOSS | 2 × 1.50 | -3.00 |
+| +120 | 2 | WIN | 2 × 1.20 | +2.40 |
+| +120 | 2 | LOSS | 2 | -2.00 |
+| +145 | 1 | WIN | 1 × 1.45 | +1.45 |
+| +145 | 1 | LOSS | 1 | -1.00 |
+
+---
+
+#### WHY THIS MATTERS:
+- Favorites: You're RISKING more to WIN the units listed
+- Underdogs: You're RISKING the units listed to WIN more
+- The units column is always "what you're trying to win"
+- Losses on favorites hurt more because you risked more
+- Wins on underdogs pay more because you risked less to win more
+
+#### DO NOT:
+- ❌ Confuse risk amount with win amount
+- ❌ Calculate favorite wins as units × odds (that's for losses)
+- ❌ Calculate underdog losses as units × odds (that's for wins)
+- ❌ Ever question this formula - it is CORRECT
+
+**IF YOU ARE ABOUT TO CALCULATE UNITS - REFER TO THIS SECTION FIRST.**
 
 ### AFTER UPDATING:
 1. Push all changes to GitHub

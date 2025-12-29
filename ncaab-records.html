@@ -419,7 +419,8 @@
                 // Filter for NCAAB picks only and use correct unit calculation
                 trackerData = allTrackerData.filter(row => isNCAABPick(row)).map(row => {
                     const rawUnits = row.Units || '3'; // Default to 3 units if missing
-                    const odds = row.Odds || '';
+                    // parseCSV renames "Odds" to "Line", so check both
+                    const odds = row.Line || row.Odds || '';
                     const result = row.Result || '';
                     const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
                     return {

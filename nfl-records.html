@@ -422,7 +422,8 @@
                 // Use the correct unit calculation formula
                 trackerData = allTrackerData.filter(row => isNFLPick(row)).map(row => {
                     const rawUnits = row.Units || '3'; // Default to 3 units if missing
-                    const odds = row.Odds || '';
+                    // parseCSV renames "Odds" to "Line", so check both
+                    const odds = row.Line || row.Odds || '';
                     const result = row.Result || '';
                     const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
                     return {
