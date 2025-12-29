@@ -1597,6 +1597,345 @@ Examples:
 
 **IF YOU ARE ABOUT TO CALCULATE UNITS - REFER TO THIS SECTION FIRST.**
 
+---
+
+### ⛔⛔⛔ TECHNICAL IMPLEMENTATION: HOW RECORD PAGES WORK ⛔⛔⛔
+
+#### PERMANENTLY LOCKED - DECEMBER 29, 2025
+
+**This section documents exactly how the record pages pull data, filter picks, and calculate units. DO NOT DEVIATE FROM THIS IMPLEMENTATION.**
+
+---
+
+#### ARCHITECTURE: DUAL DATA SOURCE SYSTEM
+
+Each record page (nfl-records.html, nba-records.html, etc.) pulls from TWO data sources:
+
+1. **Original Sport-Specific Sheet** - Contains historical picks for that sport only
+   - NFL: `https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv`
+   - NBA: `https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv`
+   - NHL: `https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv`
+   - NCAAF: `https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv`
+   - NCAAB: `https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv`
+
+2. **Master Pick Tracker** - Contains ALL recent picks across ALL sports
+   - URL: `https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0`
+   - Columns: Date, Sport, Pick, Odds, Units, Result, Profit/Loss
+
+**WHY TWO SOURCES:**
+- Original sheets have historical data that may not be in the tracker
+- Pick tracker has recent picks that may not be in the sport-specific sheets yet
+- Combining both ensures ALL picks appear on the record pages
+
+---
+
+#### DATA LOADING PROCESS (JavaScript)
+
+```javascript
+async function loadDataFromSheets() {
+    // STEP 1: Fetch from original sport-specific sheet
+    const originalResponse = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now());
+    const originalCsv = await originalResponse.text();
+    const originalData = parseCSV(originalCsv);
+
+    // STEP 2: Fetch from master pick tracker
+    let trackerData = [];
+    try {
+        const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now());
+        const trackerCsv = await trackerResponse.text();
+        const allTrackerData = parseCSV(trackerCsv);
+
+        // STEP 3: Filter tracker data for THIS sport only
+        trackerData = allTrackerData.filter(row => isSportPick(row)).map(row => {
+            // Calculate units using correct formula (see below)
+            const rawUnits = row.Units || '3';
+            const odds = row.Line || row.Odds || '';  // IMPORTANT: parseCSV renames Odds to Line
+            const result = row.Result || '';
+            const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
+            return {
+                Date: row.Date || '',
+                Pick: row.Pick || row.Picks || '',
+                Odds: odds,
+                Result: result,
+                Units: calculatedUnits.toString()
+            };
+        });
+    } catch (e) {
+        console.log('Pick tracker fetch failed, using original data only');
+    }
+
+    // STEP 4: Combine both datasets
+    const combinedData = [...originalData, ...trackerData];
+
+    // STEP 5: Deduplicate by Date + Pick
+    const seen = new Set();
+    const uniqueData = combinedData.filter(row => {
+        const key = `${row.Date}|${row.Pick}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    });
+
+    // Process and display the data...
+}
+```
+
+---
+
+#### CRITICAL BUG FIX: ODDS vs LINE COLUMN
+
+**THE PROBLEM:**
+The `parseCSV()` function in each record page renames the "Odds" column header to "Line":
+```javascript
+headers = headers.map((h, idx) => {
+    if (h.toLowerCase() === 'odds') return 'Line';  // THIS RENAMES IT
+    // ...
+});
+```
+
+**THE SOLUTION:**
+When accessing odds from tracker data, ALWAYS check BOTH column names:
+```javascript
+const odds = row.Line || row.Odds || '';  // Check Line first, then Odds
+```
+
+**IF YOU FORGET THIS:** The odds will be undefined, the unit calculation will fail, and picks won't show up correctly on the record pages.
+
+---
+
+#### SPORT FILTERING LOGIC
+
+The pick tracker has a "Sport" column with values like "Football", "Basketball", "Hockey". But "Football" could be NFL OR NCAAF. Here's how each record page filters:
+
+**NFL (nfl-records.html):**
+```javascript
+function isNFLPick(row) {
+    const sport = (row.Sport || '').toLowerCase();
+    const pick = (row.Pick || row.Picks || '').toLowerCase();
+    if (sport !== 'football') return false;
+
+    // Must contain an NFL team name
+    const nflTeamNames = ['49ers', 'niners', 'bears', 'bengals', 'bills', 'broncos',
+        'browns', 'buccaneers', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts',
+        'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars',
+        'jags', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'pats', 'raiders',
+        'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
+    return nflTeamNames.some(team => pick.includes(team));
+}
+```
+
+**NCAAF (ncaaf-records.html):**
+```javascript
+function isNCAAFPick(row) {
+    const sport = (row.Sport || '').toLowerCase();
+    const pick = (row.Pick || row.Picks || '').toLowerCase();
+    if (sport !== 'football') return false;
+
+    // Must NOT contain an NFL team name (inverse of NFL filter)
+    const nflTeams = ['49ers', 'niners', 'bears', 'bengals', ...];
+    return !nflTeams.some(team => pick.includes(team));
+}
+```
+
+**NBA (nba-records.html):**
+```javascript
+function isNBAPick(row) {
+    const sport = (row.Sport || '').toLowerCase();
+    const pick = (row.Pick || row.Picks || '').toLowerCase();
+    if (sport !== 'basketball') return false;
+
+    // Exclude NFL team names (for cross-sport parlays)
+    const nflTeams = ['49ers', 'bears', 'bengals', ...];
+    return !nflTeams.some(team => pick.includes(team));
+}
+```
+
+**NCAAB (ncaab-records.html):**
+```javascript
+function isNCAABPick(row) {
+    const sport = (row.Sport || '').toLowerCase();
+    const pick = (row.Pick || row.Picks || '').toLowerCase();
+    if (sport !== 'basketball') return false;
+
+    // Exclude NBA team names
+    const nbaTeams = ['lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat',
+        'bulls', 'mavericks', 'mavs', 'spurs', 'rockets', 'suns', 'bucks', 'sixers',
+        '76ers', 'raptors', 'thunder', 'okc', 'jazz', 'nuggets', 'blazers', 'wolves',
+        'pelicans', 'grizzlies', 'kings', 'clippers', 'hawks', 'hornets', 'magic',
+        'pistons', 'pacers', 'cavaliers', 'cavs', 'wizards'];
+    return !nbaTeams.some(team => pick.includes(team));
+}
+```
+
+**NHL (nhl-records.html):**
+```javascript
+function isNHLPick(row) {
+    const sport = (row.Sport || '').toLowerCase();
+    return sport === 'hockey';  // Simple - hockey is always NHL
+}
+```
+
+---
+
+#### UNIT CALCULATION FUNCTION (JavaScript Implementation)
+
+**This is the EXACT function used in all record pages:**
+
+```javascript
+// CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md - December 24, 2025)
+// Units column = what you're trying to WIN, not what you're risking
+// FAVORITE WIN (negative odds): UNIT_RESULT = +UNITS (win what you tried to win)
+// UNDERDOG WIN (positive odds): UNIT_RESULT = +UNITS × (ODDS / 100) (win more)
+// FAVORITE LOSS (negative odds): UNIT_RESULT = -UNITS × (|ODDS| / 100) (lose more)
+// UNDERDOG LOSS (positive odds): UNIT_RESULT = -UNITS (lose what you risked)
+
+function calculateUnitResult(unitsStake, odds, result) {
+    const stake = parseFloat(unitsStake);
+    const oddsNum = parseFloat(odds);
+    const resultUpper = (result || '').toUpperCase().trim();
+
+    if (isNaN(stake) || isNaN(oddsNum)) return 0;
+
+    if (resultUpper.startsWith('W')) {
+        // WIN
+        if (oddsNum < 0) {
+            // Favorite win: you win exactly the units (what you were trying to win)
+            return stake;
+        } else {
+            // Underdog win: you win units × (odds/100)
+            return stake * (oddsNum / 100);
+        }
+    } else if (resultUpper.startsWith('L')) {
+        // LOSS
+        if (oddsNum < 0) {
+            // Favorite loss: you lose units × (|odds|/100) because you risked more
+            return -stake * (Math.abs(oddsNum) / 100);
+        } else {
+            // Underdog loss: you lose exactly the units (what you risked)
+            return -stake;
+        }
+    } else {
+        // Push or other
+        return 0;
+    }
+}
+```
+
+---
+
+#### WORKED EXAMPLES WITH THIS FUNCTION
+
+**Example 1: Chiefs +14 at -130, 3 units, WIN**
+```
+stake = 3
+oddsNum = -130 (negative = favorite juice)
+result = 'W'
+
+Since oddsNum < 0 AND result is WIN:
+  return stake = 3.00
+
+RESULT: +3.00 units
+```
+
+**Example 2: Eagles +3 at -110, 3 units, WIN**
+```
+stake = 3
+oddsNum = -110 (negative = favorite juice)
+result = 'W'
+
+Since oddsNum < 0 AND result is WIN:
+  return stake = 3.00
+
+RESULT: +3.00 units
+```
+
+**Example 3: Sharks ML at +120, 1 unit, WIN**
+```
+stake = 1
+oddsNum = 120 (positive = underdog)
+result = 'W'
+
+Since oddsNum > 0 AND result is WIN:
+  return stake * (oddsNum / 100) = 1 * 1.20 = 1.20
+
+RESULT: +1.20 units
+```
+
+**Example 4: Chargers -1 at -110, 2 units, LOSS**
+```
+stake = 2
+oddsNum = -110 (negative = favorite juice)
+result = 'L'
+
+Since oddsNum < 0 AND result is LOSS:
+  return -stake * (|oddsNum| / 100) = -2 * 1.10 = -2.20
+
+RESULT: -2.20 units
+```
+
+**Example 5: Maple Leafs ML at +105, 3 units, LOSS**
+```
+stake = 3
+oddsNum = 105 (positive = underdog)
+result = 'L'
+
+Since oddsNum > 0 AND result is LOSS:
+  return -stake = -3.00
+
+RESULT: -3.00 units
+```
+
+---
+
+#### DEDUPLICATION LOGIC
+
+When combining data from both sources, duplicates are removed:
+
+```javascript
+const seen = new Set();
+const uniqueData = combinedData.filter(row => {
+    const key = `${row.Date}|${row.Pick}`;  // Create unique key from date + pick text
+    if (seen.has(key)) return false;         // Skip if already seen
+    seen.add(key);                           // Mark as seen
+    return true;                             // Keep this row
+});
+```
+
+**WHY THIS MATTERS:**
+- Same pick might exist in both the original sheet AND the tracker
+- Without deduplication, it would appear twice and double-count units
+- The key is Date + Pick text combined
+
+---
+
+#### TROUBLESHOOTING CHECKLIST
+
+If picks aren't showing up on a record page:
+
+1. **Check the Sport column** - Is it "Football", "Basketball", or "Hockey"?
+2. **Check the team names** - Does the pick text contain recognizable team names?
+3. **Check the Odds/Line bug** - Are you using `row.Line || row.Odds`?
+4. **Check the Result column** - Must start with W, L, or P
+5. **Check the Units column** - Must be a valid number
+6. **Check the Odds column** - Must be a valid number (can be negative or positive)
+7. **Clear browser cache** - Google Sheets data may be cached
+
+---
+
+#### FILES THAT IMPLEMENT THIS SYSTEM
+
+All these files contain the dual-source loading, filtering, and unit calculation code:
+
+- `C:\Users\Nima\nimadamus.github.io\nfl-records.html`
+- `C:\Users\Nima\nimadamus.github.io\nba-records.html`
+- `C:\Users\Nima\nimadamus.github.io\nhl-records.html`
+- `C:\Users\Nima\nimadamus.github.io\ncaaf-records.html`
+- `C:\Users\Nima\nimadamus.github.io\ncaab-records.html`
+
+**DO NOT modify the calculation logic in these files. The formula is CORRECT.**
+
+---
+
 ### AFTER UPDATING:
 1. Push all changes to GitHub
 2. Verify on live site
@@ -1604,11 +1943,13 @@ Examples:
 ---
 
 ## PROTOCOL VERSION
-Version: 1.4
-Last Updated: December 25, 2025
+Version: 1.5
+Last Updated: December 29, 2025
 Created by: Claude Code for BetLegend
 
 ### CHANGELOG:
+- v1.5 (Dec 29, 2025): Added comprehensive "TECHNICAL IMPLEMENTATION: HOW RECORD PAGES WORK" section documenting dual-source data loading, sport filtering logic, unit calculation JavaScript function, Odds/Line column bug fix, deduplication, and worked examples
+- v1.4 (Dec 25, 2025): Added "UNIT CALCULATION FORMULA" section with correct formulas for favorite/underdog wins and losses
 - v1.3 (Dec 14, 2025): Added LOCKED "Sports Archive Page Format (Calendar Style)" - ALL archive pages MUST use game-preview article format with written content, NO stat-row/deep-analysis garbage
 - v1.2 (Dec 14, 2025): Added LOCKED "Game Result Section Format" with exact HTML, colors, and placement rules
 - v1.1 (Dec 14, 2025): Added "BANNED TEMPLATE PHRASES" section to enforce human-sounding commentary on sports pages
