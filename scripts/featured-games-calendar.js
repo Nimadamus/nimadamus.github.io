@@ -1,8 +1,10 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: December 27, 2025
+// Last updated: December 29, 2025
 
 const ARCHIVE_DATA = [
+    { date: "2025-12-29", page: "featured-game-of-the-day-page30.html", title: "Rams vs Falcons - MNF" },
+    { date: "2025-12-28", page: "featured-game-of-the-day-page29.html", title: "Eagles vs Bills - Super Bowl Preview" },
     { date: "2025-12-27", page: "featured-game-of-the-day-page28.html", title: "Texans vs Chargers - Wild Card Rematch" },
     { date: "2025-12-26", page: "featured-game-of-the-day-page27.html", title: "Rate Bowl: New Mexico vs Minnesota" },
     { date: "2025-12-25", page: "featured-game-of-the-day-page26.html", title: "Lions vs Vikings - Christmas Day" },
