@@ -54,9 +54,11 @@ const FEATURED_GAMES = [
     { date: "2025-12-26", page: "featured-game-of-the-day-page27.html", title: "New Mexico vs Minnesota Rate Bowl" },
     { date: "2025-12-27", page: "featured-game-of-the-day-page28.html", title: "Texans vs Chargers Week 17" },
     { date: "2025-12-28", page: "featured-game-of-the-day-page29.html", title: "Eagles vs Bills Week 17" },
+    { date: "2025-12-29", page: "featured-game-of-the-day-page30.html", title: "Rams vs Falcons MNF" },
+    { date: "2025-12-30", page: "featured-game-of-the-day-page31.html", title: "Tennessee vs Illinois Music City Bowl" },
 
     // ADD NEW FEATURED GAMES HERE
-    // Example: { date: "2025-12-29", page: "featured-game-of-the-day-page30.html", title: "Game Title" },
+    // Example: { date: "2025-12-31", page: "featured-game-of-the-day-page32.html", title: "Game Title" },
 ];
 
 // Export for use in calendar
