@@ -78,6 +78,11 @@ MANUAL_DATE_OVERRIDES = {
     'nhl-page21.html': '2025-12-21',  # December 21 NHL
     'nhl-page22.html': '2025-12-22',  # December 22 NHL
     'nhl-page23.html': '2025-12-23',  # December 23 NHL
+    'nhl-page24.html': '2025-12-23',  # December 23 NHL (evening games)
+    'nhl-page25.html': '2025-12-27',  # December 27 NHL (Saturday slate)
+    'nhl-page26.html': '2025-12-27',  # December 27 NHL (Saturday slate part 2)
+    'nhl-page27.html': '2025-12-28',  # December 28 NHL (Sunday slate)
+    'nhl-page28.html': '2025-12-28',  # December 28 NHL (Sunday slate part 2)
     # NCAAB archive pages
     'ncaab-page4.html': '2025-12-04',   # December 4 NCAAB
     'ncaab-page5.html': '2025-12-05',   # December 5 NCAAB

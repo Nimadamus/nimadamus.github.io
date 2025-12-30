@@ -4,14 +4,14 @@
 
 const ARCHIVE_DATA = [
     { date: "2025-12-29", page: "nhl.html", title: "NHL Analysis - December 29, 2025" },
-    { date: "2025-12-28", page: "nhl-page28.html", title: "NHL Analysis Archive - Page 28" },
-    { date: "2025-12-28", page: "nhl-page27.html", title: "NHL Analysis Archive - Page 27" },
+    { date: "2025-12-28", page: "nhl-page28.html", title: "NHL Analysis - December 28, 2025 Part 2" },
+    { date: "2025-12-28", page: "nhl-page27.html", title: "NHL Analysis - December 28, 2025" },
+    { date: "2025-12-27", page: "nhl-page26.html", title: "NHL Analysis - December 27, 2025 Part 2" },
+    { date: "2025-12-27", page: "nhl-page25.html", title: "NHL Analysis - December 27, 2025" },
     { date: "2025-12-23", page: "nhl-page24.html", title: "NHL Analysis Archive - Page 24" },
     { date: "2025-12-23", page: "nhl-page23.html", title: "NHL Analysis Archive - Page 23" },
     { date: "2025-12-22", page: "nhl-page22.html", title: "NHL Analysis Archive - Page 22" },
     { date: "2025-12-21", page: "nhl-page21.html", title: "NHL Analysis Archive - Page 21" },
-    { date: "2025-12-20", page: "nhl-page26.html", title: "NHL Analysis Archive - Page 26" },
-    { date: "2025-12-20", page: "nhl-page25.html", title: "NHL Analysis Archive - Page 25" },
     { date: "2025-12-20", page: "nhl-page20.html", title: "NHL Analysis Archive - Page 20" },
     { date: "2025-12-20", page: "nhl-page12.html", title: "NHL Analysis Archive - Page 12" },
     { date: "2025-12-19", page: "nhl-page19.html", title: "NHL Analysis Archive - Page 19" },
