@@ -36,23 +36,35 @@ PLACEHOLDER_PATTERNS = [
 ]
 
 def check_placeholders():
-    """Check for placeholder content in HTML files."""
-    print("Checking for placeholder content...")
+    """Check for placeholder content in ALL sports HTML files."""
+    print("Checking for placeholder content in ALL sports pages...")
 
-    sports_files = ['nba.html', 'nhl.html', 'ncaaf.html', 'ncaab.html', 'nfl.html', 'mlb.html']
+    # Check ALL sports-related HTML files, not just the main ones
+    sports_prefixes = ['nba', 'nhl', 'ncaaf', 'ncaab', 'nfl', 'mlb', 'soccer']
+    exclude_patterns = ['records', 'calendar', 'archive.html']
 
-    for filename in sports_files:
-        filepath = REPO_DIR / filename
-        if not filepath.exists():
-            continue
+    checked_count = 0
 
-        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
-            content = f.read()
+    for prefix in sports_prefixes:
+        # Get main file and all page files
+        for filepath in REPO_DIR.glob(f'{prefix}*.html'):
+            filename = filepath.name
 
-        for pattern in PLACEHOLDER_PATTERNS:
-            matches = re.findall(pattern, content, re.IGNORECASE)
-            if matches:
-                ERRORS.append(f"PLACEHOLDER in {filename}: Found '{matches[0]}'")
+            # Skip utility files
+            if any(excl in filename.lower() for excl in exclude_patterns):
+                continue
+
+            with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
+
+            checked_count += 1
+
+            for pattern in PLACEHOLDER_PATTERNS:
+                matches = re.findall(pattern, content, re.IGNORECASE)
+                if matches:
+                    ERRORS.append(f"PLACEHOLDER in {filename}: Found '{matches[0]}'")
+
+    print(f"  Checked {checked_count} sports pages")
 
 # ============================================================
 # CHECK 2: COLLEGE LOGOS (must use numeric IDs)

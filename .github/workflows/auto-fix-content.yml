@@ -23,6 +23,32 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: "🚨 CRITICAL CHECK: Scan for placeholder content"
+        run: |
+          echo "=========================================="
+          echo "SCANNING ALL SPORTS PAGES FOR PLACEHOLDERS"
+          echo "=========================================="
+          FOUND=0
+          for prefix in nba nhl nfl ncaab ncaaf mlb soccer; do
+            for file in ${prefix}*.html; do
+              if [ -f "$file" ]; then
+                if grep -qi -E "coming soon|analysis coming|matchup analysis|preview coming|\bTBD\b|\bTBA\b" "$file" 2>/dev/null; then
+                  echo "❌ PLACEHOLDER FOUND: $file"
+                  grep -n -i -E "coming soon|analysis coming|matchup analysis|preview coming|\bTBD\b|\bTBA\b" "$file" | head -3
+                  FOUND=1
+                fi
+              fi
+            done
+          done
+          if [ $FOUND -eq 1 ]; then
+            echo ""
+            echo "=========================================="
+            echo "🚫 BUILD BLOCKED - PLACEHOLDER CONTENT DETECTED"
+            echo "=========================================="
+            exit 1
+          fi
+          echo "✅ No placeholder content found"
+
       - name: Fix college logos (convert abbreviations to numeric IDs)
         run: |
           echo "🔧 Fixing college logo URLs..."
@@ -35,7 +61,7 @@ jobs:
 
       - name: Validate content (BLOCKS if errors found)
         run: |
-          echo "🔍 Validating content..."
+          echo "🔍 Running full content validation..."
           python scripts/validate_content.py
         continue-on-error: false
 
