@@ -919,20 +919,6 @@ async function fetchAllData() {
             const rows = parseCSV(csv);
             // Use the sport from the sheet name as fallback
             return rows.map(row => {
-                // Fix ALL incorrect dates - force year to 2025 if it's wrong
-                let dateStr = row.Date || row.date || '';
-                if (dateStr) {
-                    const date = new Date(dateStr);
-                    if (!isNaN(date)) {
-                        const year = date.getFullYear();
-                        // Fix any year that's not 2025
-                        if (year !== 2025) {
-                            const correctedDate = new Date(2025, date.getMonth(), date.getDate());
-                            row.Date = correctedDate.toISOString().split('T')[0];
-                            row.date = row.Date;
-                        }
-                    }
-                }
                 return {
                     ...row,
                     sport: sheetSport // This maps to the correct sheet
@@ -985,17 +971,6 @@ async function fetchAllData() {
         }
     });
     console.log('📅 Picks by month:', monthCounts);
-
-    // Verify all dates are now 2025
-    const non2025 = allData.filter(row => {
-        const date = new Date(row.Date || row.date || '');
-        return !isNaN(date) && date.getFullYear() !== 2025;
-    });
-    if (non2025.length > 0) {
-        console.warn(`⚠️ WARNING: ${non2025.length} picks still have non-2025 dates!`);
-    } else {
-        console.log('✅ All dates corrected to 2025');
-    }
 }
 
 function parseCSV(csvText) {
