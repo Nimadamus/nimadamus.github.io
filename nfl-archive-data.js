@@ -8,6 +8,7 @@ const NFL_ARCHIVE = [
     { date: "2025-12-21", page: "nfl-page18.html", title: "NFL Analysis Archive - Page 18" },
     { date: "2025-12-21", page: "nfl-page25.html", title: "December 21, 2025" },
     { date: "2025-12-21", page: "nfl-page21.html", title: "NFL Analysis Archive - Page 21" },
+    { date: "2025-12-21", page: "nfl-page26.html", title: "December 21, 2025" },
     { date: "2025-12-21", page: "nfl-page20.html", title: "NFL Analysis Archive - Page 20" },
     { date: "2025-12-21", page: "nfl-page19.html", title: "NFL Analysis Archive - Page 19" },
     { date: "2025-12-07", page: "nfl-page13.html", title: "NFL Week 14 Preview - December 7, 2025" },

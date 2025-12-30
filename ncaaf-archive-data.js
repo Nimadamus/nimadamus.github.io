@@ -1,6 +1,7 @@
 // NCAAF Archive Data - Auto-updated by production script
 const NCAAF_ARCHIVE = [
-    { date: "2025-12-29", page: "ncaaf.html", title: "NCAAF Analysis - December 28, 2025" },
+    { date: "2025-12-30", page: "ncaaf.html", title: "NCAAF Analysis - December 28, 2025" },
+    { date: "2025-12-19", page: "ncaaf-page33.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page27.html", title: "NCAAF Analysis Archive - Page 27" },
     { date: "2025-12-19", page: "ncaaf-page23.html", title: "NCAAF Analysis Archive - Page 23" },
     { date: "2025-12-19", page: "ncaaf-page25.html", title: "NCAAF Analysis Archive - Page 25" },
@@ -9,6 +10,7 @@ const NCAAF_ARCHIVE = [
     { date: "2025-12-19", page: "ncaaf-page11.html", title: "NCAAF Analysis Archive - Page 11" },
     { date: "2025-12-19", page: "ncaaf-page22.html", title: "NCAAF Analysis Archive - Page 22" },
     { date: "2025-12-19", page: "ncaaf-page31.html", title: "December 19, 2025" },
+    { date: "2025-12-19", page: "ncaaf-page32.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page10.html", title: "NCAAF Analysis Archive - Page 10" },
     { date: "2025-12-19", page: "ncaaf-page2.html", title: "College Football Rivalry Week Nov 28 2025" },
     { date: "2025-12-19", page: "ncaaf-page30.html", title: "NCAAF Analysis Archive - Page 30" },
