@@ -240,14 +240,26 @@
     // Master Pick Tracker (new picks)
     const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
 
-    // Filter for NBA picks from the tracker (Sport = "Basketball" AND NOT cross-sport)
+    // Filter for NBA picks from the tracker (League = "NBA" OR Sport = "Basketball" with no cross-sport)
     function isNBAPick(row) {
-        const sport = (row.Sport || '').toLowerCase();
+        const league = (row.League || '').toLowerCase().trim();
+        const sport = (row.Sport || '').toLowerCase().trim();
         const pick = (row.Pick || row.Picks || '').toLowerCase();
-        if (sport !== 'basketball') return false;
+
         // Exclude cross-sport parlays
-        const nflTeams = ['49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'bucs', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
-        return !nflTeams.some(team => pick.includes(team));
+        if (league === 'cross-sport') return false;
+
+        // Check League column first (most reliable)
+        if (league === 'nba') return true;
+
+        // Fallback: check Sport column for basketball
+        if (sport === 'basketball') {
+            // Make sure it's not a cross-sport parlay by checking for other sport teams
+            const nflTeams = ['49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'bucs', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
+            return !nflTeams.some(team => pick.includes(team));
+        }
+
+        return false;
     }
 
     // CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md - December 24, 2025)

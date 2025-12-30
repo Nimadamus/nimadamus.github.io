@@ -241,9 +241,18 @@
     // Master Pick Tracker (new picks)
     const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
 
-    // Filter for NHL picks from the tracker (Sport = "Hockey")
+    // Filter for NHL picks from the tracker (League = "NHL" OR Sport = "Hockey")
     function isNHLPick(row) {
-        const sport = (row.Sport || '').toLowerCase();
+        const league = (row.League || '').toLowerCase().trim();
+        const sport = (row.Sport || '').toLowerCase().trim();
+
+        // Exclude cross-sport parlays
+        if (league === 'cross-sport') return false;
+
+        // Check League column first (most reliable)
+        if (league === 'nhl') return true;
+
+        // Fallback: check Sport column for hockey
         return sport === 'hockey';
     }
 

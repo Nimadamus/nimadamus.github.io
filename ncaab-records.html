@@ -241,14 +241,25 @@
     // Master Pick Tracker (new picks)
     const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
 
-    // Filter for NCAAB picks from the tracker (Sport = "Basketball" AND NOT NBA teams)
+    // Filter for NCAAB picks from the tracker (League = "NCAAB" OR Sport = "Basketball" without NBA teams)
     function isNCAABPick(row) {
-        const sport = (row.Sport || '').toLowerCase();
+        const league = (row.League || '').toLowerCase().trim();
+        const sport = (row.Sport || '').toLowerCase().trim();
         const pick = (row.Pick || row.Picks || '').toLowerCase();
-        if (sport !== 'basketball') return false;
-        // Exclude NBA teams
-        const nbaTeams = ['lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat', 'bulls', 'mavericks', 'mavs', 'spurs', 'rockets', 'suns', 'bucks', 'sixers', '76ers', 'raptors', 'thunder', 'okc', 'jazz', 'nuggets', 'blazers', 'wolves', 'pelicans', 'grizzlies', 'kings', 'clippers', 'hawks', 'hornets', 'magic', 'pistons', 'pacers', 'cavaliers', 'cavs', 'wizards'];
-        return !nbaTeams.some(team => pick.includes(team));
+
+        // Exclude cross-sport parlays
+        if (league === 'cross-sport') return false;
+
+        // Check League column first (most reliable)
+        if (league === 'ncaab' || league === 'cbb' || league === 'college basketball') return true;
+
+        // Fallback: check Sport column for basketball without NBA team names
+        if (sport === 'basketball') {
+            const nbaTeams = ['lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat', 'bulls', 'mavericks', 'mavs', 'spurs', 'rockets', 'suns', 'bucks', 'sixers', '76ers', 'raptors', 'thunder', 'okc', 'jazz', 'nuggets', 'blazers', 'wolves', 'pelicans', 'grizzlies', 'kings', 'clippers', 'hawks', 'hornets', 'magic', 'pistons', 'pacers', 'cavaliers', 'cavs', 'wizards'];
+            return !nbaTeams.some(team => pick.includes(team));
+        }
+
+        return false;
     }
 
     // CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md - December 24, 2025)

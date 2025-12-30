@@ -883,17 +883,27 @@ const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SR
 
 // Sport detection for Pick Tracker entries
 function detectSportFromPick(row) {
-    const sport = (row.Sport || '').toLowerCase();
+    const league = (row.League || '').toLowerCase().trim();
+    const sport = (row.Sport || '').toLowerCase().trim();
     const pick = (row.Pick || row.Picks || '').toLowerCase();
 
-    // Check explicit sport column first
-    if (sport === 'football' || sport === 'nfl') return 'NFL';
-    if (sport === 'basketball' || sport === 'nba') return 'NBA';
-    if (sport === 'hockey' || sport === 'nhl') return 'NHL';
-    if (sport === 'baseball' || sport === 'mlb') return 'MLB';
-    if (sport === 'ncaaf' || sport === 'college football' || sport === 'cfb') return 'NCAAF';
-    if (sport === 'ncaab' || sport === 'college basketball' || sport === 'cbb') return 'NCAAB';
-    if (sport === 'soccer' || sport === 'mls') return 'Soccer';
+    // Skip cross-sport parlays - they go on separate page
+    if (league === 'cross-sport') return null;
+
+    // Check League column first (most specific)
+    if (league === 'nfl') return 'NFL';
+    if (league === 'nba') return 'NBA';
+    if (league === 'nhl') return 'NHL';
+    if (league === 'mlb') return 'MLB';
+    if (league === 'ncaaf' || league === 'cfb' || league === 'college football') return 'NCAAF';
+    if (league === 'ncaab' || league === 'cbb' || league === 'college basketball') return 'NCAAB';
+    if (league === 'soccer' || league === 'mls') return 'Soccer';
+
+    // Check Sport column (generic sport names)
+    if (sport === 'football') return 'NFL'; // Default football to NFL
+    if (sport === 'basketball') return 'NBA'; // Default basketball to NBA
+    if (sport === 'hockey') return 'NHL';
+    if (sport === 'baseball') return 'MLB';
 
     // Check for explicit tags in pick text
     if (pick.includes('(nfl)')) return 'NFL';
@@ -978,10 +988,13 @@ function renderAllStats() {
 }
 
 async function fetchAllData() {
-    // Fetch from all sport-specific sheets
+    // Fetch from all sport-specific sheets with cache busting
     const promises = Object.entries(SHEET_URLS).map(async ([sheetSport, url]) => {
         try {
-            const response = await fetch(url);
+            const response = await fetch(url + '&cache=' + Date.now(), {
+                cache: 'no-store',
+                headers: { 'Cache-Control': 'no-store' }
+            });
             const csv = await response.text();
             const rows = parseCSV(csv);
             // Use the sport from the sheet name as fallback

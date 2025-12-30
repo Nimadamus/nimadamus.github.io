@@ -241,14 +241,25 @@
     // Master Pick Tracker (new picks)
     const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
 
-    // Filter for NCAAF picks from the tracker (Sport = "Football" AND NOT NFL teams)
+    // Filter for NCAAF picks from the tracker (League = "NCAAF" OR Sport = "Football" without NFL teams)
     function isNCAAFPick(row) {
-        const sport = (row.Sport || '').toLowerCase();
+        const league = (row.League || '').toLowerCase().trim();
+        const sport = (row.Sport || '').toLowerCase().trim();
         const pick = (row.Pick || row.Picks || '').toLowerCase();
-        if (sport !== 'football') return false;
-        // Exclude NFL teams
-        const nflTeams = ['49ers', 'niners', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jags', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
-        return !nflTeams.some(team => pick.includes(team));
+
+        // Exclude cross-sport parlays
+        if (league === 'cross-sport') return false;
+
+        // Check League column first (most reliable)
+        if (league === 'ncaaf' || league === 'cfb' || league === 'college football') return true;
+
+        // Fallback: check Sport column for football without NFL team names
+        if (sport === 'football') {
+            const nflTeams = ['49ers', 'niners', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jags', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
+            return !nflTeams.some(team => pick.includes(team));
+        }
+
+        return false;
     }
 
     // CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md - December 24, 2025)
