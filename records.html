@@ -907,6 +907,43 @@ function detectSportFromPick(row) {
     return null; // Unknown sport
 }
 
+// CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md - December 24, 2025)
+// Units column = what you're trying to WIN, not what you're risking
+// FAVORITE WIN (negative odds): UNIT_RESULT = +UNITS (win what you tried to win)
+// UNDERDOG WIN (positive odds): UNIT_RESULT = +UNITS × (ODDS / 100) (win more)
+// FAVORITE LOSS (negative odds): UNIT_RESULT = -UNITS × (|ODDS| / 100) (lose more because you risked more)
+// UNDERDOG LOSS (positive odds): UNIT_RESULT = -UNITS (lose what you risked)
+function calculateUnitResult(unitsStake, odds, result) {
+    const stake = parseFloat(unitsStake);
+    const oddsNum = parseFloat(odds);
+    const resultUpper = (result || '').toUpperCase().trim();
+
+    if (isNaN(stake) || isNaN(oddsNum)) return 0;
+
+    if (resultUpper.startsWith('W')) {
+        // WIN
+        if (oddsNum < 0) {
+            // Favorite win: you win exactly the units (what you were trying to win)
+            return stake;
+        } else {
+            // Underdog win: you win units × (odds/100)
+            return stake * (oddsNum / 100);
+        }
+    } else if (resultUpper.startsWith('L')) {
+        // LOSS
+        if (oddsNum < 0) {
+            // Favorite loss: you lose units × (|odds|/100) because you risked more
+            return -stake * (Math.abs(oddsNum) / 100);
+        } else {
+            // Underdog loss: you lose exactly the units (what you risked)
+            return -stake;
+        }
+    } else {
+        // Push or other
+        return 0;
+    }
+}
+
 let allData = [];
 let filteredData = []; // Data filtered by year
 let currentYearFilter = '2025'; // Default to 2025
@@ -978,12 +1015,18 @@ async function fetchAllData() {
             const detectedSport = detectSportFromPick(row);
             if (!detectedSport) return null; // Skip if sport can't be determined
 
+            // Calculate units using correct formula from CLAUDE.md
+            const rawUnits = row.Units || '3';
+            const odds = row.Line || row.Odds || '';
+            const result = row.Result || '';
+            const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
+
             return {
                 Date: row.Date || '',
                 Pick: row.Pick || row.Picks || '',
-                Line: row.Line || row.Odds || '',
-                Result: row.Result || '',
-                Units: row.Units || '3',
+                Line: odds,
+                Result: result,
+                Units: calculatedUnits.toString(),
                 sport: detectedSport
             };
         }).filter(row => row !== null);
