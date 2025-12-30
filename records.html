@@ -878,19 +878,6 @@ const SHEET_URLS = {
     'Soccer': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
 };
 
-// Master Pick Tracker (contains all new picks with Sport column)
-const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
-
-// Sport mapping for Pick Tracker
-function mapTrackerSport(sport) {
-    const s = (sport || '').toLowerCase();
-    if (s === 'basketball') return 'NBA';
-    if (s === 'hockey') return 'NHL';
-    if (s === 'football') return 'Football'; // Will be categorized as NFL or NCAAF based on team
-    if (s === 'baseball') return 'MLB';
-    return sport;
-}
-
 let allData = [];
 let filteredData = []; // Data filtered by year
 let currentYearFilter = '2025'; // Default to 2025
@@ -944,32 +931,7 @@ async function fetchAllData() {
     });
 
     const results = await Promise.all(promises);
-    let rawData = results.flat();
-
-    // Also fetch from Pick Tracker
-    try {
-        const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now());
-        const trackerCsv = await trackerResponse.text();
-        const trackerRows = parseCSV(trackerCsv);
-        // Map tracker picks to proper sport format
-        const nflTeams = ['49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'bucs', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
-        const trackerData = trackerRows.map(row => {
-            let sport = mapTrackerSport(row.Sport);
-            // For Football, determine NFL vs NCAAF
-            if (sport === 'Football') {
-                const pick = (row.Pick || '').toLowerCase();
-                sport = nflTeams.some(team => pick.includes(team)) ? 'NFL' : 'NCAAF';
-            }
-            return {
-                ...row,
-                sport: sport
-            };
-        });
-        rawData = [...rawData, ...trackerData];
-    } catch (error) {
-        console.log('Pick tracker fetch failed, using sport sheets only');
-    }
-
+    const rawData = results.flat();
     console.log(`📥 Loaded ${rawData.length} total picks (before deduplication)`);
 
     // DEDUPLICATION: Remove duplicate bets by unique identifier (Date + Pick + Line)
