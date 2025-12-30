@@ -211,6 +211,9 @@
         'NCAAB': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv'
     };
 
+    // Master Pick Tracker (contains all new picks with Sport column)
+    const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
     // NFL teams for detection
     const NFL_TEAMS = ['49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jags', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
 
@@ -368,7 +371,22 @@
             });
 
             const results = await Promise.all(promises);
-            const allData = results.flat();
+            let allData = results.flat();
+
+            // Also fetch from the Pick Tracker (contains new picks with Sport column)
+            try {
+                const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now());
+                const trackerCsv = await trackerResponse.text();
+                const trackerRows = parseCSV(trackerCsv);
+                // Add tracker rows with their Sport column as sourceSport
+                const trackerData = trackerRows.map(row => ({
+                    ...row,
+                    sourceSport: row.Sport || 'Unknown'
+                }));
+                allData = [...allData, ...trackerData];
+            } catch (error) {
+                console.log('Pick tracker fetch failed, using sport sheets only');
+            }
 
             // Filter for cross-sport parlays
             const crossSportParlays = allData.filter(row => {
