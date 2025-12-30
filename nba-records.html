@@ -320,13 +320,24 @@
         return sports.length > 1;
     }
 
-    // Function to parse CSV data
-    // NBA Sheet columns: Date, Pick, Odds, Result (blank header), Units
+    // Function to parse CSV data - handles blank headers and normalizes column names
     function parseCSV(csv) {
         const lines = csv.split('\n');
-        // Force correct column names since Result header is blank in sheet
-        const headers = ['Date', 'Pick', 'Odds', 'Result', 'Units'];
+        let headers = lines[0].split(',').map(header => header.trim().replace(/"/g, ''));
         const records = [];
+
+        // Fix blank headers and normalize names
+        headers = headers.map((h, idx) => {
+            if (h.toLowerCase() === 'odds') return 'Line';
+            if (h === '' || h === undefined) {
+                const existingHeaders = headers.filter(x => x && x !== '');
+                if (!existingHeaders.includes('Result') && !existingHeaders.includes('result')) {
+                    return 'Result';
+                }
+                return `Column${idx}`;
+            }
+            return h;
+        });
 
         for (let i = 1; i < lines.length; i++) {
             const line = lines[i].trim();
@@ -335,8 +346,21 @@
                 if (values.length >= 4) {
                     const record = {};
                     headers.forEach((header, index) => {
-                        record[header] = values[index] ? values[index].replace(/"/g, '').trim() : '';
+                        if (header && values[index] !== undefined) {
+                            record[header] = values[index] ? values[index].replace(/"/g, '').trim() : '';
+                        }
                     });
+
+                    // If Result is still empty, scan for W/L/P
+                    if (!record.Result || record.Result === '') {
+                        for (let j = 0; j < values.length; j++) {
+                            const val = (values[j] || '').trim().toUpperCase();
+                            if (val === 'W' || val === 'L' || val === 'P') {
+                                record.Result = val;
+                                break;
+                            }
+                        }
+                    }
 
                     // Only add records that have actual data
                     if (record.Date && record.Pick) {

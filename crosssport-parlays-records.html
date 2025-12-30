@@ -287,13 +287,13 @@
         return values;
     }
 
-    // Detect sports ONLY from explicit tags in parentheses
-    // This prevents false positives from team name overlaps (e.g., "Bears" matching both NFL and CFB)
-    function detectSportsFromTags(pickText) {
+    // Detect sports from BOTH explicit tags AND team names
+    // For cross-sport detection, we need to check team names to catch parlays like "Warriors ML, Broncos ML"
+    function detectSportsFromText(pickText) {
         const text = pickText.toLowerCase();
         const sports = new Set();
 
-        // ONLY check for explicit sport tags in parentheses - no team name matching
+        // Check for explicit sport tags in parentheses first
         if (text.includes('(nfl)')) sports.add('NFL');
         if (text.includes('(cfb)') || text.includes('(ncaaf)')) sports.add('CFB');
         if (text.includes('(nba)')) sports.add('NBA');
@@ -302,31 +302,48 @@
         if (text.includes('(ncaab)') || text.includes('(cbb)')) sports.add('NCAAB');
         if (text.includes('(soccer)') || text.includes('(mls)')) sports.add('Soccer');
 
+        // ALSO check team names for cross-sport detection
+        // NFL-unique teams (avoiding overlaps like Bears, Cardinals, Panthers, Giants, Jets, Kings)
+        const nflUnique = ['49ers', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'jaguars', 'jags', 'lions', 'packers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
+        if (nflUnique.some(team => text.includes(team))) sports.add('NFL');
+
+        // NBA-unique teams
+        const nbaUnique = ['lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat', 'mavericks', 'mavs', 'spurs', 'rockets', 'suns', 'bucks', 'sixers', '76ers', 'raptors', 'thunder', 'okc', 'jazz', 'nuggets', 'trail blazers', 'blazers', 'timberwolves', 'wolves', 'pelicans', 'grizzlies', 'clippers', 'hornets', 'magic', 'pistons', 'pacers', 'cavaliers', 'cavs', 'wizards'];
+        if (nbaUnique.some(team => text.includes(team))) sports.add('NBA');
+
+        // NHL-unique teams
+        const nhlUnique = ['bruins', 'sabres', 'red wings', 'canadiens', 'habs', 'senators', 'sens', 'lightning', 'bolts', 'maple leafs', 'leafs', 'hurricanes', 'canes', 'blue jackets', 'devils', 'islanders', 'isles', 'rangers', 'flyers', 'penguins', 'pens', 'capitals', 'caps', 'blackhawks', 'avalanche', 'avs', 'stars', 'wild', 'predators', 'preds', 'blues', 'ducks', 'flames', 'oilers', 'sharks', 'kraken', 'canucks', 'golden knights'];
+        if (nhlUnique.some(team => text.includes(team))) sports.add('NHL');
+
+        // MLB-unique teams
+        const mlbUnique = ['yankees', 'red sox', 'blue jays', 'rays', 'orioles', 'white sox', 'guardians', 'tigers', 'royals', 'twins', 'astros', 'angels', 'athletics', 'mariners', 'mets', 'phillies', 'braves', 'marlins', 'nationals', 'cubs', 'cardinals', 'brewers', 'reds', 'pirates', 'dodgers', 'padres', 'diamondbacks', 'd-backs', 'rockies'];
+        if (mlbUnique.some(team => text.includes(team))) sports.add('MLB');
+
         return Array.from(sports);
     }
 
     // Check if a pick is a cross-sport parlay
-    // ONLY uses explicit sport tags to avoid false positives
+    // Uses both explicit sport tags AND team name matching
     function isCrossSportParlay(pickText) {
         const text = pickText.toLowerCase();
         // Must be a parlay (not a teaser)
         if (!text.includes('parlay')) return false;
         if (text.includes('teaser')) return false;
 
-        const sports = detectSportsFromTags(pickText);
-        // Must have explicit tags for 2+ different sports
+        const sports = detectSportsFromText(pickText);
+        // Must have 2+ different sports
         return sports.length > 1;
     }
 
     // Check if a pick is a cross-sport teaser
-    // ONLY uses explicit sport tags to avoid false positives
+    // Uses both explicit sport tags AND team name matching
     function isCrossSportTeaser(pickText) {
         const text = pickText.toLowerCase();
         // Must be a teaser
         if (!text.includes('teaser')) return false;
 
-        const sports = detectSportsFromTags(pickText);
-        // Must have explicit tags for 2+ different sports
+        const sports = detectSportsFromText(pickText);
+        // Must have 2+ different sports
         return sports.length > 1;
     }
 
@@ -423,7 +440,7 @@
                 }
             }
 
-            const sports = detectSportsFromTags(pickText);
+            const sports = detectSportsFromText(pickText);
             const dateParts = p.Date.split(/[-/]/);
             const parsedDate = dateParts.length === 3
                 ? new Date(dateParts[2], dateParts[0] - 1, dateParts[1])
