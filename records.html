@@ -878,44 +878,6 @@ const SHEET_URLS = {
     'Soccer': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
 };
 
-// Master Pick Tracker for newer picks
-const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
-
-// Sport detection for Pick Tracker entries
-function detectSportFromPick(row) {
-    const league = (row.League || '').toLowerCase().trim();
-    const sport = (row.Sport || '').toLowerCase().trim();
-    const pick = (row.Pick || row.Picks || '').toLowerCase();
-
-    // Skip cross-sport parlays - they go on separate page
-    if (league === 'cross-sport') return null;
-
-    // Check League column first (most specific)
-    if (league === 'nfl') return 'NFL';
-    if (league === 'nba') return 'NBA';
-    if (league === 'nhl') return 'NHL';
-    if (league === 'mlb') return 'MLB';
-    if (league === 'ncaaf' || league === 'cfb' || league === 'college football') return 'NCAAF';
-    if (league === 'ncaab' || league === 'cbb' || league === 'college basketball') return 'NCAAB';
-    if (league === 'soccer' || league === 'mls') return 'Soccer';
-
-    // Check Sport column (generic sport names)
-    if (sport === 'football') return 'NFL'; // Default football to NFL
-    if (sport === 'basketball') return 'NBA'; // Default basketball to NBA
-    if (sport === 'hockey') return 'NHL';
-    if (sport === 'baseball') return 'MLB';
-
-    // Check for explicit tags in pick text
-    if (pick.includes('(nfl)')) return 'NFL';
-    if (pick.includes('(nba)')) return 'NBA';
-    if (pick.includes('(nhl)')) return 'NHL';
-    if (pick.includes('(mlb)')) return 'MLB';
-    if (pick.includes('(ncaaf)') || pick.includes('(cfb)')) return 'NCAAF';
-    if (pick.includes('(ncaab)') || pick.includes('(cbb)')) return 'NCAAB';
-    if (pick.includes('(soccer)') || pick.includes('(mls)')) return 'Soccer';
-
-    return null; // Unknown sport
-}
 
 // CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md - December 24, 2025)
 // Units column = what you're trying to WIN, not what you're risking
@@ -1011,46 +973,8 @@ async function fetchAllData() {
     });
 
     const results = await Promise.all(promises);
-    let rawData = results.flat();
+    const rawData = results.flat();
     console.log(`📥 Loaded ${rawData.length} picks from sport sheets`);
-
-    // Also fetch from Pick Tracker for newer picks
-    try {
-        const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
-            cache: 'no-store',
-            headers: { 'Cache-Control': 'no-store' }
-        });
-        const trackerCsv = await trackerResponse.text();
-        const trackerRows = parseCSV(trackerCsv);
-
-        // Process tracker rows and detect sport
-        const trackerData = trackerRows.map(row => {
-            const detectedSport = detectSportFromPick(row);
-            if (!detectedSport) return null; // Skip if sport can't be determined
-
-            // Calculate units using correct formula from CLAUDE.md
-            const rawUnits = row.Units || '3';
-            const odds = row.Line || row.Odds || '';
-            const result = row.Result || '';
-            const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
-
-            return {
-                Date: row.Date || '',
-                Pick: row.Pick || row.Picks || '',
-                Line: odds,
-                Result: result,
-                Units: calculatedUnits.toString(),
-                sport: detectedSport
-            };
-        }).filter(row => row !== null);
-
-        console.log(`📥 Loaded ${trackerData.length} picks from Pick Tracker`);
-        rawData = [...rawData, ...trackerData];
-    } catch (error) {
-        console.log('Pick Tracker fetch failed, using sport sheets only:', error);
-    }
-
-    console.log(`📥 Total: ${rawData.length} picks (before deduplication)`);
 
     // DEDUPLICATION: Remove duplicate bets by unique identifier (Date + Pick + Line)
     const seenBets = new Set();
@@ -1311,7 +1235,8 @@ function calculateMonthlyBreakdown() {
         '2025-08': 4,
         '2025-09': 5,
         '2025-10': 6,
-        '2025-11': 7
+        '2025-11': 7,
+        '2025-12': 8
     };
 
     const sortedMonths = Object.values(monthlyData).sort((a, b) => {
