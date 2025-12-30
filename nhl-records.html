@@ -502,7 +502,7 @@
         const unitsEl = document.getElementById('summary-units');
         unitsEl.textContent = `${summaryStats.totalUnits >= 0 ? '+' : ''}${summaryStats.totalUnits.toFixed(2)}`;
         unitsEl.className = summaryStats.totalUnits >= 0 ? 'units-win' : 'units-loss';
-        document.getElementById('summary-win-pct').textContent = summaryStats.wins + summaryStats.losses > 0 ? `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%` : 'N/A';
+        document.getElementById('summary-win-pct').textContent = summaryStats.wins + summaryStats.losses > 0 ? `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%` : '';
         const roiEl = document.getElementById('summary-roi');
         roiEl.textContent = `${summaryStats.roi >= 0 ? '+' : ''}${summaryStats.roi.toFixed(2)}%`;
         roiEl.className = summaryStats.roi >= 0 ? 'roi-win' : 'roi-loss';

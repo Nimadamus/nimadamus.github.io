@@ -545,17 +545,17 @@ def update_sport_page(sport):
             away_stats = {'pwr': '-'}
             home_stats = {'pwr': '-'}
 
-        # Game details
-        venue = comps.get('venue', {}).get('fullName', 'TBD')
+        # Game details - use empty strings, NEVER TBD
+        venue = comps.get('venue', {}).get('fullName', '')
         broadcasts = comps.get('broadcasts', [{}])
-        network = broadcasts[0].get('names', ['TBD'])[0] if broadcasts else 'TBD'
+        network = broadcasts[0].get('names', [''])[0] if broadcasts else ''
 
         game_date = event.get('date', '')
         try:
             dt = datetime.fromisoformat(game_date.replace('Z', '+00:00'))
             game_time = dt.strftime("%I:%M %p ET")
         except:
-            game_time = "TBD"
+            game_time = ""
 
         # Get odds for this game
         odds = match_odds_to_game(odds_data, away_name, home_name)

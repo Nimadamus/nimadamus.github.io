@@ -278,7 +278,7 @@ def generate_preview_html(game_data: Dict) -> str:
 
     # Game time and venue
     game_date = event.get('date', '')
-    venue = competition.get('venue', {}).get('fullName', 'TBD')
+    venue = competition.get('venue', {}).get('fullName', '')
     broadcast = ''
     for bc in competition.get('broadcasts', []):
         if bc.get('names'):
@@ -291,7 +291,7 @@ def generate_preview_html(game_data: Dict) -> str:
         game_time = dt.strftime('%I:%M %p ET').lstrip('0')
         game_date_display = dt.strftime('%B %d')
     except:
-        game_time = 'TBD'
+        game_time = ''
         game_date_display = 'Today'
 
     # Fetch odds

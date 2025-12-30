@@ -958,7 +958,7 @@ def is_valid_value(val) -> bool:
         return False
     if isinstance(val, str):
         val_str = val.strip()
-        if val_str in ['', '-', 'TBD', 'N/A', 'null', 'None']:
+        if val_str in ['', '-', 'null', 'None']:
             return False
     return True
 
@@ -2524,14 +2524,14 @@ def fetch_all_games() -> Dict[str, List]:
                         for o in odds_data
                     )
                     if not is_important_ncaab_game(event, has_odds=game_has_odds):
-                        print(f"  [SKIP] NCAAB not important: {away_team_temp.get('displayName', 'TBD')} vs {home_team_temp.get('displayName', 'TBD')}")
+                        print(f"  [SKIP] NCAAB not important: {away_team_temp.get('displayName', '?')} vs {home_team_temp.get('displayName', '?')}")
                         continue
 
                 # NCAAF: Only show bowl games during bowl season (Dec-Jan)
                 if sport == 'NCAAF' and not is_bowl_game(event):
                     away_team = competitors[0].get('team', {})
                     home_team = competitors[1].get('team', {})
-                    print(f"  [SKIP] NCAAF not a bowl: {away_team.get('displayName', 'TBD')} vs {home_team.get('displayName', 'TBD')}")
+                    print(f"  [SKIP] NCAAF not a bowl: {away_team.get('displayName', '?')} vs {home_team.get('displayName', '?')}")
                     continue
 
                 away_comp = next((c for c in competitors if c.get('homeAway') == 'away'), competitors[0])
@@ -2540,10 +2540,10 @@ def fetch_all_games() -> Dict[str, List]:
                 away_team = away_comp.get('team', {})
                 home_team = home_comp.get('team', {})
 
-                away_name = away_team.get('displayName', 'TBD')
-                home_name = home_team.get('displayName', 'TBD')
-                away_abbr = away_team.get('abbreviation', 'TBD')
-                home_abbr = home_team.get('abbreviation', 'TBD')
+                away_name = away_team.get('displayName', '')
+                home_name = home_team.get('displayName', '')
+                away_abbr = away_team.get('abbreviation', '')
+                home_abbr = home_team.get('abbreviation', '')
                 away_id = away_team.get('id', '')
                 home_id = home_team.get('id', '')
 
@@ -2602,22 +2602,22 @@ def fetch_all_games() -> Dict[str, List]:
                         game_time = game_time[1:]
                 except Exception as e:
                     print(f"  [WARN] Could not parse time '{game_date}': {e}")
-                    game_time = "TBD"
+                    game_time = ""
 
-                venue = comps.get('venue', {}).get('fullName', 'TBD')
+                venue = comps.get('venue', {}).get('fullName', '')
                 broadcasts = comps.get('broadcasts', [])
-                network = broadcasts[0].get('names', ['TBD'])[0] if broadcasts else 'TBD'
+                network = broadcasts[0].get('names', [''])[0] if broadcasts else ''
 
-                # VALIDATION: Skip games with invalid/placeholder data
-                # Check for TBD team names or abbreviations
-                if away_abbr == 'TBD' or home_abbr == 'TBD':
-                    print(f"  [SKIP] Game has TBD team: {away_abbr} vs {home_abbr}")
+                # VALIDATION: Skip games with invalid/missing data
+                # Check for empty team names or abbreviations
+                if not away_abbr or not home_abbr:
+                    print(f"  [SKIP] Game has missing team abbr: {away_abbr} vs {home_abbr}")
                     continue
-                if away_name == 'TBD' or home_name == 'TBD':
-                    print(f"  [SKIP] Game has TBD team name")
+                if not away_name or not home_name:
+                    print(f"  [SKIP] Game has missing team name")
                     continue
-                if game_time == 'TBD':
-                    print(f"  [SKIP] Game has TBD time: {away_abbr} vs {home_abbr}")
+                if not game_time:
+                    print(f"  [SKIP] Game has missing time: {away_abbr} vs {home_abbr}")
                     continue
 
                 # For college sports, verify we have real stats (not just PPG)
@@ -2758,7 +2758,7 @@ def generate_quick_take(away_data: Dict, home_data: Dict, odds: Dict, sport: str
         try:
             away_ppg_val = float(away_ppg) if away_ppg and away_ppg != '-' else 0
             home_ppg_val = float(home_ppg) if home_ppg and home_ppg != '-' else 0
-            total_val = float(total) if total and total != 'N/A' else 0
+            total_val = float(total) if total and total != '-' else 0
 
             combined_ppg = away_ppg_val + home_ppg_val
             if total_val > 0 and combined_ppg > total_val + 5:
@@ -2858,15 +2858,15 @@ def update_index_featured_game(all_games: Dict) -> bool:
             print("  [SKIP] Missing team abbreviations - keeping existing featured game")
             return False
 
-        # Get betting lines
+        # Get betting lines - use '-' for missing values, NEVER 'N/A'
         spread = odds.get('spread', {})
         away_spread = spread.get('away', 'PK')
         home_spread = spread.get('home', 'PK')
-        total = odds.get('total', 'N/A')
+        total = odds.get('total', '-')
 
         ml = odds.get('moneyline', {})
-        away_ml = ml.get('away', 'N/A')
-        home_ml = ml.get('home', 'N/A')
+        away_ml = ml.get('away', '-')
+        home_ml = ml.get('home', '-')
 
         # Format moneyline
         if isinstance(away_ml, (int, float)):
@@ -2880,13 +2880,13 @@ def update_index_featured_game(all_games: Dict) -> bool:
         if isinstance(home_spread, (int, float)):
             home_spread = f"+{home_spread}" if home_spread > 0 else str(home_spread)
 
-        # Get game details
-        game_time = featured_game.get('time', 'TBD')
-        venue = featured_game.get('venue', 'TBD')
-        broadcast = featured_game.get('network', 'TBD')
+        # Get game details - use '-' for missing values, NEVER 'TBD'
+        game_time = featured_game.get('time', '-')
+        venue = featured_game.get('venue', '-')
+        broadcast = featured_game.get('network', '-')
 
         # Clean up game time
-        game_time_clean = game_time.replace(' ET', '').strip() if game_time else 'TBD'
+        game_time_clean = game_time.replace(' ET', '').strip() if game_time else '-'
 
         # Get today's date
         today = datetime.now()
@@ -2906,22 +2906,22 @@ def update_index_featured_game(all_games: Dict) -> bool:
         away_stats = away_data.get('stats', {})
         home_stats = home_data.get('stats', {})
 
-        # Get PPG and defensive stats based on sport
+        # Get PPG and defensive stats based on sport - use '-' for missing, NEVER 'N/A'
         if featured_sport in ['NBA']:
-            away_ppg = away_stats.get('ppg', 'N/A')
-            home_ppg = home_stats.get('ppg', 'N/A')
-            away_opp = away_stats.get('opp_ppg', 'N/A')
-            home_opp = home_stats.get('opp_ppg', 'N/A')
+            away_ppg = away_stats.get('ppg', '-')
+            home_ppg = home_stats.get('ppg', '-')
+            away_opp = away_stats.get('opp_ppg', '-')
+            home_opp = home_stats.get('opp_ppg', '-')
         elif featured_sport in ['NFL', 'NCAAF']:
-            away_ppg = away_stats.get('ppg', 'N/A')
-            home_ppg = home_stats.get('ppg', 'N/A')
-            away_opp = away_stats.get('opp_ppg', 'N/A')
-            home_opp = home_stats.get('opp_ppg', 'N/A')
+            away_ppg = away_stats.get('ppg', '-')
+            home_ppg = home_stats.get('ppg', '-')
+            away_opp = away_stats.get('opp_ppg', '-')
+            home_opp = home_stats.get('opp_ppg', '-')
         else:
-            away_ppg = away_stats.get('gf_per_game', 'N/A')
-            home_ppg = home_stats.get('gf_per_game', 'N/A')
-            away_opp = away_stats.get('ga_per_game', 'N/A')
-            home_opp = home_stats.get('ga_per_game', 'N/A')
+            away_ppg = away_stats.get('gf_per_game', '-')
+            home_ppg = home_stats.get('gf_per_game', '-')
+            away_opp = away_stats.get('ga_per_game', '-')
+            home_opp = home_stats.get('ga_per_game', '-')
 
         # Get injury info
         away_injuries = away_data.get('injuries', [])
