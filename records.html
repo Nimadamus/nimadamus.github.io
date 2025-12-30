@@ -552,7 +552,7 @@ tbody tr:hover {
         </div></div>
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="screenshots.html">Screenshots</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a></div></div>
 <a href="news-page3.html">News</a>
-<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page30.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page31.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 </div>
 </div>
 </nav>
@@ -878,17 +878,62 @@ const SHEET_URLS = {
     'Soccer': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
 };
 
+// Master Pick Tracker for newer picks
+const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
+// Detect sport from Pick Tracker using League column first
+function detectSportFromPick(row) {
+    const league = (row.League || '').toLowerCase().trim();
+    const sport = (row.Sport || '').toLowerCase().trim();
+    if (league === 'cross-sport') return null;
+    if (league === 'nfl') return 'NFL';
+    if (league === 'nba') return 'NBA';
+    if (league === 'nhl') return 'NHL';
+    if (league === 'mlb') return 'MLB';
+    if (league === 'ncaaf' || league === 'cfb') return 'NCAAF';
+    if (league === 'ncaab' || league === 'cbb') return 'NCAAB';
+    if (league === 'soccer' || league === 'mls') return 'Soccer';
+    if (sport === 'football') return 'NFL';
+    if (sport === 'basketball') return 'NBA';
+    if (sport === 'hockey') return 'NHL';
+    if (sport === 'baseball') return 'MLB';
+    return null;
+}
+
+// Calculate unit profit/loss from raw stake, odds, and result
+function calculateUnitResult(unitsStake, odds, result) {
+    const stake = parseFloat(unitsStake);
+    const oddsNum = parseFloat(odds);
+    const resultUpper = (result || '').toUpperCase().trim();
+    if (isNaN(stake) || isNaN(oddsNum)) return 0;
+    if (resultUpper.startsWith('W')) {
+        return oddsNum < 0 ? stake : stake * (oddsNum / 100);
+    } else if (resultUpper.startsWith('L')) {
+        return oddsNum < 0 ? -stake * (Math.abs(oddsNum) / 100) : -stake;
+    }
+    return 0;
+}
+
 let allData = [];
 let filteredData = []; // Data filtered by year
 let currentYearFilter = '2025'; // Default to 2025
 
-// Extract year from date string
+// Extract year from date string - handles M/D/YYYY and M-D-YYYY formats
 function extractYear(dateStr) {
     if (!dateStr) return null;
-    const date = new Date(dateStr);
+    // Try parsing with Date first
+    let date = new Date(dateStr);
+    // If that fails, try parsing M-D-YYYY format manually
+    if (isNaN(date.getTime())) {
+        const parts = dateStr.split(/[-\/]/);
+        if (parts.length === 3) {
+            date = new Date(parts[2], parts[0] - 1, parts[1]);
+        }
+    }
     if (isNaN(date.getTime())) return null;
     return date.getFullYear();
 }
+
 
 // Filter data by year
 function filterDataByYear(data, yearFilter) {
@@ -912,27 +957,55 @@ function renderAllStats() {
 }
 
 async function fetchAllData() {
-    const promises = Object.entries(SHEET_URLS).map(async ([sheetSport, url]) => {
+    const cacheBuster = Date.now();
+
+    // Fetch from sport-specific sheets
+    const sportPromises = Object.entries(SHEET_URLS).map(async ([sheetSport, url]) => {
         try {
-            const response = await fetch(url);
+            const response = await fetch(url + '&_=' + cacheBuster);
             const csv = await response.text();
             const rows = parseCSV(csv);
-            // Use the sport from the sheet name as fallback
-            return rows.map(row => {
-                return {
-                    ...row,
-                    sport: sheetSport // This maps to the correct sheet
-                };
-            });
+            console.log(`📊 ${sheetSport} sheet: ${rows.length} rows`);
+            return rows.map(row => ({
+                ...row,
+                sport: sheetSport
+            }));
         } catch (error) {
             console.error(`Error fetching ${sheetSport} data:`, error);
             return [];
         }
     });
 
-    const results = await Promise.all(promises);
-    const rawData = results.flat();
-    console.log(`📥 Loaded ${rawData.length} total picks (before deduplication)`);
+    // Also fetch from Pick Tracker (master tracker)
+    const pickTrackerPromise = (async () => {
+        try {
+            const response = await fetch(PICK_TRACKER_URL + '&_=' + cacheBuster);
+            const csv = await response.text();
+            const rows = parseCSV(csv);
+            console.log(`📊 Pick Tracker: ${rows.length} rows`);
+            return rows.map(row => {
+                const detectedSport = detectSportFromPick(row);
+                if (!detectedSport) return null;
+                return {
+                    ...row,
+                    sport: detectedSport,
+                    Line: row.Odds || row.Line || '',
+                    fromPickTracker: true
+                };
+            }).filter(row => row !== null);
+        } catch (error) {
+            console.error('Error fetching Pick Tracker data:', error);
+            return [];
+        }
+    })();
+
+    const [sportResults, pickTrackerResults] = await Promise.all([
+        Promise.all(sportPromises),
+        pickTrackerPromise
+    ]);
+
+    const rawData = [...sportResults.flat(), ...pickTrackerResults];
+    console.log(`📥 Total from all sources: ${rawData.length} picks (sheets: ${sportResults.flat().length}, tracker: ${pickTrackerResults.length})`);
 
     // DEDUPLICATION: Remove duplicate bets by unique identifier (Date + Pick + Line)
     const seenBets = new Set();
