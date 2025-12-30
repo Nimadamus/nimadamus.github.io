@@ -96,11 +96,16 @@ MANUAL_DATE_OVERRIDES = {
     'ncaab-page20.html': '2025-12-20',  # December 20 NCAAB
     'ncaab-page21.html': '2025-12-21',  # December 21 NCAAB
     'ncaab-page22.html': '2025-12-22',  # December 22 NCAAB
-    # NCAAF archive pages
+    # NCAAF archive pages - Complete bowl season coverage
     'ncaaf-page4.html': '2025-12-04',   # December 4 NCAAF
     'ncaaf-page5.html': '2025-12-05',   # December 5 NCAAF
+    'ncaaf-page6.html': '2025-12-06',   # December 6 NCAAF
     'ncaaf-page7.html': '2025-12-07',   # December 7 NCAAF
     'ncaaf-page8.html': '2025-12-08',   # December 8 NCAAF
+    'ncaaf-page10.html': '2025-12-10',  # December 10 NCAAF
+    'ncaaf-page11.html': '2025-12-11',  # December 11 NCAAF
+    'ncaaf-page12.html': '2025-12-12',  # December 12 NCAAF
+    'ncaaf-page13.html': '2025-12-13',  # December 13 NCAAF
     'ncaaf-page18.html': '2025-12-18',  # December 18 NCAAF (Bowl games)
     'ncaaf-page19.html': '2025-12-19',  # December 19 NCAAF (Bowl games)
     'ncaaf-page20.html': '2025-12-20',  # December 20 NCAAF (Bowl games)
@@ -108,6 +113,14 @@ MANUAL_DATE_OVERRIDES = {
     'ncaaf-page22.html': '2025-12-22',  # December 22 NCAAF (Bowl games)
     'ncaaf-page23.html': '2025-12-23',  # December 23 NCAAF (Bowl games)
     'ncaaf-page24.html': '2025-12-24',  # December 24 NCAAF (Bowl games)
+    'ncaaf-page25.html': '2025-12-25',  # December 25 NCAAF (Bowl games)
+    'ncaaf-page26.html': '2025-12-26',  # December 26 NCAAF (Bowl games)
+    'ncaaf-page27.html': '2025-12-27',  # December 27 NCAAF (Bowl games)
+    'ncaaf-page28.html': '2025-12-28',  # December 28 NCAAF (Bowl games)
+    'ncaaf-page29.html': '2025-10-25',  # October 25 NCAAF (early season)
+    'ncaaf-page30.html': '2025-10-18',  # October 18 NCAAF (early season)
+    'ncaaf-page31.html': '2025-10-11',  # October 11 NCAAF (early season)
+    'ncaaf-page32.html': '2025-10-04',  # October 4 NCAAF (early season - oldest)
 }
 
 # Month name to number mapping
