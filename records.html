@@ -878,44 +878,6 @@ const SHEET_URLS = {
     'Soccer': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
 };
 
-
-// CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md - December 24, 2025)
-// Units column = what you're trying to WIN, not what you're risking
-// FAVORITE WIN (negative odds): UNIT_RESULT = +UNITS (win what you tried to win)
-// UNDERDOG WIN (positive odds): UNIT_RESULT = +UNITS × (ODDS / 100) (win more)
-// FAVORITE LOSS (negative odds): UNIT_RESULT = -UNITS × (|ODDS| / 100) (lose more because you risked more)
-// UNDERDOG LOSS (positive odds): UNIT_RESULT = -UNITS (lose what you risked)
-function calculateUnitResult(unitsStake, odds, result) {
-    const stake = parseFloat(unitsStake);
-    const oddsNum = parseFloat(odds);
-    const resultUpper = (result || '').toUpperCase().trim();
-
-    if (isNaN(stake) || isNaN(oddsNum)) return 0;
-
-    if (resultUpper.startsWith('W')) {
-        // WIN
-        if (oddsNum < 0) {
-            // Favorite win: you win exactly the units (what you were trying to win)
-            return stake;
-        } else {
-            // Underdog win: you win units × (odds/100)
-            return stake * (oddsNum / 100);
-        }
-    } else if (resultUpper.startsWith('L')) {
-        // LOSS
-        if (oddsNum < 0) {
-            // Favorite loss: you lose units × (|odds|/100) because you risked more
-            return -stake * (Math.abs(oddsNum) / 100);
-        } else {
-            // Underdog loss: you lose exactly the units (what you risked)
-            return -stake;
-        }
-    } else {
-        // Push or other
-        return 0;
-    }
-}
-
 let allData = [];
 let filteredData = []; // Data filtered by year
 let currentYearFilter = '2025'; // Default to 2025
@@ -950,13 +912,9 @@ function renderAllStats() {
 }
 
 async function fetchAllData() {
-    // Fetch from all sport-specific sheets with cache busting
     const promises = Object.entries(SHEET_URLS).map(async ([sheetSport, url]) => {
         try {
-            const response = await fetch(url + '&cache=' + Date.now(), {
-                cache: 'no-store',
-                headers: { 'Cache-Control': 'no-store' }
-            });
+            const response = await fetch(url);
             const csv = await response.text();
             const rows = parseCSV(csv);
             // Use the sport from the sheet name as fallback
@@ -974,7 +932,7 @@ async function fetchAllData() {
 
     const results = await Promise.all(promises);
     const rawData = results.flat();
-    console.log(`📥 Loaded ${rawData.length} picks from sport sheets`);
+    console.log(`📥 Loaded ${rawData.length} total picks (before deduplication)`);
 
     // DEDUPLICATION: Remove duplicate bets by unique identifier (Date + Pick + Line)
     const seenBets = new Set();
