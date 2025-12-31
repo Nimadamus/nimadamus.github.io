@@ -478,7 +478,14 @@
                 return true;
             });
             console.log('After dedup:', mlbPicksData.length);
-            mlbPicksData.filter(r => r.Date.includes('12/30')).forEach(r => console.log('  Dec 30:', r.Pick));
+            const dec30Picks = mlbPicksData.filter(r => r.Date.includes('12/30'));
+            dec30Picks.forEach(r => console.log('  Dec 30:', r.Pick, '| Result:', r.Result, '| Units:', r.Units, '| Line:', r.Line));
+
+            // DEBUG: Show Dec 30 picks directly on page
+            const debugDiv = document.createElement('div');
+            debugDiv.style.cssText = 'background:#ff0;padding:10px;margin:10px;border:2px solid red;';
+            debugDiv.innerHTML = '<strong>DEBUG Dec 30:</strong> ' + dec30Picks.map(p => p.Pick + ' (' + p.Result + ')').join(' | ');
+            document.body.insertBefore(debugDiv, document.body.firstChild);
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
