@@ -228,6 +228,8 @@
             <table>
                 <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
                 <tbody id="picks-table-body">
+                    <tr><td>12/30/2025</td><td>TCU +5</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>12/30/2025</td><td>Coastal Carolina +10</td><td>-110</td><td class="result-W">W</td><td class="win">+1.50</td></tr>
                     <tr><td>12/30/2025</td><td>2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10</td><td>-135</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>12/30/2025</td><td>Illinois +3</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>12/27/2025</td><td>Army/UConn under 41.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
@@ -450,8 +452,10 @@
                 });
                 const trackerCsv = await trackerResponse.text();
                 const allTrackerData = parseCSV(trackerCsv);
+                console.log('Pick Tracker total rows:', allTrackerData.length);
                 // Filter for NCAAF picks only and use correct unit calculation
                 const ncaafOnly = allTrackerData.filter(row => isNCAAFPick(row));
+                console.log('NCAAF picks from tracker:', ncaafOnly.length, ncaafOnly.map(r => r.Pick));
                 trackerData = ncaafOnly.map(row => {
                     const rawUnits = row.Units || '3'; // Default to 3 units if missing
                     // parseCSV renames "Odds" to "Line", so check both
@@ -477,6 +481,9 @@
 
             // Combine both datasets
             const combinedData = [...formattedOriginalData, ...trackerData];
+            console.log('Original sheet rows:', formattedOriginalData.length);
+            console.log('Tracker NCAAF rows:', trackerData.length);
+            console.log('Combined total:', combinedData.length);
 
             // Deduplicate by Date + Pick
             const seen = new Set();
@@ -486,6 +493,11 @@
                 seen.add(key);
                 return true;
             });
+            console.log('After dedup:', mlbPicksData.length);
+
+            // Log Dec 30 picks specifically
+            const dec30 = mlbPicksData.filter(r => r.Date && r.Date.includes('12/30'));
+            console.log('Dec 30 picks after dedup:', dec30.length, dec30.map(r => r.Pick));
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
