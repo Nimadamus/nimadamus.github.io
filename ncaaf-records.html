@@ -439,6 +439,9 @@
                 headers: { 'Cache-Control': 'no-store' }
             });
             let originalCsv = await originalResponse.text();
+            // Inject Dec 30 picks directly into CSV
+            originalCsv += '\n12/30/2025,,Illinois +3,-110,W,3';
+            originalCsv += '\n12/30/2025,,"2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10",-135,W,3';
             const originalData = parseCSV(originalCsv);
 
             // Fetch from pick tracker
@@ -475,14 +478,8 @@
             // Convert original data to standard format (tracker data is already formatted)
             const formattedOriginalData = convertToMLBFormat(originalData);
 
-            // Add Dec 30, 2025 picks manually (not yet in sheets) - add FIRST so they survive deduplication
-            const dec30Picks = [
-                { Date: '12/30/2025', Pick: 'Illinois +3', Line: '-110', Result: 'W', Units: '3' },
-                { Date: '12/30/2025', Pick: '2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10', Line: '-135', Result: 'W', Units: '3' }
-            ];
-
-            // Combine both datasets (dec30 first, then sheets data)
-            const combinedData = [...dec30Picks, ...formattedOriginalData, ...trackerData];
+            // Combine both datasets
+            const combinedData = [...formattedOriginalData, ...trackerData];
 
             // Deduplicate by Date + Pick
             const seen = new Set();
