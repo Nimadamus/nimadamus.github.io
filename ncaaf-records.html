@@ -461,15 +461,14 @@
             // Convert original data to standard format (tracker data is already formatted)
             const formattedOriginalData = convertToMLBFormat(originalData);
 
-            // HARDCODED Dec 30 picks (backup in case tracker fails)
-            const dec30Backup = [
-                { Date: '12/30/2025', Pick: 'Illinois +3', Line: '-110', Result: 'W', Units: '3' },
-                { Date: '12/30/2025', Pick: '2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10', Line: '-135', Result: 'W', Units: '3' },
-                { Date: '12/30/2025', Pick: 'TCU +5', Line: '-110', Result: '', Units: '0' }
-            ];
+            // HARDCODED Dec 30 picks - add directly to original data
+            formattedOriginalData.push(
+                { Date: '12/30/2025', Pick: 'Illinois +3', Line: '-110', Result: 'W', Units: '3', Sport: 'Football' },
+                { Date: '12/30/2025', Pick: '2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10', Line: '-135', Result: 'W', Units: '3', Sport: 'Football' }
+            );
 
-            // Combine both datasets plus backup
-            const combinedData = [...formattedOriginalData, ...trackerData, ...dec30Backup];
+            // Combine both datasets
+            const combinedData = [...formattedOriginalData, ...trackerData];
 
             // Deduplicate by Date + Pick
             const seen = new Set();
