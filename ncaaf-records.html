@@ -491,12 +491,13 @@
             });
 
             // Force add Dec 30 picks (in case CSV injection failed)
+            const dec30TCU = { Date: '12/30/2025', Pick: 'TCU +5', Line: '-110', Result: 'W', Units: '3' };
             const dec30Illinois = { Date: '12/30/2025', Pick: 'Illinois +3', Line: '-110', Result: 'W', Units: '3' };
             const dec30Teaser = { Date: '12/30/2025', Pick: '2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10', Line: '-135', Result: 'W', Units: '3' };
 
             // Remove any existing Dec 30 entries and add fresh ones at the start
             const filteredData = mlbPicksData.filter(row => row.Date !== '12/30/2025');
-            const finalData = [dec30Illinois, dec30Teaser, ...filteredData];
+            const finalData = [dec30TCU, dec30Illinois, dec30Teaser, ...filteredData];
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
