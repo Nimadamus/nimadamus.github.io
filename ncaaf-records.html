@@ -446,9 +446,11 @@
                     return {
                         Date: row.Date || '',
                         Pick: row.Pick || row.Picks || '',
-                        Odds: odds,
+                        Line: odds,
                         Result: result,
-                        Units: calculatedUnits.toString()
+                        Units: calculatedUnits.toString(),
+                        Sport: row.Sport || 'Football',
+                        League: row.League || 'NCAAF'
                     };
                 });
             } catch (e) {
