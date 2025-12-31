@@ -457,19 +457,20 @@
                 console.log('Pick tracker fetch failed, using original data only');
             }
 
+            // Convert original data to standard format (tracker data is already formatted)
+            const formattedOriginalData = convertToMLBFormat(originalData);
+
             // Combine both datasets
-            const combinedData = [...originalData, ...trackerData];
+            const combinedData = [...formattedOriginalData, ...trackerData];
 
             // Deduplicate by Date + Pick
             const seen = new Set();
-            const uniqueData = combinedData.filter(row => {
+            const mlbPicksData = combinedData.filter(row => {
                 const key = `${row.Date}|${row.Pick}`;
                 if (seen.has(key)) return false;
                 seen.add(key);
                 return true;
             });
-
-            const mlbPicksData = convertToMLBFormat(uniqueData);
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
