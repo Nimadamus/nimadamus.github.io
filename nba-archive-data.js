@@ -1,6 +1,7 @@
 // NBA Archive Data - Auto-updated by production script
 const NBA_ARCHIVE = [
-    { date: "2025-12-30", page: "nba.html", title: "NBA Analysis - December 28, 2025" },
+    { date: "2025-12-31", page: "nba.html", title: "NBA Analysis - December 28, 2025" },
+    { date: "2025-12-20", page: "nba-page29.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page9.html", title: "NBA Analysis Archive - Page 11" },
     { date: "2025-12-20", page: "nba-page20.html", title: "NBA Analysis Archive - Page 20" },
     { date: "2025-12-20", page: "nba-page17.html", title: "NBA Analysis Archive - Page 17" },

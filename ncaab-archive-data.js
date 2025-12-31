@@ -1,6 +1,6 @@
 // NCAAB Archive Data - Auto-updated by production script
 const NCAAB_ARCHIVE = [
-    { date: "2025-12-30", page: "ncaab.html", title: "NCAAB Analysis - December 28, 2025" },
+    { date: "2025-12-31", page: "ncaab.html", title: "NCAAB Analysis - December 28, 2025" },
     { date: "2025-12-20", page: "ncaab-page9.html", title: "NCAAB Analysis Archive - Page 9" },
     { date: "2025-12-20", page: "ncaab-page25.html", title: "NCAAB Analysis Archive - Page 25" },
     { date: "2025-12-20", page: "ncaab-page20.html", title: "NCAAB Analysis Archive - Page 20" },
@@ -12,6 +12,7 @@ const NCAAB_ARCHIVE = [
     { date: "2025-12-20", page: "ncaab-page18.html", title: "NCAAB Analysis Archive - Page 18" },
     { date: "2025-12-20", page: "ncaab-page24.html", title: "NCAAB Analysis Archive - Page 24" },
     { date: "2025-12-20", page: "ncaab-page26.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "ncaab-page29.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page21.html", title: "NCAAB Analysis Archive - Page 21" },
     { date: "2025-12-20", page: "ncaab-page11.html", title: "NCAAB Analysis Archive - Page 11" },
     { date: "2025-12-20", page: "ncaab-page4.html", title: "College Basketball Picks - Champions Classic 2025" },
