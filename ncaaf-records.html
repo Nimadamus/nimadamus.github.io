@@ -227,11 +227,7 @@
         <div class="table-container">
             <table>
                 <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
-                <tbody id="picks-table-body">
-                    <!-- Static Dec 30 entries (will be replaced by JS if it loads) -->
-                    <tr><td>12/30/2025</td><td>2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10</td><td>-135</td><td class="result-W">W</td><td>+3.00</td></tr>
-                    <tr><td>12/30/2025</td><td>Illinois +3</td><td>-110</td><td class="result-W">W</td><td>+3.00</td></tr>
-                </tbody>
+                <tbody id="picks-table-body"></tbody>
             </table>
         </div>
     </div>
@@ -329,8 +325,11 @@
     }
 
     // Check if a pick is a cross-sport parlay (should be excluded from single-sport pages)
+    // NOTE: Teasers are NOT cross-sport parlays - they stay on single-sport pages
     function isCrossSportParlay(pickText) {
         const text = pickText.toLowerCase();
+        // Teasers are single-sport, never cross-sport
+        if (text.includes('teaser')) return false;
         if (!text.includes('parlay')) return false;
         const sports = detectSports(pickText);
         return sports.length > 1;
