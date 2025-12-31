@@ -1,6 +1,6 @@
 // NHL Archive Data - Auto-updated by production script
 const NHL_ARCHIVE = [
-    { date: "2025-12-30", page: "nhl.html", title: "NHL Analysis - December 28, 2025" },
+    { date: "2025-12-31", page: "nhl.html", title: "NHL Analysis - December 28, 2025" },
     { date: "2025-12-28", page: "nhl-page27.html", title: "December 20, 2025" },
     { date: "2025-12-28", page: "nhl-page28.html", title: "December 28, 2025" },
     { date: "2025-12-27", page: "nhl-page25.html", title: "NHL Analysis Archive - Page 25" },
@@ -17,6 +17,7 @@ const NHL_ARCHIVE = [
     { date: "2025-12-20", page: "nhl-page19.html", title: "NHL Analysis Archive - Page 19" },
     { date: "2025-12-20", page: "nhl-page11.html", title: "NHL Analysis Archive - Page 11" },
     { date: "2025-12-20", page: "nhl-page9.html", title: "NHL Betting Archive - Page 9" },
+    { date: "2025-12-20", page: "nhl-page30.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page12.html", title: "NHL Analysis Archive - Page 12" },
     { date: "2025-12-20", page: "nhl-page20.html", title: "NHL Analysis Archive - Page 20" },
     { date: "2025-12-20", page: "nhl-page17.html", title: "NHL Analysis Archive - Page 17" },
