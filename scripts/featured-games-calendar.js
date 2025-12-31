@@ -1,8 +1,10 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: December 29, 2025
+// Last updated: December 31, 2025
 
 const ARCHIVE_DATA = [
+    { date: "2025-12-31", page: "featured-game-of-the-day-page32.html", title: "Miami vs Ohio State - Cotton Bowl CFP" },
+    { date: "2025-12-30", page: "featured-game-of-the-day-page31.html", title: "Tennessee vs Illinois - Music City Bowl" },
     { date: "2025-12-29", page: "featured-game-of-the-day-page30.html", title: "Rams vs Falcons - MNF" },
     { date: "2025-12-28", page: "featured-game-of-the-day-page29.html", title: "Eagles vs Bills - Super Bowl Preview" },
     { date: "2025-12-27", page: "featured-game-of-the-day-page28.html", title: "Texans vs Chargers - Wild Card Rematch" },
