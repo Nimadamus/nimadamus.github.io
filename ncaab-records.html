@@ -326,8 +326,11 @@
     }
 
     // Check if a pick is a cross-sport parlay (should be excluded from single-sport pages)
+    // NOTE: Teasers are NOT cross-sport parlays - they stay on single-sport pages
     function isCrossSportParlay(pickText) {
         const text = pickText.toLowerCase();
+        // Teasers are single-sport, never cross-sport
+        if (text.includes('teaser')) return false;
         if (!text.includes('parlay')) return false;
         const sports = detectSports(pickText);
         return sports.length > 1;
