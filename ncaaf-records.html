@@ -437,7 +437,11 @@
                 const trackerCsv = await trackerResponse.text();
                 const allTrackerData = parseCSV(trackerCsv);
                 // Filter for NCAAF picks only and use correct unit calculation
-                trackerData = allTrackerData.filter(row => isNCAAFPick(row)).map(row => {
+                console.log('All tracker data rows:', allTrackerData.length);
+                const ncaafOnly = allTrackerData.filter(row => isNCAAFPick(row));
+                console.log('NCAAF picks from tracker:', ncaafOnly.length);
+                ncaafOnly.forEach(r => console.log('  -', r.Date, r.Pick, r.Line, r.Result));
+                trackerData = ncaafOnly.map(row => {
                     const rawUnits = row.Units || '3'; // Default to 3 units if missing
                     // parseCSV renames "Odds" to "Line", so check both
                     const odds = row.Line || row.Odds || '';
@@ -453,8 +457,9 @@
                         League: row.League || 'NCAAF'
                     };
                 });
+                console.log('Processed tracker data:', trackerData.length);
             } catch (e) {
-                console.log('Pick tracker fetch failed, using original data only');
+                console.log('Pick tracker fetch failed:', e);
             }
 
             // Convert original data to standard format (tracker data is already formatted)
@@ -462,6 +467,7 @@
 
             // Combine both datasets
             const combinedData = [...formattedOriginalData, ...trackerData];
+            console.log('Combined data:', combinedData.length, '(original:', formattedOriginalData.length, ', tracker:', trackerData.length, ')');
 
             // Deduplicate by Date + Pick
             const seen = new Set();
@@ -471,6 +477,8 @@
                 seen.add(key);
                 return true;
             });
+            console.log('After dedup:', mlbPicksData.length);
+            mlbPicksData.filter(r => r.Date.includes('12/30')).forEach(r => console.log('  Dec 30:', r.Pick));
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
@@ -548,14 +556,25 @@
     // Original processing logic (adapted from the original script)
     function processPicksData(mlbPicksData) {
         try {
+            console.log('Processing', mlbPicksData.length, 'picks');
             const processedPicks = mlbPicksData.map(p => {
                 try {
-                    if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
+                    if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) {
+                        if (p.Pick && p.Pick.includes('Teaser')) {
+                            console.log('TEASER REJECTED - missing field:', 'Pick:', !!p.Pick, 'Result:', !!p.Result, 'Units:', !!p.Units, 'Line:', !!p.Line, 'Date:', !!p.Date);
+                        }
+                        return null;
+                    }
                     const pickText = String(p.Pick).trim();
                     const resultText = String(p.Result).trim().toUpperCase();
                     const units = parseFloat(p.Units);
                     const line = parseFloat(p.Line);
-                    if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
+                    if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) {
+                        if (p.Pick && p.Pick.includes('Teaser')) {
+                            console.log('TEASER REJECTED - parse fail:', 'pickText:', pickText, 'result:', resultText, 'units:', units, 'line:', line);
+                        }
+                        return null;
+                    }
                     let risk = 0;
                     if (units < 0) {
                         risk = Math.abs(units);
