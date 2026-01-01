@@ -98,6 +98,8 @@ footer a{color:var(--accent-cyan);text-decoration:none}
   .matchup-info h2{font-size:17px}
   .game-header{gap:14px}
 }
+.cal-day.current-page{background:linear-gradient(135deg,#ffd700,#ffb300);color:#000;font-weight:700;border:2px solid #ffd700;box-shadow:0 0 8px rgba(255,215,0,0.6)}
+.cal-day.current-page:hover{transform:scale(1.15)}
 </style>
 </head>
 <body>
@@ -131,6 +133,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="calendar-days" id="calendar-days"></div>
 </div>
 </aside>
+<div class="mobile-archive" id="mobile-archive">
+<div class="mobile-archive-title">NCAAF Archive</div>
+<select class="mobile-archive-select" id="mobile-archive-select">
+<option value="">Jump to date...</option>
+</select>
+</div>
 <main class="main-content">
 <article class="game-preview">
 <div class="game-header">
@@ -242,5 +250,34 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>© 2025 BetLegend Picks | <a href="index.html">Home</a> | <a href="handicapping-hub.html">Handicapping Hub</a></p>
 </footer>
 <script src="scripts/ncaaf-calendar.js"></script>
+<script>
+(function() {
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dropdown) {
+        var btn = dropdown.querySelector('.dropbtn');
+        if (!btn) return;
+        function toggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdowns.forEach(function(d) {
+                if (d !== dropdown) d.classList.remove('active');
+            });
+            dropdown.classList.toggle('active');
+        }
+        btn.addEventListener('touchend', toggle, {passive: false});
+        btn.addEventListener('click', toggle);
+    });
+    document.addEventListener('touchend', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+})();
+</script>
 </body>
 </html>
