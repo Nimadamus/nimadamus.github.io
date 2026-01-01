@@ -444,7 +444,13 @@
                 headers: { 'Cache-Control': 'no-store' }
             });
             let originalCsv = await originalResponse.text();
+            console.log('Original CSV first 500 chars:', originalCsv.substring(0, 500));
             const originalData = parseCSV(originalCsv);
+            console.log('Parsed original data rows:', originalData.length);
+            if (originalData.length > 0) {
+                console.log('First row keys:', Object.keys(originalData[0]));
+                console.log('First row values:', originalData[0]);
+            }
 
             // Fetch from pick tracker
             let trackerData = [];
