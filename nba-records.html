@@ -857,17 +857,15 @@
         rows.forEach(row => {
             const cells = row.querySelectorAll('td');
             if (cells.length >= 5) {
-                // Result is in column 4 (0-indexed: 3), Units in column 5 (0-indexed: 4)
-                const resultCell = cells[3];
+                // Units is in column 5 (0-indexed: 4)
                 const unitsCell = cells[4];
-
-                const resultText = resultCell.textContent.trim().toUpperCase();
                 const unitsText = unitsCell.textContent.trim().replace(/[+,]/g, '');
                 const units = parseFloat(unitsText) || 0;
 
-                if (resultText === 'W' || resultText.startsWith('W')) wins++;
-                else if (resultText === 'L' || resultText.startsWith('L')) losses++;
-                else if (resultText === 'P' || resultText.startsWith('P')) pushes++;
+                // Determine W/L/P from units value (more reliable than result text)
+                if (units > 0) wins++;
+                else if (units < 0) losses++;
+                else pushes++;
 
                 totalUnits += units;
             }

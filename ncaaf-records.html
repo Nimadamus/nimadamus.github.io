@@ -676,14 +676,13 @@
         rows.forEach(row => {
             const cells = row.querySelectorAll('td');
             if (cells.length >= 5) {
-                const result = cells[3].textContent.trim().toUpperCase();
                 const units = parseFloat(cells[4].textContent.replace(/[+,]/g, ''));
 
-                if (result === 'W') wins++;
-                else if (result === 'L') losses++;
-                else if (result === 'P') pushes++;
-
+                // Determine W/L/P from units value (more reliable than result text)
                 if (!isNaN(units)) {
+                    if (units > 0) wins++;
+                    else if (units < 0) losses++;
+                    else pushes++;
                     totalUnits += units;
                     totalRisk += Math.abs(units);
                 }
