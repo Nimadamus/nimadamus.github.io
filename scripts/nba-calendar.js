@@ -59,8 +59,8 @@ months.add(currentMonth);
 const sortedMonths = Array.from(months).sort().reverse();
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+// Always default to current month, not the page date
 let displayMonth = currentMonth;
-if (currentPageDate) { const [py, pm] = currentPageDate.split('-'); displayMonth = py + '-' + pm; }
 
 function renderCalendar(yearMonth) {
     const [year, month] = yearMonth.split('-').map(Number);

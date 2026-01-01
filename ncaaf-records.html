@@ -464,7 +464,12 @@
                 console.log('Pick Tracker total rows:', allTrackerData.length);
                 // Filter for NCAAF picks only and use correct unit calculation
                 const ncaafOnly = allTrackerData.filter(row => isNCAAFPick(row));
-                console.log('NCAAF picks from tracker:', ncaafOnly.length, ncaafOnly.map(r => r.Pick));
+                console.log('NCAAF picks from tracker:', ncaafOnly.length);
+                // Log Dec 31 picks specifically
+                const dec31Tracker = allTrackerData.filter(r => r.Date && r.Date.includes('12/31'));
+                console.log('ALL Dec 31 picks in tracker:', dec31Tracker.map(r => ({pick: r.Pick, result: r.Result, league: r.League})));
+                const dec31NCAAF = ncaafOnly.filter(r => r.Date && r.Date.includes('12/31'));
+                console.log('Dec 31 NCAAF picks after filter:', dec31NCAAF.map(r => ({pick: r.Pick, result: r.Result})));
                 trackerData = ncaafOnly.map(row => {
                     const rawUnits = row.Units || '3'; // Default to 3 units if missing
                     // parseCSV renames "Odds" to "Line", so check both
@@ -504,9 +509,11 @@
             });
             console.log('After dedup:', mlbPicksData.length);
 
-            // Log Dec 30 picks specifically
+            // Log Dec 30 and Dec 31 picks specifically
             const dec30 = mlbPicksData.filter(r => r.Date && r.Date.includes('12/30'));
             console.log('Dec 30 picks after dedup:', dec30.length, dec30.map(r => r.Pick));
+            const dec31Final = mlbPicksData.filter(r => r.Date && r.Date.includes('12/31'));
+            console.log('Dec 31 picks after dedup:', dec31Final.length, dec31Final.map(r => ({pick: r.Pick, result: r.Result, units: r.Units})));
 
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
