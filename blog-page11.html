@@ -203,40 +203,201 @@ letter-spacing: 2px;
 margin: 0;
 }
 .the-pick {
-font-size: 2em;
+font-size: 2.2em;
 color: #D4AF37;
 font-weight: bold;
 margin: 10px 0 0 0;
 }
-.pagination {
+.pagination-nav {
 display: flex;
-justify-content: center;
-gap: 10px;
-margin: 40px 0;
-flex-wrap: wrap;
+justify-content: space-between;
+align-items: center;
+margin: 50px auto 40px;
+padding-top: 25px;
+border-top: 2px solid #444;
+max-width: 1140px;
 }
-.pagination a {
+.pagination-nav a, .pagination-nav span {
 display: inline-block;
-padding: 10px 20px;
-background-color: #222;
-color: #FFD700;
-text-decoration: none;
-border-radius: 5px;
-border: 1px solid #FFD700;
-transition: all 0.3s ease;
-}
-.pagination a:hover {
-background-color: #FFD700;
-color: #000;
-}
-.pagination a.active {
-background-color: #FFD700;
-color: #000;
+padding: 12px 25px;
+font-size: 1.1em;
 font-weight: bold;
+text-decoration: none;
+border: 2px solid #D4AF37;
+color: #D4AF37;
+background-color: #222;
+border-radius: 8px;
+transition: background-color 0.3s, color 0.3s;
+cursor: pointer;
 }
-.pagination a.disabled {
-opacity: 0.5;
-pointer-events: none;
+.pagination-nav a:hover {
+background-color: #D4AF37;
+color: #121212;
+}
+.pagination-nav span {
+color: #666;
+border-color: #444;
+background-color: #1a1a1a;
+cursor: not-allowed;
+}
+
+
+.nav-links a {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown .dropbtn {
+    font-family: var(--font-secondary);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 8px var(--neon-gold);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    min-width: 200px;
+    box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+    z-index: 9999;
+    border: 2px solid rgba(0, 224, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px 0;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: var(--neon-cyan);
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+    color: #fff;
+    padding-left: 30px;
+    text-shadow: 0 0 10px var(--glow-color);
+    border-left-color: var(--neon-cyan);
+}
+
+/* Desktop only: show dropdown on hover */
+@media (hover: hover) and (pointer: fine) {
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: dropdownFade 0.3s ease;
+    }
+
+    .dropdown:hover .dropbtn {
+        color: var(--neon-gold);
+        text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Both desktop and mobile: show dropdown when active (clicked/tapped) */
+.dropdown.active .dropdown-content {
+    display: block;
+    animation: dropdownFade 0.3s ease;
+}
+
+.dropdown.active .dropbtn {
+    color: var(--neon-gold);
+    text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .logo-container {
+        top: 10px;
+        left: 20px;
+    }
+
+    .logo-container a {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        flex-wrap:wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 10px 5px;
+    }
+
+    .nav-links a {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown-content {
+        min-width: 160px;
+        padding: 10px 0;
+    }
+
+    .dropdown-content a {
+        font-size: 0.85rem;
+        padding: 12px 15px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    }
 }
 
     /* Navigation */
@@ -305,9 +466,9 @@ pointer-events: none;
 {
 "@context": "https://schema.org",
 "@type": "BlogPosting",
-"headline": "Cotton Bowl CFP Quarterfinal: Miami Hurricanes +7.5 vs Ohio State Buckeyes - December 31, 2025",
-"description": "Expert CFP Quarterfinal pick: Miami +7.5 vs Ohio State in the Cotton Bowl. Carson Beck has been electric during Miami's 4-game winning streak (79.5% completion, 11 TDs, 1 INT). Ohio State's defense is elite, but they just lost to Indiana 13-10. The Hurricanes already covered as underdogs against Texas A&M. This is too many points for a team playing its best football of the season.",
-"image": "https://www.sun-sentinel.com/wp-content/uploads/2025/11/tfl-z-miami1-1.jpg",
+"headline": "Rose Bowl CFP Quarterfinal: Alabama Crimson Tide +7.5 vs Indiana Hoosiers - December 31, 2025",
+"description": "Expert CFP Rose Bowl betting analysis: Taking Alabama +7.5 (-110) against undefeated Indiana. Ty Simpson has thrown for 3,500 yards with 28 TDs this season. The Hoosiers are 13-0 but haven't faced a defense with Alabama's pedigree. Kalen DeBoer's squad is battle-tested after surviving the SEC gauntlet, and underdogs have historically thrived in the CFP. Deep dive on why the Crimson Tide covers in Pasadena.",
+"image": "https://platform.rollbamaroll.com/wp-content/uploads/sites/138/2025/12/gettyimages-2252791908.jpg",
 "author": {
 "@type": "Person",
 "name": "BetLegend"
@@ -320,630 +481,209 @@ pointer-events: none;
 "url": "https://www.betlegendpicks.com/newlogo.png"
 }
 },
-"datePublished": "2025-12-31T15:11:00-08:00",
-"dateModified": "2025-12-31T15:11:00-08:00"
+"datePublished": "2025-12-31T22:57:00-08:00",
+"dateModified": "2025-12-31T22:57:00-08:00"
 }
 </script>
 
-<div class="blog-post" id="post-20251231-miami-ohio-state-cfp">
-<div class="post-header">Cotton Bowl CFP Quarterfinal: Miami +7.5</div>
-<p class="post-time">Posted: 3:11 PM, December 31, 2025 | Kickoff: 7:30 PM ET at AT&T Stadium, Arlington (ESPN)</p>
+<div class="blog-post" id="post-20251231-rose-bowl-alabama">
+<div class="post-header">Rose Bowl CFP Quarterfinal: Alabama Crimson Tide +7.5</div>
+<p class="post-time">Posted: 10:57 PM, December 31, 2025 | Kickoff: 4:00 PM ET on January 1, 2026 | Rose Bowl, Pasadena, CA (ESPN)</p>
 
 <figure style="text-align:center;margin:20px 0;">
-<img alt="Miami Hurricanes quarterback Carson Beck looks to pass against the SMU Mustangs at Gerald J. Ford Stadium November 1 2025" src="https://www.sun-sentinel.com/wp-content/uploads/2025/11/tfl-z-miami1-1.jpg" style="max-width:900px;width:100%;border-radius:10px;"/>
-<figcaption style="color:#aaa;font-size:14px;margin-top:8px;">Carson Beck (11) looks to pass against the SMU Mustangs, Nov. 1, 2025 | Stacy Revere/Getty Images</figcaption>
+<img alt="Alabama Crimson Tide football action shot 2025 Rose Bowl CFP Quarterfinal vs Indiana" src="https://platform.rollbamaroll.com/wp-content/uploads/sites/138/2025/12/gettyimages-2252791908.jpg" style="max-width:100%;border-radius:10px;"/>
+<figcaption style="color:#aaa;font-size:14px;margin-top:8px;">The Crimson Tide bring playoff experience and SEC battle scars to Pasadena | Getty Images</figcaption>
 </figure>
 
 <div class="share-buttons" style="text-align:center;margin:20px 0;padding:15px;background:rgba(255,215,0,0.1);border-radius:10px;">
 <p style="color:#FFD700;font-weight:600;margin:0 0 12px 0;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Share This Pick</p>
-<a href="https://twitter.com/intent/tweet?text=CFP%20Quarterfinal%3A%20Miami%20%2B7.5%20%F0%9F%8F%88%20Carson%20Beck%20is%20on%20fire%20-%20let%27s%20get%20this%20cover&url=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-miami-ohio-state-cfp&via=BetLegend2025" style="background:#000;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">X</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-miami-ohio-state-cfp" style="background:#1877f2;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Facebook</a>
-<a href="https://reddit.com/submit?url=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-miami-ohio-state-cfp&title=CFP%20Quarterfinal%3A%20Miami%20%2B7.5" style="background:#ff4500;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Reddit</a>
-</div>
-
-<div class="analysis-content" style="line-height: 1.8; font-size: 17px;">
-
-<p>Happy New Year's Eve, everybody. We're closing out 2025 with the biggest game on the board—the Cotton Bowl CFP Quarterfinal between the No. 10 Miami Hurricanes and the No. 2 Ohio State Buckeyes. The defending national champs are laying nearly double digits, and I'm grabbing <span style="color: #39FF14; font-weight: 600;">Miami +7.5 (-105)</span>. Look, I know Ohio State has the best defense in college football. I know they're loaded with NFL talent at every position. But Carson Beck is playing the best football of his career right now, and nearly 8 points is way too many for a Miami team that just proved they can win ugly against Texas A&M. Let's break this thing down.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🔥 Carson Beck Is On Fire When It Matters Most</span></p>
-
-<p>Here's the thing about Carson Beck that the national media keeps overlooking—this guy has been absolutely elite when the lights are brightest. During Miami's four-game winning streak to close the regular season, Beck completed 89 of 112 passes for a ridiculous 79.5% completion rate, 1,125 yards, 11 touchdowns, and just one interception. That's not good. That's not even great. That's otherworldly. When the Hurricanes needed him most, Beck delivered like the first-round pick he was supposed to be coming out of Georgia.</p>
-
-<p>For the full 2025 season, Beck has set a Miami single-season record with a 74.7% completion rate—second in all of FBS. He's thrown for 3,175 yards with 26 touchdowns and 10 interceptions. But here's the key stat: in Miami's 11 wins this season, Beck has completed 76% of his passes for 2,527 yards, 23 touchdowns, and only 4 picks. The interceptions that hurt his numbers? Six of those 10 came in just two games—the losses to Louisville and SMU. When the Hurricanes are winning, Beck is basically mistake-free. And that version of Carson Beck can hang with anybody in college football.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">💀 Ohio State's Defense Is Elite—But They're Not Invincible</span></p>
-
-<p>Let's give credit where it's due. The Ohio State Buckeyes have the best defense in America, and it's not particularly close. They've held 10 straight opponents under 100 rushing yards. They've only allowed more than 10 points twice all season. No team has scored more than 16 on them. The numbers are absurd, and the unit is legitimately being compared to some of the greatest defenses in college football history. I get all of that.</p>
-
-<p>But here's what the market is missing: Ohio State just lost. Two weeks ago, Indiana walked into the Big Ten Championship Game and beat the Buckeyes 13-10. The Hoosiers exposed that Ohio State's offense isn't quite as unstoppable as everyone assumed. Indiana's defense held Ohio State to 10 points—and the Buckeyes couldn't answer when it mattered. That loss tells me something important: when Ohio State faces a team that can slow the game down and make it a grind, they're vulnerable. And what did Miami just do against Texas A&M? They won 10-3 in a defensive slugfest. The Hurricanes know exactly how to play this kind of game.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📉 The Line Is Inflated By Reputation</span></p>
-
-<p>Let's talk about what the market is actually telling us here. Ohio State opened as an 8.5-point favorite the moment Miami beat Texas A&M. Within minutes, it jumped to -9.5, briefly touched -10, and has been sitting at -9.5 for the past week. The total has dropped from 43.5 all the way down to 40.5—the lowest of any CFP quarterfinal. Books are basically telling us this is going to be a low-scoring, grind-it-out affair. And in that kind of game, double-digit favorites rarely cover.</p>
-
-<p>Here's what I love about this spot: Miami +7.5 at -105 is actually better than the market number. You're getting an extra point and a half of value compared to the consensus line. Ohio State is 10-3 against the spread this season, which is excellent, but they were just 3.5-point favorites against Indiana and couldn't cover. The Buckeyes are 7-0 ATS against top-25 scoring defenses this year, but Miami's defense isn't in that category—it's their offense that ranked in the top 10. The trends that favor Ohio State don't perfectly apply to this matchup.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🏈 Miami Already Proved They Can Win As Underdogs</span></p>
-
-<p>Ten days ago, Miami went into Kyle Field as 3-point underdogs against a loaded Texas A&M team that was 11-1. Everyone and their mother was on the Aggies. The narrative was that Miami's soft ACC schedule hadn't prepared them for SEC physicality. What happened? The Hurricanes won 10-3. They held Texas A&M—a team averaging over 30 points per game—to three points. Their defense absolutely locked down the Aggies, and Carson Beck did just enough offensively to get the win.</p>
-
-<p>That game told me everything I need to know about this Miami team. They're not going to fold under pressure. They're not going to get blown out because the moment is too big. Mario Cristobal has these kids playing disciplined, physical football, and they've already beaten the doubters once in these playoffs. Now they get to do it again against the defending national champions. You don't think there's extra motivation in that locker room? You don't think Beck and the Hurricanes are fired up to prove they belong on this stage?</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🎭 The Coaching Matchup Favors Miami</span></p>
-
-<p>Mario Cristobal is coaching in his fourth year at Miami, and this is exactly the kind of game he was brought in to win. He's an elite recruiter who finally has the roster to compete with the blue bloods, and he's not going to let his team get embarrassed on New Year's Eve. Cristobal's teams are built for games like this—physical, run-the-ball, play-defense affairs where possessions are precious and mistakes are fatal. That's exactly how this Cotton Bowl is going to unfold.</p>
-
-<p>Ryan Day is an excellent coach, and Ohio State is absolutely stacked with talent. But the Buckeyes also just lost a game they were supposed to win. There's a narrative forming around Day that his teams struggle in the biggest moments—and while that might be overblown, narratives matter. Ohio State's players have heard the criticism. They know the pressure is on them as defending champs. Sometimes that pressure elevates you. Sometimes it weighs you down. At nearly double digits, I'm betting that Ohio State plays tight early, and Miami hangs around long enough to make this a sweat.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📊 The Total Tells The Story</span></p>
-
-<p>The single most important number on this game isn't the spread—it's the total. At 40.5, this is the lowest over/under of any CFP quarterfinal matchup. The books are basically telling us this game is going to finish somewhere around 24-17 or 21-20. And in a game where the final margin is expected to be a single score, you're going to lay 9.5 points? That's insane to me.</p>
-
-<p>Low-scoring games tend to be close games. When teams are trading field goals and grinding out 6-minute drives, it's nearly impossible for a favorite to pull away. Ohio State's offense has been good this season, but they're not the same high-octane unit that won the national title last year. If Miami can keep this in the 20s—which they absolutely have the defense to do—they're covering. Period.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🧮 The Bottom Line</span></p>
-
-<p>I'm riding with Miami +7.5 (-105) because the market is overreacting to Ohio State's reputation while undervaluing everything the Hurricanes have accomplished this season. Carson Beck is playing elite football. Miami just won a playoff game as an underdog. The total screams "close game." And Ohio State just showed vulnerability against Indiana two weeks ago. The Buckeyes will probably win this game—I'm not picking an outright upset—but they're not winning by double digits. Take the points, trust Beck, and let's ring in 2026 with a winner.</p>
-
-</div>
-
-<div class="verdict" style="margin-top:30px;background:#222;border:2px solid #D4AF37;padding:25px;text-align:center;border-radius:10px;">
-<p class="verdict-title" style="font-size:1.1em;color:#aaa;text-transform:uppercase;letter-spacing:2px;margin:0;">BetLegend's Pick</p>
-<p class="the-pick" style="font-size:2em;color:#D4AF37;font-weight:bold;margin:10px 0 0 0;">Miami +7.5 (-105)</p>
-</div>
-
-</div>
-
-<hr style="border: 0; height: 1px; background: linear-gradient(90deg, transparent, #ff6b00, transparent); margin: 40px 0;">
-
-
-<script type="application/ld+json">
-{
-"@context": "https://schema.org",
-"@type": "BlogPosting",
-"headline": "NHL: Buffalo Sabres +1.5 (-180) at Dallas Stars - December 31, 2025",
-"description": "Expert NHL pick: Buffalo Sabres +1.5 at Dallas Stars. The Sabres are riding a historic 9-game winning streak and have won 6 straight on the road. A 10th consecutive win would tie the franchise record. Dallas is coming off back-to-back losses and Buffalo's elite 84.8% penalty kill neutralizes Dallas's 2nd-ranked power play.",
-"image": "https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_106,w_4296,h_2416/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/breakaway_on_si/01kdjshpx3b9bkrrv4ra.jpg",
-"author": {
-"@type": "Person",
-"name": "BetLegend"
-},
-"publisher": {
-"@type": "Organization",
-"name": "BetLegend Picks",
-"logo": {
-"@type": "ImageObject",
-"url": "https://www.betlegendpicks.com/newlogo.png"
-}
-},
-"datePublished": "2025-12-31T12:23:00-08:00",
-"dateModified": "2025-12-31T12:23:00-08:00"
-}
-</script>
-
-<div class="blog-post" id="post-20251231-sabres-stars-nhl">
-<div class="post-header">NHL: Sabres +1.5 (-180)</div>
-<p class="post-time">Posted: 12:23 PM, December 31, 2025 | Puck Drop: 8:00 PM ET at American Airlines Center, Dallas (ESPN+)</p>
-
-<figure style="text-align:center;margin:20px 0;">
-<img alt="Buffalo Sabres center Tage Thompson skates with the puck against the Boston Bruins at KeyBank Center December 27 2025" src="https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_106,w_4296,h_2416/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/breakaway_on_si/01kdjshpx3b9bkrrv4ra.jpg" style="max-width:900px;width:100%;border-radius:10px;"/>
-<figcaption style="color:#aaa;font-size:14px;margin-top:8px;">Tage Thompson (72) skates with the puck vs Boston Bruins, Dec. 27, 2025 | Timothy T. Ludwig/Imagn Images</figcaption>
-</figure>
-
-<div class="share-buttons" style="text-align:center;margin:20px 0;padding:15px;background:rgba(255,215,0,0.1);border-radius:10px;">
-<p style="color:#FFD700;font-weight:600;margin:0 0 12px 0;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Share This Pick</p>
-<a href="https://twitter.com/intent/tweet?text=NHL%3A%20Sabres%20%2B1.5%20%F0%9F%8F%92%209-game%20win%20streak%2C%206%20straight%20on%20the%20road%20-%20historic%20run&url=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-sabres-stars-nhl&via=BetLegend2025" style="background:#000;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">X</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-sabres-stars-nhl" style="background:#1877f2;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Facebook</a>
-<a href="https://reddit.com/submit?url=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-sabres-stars-nhl&title=NHL%3A%20Sabres%20%2B1.5%20-%20Historic%209-game%20winning%20streak" style="background:#ff4500;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Reddit</a>
+<a href="https://twitter.com/intent/tweet?text=Rose%20Bowl%3A%20Alabama%20%2B7.5%20%F0%9F%8F%88%20Tide%20covers%20vs%20undefeated%20Indiana&url=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-rose-bowl-alabama&via=BetLegend2025" style="background:#000;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">X</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-rose-bowl-alabama" style="background:#1877f2;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Facebook</a>
+<a href="https://reddit.com/submit?url=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-rose-bowl-alabama&title=Rose%20Bowl%3A%20Alabama%20%2B7.5" style="background:#ff4500;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Reddit</a>
 </div>
 
 <div style="margin: 25px 0; text-align: center;">
-<video controls style="max-width: 600px; width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-<source src="videos/sabres.mp4" type="video/mp4">
+<video controls style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+<source src="videos/BAMA121.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
 </div>
 
 <div class="analysis-content" style="line-height: 1.8; font-size: 17px;">
 
-<p>Happy New Year's Eve, and let me tell you about the hottest team in hockey right now. The Buffalo Sabres are riding a <span style="color: #39FF14; font-weight: 600;">nine-game winning streak</span> into Dallas tonight, and I'm taking them with the puck line at <span style="color: #39FF14; font-weight: 600;">+1.5 (-180)</span>. Yeah, you're laying juice on the road underdog, but this is a special situation. Buffalo hasn't won 10 straight games since November 2018. They've won six straight on the road—their longest road winning streak since 1976. The vibes are immaculate in Western New York, and this team believes they can beat anybody right now.</p>
+<p>Happy New Year's Eve, everyone. Tomorrow we've got one of the most fascinating matchups of the entire College Football Playoff, and I'm loading up on the Alabama Crimson Tide at <span style="color: #39FF14; font-weight: 600;">+7.5 (-110)</span> against the undefeated Indiana Hoosiers in the Rose Bowl. Yeah, I know what you're thinking. Indiana is 13-0. They're the top seed. They just won the Big Ten Championship for the first time since 1967. Curt Cignetti has them playing the best football in program history. And you want me to take a three-loss Alabama team that couldn't even win the SEC? Absolutely. And here's why.</p>
 
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">The Sabres Are Playing Historic Hockey</span></p>
+<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">The SEC Gauntlet vs. The Big Ten Question Mark</span></p>
 
-<p>Let me put this in perspective for you. The Buffalo Sabres have won nine consecutive games for just the sixth time in franchise history. They haven't reached 10 straight since that November 2018 run, and they haven't won six straight on the road since December 1976. That's almost 50 years. This isn't just a hot streak—this is a team that has completely transformed its identity. Lindy Ruff came back to Buffalo and has this group playing with a swagger we haven't seen from the Sabres in over a decade.</p>
+<p>Let me paint a picture for you. Alabama went 11-3 this season playing in the most brutal conference in college football. They lost to Tennessee by 4 points. They lost to Vanderbilt by 5 points in one of the wildest upsets of the year. They lost to Oklahoma by 3 points. Every single loss was a one-score game against quality opponents. Meanwhile, Indiana waltzed through a Big Ten schedule where their toughest tests were... what exactly? They beat a depleted Ohio State team. They beat Penn State at home. Those are quality wins, don't get me wrong. But they never faced a team with Alabama's combination of speed, size, and raw athletic talent.</p>
 
-<p>What's driving this run? Everything is clicking. The defense has tightened up, the goaltending has been stellar, and the top-six is finishing their chances. Tage Thompson leads the team with 132 shots on goal and is playing like the franchise center Buffalo always believed he could become. Rasmus Dahlin is logging 24:08 of ice time per game and quarterbacking the power play like an elite defenseman. Ukko-Pekka Luukkonen has a 2.58 GAA in net and has been the backbone of this winning streak. The Sabres are 20-14-4 and have climbed all the way to ninth in the Eastern Conference, just one point behind Florida for a playoff spot. They're playing meaningful hockey in late December for the first time in forever.</p>
+<p>Here's the thing about undefeated teams in the playoff. The market always overvalues the zero in the loss column. Indiana has never been here before. Not the program. Not the coaching staff. Not a single player on that roster has experienced a game with these stakes. Alabama? This is their ninth appearance in the College Football Playoff. Kalen DeBoer might be in his first year in Tuscaloosa, but he's been to the national championship game with Washington. This program knows what playoff football feels like. The lights won't be too bright for the Crimson Tide. But for Indiana? We're about to find out.</p>
 
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">Dallas Is Stumbling at the Wrong Time</span></p>
+<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">Ty Simpson Is Playing Elite Football</span></p>
 
-<p>Now let's talk about the Stars. On paper, Dallas is the better team—they're 25-7-7 and sitting second in the Central Division. But here's what the record doesn't tell you: the Stars just lost back-to-back games against the Red Wings and the Blackhawks. Those aren't exactly powerhouses. Detroit and Chicago are two of the weaker teams in the league, and Dallas couldn't get it done against either one. The Stars scraped a point in each game by getting to overtime, but they came away with zero wins. That's concerning momentum heading into a matchup against a team that's playing with house money.</p>
+<p>Let's talk about the guy who's going to determine whether Alabama can hang in this game. Ty Simpson has been absolutely electric this season. The junior quarterback has thrown for 3,500 yards with 28 touchdowns and just 5 interceptions. That's a 64.1% completion rate with a passer rating north of 145. He leads the SEC in passing touchdowns and ranks fifth nationally in passing yards. This isn't some game manager protecting a lead. This is a bona fide NFL prospect who can take over a football game with his arm.</p>
 
-<p>Dallas is 12-5-2 at home this season at American Airlines Center, which is still solid. But their recent form suggests some cracks are forming. The Stars have the second-best power play in the NHL at 30.6%, which is absolutely lethal—but here's the key matchup: Buffalo has the third-best penalty kill in the league at 84.8%. That's a classic force-meets-immovable-object situation. If Buffalo can stay out of the box and limit Dallas's power play opportunities, they neutralize the Stars' biggest weapon. And the Sabres have been disciplined lately—they're not taking stupid penalties during this winning streak.</p>
+<p>Against Oklahoma in the first round, Simpson threw for 232 yards and 2 touchdowns. He got sacked four times, and Alabama's ground game was virtually non-existent with just 28 yards on 25 carries. But here's what matters: they still won 34-24. Simpson found ways to move the chains when the running game gave him nothing. He extended plays with his legs. He hit throws in tight windows. And against Indiana's secondary, which features some talented but undersized corners, Simpson is going to have opportunities to attack down the field with his big-bodied receivers like Josh Cuevas and Isaiah Horton.</p>
 
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">The Tage Thompson Factor</span></p>
+<p>At Rose Bowl Media Day, DeBoer was asked about Simpson's growth this season. "This is game 15 for us. There's the ups and downs. And every game is not going to be perfect. But his response and just what he's played through... He just continues to stay the course." That's a coach who trusts his quarterback. And in a game this big, having a quarterback you can trust is everything.</p>
 
-<p>If you haven't been paying attention to what Tage Thompson has become, now's the time to start. The guy is 6'6", 220 pounds with elite skating ability and a wicked shot. He's the engine that drives this Sabres offense, and he's been absolutely dialed in during this winning streak. Thompson is generating chances at an elite rate—132 shots on the season—and he's finishing them. When he's on the ice, Buffalo is a completely different team.</p>
+<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">Indiana's Turnover Margin Is Unsustainable</span></p>
 
-<p>But it's not just Thompson. Rasmus Dahlin returned from a personal trip to Sweden and immediately went on a heater. The former first-overall pick is playing some of the best hockey of his career, both offensively and defensively. He's logging heavy minutes and producing like a Norris Trophy candidate. The chemistry between Thompson and Dahlin—with Thompson scoring and Dahlin creating from the blue line—has been the foundation of this winning streak. Dallas will try to match up against them, but good luck stopping two All-Star caliber players who are playing with supreme confidence.</p>
+<p>Here's a stat that should terrify Indiana backers. The Hoosiers rank first in the nation in turnover margin at +17. That's elite. That's historically good. It's also completely unsustainable in a single game against a team like Alabama. When you're winning the turnover battle by an average of more than one per game, you're riding variance. And variance has a way of evening out when you least expect it.</p>
 
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">Why the Puck Line Is the Play</span></p>
+<p>Fernando Mendoza, Indiana's quarterback, has been remarkably efficient this season. He's thrown just 6 interceptions on 316 attempts, which is an excellent rate. But he's never faced a defense with this much NFL talent. Alabama's secondary is deep. Their front seven can generate pressure without blitzing. And when you take a quarterback who's never been in a game this big and put him under the lights in the Rose Bowl against a defense that's been battle-tested against Nico Iamaleava, Diego Pavia, and Jackson Arnold, bad things can happen.</p>
 
-<p>Look, I'm not saying Buffalo is going to walk into Dallas and dominate the Stars. This is going to be a hard-fought game, probably something in the 3-2 or 4-3 range. But that's exactly why the puck line is the move. By taking Sabres +1.5, we're essentially betting that Buffalo doesn't lose by two or more goals. Given how they've been playing—controlling games, protecting leads, and winning the tight ones—that feels like a very safe bet. They've won nine straight games, and most of them have been close. They know how to win in the margins.</p>
+<p>I'm not predicting that Indiana is suddenly going to turn the ball over four times. But I am saying that expecting them to maintain their season-long turnover advantage against Alabama is wishful thinking. If this game is even in the turnover department, the Hoosiers lose their biggest edge.</p>
 
-<p>The Sabres have shown all the characteristics of a team that doesn't get blown out. They play smart, structured hockey under Lindy Ruff. They don't give up easy chances. And even if they fall behind, they've shown the ability to claw back—their win over St. Louis on Sunday came after they trailed early. Ruff said it best: "We're relentless right now." That's not the mentality of a team that's going to lose by multiple goals in a measuring-stick game against one of the best teams in the league.</p>
+<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">The ATS Numbers Favor the Tide</span></p>
 
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">The Historic Stakes Add Motivation</span></p>
+<p>Let's look at the betting trends, because they're screaming at us to take Alabama. The Crimson Tide are 9-5 against the spread this season. That's a 64% cover rate, which is excellent. They're 3-3 on the road, so they know how to compete away from Tuscaloosa. More importantly, they've covered in spots where the market has undervalued them. When Alabama was given points earlier this season, they found ways to stay in games and push the margin.</p>
 
-<p>There's something to be said for playing with history on the line. The Sabres know exactly what's at stake tonight. A win gives them their first 10-game winning streak in seven years. A win extends their road winning streak to seven—something this franchise hasn't done since the disco era. The players are talking about it, the fans are buzzing about it, and there's real energy around this team for the first time since they made the playoffs in 2011. You don't think Tage Thompson and Rasmus Dahlin are going to leave everything on the ice in Dallas? This is the kind of game that defines a season.</p>
+<p>Indiana, on the other hand, is 8-5 against the spread. That's a 61.5% cover rate, which is solid but not dominant. Here's the issue: Indiana has been getting hyped all season long. The market has been catching up to them. The line opened at Indiana -6.5 and has moved to -7, even though roughly 75% of the bets and 72% of the money have been backing Alabama. That's a classic case of sportsbooks standing firm because they know something the public doesn't. Sharp money is respecting Indiana's talent, but the books aren't moving the line because they're not afraid of Alabama money.</p>
 
-<p>Meanwhile, Dallas is just trying to shake off two straight losses against inferior competition. The motivation edge clearly belongs to Buffalo. The Sabres have been the best team in hockey for the last three weeks, and they're playing with the confidence of a group that believes they can't be beaten. Dallas might be the better roster on paper, but right now, momentum and belief matter more.</p>
+<p>When you see a line hold firm against heavy public action, it usually means the market has this game priced correctly. And at +7.5, we're getting a full touchdown with a team that has championship pedigree, an elite quarterback, and nothing to lose.</p>
+
+<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">The Defensive Matchup Favors Alabama</span></p>
+
+<p>Indiana's offense has been phenomenal this season. They're averaging 41.9 points per game, which ranks fourth nationally. They're balanced, efficient, and explosive. But here's what they haven't seen: an Alabama defense that ranks in the top 30 nationally in yards per play allowed. The Crimson Tide have faced Georgia, Tennessee, LSU, and Oklahoma this season. They've seen elite quarterbacks, elite running backs, and elite coaching. Indiana has seen... Michigan's struggling offense? A Penn State team that's now missing half their starters to the draft and portal?</p>
+
+<p>Alabama's rush defense is particularly interesting in this matchup. The Crimson Tide rank 31st nationally against the run, which isn't elite but is respectable. Indiana features a two-headed monster at running back with Roman Hemby (918 yards, 6 TDs) and Kaelon Black (799 yards, 7 TDs). They're going to try to establish the ground game and control the clock. But Alabama has the athletes up front to win one-on-one battles, and if they can force Indiana into obvious passing situations, that's where the advantage shifts.</p>
+
+<p>The Hoosiers' defense has been outstanding, allowing just 10.8 points per game (second nationally) and 257.2 yards per game (fourth nationally). But again, who have they faced? The best offense they've played all season was Ohio State, and that game was closer than people remember. Alabama's offense is different. It's faster. It's more experienced. And it's got a quarterback who's been in pressure cooker environments all season long.</p>
+
+<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">The Cignetti Factor Cuts Both Ways</span></p>
+
+<p>Curt Cignetti is a phenomenal football coach. He won the 2025 Coach of the Year award, and he deserved it. Taking Indiana from the cellar of the Big Ten to an undefeated regular season and a conference championship is one of the greatest coaching jobs in college football history. The man knows how to build a program, motivate his players, and put his team in position to win football games.</p>
+
+<p>But here's the flip side. Cignetti has never coached in a game like this. He came from James Madison, where he built a dynasty in the Sun Belt. He's never faced a team with Alabama's resources, Alabama's athletes, or Alabama's expectations. This isn't a shot at Cignetti. It's just reality. When you're coaching in your first ever playoff game against one of the most storied programs in college football history, there's going to be a learning curve. DeBoer, on the other hand, has been on this stage. He's coached against Nick Saban. He's coached in the national championship game. He knows what it takes to prepare a team for a game of this magnitude.</p>
+
+<p>Indiana has had 12-13 days to prepare for this game, which is the same as Alabama. But preparation time favors experience. When you've been here before, you know how to manage the distractions, the media obligations, the hype. When everything is new, every decision becomes harder. I'm not saying Cignetti is going to be outcoached. I'm saying the experience gap is real, and it matters in close games.</p>
+
+<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">The Historical Precedent for Playoff Underdogs</span></p>
+
+<p>Here's something the market often forgets. Underdogs have historically performed well in the College Football Playoff. Since the playoff expanded, we've seen multiple instances of teams getting points and covering or winning outright when the public didn't believe in them. The playoff is a different animal. The intensity ratchets up. The margin for error shrinks. And teams with championship experience tend to rise to the occasion.</p>
+
+<p>Alabama has been in this position before. They've been the hunted and the hunter. They've won playoff games as favorites and covered as underdogs. The program has institutional knowledge of how to handle these situations. Indiana is writing their story in real-time. And sometimes, when you're writing a new chapter, you make mistakes that experienced programs don't make.</p>
+
+<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">Why +7.5 Is the Magic Number</span></p>
+
+<p>The number seven is sacred in college football. It's a touchdown. It's the margin that separates close games from comfortable wins. At +7.5, we're getting a full touchdown plus a hook with Alabama. That means Indiana needs to win by 8 or more for us to lose this bet. Think about that. In a game between two top-10 teams, we need the favorite to win by more than a touchdown.</p>
+
+<p>This game is going to be close. Both teams are going to make plays. Both defenses are going to get stops. The Rose Bowl is going to be rocking, and the atmosphere is going to be electric. In that environment, with everything on the line, I trust Alabama to stay within a score. They might not win outright. But they're going to fight. They're going to compete. And they're going to cover this number.</p>
 
 <p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">The Bottom Line</span></p>
 
-<p>I'm laying the juice on Sabres +1.5 (-180) because this team has earned our trust. Nine straight wins, six straight on the road, playing their best hockey in over a decade. Tage Thompson is a monster. Rasmus Dahlin is elite. The goaltending is rock solid. And Dallas just dropped back-to-back games and is facing a team with nothing to lose and everything to prove. Buffalo might not win this game outright, but they're absolutely not losing by two. Take the Sabres with the puck line and let's ride this historic streak into the New Year.</p>
+<p>Indiana is a great story. An undefeated season. A first-time Big Ten champion. A coach who turned a moribund program into a national contender. I respect everything the Hoosiers have accomplished this season. But stories don't cover spreads. Execution does. And when I look at this matchup, I see an Alabama team with more playoff experience, a quarterback playing at an elite level, and a defense that's been forged in the SEC fire.</p>
+
+<p>The market is giving us +7.5 with the Crimson Tide. They're giving us a full touchdown with a program that has been to nine College Football Playoffs. They're giving us Ty Simpson and Kalen DeBoer in the Rose Bowl with a chance to knock off the only undefeated team in college football. This is exactly the kind of spot where sharps load up on the underdog. Indiana might win this game. But they're not going to blow Alabama out. Take the Tide and enjoy the Rose Bowl.</p>
 
 </div>
 
 <div class="verdict" style="margin-top:30px;background:#222;border:2px solid #D4AF37;padding:25px;text-align:center;border-radius:10px;">
 <p class="verdict-title" style="font-size:1.1em;color:#aaa;text-transform:uppercase;letter-spacing:2px;margin:0;">BetLegend's Pick</p>
-<p class="the-pick" style="font-size:2em;color:#D4AF37;font-weight:bold;margin:10px 0 0 0;">Sabres +1.5 (-180)</p>
+<p class="the-pick" style="font-size:2em;color:#D4AF37;font-weight:bold;margin:10px 0 0 0;">Alabama +7.5 (-110)</p>
 </div>
 
 </div>
 
-<hr style="border: 0; height: 1px; background: linear-gradient(90deg, transparent, #ff6b00, transparent); margin: 40px 0;">
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
 
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
 
+        dropbtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdown.classList.toggle('active');
 
-<script type="application/ld+json">
-{
-"@context": "https://schema.org",
-"@type": "BlogPosting",
-"headline": "Citrus Bowl: Michigan Wolverines +5 vs Texas Longhorns - December 31, 2025",
-"description": "Expert Citrus Bowl pick: Michigan +5 vs Texas (buying half a point). Texas is missing 7 of their top 11 defenders to opt-outs. The Longhorns lost their top three running backs to the portal. Bryce Underwood and the Wolverines are motivated to prove doubters wrong.",
-"image": "https://www.themorningsun.com/wp-content/uploads/2025/09/Central_Michigan_Michigan_Football_48656-1-1.jpg",
-"author": {
-"@type": "Person",
-"name": "BetLegend"
-},
-"publisher": {
-"@type": "Organization",
-"name": "BetLegend Picks",
-"logo": {
-"@type": "ImageObject",
-"url": "https://www.betlegendpicks.com/newlogo.png"
-}
-},
-"datePublished": "2025-12-31T11:50:00-08:00",
-"dateModified": "2025-12-31T11:50:00-08:00"
-}
+            dropdowns.forEach(otherDropdown => {
+                if (otherDropdown !== dropdown) {
+                    otherDropdown.classList.remove('active');
+                }
+            });
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
 </script>
 
-<div class="blog-post" id="post-20251231-michigan-texas-citrus">
-<div class="post-header">Citrus Bowl: Michigan +5</div>
-<p class="post-time">Posted: 11:50 AM, December 31, 2025 | Kickoff: 3:00 PM ET at Camping World Stadium, Orlando (ABC)</p>
-
-<figure style="text-align:center;margin:20px 0;">
-<img alt="Michigan quarterback Bryce Underwood runs past Central Michigan defenders during the Wolverines 63-3 victory" src="https://www.themorningsun.com/wp-content/uploads/2025/09/Central_Michigan_Michigan_Football_48656-1-1.jpg" style="max-width:900px;width:100%;border-radius:10px;"/>
-<figcaption style="color:#aaa;font-size:14px;margin-top:8px;">Michigan QB Bryce Underwood runs past Central Michigan defenders in the Wolverines' 63-3 victory | AP Photo/Ryan Sun</figcaption>
-</figure>
-
-<div class="share-buttons" style="text-align:center;margin:20px 0;padding:15px;background:rgba(255,215,0,0.1);border-radius:10px;">
-<p style="color:#FFD700;font-weight:600;margin:0 0 12px 0;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Share This Pick</p>
-<a href="https://twitter.com/intent/tweet?text=Citrus%20Bowl%3A%20Michigan%20%2B5%20%F0%9F%8F%88%20Texas%20missing%207%20of%20top%2011%20defenders&url=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-michigan-texas-citrus&via=BetLegend2025" style="background:#000;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">X</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-michigan-texas-citrus" style="background:#1877f2;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Facebook</a>
-<a href="https://reddit.com/submit?url=https://www.betlegendpicks.com/blog-page11.html%23post-20251231-michigan-texas-citrus&title=Citrus%20Bowl%3A%20Michigan%20%2B5" style="background:#ff4500;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Reddit</a>
+<!-- Related Picks & Internal Links -->
+<div class="related-picks" style="max-width: 1140px; margin: 70px auto; padding: 30px; background: #1a1a1a; border-left: 4px solid gold; border-radius: 8px;">
+  <h3 style="color: gold; font-size: 22px; margin-bottom: 20px; text-align: center;">Related Picks & Resources</h3>
+  <ul style="list-style: none; padding: 0; margin: 0; text-align: center;">
+        <li style="margin: 10px 0;"><a href="/ncaaf-records.html" style="color: #00ffff; text-decoration: none; font-size: 16px;">Verified NCAAF Betting Track Record</a></li>
+    <li style="margin: 10px 0;"><a href="/betting-101.html" style="color: #00ffff; text-decoration: none; font-size: 16px;">College Football Betting Strategy Guide</a></li>
+    <li style="margin: 10px 0;"><a href="/betting-calculators.html" style="color: #00ffff; text-decoration: none; font-size: 16px;">Betting Calculators</a></li>
+  </ul>
 </div>
 
-<div style="margin: 25px 0; text-align: center;">
-<video controls style="max-width: 600px; width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-<source src="videos/michigan.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-</div>
-
-<div class="analysis-content" style="line-height: 1.8; font-size: 17px;">
-
-<p>Happy New Year's Eve, everybody. Let's close out 2025 the right way with a Citrus Bowl pick that has VALUE written all over it. No. 18 Michigan is getting 7 points against No. 14 Texas, and I'm buying half a point to grab <span style="color: #39FF14; font-weight: 600;">Michigan +5</span>. Look, I know the Longhorns have the more talented roster on paper. I know Arch Manning is a future first-overall pick. But paper rosters don't play football games—the players who actually show up do. And Texas is showing up to Orlando with a skeleton crew while Michigan is hungry, motivated, and ready to prove the doubters wrong.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">💀 Texas Is Missing Half Their Defense</span></p>
-
-<p>Let me tell you exactly who's NOT playing for Texas today, because it's absolutely insane. Anthony Hill Jr.—their best linebacker and a future NFL centerpiece—opted out. Michael Taaffe, their starting safety who held the secondary together all year? Gone. Cornerbacks Malik Muhammad and Jaylon Guilbeau? Both sitting. Edge rushers Trey Moore and Ethan Burke? Nope and nope. That's seven of their top 11 defenders by snap count who won't be suiting up. The Longhorns are entering this game with three scholarship linebackers. THREE. This isn't the Texas defense that played through the regular season—this is a shell of that unit.</p>
-
-<p>And it gets worse for Texas. They also lost their top three running backs to the transfer portal. Quintrevion Wisner, C.J. Baxter, and Jerrick Gibson are all gone, leaving Steve Sarkisian with just one running back who found the end zone this year. How do you expect to control the clock and protect a 7-point lead when you can't run the football? Arch Manning is going to have to throw 45 times, and that defense Michigan is facing? It's not the one that held SEC offenses in check all season.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🎯 Michigan Has More to Prove</span></p>
-
-<p>Here's the thing about the Wolverines—they've been through absolute chaos this month and they're still here. Sherrone Moore got fired for an extramarital relationship with a staffer, and the program hired Kyle Whittingham as the new head coach. Biff Poggi is the interim coach for this game, and by all accounts, the team has rallied behind him. Michigan only had three opt-outs before flying to Orlando—Derrick Moore, Jaishawn Barham, and Giovanni El-Hadi. Compare that to Texas losing half their roster. The Wolverines want this game.</p>
-
-<p>And don't sleep on what Bryce Underwood has done this year. The true freshman set a Michigan program record for a freshman quarterback in his debut—251 yards against New Mexico in his first career start. He finished the season with 2,229 passing yards, 9 touchdowns through the air, 323 rushing yards, and 5 rushing scores. That's 14 total touchdowns for a guy who wasn't even supposed to start this year. He's completing 61% of his passes and has shown he can extend plays with his legs. Against a depleted Texas defense missing their best pass rushers? Underwood could have a massive day.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📊 The ATS Numbers Favor Michigan</span></p>
-
-<p>Let's talk trends, because they're screaming at us here. Texas has covered the spread in just 4 of their last 14 games for a -45% ROI. That's brutal. The Longhorns are 4-8 ATS this season, which tells you the market consistently overvalues them. Meanwhile, Michigan has struggled against the spread too at 4-8, but here's the difference—the Wolverines haven't had a bowl game line this inflated against a depleted opponent. Texas opened as high as -9 and has dropped to -7, with some books offering +7.5. The sharp money is on Michigan.</p>
-
-<p>Here's another angle: Michigan's last three bowl games have all gone under 48.5 total points. The Wolverines know how to grind out low-scoring affairs, and that benefits the underdog. If this thing turns into a 24-21 slugfest—which it very well could with Texas missing their playmakers—Michigan covers easily. The fewer possessions, the fewer chances for Arch Manning to pull away.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🏈 The Quarterback Showdown</span></p>
-
-<p>Look, I'm not going to sit here and tell you Bryce Underwood is better than Arch Manning. He's not—at least not yet. Manning threw for 2,942 yards with 24 touchdowns and just 7 interceptions this season. He's got the pedigree, the arm talent, and the coaching. But here's the thing: Arch Manning has never played a game where he's missing this much talent around him. No Anthony Hill Jr. to keep drives alive with stops. No Trey Moore to generate pressure. No running game to lean on when things get tight. Manning is going to have to carry this offense against a Michigan defense that still has its key pieces intact.</p>
-
-<p>Underwood doesn't need to outplay Manning—he just needs to keep it close. Control the clock with Kalel Mullings, who rushed for over 1,000 yards this season. Hit a few intermediate throws. Don't turn the ball over. That's the formula for Michigan, and it's the same formula that kept them in games against Ohio State and Oregon earlier this year. The Wolverines lost those games, sure, but they competed. And Texas isn't Ohio State or Oregon—especially not today.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🎭 The Motivation Factor</span></p>
-
-<p>Texas expected to be in the College Football Playoff. They beat Oklahoma and Texas A&M—two teams that made the 12-team field—and still got left out. That stings. But here's the problem with that narrative: it can go either way. Maybe the Longhorns come out fired up and destroy Michigan. Or maybe they're checked out, frustrated, and just going through the motions against an opponent they feel is beneath them. With this many opt-outs, I'm betting on the latter.</p>
-
-<p>Michigan, meanwhile, has nothing to lose and everything to prove. They've been written off all season. They lost to Texas last year in Ann Arbor. Their coach just got fired. The national media has buried them. This is the kind of game where a program rallies together and plays above its head. Biff Poggi knows this might be his only shot to lead a bowl game, and you better believe he's got these kids ready to compete.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🧮 The Bottom Line</span></p>
-
-<p>I'm buying half a point to get Michigan +5 because this number is inflated. Texas is missing seven of their top 11 defenders. They have no running game. The market has consistently overvalued them all year at 4-8 ATS. Michigan has their key players, a motivated locker room, and a freshman quarterback who's shown he can compete on the big stage. This should be a 4-6 point game, not a 7-point spread. The Longhorns might win, but they're not covering a touchdown against a team with this much to prove. Give me the Wolverines and let's ring in the New Year with a winner.</p>
-
-</div>
-
-<div class="verdict" style="margin-top:30px;background:#222;border:2px solid #D4AF37;padding:25px;text-align:center;border-radius:10px;">
-<p class="verdict-title" style="font-size:1.1em;color:#aaa;text-transform:uppercase;letter-spacing:2px;margin:0;">BetLegend's Pick</p>
-<p class="the-pick" style="font-size:2em;color:#D4AF37;font-weight:bold;margin:10px 0 0 0;">Michigan +5</p>
-</div>
-
-</div>
-
-<hr style="border: 0; height: 1px; background: linear-gradient(90deg, transparent, #ff6b00, transparent); margin: 40px 0;">
-
-<script type="application/ld+json">
-{
-"@context": "https://schema.org",
-"@type": "BlogPosting",
-"headline": "Alamo Bowl: TCU Horned Frogs +5 vs USC Trojans - December 30, 2025",
-"description": "Expert Alamo Bowl pick: TCU +5 vs USC. The Trojans lost their top three receivers to opt-outs - Makai Lemon, Ja'Kobi Lane, and Lake McRee combined for 158 catches and 2,351 yards. USC is 1-6 ATS as favorites of more than a field goal. Sonny Dykes has TCU motivated and ready.",
-"image": "https://www.dominionpost.com/wp-content/uploads/2025/10/tcu-hoover-scaled.jpg",
-"author": {
-"@type": "Person",
-"name": "BetLegend"
-},
-"publisher": {
-"@type": "Organization",
-"name": "BetLegend Picks",
-"logo": {
-"@type": "ImageObject",
-"url": "https://www.betlegendpicks.com/newlogo.png"
-}
-},
-"datePublished": "2025-12-30T17:05:00-08:00",
-"dateModified": "2025-12-30T17:05:00-08:00"
-}
-</script>
-
-<div class="blog-post" id="post-20251230-tcu-usc-alamo">
-<div class="post-header">Alamo Bowl: TCU +5</div>
-<p class="post-time">Posted: 5:05 PM, December 30, 2025 | Kickoff: 9:00 PM ET at Alamodome, San Antonio (ESPN)</p>
-
-<figure style="text-align:center;margin:20px 0;">
-<img alt="TCU quarterback Josh Hoover throws a pass against Kansas State" src="https://www.dominionpost.com/wp-content/uploads/2025/10/tcu-hoover-scaled.jpg" style="max-width:900px;width:100%;border-radius:10px;"/>
-<figcaption style="color:#aaa;font-size:14px;margin-top:8px;">TCU QB Josh Hoover fires a pass vs Kansas State, Oct. 11, 2025 | Charlie Riedel/AP</figcaption>
-</figure>
-
-<div class="share-buttons" style="text-align:center;margin:20px 0;padding:15px;background:rgba(255,215,0,0.1);border-radius:10px;">
-<p style="color:#FFD700;font-weight:600;margin:0 0 12px 0;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Share This Pick</p>
-<a href="https://twitter.com/intent/tweet?text=Alamo%20Bowl%3A%20TCU%20%2B5%20%F0%9F%8F%88%20USC%20lost%20their%20top%203%20receivers%20to%20opt-outs&url=https://www.betlegendpicks.com/blog-page11.html%23post-20251230-tcu-usc-alamo&via=BetLegend2025" style="background:#000;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">X</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.betlegendpicks.com/blog-page11.html%23post-20251230-tcu-usc-alamo" style="background:#1877f2;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Facebook</a>
-<a href="https://reddit.com/submit?url=https://www.betlegendpicks.com/blog-page11.html%23post-20251230-tcu-usc-alamo&title=Alamo%20Bowl%3A%20TCU%20%2B5" style="background:#ff4500;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Reddit</a>
-</div>
-
-<div class="analysis-content" style="line-height: 1.8; font-size: 17px;">
-
-<p>Bowl season is all about who's actually showing up, and USC is walking into the Alamodome tonight with a skeleton crew at receiver. The Trojans lost their top three pass catchers to opt-outs—Makai Lemon, Ja'Kobi Lane, and Lake McRee are all sitting this one out. That's 158 catches, 2,351 yards, and 19 touchdowns just gone. Meanwhile, TCU is motivated, hungry, and getting points. Give me <span style="color: #39FF14; font-weight: 600;">TCU +5</span> in the Alamo Bowl.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">💀 USC's Receiving Corps Is Gutted</span></p>
-
-<p>Let me paint you a picture of what Jayden Maiava is working with tonight. Makai Lemon? Gone. The guy had 1,156 receiving yards and 11 touchdowns this season—he's opting out for the NFL Draft. Ja'Kobi Lane? Gone. Lake McRee? Gone. Those three combined for the vast majority of USC's production through the air. And it gets worse. Both of their top tight ends are out too—Walker Lyons hit the transfer portal and Lake McRee is draft-bound. The Trojans made 51 catches from the tight end position this season, and 50 of them came from guys who won't be playing tonight.</p>
-
-<p>So who's catching passes for USC? Freshman Tanook Hines, who had 28 catches for 398 yards this year. Jaden Richardson, playing his final collegiate game. Zacharyus Williams, a sophomore who missed two months with a shoulder injury. That's it. That's the receiver room. Maiava led the Big Ten with 3,431 passing yards and 23 touchdowns, but he did that throwing to Lemon and Lane. Tonight he's throwing to backups and walk-ons. Good luck with that.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📉 USC Is Brutal Against the Spread as Favorites</span></p>
-
-<p>Here's the number that should scare every USC backer: the Trojans are 1-6 ATS in their last seven games as favorites of more than a field goal. One and six. That's not a trend—that's a pattern of a team that gets overvalued by the market. Lincoln Riley's teams always look good on paper, but they consistently fail to cover when they're supposed to dominate. And tonight, with half their offense sitting at home, you think they're going to cover a 5-point spread? I don't buy it.</p>
-
-<p>The line opened at USC -5.5 and has bounced around between 5 and 6.5 depending on the book. The market knows USC has issues, but it's still giving them too much credit based on reputation. This is a 9-3 team that lost to Oregon and got exposed against quality competition. Now they're missing their playmakers. The number should be closer to 3.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🐸 TCU Has the Right Pieces in Place</span></p>
-
-<p>Yes, Josh Hoover entered the transfer portal and isn't playing tonight. That's not ideal. But Ken Seals isn't some random backup—he's a former Vanderbilt starter with over 700 career passing attempts and 4,389 career yards. He threw 29 touchdowns in three seasons at Vanderbilt, starting 22 games. He knows what he's doing. And more importantly, he's a hometown kid getting the chance to lead TCU in a bowl game. You don't think he's motivated?</p>
-
-<p>TCU still has Eric McAllister, who transferred from Boise State and emerged as one of the best receivers in the country this year—64 catches for 1,121 yards and 10 touchdowns. That's a legitimate go-to target. Sonny Dykes has been here before. He knows how to prepare his team for bowl games, and he's got a motivated roster that wants to finish the season on a high note. TCU went 8-4 and won their last two games heading into this matchup. The vibes are good in Fort Worth.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📊 TCU Covers Early and Often</span></p>
-
-<p>If you're looking for a first-half play, TCU is your team. The Horned Frogs have covered the first-half spread in 9 of their last 13 games. That's a 69% cover rate. They come out fast, they play with energy, and they don't let opponents build early leads. Even if USC adjusts in the second half, TCU should be in this game from the jump.</p>
-
-<p>For the full game, TCU is 6-5-1 ATS this season. Not spectacular, but solid. More importantly, they're not a team that gets blown out. Their four losses this year came by an average of 10 points, and two of those were one-score games. This is a competitive team that hangs around. Getting 5 points against a depleted USC squad? That's value.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🎯 The Bottom Line</span></p>
-
-<p>This comes down to a simple question: can Jayden Maiava win this game throwing to freshmen and backups while TCU has their full roster motivated and ready to compete? Maybe. But can he win by more than 5? I seriously doubt it. USC is walking into a hostile environment—TCU is basically a home team in San Antonio—with a gutted offense and a defense that still has to deal with Eric McAllister and a veteran backup quarterback in Ken Seals. The Trojans' ATS record as favorites tells you everything you need to know. Take the points with TCU and enjoy the sweat.</p>
-
-</div>
-
-<div class="verdict" style="margin-top:30px;background:#222;border:2px solid #D4AF37;padding:25px;text-align:center;border-radius:10px;">
-<p class="verdict-title" style="font-size:1.1em;color:#aaa;text-transform:uppercase;letter-spacing:2px;margin:0;">BetLegend's Pick</p>
-<p class="the-pick" style="font-size:2em;color:#D4AF37;font-weight:bold;margin:10px 0 0 0;">TCU +5</p>
-</div>
-
-</div>
-
-<hr style="border: 0; height: 1px; background: linear-gradient(90deg, transparent, #ff6b00, transparent); margin: 40px 0;">
-
-<script type="application/ld+json">
-{
-"@context": "https://schema.org",
-"@type": "BlogPosting",
-"headline": "NHL: Islanders at Blackhawks Under 6.5 (-160) - December 30, 2025",
-"description": "Expert NHL pick: Islanders at Blackhawks Under 6.5. Two offensively challenged teams meet at United Center. The Islanders are allowing just 2.3 goals per game over their last 10, while the Blackhawks have scored 2 or fewer in 5 of their last 8 games. Connor Bedard is out with a shoulder injury. This game has 4-2 written all over it.",
-"image": "https://bloximages.chicago2.vip.townnews.com/idahostatejournal.com/content/tncms/assets/v3/editorial/4/c1/4c1d7701-9068-5128-bbe1-ca5b931d581f/69323e6bbbf99.image.jpg",
-"author": {
-"@type": "Person",
-"name": "BetLegend"
-},
-"publisher": {
-"@type": "Organization",
-"name": "BetLegend Picks",
-"logo": {
-"@type": "ImageObject",
-"url": "https://www.betlegendpicks.com/newlogo.png"
-}
-},
-"datePublished": "2025-12-30T11:19:00-08:00",
-"dateModified": "2025-12-30T11:19:00-08:00"
-}
-</script>
-
-<div class="blog-post" id="post-20251230-islanders-blackhawks-under">
-<div class="post-header">NHL: Islanders at Blackhawks Under 6.5</div>
-<p class="post-time">Posted: 11:19 AM, December 30, 2025 | Puck Drop: 8:30 PM ET at United Center, Chicago (NHL Network)</p>
-
-<figure style="text-align:center;margin:20px 0;">
-<img alt="Bo Horvat New York Islanders celebrates after scoring goal against Colorado Avalanche" src="https://bloximages.chicago2.vip.townnews.com/idahostatejournal.com/content/tncms/assets/v3/editorial/4/c1/4c1d7701-9068-5128-bbe1-ca5b931d581f/69323e6bbbf99.image.jpg" style="max-width:900px;width:100%;border-radius:10px;"/>
-<figcaption style="color:#aaa;font-size:14px;margin-top:8px;">Bo Horvat celebrates a goal against the Avalanche on Dec. 4, 2025 | Seth Wenig/AP</figcaption>
-</figure>
-
-<div class="share-buttons" style="text-align:center;margin:20px 0;padding:15px;background:rgba(255,215,0,0.1);border-radius:10px;">
-<p style="color:#FFD700;font-weight:600;margin:0 0 12px 0;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Share This Pick</p>
-<a href="https://twitter.com/intent/tweet?text=NHL%3A%20Islanders%20at%20Blackhawks%20Under%206.5%20%F0%9F%8F%92%20Two%20offensively%20challenged%20teams&url=https://www.betlegendpicks.com/blog-page11.html%23post-20251230-islanders-blackhawks-under&via=BetLegend2025" style="background:#000;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">X</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.betlegendpicks.com/blog-page11.html%23post-20251230-islanders-blackhawks-under" style="background:#1877f2;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Facebook</a>
-<a href="https://reddit.com/submit?url=https://www.betlegendpicks.com/blog-page11.html%23post-20251230-islanders-blackhawks-under&title=NHL%3A%20Islanders%20at%20Blackhawks%20Under%206.5" style="background:#ff4500;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Reddit</a>
-</div>
-
-<div class="analysis-content" style="line-height: 1.8; font-size: 17px;">
-
-<p>This is the kind of under spot I live for. The New York Islanders travel to Chicago to face the Blackhawks tonight, and I'm hammering <span style="color: #39FF14; font-weight: 600;">Under 6.5 (-160)</span>. Yeah, you're laying some juice here, but this number should be closer to 5.5 anyway. Both of these teams are offensively challenged, both are coming off losses, and neither has any reason to open things up. This is going to be a grind-it-out affair that finishes somewhere in the 4-2, 3-2 range.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🧊 The Islanders Are Built for Low-Scoring Games</span></p>
-
-<p>New York comes into this one at 21-14-4, and they've done it with defense. The Islanders are allowing just 2.67 goals per game this season—good for sixth in the entire NHL. But here's what really matters: over their last 10 games, they've given up only 2.3 goals per game. That's elite. In three of their last four games, they've held opponents to two goals or fewer. This is a team that knows how to suffocate opponents and play in the mud.</p>
-
-<p>The Islanders aren't exactly lighting it up offensively either. They're ranked 25th in goals scored this season. Bo Horvat leads the team with 20 goals and 32 points, but this isn't a team that's going to run you out of the building. They win by controlling the pace, limiting chances, and capitalizing on their opportunities. That's not a recipe for high-scoring hockey—it's a recipe for 3-2 games.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📉 The Blackhawks Can't Score Without Bedard</span></p>
-
-<p>Chicago is in rough shape. They're 14-18-6 on the season, sitting near the bottom of the Western Conference, and they just lost their best player. Connor Bedard is out with a shoulder injury he suffered in mid-December, and the offense has completely cratered without him. Over their last 10 games, the Blackhawks are averaging just 2.0 goals per game. In five of their last eight games, they've scored two goals or fewer. That's brutal.</p>
-
-<p>The Blackhawks rank 27th in the league in goals scored with just 102 on the season. Without Bedard creating chances and finishing plays, there's no one to pick up the slack. This team was already struggling offensively, and now they're missing their franchise player. They've lost seven of their last eight games, and the offense looks completely lost. How are they supposed to contribute to a high-scoring game tonight?</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🥅 Goaltending Favors the Under</span></p>
-
-<p>The Islanders will likely go with Marcus Hogberg or Jakub Skarek in net with Ilya Sorokin still nursing a lower-body injury. But here's the thing—David Rittich has been outstanding as the backup this year, going 9-3-2 with a 2.25 GAA and .919 save percentage. Whoever's in net for New York, they've been getting solid goaltending all season.</p>
-
-<p>For Chicago, it'll likely be Petr Mrazek or Arvid Soderblom between the pipes. The goaltending has been inconsistent, but that almost helps the under case—if Chicago's goalie steals one, this thing stays low. And the Islanders aren't the type of team to pile on goals anyway. They'll take their 3-1 lead and sit on it.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📊 The Trends Are Screaming Under</span></p>
-
-<p>Let's talk numbers. The under has cashed in 8 of the Islanders' last 10 road games. Eight out of ten. That's not a trend—that's a pattern. New York plays tight, structured hockey on the road and doesn't get into track meets. They're content to win 2-1 or 3-2 and move on to the next city.</p>
-
-<p>The Blackhawks' totals have been trending under as well, largely because they can't score. When your offense is averaging 2.0 goals per game over the last 10, it's hard for totals to go over. Even if the Islanders score 3 or 4, Chicago isn't holding up their end of the bargain. This total is inflated by name recognition—people see Islanders-Blackhawks and think it should be a 6-5 game. It won't be.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🎯 The Bottom Line</span></p>
-
-<p>This is about as clean an under spot as you'll find. The Islanders play elite defense and don't score much. The Blackhawks can't score at all without Bedard. Both teams are coming off losses and will be playing tight. The trends heavily favor the under. And 6.5 is a full goal higher than where this line should probably be. I'm expecting a final score somewhere around 3-2 or 4-2. Lay the juice and take the under.</p>
-
-</div>
-
-<div class="verdict" style="margin-top:30px;background:#222;border:2px solid #D4AF37;padding:25px;text-align:center;border-radius:10px;">
-<p class="verdict-title" style="font-size:1.1em;color:#aaa;text-transform:uppercase;letter-spacing:2px;margin:0;">BetLegend's Pick</p>
-<p class="the-pick" style="font-size:2em;color:#D4AF37;font-weight:bold;margin:10px 0 0 0;">Under 6.5 (-160)</p>
-</div>
-
-</div>
-
-<hr style="border: 0; height: 1px; background: linear-gradient(90deg, transparent, #ff6b00, transparent); margin: 40px 0;">
-
-<script type="application/ld+json">
-{
-"@context": "https://schema.org",
-"@type": "BlogPosting",
-"headline": "Music City Bowl: Illinois Fighting Illini +3.5 vs Tennessee Volunteers - December 30, 2025",
-"description": "Expert Music City Bowl pick: Illinois +3.5 vs Tennessee. Luke Altmyer stayed loyal to the Illini after Tennessee came calling, and now he gets to prove it was the right choice. The line crashed from Tennessee -8.5 to -3.5 when Altmyer announced he was playing. Tennessee fired defensive coordinator Tim Banks midseason for a reason.",
-"image": "https://a.espncdn.com/i/teamlogos/ncaa/500/356.png",
-"author": {
-"@type": "Person",
-"name": "BetLegend"
-},
-"publisher": {
-"@type": "Organization",
-"name": "BetLegend Picks",
-"logo": {
-"@type": "ImageObject",
-"url": "https://www.betlegendpicks.com/newlogo.png"
-}
-},
-"datePublished": "2025-12-30T10:21:00-08:00",
-"dateModified": "2025-12-30T10:21:00-08:00"
-}
-</script>
-
-<div class="blog-post" id="post-20251230-illinois-tennessee-mcb">
-<div class="post-header">Music City Bowl: Illinois +3.5</div>
-<p class="post-time">Posted: 10:21 AM, December 30, 2025 | Kickoff: 5:30 PM ET at Nissan Stadium, Nashville (ESPN)</p>
-
-<figure style="text-align:center;margin:20px 0;">
-<img alt="Luke Altmyer Illinois Fighting Illini quarterback celebrates with fans after upset win over USC" src="https://www.chicagotribune.com/wp-content/uploads/2025/12/CTC-Z-USC-Illinois-Football_240100380.jpg" style="max-width:900px;width:100%;border-radius:10px;"/>
-<figcaption style="color:#aaa;font-size:14px;margin-top:8px;">Luke Altmyer celebrates with Illinois fans after upsetting USC in September | Chicago Tribune</figcaption>
-</figure>
-
-<div class="share-buttons" style="text-align:center;margin:20px 0;padding:15px;background:rgba(255,215,0,0.1);border-radius:10px;">
-<p style="color:#FFD700;font-weight:600;margin:0 0 12px 0;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Share This Pick</p>
-<a href="https://twitter.com/intent/tweet?text=Music%20City%20Bowl%3A%20Illinois%20%2B3.5%20%F0%9F%8F%88%20Altmyer%20spurned%20Tennessee%20-%20payback%20time&url=https://www.betlegendpicks.com/blog-page11.html%23post-20251230-illinois-tennessee-mcb&via=BetLegend2025" style="background:#000;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">X</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.betlegendpicks.com/blog-page11.html%23post-20251230-illinois-tennessee-mcb" style="background:#1877f2;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Facebook</a>
-<a href="https://reddit.com/submit?url=https://www.betlegendpicks.com/blog-page11.html%23post-20251230-illinois-tennessee-mcb&title=Music%20City%20Bowl%3A%20Illinois%20%2B3.5" style="background:#ff4500;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Reddit</a>
-</div>
-
-<div class="analysis-content" style="line-height: 1.8; font-size: 17px;">
-
-<p>Here's a story you're going to love. When Nico Iamaleava bolted from Tennessee after the season and headed to UCLA, the Vols came calling for Luke Altmyer. They wanted the Illinois quarterback to jump ship and come save their program. Altmyer said no thanks. He stayed loyal to Bret Bielema and the Fighting Illini. Now he gets to face the team that tried to poach him, and I'm betting he shows them exactly what they missed. Give me <span style="color: #39FF14; font-weight: 600;">Illinois +3.5</span> in the Music City Bowl.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📉 The Line Movement Tells the Story</span></p>
-
-<p>This line opened at Tennessee -8.5 when the matchup was announced on December 7th. That's a full touchdown plus a hook. Now? It's down to Tennessee -3.5, and some books have it as low as -2.5. What changed? Luke Altmyer confirmed he's playing. That's a six-point swing just because one quarterback decided not to opt out. When the market moves that aggressively, it's telling you something. The sharp money knows Illinois can compete in this game, and they're hammering the Illini.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🔥 Luke Altmyer Is Having a Monster Season</span></p>
-
-<p>Let me tell you about what Altmyer has done this year, because it's been special. The guy threw for 2,255 yards and 19 touchdowns against just four interceptions through the regular season. He's also added 108 rushing yards and three scores on the ground. Against USC back in September, he put up one of the most complete performances in Big Ten history—328 passing yards, two passing TDs, a rushing touchdown, AND a receiving touchdown. He became the first player in at least 30 years to hit 300 passing yards with both a rushing and receiving score in a Big Ten game. This isn't some game manager. This is a playmaker who can absolutely torch Tennessee's defense.</p>
-
-<p>And about that Tennessee defense? Yeah, there's a reason they fired defensive coordinator Tim Banks midseason. The Vols rank 60th nationally in SP+ on the defensive side of the ball. That's not good. That's the kind of defense that a creative quarterback like Altmyer can absolutely shred. He's going to have opportunities all game long, and he has the arm talent and mobility to capitalize.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📊 The ATS Numbers Don't Lie</span></p>
-
-<p>Here's where it gets really interesting. Illinois is 7-4-1 against the spread this season. Tennessee? They're 5-7 ATS. If you go back even further, the Illini are on an absurd 11-4-1 ATS run dating back to last season. This team covers. Bret Bielema has his guys ready to play every single week, and they consistently outperform market expectations. Meanwhile, Tennessee has been a disappointment relative to the number all year. They haven't beaten a single FBS team that won six or more games. Their 8-4 record is hollow.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🎯 Tennessee's QB Situation Is a Mess</span></p>
-
-<p>The Vols are rolling with Joey Aguilar at quarterback for this one. He's a serviceable backup who did lead Tennessee to its first win at The Swamp in 22 years, so credit where it's due. But he's not Nico Iamaleava—even the flawed version of Iamaleava that struggled with accuracy and bailed from the pocket too quickly. Aguilar is a step down in talent, and he's going up against an Illinois defense that has been solid all year. The Illini aren't going to make it easy on him.</p>
-
-<p>This is also the first-ever meeting between these two programs. No historical data, no familiarity, just two 8-4 teams going at it in Nashville. In a game like this, I'm taking the team with the better quarterback and the better track record against the spread. That's Illinois.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🎭 The Motivation Factor</span></p>
-
-<p>Look, I don't usually put too much stock in "revenge game" narratives. But this one is different. Tennessee literally tried to steal Luke Altmyer out of Champaign. They came after him when their own quarterback left. And he said no. Now he gets to prove that decision was right on a national stage. You don't think he's fired up for this one? You don't think the Illinois locker room is using that as fuel? This team is going to come out swinging.</p>
-
-<p>Meanwhile, Tennessee is dealing with the fallout of losing their starting quarterback to the transfer portal and firing their defensive coordinator. That's a lot of instability heading into a bowl game. The Vols won their last two games, but the vibe around this program isn't exactly electric right now. They're trying to salvage a disappointing season, while Illinois is trying to cap off a successful one with a signature win.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🧮 The Bottom Line</span></p>
-
-<p>I'm not saying Illinois is going to blow Tennessee out. This should be a close, competitive game—exactly what you'd expect when two 8-4 teams meet up. But 3.5 points is not enough of a cushion for a Tennessee team that has underperformed against the spread all year, just fired their DC, and is facing a motivated quarterback who they tried to recruit away. The line crashed for a reason. Trust the movement. Illinois covers, and might just win this thing outright.</p>
-
-</div>
-
-<div class="verdict" style="margin-top:30px;background:#222;border:2px solid #D4AF37;padding:25px;text-align:center;border-radius:10px;">
-<p class="verdict-title" style="font-size:1.1em;color:#aaa;text-transform:uppercase;letter-spacing:2px;margin:0;">BetLegend's Pick</p>
-<p class="the-pick" style="font-size:2em;color:#D4AF37;font-weight:bold;margin:10px 0 0 0;">Illinois +3.5</p>
-</div>
-
-</div>
-
-<hr style="border: 0; height: 1px; background: linear-gradient(90deg, transparent, #ff6b00, transparent); margin: 40px 0;">
-
-<script type="application/ld+json">
-{
-"@context": "https://schema.org",
-"@type": "BlogPosting",
-"headline": "NFL Monday Night Football: Atlanta Falcons +7.5 vs Los Angeles Rams - December 29, 2025",
-"description": "Expert NFL Monday Night Football pick: Atlanta Falcons +7.5 vs Los Angeles Rams. Bijan Robinson is having a historic season with 2,026 scrimmage yards and is closing in on the franchise record. The Falcons have won two straight with Kirk Cousins, and the Rams can no longer win the NFC West. This is too many points for a motivated home team.",
-"image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4430807.png&w=350&h=254",
-"author": {
-"@type": "Person",
-"name": "BetLegend"
-},
-"publisher": {
-"@type": "Organization",
-"name": "BetLegend Picks",
-"logo": {
-"@type": "ImageObject",
-"url": "https://www.betlegendpicks.com/newlogo.png"
-}
-},
-"datePublished": "2025-12-29T13:29:00-08:00",
-"dateModified": "2025-12-29T13:29:00-08:00"
-}
-</script>
-
-<div class="blog-post" id="post-20251229-falcons-rams-mnf">
-<div class="post-header">NFL Monday Night Football: Falcons +7.5</div>
-<p class="post-time">Posted: 1:29 PM, December 29, 2025 | Kickoff: 8:15 PM ET at Mercedes-Benz Stadium, Atlanta (ESPN/ABC)</p>
-
-<figure style="text-align:center;margin:20px 0;">
-<img alt="Bijan Robinson Atlanta Falcons running back scores 81-yard rushing touchdown against Buffalo Bills" src="https://s.yimg.com/ny/api/res/1.2/4ot9V6g1FfToYx7yrytBFw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTI0MDA7aD0xMzUwO2NmPXdlYnA-/https://media.zenfs.com/en/pa-sport.com/d51936f28a83e6771a4c2552242ba371" style="max-width:600px;width:100%;border-radius:10px;"/>
-<figcaption style="color:#aaa;font-size:14px;margin-top:8px;">Bijan Robinson scored an 81-yard rushing TD vs the Bills - the longest run of the 2025 NFL season | PA Sport</figcaption>
-</figure>
-
-<div class="share-buttons" style="text-align:center;margin:20px 0;padding:15px;background:rgba(255,215,0,0.1);border-radius:10px;">
-<p style="color:#FFD700;font-weight:600;margin:0 0 12px 0;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Share This Pick</p>
-<a href="https://twitter.com/intent/tweet?text=NFL%20MNF%3A%20Falcons%20%2B7.5%20%F0%9F%8F%88%20Bijan%20Robinson%20chasing%20franchise%20record&url=https://www.betlegendpicks.com/blog-page11.html%23post-20251229-falcons-rams-mnf&via=BetLegend2025" style="background:#000;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">X</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.betlegendpicks.com/blog-page11.html%23post-20251229-falcons-rams-mnf" style="background:#1877f2;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Facebook</a>
-<a href="https://reddit.com/submit?url=https://www.betlegendpicks.com/blog-page11.html%23post-20251229-falcons-rams-mnf&title=NFL%20MNF%3A%20Falcons%20%2B7.5" style="background:#ff4500;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;margin:0 5px;display:inline-block;" target="_blank">Reddit</a>
-</div>
-
-<div style="margin: 25px 0; text-align: center;">
-<video controls style="max-width: 600px; width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-<source src="videos/rams.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-</div>
-
-<div class="analysis-content" style="line-height: 1.8; font-size: 17px;">
-
-<p>Alright, let's close out Monday Night Football for the 2025 season the right way. The Atlanta Falcons are getting <span style="color: #39FF14; font-weight: 600;">+7.5</span> at home against the Los Angeles Rams, and I'm all over it. Look, I know the Falcons are 6-9 and playing out the string. I know the Rams are 11-4 and fighting for playoff positioning. But seven and a half points? At Mercedes-Benz Stadium? With Bijan Robinson running behind that offensive line? That's too many points, and I'm betting Atlanta keeps this one close.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🔥 Bijan Robinson Is Having a Historic Season</span></p>
-
-<p>Let me tell you about what Bijan Robinson has been doing this year, because it's absolutely ridiculous. The man has 2,026 scrimmage yards through 15 games. That's 1,250 rushing yards on 5.0 yards per carry, plus another 776 receiving yards out of the backfield. He's just 150 yards away from breaking William Andrews' franchise record of 2,176 scrimmage yards set back in 1983. That record has stood for over 40 years, and Bijan is about to smash it with two games left to play.</p>
-
-<p>Robinson has been named to his second Pro Bowl roster, and he's only in his third NFL season. Back in Week 6, he absolutely torched the Buffalo Bills for 170 rushing yards—including an 81-yard touchdown—plus 68 receiving yards, earning NFC Offensive Player of the Week honors. This guy is a complete game-wrecker. He can beat you between the tackles, he can take it to the house on any touch, and he's one of the best receiving backs in the entire league. The Rams know he's coming, and they still might not be able to stop him.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">📉 The Rams Have Nothing to Play For</span></p>
-
-<p>Here's the thing about the Rams tonight—they can no longer win the NFC West. The Seahawks and 49ers both won on Sunday, which means LA is locked out of the division title regardless of what happens in Atlanta. They're playing for seeding now, trying to climb from the sixth seed to potentially the fifth seed, but that's not exactly life or death. There's a real chance Sean McVay rests some guys or at least limits snaps for key players heading into the playoffs.</p>
-
-<p>More importantly, the Rams are dealing with some significant injuries. Offensive lineman Kevin Dotson and cornerback Josh Wallace have already been ruled out. Davante Adams is listed as doubtful, which means the Rams might be without their best receiver. Alaric Jackson and Braden Fiske are questionable. Meanwhile, the Falcons are expecting Drake London back after a knee issue—Raheem Morris said he "feels great" about London playing tonight. Atlanta is getting healthier at the right time, and LA is heading in the opposite direction.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🏠 Mercedes-Benz Stadium Advantage</span></p>
-
-<p>Don't sleep on the home environment here. Mercedes-Benz Stadium is one of the loudest buildings in the NFL when the Falcons are competitive, and they've won two straight games with Kirk Cousins under center. The crowd is going to be hyped for the final Monday Night Football game of the season, and the Falcons have shown they can still put up points when things are clicking. Atlanta is averaging over 24 points per game at home this season, and with Robinson running wild and London back in the lineup, they have the weapons to hang with anybody.</p>
-
-<p>Kirk Cousins has been up and down this year—that's no secret. But he's a veteran quarterback who knows how to manage games and take care of the football. In the two wins to close December, Cousins has been efficient, completing over 65% of his passes with 4 touchdowns and just 1 interception. He's not going to beat you with his arm alone, but he doesn't have to. Just get the ball to Bijan, keep the chains moving, and let the defense make a few stops. That's the formula.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🧮 Why 7.5 Is Too Many Points</span></p>
-
-<p>The Rams are a good football team, and they probably should win this game outright. But nearly eight points against a home team that's playing well, with one of the best running backs in the league, against a road team with playoff positioning already locked and key injuries mounting? That number is inflated because of the records, and the market is giving us way too much credit for being on the right side.</p>
-
-<p>Atlanta has covered the spread in 4 of their last 6 home games. The Rams are just 2-4 ATS as road favorites this season. Home underdogs getting more than a touchdown in primetime games have historically been a profitable spot, especially late in the season when motivation levels start to diverge. The Falcons aren't going to the playoffs, but they're not going to roll over and die in front of a national audience either.</p>
-
-<p><span style="color: #FFD700; font-weight: 700; font-size: 22px;">🎯 The Bottom Line</span></p>
-
-<p>Bijan Robinson is chasing history tonight. The Falcons have won two straight and are playing with energy down the stretch. The Rams can't win their division and might be without Davante Adams. And we're getting 7.5 points at home on Monday Night Football? This is exactly the kind of spot where you take the points, sit back, and watch a hungry home team keep it competitive. I'm not saying Atlanta wins—although they might—but I'm confident they don't lose by 8 or more. Give me the Falcons.</p>
-
-</div>
-
-<div class="verdict" style="margin-top:30px;background:#222;border:2px solid #D4AF37;padding:25px;text-align:center;border-radius:10px;">
-<p class="verdict-title" style="font-size:1.1em;color:#aaa;text-transform:uppercase;letter-spacing:2px;margin:0;">BetLegend's Pick</p>
-<p class="the-pick" style="font-size:2em;color:#D4AF37;font-weight:bold;margin:10px 0 0 0;">Falcons +7.5</p>
-</div>
-
-</div>
-
-<hr style="border: 0; height: 1px; background: linear-gradient(90deg, transparent, #ff6b00, transparent); margin: 40px 0;">
-
-<!-- Pagination -->
 <div class="pagination" style="text-align:center;margin:30px 0;"><span>← Previous</span><span>   </span><a href="blog-page10.html">Next →</a></div>
 
-<footer style="text-align: center; padding: 40px 20px; background: #111; margin-top: 60px; border-top: 1px solid #333;">
-<p style="color: #888; font-size: 14px;">&copy; 2025 BetLegend Picks. All rights reserved.</p>
-<p style="color: #666; font-size: 12px; margin-top: 10px;">
-<a href="index.html" style="color: #FFD700; text-decoration: none;">Home</a> |
-<a href="blog-page11.html" style="color: #FFD700; text-decoration: none;">Picks</a> |
-<a href="records.html" style="color: #FFD700; text-decoration: none;">Records</a> |
-<a href="howitworks.html" style="color: #FFD700; text-decoration: none;">How It Works</a>
-</p>
-</footer>
+<!-- Related Content Section -->
+<div style="max-width: 1140px; margin: 60px auto 40px; padding: 30px; background: rgba(255, 215, 0, 0.05); border: 2px solid gold; border-radius: 15px;">
+    <h2 style="font-family: 'Orbitron', sans-serif; color: gold; text-align: center; font-size: 28px; margin-bottom: 30px;">Continue Reading</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
 
+        <a href="ncaaf.html" style="text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 2px solid #00ffff; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+            <h3 style="color: gold; font-size: 20px; margin-bottom: 10px;">NCAAF Picks & Analysis</h3>
+            <p style="color: #eaf8ff; font-size: 15px; line-height: 1.6;">Expert college football betting picks with full game breakdowns. ATS records, trends, and sharp angles.</p>
+        </a>
+
+        <a href="news-page3.html" style="text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 2px solid #00ffff; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+            <h3 style="color: gold; font-size: 20px; margin-bottom: 10px;">Latest Betting News</h3>
+            <p style="color: #eaf8ff; font-size: 15px; line-height: 1.6;">Breaking news and headlines from the sports betting world. Stay informed on industry updates.</p>
+        </a>
+
+        <a href="records.html" style="text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 2px solid #00ffff; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+            <h3 style="color: gold; font-size: 20px; margin-bottom: 10px;">Our Verified Records</h3>
+            <p style="color: #eaf8ff; font-size: 15px; line-height: 1.6;">See our complete betting record with full transparency. Every pick tracked and graded publicly.</p>
+        </a>
+
+        <a href="kelly-criterion.html" style="text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 2px solid #00ffff; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+            <h3 style="color: gold; font-size: 20px; margin-bottom: 10px;">Kelly Criterion Calculator</h3>
+            <p style="color: #eaf8ff; font-size: 15px; line-height: 1.6;">Calculate optimal bet sizing using the Kelly formula. The professional's guide to smart bankroll management.</p>
+        </a>
+
+        <a href="bankroll-management.html" style="text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 2px solid #00ffff; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+            <h3 style="color: gold; font-size: 20px; margin-bottom: 10px;">Bankroll Management Guide</h3>
+            <p style="color: #eaf8ff; font-size: 15px; line-height: 1.6;">Master unit sizing, risk of ruin, and professional money management strategies for long-term success.</p>
+        </a>
+
+        <a href="ncaaf-records.html" style="text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 2px solid #00ffff; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+            <h3 style="color: gold; font-size: 20px; margin-bottom: 10px;">NCAAF Verified Records</h3>
+            <p style="color: #eaf8ff; font-size: 15px; line-height: 1.6;">Complete college football betting history with transparent tracking, unit charts, and verified win/loss records.</p>
+        </a>
+
+        <a href="moneyline-parlay-of-the-day.html" style="text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 2px solid #00ffff; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+            <h3 style="color: gold; font-size: 20px; margin-bottom: 10px;">ML Parlay of the Day</h3>
+            <p style="color: #eaf8ff; font-size: 15px; line-height: 1.6;">Daily moneyline parlay picks with detailed analysis. Low-risk, high-reward plays from our team.</p>
+        </a>
+
+        <a href="parlay-calculator.html" style="text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 2px solid #00ffff; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+            <h3 style="color: gold; font-size: 20px; margin-bottom: 10px;">Parlay Calculator</h3>
+            <p style="color: #eaf8ff; font-size: 15px; line-height: 1.6;">Calculate parlay payouts instantly. See your potential winnings before placing your multi-leg wagers.</p>
+        </a>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="subscribe.html" style="display: inline-block; padding: 15px 40px; background: gold; color: #000; font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 700; border-radius: 10px; text-decoration: none; box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); transition: all 0.3s ease;">
+            Subscribe for Premium Picks →
+        </a>
+    </div>
+</div>
+
+
+<!-- Clicky Analytics -->
+<a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
+<script async data-id="101485054" src="//static.getclicky.com/js"></script>
 </body>
 </html>
