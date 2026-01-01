@@ -225,7 +225,7 @@
         <div class="loading-message" id="loading-message">Loading records from Google Sheets...</div>
         <div class="table-container">
             <table>
-                <thead><tr><th>Date</th><th>Sport</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
+                <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
                 <tbody id="picks-table-body">
                     <tr><td>12/25/2025</td><td>Lakers/Rockets over 231</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
                     <tr><td>12/10/2025</td><td>3 Team Parlay:  Lakers ML, Thunder ML, Boise St ML </td><td>-160</td><td class="result-P">P</td><td class="loss">-4.80</td></tr>
@@ -678,7 +678,7 @@
                 if(!cells.length) return null;
                 
                 var dateTxt = cells[0].textContent.trim();
-                var unitsTxt = (cells[5] || {}).textContent || "0";
+                var unitsTxt = (cells[4] || {}).textContent || "0";
                 var unitsVal = parseNumber(unitsTxt);
                 
                 var dateObj = new Date(dateTxt);
@@ -844,6 +844,58 @@
                 }
             }
         });
+    }
+
+    // Calculate stats from static HTML table
+    function calculateStatsFromTable() {
+        const tbody = document.getElementById('picks-table-body');
+        if (!tbody) return;
+
+        const rows = tbody.querySelectorAll('tr');
+        let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length >= 5) {
+                // Result is in column 4 (0-indexed: 3), Units in column 5 (0-indexed: 4)
+                const resultCell = cells[3];
+                const unitsCell = cells[4];
+
+                const resultText = resultCell.textContent.trim().toUpperCase();
+                const unitsText = unitsCell.textContent.trim().replace(/[+,]/g, '');
+                const units = parseFloat(unitsText) || 0;
+
+                if (resultText === 'W' || resultText.startsWith('W')) wins++;
+                else if (resultText === 'L' || resultText.startsWith('L')) losses++;
+                else if (resultText === 'P' || resultText.startsWith('P')) pushes++;
+
+                totalUnits += units;
+            }
+        });
+
+        // Update summary stats
+        document.getElementById('summary-record').textContent = `${wins}-${losses}-${pushes}`;
+
+        const unitsEl = document.getElementById('summary-units');
+        unitsEl.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+        unitsEl.className = totalUnits >= 0 ? 'units-win' : 'units-loss';
+
+        const winPct = wins + losses > 0 ? ((wins / (wins + losses)) * 100).toFixed(1) : '0.0';
+        document.getElementById('summary-win-pct').textContent = `${winPct}%`;
+
+        // Calculate ROI (rough estimate: assume average 1.5 units risked per bet)
+        const totalBets = wins + losses;
+        const avgRisk = totalBets * 1.5;
+        const roi = avgRisk > 0 ? ((totalUnits / avgRisk) * 100).toFixed(2) : '0.00';
+        const roiEl = document.getElementById('summary-roi');
+        roiEl.textContent = `${parseFloat(roi) >= 0 ? '+' : ''}${roi}%`;
+        roiEl.className = parseFloat(roi) >= 0 ? 'roi-win' : 'roi-loss';
+
+        // Hide loading message
+        document.getElementById('loading-message').style.display = 'none';
+
+        // Create chart
+        setTimeout(createChart, 100);
     }
 
     // Load data when page loads
