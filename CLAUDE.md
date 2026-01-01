@@ -27,7 +27,22 @@
 3. Use CONVERSATIONAL tone (contractions, opinions)
 4. NEVER write "coming soon", "TBD", "TBA", or any placeholder
 5. Use NUMERIC ESPN IDs for college logos (not abbreviations)
+6. PAGE TITLE MUST INCLUDE THE DATE - e.g., "NBA Analysis - December 31, 2025"
 ```
+
+### ⛔ CRITICAL: PAGE TITLES MUST HAVE DATES ⛔
+**PERMANENTLY LOCKED - DECEMBER 31, 2025**
+
+Every sports page title MUST include the full date so calendars work correctly:
+```
+✅ CORRECT: <title>NCAAF Bowl Games - December 29, 2025 | BetLegend</title>
+✅ CORRECT: <title>NBA Analysis - December 31, 2025 | BetLegend</title>
+❌ WRONG: <title>NCAAF Analysis Archive - Page 29 | BetLegend</title>
+❌ WRONG: <title>NBA Analysis Archive - Page 26 | BetLegend</title>
+```
+
+**WHY:** The sync_calendars.py script extracts dates from page titles. Generic titles like "Page 29"
+cause the script to use wrong fallback dates (file modification date), breaking the calendar.
 
 ### BEFORE COMMITTING:
 ```
@@ -46,10 +61,13 @@
 ```
 
 ### THE PRE-COMMIT HOOK:
-A git pre-commit hook is now installed that will BLOCK commits containing:
-- Placeholder text ("coming soon", etc.)
-- Non-numeric college logos
-- Wrong navigation text
+A git pre-commit hook is now installed that will:
+- BLOCK commits with placeholder text ("coming soon", etc.)
+- BLOCK commits with non-numeric college logos
+- BLOCK commits with wrong nav text ("Overview" instead of "Detailed Breakdown")
+- BLOCK commits with pagination on sports pages
+- WARN if sports page titles are missing dates
+- AUTO-RUN sync_calendars.py when sports pages change (auto-stages calendar updates)
 
 **If a commit is blocked, FIX the issues before trying again.**
 
