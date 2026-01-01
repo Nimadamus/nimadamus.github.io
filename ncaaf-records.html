@@ -805,10 +805,52 @@
         });
     }
 
+    // Calculate stats from static table
+    function calculateStatsFromTable() {
+        const tbody = document.getElementById('picks-table-body');
+        const rows = tbody.querySelectorAll('tr');
+        let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length >= 5) {
+                const result = cells[3].textContent.trim().toUpperCase();
+                const units = parseFloat(cells[4].textContent.replace(/[+,]/g, ''));
+
+                if (result === 'W') wins++;
+                else if (result === 'L') losses++;
+                else if (result === 'P') pushes++;
+
+                if (!isNaN(units)) {
+                    totalUnits += units;
+                    totalRisk += Math.abs(units);
+                }
+            }
+        });
+
+        document.getElementById('summary-record').textContent = `${wins}-${losses}-${pushes}`;
+        const unitsEl = document.getElementById('summary-units');
+        unitsEl.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+        unitsEl.className = totalUnits >= 0 ? 'units-win' : 'units-loss';
+        document.getElementById('summary-win-pct').textContent = wins + losses > 0 ? `${((wins / (wins + losses)) * 100).toFixed(1)}%` : '0%';
+        const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
+        const roiEl = document.getElementById('summary-roi');
+        roiEl.textContent = `${roi >= 0 ? '+' : ''}${roi.toFixed(2)}%`;
+        roiEl.className = roi >= 0 ? 'roi-win' : 'roi-loss';
+
+        // Update chart stats
+        document.getElementById('chart-total-bets').textContent = rows.length;
+        document.getElementById('chart-current-units').textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+        document.getElementById('chart-current-units').style.color = totalUnits >= 0 ? '#39FF14' : '#FF3131';
+
+        // Create chart
+        setTimeout(createChart, 100);
+    }
+
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
-        // Load data from Google Sheets
-        loadDataFromSheets();
+        // Using static HTML - calculate stats from table
+        calculateStatsFromTable();
 
         // Year filter button event listeners
         const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
@@ -822,8 +864,8 @@
         });
     });
 
-    // Optional: Refresh data every 5 minutes
-    setInterval(loadDataFromSheets, 300000);
+    // Optional: Refresh data every 5 minutes - DISABLED
+    // setInterval(loadDataFromSheets, 300000);
 
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
