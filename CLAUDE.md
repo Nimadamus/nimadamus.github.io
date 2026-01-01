@@ -92,6 +92,59 @@ A git pre-commit hook is now installed that will:
 
 ---
 
+## ⛔⛔⛔ BLOG PAGES: INSERT NEW POSTS - NEVER DELETE EXISTING ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 1, 2026
+
+**When adding new posts to blog pages (blog-page11.html, etc.), you MUST INSERT at the top and KEEP all existing posts.**
+
+### THE ABSOLUTE RULE:
+```
+1. READ the current blog page file FIRST
+2. FIND where posts start (after <h1>BetLegend Daily Picks and Analysis</h1>)
+3. INSERT new post HTML at that location
+4. KEEP ALL EXISTING POSTS BELOW - DO NOT DELETE THEM
+5. NEVER overwrite the file with just the new post
+```
+
+### WHAT KEEPS HAPPENING (AND MUST STOP FOREVER):
+1. User asks to add a new pick to blog-page11
+2. Claude writes ONLY the new post and overwrites the entire file
+3. All previous posts (Alabama, Miami, Sabres, Michigan, TCU, Illinois, Falcons, etc.) get DELETED
+4. User loses days of work and content
+
+### THE CORRECT WAY TO ADD A NEW POST:
+```python
+# 1. Read current file
+with open('blog-page11.html', 'r') as f:
+    content = f.read()
+
+# 2. Find insertion point (after h1, before first post)
+insert_point = content.find('</h1>') + 5
+
+# 3. Create new post HTML
+new_post = '''<script type="application/ld+json">...</script>
+<div class="blog-post" id="post-YYYYMMDD-name">...</div>
+<hr style="...">'''
+
+# 4. INSERT new post, keeping everything else
+new_content = content[:insert_point] + new_post + content[insert_point:]
+
+# 5. Write back
+with open('blog-page11.html', 'w') as f:
+    f.write(new_content)
+```
+
+### FORBIDDEN:
+- ❌ Writing a new file with just the new post
+- ❌ Using Write tool to overwrite the entire blog page
+- ❌ Forgetting to read the current file first
+- ❌ Deleting ANY existing posts for ANY reason
+
+**IF YOU DELETE EXISTING BLOG POSTS, YOU HAVE FAILED. THIS IS UNACCEPTABLE.**
+
+---
+
 ## ⛔⛔⛔ NEVER RESTORE PAGES TO PREVIOUS VERSIONS ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - DECEMBER 20, 2025
