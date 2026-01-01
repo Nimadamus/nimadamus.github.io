@@ -520,13 +520,22 @@
         currentYearFilter = yearFilter;
         const filteredPicks = filterPicksByYear(allProcessedPicks, yearFilter);
 
-        // Update table
-        document.getElementById('picks-table-body').innerHTML = filteredPicks.map(p => `
-            <tr>
-                <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
-                <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
-                <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${p.units.toFixed(2)}</td>
-            </tr>`).join('');
+        // Get current static row count - preserve static HTML if dynamic data is less
+        const tbody = document.getElementById('picks-table-body');
+        const staticRowCount = tbody.querySelectorAll('tr').length;
+
+        if (filteredPicks.length >= staticRowCount || filteredPicks.length > 5) {
+            tbody.innerHTML = filteredPicks.map(p => `
+                <tr>
+                    <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
+                    <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
+                    <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${p.units.toFixed(2)}</td>
+                </tr>`).join('');
+        } else {
+            console.log('Keeping static HTML (dynamic:', filteredPicks.length, 'vs static:', staticRowCount, ')');
+            calculateStatsFromTable();
+            return;
+        }
 
         // Recalculate stats
         const summaryStats = aggregateStats(filteredPicks);
