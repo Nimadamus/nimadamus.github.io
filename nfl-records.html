@@ -822,25 +822,21 @@
 
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
-        loadDataFromSheets();
+        // Use static HTML - no dynamic loading (prevents picks from disappearing)
+        calculateStatsFromTable();
 
-        // Year filter button event listeners
+        // Year filter disabled - using static HTML
         const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
         yearFilterBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                // Remove active class from all buttons
                 yearFilterBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
                 this.classList.add('active');
-                // Filter picks by selected year
-                const selectedYear = this.getAttribute('data-year');
-                displayFilteredPicks(selectedYear);
             });
         });
     });
 
-    // Optional: Refresh data every 5 minutes
-    setInterval(loadDataFromSheets, 300000);
+    // Disabled - using static HTML
+    // setInterval(loadDataFromSheets, 300000);
 
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
