@@ -228,19 +228,23 @@
             <table>
                 <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
                 <tbody id="picks-table-body">
-                    <tr><td>12/31/2025</td><td>Miami Florida +7.5</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
-                    <tr><td>12/31/2025</td><td>Michigan Team Total over 20.5</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
-                    <tr><td>12/31/2025</td><td>Michigan +5</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
+                    <!-- Dec 31, 2025 -->
+                    <tr><td>12/31/2025</td><td>Miami Florida +7.5</td><td>-105</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>12/31/2025</td><td>Michigan Team Total over 20.5</td><td>-135</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>12/31/2025</td><td>Michigan +5</td><td>-125</td><td class="result-L">L</td><td class="loss">-3.75</td></tr>
+                    <!-- Dec 30, 2025 -->
                     <tr><td>12/30/2025</td><td>TCU +5</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>12/30/2025</td><td>Coastal Carolina +10</td><td>-110</td><td class="result-W">W</td><td class="win">+1.50</td></tr>
                     <tr><td>12/30/2025</td><td>2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10</td><td>-135</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>12/30/2025</td><td>Illinois +3</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <!-- Dec 27, 2025 -->
                     <tr><td>12/27/2025</td><td>Army/UConn under 41.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
                     <tr><td>12/27/2025</td><td>Missouri -3</td><td>-130</td><td class="result-L">L</td><td class="loss">-3.90</td></tr>
                     <tr><td>12/27/2025</td><td>BYU -3</td><td>-125</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
                     <tr><td>12/27/2025</td><td>Clemson -2.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
+                    <!-- Dec 26, 2025 -->
                     <tr><td>12/26/2025</td><td>New Mexico/Minnesota under 44.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.50</td></tr>
-                    <tr><td>12/26/2025</td><td>2-Team 7pt Teaser: CMU +19.5, New Mexico +8</td><td>-135</td><td class="result-L">L</td><td class="loss">-4.05</td></tr>
+                    <tr><td>12/26/2025</td><td>2 Team 7 Point Teaser: Central Michigan +19.5, New Mexico +8</td><td>-135</td><td class="result-L">L</td><td class="loss">-4.05</td></tr>
                     <tr><td>12/26/2025</td><td>Central Michigan +12.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.75</td></tr>
                     <tr><td>12/26/2025</td><td>New Mexico ML</td><td>+100</td><td class="result-L">L</td><td class="loss">-3.00</td></tr>
                 </tbody>
@@ -438,66 +442,77 @@
     // Load data from BOTH Google Sheets and combine them
     async function loadDataFromSheets() {
         try {
+            let formattedOriginalData = [];
+            let trackerData = [];
+
             // Fetch from original NCAAF sheet
-            const originalResponse = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
-                cache: 'no-store',
-                headers: { 'Cache-Control': 'no-store' }
-            });
-            let originalCsv = await originalResponse.text();
-            console.log('Original CSV first 500 chars:', originalCsv.substring(0, 500));
-            const originalData = parseCSV(originalCsv);
-            console.log('Parsed original data rows:', originalData.length);
-            if (originalData.length > 0) {
-                console.log('First row keys:', Object.keys(originalData[0]));
-                console.log('First row values:', originalData[0]);
+            try {
+                const originalResponse = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
+                    cache: 'no-store',
+                    headers: { 'Cache-Control': 'no-store' }
+                });
+                if (originalResponse.ok) {
+                    let originalCsv = await originalResponse.text();
+                    // Check if response is valid CSV (not HTML error page)
+                    if (originalCsv && !originalCsv.includes('<!DOCTYPE') && !originalCsv.includes('<html')) {
+                        const originalData = parseCSV(originalCsv);
+                        console.log('Original sheet loaded:', originalData.length, 'rows');
+                        formattedOriginalData = convertToMLBFormat(originalData);
+                    } else {
+                        console.warn('Original sheet returned HTML instead of CSV');
+                    }
+                } else {
+                    console.warn('Original sheet fetch failed:', originalResponse.status);
+                }
+            } catch (e) {
+                console.warn('Original sheet fetch error:', e.message);
             }
 
             // Fetch from pick tracker
-            let trackerData = [];
             try {
                 const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
                     cache: 'no-store',
                     headers: { 'Cache-Control': 'no-store' }
                 });
-                const trackerCsv = await trackerResponse.text();
-                const allTrackerData = parseCSV(trackerCsv);
-                console.log('Pick Tracker total rows:', allTrackerData.length);
-                // Filter for NCAAF picks only and use correct unit calculation
-                const ncaafOnly = allTrackerData.filter(row => isNCAAFPick(row));
-                console.log('NCAAF picks from tracker:', ncaafOnly.length);
-                // Log Dec 31 picks specifically
-                const dec31Tracker = allTrackerData.filter(r => r.Date && r.Date.includes('12/31'));
-                console.log('ALL Dec 31 picks in tracker:', dec31Tracker.map(r => ({pick: r.Pick, result: r.Result, league: r.League})));
-                const dec31NCAAF = ncaafOnly.filter(r => r.Date && r.Date.includes('12/31'));
-                console.log('Dec 31 NCAAF picks after filter:', dec31NCAAF.map(r => ({pick: r.Pick, result: r.Result})));
-                trackerData = ncaafOnly.map(row => {
-                    const rawUnits = row.Units || '3'; // Default to 3 units if missing
-                    // parseCSV renames "Odds" to "Line", so check both
-                    const odds = row.Line || row.Odds || '';
-                    const result = row.Result || '';
-                    const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
-                    return {
-                        Date: row.Date || '',
-                        Pick: row.Pick || row.Picks || '',
-                        Line: odds,
-                        Result: result,
-                        Units: calculatedUnits.toString(),
-                        Sport: row.Sport || 'Football',
-                        League: row.League || 'NCAAF'
-                    };
-                });
+                if (trackerResponse.ok) {
+                    const trackerCsv = await trackerResponse.text();
+                    if (trackerCsv && !trackerCsv.includes('<!DOCTYPE') && !trackerCsv.includes('<html')) {
+                        const allTrackerData = parseCSV(trackerCsv);
+                        console.log('Pick Tracker loaded:', allTrackerData.length, 'rows');
+                        const ncaafOnly = allTrackerData.filter(row => isNCAAFPick(row));
+                        console.log('NCAAF picks from tracker:', ncaafOnly.length);
+                        trackerData = ncaafOnly.map(row => {
+                            const rawUnits = row.Units || '3';
+                            const odds = row.Line || row.Odds || '';
+                            const result = row.Result || '';
+                            const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
+                            return {
+                                Date: row.Date || '',
+                                Pick: row.Pick || row.Picks || '',
+                                Line: odds,
+                                Result: result,
+                                Units: calculatedUnits.toString(),
+                                Sport: row.Sport || 'Football',
+                                League: row.League || 'NCAAF'
+                            };
+                        });
+                    }
+                }
             } catch (e) {
-                // Tracker fetch failed, will use backup data
+                console.warn('Tracker fetch error:', e.message);
             }
-
-            // Convert original data to standard format (tracker data is already formatted)
-            const formattedOriginalData = convertToMLBFormat(originalData);
 
             // Combine both datasets
             const combinedData = [...formattedOriginalData, ...trackerData];
-            console.log('Original sheet rows:', formattedOriginalData.length);
-            console.log('Tracker NCAAF rows:', trackerData.length);
-            console.log('Combined total:', combinedData.length);
+            console.log('Combined total:', combinedData.length, '(Original:', formattedOriginalData.length, '+ Tracker:', trackerData.length, ')');
+
+            // If we got NO data from either source, keep static HTML
+            if (combinedData.length === 0) {
+                console.log('No data loaded, keeping static HTML');
+                document.getElementById('loading-message').style.display = 'none';
+                calculateStatsFromTable();
+                return;
+            }
 
             // Deduplicate by Date + Pick
             const seen = new Set();
@@ -509,12 +524,6 @@
             });
             console.log('After dedup:', mlbPicksData.length);
 
-            // Log Dec 30 and Dec 31 picks specifically
-            const dec30 = mlbPicksData.filter(r => r.Date && r.Date.includes('12/30'));
-            console.log('Dec 30 picks after dedup:', dec30.length, dec30.map(r => r.Pick));
-            const dec31Final = mlbPicksData.filter(r => r.Date && r.Date.includes('12/31'));
-            console.log('Dec 31 picks after dedup:', dec31Final.length, dec31Final.map(r => ({pick: r.Pick, result: r.Result, units: r.Units})));
-
             // Hide loading message
             document.getElementById('loading-message').style.display = 'none';
 
@@ -523,7 +532,9 @@
 
         } catch (error) {
             console.error('Error loading data from Google Sheets:', error);
-            document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';
+            document.getElementById('loading-message').style.display = 'none';
+            // Keep static HTML on error
+            calculateStatsFromTable();
         }
     }
 
