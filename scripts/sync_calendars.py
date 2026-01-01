@@ -121,6 +121,10 @@ MANUAL_DATE_OVERRIDES = {
     'ncaaf-page30.html': '2025-10-18',  # October 18 NCAAF (early season)
     'ncaaf-page31.html': '2025-10-11',  # October 11 NCAAF (early season)
     'ncaaf-page32.html': '2025-10-04',  # October 4 NCAAF (early season - oldest)
+    'ncaaf-page33.html': '2025-12-19',  # December 19 NCAAF (Bowl games - Myrtle Beach)
+    'ncaaf-page34.html': '2025-12-19',  # December 19 NCAAF (Bowl games - Gasparilla)
+    'ncaaf-page35.html': '2025-12-31',  # December 31 NCAAF (New Year's Eve bowls)
+    'ncaaf.html': '2025-12-31',         # December 31 NCAAF (main page - latest)
 }
 
 # Month name to number mapping
