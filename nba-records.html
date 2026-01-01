@@ -896,17 +896,95 @@
         setTimeout(createChart, 100);
     }
 
+    // Extract year from date string (handles M/D/YYYY, M-D-YYYY, MM/DD/YYYY formats)
+    function getYearFromDate(dateStr) {
+        if (!dateStr) return null;
+        const parts = dateStr.split(/[-/]/);
+        if (parts.length === 3) {
+            // Year is always the last part in M/D/YYYY or M-D-YYYY format
+            const year = parseInt(parts[2], 10);
+            if (year >= 2020 && year <= 2030) return year;
+        }
+        return null;
+    }
+
+    // Filter table rows by year and recalculate stats
+    function filterByYear(yearFilter) {
+        const tbody = document.getElementById('picks-table-body');
+        if (!tbody) return;
+
+        const rows = tbody.querySelectorAll('tr');
+        let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length >= 5) {
+                const dateCell = cells[0].textContent.trim();
+                const rowYear = getYearFromDate(dateCell);
+
+                // Check if row should be visible
+                let showRow = false;
+                if (yearFilter === 'all') {
+                    showRow = true;
+                } else {
+                    const targetYear = parseInt(yearFilter, 10);
+                    showRow = (rowYear === targetYear);
+                }
+
+                if (showRow) {
+                    row.style.display = '';
+                    visibleCount++;
+
+                    // Count stats for visible rows
+                    const unitsCell = cells[4];
+                    const unitsText = unitsCell.textContent.trim().replace(/[+,]/g, '');
+                    const units = parseFloat(unitsText) || 0;
+
+                    if (units > 0) wins++;
+                    else if (units < 0) losses++;
+                    else pushes++;
+                    totalUnits += units;
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+
+        // Update summary stats
+        document.getElementById('summary-record').textContent = `${wins}-${losses}-${pushes}`;
+
+        const unitsEl = document.getElementById('summary-units');
+        unitsEl.textContent = `${totalUnits >= 0 ? '+' : ''}${totalUnits.toFixed(2)}`;
+        unitsEl.className = totalUnits >= 0 ? 'units-win' : 'units-loss';
+
+        const winPct = wins + losses > 0 ? ((wins / (wins + losses)) * 100).toFixed(1) : '0.0';
+        document.getElementById('summary-win-pct').textContent = `${winPct}%`;
+
+        const totalBets = wins + losses;
+        const avgRisk = totalBets * 1.5;
+        const roi = avgRisk > 0 ? ((totalUnits / avgRisk) * 100).toFixed(2) : '0.00';
+        const roiEl = document.getElementById('summary-roi');
+        roiEl.textContent = `${parseFloat(roi) >= 0 ? '+' : ''}${roi}%`;
+        roiEl.className = parseFloat(roi) >= 0 ? 'roi-win' : 'roi-loss';
+
+        // Recreate chart with visible rows only
+        setTimeout(createChart, 100);
+    }
+
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
         // Use static HTML - no dynamic loading (prevents picks from disappearing)
         calculateStatsFromTable();
 
-        // Year filter disabled - using static HTML
+        // Year filter - filter static HTML rows by date
         const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
         yearFilterBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 yearFilterBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
+                const yearFilter = this.getAttribute('data-year');
+                filterByYear(yearFilter);
             });
         });
     });
