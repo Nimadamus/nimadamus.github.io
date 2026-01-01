@@ -1691,6 +1691,31 @@ function calculateParlayBreakdown() {
         tbody.appendChild(row);
     });
 
+    // Add Total Parlays row
+    const allParlayData = filteredData.filter(row => {
+        const pick = (row.Pick || row.pick || '').toLowerCase();
+        const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
+        const searchText = pick + ' ' + betType;
+        return searchText.includes('parlay') || searchText.includes('parl');
+    });
+
+    if (allParlayData.length > 0) {
+        hasData = true;
+        const totalStats = calculateStats(allParlayData, true);
+        const totalRow = document.createElement('tr');
+        totalRow.style.backgroundColor = 'rgba(0, 224, 255, 0.1)';
+        totalRow.style.fontWeight = 'bold';
+        totalRow.innerHTML = `
+            <td style="color: var(--accent);"><strong>TOTAL PARLAYS</strong></td>
+            <td class="${totalStats.winRate > 50 ? 'win' : 'loss'}">${totalStats.record}</td>
+            <td class="${totalStats.winRate > 50 ? 'win' : ''}">${totalStats.winRate.toFixed(1)}%</td>
+            <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(1)}u</td>
+            <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(1)}%</td>
+            <td>${findBestSport(allParlayData)}</td>
+        `;
+        tbody.appendChild(totalRow);
+    }
+
     if (!hasData) {
         tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted);">No parlay data available</td></tr>';
     }
