@@ -5,6 +5,8 @@
 const ARCHIVE_DATA = [
     { date: "2025-12-31", page: "ncaaf.html", title: "NCAAF Analysis - December 31, 2025" },
     { date: "2025-12-31", page: "ncaaf-page35.html", title: "Bowl Games - December 31, 2025" },
+    { date: "2025-12-30", page: "ncaaf-page30.html", title: "NCAAF Bowl Games - December 30, 2025" },
+    { date: "2025-12-29", page: "ncaaf-page29.html", title: "NCAAF Bowl Games - December 29, 2025" },
     { date: "2025-12-28", page: "ncaaf-page28.html", title: "NCAAF Analysis Archive - Page 28" },
     { date: "2025-12-27", page: "ncaaf-page27.html", title: "NCAAF Analysis Archive - Page 27" },
     { date: "2025-12-26", page: "ncaaf-page26.html", title: "NCAAF Analysis Archive - Page 26" },
@@ -18,6 +20,8 @@ const ARCHIVE_DATA = [
     { date: "2025-12-19", page: "ncaaf-page33.html", title: "NCAAF Analysis Archive - Page 33" },
     { date: "2025-12-19", page: "ncaaf-page19.html", title: "NCAAF Analysis Archive - Page 19" },
     { date: "2025-12-18", page: "ncaaf-page18.html", title: "NCAAF Analysis Archive - Page 18" },
+    { date: "2025-12-17", page: "ncaaf-page32.html", title: "NCAAF Analysis Archive - Page 32" },
+    { date: "2025-12-17", page: "ncaaf-page31.html", title: "NCAAF Analysis Archive - Page 31" },
     { date: "2025-12-15", page: "ncaaf-page9.html", title: "NCAAF Analysis - December 15, 2025" },
     { date: "2025-12-13", page: "ncaaf-page13.html", title: "NCAAF Analysis Archive - Page 13" },
     { date: "2025-12-12", page: "ncaaf-page12.html", title: "NCAAF Analysis Archive - Page 12" },
@@ -37,10 +41,6 @@ const ARCHIVE_DATA = [
     { date: "2025-11-29", page: "archives/ncaaf/2025-11-29.html", title: "NCAAF Archive - 2025-11-29" },
     { date: "2025-11-28", page: "ncaaf-page2.html", title: "College Football Rivalry Week Nov 28 2025" },
     { date: "2025-11-01", page: "ncaaf-page3.html", title: "College Football Picks - Week 1, November 1, 2025" },
-    { date: "2025-10-25", page: "ncaaf-page29.html", title: "NCAAF Analysis Archive - Page 29" },
-    { date: "2025-10-18", page: "ncaaf-page30.html", title: "NCAAF Analysis Archive - Page 30" },
-    { date: "2025-10-11", page: "ncaaf-page31.html", title: "NCAAF Analysis Archive - Page 31" },
-    { date: "2025-10-04", page: "ncaaf-page32.html", title: "NCAAF Analysis Archive - Page 32" },
 ];
 
 const dateMap = {};
