@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-02", page: "featured-game-of-the-day-page33.html", title: "Arizona vs SMU - Holiday Bowl" },
+    { date: "2026-01-01", page: "featured-game-of-the-day-2026-01-01.html", title: "Indiana vs Alabama - Rose Bowl CFP" },
     { date: "2025-12-31", page: "featured-game-of-the-day-page32.html", title: "Miami vs Ohio State - Cotton Bowl CFP" },
     { date: "2025-12-30", page: "featured-game-of-the-day-page31.html", title: "Tennessee vs Illinois - Music City Bowl" },
     { date: "2025-12-29", page: "featured-game-of-the-day-page30.html", title: "Rams vs Falcons - MNF" },
