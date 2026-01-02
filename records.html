@@ -1953,7 +1953,7 @@ function calculateTeamTotalsBySport() {
     let hasData = false;
 
     sports.forEach(sport => {
-        const sportData = allData.filter(row => {
+        const sportData = filteredData.filter(row => {
             if (row.sport !== sport) return false;
 
             const pick = (row.Pick || row.pick || '').toLowerCase();
@@ -1988,7 +1988,7 @@ function calculateTeamTotalsBySport() {
 function createPerformanceChart() {
     const sports = ['NFL', 'NBA', 'NHL', 'MLB', 'NCAAF', 'NCAAB', 'Soccer'];
     const sportData = sports.map(sport => {
-        const data = allData.filter(row => row.sport === sport);
+        const data = filteredData.filter(row => row.sport === sport);
         if (data.length === 0) return null;
         const stats = calculateStats(data);
         return {
@@ -2257,8 +2257,15 @@ async function init() {
                 this.classList.add('active');
                 currentYearFilter = this.getAttribute('data-year');
                 renderAllStats();
+                // Also re-render all breakdown sections with filtered data
+                calculateTeaserBreakdown();
+                calculateParlayBreakdown();
+                calculateFiveInningBreakdown();
+                calculateTotalBetsBreakdown();
+                calculateTeamTotalsBySport();
             });
         });
+        // Initial render of breakdown sections
         calculateTeaserBreakdown();
         calculateParlayBreakdown();
         calculateFiveInningBreakdown();
