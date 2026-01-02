@@ -212,7 +212,7 @@ COLLEGE_TEAM_IDS = {
     'morg': 2400,                 # Morgan State
     'harv': 108,                  # Harvard
     'wvut': 2916,                 # WVU Tech (placeholder)
-    'gb': 2739,                   # Green Bay
+    'gb': 2354,                   # Green Bay
     'cam': 2097,                  # Campbell
     'bing': 2066,                 # Binghamton
     'bell': 2057,                 # Bellarmine
@@ -264,7 +264,30 @@ COLLEGE_TEAM_IDS = {
     'hcu': 2277,                  # Houston Christian
     'uiw': 2916,                  # Incarnate Word
     'campbellsville': 2739,       # Campbellsville (placeholder)
-    'lip': 2335,                  # Lipscomb
+    'lip': 288,                   # Lipscomb
+
+    # January 2026 NCAAB additions
+    'dart': 159,                  # Dartmouth
+    'ysu': 2754,                  # Youngstown State
+    'vmi': 2678,                  # VMI
+    'oru': 198,                   # Oral Roberts
+    'iuin': 85,                   # IU Indianapolis
+    'nku': 94,                    # Northern Kentucky
+    'milw': 270,                  # Milwaukee
+    'wrst': 2750,                 # Wright State
+    'pfw': 2870,                  # Purdue Fort Wayne
+    'jax': 294,                   # Jacksonville
+    'fgcu': 526,                  # Florida Gulf Coast
+    'cark': 2110,                 # Central Arkansas
+    'val': 2674,                  # Valparaiso
+    'siu': 79,                    # Southern Illinois
+    'evan': 339,                  # Evansville
+    'cbu': 2856,                  # California Baptist
+    'uta': 250,                   # UT Arlington
+    'utc': 236,                   # Chattanooga
+    'uncg': 2430,                 # UNC Greensboro
+    'elms': 159,                  # Elms College (use Dartmouth as fallback - D3 school)
+    'iu': 84,                     # Indiana Hoosiers
 }
 
 def fix_logo_url(match):
