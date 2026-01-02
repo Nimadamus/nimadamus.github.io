@@ -76,8 +76,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
   .mobile-archive{display:block}
 }
 
-.cal-day.current-page{background:linear-gradient(135deg,#ffd700,#ffb300);color:#000;font-weight:700;border:2px solid #ffd700;box-shadow:0 0 8px rgba(255,215,0,0.6)}
-.cal-day.current-page:hover{transform:scale(1.15)}
 .dropdown.active .dropdown-content{display:block}
 .dropdown.active .dropbtn{color:var(--accent-gold)}
 </style>
@@ -141,8 +139,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>Take Newcastle +155. When the line looks too good to be true for the underdog, it usually means the dog's got more bite than the public realizes.</p>
 </div>
 </article>
-
-
 
 <div class="archive-link"><a href="soccer-page4.html">← Newer</a> <span>Page 8 of 12</span> <a href="soccer-page6.html">Older →</a></div>
 </main>
@@ -228,7 +224,7 @@ function renderCalendar(yearMonth) {
         const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         const hasData = dateMap[dateStr];
         let classes = 'cal-day';
-        if (dateStr === currentPageDate) classes += ' current-page';
+        if (dateStr === todayStr) classes += ' today';
         if (hasData) classes += ' has-content';
 
         if (hasData) {
