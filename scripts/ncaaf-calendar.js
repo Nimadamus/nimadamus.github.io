@@ -5,7 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-01-02", page: "archives/ncaaf/2026-01-02.html", title: "NCAAF Archive - 2026-01-02" },
     { date: "2026-01-01", page: "ncaaf-page36.html", title: "CFP Quarterfinals - January 1, 2026" },
-    { date: "2025-12-31", page: "ncaaf.html", title: "NCAAF Analysis - January 01, 2026" },
+    { date: "2025-12-31", page: "ncaaf.html", title: "NCAAF Analysis - January 02, 2026" },
     { date: "2025-12-31", page: "ncaaf-page35.html", title: "Bowl Games - December 31, 2025" },
     { date: "2025-12-30", page: "ncaaf-page30.html", title: "NCAAF Bowl Games - December 30, 2025" },
     { date: "2025-12-29", page: "ncaaf-page29.html", title: "NCAAF Bowl Games - December 29, 2025" },
@@ -18,6 +18,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-22", page: "ncaaf-page22.html", title: "NCAAF Analysis Archive - Page 22" },
     { date: "2025-12-21", page: "ncaaf-page21.html", title: "NCAAF Analysis Archive - Page 21" },
     { date: "2025-12-20", page: "ncaaf-page20.html", title: "NCAAF Analysis Archive - Page 20" },
+    { date: "2025-12-19", page: "ncaaf-page38.html", title: "NCAAF Analysis Archive - Page 38" },
     { date: "2025-12-19", page: "ncaaf-page37.html", title: "NCAAF Analysis Archive - Page 37" },
     { date: "2025-12-19", page: "ncaaf-page34.html", title: "NCAAF Analysis Archive - Page 34" },
     { date: "2025-12-19", page: "ncaaf-page33.html", title: "NCAAF Analysis Archive - Page 33" },
@@ -84,6 +85,7 @@ function renderCalendar(yearMonth) {
         const hasData = dateMap[dateStr];
         let classes = 'cal-day';
         if (dateStr === todayStr) classes += ' today';
+        if (dateStr === currentPageDate) classes += ' current-page';
         if (hasData) classes += ' has-content';
         const cell = document.createElement('div');
         cell.className = classes;

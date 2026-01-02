@@ -288,6 +288,7 @@ COLLEGE_TEAM_IDS = {
     'uncg': 2430,                 # UNC Greensboro
     'elms': 159,                  # Elms College (use Dartmouth as fallback - D3 school)
     'iu': 84,                     # Indiana Hoosiers
+    'sea': 2547,                  # Seattle University
 }
 
 def fix_logo_url(match):
