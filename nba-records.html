@@ -53,11 +53,14 @@
         .result-L, .loss { font-weight: bold; color: var(--loss-color); }
         .result-P { font-weight: bold; color: var(--push-color); }
         .loading-message { text-align: center; color: var(--glow-color); margin: 20px 0; font-size: 18px; }
-        /* Year Filter Tabs */
-        .year-filter-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
-        .year-filter-btn { background: rgba(17, 17, 17, 0.8); border: 1px solid rgba(0, 224, 255, 0.3); color: #9bb3c9; padding: 12px 28px; font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: all 0.3s ease; text-transform: uppercase; }
-        .year-filter-btn:hover { border-color: var(--glow-color); color: var(--glow-color); box-shadow: 0 0 15px rgba(0, 224, 255, 0.3); }
-        .year-filter-btn.active { background: linear-gradient(135deg, rgba(0, 224, 255, 0.2), rgba(0, 224, 255, 0.1)); border-color: var(--glow-color); color: #fff; box-shadow: 0 0 20px rgba(0, 224, 255, 0.4); text-shadow: 0 0 10px var(--glow-color); }
+        /* Year Filter Tabs - PROMINENT DESIGN */
+        .year-filter-wrapper { background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 224, 255, 0.1)); border: 2px solid var(--neon-gold); border-radius: 15px; padding: 20px 25px; margin-bottom: 30px; text-align: center; box-shadow: 0 0 25px rgba(255, 215, 0, 0.3); }
+        .year-filter-title { font-family: 'Orbitron', sans-serif; font-size: 18px; color: var(--neon-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .year-filter-subtitle { font-family: 'Roboto', sans-serif; font-size: 14px; color: #ccc; margin-bottom: 15px; }
+        .year-filter-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 0; }
+        .year-filter-btn { background: rgba(17, 17, 17, 0.9); border: 2px solid rgba(0, 224, 255, 0.4); color: #9bb3c9; padding: 15px 35px; font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; border-radius: 10px; transition: all 0.3s ease; text-transform: uppercase; }
+        .year-filter-btn:hover { border-color: var(--glow-color); color: var(--glow-color); box-shadow: 0 0 20px rgba(0, 224, 255, 0.4); transform: translateY(-2px); }
+        .year-filter-btn.active { background: linear-gradient(135deg, rgba(0, 224, 255, 0.3), rgba(255, 215, 0, 0.2)); border-color: var(--neon-gold); color: #fff; box-shadow: 0 0 25px rgba(255, 215, 0, 0.5); text-shadow: 0 0 10px var(--neon-gold); }
         @media (max-width: 768px) {
             /* Mobile dropdown fix - full width centered */
             .dropdown-content,
@@ -178,11 +181,15 @@
         <p><strong>All plays are between half a unit and 3 units on a 1 to 6 scale.</strong> 6 being the highest (3 units), 1 being the lowest (half a unit).</p>
         </div>
 
-        <!-- Year Filter Tabs -->
-        <div class="year-filter-container">
-            <button class="year-filter-btn" data-year="2025">2025</button>
-            <button class="year-filter-btn active" data-year="2026">2026</button>
-            <button class="year-filter-btn" data-year="all">All Time</button>
+        <!-- Year Filter Tabs - PROMINENT -->
+        <div class="year-filter-wrapper">
+            <div class="year-filter-title">📅 Select Year to View Records</div>
+            <div class="year-filter-subtitle">Click 2025 to see full season records • 2026 shows current year picks only</div>
+            <div class="year-filter-container">
+                <button class="year-filter-btn" data-year="2025">2025</button>
+                <button class="year-filter-btn active" data-year="2026">2026</button>
+                <button class="year-filter-btn" data-year="all">All Time</button>
+            </div>
         </div>
 
         <div class="stats-container">

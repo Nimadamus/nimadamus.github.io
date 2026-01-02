@@ -2063,15 +2063,24 @@ function extractOdds(line) {
 }
 
 function extractBetSize(row) {
-    // PARSE bet size DIRECTLY from Pick or Bet Type text (e.g., "1u", "2u", "0.5u")
+    // IMPORTANT: Pick Tracker stores STAKE in Units column
+    // Sport-specific sheets store PROFIT/LOSS in Units column
+
+    // METHOD 1: For Pick Tracker rows, Units column IS the stake directly
+    if (row.fromPickTracker) {
+        const units = parseFloat(row.Units || row.units || 0);
+        if (!isNaN(units) && units > 0) {
+            return units; // This IS the stake
+        }
+    }
+
+    // METHOD 2: Check for unit pattern in Pick or Bet Type text (e.g., "1u", "2u", "0.5u")
     const pick = (row.Pick || row.pick || '').toLowerCase();
     const betType = (row['Bet Type'] || row['bet type'] || row.BetType || row.betType || '').toLowerCase();
     const confidence = (row.Confidence || row.confidence || '');
     const searchText = pick + ' ' + betType;
 
     // Look for patterns like "0.5u", "1u", "2u", "3u", etc.
-    // More flexible regex - allows optional spaces between number and 'u'
-    // Use negative lookahead (?!n) to avoid matching "un" in words like "under"
     const unitMatch = searchText.match(/(\d+\.?\d*)\s*u(?!n)/i);
     if (unitMatch) {
         const betSize = parseFloat(unitMatch[1]);
@@ -2080,12 +2089,10 @@ function extractBetSize(row) {
         }
     }
 
-    // PRIMARY METHOD: Check confidence level (1-6 confidence maps to unit sizes)
-    // This should be the PRIMARY method since most picks use confidence levels
+    // METHOD 3: Check confidence level (1-6 confidence maps to unit sizes)
     if (confidence) {
         const confNum = parseInt(confidence);
         if (!isNaN(confNum)) {
-            // Map confidence to typical unit sizes
             const confMap = { 1: 0.5, 2: 1, 3: 1.5, 4: 2, 5: 2.5, 6: 3 };
             if (confMap[confNum]) {
                 return confMap[confNum];
@@ -2093,31 +2100,37 @@ function extractBetSize(row) {
         }
     }
 
-    // Fallback: Try to extract from Units column
-    // For wins: Units column shows profit (need to reverse-calculate stake from odds)
-    // For losses: Units column shows negative amount risked
+    // METHOD 4: For sport-specific sheets, reverse-calculate stake from profit/loss
+    // Units column shows profit (positive) or loss (negative amount risked as percentage)
     const result = (row.Result || row.result || '').toUpperCase();
     const units = parseFloat(row.Units || row.units || 0);
     const line = row.Line || row.line || row.Odds || row.odds || '';
+    const odds = extractOdds(line);
 
-    if ((result === 'L' || result === 'LOSS') && !isNaN(units) && units < 0) {
-        // For losses, the Units column is the negative amount risked
-        return Math.abs(units);
+    if ((result === 'L' || result === 'LOSS') && !isNaN(units) && units < 0 && odds) {
+        // For sport sheets: Units shows what was LOST
+        // Loss = stake × (|odds|/100) for favorites, stake for underdogs
+        const lossAmount = Math.abs(units);
+        if (odds < 0) {
+            // Favorite loss: loss = stake × (|odds|/100), so stake = loss / (|odds|/100)
+            const stake = lossAmount / (Math.abs(odds) / 100);
+            if (stake > 0 && stake <= 10) return Math.round(stake * 2) / 2;
+        } else {
+            // Underdog loss: loss = stake, so Units IS the stake
+            return lossAmount;
+        }
     }
 
-    if ((result === 'W' || result === 'WIN') && !isNaN(units) && units > 0) {
-        // For wins, try to reverse-calculate stake from profit and odds
-        const odds = extractOdds(line);
-        if (odds) {
-            // For positive odds: profit = stake * (odds/100)
-            // For negative odds: profit = stake * (100/|odds|)
-            if (odds > 0) {
-                const stake = units / (odds / 100);
-                if (stake > 0 && stake < 10) return Math.round(stake * 2) / 2; // Round to nearest 0.5
-            } else if (odds < 0) {
-                const stake = units / (100 / Math.abs(odds));
-                if (stake > 0 && stake < 10) return Math.round(stake * 2) / 2; // Round to nearest 0.5
-            }
+    if ((result === 'W' || result === 'WIN') && !isNaN(units) && units > 0 && odds) {
+        // For sport sheets: Units shows profit
+        // Win profit: stake for favorites, stake × (odds/100) for underdogs
+        if (odds < 0) {
+            // Favorite win: profit = stake, so Units IS the stake
+            return units;
+        } else {
+            // Underdog win: profit = stake × (odds/100), so stake = profit / (odds/100)
+            const stake = units / (odds / 100);
+            if (stake > 0 && stake <= 10) return Math.round(stake * 2) / 2;
         }
     }
 
