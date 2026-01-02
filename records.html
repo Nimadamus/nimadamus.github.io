@@ -1492,7 +1492,6 @@ function calculateStats(data, useActualBetSizes = false) {
     // Process each row
     data.forEach(row => {
         const result = (row.Result || row.result || '').toLowerCase().trim();
-        const units = parseFloat(row.Units || row.units || 0);
         const line = row.Line || row.line || row.Odds || row.odds || '';
 
         // Skip pending or empty results
@@ -1500,20 +1499,37 @@ function calculateStats(data, useActualBetSizes = false) {
             return;
         }
 
-        // Get the actual bet size for accurate ROI
+        // Get the actual bet size (stake) for accurate calculations
         const betSize = useActualBetSizes ? extractBetSize(row) : 1;
-        totalRisked += betSize;
+        const odds = extractOdds(line) || -110; // Default to -110 if can't parse
 
-        // Count wins, losses, pushes - EXACT MATCH to betlegend-verified-records.html logic
+        // Count wins, losses, pushes and CALCULATE unit profit/loss
         const resultUpper = result.toUpperCase();
         if (resultUpper === 'W' || resultUpper === 'WIN') {
             wins++;
-            totalUnits += units; // Add units as-is (should be positive for wins)
+            totalRisked += betSize;
+            // Calculate profit based on CLAUDE.md formula
+            // Favorites (negative odds): profit = stake (win what you were trying to win)
+            // Underdogs (positive odds): profit = stake × (odds / 100)
+            if (odds < 0) {
+                totalUnits += betSize; // Favorite win: profit = stake
+            } else {
+                totalUnits += betSize * (odds / 100); // Underdog win: profit = stake × (odds/100)
+            }
         } else if (resultUpper === 'L' || resultUpper === 'LOSS') {
             losses++;
-            totalUnits += units; // Add units as-is (should be negative for losses)
+            totalRisked += betSize;
+            // Calculate loss based on CLAUDE.md formula
+            // Favorites (negative odds): loss = stake × (|odds| / 100)
+            // Underdogs (positive odds): loss = stake
+            if (odds < 0) {
+                totalUnits -= betSize * (Math.abs(odds) / 100); // Favorite loss: lose stake × (|odds|/100)
+            } else {
+                totalUnits -= betSize; // Underdog loss: lose stake
+            }
         } else if (resultUpper === 'P' || resultUpper === 'PUSH') {
             pushes++;
+            totalRisked += betSize;
             // Pushes are 0 profit/loss, but still risked capital
         }
 
