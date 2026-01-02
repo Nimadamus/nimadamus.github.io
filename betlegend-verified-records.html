@@ -489,9 +489,12 @@
             if(rows.length === 0) return {labels:[], dates:[], cumulative:[], totalBets:0};
 
             var points = rows.map(function(tr){
+                // Skip hidden rows (filtered out by year)
+                if (tr.style.display === 'none') return null;
+
                 var cells = tr.querySelectorAll('td');
                 if(!cells.length) return null;
-                
+
                 var dateTxt = cells[0].textContent.trim();
                 var unitsTxt = (cells[5] || {}).textContent || "0";
                 var unitsVal = parseNumber(unitsTxt);
