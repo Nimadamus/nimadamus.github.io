@@ -838,11 +838,16 @@
     // Extract year from date string (handles M/D/YYYY, M-D-YYYY, MM/DD/YYYY formats)
     function getYearFromDate(dateStr) {
         if (!dateStr) return null;
-        const parts = dateStr.split(/[-/]/);
+        // Try splitting by dash or slash
+        const parts = dateStr.split(/[-\/]/);
         if (parts.length === 3) {
-            // Year is always the last part in M/D/YYYY or M-D-YYYY format
             const year = parseInt(parts[2], 10);
             if (year >= 2020 && year <= 2030) return year;
+        }
+        // Fallback: try to find 4-digit year anywhere in string
+        const yearMatch = dateStr.match(/20\d{2}/);
+        if (yearMatch) {
+            return parseInt(yearMatch[0], 10);
         }
         return null;
     }
