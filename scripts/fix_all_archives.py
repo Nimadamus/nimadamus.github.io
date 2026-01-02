@@ -1,0 +1,426 @@
+"""Fix all sports archive pages for January 2, 2026.
+Archive pages = article previews only (no picks), with calendar sidebar.
+Main pages get updated content.
+"""
+
+import os
+
+REPO = r'C:\Users\Nima\nimadamus.github.io'
+
+# Archive page template with calendar sidebar - PREVIEW ONLY format
+def get_archive_template(sport, sport_title, games_html, calendar_js, date_display):
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{sport_title} - January 2, 2026 | BetLegend</title>
+<meta name="description" content="{sport_title} archive for January 2, 2026.">
+<link rel="icon" href="https://www.betlegendpicks.com/newlogo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+:root{{
+  --bg-primary:#0a0c10;--bg-card:#12151c;--bg-card-hover:#181c25;
+  --accent-orange:#fd5000;--accent-cyan:#00e5ff;--accent-gold:#ffd54f;
+  --text-primary:#ffffff;--text-secondary:#b0b8c4;--text-muted:#6b7280;
+  --border-subtle:rgba(255,255,255,0.08);
+  --font-display:'Orbitron',sans-serif;--font-body:'Inter',system-ui,sans-serif
+}}
+body{{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-body);line-height:1.8}}
+.nav-container{{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-subtle)}}
+.nav-inner{{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}}
+.logo{{position:fixed;top:15px;left:15px;z-index:1001}}
+.logo a{{font-family:var(--font-display);font-size:2.2rem;font-weight:900;color:#fff;text-decoration:none}}
+.logo a span{{color:var(--accent-cyan)}}
+.nav-links{{display:flex;align-items:center;gap:8px}}
+.nav-links>a,.dropbtn{{font-family:var(--font-body);color:#fff;text-decoration:none;font-size:14px;font-weight:600;padding:8px 14px;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:1px}}
+.nav-links>a:hover,.dropbtn:hover{{color:var(--accent-gold)}}
+.dropdown{{position:relative}}
+.dropdown-content{{display:none;position:absolute;top:100%;left:0;background:rgba(10,12,16,0.98);min-width:180px;border:1px solid var(--border-subtle);border-radius:10px;padding:10px 0;margin-top:8px}}
+.dropdown-content a{{color:var(--accent-cyan);padding:12px 18px;display:block;text-decoration:none;font-size:14px}}
+.dropdown-content a:hover{{background:rgba(0,229,255,0.1);color:#fff}}
+.dropdown:hover .dropdown-content{{display:block}}
+.hero{{padding:140px 24px 50px;text-align:center;background:linear-gradient(180deg,rgba(253,80,0,0.08) 0%,transparent 100%)}}
+.hero-badge{{display:inline-block;background:rgba(253,80,0,0.15);border:1px solid rgba(253,80,0,0.3);padding:8px 20px;border-radius:50px;font-size:13px;font-weight:600;color:var(--accent-orange);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}}
+.hero h1{{font-family:var(--font-display);font-size:clamp(32px,5vw,48px);font-weight:700;margin-bottom:12px}}
+.hero p{{color:var(--text-secondary);font-size:17px}}
+.page-wrapper{{display:flex;gap:40px;max-width:1400px;margin:0 auto;padding:0 24px 80px}}
+.calendar-sidebar{{position:sticky;top:120px;width:280px;flex-shrink:0;height:fit-content}}
+.calendar-box{{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:24px}}
+.calendar-title{{font-family:var(--font-display);font-size:16px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;text-align:center}}
+.year-display{{font-family:var(--font-display);font-size:24px;color:var(--accent-gold);text-align:center;margin-bottom:12px}}
+.month-select{{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 18px;font-size:15px;border-radius:8px;cursor:pointer;margin-bottom:18px}}
+.calendar-weekdays{{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}}
+.calendar-weekdays span{{text-align:center;font-size:12px;font-weight:600;color:var(--text-muted);padding:6px 0}}
+.calendar-days{{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}}
+.cal-day{{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-muted);background:rgba(0,0,0,0.2);border-radius:6px;cursor:default}}
+.cal-day.empty{{background:transparent}}
+.cal-day.has-content{{background:rgba(253,80,0,0.15);color:var(--accent-orange);cursor:pointer;font-weight:600;border:1px solid rgba(253,80,0,0.3)}}
+.cal-day.has-content:hover{{background:rgba(253,80,0,0.3);transform:scale(1.1)}}
+.cal-day.today{{box-shadow:0 0 0 2px var(--accent-gold)}}
+.main-content{{flex:1;min-width:0}}
+.game-preview{{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:28px;margin-bottom:24px}}
+.game-preview:hover{{background:var(--bg-card-hover);border-color:rgba(253,80,0,0.3)}}
+.game-header{{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border-subtle)}}
+.team-logo{{width:52px;height:52px;object-fit:contain}}
+.matchup-info{{text-align:center}}
+.matchup-info h2{{font-family:var(--font-display);font-size:18px;font-weight:600;margin-bottom:4px}}
+.game-time{{font-size:13px;color:var(--text-muted)}}
+.preview-content{{color:var(--text-secondary);font-size:15px;line-height:1.8}}
+.preview-content p{{margin-bottom:12px}}
+footer{{text-align:center;padding:50px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}}
+footer a{{color:var(--accent-cyan);text-decoration:none}}
+@media(max-width:1024px){{
+  .calendar-sidebar{{display:none}}
+  .page-wrapper{{padding:0 20px 60px}}
+}}
+.mobile-archive{{display:none;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;padding:16px;margin-bottom:24px}}
+.mobile-archive-title{{font-size:14px;color:var(--accent-orange);margin-bottom:10px}}
+.mobile-archive-select{{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px;border-radius:8px}}
+@media(max-width:1024px){{.mobile-archive{{display:block}}}}
+.dropdown.active .dropdown-content{{display:block}}
+</style>
+</head>
+<body>
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="../../index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
+<a href="../../index.html">Home</a>
+<a href="../../handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Hub</a>
+<a href="../../blog-page11.html">Picks</a>
+<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="../../nfl.html">NFL</a><a href="../../nba.html">NBA</a><a href="../../nhl.html">NHL</a><a href="../../ncaaf.html">NCAAF</a><a href="../../ncaab.html">NCAAB</a><a href="../../soccer.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="../../records.html">Detailed Breakdown</a><a href="../../nfl-records.html">NFL</a><a href="../../nba-records.html">NBA</a><a href="../../nhl-records.html">NHL</a><a href="../../ncaab-records.html">NCAAB</a></div></div>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="../../featured-game-of-the-day-page33.html">Featured Game</a><a href="../../moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+</div>
+</div>
+</nav>
+<header class="hero">
+<div class="hero-badge">{sport_title} Archive</div>
+<h1>{date_display}</h1>
+<p>Game previews from January 2, 2026</p>
+</header>
+<div class="page-wrapper">
+<aside class="calendar-sidebar">
+<div class="calendar-box">
+<div class="calendar-title">{sport_title} Archive</div>
+<div class="year-display" id="cal-year">2026</div>
+<select class="month-select" id="month-select"></select>
+<div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+<div class="calendar-days" id="calendar-days"></div>
+</div>
+</aside>
+<main class="main-content">
+<div class="mobile-archive">
+<div class="mobile-archive-title">{sport_title} Archive</div>
+<select class="mobile-archive-select" id="mobile-archive-select"><option value="">Select date...</option></select>
+</div>
+{games_html}
+</main>
+</div>
+<footer><p>&copy; 2026 BetLegend | <a href="../../index.html">Home</a></p></footer>
+<script src="../../scripts/{calendar_js}"></script>
+<script>
+(function(){{
+    var dropdowns=document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(d){{
+        var btn=d.querySelector('.dropbtn');
+        if(!btn)return;
+        function toggle(e){{e.preventDefault();e.stopPropagation();dropdowns.forEach(function(x){{if(x!==d)x.classList.remove('active')}});d.classList.toggle('active')}}
+        btn.addEventListener('click',toggle);
+    }});
+    document.addEventListener('click',function(e){{if(!e.target.closest('.dropdown'))dropdowns.forEach(function(d){{d.classList.remove('active')}});}});
+}})();
+</script>
+</body>
+</html>'''
+
+# NHL archive - brief previews only
+nhl_games = '''<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nyr.png" alt="Rangers" class="team-logo">
+<div class="matchup-info">
+<h2>Rangers vs Panthers</h2>
+<span class="game-time">2026 Winter Classic | 8:00 PM ET | LoanDepot Park</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/fla.png" alt="Panthers" class="team-logo">
+</div>
+<div class="preview-content">
+<p>The historic 2026 NHL Winter Classic brings outdoor hockey to Miami for the first time. The two-time defending Stanley Cup champion Florida Panthers host the New York Rangers at LoanDepot Park. Rangers are 5-0-0 all-time in outdoor games, while this is Florida's first outdoor appearance.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/vgs.png" alt="Golden Knights" class="team-logo">
+<div class="matchup-info">
+<h2>Golden Knights @ Blues</h2>
+<span class="game-time">3:00 PM ET | Enterprise Center</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/stl.png" alt="Blues" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Vegas continues their road trip with a stop in St. Louis. The Golden Knights feature Mitch Marner since his July trade from Toronto. The Blues have struggled this season at 9-10-7, ranking near the bottom in both goals scored and allowed.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/sea.png" alt="Kraken" class="team-logo">
+<div class="matchup-info">
+<h2>Kraken @ Canucks</h2>
+<span class="game-time">10:30 PM ET | Rogers Arena</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/van.png" alt="Canucks" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Pacific Division rivalry matchup as Seattle travels to Vancouver. The Canucks are led by Elias Pettersson and Quinn Hughes, while the Kraken continue to search for consistency on the road this season.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/min.png" alt="Wild" class="team-logo">
+<div class="matchup-info">
+<h2>Wild @ Ducks</h2>
+<span class="game-time">10:30 PM ET | Honda Center</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/ana.png" alt="Ducks" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Minnesota visits Anaheim in a Western Conference matchup. The Wild feature Kirill Kaprizov while the Ducks have been a pleasant surprise at 15-9-1, sitting atop the Pacific Division with a talented young core.</p>
+</div>
+</article>'''
+
+# NBA archive - brief previews only
+nba_games = '''<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/sa.png" alt="Spurs" class="team-logo">
+<div class="matchup-info">
+<h2>Spurs @ Pacers</h2>
+<span class="game-time">7:00 PM ET | Gainbridge Fieldhouse</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ind.png" alt="Pacers" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Victor Wembanyama leads San Antonio to Indiana. Wemby is questionable after hyperextending his left knee. The Spurs boast the best defense in the NBA (103.9 rating) when healthy. The Pacers are winless in their last 10 games.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/den.png" alt="Nuggets" class="team-logo">
+<div class="matchup-info">
+<h2>Nuggets @ Cavaliers</h2>
+<span class="game-time">7:30 PM ET | Rocket Mortgage FieldHouse | Prime Video</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/cle.png" alt="Cavaliers" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Nikola Jokic brings his MVP candidacy to Cleveland in this nationally televised matchup. The Cavaliers are 17-15 and averaging 120.2 PPG with Donovan Mitchell leading the charge. Jokic vs Jarrett Allen is the key matchup.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/atl.png" alt="Hawks" class="team-logo">
+<div class="matchup-info">
+<h2>Hawks @ Knicks</h2>
+<span class="game-time">7:30 PM ET | Madison Square Garden</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ny.png" alt="Knicks" class="team-logo">
+</div>
+<div class="preview-content">
+<p>MSG showdown as Atlanta visits New York. The Knicks already beat Atlanta this week. The Hawks have dropped 8 of their last 10 games while New York plays physical, grind-it-out basketball at home.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/cha.png" alt="Hornets" class="team-logo">
+<div class="matchup-info">
+<h2>Hornets @ Bucks</h2>
+<span class="game-time">8:00 PM ET | Fiserv Forum</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/mil.png" alt="Bucks" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Giannis Antetokounmpo and the Bucks host Charlotte. Giannis is averaging 30.9 points, 10.9 rebounds, and 6.6 assists. Milwaukee has won 19 of their last 22 games against the Hornets.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/okc.png" alt="Thunder" class="team-logo">
+<div class="matchup-info">
+<h2>Thunder @ Warriors</h2>
+<span class="game-time">10:00 PM ET | Chase Center | Prime Video</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/gs.png" alt="Warriors" class="team-logo">
+</div>
+<div class="preview-content">
+<p>The 2025 NBA Champion Oklahoma City Thunder visit Chase Center. SGA vs Curry is the marquee matchup. OKC is favored on the road, showing the state of both franchises.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/mem.png" alt="Grizzlies" class="team-logo">
+<div class="matchup-info">
+<h2>Grizzlies @ Lakers</h2>
+<span class="game-time">10:30 PM ET | Crypto.com Arena</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png" alt="Lakers" class="team-logo">
+</div>
+<div class="preview-content">
+<p>The Lakers ride a seven-game winning streak. Luka Doncic has been phenomenal since arriving in LA, recently dropping 34 points. Ja Morant and the Grizzlies look to play spoiler.</p>
+</div>
+</article>'''
+
+# NCAAB archive - brief previews only
+ncaab_games = '''<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/30.png" alt="USC" class="team-logo">
+<div class="matchup-info">
+<h2>#24 USC @ #2 Michigan</h2>
+<span class="game-time">7:00 PM ET | Crisler Center | Peacock</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/130.png" alt="Michigan" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Michigan is 12-0 with the nation's best defense. The Wolverines have set a Big Ten record with six 40+ point victories this season. They rank #1 in both NET and KenPom.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/277.png" alt="West Virginia" class="team-logo">
+<div class="matchup-info">
+<h2>West Virginia @ #3 Iowa State</h2>
+<span class="game-time">9:00 PM ET | Hilton Coliseum | ESPN2</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/66.png" alt="Iowa State" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Iowa State is 13-0 and has won 42 consecutive non-conference home games. Hilton Magic is real. The Cyclones beat #1 Purdue on the road earlier this season.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/127.png" alt="Michigan State" class="team-logo">
+<div class="matchup-info">
+<h2>#9 Michigan State @ #13 Nebraska</h2>
+<span class="game-time">9:00 PM ET | Pinnacle Bank Arena | Peacock</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/158.png" alt="Nebraska" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Nebraska is UNDEFEATED and one of just six teams without a loss. Tom Izzo's Spartans visit Lincoln in a top-15 Big Ten showdown. Game of the night in college basketball.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/97.png" alt="Louisville" class="team-logo">
+<div class="matchup-info">
+<h2>#16 Louisville @ Stanford</h2>
+<span class="game-time">8:00 PM ET | Maples Pavilion | ACC Network</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/24.png" alt="Stanford" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Pat Kelsey has brought excitement back to Louisville. The Cardinals are ranked #16 in the ACC. Stanford has struggled in their first year in the new conference.</p>
+</div>
+</article>'''
+
+# Soccer archive - brief previews only
+soccer_games = '''<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/soccer/500/1075.png" alt="Rayo Vallecano" class="team-logo">
+<div class="matchup-info">
+<h2>La Liga: Rayo Vallecano vs Getafe</h2>
+<span class="game-time">3:00 PM ET | Estadio de Vallecas, Madrid</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/soccer/500/8994.png" alt="Getafe" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Madrid derby between two of the capital's smaller clubs. Rayo's passionate fanbase at Vallecas creates an incredible atmosphere. Expect a tight, physical affair.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/soccer/500/109.png" alt="Cagliari" class="team-logo">
+<div class="matchup-info">
+<h2>Serie A: Cagliari vs AC Milan</h2>
+<span class="game-time">2:45 PM ET | Unipol Domus, Sardinia</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/soccer/500/103.png" alt="AC Milan" class="team-logo">
+</div>
+<div class="preview-content">
+<p>AC Milan travels to Sardinia. The Rossoneri have Scudetto ambitions while Cagliari fights relegation. The island trip is always tricky for visiting teams.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/soccer/500/168.png" alt="Toulouse" class="team-logo">
+<div class="matchup-info">
+<h2>Ligue 1: Toulouse vs Lens</h2>
+<span class="game-time">2:45 PM ET | Stadium de Toulouse</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/soccer/500/171.png" alt="Lens" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Lens has European ambitions and plays direct, attacking football. Toulouse has been solid at home this season. Expect an entertaining Ligue 1 affair.</p>
+</div>
+</article>
+
+<article class="game-preview">
+<div class="game-header">
+<img src="https://a.espncdn.com/i/teamlogos/soccer/500/18762.png" alt="Al Ahli" class="team-logo">
+<div class="matchup-info">
+<h2>Saudi Pro League: Al Ahli vs Al Nassr</h2>
+<span class="game-time">12:00 PM ET | King Abdullah Sports City</span>
+</div>
+<img src="https://a.espncdn.com/i/teamlogos/soccer/500/18774.png" alt="Al Nassr" class="team-logo">
+</div>
+<div class="preview-content">
+<p>Cristiano Ronaldo leads Al Nassr to Jeddah. The 40-year-old continues to score at an incredible rate. Star-studded showdown in the Saudi Pro League.</p>
+</div>
+</article>'''
+
+# Create archive directories if needed
+os.makedirs(os.path.join(REPO, 'archives', 'nhl'), exist_ok=True)
+os.makedirs(os.path.join(REPO, 'archives', 'nba'), exist_ok=True)
+os.makedirs(os.path.join(REPO, 'archives', 'ncaab'), exist_ok=True)
+os.makedirs(os.path.join(REPO, 'archives', 'soccer'), exist_ok=True)
+
+# Write NHL archive
+nhl_html = get_archive_template('nhl', 'NHL', nhl_games, 'nhl-calendar.js', 'January 2, 2026')
+with open(os.path.join(REPO, 'archives', 'nhl', '2026-01-02.html'), 'w', encoding='utf-8') as f:
+    f.write(nhl_html)
+print("Created archives/nhl/2026-01-02.html")
+
+# Write NBA archive
+nba_html = get_archive_template('nba', 'NBA', nba_games, 'nba-calendar.js', 'January 2, 2026')
+with open(os.path.join(REPO, 'archives', 'nba', '2026-01-02.html'), 'w', encoding='utf-8') as f:
+    f.write(nba_html)
+print("Created archives/nba/2026-01-02.html")
+
+# Write NCAAB archive
+ncaab_html = get_archive_template('ncaab', 'NCAAB', ncaab_games, 'ncaab-calendar.js', 'January 2, 2026')
+with open(os.path.join(REPO, 'archives', 'ncaab', '2026-01-02.html'), 'w', encoding='utf-8') as f:
+    f.write(ncaab_html)
+print("Created archives/ncaab/2026-01-02.html")
+
+# Write Soccer archive
+soccer_html = get_archive_template('soccer', 'Soccer', soccer_games, 'soccer-calendar.js', 'January 2, 2026')
+with open(os.path.join(REPO, 'archives', 'soccer', '2026-01-02.html'), 'w', encoding='utf-8') as f:
+    f.write(soccer_html)
+print("Created archives/soccer/2026-01-02.html")
+
+print("\nAll archive pages created with calendar sidebar and brief previews (no picks)!")
