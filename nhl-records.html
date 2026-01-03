@@ -679,6 +679,7 @@
         rows.forEach(row => {
             const cells = row.querySelectorAll('td');
             if (cells.length >= 5) {
+                const odds = parseFloat(cells[2].textContent.replace(/[+,]/g, '')) || -110;
                 const units = parseFloat(cells[4].textContent.replace(/[+,]/g, ''));
 
                 // Determine W/L/P from units value (more reliable than result text)
@@ -687,7 +688,19 @@
                     else if (units < 0) losses++;
                     else pushes++;
                     totalUnits += units;
-                    totalRisk += Math.abs(units);
+
+                    // Calculate actual risk based on odds and result
+                    let risk = 0;
+                    if (units < 0) {
+                        risk = Math.abs(units);
+                    } else if (units > 0) {
+                        if (odds < 0) {
+                            risk = units * (Math.abs(odds) / 100);
+                        } else {
+                            risk = units / (odds / 100);
+                        }
+                    }
+                    totalRisk += risk;
                 }
             }
         });
@@ -734,7 +747,7 @@
         if (!tbody) return;
 
         const rows = tbody.querySelectorAll('tr');
-        let wins = 0, losses = 0, pushes = 0, totalUnits = 0;
+        let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
 
         rows.forEach(row => {
             const cells = row.querySelectorAll('td');
@@ -752,6 +765,7 @@
 
                 if (showRow) {
                     row.style.display = '';
+                    const odds = parseFloat(cells[2].textContent.replace(/[+,]/g, '')) || -110;
                     const unitsCell = cells[4];
                     const unitsText = unitsCell.textContent.trim().replace(/[+,]/g, '');
                     const units = parseFloat(unitsText) || 0;
@@ -759,6 +773,19 @@
                     else if (units < 0) losses++;
                     else pushes++;
                     totalUnits += units;
+
+                    // Calculate actual risk based on odds and result
+                    let risk = 0;
+                    if (units < 0) {
+                        risk = Math.abs(units);
+                    } else if (units > 0) {
+                        if (odds < 0) {
+                            risk = units * (Math.abs(odds) / 100);
+                        } else {
+                            risk = units / (odds / 100);
+                        }
+                    }
+                    totalRisk += risk;
                 } else {
                     row.style.display = 'none';
                 }
@@ -771,9 +798,7 @@
         unitsEl.className = totalUnits >= 0 ? 'units-win' : 'units-loss';
         const winPct = wins + losses > 0 ? ((wins / (wins + losses)) * 100).toFixed(1) : '0.0';
         document.getElementById('summary-win-pct').textContent = winPct + '%';
-        const totalBets = wins + losses;
-        const avgRisk = totalBets * 1.5;
-        const roi = avgRisk > 0 ? ((totalUnits / avgRisk) * 100).toFixed(2) : '0.00';
+        const roi = totalRisk > 0 ? ((totalUnits / totalRisk) * 100).toFixed(2) : '0.00';
         const roiEl = document.getElementById('summary-roi');
         roiEl.textContent = (parseFloat(roi) >= 0 ? '+' : '') + roi + '%';
         roiEl.className = parseFloat(roi) >= 0 ? 'roi-win' : 'roi-loss';
