@@ -563,12 +563,31 @@
         try {
             const processedPicks = mlbPicksData.map(p => {
                 try {
-                    if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
+                    if (!p.Pick || !p.Units || !p.Date) return null;
                     const pickText = String(p.Pick).trim();
-                    const resultText = String(p.Result).trim().toUpperCase();
-                    const units = parseFloat(p.Units);
-                    const line = parseFloat(p.Line);
-                    if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
+
+                    // Try to get Result from Result column, or derive from UNIT_RESULT
+                    let resultText = (p.Result || '').trim().toUpperCase();
+                    let unitsValue = parseFloat(p.Units);
+
+                    // If Result is empty but UNIT_RESULT exists, derive result from it
+                    if (!resultText && p.UNIT_RESULT) {
+                        const unitResult = parseFloat(p.UNIT_RESULT);
+                        if (!isNaN(unitResult)) {
+                            if (unitResult > 0) resultText = 'W';
+                            else if (unitResult < 0) resultText = 'L';
+                            else resultText = 'P';
+                            // Use UNIT_RESULT as the units value for accurate P/L
+                            unitsValue = unitResult;
+                        }
+                    }
+
+                    // Skip picks without a result
+                    if (!resultText) return null;
+
+                    const units = unitsValue;
+                    const line = parseFloat(p.Line || p.Odds) || -110;
+                    if (pickText === '' || resultText === '' || isNaN(units)) return null;
                     let risk = 0;
                     if (units < 0) {
                         risk = Math.abs(units);
