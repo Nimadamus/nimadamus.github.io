@@ -1502,9 +1502,16 @@ function calculateStats(data, useActualBetSizes = false) {
 
         // Count wins, losses, pushes and CALCULATE unit profit/loss
         const resultUpper = result.toUpperCase();
+
+        // Calculate actual risk based on odds (CLAUDE.md formula)
+        // betSize = Units = what you're trying to WIN
+        // Favorites: risk = betSize × |odds|/100 (risk more to win target)
+        // Underdogs: risk = betSize (risk target to win more)
+        const actualRisk = odds < 0 ? betSize * (Math.abs(odds) / 100) : betSize;
+
         if (resultUpper === 'W' || resultUpper === 'WIN') {
             wins++;
-            totalRisked += betSize;
+            totalRisked += actualRisk;
             // Calculate profit based on CLAUDE.md formula
             // Favorites (negative odds): profit = stake (win what you were trying to win)
             // Underdogs (positive odds): profit = stake × (odds / 100)
@@ -1515,7 +1522,7 @@ function calculateStats(data, useActualBetSizes = false) {
             }
         } else if (resultUpper === 'L' || resultUpper === 'LOSS') {
             losses++;
-            totalRisked += betSize;
+            totalRisked += actualRisk;
             // Calculate loss based on CLAUDE.md formula
             // Favorites (negative odds): loss = stake × (|odds| / 100)
             // Underdogs (positive odds): loss = stake
@@ -1526,7 +1533,7 @@ function calculateStats(data, useActualBetSizes = false) {
             }
         } else if (resultUpper === 'P' || resultUpper === 'PUSH') {
             pushes++;
-            totalRisked += betSize;
+            totalRisked += actualRisk;
             // Pushes are 0 profit/loss, but still risked capital
         }
 

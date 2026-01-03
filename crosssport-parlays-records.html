@@ -623,13 +623,17 @@
         }
 
         function getChartData() {
-            var table = document.querySelector('#picks-table-body');
-            if (!table) return { labels: [], dates: [], cumulative: [], totalBets: 0 };
+            // Get rows from both parlay and teaser tables
+            var parlayTable = document.querySelector('#parlays-table-body');
+            var teaserTable = document.querySelector('#teasers-table-body');
 
-            var rows = Array.from(table.querySelectorAll('tr'));
-            if (rows.length === 0) return { labels: [], dates: [], cumulative: [], totalBets: 0 };
+            var allRows = [];
+            if (parlayTable) allRows = allRows.concat(Array.from(parlayTable.querySelectorAll('tr')));
+            if (teaserTable) allRows = allRows.concat(Array.from(teaserTable.querySelectorAll('tr')));
 
-            var points = rows.map(function(tr) {
+            if (allRows.length === 0) return { labels: [], dates: [], cumulative: [], totalBets: 0 };
+
+            var points = allRows.map(function(tr) {
                 // Skip hidden rows (filtered out by year)
                 if (tr.style.display === 'none') return null;
 
