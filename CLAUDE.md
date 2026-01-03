@@ -6,6 +6,34 @@
 
 ---
 
+## ⛔⛔⛔ ABSOLUTE RULE #1: NO PAGINATION ON SPORTS PAGES - EVER ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 2, 2026
+
+**SPORTS PAGES USE CALENDAR SIDEBAR ONLY. NEVER ADD PAGINATION LINKS.**
+
+```
+BANNED ON ALL SPORTS PAGES:
+❌ <div class="archive-link">...</div>
+❌ <div class="date-section">...</div>
+❌ "← Newer" / "Older →" links
+❌ "Page X of Y" indicators
+❌ ANY navigation between the last article and footer
+```
+
+**THE STRUCTURE IS:**
+```html
+</article>   <!-- Last game article -->
+</main>
+<footer>...</footer>
+```
+
+**NOTHING ELSE. The calendar sidebar handles all navigation.**
+
+**Pre-commit hook BLOCKS any commit with pagination on sports pages.**
+
+---
+
 ## ⛔⛔⛔ MANDATORY POSTING WORKFLOW - FOLLOW EVERY TIME ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - DECEMBER 23, 2025
