@@ -477,8 +477,120 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // STATIC HTML ONLY - No dynamic loading
-    // All picks are hardcoded in the HTML table above
+    // Pick Tracker URL for dynamic loading
+    const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
+    // Filter for NHL picks from the tracker
+    function isNHLPick(row) {
+        const league = (row.League || '').toLowerCase().trim();
+        const sport = (row.Sport || '').toLowerCase().trim();
+        if (league === 'cross-sport') return false;
+        if (league === 'nhl' || league === 'hockey') return true;
+        if (sport === 'hockey' || sport === 'nhl') return true;
+        return false;
+    }
+
+    // CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md)
+    function calculateUnitResult(unitsStake, odds, result) {
+        const stake = parseFloat(unitsStake);
+        const oddsNum = parseFloat(odds);
+        const resultUpper = (result || '').toUpperCase().trim();
+        if (isNaN(stake) || isNaN(oddsNum)) return 0;
+        if (resultUpper.startsWith('W')) {
+            return oddsNum < 0 ? stake : stake * (oddsNum / 100);
+        } else if (resultUpper.startsWith('L')) {
+            return oddsNum < 0 ? -stake * (Math.abs(oddsNum) / 100) : -stake;
+        }
+        return 0;
+    }
+
+    function parseCSV(csv) {
+        const lines = csv.split('\n');
+        let headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+        headers = headers.map((h, idx) => {
+            if (h.toLowerCase() === 'odds') return 'Line';
+            if (h === '') return `Column${idx}`;
+            return h;
+        });
+        const records = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = parseCSVLine(lines[i].trim());
+            if (values.length >= 4) {
+                const record = {};
+                headers.forEach((header, index) => {
+                    if (header && values[index] !== undefined) {
+                        record[header] = (values[index] || '').replace(/"/g, '').trim();
+                    }
+                });
+                if (record.Date && record.Pick) records.push(record);
+            }
+        }
+        return records;
+    }
+
+    function parseCSVLine(line) {
+        const values = []; let current = ''; let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === '"') inQuotes = !inQuotes;
+            else if (char === ',' && !inQuotes) { values.push(current); current = ''; }
+            else current += char;
+        }
+        values.push(current);
+        return values;
+    }
+
+    async function loadDataFromSheets() {
+        try {
+            const response = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
+                cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
+            });
+            const csv = await response.text();
+            const allData = parseCSV(csv);
+            const nhlPicks = allData.filter(row => isNHLPick(row)).map(row => {
+                const rawUnits = row.Units || '3';
+                const odds = row.Line || row.Odds || '-110';
+                const result = row.Result || '';
+                const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
+                return {
+                    Date: row.Date || '',
+                    Pick: row.Pick || row.Picks || '',
+                    Line: odds,
+                    Result: result,
+                    Units: calculatedUnits
+                };
+            }).filter(p => p.Result); // Only graded picks
+
+            if (nhlPicks.length > 0) {
+                // Sort by date descending
+                nhlPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+
+                // Update table with new picks at top
+                const tbody = document.getElementById('picks-table-body');
+                const existingDates = new Set();
+                tbody.querySelectorAll('tr td:first-child').forEach(td => existingDates.add(td.textContent.trim()));
+
+                nhlPicks.forEach(p => {
+                    const dateKey = p.Date;
+                    if (!existingDates.has(dateKey)) {
+                        const resultClass = p.Result.toUpperCase().startsWith('W') ? 'result-W' :
+                                          p.Result.toUpperCase().startsWith('L') ? 'result-L' : 'result-P';
+                        const unitsClass = p.Units > 0 ? 'win' : (p.Units < 0 ? 'loss' : 'result-P');
+                        const unitsText = (p.Units >= 0 ? '+' : '') + p.Units.toFixed(2);
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `<td>${p.Date}</td><td>${p.Pick}</td><td>${p.Line}</td><td class="${resultClass}">${p.Result}</td><td class="${unitsClass}">${unitsText}</td>`;
+                        tbody.insertBefore(newRow, tbody.firstChild);
+                        existingDates.add(dateKey);
+                    }
+                });
+
+                // Recalculate stats
+                calculateStatsFromTable();
+            }
+        } catch (error) {
+            console.error('Error loading from Pick Tracker:', error);
+        }
+    }
 
     // CHART FUNCTION
     function createChart() {
@@ -810,7 +922,8 @@
 
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
-        // Use static HTML - no dynamic loading (prevents picks from disappearing)
+        // Load from Pick Tracker to get new graded picks
+        loadDataFromSheets();
         calculateStatsFromTable();
 
         // Default to 2026 view on page load
@@ -828,9 +941,8 @@
         });
     });
 
-    // Optional: Refresh data every 5 minutes
-    // Disabled - using static HTML instead
-    // setInterval(loadDataFromSheets, 300000);
+    // Refresh data every 5 minutes
+    setInterval(loadDataFromSheets, 300000);
 
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
