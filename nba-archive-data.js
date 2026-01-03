@@ -1,6 +1,6 @@
 // NBA Archive Data - Auto-updated by production script
 const NBA_ARCHIVE = [
-    { date: "2026-01-02", page: "nba.html", title: "NBA Analysis - December 28, 2025" },
+    { date: "2026-01-03", page: "nba.html", title: "NBA Analysis - December 28, 2025" },
     { date: "2026-01-01", page: "nba-page31.html", title: "January 1, 2026" },
     { date: "2025-12-31", page: "nba-page30.html", title: "December 31, 2025" },
     { date: "2025-12-20", page: "nba-page29.html", title: "December 20, 2025" },
@@ -19,6 +19,7 @@ const NBA_ARCHIVE = [
     { date: "2025-12-20", page: "nba-page22.html", title: "NBA Analysis Archive - Page 22" },
     { date: "2025-12-20", page: "nba-page18.html", title: "NBA Analysis Archive - Page 18" },
     { date: "2025-12-20", page: "nba-page5.html", title: "NBA Analysis Archive - Page 5" },
+    { date: "2025-12-20", page: "nba-page34.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page24.html", title: "NBA Analysis Archive - Page 24" },
     { date: "2025-12-20", page: "nba-page32.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "nba-page27.html", title: "December 20, 2025" },
