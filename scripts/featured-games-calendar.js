@@ -1,8 +1,9 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: January 2, 2026
+// Last updated: January 3, 2026
 
 const ARCHIVE_DATA = [
+    { date: "2026-01-03", page: "featured-game-of-the-day-page34.html", title: "49ers vs Seahawks - NFC West Title" },
     { date: "2026-01-02", page: "featured-game-of-the-day-page33.html", title: "Arizona vs SMU - Holiday Bowl" },
     { date: "2026-01-01", page: "featured-game-of-the-day-2026-01-01.html", title: "Indiana vs Alabama - Rose Bowl CFP" },
     { date: "2025-12-31", page: "featured-game-of-the-day-page32.html", title: "Miami vs Ohio State - Cotton Bowl CFP" },
