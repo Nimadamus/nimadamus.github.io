@@ -42,8 +42,8 @@ months.add(currentMonth);
 const sortedMonths = Array.from(months).sort().reverse();
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-// Always default to current month, not the page date
-let displayMonth = currentMonth;
+// Default to page date month if available, otherwise current month
+let displayMonth = currentPageDate ? currentPageDate.substring(0, 7) : currentMonth;
 
 function renderCalendar(yearMonth) {
     const [year, month] = yearMonth.split('-').map(Number);
@@ -59,7 +59,6 @@ function renderCalendar(yearMonth) {
         const dateStr = year + '-' + String(month).padStart(2, '0') + '-' + String(d).padStart(2, '0');
         const hasData = dateMap[dateStr];
         let classes = 'cal-day';
-        if (dateStr === todayStr) classes += ' today';
         if (dateStr === currentPageDate) classes += ' current-page';
         if (hasData) classes += ' has-content';
         const cell = document.createElement('div');
