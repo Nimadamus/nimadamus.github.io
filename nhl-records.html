@@ -235,7 +235,9 @@
                 <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
                 <tbody id="picks-table-body">
                     <!-- Jan 2, 2026 -->
-                    <tr><td>1/2/2026</td><td>Rangers +1.5</td><td>-205</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    
+                    <tr><td>1/2/2026</td><td>Seattle Kraken ML</td><td>125</td><td class="result-W">W</td><td class="win">+2.50</td></tr>
+<tr><td>1/2/2026</td><td>Rangers +1.5</td><td>-205</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>1/2/2026</td><td>Rangers ML</td><td>+120</td><td class="result-W">W</td><td class="win">+1.80</td></tr>
                     <!-- Jan 1, 2026 -->
                     <tr><td>1/1/2026</td><td>Detroit/Pittsburgh over 6.5</td><td>-105</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
@@ -565,14 +567,23 @@
                 // Sort by date descending
                 nhlPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
 
-                // Update table with new picks at top
+                // Update table with new picks
                 const tbody = document.getElementById('picks-table-body');
-                const existingDates = new Set();
-                tbody.querySelectorAll('tr td:first-child').forEach(td => existingDates.add(td.textContent.trim()));
+
+                // Get existing picks by Date+Pick combination
+                const existingPicks = new Set();
+                tbody.querySelectorAll('tr').forEach(tr => {
+                    const cells = tr.querySelectorAll('td');
+                    if (cells.length >= 2) {
+                        const date = cells[0].textContent.trim();
+                        const pick = cells[1].textContent.trim().toLowerCase();
+                        existingPicks.add(date + '|' + pick);
+                    }
+                });
 
                 nhlPicks.forEach(p => {
-                    const dateKey = p.Date;
-                    if (!existingDates.has(dateKey)) {
+                    const pickKey = p.Date + '|' + p.Pick.toLowerCase();
+                    if (!existingPicks.has(pickKey)) {
                         const resultClass = p.Result.toUpperCase().startsWith('W') ? 'result-W' :
                                           p.Result.toUpperCase().startsWith('L') ? 'result-L' : 'result-P';
                         const unitsClass = p.Units > 0 ? 'win' : (p.Units < 0 ? 'loss' : 'result-P');
@@ -580,7 +591,7 @@
                         const newRow = document.createElement('tr');
                         newRow.innerHTML = `<td>${p.Date}</td><td>${p.Pick}</td><td>${p.Line}</td><td class="${resultClass}">${p.Result}</td><td class="${unitsClass}">${unitsText}</td>`;
                         tbody.insertBefore(newRow, tbody.firstChild);
-                        existingDates.add(dateKey);
+                        existingPicks.add(pickKey);
                     }
                 });
 
