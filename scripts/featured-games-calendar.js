@@ -123,6 +123,7 @@ function renderCalendar(yearMonth) {
         const cell = document.createElement('div');
         cell.className = 'cal-day';
         cell.textContent = d;
+        if (dateStr === todayStr) cell.classList.add('today');
         if (dateStr === currentPageDate) cell.classList.add('current-page');
         if (dateMap[dateStr]) {
             cell.classList.add('has-content');
