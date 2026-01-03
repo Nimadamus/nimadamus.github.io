@@ -59,6 +59,11 @@ jobs:
           echo "📅 Syncing all sport calendars..."
           python scripts/sync_calendars.py
 
+      - name: Sync records from Pick Tracker
+        run: |
+          echo "📊 Syncing records from Pick Tracker..."
+          python scripts/sync_records_from_tracker.py
+
       - name: Validate content (BLOCKS if errors found)
         run: |
           echo "🔍 Running full content validation..."
