@@ -38,8 +38,8 @@ SPORT_CONFIG = {
     },
     'nfl': {
         'file': 'nfl-records.html',
-        'leagues': ['nfl', 'football'],
-        'sports': ['football', 'nfl']
+        'leagues': ['nfl'],
+        'sports': ['nfl', 'pro football']
     },
     'ncaaf': {
         'file': 'ncaaf-records.html',
