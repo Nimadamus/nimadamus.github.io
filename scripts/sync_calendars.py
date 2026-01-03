@@ -412,10 +412,56 @@ def generate_calendar_js(sport_name, sport_config, pages):
 
     return '\n'.join(lines)
 
+def remove_pagination_from_sports_pages():
+    """
+    PERMANENTLY removes pagination from ALL sports pages.
+    Sports pages use calendar sidebar only - NO archive-link pagination.
+    Added January 3, 2026 - This runs automatically with every calendar sync.
+    """
+    print("\n[CLEANUP] Removing pagination from sports pages...")
+    sports_patterns = ['nba', 'nhl', 'nfl', 'ncaab', 'ncaaf', 'mlb', 'soccer']
+    count = 0
+
+    for f in os.listdir(REPO_DIR):
+        if not f.endswith('.html'):
+            continue
+        # Check if it's a sports page
+        is_sports = False
+        for sp in sports_patterns:
+            if f == f'{sp}.html' or f.startswith(f'{sp}-page'):
+                is_sports = True
+                break
+        if not is_sports:
+            continue
+
+        path = REPO_DIR / f
+        with open(path, 'r', encoding='utf-8', errors='ignore') as file:
+            content = file.read()
+
+        orig = content
+        # Remove archive-link divs (pagination)
+        content = re.sub(r'\n*<div class="archive-link">.*?</div>\n*', '\n', content, flags=re.DOTALL)
+        # Remove date-section divs that might be pagination
+        content = re.sub(r'\n*<div class="date-section">.*?</div>\n*', '\n', content, flags=re.DOTALL)
+
+        if content != orig:
+            with open(path, 'w', encoding='utf-8') as file:
+                file.write(content)
+            count += 1
+
+    if count > 0:
+        print(f"  [OK] Removed pagination from {count} files")
+    else:
+        print(f"  [OK] No pagination found - all clean!")
+    return count
+
 def main():
     print("=" * 60)
     print("BetLegend Calendar Sync (Enhanced Date Extraction)")
     print("=" * 60)
+
+    # ALWAYS remove pagination first - sports pages use calendar only
+    remove_pagination_from_sports_pages()
 
     total_pages = 0
     for sport_name, sport_config in SPORTS.items():
