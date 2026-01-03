@@ -330,9 +330,6 @@ main{{max-width:900px;margin:0 auto;padding:0 24px 80px}}
 .stat-item{{flex:1;min-width:100px;text-align:center;padding:8px}}
 .stat-item .value{{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;color:var(--accent-gold)}}
 .stat-item .label{{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}}
-.archive-link{{text-align:center;margin:40px 0;padding:20px}}
-.archive-link a{{color:var(--accent-cyan);text-decoration:none;font-size:16px;padding:12px 24px;border:1px solid var(--border-subtle);border-radius:8px;transition:all 0.3s}}
-.archive-link a:hover{{background:rgba(0,229,255,0.1);border-color:var(--accent-cyan)}}
 footer{{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}}
 footer a{{color:var(--accent-cyan);text-decoration:none}}
 .data-source{{font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--border-subtle)}}
@@ -379,9 +376,6 @@ footer a{{color:var(--accent-cyan);text-decoration:none}}
 <main>
 {cards_html}
 </main>
-<div class="archive-link">
-<a href="{sport.lower()}-page2.html">← View Previous Days</a>
-</div>
 <footer>
 <p>© 2025 BetLegend. For entertainment purposes only.</p>
 <p><a href="index.html">Home</a> | <a href="howitworks.html">How It Works</a></p>
