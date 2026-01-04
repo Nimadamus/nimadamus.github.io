@@ -60,7 +60,7 @@ COLLEGE_TEAM_IDS = {
     'psu': 213,                   # Penn State
     'pur': 2509,                  # Purdue
     'rut': 164,                   # Rutgers
-    'wisc': 275,                  # Wisconsin
+    'wisc': 275, 'wis': 275,      # Wisconsin
     'ucla': 26,                   # UCLA
     'usc': 30,                    # USC
     'ore': 2483,                  # Oregon
@@ -97,7 +97,7 @@ COLLEGE_TEAM_IDS = {
     'msst': 344,                  # Mississippi State
     'miz': 142,                   # Missouri
     'ou': 201,                    # Oklahoma
-    'scar': 2579,                 # South Carolina
+    'scar': 2579, 'sc': 2579,     # South Carolina
     'tenn': 2633,                 # Tennessee
     'tamu': 245, 'ta&m': 245,    # Texas A&M
     'van': 238,                   # Vanderbilt
