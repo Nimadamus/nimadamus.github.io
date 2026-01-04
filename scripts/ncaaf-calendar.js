@@ -4,8 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-02", page: "archives/ncaaf/2026-01-02.html", title: "NCAAF Archive - 2026-01-02" },
+    { date: "2026-01-01", page: "ncaaf.html", title: "CFP Quarterfinals - January 1, 2026" },
     { date: "2026-01-01", page: "ncaaf-page36.html", title: "CFP Quarterfinals - January 1, 2026" },
-    { date: "2025-12-31", page: "ncaaf.html", title: "NCAAF Bowl Season - December 2025" },
     { date: "2025-12-31", page: "ncaaf-page35.html", title: "Bowl Games - December 31, 2025" },
     { date: "2025-12-30", page: "ncaaf-page30.html", title: "NCAAF Bowl Games - December 30, 2025" },
     { date: "2025-12-29", page: "ncaaf-page29.html", title: "NCAAF Bowl Games - December 29, 2025" },

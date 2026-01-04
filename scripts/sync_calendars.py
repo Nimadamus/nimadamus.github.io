@@ -124,7 +124,7 @@ MANUAL_DATE_OVERRIDES = {
     'ncaaf-page33.html': '2025-12-19',  # December 19 NCAAF (Bowl games - Myrtle Beach)
     'ncaaf-page34.html': '2025-12-19',  # December 19 NCAAF (Bowl games - Gasparilla)
     'ncaaf-page35.html': '2025-12-31',  # December 31 NCAAF (New Year's Eve bowls)
-    'ncaaf.html': '2025-12-31',         # December 31 NCAAF (main page - latest)
+    'ncaaf.html': '2026-01-01',         # January 1 NCAAF (CFP Quarterfinals)
 }
 
 # Month name to number mapping
