@@ -1,11 +1,12 @@
 // NCAAF Archive Data - Auto-updated by production script
 const NCAAF_ARCHIVE = [
-    { date: "2026-01-03", page: "ncaaf.html", title: "NCAAF Analysis - December 28, 2025" },
+    { date: "2026-01-04", page: "ncaaf.html", title: "NCAAF Analysis - December 28, 2025" },
     { date: "2026-01-01", page: "ncaaf-page36.html", title: "January 1, 2026" },
     { date: "2025-12-31", page: "ncaaf-page35.html", title: "December 31, 2025" },
     { date: "2025-12-30", page: "ncaaf-page30.html", title: "NCAAF Analysis Archive - Page 30" },
     { date: "2025-12-29", page: "ncaaf-page29.html", title: "NCAAF Analysis Archive - Page 29" },
     { date: "2025-12-19", page: "ncaaf-page33.html", title: "December 19, 2025" },
+    { date: "2025-12-19", page: "ncaaf-page40.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page34.html", title: "December 19, 2025" },
     { date: "2025-12-19", page: "ncaaf-page27.html", title: "NCAAF Analysis Archive - Page 27" },
     { date: "2025-12-19", page: "ncaaf-page23.html", title: "NCAAF Analysis Archive - Page 23" },
