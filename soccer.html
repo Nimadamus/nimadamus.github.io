@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Soccer Analysis - January 03, 2026 | BetLegend</title>
-<meta content="Premier League January 1, 2026 - New Year's Day action featuring Liverpool vs Leeds, Crystal Palace vs Fulham, Brentford vs Tottenham, and Sunderland vs Manchester City." name="description"/>
+<meta content="Soccer Analysis January 3, 2026 - Premier League and European football action." name="description"/>
 <link href="https://betlegendpicks.com/soccer.html" rel="canonical"/>
 <link href="https://www.betlegendpicks.com/newlogo.png" rel="icon"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Orbitron:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
@@ -107,8 +107,8 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </nav>
 <header class="hero">
 <div class="hero-badge">Premier League</div>
-<h1>New Year's Day Football</h1>
-<p>Four Premier League matches kick off 2026 with Liverpool hosting promoted Leeds and Manchester City visiting Sunderland in the FA Cup</p>
+<h1>January 3, 2026 Football</h1>
+<p>Premier League and European football action continues with key matches across the continent</p>
 </header>
 <div class="page-wrapper">
 <aside class="calendar-sidebar">
@@ -455,118 +455,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <footer>
 <p>© 2026 BetLegend Picks | <a href="index.html">Home</a> | <a href="handicapping-hub.html">Handicapping Hub</a></p>
 </footer>
-<script>
-// Archive Data
-const ARCHIVE_DATA = [
-    { date: "2026-01-01", page: "soccer.html", title: "New Year's Day Premier League" },
-    { date: "2025-12-22", page: "soccer.html", title: "Premier League & La Liga" },
-    { date: "2025-12-22", page: "soccer-page31.html", title: "Forest vs Fulham" },
-    { date: "2025-12-21", page: "soccer-page30.html", title: "Villa, Atlético, Barcelona" },
-    { date: "2025-12-19", page: "soccer-page2.html", title: "Dortmund, Valencia" },
-    { date: "2025-12-15", page: "soccer-page22.html", title: "Man United, La Liga" },
-    { date: "2025-11-28", page: "soccer-page3.html", title: "Bundesliga Matchday 12" }
-];
-
-// Build date map
-const dateMap = {};
-ARCHIVE_DATA.forEach(item => { dateMap[item.date] = item; });
-
-// Get available months
-const months = new Set();
-ARCHIVE_DATA.forEach(item => {
-    const [y, m] = item.date.split('-');
-    months.add(`${y}-${m}`);
-});
-
-// Add current month
-const today = new Date();
-const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
-const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-months.add(currentMonth);
-
-// Sort months descending
-const sortedMonths = Array.from(months).sort().reverse();
-
-// Month names
-const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                    'July', 'August', 'September', 'October', 'November', 'December'];
-
-// Populate month dropdown
-const monthSelect = document.getElementById('month-select');
-sortedMonths.forEach(m => {
-    const [year, month] = m.split('-');
-    const opt = document.createElement('option');
-    opt.value = m;
-    opt.textContent = `${monthNames[parseInt(month) - 1]} ${year}`;
-    if (m === currentMonth) opt.selected = true;
-    monthSelect.appendChild(opt);
-});
-
-// Get current page filename and find its date
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-let currentPageDate = null;
-ARCHIVE_DATA.forEach(item => {
-    if (item.page === currentPage) {
-        currentPageDate = item.date;
-    }
-});
-
-// Render calendar
-function renderCalendar(yearMonth) {
-    const [year, month] = yearMonth.split('-').map(Number);
-    document.getElementById('cal-year').textContent = year;
-
-    const firstDay = new Date(year, month - 1, 1).getDay();
-    const daysInMonth = new Date(year, month, 0).getDate();
-
-    const container = document.getElementById('calendar-days');
-    container.innerHTML = '';
-
-    // Empty cells before first day
-    for (let i = 0; i < firstDay; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'cal-day empty';
-        container.appendChild(cell);
-    }
-
-    // Day cells
-    for (let d = 1; d <= daysInMonth; d++) {
-        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const hasData = dateMap[dateStr];
-        let classes = 'cal-day';
-        if (dateStr === todayStr) classes += ' today';
-        if (hasData) classes += ' has-content';
-
-        if (hasData) {
-            container.innerHTML += `<div class="${classes}" title="${hasData.title}" onclick="window.location.href='${hasData.page}'">${d}</div>`;
-        } else {
-            container.innerHTML += `<div class="${classes}">${d}</div>`;
-        }
-    }
-}
-
-// Initial render
-renderCalendar(currentMonth);
-
-// Month change handler
-monthSelect.addEventListener('change', (e) => {
-    renderCalendar(e.target.value);
-});
-
-// Mobile archive dropdown
-const mobileSelect = document.getElementById('mobile-archive-select');
-ARCHIVE_DATA.forEach(item => {
-    const opt = document.createElement('option');
-    opt.value = item.page;
-    const dateObj = new Date(item.date + 'T12:00:00');
-    const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    opt.textContent = `${dateLabel} - ${item.title}`;
-    mobileSelect.appendChild(opt);
-});
-mobileSelect.addEventListener('change', (e) => {
-    if (e.target.value) window.location.href = e.target.value;
-});
-</script>
 <script>
 (function() {
     var dropdowns = document.querySelectorAll('.dropdown');
