@@ -404,8 +404,108 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // STATIC HTML ONLY - No dynamic loading
-    // All picks are hardcoded in the HTML table above
+    // LIVE FETCHING from Pick Tracker + Static HTML fallback
+    const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
+    // Calculate unit result using correct formula from CLAUDE.md
+    function calculateUnitResult(unitsStake, odds, result) {
+        const stake = parseFloat(unitsStake) || 2;
+        const oddsNum = parseFloat(String(odds).replace('+', '').replace(',', '')) || -110;
+        const resultUpper = (result || '').toUpperCase().trim();
+
+        if (resultUpper.startsWith('W')) {
+            if (oddsNum < 0) return stake; // Favorite win
+            else return stake * (oddsNum / 100); // Underdog win
+        } else if (resultUpper.startsWith('L')) {
+            if (oddsNum < 0) return -stake * (Math.abs(oddsNum) / 100); // Favorite loss
+            else return -stake; // Underdog loss
+        }
+        return 0; // Push
+    }
+
+    // Parse CSV
+    function parseCSV(csv) {
+        const lines = csv.split('\n');
+        const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+        const records = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = [];
+            let current = '', inQuotes = false;
+            for (let j = 0; j < lines[i].length; j++) {
+                const char = lines[i][j];
+                if (char === '"') inQuotes = !inQuotes;
+                else if (char === ',' && !inQuotes) { values.push(current); current = ''; }
+                else current += char;
+            }
+            values.push(current);
+            if (values.length >= 4) {
+                const record = {};
+                headers.forEach((h, idx) => { if (h) record[h] = (values[idx] || '').replace(/"/g, '').trim(); });
+                if (record.Date && record.Pick) records.push(record);
+            }
+        }
+        return records;
+    }
+
+    // Check if pick is NFL
+    function isNFLPick(row) {
+        const league = (row.League || '').toLowerCase().trim();
+        return league === 'nfl';
+    }
+
+    // Fetch and merge picks from Pick Tracker
+    async function fetchAndMergePicks() {
+        try {
+            const response = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now());
+            const csv = await response.text();
+            const allRecords = parseCSV(csv);
+
+            // Filter for NFL picks with results
+            const nflPicks = allRecords.filter(r => {
+                const result = (r.Result || '').toUpperCase().trim();
+                return isNFLPick(r) && result && (result.startsWith('W') || result.startsWith('L') || result.startsWith('P'));
+            });
+
+            if (nflPicks.length === 0) return;
+
+            // Get existing picks from table
+            const tbody = document.getElementById('picks-table-body');
+            const existingKeys = new Set();
+            tbody.querySelectorAll('tr').forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 2) {
+                    const key = (cells[0].textContent.trim() + '|' + cells[1].textContent.trim()).toLowerCase();
+                    existingKeys.add(key);
+                }
+            });
+
+            // Add new picks that aren't already in the table
+            let addedCount = 0;
+            nflPicks.forEach(pick => {
+                const key = (pick.Date + '|' + pick.Pick).toLowerCase();
+                if (!existingKeys.has(key)) {
+                    const units = calculateUnitResult(pick.Units || '2', pick.Odds || pick.Line || '-110', pick.Result);
+                    const result = pick.Result.toUpperCase().trim()[0];
+                    const unitsClass = units > 0 ? 'win' : (units < 0 ? 'loss' : 'result-P');
+                    const unitsText = units > 0 ? '+' + units.toFixed(2) : units.toFixed(2);
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${pick.Date}</td><td>${pick.Pick}</td><td>${pick.Odds || pick.Line || '-110'}</td><td class="result-${result}">${result}</td><td class="${unitsClass}">${unitsText}</td>`;
+                    tbody.insertBefore(tr, tbody.firstChild);
+                    addedCount++;
+                }
+            });
+
+            if (addedCount > 0) {
+                console.log('Added ' + addedCount + ' new NFL picks from Pick Tracker');
+                // Recalculate stats after adding
+                calculateStatsFromTable();
+                filterByYear(document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || '2026');
+            }
+        } catch (e) {
+            console.log('Pick Tracker fetch failed, using static HTML:', e);
+        }
+    }
 
     // CHART FUNCTION
     function createChart() {
@@ -737,11 +837,12 @@
 
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
-        // Use static HTML - no dynamic loading (prevents picks from disappearing)
+        // First show static HTML
         calculateStatsFromTable();
-
-        // Default to 2026 view on page load
         filterByYear('2026');
+
+        // Then fetch fresh data from Pick Tracker and merge
+        fetchAndMergePicks();
 
         // Year filter - filter static HTML rows by date
         const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
@@ -755,9 +856,8 @@
         });
     });
 
-    // Optional: Refresh data every 5 minutes
-    // Disabled - using static HTML instead
-    // setInterval(loadDataFromSheets, 300000);
+    // Auto-refresh from Pick Tracker every 5 minutes
+    setInterval(fetchAndMergePicks, 300000);
 
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
