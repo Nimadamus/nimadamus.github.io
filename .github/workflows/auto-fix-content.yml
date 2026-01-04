@@ -5,6 +5,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    # Run every day at 10:00 AM ET (15:00 UTC) to sync graded picks
+    - cron: '0 15 * * *'
+  workflow_dispatch:
+    # Allow manual trigger from GitHub Actions UI
 
 jobs:
   validate-and-fix:
@@ -71,7 +76,7 @@ jobs:
         continue-on-error: false
 
       - name: Commit and push fixes
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
@@ -79,6 +84,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "✅ No changes needed"
           else
-            git commit -m "🤖 Auto-fix: Sync calendars, fix logos, validate content"
+            git commit -m "🤖 Auto-sync: Records from Pick Tracker"
             git push
           fi
