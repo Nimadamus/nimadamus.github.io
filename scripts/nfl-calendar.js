@@ -74,6 +74,7 @@ function renderCalendar(yearMonth) {
         const hasData = dateMap[dateStr];
         let classes = 'cal-day';
         if (dateStr === currentPageDate) classes += ' current-page';
+        if (dateStr === todayStr) classes += ' today';
         if (hasData) classes += ' has-content';
         const cell = document.createElement('div');
         cell.className = classes;
