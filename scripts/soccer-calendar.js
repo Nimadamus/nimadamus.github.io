@@ -66,7 +66,7 @@ function renderCalendar(yearMonth) {
         const cell = document.createElement('div');
         cell.className = classes;
         cell.textContent = d;
-        if (hasData) { cell.title = hasData.title; cell.onclick = () => window.location.href = hasData.page; }
+        if (hasData) { cell.title = hasData.title; cell.onclick = () => window.location.href = "/" + hasData.page; }
         container.appendChild(cell);
     }
 }
@@ -98,7 +98,7 @@ function initSportCalendar() {
             if (item.page === currentPage) opt.selected = true;
             mobileSelect.appendChild(opt);
         });
-        mobileSelect.addEventListener('change', (e) => { if (e.target.value) window.location.href = e.target.value; });
+        mobileSelect.addEventListener('change', (e) => { if (e.target.value) window.location.href = '/' + e.target.value; });
     }
 }
 
