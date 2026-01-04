@@ -83,6 +83,13 @@ MANUAL_DATE_OVERRIDES = {
     'nhl-page26.html': '2025-12-27',  # December 27 NHL (Saturday slate part 2)
     'nhl-page27.html': '2025-12-28',  # December 28 NHL (Sunday slate)
     'nhl-page28.html': '2025-12-28',  # December 28 NHL (Sunday slate part 2)
+    'nhl-page29.html': '2025-12-29',  # December 29 NHL (Sunday slate)
+    'nhl-page30.html': '2025-12-31',  # December 31 NHL (New Year's Eve - has ISO dates 2025-12-31)
+    'nhl-page31.html': '2025-12-31',  # December 31 NHL (New Year's Eve slate part 2)
+    'nhl-page32.html': '2026-01-01',  # January 1 NHL (New Year's Day)
+    'nhl-page33.html': '2026-01-01',  # January 1 NHL (New Year's Day part 2)
+    'nhl-page34.html': '2026-01-01',  # January 1 NHL (New Year's Day part 3)
+    'nhl-page35.html': '2026-01-03',  # January 3 NHL (Friday slate - Jets@Leafs, Caps@Sens, etc.)
     # NCAAB archive pages
     'ncaab-page4.html': '2025-12-04',   # December 4 NCAAB
     'ncaab-page5.html': '2025-12-05',   # December 5 NCAAB
