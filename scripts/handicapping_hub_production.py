@@ -2801,14 +2801,20 @@ def generate_quick_take(away_data: Dict, home_data: Dict, odds: Dict, sport: str
 
     return takes[0]
 
-def update_index_featured_game(all_games: Dict) -> bool:
+def update_index_featured_game(all_games: Dict, preferred_sport: str = None) -> bool:
     """Update the featured game on index.html with today's most notable game.
 
     This function updates the homepage preview panel to show the best game of the day.
     It uses the actual HTML structure with inline styles that matches the BetLegend homepage.
     Enhanced: More detailed stats, ATS/O-U info, quick take analysis.
+
+    Args:
+        all_games: Dictionary of games by sport
+        preferred_sport: If specified, only consider games from this sport (e.g., 'NHL')
     """
     print("\n[INDEX] Updating featured game on index.html...")
+    if preferred_sport:
+        print(f"  [PREF] Preferred sport: {preferred_sport}")
 
     index_path = os.path.join(REPO_PATH, 'index.html')
     if not os.path.exists(index_path):
@@ -2820,7 +2826,10 @@ def update_index_featured_game(all_games: Dict) -> bool:
     featured_sport = None
     best_score = -1
 
-    for sport in ['NFL', 'NBA', 'NHL', 'NCAAF', 'NCAAB']:
+    # If preferred_sport is specified, ONLY look at that sport
+    sports_to_check = [preferred_sport] if preferred_sport else ['NFL', 'NBA', 'NHL', 'NCAAF', 'NCAAB']
+
+    for sport in sports_to_check:
         games = all_games.get(sport, [])
         for game in games:
             score = score_game_importance(game, sport)
@@ -3116,6 +3125,15 @@ def update_index_featured_game(all_games: Dict) -> bool:
         return False
 
 def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Generate Handicapping Hub')
+    parser.add_argument('--skip-featured', action='store_true',
+                        help='Skip updating the featured game on index.html')
+    parser.add_argument('--featured-sport', type=str, choices=['NBA', 'NFL', 'NHL', 'NCAAB', 'NCAAF'],
+                        help='Force a specific sport for the featured game (e.g., --featured-sport NHL)')
+    args = parser.parse_args()
+
     print("=" * 60)
     print("HANDICAPPING HUB - ULTIMATE PRODUCTION SYSTEM")
     print(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -3136,8 +3154,11 @@ def main():
     # This ensures all existing sport pages are in the archive calendars
     sync_all_sport_archives()
 
-    # Update the featured game on the index page
-    update_index_featured_game(all_games)
+    # Update the featured game on the index page (unless --skip-featured)
+    if args.skip_featured:
+        print("\n[INDEX] Skipping featured game update (--skip-featured flag)")
+    else:
+        update_index_featured_game(all_games, preferred_sport=args.featured_sport)
 
     print("\n" + "=" * 60)
     print(f"SUCCESS: Generated {OUTPUT_FILE}")
