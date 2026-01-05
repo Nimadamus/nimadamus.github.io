@@ -1560,6 +1560,9 @@ document.addEventListener('DOMContentLoaded', function() {
         Soccer: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
     };
 
+    // Pick Tracker - master sheet with all graded picks (uses League column for sport)
+    const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/gviz/tq?tqx=out:csv&gid=0';
+
     const tickerContent = document.getElementById('ticker-content');
     const planDisplay = document.getElementById('planDisplay');
 
@@ -1620,6 +1623,48 @@ document.addEventListener('DOMContentLoaded', function() {
                     picks: []
                 };
             }
+        }
+
+        // Also fetch from Pick Tracker (graded picks use League column for sport)
+        try {
+            const trackerResponse = await fetch(PICK_TRACKER_URL);
+            const trackerCsv = await trackerResponse.text();
+            const trackerParsed = Papa.parse(trackerCsv, {
+                header: true,
+                skipEmptyLines: 'greedy',
+                transformHeader: h => h.trim()
+            });
+
+            // Process Pick Tracker picks and add to appropriate sport
+            for (const row of trackerParsed.data) {
+                if (!row.Pick || !row.Result) continue;
+                const result = (row.Result || '').trim().toUpperCase();
+                if (!result || (result !== 'W' && result !== 'L' && result !== 'P')) continue;
+
+                // Get sport from League column (NBA, NFL, NCAAF, etc.)
+                let sport = (row.League || '').trim().toUpperCase();
+                // Normalize sport names
+                if (sport === 'CROSS-SPORT') sport = 'Parlay';
+                else if (sport === 'BASKETBALL') sport = 'NBA';
+                else if (sport === 'FOOTBALL') sport = 'NFL';
+
+                // Create normalized pick object
+                const pick = {
+                    Date: row.Date || '',
+                    Pick: row.Pick || '',
+                    Result: result,
+                    Units: row.UNIT_RESULT || row.Units || '0',
+                    sport: sport
+                };
+
+                // Add to sportsData if sport exists, otherwise create new
+                if (!sportsData[sport]) {
+                    sportsData[sport] = { record: { w: 0, l: 0, p: 0, units: 0.0, totalPicks: 0 }, picks: [] };
+                }
+                sportsData[sport].picks.push(pick);
+            }
+        } catch (error) {
+            console.error('Error fetching Pick Tracker:', error);
         }
 
         const overall = { w: 0, l: 0, p: 0, units: 0.0, totalPicks: 0 };
