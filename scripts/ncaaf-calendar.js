@@ -18,6 +18,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-22", page: "ncaaf-page22.html", title: "NCAAF Analysis Archive - Page 22" },
     { date: "2025-12-21", page: "ncaaf-page21.html", title: "NCAAF Analysis Archive - Page 21" },
     { date: "2025-12-20", page: "ncaaf-page20.html", title: "NCAAF Analysis Archive - Page 20" },
+    { date: "2025-12-19", page: "ncaaf-page41.html", title: "NCAAF Analysis Archive - Page 41" },
     { date: "2025-12-19", page: "ncaaf-page40.html", title: "NCAAF Analysis Archive - Page 40" },
     { date: "2025-12-19", page: "ncaaf-page39.html", title: "NCAAF Analysis Archive - Page 39" },
     { date: "2025-12-19", page: "ncaaf-page38.html", title: "NCAAF Analysis Archive - Page 38" },
