@@ -17,6 +17,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-26", page: "soccer-page5.html", title: "Soccer Analysis Archive - Page 5" },
     { date: "2025-12-22", page: "soccer-page4.html", title: "Soccer Analysis Archive - Page 4" },
     { date: "2025-12-22", page: "soccer-page31.html", title: "Soccer Analysis Archive - Page 31" },
+    { date: "2025-12-22", page: "soccer-page14.html", title: "Soccer Analysis Archive - Page 14" },
     { date: "2025-12-22", page: "soccer-page10.html", title: "Soccer Analysis Archive - Page 10" },
     { date: "2025-12-21", page: "soccer-page30.html", title: "Soccer Analysis Archive - Page 30" },
     { date: "2025-12-19", page: "soccer-page2.html", title: "Soccer Analysis - December 19, 2025" },

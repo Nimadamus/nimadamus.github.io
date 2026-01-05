@@ -26,6 +26,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-21", page: "nba-page22.html", title: "NBA Analysis Archive - Page 22" },
     { date: "2025-12-21", page: "nba-page15.html", title: "NBA Analysis Archive - Page 15" },
     { date: "2025-12-20", page: "nba-page4.html", title: "NBA Analysis Archive - Page 4" },
+    { date: "2025-12-20", page: "nba-page36.html", title: "NBA Analysis Archive - Page 36" },
     { date: "2025-12-20", page: "nba-page32.html", title: "NBA Analysis Archive - Page 32" },
     { date: "2025-12-20", page: "nba-page28.html", title: "NBA Analysis Archive - Page 28" },
     { date: "2025-12-19", page: "nba-page9.html", title: "NBA Analysis Archive - Page 11" },
