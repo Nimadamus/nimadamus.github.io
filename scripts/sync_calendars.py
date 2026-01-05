@@ -131,7 +131,13 @@ MANUAL_DATE_OVERRIDES = {
     'ncaaf-page33.html': '2025-12-19',  # December 19 NCAAF (Bowl games - Myrtle Beach)
     'ncaaf-page34.html': '2025-12-19',  # December 19 NCAAF (Bowl games - Gasparilla)
     'ncaaf-page35.html': '2025-12-31',  # December 31 NCAAF (New Year's Eve bowls)
-    'ncaaf.html': '2026-01-01',         # January 1 NCAAF (CFP Quarterfinals)
+    'ncaaf-page36.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals)
+    'ncaaf-page37.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - duplicate/overflow)
+    'ncaaf-page38.html': '2025-12-19',  # December 19 NCAAF (Bowl games)
+    'ncaaf-page39.html': '2025-12-19',  # December 19 NCAAF (Bowl games - overflow)
+    'ncaaf-page40.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - overflow)
+    'ncaaf-page41.html': '2025-12-19',  # December 19 NCAAF (Bowl games - overflow)
+    'ncaaf.html': '2026-01-05',         # January 5 NCAAF (FCS Championship - MAIN PAGE)
 }
 
 # Month name to number mapping
@@ -341,7 +347,16 @@ def generate_calendar_js(sport_name, sport_config, pages):
         'const pageToDateMap = {};',
         'ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });',
         '',
-        "const currentPage = window.location.pathname.split('/').pop() || 'index.html';",
+        '// Handle both root pages and archive pages',
+        'const pathname = window.location.pathname;',
+        'let currentPage;',
+        "if (pathname.includes('/archives/')) {",
+        "    // For archive pages, get the full relative path from archives/",
+        "    currentPage = pathname.replace(/^\\//, '');",
+        '} else {',
+        "    // For root pages, just get the filename",
+        "    currentPage = pathname.split('/').pop() || 'index.html';",
+        '}',
         'const currentPageDate = pageToDateMap[currentPage] || null;',
         '',
         'const months = new Set();',

@@ -55,7 +55,16 @@ ARCHIVE_DATA.forEach(item => { if (!dateMap[item.date]) dateMap[item.date] = ite
 const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });
 
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+// Handle both root pages and archive pages
+const pathname = window.location.pathname;
+let currentPage;
+if (pathname.includes('/archives/')) {
+    // For archive pages, get the full relative path from archives/
+    currentPage = pathname.replace(/^\//, '');
+} else {
+    // For root pages, just get the filename
+    currentPage = pathname.split('/').pop() || 'index.html';
+}
 const currentPageDate = pageToDateMap[currentPage] || null;
 
 const months = new Set();

@@ -4,7 +4,9 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-05", page: "ncaaf.html", title: "NCAAF FCS Championship - January 5, 2026" },
-    { date: "2026-01-02", page: "archives/ncaaf/2026-01-02.html", title: "NCAAF Bowl Games - January 2, 2026" },
+    { date: "2026-01-02", page: "archives/ncaaf/2026-01-02.html", title: "NCAAF Archive - 2026-01-02" },
+    { date: "2026-01-01", page: "ncaaf-page40.html", title: "NCAAF Analysis Archive - Page 40" },
+    { date: "2026-01-01", page: "ncaaf-page37.html", title: "NCAAF Analysis Archive - Page 37" },
     { date: "2026-01-01", page: "ncaaf-page36.html", title: "CFP Quarterfinals - January 1, 2026" },
     { date: "2025-12-31", page: "ncaaf-page35.html", title: "Bowl Games - December 31, 2025" },
     { date: "2025-12-30", page: "ncaaf-page30.html", title: "NCAAF Bowl Games - December 30, 2025" },
@@ -19,10 +21,8 @@ const ARCHIVE_DATA = [
     { date: "2025-12-21", page: "ncaaf-page21.html", title: "NCAAF Analysis Archive - Page 21" },
     { date: "2025-12-20", page: "ncaaf-page20.html", title: "NCAAF Analysis Archive - Page 20" },
     { date: "2025-12-19", page: "ncaaf-page41.html", title: "NCAAF Analysis Archive - Page 41" },
-    { date: "2025-12-19", page: "ncaaf-page40.html", title: "NCAAF Analysis Archive - Page 40" },
     { date: "2025-12-19", page: "ncaaf-page39.html", title: "NCAAF Analysis Archive - Page 39" },
     { date: "2025-12-19", page: "ncaaf-page38.html", title: "NCAAF Analysis Archive - Page 38" },
-    { date: "2025-12-19", page: "ncaaf-page37.html", title: "NCAAF Analysis Archive - Page 37" },
     { date: "2025-12-19", page: "ncaaf-page34.html", title: "NCAAF Analysis Archive - Page 34" },
     { date: "2025-12-19", page: "ncaaf-page33.html", title: "NCAAF Analysis Archive - Page 33" },
     { date: "2025-12-19", page: "ncaaf-page19.html", title: "NCAAF Analysis Archive - Page 19" },
