@@ -1,6 +1,6 @@
 // NFL Archive Data - Auto-updated by production script
 const NFL_ARCHIVE = [
-    { date: "2026-01-04", page: "nfl.html", title: "NFL Analysis - December 28, 2025" },
+    { date: "2026-01-08", page: "nfl.html", title: "NFL Analysis - December 28, 2025" },
     { date: "2026-01-04", page: "nfl-page28.html", title: "January 4, 2026" },
     { date: "2025-12-21", page: "nfl-page23.html", title: "NFL Analysis Archive - Page 23" },
     { date: "2025-12-21", page: "nfl-page24.html", title: "NFL Analysis Archive - Page 24" },
