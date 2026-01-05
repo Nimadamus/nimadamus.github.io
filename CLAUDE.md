@@ -6,6 +6,50 @@
 
 ---
 
+## ⛔⛔⛔ ABSOLUTE RULE #0: MANDATORY FACT-CHECK BEFORE ANY UPLOAD ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 5, 2026
+
+### ⚠️ CLAUDE: READ THIS AT THE START OF EVERY SESSION ⚠️
+
+**I MUST SEARCH TO VERIFY EVERY SINGLE FACT I MENTION. NO EXCEPTIONS.**
+
+### MANDATORY VERIFICATION REPORT (SHOW USER BEFORE UPLOADING):
+```
+=== VERIFICATION REPORT ===
+Date: [today's date]
+Content: [what I'm creating]
+
+PLAYERS MENTIONED:
+- [Player 1]: Verified on [Team] via [source]
+- [Player 2]: Verified on [Team] via [source]
+
+INJURIES CHECKED:
+- [Player]: [Status] - confirmed via [source]
+
+✅ VERIFICATION COMPLETE - OK TO UPLOAD
+```
+
+### 2025 CHAMPIONSHIP RESULTS (VERIFIED):
+- **MLB**: Dodgers beat Blue Jays 4-3 (back-to-back)
+- **NBA**: OKC Thunder
+- **NHL**: Florida Panthers (back-to-back)
+- **NFL Super Bowl LIX**: Eagles beat Bills 38-35
+- **CFB**: Ohio State beat Texas
+
+### KEY 2025 ROSTER CHANGES:
+| Player | OLD Team | NEW Team |
+|--------|----------|----------|
+| Leonard Floyd | 49ers | Falcons |
+| Deebo Samuel | 49ers | Commanders |
+| Nick Bosa | 49ers | OUT (ACL) |
+| Kevin Durant | Suns | Rockets |
+| Mitch Marner | Maple Leafs | Golden Knights |
+
+**See C:\Users\Nima\CLAUDE.md for complete roster changes tables.**
+
+---
+
 ## ⛔⛔⛔ ABSOLUTE RULE #1: NO PAGINATION ON SPORTS PAGES - EVER ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - JANUARY 2, 2026
