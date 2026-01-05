@@ -138,6 +138,8 @@ MANUAL_DATE_OVERRIDES = {
     'ncaaf-page40.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - overflow)
     'ncaaf-page41.html': '2025-12-19',  # December 19 NCAAF (Bowl games - overflow)
     'ncaaf.html': '2026-01-05',         # January 5 NCAAF (FCS Championship - MAIN PAGE)
+    # MLB pages
+    'mlb.html': '2026-01-05',            # January 5 MLB (Off-season coverage - MAIN PAGE)
 }
 
 # Month name to number mapping
