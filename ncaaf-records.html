@@ -832,10 +832,7 @@
 
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
-        // Use static HTML - no dynamic loading (prevents picks from disappearing)
-        calculateStatsFromTable();
-
-        // Default to 2026 view on page load
+        // Filter to 2026 first (this calculates stats for filtered rows only)
         filterByYear('2026');
 
         // Year filter - filter static HTML rows by date

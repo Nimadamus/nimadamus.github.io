@@ -501,8 +501,7 @@
 
             if (addedCount > 0) {
                 console.log('Added ' + addedCount + ' new NFL picks from Pick Tracker');
-                // Recalculate stats after adding
-                calculateStatsFromTable();
+                // Recalculate stats for current year filter
                 filterByYear(document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || '2026');
             }
         } catch (e) {
@@ -840,8 +839,7 @@
 
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
-        // First show static HTML
-        calculateStatsFromTable();
+        // Filter to 2026 first (this calculates stats for filtered rows only)
         filterByYear('2026');
 
         // Then fetch fresh data from Pick Tracker and merge
