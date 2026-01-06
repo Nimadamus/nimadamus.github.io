@@ -1,8 +1,10 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: January 4, 2026
+// Last updated: January 6, 2026
 
 const ARCHIVE_DATA = [
+    { date: "2026-01-06", page: "featured-game-of-the-day-page37.html", title: "Devils vs Islanders" },
+    { date: "2026-01-05", page: "featured-game-of-the-day-page36.html", title: "Bulls vs Celtics" },
     { date: "2026-01-04", page: "featured-game-of-the-day-page35.html", title: "Ravens vs Steelers - AFC North Title" },
     { date: "2026-01-03", page: "featured-game-of-the-day-page34.html", title: "49ers vs Seahawks - NFC West Title" },
     { date: "2026-01-02", page: "featured-game-of-the-day-page33.html", title: "Arizona vs SMU - Holiday Bowl" },
