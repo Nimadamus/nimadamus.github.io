@@ -30,6 +30,9 @@ def parse_featured_games_data():
 
     entries = []
     for date, page, title in matches:
+        # Skip template/placeholder entries from comments
+        if date == "YYYY-MM-DD" or page == "filename.html":
+            continue
         entries.append({'date': date, 'page': page, 'title': title})
 
     # Sort by date descending (newest first)
