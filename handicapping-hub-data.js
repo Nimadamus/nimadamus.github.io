@@ -1,6 +1,7 @@
 // Handicapping Hub Archive Data - Auto-generated
 // Updated: December 24, 2025
 const HUB_ARCHIVE = [
+    { date: "2026-01-06", page: "handicapping-hub-2026-01-06.html", title: "January 6, 2026" },
     { date: "2026-01-05", page: "handicapping-hub-2026-01-05.html", title: "January 5, 2026" },
     { date: "2026-01-04", page: "handicapping-hub-2026-01-04.html", title: "January 4, 2026" },
     { date: "2026-01-03", page: "handicapping-hub-2026-01-03.html", title: "January 3, 2026" },
