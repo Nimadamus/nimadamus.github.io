@@ -39,6 +39,7 @@ LOGO_URLS = {
     'NCAAF': 'https://a.espncdn.com/i/teamlogos/ncaa/500/{id}.png',
     'NCAAB': 'https://a.espncdn.com/i/teamlogos/ncaa/500/{id}.png',
     'MLB': 'https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/{abbrev}.png',
+    'SOCCER': 'https://a.espncdn.com/i/teamlogos/soccer/500/{id}.png',  # Soccer uses team IDs
 }
 
 # Team abbreviation mappings for logos

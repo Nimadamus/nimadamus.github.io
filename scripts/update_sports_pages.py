@@ -430,12 +430,14 @@ def generate_game_card(away_name, home_name, away_abbr, home_abbr, away_record, 
     # Generate analysis article for this game
     analysis_html = generate_game_analysis(sport, away_name, home_name, away_record, home_record, odds, venue)
 
-    # Fix logo path for college sports
+    # Fix logo path for college sports and soccer
     logo_sport = sport.lower()
     if sport == 'NCAAB':
         logo_sport = 'ncaab'
     elif sport == 'NCAAF':
         logo_sport = 'ncaa'
+    elif sport.upper() == 'SOCCER':
+        logo_sport = 'soccer'  # Soccer uses team IDs, handled separately below
 
     # Generate team stats rows if available
     if away_stats is None:
