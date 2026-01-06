@@ -119,6 +119,8 @@ class NCAAFScraper(BaseScraper):
             'home': {
                 'name': home.get('name'),
                 'abbrev': home.get('abbreviation'),
+                'id': home.get('id', ''),  # Team ID for NCAA logo URLs
+                'logo': home.get('logo', ''),  # Direct logo URL from ESPN
                 'record': home.get('record', ''),
                 'wins': home_parsed['wins'],
                 'losses': home_parsed['losses'],
@@ -127,6 +129,8 @@ class NCAAFScraper(BaseScraper):
             'away': {
                 'name': away.get('name'),
                 'abbrev': away.get('abbreviation'),
+                'id': away.get('id', ''),  # Team ID for NCAA logo URLs
+                'logo': away.get('logo', ''),  # Direct logo URL from ESPN
                 'record': away.get('record', ''),
                 'wins': away_parsed['wins'],
                 'losses': away_parsed['losses'],

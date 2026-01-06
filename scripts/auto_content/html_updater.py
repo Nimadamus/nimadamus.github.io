@@ -439,27 +439,48 @@ class HTMLUpdater:
         away = game_data.get('away', {})
         odds = game_data.get('odds', {})
 
-        # Get team abbreviations for logo URLs
+        # Get team data for logo URLs
         home_abbrev = home.get('abbrev', '').lower()
         away_abbrev = away.get('abbrev', '').lower()
+        home_id = home.get('id', home.get('team_id', ''))
+        away_id = away.get('id', away.get('team_id', ''))
 
-        # Build logo URLs based on sport
-        sport_lower = sport.lower()
-        if sport_lower == 'nba':
-            logo_base = "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard"
-        elif sport_lower == 'nhl':
-            logo_base = "https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard"
-        elif sport_lower == 'nfl':
-            logo_base = "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard"
-        elif sport_lower == 'mlb':
-            logo_base = "https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard"
-        elif sport_lower in ['ncaab', 'ncaaf']:
-            logo_base = "https://a.espncdn.com/i/teamlogos/ncaa/500"
-        else:
-            logo_base = ""
+        # First check if direct logo URLs are provided (from ESPN API)
+        home_logo = home.get('logo', '')
+        away_logo = away.get('logo', '')
 
-        home_logo = f"{logo_base}/{home_abbrev}.png" if logo_base else ""
-        away_logo = f"{logo_base}/{away_abbrev}.png" if logo_base else ""
+        # If no direct logos, build URLs based on sport
+        if not home_logo or not away_logo:
+            sport_lower = sport.lower()
+            if sport_lower == 'nba':
+                logo_base = "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard"
+                home_logo = home_logo or f"{logo_base}/{home_abbrev}.png"
+                away_logo = away_logo or f"{logo_base}/{away_abbrev}.png"
+            elif sport_lower == 'nhl':
+                logo_base = "https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard"
+                home_logo = home_logo or f"{logo_base}/{home_abbrev}.png"
+                away_logo = away_logo or f"{logo_base}/{away_abbrev}.png"
+            elif sport_lower == 'nfl':
+                logo_base = "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard"
+                home_logo = home_logo or f"{logo_base}/{home_abbrev}.png"
+                away_logo = away_logo or f"{logo_base}/{away_abbrev}.png"
+            elif sport_lower == 'mlb':
+                logo_base = "https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard"
+                home_logo = home_logo or f"{logo_base}/{home_abbrev}.png"
+                away_logo = away_logo or f"{logo_base}/{away_abbrev}.png"
+            elif sport_lower in ['ncaab', 'ncaaf']:
+                logo_base = "https://a.espncdn.com/i/teamlogos/ncaa/500"
+                # NCAA uses team IDs, not abbreviations
+                home_logo = home_logo or f"{logo_base}/{home_id}.png" if home_id else f"{logo_base}/{home_abbrev}.png"
+                away_logo = away_logo or f"{logo_base}/{away_id}.png" if away_id else f"{logo_base}/{away_abbrev}.png"
+            elif sport_lower == 'soccer':
+                # Soccer MUST use team IDs - abbreviations don't work
+                logo_base = "https://a.espncdn.com/i/teamlogos/soccer/500"
+                home_logo = home_logo or (f"{logo_base}/{home_id}.png" if home_id else "")
+                away_logo = away_logo or (f"{logo_base}/{away_id}.png" if away_id else "")
+            else:
+                # Unknown sport - leave empty if no direct logo
+                pass
 
         # Build game time string
         game_time_parts = []
