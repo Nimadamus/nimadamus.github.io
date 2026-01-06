@@ -57,8 +57,16 @@ const FEATURED_GAMES = [
     { date: "2025-12-29", page: "featured-game-of-the-day-page30.html", title: "Rams vs Falcons MNF" },
     { date: "2025-12-30", page: "featured-game-of-the-day-page31.html", title: "Tennessee vs Illinois Music City Bowl" },
 
+    // January 2026
+    { date: "2025-12-31", page: "featured-game-of-the-day-page32.html", title: "New Year's Eve Game" },
+    { date: "2026-01-01", page: "featured-game-of-the-day-page33.html", title: "New Year's Day" },
+    { date: "2026-01-02", page: "featured-game-of-the-day-page34.html", title: "NHL Game" },
+    { date: "2026-01-03", page: "featured-game-of-the-day-page35.html", title: "Weekend Game" },
+    { date: "2026-01-05", page: "featured-game-of-the-day-page36.html", title: "Bulls vs Celtics" },
+    { date: "2026-01-06", page: "featured-game-of-the-day-page37.html", title: "Devils vs Islanders" },
+
     // ADD NEW FEATURED GAMES HERE
-    // Example: { date: "2025-12-31", page: "featured-game-of-the-day-page32.html", title: "Game Title" },
+    // Example: { date: "2026-01-07", page: "featured-game-of-the-day-page38.html", title: "Game Title" },
 ];
 
 // Export for use in calendar
