@@ -584,9 +584,9 @@
         if (filteredPicks.length >= staticRowCount || filteredPicks.length > 0) {
             tbody.innerHTML = filteredPicks.map(p => `
                 <tr>
-                    <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
+                    <td>${p.Date}</td><td>${p.Pick}</td><td>${p.Line || '-110'}</td>
                     <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
-                    <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${p.units.toFixed(2)}</td>
+                    <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${p.units >= 0 ? '+' : ''}${p.units.toFixed(2)}</td>
                 </tr>`).join('');
         } else {
             console.log('Keeping static HTML (dynamic:', filteredPicks.length, 'vs static:', staticRowCount, ')');
@@ -1030,23 +1030,24 @@
 
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
-        // Filter to 2026 first (this calculates stats for filtered rows only)
-        filterByYear('2026');
+        // Load dynamic data from Pick Tracker sheet
+        loadDataFromSheets();
 
-        // Year filter - filter static HTML rows by date
+        // Year filter buttons
         const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
         yearFilterBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 yearFilterBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 const yearFilter = this.getAttribute('data-year');
-                filterByYear(yearFilter);
+                currentYearFilter = yearFilter;
+                displayFilteredPicks(yearFilter);
             });
         });
     });
 
-    // Disabled - using static HTML
-    // setInterval(loadDataFromSheets, 300000);
+    // Refresh data every 5 minutes
+    setInterval(loadDataFromSheets, 300000);
 
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
