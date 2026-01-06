@@ -139,7 +139,21 @@ MANUAL_DATE_OVERRIDES = {
     'ncaaf-page41.html': '2025-12-19',  # December 19 NCAAF (Bowl games - overflow)
     'ncaaf.html': '2026-01-05',         # January 5 NCAAF (FCS Championship - MAIN PAGE)
     # MLB pages
-    'mlb.html': '2026-01-05',            # January 5 MLB (Off-season coverage - MAIN PAGE)
+    'mlb.html': '2026-01-06',            # January 6 MLB (Off-season coverage - MAIN PAGE)
+    # NBA January 2026 pages - CORRECTED JANUARY 6, 2026
+    'nba.html': '2026-01-06',            # January 6 NBA (current main page)
+    'nba-page39.html': '2026-01-05',     # January 5 NBA
+    'nba-page35.html': '2026-01-04',     # January 4 NBA
+    'nba-page37.html': '2026-01-04',     # January 4 NBA (duplicate)
+    # NHL January 2026 pages - CORRECTED JANUARY 6, 2026
+    'nhl.html': '2026-01-06',            # January 6 NHL (current main page)
+    'nhl-page40.html': '2026-01-05',     # January 5 NHL
+    'nhl-page36.html': '2026-01-04',     # January 4 NHL
+    'nhl-page38.html': '2026-01-04',     # January 4 NHL (duplicate)
+    # NCAAB January 2026 pages - CORRECTED JANUARY 6, 2026
+    'ncaab.html': '2026-01-06',          # January 6 NCAAB (current main page)
+    # Soccer January 2026 pages - CORRECTED JANUARY 6, 2026
+    'soccer.html': '2026-01-06',         # January 6 Soccer (current main page)
 }
 
 # Month name to number mapping
