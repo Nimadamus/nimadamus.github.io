@@ -189,27 +189,90 @@ class HTMLUpdater:
         return str(soup), archived_content
 
     def _update_page_date(self, html_content: str, date: str, sport: str) -> str:
-        """Update the date displayed on the page."""
+        """Update ALL date-related elements on the page.
+
+        CRITICAL: This must update:
+        1. <title> tag
+        2. <meta content="..."> description (note: content comes BEFORE name)
+        3. <meta property="og:title">
+        4. <meta property="og:description">
+        5. Hero <h1> tag
+        6. Hero badge day of week
+        7. Hero <p> tagline
+        """
+        from datetime import datetime
+
         config = SPORTS.get(sport.lower())
         sport_name = config.get('name', sport.upper()) if config else sport.upper()
 
-        # Update title tag
+        # Parse the date to get day of week
+        try:
+            date_obj = datetime.strptime(date, "%B %d, %Y")
+            day_of_week = date_obj.strftime("%A")  # e.g., "Tuesday"
+        except:
+            day_of_week = "Today"
+
+        # 1. Update title tag
         html_content = re.sub(
-            r'<title>.*?</title>',
+            r'<title>[^<]*</title>',
             f'<title>{sport_name} Analysis - {date} | BetLegend</title>',
             html_content,
             count=1
         )
 
-        # Update meta description
+        # 2. Update meta description (content comes BEFORE name in our HTML)
         html_content = re.sub(
-            r'<meta name="description" content="[^"]*">',
-            f'<meta name="description" content="{sport_name} statistical analysis for {date}. Advanced stats, efficiency ratings, and betting trends.">',
+            r'<meta\s+content="[^"]*"\s+name="description"\s*/?>',
+            f'<meta content="{sport_name} {date} - Statistical analysis, betting trends, and game previews." name="description"/>',
             html_content,
             count=1
         )
 
-        # Update current-date div
+        # 3. Update og:title
+        html_content = re.sub(
+            r'<meta\s+content="[^"]*"\s+property="og:title"\s*/?>',
+            f'<meta content="{sport_name} {date} Preview | BetLegend Picks" property="og:title"/>',
+            html_content,
+            count=1
+        )
+
+        # 4. Update og:description
+        html_content = re.sub(
+            r'<meta\s+content="[^"]*"\s+property="og:description"\s*/?>',
+            f'<meta content="{sport_name} analysis and betting preview for {date}." property="og:description"/>',
+            html_content,
+            count=1
+        )
+
+        # 5. Update hero <h1> - critical fix for the date display issue
+        # Match patterns like: <h1>NBA January 4, 2026</h1> or <h1>College Basketball January 4, 2026</h1>
+        html_content = re.sub(
+            r'<h1>[^<]*(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}[^<]*</h1>',
+            f'<h1>{sport_name} {date}</h1>',
+            html_content,
+            count=1,
+            flags=re.IGNORECASE
+        )
+
+        # Also try alternate h1 formats
+        html_content = re.sub(
+            r'<h1>\s*(?:NBA|NHL|NFL|NCAAB|NCAAF|MLB|Soccer|College Basketball|College Football)[^<]*</h1>',
+            f'<h1>{sport_name} {date}</h1>',
+            html_content,
+            count=1,
+            flags=re.IGNORECASE
+        )
+
+        # 6. Update hero-badge with day of week
+        html_content = re.sub(
+            r'<div class="hero-badge">[^<]*(?:Slate|Games|Action)[^<]*</div>',
+            f'<div class="hero-badge">{day_of_week} Slate</div>',
+            html_content,
+            count=1,
+            flags=re.IGNORECASE
+        )
+
+        # 7. Update current-date div if it exists
         html_content = re.sub(
             r'<div class="current-date">.*?</div>',
             f'<div class="current-date"><h2>{date}</h2></div>',
