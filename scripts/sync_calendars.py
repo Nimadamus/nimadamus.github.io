@@ -141,24 +141,28 @@ MANUAL_DATE_OVERRIDES = {
     # MLB pages
     'mlb.html': '2026-01-06',            # January 6 MLB (Off-season coverage - MAIN PAGE)
     # NBA January 2026 pages - CORRECTED JANUARY 7, 2026
-    'nba-page40.html': '2026-01-07',     # January 7 NBA (NEW)
-    'nba.html': '2026-01-06',            # January 6 NBA
-    'nba-page38.html': '2026-01-03',     # January 3 NBA (was incorrectly 01-06)
+    # NOTE: Main pages (nba.html etc) now have Jan 7 content per their titles
+    'nba.html': '2026-01-07',            # January 7 NBA (main page - matches title)
+    'nba-page40.html': '2026-01-07',     # January 7 NBA (alternate)
     'nba-page39.html': '2026-01-05',     # January 5 NBA
+    'nba-page38.html': '2026-01-06',     # January 6 NBA (reassigned from main)
     'nba-page35.html': '2026-01-04',     # January 4 NBA
-    'nba-page37.html': '2026-01-04',     # January 4 NBA (duplicate)
+    'nba-page37.html': '2026-01-03',     # January 3 NBA
     # NHL January 2026 pages - CORRECTED JANUARY 7, 2026
-    'nhl-page41.html': '2026-01-07',     # January 7 NHL (NEW)
-    'nhl.html': '2026-01-06',            # January 6 NHL
+    'nhl.html': '2026-01-07',            # January 7 NHL (main page - matches title)
+    'nhl-page41.html': '2026-01-07',     # January 7 NHL (alternate)
     'nhl-page40.html': '2026-01-05',     # January 5 NHL
+    'nhl-page39.html': '2026-01-06',     # January 6 NHL (reassigned from main)
     'nhl-page36.html': '2026-01-04',     # January 4 NHL
-    'nhl-page38.html': '2026-01-04',     # January 4 NHL (duplicate)
+    'nhl-page38.html': '2026-01-03',     # January 3 NHL
     # NCAAB January 2026 pages - CORRECTED JANUARY 7, 2026
-    'ncaab-page39.html': '2026-01-07',   # January 7 NCAAB (NEW)
-    'ncaab.html': '2026-01-06',          # January 6 NCAAB
+    'ncaab.html': '2026-01-07',          # January 7 NCAAB (main page - matches title)
+    'ncaab-page39.html': '2026-01-07',   # January 7 NCAAB (alternate)
+    'ncaab-page38.html': '2026-01-06',   # January 6 NCAAB (reassigned from main)
     # Soccer January 2026 pages - CORRECTED JANUARY 7, 2026
-    'soccer-page35.html': '2026-01-07',  # January 7 Soccer (NEW)
-    'soccer.html': '2026-01-06',         # January 6 Soccer
+    'soccer.html': '2026-01-07',         # January 7 Soccer (main page - matches title)
+    'soccer-page35.html': '2026-01-07',  # January 7 Soccer (alternate)
+    'soccer-page34.html': '2026-01-06',  # January 6 Soccer (reassigned from main)
 }
 
 # Month name to number mapping
