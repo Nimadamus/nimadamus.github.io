@@ -159,8 +159,23 @@ def format_date(date_str):
     return date_str
 
 
+def parse_date_for_sorting(date_str):
+    """Parse date string to datetime for proper sorting."""
+    if not date_str:
+        return datetime.min
+
+    # Try various date formats
+    for fmt in ['%m/%d/%Y', '%Y-%m-%d', '%m-%d-%Y', '%m/%d/%y', '%d/%m/%Y']:
+        try:
+            return datetime.strptime(date_str.strip(), fmt)
+        except ValueError:
+            continue
+
+    return datetime.min
+
+
 def get_existing_picks(html_content):
-    """Extract existing picks from the records page table."""
+    """Extract existing picks from the records page table as a set of keys for deduplication."""
     existing = set()
 
     # Find all table rows and extract Date + Pick combinations
@@ -172,6 +187,31 @@ def get_existing_picks(html_content):
         existing.add(key)
 
     return existing
+
+
+def extract_all_picks_from_table(html_content):
+    """Extract ALL picks from the records page table with full data for re-sorting."""
+    picks = []
+
+    # Find all table rows with full data: Date, Pick, Line, Result, Units
+    pattern = r'<tr><td>([^<]+)</td><td>([^<]+)</td><td>([^<]*)</td><td[^>]*>([^<]*)</td><td[^>]*>([^<]*)</td></tr>'
+    matches = re.findall(pattern, html_content, re.IGNORECASE)
+
+    for date, pick, line, result, units in matches:
+        try:
+            units_val = float(units.replace('+', '').strip()) if units.strip() else 0.0
+        except ValueError:
+            units_val = 0.0
+
+        picks.append({
+            'Date': date.strip(),
+            'Pick': pick.strip(),
+            'Line': line.strip(),
+            'Result': result.strip(),
+            'Units': units_val
+        })
+
+    return picks
 
 
 def create_table_row(pick):
@@ -199,7 +239,7 @@ def create_table_row(pick):
 
 
 def update_records_page(sport_key, picks):
-    """Update a records page with new picks from the tracker."""
+    """Update a records page with new picks from the tracker and re-sort by date."""
     config = SPORT_CONFIG[sport_key]
     file_path = os.path.join(REPO_PATH, config['file'])
 
@@ -211,45 +251,49 @@ def update_records_page(sport_key, picks):
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
         html = f.read()
 
-    # Get existing picks
-    existing = get_existing_picks(html)
+    # Extract ALL existing picks from the table
+    existing_picks = extract_all_picks_from_table(html)
+    existing_keys = set()
+    for p in existing_picks:
+        key = f"{p['Date'].strip().lower()}|{p['Pick'].strip().lower()}"
+        existing_keys.add(key)
 
     # Find new picks that aren't already in the page
     new_picks = []
     for pick in picks:
         key = f"{pick['Date'].strip().lower()}|{pick['Pick'].strip().lower()}"
-        if key not in existing and pick['Result']:  # Only graded picks
+        if key not in existing_keys and pick['Result']:  # Only graded picks
             new_picks.append(pick)
 
-    if not new_picks:
-        print(f"  {sport_key.upper()}: No new picks to add")
+    # Combine existing and new picks
+    all_picks = existing_picks + new_picks
+
+    if not all_picks:
+        print(f"  {sport_key.upper()}: No picks found")
         return 0
 
-    # Sort new picks by date (newest first)
-    new_picks.sort(key=lambda x: x['Date'], reverse=True)
+    # Sort ALL picks by date (newest first) using proper datetime parsing
+    all_picks.sort(key=lambda x: parse_date_for_sorting(x['Date']), reverse=True)
 
-    # Create new rows
-    new_rows = '\n'.join([create_table_row(p) for p in new_picks])
+    # Create all rows
+    all_rows = '\n'.join(['                    ' + create_table_row(p).strip() for p in all_picks])
 
-    # Find the table body and insert new rows at the top
-    tbody_pattern = r'(<tbody id="picks-table-body">)\s*(\n\s*<!--[^>]*-->)?'
-    match = re.search(tbody_pattern, html)
+    # Find and replace the entire tbody content
+    tbody_pattern = r'(<tbody id="picks-table-body">).*?(</tbody>)'
+    match = re.search(tbody_pattern, html, re.DOTALL)
 
     if match:
-        insert_pos = match.end()
-        # Find the position after any comments but before first <tr>
-        remaining = html[insert_pos:]
-        first_tr = remaining.find('<tr>')
-        if first_tr > 0:
-            insert_pos += first_tr
-
-        new_html = html[:insert_pos] + '\n' + new_rows + '\n' + html[insert_pos:]
+        new_tbody = f'{match.group(1)}\n{all_rows}\n                {match.group(2)}'
+        new_html = html[:match.start()] + new_tbody + html[match.end():]
 
         # Write updated file
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(new_html)
 
-        print(f"  {sport_key.upper()}: Added {len(new_picks)} new picks")
+        if new_picks:
+            print(f"  {sport_key.upper()}: Added {len(new_picks)} new picks, re-sorted {len(all_picks)} total picks by date")
+        else:
+            print(f"  {sport_key.upper()}: Re-sorted {len(all_picks)} picks by date (no new picks)")
         return len(new_picks)
     else:
         print(f"  {sport_key.upper()}: Could not find table body, skipping")
