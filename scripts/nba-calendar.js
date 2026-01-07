@@ -4,11 +4,11 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-07", page: "nba-page40.html", title: "NBA Analysis - January 07, 2026" },
-    { date: "2026-01-06", page: "nba.html", title: "NBA Analysis - January 06, 2026" },
-    { date: "2026-01-06", page: "nba-page38.html", title: "NBA Analysis Archive - Page 38" },
+    { date: "2026-01-06", page: "nba.html", title: "NBA Analysis - January 07, 2026" },
     { date: "2026-01-05", page: "nba-page39.html", title: "NBA Analysis - January 05, 2026" },
     { date: "2026-01-04", page: "nba-page37.html", title: "NBA Analysis Archive - Page 37" },
     { date: "2026-01-04", page: "nba-page35.html", title: "NBA Analysis - January 04, 2026" },
+    { date: "2026-01-03", page: "nba-page38.html", title: "NBA Analysis Archive - Page 38" },
     { date: "2026-01-03", page: "nba-page34.html", title: "NBA Analysis Archive - Page 34" },
     { date: "2026-01-02", page: "archives/nba/2026-01-02.html", title: "NBA Archive - 2026-01-02" },
     { date: "2026-01-01", page: "nba-page33.html", title: "NBA Analysis Archive - Page 33" },

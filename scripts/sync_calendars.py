@@ -140,20 +140,25 @@ MANUAL_DATE_OVERRIDES = {
     'ncaaf.html': '2026-01-05',         # January 5 NCAAF (FCS Championship - MAIN PAGE)
     # MLB pages
     'mlb.html': '2026-01-06',            # January 6 MLB (Off-season coverage - MAIN PAGE)
-    # NBA January 2026 pages - CORRECTED JANUARY 6, 2026
-    'nba.html': '2026-01-06',            # January 6 NBA (current main page)
+    # NBA January 2026 pages - CORRECTED JANUARY 7, 2026
+    'nba-page40.html': '2026-01-07',     # January 7 NBA (NEW)
+    'nba.html': '2026-01-06',            # January 6 NBA
+    'nba-page38.html': '2026-01-03',     # January 3 NBA (was incorrectly 01-06)
     'nba-page39.html': '2026-01-05',     # January 5 NBA
     'nba-page35.html': '2026-01-04',     # January 4 NBA
     'nba-page37.html': '2026-01-04',     # January 4 NBA (duplicate)
-    # NHL January 2026 pages - CORRECTED JANUARY 6, 2026
-    'nhl.html': '2026-01-06',            # January 6 NHL (current main page)
+    # NHL January 2026 pages - CORRECTED JANUARY 7, 2026
+    'nhl-page41.html': '2026-01-07',     # January 7 NHL (NEW)
+    'nhl.html': '2026-01-06',            # January 6 NHL
     'nhl-page40.html': '2026-01-05',     # January 5 NHL
     'nhl-page36.html': '2026-01-04',     # January 4 NHL
     'nhl-page38.html': '2026-01-04',     # January 4 NHL (duplicate)
-    # NCAAB January 2026 pages - CORRECTED JANUARY 6, 2026
-    'ncaab.html': '2026-01-06',          # January 6 NCAAB (current main page)
-    # Soccer January 2026 pages - CORRECTED JANUARY 6, 2026
-    'soccer.html': '2026-01-06',         # January 6 Soccer (current main page)
+    # NCAAB January 2026 pages - CORRECTED JANUARY 7, 2026
+    'ncaab-page39.html': '2026-01-07',   # January 7 NCAAB (NEW)
+    'ncaab.html': '2026-01-06',          # January 6 NCAAB
+    # Soccer January 2026 pages - CORRECTED JANUARY 7, 2026
+    'soccer-page35.html': '2026-01-07',  # January 7 Soccer (NEW)
+    'soccer.html': '2026-01-06',         # January 6 Soccer
 }
 
 # Month name to number mapping

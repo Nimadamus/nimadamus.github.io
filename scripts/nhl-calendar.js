@@ -4,7 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-07", page: "nhl-page41.html", title: "NHL Analysis - January 07, 2026" },
-    { date: "2026-01-06", page: "nhl.html", title: "NHL Analysis - January 06, 2026" },
+    { date: "2026-01-06", page: "nhl.html", title: "NHL Analysis - January 07, 2026" },
     { date: "2026-01-06", page: "nhl-page39.html", title: "NHL Analysis Archive - Page 39" },
     { date: "2026-01-05", page: "nhl-page40.html", title: "NHL Analysis - January 05, 2026" },
     { date: "2026-01-04", page: "nhl-page38.html", title: "NHL Analysis Archive - Page 38" },
