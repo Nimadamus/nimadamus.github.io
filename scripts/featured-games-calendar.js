@@ -73,9 +73,10 @@ const currentPage = window.location.pathname.split('/').pop().split('?')[0].spli
 console.log('[Calendar Debug] currentPage:', currentPage);
 console.log('[Calendar Debug] pageToDateMap has page38?', 'featured-game-of-the-day-page38.html' in pageToDateMap);
 console.log('[Calendar Debug] pageToDateMap[currentPage]:', pageToDateMap[currentPage]);
+console.log('[Calendar Debug] window.FORCED_PAGE_DATE:', window.FORCED_PAGE_DATE);
 
-// Get current page date from ARCHIVE_DATA first (most reliable), then try title extraction
-const currentPageDate = pageToDateMap[currentPage] || (function() {
+// PRIORITY: Use FORCED_PAGE_DATE if set (most reliable), then ARCHIVE_DATA, then title parsing
+const currentPageDate = window.FORCED_PAGE_DATE || pageToDateMap[currentPage] || (function() {
     const title = document.title || '';
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
                         'July', 'August', 'September', 'October', 'November', 'December'];
