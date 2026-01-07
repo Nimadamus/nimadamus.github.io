@@ -1,8 +1,9 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: January 06, 2026
+// Last updated: January 07, 2026
 
 const ARCHIVE_DATA = [
+    { date: "2026-01-07", page: "featured-game-of-the-day-page38.html", title: "Stars vs Capitals" },
     { date: "2026-01-06", page: "featured-game-of-the-day-page37.html", title: "Devils vs Islanders" },
     { date: "2026-01-05", page: "featured-game-of-the-day-page36.html", title: "Bulls vs Celtics" },
     { date: "2026-01-04", page: "featured-game-of-the-day-page35.html", title: "Ravens vs Steelers AFC North Title" },
