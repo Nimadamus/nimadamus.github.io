@@ -69,12 +69,6 @@ ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });
 
 const currentPage = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || 'index.html';
 
-// DEBUG - remove after testing
-console.log('[Calendar Debug] currentPage:', currentPage);
-console.log('[Calendar Debug] pageToDateMap has page38?', 'featured-game-of-the-day-page38.html' in pageToDateMap);
-console.log('[Calendar Debug] pageToDateMap[currentPage]:', pageToDateMap[currentPage]);
-console.log('[Calendar Debug] window.FORCED_PAGE_DATE:', window.FORCED_PAGE_DATE);
-
 // PRIORITY: Use FORCED_PAGE_DATE if set (most reliable), then ARCHIVE_DATA, then title parsing
 const currentPageDate = window.FORCED_PAGE_DATE || pageToDateMap[currentPage] || (function() {
     const title = document.title || '';
@@ -92,9 +86,6 @@ const currentPageDate = window.FORCED_PAGE_DATE || pageToDateMap[currentPage] ||
     }
     return null;
 })();
-
-// DEBUG - remove after testing
-console.log('[Calendar Debug] currentPageDate resolved to:', currentPageDate);
 
 // Auto-add current page to dateMap if not already there (makes it clickable)
 if (currentPageDate && !dateMap[currentPageDate]) {
@@ -141,8 +132,6 @@ function initFeaturedGamesCalendar() {
 }
 
 function renderCalendar(yearMonth) {
-    console.log('[Calendar Debug] renderCalendar called with yearMonth:', yearMonth);
-    console.log('[Calendar Debug] currentPageDate for highlighting:', currentPageDate);
     const [year, month] = yearMonth.split('-').map(Number);
     const yearEl = document.getElementById('cal-year');
     if (yearEl) yearEl.textContent = year;
@@ -157,10 +146,7 @@ function renderCalendar(yearMonth) {
         const cell = document.createElement('div');
         cell.className = 'cal-day';
         cell.textContent = d;
-        if (dateStr === currentPageDate) {
-            cell.classList.add('current-page');
-            console.log('[Calendar Debug] MATCHED! Highlighting day', d, 'for date', dateStr);
-        }
+        if (dateStr === currentPageDate) cell.classList.add('current-page');
         if (dateMap[dateStr]) {
             cell.classList.add('has-content');
             cell.title = dateMap[dateStr].title;
@@ -171,17 +157,3 @@ function renderCalendar(yearMonth) {
 }
 
 if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initFeaturedGamesCalendar); } else { initFeaturedGamesCalendar(); }
-
-// VISIBLE DEBUG - shows info below calendar - REMOVE AFTER TESTING
-(function() {
-    const debugDiv = document.createElement('div');
-    debugDiv.id = 'calendar-debug';
-    debugDiv.style.cssText = 'background:#ff0;color:#000;padding:10px;margin-top:10px;font-size:11px;border-radius:5px;';
-    debugDiv.innerHTML = '<strong>DEBUG:</strong><br>' +
-        'currentPage: ' + currentPage + '<br>' +
-        'pageToDateMap[currentPage]: ' + pageToDateMap[currentPage] + '<br>' +
-        'currentPageDate: ' + currentPageDate + '<br>' +
-        'displayMonth: ' + displayMonth;
-    const calBox = document.querySelector('.calendar-box');
-    if (calBox) calBox.appendChild(debugDiv);
-})();
