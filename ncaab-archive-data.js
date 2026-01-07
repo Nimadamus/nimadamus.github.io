@@ -1,6 +1,6 @@
 // NCAAB Archive Data - Auto-updated by production script
 const NCAAB_ARCHIVE = [
-    { date: "2026-01-06", page: "ncaab.html", title: "NCAAB Analysis - December 28, 2025" },
+    { date: "2026-01-07", page: "ncaab.html", title: "NCAAB Analysis - December 28, 2025" },
     { date: "2026-01-04", page: "ncaab-page35.html", title: "January 4, 2026" },
     { date: "2026-01-01", page: "ncaab-page31.html", title: "January 1, 2026" },
     { date: "2025-12-31", page: "ncaab-page30.html", title: "December 31, 2025" },
@@ -14,6 +14,7 @@ const NCAAB_ARCHIVE = [
     { date: "2025-12-20", page: "ncaab-page19.html", title: "NCAAB Analysis Archive - Page 19" },
     { date: "2025-12-20", page: "ncaab-page16.html", title: "NCAAB Analysis Archive - Page 16" },
     { date: "2025-12-20", page: "ncaab-page38.html", title: "December 20, 2025" },
+    { date: "2025-12-20", page: "ncaab-page39.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page34.html", title: "December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page18.html", title: "NCAAB Analysis Archive - Page 18" },
     { date: "2025-12-20", page: "ncaab-page24.html", title: "NCAAB Analysis Archive - Page 24" },
