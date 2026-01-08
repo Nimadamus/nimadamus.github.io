@@ -471,24 +471,28 @@ def generate_calendar_js(sport_name, sport_config, pages):
 
 def remove_pagination_from_sports_pages():
     """
-    PERMANENTLY removes pagination from ALL sports pages.
-    Sports pages use calendar sidebar only - NO archive-link pagination.
+    PERMANENTLY removes pagination from ALL sports pages AND featured game pages.
+    These pages use calendar sidebar only - NO archive-link pagination.
     Added January 3, 2026 - This runs automatically with every calendar sync.
+    Updated January 8, 2026 - Now also cleans featured game pages.
     """
-    print("\n[CLEANUP] Removing pagination from sports pages...")
+    print("\n[CLEANUP] Removing pagination from sports + featured game pages...")
     sports_patterns = ['nba', 'nhl', 'nfl', 'ncaab', 'ncaaf', 'mlb', 'soccer']
     count = 0
 
     for f in os.listdir(REPO_DIR):
         if not f.endswith('.html'):
             continue
-        # Check if it's a sports page
-        is_sports = False
+        # Check if it's a sports page OR a featured game page
+        is_target = False
         for sp in sports_patterns:
             if f == f'{sp}.html' or f.startswith(f'{sp}-page'):
-                is_sports = True
+                is_target = True
                 break
-        if not is_sports:
+        # Also include featured game pages
+        if f.startswith('featured-game'):
+            is_target = True
+        if not is_target:
             continue
 
         path = REPO_DIR / f
