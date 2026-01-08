@@ -4,7 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-06", page: "ncaaf-page42.html", title: "NCAAF Analysis Archive - Page 42" },
-    { date: "2026-01-05", page: "ncaaf.html", title: "NCAAF Analysis - January 07, 2026" },
+    { date: "2026-01-05", page: "ncaaf.html", title: "NCAAF Analysis - January 08, 2026" },
     { date: "2026-01-02", page: "archives/ncaaf/2026-01-02.html", title: "NCAAF Archive - 2026-01-02" },
     { date: "2026-01-01", page: "ncaaf-page40.html", title: "NCAAF Analysis Archive - Page 40" },
     { date: "2026-01-01", page: "ncaaf-page37.html", title: "NCAAF Analysis Archive - Page 37" },
@@ -21,6 +21,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-22", page: "ncaaf-page22.html", title: "NCAAF Analysis Archive - Page 22" },
     { date: "2025-12-21", page: "ncaaf-page21.html", title: "NCAAF Analysis Archive - Page 21" },
     { date: "2025-12-20", page: "ncaaf-page20.html", title: "NCAAF Analysis Archive - Page 20" },
+    { date: "2025-12-19", page: "ncaaf-page44.html", title: "NCAAF Analysis Archive - Page 44" },
     { date: "2025-12-19", page: "ncaaf-page43.html", title: "NCAAF Analysis Archive - Page 43" },
     { date: "2025-12-19", page: "ncaaf-page41.html", title: "NCAAF Analysis Archive - Page 41" },
     { date: "2025-12-19", page: "ncaaf-page39.html", title: "NCAAF Analysis Archive - Page 39" },
