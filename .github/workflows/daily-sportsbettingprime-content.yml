@@ -35,7 +35,7 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git clone https://${GH_PAT}@github.com/Nimadamus/sportsbettingprime.git sbp_repo
+          git clone https://x-access-token:${GH_PAT}@github.com/Nimadamus/sportsbettingprime.git sbp_repo
 
       - name: Copy generated content
         run: |
@@ -44,10 +44,13 @@ jobs:
           ls -la sbp_repo/daily/
 
       - name: Commit and push to sportsbettingprime
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           cd sbp_repo
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/Nimadamus/sportsbettingprime.git
           git add -A
           if git diff --staged --quiet; then
             echo "No changes to commit"
