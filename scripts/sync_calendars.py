@@ -103,42 +103,19 @@ MANUAL_DATE_OVERRIDES = {
     'ncaab-page20.html': '2025-12-20',  # December 20 NCAAB
     'ncaab-page21.html': '2025-12-21',  # December 21 NCAAB
     'ncaab-page22.html': '2025-12-22',  # December 22 NCAAB
-    # NCAAF archive pages - Complete bowl season coverage
-    'ncaaf-page4.html': '2025-12-04',   # December 4 NCAAF
-    'ncaaf-page5.html': '2025-12-05',   # December 5 NCAAF
-    'ncaaf-page6.html': '2025-12-06',   # December 6 NCAAF
-    'ncaaf-page7.html': '2025-12-07',   # December 7 NCAAF
-    'ncaaf-page8.html': '2025-12-08',   # December 8 NCAAF
-    'ncaaf-page10.html': '2025-12-10',  # December 10 NCAAF
-    'ncaaf-page11.html': '2025-12-11',  # December 11 NCAAF
-    'ncaaf-page12.html': '2025-12-12',  # December 12 NCAAF
-    'ncaaf-page13.html': '2025-12-13',  # December 13 NCAAF
-    'ncaaf-page18.html': '2025-12-18',  # December 18 NCAAF (Bowl games)
-    'ncaaf-page19.html': '2025-12-19',  # December 19 NCAAF (Bowl games)
-    'ncaaf-page20.html': '2025-12-20',  # December 20 NCAAF (Bowl games)
-    'ncaaf-page21.html': '2025-12-21',  # December 21 NCAAF (Bowl games)
-    'ncaaf-page22.html': '2025-12-22',  # December 22 NCAAF (Bowl games)
-    'ncaaf-page23.html': '2025-12-23',  # December 23 NCAAF (Bowl games)
-    'ncaaf-page24.html': '2025-12-24',  # December 24 NCAAF (Bowl games)
-    'ncaaf-page25.html': '2025-12-25',  # December 25 NCAAF (Bowl games)
-    'ncaaf-page26.html': '2025-12-26',  # December 26 NCAAF (Bowl games)
-    'ncaaf-page27.html': '2025-12-27',  # December 27 NCAAF (Bowl games)
-    'ncaaf-page28.html': '2025-12-28',  # December 28 NCAAF (Bowl games)
-    'ncaaf-page29.html': '2025-12-29',  # December 29 NCAAF (Bowl games)
-    'ncaaf-page30.html': '2025-12-30',  # December 30 NCAAF (Bowl games)
-    'ncaaf-page31.html': '2025-12-17',  # December 17 NCAAF (Bowl games - Cramton Bowl etc)
-    'ncaaf-page32.html': '2025-12-17',  # December 17 NCAAF (Bowl games - Gasparilla etc)
-    'ncaaf-page33.html': '2025-12-19',  # December 19 NCAAF (Bowl games - Myrtle Beach)
-    'ncaaf-page34.html': '2025-12-19',  # December 19 NCAAF (Bowl games - Gasparilla)
-    'ncaaf-page35.html': '2025-12-31',  # December 31 NCAAF (New Year's Eve bowls)
-    'ncaaf-page36.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals)
-    'ncaaf-page37.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - duplicate/overflow)
-    'ncaaf-page38.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - Rose Bowl, etc.)
-    'ncaaf-page39.html': '2026-01-02',  # January 2 NCAAF (Bowl games - Armed Forces, Liberty)
-    'ncaaf-page40.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - overflow)
-    'ncaaf-page41.html': '2025-12-14',  # December 14 NCAAF (FCS Playoffs + early bowls)
-    'ncaaf-page43.html': '2025-12-13',  # December 13 NCAAF (FCS Playoffs - Quarterfinals)
-    'ncaaf-page44.html': '2025-12-14',  # December 14 NCAAF (FCS Playoffs + Army-Navy)
+    # NCAAF archive pages - CLEANED UP Jan 8, 2026
+    # Most NCAAF pages now have dates in their titles, so we removed incorrect overrides.
+    # Only keep overrides for pages that DON'T have dates in their titles.
+    # Pages with correct title dates will extract automatically:
+    # - ncaaf-page13.html: December 19, 2025 (title)
+    # - ncaaf-page22.html: December 23, 2025 (title)
+    # - ncaaf-page27.html: December 27, 2025 (title)
+    # - ncaaf-page29.html: December 29, 2025 (title)
+    # - ncaaf-page33.html: December 30, 2025 (title)
+    # - ncaaf-page35.html: December 31, 2025 (title)
+    # - ncaaf-page36.html: January 1, 2026 (title)
+    # - ncaaf-page39.html: January 2, 2026 (title)
+    # - ncaaf-page42.html: January 6, 2026 (title)
     # ============================================================
     # IMPORTANT: MAIN PAGES ARE NOT IN THIS LIST!
     # nba.html, nhl.html, ncaab.html, soccer.html, nfl.html, mlb.html
