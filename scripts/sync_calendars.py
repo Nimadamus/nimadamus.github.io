@@ -209,6 +209,13 @@ def extract_date_from_page(filepath):
         if filename in MANUAL_DATE_OVERRIDES:
             return MANUAL_DATE_OVERRIDES[filename]
 
+        # CRITICAL FIX (Jan 8, 2026): Main pages ALWAYS use today's date
+        # These are the "current" pages that show today's content
+        # Archive pages (page2, page3, etc.) extract dates from content
+        MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html']
+        if filename in MAIN_PAGES:
+            return datetime.now().strftime('%Y-%m-%d')
+
         with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()  # Read full file to find game-time dates
 
