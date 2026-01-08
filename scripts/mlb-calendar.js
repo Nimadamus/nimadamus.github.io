@@ -4,7 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-08", page: "mlb.html", title: "MLB Analysis - January 5, 2026" },
-    { date: "2026-01-08", page: "mlb-page2.html", title: "MLB Picks & Analysis" },
+    { date: "2026-01-08", page: "mlb-page2.html", title: "MLB Analysis - January 08, 2026" },
 ];
 
 const dateMap = {};
