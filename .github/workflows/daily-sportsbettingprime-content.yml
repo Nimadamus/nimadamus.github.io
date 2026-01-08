@@ -1,0 +1,64 @@
+name: Daily Sports Betting Prime Content (Claude API)
+
+on:
+  schedule:
+    - cron: '0 15 * * *'  # 10:00 AM ET
+  workflow_dispatch:
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout nimadamus.github.io
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Generate Sports Content via Claude API
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "=== Generating Sports Betting Prime Content ==="
+          echo "Using Claude API to write human-quality analysis..."
+          python scripts/claude_content_generator.py
+          ls -la daily/ || echo "No daily folder yet"
+
+      - name: Clone sportsbettingprime repo
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git clone https://${GH_PAT}@github.com/Nimadamus/sportsbettingprime.git sbp_repo
+
+      - name: Copy generated content
+        run: |
+          mkdir -p sbp_repo/daily
+          cp -r daily/* sbp_repo/daily/ 2>/dev/null || echo "No daily content to copy"
+          ls -la sbp_repo/daily/
+
+      - name: Commit and push to sportsbettingprime
+        run: |
+          cd sbp_repo
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Daily Claude API content update $(date +'%Y-%m-%d')"
+            git push
+            echo "Pushed to sportsbettingprime"
+          fi
+
+      - name: Summary
+        run: |
+          echo "## Daily Content Generation Complete" >> $GITHUB_STEP_SUMMARY
+          echo "- Claude API generated human-quality sports analysis" >> $GITHUB_STEP_SUMMARY
+          echo "- Content pushed to sportsbettingprime repo" >> $GITHUB_STEP_SUMMARY
