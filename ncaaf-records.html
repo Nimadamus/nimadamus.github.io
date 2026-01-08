@@ -184,11 +184,11 @@
 
         <!-- Year Filter Tabs - PROMINENT -->
         <div class="year-filter-wrapper">
-            <div class="year-filter-title">📅 Select Season to View Records</div>
-            <div class="year-filter-subtitle">NCAAF seasons run August-January • 2025 = Aug '25 through Jan '26</div>
+            <div class="year-filter-title">📅 Select Year to View Records</div>
+            <div class="year-filter-subtitle">Click 2025 to see full season records • 2026 shows current year picks only</div>
             <div class="year-filter-container">
-                <button class="year-filter-btn" data-year="2024">2024</button>
-                <button class="year-filter-btn active" data-year="2025">2025</button>
+                <button class="year-filter-btn" data-year="2025">2025</button>
+                <button class="year-filter-btn active" data-year="2026">2026</button>
                 <button class="year-filter-btn" data-year="all">All Time</button>
             </div>
         </div>
@@ -690,28 +690,14 @@
         setTimeout(createChart, 100);
     }
 
-    // Extract SEASON YEAR from date string (NCAAF seasons run Aug-Jan across two calendar years)
-    // Returns the "season starting year" - e.g., Aug 2025 through Jan 2026 both return 2025 (2025 CFB season)
-    function getSeasonYear(dateStr) {
+    // Extract year from date string (handles M/D/YYYY, M-D-YYYY, MM/DD/YYYY formats)
+    function getYearFromDate(dateStr) {
         if (!dateStr) return null;
         // Try splitting by dash or slash
         const parts = dateStr.split(/[-\/]/);
         if (parts.length === 3) {
-            const month = parseInt(parts[0], 10);
             const year = parseInt(parts[2], 10);
-            if (year >= 2020 && year <= 2030 && month >= 1 && month <= 12) {
-                // College football season runs August through January
-                // Aug (8) through Dec (12) = season started this year
-                // Jan (1) = bowl games/playoffs, season started PREVIOUS year
-                // Feb (2) through Jul (7) = off-season, use calendar year
-                if (month >= 8) {
-                    return year; // Aug-Dec: season started this year
-                } else if (month === 1) {
-                    return year - 1; // Jan: bowl games, season started previous year
-                } else {
-                    return year; // Feb-Jul: off-season, use calendar year
-                }
-            }
+            if (year >= 2020 && year <= 2030) return year;
         }
         // Fallback: try to find 4-digit year anywhere in string
         const yearMatch = dateStr.match(/20\d{2}/);
@@ -733,7 +719,7 @@
             const cells = row.querySelectorAll('td');
             if (cells.length >= 5) {
                 const dateCell = cells[0].textContent.trim();
-                const rowYear = getSeasonYear(dateCell);
+                const rowYear = getYearFromDate(dateCell);
 
                 let showRow = false;
                 if (yearFilter === 'all') {
@@ -787,8 +773,8 @@
 
     // Load data when page loads
     document.addEventListener('DOMContentLoaded', function () {
-        // Filter to 2025 season first (this calculates stats for filtered rows only)
-        filterByYear('2025');
+        // Filter to 2026 first (this calculates stats for filtered rows only)
+        filterByYear('2026');
 
         // Year filter - filter static HTML rows by date
         const yearFilterBtns = document.querySelectorAll('.year-filter-btn');

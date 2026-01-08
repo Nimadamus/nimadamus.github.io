@@ -183,11 +183,11 @@
 
         <!-- Year Filter Tabs - PROMINENT -->
         <div class="year-filter-wrapper">
-            <div class="year-filter-title">📅 Select Season to View Records</div>
-            <div class="year-filter-subtitle">NBA seasons run October-June • 2025-26 = Oct '25 through Jun '26</div>
+            <div class="year-filter-title">📅 Select Year to View Records</div>
+            <div class="year-filter-subtitle">Click 2025 to see full season records • 2026 shows current year picks only</div>
             <div class="year-filter-container">
-                <button class="year-filter-btn" data-year="2025">2024-25</button>
-                <button class="year-filter-btn active" data-year="2026">2025-26</button>
+                <button class="year-filter-btn" data-year="2025">2025</button>
+                <button class="year-filter-btn active" data-year="2026">2026</button>
                 <button class="year-filter-btn" data-year="all">All Time</button>
             </div>
         </div>
@@ -937,25 +937,14 @@
         setTimeout(createChart, 100);
     }
 
-    // Extract SEASON YEAR from date string (NBA seasons run Oct-June across two calendar years)
-    // Returns the "season ending year" - e.g., Oct 2025 through June 2026 both return 2026 (2025-26 season)
-    function getSeasonYear(dateStr) {
+    // Extract year from date string (handles M/D/YYYY, M-D-YYYY, MM/DD/YYYY formats)
+    function getYearFromDate(dateStr) {
         if (!dateStr) return null;
         // Try splitting by dash or slash
         const parts = dateStr.split(/[-\/]/);
         if (parts.length === 3) {
-            const month = parseInt(parts[0], 10);
             const year = parseInt(parts[2], 10);
-            if (year >= 2020 && year <= 2030 && month >= 1 && month <= 12) {
-                // NBA season runs October through June
-                // Oct (10), Nov (11), Dec (12) = first half of season, season ends next year
-                // Jan (1) through Sep (9) = second half of season, season ends this year
-                if (month >= 10) {
-                    return year + 1; // Oct-Dec: season ends next year
-                } else {
-                    return year; // Jan-Sep: season ends this year
-                }
-            }
+            if (year >= 2020 && year <= 2030) return year;
         }
         // Fallback: try to find 4-digit year anywhere in string
         const yearMatch = dateStr.match(/20\d{2}/);
@@ -978,7 +967,7 @@
             const cells = row.querySelectorAll('td');
             if (cells.length >= 5) {
                 const dateCell = cells[0].textContent.trim();
-                const rowYear = getSeasonYear(dateCell);
+                const rowYear = getYearFromDate(dateCell);
 
                 // Check if row should be visible
                 let showRow = false;
