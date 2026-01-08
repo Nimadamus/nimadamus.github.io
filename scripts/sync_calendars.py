@@ -133,10 +133,12 @@ MANUAL_DATE_OVERRIDES = {
     'ncaaf-page35.html': '2025-12-31',  # December 31 NCAAF (New Year's Eve bowls)
     'ncaaf-page36.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals)
     'ncaaf-page37.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - duplicate/overflow)
-    'ncaaf-page38.html': '2025-12-19',  # December 19 NCAAF (Bowl games)
-    'ncaaf-page39.html': '2025-12-19',  # December 19 NCAAF (Bowl games - overflow)
+    'ncaaf-page38.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - Rose Bowl, etc.)
+    'ncaaf-page39.html': '2026-01-02',  # January 2 NCAAF (Bowl games - Armed Forces, Liberty)
     'ncaaf-page40.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - overflow)
-    'ncaaf-page41.html': '2025-12-19',  # December 19 NCAAF (Bowl games - overflow)
+    'ncaaf-page41.html': '2025-12-14',  # December 14 NCAAF (FCS Playoffs + early bowls)
+    'ncaaf-page43.html': '2025-12-13',  # December 13 NCAAF (FCS Playoffs - Quarterfinals)
+    'ncaaf-page44.html': '2025-12-14',  # December 14 NCAAF (FCS Playoffs + Army-Navy)
     # ============================================================
     # IMPORTANT: MAIN PAGES ARE NOT IN THIS LIST!
     # nba.html, nhl.html, ncaab.html, soccer.html, nfl.html, mlb.html
