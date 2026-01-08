@@ -137,32 +137,32 @@ MANUAL_DATE_OVERRIDES = {
     'ncaaf-page39.html': '2025-12-19',  # December 19 NCAAF (Bowl games - overflow)
     'ncaaf-page40.html': '2026-01-01',  # January 1 NCAAF (CFP Quarterfinals - overflow)
     'ncaaf-page41.html': '2025-12-19',  # December 19 NCAAF (Bowl games - overflow)
-    'ncaaf.html': '2026-01-05',         # January 5 NCAAF (FCS Championship - MAIN PAGE)
-    # MLB pages
-    'mlb.html': '2026-01-06',            # January 6 MLB (Off-season coverage - MAIN PAGE)
-    # NBA January 2026 pages - CORRECTED JANUARY 7, 2026
-    # NOTE: Main pages (nba.html etc) now have Jan 7 content per their titles
-    'nba.html': '2026-01-07',            # January 7 NBA (main page - matches title)
-    'nba-page40.html': '2026-01-07',     # January 7 NBA (alternate)
+    # ============================================================
+    # IMPORTANT: MAIN PAGES ARE NOT IN THIS LIST!
+    # nba.html, nhl.html, ncaab.html, soccer.html, nfl.html, mlb.html
+    # MUST extract dates from their page titles (not static overrides)
+    # because main pages change daily with new content.
+    # Only archive pages (pageXX.html) belong in this list.
+    # ============================================================
+
+    # NBA archive pages (NOT main page - nba.html extracts from title)
+    'nba-page40.html': '2026-01-07',     # January 7 NBA
     'nba-page39.html': '2026-01-05',     # January 5 NBA
-    'nba-page38.html': '2026-01-06',     # January 6 NBA (reassigned from main)
+    'nba-page38.html': '2026-01-06',     # January 6 NBA
     'nba-page35.html': '2026-01-04',     # January 4 NBA
     'nba-page37.html': '2026-01-03',     # January 3 NBA
-    # NHL January 2026 pages - CORRECTED JANUARY 7, 2026
-    'nhl.html': '2026-01-07',            # January 7 NHL (main page - matches title)
-    'nhl-page41.html': '2026-01-07',     # January 7 NHL (alternate)
+    # NHL archive pages (NOT main page - nhl.html extracts from title)
+    'nhl-page41.html': '2026-01-07',     # January 7 NHL
     'nhl-page40.html': '2026-01-05',     # January 5 NHL
-    'nhl-page39.html': '2026-01-06',     # January 6 NHL (reassigned from main)
+    'nhl-page39.html': '2026-01-06',     # January 6 NHL
     'nhl-page36.html': '2026-01-04',     # January 4 NHL
     'nhl-page38.html': '2026-01-03',     # January 3 NHL
-    # NCAAB January 2026 pages - CORRECTED JANUARY 7, 2026
-    'ncaab.html': '2026-01-07',          # January 7 NCAAB (main page - matches title)
-    'ncaab-page39.html': '2026-01-07',   # January 7 NCAAB (alternate)
-    'ncaab-page38.html': '2026-01-06',   # January 6 NCAAB (reassigned from main)
-    # Soccer January 2026 pages - CORRECTED JANUARY 7, 2026
-    'soccer.html': '2026-01-07',         # January 7 Soccer (main page - matches title)
-    'soccer-page35.html': '2026-01-07',  # January 7 Soccer (alternate)
-    'soccer-page34.html': '2026-01-06',  # January 6 Soccer (reassigned from main)
+    # NCAAB archive pages (NOT main page - ncaab.html extracts from title)
+    'ncaab-page39.html': '2026-01-07',   # January 7 NCAAB
+    'ncaab-page38.html': '2026-01-06',   # January 6 NCAAB
+    # Soccer archive pages (NOT main page - soccer.html extracts from title)
+    'soccer-page35.html': '2026-01-07',  # January 7 Soccer
+    'soccer-page34.html': '2026-01-06',  # January 6 Soccer
 }
 
 # Month name to number mapping
