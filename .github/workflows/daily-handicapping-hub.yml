@@ -64,9 +64,22 @@ jobs:
             exit 1
           fi
 
+          # Check for merge conflict markers - CRITICAL
+          if grep -qE "^<<<<<<|^======|^>>>>>>" handicapping-hub.html; then
+            echo "ERROR: Merge conflict markers found in handicapping-hub.html!"
+            echo "This should never happen - the production script generates fresh content."
+            exit 1
+          fi
+
           # Check for game cards (at least one game should exist)
           if ! grep -q "game-card" handicapping-hub.html; then
             echo "WARNING: No game cards found in output - may be an off day or API failure"
+          fi
+
+          # Check that stats tables exist
+          if ! grep -q "OFFENSE" handicapping-hub.html; then
+            echo "ERROR: No OFFENSE stats found - layout may be broken!"
+            exit 1
           fi
 
           echo "Validation passed: handicapping-hub.html is $FILE_SIZE bytes"
