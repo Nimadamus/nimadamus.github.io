@@ -394,6 +394,46 @@
             .archive-btn { top: 60px; right: 10px; padding: 8px 12px; font-size: 0.7rem; }
             .archive-dropdown { right: 10px; width: 260px; top: 100px; }
         }
+    
+        .alerts-banner {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            color: white;
+        }
+        .alerts-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .alert-icon { font-size: 20px; }
+        .alert-title { font-weight: 700; font-size: 14px; text-transform: uppercase; }
+        .alert-time { margin-left: auto; font-size: 12px; opacity: 0.8; }
+        .alerts-scroll {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .alert-item {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sport-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+        .alert-text { flex: 1; }
+
     </style>
 </head>
 <body>
@@ -437,6 +477,37 @@
     </div>
 
     <div class="container">
+
+        <div class="alerts-banner">
+            <div class="alerts-header">
+                <span class="alert-icon">⚠️</span>
+                <span class="alert-title">LINE MOVEMENTS DETECTED</span>
+                <span class="alert-time">11:00 AM</span>
+            </div>
+            <div class="alerts-scroll">
+                <div class="alert-item">
+                    <span class="sport-tag">NBA</span>
+                    <span class="alert-text">TOTAL MOVE: Los Angeles Clippers @ Brooklyn Nets (NBA) - Total moved from 216.5 to 214.5 (down)</span>
+                </div>
+                <div class="alert-item">
+                    <span class="sport-tag">NBA</span>
+                    <span class="alert-text">TOTAL MOVE: New York Knicks @ Phoenix Suns (NBA) - Total moved from 229.5 to 227.5 (down)</span>
+                </div>
+                <div class="alert-item">
+                    <span class="sport-tag">NHL</span>
+                    <span class="alert-text">ML MOVE: Detroit Red Wings @ Montréal Canadiens (NHL) - Detroit Red Wings ML moved from 100 to 120</span>
+                </div>
+                <div class="alert-item">
+                    <span class="sport-tag">NCAAB</span>
+                    <span class="alert-text">ML MOVE: Cleveland St Vikings @ Oakland Golden Grizzlies (NCAAB) - Cleveland St Vikings ML moved from 750 to 800</span>
+                </div>
+                <div class="alert-item">
+                    <span class="sport-tag">NCAAB</span>
+                    <span class="alert-text">ML MOVE: Rider Broncs @ Fairfield Stags (NCAAB) - Rider Broncs ML moved from 280 to 310</span>
+                </div>
+            </div>
+        </div>
+
         <div class="tabs">
             <button class="tab-btn active" data-sport="nba">NBA <span class="count">(10)</span></button>
 <button class="tab-btn " data-sport="nfl">NFL <span class="count">(0)</span></button>
