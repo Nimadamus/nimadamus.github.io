@@ -245,6 +245,36 @@ class AutoContentOrchestrator:
 
         return results
 
+    def sync_calendars(self):
+        """Run calendar sync after content generation.
+
+        This ensures the calendar sidebar always shows the correct dates
+        including the newly generated content.
+        """
+        if self.dry_run:
+            print("\n[DRY RUN] Would sync calendars")
+            return
+
+        print("\n[SYNC] Syncing calendars...")
+        try:
+            # Run sync_calendars.py script
+            sync_script = os.path.join(os.path.dirname(REPO_PATH), 'nimadamus.github.io', 'scripts', 'sync_calendars.py')
+            if not os.path.exists(sync_script):
+                sync_script = os.path.join(REPO_PATH, 'scripts', 'sync_calendars.py')
+
+            result = subprocess.run(
+                ['python', sync_script],
+                capture_output=True,
+                text=True,
+                cwd=REPO_PATH
+            )
+            if result.returncode == 0:
+                print("  Calendars synced successfully")
+            else:
+                print(f"  Warning: Calendar sync had issues: {result.stderr}")
+        except Exception as e:
+            print(f"  Warning: Could not sync calendars: {e}")
+
     def git_commit_and_push(self, message: str = None):
         """Commit and push changes to git.
 
@@ -371,6 +401,11 @@ def main():
             total_games += result['games']
 
     print(f"\nTotal: {total_games} games across {successful}/{len(results)} sports")
+
+    # ALWAYS sync calendars after content generation
+    # This ensures the calendar sidebar shows today's date correctly
+    if total_games > 0:
+        orchestrator.sync_calendars()
 
     # Git operations
     if not args.dry_run and GIT_AUTO_COMMIT and total_games > 0:

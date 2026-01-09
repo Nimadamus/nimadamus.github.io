@@ -401,10 +401,12 @@ BANNED PHRASES (DO NOT USE):
 
 FOR EACH GAME YOU MUST INCLUDE:
 1. Specific player matchups with actual stats (e.g., "Luka averaging 33.2 PPG faces a Wolves defense allowing just 108.4")
-2. A clear betting angle or lean with reasoning
+2. BALANCED analysis of BOTH sides - present arguments for each team, do NOT give picks or leans
 3. Key injury impacts with player names
 4. At least one unique trend or stat (ATS record, O/U trend, H2H history)
-5. A specific factor that will decide the game
+5. Key factors that could swing the game EITHER way
+
+CRITICAL: DO NOT give picks, leans, or betting recommendations. Present BOTH sides neutrally.
 
 GAME DATA:
 {games_info}
@@ -423,8 +425,8 @@ For each game, use this structure with REAL specific content:
         <p><strong>The Setup:</strong> [2-3 sentences with specific records and context]</p>
         <p><strong>Key Matchup:</strong> [Player vs player or unit vs unit with REAL stats]</p>
         <p><strong>Injury Factor:</strong> [How specific injuries affect the line]</p>
-        <p><strong>The Number:</strong> [Analysis of spread/total with specific reasoning]</p>
-        <p><strong>Sharp Angle:</strong> [Your betting lean with a unique insight]</p>
+        <p><strong>The Number:</strong> [Analysis of spread/total - why it might be right OR wrong]</p>
+        <p><strong>Key Factor:</strong> [The main variable that could determine the outcome]</p>
     </div>
 </div>
 
