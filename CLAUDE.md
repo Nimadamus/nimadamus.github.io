@@ -50,6 +50,72 @@ INJURIES CHECKED:
 
 ---
 
+## ⛔⛔⛔ ABSOLUTE RULE #0.5: NEVER GUESS BETTING LINES ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 9, 2026
+
+**I MUST SEARCH TO VERIFY BETTING LINES. NEVER ASSUME BASED ON RECORDS OR RANKINGS.**
+
+### THE BETTING LINES RULE:
+```
+BEFORE WRITING ANY SPREAD, MONEYLINE, OR TOTAL:
+1. SEARCH "[Team A] vs [Team B] betting odds" or "[Game] spread"
+2. VERIFY which team is favored and by how much
+3. VERIFY the moneyline for BOTH teams
+4. NEVER assume the "better" team is favored
+5. NEVER make up betting lines based on team records
+```
+
+### WHAT HAPPENED (January 9, 2026):
+- Oregon vs Indiana Rose Bowl CFP Quarterfinal
+- Oregon was 13-0, #1 seed, Heisman finalist QB
+- I ASSUMED Oregon would be heavy favorites (-11.5)
+- I made up moneylines: Oregon -420, Indiana +320
+- **ACTUAL LINE: Indiana -3.5 favorite, Oregon +3.5 underdog**
+- I was COMPLETELY WRONG because I assumed instead of searching
+
+### WHY THIS HAPPENS:
+- Team records DON'T determine betting lines
+- Rankings DON'T determine betting lines
+- The betting market has information I don't have
+- Vegas knows things that records don't show
+
+### THE IRON RULE FOR BETTING CONTENT:
+```
+STEP 1: SEARCH for actual betting lines FIRST
+STEP 2: Write down: [Favorite] -[spread] / [Underdog] +[spread]
+STEP 3: Write down: [Favorite] -[ML] / [Underdog] +[ML]
+STEP 4: ONLY THEN write any analysis
+STEP 5: Double-check analysis matches the correct favorite/underdog
+```
+
+### VERIFICATION REPORT MUST NOW INCLUDE:
+```
+BETTING LINES VERIFIED:
+- Spread: [Team] -X.X via [source]
+- Moneyline: [Favorite] -XXX / [Underdog] +XXX via [source]
+- Total: O/U XX.X via [source]
+```
+
+### RED FLAGS THAT MEAN I'M GUESSING:
+- ❌ "The spread should be around..."
+- ❌ "I'd expect them to be favored by..."
+- ❌ "With their record, they're probably -X"
+- ❌ Any spread I didn't explicitly search for
+
+### IF I AM ABOUT TO WRITE BETTING CONTENT:
+1. STOP
+2. SEARCH for actual current betting lines
+3. WRITE DOWN the exact spread, ML, and total from the source
+4. THEN write the analysis matching those lines
+5. If I can't find lines, ASK THE USER for the correct lines
+
+**GUESSING BETTING LINES IS UNACCEPTABLE. ONE WRONG LINE DESTROYS ALL CREDIBILITY.**
+
+**THIS ERROR HAPPENED ONCE. IT WILL NEVER HAPPEN AGAIN.**
+
+---
+
 ## ⛔⛔⛔ ABSOLUTE RULE #1: NO PAGINATION ON SPORTS PAGES - EVER ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - JANUARY 2, 2026
