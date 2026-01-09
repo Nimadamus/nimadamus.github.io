@@ -604,6 +604,15 @@
                     }
                 });
 
+                // Re-sort entire table by date descending (newest first)
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                rows.sort((a, b) => {
+                    const dateA = new Date(a.cells[0].textContent.trim());
+                    const dateB = new Date(b.cells[0].textContent.trim());
+                    return dateB - dateA; // Newest first
+                });
+                rows.forEach(row => tbody.appendChild(row));
+
                 // Recalculate stats for current year filter
                 const activeYear = document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || '2026';
                 filterByYear(activeYear);

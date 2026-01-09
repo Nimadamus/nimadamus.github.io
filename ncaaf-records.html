@@ -252,7 +252,7 @@
                     <tr><td>12/30/2025</td><td>Coastal Carolina +10</td><td>-110</td><td class="result-W">W</td><td class="win">+1.50</td></tr>
                     <tr><td>12/30/2025</td><td>2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10</td><td>-135</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>12/30/2025</td><td>Illinois +3</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
-                    <tr><td>12/27/2025</td><td>Army/UConn under 41.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
+                    <tr><td>12/27/2025</td><td>Army/Uconn under 41.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
                     <tr><td>12/27/2025</td><td>Missouri -3</td><td>-130</td><td class="result-L">L</td><td class="loss">-3.90</td></tr>
                     <tr><td>12/27/2025</td><td>BYU -3</td><td>-125</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
                     <tr><td>12/27/2025</td><td>Clemson -2.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
@@ -426,7 +426,7 @@
                     <tr><td>8/29/2025</td><td>Army -14.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
                     <tr><td>8/28/2025</td><td>East Carolina +14</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
                     <tr><td>8/23/2025</td><td>Fresno St/Kansas under 50</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
-                    <tr><td>1/1/2025</td><td>Mississppi Team Total under 23.5</td><td>105</td><td class="result-L">L</td><td class="loss">-2.00</td></tr>
+                    <tr><td>1/1/2025</td><td>Mississppi Team Total under 23.5</td><td>+105</td><td class="result-L">L</td><td class="loss">-2.00</td></tr>
                 </tbody>
             </table>
         </div>
@@ -551,6 +551,15 @@
                         existingPicks.add(pickKey);
                     }
                 });
+
+                // Re-sort entire table by date descending (newest first)
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                rows.sort((a, b) => {
+                    const dateA = new Date(a.cells[0].textContent.trim());
+                    const dateB = new Date(b.cells[0].textContent.trim());
+                    return dateB - dateA; // Newest first
+                });
+                rows.forEach(row => tbody.appendChild(row));
 
                 // Recalculate stats for current year filter
                 const activeYear = document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || '2026';
