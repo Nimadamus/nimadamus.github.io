@@ -345,78 +345,30 @@ class HTMLUpdater:
         print(f"Created archive page: {new_page_path}")
 
     def update_all_pagination(self, sport: str, total_pages: int):
-        """Update pagination links on all pages for a sport.
+        """DISABLED - Sports pages use calendar sidebar only, NO pagination.
 
-        Args:
-            sport: Sport code
-            total_pages: Total number of pages including new ones
+        Per CLAUDE.md ABSOLUTE RULE #1: Sports pages must NEVER have pagination.
+        Users navigate via the calendar sidebar. This function now does nothing.
         """
-        config = SPORTS.get(sport.lower())
-        if not config:
-            return
-
-        for page_num in range(1, total_pages + 1):
-            page_path = self.get_page_path(sport, page_num if page_num > 1 else None)
-            if os.path.exists(page_path):
-                html_content = self.read_page(page_path)
-                updated_html = self._update_page_pagination(
-                    html_content, sport, page_num, total_pages
-                )
-                self.write_page(page_path, updated_html)
+        # DISABLED - Do not add pagination to sports pages
+        pass
 
     def _update_page_pagination(self, html_content: str, sport: str,
                                  current_page: int, total_pages: int) -> str:
-        """Update pagination on a single page.
+        """DISABLED - Sports pages use calendar sidebar only, NO pagination.
 
-        Per CLAUDE.md:
-        - sport.html = NEWEST content (Page X of X)
-        - sport-page2.html = Second newest (Page X-1 of X)
-        - sport-pageN.html = OLDEST (Page 1 of X)
+        Per CLAUDE.md ABSOLUTE RULE #1: Sports pages must NEVER have pagination.
+        Users navigate via the calendar sidebar.
 
-        So main page "Older" link goes to page2, not pageN.
+        This function now REMOVES any existing pagination instead of adding it.
         """
-        config = SPORTS.get(sport.lower())
-        main_page = config.get('main_page', f'{sport}.html')
-        page_prefix = config.get('page_prefix', f'{sport}-page')
-
-        # Calculate display page number (newest = highest number)
-        display_page = total_pages - current_page + 1 if current_page > 1 else total_pages
-
-        # Build pagination HTML
-        pagination_parts = ['<div class="archive-link">']
-
-        # Newer link (higher page number in display = lower file number)
-        if current_page > 1:
-            if current_page == 2:
-                newer_link = main_page
-            else:
-                newer_link = f"{page_prefix}{current_page - 1}.html"
-            pagination_parts.append(f'<a href="{newer_link}">← Newer</a> ')
-
-        pagination_parts.append(f'<span>Page {display_page} of {total_pages}</span>')
-
-        # Older link (lower page number in display = higher file number)
-        if current_page < total_pages:
-            older_link = f"{page_prefix}{current_page + 1}.html"
-            pagination_parts.append(f' <a href="{older_link}">Older →</a>')
-
-        pagination_parts.append('</div>')
-        new_pagination = ''.join(pagination_parts)
-
-        # Replace existing pagination or add before </main>
-        if '<div class="archive-link">' in html_content:
-            html_content = re.sub(
-                r'<div class="archive-link">.*?</div>',
-                new_pagination,
-                html_content,
-                flags=re.DOTALL
-            )
-        else:
-            html_content = html_content.replace(
-                '</main>',
-                f'\n{new_pagination}\n</main>'
-            )
-
+        # REMOVE any existing pagination instead of adding it
+        html_content = re.sub(
+            r'<div class="archive-link">.*?</div>\s*',
+            '',
+            html_content,
+            flags=re.DOTALL
+        )
         return html_content
 
     def generate_game_card_html(self, game_data: Dict, sport: str,
