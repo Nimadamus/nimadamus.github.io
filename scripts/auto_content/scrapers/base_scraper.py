@@ -42,7 +42,12 @@ class BaseScraper:
         return None
 
     def get_todays_games(self, date: str = None) -> List[Dict]:
-        """Get today's games from ESPN API."""
+        """Get today's games from ESPN API.
+
+        IMPORTANT: ESPN's scoreboard API for some sports (especially college football)
+        returns ALL recent/upcoming events, not just games for the specific date.
+        This method filters results to only include games matching the requested date.
+        """
         if date is None:
             date = datetime.now().strftime("%Y%m%d")
 
@@ -52,8 +57,34 @@ class BaseScraper:
         if not data or 'events' not in data:
             return []
 
+        # Convert requested date to comparable format
+        requested_date = date  # Already in YYYYMMDD format
+
         games = []
         for event in data['events']:
+            # Filter by date - ESPN returns games outside the requested date for some sports
+            event_date_str = event.get('date', '')
+            if event_date_str:
+                # Parse ISO date format (e.g., "2026-01-10T00:30Z")
+                try:
+                    # Extract just the date part and convert to YYYYMMDD
+                    event_date_part = event_date_str.split('T')[0].replace('-', '')
+
+                    # For games that span midnight (e.g., 00:30Z is actually evening PT)
+                    # Allow games from the day before or day of
+                    event_dt = datetime.strptime(event_date_part, "%Y%m%d")
+                    requested_dt = datetime.strptime(requested_date, "%Y%m%d")
+
+                    # Allow games within a 1-day window (for timezone differences)
+                    day_diff = abs((event_dt - requested_dt).days)
+                    if day_diff > 1:
+                        # Skip games more than 1 day away from requested date
+                        continue
+                except Exception as e:
+                    print(f"Warning: Could not parse event date '{event_date_str}': {e}")
+                    # If we can't parse the date, skip to be safe
+                    continue
+
             game = self._parse_game(event)
             if game:
                 games.append(game)
