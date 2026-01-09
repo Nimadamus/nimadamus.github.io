@@ -145,6 +145,38 @@ A git pre-commit hook is now installed that will:
 
 ---
 
+## ⛔⛔⛔ SYNC RECORDS AFTER GRADING PICKS ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 9, 2026
+
+**After grading ANY picks in the Pick Tracker spreadsheet, I MUST run the sync scripts to update the records pages.**
+
+### THE SYNC SCRIPTS:
+```bash
+# For NCAAF picks:
+python scripts/sync_ncaaf_records.py
+
+# After running sync scripts, commit and push:
+git add .
+git commit -m "Sync records from Pick Tracker"
+git push
+```
+
+### WHEN TO RUN:
+- After grading new NCAAF picks in the Pick Tracker
+- After adding/modifying any picks in the Pick Tracker
+- When user reports records page is out of sync
+
+### WHAT THE SCRIPT DOES:
+1. Reads existing picks from the HTML file (preserves historical data)
+2. Fetches new picks from the Pick Tracker Google Sheet
+3. MERGES new picks with existing data (no data loss)
+4. Updates the HTML file with the merged records
+
+**IF I GRADE PICKS AND DON'T SYNC THE RECORDS PAGE, I HAVE FAILED.**
+
+---
+
 ## ⛔⛔⛔ SPORTS PAGES = PREGAME ANALYSIS ONLY ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - DECEMBER 21, 2025
