@@ -49,17 +49,18 @@ Venue: {game_data.get('venue', '?')}"""
             game_info += f"\nLeague: {game_data.get('league', '?')} | Matchweek: {game_data.get('match_week', '?')}"
 
         # Pick a random angle - this is what makes each article DIFFERENT
+        # NOTE: These are ANALYSIS angles, NOT pick recommendations
         angles = [
-            ("TRAP GAME ALERT", "Look for the trap. Why might the favorite stumble here? Or is the dog getting too much love?"),
-            ("FOLLOW THE MONEY", "Sharps vs squares. Where's the smart money going and why?"),
-            ("SCHEDULING SPOT", "Rest, travel, motivation - what situational factors matter most here?"),
-            ("KEY NUMBER ANALYSIS", "Is this line sitting on a key number? What's the vig telling us?"),
-            ("REVENGE NARRATIVE", "Any bad blood? Recent embarrassments? Teams with something to prove?"),
+            ("MATCHUP ANALYSIS", "Break down how these two teams match up stylistically. What are the key battles?"),
+            ("SCHEDULING CONTEXT", "Rest, travel, motivation - what situational factors are in play here?"),
+            ("KEY STORYLINES", "What narratives are driving this game? Revenge? Playoff positioning? Streaks?"),
             ("PACE & STYLE CLASH", "How do these teams' styles match up? Fast vs slow, offense vs defense?"),
-            ("HOME COOKING", "How much does home court/ice/field actually matter in this specific matchup?"),
+            ("HOME VS AWAY FACTOR", "How much does venue matter in this specific matchup? Look at both teams' home/road splits."),
             ("FORM CHECK", "Forget the season record - what have these teams done in the last 2 weeks?"),
-            ("OVERREACTION TEST", "Is the market overreacting to recent results? Time to fade the public?"),
-            ("TOTAL BREAKDOWN", "Forget the side - is the total the real play here?"),
+            ("INJURY IMPACT", "Who's missing and how does it change the game dynamics?"),
+            ("TOTAL BREAKDOWN", "Is this game set up for high scoring or a defensive battle? Analyze both sides."),
+            ("STRENGTH VS STRENGTH", "Where are both teams at their best? Which strength wins out?"),
+            ("WEAKNESS EXPOSED", "What vulnerabilities does each team have that the opponent can exploit?"),
         ]
 
         angle_name, angle_focus = random.choice(angles)
@@ -98,10 +99,12 @@ GAME DATA:
 INSTRUCTIONS:
 - {opener}
 - 120-180 words MAXIMUM. Tight. Every word earns its place.
-- Have a TAKE. Don't hedge with "could go either way" garbage
+- Provide BALANCED analysis that helps readers understand BOTH sides
 - Reference the actual numbers but don't just list stats
 - Sound like a human with opinions, not a content algorithm
-- End with a clear lean (side or total) - make it punchy
+- DO NOT give picks, leans, or betting recommendations
+- DO NOT say "take the over/under" or "take [team]" or "lean [team]"
+- Present the key factors and let readers decide for themselves
 
 BANNED PHRASES (instant fail if you use these):
 - "In this matchup"
@@ -112,8 +115,11 @@ BANNED PHRASES (instant fail if you use these):
 - "That being said"
 - "Moving forward"
 - Any sentence starting with "This is"
+- "Take the [team]" or "Lean: [team]"
+- "The play is" or "The pick is"
+- "Hammer the over/under"
 
-Write the take. No title. No headers. Just the analysis."""
+Write the analysis. No title. No headers. No picks. Just balanced preview content."""
 
         response = self.client.messages.create(
             model=self.model,
