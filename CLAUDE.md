@@ -6,6 +6,27 @@
 
 ---
 
+## 🔴🔴🔴 CRITICAL REMINDER - READ EVERY SESSION 🔴🔴🔴
+
+### BETTING LINES: NEVER GUESS. ALWAYS SEARCH.
+
+**Before writing ANY spread, moneyline, or total:**
+```
+1. SEARCH "[Team A] vs [Team B] betting odds"
+2. VERIFY which team is favored
+3. WRITE DOWN the exact lines
+4. THEN write analysis
+5. If you can't find lines → ASK THE USER
+```
+
+**JANUARY 9, 2026 ERROR:** I assumed Oregon -11.5 vs Indiana based on their 13-0 record.
+**ACTUAL LINE:** Indiana -3.5 favorite. I was completely wrong.
+**LESSON:** Records DON'T determine lines. Vegas knows things records don't show.
+
+**IF I GUESS BETTING LINES, I HAVE FAILED. SEARCH FIRST. ALWAYS.**
+
+---
+
 ## ⛔⛔⛔ ABSOLUTE RULE #0: MANDATORY FACT-CHECK BEFORE ANY UPLOAD ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - JANUARY 5, 2026
