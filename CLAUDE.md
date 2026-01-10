@@ -27,6 +27,40 @@
 
 ---
 
+## ⛔⛔⛔ ABSOLUTE RULE: FORCED_PAGE_DATE = POST DATE, NOT GAME DATE ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 10, 2026
+
+**The FORCED_PAGE_DATE on Featured Game pages must be the DATE THE POST IS MADE, not when the game is played.**
+
+### THE RULE:
+```
+FORCED_PAGE_DATE = TODAY'S DATE (when you're creating the post)
+NOT the date the game was/is played
+
+Example:
+- Today is January 10, 2026
+- Writing about a game that was played Jan 1
+- FORCED_PAGE_DATE = '2026-01-10' ← POST date (CORRECT)
+- NOT '2026-01-01' ← WRONG (game date)
+```
+
+### WHY THIS MATTERS:
+- The calendar shows when POSTS were made, not when games occurred
+- Setting game dates creates gaps in the calendar
+- Users browse by post date, not game date
+
+### WHEN CREATING A FEATURED GAME PAGE:
+```
+1. FORCED_PAGE_DATE = today's date (e.g., '2026-01-10')
+2. Calendar entry date = today's date
+3. The game can be from any date - past or future - doesn't matter
+```
+
+**THE CALENDAR TRACKS POSTS, NOT GAMES. USE TODAY'S DATE. ALWAYS.**
+
+---
+
 ## ⛔⛔⛔ ABSOLUTE RULE #0: MANDATORY FACT-CHECK BEFORE ANY UPLOAD ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - JANUARY 5, 2026
