@@ -28,6 +28,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-23", page: "nhl-page23.html", title: "NHL Analysis - December 23, 2025" },
     { date: "2025-12-22", page: "nhl-page22.html", title: "NHL Analysis - December 22, 2025" },
     { date: "2025-12-21", page: "nhl-page21.html", title: "NHL Analysis - December 21, 2025" },
+    { date: "2025-12-20", page: "nhl-page45.html", title: "NHL Analysis Archive - Page 45" },
     { date: "2025-12-20", page: "nhl-page37.html", title: "NHL Analysis - December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page20.html", title: "NHL Analysis - December 20, 2025" },
     { date: "2025-12-20", page: "nhl-page12.html", title: "NHL Analysis - December 20, 2025" },

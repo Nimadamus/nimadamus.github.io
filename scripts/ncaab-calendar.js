@@ -24,6 +24,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-23", page: "ncaab-page23.html", title: "NCAAB Analysis - December 23, 2025" },
     { date: "2025-12-22", page: "ncaab-page22.html", title: "NCAAB Analysis - December 22, 2025" },
     { date: "2025-12-21", page: "ncaab-page21.html", title: "NCAAB Analysis - December 21, 2025" },
+    { date: "2025-12-20", page: "ncaab-page43.html", title: "NCAAB Analysis Archive - Page 43" },
     { date: "2025-12-20", page: "ncaab-page36.html", title: "NCAAB Analysis - December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page32.html", title: "NCAAB Analysis - December 20, 2025" },
     { date: "2025-12-20", page: "ncaab-page28.html", title: "NCAAB Analysis - December 20, 2025" },

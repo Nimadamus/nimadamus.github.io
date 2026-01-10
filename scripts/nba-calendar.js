@@ -32,6 +32,7 @@ const ARCHIVE_DATA = [
     { date: "2025-12-21", page: "nba-page5.html", title: "NBA Analysis - December 21, 2025" },
     { date: "2025-12-21", page: "nba-page22.html", title: "NBA Analysis - December 21, 2025" },
     { date: "2025-12-21", page: "nba-page15.html", title: "NBA Analysis - December 21, 2025" },
+    { date: "2025-12-20", page: "nba-page44.html", title: "NBA Analysis Archive - Page 44" },
     { date: "2025-12-20", page: "nba-page4.html", title: "NBA Analysis - December 20, 2025" },
     { date: "2025-12-20", page: "nba-page36.html", title: "NBA Analysis - December 20, 2025" },
     { date: "2025-12-20", page: "nba-page32.html", title: "NBA Analysis - December 20, 2025" },
