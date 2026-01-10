@@ -4,17 +4,13 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-10", page: "soccer.html", title: "Soccer Analysis - January 09, 2026" },
-    { date: "2026-01-10", page: "soccer-page36.html", title: "Soccer Analysis - January 10, 2026" },
+    { date: "2026-01-10", page: "soccer-page19.html", title: "Soccer Analysis - January 10, 2026" },
     { date: "2026-01-08", page: "soccer-page18.html", title: "Soccer Analysis Archive - Page 18" },
-    { date: "2026-01-07", page: "soccer-page35.html", title: "Soccer Analysis - January 07, 2026" },
     { date: "2026-01-07", page: "soccer-page17.html", title: "SOCCER Analysis - January 07, 2026" },
-    { date: "2026-01-06", page: "soccer-page34.html", title: "Soccer Analysis - January 05, 2026" },
     { date: "2026-01-06", page: "soccer-page16.html", title: "SOCCER Analysis - January 06, 2026" },
-    { date: "2026-01-04", page: "soccer-page33.html", title: "Soccer Analysis - January 04, 2026" },
     { date: "2026-01-04", page: "soccer-page15.html", title: "SOCCER Analysis - January 04, 2026" },
     { date: "2026-01-02", page: "soccer-page13.html", title: "SOCCER Analysis - January 02, 2026" },
     { date: "2026-01-02", page: "archives/soccer/2026-01-02.html", title: "SOCCER Archive - 2026-01-02" },
-    { date: "2026-01-01", page: "soccer-page32.html", title: "Soccer Analysis - January 1, 2026" },
     { date: "2026-01-01", page: "soccer-page12.html", title: "SOCCER Analysis - January 01, 2026" },
     { date: "2026-01-01", page: "soccer-page11.html", title: "SOCCER Analysis - January 01, 2026" },
     { date: "2025-12-28", page: "soccer-page9.html", title: "SOCCER Analysis - December 28, 2025" },
@@ -23,12 +19,9 @@ const ARCHIVE_DATA = [
     { date: "2025-12-27", page: "soccer-page6.html", title: "SOCCER Analysis - December 27, 2025" },
     { date: "2025-12-26", page: "soccer-page5.html", title: "SOCCER Analysis - December 26, 2025" },
     { date: "2025-12-22", page: "soccer-page4.html", title: "SOCCER Analysis - December 22, 2025" },
-    { date: "2025-12-22", page: "soccer-page31.html", title: "SOCCER Analysis - December 22, 2025" },
     { date: "2025-12-22", page: "soccer-page14.html", title: "SOCCER Analysis - December 22, 2025" },
     { date: "2025-12-22", page: "soccer-page10.html", title: "SOCCER Analysis - December 22, 2025" },
-    { date: "2025-12-21", page: "soccer-page30.html", title: "SOCCER Analysis - December 21, 2025" },
     { date: "2025-12-19", page: "soccer-page2.html", title: "Soccer Analysis - December 19, 2025" },
-    { date: "2025-12-15", page: "soccer-page22.html", title: "Soccer Analysis - December 15, 2025" },
     { date: "2025-11-28", page: "soccer-page3.html", title: "SOCCER Analysis - November 28, 2025" },
 ];
 
