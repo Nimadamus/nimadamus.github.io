@@ -1,8 +1,9 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: January 09, 2026
+// Last updated: January 10, 2026
 
 const ARCHIVE_DATA = [
+    { date: "2026-01-10", page: "featured-game-of-the-day-page41.html", title: "Rams vs Panthers Wild Card" },
     { date: "2026-01-01", page: "featured-game-of-the-day-page40.html", title: "Oregon vs Indiana Rose Bowl CFP" },
     { date: "2026-01-08", page: "featured-game-of-the-day-page39.html", title: "Miami vs Ole Miss Fiesta Bowl CFP" },
     { date: "2026-01-07", page: "featured-game-of-the-day-page38.html", title: "Stars vs Capitals" },
