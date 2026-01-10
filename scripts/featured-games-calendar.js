@@ -4,7 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-10", page: "featured-game-of-the-day-page41.html", title: "Rams vs Panthers Wild Card" },
-    { date: "2026-01-01", page: "featured-game-of-the-day-page40.html", title: "Oregon vs Indiana Rose Bowl CFP" },
+    { date: "2026-01-09", page: "featured-game-of-the-day-page40.html", title: "Oregon vs Indiana Rose Bowl CFP" },
     { date: "2026-01-08", page: "featured-game-of-the-day-page39.html", title: "Miami vs Ole Miss Fiesta Bowl CFP" },
     { date: "2026-01-07", page: "featured-game-of-the-day-page38.html", title: "Stars vs Capitals" },
     { date: "2026-01-06", page: "featured-game-of-the-day-page37.html", title: "Devils vs Islanders" },
