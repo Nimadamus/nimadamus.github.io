@@ -1,6 +1,6 @@
 // NHL Archive Data - Auto-updated by production script
 const NHL_ARCHIVE = [
-    { date: "2026-01-10", page: "nhl.html", title: "NHL Analysis - December 28, 2025" },
+    { date: "2026-01-11", page: "nhl.html", title: "NHL Analysis - December 28, 2025" },
     { date: "2026-01-10", page: "nhl-page44.html", title: "January 10, 2026" },
     { date: "2026-01-08", page: "nhl-page42.html", title: "December 20, 2025" },
     { date: "2026-01-07", page: "nhl-page41.html", title: "December 20, 2025" },
