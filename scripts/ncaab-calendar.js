@@ -73,16 +73,13 @@ const currentPageDate = pageToDateMap[currentPage] || null;
 const months = new Set();
 ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });
 
-const today = new Date();
-const currentMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
-const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-months.add(currentMonth);
-
+// FIXED Jan 10, 2026: Calendar shows PAGE date, not today's date
+// The calendar reflects what content the user is viewing, not the actual current date
 const sortedMonths = Array.from(months).sort().reverse();
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-// Default to page date month if available, otherwise current month
-let displayMonth = currentPageDate ? currentPageDate.substring(0, 7) : currentMonth;
+// Default to page date month - this is what the user is viewing
+let displayMonth = currentPageDate ? currentPageDate.substring(0, 7) : sortedMonths[0];
 
 function renderCalendar(yearMonth) {
     const [year, month] = yearMonth.split('-').map(Number);
@@ -99,7 +96,7 @@ function renderCalendar(yearMonth) {
         const hasData = dateMap[dateStr];
         let classes = 'cal-day';
         if (dateStr === currentPageDate) classes += ' current-page';
-        if (dateStr === todayStr) classes += ' today';
+        // Removed 'today' highlight - calendar shows PAGE date, not actual date
         if (hasData) classes += ' has-content';
         const cell = document.createElement('div');
         cell.className = classes;
