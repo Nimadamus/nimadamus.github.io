@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Sharp vs Square Page Generator
-Scrapes betting consensus data from SBR and generates HTML page
+Sharp vs Square Page Generator - Clean Table Format
+Scrapes betting consensus data from SBR and generates readable HTML page
 """
 
 import requests
@@ -28,7 +28,6 @@ def fetch_sbr_consensus(sport, url):
         response = requests.get(url, headers=HEADERS, timeout=30)
         response.raise_for_status()
 
-        # Extract __NEXT_DATA__ JSON
         match = re.search(r'__NEXT_DATA__.*?type="application/json">([^<]+)', response.text)
         if not match:
             print(f"[{sport}] No __NEXT_DATA__ found")
@@ -48,63 +47,45 @@ def fetch_sbr_consensus(sport, url):
                 home_team = g.get('homeTeam', {})
                 consensus = g.get('consensus', {})
 
-                # Get odds data
+                # Get odds from first bookmaker
                 odds_views = game.get('oddsViews', [])
-                spread_data = {}
-                total_data = {}
-                ml_data = {}
+                spread_home = None
+                spread_away = None
+                total = None
+                ml_home = None
+                ml_away = None
 
                 for odds in odds_views:
                     if odds and odds.get('currentLine'):
                         line = odds['currentLine']
-                        open_line = odds.get('openingLine', {})
-
-                        if 'spread' in str(line.get('homeSpread', '')).lower() or line.get('homeSpread') is not None:
-                            spread_data = {
-                                'home_spread': line.get('homeSpread'),
-                                'away_spread': line.get('awaySpread'),
-                                'home_spread_odds': line.get('homeSpreadOdds'),
-                                'away_spread_odds': line.get('awaySpreadOdds'),
-                                'open_home_spread': open_line.get('homeSpread') if open_line else None,
-                                'open_away_spread': open_line.get('awaySpread') if open_line else None
-                            }
-
-                        if line.get('total') is not None:
-                            total_data = {
-                                'total': line.get('total'),
-                                'over_odds': line.get('overOdds'),
-                                'under_odds': line.get('underOdds'),
-                                'open_total': open_line.get('total') if open_line else None
-                            }
-
-                        if line.get('homeMoneyLine') is not None:
-                            ml_data = {
-                                'home_ml': line.get('homeMoneyLine'),
-                                'away_ml': line.get('awayMoneyLine'),
-                                'open_home_ml': open_line.get('homeMoneyLine') if open_line else None,
-                                'open_away_ml': open_line.get('awayMoneyLine') if open_line else None
-                            }
+                        if spread_home is None and line.get('homeSpread') is not None:
+                            spread_home = line.get('homeSpread')
+                            spread_away = line.get('awaySpread')
+                        if total is None and line.get('total') is not None:
+                            total = line.get('total')
+                        if ml_home is None and line.get('homeMoneyLine') is not None:
+                            ml_home = line.get('homeMoneyLine')
+                            ml_away = line.get('awayMoneyLine')
+                        break
 
                 game_data = {
                     'sport': sport,
                     'away_team': away_team.get('name', 'Unknown'),
                     'away_abbr': away_team.get('abbreviation', ''),
-                    'away_logo': away_team.get('logoUrl', ''),
                     'home_team': home_team.get('name', 'Unknown'),
                     'home_abbr': home_team.get('abbreviation', ''),
-                    'home_logo': home_team.get('logoUrl', ''),
                     'game_time': g.get('startDate', ''),
-                    'consensus': {
-                        'away_spread_pct': consensus.get('awaySpreadPickPercent', 0),
-                        'home_spread_pct': consensus.get('homeSpreadPickPercent', 0),
-                        'over_pct': consensus.get('overPickPercent', 0),
-                        'under_pct': consensus.get('underPickPercent', 0),
-                        'away_ml_pct': consensus.get('awayMoneyLinePickPercent', 0),
-                        'home_ml_pct': consensus.get('homeMoneyLinePickPercent', 0)
-                    },
-                    'spread': spread_data,
-                    'total': total_data,
-                    'moneyline': ml_data
+                    'spread_home': spread_home,
+                    'spread_away': spread_away,
+                    'total': total,
+                    'ml_home': ml_home,
+                    'ml_away': ml_away,
+                    'away_spread_pct': consensus.get('awaySpreadPickPercent', 0),
+                    'home_spread_pct': consensus.get('homeSpreadPickPercent', 0),
+                    'over_pct': consensus.get('overPickPercent', 0),
+                    'under_pct': consensus.get('underPickPercent', 0),
+                    'away_ml_pct': consensus.get('awayMoneyLinePickPercent', 0),
+                    'home_ml_pct': consensus.get('homeMoneyLinePickPercent', 0)
                 }
 
                 parsed_games.append(game_data)
@@ -121,236 +102,111 @@ def fetch_sbr_consensus(sport, url):
         return []
 
 
-def identify_sharp_signals(game):
-    """Identify sharp betting signals for a game"""
-    signals = []
-    consensus = game.get('consensus', {})
-    spread = game.get('spread', {})
-    total = game.get('total', {})
-
-    # Check for Reverse Line Movement (RLM) on spread
-    if spread.get('home_spread') is not None and spread.get('open_home_spread') is not None:
-        home_spread = float(spread['home_spread']) if spread['home_spread'] else 0
-        open_home_spread = float(spread['open_home_spread']) if spread['open_home_spread'] else 0
-        home_spread_pct = consensus.get('home_spread_pct', 50)
-
-        # RLM: Line moves against public (public on home but line gets worse for home)
-        if home_spread_pct > 55 and home_spread > open_home_spread:
-            signals.append({
-                'type': 'RLM',
-                'side': game['away_team'],
-                'desc': f"Reverse line movement - {home_spread_pct:.0f}% on {game['home_team']} but line moved from {open_home_spread} to {home_spread}"
-            })
-        elif home_spread_pct < 45 and home_spread < open_home_spread:
-            signals.append({
-                'type': 'RLM',
-                'side': game['home_team'],
-                'desc': f"Reverse line movement - {100-home_spread_pct:.0f}% on {game['away_team']} but line moved from {open_home_spread} to {home_spread}"
-            })
-
-    # Check for total RLM
-    if total.get('total') is not None and total.get('open_total') is not None:
-        current_total = float(total['total']) if total['total'] else 0
-        open_total = float(total['open_total']) if total['open_total'] else 0
-        over_pct = consensus.get('over_pct', 50)
-
-        if over_pct > 60 and current_total < open_total:
-            signals.append({
-                'type': 'RLM',
-                'side': 'UNDER',
-                'desc': f"Reverse line movement - {over_pct:.0f}% on OVER but total dropped from {open_total} to {current_total}"
-            })
-        elif over_pct < 40 and current_total > open_total:
-            signals.append({
-                'type': 'RLM',
-                'side': 'OVER',
-                'desc': f"Reverse line movement - {100-over_pct:.0f}% on UNDER but total rose from {open_total} to {current_total}"
-            })
-
-    # Heavy one-sided action (potential sharp or square trap)
-    home_spread_pct = consensus.get('home_spread_pct', 50)
-    if home_spread_pct >= 70:
-        signals.append({
-            'type': 'HEAVY',
-            'side': game['home_team'],
-            'desc': f"Heavy public action - {home_spread_pct:.0f}% on {game['home_team']}"
-        })
-    elif home_spread_pct <= 30:
-        signals.append({
-            'type': 'HEAVY',
-            'side': game['away_team'],
-            'desc': f"Heavy public action - {100-home_spread_pct:.0f}% on {game['away_team']}"
-        })
-
-    return signals
-
-
-def generate_game_card_html(game):
-    """Generate HTML for a single game card"""
-    consensus = game.get('consensus', {})
-    spread = game.get('spread', {})
-    total = game.get('total', {})
-    ml = game.get('moneyline', {})
-    signals = identify_sharp_signals(game)
-
-    away_spread_pct = consensus.get('away_spread_pct', 0)
-    home_spread_pct = consensus.get('home_spread_pct', 0)
-    over_pct = consensus.get('over_pct', 0)
-    under_pct = consensus.get('under_pct', 0)
-    away_ml_pct = consensus.get('away_ml_pct', 0)
-    home_ml_pct = consensus.get('home_ml_pct', 0)
-
-    # Determine sharp indicator
-    sharp_indicator = ''
-    if signals:
-        for sig in signals:
-            if sig['type'] == 'RLM':
-                sharp_indicator = f'''
-                <div class="sharp-alert">
-                    <span class="sharp-icon">&#x1F4B0;</span>
-                    <span>Sharp money appears to be on <strong>{sig['side']}</strong></span>
-                </div>'''
-                break
-
-    # Format spread display
-    home_spread_val = spread.get('home_spread')
-    away_spread_val = spread.get('away_spread')
-
-    def format_spread(val):
-        if val is None or val == '-' or val == '':
-            return '-'
-        try:
-            num = float(val)
-            return f"+{num}" if num > 0 else str(num)
-        except (ValueError, TypeError):
-            return '-'
-
-    home_spread_str = format_spread(home_spread_val)
-    away_spread_str = format_spread(away_spread_val)
-
-    # Format total display
-    total_val = total.get('total', '-') or '-'
-
-    # Format ML display
-    home_ml = ml.get('home_ml')
-    away_ml = ml.get('away_ml')
-
-    def format_ml(val):
-        if val is None or val == '-' or val == '':
-            return '-'
-        try:
-            num = int(val)
-            return f"+{num}" if num > 0 else str(num)
-        except (ValueError, TypeError):
-            return '-'
-
-    home_ml_str = format_ml(home_ml)
-    away_ml_str = format_ml(away_ml)
-
-    # Line movement indicators
-    spread_move = ''
+def format_spread(val):
+    """Format spread value"""
+    if val is None:
+        return '-'
     try:
-        open_spread = spread.get('open_home_spread')
-        curr_spread = spread.get('home_spread')
-        if open_spread and curr_spread and open_spread != '-' and curr_spread != '-':
-            diff = float(curr_spread) - float(open_spread)
-            if abs(diff) >= 0.5:
-                arrow = '&#x2191;' if diff > 0 else '&#x2193;'
-                spread_move = f'<span class="line-move">({open_spread} {arrow})</span>'
-    except (ValueError, TypeError):
-        pass
+        num = float(val)
+        return f"+{num}" if num > 0 else str(num)
+    except:
+        return '-'
 
-    total_move = ''
+
+def format_ml(val):
+    """Format moneyline value"""
+    if val is None:
+        return '-'
     try:
-        open_total = total.get('open_total')
-        curr_total = total.get('total')
-        if open_total and curr_total and open_total != '-' and curr_total != '-':
-            diff = float(curr_total) - float(open_total)
-            if abs(diff) >= 0.5:
-                arrow = '&#x2191;' if diff > 0 else '&#x2193;'
-                total_move = f'<span class="line-move">({open_total} {arrow})</span>'
-    except (ValueError, TypeError):
-        pass
+        num = int(val)
+        return f"+{num}" if num > 0 else str(num)
+    except:
+        return '-'
 
-    return f'''
-    <div class="game-card">
-        <div class="game-header">
-            <span class="game-time">{game.get('game_time', 'TBD')}</span>
+
+def get_sharp_signal(game):
+    """Determine if there's a sharp signal and which side"""
+    away_pct = game.get('away_spread_pct', 50)
+    home_pct = game.get('home_spread_pct', 50)
+
+    # Heavy one-sided action (potential sharp fade)
+    if away_pct >= 65:
+        return ('away_heavy', game['away_team'], away_pct)
+    elif home_pct >= 65:
+        return ('home_heavy', game['home_team'], home_pct)
+
+    return None
+
+
+def generate_game_table_html(games, sport):
+    """Generate a clean table for games"""
+    if not games:
+        return '<p class="no-games">No games scheduled for today.</p>'
+
+    rows = []
+    for game in games:
+        away_spread_pct = game.get('away_spread_pct', 0)
+        home_spread_pct = game.get('home_spread_pct', 0)
+        over_pct = game.get('over_pct', 0)
+        under_pct = game.get('under_pct', 0)
+        away_ml_pct = game.get('away_ml_pct', 0)
+        home_ml_pct = game.get('home_ml_pct', 0)
+
+        # Determine which side has more action
+        away_spread_class = 'highlight-pct' if away_spread_pct > home_spread_pct else ''
+        home_spread_class = 'highlight-pct' if home_spread_pct > away_spread_pct else ''
+        over_class = 'highlight-pct' if over_pct > under_pct else ''
+        under_class = 'highlight-pct' if under_pct > over_pct else ''
+        away_ml_class = 'highlight-pct' if away_ml_pct > home_ml_pct else ''
+        home_ml_class = 'highlight-pct' if home_ml_pct > away_ml_pct else ''
+
+        # Sharp signal
+        signal = get_sharp_signal(game)
+        signal_html = ''
+        if signal:
+            signal_type, team, pct = signal
+            signal_html = f'<div class="sharp-signal">&#x26A0; {pct:.0f}% of bets on {team} - potential fade opportunity</div>'
+
+        rows.append(f'''
+        <div class="game-block">
+            {signal_html}
+            <table class="consensus-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th class="line-col">SPREAD</th>
+                        <th class="pct-col">SPREAD %</th>
+                        <th class="line-col">TOTAL</th>
+                        <th class="pct-col">O/U %</th>
+                        <th class="line-col">ML</th>
+                        <th class="pct-col">ML %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-name">{game['away_team']}</td>
+                        <td class="line-val">{format_spread(game.get('spread_away'))}</td>
+                        <td class="pct-val {away_spread_class}">{away_spread_pct:.0f}%</td>
+                        <td class="line-val">O {game.get('total') or '-'}</td>
+                        <td class="pct-val {over_class}">{over_pct:.0f}%</td>
+                        <td class="line-val">{format_ml(game.get('ml_away'))}</td>
+                        <td class="pct-val {away_ml_class}">{away_ml_pct:.0f}%</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-name">{game['home_team']}</td>
+                        <td class="line-val">{format_spread(game.get('spread_home'))}</td>
+                        <td class="pct-val {home_spread_class}">{home_spread_pct:.0f}%</td>
+                        <td class="line-val">U {game.get('total') or '-'}</td>
+                        <td class="pct-val {under_class}">{under_pct:.0f}%</td>
+                        <td class="line-val">{format_ml(game.get('ml_home'))}</td>
+                        <td class="pct-val {home_ml_class}">{home_ml_pct:.0f}%</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        {sharp_indicator}
-        <div class="teams-container">
-            <div class="team-row">
-                <div class="team-info">
-                    <span class="team-name">{game['away_team']}</span>
-                </div>
-                <div class="consensus-bars">
-                    <div class="bar-container">
-                        <div class="bar-label">SPREAD {away_spread_str}</div>
-                        <div class="bar-wrapper">
-                            <div class="bar away-bar" style="width: {away_spread_pct}%;">
-                                <span class="bar-pct">{away_spread_pct:.0f}%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-container">
-                        <div class="bar-label">ML {away_ml_str}</div>
-                        <div class="bar-wrapper">
-                            <div class="bar away-bar" style="width: {away_ml_pct if away_ml_pct > 0 else 50}%;">
-                                <span class="bar-pct">{away_ml_pct:.0f}%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="team-row">
-                <div class="team-info">
-                    <span class="team-name">{game['home_team']}</span>
-                </div>
-                <div class="consensus-bars">
-                    <div class="bar-container">
-                        <div class="bar-label">SPREAD {home_spread_str} {spread_move}</div>
-                        <div class="bar-wrapper">
-                            <div class="bar home-bar" style="width: {home_spread_pct}%;">
-                                <span class="bar-pct">{home_spread_pct:.0f}%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-container">
-                        <div class="bar-label">ML {home_ml_str}</div>
-                        <div class="bar-wrapper">
-                            <div class="bar home-bar" style="width: {home_ml_pct if home_ml_pct > 0 else 50}%;">
-                                <span class="bar-pct">{home_ml_pct:.0f}%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="totals-row">
-            <div class="total-info">
-                <span class="total-label">TOTAL: {total_val} {total_move}</span>
-            </div>
-            <div class="total-bars">
-                <div class="total-bar-item">
-                    <span class="ou-label">OVER</span>
-                    <div class="bar-wrapper small">
-                        <div class="bar over-bar" style="width: {over_pct}%;">
-                            <span class="bar-pct">{over_pct:.0f}%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="total-bar-item">
-                    <span class="ou-label">UNDER</span>
-                    <div class="bar-wrapper small">
-                        <div class="bar under-bar" style="width: {under_pct}%;">
-                            <span class="bar-pct">{under_pct:.0f}%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    '''
+        ''')
+
+    return '\n'.join(rows)
 
 
 def generate_html(all_games):
@@ -364,11 +220,10 @@ def generate_html(all_games):
         if sport in games_by_sport:
             games_by_sport[sport].append(game)
 
-    # Generate game cards for each sport
-    sport_sections = {}
+    # Generate tables for each sport
+    sport_tables = {}
     for sport, games in games_by_sport.items():
-        cards_html = '\n'.join([generate_game_card_html(g) for g in games])
-        sport_sections[sport] = cards_html if cards_html else '<p class="no-games">No games scheduled</p>'
+        sport_tables[sport] = generate_game_table_html(games, sport)
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -380,36 +235,11 @@ def generate_html(all_games):
     <link rel="canonical" href="https://betlegendpicks.com/sharp-vs-square.html">
     <link rel="icon" type="image/png" href="favicon.png">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Sharp vs Square - Betting Consensus Tracker | BetLegend">
-    <meta property="og:description" content="Track sharp money vs public betting percentages. See where the smart money is going.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://betlegendpicks.com/sharp-vs-square.html">
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        :root {{
-            --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
-            --bg-card-hover: #1a1a24;
-            --accent-cyan: #00d4ff;
-            --accent-gold: #ffd700;
-            --accent-green: #00ff88;
-            --accent-red: #ff4757;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --text-muted: #6a6a7a;
-            --border-color: #2a2a3a;
-            --away-color: #00d4ff;
-            --home-color: #ff6b35;
-            --over-color: #00ff88;
-            --under-color: #ff4757;
-        }}
-
         * {{
             margin: 0;
             padding: 0;
@@ -418,123 +248,133 @@ def generate_html(all_games):
 
         body {{
             font-family: 'Inter', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.5;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            line-height: 1.6;
         }}
 
         /* Header */
         header {{
-            background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0f 100%);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background: linear-gradient(135deg, #1a365d 0%, #2d4a7c 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
         }}
 
-        .header-content {{
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }}
-
-        .logo {{
-            font-size: 1.5rem;
+        header h1 {{
+            font-size: 2.5rem;
             font-weight: 800;
-            color: var(--accent-cyan);
-            text-decoration: none;
-            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
         }}
 
-        .logo span {{
-            color: var(--accent-gold);
+        header h1 span {{
+            color: #fd5000;
         }}
 
+        header p {{
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }}
+
+        .last-updated {{
+            background: rgba(255,255,255,0.1);
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }}
+
+        /* Navigation */
         nav {{
-            display: flex;
-            gap: 1.5rem;
+            background: #1a365d;
+            padding: 0.75rem 2rem;
+            border-bottom: 3px solid #fd5000;
         }}
 
         nav a {{
-            color: var(--text-secondary);
+            color: white;
             text-decoration: none;
+            margin-right: 1.5rem;
             font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.2s;
+            opacity: 0.8;
+            transition: opacity 0.2s;
         }}
 
-        nav a:hover, nav a.active {{
-            color: var(--accent-cyan);
+        nav a:hover {{
+            opacity: 1;
         }}
 
         /* Main Content */
         main {{
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }}
 
-        .page-header {{
-            text-align: center;
+        /* Explanation Box */
+        .explanation {{
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
             margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid #fd5000;
         }}
 
-        .page-header h1 {{
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .explanation h2 {{
+            color: #1a365d;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }}
+
+        .explanation p {{
+            color: #444;
+            margin-bottom: 0.75rem;
+        }}
+
+        .explanation ul {{
+            margin-left: 1.5rem;
+            color: #444;
+        }}
+
+        .explanation li {{
             margin-bottom: 0.5rem;
         }}
 
-        .page-header p {{
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }}
-
-        .last-updated {{
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 2rem;
-            font-family: 'JetBrains Mono', monospace;
+        .explanation strong {{
+            color: #1a365d;
         }}
 
         /* Sport Tabs */
         .sport-tabs {{
             display: flex;
-            justify-content: center;
             gap: 0.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }}
 
         .sport-tab {{
             padding: 0.75rem 1.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            background: white;
+            border: 2px solid #ddd;
             border-radius: 8px;
-            color: var(--text-secondary);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            font-size: 1rem;
         }}
 
         .sport-tab:hover {{
-            background: var(--bg-card-hover);
-            border-color: var(--accent-cyan);
+            border-color: #1a365d;
         }}
 
         .sport-tab.active {{
-            background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
-            border-color: var(--accent-cyan);
-            color: var(--bg-dark);
+            background: #1a365d;
+            border-color: #1a365d;
+            color: white;
         }}
 
         /* Games Container */
@@ -546,321 +386,208 @@ def generate_html(all_games):
             display: block;
         }}
 
-        .games-grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1.5rem;
-        }}
-
-        /* Game Card */
-        .game-card {{
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
+        /* Game Block */
+        .game-block {{
+            background: white;
             border-radius: 12px;
-            padding: 1.25rem;
-            transition: all 0.2s;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }}
 
-        .game-card:hover {{
-            border-color: var(--accent-cyan);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
-        }}
-
-        .game-header {{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border-color);
-        }}
-
-        .game-time {{
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            font-family: 'JetBrains Mono', monospace;
-        }}
-
-        .sharp-alert {{
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
-            border: 1px solid var(--accent-gold);
-            border-radius: 8px;
+        /* Sharp Signal */
+        .sharp-signal {{
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
             padding: 0.75rem 1rem;
+            border-radius: 8px;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
+            font-weight: 500;
         }}
 
-        .sharp-icon {{
-            font-size: 1.2rem;
+        /* Consensus Table */
+        .consensus-table {{
+            width: 100%;
+            border-collapse: collapse;
         }}
 
-        .sharp-alert strong {{
-            color: var(--accent-gold);
+        .consensus-table th {{
+            background: #f8f9fa;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #dee2e6;
         }}
 
-        .teams-container {{
-            margin-bottom: 1rem;
+        .consensus-table th.team-col {{
+            text-align: left;
+            width: 25%;
         }}
 
-        .team-row {{
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem 0;
+        .consensus-table th.line-col {{
+            width: 12%;
         }}
 
-        .team-row:first-child {{
-            border-bottom: 1px dashed var(--border-color);
+        .consensus-table th.pct-col {{
+            width: 12%;
         }}
 
-        .team-info {{
-            min-width: 120px;
+        .consensus-table td {{
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
         }}
 
-        .team-name {{
+        .consensus-table .team-name {{
+            text-align: left;
             font-weight: 600;
+            font-size: 1.05rem;
+            color: #1a1a1a;
+        }}
+
+        .consensus-table .line-val {{
+            font-weight: 500;
+            color: #444;
             font-size: 0.95rem;
         }}
 
-        .consensus-bars {{
-            flex: 1;
-            display: flex;
-            gap: 1rem;
+        .consensus-table .pct-val {{
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #666;
         }}
 
-        .bar-container {{
-            flex: 1;
-        }}
-
-        .bar-label {{
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 0.25rem;
-            font-family: 'JetBrains Mono', monospace;
-        }}
-
-        .bar-wrapper {{
-            background: var(--bg-dark);
+        .consensus-table .highlight-pct {{
+            color: #1a365d;
+            background: #e8f4f8;
             border-radius: 4px;
-            height: 24px;
-            overflow: hidden;
         }}
 
-        .bar-wrapper.small {{
-            height: 20px;
+        .away-row {{
+            background: #fafafa;
         }}
 
-        .bar {{
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 8px;
-            border-radius: 4px;
-            min-width: 40px;
-            transition: width 0.3s ease;
-        }}
-
-        .bar-pct {{
-            font-size: 0.75rem;
-            font-weight: 600;
-            font-family: 'JetBrains Mono', monospace;
-        }}
-
-        .away-bar {{
-            background: linear-gradient(90deg, var(--away-color), #0099cc);
-        }}
-
-        .home-bar {{
-            background: linear-gradient(90deg, var(--home-color), #cc4400);
-        }}
-
-        .over-bar {{
-            background: linear-gradient(90deg, var(--over-color), #00cc66);
-        }}
-
-        .under-bar {{
-            background: linear-gradient(90deg, var(--under-color), #cc3344);
-        }}
-
-        .line-move {{
-            color: var(--accent-gold);
-            font-size: 0.7rem;
-            margin-left: 4px;
-        }}
-
-        .totals-row {{
-            background: var(--bg-dark);
-            border-radius: 8px;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }}
-
-        .total-info {{
-            min-width: 100px;
-        }}
-
-        .total-label {{
-            font-size: 0.85rem;
-            font-weight: 600;
-            font-family: 'JetBrains Mono', monospace;
-        }}
-
-        .total-bars {{
-            flex: 1;
-            display: flex;
-            gap: 1rem;
-        }}
-
-        .total-bar-item {{
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }}
-
-        .ou-label {{
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            min-width: 45px;
+        .home-row {{
+            background: white;
         }}
 
         .no-games {{
             text-align: center;
-            color: var(--text-muted);
+            color: #666;
             padding: 3rem;
             font-size: 1.1rem;
+            background: white;
+            border-radius: 12px;
         }}
 
         /* Legend */
         .legend {{
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            background: white;
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.5rem 2rem;
             margin-top: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }}
 
         .legend h3 {{
-            font-size: 1rem;
-            color: var(--accent-cyan);
+            color: #1a365d;
+            font-size: 1.1rem;
             margin-bottom: 1rem;
+            border-bottom: 2px solid #fd5000;
+            padding-bottom: 0.5rem;
+            display: inline-block;
         }}
 
-        .legend-items {{
+        .legend-grid {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
         }}
 
         .legend-item {{
             display: flex;
-            align-items: flex-start;
             gap: 0.75rem;
         }}
 
-        .legend-icon {{
-            font-size: 1.2rem;
-        }}
-
-        .legend-text strong {{
+        .legend-item strong {{
+            color: #1a365d;
             display: block;
-            font-size: 0.9rem;
             margin-bottom: 0.25rem;
         }}
 
-        .legend-text span {{
-            font-size: 0.8rem;
-            color: var(--text-muted);
+        .legend-item span {{
+            color: #666;
+            font-size: 0.9rem;
         }}
 
         /* Footer */
         footer {{
-            background: var(--bg-card);
-            border-top: 1px solid var(--border-color);
-            padding: 2rem;
-            margin-top: 3rem;
+            background: #1a365d;
+            color: white;
+            padding: 1.5rem 2rem;
             text-align: center;
-        }}
-
-        footer p {{
-            color: var(--text-muted);
-            font-size: 0.85rem;
+            margin-top: 2rem;
         }}
 
         footer a {{
-            color: var(--accent-cyan);
+            color: #fd5000;
             text-decoration: none;
         }}
 
         /* Responsive */
         @media (max-width: 768px) {{
-            .header-content {{
-                flex-direction: column;
-                gap: 1rem;
+            header h1 {{
+                font-size: 1.8rem;
             }}
 
-            nav {{
-                flex-wrap: wrap;
-                justify-content: center;
+            .consensus-table {{
+                font-size: 0.85rem;
             }}
 
-            .games-grid {{
-                grid-template-columns: 1fr;
+            .consensus-table th,
+            .consensus-table td {{
+                padding: 0.5rem;
             }}
 
-            .team-row {{
-                flex-direction: column;
-                align-items: flex-start;
-            }}
-
-            .consensus-bars {{
-                width: 100%;
-            }}
-
-            .totals-row {{
-                flex-direction: column;
-                align-items: flex-start;
-            }}
-
-            .total-bars {{
-                width: 100%;
+            .consensus-table th.team-col {{
+                width: 30%;
             }}
         }}
     </style>
 </head>
 <body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="handicapping-hub.html">Handicapping Hub</a>
+        <a href="sharp-vs-square.html" style="opacity:1; color:#fd5000;">Sharp vs Square</a>
+        <a href="moneyline-parlay-of-the-day.html">ML Parlay</a>
+        <a href="nba.html">NBA</a>
+        <a href="nfl.html">NFL</a>
+        <a href="nhl.html">NHL</a>
+    </nav>
+
     <header>
-        <div class="header-content">
-            <a href="index.html" class="logo">Bet<span>Legend</span></a>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="handicapping-hub.html">Handicapping Hub</a>
-                <a href="sharp-vs-square.html" class="active">Sharp vs Square</a>
-                <a href="moneyline-parlay-of-the-day.html">ML Parlay</a>
-                <a href="featured-game-of-the-day-page49.html">Featured Game</a>
-                <a href="nba.html">NBA</a>
-                <a href="nfl.html">NFL</a>
-                <a href="nhl.html">NHL</a>
-                <a href="ncaab.html">NCAAB</a>
-            </nav>
-        </div>
+        <h1>Sharp vs <span>Square</span></h1>
+        <p>See where the betting public is putting their money. Track consensus percentages for spreads, totals, and moneylines across all major sports.</p>
+        <div class="last-updated">Last Updated: {now.strftime('%B %d, %Y at %I:%M %p ET')}</div>
     </header>
 
     <main>
-        <div class="page-header">
-            <h1>Sharp vs Square</h1>
-            <p>Track where the smart money is going. Consensus betting percentages updated hourly.</p>
-        </div>
-
-        <div class="last-updated">
-            Last Updated: {now.strftime('%B %d, %Y at %I:%M %p ET')}
+        <div class="explanation">
+            <h2>What Is This Page?</h2>
+            <p>This page shows <strong>betting consensus data</strong> - the percentage of bets placed on each side of a game. This data helps you understand where the general public ("squares") is betting.</p>
+            <p><strong>How to use this information:</strong></p>
+            <ul>
+                <li><strong>High percentage (65%+) on one side</strong> = Heavy public action. Some bettors like to "fade the public" and bet the other side.</li>
+                <li><strong>Look for value</strong> = When the public hammers one side, the line may move, creating value on the less popular side.</li>
+                <li><strong>Not a guarantee</strong> = The public wins sometimes too. Use this as ONE tool in your analysis, not the only factor.</li>
+            </ul>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;"><em>Data updates hourly. Percentages show % of total bets on each side.</em></p>
         </div>
 
         <div class="sport-tabs">
@@ -871,58 +598,46 @@ def generate_html(all_games):
         </div>
 
         <div id="nfl-games" class="games-container active">
-            <div class="games-grid">
-                {sport_sections['NFL']}
-            </div>
+            {sport_tables['NFL']}
         </div>
 
         <div id="nba-games" class="games-container">
-            <div class="games-grid">
-                {sport_sections['NBA']}
-            </div>
+            {sport_tables['NBA']}
         </div>
 
         <div id="nhl-games" class="games-container">
-            <div class="games-grid">
-                {sport_sections['NHL']}
-            </div>
+            {sport_tables['NHL']}
         </div>
 
         <div id="ncaab-games" class="games-container">
-            <div class="games-grid">
-                {sport_sections['NCAAB']}
-            </div>
+            {sport_tables['NCAAB']}
         </div>
 
         <div class="legend">
-            <h3>Understanding Sharp Signals</h3>
-            <div class="legend-items">
+            <h3>Understanding the Data</h3>
+            <div class="legend-grid">
                 <div class="legend-item">
-                    <span class="legend-icon">&#x1F4B0;</span>
-                    <div class="legend-text">
-                        <strong>Reverse Line Movement (RLM)</strong>
-                        <span>When the line moves against the side getting the majority of bets. This often indicates sharp money on the other side.</span>
+                    <div>
+                        <strong>SPREAD %</strong>
+                        <span>Percentage of bets on each team to cover the point spread. Higher % = more public money on that side.</span>
                     </div>
                 </div>
                 <div class="legend-item">
-                    <span class="legend-icon">&#x26A1;</span>
-                    <div class="legend-text">
-                        <strong>Steam Move</strong>
-                        <span>Rapid line movement across multiple sportsbooks simultaneously, typically caused by sharp bettors.</span>
+                    <div>
+                        <strong>O/U %</strong>
+                        <span>Percentage of bets on the Over vs Under for the total points. Shows public lean on game tempo.</span>
                     </div>
                 </div>
                 <div class="legend-item">
-                    <span class="legend-icon">&#x1F4CA;</span>
-                    <div class="legend-text">
-                        <strong>Bet % vs Money %</strong>
-                        <span>When a small percentage of tickets account for a large percentage of money, sharps are likely involved.</span>
+                    <div>
+                        <strong>ML %</strong>
+                        <span>Percentage of bets on each team's moneyline (to win straight up). Often favors favorites.</span>
                     </div>
                 </div>
                 <div class="legend-item">
-                    <span class="legend-icon">&#x1F465;</span>
-                    <div class="legend-text">
-                        <strong>Public Favorites</strong>
-                        <span>Games with 70%+ public action on one side. Fading the public can be profitable long-term.</span>
+                    <div>
+                        <strong>Highlighted Numbers</strong>
+                        <span>The side with more bets is highlighted in blue. 65%+ triggers a "potential fade" alert.</span>
                     </div>
                 </div>
             </div>
@@ -930,23 +645,16 @@ def generate_html(all_games):
     </main>
 
     <footer>
-        <p>&copy; 2026 BetLegend. All rights reserved. | <a href="index.html">Home</a></p>
-        <p style="margin-top: 0.5rem;">Data sourced from public betting consensus. For entertainment purposes only.</p>
+        <p>&copy; 2026 BetLegend | <a href="index.html">Home</a> | Data for entertainment purposes only.</p>
     </footer>
 
     <script>
-        // Sport tab switching
         document.querySelectorAll('.sport-tab').forEach(tab => {{
             tab.addEventListener('click', () => {{
-                // Remove active from all tabs
                 document.querySelectorAll('.sport-tab').forEach(t => t.classList.remove('active'));
-                // Hide all containers
                 document.querySelectorAll('.games-container').forEach(c => c.classList.remove('active'));
-
-                // Activate clicked tab
                 tab.classList.add('active');
-                const sport = tab.dataset.sport;
-                document.getElementById(sport + '-games').classList.add('active');
+                document.getElementById(tab.dataset.sport + '-games').classList.add('active');
             }});
         }});
     </script>
@@ -963,7 +671,6 @@ def main():
     print("=" * 60)
     print()
 
-    # Fetch data for all sports
     all_games = []
     for sport, url in SBR_URLS.items():
         print(f"Fetching {sport} data...")
@@ -973,11 +680,9 @@ def main():
     print()
     print(f"Total games found: {len(all_games)}")
 
-    # Generate HTML
     print("Generating HTML...")
     html = generate_html(all_games)
 
-    # Write output file
     repo_path = r'C:\Users\Nima\nimadamus.github.io'
     output_path = os.path.join(repo_path, 'sharp-vs-square.html')
 
