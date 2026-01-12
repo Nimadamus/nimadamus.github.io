@@ -1,0 +1,38 @@
+name: Update Sharp vs Square
+
+on:
+  schedule:
+    # Run every hour at minute 30
+    - cron: '30 * * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Sharp vs Square generator
+        run: python scripts/generate_sharp_vs_square.py
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add sharp-vs-square.html
+          git diff --staged --quiet || git commit -m "Auto-update Sharp vs Square data"
+          git push

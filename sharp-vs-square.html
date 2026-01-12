@@ -1,0 +1,3027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharp vs Square - Betting Consensus Tracker | BetLegend</title>
+    <meta name="description" content="Track sharp money vs public betting percentages. See where the smart money is going with live consensus data for NFL, NBA, NHL, and college basketball.">
+    <link rel="canonical" href="https://betlegendpicks.com/sharp-vs-square.html">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Sharp vs Square - Betting Consensus Tracker | BetLegend">
+    <meta property="og:description" content="Track sharp money vs public betting percentages. See where the smart money is going.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://betlegendpicks.com/sharp-vs-square.html">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a24;
+            --accent-cyan: #00d4ff;
+            --accent-gold: #ffd700;
+            --accent-green: #00ff88;
+            --accent-red: #ff4757;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6a6a7a;
+            --border-color: #2a2a3a;
+            --away-color: #00d4ff;
+            --home-color: #ff6b35;
+            --over-color: #00ff88;
+            --under-color: #ff4757;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0f 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent-gold);
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-cyan);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Sport Tabs */
+        .sport-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .sport-tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sport-tab:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-cyan);
+        }
+
+        .sport-tab.active {
+            background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
+            border-color: var(--accent-cyan);
+            color: var(--bg-dark);
+        }
+
+        /* Games Container */
+        .games-container {
+            display: none;
+        }
+
+        .games-container.active {
+            display: block;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Game Card */
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.2s;
+        }
+
+        .game-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .game-time {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .sharp-alert {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+            border: 1px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sharp-icon {
+            font-size: 1.2rem;
+        }
+
+        .sharp-alert strong {
+            color: var(--accent-gold);
+        }
+
+        .teams-container {
+            margin-bottom: 1rem;
+        }
+
+        .team-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+        }
+
+        .team-row:first-child {
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .team-info {
+            min-width: 120px;
+        }
+
+        .team-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .consensus-bars {
+            flex: 1;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .bar-container {
+            flex: 1;
+        }
+
+        .bar-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .bar-wrapper {
+            background: var(--bg-dark);
+            border-radius: 4px;
+            height: 24px;
+            overflow: hidden;
+        }
+
+        .bar-wrapper.small {
+            height: 20px;
+        }
+
+        .bar {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            border-radius: 4px;
+            min-width: 40px;
+            transition: width 0.3s ease;
+        }
+
+        .bar-pct {
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .away-bar {
+            background: linear-gradient(90deg, var(--away-color), #0099cc);
+        }
+
+        .home-bar {
+            background: linear-gradient(90deg, var(--home-color), #cc4400);
+        }
+
+        .over-bar {
+            background: linear-gradient(90deg, var(--over-color), #00cc66);
+        }
+
+        .under-bar {
+            background: linear-gradient(90deg, var(--under-color), #cc3344);
+        }
+
+        .line-move {
+            color: var(--accent-gold);
+            font-size: 0.7rem;
+            margin-left: 4px;
+        }
+
+        .totals-row {
+            background: var(--bg-dark);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .total-info {
+            min-width: 100px;
+        }
+
+        .total-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .total-bars {
+            flex: 1;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .total-bar-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ou-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            min-width: 45px;
+        }
+
+        .no-games {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Legend */
+        .legend {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .legend h3 {
+            font-size: 1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .legend-icon {
+            font-size: 1.2rem;
+        }
+
+        .legend-text strong {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .legend-text span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .consensus-bars {
+                width: 100%;
+            }
+
+            .totals-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .total-bars {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">Bet<span>Legend</span></a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="handicapping-hub.html">Handicapping Hub</a>
+                <a href="sharp-vs-square.html" class="active">Sharp vs Square</a>
+                <a href="moneyline-parlay-of-the-day.html">ML Parlay</a>
+                <a href="featured-game-of-the-day-page49.html">Featured Game</a>
+                <a href="nba.html">NBA</a>
+                <a href="nfl.html">NFL</a>
+                <a href="nhl.html">NHL</a>
+                <a href="ncaab.html">NCAAB</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Sharp vs Square</h1>
+            <p>Track where the smart money is going. Consensus betting percentages updated hourly.</p>
+        </div>
+
+        <div class="last-updated">
+            Last Updated: January 12, 2026 at 01:26 PM ET
+        </div>
+
+        <div class="sport-tabs">
+            <button class="sport-tab active" data-sport="nfl">NFL</button>
+            <button class="sport-tab" data-sport="nba">NBA</button>
+            <button class="sport-tab" data-sport="nhl">NHL</button>
+            <button class="sport-tab" data-sport="ncaab">NCAAB</button>
+        </div>
+
+        <div id="nfl-games" class="games-container active">
+            <div class="games-grid">
+                
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T01:15:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Houston</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 57.79661016949152%;">
+                                <span class="bar-pct">58%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Pittsburgh</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 42.20338983050848%;">
+                                <span class="bar-pct">42%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 44.44444444444444%;">
+                            <span class="bar-pct">44%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 55.55555555555556%;">
+                            <span class="bar-pct">56%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+            </div>
+        </div>
+
+        <div id="nba-games" class="games-container">
+            <div class="games-grid">
+                
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Utah</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 55.4089709762533%;">
+                                <span class="bar-pct">55%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Cleveland</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 44.59102902374671%;">
+                                <span class="bar-pct">45%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 39.32203389830509%;">
+                            <span class="bar-pct">39%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 60.67796610169491%;">
+                            <span class="bar-pct">61%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:30:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Philadelphia</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 42.67015706806283%;">
+                                <span class="bar-pct">43%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Toronto</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 57.32984293193717%;">
+                                <span class="bar-pct">57%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 70.17543859649122%;">
+                            <span class="bar-pct">70%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 29.82456140350877%;">
+                            <span class="bar-pct">30%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:30:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Boston</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 59.50617283950618%;">
+                                <span class="bar-pct">60%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Indiana</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 40.49382716049383%;">
+                                <span class="bar-pct">40%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 68.15068493150685%;">
+                            <span class="bar-pct">68%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 31.84931506849315%;">
+                            <span class="bar-pct">32%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T01:30:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Brooklyn</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 39.340101522842644%;">
+                                <span class="bar-pct">39%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Dallas</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 60.659898477157356%;">
+                                <span class="bar-pct">61%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 58.606557377049185%;">
+                            <span class="bar-pct">59%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 41.39344262295082%;">
+                            <span class="bar-pct">41%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T03:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Los Angeles</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 51.724137931034484%;">
+                                <span class="bar-pct">52%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Sacramento</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 48.275862068965516%;">
+                                <span class="bar-pct">48%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 58.14814814814815%;">
+                            <span class="bar-pct">58%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 41.85185185185185%;">
+                            <span class="bar-pct">42%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T03:30:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Charlotte</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 40.55555555555556%;">
+                                <span class="bar-pct">41%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">LA</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 59.44444444444444%;">
+                                <span class="bar-pct">59%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 61.29032258064516%;">
+                            <span class="bar-pct">61%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 38.70967741935484%;">
+                            <span class="bar-pct">39%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+            </div>
+        </div>
+
+        <div id="nhl-games" class="games-container">
+            <div class="games-grid">
+                
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Carolina</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 40.66193853427896%;">
+                                <span class="bar-pct">41%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Detroit</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 59.33806146572104%;">
+                                <span class="bar-pct">59%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 63.725490196078425%;">
+                            <span class="bar-pct">64%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 36.27450980392157%;">
+                            <span class="bar-pct">36%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Florida</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 43.42105263157895%;">
+                                <span class="bar-pct">43%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Buffalo</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 56.57894736842105%;">
+                                <span class="bar-pct">57%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 67.81609195402298%;">
+                            <span class="bar-pct">68%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 32.18390804597701%;">
+                            <span class="bar-pct">32%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Seattle</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 52.35602094240838%;">
+                                <span class="bar-pct">52%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">New York</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 47.64397905759162%;">
+                                <span class="bar-pct">48%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 56.390977443609025%;">
+                            <span class="bar-pct">56%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 43.609022556390975%;">
+                            <span class="bar-pct">44%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Tampa Bay</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 62.849872773536894%;">
+                                <span class="bar-pct">63%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Philadelphia</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 37.150127226463106%;">
+                                <span class="bar-pct">37%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 63.670411985018724%;">
+                            <span class="bar-pct">64%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 36.329588014981276%;">
+                            <span class="bar-pct">36%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:30:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Vancouver</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 28.083989501312335%;">
+                                <span class="bar-pct">28%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Montreal</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 71.91601049868767%;">
+                                <span class="bar-pct">72%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 46.44351464435147%;">
+                            <span class="bar-pct">46%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 53.55648535564853%;">
+                            <span class="bar-pct">54%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T01:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">New Jersey</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 32.12435233160622%;">
+                                <span class="bar-pct">32%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Minnesota</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 67.87564766839378%;">
+                                <span class="bar-pct">68%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 41.88034188034188%;">
+                            <span class="bar-pct">42%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 58.119658119658126%;">
+                            <span class="bar-pct">58%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T01:30:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Edmonton</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 56.26598465473146%;">
+                                <span class="bar-pct">56%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Chicago</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 43.73401534526854%;">
+                                <span class="bar-pct">44%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 60.33057851239669%;">
+                            <span class="bar-pct">60%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 39.66942148760331%;">
+                            <span class="bar-pct">40%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T03:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Toronto</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 34.5945945945946%;">
+                                <span class="bar-pct">35%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Colorado</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 65.4054054054054%;">
+                                <span class="bar-pct">65%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 67.77777777777779%;">
+                            <span class="bar-pct">68%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 32.22222222222222%;">
+                            <span class="bar-pct">32%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T03:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Dallas</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 47.56756756756757%;">
+                                <span class="bar-pct">48%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Los Angeles</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 52.43243243243243%;">
+                                <span class="bar-pct">52%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 46.58119658119658%;">
+                            <span class="bar-pct">47%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 53.41880341880342%;">
+                            <span class="bar-pct">53%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+            </div>
+        </div>
+
+        <div id="ncaab-games" class="games-container">
+            <div class="games-grid">
+                
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-12T23:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">North Carolina Central</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 44.59016393442623%;">
+                                <span class="bar-pct">45%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Morgan State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 55.40983606557377%;">
+                                <span class="bar-pct">55%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 41.37931034482759%;">
+                            <span class="bar-pct">41%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 58.620689655172406%;">
+                            <span class="bar-pct">59%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">New Orleans</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 41.30434782608695%;">
+                                <span class="bar-pct">41%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Southeastern Louisiana</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 58.69565217391305%;">
+                                <span class="bar-pct">59%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 57.89473684210527%;">
+                            <span class="bar-pct">58%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 42.10526315789473%;">
+                            <span class="bar-pct">42%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Incarnate Word</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 43.70629370629371%;">
+                                <span class="bar-pct">44%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Stephen F. Austin</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 56.29370629370629%;">
+                                <span class="bar-pct">56%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 53.10734463276836%;">
+                            <span class="bar-pct">53%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 46.89265536723164%;">
+                            <span class="bar-pct">47%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Navy</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 61.111111111111114%;">
+                                <span class="bar-pct">61%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">American</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 38.88888888888889%;">
+                                <span class="bar-pct">39%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 63.775510204081634%;">
+                            <span class="bar-pct">64%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 36.224489795918366%;">
+                            <span class="bar-pct">36%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Southern University</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 41.99288256227758%;">
+                                <span class="bar-pct">42%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Bethune-Cookman</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 58.00711743772242%;">
+                                <span class="bar-pct">58%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 61.42131979695431%;">
+                            <span class="bar-pct">61%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 38.578680203045685%;">
+                            <span class="bar-pct">39%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Maryland-Eastern Shore</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Norfolk State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 0%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 59%;">
+                            <span class="bar-pct">59%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 41%;">
+                            <span class="bar-pct">41%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">South Carolina State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 46.15384615384615%;">
+                                <span class="bar-pct">46%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Coppin State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 53.84615384615385%;">
+                                <span class="bar-pct">54%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 45.64102564102564%;">
+                            <span class="bar-pct">46%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 54.35897435897436%;">
+                            <span class="bar-pct">54%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Arkansas-Pine Bluff</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 43.27731092436975%;">
+                                <span class="bar-pct">43%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Prairie View A&M</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 56.72268907563025%;">
+                                <span class="bar-pct">57%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 46.111111111111114%;">
+                            <span class="bar-pct">46%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 53.888888888888886%;">
+                            <span class="bar-pct">54%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Alcorn State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 47.61904761904761%;">
+                                <span class="bar-pct">48%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Alabama State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 52.38095238095239%;">
+                                <span class="bar-pct">52%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 49.700598802395206%;">
+                            <span class="bar-pct">50%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 50.29940119760479%;">
+                            <span class="bar-pct">50%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Grambling State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 48.4375%;">
+                                <span class="bar-pct">48%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Florida A&M</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 51.5625%;">
+                                <span class="bar-pct">52%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 54.310344827586206%;">
+                            <span class="bar-pct">54%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 45.689655172413794%;">
+                            <span class="bar-pct">46%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Delaware State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 56.62650602409639%;">
+                                <span class="bar-pct">57%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Howard</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 43.373493975903614%;">
+                                <span class="bar-pct">43%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 50.282485875706215%;">
+                            <span class="bar-pct">50%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 49.717514124293785%;">
+                            <span class="bar-pct">50%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:30:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Texas A&M-Corpus Christi</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 51.36186770428015%;">
+                                <span class="bar-pct">51%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">East Texas A&M</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 48.63813229571984%;">
+                                <span class="bar-pct">49%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 0%;">
+                            <span class="bar-pct">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 0%;">
+                            <span class="bar-pct">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T00:30:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">UT Rio Grande Valley</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 48.38709677419355%;">
+                                <span class="bar-pct">48%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Northwestern State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 51.61290322580645%;">
+                                <span class="bar-pct">52%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 0%;">
+                            <span class="bar-pct">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 0%;">
+                            <span class="bar-pct">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T01:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Mississippi Valley State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 59.25925925925925%;">
+                                <span class="bar-pct">59%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Texas Southern</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 40.74074074074074%;">
+                                <span class="bar-pct">41%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 50.847457627118644%;">
+                            <span class="bar-pct">51%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 49.152542372881356%;">
+                            <span class="bar-pct">49%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="game-card">
+        <div class="game-header">
+            <span class="game-time">2026-01-13T01:00:00+00:00</span>
+        </div>
+        
+        <div class="teams-container">
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Jackson State</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50.54945054945055%;">
+                                <span class="bar-pct">51%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar away-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-info">
+                    <span class="team-name">Alabama A&M</span>
+                </div>
+                <div class="consensus-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">SPREAD - </div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 49.45054945054945%;">
+                                <span class="bar-pct">49%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">ML -</div>
+                        <div class="bar-wrapper">
+                            <div class="bar home-bar" style="width: 50%;">
+                                <span class="bar-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="totals-row">
+            <div class="total-info">
+                <span class="total-label">TOTAL: - </span>
+            </div>
+            <div class="total-bars">
+                <div class="total-bar-item">
+                    <span class="ou-label">OVER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar over-bar" style="width: 53.14685314685315%;">
+                            <span class="bar-pct">53%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-bar-item">
+                    <span class="ou-label">UNDER</span>
+                    <div class="bar-wrapper small">
+                        <div class="bar under-bar" style="width: 46.85314685314685%;">
+                            <span class="bar-pct">47%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>Understanding Sharp Signals</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <span class="legend-icon">&#x1F4B0;</span>
+                    <div class="legend-text">
+                        <strong>Reverse Line Movement (RLM)</strong>
+                        <span>When the line moves against the side getting the majority of bets. This often indicates sharp money on the other side.</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon">&#x26A1;</span>
+                    <div class="legend-text">
+                        <strong>Steam Move</strong>
+                        <span>Rapid line movement across multiple sportsbooks simultaneously, typically caused by sharp bettors.</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon">&#x1F4CA;</span>
+                    <div class="legend-text">
+                        <strong>Bet % vs Money %</strong>
+                        <span>When a small percentage of tickets account for a large percentage of money, sharps are likely involved.</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon">&#x1F465;</span>
+                    <div class="legend-text">
+                        <strong>Public Favorites</strong>
+                        <span>Games with 70%+ public action on one side. Fading the public can be profitable long-term.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 BetLegend. All rights reserved. | <a href="index.html">Home</a></p>
+        <p style="margin-top: 0.5rem;">Data sourced from public betting consensus. For entertainment purposes only.</p>
+    </footer>
+
+    <script>
+        // Sport tab switching
+        document.querySelectorAll('.sport-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active from all tabs
+                document.querySelectorAll('.sport-tab').forEach(t => t.classList.remove('active'));
+                // Hide all containers
+                document.querySelectorAll('.games-container').forEach(c => c.classList.remove('active'));
+
+                // Activate clicked tab
+                tab.classList.add('active');
+                const sport = tab.dataset.sport;
+                document.getElementById(sport + '-games').classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
