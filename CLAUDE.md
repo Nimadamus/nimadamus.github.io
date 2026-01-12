@@ -61,6 +61,58 @@ Example:
 
 ---
 
+## ⛔⛔⛔ ABSOLUTE RULE: SPORTS PAGE TITLES MUST HAVE DATES ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 11, 2026
+
+**EVERY sports page title MUST include the full date. NO GENERIC TITLES.**
+
+### THE RULE:
+```
+CORRECT TITLE FORMAT:
+<title>[Sport] Analysis - [Month] [Day], [Year] | BetLegend</title>
+
+Examples:
+✅ <title>NBA Analysis - January 12, 2026 | BetLegend</title>
+✅ <title>NHL Analysis - January 09, 2026 | BetLegend</title>
+✅ <title>NCAAB Analysis - January 11, 2026 | BetLegend</title>
+✅ <title>Soccer Analysis - January 08, 2026 | BetLegend</title>
+
+WRONG (BANNED):
+❌ <title>NBA Analysis Archive - Page 42 | BetLegend</title>
+❌ <title>NHL Analysis Archive - Page 45 | BetLegend</title>
+❌ <title>NCAAB Analysis Archive - Page 41 | BetLegend</title>
+```
+
+### WHY THIS MATTERS:
+- The sync_calendars.py script extracts dates from page titles
+- Generic "Page X" titles cause pages to fall back to wrong dates
+- This creates GAPS in the calendar where dates appear missing
+- Users cannot navigate to content that exists but has wrong titles
+
+### WHAT HAPPENED (January 11, 2026):
+- 9 pages had generic "Archive - Page X" titles
+- Calendar showed gaps for January 5, 9, and 11
+- Pages existed but were invisible in the calendar
+- User frustrated because content wasn't navigable
+
+### BEFORE CREATING ANY SPORTS PAGE:
+```
+1. ALWAYS include the date in the <title> tag
+2. Format: "[Sport] Analysis - [Full Date] | BetLegend"
+3. NEVER use "Archive - Page X" format
+4. Run sync_calendars.py after creating pages
+5. Verify the date appears in the calendar
+```
+
+### THE PRE-COMMIT HOOK WARNS ABOUT THIS:
+The pre-commit hook will display warnings for pages missing dates.
+If you see warnings - FIX THEM BEFORE PUSHING.
+
+**GENERIC TITLES = INVISIBLE PAGES. ALWAYS INCLUDE DATES.**
+
+---
+
 ## ⛔⛔⛔ ABSOLUTE RULE #0: MANDATORY FACT-CHECK BEFORE ANY UPLOAD ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - JANUARY 5, 2026
