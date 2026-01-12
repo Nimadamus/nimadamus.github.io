@@ -18,6 +18,9 @@ ENDPOINTS = {
     'MLB': 'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/injuries'
 }
 
+# MLB Offseason: November through March - no active injuries to report
+MLB_OFFSEASON_MONTHS = [11, 12, 1, 2, 3]  # Nov, Dec, Jan, Feb, Mar
+
 # Status display order (most severe first)
 STATUS_ORDER = ['Out', 'Injured Reserve', 'Doubtful', 'Questionable', 'Day-To-Day', 'Probable']
 
@@ -222,8 +225,17 @@ def get_status_class(status):
 def generate_html(all_data):
     now = datetime.now().strftime('%B %d, %Y at %I:%M %p ET')
 
-    # Count totals for stats
-    total_injuries = sum(sum(len(t['players']) for t in teams.values()) for teams in all_data.values())
+    # Check if MLB is in offseason
+    current_month = datetime.now().month
+    is_mlb_offseason = current_month in MLB_OFFSEASON_MONTHS
+
+    # Count totals for stats (exclude MLB during offseason)
+    total_injuries = sum(
+        sum(len(t['players']) for t in teams.values())
+        for sport, teams in all_data.items()
+        if not (sport == 'MLB' and is_mlb_offseason)
+    )
+    leagues_count = 3 if is_mlb_offseason else 4
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -794,7 +806,7 @@ def generate_html(all_data):
                 <div class="stat-label">Total Players Injured</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number">4</div>
+                <div class="stat-number">{leagues_count}</div>
                 <div class="stat-label">Leagues Tracked</div>
             </div>
             <div class="stat-box">
@@ -829,6 +841,22 @@ def generate_html(all_data):
         playoff_note = ''
         if sport == 'NFL':
             playoff_note = '<p style="text-align:center;color:#00d4ff;font-size:0.9rem;margin-bottom:15px;font-weight:600;">NFL Playoff Teams Only - Divisional Round (Includes Steelers & Texans - Wild Card tonight Jan 12)</p>'
+
+        # Check if MLB is in offseason
+        current_month = datetime.now().month
+        is_mlb_offseason = sport == 'MLB' and current_month in MLB_OFFSEASON_MONTHS
+
+        if is_mlb_offseason:
+            html += f'''
+        <div id="{sport_lower}" class="sport-content {is_active}">
+            <div style="text-align:center;padding:60px 20px;background:#1a1a1a;border-radius:10px;margin:20px 0;">
+                <p style="color:#ffd700;font-size:1.3rem;font-weight:700;margin-bottom:15px;">MLB OFFSEASON</p>
+                <p style="color:#888;font-size:1rem;">The MLB season runs from late March through October.</p>
+                <p style="color:#888;font-size:1rem;margin-top:10px;">Injury reports will resume when the 2026 season begins.</p>
+            </div>
+        </div>
+'''
+            continue
 
         html += f'''
         <div id="{sport_lower}" class="sport-content {is_active}">
@@ -899,8 +927,17 @@ def main():
     print("BetLegend Injury Report Generator")
     print("=" * 50)
 
+    current_month = datetime.now().month
+    is_mlb_offseason = current_month in MLB_OFFSEASON_MONTHS
+
     all_data = {}
     for sport, url in ENDPOINTS.items():
+        # Skip fetching MLB during offseason
+        if sport == 'MLB' and is_mlb_offseason:
+            print(f"Skipping {sport} (offseason)...")
+            all_data[sport] = {}
+            continue
+
         print(f"Fetching {sport}...")
         teams_data = fetch_injuries(sport, url)
         teams = parse_all_injuries(sport, teams_data)
