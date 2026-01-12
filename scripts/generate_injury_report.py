@@ -21,6 +21,51 @@ ENDPOINTS = {
 # Status display order (most severe first)
 STATUS_ORDER = ['Out', 'Injured Reserve', 'Doubtful', 'Questionable', 'Day-To-Day', 'Probable']
 
+# NFL Playoff Teams - Divisional Round (January 2026)
+# VERIFIED: NFC: Seahawks (1), Bears (2), Rams (5), 49ers (6)
+# AFC: Broncos (1), Patriots, Bills (6), + Steelers vs Texans winner (game Jan 12)
+# Including both Steelers and Texans since their game is TODAY
+NFL_PLAYOFF_TEAMS = [
+    'Seattle Seahawks',      # NFC 1 seed
+    'Chicago Bears',         # NFC 2 seed
+    'Los Angeles Rams',      # NFC 5 seed (beat Panthers 34-31)
+    'San Francisco 49ers',   # NFC 6 seed (beat Eagles 23-19)
+    'Denver Broncos',        # AFC 1 seed
+    'New England Patriots',  # AFC (beat Chargers 16-3)
+    'Buffalo Bills',         # AFC 6 seed (beat Jaguars 27-24)
+    'Pittsburgh Steelers',   # AFC 4 seed (hosting Texans tonight Jan 12)
+    'Houston Texans'         # AFC 7 seed (playing Steelers tonight Jan 12)
+]
+
+# Supplemental injuries not always captured by ESPN API
+# VERIFIED from official sources - major season-ending injuries
+SUPPLEMENTAL_INJURIES = {
+    'NFL': {
+        'San Francisco 49ers': [
+            {
+                'name': 'Nick Bosa',
+                'position': 'DE',
+                'status': 'Injured Reserve',
+                'injury': 'ACL',
+                'comment': 'Torn ACL in right knee (Week 3 vs Cardinals, Sept 21) - Out for season',
+                'days_out': 113,  # Sept 21 to Jan 12
+                'days_display': '4 months',
+                'date': '2025-09-21'
+            },
+            {
+                'name': 'Fred Warner',
+                'position': 'LB',
+                'status': 'Injured Reserve',
+                'injury': 'Ankle',
+                'comment': 'Dislocated/fractured right ankle (Week 6 vs Buccaneers) - Unlikely for Divisional',
+                'days_out': 89,   # Oct 15 to Jan 12
+                'days_display': '3 months',
+                'date': '2025-10-15'
+            }
+        ]
+    }
+}
+
 def get_team_logo(sport, team_id):
     sport_path = {'NBA': 'nba', 'NHL': 'nhl', 'NFL': 'nfl', 'MLB': 'mlb'}
     return f"https://a.espncdn.com/i/teamlogos/{sport_path.get(sport, 'nba')}/500/{team_id}.png"
@@ -89,8 +134,17 @@ def parse_all_injuries(sport, teams_data):
     for team in teams_data:
         team_name = team.get('displayName', 'Unknown')
         team_id = team.get('id', '')
+
+        # NFL: Only include playoff teams
+        if sport == 'NFL' and team_name not in NFL_PLAYOFF_TEAMS:
+            continue
+
         team_injuries = team.get('injuries', [])
         players = []
+
+        # Track existing player names to avoid duplicates with supplemental
+        existing_names = set()
+
         for inj in team_injuries:
             status = inj.get('status', 'Unknown')
             if status == 'Active':
@@ -103,8 +157,10 @@ def parse_all_injuries(sport, teams_data):
                 position = athlete['position'].get('abbreviation', '')
             injury_type = extract_injury_type(comment)
             days_out = calculate_days_out(date_str)
+            player_name = athlete.get('displayName', 'Unknown')
+            existing_names.add(player_name)
             players.append({
-                'name': athlete.get('displayName', 'Unknown'),
+                'name': player_name,
                 'position': position,
                 'status': status,
                 'injury': injury_type,
@@ -113,6 +169,14 @@ def parse_all_injuries(sport, teams_data):
                 'days_display': format_days_out(days_out),
                 'date': date_str
             })
+
+        # Add supplemental injuries if available (major injuries not in API)
+        if sport in SUPPLEMENTAL_INJURIES and team_name in SUPPLEMENTAL_INJURIES[sport]:
+            for supp_injury in SUPPLEMENTAL_INJURIES[sport][team_name]:
+                # Only add if not already in the list
+                if supp_injury['name'] not in existing_names:
+                    players.append(supp_injury)
+
         def status_sort(p):
             try:
                 return STATUS_ORDER.index(p['status'])
@@ -120,6 +184,28 @@ def parse_all_injuries(sport, teams_data):
                 return 99
         players.sort(key=status_sort)
         teams[team_name] = {'id': team_id, 'players': players}
+
+    # For NFL, ensure all playoff teams are listed even if no injuries
+    if sport == 'NFL':
+        for playoff_team in NFL_PLAYOFF_TEAMS:
+            if playoff_team not in teams:
+                # ESPN team IDs for NFL teams
+                team_id_map = {
+                    'Seattle Seahawks': '26',
+                    'Chicago Bears': '3',
+                    'San Francisco 49ers': '25',
+                    'Los Angeles Rams': '14',
+                    'Denver Broncos': '7',
+                    'New England Patriots': '17',
+                    'Buffalo Bills': '2',
+                    'Houston Texans': '34',
+                    'Pittsburgh Steelers': '23'
+                }
+                teams[playoff_team] = {
+                    'id': team_id_map.get(playoff_team, ''),
+                    'players': SUPPLEMENTAL_INJURIES.get('NFL', {}).get(playoff_team, [])
+                }
+
     return dict(sorted(teams.items()))
 
 def get_status_class(status):
@@ -532,8 +618,14 @@ def generate_html(all_data):
         sport_lower = sport.lower()
         is_active = 'active' if sport == 'NBA' else ''
 
+        # Add playoff note for NFL
+        playoff_note = ''
+        if sport == 'NFL':
+            playoff_note = '<p style="text-align:center;color:#00d4ff;font-size:0.9rem;margin-bottom:15px;font-weight:600;">NFL Playoff Teams Only - Divisional Round (Includes Steelers & Texans - Wild Card tonight Jan 12)</p>'
+
         html += f'''
         <div id="{sport_lower}" class="sport-content {is_active}">
+            {playoff_note}
             <div class="column-headers">
                 <span>Player</span>
                 <span>Position</span>
