@@ -1,0 +1,627 @@
+#!/usr/bin/env python3
+"""
+BetLegend Injury Report Generator
+Organized by TEAM - shows all players, all statuses, injury details
+Runs hourly via GitHub Actions
+"""
+
+import urllib.request
+import json
+from datetime import datetime, timezone
+import os
+
+# ESPN API endpoints
+ENDPOINTS = {
+    'NBA': 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries',
+    'NHL': 'https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/injuries',
+    'NFL': 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries',
+    'MLB': 'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/injuries'
+}
+
+# Status display order (most severe first)
+STATUS_ORDER = ['Out', 'Injured Reserve', 'Doubtful', 'Questionable', 'Day-To-Day', 'Probable']
+
+def get_team_logo(sport, team_id):
+    sport_path = {'NBA': 'nba', 'NHL': 'nhl', 'NFL': 'nfl', 'MLB': 'mlb'}
+    return f"https://a.espncdn.com/i/teamlogos/{sport_path.get(sport, 'nba')}/500/{team_id}.png"
+
+def fetch_injuries(sport, url):
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=15) as response:
+            data = json.loads(response.read().decode())
+            return data.get('injuries', [])
+    except Exception as e:
+        print(f"Error fetching {sport}: {e}")
+        return []
+
+def extract_injury_type(comment):
+    if not comment:
+        return "Undisclosed"
+    injuries = [
+        'ACL', 'MCL', 'ankle', 'knee', 'hamstring', 'groin', 'shoulder',
+        'concussion', 'head', 'back', 'hip', 'calf', 'quad', 'quadriceps',
+        'foot', 'wrist', 'hand', 'finger', 'thumb', 'elbow', 'arm',
+        'oblique', 'ribs', 'neck', 'Achilles', 'toe', 'illness',
+        'rest', 'personal', 'suspension', 'lower body', 'upper body',
+        'leg', 'thigh', 'abdomen', 'eye', 'jaw', 'nose', 'dental'
+    ]
+    comment_lower = comment.lower()
+    for injury in injuries:
+        if injury.lower() in comment_lower:
+            return injury.title()
+    import re
+    match = re.search(r'\(([^)]+)\)', comment)
+    if match:
+        return match.group(1).title()
+    return "Undisclosed"
+
+def calculate_days_out(date_str):
+    if not date_str:
+        return None
+    try:
+        injury_date = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+        now = datetime.now(timezone.utc)
+        delta = now - injury_date
+        return delta.days
+    except:
+        return None
+
+def format_days_out(days):
+    if days is None:
+        return "Recently"
+    if days == 0:
+        return "Today"
+    if days == 1:
+        return "1 day"
+    if days < 7:
+        return f"{days} days"
+    if days < 14:
+        return "1 week"
+    if days < 30:
+        return f"{days // 7} weeks"
+    if days < 60:
+        return "1 month"
+    return f"{days // 30} months"
+
+def parse_all_injuries(sport, teams_data):
+    teams = {}
+    for team in teams_data:
+        team_name = team.get('displayName', 'Unknown')
+        team_id = team.get('id', '')
+        team_injuries = team.get('injuries', [])
+        players = []
+        for inj in team_injuries:
+            status = inj.get('status', 'Unknown')
+            if status == 'Active':
+                continue
+            athlete = inj.get('athlete', {})
+            comment = inj.get('shortComment', '')
+            date_str = inj.get('date', '')
+            position = ''
+            if 'position' in athlete:
+                position = athlete['position'].get('abbreviation', '')
+            injury_type = extract_injury_type(comment)
+            days_out = calculate_days_out(date_str)
+            players.append({
+                'name': athlete.get('displayName', 'Unknown'),
+                'position': position,
+                'status': status,
+                'injury': injury_type,
+                'comment': comment,
+                'days_out': days_out,
+                'days_display': format_days_out(days_out),
+                'date': date_str
+            })
+        def status_sort(p):
+            try:
+                return STATUS_ORDER.index(p['status'])
+            except ValueError:
+                return 99
+        players.sort(key=status_sort)
+        teams[team_name] = {'id': team_id, 'players': players}
+    return dict(sorted(teams.items()))
+
+def get_status_class(status):
+    status_map = {
+        'Out': 'status-out',
+        'Injured Reserve': 'status-ir',
+        'Doubtful': 'status-doubtful',
+        'Questionable': 'status-questionable',
+        'Day-To-Day': 'status-dtd',
+        'Probable': 'status-probable'
+    }
+    return status_map.get(status, 'status-unknown')
+
+def generate_html(all_data):
+    now = datetime.now().strftime('%B %d, %Y at %I:%M %p ET')
+
+    # Count totals for stats
+    total_injuries = sum(sum(len(t['players']) for t in teams.values()) for teams in all_data.values())
+
+    html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Injury Report - NFL, NBA, NHL, MLB | Updated Hourly | BetLegend</title>
+    <meta name="description" content="Live injury reports for NFL, NBA, NHL, and MLB. Updated hourly with player status, injury details, and expected return dates. Your go-to resource for the most up-to-date injury information.">
+    <meta name="keywords" content="NFL injury report, NBA injuries, NHL injury report, MLB injuries, sports injuries today, player injury status">
+    <link rel="canonical" href="https://www.betlegendpicks.com/injury-report.html">
+    <meta property="og:title" content="Injury Report - NFL, NBA, NHL, MLB | BetLegend">
+    <meta property="og:description" content="Live injury reports updated hourly. NFL, NBA, NHL, MLB player status and injury details.">
+    <meta property="og:url" content="https://www.betlegendpicks.com/injury-report.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+      gtag('config', 'G-QS8L5TDNLY');
+    </script>
+
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{
+            font-family: 'Inter', sans-serif;
+            background: #0d0d0d;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }}
+        .container {{
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+
+        /* Navigation */
+        .nav-bar {{
+            background: rgba(0, 0, 0, 0.95);
+            padding: 15px 30px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }}
+        .nav-inner {{
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }}
+        .nav-logo {{
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+        }}
+        .nav-logo span {{
+            color: #00f0ff;
+        }}
+        .nav-links {{
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }}
+        .nav-links a {{
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }}
+        .nav-links a:hover {{
+            color: #fd5000;
+        }}
+        .nav-links a.active {{
+            color: #fd5000;
+            font-weight: 700;
+        }}
+
+        /* Header */
+        .header {{
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #fd5000;
+            margin-bottom: 20px;
+        }}
+        .header h1 {{
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: #fd5000;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }}
+        .header .tagline {{
+            color: #aaa;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }}
+        .last-updated {{
+            color: #00d4ff;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }}
+
+        /* Stats Summary */
+        .stats-summary {{
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 25px 0;
+            padding: 20px;
+            background: #1a1a1a;
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }}
+        .stat-box {{
+            text-align: center;
+        }}
+        .stat-number {{
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fd5000;
+        }}
+        .stat-label {{
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+        }}
+
+        /* Sport Tabs */
+        .sport-tabs {{
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }}
+        .sport-tab {{
+            padding: 12px 28px;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 6px;
+            color: #888;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }}
+        .sport-tab:hover {{
+            border-color: #fd5000;
+            color: #fd5000;
+        }}
+        .sport-tab.active {{
+            background: #fd5000;
+            border-color: #fd5000;
+            color: #fff;
+        }}
+
+        /* Content */
+        .sport-content {{ display: none; }}
+        .sport-content.active {{ display: block; }}
+
+        /* Legend */
+        .legend {{
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 12px;
+            background: #1a1a1a;
+            border-radius: 6px;
+            flex-wrap: wrap;
+        }}
+        .legend-item {{
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+        }}
+        .legend-dot {{
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }}
+
+        /* Team Card */
+        .team-card {{
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }}
+        .team-header {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: #1a1a1a;
+            border-bottom: 1px solid #2a2a2a;
+        }}
+        .team-logo {{
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }}
+        .team-name {{
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            flex-grow: 1;
+        }}
+        .team-count {{
+            font-size: 0.85rem;
+            color: #888;
+        }}
+        .team-count span {{
+            color: #ff4444;
+            font-weight: 600;
+        }}
+
+        /* Player Row */
+        .player-list {{ padding: 0; }}
+        .player-row {{
+            display: grid;
+            grid-template-columns: 200px 80px 120px 100px 1fr;
+            gap: 10px;
+            padding: 12px 20px;
+            border-bottom: 1px solid #222;
+            align-items: center;
+        }}
+        .player-row:last-child {{ border-bottom: none; }}
+        .player-row:hover {{ background: #1a1a1a; }}
+        .player-name {{ font-weight: 600; color: #fff; }}
+        .player-position {{ color: #666; font-size: 0.85rem; }}
+        .player-injury {{ color: #aaa; font-size: 0.9rem; }}
+        .player-duration {{ color: #666; font-size: 0.85rem; }}
+        .player-comment {{
+            color: #777;
+            font-size: 0.8rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }}
+
+        /* Status Badges */
+        .status {{
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+        }}
+        .status-out {{ background: #ff3b30; color: #fff; }}
+        .status-ir {{ background: #8b0000; color: #fff; }}
+        .status-doubtful {{ background: #ff6b00; color: #fff; }}
+        .status-questionable {{ background: #ffcc00; color: #000; }}
+        .status-dtd {{ background: #00a8ff; color: #fff; }}
+        .status-probable {{ background: #34c759; color: #fff; }}
+        .status-unknown {{ background: #555; color: #fff; }}
+
+        /* No Injuries */
+        .no-injuries {{
+            padding: 20px;
+            text-align: center;
+            color: #34c759;
+            font-size: 0.9rem;
+        }}
+
+        /* Column Headers */
+        .column-headers {{
+            display: grid;
+            grid-template-columns: 200px 80px 120px 100px 1fr;
+            gap: 10px;
+            padding: 10px 20px;
+            background: #0a0a0a;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }}
+
+        /* Footer */
+        .footer {{
+            text-align: center;
+            padding: 30px;
+            color: #555;
+            font-size: 0.85rem;
+            border-top: 1px solid #222;
+            margin-top: 40px;
+        }}
+        .footer a {{ color: #fd5000; text-decoration: none; }}
+
+        /* Mobile */
+        @media (max-width: 900px) {{
+            .player-row {{ grid-template-columns: 1fr 70px 90px; }}
+            .player-duration, .player-comment {{ display: none; }}
+            .column-headers {{ grid-template-columns: 1fr 70px 90px; }}
+            .column-headers span:nth-child(4),
+            .column-headers span:nth-child(5) {{ display: none; }}
+            .nav-links {{ display: none; }}
+        }}
+        @media (max-width: 600px) {{
+            .header h1 {{ font-size: 1.8rem; }}
+            .sport-tab {{ padding: 10px 18px; font-size: 0.8rem; }}
+            .team-name {{ font-size: 0.95rem; }}
+            .player-row {{
+                grid-template-columns: 1fr 60px 80px;
+                padding: 10px 15px;
+                font-size: 0.85rem;
+            }}
+            .stats-summary {{ gap: 20px; }}
+            .stat-number {{ font-size: 1.5rem; }}
+        }}
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">BET<span>LEGEND</span></a>
+            <div class="nav-links">
+                <a href="handicapping-hub.html">Handicapping Hub</a>
+                <a href="blog-page11.html">Picks</a>
+                <a href="nba.html">NBA</a>
+                <a href="nfl.html">NFL</a>
+                <a href="nhl.html">NHL</a>
+                <a href="injury-report.html" class="active">Injury Report</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <h1>Injury Report</h1>
+            <p class="tagline">Your go-to resource for the most up-to-date injury information across all major sports. Updated hourly with real-time data.</p>
+            <p class="last-updated">Last Updated: {now}</p>
+        </header>
+
+        <div class="stats-summary">
+            <div class="stat-box">
+                <div class="stat-number">{total_injuries}</div>
+                <div class="stat-label">Total Players Injured</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Leagues Tracked</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">Hourly</div>
+                <div class="stat-label">Update Frequency</div>
+            </div>
+        </div>
+
+        <div class="sport-tabs">
+            <button class="sport-tab active" onclick="showSport('nba')">NBA</button>
+            <button class="sport-tab" onclick="showSport('nhl')">NHL</button>
+            <button class="sport-tab" onclick="showSport('nfl')">NFL</button>
+            <button class="sport-tab" onclick="showSport('mlb')">MLB</button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#ff3b30;"></div> Out</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#8b0000;"></div> IR</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ff6b00;"></div> Doubtful</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ffcc00;"></div> Questionable</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#00a8ff;"></div> Day-to-Day</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#34c759;"></div> Probable</div>
+        </div>
+'''
+
+    for sport in ['NBA', 'NHL', 'NFL', 'MLB']:
+        teams = all_data.get(sport, {})
+        sport_lower = sport.lower()
+        is_active = 'active' if sport == 'NBA' else ''
+
+        html += f'''
+        <div id="{sport_lower}" class="sport-content {is_active}">
+            <div class="column-headers">
+                <span>Player</span>
+                <span>Position</span>
+                <span>Status</span>
+                <span>Duration</span>
+                <span>Injury Details</span>
+            </div>
+'''
+        for team_name, team_data in teams.items():
+            players = team_data['players']
+            team_id = team_data['id']
+            logo_url = get_team_logo(sport, team_id)
+            injured_count = len(players)
+
+            html += f'''
+            <div class="team-card">
+                <div class="team-header">
+                    <img src="{logo_url}" alt="{team_name}" class="team-logo" onerror="this.style.display='none'">
+                    <span class="team-name">{team_name}</span>
+                    <span class="team-count"><span>{injured_count}</span> injured</span>
+                </div>
+'''
+            if players:
+                html += '                <div class="player-list">\n'
+                for p in players:
+                    status_class = get_status_class(p['status'])
+                    comment = p['comment'][:80] + '...' if len(p['comment']) > 80 else p['comment']
+                    html += f'''                    <div class="player-row">
+                        <div class="player-name">{p['name']}</div>
+                        <div class="player-position">{p['position'] or '-'}</div>
+                        <div><span class="status {status_class}">{p['status'].replace('Injured Reserve', 'IR').replace('Day-To-Day', 'DTD')}</span></div>
+                        <div class="player-duration">{p['days_display']}</div>
+                        <div class="player-comment" title="{p['comment']}">{p['injury']} - {comment}</div>
+                    </div>
+'''
+                html += '                </div>\n'
+            else:
+                html += '                <div class="no-injuries">No injuries reported</div>\n'
+            html += '            </div>\n'
+        html += '        </div>\n'
+
+    html += '''
+        <footer class="footer">
+            <p>Data sourced from ESPN. Updated hourly via automated system.</p>
+            <p style="margin-top:10px;"><a href="index.html">Back to BetLegend Home</a> | <a href="handicapping-hub.html">Handicapping Hub</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function showSport(sport) {
+            document.querySelectorAll('.sport-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.sport-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(sport).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
+'''
+    return html
+
+def main():
+    print("=" * 50)
+    print("BetLegend Injury Report Generator")
+    print("=" * 50)
+
+    all_data = {}
+    for sport, url in ENDPOINTS.items():
+        print(f"Fetching {sport}...")
+        teams_data = fetch_injuries(sport, url)
+        teams = parse_all_injuries(sport, teams_data)
+        all_data[sport] = teams
+        total_injured = sum(len(t['players']) for t in teams.values())
+        print(f"  {len(teams)} teams, {total_injured} injured players")
+
+    print("\nGenerating HTML...")
+    html = generate_html(all_data)
+
+    # Determine output path
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_root = os.path.dirname(script_dir)
+    output_path = os.path.join(repo_root, 'injury-report.html')
+
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+
+    print(f"Saved to: {output_path}")
+    return output_path
+
+if __name__ == "__main__":
+    main()

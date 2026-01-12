@@ -1,0 +1,38 @@
+name: Hourly Injury Report Update
+
+on:
+  schedule:
+    # Run every hour at minute 15 (e.g., 1:15, 2:15, 3:15...)
+    - cron: '15 * * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  update-injury-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate Injury Report
+        run: |
+          python scripts/generate_injury_report.py
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --quiet injury-report.html || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add injury-report.html
+          git commit -m "Update injury report - $(date +'%Y-%m-%d %H:%M') UTC"
+          git push
