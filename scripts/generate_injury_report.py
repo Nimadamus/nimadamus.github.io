@@ -222,6 +222,17 @@ def get_status_class(status):
     }
     return status_map.get(status, 'status-unknown')
 
+def get_indicator_class(status):
+    indicator_map = {
+        'Out': 'indicator-out',
+        'Injured Reserve': 'indicator-ir',
+        'Doubtful': 'indicator-doubtful',
+        'Questionable': 'indicator-questionable',
+        'Day-To-Day': 'indicator-dtd',
+        'Probable': 'indicator-probable'
+    }
+    return indicator_map.get(status, 'indicator-out')
+
 def generate_html(all_data):
     now = datetime.now().strftime('%B %d, %Y at %I:%M %p ET')
 
@@ -622,43 +633,91 @@ def generate_html(all_data):
         .player-list {{ padding: 0; }}
         .player-row {{
             display: grid;
-            grid-template-columns: 200px 80px 120px 100px 1fr;
+            grid-template-columns: 6px 200px 70px 110px 90px 1fr;
             gap: 10px;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border-bottom: 1px solid #222;
             align-items: center;
+            transition: background 0.2s;
         }}
         .player-row:last-child {{ border-bottom: none; }}
-        .player-row:hover {{ background: #1a1a1a; }}
-        .player-name {{ font-weight: 600; color: #fff; }}
-        .player-position {{ color: #666; font-size: 0.85rem; }}
-        .player-injury {{ color: #aaa; font-size: 0.9rem; }}
-        .player-duration {{ color: #666; font-size: 0.85rem; }}
+        .player-row:hover {{ background: rgba(255,255,255,0.03); }}
+
+        /* Color indicator bar on left */
+        .status-indicator {{
+            width: 6px;
+            height: 100%;
+            min-height: 40px;
+            border-radius: 3px;
+        }}
+        .indicator-ir {{ background: linear-gradient(180deg, #1a1a1a, #000); }}
+        .indicator-out {{ background: linear-gradient(180deg, #ff3b30, #cc2020); }}
+        .indicator-doubtful {{ background: linear-gradient(180deg, #ff6b00, #cc5500); }}
+        .indicator-questionable {{ background: linear-gradient(180deg, #ffcc00, #e6b800); }}
+        .indicator-dtd {{ background: linear-gradient(180deg, #00a8ff, #0088cc); }}
+        .indicator-probable {{ background: linear-gradient(180deg, #34c759, #28a745); }}
+
+        .player-name {{ font-weight: 600; color: #fff; font-size: 0.95rem; }}
+        .player-position {{ color: #888; font-size: 0.85rem; font-weight: 500; }}
+        .player-injury {{ color: #bbb; font-size: 0.9rem; }}
+        .player-duration {{ color: #888; font-size: 0.85rem; }}
         .player-comment {{
-            color: #777;
+            color: #666;
             font-size: 0.8rem;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }}
 
-        /* Status Badges */
+        /* Status Badges - Enhanced */
         .status {{
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
             text-transform: uppercase;
-            text-align: center;
+            letter-spacing: 0.5px;
+            min-width: 90px;
         }}
-        .status-out {{ background: #ff3b30; color: #fff; }}
-        .status-ir {{ background: #8b0000; color: #fff; }}
-        .status-doubtful {{ background: #ff6b00; color: #fff; }}
-        .status-questionable {{ background: #ffcc00; color: #000; }}
-        .status-dtd {{ background: #00a8ff; color: #fff; }}
-        .status-probable {{ background: #34c759; color: #fff; }}
-        .status-unknown {{ background: #555; color: #fff; }}
+        .status-ir {{
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            color: #fff;
+            border: 1px solid #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }}
+        .status-out {{
+            background: linear-gradient(135deg, #ff3b30, #cc2020);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(255,59,48,0.4);
+        }}
+        .status-doubtful {{
+            background: linear-gradient(135deg, #ff6b00, #cc5500);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(255,107,0,0.4);
+        }}
+        .status-questionable {{
+            background: linear-gradient(135deg, #ffcc00, #e6b800);
+            color: #000;
+            box-shadow: 0 2px 8px rgba(255,204,0,0.4);
+        }}
+        .status-dtd {{
+            background: linear-gradient(135deg, #00a8ff, #0088cc);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0,168,255,0.4);
+        }}
+        .status-probable {{
+            background: linear-gradient(135deg, #34c759, #28a745);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(52,199,89,0.4);
+        }}
+        .status-unknown {{
+            background: #444;
+            color: #aaa;
+            border: 1px solid #555;
+        }}
 
         /* No Injuries */
         .no-injuries {{
@@ -671,17 +730,18 @@ def generate_html(all_data):
         /* Column Headers */
         .column-headers {{
             display: grid;
-            grid-template-columns: 200px 80px 120px 100px 1fr;
+            grid-template-columns: 6px 200px 70px 110px 90px 1fr;
             gap: 10px;
-            padding: 10px 20px;
-            background: #0a0a0a;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #0a0a0a, #111);
             font-size: 0.75rem;
             font-weight: 700;
-            color: #666;
+            color: #888;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 10px;
-            border-radius: 4px;
+            border-radius: 6px;
+            border: 1px solid #222;
         }}
 
         /* Footer */
@@ -697,22 +757,28 @@ def generate_html(all_data):
 
         /* Mobile */
         @media (max-width: 900px) {{
-            .player-row {{ grid-template-columns: 1fr 70px 90px; }}
+            .player-row {{ grid-template-columns: 4px 1fr 50px 85px; }}
             .player-duration, .player-comment {{ display: none; }}
-            .column-headers {{ grid-template-columns: 1fr 70px 90px; }}
-            .column-headers span:nth-child(4),
-            .column-headers span:nth-child(5) {{ display: none; }}
-            .nav-links {{ display: none; }}
+            .column-headers {{ grid-template-columns: 4px 1fr 50px 85px; }}
+            .column-headers span:nth-child(5),
+            .column-headers span:nth-child(6) {{ display: none; }}
+            .nav-menu {{ display: none; }}
+            .status {{ min-width: 70px; font-size: 0.65rem; padding: 5px 8px; }}
+            .status-indicator {{ min-height: 30px; }}
         }}
         @media (max-width: 600px) {{
             .header h1 {{ font-size: 1.8rem; }}
             .sport-tab {{ padding: 10px 18px; font-size: 0.8rem; }}
             .team-name {{ font-size: 0.95rem; }}
             .player-row {{
-                grid-template-columns: 1fr 60px 80px;
-                padding: 10px 15px;
+                grid-template-columns: 4px 1fr 40px 70px;
+                padding: 10px 12px;
                 font-size: 0.85rem;
             }}
+            .column-headers {{ grid-template-columns: 4px 1fr 40px 70px; }}
+            .status {{ min-width: 60px; font-size: 0.6rem; padding: 4px 6px; }}
+            .legend {{ gap: 10px; padding: 12px; }}
+            .legend-item {{ font-size: 0.7rem; }}
             .stats-summary {{ gap: 20px; }}
             .stat-number {{ font-size: 1.5rem; }}
         }}
@@ -823,12 +889,12 @@ def generate_html(all_data):
         </div>
 
         <div class="legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#ff3b30;"></div> Out</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#8b0000;"></div> IR</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#ff6b00;"></div> Doubtful</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#ffcc00;"></div> Questionable</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#00a8ff;"></div> Day-to-Day</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#34c759;"></div> Probable</div>
+            <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(180deg, #ff3b30, #cc2020);"></div> Out</div>
+            <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(180deg, #1a1a1a, #000); border:1px solid #333;"></div> IR</div>
+            <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(180deg, #ff6b00, #cc5500);"></div> Doubtful</div>
+            <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(180deg, #ffcc00, #e6b800);"></div> Questionable</div>
+            <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(180deg, #00a8ff, #0088cc);"></div> Day-to-Day</div>
+            <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(180deg, #34c759, #28a745);"></div> Probable</div>
         </div>
 '''
 
@@ -862,6 +928,7 @@ def generate_html(all_data):
         <div id="{sport_lower}" class="sport-content {is_active}">
             {playoff_note}
             <div class="column-headers">
+                <span></span>
                 <span>Player</span>
                 <span>Position</span>
                 <span>Status</span>
@@ -887,8 +954,10 @@ def generate_html(all_data):
                 html += '                <div class="player-list">\n'
                 for p in players:
                     status_class = get_status_class(p['status'])
+                    indicator_class = get_indicator_class(p['status'])
                     comment = p['comment'][:80] + '...' if len(p['comment']) > 80 else p['comment']
                     html += f'''                    <div class="player-row">
+                        <div class="status-indicator {indicator_class}"></div>
                         <div class="player-name">{p['name']}</div>
                         <div class="player-position">{p['position'] or '-'}</div>
                         <div><span class="status {status_class}">{p['status'].replace('Injured Reserve', 'IR').replace('Day-To-Day', 'DTD')}</span></div>
