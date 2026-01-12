@@ -105,11 +105,24 @@ WRONG (BANNED):
 5. Verify the date appears in the calendar
 ```
 
-### THE PRE-COMMIT HOOK WARNS ABOUT THIS:
-The pre-commit hook will display warnings for pages missing dates.
-If you see warnings - FIX THEM BEFORE PUSHING.
+### THE PRE-COMMIT HOOK BLOCKS THIS:
+The pre-commit hook will BLOCK commits with generic "Archive - Page X" titles.
+If a commit is blocked - FIX THE TITLES BEFORE PUSHING.
 
 **GENERIC TITLES = INVISIBLE PAGES. ALWAYS INCLUDE DATES.**
+
+### CALENDAR GAP DETECTION SCRIPT:
+Run this script to check for calendar issues BEFORE committing:
+```bash
+python scripts/detect_calendar_gaps.py
+```
+
+This script detects:
+1. **CRITICAL**: Pages with generic/missing date titles
+2. **WARNING**: Duplicate dates (multiple pages for same date)
+3. **INFO**: Recent gaps (may be intentional if no games)
+
+**RUN THIS BEFORE EVERY COMMIT TO SPORTS PAGES.**
 
 ---
 

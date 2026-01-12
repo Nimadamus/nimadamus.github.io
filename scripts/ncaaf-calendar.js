@@ -4,8 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-11", page: "ncaaf.html", title: "NCAAF Analysis - January 11, 2026" },
-    { date: "2026-01-09", page: "ncaaf-page5.html", title: "NCAAF Analysis Archive - Page 5" },
-    { date: "2026-01-08", page: "ncaaf-page4.html", title: "NCAAF Analysis Archive - Page 4" },
+    { date: "2026-01-09", page: "ncaaf-page5.html", title: "NCAAF Analysis - January 09, 2026" },
+    { date: "2026-01-08", page: "ncaaf-page4.html", title: "NCAAF Analysis - January 08, 2026" },
     { date: "2026-01-06", page: "ncaaf-page42.html", title: "FCS Championship - January 6, 2026" },
     { date: "2026-01-02", page: "ncaaf-page39.html", title: "NCAAF Bowl Games - January 2, 2026" },
     { date: "2026-01-02", page: "archives/ncaaf/2026-01-02.html", title: "NCAAF Archive - 2026-01-02" },
