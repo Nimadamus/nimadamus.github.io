@@ -227,6 +227,33 @@ fi
 echo "  ✓ Sports page titles checked"
 
 # ============================================================
+# CHECK 7: DUPLICATE GAMES ACROSS PAGES
+# Added January 13, 2026 - Prevents same game appearing on multiple date pages
+# ============================================================
+echo "Checking for duplicate games across pages..."
+
+# Only run this check if soccer, nba, nhl, nfl, ncaab, ncaaf, or mlb pages are staged
+SPORTS_STAGED=$(git diff --cached --name-only | grep -E "^(soccer|nba|nhl|nfl|ncaab|ncaaf|mlb).*\.html$")
+if [ -n "$SPORTS_STAGED" ]; then
+    # Determine which sports have staged files
+    for sport in soccer nba nhl nfl ncaab ncaaf mlb; do
+        if echo "$SPORTS_STAGED" | grep -q "^${sport}"; then
+            # Run duplicate detection for this sport
+            if python scripts/detect_duplicate_games.py "$sport" > /dev/null 2>&1; then
+                # Check exit code
+                if ! python scripts/detect_duplicate_games.py "$sport" --quiet 2>/dev/null; then
+                    echo ""
+                    echo "[!] WARNING: Possible duplicate games in $sport pages"
+                    echo "    Run: python scripts/detect_duplicate_games.py $sport"
+                    echo "    to see details and fix before pushing."
+                fi
+            fi
+        fi
+    done
+fi
+echo "  ✓ Duplicate game check complete"
+
+# ============================================================
 
 echo ""
 echo "[OK] All pre-commit checks passed!"
