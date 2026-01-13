@@ -314,6 +314,7 @@ def generate_html(all_data):
             color: #fff;
             letter-spacing: 2px;
             text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            margin-right: auto;
         }}
         .logo span {{
             color: #00f0ff;
@@ -863,7 +864,7 @@ def generate_html(all_data):
         <header class="header">
             <h1>Injury Report</h1>
             <p class="tagline">Your go-to resource for the most up-to-date injury information across all major sports. Updated hourly with real-time data.</p>
-            <p class="last-updated">Last Updated: {now}</p>
+            <p class="last-updated" id="last-updated-time">Last Updated: Loading...</p>
         </header>
 
         <div class="stats-summary">
@@ -985,6 +986,41 @@ def generate_html(all_data):
             document.getElementById(sport).classList.add('active');
             event.target.classList.add('active');
         }
+
+        // Update timestamp to current Eastern Time
+        function updateTimestamp() {
+            const now = new Date();
+            const options = {
+                timeZone: 'America/New_York',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            const parts = formatter.formatToParts(now);
+
+            let month = '', day = '', year = '', hour = '', minute = '', dayPeriod = '';
+            parts.forEach(part => {
+                if (part.type === 'month') month = part.value;
+                if (part.type === 'day') day = part.value;
+                if (part.type === 'year') year = part.value;
+                if (part.type === 'hour') hour = part.value;
+                if (part.type === 'minute') minute = part.value;
+                if (part.type === 'dayPeriod') dayPeriod = part.value.toUpperCase();
+            });
+
+            const timeStr = `Last Updated: ${month} ${day}, ${year} at ${hour}:${minute} ${dayPeriod} ET`;
+            document.getElementById('last-updated-time').textContent = timeStr;
+        }
+
+        // Update on page load
+        updateTimestamp();
+
+        // Update every minute
+        setInterval(updateTimestamp, 60000);
     </script>
 </body>
 </html>
