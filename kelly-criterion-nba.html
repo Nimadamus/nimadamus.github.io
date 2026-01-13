@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="canonical" href="https://www.betlegendpicks.com/kelly-criterion-nba.html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kelly Criterion for NBA Betting | Basketball Bankroll Strategy</title>
+    <meta name="description" content="Apply the Kelly Criterion to NBA betting with basketball-specific examples. Optimal bet sizing for NBA spreads, totals, player props, and moneylines."/>
+    <meta name="keywords" content="Kelly Criterion NBA, NBA bet sizing, basketball bankroll management, NBA betting strategy, NBA spread Kelly"/>
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="Kelly Criterion for NBA Betting | BetLegend">
+    <meta property="og:description" content="Master optimal bet sizing for NBA games. Real examples with spreads, totals, and player props.">
+    <meta property="og:url" content="https://www.betlegendpicks.com/kelly-criterion-nba.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.betlegendpicks.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Kelly Criterion", "item": "https://www.betlegendpicks.com/kelly-criterion.html"},
+        {"@type": "ListItem", "position": 3, "name": "Kelly Criterion for NBA", "item": "https://www.betlegendpicks.com/kelly-criterion-nba.html"}
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the 82-game NBA season affect Kelly Criterion usage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 82-game NBA season provides larger sample sizes than NFL, allowing you to validate your edge more quickly. This means you can potentially move from quarter Kelly to half Kelly faster once you've proven consistent CLV (closing line value) over 50+ bets."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use Kelly Criterion for NBA player props?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kelly can be applied to player props, but use extra caution. Props have thinner markets with potentially larger edges but also more variance. Use quarter Kelly or less for props, and only on markets where you have specific expertise (like knowing a player's role has changed)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do back-to-back games affect NBA Kelly calculations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Back-to-back games create correlated betting opportunities. If you're betting multiple games involving rest advantages, reduce your total exposure. Never let correlated NBA bets exceed 10% of your bankroll combined, regardless of what individual Kelly calculations suggest."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-gold: #FFD700;
+            --win-color: #39FF14;
+            --loss-color: #FF3131;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: var(--text-color);
+            line-height: 1.8;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--glow-color);
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--neon-gold);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-gold);
+            font-size: 1.4rem;
+            margin: 30px 0 15px 0;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 10px;
+        }
+        p { margin-bottom: 15px; font-size: 1.05rem; }
+        .example-box {
+            background: rgba(0, 224, 255, 0.1);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .example-box h3 {
+            color: var(--glow-color);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .formula {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 1rem;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .internal-links {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .internal-links h3 {
+            color: var(--neon-gold);
+            margin-bottom: 15px;
+        }
+        .internal-links ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .internal-links a {
+            color: var(--glow-color);
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .internal-links a:hover {
+            background: rgba(0, 224, 255, 0.1);
+            border-color: var(--glow-color);
+        }
+        .back-link {
+            display: inline-block;
+            color: var(--neon-gold);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .tip-box {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(0, 224, 255, 0.1));
+            border: 1px solid var(--win-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="kelly-criterion.html" class="back-link">← Back to Kelly Criterion Calculator</a>
+
+    <h1>Kelly Criterion for NBA Betting</h1>
+    <p class="subtitle">Optimal Bet Sizing for Basketball Spreads, Totals & Props</p>
+
+    <p>NBA betting offers unique opportunities for Kelly Criterion application. The 82-game regular season, combined with high-scoring games and frequent line movements, creates an environment where disciplined bankroll management can significantly impact long-term results.</p>
+
+    <h2>Why NBA Betting Suits Kelly Criterion</h2>
+
+    <p><strong>Large Sample Size:</strong> With 82 games per team and over 1,200 regular season games total, NBA provides ample opportunity to prove and exploit your edge. Unlike NFL's 17-game season, you can validate your handicapping approach within a single season.</p>
+
+    <p><strong>Market Efficiency Gaps:</strong> While NBA point spreads are relatively efficient, totals and player props often present value. Back-to-back situations, rest advantages, and load management create exploitable patterns.</p>
+
+    <p><strong>Consistent Scoring:</strong> Basketball's high-scoring nature means fewer random outcomes. A late fumble can't swing an NBA game the way it can in football. This slightly lower variance supports more aggressive Kelly fractions.</p>
+
+    <h2>NBA Point Spread Kelly Example</h2>
+
+    <div class="example-box">
+        <h3>Example: Celtics -6.5 (-110) vs Heat</h3>
+        <p><strong>Your Analysis:</strong> You estimate the Celtics have a 57% chance to cover based on rest advantage and home court.</p>
+        <p><strong>Bankroll:</strong> $3,000</p>
+
+        <div class="formula">
+            Kelly % = (1.909 × 0.57 - 1) / (1.909 - 1) = 8.7%<br>
+            <strong>Half Kelly: 4.35% = $130.50 bet</strong>
+        </div>
+
+        <p>Your 57% estimate against the 52.4% breakeven gives you a 4.6% edge. Half Kelly recommends a $130 bet.</p>
+    </div>
+
+    <h2>NBA Total (Over/Under) Kelly Example</h2>
+
+    <div class="example-box">
+        <h3>Example: Thunder/Nuggets Over 224.5 (-108)</h3>
+        <p><strong>Your Analysis:</strong> Both teams rank top-10 in pace, and you estimate 58% for the over.</p>
+        <p><strong>Bankroll:</strong> $3,000</p>
+
+        <div class="formula">
+            Decimal Odds = 1.926 (from -108)<br>
+            Kelly % = (1.926 × 0.58 - 1) / (1.926 - 1) = 10.5%<br>
+            <strong>Half Kelly: 5.25% = $157.50 bet</strong>
+        </div>
+
+        <p>Totals often offer larger edges than spreads because they're less analyzed by the public. Your 58% estimate gives a strong edge here.</p>
+    </div>
+
+    <h2>NBA-Specific Kelly Considerations</h2>
+
+    <p><strong>Load Management:</strong> Star player rest is announced late, sometimes day-of. If your edge depends on specific players being available, reduce Kelly fraction or wait for confirmed lineups.</p>
+
+    <p><strong>Back-to-Backs:</strong> Teams on the second night of a back-to-back typically underperform. Factor this into your probability estimates, but remember the market adjusts for this too.</p>
+
+    <p><strong>Playoff Adjustments:</strong> NBA playoff series feature repeated matchups where adjustments matter. Your edge estimation should account for coaching adjustments after each game.</p>
+
+    <div class="tip-box">
+        <p><strong>Pro Tip:</strong> The NBA betting market is sharpest 30 minutes before tip-off. If you're getting a significantly better line than the closing number consistently, your edge is likely real. Track your CLV (closing line value) to validate Kelly calculations.</p>
+    </div>
+
+    <h2>Recommended Kelly Fractions for NBA</h2>
+
+    <p><strong>Quarter Kelly (25%):</strong> Use for player props and situational bets where your edge estimation has higher uncertainty.</p>
+
+    <p><strong>Half Kelly (50%):</strong> Recommended for standard spread and total bets where you have a proven methodology. The large sample size of NBA makes half Kelly appropriate for experienced bettors.</p>
+
+    <p><strong>Never Exceed:</strong> Even with a large estimated edge, cap any single NBA bet at 5% of your bankroll. Upsets happen, and no single regular season game is worth risking more.</p>
+
+    <div class="internal-links">
+        <h3>Related Resources</h3>
+        <ul>
+            <li><a href="kelly-criterion.html">Kelly Criterion Calculator</a></li>
+            <li><a href="bankroll.html">Bankroll Management Guide</a></li>
+            <li><a href="nba-records.html">NBA Betting Records</a></li>
+            <li><a href="nba.html">Today's NBA Picks</a></li>
+            <li><a href="records.html">All Verified Records</a></li>
+            <li><a href="betting-calculators.html">All Betting Calculators</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
