@@ -1,9 +1,10 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: January 13, 2026
+// Last updated: January 14, 2026
 
 const ARCHIVE_DATA = [
     // 2026 - Individual pages with unique content
+    { date: "2026-01-14", page: "featured-game-of-the-day-page45.html", title: "Kraken vs Devils NHL" },
     { date: "2026-01-13", page: "featured-game-of-the-day-page44.html", title: "Stars vs Ducks NHL" },
     { date: "2026-01-12", page: "featured-game-of-the-day-page43.html", title: "Texans vs Steelers AFC Wild Card" },
     { date: "2026-01-11", page: "featured-game-of-the-day-page42.html", title: "49ers vs Eagles NFC Wild Card" },
