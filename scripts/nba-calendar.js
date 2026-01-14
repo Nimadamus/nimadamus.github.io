@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-14", page: "nba.html", title: "NBA Analysis - January 14, 2026" },
+    { date: "2026-01-14", page: "nba-page46.html", title: "NBA Analysis - January 14, 2026" },
     { date: "2026-01-13", page: "nba-page45.html", title: "NBA Analysis - January 13, 2026" },
     { date: "2026-01-11", page: "nba-page44.html", title: "NBA Analysis - January 11, 2026" },
     { date: "2026-01-10", page: "nba-page43.html", title: "NBA Analysis - January 10, 2026" },
