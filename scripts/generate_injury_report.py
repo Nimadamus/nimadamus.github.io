@@ -24,20 +24,20 @@ MLB_OFFSEASON_MONTHS = [11, 12, 1, 2, 3]  # Nov, Dec, Jan, Feb, Mar
 # Status display order (most severe first)
 STATUS_ORDER = ['Out', 'Injured Reserve', 'Doubtful', 'Questionable', 'Day-To-Day', 'Probable']
 
-# NFL Playoff Teams - Divisional Round (January 2026)
-# VERIFIED: NFC: Seahawks (1), Bears (2), Rams (5), 49ers (6)
-# AFC: Broncos (1), Patriots, Bills (6), + Steelers vs Texans winner (game Jan 12)
-# Including both Steelers and Texans since their game is TODAY
+# NFL Playoff Teams - Divisional Round (January 17-18, 2026)
+# VERIFIED: Wild Card results complete - Divisional Round set
+# NFC: Seahawks (1-bye), Bears (2), Rams (5), 49ers (6)
+# AFC: Broncos (1-bye), Patriots (2), Texans (5), Bills (6)
+# Eliminated in Wild Card: Steelers, Chargers, Jaguars, Panthers, Packers, Eagles
 NFL_PLAYOFF_TEAMS = [
-    'Seattle Seahawks',      # NFC 1 seed
-    'Chicago Bears',         # NFC 2 seed
+    'Seattle Seahawks',      # NFC 1 seed (bye)
+    'Chicago Bears',         # NFC 2 seed (beat Packers 31-27)
     'Los Angeles Rams',      # NFC 5 seed (beat Panthers 34-31)
     'San Francisco 49ers',   # NFC 6 seed (beat Eagles 23-19)
-    'Denver Broncos',        # AFC 1 seed
-    'New England Patriots',  # AFC (beat Chargers 16-3)
+    'Denver Broncos',        # AFC 1 seed (bye)
+    'New England Patriots',  # AFC 2 seed (beat Chargers 16-3)
+    'Houston Texans',        # AFC 5 seed (beat Steelers 30-6)
     'Buffalo Bills',         # AFC 6 seed (beat Jaguars 27-24)
-    'Pittsburgh Steelers',   # AFC 4 seed (hosting Texans tonight Jan 12)
-    'Houston Texans'         # AFC 7 seed (playing Steelers tonight Jan 12)
 ]
 
 # Supplemental injuries not always captured by ESPN API
@@ -201,8 +201,7 @@ def parse_all_injuries(sport, teams_data):
                     'Denver Broncos': '7',
                     'New England Patriots': '17',
                     'Buffalo Bills': '2',
-                    'Houston Texans': '34',
-                    'Pittsburgh Steelers': '23'
+                    'Houston Texans': '34'
                 }
                 teams[playoff_team] = {
                     'id': team_id_map.get(playoff_team, ''),
@@ -852,7 +851,7 @@ def generate_html(all_data):
                 <div class="dropdown">
                     <button class="dropbtn">Game of the Day ▼</button>
                     <div class="dropdown-content">
-                        <a href="featured-game-of-the-day-page43.html">Game of the Day</a>
+                        <a href="featured-game-of-the-day-page44.html">Game of the Day</a>
                         <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
                     </div>
                 </div>
@@ -907,7 +906,7 @@ def generate_html(all_data):
         # Add playoff note for NFL
         playoff_note = ''
         if sport == 'NFL':
-            playoff_note = '<p style="text-align:center;color:#00d4ff;font-size:0.9rem;margin-bottom:15px;font-weight:600;">NFL Playoff Teams Only - Divisional Round (Includes Steelers & Texans - Wild Card tonight Jan 12)</p>'
+            playoff_note = '<p style="text-align:center;color:#00d4ff;font-size:0.9rem;margin-bottom:15px;font-weight:600;">NFL Playoff Teams Only - Divisional Round (Jan 17-18, 2026)</p>'
 
         # Check if MLB is in offseason
         current_month = datetime.now().month
