@@ -6,6 +6,7 @@ const ARCHIVE_DATA = [
     { date: "2026-01-14", page: "soccer-page22.html", title: "Soccer Analysis - January 14, 2026" },
     { date: "2026-01-13", page: "soccer-page21.html", title: "Soccer Analysis - January 13, 2026" },
     { date: "2026-01-12", page: "soccer.html", title: "Soccer Analysis - January 12, 2026" },
+    { date: "2026-01-12", page: "soccer-page23.html", title: "Soccer Analysis - January 12, 2026" },
     { date: "2026-01-11", page: "soccer-page20.html", title: "Soccer Analysis - January 11, 2026" },
     { date: "2026-01-10", page: "soccer-page19.html", title: "Soccer Analysis - January 10, 2026" },
     { date: "2026-01-09", page: "soccer-page14.html", title: "Soccer Analysis - January 09, 2026" },
