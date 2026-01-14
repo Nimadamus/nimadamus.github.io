@@ -19,7 +19,7 @@
         /* Navigation */
         .nav {
             background: #1a365d;
-            padding: 12px 20px;
+            padding: 0 30px;
             position: fixed;
             top: 0;
             left: 0;
@@ -33,20 +33,186 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 12px 0;
         }
         .logo {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: white;
             text-decoration: none;
+            letter-spacing: 1px;
         }
         .logo span { color: #fd5000; }
-        .nav-links { display: flex; gap: 15px; }
-        .nav-links a {
-            color: white;
+
+        /* Nav Menu */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Home Button */
+        .home-btn {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+            background: linear-gradient(135deg, #fd5000, #ff7b3d);
+            padding: 10px 18px;
+            border-radius: 8px;
             text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(253, 80, 0, 0.5);
+        }
+
+        /* Nav Links */
+        .nav-link {
             font-weight: 600;
             font-size: 0.85rem;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .nav-link:hover {
+            color: #fd5000;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .dropdown .dropbtn {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #fff;
+            background: none;
+            border: none;
+            padding: 10px 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .dropdown:hover .dropbtn,
+        .dropdown.active .dropbtn {
+            color: #fd5000;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            background: rgba(26, 54, 93, 0.98);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(253, 80, 0, 0.3);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 99999;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 10px 14px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .dropdown-content a:hover {
+            background: rgba(253, 80, 0, 0.2);
+            padding-left: 18px;
+            color: #fd5000;
+        }
+
+        /* Two-column dropdown for Sports & Records */
+        .sports-records-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 380px;
+            background: rgba(26, 54, 93, 0.98);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(253, 80, 0, 0.3);
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 99999;
+        }
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .column h4 {
+            color: #000;
+            background: linear-gradient(135deg, #fd5000, #ff7b3d);
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            padding: 6px 10px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-align: center;
+        }
+        .column a {
+            display: block;
+            color: #fff;
+            padding: 8px 12px;
+            margin: 3px 0;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+        .column a:hover {
+            background: rgba(253, 80, 0, 0.2);
+            border-color: rgba(253, 80, 0, 0.5);
+            transform: translateX(4px);
+        }
+
+        /* Desktop hover for dropdowns */
+        @media (hover: hover) and (pointer: fine) {
+            .dropdown:hover .dropdown-content,
+            .dropdown:hover .sports-records-dropdown {
+                display: block;
+                animation: dropdownFade 0.25s ease;
+            }
+        }
+        /* Touch/click active state */
+        .dropdown.active .dropdown-content,
+        .dropdown.active .sports-records-dropdown {
+            display: block;
+            animation: dropdownFade 0.25s ease;
+        }
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Header */
@@ -400,20 +566,104 @@
     <nav class="nav">
         <div class="nav-inner">
             <a href="index.html" class="logo">BET<span>LEGEND</span></a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="handicapping-hub.html">Hub</a>
-                <a href="handicapping-hub-archive.html">Archive</a>
-                <a href="blog-page10.html">Picks</a>
-                <a href="featured-game-of-the-day-page18.html">Featured</a>
-                <a href="nfl.html">NFL</a>
-                <a href="nba.html">NBA</a>
-                <a href="nhl.html">NHL</a>
-                <a href="ncaab.html">NCAAB</a>
-                <a href="ncaaf.html">NCAAF</a>
+            <div class="nav-menu">
+                <!-- Home Button -->
+                <a href="index.html" class="home-btn">Home</a>
+
+                <!-- Picks & Analysis -->
+                <a href="blog-page11.html" class="nav-link">Picks</a>
+
+                <!-- Sports & Records Dropdown -->
+                <div class="dropdown">
+                    <button class="dropbtn">Sports & Records ▼</button>
+                    <div class="sports-records-dropdown">
+                        <div class="two-columns">
+                            <div class="column">
+                                <h4>Sports</h4>
+                                <a href="nfl.html">NFL</a>
+                                <a href="mlb-page2.html">MLB</a>
+                                <a href="ncaaf.html">NCAAF</a>
+                                <a href="nba.html">NBA</a>
+                                <a href="ncaab.html">NCAAB</a>
+                                <a href="nhl.html">NHL</a>
+                                <a href="soccer.html">Soccer</a>
+                            </div>
+                            <div class="column">
+                                <h4>Records</h4>
+                                <a href="records.html">Detailed Breakdown</a>
+                                <a href="mlb-records.html">MLB</a>
+                                <a href="nfl-records.html">NFL</a>
+                                <a href="ncaaf-records.html">NCAAF</a>
+                                <a href="ncaab-records.html">NCAAB</a>
+                                <a href="nhl-records.html">NHL</a>
+                                <a href="nba-records.html">NBA</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Dropdown -->
+                <div class="dropdown">
+                    <button class="dropbtn">Resources ▼</button>
+                    <div class="dropdown-content">
+                        <a href="proofofpicks.html">Proof of Picks</a>
+                        <a href="live-odds.html">Live Odds</a>
+                        <a href="howitworks.html">How It Works</a>
+                        <a href="bankroll.html">Bankroll</a>
+                        <a href="betting-calculators.html">Calculators</a>
+                        <a href="betting-glossary.html">Glossary</a>
+                        <a href="contact.html">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Archive -->
+                <a href="handicapping-hub-archive.html" class="nav-link">Archive</a>
+
+                <!-- Game of the Day Dropdown -->
+                <div class="dropdown">
+                    <button class="dropbtn">Game of Day ▼</button>
+                    <div class="dropdown-content">
+                        <a href="featured-game-of-the-day-page44.html">Featured Game</a>
+                        <a href="moneyline-parlay-of-the-day.html">ML Parlay</a>
+                    </div>
+                </div>
+
+                <!-- News -->
+                <a href="news-page3.html" class="nav-link">News</a>
             </div>
         </div>
     </nav>
+
+    <!-- Dropdown JavaScript -->
+    <script>
+    (function() {
+        var dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(function(dropdown) {
+            var btn = dropdown.querySelector('.dropbtn');
+            if (!btn) return;
+            function toggle(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdowns.forEach(function(d) {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
+                dropdown.classList.toggle('active');
+            }
+            btn.addEventListener('touchend', toggle, {passive: false});
+            btn.addEventListener('click', toggle);
+        });
+        document.addEventListener('touchend', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+    })();
+    </script>
 
     <header class="header">
         <h1>Handicapping <span>Hub</span></h1>
