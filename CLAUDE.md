@@ -236,6 +236,58 @@ BETTING LINES VERIFIED:
 
 ---
 
+## ⛔⛔⛔ ABSOLUTE RULE #0.6: VERIFY HOMEPAGE FEATURED GAME PREVIEW ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 13, 2026
+
+**When updating the Featured Game preview on the BetLegend homepage (index.html), ALL betting lines MUST be searched and verified.**
+
+### THE HOMEPAGE FEATURED GAME RULE:
+```
+BEFORE UPDATING THE FEATURED GAME PREVIEW ON INDEX.HTML:
+1. SEARCH for actual betting lines: "[Team A] vs [Team B] odds"
+2. VERIFY the spread, moneyline, AND total (O/U) from official sources
+3. COPY the exact numbers from the search results
+4. UPDATE the index.html with verified numbers
+5. DOUBLE-CHECK every field matches the search results
+
+AFTER UPDATING:
+1. VERIFY the live site shows correct data
+2. If user reports incorrect data, CHECK THEIR BROWSER CACHE
+3. The live site should always match the committed code
+```
+
+### WHAT THIS APPLIES TO:
+The "Tonight's Featured Game" section on index.html contains:
+- Team logos, names, and records
+- Puck line/Spread
+- Moneyline for both teams
+- Over/Under total
+- Game time, venue, and network
+
+**EVERY NUMBER in this section must be verified before committing.**
+
+### VERIFICATION CHECKLIST FOR HOMEPAGE FEATURED GAME:
+```
+□ Team records verified (check ESPN standings)
+□ Spread/Puck Line verified (search current odds)
+□ Moneyline for BOTH teams verified
+□ O/U Total verified (THE MOST COMMONLY MISSED!)
+□ Game time verified (check ESPN schedule)
+□ Venue verified
+□ Network verified
+```
+
+### COMMON ERRORS TO AVOID:
+- ❌ Guessing the O/U based on average goals/points
+- ❌ Copy-pasting from old featured games without updating
+- ❌ Using stale data from earlier in the day (lines move!)
+- ❌ Forgetting to update the total when updating other fields
+
+**ONE WRONG NUMBER ON THE HOMEPAGE DESTROYS CREDIBILITY. VERIFY EVERYTHING.**
+
+---
+
 ## ⛔⛔⛔ ABSOLUTE RULE #1: NO PAGINATION ON SPORTS PAGES - EVER ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - JANUARY 2, 2026
