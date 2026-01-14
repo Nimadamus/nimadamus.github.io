@@ -98,6 +98,71 @@ WRONG (BANNED):
 - Pages existed but were invisible in the calendar
 - User frustrated because content wasn't navigable
 
+---
+
+## ⛔⛔⛔ ABSOLUTE RULE: ALWAYS CREATE DEDICATED PAGE FILES ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 14, 2026
+
+**EVERY day's sports content MUST be saved to BOTH the main page AND a dedicated page file.**
+
+### THE RULE:
+```
+When adding daily sports content:
+1. Update the main page (nba.html, nhl.html, etc.)
+2. ALSO create a dedicated page file (nba-page48.html, etc.)
+3. The page file preserves content when main page is updated tomorrow
+
+CORRECT (Content Preserved):
+  nba.html         ← Today's content (will be overwritten tomorrow)
+  nba-page48.html  ← Today's content (PERMANENT archive)
+
+WRONG (Content LOST):
+  nba.html         ← Today's content (will be overwritten tomorrow)
+  [no page file]   ← CONTENT LOST FOREVER when tomorrow's update comes!
+```
+
+### WHAT HAPPENED (January 12, 2026):
+- January 12 content was added to main pages (nba.html, nhl.html, etc.)
+- NO dedicated page files were created
+- When January 13 updates were made, main pages were overwritten
+- Result: ALL January 12 content was LOST
+- Had to recover from git history
+
+### THE PRE-COMMIT HOOK NOW BLOCKS THIS:
+The pre-commit hook will BLOCK commits that update main sports pages
+without having a corresponding dedicated page file for that date.
+
+### WHEN CREATING DAILY SPORTS CONTENT:
+```bash
+# 1. Find next page number
+ls nba-page*.html | tail -1  # e.g., nba-page47.html
+
+# 2. Create BOTH files
+# Main page (for "latest" view):
+#   Update nba.html with today's content
+
+# Archive page (PERMANENT):
+#   Create nba-page48.html with same content
+#   Update canonical URL to nba-page48.html
+
+# 3. Sync calendars
+python scripts/sync_calendars.py
+
+# 4. Commit BOTH files together
+git add nba.html nba-page48.html
+```
+
+### VALIDATION SCRIPT:
+Run this to check for missing page files:
+```bash
+python scripts/validate_daily_pages.py
+```
+
+**IF I UPDATE MAIN PAGES WITHOUT CREATING PAGE FILES, CONTENT WILL BE LOST.**
+
+**THIS HAPPENED ONCE. IT WILL NEVER HAPPEN AGAIN.**
+
 ### BEFORE CREATING ANY SPORTS PAGE:
 ```
 1. ALWAYS include the date in the <title> tag
