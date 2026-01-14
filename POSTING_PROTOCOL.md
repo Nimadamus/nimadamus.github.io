@@ -1,5 +1,7 @@
 # BetLegend Posting Protocol
 
+### SESSION VERIFICATION CODE: POSTING-RULES-ACTIVE
+
 ## MANDATORY REQUIREMENTS FOR ALL POSTS
 
 This protocol MUST be followed for every blog post and news article uploaded to betlegendpicks.com.

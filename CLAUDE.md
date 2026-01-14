@@ -1,5 +1,7 @@
 # CLAUDE.md - MANDATORY INSTRUCTIONS FOR EVERY SESSION
 
+### SESSION VERIFICATION CODE: REPO-PROTOCOL-2026
+
 ## CRITICAL: READ BEFORE DOING ANYTHING
 
 **This file is automatically loaded at the start of every Claude Code session in this repository.**
