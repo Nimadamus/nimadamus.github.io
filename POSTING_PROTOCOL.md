@@ -893,6 +893,39 @@ BAD - Dry and corporate:
 
 ## 4. SEO OPTIMIZATION REQUIREMENTS
 
+### ⛔ FEATURED GAME TITLES: USE "PICKS & PREDICTION" NOT "PREVIEW" ⛔
+
+**PERMANENTLY LOCKED - JANUARY 15, 2026**
+
+**All Featured Game of the Day page titles MUST use "Picks & Prediction" instead of "Preview" or "Showdown" for better long-tail SEO.**
+
+**THE RULE:**
+```
+CORRECT (SEO-optimized):
+<title>Knicks vs Warriors Picks & Prediction - January 15, 2026 | BetLegend</title>
+<title>Eagles vs Bills Wild Card Picks & Prediction - January 12, 2026 | BetLegend</title>
+<title>Cowboys vs Lions Thursday Night Football Picks & Prediction - December 4, 2025 | BetLegend</title>
+
+WRONG (low search volume):
+<title>Knicks vs Warriors Preview - January 15, 2026 | BetLegend</title>
+<title>Eagles vs Bills Wild Card Preview - January 12, 2026 | BetLegend</title>
+<title>Cowboys vs Lions Showdown - December 4, 2025 | BetLegend</title>
+```
+
+**WHY THIS MATTERS:**
+- People search "Team vs Team picks" and "Team vs Team prediction" far more than "preview"
+- Long-tail keywords like "Knicks Warriors picks" have less competition
+- Better title = higher click-through rate from search results
+- "Picks & Prediction" signals actionable betting content
+
+**WHEN CREATING ANY FEATURED GAME PAGE:**
+1. Use format: `[Team A] vs [Team B] [Context] Picks & Prediction - [Date] | BetLegend`
+2. NEVER use "Preview", "Showdown", or "Analysis" in the title
+3. Include the date for freshness signals
+4. Keep team names in the title for search matching
+
+---
+
 ### CRITICAL: Every Post MUST Include SEO Meta Tags
 
 #### A. Per-Post Meta Tags (Inside blog-post div)
@@ -1945,11 +1978,12 @@ All these files contain the dual-source loading, filtering, and unit calculation
 ---
 
 ## PROTOCOL VERSION
-Version: 1.5
-Last Updated: December 29, 2025
+Version: 1.6
+Last Updated: January 15, 2026
 Created by: Claude Code for BetLegend
 
 ### CHANGELOG:
+- v1.6 (Jan 15, 2026): Added "FEATURED GAME TITLES: USE 'PICKS & PREDICTION' NOT 'PREVIEW'" SEO rule for better long-tail keyword targeting
 - v1.5 (Dec 29, 2025): Added comprehensive "TECHNICAL IMPLEMENTATION: HOW RECORD PAGES WORK" section documenting dual-source data loading, sport filtering logic, unit calculation JavaScript function, Odds/Line column bug fix, deduplication, and worked examples
 - v1.4 (Dec 25, 2025): Added "UNIT CALCULATION FORMULA" section with correct formulas for favorite/underdog wins and losses
 - v1.3 (Dec 14, 2025): Added LOCKED "Sports Archive Page Format (Calendar Style)" - ALL archive pages MUST use game-preview article format with written content, NO stat-row/deep-analysis garbage
