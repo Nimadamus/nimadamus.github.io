@@ -2511,6 +2511,22 @@ def fetch_all_games() -> Dict[str, List]:
                 # This ensures all scheduled games are visible when the page first loads.
                 game_status = event.get('status', {}).get('type', {}).get('name', '')
 
+                # DATE FILTER: Only show games scheduled for TODAY
+                # This prevents stale data from appearing (e.g., old bowl games)
+                game_date_str = event.get('date', '')
+                if game_date_str:
+                    try:
+                        game_dt = datetime.fromisoformat(game_date_str.replace('Z', '+00:00'))
+                        today = datetime.now(timezone.utc).date()
+                        game_date = game_dt.date()
+                        if game_date != today:
+                            away_team_check = competitors[0].get('team', {})
+                            home_team_check = competitors[1].get('team', {})
+                            print(f"  [SKIP] Game not today ({game_date}): {away_team_check.get('displayName', '?')} vs {home_team_check.get('displayName', '?')}")
+                            continue
+                    except (ValueError, AttributeError) as e:
+                        print(f"  [WARN] Could not parse game date: {game_date_str} - {e}")
+
                 # NCAAB: Only show important games (ranked teams, major programs, or has betting odds)
                 if sport == 'NCAAB':
                     away_team_temp = competitors[0].get('team', {})
