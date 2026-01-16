@@ -56,6 +56,56 @@ Every game MUST have substantive content. If time constraints exist:
 
 ---
 
+## ⛔⛔⛔ NO EM DASHES IN NEWS OR BLOG POSTS ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 15, 2026
+
+**Em dashes (—) are a telltale sign of AI-generated content. NEVER use them.**
+
+### BANNED:
+- ❌ Em dashes (—) anywhere in the article
+- ❌ "Twenty-six individuals—including 22 players—were charged"
+- ❌ "The investigation—which lasted three years—revealed..."
+- ❌ Any sentence with em dashes
+
+### USE INSTEAD:
+- ✅ Periods to separate thoughts
+- ✅ Commas for natural pauses
+- ✅ Rewrite sentences to flow naturally
+- ✅ Parentheses only when absolutely necessary
+
+### EXAMPLE:
+```
+WRONG (AI-sounding):
+"Antonio Blakeney—a former Bulls guard who played 76 games—allegedly
+orchestrated the scheme."
+
+RIGHT (Human-sounding):
+"Antonio Blakeney, the former Bulls guard who played 76 games, allegedly
+orchestrated the scheme."
+
+EVEN BETTER:
+"Antonio Blakeney allegedly orchestrated the scheme. The former Bulls
+guard played 76 games in the NBA from 2017 to 2019."
+```
+
+### WHY THIS MATTERS:
+- Em dashes are overused by AI models
+- Human writers rarely use em dashes this frequently
+- Readers can spot AI content by the dash patterns
+- Professional journalism uses them sparingly, not constantly
+
+### THE RULE:
+```
+BEFORE PUBLISHING: Search the article for "—"
+IF any em dashes found → REWRITE those sentences
+The article should have ZERO em dashes
+```
+
+**Em dashes = AI smell. Remove them. Always.**
+
+---
+
 ## ⛔⛔⛔ CRITICAL: COVER ALL GAMES ON THE BOARD ⛔⛔⛔
 
 ### FULL SLATE COVERAGE IS MANDATORY
