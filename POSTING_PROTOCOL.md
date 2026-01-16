@@ -56,6 +56,134 @@ Every game MUST have substantive content. If time constraints exist:
 
 ---
 
+## ⛔⛔⛔ SPORTS PAGE ANALYSIS QUALITY STANDARDS ⛔⛔⛔
+
+### PERMANENTLY LOCKED - JANUARY 16, 2026
+
+**Surface-level analysis is UNACCEPTABLE. Every game preview must contain SHARP, IN-DEPTH handicapping analysis.**
+
+### WHAT SURFACE-LEVEL ANALYSIS LOOKS LIKE (BANNED):
+
+```
+❌ "The Lakers have been playing well, winning 7 of their last 10."
+❌ "This is a revenge game for the Celtics."
+❌ "Both teams have strong offenses."
+❌ "Key players will need to step up."
+❌ "This should be a competitive matchup between conference rivals."
+```
+
+**This is LAZY. This is FILLER. This provides ZERO value to bettors.**
+
+### WHAT SHARP ANALYSIS LOOKS LIKE (REQUIRED):
+
+```
+✅ "Boston is 4-6 ATS in their last 10 despite going 7-3 straight up -
+   the market has their number. They're 2-5 ATS as road favorites this
+   month, and Cleveland is 8-2 ATS at home against winning teams."
+
+✅ "The total opened at 224.5 and has been steamed down to 221. Sharp
+   money sees a grind. Cleveland ranks 3rd in defensive rating at home
+   (104.2) compared to 11th on the road (110.8)."
+
+✅ "Evan Mobley has held primary assignments to 38% shooting this season.
+   Tatum's been dominant (29.4 PPG last 10), but this is a brutal matchup."
+```
+
+### MANDATORY ELEMENTS FOR EVERY GAME ANALYSIS:
+
+| Element | Description | Example |
+|---------|-------------|---------|
+| **ATS Records** | Not just W-L, but against the spread performance | "6-2 ATS as home underdogs" |
+| **Situational Angles** | Rest, travel, schedule spots, revenge | "0-4 ATS on zero days rest this season" |
+| **Pace/Style Matchup** | How the teams' styles interact | "Utah ranks 28th in pace; this drags toward under" |
+| **Specific Player Matchups** | Who guards who, exploitable edges | "Dort has held primary assignments to 41% FG" |
+| **Line Movement** | Where it opened, where it is now, why | "Opened -3, now -1.5. Money on the dog." |
+| **Totals Analysis** | Over/under angle for every game | "Combined 218.4 PPG; total at 224 has over value" |
+| **Historical Trends** | Relevant past performance with numbers | "Miami is 12-3 to the over after a loss" |
+| **Sharp vs Public** | Who's on which side if available | "78% of bets on favorite, line moving opposite" |
+| **Injury Cascade** | Not just who's out, but the downstream effects | "With Smart out, Pritchard's on/off splits crater by 6.8 DRtg" |
+
+### THE ANALYSIS QUALITY TEST:
+
+Before publishing, ask yourself:
+```
+1. Would a sharp bettor learn something from this analysis?
+2. Are there SPECIFIC NUMBERS backing every claim?
+3. Is there an actual OPINION with conviction, not wishy-washy hedging?
+4. Does this sound like a human handicapper or a generic AI summary?
+5. Is there analysis on BOTH the side AND the total?
+```
+
+**If any answer is NO → REWRITE IT.**
+
+### BANNED PHRASES (LAZY INDICATORS):
+
+| Banned Phrase | Why It's Lazy |
+|---------------|---------------|
+| "should be a good game" | Says nothing, provides no insight |
+| "will need to step up" | Generic filler |
+| "key matchup to watch" | Empty without specifics |
+| "both teams are playing well" | Surface-level observation |
+| "could go either way" | Wishy-washy, no conviction |
+| "revenge game" (without data) | Narrative without supporting evidence |
+| "due for regression" (without stats) | Claim without proof |
+
+### WRITING STYLE REQUIREMENTS:
+
+**Sound like a sharp handicapper, not a robot:**
+- Use contractions naturally ("they're", "don't", "can't")
+- Take strong positions ("I love this spot", "this line is wrong")
+- Show personality ("Look, I get why the public is on the Lakers, but...")
+- Vary sentence length (mix punchy takes with detailed analysis)
+- Reference specific numbers constantly
+
+### EXAMPLE OF FULL GAME ANALYSIS (MINIMUM STANDARD):
+
+```
+CELTICS @ CAVALIERS (-3.5) | O/U 221
+
+Boston's been winning ugly lately - 7-3 straight up but just 4-6 ATS in
+their last 10. The market knows something. They're also a brutal 2-5 ATS
+as road favorites this month, and that number gets worse against quality
+opponents.
+
+Cleveland's a different beast at home. They're 8-2 ATS against teams with
+winning records at Rocket Mortgage FieldHouse, and their defensive rating
+at home (104.2, 3rd in NBA) is elite compared to their road number (110.8,
+11th). This isn't the same team you see struggling on the road.
+
+The matchup problem for Boston is Evan Mobley. He's held primary defensive
+assignments to 38% shooting this season, and he'll get plenty of time on
+Tatum. Tatum's been cooking (29.4 PPG last 10), but this is his toughest
+individual matchup of the month.
+
+The total tells a story too - opened 224.5, now down to 221. Sharp money
+sees a grind. Cleveland's pace at home ranks 22nd, and Boston's been
+playing slower recently (96.2 possessions per game last 5, down from 99.1
+season average). This has under written all over it.
+
+THE PLAY: Cleveland +3.5 (-110), Under 221 (-110)
+```
+
+### ENFORCEMENT:
+
+- Sports pages with surface-level analysis will be flagged for rewrite
+- "Generic filler" content is equivalent to placeholder content
+- Quality standards apply to EVERY game, not just featured matchups
+- If you can't write sharp analysis on a game, don't include it
+
+### WHY THIS STANDARD EXISTS (January 16, 2026):
+
+Claude admitted to "taking the path of least resistance" by writing generic content that technically met minimum requirements while providing zero actual value. Surface-level analysis like "the Celtics have been playing well lately" is:
+- Lazy
+- Provides no betting value
+- Makes the site look amateur
+- Is the AI equivalent of phoning it in
+
+**This ends now. Every game gets sharp analysis or it doesn't get covered.**
+
+---
+
 ## ⛔⛔⛔ NO EM DASHES IN NEWS OR BLOG POSTS ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - JANUARY 15, 2026
