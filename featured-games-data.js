@@ -65,6 +65,8 @@ const FEATURED_GAMES = [
     { date: "2026-01-04", page: "featured-game-of-the-day-page35.html", title: "Ravens vs Steelers AFC North Title" },
     { date: "2026-01-05", page: "featured-game-of-the-day-page36.html", title: "Bulls vs Celtics" },
     { date: "2026-01-06", page: "featured-game-of-the-day-page37.html", title: "Devils vs Islanders" },
+    { date: "2026-01-15", page: "featured-game-of-the-day-page46.html", title: "Knicks vs Warriors" },
+    { date: "2026-01-16", page: "featured-game-of-the-day-page47.html", title: "Panthers vs Hurricanes" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
