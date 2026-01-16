@@ -8,6 +8,96 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
+## 🔴🔴🔴 RULE #0: BEST POSSIBLE OUTPUT. ALWAYS. 🔴🔴🔴
+
+### PERMANENTLY LOCKED - JANUARY 16, 2026
+
+**Claude does not produce "acceptable" or "good enough" output. Claude produces the BEST POSSIBLE output on EVERYTHING.**
+
+### THE STANDARD:
+
+```
+NOT: "This meets the minimum requirements"
+NOT: "This is good enough"
+NOT: "This technically satisfies the rules"
+
+ONLY: "This is the best I can possibly do"
+```
+
+### WHAT THIS MEANS:
+
+- Every piece of content is written as if it's the most important thing on the site
+- Every analysis goes as deep as possible, not as shallow as acceptable
+- Every task is executed with maximum effort, not minimum viable effort
+- "Good enough" is not good enough. Only BEST is acceptable.
+
+### WHY THIS RULE EXISTS:
+
+Claude admitted to "taking the path of least resistance" - producing generic, surface-level content that technically met requirements while providing minimal value. This is unacceptable.
+
+**From January 16, 2026 forward: BEST POSSIBLE OUTPUT. NO EXCEPTIONS.**
+
+---
+
+## 🔴🔴🔴 RULE #0.1: NEVER ALTER, DELETE, OR OVERRIDE WITHOUT ASKING 🔴🔴🔴
+
+### PERMANENTLY LOCKED - JANUARY 16, 2026
+
+**Claude MUST ask for explicit permission before making ANY changes that alter, delete, or override existing content.**
+
+### BEFORE MAKING ANY CHANGE, CLAUDE MUST ASK:
+
+```
+"I'm about to [describe the change]. This will [alter/delete/override] [what].
+Should I proceed? (yes/no)"
+```
+
+### THIS APPLIES TO:
+
+| Action | Requires Permission |
+|--------|---------------------|
+| Deleting any file | ✅ MUST ASK |
+| Deleting any content within a file | ✅ MUST ASK |
+| Overwriting existing content | ✅ MUST ASK |
+| Changing page layouts or designs | ✅ MUST ASK |
+| Modifying navigation or structure | ✅ MUST ASK |
+| Removing or replacing images | ✅ MUST ASK |
+| Changing titles or meta content | ✅ MUST ASK |
+| Any destructive or replacing action | ✅ MUST ASK |
+
+### WHAT DOES NOT REQUIRE ASKING:
+
+| Action | Permission |
+|--------|------------|
+| Adding NEW content to a page | OK (but never delete existing) |
+| Inserting new posts at TOP of page | OK |
+| Creating new files | OK |
+| Adding new internal links | OK |
+| Fixing typos (without changing meaning) | OK |
+
+### THE RULE:
+
+```
+ADDING = Usually OK
+ALTERING = ASK FIRST
+DELETING = ASK FIRST
+OVERRIDING = ASK FIRST
+
+When in doubt → ASK
+```
+
+### WHY THIS RULE EXISTS:
+
+Past incidents where Claude deleted files, overwrote content, or made changes without asking caused significant damage:
+- SEO value destroyed
+- Content permanently lost
+- User trust broken
+- Hours of work erased
+
+**The default is: DO NOTHING DESTRUCTIVE WITHOUT EXPLICIT APPROVAL.**
+
+---
+
 ## ⛔⛔⛔ ZERO TOLERANCE: NO PLACEHOLDER CONTENT. EVER. ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - DECEMBER 20, 2025
