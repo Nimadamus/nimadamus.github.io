@@ -1,9 +1,11 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: January 15, 2026
+// Last updated: January 17, 2026
 
 const ARCHIVE_DATA = [
     // 2026 - Individual pages with unique content
+    { date: "2026-01-17", page: "featured-game-of-the-day-page48.html", title: "49ers vs Seahawks NFC Divisional" },
+    { date: "2026-01-16", page: "featured-game-of-the-day-page47.html", title: "Panthers vs Hurricanes NHL" },
     { date: "2026-01-15", page: "featured-game-of-the-day-page46.html", title: "Knicks vs Warriors NBA" },
     { date: "2026-01-14", page: "featured-game-of-the-day-page45.html", title: "Kraken vs Devils NHL" },
     { date: "2026-01-13", page: "featured-game-of-the-day-page44.html", title: "Stars vs Ducks NHL" },
