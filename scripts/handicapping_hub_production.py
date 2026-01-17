@@ -1948,13 +1948,50 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             text-decoration: none;
         }}
         .logo span {{ color: #fd5000; }}
-        .nav-links {{ display: flex; gap: 15px; }}
+        .nav-links {{ display: flex; gap: 25px; align-items: center; }}
         .nav-links a {{
             color: white;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.85rem;
         }}
+        .nav-links a:hover {{ color: #fd5000; }}
+        .sports-dropdown {{
+            position: relative;
+            display: inline-block;
+        }}
+        .sports-dropdown-btn {{
+            background: none;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }}
+        .sports-dropdown-btn:hover {{ color: #fd5000; }}
+        .sports-dropdown-content {{
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1a365d;
+            min-width: 120px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1001;
+            padding: 8px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }}
+        .sports-dropdown:hover .sports-dropdown-content {{ display: block; }}
+        .sports-dropdown-content a {{
+            display: block;
+            padding: 8px 16px;
+            color: white;
+        }}
+        .sports-dropdown-content a:hover {{ background: rgba(253,80,0,0.3); }}
 
         /* Header */
         .header {{
@@ -2310,14 +2347,20 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="handicapping-hub.html">Hub</a>
-                <a href="handicapping-hub-archive.html">Archive</a>
-                <a href="blog-page10.html">Picks</a>
-                <a href="featured-game-of-the-day-page18.html">Featured</a>
-                <a href="nfl.html">NFL</a>
-                <a href="nba.html">NBA</a>
-                <a href="nhl.html">NHL</a>
-                <a href="ncaab.html">NCAAB</a>
-                <a href="ncaaf.html">NCAAF</a>
+                <a href="blog-page11.html">Picks</a>
+                <a href="featured-game-of-the-day-page48.html">Featured</a>
+                <div class="sports-dropdown">
+                    <button class="sports-dropdown-btn">Sports ▼</button>
+                    <div class="sports-dropdown-content">
+                        <a href="nfl.html">NFL</a>
+                        <a href="nba.html">NBA</a>
+                        <a href="nhl.html">NHL</a>
+                        <a href="ncaab.html">NCAAB</a>
+                        <a href="ncaaf.html">NCAAF</a>
+                        <a href="mlb.html">MLB</a>
+                        <a href="soccer.html">Soccer</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -2351,7 +2394,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     </div>
 
     <footer>
-        <p>&copy; 2025 BetLegend | Data: ESPN, The Odds API | <a href="index.html">Home</a> | <a href="handicapping-hub-archive.html">Hub Archive</a></p>
+        <p>&copy; 2026 BetLegend | Data: ESPN, The Odds API | <a href="index.html">Home</a></p>
     </footer>
 
     <script>
@@ -2511,15 +2554,19 @@ def fetch_all_games() -> Dict[str, List]:
                 # This ensures all scheduled games are visible when the page first loads.
                 game_status = event.get('status', {}).get('type', {}).get('name', '')
 
-                # DATE FILTER: Only show games scheduled for TODAY
+                # DATE FILTER: Only show games scheduled for TODAY (in Eastern Time)
                 # This prevents stale data from appearing (e.g., old bowl games)
+                # IMPORTANT: Use Eastern Time for comparison, not UTC, because games
+                # at 8pm ET on Jan 17 are stored as 1am UTC on Jan 18
                 game_date_str = event.get('date', '')
                 if game_date_str:
                     try:
                         game_dt = datetime.fromisoformat(game_date_str.replace('Z', '+00:00'))
-                        today = datetime.now(timezone.utc).date()
-                        game_date = game_dt.date()
-                        if game_date != today:
+                        # Convert to Eastern Time for comparison (games display in ET)
+                        game_dt_eastern = game_dt.astimezone(EASTERN)
+                        today_eastern = datetime.now(EASTERN).date()
+                        game_date = game_dt_eastern.date()
+                        if game_date != today_eastern:
                             away_team_check = competitors[0].get('team', {})
                             home_team_check = competitors[1].get('team', {})
                             print(f"  [SKIP] Game not today ({game_date}): {away_team_check.get('displayName', '?')} vs {home_team_check.get('displayName', '?')}")

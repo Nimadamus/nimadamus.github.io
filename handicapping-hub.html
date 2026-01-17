@@ -41,13 +41,50 @@
             text-decoration: none;
         }
         .logo span { color: #fd5000; }
-        .nav-links { display: flex; gap: 15px; }
+        .nav-links { display: flex; gap: 25px; align-items: center; }
         .nav-links a {
             color: white;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.85rem;
         }
+        .nav-links a:hover { color: #fd5000; }
+        .sports-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .sports-dropdown-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .sports-dropdown-btn:hover { color: #fd5000; }
+        .sports-dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1a365d;
+            min-width: 120px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1001;
+            padding: 8px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .sports-dropdown:hover .sports-dropdown-content { display: block; }
+        .sports-dropdown-content a {
+            display: block;
+            padding: 8px 16px;
+            color: white;
+        }
+        .sports-dropdown-content a:hover { background: rgba(253,80,0,0.3); }
 
         /* Header */
         .header {
@@ -394,46 +431,6 @@
             .archive-btn { top: 60px; right: 10px; padding: 8px 12px; font-size: 0.7rem; }
             .archive-dropdown { right: 10px; width: 260px; top: 100px; }
         }
-    
-        .alerts-banner {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            border-radius: 12px;
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            color: white;
-        }
-        .alerts-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .alert-icon { font-size: 20px; }
-        .alert-title { font-weight: 700; font-size: 14px; text-transform: uppercase; }
-        .alert-time { margin-left: auto; font-size: 12px; opacity: 0.8; }
-        .alerts-scroll {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .alert-item {
-            background: rgba(255,255,255,0.1);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .sport-tag {
-            background: rgba(255,255,255,0.2);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 11px;
-        }
-        .alert-text { flex: 1; }
-
     </style>
 </head>
 <body>
@@ -443,14 +440,20 @@
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="handicapping-hub.html">Hub</a>
-                <a href="handicapping-hub-archive.html">Archive</a>
-                <a href="blog-page10.html">Picks</a>
+                <a href="blog-page11.html">Picks</a>
                 <a href="featured-game-of-the-day-page48.html">Featured</a>
-                <a href="nfl.html">NFL</a>
-                <a href="nba.html">NBA</a>
-                <a href="nhl.html">NHL</a>
-                <a href="ncaab.html">NCAAB</a>
-                <a href="ncaaf.html">NCAAF</a>
+                <div class="sports-dropdown">
+                    <button class="sports-dropdown-btn">Sports ▼</button>
+                    <div class="sports-dropdown-content">
+                        <a href="nfl.html">NFL</a>
+                        <a href="nba.html">NBA</a>
+                        <a href="nhl.html">NHL</a>
+                        <a href="ncaab.html">NCAAB</a>
+                        <a href="ncaaf.html">NCAAF</a>
+                        <a href="mlb.html">MLB</a>
+                        <a href="soccer.html">Soccer</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -477,42 +480,11 @@
     </div>
 
     <div class="container">
-
-        <div class="alerts-banner">
-            <div class="alerts-header">
-                <span class="alert-icon">⚠️</span>
-                <span class="alert-title">LINE MOVEMENTS DETECTED</span>
-                <span class="alert-time">11:00 AM</span>
-            </div>
-            <div class="alerts-scroll">
-                <div class="alert-item">
-                    <span class="sport-tag">NHL</span>
-                    <span class="alert-text">SPREAD MOVE: Minnesota Wild @ Buffalo Sabres (NHL) - Spread moved from 1.5 to -1.5 (+3.0 pts)</span>
-                </div>
-                <div class="alert-item">
-                    <span class="sport-tag">NHL</span>
-                    <span class="alert-text">ML MOVE: Minnesota Wild @ Buffalo Sabres (NHL) - Minnesota Wild ML moved from 105 to -280</span>
-                </div>
-                <div class="alert-item">
-                    <span class="sport-tag">NHL</span>
-                    <span class="alert-text">TOTAL MOVE: Minnesota Wild @ Buffalo Sabres (NHL) - Total moved from 6.5 to 8.5 (up)</span>
-                </div>
-                <div class="alert-item">
-                    <span class="sport-tag">NHL</span>
-                    <span class="alert-text">SPREAD MOVE: New York Rangers @ Philadelphia Flyers (NHL) - Spread moved from 1.5 to -2.5 (+4.0 pts)</span>
-                </div>
-                <div class="alert-item">
-                    <span class="sport-tag">NHL</span>
-                    <span class="alert-text">ML MOVE: New York Rangers @ Philadelphia Flyers (NHL) - New York Rangers ML moved from 120 to -425</span>
-                </div>
-            </div>
-        </div>
-
         <div class="tabs">
-            <button class="tab-btn active" data-sport="nba">NBA <span class="count">(1)</span></button>
-<button class="tab-btn " data-sport="nfl">NFL <span class="count">(1)</span></button>
-<button class="tab-btn " data-sport="nhl">NHL <span class="count">(4)</span></button>
-<button class="tab-btn " data-sport="ncaab">NCAAB <span class="count">(18)</span></button>
+            <button class="tab-btn active" data-sport="nba">NBA <span class="count">(9)</span></button>
+<button class="tab-btn " data-sport="nfl">NFL <span class="count">(2)</span></button>
+<button class="tab-btn " data-sport="nhl">NHL <span class="count">(13)</span></button>
+<button class="tab-btn " data-sport="ncaab">NCAAB <span class="count">(21)</span></button>
 <button class="tab-btn " data-sport="ncaaf">NCAAF <span class="count">(0)</span></button>
 
         </div>
@@ -545,8 +517,8 @@
                             <span class="team-name">UTAH</span>
                             <span class="team-record">14-27</span>
                         </td>
-                        <td class="spread">+3.5</td>
-                        <td class="ml">+133</td>
+                        <td class="spread">+3.0</td>
+                        <td class="ml">+125</td>
                         <td class="total">O 241.5</td>
                     </tr>
                     <tr class="home-row">
@@ -555,8 +527,8 @@
                             <span class="team-name">DAL</span>
                             <span class="team-record">16-26</span>
                         </td>
-                        <td class="spread">-3.5</td>
-                        <td class="ml">-164</td>
+                        <td class="spread">-3.0</td>
+                        <td class="ml">-154</td>
                         <td class="total">U 241.5</td>
                     </tr>
                 </tbody>
@@ -627,6 +599,890 @@
         </div>
     </div>
     
+    <div class="game-card" data-event-id="401810449" data-sport="nba">
+        <div class="game-header">
+            <span class="game-time">7:30 PM ET</span>
+            <span class="game-venue">State Farm Arena</span>
+            <span class="game-network">FanDuel SN SE</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/bos.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">BOS</span>
+                            <span class="team-record">25-15</span>
+                        </td>
+                        <td class="spread">-3.5</td>
+                        <td class="ml">-160</td>
+                        <td class="total">O 229.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/atl.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">ATL</span>
+                            <span class="team-record">20-23</span>
+                        </td>
+                        <td class="spread">+3.5</td>
+                        <td class="ml">+135</td>
+                        <td class="total">U 229.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BOS</td><td>116.7</td><td>47.2%</td><td>36.8%</td><td>79.6%</td><td>23.8</td><td>44.7</td></tr>
+                        <tr><td class="team-abbr">ATL</td><td>117.9</td><td>47.8%</td><td>37.0%</td><td>77.2%</td><td>31.0</td><td>41.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BOS</td><td>7.8</td><td>5.3</td><td>31.9</td><td>12.7</td><td>11.1</td><td>20.5</td></tr>
+                        <tr><td class="team-abbr">ATL</td><td>9.5</td><td>4.7</td><td>32.0</td><td>9.7</td><td>13.8</td><td>20.2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BOS</td><td>43.0</td><td>91.1</td><td>15.6</td><td>42.5</td><td>56.4%</td><td>55.8%</td></tr>
+                        <tr><td class="team-abbr">ATL</td><td>43.4</td><td>90.9</td><td>14.5</td><td>39.1</td><td>56.0%</td><td>55.7%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BOS</td><td>2.1</td><td>15.0</td><td>18.9</td><td>55.8%</td><td>58.7%</td><td>62.5</td></tr>
+                        <tr><td class="team-abbr">ATL</td><td>2.2</td><td>16.6</td><td>21.4</td><td>55.7%</td><td>58.8%</td><td>46.5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 BOS: J. Minott (F) - OUT, P. Pritchard (G) - OUT, J. Tatum (F) - OUT | ATL: D. Daniels (G) - DTD, N. Dante (C) - OUT, K. Porzingis (C) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401810450" data-sport="nba">
+        <div class="game-header">
+            <span class="game-time">7:30 PM ET</span>
+            <span class="game-venue">Little Caesars Arena</span>
+            <span class="game-network">FanDuel SN IN</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ind.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">IND</span>
+                            <span class="team-record">10-32</span>
+                        </td>
+                        <td class="spread">+15.0</td>
+                        <td class="ml">+575</td>
+                        <td class="total">O 225.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/det.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">DET</span>
+                            <span class="team-record">29-10</span>
+                        </td>
+                        <td class="spread">-15.0</td>
+                        <td class="ml">-900</td>
+                        <td class="total">U 225.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">IND</td><td>111.0</td><td>44.4%</td><td>34.4%</td><td>77.4%</td><td>25.2</td><td>42.8</td></tr>
+                        <tr><td class="team-abbr">DET</td><td>117.6</td><td>48.0%</td><td>35.0%</td><td>74.6%</td><td>26.6</td><td>46.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">IND</td><td>7.3</td><td>5.1</td><td>31.8</td><td>10.9</td><td>13.3</td><td>22.5</td></tr>
+                        <tr><td class="team-abbr">DET</td><td>10.4</td><td>6.7</td><td>32.6</td><td>13.7</td><td>15.1</td><td>22.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">IND</td><td>39.8</td><td>89.7</td><td>12.6</td><td>36.6</td><td>51.3%</td><td>51.4%</td></tr>
+                        <tr><td class="team-abbr">DET</td><td>43.0</td><td>89.7</td><td>11.1</td><td>31.7</td><td>55.1%</td><td>54.1%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">IND</td><td>1.9</td><td>18.8</td><td>24.3</td><td>51.4%</td><td>55.3%</td><td>23.8</td></tr>
+                        <tr><td class="team-abbr">DET</td><td>1.8</td><td>20.5</td><td>27.4</td><td>54.1%</td><td>57.8%</td><td>74.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -950 -> -900</span><span class="movement-item"><span class="move-icon">💰</span> Away ML: +640 -> +575</span><span class="movement-item"><span class="move-icon">📊</span> Spread: -15.5 -> -15.0 (+0.5)</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 IND: T. Haliburton (G) - OUT, I. Jackson (F) - OUT, B. Mathurin (G) - OUT | DET: C. Cunningham (G) - DTD, W. Jr. (F) - OUT, P. Reed (F) - DTD</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401810451" data-sport="nba">
+        <div class="game-header">
+            <span class="game-time">7:30 PM ET</span>
+            <span class="game-venue">Madison Square Garden</span>
+            <span class="game-network">NBA TV</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/phx.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">PHX</span>
+                            <span class="team-record">24-17</span>
+                        </td>
+                        <td class="spread">+2.5</td>
+                        <td class="ml">+120</td>
+                        <td class="total">O 226.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ny.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">NY</span>
+                            <span class="team-record">25-16</span>
+                        </td>
+                        <td class="spread">-2.5</td>
+                        <td class="ml">-140</td>
+                        <td class="total">U 226.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">PHX</td><td>114.6</td><td>46.1%</td><td>36.2%</td><td>79.4%</td><td>25.3</td><td>43.5</td></tr>
+                        <tr><td class="team-abbr">NY</td><td>118.9</td><td>47.1%</td><td>37.8%</td><td>80.2%</td><td>26.9</td><td>45.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">PHX</td><td>10.5</td><td>4.2</td><td>30.6</td><td>13.0</td><td>14.5</td><td>21.9</td></tr>
+                        <tr><td class="team-abbr">NY</td><td>8.0</td><td>4.2</td><td>32.2</td><td>13.5</td><td>13.0</td><td>20.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">PHX</td><td>41.7</td><td>90.4</td><td>14.5</td><td>40.1</td><td>54.0%</td><td>54.1%</td></tr>
+                        <tr><td class="team-abbr">NY</td><td>42.9</td><td>91.1</td><td>15.1</td><td>39.9</td><td>54.3%</td><td>55.4%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">PHX</td><td>1.7</td><td>16.7</td><td>21.1</td><td>54.1%</td><td>57.5%</td><td>58.5</td></tr>
+                        <tr><td class="team-abbr">NY</td><td>2.1</td><td>18.0</td><td>22.5</td><td>55.4%</td><td>58.9%</td><td>61.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">📊</span> Spread: -2.0 -> -2.5 (-0.5)</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 PHX: D. Booker (G) - DTD, J. Bouyea (G) - OUT, J. Green (G) - OUT | NY: J. Brunson (G) - DTD, J. Hart (G) - DTD</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401810452" data-sport="nba">
+        <div class="game-header">
+            <span class="game-time">8:00 PM ET</span>
+            <span class="game-venue">Kaseya Center</span>
+            <span class="game-network">FanDuel SN OK</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/okc.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">OKC</span>
+                            <span class="team-record">35-7</span>
+                        </td>
+                        <td class="spread">-10.0</td>
+                        <td class="ml">-450</td>
+                        <td class="total">O 235.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/mia.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">MIA</span>
+                            <span class="team-record">21-20</span>
+                        </td>
+                        <td class="spread">+10.0</td>
+                        <td class="ml">+335</td>
+                        <td class="total">U 235.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">OKC</td><td>121.1</td><td>48.9%</td><td>35.7%</td><td>82.9%</td><td>25.7</td><td>43.9</td></tr>
+                        <tr><td class="team-abbr">MIA</td><td>119.4</td><td>47.0%</td><td>36.8%</td><td>79.0%</td><td>28.5</td><td>45.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">OKC</td><td>10.3</td><td>5.9</td><td>34.7</td><td>9.2</td><td>11.7</td><td>20.4</td></tr>
+                        <tr><td class="team-abbr">MIA</td><td>9.2</td><td>4.4</td><td>34.4</td><td>10.9</td><td>14.0</td><td>19.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">OKC</td><td>43.9</td><td>89.9</td><td>13.2</td><td>37.0</td><td>58.2%</td><td>56.2%</td></tr>
+                        <tr><td class="team-abbr">MIA</td><td>43.6</td><td>92.9</td><td>13.1</td><td>35.5</td><td>53.3%</td><td>54.0%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">OKC</td><td>2.2</td><td>20.0</td><td>24.2</td><td>56.2%</td><td>60.2%</td><td>83.3</td></tr>
+                        <tr><td class="team-abbr">MIA</td><td>2.0</td><td>19.1</td><td>24.1</td><td>54.0%</td><td>57.7%</td><td>51.2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Home ML: +350 -> +335</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +10.5 -> +10.0 (-0.5)</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 OKC: I. Hartenstein (C) - OUT, T. Sorber (C) - OUT, N. Topic (G) - OUT | MIA: T. Herro (G) - DTD, J. Jr. (F) - OUT, N. Jovic (F) - DTD</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401810453" data-sport="nba">
+        <div class="game-header">
+            <span class="game-time">8:00 PM ET</span>
+            <span class="game-venue">Frost Bank Center</span>
+            <span class="game-network">FanDuel SN North</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/min.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">MIN</span>
+                            <span class="team-record">27-15</span>
+                        </td>
+                        <td class="spread">+4.5</td>
+                        <td class="ml">+155</td>
+                        <td class="total">O 232.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/sa.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SA</span>
+                            <span class="team-record">28-13</span>
+                        </td>
+                        <td class="spread">-4.5</td>
+                        <td class="ml">-180</td>
+                        <td class="total">U 232.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MIN</td><td>120.0</td><td>48.6%</td><td>37.3%</td><td>74.7%</td><td>26.9</td><td>44.8</td></tr>
+                        <tr><td class="team-abbr">SA</td><td>117.6</td><td>47.2%</td><td>34.8%</td><td>79.6%</td><td>25.6</td><td>46.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MIN</td><td>8.5</td><td>5.4</td><td>33.5</td><td>11.3</td><td>13.5</td><td>21.5</td></tr>
+                        <tr><td class="team-abbr">SA</td><td>7.9</td><td>4.5</td><td>35.1</td><td>11.6</td><td>13.4</td><td>19.5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MIN</td><td>43.2</td><td>88.9</td><td>14.1</td><td>37.8</td><td>56.9%</td><td>56.5%</td></tr>
+                        <tr><td class="team-abbr">SA</td><td>42.0</td><td>89.0</td><td>13.0</td><td>37.2</td><td>56.1%</td><td>54.5%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MIN</td><td>2.0</td><td>19.5</td><td>26.1</td><td>56.5%</td><td>59.8%</td><td>64.3</td></tr>
+                        <tr><td class="team-abbr">SA</td><td>1.9</td><td>20.7</td><td>26.0</td><td>54.5%</td><td>58.5%</td><td>68.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 MIN: R. Gobert (C) - DTD, T. Jr. (G) - OUT | SA: S. Castle (G) - DTD, D. Vassell (G) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401810454" data-sport="nba">
+        <div class="game-header">
+            <span class="game-time">8:30 PM ET</span>
+            <span class="game-venue">Chase Center</span>
+            <span class="game-network">FanDuel SN SE</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/cha.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">CHA</span>
+                            <span class="team-record">15-26</span>
+                        </td>
+                        <td class="spread">+7.0</td>
+                        <td class="ml">+225</td>
+                        <td class="total">O 235.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/gs.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">GS</span>
+                            <span class="team-record">23-19</span>
+                        </td>
+                        <td class="spread">-7.0</td>
+                        <td class="ml">-275</td>
+                        <td class="total">U 235.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CHA</td><td>116.6</td><td>46.1%</td><td>37.3%</td><td>81.3%</td><td>26.6</td><td>45.4</td></tr>
+                        <tr><td class="team-abbr">GS</td><td>115.8</td><td>45.9%</td><td>36.2%</td><td>82.1%</td><td>28.4</td><td>43.2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CHA</td><td>6.8</td><td>4.7</td><td>33.3</td><td>12.1</td><td>14.7</td><td>19.3</td></tr>
+                        <tr><td class="team-abbr">GS</td><td>9.5</td><td>4.5</td><td>31.8</td><td>11.4</td><td>14.9</td><td>20.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CHA</td><td>41.1</td><td>89.2</td><td>15.4</td><td>41.2</td><td>53.7%</td><td>54.7%</td></tr>
+                        <tr><td class="team-abbr">GS</td><td>40.6</td><td>88.6</td><td>16.0</td><td>44.2</td><td>55.5%</td><td>54.9%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CHA</td><td>1.8</td><td>19.0</td><td>23.3</td><td>54.7%</td><td>58.6%</td><td>36.6</td></tr>
+                        <tr><td class="team-abbr">GS</td><td>1.9</td><td>18.5</td><td>22.5</td><td>54.9%</td><td>58.8%</td><td>54.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 CHA: M. Diabate (F) - DTD, M. Plumlee (C) - OUT | GS: S. Curry (SG) - OUT, G. Santos (F) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401810455" data-sport="nba">
+        <div class="game-header">
+            <span class="game-time">9:00 PM ET</span>
+            <span class="game-venue">Ball Arena</span>
+            <span class="game-network">MNMT</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/wsh.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">WSH</span>
+                            <span class="team-record">10-30</span>
+                        </td>
+                        <td class="spread">+11.5</td>
+                        <td class="ml">+400</td>
+                        <td class="total">O 229.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/den.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">DEN</span>
+                            <span class="team-record">28-13</span>
+                        </td>
+                        <td class="spread">-11.5</td>
+                        <td class="ml">-575</td>
+                        <td class="total">U 229.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">WSH</td><td>112.7</td><td>46.2%</td><td>35.4%</td><td>77.3%</td><td>25.3</td><td>43.9</td></tr>
+                        <tr><td class="team-abbr">DEN</td><td>122.6</td><td>50.2%</td><td>40.3%</td><td>81.7%</td><td>28.4</td><td>42.9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">WSH</td><td>7.2</td><td>6.1</td><td>32.6</td><td>11.3</td><td>15.3</td><td>21.6</td></tr>
+                        <tr><td class="team-abbr">DEN</td><td>6.9</td><td>3.9</td><td>33.1</td><td>9.7</td><td>12.2</td><td>19.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">WSH</td><td>41.6</td><td>90.0</td><td>12.7</td><td>35.7</td><td>53.2%</td><td>53.3%</td></tr>
+                        <tr><td class="team-abbr">DEN</td><td>43.9</td><td>87.4</td><td>14.1</td><td>35.1</td><td>56.8%</td><td>58.3%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">WSH</td><td>1.6</td><td>16.9</td><td>21.9</td><td>53.3%</td><td>56.6%</td><td>25.0</td></tr>
+                        <tr><td class="team-abbr">DEN</td><td>2.3</td><td>20.7</td><td>25.4</td><td>58.3%</td><td>62.2%</td><td>68.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -560 -> -575</span><span class="movement-item"><span class="move-icon">💰</span> Away ML: +430 -> +400</span><span class="movement-item"><span class="move-icon">📊</span> Spread: -12.5 -> -11.5 (+1.0)</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 WSH: B. Coulibaly (G) - OUT, K. Middleton (F) - DTD, T. Vukcevic (F) - DTD | DEN: T. Bates (G) - OUT, C. Braun (G) - OUT, B. Brown (G) - DTD</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401810456" data-sport="nba">
+        <div class="game-header">
+            <span class="game-time">10:00 PM ET</span>
+            <span class="game-venue">Moda Center</span>
+            <span class="game-network">NBA TV</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">LAL</span>
+                            <span class="team-record">24-15</span>
+                        </td>
+                        <td class="spread">+3.5</td>
+                        <td class="ml">+125</td>
+                        <td class="total">O 223.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/por.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">POR</span>
+                            <span class="team-record">20-22</span>
+                        </td>
+                        <td class="spread">-3.5</td>
+                        <td class="ml">-145</td>
+                        <td class="total">U 223.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LAL</td><td>116.5</td><td>49.7%</td><td>34.5%</td><td>77.8%</td><td>24.9</td><td>41.3</td></tr>
+                        <tr><td class="team-abbr">POR</td><td>115.9</td><td>44.8%</td><td>33.8%</td><td>77.7%</td><td>24.6</td><td>45.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LAL</td><td>8.1</td><td>3.9</td><td>31.2</td><td>10.2</td><td>14.5</td><td>19.6</td></tr>
+                        <tr><td class="team-abbr">POR</td><td>8.0</td><td>4.8</td><td>31.5</td><td>13.8</td><td>16.0</td><td>21.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LAL</td><td>41.6</td><td>83.7</td><td>11.8</td><td>34.4</td><td>60.2%</td><td>56.8%</td></tr>
+                        <tr><td class="team-abbr">POR</td><td>40.5</td><td>90.4</td><td>14.1</td><td>41.7</td><td>54.1%</td><td>52.6%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LAL</td><td>1.7</td><td>21.5</td><td>27.7</td><td>56.8%</td><td>60.7%</td><td>61.5</td></tr>
+                        <tr><td class="team-abbr">POR</td><td>1.5</td><td>20.9</td><td>26.9</td><td>52.6%</td><td>56.7%</td><td>47.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 LAL: D. Ayton (C) - DTD, L. Doncic (G) - OUT, J. Hayes (C) - DTD | POR: D. Avdija (F) - OUT, J. Grant (F) - DTD, S. Henderson (G) - OUT</span>
+        </div>
+    </div>
+    
             </div>
         
             <div class="sport-section " id="nfl-section">
@@ -659,7 +1515,7 @@
                         </td>
                         <td class="spread">+1.0</td>
                         <td class="ml">+100</td>
-                        <td class="total">O 46.0</td>
+                        <td class="total">O 45.0</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -669,7 +1525,7 @@
                         </td>
                         <td class="spread">-1.0</td>
                         <td class="ml">-120</td>
-                        <td class="total">U 46.0</td>
+                        <td class="total">U 45.0</td>
                     </tr>
                 </tbody>
             </table>
@@ -744,6 +1600,119 @@
         </div>
     </div>
     
+    <div class="game-card" data-event-id="401772984" data-sport="nfl">
+        <div class="game-header">
+            <span class="game-time">8:00 PM ET</span>
+            <span class="game-venue">Lumen Field</span>
+            <span class="game-network">FOX</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SF</span>
+                            <span class="team-record">12-5</span>
+                        </td>
+                        <td class="spread">+7.0</td>
+                        <td class="ml">+265</td>
+                        <td class="total">O 45.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sea.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SEA</span>
+                            <span class="team-record">14-3</span>
+                        </td>
+                        <td class="spread">-7.0</td>
+                        <td class="ml">-330</td>
+                        <td class="total">U 45.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>1stD</th><th>3RD%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SF</td><td>23.0</td><td>366</td><td>286</td><td>75</td><td>20</td><td>54.5%</td></tr>
+                        <tr><td class="team-abbr">SEA</td><td>28.4</td><td>362</td><td>228</td><td>123</td><td>340</td><td>39.8%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>SACK</th><th>INT</th><th>TFL</th><th>FF</th><th>PD</th><th>PEN</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SF</td><td>1</td><td>0</td><td>7</td><td>0</td><td>3</td><td>1</td></tr>
+                        <tr><td class="team-abbr">SEA</td><td>47</td><td>18</td><td>89</td><td>9</td><td>96</td><td>100</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: EFFICIENCY vs SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>CMP%</th><th>YPA</th><th>YPC</th><th>YPR</th><th>QBR</th><th>FG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SF</td><td>59.4%</td><td>9.1</td><td>15.3</td><td>3.0</td><td>94.7</td><td>100.0%</td></tr>
+                        <tr><td class="team-abbr">SEA</td><td>67.6%</td><td>8.4</td><td>12.5</td><td>4.1</td><td>97.9</td><td>85.4%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">SITUATIONAL</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>RZ%</th><th>4TH%</th><th>TO+/-</th><th>TOP</th><th>FG%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SF</td><td>66.7%</td><td>0.0%</td><td>-2</td><td>24:21</td><td>100.0%</td><td>70.6</td></tr>
+                        <tr><td class="team-abbr">SEA</td><td>54.2%</td><td>58.3%</td><td>-3</td><td>30:12</td><td>85.4%</td><td>82.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: +245 -> +265</span><span class="movement-item"><span class="move-icon">💰</span> Home ML: -305 -> -330</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 SF: R. Pearsall (WR) - Q, J. Brown (S) - OUT, L. Gifford (LB) - Q | SEA: S. Darnold (QB) - Q, J. Jones (G) - OUT, E. Arroyo (TE) - OUT</span>
+        </div>
+    </div>
+    
             </div>
         
             <div class="sport-section " id="nhl-section">
@@ -775,8 +1744,8 @@
                             <span class="team-record">26-13-9</span>
                         </td>
                         <td class="spread">+1.5</td>
-                        <td class="ml">+105</td>
-                        <td class="total">O 6.0</td>
+                        <td class="ml">-110</td>
+                        <td class="total">O 9.5</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -785,8 +1754,8 @@
                             <span class="team-record">26-16-4</span>
                         </td>
                         <td class="spread">-1.5</td>
-                        <td class="ml">-125</td>
-                        <td class="total">U 6.0</td>
+                        <td class="ml">-115</td>
+                        <td class="total">U 9.5</td>
                     </tr>
                 </tbody>
             </table>
@@ -852,7 +1821,7 @@
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
-            <span class="trend-item">🏥 MIN: J. Ek (C) - OUT, M. Boldy (LW) - OUT, Z. Bogosian (D) - OUT | BUF: J. Dunne (C) - OUT, J. Norris (C) - DTD, M. Kesselring (D) - OUT</span>
+            <span class="trend-item">🏥 MIN: J. Ek (C) - OUT, M. Boldy (LW) - OUT, M. Johansson (LW) - OUT | BUF: J. Dunne (C) - OUT, J. Norris (C) - OUT, M. Kesselring (D) - OUT</span>
         </div>
     </div>
     
@@ -882,9 +1851,9 @@
                             <span class="team-name">NYR</span>
                             <span class="team-record">20-22-6</span>
                         </td>
-                        <td class="spread">+1.5</td>
-                        <td class="ml">+115</td>
-                        <td class="total">O 6.5</td>
+                        <td class="spread">-3.5</td>
+                        <td class="ml">-10000</td>
+                        <td class="total">O 9.5</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -892,9 +1861,9 @@
                             <span class="team-name">PHI</span>
                             <span class="team-record">22-16-8</span>
                         </td>
-                        <td class="spread">-1.5</td>
-                        <td class="ml">-135</td>
-                        <td class="total">U 6.5</td>
+                        <td class="spread">+3.5</td>
+                        <td class="ml">+3300</td>
+                        <td class="total">U 9.5</td>
                     </tr>
                 </tbody>
             </table>
@@ -957,15 +1926,10 @@
         </div>
 
         
-        <!-- LINE MOVEMENT ALERTS -->
-        <div class="line-movements-bar">
-            <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -155 -> -135</span>
-        </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
-            <span class="trend-item">🏥 NYR: A. Edstrom (C) - OUT, C. Sheary (LW) - OUT, A. Fox (D) - OUT | PHI: B. Brink (RW) - OUT, R. Ristolainen (D) - DTD, D. Vladar (G) - OUT</span>
+            <span class="trend-item">🏥 NYR: A. Edstrom (C) - OUT, C. Sheary (LW) - OUT, A. Fox (D) - OUT | PHI: R. Abols (C) - DTD, B. Brink (RW) - OUT, R. Ristolainen (D) - OUT</span>
         </div>
     </div>
     
@@ -995,9 +1959,9 @@
                             <span class="team-name">NYI</span>
                             <span class="team-record">26-16-5</span>
                         </td>
-                        <td class="spread">-1.5</td>
-                        <td class="ml">-110</td>
-                        <td class="total">O 5.5</td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">+100</td>
+                        <td class="total">O 6.0</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -1005,9 +1969,9 @@
                             <span class="team-name">CGY</span>
                             <span class="team-record">20-23-4</span>
                         </td>
-                        <td class="spread">+1.5</td>
-                        <td class="ml">-110</td>
-                        <td class="total">U 5.5</td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-120</td>
+                        <td class="total">U 6.0</td>
                     </tr>
                 </tbody>
             </table>
@@ -1073,12 +2037,12 @@
         <!-- LINE MOVEMENT ALERTS -->
         <div class="line-movements-bar">
             <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">📊</span> Spread: -1.5 -> +1.5 (+3.0)</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -112 -> +100</span>
         </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
-            <span class="trend-item">🏥 NYI: B. Horvat (C) - OUT, K. Palmieri (C) - OUT | CGY: J. Beecher (C) - OUT, B. Coleman (LW) - OUT, Z. Parekh (D) - DTD</span>
+            <span class="trend-item">🏥 NYI: B. Horvat (C) - OUT, K. Palmieri (C) - OUT | CGY: J. Beecher (C) - OUT, B. Coleman (LW) - OUT, Z. Parekh (D) - OUT</span>
         </div>
     </div>
     
@@ -1183,10 +2147,997 @@
         </div>
 
         
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -220 -> -195</span>
+        </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
             <span class="trend-item">🏥 SEA: No reported injuries | UTA: A. Kerfoot (C) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401803109" data-sport="nhl">
+        <div class="game-header">
+            <span class="game-time">7:00 PM ET</span>
+            <span class="game-venue">Canadian Tire Centre</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>PUCK LINE</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/mtl.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">MTL</span>
+                            <span class="team-record">26-15-7</span>
+                        </td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">-110</td>
+                        <td class="total">O 6.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/ott.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">OTT</span>
+                            <span class="team-record">22-19-5</span>
+                        </td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-110</td>
+                        <td class="total">U 6.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MTL</td><td>3.3</td><td>26.1</td><td>12.8%</td><td>32</td><td>273</td><td>433</td></tr>
+                        <tr><td class="team-abbr">OTT</td><td>3.2</td><td>28.5</td><td>11.3%</td><td>35</td><td>266</td><td>414</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MTL</td><td>3.2</td><td>27.2</td><td>88.6%</td><td>4</td><td>+0.1</td><td>10.8</td></tr>
+                        <tr><td class="team-abbr">OTT</td><td>3.3</td><td>25.2</td><td>87.3%</td><td>3</td><td>-0.1</td><td>10.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MTL</td><td>49.9%</td><td>1303</td><td>1310</td><td>2</td><td>0</td><td>7</td></tr>
+                        <tr><td class="team-abbr">OTT</td><td>55.1%</td><td>1446</td><td>1178</td><td>3</td><td>0</td><td>5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">CLUTCH & POWER</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MTL</td><td>0</td><td>32</td><td>4</td><td>63.4</td><td>26-15-7</td></tr>
+                        <tr><td class="team-abbr">OTT</td><td>0</td><td>35</td><td>3</td><td>53.7</td><td>22-19-5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 MTL: J. Evans (C) - OUT, P. Laine (RW) - OUT | OTT: L. Ullmark (G) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401803110" data-sport="nhl">
+        <div class="game-header">
+            <span class="game-time">7:00 PM ET</span>
+            <span class="game-venue">Prudential Center</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>PUCK LINE</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/car.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">CAR</span>
+                            <span class="team-record">29-15-4</span>
+                        </td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-115</td>
+                        <td class="total">O 6.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nj.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">NJ</span>
+                            <span class="team-record">24-21-2</span>
+                        </td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">-105</td>
+                        <td class="total">U 6.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CAR</td><td>3.4</td><td>32.4</td><td>10.5%</td><td>32</td><td>265</td><td>428</td></tr>
+                        <tr><td class="team-abbr">NJ</td><td>2.6</td><td>29.8</td><td>8.8%</td><td>24</td><td>203</td><td>326</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CAR</td><td>2.9</td><td>24.1</td><td>88.6%</td><td>6</td><td>+0.5</td><td>8.0</td></tr>
+                        <tr><td class="team-abbr">NJ</td><td>3.1</td><td>28.3</td><td>89.5%</td><td>4</td><td>-0.5</td><td>7.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CAR</td><td>50.5%</td><td>1527</td><td>1494</td><td>6</td><td>0</td><td>4</td></tr>
+                        <tr><td class="team-abbr">NJ</td><td>50.5%</td><td>1319</td><td>1295</td><td>3</td><td>0</td><td>2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">CLUTCH & POWER</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CAR</td><td>0</td><td>32</td><td>6</td><td>65.9</td><td>29-15-4</td></tr>
+                        <tr><td class="team-abbr">NJ</td><td>0</td><td>24</td><td>4</td><td>53.3</td><td>24-21-2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 CAR: N. Philp (C) - OUT, W. Carrier (LW) - DTD, S. Gostisbehere (D) - DTD | NJ: O. Palat (LW) - OUT, Z. MacEwen (RW) - OUT, S. Noesen (RW) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401803111" data-sport="nhl">
+        <div class="game-header">
+            <span class="game-time">7:00 PM ET</span>
+            <span class="game-venue">PPG Paints Arena</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>PUCK LINE</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/cbj.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">CBJ</span>
+                            <span class="team-record">21-19-7</span>
+                        </td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">+105</td>
+                        <td class="total">O 6.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/pit.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">PIT</span>
+                            <span class="team-record">22-14-10</span>
+                        </td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-125</td>
+                        <td class="total">U 6.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CBJ</td><td>3.0</td><td>30.7</td><td>9.7%</td><td>24</td><td>244</td><td>384</td></tr>
+                        <tr><td class="team-abbr">PIT</td><td>3.2</td><td>28.8</td><td>11.0%</td><td>37</td><td>253</td><td>399</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CBJ</td><td>3.3</td><td>30.9</td><td>89.9%</td><td>3</td><td>-0.3</td><td>8.1</td></tr>
+                        <tr><td class="team-abbr">PIT</td><td>2.9</td><td>27.7</td><td>89.8%</td><td>1</td><td>+0.3</td><td>8.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CBJ</td><td>51.1%</td><td>1411</td><td>1352</td><td>3</td><td>0</td><td>7</td></tr>
+                        <tr><td class="team-abbr">PIT</td><td>50.3%</td><td>1238</td><td>1221</td><td>2</td><td>0</td><td>10</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">CLUTCH & POWER</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CBJ</td><td>0</td><td>24</td><td>3</td><td>52.5</td><td>21-19-7</td></tr>
+                        <tr><td class="team-abbr">PIT</td><td>0</td><td>37</td><td>1</td><td>61.1</td><td>22-14-10</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 CBJ: I. Lundestrom (C) - OUT, M. Marchment (LW) - OUT, M. Wood (LW) - OUT | PIT: R. McGroarty (RW) - OUT, H. Brunicke (D) - OUT, E. Karlsson (D) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401803112" data-sport="nhl">
+        <div class="game-header">
+            <span class="game-time">7:00 PM ET</span>
+            <span class="game-venue">Capital One Arena</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>PUCK LINE</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/fla.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">FLA</span>
+                            <span class="team-record">24-19-3</span>
+                        </td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">+125</td>
+                        <td class="total">O 6.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/wsh.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">WSH</span>
+                            <span class="team-record">24-18-6</span>
+                        </td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-145</td>
+                        <td class="total">U 6.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">FLA</td><td>3.0</td><td>28.9</td><td>10.4%</td><td>31</td><td>236</td><td>374</td></tr>
+                        <tr><td class="team-abbr">WSH</td><td>3.2</td><td>29.3</td><td>11.0%</td><td>22</td><td>262</td><td>417</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">FLA</td><td>3.3</td><td>26.3</td><td>88.4%</td><td>4</td><td>-0.3</td><td>10.9</td></tr>
+                        <tr><td class="team-abbr">WSH</td><td>2.8</td><td>28.1</td><td>90.7%</td><td>1</td><td>+0.4</td><td>9.2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">FLA</td><td>47.2%</td><td>1272</td><td>1424</td><td>4</td><td>0</td><td>3</td></tr>
+                        <tr><td class="team-abbr">WSH</td><td>49.1%</td><td>1265</td><td>1311</td><td>1</td><td>0</td><td>6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">CLUTCH & POWER</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">FLA</td><td>0</td><td>31</td><td>4</td><td>55.8</td><td>24-19-3</td></tr>
+                        <tr><td class="team-abbr">WSH</td><td>0</td><td>22</td><td>1</td><td>57.1</td><td>24-18-6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 FLA: J. Gadjovich (LW) - OUT, B. Marchand (LW) - OUT, M. Tkachuk (LW) - OUT | WSH: P. Dubois (LW) - OUT, J. Sourdif (RW) - OUT, T. Wilson (RW) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401803113" data-sport="nhl">
+        <div class="game-header">
+            <span class="game-time">7:00 PM ET</span>
+            <span class="game-venue">Canada Life Centre</span>
+            <span class="game-network">NHL Net</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>PUCK LINE</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/tor.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">TOR</span>
+                            <span class="team-record">23-16-8</span>
+                        </td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">+115</td>
+                        <td class="total">O 6.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/wpg.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">WPG</span>
+                            <span class="team-record">19-22-5</span>
+                        </td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-135</td>
+                        <td class="total">U 6.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">TOR</td><td>3.4</td><td>26.8</td><td>12.5%</td><td>20</td><td>260</td><td>418</td></tr>
+                        <tr><td class="team-abbr">WPG</td><td>3.0</td><td>26.4</td><td>11.5%</td><td>26</td><td>241</td><td>381</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">TOR</td><td>3.3</td><td>31.4</td><td>90.1%</td><td>3</td><td>+0.1</td><td>7.6</td></tr>
+                        <tr><td class="team-abbr">WPG</td><td>3.1</td><td>28.0</td><td>89.4%</td><td>5</td><td>-0.1</td><td>9.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">TOR</td><td>56.4%</td><td>1503</td><td>1161</td><td>1</td><td>0</td><td>8</td></tr>
+                        <tr><td class="team-abbr">WPG</td><td>51.1%</td><td>1266</td><td>1213</td><td>4</td><td>0</td><td>5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">CLUTCH & POWER</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">TOR</td><td>0</td><td>20</td><td>3</td><td>59.0</td><td>23-16-8</td></tr>
+                        <tr><td class="team-abbr">WPG</td><td>0</td><td>26</td><td>5</td><td>46.3</td><td>19-22-5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 TOR: D. Joshua (C) - OUT, W. Nylander (RW) - OUT, S. Benoit (D) - OUT | WPG: H. Fleury (D) - OUT, C. Miller (D) - OUT, N. Pionk (D) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401803114" data-sport="nhl">
+        <div class="game-header">
+            <span class="game-time">8:00 PM ET</span>
+            <span class="game-venue">United Center</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>PUCK LINE</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/bos.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">BOS</span>
+                            <span class="team-record">27-19-2</span>
+                        </td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-120</td>
+                        <td class="total">O 6.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/chi.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">CHI</span>
+                            <span class="team-record">19-21-7</span>
+                        </td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">+100</td>
+                        <td class="total">U 6.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BOS</td><td>3.3</td><td>27.5</td><td>11.9%</td><td>35</td><td>269</td><td>426</td></tr>
+                        <tr><td class="team-abbr">CHI</td><td>2.7</td><td>25.2</td><td>10.9%</td><td>30</td><td>216</td><td>345</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BOS</td><td>3.1</td><td>29.7</td><td>90.1%</td><td>2</td><td>+0.2</td><td>13.7</td></tr>
+                        <tr><td class="team-abbr">CHI</td><td>3.1</td><td>29.7</td><td>89.9%</td><td>3</td><td>-0.4</td><td>10.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BOS</td><td>52.4%</td><td>1473</td><td>1339</td><td>1</td><td>0</td><td>2</td></tr>
+                        <tr><td class="team-abbr">CHI</td><td>47.2%</td><td>1232</td><td>1377</td><td>5</td><td>0</td><td>7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">CLUTCH & POWER</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BOS</td><td>0</td><td>35</td><td>2</td><td>58.7</td><td>27-19-2</td></tr>
+                        <tr><td class="team-abbr">CHI</td><td>0</td><td>30</td><td>3</td><td>47.5</td><td>19-21-7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -103 -> +100</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 BOS: H. Lindholm (D) - OUT, A. Peeke (D) - DTD | CHI: C. Bedard (C) - DTD, F. Nazar (C) - OUT, T. Teravainen (C) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401803115" data-sport="nhl">
+        <div class="game-header">
+            <span class="game-time">10:00 PM ET</span>
+            <span class="game-venue">Rogers Arena</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>PUCK LINE</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/edm.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">EDM</span>
+                            <span class="team-record">23-17-8</span>
+                        </td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-170</td>
+                        <td class="total">O 6.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/van.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">VAN</span>
+                            <span class="team-record">16-26-5</span>
+                        </td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">+146</td>
+                        <td class="total">U 6.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">EDM</td><td>3.3</td><td>29.2</td><td>11.3%</td><td>44</td><td>269</td><td>428</td></tr>
+                        <tr><td class="team-abbr">VAN</td><td>2.6</td><td>26.8</td><td>9.7%</td><td>31</td><td>198</td><td>320</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">EDM</td><td>3.2</td><td>27.1</td><td>88.6%</td><td>4</td><td>+0.1</td><td>9.5</td></tr>
+                        <tr><td class="team-abbr">VAN</td><td>3.6</td><td>29.8</td><td>88.9%</td><td>5</td><td>-1.0</td><td>8.5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">EDM</td><td>52.4%</td><td>1331</td><td>1208</td><td>6</td><td>0</td><td>8</td></tr>
+                        <tr><td class="team-abbr">VAN</td><td>48.1%</td><td>1261</td><td>1358</td><td>1</td><td>0</td><td>5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">CLUTCH & POWER</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">EDM</td><td>0</td><td>44</td><td>4</td><td>57.5</td><td>23-17-8</td></tr>
+                        <tr><td class="team-abbr">VAN</td><td>0</td><td>31</td><td>5</td><td>38.1</td><td>16-26-5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 EDM: L. Draisaitl (C) - OUT, A. Henrique (C) - OUT | VAN: T. Blueger (C) - OUT, F. Chytil (C) - OUT, M. Rossi (C) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401803116" data-sport="nhl">
+        <div class="game-header">
+            <span class="game-time">10:00 PM ET</span>
+            <span class="game-venue">T-Mobile Arena</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>PUCK LINE</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nsh.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">NSH</span>
+                            <span class="team-record">23-20-4</span>
+                        </td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">+175</td>
+                        <td class="total">O 6.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/vgk.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">VGK</span>
+                            <span class="team-record">23-11-12</span>
+                        </td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-205</td>
+                        <td class="total">U 6.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NSH</td><td>2.8</td><td>28.0</td><td>10.1%</td><td>28</td><td>229</td><td>362</td></tr>
+                        <tr><td class="team-abbr">VGK</td><td>3.3</td><td>28.9</td><td>11.4%</td><td>38</td><td>269</td><td>421</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NSH</td><td>3.3</td><td>28.7</td><td>89.5%</td><td>4</td><td>-0.5</td><td>8.7</td></tr>
+                        <tr><td class="team-abbr">VGK</td><td>3.0</td><td>24.7</td><td>88.3%</td><td>1</td><td>+0.3</td><td>7.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NSH</td><td>52.2%</td><td>1439</td><td>1319</td><td>4</td><td>0</td><td>4</td></tr>
+                        <tr><td class="team-abbr">VGK</td><td>50.8%</td><td>1327</td><td>1286</td><td>1</td><td>0</td><td>12</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">CLUTCH & POWER</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NSH</td><td>0</td><td>28</td><td>4</td><td>53.5</td><td>23-20-4</td></tr>
+                        <tr><td class="team-abbr">VGK</td><td>0</td><td>38</td><td>1</td><td>67.6</td><td>23-11-12</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -230 -> -205</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 NSH: J. Marchessault (RW) - OUT, A. Wilsby (D) - DTD | VGK: B. Howden (C) - DTD, W. Karlsson (C) - OUT, B. Saad (LW) - OUT</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401803117" data-sport="nhl">
+        <div class="game-header">
+            <span class="game-time">10:00 PM ET</span>
+            <span class="game-venue">Honda Center</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>PUCK LINE</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/la.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">LA</span>
+                            <span class="team-record">19-16-12</span>
+                        </td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-120</td>
+                        <td class="total">O 6.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/ana.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">ANA</span>
+                            <span class="team-record">23-21-3</span>
+                        </td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">+100</td>
+                        <td class="total">U 6.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>AST</th><th>PTS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LA</td><td>2.6</td><td>28.0</td><td>9.2%</td><td>22</td><td>202</td><td>323</td></tr>
+                        <tr><td class="team-abbr">ANA</td><td>3.2</td><td>30.4</td><td>10.6%</td><td>24</td><td>254</td><td>405</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>GD</th><th>PIM</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LA</td><td>2.7</td><td>26.8</td><td>90.3%</td><td>7</td><td>-0.1</td><td>8.0</td></tr>
+                        <tr><td class="team-abbr">ANA</td><td>3.6</td><td>28.9</td><td>88.2%</td><td>6</td><td>-0.4</td><td>10.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SITUATIONAL -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">FACE-OFFS & SPECIAL TEAMS</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FO%</th><th>FOW</th><th>FOL</th><th>SHA</th><th>+/-</th><th>OTL</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LA</td><td>49.5%</td><td>1318</td><td>1347</td><td>10</td><td>0</td><td>12</td></tr>
+                        <tr><td class="team-abbr">ANA</td><td>46.7%</td><td>1270</td><td>1451</td><td>9</td><td>0</td><td>3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">CLUTCH & POWER</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>GWG</th><th>PPG</th><th>SHG</th><th>PWR</th><th>REC</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LA</td><td>0</td><td>22</td><td>7</td><td>54.3</td><td>19-16-12</td></tr>
+                        <tr><td class="team-abbr">ANA</td><td>0</td><td>24</td><td>6</td><td>52.3</td><td>23-21-3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 LA: A. Kopitar (C) - OUT, T. Moore (LW) - OUT, C. Perry (RW) - OUT | ANA: L. Carlsson (C) - OUT, C. Kreider (LW) - DTD, T. Terry (RW) - OUT</span>
         </div>
     </div>
     
@@ -1201,16 +3152,14 @@
             <span class="game-network">FOX</span>
         </div>
         
-        <!-- SECTION 1: BETTING LINES -->
-        <div class="section betting-lines">
-            <div class="section-title">BETTING LINES</div>
+        <!-- TEAMS INFO (No betting lines available) -->
+        <div class="section teams-info">
+            <div class="section-title">MATCHUP</div>
             <table class="lines-table">
                 <thead>
                     <tr>
                         <th class="team-col">TEAM</th>
-                        <th>SPREAD</th>
-                        <th>ML</th>
-                        <th>O/U</th>
+                        <th>RECORD</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1218,21 +3167,15 @@
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/41.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">CONN</span>
-                            <span class="team-record">17-1</span>
                         </td>
-                        <td class="spread">-11.5</td>
-                        <td class="ml">-850</td>
-                        <td class="total">O 142.5</td>
+                        <td>18-1</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/46.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">GTWN</span>
-                            <span class="team-record">9-8</span>
                         </td>
-                        <td class="spread">+11.5</td>
-                        <td class="ml">+550</td>
-                        <td class="total">U 142.5</td>
+                        <td>9-9</td>
                     </tr>
                 </tbody>
             </table>
@@ -1287,19 +3230,14 @@
                         <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">CONN</td><td>1.6</td><td>13.1</td><td>18.5</td><td>56.1%</td><td>59.1%</td><td>94.4</td></tr>
-                        <tr><td class="team-abbr">GTWN</td><td>1.6</td><td>19.0</td><td>25.7</td><td>49.0%</td><td>54.5%</td><td>52.9</td></tr>
+                        <tr><td class="team-abbr">CONN</td><td>1.6</td><td>13.1</td><td>18.5</td><td>56.1%</td><td>59.1%</td><td>94.7</td></tr>
+                        <tr><td class="team-abbr">GTWN</td><td>1.6</td><td>19.0</td><td>25.7</td><td>49.0%</td><td>54.5%</td><td>50.0</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
         
-        <!-- LINE MOVEMENT ALERTS -->
-        <div class="line-movements-bar">
-            <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -800 -> -850</span>
-        </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
@@ -1314,16 +3252,14 @@
             <span class="game-network">BTN</span>
         </div>
         
-        <!-- SECTION 1: BETTING LINES -->
-        <div class="section betting-lines">
-            <div class="section-title">BETTING LINES</div>
+        <!-- TEAMS INFO (No betting lines available) -->
+        <div class="section teams-info">
+            <div class="section-title">MATCHUP</div>
             <table class="lines-table">
                 <thead>
                     <tr>
                         <th class="team-col">TEAM</th>
-                        <th>SPREAD</th>
-                        <th>ML</th>
-                        <th>O/U</th>
+                        <th>RECORD</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1331,21 +3267,15 @@
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/135.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">MINN</span>
-                            <span class="team-record">10-7</span>
                         </td>
-                        <td class="spread">+15.0</td>
-                        <td class="ml">+850</td>
-                        <td class="total">O 141.5</td>
+                        <td>10-8</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/356.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">ILL</span>
-                            <span class="team-record">14-3</span>
                         </td>
-                        <td class="spread">-15.0</td>
-                        <td class="ml">-1800</td>
-                        <td class="total">U 141.5</td>
+                        <td>15-3</td>
                     </tr>
                 </tbody>
             </table>
@@ -1400,19 +3330,14 @@
                         <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">MINN</td><td>1.7</td><td>16.5</td><td>23.9</td><td>53.3%</td><td>57.5%</td><td>58.8</td></tr>
-                        <tr><td class="team-abbr">ILL</td><td>1.5</td><td>16.7</td><td>20.8</td><td>56.0%</td><td>60.6%</td><td>82.4</td></tr>
+                        <tr><td class="team-abbr">MINN</td><td>1.7</td><td>16.5</td><td>23.9</td><td>53.3%</td><td>57.5%</td><td>55.6</td></tr>
+                        <tr><td class="team-abbr">ILL</td><td>1.5</td><td>16.7</td><td>20.8</td><td>56.0%</td><td>60.6%</td><td>83.3</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
         
-        <!-- LINE MOVEMENT ALERTS -->
-        <div class="line-movements-bar">
-            <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -1650 -> -1800</span><span class="movement-item"><span class="move-icon">💰</span> Away ML: +950 -> +850</span><span class="movement-item"><span class="move-icon">📊</span> Spread: -15.5 -> -15.0 (+0.5)</span><span class="movement-item"><span class="move-icon">🎯</span> Total: 142.5 -> 141.5 (-1.0)</span>
-        </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
@@ -1427,16 +3352,14 @@
             <span class="game-network">ESPN2</span>
         </div>
         
-        <!-- SECTION 1: BETTING LINES -->
-        <div class="section betting-lines">
-            <div class="section-title">BETTING LINES</div>
+        <!-- TEAMS INFO (No betting lines available) -->
+        <div class="section teams-info">
+            <div class="section-title">MATCHUP</div>
             <table class="lines-table">
                 <thead>
                     <tr>
                         <th class="team-col">TEAM</th>
-                        <th>SPREAD</th>
-                        <th>ML</th>
-                        <th>O/U</th>
+                        <th>RECORD</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1444,21 +3367,15 @@
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/258.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">UVA</span>
-                            <span class="team-record">15-2</span>
                         </td>
-                        <td class="spread">-2.0</td>
-                        <td class="ml">-130</td>
-                        <td class="total">O 155.0</td>
+                        <td>16-2</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2567.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">SMU</span>
-                            <span class="team-record">13-4</span>
                         </td>
-                        <td class="spread">+2.0</td>
-                        <td class="ml">+110</td>
-                        <td class="total">U 155.0</td>
+                        <td>13-5</td>
                     </tr>
                 </tbody>
             </table>
@@ -1513,19 +3430,14 @@
                         <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">UVA</td><td>1.6</td><td>15.9</td><td>22.8</td><td>56.3%</td><td>59.5%</td><td>88.2</td></tr>
-                        <tr><td class="team-abbr">SMU</td><td>1.5</td><td>17.5</td><td>22.7</td><td>56.0%</td><td>60.4%</td><td>76.5</td></tr>
+                        <tr><td class="team-abbr">UVA</td><td>1.6</td><td>15.9</td><td>22.8</td><td>56.3%</td><td>59.5%</td><td>88.9</td></tr>
+                        <tr><td class="team-abbr">SMU</td><td>1.5</td><td>17.5</td><td>22.7</td><td>56.0%</td><td>60.4%</td><td>72.2</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
         
-        <!-- LINE MOVEMENT ALERTS -->
-        <div class="line-movements-bar">
-            <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">📊</span> Spread: +1.5 -> +2.0 (+0.5)</span>
-        </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
@@ -1540,16 +3452,14 @@
             <span class="game-network">ESPN</span>
         </div>
         
-        <!-- SECTION 1: BETTING LINES -->
-        <div class="section betting-lines">
-            <div class="section-title">BETTING LINES</div>
+        <!-- TEAMS INFO (No betting lines available) -->
+        <div class="section teams-info">
+            <div class="section-title">MATCHUP</div>
             <table class="lines-table">
                 <thead>
                     <tr>
                         <th class="team-col">TEAM</th>
-                        <th>SPREAD</th>
-                        <th>ML</th>
-                        <th>O/U</th>
+                        <th>RECORD</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1557,21 +3467,15 @@
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/96.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">UK</span>
-                            <span class="team-record">11-6</span>
                         </td>
-                        <td class="spread">+7.0</td>
-                        <td class="ml">+250</td>
-                        <td class="total">O 147.5</td>
+                        <td>12-6</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2633.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">TENN</span>
-                            <span class="team-record">12-5</span>
                         </td>
-                        <td class="spread">-7.0</td>
-                        <td class="ml">-300</td>
-                        <td class="total">U 147.5</td>
+                        <td>12-6</td>
                     </tr>
                 </tbody>
             </table>
@@ -1626,19 +3530,14 @@
                         <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">UK</td><td>1.7</td><td>15.5</td><td>21.1</td><td>55.0%</td><td>58.7%</td><td>64.7</td></tr>
-                        <tr><td class="team-abbr">TENN</td><td>1.3</td><td>16.8</td><td>24.2</td><td>54.2%</td><td>57.7%</td><td>70.6</td></tr>
+                        <tr><td class="team-abbr">UK</td><td>1.7</td><td>15.5</td><td>21.1</td><td>55.0%</td><td>58.7%</td><td>66.7</td></tr>
+                        <tr><td class="team-abbr">TENN</td><td>1.3</td><td>16.8</td><td>24.2</td><td>54.2%</td><td>57.7%</td><td>66.7</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
         
-        <!-- LINE MOVEMENT ALERTS -->
-        <div class="line-movements-bar">
-            <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -320 -> -300</span><span class="movement-item"><span class="move-icon">📊</span> Spread: -6.5 -> -7.0 (-0.5)</span>
-        </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
@@ -1653,16 +3552,14 @@
             <span class="game-network">TNT</span>
         </div>
         
-        <!-- SECTION 1: BETTING LINES -->
-        <div class="section betting-lines">
-            <div class="section-title">BETTING LINES</div>
+        <!-- TEAMS INFO (No betting lines available) -->
+        <div class="section teams-info">
+            <div class="section-title">MATCHUP</div>
             <table class="lines-table">
                 <thead>
                     <tr>
                         <th class="team-col">TEAM</th>
-                        <th>SPREAD</th>
-                        <th>ML</th>
-                        <th>O/U</th>
+                        <th>RECORD</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1670,21 +3567,15 @@
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2086.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">BUT</span>
-                            <span class="team-record">10-7</span>
                         </td>
-                        <td class="spread">+6.5</td>
-                        <td class="ml">+260</td>
-                        <td class="total">O 144.5</td>
+                        <td>11-7</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2550.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">HALL</span>
-                            <span class="team-record">14-3</span>
                         </td>
-                        <td class="spread">-6.5</td>
-                        <td class="ml">-320</td>
-                        <td class="total">U 144.5</td>
+                        <td>14-4</td>
                     </tr>
                 </tbody>
             </table>
@@ -1739,8 +3630,8 @@
                         <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="team-abbr">BUT</td><td>1.4</td><td>17.8</td><td>25.2</td><td>52.8%</td><td>56.9%</td><td>58.8</td></tr>
-                        <tr><td class="team-abbr">HALL</td><td>1.3</td><td>16.5</td><td>22.2</td><td>48.5%</td><td>53.5%</td><td>82.4</td></tr>
+                        <tr><td class="team-abbr">BUT</td><td>1.4</td><td>17.8</td><td>25.2</td><td>52.8%</td><td>56.9%</td><td>61.1</td></tr>
+                        <tr><td class="team-abbr">HALL</td><td>1.3</td><td>16.5</td><td>22.2</td><td>48.5%</td><td>53.5%</td><td>77.8</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1761,16 +3652,14 @@
             <span class="game-network">SEC Network</span>
         </div>
         
-        <!-- SECTION 1: BETTING LINES -->
-        <div class="section betting-lines">
-            <div class="section-title">BETTING LINES</div>
+        <!-- TEAMS INFO (No betting lines available) -->
+        <div class="section teams-info">
+            <div class="section-title">MATCHUP</div>
             <table class="lines-table">
                 <thead>
                     <tr>
                         <th class="team-col">TEAM</th>
-                        <th>SPREAD</th>
-                        <th>ML</th>
-                        <th>O/U</th>
+                        <th>RECORD</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1778,21 +3667,15 @@
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/333.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">ALA</span>
-                            <span class="team-record">12-5</span>
                         </td>
-                        <td class="spread">-5.0</td>
-                        <td class="ml">-225</td>
-                        <td class="total">O 175.5</td>
+                        <td>12-5</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/201.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">OU</span>
-                            <span class="team-record">11-6</span>
                         </td>
-                        <td class="spread">+5.0</td>
-                        <td class="ml">+185</td>
-                        <td class="total">U 175.5</td>
+                        <td>11-6</td>
                     </tr>
                 </tbody>
             </table>
@@ -1858,7 +3741,7 @@
         <!-- LINE MOVEMENT ALERTS -->
         <div class="line-movements-bar">
             <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -250 -> -225</span><span class="movement-item"><span class="move-icon">💰</span> Home ML: +202 -> +185</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +4.5 -> +5.0 (+0.5)</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -4500 -> -3000</span><span class="movement-item"><span class="move-icon">💰</span> Home ML: +1200 -> +1050</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +3.5 -> +2.5 (-1.0)</span>
         </div>
 
         <!-- SECTION 4: TRENDS BAR -->
@@ -1893,9 +3776,9 @@
                             <span class="team-name">ISU</span>
                             <span class="team-record">16-1</span>
                         </td>
-                        <td class="spread">-7.0</td>
-                        <td class="ml">-290</td>
-                        <td class="total">O 142.0</td>
+                        <td class="spread">-1.5</td>
+                        <td class="ml">-155</td>
+                        <td class="total">O 141.5</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -1903,9 +3786,9 @@
                             <span class="team-name">CIN</span>
                             <span class="team-record">9-8</span>
                         </td>
-                        <td class="spread">+7.0</td>
-                        <td class="ml">+240</td>
-                        <td class="total">U 142.0</td>
+                        <td class="spread">+1.5</td>
+                        <td class="ml">+120</td>
+                        <td class="total">U 141.5</td>
                     </tr>
                 </tbody>
             </table>
@@ -1968,11 +3851,6 @@
         </div>
 
         
-        <!-- LINE MOVEMENT ALERTS -->
-        <div class="line-movements-bar">
-            <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -305 -> -290</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +6.5 -> +7.0 (+0.5)</span>
-        </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
@@ -2007,8 +3885,8 @@
                             <span class="team-record">12-5</span>
                         </td>
                         <td class="spread">+1.5</td>
-                        <td class="ml">+105</td>
-                        <td class="total">O 164.0</td>
+                        <td class="ml">-105</td>
+                        <td class="total">O 176.5</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -2017,8 +3895,8 @@
                             <span class="team-record">16-1</span>
                         </td>
                         <td class="spread">-1.5</td>
-                        <td class="ml">-125</td>
-                        <td class="total">U 164.0</td>
+                        <td class="ml">-120</td>
+                        <td class="total">U 176.5</td>
                     </tr>
                 </tbody>
             </table>
@@ -2081,6 +3959,11 @@
         </div>
 
         
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -120 -> -105</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +0.5 -> -1.5 (-2.0)</span><span class="movement-item"><span class="move-icon">🎯</span> Total: 177.5 -> 176.5 (-1.0)</span>
+        </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
@@ -2114,9 +3997,9 @@
                             <span class="team-name">MIA</span>
                             <span class="team-record">15-2</span>
                         </td>
-                        <td class="spread">+4.5</td>
-                        <td class="ml">+165</td>
-                        <td class="total">O 145.0</td>
+                        <td class="spread">+10.5</td>
+                        <td class="ml">+475</td>
+                        <td class="total">O 143.5</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -2124,9 +4007,9 @@
                             <span class="team-name">CLEM</span>
                             <span class="team-record">15-3</span>
                         </td>
-                        <td class="spread">-4.5</td>
-                        <td class="ml">-195</td>
-                        <td class="total">U 145.0</td>
+                        <td class="spread">-10.5</td>
+                        <td class="ml">-750</td>
+                        <td class="total">U 143.5</td>
                     </tr>
                 </tbody>
             </table>
@@ -2192,7 +4075,7 @@
         <!-- LINE MOVEMENT ALERTS -->
         <div class="line-movements-bar">
             <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -225 -> -195</span><span class="movement-item"><span class="move-icon">💰</span> Away ML: +184 -> +165</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -850 -> -750</span><span class="movement-item"><span class="move-icon">📊</span> Spread: -9.5 -> -10.5 (-1.0)</span><span class="movement-item"><span class="move-icon">🎯</span> Total: 142.5 -> 143.5 (+1.0)</span>
         </div>
 
         <!-- SECTION 4: TRENDS BAR -->
@@ -2328,7 +4211,7 @@
                             <span class="team-record">17-0</span>
                         </td>
                         <td class="spread">-9.5</td>
-                        <td class="ml">-490</td>
+                        <td class="ml">-500</td>
                         <td class="total">O 165.5</td>
                     </tr>
                     <tr class="home-row">
@@ -2338,7 +4221,7 @@
                             <span class="team-record">14-2</span>
                         </td>
                         <td class="spread">+9.5</td>
-                        <td class="ml">+355</td>
+                        <td class="ml">+360</td>
                         <td class="total">U 165.5</td>
                     </tr>
                 </tbody>
@@ -2402,6 +4285,11 @@
         </div>
 
         
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -520 -> -500</span><span class="movement-item"><span class="move-icon">💰</span> Home ML: +385 -> +360</span>
+        </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
@@ -2540,9 +4428,9 @@
                             <span class="team-name">NEB</span>
                             <span class="team-record">17-0</span>
                         </td>
-                        <td class="spread">-5.5</td>
-                        <td class="ml">-235</td>
-                        <td class="total">O 148.5</td>
+                        <td class="spread">-4.5</td>
+                        <td class="ml">-210</td>
+                        <td class="total">O 149.5</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -2550,9 +4438,9 @@
                             <span class="team-name">NU</span>
                             <span class="team-record">8-9</span>
                         </td>
-                        <td class="spread">+5.5</td>
-                        <td class="ml">+195</td>
-                        <td class="total">U 148.5</td>
+                        <td class="spread">+4.5</td>
+                        <td class="ml">+175</td>
+                        <td class="total">U 149.5</td>
                     </tr>
                 </tbody>
             </table>
@@ -2618,7 +4506,7 @@
         <!-- LINE MOVEMENT ALERTS -->
         <div class="line-movements-bar">
             <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -265 -> -235</span><span class="movement-item"><span class="move-icon">💰</span> Home ML: +215 -> +195</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -235 -> -210</span><span class="movement-item"><span class="move-icon">💰</span> Home ML: +190 -> +175</span>
         </div>
 
         <!-- SECTION 4: TRENDS BAR -->
@@ -2653,8 +4541,8 @@
                             <span class="team-name">UNC</span>
                             <span class="team-record">14-3</span>
                         </td>
-                        <td class="spread">-6.0</td>
-                        <td class="ml">-250</td>
+                        <td class="spread">-6.5</td>
+                        <td class="ml">-290</td>
                         <td class="total">O 151.0</td>
                     </tr>
                     <tr class="home-row">
@@ -2663,8 +4551,8 @@
                             <span class="team-name">CAL</span>
                             <span class="team-record">13-5</span>
                         </td>
-                        <td class="spread">+6.0</td>
-                        <td class="ml">+210</td>
+                        <td class="spread">+6.5</td>
+                        <td class="ml">+240</td>
                         <td class="total">U 151.0</td>
                     </tr>
                 </tbody>
@@ -2731,7 +4619,7 @@
         <!-- LINE MOVEMENT ALERTS -->
         <div class="line-movements-bar">
             <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -275 -> -250</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +6.5 -> +6.0 (-0.5)</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Home ML: +225 -> +240</span>
         </div>
 
         <!-- SECTION 4: TRENDS BAR -->
@@ -2766,9 +4654,9 @@
                             <span class="team-name">ARK</span>
                             <span class="team-record">13-4</span>
                         </td>
-                        <td class="spread">+2.5</td>
-                        <td class="ml">+120</td>
-                        <td class="total">O 182.5</td>
+                        <td class="spread">+3.0</td>
+                        <td class="ml">+130</td>
+                        <td class="total">O 181.5</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -2776,9 +4664,9 @@
                             <span class="team-name">UGA</span>
                             <span class="team-record">14-3</span>
                         </td>
-                        <td class="spread">-2.5</td>
-                        <td class="ml">-140</td>
-                        <td class="total">U 182.5</td>
+                        <td class="spread">-3.0</td>
+                        <td class="ml">-150</td>
+                        <td class="total">U 181.5</td>
                     </tr>
                 </tbody>
             </table>
@@ -2844,7 +4732,7 @@
         <!-- LINE MOVEMENT ALERTS -->
         <div class="line-movements-bar">
             <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -160 -> -140</span>
+            <span class="movement-item"><span class="move-icon">📊</span> Spread: -2.5 -> -3.0 (-0.5)</span>
         </div>
 
         <!-- SECTION 4: TRENDS BAR -->
@@ -2881,7 +4769,7 @@
                         </td>
                         <td class="spread">-9.0</td>
                         <td class="ml">-450</td>
-                        <td class="total">O 157.0</td>
+                        <td class="total">O 155.5</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -2891,7 +4779,7 @@
                         </td>
                         <td class="spread">+9.0</td>
                         <td class="ml">+355</td>
-                        <td class="total">U 157.0</td>
+                        <td class="total">U 155.5</td>
                     </tr>
                 </tbody>
             </table>
@@ -2957,7 +4845,7 @@
         <!-- LINE MOVEMENT ALERTS -->
         <div class="line-movements-bar">
             <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -490 -> -450</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +9.5 -> +9.0 (-0.5)</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -500 -> -450</span><span class="movement-item"><span class="move-icon">💰</span> Home ML: +375 -> +355</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +9.5 -> +9.0 (-0.5)</span>
         </div>
 
         <!-- SECTION 4: TRENDS BAR -->
@@ -2992,9 +4880,9 @@
                             <span class="team-name">DUKE</span>
                             <span class="team-record">16-1</span>
                         </td>
-                        <td class="spread">-10.0</td>
-                        <td class="ml">-600</td>
-                        <td class="total">O 148.0</td>
+                        <td class="spread">-11.0</td>
+                        <td class="ml">-700</td>
+                        <td class="total">O 147.0</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
@@ -3002,9 +4890,9 @@
                             <span class="team-name">STAN</span>
                             <span class="team-record">14-4</span>
                         </td>
-                        <td class="spread">+10.0</td>
-                        <td class="ml">+450</td>
-                        <td class="total">U 148.0</td>
+                        <td class="spread">+11.0</td>
+                        <td class="ml">+500</td>
+                        <td class="total">U 147.0</td>
                     </tr>
                 </tbody>
             </table>
@@ -3070,7 +4958,7 @@
         <!-- LINE MOVEMENT ALERTS -->
         <div class="line-movements-bar">
             <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">📊</span> Spread: +10.5 -> +10.0 (-0.5)</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -720 -> -700</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +10.5 -> +11.0 (+0.5)</span>
         </div>
 
         <!-- SECTION 4: TRENDS BAR -->
@@ -3105,7 +4993,7 @@
                             <span class="team-name">MSU</span>
                             <span class="team-record">15-2</span>
                         </td>
-                        <td class="spread">-3.0</td>
+                        <td class="spread">-3.5</td>
                         <td class="ml">-160</td>
                         <td class="total">O 143.5</td>
                     </tr>
@@ -3115,7 +5003,7 @@
                             <span class="team-name">WASH</span>
                             <span class="team-record">10-7</span>
                         </td>
-                        <td class="spread">+3.0</td>
+                        <td class="spread">+3.5</td>
                         <td class="ml">+138</td>
                         <td class="total">U 143.5</td>
                     </tr>
@@ -3183,12 +5071,351 @@
         <!-- LINE MOVEMENT ALERTS -->
         <div class="line-movements-bar">
             <span class="movements-label">LINE MOVES:</span>
-            <span class="movement-item"><span class="move-icon">📊</span> Spread: +3.5 -> +3.0 (-0.5)</span><span class="movement-item"><span class="move-icon">🎯</span> Total: 142.5 -> 143.5 (+1.0)</span>
+            <span class="movement-item"><span class="move-icon">🎯</span> Total: 142.5 -> 143.5 (+1.0)</span>
         </div>
 
         <!-- SECTION 4: TRENDS BAR -->
         <div class="trends-bar">
             <span class="trend-item">🏥 MSU: No reported injuries | WASH: No reported injuries</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401827628" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">8:00 PM ET</span>
+            <span class="game-venue">United Supermarkets Arena</span>
+            <span class="game-network">ESPN</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/252.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">BYU</span>
+                            <span class="team-record">16-1</span>
+                        </td>
+                        <td class="spread">+2.5</td>
+                        <td class="ml">+125</td>
+                        <td class="total">O 163.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2641.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">TTU</span>
+                            <span class="team-record">13-4</span>
+                        </td>
+                        <td class="spread">-2.5</td>
+                        <td class="ml">-145</td>
+                        <td class="total">U 163.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BYU</td><td>87.5</td><td>49.3%</td><td>35.7%</td><td>74.8%</td><td>15.6</td><td>40.6</td></tr>
+                        <tr><td class="team-abbr">TTU</td><td>83.4</td><td>46.8%</td><td>37.8%</td><td>68.9%</td><td>16.5</td><td>38.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BYU</td><td>8.9</td><td>4.9</td><td>28.2</td><td>12.4</td><td>10.9</td><td>14.7</td></tr>
+                        <tr><td class="team-abbr">TTU</td><td>6.4</td><td>3.7</td><td>25.9</td><td>12.8</td><td>10.3</td><td>16.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BYU</td><td>30.6</td><td>62.1</td><td>9.1</td><td>25.4</td><td>58.7%</td><td>56.6%</td></tr>
+                        <tr><td class="team-abbr">TTU</td><td>29.9</td><td>63.9</td><td>11.1</td><td>29.2</td><td>54.3%</td><td>55.5%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BYU</td><td>1.4</td><td>17.3</td><td>23.1</td><td>56.6%</td><td>60.5%</td><td>94.1</td></tr>
+                        <tr><td class="team-abbr">TTU</td><td>1.6</td><td>12.5</td><td>18.2</td><td>55.5%</td><td>58.0%</td><td>76.5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Home ML: -162 -> -145</span><span class="movement-item"><span class="move-icon">🎯</span> Total: 162.5 -> 163.5 (+1.0)</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 BYU: No reported injuries | TTU: No reported injuries</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401820679" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">8:00 PM ET</span>
+            <span class="game-venue">Petersen Events Center</span>
+            <span class="game-network">ESPN2</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/97.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">LOU</span>
+                            <span class="team-record">12-5</span>
+                        </td>
+                        <td class="spread">-7.0</td>
+                        <td class="ml">-310</td>
+                        <td class="total">O 152.0</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/221.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">PITT</span>
+                            <span class="team-record">8-9</span>
+                        </td>
+                        <td class="spread">+7.0</td>
+                        <td class="ml">+255</td>
+                        <td class="total">U 152.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LOU</td><td>87.2</td><td>46.1%</td><td>34.3%</td><td>76.8%</td><td>17.5</td><td>41.6</td></tr>
+                        <tr><td class="team-abbr">PITT</td><td>74.1</td><td>45.9%</td><td>35.2%</td><td>69.7%</td><td>13.4</td><td>34.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LOU</td><td>7.4</td><td>3.5</td><td>28.8</td><td>12.9</td><td>11.5</td><td>19.8</td></tr>
+                        <tr><td class="team-abbr">PITT</td><td>7.1</td><td>3.4</td><td>23.1</td><td>11.5</td><td>11.1</td><td>17.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LOU</td><td>29.0</td><td>62.9</td><td>11.7</td><td>34.2</td><td>60.1%</td><td>55.4%</td></tr>
+                        <tr><td class="team-abbr">PITT</td><td>26.6</td><td>57.9</td><td>8.4</td><td>23.7</td><td>53.3%</td><td>53.2%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LOU</td><td>1.5</td><td>17.5</td><td>22.8</td><td>55.4%</td><td>59.8%</td><td>70.6</td></tr>
+                        <tr><td class="team-abbr">PITT</td><td>1.2</td><td>12.6</td><td>18.1</td><td>53.2%</td><td>56.3%</td><td>47.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -345 -> -310</span><span class="movement-item"><span class="move-icon">💰</span> Home ML: +270 -> +255</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +7.5 -> +7.0 (-0.5)</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 LOU: No reported injuries | PITT: No reported injuries</span>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401829203" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">10:00 PM ET</span>
+            <span class="game-venue">Climate Pledge Arena</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <!-- SECTION 1: BETTING LINES -->
+        <div class="section betting-lines">
+            <div class="section-title">BETTING LINES</div>
+            <table class="lines-table">
+                <thead>
+                    <tr>
+                        <th class="team-col">TEAM</th>
+                        <th>SPREAD</th>
+                        <th>ML</th>
+                        <th>O/U</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2250.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">GONZ</span>
+                            <span class="team-record">18-1</span>
+                        </td>
+                        <td class="spread">-14.0</td>
+                        <td class="ml">-1400</td>
+                        <td class="total">O 150.5</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2547.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SEA</span>
+                            <span class="team-record">13-6</span>
+                        </td>
+                        <td class="spread">+14.0</td>
+                        <td class="ml">+750</td>
+                        <td class="total">U 150.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GONZ</td><td>91.2</td><td>52.5%</td><td>37.0%</td><td>70.0%</td><td>19.7</td><td>42.9</td></tr>
+                        <tr><td class="team-abbr">SEA</td><td>76.8</td><td>46.0%</td><td>34.8%</td><td>69.8%</td><td>14.5</td><td>34.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>STL</th><th>BLK</th><th>DREB</th><th>OREB</th><th>TO</th><th>PF</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GONZ</td><td>8.8</td><td>3.6</td><td>29.9</td><td>12.9</td><td>10.4</td><td>18.1</td></tr>
+                        <tr><td class="team-abbr">SEA</td><td>8.4</td><td>5.3</td><td>24.6</td><td>10.2</td><td>11.8</td><td>16.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHOOTING vs EFFICIENCY -->
+        <div class="stats-grid">
+            <div class="section efficiency">
+                <div class="section-title">SHOOTING</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>FGM</th><th>FGA</th><th>3PM</th><th>3PA</th><th>2P%</th><th>eFG%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GONZ</td><td>34.7</td><td>66.2</td><td>7.3</td><td>19.8</td><td>59.1%</td><td>57.9%</td></tr>
+                        <tr><td class="team-abbr">SEA</td><td>27.3</td><td>59.3</td><td>7.7</td><td>22.1</td><td>52.6%</td><td>52.5%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section situational">
+                <div class="section-title">EFFICIENCY</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th></th><th>A/TO</th><th>FTM</th><th>FTA</th><th>eFG%</th><th>TS%</th><th>PWR</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GONZ</td><td>1.9</td><td>14.4</td><td>20.5</td><td>57.9%</td><td>60.6%</td><td>94.7</td></tr>
+                        <tr><td class="team-abbr">SEA</td><td>1.2</td><td>14.6</td><td>20.9</td><td>52.5%</td><td>56.1%</td><td>68.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <!-- LINE MOVEMENT ALERTS -->
+        <div class="line-movements-bar">
+            <span class="movements-label">LINE MOVES:</span>
+            <span class="movement-item"><span class="move-icon">💰</span> Away ML: -1450 -> -1400</span><span class="movement-item"><span class="move-icon">💰</span> Home ML: +810 -> +750</span><span class="movement-item"><span class="move-icon">📊</span> Spread: +14.5 -> +14.0 (-0.5)</span>
+        </div>
+
+        <!-- SECTION 4: TRENDS BAR -->
+        <div class="trends-bar">
+            <span class="trend-item">🏥 GONZ: No reported injuries | SEA: No reported injuries</span>
         </div>
     </div>
     
@@ -3201,7 +5428,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 BetLegend | Data: ESPN, The Odds API | <a href="index.html">Home</a> | <a href="handicapping-hub-archive.html">Hub Archive</a></p>
+        <p>&copy; 2026 BetLegend | Data: ESPN, The Odds API | <a href="index.html">Home</a></p>
     </footer>
 
     <script>
@@ -3215,7 +5442,7 @@
         });
 
         // Archive Calendar
-        const archiveData = {"2026-01-11": "handicapping-hub-2026-01-11.html", "2026-01-08": "handicapping-hub-2026-01-08.html", "2026-01-13": "handicapping-hub-2026-01-13.html", "2025-12-27": "handicapping-hub-2025-12-27.html", "2025-12-25": "handicapping-hub-2025-12-25.html", "2026-01-05": "handicapping-hub-2026-01-05.html", "2025-12-24": "handicapping-hub-2025-12-24.html", "2026-01-06": "handicapping-hub-2026-01-06.html", "2026-01-16": "handicapping-hub-2026-01-16.html", "2026-01-09": "handicapping-hub-2026-01-09.html", "2026-01-14": "handicapping-hub-2026-01-14.html", "2025-12-31": "handicapping-hub-2025-12-31.html", "2026-01-12": "handicapping-hub-2026-01-12.html", "2026-01-17": "handicapping-hub.html", "2026-01-04": "handicapping-hub-2026-01-04.html", "2025-12-23": "handicapping-hub-2025-12-23.html", "2025-12-30": "handicapping-hub-2025-12-30.html", "2025-12-26": "handicapping-hub-2025-12-26.html", "2026-01-15": "handicapping-hub-2026-01-15.html", "2026-01-02": "handicapping-hub-2026-01-02.html", "2026-01-07": "handicapping-hub-2026-01-07.html", "2025-12-28": "handicapping-hub-2025-12-28.html", "2025-12-29": "handicapping-hub-2025-12-29.html", "2025-12-22": "handicapping-hub-2025-12-22.html", "2026-01-03": "handicapping-hub-2026-01-03.html", "2025-12-20": "handicapping-hub-2025-12-20.html", "2026-01-01": "handicapping-hub-2026-01-01.html", "2025-12-21": "handicapping-hub-2025-12-21.html", "2026-01-10": "handicapping-hub-2026-01-10.html"};
+        const archiveData = {"2025-12-20": "handicapping-hub-2025-12-20.html", "2025-12-21": "handicapping-hub-2025-12-21.html", "2025-12-22": "handicapping-hub-2025-12-22.html", "2025-12-23": "handicapping-hub-2025-12-23.html", "2025-12-24": "handicapping-hub-2025-12-24.html", "2025-12-25": "handicapping-hub-2025-12-25.html", "2025-12-26": "handicapping-hub-2025-12-26.html", "2025-12-27": "handicapping-hub-2025-12-27.html", "2025-12-28": "handicapping-hub-2025-12-28.html", "2025-12-29": "handicapping-hub-2025-12-29.html", "2025-12-30": "handicapping-hub-2025-12-30.html", "2025-12-31": "handicapping-hub-2025-12-31.html", "2026-01-01": "handicapping-hub-2026-01-01.html", "2026-01-02": "handicapping-hub-2026-01-02.html", "2026-01-03": "handicapping-hub-2026-01-03.html", "2026-01-04": "handicapping-hub-2026-01-04.html", "2026-01-05": "handicapping-hub-2026-01-05.html", "2026-01-06": "handicapping-hub-2026-01-06.html", "2026-01-07": "handicapping-hub-2026-01-07.html", "2026-01-08": "handicapping-hub-2026-01-08.html", "2026-01-09": "handicapping-hub-2026-01-09.html", "2026-01-10": "handicapping-hub-2026-01-10.html", "2026-01-11": "handicapping-hub-2026-01-11.html", "2026-01-12": "handicapping-hub-2026-01-12.html", "2026-01-13": "handicapping-hub-2026-01-13.html", "2026-01-14": "handicapping-hub-2026-01-14.html", "2026-01-15": "handicapping-hub-2026-01-15.html", "2026-01-16": "handicapping-hub-2026-01-16.html", "2026-01-17": "handicapping-hub.html"};
         let calDate = new Date();
         const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
