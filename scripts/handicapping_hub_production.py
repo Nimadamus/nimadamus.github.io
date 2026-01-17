@@ -1948,50 +1948,53 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             text-decoration: none;
         }}
         .logo span {{ color: #fd5000; }}
-        .nav-links {{ display: flex; gap: 25px; align-items: center; }}
+        .nav-links {{ display: flex; gap: 40px; align-items: center; }}
         .nav-links a {{
             color: white;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
         }}
         .nav-links a:hover {{ color: #fd5000; }}
-        .sports-dropdown {{
+        .nav-dropdown {{
             position: relative;
             display: inline-block;
         }}
-        .sports-dropdown-btn {{
+        .nav-dropdown-btn {{
             background: none;
             border: none;
             color: white;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 4px;
+            letter-spacing: 0.3px;
         }}
-        .sports-dropdown-btn:hover {{ color: #fd5000; }}
-        .sports-dropdown-content {{
+        .nav-dropdown-btn:hover {{ color: #fd5000; }}
+        .nav-dropdown-content {{
             display: none;
             position: absolute;
             top: 100%;
             left: 0;
             background: #1a365d;
-            min-width: 120px;
+            min-width: 140px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             z-index: 1001;
             padding: 8px 0;
             border: 1px solid rgba(255,255,255,0.1);
         }}
-        .sports-dropdown:hover .sports-dropdown-content {{ display: block; }}
-        .sports-dropdown-content a {{
+        .nav-dropdown:hover .nav-dropdown-content {{ display: block; }}
+        .nav-dropdown-content a {{
             display: block;
-            padding: 8px 16px;
+            padding: 10px 18px;
             color: white;
+            font-size: 0.85rem;
         }}
-        .sports-dropdown-content a:hover {{ background: rgba(253,80,0,0.3); }}
+        .nav-dropdown-content a:hover {{ background: rgba(253,80,0,0.3); }}
 
         /* Header */
         .header {{
@@ -2346,19 +2349,29 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             <a href="index.html" class="logo">BET<span>LEGEND</span></a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="handicapping-hub.html">Hub</a>
-                <a href="blog-page11.html">Picks</a>
-                <a href="featured-game-of-the-day-page48.html">Featured</a>
-                <div class="sports-dropdown">
-                    <button class="sports-dropdown-btn">Sports ▼</button>
-                    <div class="sports-dropdown-content">
+                <a href="blog-page12.html">Picks & Analysis</a>
+                <a href="records.html">Records</a>
+                <a href="featured-game-of-the-day-page48.html">Featured Game</a>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-btn">Sports ▼</button>
+                    <div class="nav-dropdown-content">
                         <a href="nfl.html">NFL</a>
                         <a href="nba.html">NBA</a>
                         <a href="nhl.html">NHL</a>
                         <a href="ncaab.html">NCAAB</a>
                         <a href="ncaaf.html">NCAAF</a>
-                        <a href="mlb.html">MLB</a>
+                        <a href="mlb-page2.html">MLB</a>
                         <a href="soccer.html">Soccer</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-btn">Tools ▼</button>
+                    <div class="nav-dropdown-content">
+                        <a href="live-odds.html">Live Odds</a>
+                        <a href="proofofpicks.html">Proof of Picks</a>
+                        <a href="bankroll.html">Bankroll</a>
+                        <a href="kelly-criterion.html">Kelly Criterion</a>
+                        <a href="betting-calculators.html">Calculators</a>
                     </div>
                 </div>
             </div>
