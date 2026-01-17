@@ -1231,8 +1231,9 @@ def extract_nfl_stats(raw: Dict, record: str) -> Dict:
         'fg_pct': safe_pct(raw.get('fieldGoalPct')),
         'punt_avg': safe_num(raw.get('grossAvgPuntYards'), 1),
         'kr_avg': safe_num(raw.get('yardsPerKickReturn'), 1),
-        # First Downs
-        'first_downs': safe_num(raw.get('firstDowns'), 0),
+        # First Downs (convert season total to per-game if value looks like season total)
+        # NFL teams average ~18-23 first downs per game, so >50 means it's likely season total
+        'first_downs': f"{float(raw.get('firstDowns', 0)) / games:.1f}" if games > 0 and raw.get('firstDowns') and float(raw.get('firstDowns', 0)) > 50 else safe_num(raw.get('firstDowns'), 0),
         'rush_td': safe_num(raw.get('rushingTouchdowns'), 0),
         'pass_td': safe_num(raw.get('passingTouchdowns'), 0),
         'penalties': safe_num(raw.get('totalPenalties'), 0),
