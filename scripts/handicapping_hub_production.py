@@ -988,12 +988,24 @@ def safe_num(val, decimals=1):
     if val is None or val == '' or val == '-':
         return '-'
     try:
-        num = float(val)
+        # Strip commas from numbers like "1,149"
+        clean_val = str(val).replace(',', '') if isinstance(val, str) else val
+        num = float(clean_val)
         if decimals == 0:
             return str(int(num))
         return f"{num:.{decimals}f}"
     except (ValueError, TypeError):
         return str(val) if val else '-'
+
+def safe_float(val):
+    """Safely convert to float, handling commas"""
+    if val is None or val == '' or val == '-':
+        return 0
+    try:
+        clean_val = str(val).replace(',', '') if isinstance(val, str) else val
+        return float(clean_val)
+    except (ValueError, TypeError):
+        return 0
 
 def safe_pct(val):
     """Format percentage"""
@@ -1207,14 +1219,14 @@ def extract_nfl_stats(raw: Dict, record: str) -> Dict:
         'rush_ypg': safe_num(raw.get('rushingYardsPerGame'), 0),
         'comp_pct': safe_pct(raw.get('completionPct')),
         'qbr': safe_num(raw.get('QBRating')),
-        # Defense
+        # Defense (convert season totals to per-game if values look like season totals)
         'opp_ppg': safe_num(raw.get('avgPointsAgainst', raw.get('pointsAgainstPerGame'))),
         'opp_ypg': safe_num(raw.get('yardsAllowedPerGame'), 0),
-        'sacks': safe_num(raw.get('sacks'), 0),
-        'ints': safe_num(raw.get('interceptions'), 0),
-        'tfl': safe_num(raw.get('tacklesForLoss'), 0),
-        'ff': safe_num(raw.get('fumblesForced'), 0),
-        'pd': safe_num(raw.get('passesDefended'), 0),  # Passes Defended
+        'sacks': f"{safe_float(raw.get('sacks')) / games:.1f}" if games > 0 and raw.get('sacks') and safe_float(raw.get('sacks')) > 10 else safe_num(raw.get('sacks'), 0),
+        'ints': f"{safe_float(raw.get('interceptions')) / games:.1f}" if games > 0 and raw.get('interceptions') and safe_float(raw.get('interceptions')) > 8 else safe_num(raw.get('interceptions'), 0),
+        'tfl': f"{safe_float(raw.get('tacklesForLoss')) / games:.1f}" if games > 0 and raw.get('tacklesForLoss') and safe_float(raw.get('tacklesForLoss')) > 15 else safe_num(raw.get('tacklesForLoss'), 0),
+        'ff': f"{safe_float(raw.get('fumblesForced')) / games:.1f}" if games > 0 and raw.get('fumblesForced') and safe_float(raw.get('fumblesForced')) > 5 else safe_num(raw.get('fumblesForced'), 0),
+        'pd': f"{safe_float(raw.get('passesDefended')) / games:.1f}" if games > 0 and raw.get('passesDefended') and safe_float(raw.get('passesDefended')) > 20 else safe_num(raw.get('passesDefended'), 0),
         # Efficiency
         'ypp': safe_num(raw.get('yardsPerPlay')) if raw.get('yardsPerPlay') else ypp_calc,
         'ypa': safe_num(raw.get('yardsPerPassAttempt'), 1),
@@ -1233,11 +1245,11 @@ def extract_nfl_stats(raw: Dict, record: str) -> Dict:
         'kr_avg': safe_num(raw.get('yardsPerKickReturn'), 1),
         # First Downs (convert season total to per-game if value looks like season total)
         # NFL teams average ~18-23 first downs per game, so >50 means it's likely season total
-        'first_downs': f"{float(raw.get('firstDowns', 0)) / games:.1f}" if games > 0 and raw.get('firstDowns') and float(raw.get('firstDowns', 0)) > 50 else safe_num(raw.get('firstDowns'), 0),
-        'rush_td': safe_num(raw.get('rushingTouchdowns'), 0),
-        'pass_td': safe_num(raw.get('passingTouchdowns'), 0),
-        'penalties': safe_num(raw.get('totalPenalties'), 0),
-        'pen_yds': safe_num(raw.get('totalPenaltyYards'), 0),
+        'first_downs': f"{safe_float(raw.get('firstDowns')) / games:.1f}" if games > 0 and raw.get('firstDowns') and safe_float(raw.get('firstDowns')) > 50 else safe_num(raw.get('firstDowns'), 0),
+        'rush_td': f"{safe_float(raw.get('rushingTouchdowns')) / games:.1f}" if games > 0 and raw.get('rushingTouchdowns') and safe_float(raw.get('rushingTouchdowns')) > 5 else safe_num(raw.get('rushingTouchdowns'), 0),
+        'pass_td': f"{safe_float(raw.get('passingTouchdowns')) / games:.1f}" if games > 0 and raw.get('passingTouchdowns') and safe_float(raw.get('passingTouchdowns')) > 8 else safe_num(raw.get('passingTouchdowns'), 0),
+        'penalties': f"{safe_float(raw.get('totalPenalties')) / games:.1f}" if games > 0 and raw.get('totalPenalties') and safe_float(raw.get('totalPenalties')) > 20 else safe_num(raw.get('totalPenalties'), 0),
+        'pen_yds': f"{safe_float(raw.get('totalPenaltyYards')) / games:.1f}" if games > 0 and raw.get('totalPenaltyYards') and safe_float(raw.get('totalPenaltyYards')) > 150 else safe_num(raw.get('totalPenaltyYards'), 0),
         'pwr': get_power_rating(record),
     }
 
