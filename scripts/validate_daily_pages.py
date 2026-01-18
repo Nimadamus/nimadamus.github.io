@@ -111,11 +111,11 @@ def main():
 
         if main_date:
             if valid:
-                print(f"  ✓ {sport.upper()}: {main_date} → {page_file}")
+                print(f"  [OK] {sport.upper()}: {main_date} -> {page_file}")
             else:
                 error_msg = f"{sport.upper()}: Main page has date {main_date} but NO dedicated page file exists!"
                 errors.append(error_msg)
-                print(f"  ✗ {error_msg}")
+                print(f"  [X] {error_msg}")
                 print(f"    ACTION REQUIRED: Create {sport}-page[N].html with title containing '{main_date}'")
         else:
             print(f"  ? {sport.upper()}: Could not extract date from main page")
