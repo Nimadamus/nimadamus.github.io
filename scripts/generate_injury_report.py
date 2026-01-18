@@ -24,20 +24,50 @@ MLB_OFFSEASON_MONTHS = [11, 12, 1, 2, 3]  # Nov, Dec, Jan, Feb, Mar
 # Status display order (most severe first)
 STATUS_ORDER = ['Out', 'Injured Reserve', 'Doubtful', 'Questionable', 'Day-To-Day', 'Probable']
 
-# NFL Playoff Teams - Divisional Round (January 17-18, 2026)
-# VERIFIED: Wild Card results complete - Divisional Round set
-# NFC: Seahawks (1-bye), Bears (2), Rams (5), 49ers (6)
-# AFC: Broncos (1-bye), Patriots (2), Texans (5), Bills (6)
-# Eliminated in Wild Card: Steelers, Chargers, Jaguars, Panthers, Packers, Eagles
+# =============================================================================
+# NFL PLAYOFF TEAMS - UPDATE THIS LIST AS TEAMS ARE ELIMINATED
+# =============================================================================
+# Last Updated: January 18, 2026 - After Divisional Round Saturday games
+#
+# HOW TO UPDATE:
+# 1. After each playoff game, remove the losing team from this list
+# 2. Update the comment with the date and round
+# 3. Push the change - GitHub Actions will regenerate the injury report
+#
+# DIVISIONAL ROUND RESULTS (Jan 18, 2026):
+# - Seahawks 41, 49ers 6 → 49ers ELIMINATED
+# - Broncos 33, Bills 30 (OT) → Bills ELIMINATED
+#
+# ELIMINATED THIS POSTSEASON:
+# - Wild Card: Steelers, Chargers, Jaguars, Panthers, Packers, Eagles
+# - Divisional: 49ers, Bills
+# =============================================================================
 NFL_PLAYOFF_TEAMS = [
-    'Seattle Seahawks',      # NFC 1 seed (bye)
-    'Chicago Bears',         # NFC 2 seed (beat Packers 31-27)
-    'Los Angeles Rams',      # NFC 5 seed (beat Panthers 34-31)
-    'San Francisco 49ers',   # NFC 6 seed (beat Eagles 23-19)
-    'Denver Broncos',        # AFC 1 seed (bye)
-    'New England Patriots',  # AFC 2 seed (beat Chargers 16-3)
-    'Houston Texans',        # AFC 5 seed (beat Steelers 30-6)
-    'Buffalo Bills',         # AFC 6 seed (beat Jaguars 27-24)
+    'Seattle Seahawks',      # NFC - Beat 49ers 41-6 (Divisional)
+    'Chicago Bears',         # NFC 2 seed - plays Rams Sunday
+    'Los Angeles Rams',      # NFC 5 seed - plays Bears Sunday
+    'Denver Broncos',        # AFC - Beat Bills 33-30 OT (Divisional)
+    'New England Patriots',  # AFC 2 seed - plays Texans Sunday
+    'Houston Texans',        # AFC 5 seed - plays Patriots Sunday
+]
+
+# =============================================================================
+# NBA PLAYOFF TEAMS - UPDATE WHEN PLAYOFFS BEGIN (typically mid-April)
+# =============================================================================
+# Set NBA_PLAYOFFS_ACTIVE = True when NBA playoffs start
+# Then add the 16 playoff teams to the list below
+# During regular season, all teams are shown
+#
+# NBA Playoffs typically run mid-April through mid-June
+# =============================================================================
+NBA_PLAYOFFS_ACTIVE = False  # Set to True when NBA playoffs begin
+
+NBA_PLAYOFF_TEAMS = [
+    # Add playoff teams here when playoffs start (16 teams)
+    # Example:
+    # 'Boston Celtics',
+    # 'Cleveland Cavaliers',
+    # etc.
 ]
 
 # Supplemental injuries not always captured by ESPN API
@@ -142,6 +172,10 @@ def parse_all_injuries(sport, teams_data):
         if sport == 'NFL' and team_name not in NFL_PLAYOFF_TEAMS:
             continue
 
+        # NBA: Only include playoff teams when playoffs are active
+        if sport == 'NBA' and NBA_PLAYOFFS_ACTIVE and team_name not in NBA_PLAYOFF_TEAMS:
+            continue
+
         team_injuries = team.get('injuries', [])
         players = []
 
@@ -192,20 +226,28 @@ def parse_all_injuries(sport, teams_data):
     if sport == 'NFL':
         for playoff_team in NFL_PLAYOFF_TEAMS:
             if playoff_team not in teams:
-                # ESPN team IDs for NFL teams
+                # ESPN team IDs for remaining NFL playoff teams
                 team_id_map = {
                     'Seattle Seahawks': '26',
                     'Chicago Bears': '3',
-                    'San Francisco 49ers': '25',
                     'Los Angeles Rams': '14',
                     'Denver Broncos': '7',
                     'New England Patriots': '17',
-                    'Buffalo Bills': '2',
                     'Houston Texans': '34'
                 }
                 teams[playoff_team] = {
                     'id': team_id_map.get(playoff_team, ''),
                     'players': SUPPLEMENTAL_INJURIES.get('NFL', {}).get(playoff_team, [])
+                }
+
+    # For NBA, ensure all playoff teams are listed when playoffs are active
+    if sport == 'NBA' and NBA_PLAYOFFS_ACTIVE:
+        for playoff_team in NBA_PLAYOFF_TEAMS:
+            if playoff_team not in teams:
+                # Will need to add NBA team IDs here when playoffs start
+                teams[playoff_team] = {
+                    'id': '',  # Add team ID when playoffs start
+                    'players': []
                 }
 
     return dict(sorted(teams.items()))
@@ -903,10 +945,12 @@ def generate_html(all_data):
         sport_lower = sport.lower()
         is_active = 'active' if sport == 'NBA' else ''
 
-        # Add playoff note for NFL
+        # Add playoff note for NFL and NBA (when applicable)
         playoff_note = ''
         if sport == 'NFL':
-            playoff_note = '<p style="text-align:center;color:#00d4ff;font-size:0.9rem;margin-bottom:15px;font-weight:600;">NFL Playoff Teams Only - Divisional Round (Jan 17-18, 2026)</p>'
+            playoff_note = '<p style="text-align:center;color:#00d4ff;font-size:0.9rem;margin-bottom:15px;font-weight:600;">NFL Playoff Teams Only - Conference Championships (Jan 25-26, 2026)</p>'
+        elif sport == 'NBA' and NBA_PLAYOFFS_ACTIVE:
+            playoff_note = '<p style="text-align:center;color:#00d4ff;font-size:0.9rem;margin-bottom:15px;font-weight:600;">NBA Playoff Teams Only</p>'
 
         # Check if MLB is in offseason
         current_month = datetime.now().month
