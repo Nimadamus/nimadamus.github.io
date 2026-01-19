@@ -1029,8 +1029,10 @@ async function fetchAllData() {
         pickTrackerPromise
     ]);
 
-    const rawData = [...sportResults.flat(), ...pickTrackerResults];
-    console.log(`📥 Total from all sources: ${rawData.length} picks (sheets: ${sportResults.flat().length}, tracker: ${pickTrackerResults.length})`);
+    // IMPORTANT: Put Pick Tracker rows FIRST so they take precedence during deduplication
+    // Pick Tracker has Units = STAKE (cleaner data), sport sheets have Units = PROFIT/LOSS
+    const rawData = [...pickTrackerResults, ...sportResults.flat()];
+    console.log(`📥 Total from all sources: ${rawData.length} picks (tracker: ${pickTrackerResults.length}, sheets: ${sportResults.flat().length})`);
 
     // DEDUPLICATION: Remove duplicate bets by unique identifier (Date + Pick + Line)
     const seenBets = new Set();
@@ -1040,7 +1042,8 @@ async function fetchAllData() {
         // Create unique identifier from Date, Pick, and Line
         const dateStr = row.Date || row.date || '';
         const pick = (row.Pick || row.pick || '').trim();
-        const line = (row.Line || row.line || '').trim();
+        // Normalize line for comparison - strip leading "+" to handle "+120" vs "120"
+        const line = (row.Line || row.line || '').trim().replace(/^\+/, '');
         const sport = row.sport || '';
 
         const uniqueId = `${dateStr}|${sport}|${pick}|${line}`;
