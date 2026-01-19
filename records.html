@@ -2090,13 +2090,31 @@ function createPerformanceChart() {
 }
 
 function extractOdds(line) {
-    // Match all numbers with +/- signs, then take the last one (which is typically the odds)
-    const matches = line.match(/([+-]\d+)/g);
-    if (!matches || matches.length === 0) return null;
+    if (!line || typeof line !== 'string') {
+        // Try to parse as a number directly
+        const num = parseFloat(line);
+        if (!isNaN(num)) {
+            // Unsigned numbers 100+ are treated as positive odds
+            return num >= 100 ? num : (num <= -100 ? num : null);
+        }
+        return null;
+    }
 
-    // The odds are usually the last +/- number in the line
-    const lastMatch = matches[matches.length - 1];
-    return parseInt(lastMatch);
+    // First try to match numbers with +/- signs
+    const signedMatches = line.match(/([+-]\d+)/g);
+    if (signedMatches && signedMatches.length > 0) {
+        return parseInt(signedMatches[signedMatches.length - 1]);
+    }
+
+    // If no signed match, try to match plain numbers (100+) which are positive odds
+    const plainMatches = line.match(/\b(\d{3,})\b/g);
+    if (plainMatches && plainMatches.length > 0) {
+        const num = parseInt(plainMatches[plainMatches.length - 1]);
+        // Numbers 100+ without a sign are treated as positive odds
+        if (num >= 100) return num;
+    }
+
+    return null;
 }
 
 function extractBetSize(row) {
