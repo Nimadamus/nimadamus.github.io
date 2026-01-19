@@ -67,6 +67,9 @@ const FEATURED_GAMES = [
     { date: "2026-01-06", page: "featured-game-of-the-day-page37.html", title: "Devils vs Islanders" },
     { date: "2026-01-15", page: "featured-game-of-the-day-page46.html", title: "Knicks vs Warriors" },
     { date: "2026-01-16", page: "featured-game-of-the-day-page47.html", title: "Panthers vs Hurricanes" },
+    { date: "2026-01-17", page: "featured-game-of-the-day-page48.html", title: "NFL Divisional Round" },
+    { date: "2026-01-18", page: "featured-game-of-the-day-page49.html", title: "Texans vs Patriots AFC Divisional" },
+    { date: "2026-01-19", page: "featured-game-of-the-day-page50.html", title: "Indiana vs Miami CFP National Championship" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
