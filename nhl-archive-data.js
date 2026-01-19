@@ -2,6 +2,7 @@
 const NHL_ARCHIVE = [
     { date: "2026-01-18", page: "nhl.html", title: "NHL Analysis - December 28, 2025" },
     { date: "2026-01-18", page: "nhl-page54.html", title: "January 18, 2026" },
+    { date: "2026-01-18", page: "nhl-page55.html", title: "January 18, 2026" },
     { date: "2026-01-17", page: "nhl-page53.html", title: "January 17, 2026" },
     { date: "2026-01-17", page: "nhl-page52.html", title: "January 17, 2026" },
     { date: "2026-01-16", page: "nhl-page51.html", title: "January 16, 2026" },
