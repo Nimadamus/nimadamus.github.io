@@ -1,9 +1,10 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: January 19, 2026
+// Last updated: January 20, 2026
 
 const ARCHIVE_DATA = [
     // 2026 - Individual pages with unique content
+    { date: "2026-01-20", page: "featured-game-of-the-day-page51.html", title: "Spurs @ Rockets NBA" },
     { date: "2026-01-19", page: "featured-game-of-the-day-page50.html", title: "Indiana vs Miami CFP National Championship" },
     { date: "2026-01-18", page: "featured-game-of-the-day-page49.html", title: "Texans vs Patriots AFC Divisional" },
     { date: "2026-01-17", page: "featured-game-of-the-day-page48.html", title: "NFL Divisional Round" },
