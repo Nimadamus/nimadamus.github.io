@@ -246,7 +246,7 @@ NAV_HTML = """
 
     <a href="proofofpicks.html">Proof</a>
     <a href="news-page3.html">News</a>
-    <a href="featured-game-of-the-day.html">Game of the Day</a>
+    <a href="featured-game-of-the-day-page50.html">Game of the Day</a>
 
     <div class="dropdown">
         <button class="dropbtn">Community</button>
@@ -359,7 +359,7 @@ def main():
         'parlay-calculator.html',
 
         # Feature pages
-        'featured-game-of-the-day.html',
+        'featured-game-of-the-day-page50.html',
         'betting-101.html',
         'bestonlinesportsbook.html',
         'live-odds.html',
