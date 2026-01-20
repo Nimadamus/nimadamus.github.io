@@ -136,6 +136,12 @@ body {
     color: var(--accent);
     text-shadow: 0 0 20px var(--accent);
     line-height: 1;
+    white-space: nowrap;
+}
+
+/* Smaller font for record to fit W-L-P format on one line */
+#total-record {
+    font-size: 48px;
 }
 
 .stat-value.positive {
@@ -637,7 +643,7 @@ tbody tr:hover {
         </div>
 
         <div class="stat-card">
-            <div class="stat-label">Average Odds</div>
+            <div class="stat-label">Avg Line</div>
             <div class="stat-value" id="avg-odds">--</div>
         </div>
 
@@ -1595,7 +1601,12 @@ function calculateStats(data, useActualBetSizes = false) {
     // ROI = profit / total risked
     const roi = totalRisked > 0 ? (totalUnits / totalRisked) * 100 : 0;
 
-    const avgOdds = oddsCount > 0 ? Math.round(totalOdds / oddsCount) : -110;
+    // Calculate average odds - round to nearest standard line
+    let avgOdds = oddsCount > 0 ? Math.round(totalOdds / oddsCount) : -110;
+    // Ensure avg odds makes sense (American odds can't be between -100 and +100)
+    if (avgOdds > -100 && avgOdds < 100) {
+        avgOdds = avgOdds < 0 ? -110 : 100; // Default to -110 for small negatives, +100 for positives
+    }
 
     return {
         record: `${wins}-${losses}${pushes > 0 ? `-${pushes}` : ''}`,
