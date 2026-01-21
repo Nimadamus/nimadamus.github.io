@@ -1,5 +1,6 @@
 // NCAAB Archive Data - Auto-updated by production script
 const NCAAB_ARCHIVE = [
+    { date: "2026-01-21", page: "ncaab-page54.html", title: "January 21, 2026" },
     { date: "2026-01-20", page: "ncaab.html", title: "NCAAB Analysis - December 28, 2025" },
     { date: "2026-01-20", page: "ncaab-page53.html", title: "January 20, 2026" },
     { date: "2026-01-19", page: "ncaab-page52.html", title: "January 19, 2026" },
