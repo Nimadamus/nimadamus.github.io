@@ -38,7 +38,7 @@
   --bg-black:#000000;
   --bg-dark:#0a0a0a;
   --neon-cyan:#00fff2;
-  --neon-pink:#fd5000;
+  --neon-pink:#00fff2;
   --neon-gold:#ffd000;
   --neon-green:#39ff14;
   --neon-red:#ff4444;
@@ -227,50 +227,7 @@ body::before{
 .dropdown.active .dropdown-content,.dropdown.active .sports-records-dropdown{display:block;animation:dropdownFade 0.3s ease}
 @keyframes dropdownFade{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 
-/* NEWS HEADER */
-.news-header{
-  padding:60px 24px 40px;
-  text-align:center;
-  position:relative;
-}
-.news-header::before{
-  content:'';
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:600px;height:600px;
-  background:radial-gradient(circle,rgba(253,80,0,0.1) 0%,transparent 60%);
-  pointer-events:none;
-}
-.news-header h1{
-  font-family:var(--font-display);
-  font-size:clamp(36px,6vw,60px);
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:8px;
-  color:var(--neon-pink);
-  position:relative;
-  text-shadow:
-    0 0 10px var(--neon-pink),
-    0 0 20px var(--neon-pink),
-    0 0 40px var(--neon-pink);
-  animation:flicker 3s infinite;
-  margin-bottom:10px;
-}
-@keyframes flicker{
-  0%,100%{opacity:1}
-  92%{opacity:1}
-  93%{opacity:0.8}
-  94%{opacity:1}
-  95%{opacity:0.9}
-  96%{opacity:1}
-}
-.news-header p{
-  font-size:18px;
-  color:var(--neon-cyan);
-  text-transform:uppercase;
-  letter-spacing:4px;
-}
+
 
 /* NEWS CONTAINER */
 .news-container{
@@ -304,7 +261,7 @@ body::before{
 }
 .news-post:hover::before{opacity:0.4}
 .news-post:hover{
-  box-shadow:0 0 40px rgba(0,255,242,0.3),0 0 60px rgba(253,80,0,0.15)!important;
+  box-shadow:0 0 40px rgba(0,255,242,0.3),0 0 60px rgba(0,255,242,0.15)!important;
 }
 
 /* Breaking news styling */
@@ -512,11 +469,6 @@ footer a:hover{text-shadow:0 0 10px var(--neon-cyan)}
     });
 })();
 </script>
-
-<header class="news-header">
-<h1>Latest News</h1>
-<p>Breaking Headlines // Sports Updates</p>
-</header>
 
 <div class="news-container">
 <div class="news-post" style="background-color: #111; border: 3px solid gold; border-radius: 14px; padding: 28px; box-shadow: 0 0 18px rgba(255, 215, 0, 0.13); margin-bottom: 65px;">
