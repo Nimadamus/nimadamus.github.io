@@ -1469,6 +1469,18 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
             </table>
         </div>'''
 
+    # Format injuries section cleanly
+    injuries_html = ''
+    if away_inj_html != 'No reported injuries' or home_inj_html != 'No reported injuries':
+        injuries_html = f'''
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>{away['abbr']}:</strong> {away_inj_html}</div>
+                <div class="team-injuries"><strong>{home['abbr']}:</strong> {home_inj_html}</div>
+            </div>
+        </div>'''
+
     return f'''
     <div class="game-card" data-event-id="{game.get('event_id', '')}" data-sport="{sport.lower()}">
         <div class="game-header">
@@ -1491,70 +1503,18 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
                 </table>
             </div>
             <div class="section defense">
-                <div class="section-title">DEFENSE (Opponent Stats Allowed)</div>
+                <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
-                    <thead><tr><th></th><th>OPP PPG</th><th>OPP FG%</th><th>OPP 3P%</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <thead><tr><th></th><th>OPP PPG</th><th>OPP FG%</th><th>OPP 3P%</th><th>STL</th><th>BLK</th></tr></thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['opp_fg_pct']}</td><td>{away['stats']['opp_3pt_pct']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td><td>{away['stats']['dreb']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['opp_fg_pct']}</td><td>{home['stats']['opp_3pt_pct']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td><td>{home['stats']['dreb']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['opp_fg_pct']}</td><td>{away['stats']['opp_3pt_pct']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['opp_fg_pct']}</td><td>{home['stats']['opp_3pt_pct']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- SECTION 3: BETTING RECORDS (ScoresAndOdds Style) -->
-        <div class="stats-grid">
-            <div class="section betting-trends">
-                <div class="section-title">BETTING RECORDS</div>
-                <table class="stats-table">
-                    <thead><tr><th></th><th>SU</th><th>ATS</th><th>O/U</th><th>MARGIN</th></tr></thead>
-                    <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['record']}</td><td class="ats-record">{away['stats']['ats']}</td><td class="ou-record">{away['stats']['ou']}</td><td>{away['stats']['net_rtg']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['record']}</td><td class="ats-record">{home['stats']['ats']}</td><td class="ou-record">{home['stats']['ou']}</td><td>{home['stats']['net_rtg']}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="section scoring">
-                <div class="section-title">SCORING</div>
-                <table class="stats-table">
-                    <thead><tr><th></th><th>PPG</th><th>OPP PPG</th><th>eFG%</th><th>TS%</th></tr></thead>
-                    <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td class="ppg">{away['stats']['ppg']}</td><td class="opp-ppg">{away['stats']['opp_ppg']}</td><td>{away['stats']['efg']}</td><td>{away['stats']['ts']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td class="ppg">{home['stats']['ppg']}</td><td class="opp-ppg">{home['stats']['opp_ppg']}</td><td>{home['stats']['efg']}</td><td>{home['stats']['ts']}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- SECTION 4: SITUATIONAL / RECENT FORM -->
-        <div class="stats-grid">
-            <div class="section situational">
-                <div class="section-title">SITUATIONAL</div>
-                <table class="stats-table">
-                    <thead><tr><th></th><th>L5</th><th>HOME</th><th>AWAY</th><th>STK</th><th>PWR</th></tr></thead>
-                    <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['l5']}</td><td>{away['stats']['home_rec']}</td><td>{away['stats']['away_rec']}</td><td>{away['stats']['streak']}</td><td>{away['stats']['pwr']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['l5']}</td><td>{home['stats']['home_rec']}</td><td>{home['stats']['away_rec']}</td><td>{home['stats']['streak']}</td><td>{home['stats']['pwr']}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="section shooting">
-                <div class="section-title">SHOOTING SPLITS</div>
-                <table class="stats-table">
-                    <thead><tr><th></th><th>FG%</th><th>3P%</th><th>FT%</th><th>REB</th><th>AST</th></tr></thead>
-                    <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['fg_pct']}</td><td>{away['stats']['three_pct']}</td><td>{away['stats']['ft_pct']}</td><td>{away['stats']['reb']}</td><td>{away['stats']['ast']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['fg_pct']}</td><td>{home['stats']['three_pct']}</td><td>{home['stats']['ft_pct']}</td><td>{home['stats']['reb']}</td><td>{home['stats']['ast']}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- SECTION 5: INJURIES -->
-        <div class="trends-bar">
-            <span class="trend-item">🏥 {away_inj_html} | {home_inj_html}</span>
-        </div>
-
+        {injuries_html}
         {h2h_html}
     </div>
     '''
@@ -1711,6 +1671,18 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
             </table>
         </div>'''
 
+    # Format injuries section cleanly
+    injuries_html = ''
+    if away_inj_html != 'No reported injuries' or home_inj_html != 'No reported injuries':
+        injuries_html = f'''
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>{away['abbr']}:</strong> {away_inj_html}</div>
+                <div class="team-injuries"><strong>{home['abbr']}:</strong> {home_inj_html}</div>
+            </div>
+        </div>'''
+
     return f'''
     <div class="game-card" data-event-id="{game.get('event_id', '')}" data-sport="{sport.lower()}">
         <div class="game-header">
@@ -1725,54 +1697,26 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
             <div class="section offense">
                 <div class="section-title">OFFENSE</div>
                 <table class="stats-table">
-                    <thead><tr><th></th><th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>1stD</th><th>3RD%</th></tr></thead>
+                    <thead><tr><th></th><th>PPG</th><th>YPG</th><th>PASS</th><th>RUSH</th><th>3RD%</th></tr></thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['ypg']}</td><td>{away['stats']['pass_ypg']}</td><td>{away['stats']['rush_ypg']}</td><td>{away['stats']['first_downs']}</td><td>{away['stats']['third_pct']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['ypg']}</td><td>{home['stats']['pass_ypg']}</td><td>{home['stats']['rush_ypg']}</td><td>{home['stats']['first_downs']}</td><td>{home['stats']['third_pct']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['ypg']}</td><td>{away['stats']['pass_ypg']}</td><td>{away['stats']['rush_ypg']}</td><td>{away['stats']['third_pct']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['ypg']}</td><td>{home['stats']['pass_ypg']}</td><td>{home['stats']['rush_ypg']}</td><td>{home['stats']['third_pct']}</td></tr>
                     </tbody>
                 </table>
             </div>
             <div class="section defense">
                 <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
-                    <thead><tr><th></th><th>SACK</th><th>INT</th><th>TFL</th><th>FF</th><th>PD</th><th>PEN</th></tr></thead>
+                    <thead><tr><th></th><th>SACK</th><th>INT</th><th>TFL</th><th>FF</th><th>TO+/-</th></tr></thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['sacks']}</td><td>{away['stats']['ints']}</td><td>{away['stats']['tfl']}</td><td>{away['stats']['ff']}</td><td>{away['stats']['pd']}</td><td>{away['stats']['penalties']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['sacks']}</td><td>{home['stats']['ints']}</td><td>{home['stats']['tfl']}</td><td>{home['stats']['ff']}</td><td>{home['stats']['pd']}</td><td>{home['stats']['penalties']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['sacks']}</td><td>{away['stats']['ints']}</td><td>{away['stats']['tfl']}</td><td>{away['stats']['ff']}</td><td>{away['stats']['to_diff']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['sacks']}</td><td>{home['stats']['ints']}</td><td>{home['stats']['tfl']}</td><td>{home['stats']['ff']}</td><td>{home['stats']['to_diff']}</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- SECTION 3: BETTING TRENDS (ATS/O/U) vs SITUATIONAL -->
-        <div class="stats-grid">
-            <div class="section betting-trends">
-                <div class="section-title">BETTING TRENDS</div>
-                <table class="stats-table">
-                    <thead><tr><th></th><th>ATS</th><th>O/U</th><th>RZ%</th><th>TO+/-</th><th>YPP</th></tr></thead>
-                    <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td class="ats-record">{away['stats']['ats']}</td><td class="ou-record">{away['stats']['ou']}</td><td>{away['stats']['rz_pct']}</td><td>{away['stats']['to_diff']}</td><td>{away['stats']['ypp']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td class="ats-record">{home['stats']['ats']}</td><td class="ou-record">{home['stats']['ou']}</td><td>{home['stats']['rz_pct']}</td><td>{home['stats']['to_diff']}</td><td>{home['stats']['ypp']}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="section situational">
-                <div class="section-title">SITUATIONAL</div>
-                <table class="stats-table">
-                    <thead><tr><th></th><th>L5</th><th>HOME</th><th>AWAY</th><th>STK</th><th>PWR</th></tr></thead>
-                    <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['l5']}</td><td>{away['stats']['home_rec']}</td><td>{away['stats']['away_rec']}</td><td>{away['stats']['streak']}</td><td>{away['stats']['pwr']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['l5']}</td><td>{home['stats']['home_rec']}</td><td>{home['stats']['away_rec']}</td><td>{home['stats']['streak']}</td><td>{home['stats']['pwr']}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- SECTION 4: TRENDS BAR -->
-        <div class="trends-bar">
-            <span class="trend-item">🏥 {away_inj_html} | {home_inj_html}</span>
-        </div>
-
+        {injuries_html}
         {h2h_html}
     </div>
     '''
@@ -1963,6 +1907,18 @@ def generate_game_card_nhl(game: Dict) -> str:
             </table>
         </div>'''
 
+    # Format injuries section cleanly
+    injuries_html = ''
+    if away_inj_html != 'No reported injuries' or home_inj_html != 'No reported injuries':
+        injuries_html = f'''
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>{away['abbr']}:</strong> {away_inj_html}</div>
+                <div class="team-injuries"><strong>{home['abbr']}:</strong> {home_inj_html}</div>
+            </div>
+        </div>'''
+
     return f'''
     <div class="game-card" data-event-id="{game.get('event_id', '')}" data-sport="nhl">
         <div class="game-header">
@@ -1977,54 +1933,26 @@ def generate_game_card_nhl(game: Dict) -> str:
             <div class="section offense">
                 <div class="section-title">OFFENSE</div>
                 <table class="stats-table">
-                    <thead><tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PPG</th><th>FO%</th><th>GD</th></tr></thead>
+                    <thead><tr><th></th><th>GF</th><th>SOG</th><th>S%</th><th>PP%</th><th>FO%</th></tr></thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['gf']}</td><td>{away['stats']['sog']}</td><td>{away['stats']['shoot_pct']}</td><td>{away['stats']['ppg']}</td><td>{away['stats']['fow_pct']}</td><td>{away['stats']['gd']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['gf']}</td><td>{home['stats']['sog']}</td><td>{home['stats']['shoot_pct']}</td><td>{home['stats']['ppg']}</td><td>{home['stats']['fow_pct']}</td><td>{home['stats']['gd']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['gf']}</td><td>{away['stats']['sog']}</td><td>{away['stats']['shoot_pct']}</td><td>{away['stats']['pp_pct']}</td><td>{away['stats']['fow_pct']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['gf']}</td><td>{home['stats']['sog']}</td><td>{home['stats']['shoot_pct']}</td><td>{home['stats']['pp_pct']}</td><td>{home['stats']['fow_pct']}</td></tr>
                     </tbody>
                 </table>
             </div>
             <div class="section defense">
                 <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
-                    <thead><tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>SHG</th><th>PIM</th><th>OTL</th></tr></thead>
+                    <thead><tr><th></th><th>GA</th><th>SA</th><th>SV%</th><th>PK%</th><th>GD</th></tr></thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ga']}</td><td>{away['stats']['sa']}</td><td>{away['stats']['sv_pct']}</td><td>{away['stats']['shg']}</td><td>{away['stats']['pim']}</td><td>{away['stats']['otl']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ga']}</td><td>{home['stats']['sa']}</td><td>{home['stats']['sv_pct']}</td><td>{home['stats']['shg']}</td><td>{home['stats']['pim']}</td><td>{home['stats']['otl']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['ga']}</td><td>{away['stats']['sa']}</td><td>{away['stats']['sv_pct']}</td><td>{away['stats']['pk_pct']}</td><td>{away['stats']['gd']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['ga']}</td><td>{home['stats']['sa']}</td><td>{home['stats']['sv_pct']}</td><td>{home['stats']['pk_pct']}</td><td>{home['stats']['gd']}</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- SECTION 3: BETTING TRENDS (ATS/O/U) vs SITUATIONAL -->
-        <div class="stats-grid">
-            <div class="section betting-trends">
-                <div class="section-title">BETTING TRENDS</div>
-                <table class="stats-table">
-                    <thead><tr><th></th><th>ATS</th><th>O/U</th><th>PP%</th><th>PK%</th><th>GD</th></tr></thead>
-                    <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td class="ats-record">{away['stats']['ats']}</td><td class="ou-record">{away['stats']['ou']}</td><td>{away['stats']['pp_pct']}</td><td>{away['stats']['pk_pct']}</td><td>{away['stats']['gd']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td class="ats-record">{home['stats']['ats']}</td><td class="ou-record">{home['stats']['ou']}</td><td>{home['stats']['pp_pct']}</td><td>{home['stats']['pk_pct']}</td><td>{home['stats']['gd']}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="section situational">
-                <div class="section-title">SITUATIONAL</div>
-                <table class="stats-table">
-                    <thead><tr><th></th><th>L5</th><th>HOME</th><th>AWAY</th><th>STK</th><th>PWR</th></tr></thead>
-                    <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['l5']}</td><td>{away['stats']['home_rec']}</td><td>{away['stats']['away_rec']}</td><td>{away['stats']['streak']}</td><td>{away['stats']['pwr']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['l5']}</td><td>{home['stats']['home_rec']}</td><td>{home['stats']['away_rec']}</td><td>{home['stats']['streak']}</td><td>{home['stats']['pwr']}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- SECTION 4: TRENDS BAR -->
-        <div class="trends-bar">
-            <span class="trend-item">🏥 {away_inj_html} | {home_inj_html}</span>
-        </div>
-
+        {injuries_html}
         {h2h_html}
     </div>
     '''
@@ -2381,16 +2309,28 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             text-shadow: 0 0 10px rgba(0, 196, 255, 0.3);
         }}
 
-        .trends-bar {{
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 140, 66, 0.1) 100%);
-            padding: 14px 24px;
-            font-size: 0.95rem;
-            color: #ff6b35;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
+        /* === INJURIES SECTION === */
+        .injuries-section {{
+            padding: 16px 24px;
             border-top: 1px solid rgba(255, 107, 53, 0.3);
+        }}
+        .injuries-section .section-title {{
+            color: #ff6b35;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }}
+        .injuries-content {{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }}
+        .team-injuries {{
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.5;
+        }}
+        .team-injuries strong {{
+            color: #00f5ff;
         }}
 
         /* === H2H SECTION - REDESIGNED === */
