@@ -827,6 +827,10 @@ def extract_nba_stats(raw: Dict, record: str, standings: Dict = None, l5: str = 
     standings = standings or {}
     betting_rec = betting_rec or {}
 
+    # Opponent shooting percentages (defensive stats)
+    opp_fg_pct = safe_pct(raw.get('oppFieldGoalPct', raw.get('avgPointsAgainstPerFieldGoalAttempt')))
+    opp_3pt_pct = safe_pct(raw.get('oppThreePointPct', raw.get('oppThreePointFieldGoalPct')))
+
     return {
         # Offense
         'ppg': safe_num(ppg),
@@ -836,8 +840,10 @@ def extract_nba_stats(raw: Dict, record: str, standings: Dict = None, l5: str = 
         'ast': safe_num(raw.get('avgAssists', raw.get('assistsPerGame'))),
         'reb': safe_num(raw.get('avgRebounds', raw.get('reboundsPerGame'))),
         'oreb': safe_num(raw.get('avgOffensiveRebounds', raw.get('offReboundsPerGame'))),
-        # Defense
+        # Defense - Enhanced with opponent shooting
         'opp_ppg': safe_num(opp_ppg),
+        'opp_fg_pct': opp_fg_pct if opp_fg_pct != '-' else '-',
+        'opp_3pt_pct': opp_3pt_pct if opp_3pt_pct != '-' else '-',
         'stl': safe_num(raw.get('avgSteals', raw.get('stealsPerGame'))),
         'blk': safe_num(raw.get('avgBlocks', raw.get('blocksPerGame'))),
         'dreb': safe_num(raw.get('avgDefensiveRebounds', raw.get('defReboundsPerGame'))),
@@ -1301,9 +1307,48 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
     # Generate H2H section HTML if data available
     h2h_html = ''
     if h2h and h2h.get('total_games', 0) > 0:
+        import re as re_h2h
         meetings_html = ''
         for m in h2h.get('meetings', [])[:5]:
-            meetings_html += f'<tr><td>{m["date"]}</td><td>{m["home"]}</td><td>{m["result"]}</td><td class="h2h-ats">{m["ats"]}</td><td class="h2h-ou">{m["ou"]}</td></tr>'
+            # Parse who won from result (home score first, away score second)
+            scores = re_h2h.findall(r'(\d+)', m['result'])
+            home_team = m['home'].upper()
+            if len(scores) >= 2:
+                home_score = int(scores[0])
+                away_score = int(scores[1])
+                if home_score > away_score:
+                    winner = home_team
+                    winner_class = 'winner-home'
+                else:
+                    # Away team won - figure out who that is
+                    winner = away['abbr'] if home_team == home['abbr'] else home['abbr']
+                    winner_class = 'winner-away'
+                score_display = f"{home_score}-{away_score}"
+            else:
+                winner = "—"
+                winner_class = ''
+                score_display = m['result']
+
+            # Parse who covered from ATS (format like "OKC-5.5" or "MIL+3.0")
+            ats_match = re_h2h.match(r'([A-Z]+)', m['ats'])
+            covered_team = ats_match.group(1) if ats_match else "—"
+
+            # Parse O/U (format like "o233.5" or "u233.5")
+            ou_val = m['ou'].lower()
+            if ou_val.startswith('o'):
+                ou_display = '<span class="over">OVER</span>'
+            elif ou_val.startswith('u'):
+                ou_display = '<span class="under">UNDER</span>'
+            else:
+                ou_display = m['ou']
+
+            meetings_html += f'''<tr>
+                <td>{m["date"]}</td>
+                <td class="{winner_class}"><strong>{winner}</strong></td>
+                <td class="score">{score_display}</td>
+                <td class="h2h-ats"><strong>{covered_team}</strong></td>
+                <td class="h2h-ou">{ou_display}</td>
+            </tr>'''
 
         # Parse clearer H2H display
         su_parts = h2h['h2h_su'].split()  # "OKC 3-2" -> ["OKC", "3-2"]
@@ -1341,7 +1386,7 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
                 </div>
             </div>
             <table class="h2h-table">
-                <thead><tr><th>DATE</th><th>HOME</th><th>RESULT</th><th>COVERED</th><th>TOTAL</th></tr></thead>
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
                 <tbody>{meetings_html}</tbody>
             </table>
         </div>'''
@@ -1349,56 +1394,76 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
     betting_lines_html = ''
     if has_valid_odds(odds):
         betting_lines_html = f'''
-        <div class="section betting-lines">
-            <div class="section-title">BETTING LINES</div>
-            <table class="lines-table">
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP & BETTING (ScoresAndOdds Style)</div>
+            <table class="lines-table-full">
                 <thead>
-                    <tr><th class="team-col">TEAM</th><th>SPREAD</th><th>ML</th><th>O/U</th></tr>
+                    <tr><th class="team-col">TEAM</th><th>LINE</th><th>ML</th><th>O/U</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr>
                 </thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{away['abbr']}</span>
-                            <span class="team-record">{away['record']}</span>
                         </td>
                         <td class="spread">{odds['spread_away']}</td>
                         <td class="ml">{odds['ml_away']}</td>
                         <td class="total">O {odds['total']}</td>
+                        <td class="su-record">{away['record']}</td>
+                        <td class="ats-record">{away['stats']['ats']}</td>
+                        <td class="ou-record">{away['stats']['ou']}</td>
+                        <td class="ppg">{away['stats']['ppg']}</td>
+                        <td class="opp-ppg">{away['stats']['opp_ppg']}</td>
+                        <td class="pwr">{away['stats']['pwr']}</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
                             <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{home['abbr']}</span>
-                            <span class="team-record">{home['record']}</span>
                         </td>
                         <td class="spread">{odds['spread_home']}</td>
                         <td class="ml">{odds['ml_home']}</td>
                         <td class="total">U {odds['total']}</td>
+                        <td class="su-record">{home['record']}</td>
+                        <td class="ats-record">{home['stats']['ats']}</td>
+                        <td class="ou-record">{home['stats']['ou']}</td>
+                        <td class="ppg">{home['stats']['ppg']}</td>
+                        <td class="opp-ppg">{home['stats']['opp_ppg']}</td>
+                        <td class="pwr">{home['stats']['pwr']}</td>
                     </tr>
                 </tbody>
             </table>
         </div>'''
     else:
         betting_lines_html = f'''
-        <div class="section teams-info">
-            <div class="section-title">MATCHUP</div>
-            <table class="lines-table">
-                <thead><tr><th class="team-col">TEAM</th><th>RECORD</th></tr></thead>
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{away['abbr']}</span>
                         </td>
-                        <td>{away['record']}</td>
+                        <td class="su-record">{away['record']}</td>
+                        <td class="ats-record">{away['stats']['ats']}</td>
+                        <td class="ou-record">{away['stats']['ou']}</td>
+                        <td class="ppg">{away['stats']['ppg']}</td>
+                        <td class="opp-ppg">{away['stats']['opp_ppg']}</td>
+                        <td class="pwr">{away['stats']['pwr']}</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
                             <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{home['abbr']}</span>
                         </td>
-                        <td>{home['record']}</td>
+                        <td class="su-record">{home['record']}</td>
+                        <td class="ats-record">{home['stats']['ats']}</td>
+                        <td class="ou-record">{home['stats']['ou']}</td>
+                        <td class="ppg">{home['stats']['ppg']}</td>
+                        <td class="opp-ppg">{home['stats']['opp_ppg']}</td>
+                        <td class="pwr">{home['stats']['pwr']}</td>
                     </tr>
                 </tbody>
             </table>
@@ -1426,29 +1491,43 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
                 </table>
             </div>
             <div class="section defense">
-                <div class="section-title">DEFENSE</div>
+                <div class="section-title">DEFENSE (Opponent Stats Allowed)</div>
                 <table class="stats-table">
-                    <thead><tr><th></th><th>OPP</th><th>STL</th><th>BLK</th><th>DREB</th><th>TO</th><th>PF</th></tr></thead>
+                    <thead><tr><th></th><th>OPP PPG</th><th>OPP FG%</th><th>OPP 3P%</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td><td>{away['stats']['dreb']}</td><td>{away['stats']['to']}</td><td>{away['stats']['pf']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td><td>{home['stats']['dreb']}</td><td>{home['stats']['to']}</td><td>{home['stats']['pf']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['opp_fg_pct']}</td><td>{away['stats']['opp_3pt_pct']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td><td>{away['stats']['dreb']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['opp_fg_pct']}</td><td>{home['stats']['opp_3pt_pct']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td><td>{home['stats']['dreb']}</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- SECTION 3: BETTING TRENDS (ATS/O/U) vs SITUATIONAL -->
+        <!-- SECTION 3: BETTING RECORDS (ScoresAndOdds Style) -->
         <div class="stats-grid">
             <div class="section betting-trends">
-                <div class="section-title">BETTING TRENDS</div>
+                <div class="section-title">BETTING RECORDS</div>
                 <table class="stats-table">
-                    <thead><tr><th></th><th>ATS</th><th>O/U</th><th>eFG%</th><th>TS%</th><th>NET</th></tr></thead>
+                    <thead><tr><th></th><th>SU</th><th>ATS</th><th>O/U</th><th>MARGIN</th></tr></thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td class="ats-record">{away['stats']['ats']}</td><td class="ou-record">{away['stats']['ou']}</td><td>{away['stats']['efg']}</td><td>{away['stats']['ts']}</td><td>{away['stats']['net_rtg']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td class="ats-record">{home['stats']['ats']}</td><td class="ou-record">{home['stats']['ou']}</td><td>{home['stats']['efg']}</td><td>{home['stats']['ts']}</td><td>{home['stats']['net_rtg']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['record']}</td><td class="ats-record">{away['stats']['ats']}</td><td class="ou-record">{away['stats']['ou']}</td><td>{away['stats']['net_rtg']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['record']}</td><td class="ats-record">{home['stats']['ats']}</td><td class="ou-record">{home['stats']['ou']}</td><td>{home['stats']['net_rtg']}</td></tr>
                     </tbody>
                 </table>
             </div>
+            <div class="section scoring">
+                <div class="section-title">SCORING</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>OPP PPG</th><th>eFG%</th><th>TS%</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td class="ppg">{away['stats']['ppg']}</td><td class="opp-ppg">{away['stats']['opp_ppg']}</td><td>{away['stats']['efg']}</td><td>{away['stats']['ts']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td class="ppg">{home['stats']['ppg']}</td><td class="opp-ppg">{home['stats']['opp_ppg']}</td><td>{home['stats']['efg']}</td><td>{home['stats']['ts']}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 4: SITUATIONAL / RECENT FORM -->
+        <div class="stats-grid">
             <div class="section situational">
                 <div class="section-title">SITUATIONAL</div>
                 <table class="stats-table">
@@ -1459,9 +1538,19 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
                     </tbody>
                 </table>
             </div>
+            <div class="section shooting">
+                <div class="section-title">SHOOTING SPLITS</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>FG%</th><th>3P%</th><th>FT%</th><th>REB</th><th>AST</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['fg_pct']}</td><td>{away['stats']['three_pct']}</td><td>{away['stats']['ft_pct']}</td><td>{away['stats']['reb']}</td><td>{away['stats']['ast']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['fg_pct']}</td><td>{home['stats']['three_pct']}</td><td>{home['stats']['ft_pct']}</td><td>{home['stats']['reb']}</td><td>{home['stats']['ast']}</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- SECTION 4: TRENDS BAR -->
+        <!-- SECTION 5: INJURIES -->
         <div class="trends-bar">
             <span class="trend-item">🏥 {away_inj_html} | {home_inj_html}</span>
         </div>
@@ -1485,9 +1574,45 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
     # Generate H2H section HTML if data available
     h2h_html = ''
     if h2h and h2h.get('total_games', 0) > 0:
+        import re as re_h2h
         meetings_html = ''
         for m in h2h.get('meetings', [])[:5]:
-            meetings_html += f'<tr><td>{m["date"]}</td><td>{m["home"]}</td><td>{m["result"]}</td><td class="h2h-ats">{m["ats"]}</td><td class="h2h-ou">{m["ou"]}</td></tr>'
+            # Parse who won from result (home score first, away score second)
+            scores = re_h2h.findall(r'(\d+)', m['result'])
+            home_team = m['home'].upper()
+            if len(scores) >= 2:
+                home_score = int(scores[0])
+                away_score = int(scores[1])
+                if home_score > away_score:
+                    winner = home_team
+                    winner_class = 'winner-home'
+                else:
+                    winner = away['abbr'] if home_team == home['abbr'] else home['abbr']
+                    winner_class = 'winner-away'
+                score_display = f"{home_score}-{away_score}"
+            else:
+                winner = "—"
+                winner_class = ''
+                score_display = m['result']
+
+            ats_match = re_h2h.match(r'([A-Z]+)', m['ats'])
+            covered_team = ats_match.group(1) if ats_match else "—"
+
+            ou_val = m['ou'].lower()
+            if ou_val.startswith('o'):
+                ou_display = '<span class="over">OVER</span>'
+            elif ou_val.startswith('u'):
+                ou_display = '<span class="under">UNDER</span>'
+            else:
+                ou_display = m['ou']
+
+            meetings_html += f'''<tr>
+                <td>{m["date"]}</td>
+                <td class="{winner_class}"><strong>{winner}</strong></td>
+                <td class="score">{score_display}</td>
+                <td class="h2h-ats"><strong>{covered_team}</strong></td>
+                <td class="h2h-ou">{ou_display}</td>
+            </tr>'''
 
         # Parse clearer H2H display
         su_parts = h2h['h2h_su'].split()
@@ -1525,7 +1650,7 @@ def generate_game_card_nfl(game: Dict, sport: str = 'NFL') -> str:
                 </div>
             </div>
             <table class="h2h-table">
-                <thead><tr><th>DATE</th><th>HOME</th><th>RESULT</th><th>COVERED</th><th>TOTAL</th></tr></thead>
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
                 <tbody>{meetings_html}</tbody>
             </table>
         </div>'''
@@ -1665,9 +1790,45 @@ def generate_game_card_nhl(game: Dict) -> str:
     # Generate H2H section HTML if data available
     h2h_html = ''
     if h2h and h2h.get('total_games', 0) > 0:
+        import re as re_h2h
         meetings_html = ''
         for m in h2h.get('meetings', [])[:5]:
-            meetings_html += f'<tr><td>{m["date"]}</td><td>{m["home"]}</td><td>{m["result"]}</td><td class="h2h-ats">{m["ats"]}</td><td class="h2h-ou">{m["ou"]}</td></tr>'
+            # Parse who won from result (home score first, away score second)
+            scores = re_h2h.findall(r'(\d+)', m['result'])
+            home_team = m['home'].upper()
+            if len(scores) >= 2:
+                home_score = int(scores[0])
+                away_score = int(scores[1])
+                if home_score > away_score:
+                    winner = home_team
+                    winner_class = 'winner-home'
+                else:
+                    winner = away['abbr'] if home_team == home['abbr'] else home['abbr']
+                    winner_class = 'winner-away'
+                score_display = f"{home_score}-{away_score}"
+            else:
+                winner = "—"
+                winner_class = ''
+                score_display = m['result']
+
+            ats_match = re_h2h.match(r'([A-Z]+)', m['ats'])
+            covered_team = ats_match.group(1) if ats_match else "—"
+
+            ou_val = m['ou'].lower()
+            if ou_val.startswith('o'):
+                ou_display = '<span class="over">OVER</span>'
+            elif ou_val.startswith('u'):
+                ou_display = '<span class="under">UNDER</span>'
+            else:
+                ou_display = m['ou']
+
+            meetings_html += f'''<tr>
+                <td>{m["date"]}</td>
+                <td class="{winner_class}"><strong>{winner}</strong></td>
+                <td class="score">{score_display}</td>
+                <td class="h2h-ats"><strong>{covered_team}</strong></td>
+                <td class="h2h-ou">{ou_display}</td>
+            </tr>'''
 
         # Parse clearer H2H display with team abbreviations
         t1_abbr = away['abbr']
@@ -1689,7 +1850,6 @@ def generate_game_card_nhl(game: Dict) -> str:
 
         # Parse O/U record - format: "XO-YU"
         ou_str = h2h['h2h_ou']
-        import re as re_h2h
         ou_match = re_h2h.match(r'(\d+)O-(\d+)U', ou_str)
         if ou_match:
             overs = ou_match.group(1)
@@ -1717,62 +1877,87 @@ def generate_game_card_nhl(game: Dict) -> str:
                 </div>
             </div>
             <table class="h2h-table">
-                <thead><tr><th>DATE</th><th>HOME</th><th>RESULT</th><th>COVERED</th><th>TOTAL</th></tr></thead>
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
                 <tbody>{meetings_html}</tbody>
             </table>
         </div>'''
 
+    away_logo = f"https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{away['abbr'].lower()}.png"
+    home_logo = f"https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{home['abbr'].lower()}.png"
+
     betting_lines_html = ''
     if has_valid_odds(odds):
         betting_lines_html = f'''
-        <div class="section betting-lines">
-            <div class="section-title">BETTING LINES</div>
-            <table class="lines-table">
-                <thead><tr><th class="team-col">TEAM</th><th>PUCK LINE</th><th>ML</th><th>O/U</th></tr></thead>
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP & BETTING (ScoresAndOdds Style)</div>
+            <table class="lines-table-full">
+                <thead>
+                    <tr><th class="team-col">TEAM</th><th>LINE</th><th>ML</th><th>O/U</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>GPG</th><th>GA</th><th>PWR</th></tr>
+                </thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
-                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{away['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{away['abbr']}</span>
-                            <span class="team-record">{away['record']}</span>
                         </td>
                         <td class="spread">{odds['spread_away']}</td>
                         <td class="ml">{odds['ml_away']}</td>
                         <td class="total">O {odds['total']}</td>
+                        <td class="su-record">{away['record']}</td>
+                        <td class="ats-record">{away['stats']['ats']}</td>
+                        <td class="ou-record">{away['stats']['ou']}</td>
+                        <td class="ppg">{away['stats']['gf']}</td>
+                        <td class="opp-ppg">{away['stats']['ga']}</td>
+                        <td class="pwr">{away['stats']['pwr']}</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
-                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{home['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{home['abbr']}</span>
-                            <span class="team-record">{home['record']}</span>
                         </td>
                         <td class="spread">{odds['spread_home']}</td>
                         <td class="ml">{odds['ml_home']}</td>
                         <td class="total">U {odds['total']}</td>
+                        <td class="su-record">{home['record']}</td>
+                        <td class="ats-record">{home['stats']['ats']}</td>
+                        <td class="ou-record">{home['stats']['ou']}</td>
+                        <td class="ppg">{home['stats']['gf']}</td>
+                        <td class="opp-ppg">{home['stats']['ga']}</td>
+                        <td class="pwr">{home['stats']['pwr']}</td>
                     </tr>
                 </tbody>
             </table>
         </div>'''
     else:
         betting_lines_html = f'''
-        <div class="section teams-info">
-            <div class="section-title">MATCHUP</div>
-            <table class="lines-table">
-                <thead><tr><th class="team-col">TEAM</th><th>RECORD</th></tr></thead>
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>GPG</th><th>GA</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
-                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{away['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{away['abbr']}</span>
                         </td>
-                        <td>{away['record']}</td>
+                        <td class="su-record">{away['record']}</td>
+                        <td class="ats-record">{away['stats']['ats']}</td>
+                        <td class="ou-record">{away['stats']['ou']}</td>
+                        <td class="ppg">{away['stats']['gf']}</td>
+                        <td class="opp-ppg">{away['stats']['ga']}</td>
+                        <td class="pwr">{away['stats']['pwr']}</td>
                     </tr>
                     <tr class="home-row">
                         <td class="team-col">
-                            <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{home['abbr'].lower()}.png" class="team-logo" onerror="this.style.display='none'">
+                            <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{home['abbr']}</span>
                         </td>
-                        <td>{home['record']}</td>
+                        <td class="su-record">{home['record']}</td>
+                        <td class="ats-record">{home['stats']['ats']}</td>
+                        <td class="ou-record">{home['stats']['ou']}</td>
+                        <td class="ppg">{home['stats']['gf']}</td>
+                        <td class="opp-ppg">{home['stats']['ga']}</td>
+                        <td class="pwr">{home['stats']['pwr']}</td>
                     </tr>
                 </tbody>
             </table>
@@ -2144,6 +2329,37 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .away-row {{ background: rgba(0, 0, 0, 0.2); }}
         .home-row {{ background: rgba(0, 245, 255, 0.05); }}
 
+        /* ScoresAndOdds-style full width table */
+        .betting-lines-full {{ margin-bottom: 20px; }}
+        .lines-table-full {{ width: 100%; border-collapse: collapse; font-size: 0.95rem; }}
+        .lines-table-full th {{
+            text-align: center;
+            padding: 10px 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 107, 53, 0.1) 100%);
+            border-bottom: 2px solid #ffd700;
+        }}
+        .lines-table-full td {{
+            text-align: center;
+            padding: 12px 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #e0e0e0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }}
+        .lines-table-full .team-col {{ text-align: left !important; min-width: 100px; }}
+        .su-record {{ color: #fff; }}
+        .ats-record {{ color: #00ff88; font-weight: 800; }}
+        .ou-record {{ color: #00c4ff; font-weight: 800; }}
+        .ppg {{ color: #ff6b35; font-weight: 800; }}
+        .opp-ppg {{ color: #ff4757; }}
+        .pwr {{ color: #ffd700; font-weight: 800; }}
+
         .ats-record {{
             color: #00ff88;
             font-weight: 800;
@@ -2271,6 +2487,11 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .h2h-table tr:hover {{ background: rgba(255, 215, 0, 0.1); }}
         .h2h-ats {{ color: #00ff88; font-weight: 700; }}
         .h2h-ou {{ color: #00c4ff; font-weight: 700; }}
+        .winner-home {{ color: #00ff88; }}
+        .winner-away {{ color: #00c4ff; }}
+        .score {{ color: #fff; font-weight: 700; }}
+        .over {{ color: #ff6b35; font-weight: 700; }}
+        .under {{ color: #00c4ff; font-weight: 700; }}
 
         footer {{
             text-align: center;
