@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelly Criterion Calculator Widget | BetLegend</title>
+    <meta name="description" content="Embeddable Kelly Criterion calculator widget for sports betting bankroll management.">
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .widget-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(0,224,255,0.08), rgba(0,224,255,0.02));
+            border: 2px solid rgba(0,224,255,0.3);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        .widget-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00e0ff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .widget-input-group {
+            margin-bottom: 16px;
+        }
+        .widget-input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #8b949e;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .widget-input-group input,
+        .widget-input-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,224,255,0.2);
+            border-radius: 8px;
+            color: #e6edf3;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        .widget-input-group input:focus,
+        .widget-input-group select:focus {
+            outline: none;
+            border-color: #00e0ff;
+        }
+        .widget-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00e0ff, #00ff88);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+        .widget-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,224,255,0.3);
+        }
+        .widget-result {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,215,0,0.1);
+            border: 2px solid #FFD700;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .widget-result.show { display: block; }
+        .widget-result-label {
+            font-size: 0.85rem;
+            color: #8b949e;
+            margin-bottom: 5px;
+        }
+        .widget-result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FFD700;
+        }
+        .widget-result-secondary {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .widget-result-secondary div {
+            text-align: center;
+        }
+        .widget-result-secondary .label {
+            font-size: 0.75rem;
+            color: #8b949e;
+        }
+        .widget-result-secondary .value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #00e0ff;
+        }
+        .widget-warning {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        .widget-warning.positive {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+        }
+        .widget-warning.negative {
+            background: rgba(255,68,68,0.1);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+        .widget-footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #6e7681;
+        }
+        .widget-footer a {
+            color: #00e0ff;
+            text-decoration: none;
+        }
+        .widget-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <div class="widget-title">Kelly Criterion Calculator</div>
+
+        <div class="widget-input-group">
+            <label>Bankroll ($)</label>
+            <input type="number" id="wBankroll" placeholder="1000" min="1">
+        </div>
+
+        <div class="widget-input-group">
+            <label>American Odds</label>
+            <input type="number" id="wOdds" placeholder="-110 or +150">
+        </div>
+
+        <div class="widget-input-group">
+            <label>Your Win Probability (%)</label>
+            <input type="number" id="wWinProb" placeholder="55" min="0" max="100" step="0.1">
+        </div>
+
+        <div class="widget-input-group">
+            <label>Kelly Fraction</label>
+            <select id="wFraction">
+                <option value="0.5" selected>Half Kelly (Recommended)</option>
+                <option value="0.25">Quarter Kelly (Conservative)</option>
+                <option value="1">Full Kelly (Aggressive)</option>
+            </select>
+        </div>
+
+        <button class="widget-btn" onclick="widgetCalculate()">Calculate Bet Size</button>
+
+        <div id="wResult" class="widget-result">
+            <div class="widget-result-label">Recommended Bet</div>
+            <div class="widget-result-value" id="wBetAmount">$0</div>
+            <div class="widget-result-secondary">
+                <div>
+                    <div class="label">% of Bankroll</div>
+                    <div class="value" id="wPercent">0%</div>
+                </div>
+                <div>
+                    <div class="label">Expected Value</div>
+                    <div class="value" id="wEV">$0</div>
+                </div>
+            </div>
+            <div id="wWarning" class="widget-warning"></div>
+        </div>
+
+        <div class="widget-footer">
+            Powered by <a href="https://www.betlegendpicks.com/kelly-criterion.html" target="_blank">BetLegend</a>
+        </div>
+    </div>
+
+    <script>
+    function widgetCalculate() {
+        const bankroll = parseFloat(document.getElementById('wBankroll').value);
+        const americanOdds = parseFloat(document.getElementById('wOdds').value);
+        const winProb = parseFloat(document.getElementById('wWinProb').value) / 100;
+        const fraction = parseFloat(document.getElementById('wFraction').value);
+
+        if (!bankroll || !americanOdds || !winProb) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        // Convert to decimal odds
+        let decimalOdds;
+        if (americanOdds > 0) {
+            decimalOdds = 1 + (americanOdds / 100);
+        } else {
+            decimalOdds = 1 + (100 / Math.abs(americanOdds));
+        }
+
+        // Calculate Kelly
+        let kellyPct = ((decimalOdds * winProb) - 1) / (decimalOdds - 1);
+        const fullKelly = kellyPct;
+        kellyPct = kellyPct * fraction;
+
+        const betAmount = bankroll * kellyPct;
+        const loseProb = 1 - winProb;
+        const winAmount = betAmount * (decimalOdds - 1);
+        const ev = (winProb * winAmount) - (loseProb * betAmount);
+
+        // Display results
+        document.getElementById('wBetAmount').textContent = '$' + betAmount.toFixed(2);
+        document.getElementById('wPercent').textContent = (kellyPct * 100).toFixed(2) + '%';
+        document.getElementById('wEV').textContent = '$' + ev.toFixed(2);
+
+        const warning = document.getElementById('wWarning');
+        if (kellyPct < 0) {
+            warning.className = 'widget-warning negative';
+            warning.textContent = 'No edge detected. Do not bet.';
+        } else if (kellyPct * 100 > 5) {
+            warning.className = 'widget-warning negative';
+            warning.textContent = 'Caution: Bet exceeds 5% of bankroll.';
+        } else {
+            warning.className = 'widget-warning positive';
+            warning.textContent = 'Positive edge detected. Bet approved.';
+        }
+
+        document.getElementById('wResult').classList.add('show');
+    }
+
+    // Enter key support
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('keypress', e => {
+            if (e.key === 'Enter') widgetCalculate();
+        });
+    });
+    </script>
+</body>
+</html>
