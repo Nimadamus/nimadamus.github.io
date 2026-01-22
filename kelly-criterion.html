@@ -656,6 +656,28 @@
 .nav-links{justify-content:center}
 .nav-links>a,.nav-links>.dropdown,.dropbtn{font-size:12px;padding:8px 12px;margin:0}
 }
+
+/* === ADDITIVE ENHANCEMENTS (Jan 2026) - Isolated styles === */
+.kelly-presets{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.kelly-preset-btn{background:rgba(0,224,255,0.1);border:1px solid rgba(0,224,255,0.3);color:#00e0ff;padding:8px 14px;border-radius:6px;font-size:0.85rem;cursor:pointer;transition:all 0.2s;font-family:var(--font-content)}
+.kelly-preset-btn:hover{background:rgba(0,224,255,0.2);border-color:#00e0ff}
+.kelly-preset-btn.active{background:rgba(255,215,0,0.2);border-color:#FFD700;color:#FFD700}
+.kelly-helper-note{font-size:0.8rem;color:#888;margin-top:6px;font-style:italic}
+.kelly-implied-display{font-size:0.85rem;color:#00e0ff;margin-top:5px;min-height:20px}
+.kelly-quiet-links{margin-top:25px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);text-align:center}
+.kelly-quiet-links a{color:#888;font-size:0.9rem;text-decoration:none;margin:0 15px;transition:color 0.2s}
+.kelly-quiet-links a:hover{color:#FFD700}
+.kelly-collapsible{margin-bottom:15px}
+.kelly-collapsible-header{background:rgba(0,224,255,0.08);border:1px solid rgba(0,224,255,0.2);padding:15px 20px;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all 0.2s}
+.kelly-collapsible-header:hover{background:rgba(0,224,255,0.12);border-color:rgba(0,224,255,0.4)}
+.kelly-collapsible-header h4{color:#00e0ff;font-size:1.05rem;margin:0;font-weight:600}
+.kelly-collapsible-header span{color:#00e0ff;font-size:1.2rem;transition:transform 0.3s}
+.kelly-collapsible.open .kelly-collapsible-header span{transform:rotate(180deg)}
+.kelly-collapsible-content{max-height:0;overflow:hidden;transition:max-height 0.3s ease-out;padding:0 20px}
+.kelly-collapsible.open .kelly-collapsible-content{max-height:500px;padding:20px}
+.kelly-collapsible-content p{color:#ccc;font-size:1rem;line-height:1.7;margin:0}
+.kelly-bookmark-hint{text-align:center;color:#666;font-size:0.85rem;margin-top:15px}
+.kelly-bookmark-hint span{color:#888}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
@@ -726,7 +748,9 @@
 
                 <div class="calc-input-group">
                     <label for="odds">American Odds</label>
-                    <input type="number" id="odds" placeholder="-110 or +150" step="1">
+                    <input type="number" id="odds" placeholder="-110 or +150" step="1" oninput="showImpliedProb()">
+                    <div id="impliedProbDisplay" class="kelly-implied-display"></div>
+                    <p class="kelly-helper-note">Implied probability shows what the book thinks. Your edge = your estimate minus implied.</p>
                 </div>
 
                 <div class="calc-input-group">
@@ -744,6 +768,11 @@
                         <option value="0.25">Quarter Kelly (Conservative)</option>
                         <option value="0.125">1/8 Kelly (Very Conservative)</option>
                     </select>
+                    <div class="kelly-presets">
+                        <button type="button" class="kelly-preset-btn" onclick="applyPreset('conservative')">Conservative</button>
+                        <button type="button" class="kelly-preset-btn active" onclick="applyPreset('standard')">Standard</button>
+                        <button type="button" class="kelly-preset-btn" onclick="applyPreset('aggressive')">Aggressive</button>
+                    </div>
                 </div>
 
                 <div style="margin-top: 30px;">
@@ -776,7 +805,13 @@
             </div>
 
             <div id="warningMessage" style="margin-top: 20px;"></div>
+            <div id="kellyQuietLinks" class="kelly-quiet-links" style="display:none;">
+                <a href="bankroll.html">Learn why this works</a>
+                <a href="betting-101.html">Common bet sizing mistakes</a>
+                <a href="records.html">See verified results</a>
+            </div>
         </div>
+        <p class="kelly-bookmark-hint"><span>Bookmark this calculator for game day.</span></p>
     </section>
 
     <!-- How to Use This Calculator -->
@@ -1153,6 +1188,64 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// === ADDITIVE ENHANCEMENT FUNCTIONS (Jan 2026) ===
+
+// Show implied probability from odds input
+function showImpliedProb() {
+    const americanOdds = parseFloat(document.getElementById('odds').value);
+    const display = document.getElementById('impliedProbDisplay');
+
+    if (!americanOdds || isNaN(americanOdds)) {
+        display.textContent = '';
+        return;
+    }
+
+    let impliedProb;
+    if (americanOdds > 0) {
+        impliedProb = 100 / (americanOdds + 100);
+    } else {
+        impliedProb = Math.abs(americanOdds) / (Math.abs(americanOdds) + 100);
+    }
+
+    display.textContent = 'Implied probability: ' + (impliedProb * 100).toFixed(1) + '%';
+}
+
+// Apply preset Kelly fractions
+function applyPreset(preset) {
+    const select = document.getElementById('kellyFraction');
+    const buttons = document.querySelectorAll('.kelly-preset-btn');
+
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    switch(preset) {
+        case 'conservative':
+            select.value = '0.25';
+            break;
+        case 'standard':
+            select.value = '0.5';
+            break;
+        case 'aggressive':
+            select.value = '1';
+            break;
+    }
+}
+
+// Toggle collapsible FAQ sections
+function toggleCollapsible(element) {
+    element.classList.toggle('open');
+}
+
+// Show quiet links after calculation (hook into existing calculateKelly)
+var originalCalculateKelly = calculateKelly;
+calculateKelly = function() {
+    originalCalculateKelly();
+    var quietLinks = document.getElementById('kellyQuietLinks');
+    if (quietLinks && document.getElementById('calcResults').classList.contains('show')) {
+        quietLinks.style.display = 'block';
+    }
+};
     </script>
 
 <!-- FAQ Section -->
@@ -1197,6 +1290,51 @@ document.addEventListener('DOMContentLoaded', function() {
     <p style="font-size: 1.05rem; line-height: 1.8; color: #ddd; margin-bottom: 0;">
         The optimal fraction depends on your edge accuracy and risk tolerance. Professional syndicates with sophisticated models might use 50-75% Kelly because their edge estimates are battle-tested. Individual bettors with less robust modeling should consider 25-33% Kelly. Remember: Kelly Criterion prevents ruin by never suggesting bets that could bankrupt you, but fractional Kelly protects against the overconfidence that comes from overestimating edges. If this calculator suggests a $500 bet and that feels uncomfortable, you're either overestimating your edge or your bankroll is too small. Start with quarter Kelly, track results rigorously, and adjust your fraction as you prove your edge estimates are accurate over hundreds of bets.
     </p>
+</section>
+
+<!-- Collapsible Deep Dive FAQs (Additive Enhancement - Jan 2026) -->
+<section style="max-width: 1000px; margin: 40px auto 60px auto; padding: 0 20px;">
+    <h2 style="color: #FFD700; font-size: 1.6rem; margin-bottom: 25px; font-family: 'Orbitron', sans-serif; text-align: center;">Deep Dive: Common Questions</h2>
+
+    <div class="kelly-collapsible" onclick="toggleCollapsible(this)">
+        <div class="kelly-collapsible-header">
+            <h4>How much should I actually bet on a single game?</h4>
+            <span>▼</span>
+        </div>
+        <div class="kelly-collapsible-content">
+            <p>Most professionals cap single-game bets at 3-5% of bankroll regardless of what Kelly suggests. Even if Kelly recommends 10%, experienced bettors know that edge estimates are imperfect. A 5% max protects you from catastrophic losses when your probability estimate is off. Start with 1-2% per bet while you build a track record, then gradually increase to 3-5% once you have 200+ documented bets showing a positive ROI.</p>
+        </div>
+    </div>
+
+    <div class="kelly-collapsible" onclick="toggleCollapsible(this)">
+        <div class="kelly-collapsible-header">
+            <h4>Is Kelly Criterion better than flat betting?</h4>
+            <span>▼</span>
+        </div>
+        <div class="kelly-collapsible-content">
+            <p>Kelly maximizes long-term growth when you have an edge and can accurately estimate win probabilities. Flat betting is simpler and has lower variance. For recreational bettors or those without extensive tracking data, flat betting at 1-2% per bet is often the smarter choice. Kelly shines when you have a proven, quantifiable edge and hundreds of data points validating your probability estimates. Without that data, Kelly can actually hurt you by encouraging overconfidence.</p>
+        </div>
+    </div>
+
+    <div class="kelly-collapsible" onclick="toggleCollapsible(this)">
+        <div class="kelly-collapsible-header">
+            <h4>Why do most bettors overbet?</h4>
+            <span>▼</span>
+        </div>
+        <div class="kelly-collapsible-content">
+            <p>Overbetting happens because of overconfidence in edge estimates. If you think you have a 58% win rate but actually have 52%, Kelly will recommend bets that are far too large for your true edge. Studies show that even professional handicappers routinely overestimate their win probability by 2-5%. This is why fractional Kelly (betting 25-50% of the recommended amount) is the industry standard. It provides a safety buffer against the inevitable estimation errors we all make.</p>
+        </div>
+    </div>
+
+    <div class="kelly-collapsible" onclick="toggleCollapsible(this)">
+        <div class="kelly-collapsible-header">
+            <h4>When should I NOT use Kelly Criterion?</h4>
+            <span>▼</span>
+        </div>
+        <div class="kelly-collapsible-content">
+            <p>Skip Kelly when: (1) You have fewer than 100 tracked bets to validate your edge estimates. (2) You are betting correlated events on the same slate, where one outcome affects another. (3) The recommended bet exceeds 5% of your bankroll. (4) You cannot articulate specifically why your probability estimate differs from the implied odds. (5) You are betting parlays, where probability estimation errors compound multiplicatively. In these cases, flat betting at 1-2% is safer.</p>
+        </div>
+    </div>
 </section>
 
 <!-- Clicky Analytics -->
