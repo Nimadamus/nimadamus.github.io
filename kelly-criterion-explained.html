@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://www.betlegendpicks.com/kelly-criterion-explained.html"/>
+
+    <title>Kelly Criterion Explained in Plain English | BetLegend</title>
+    <meta name="description" content="What is the Kelly Criterion? A simple, jargon-free explanation of the betting formula that tells you exactly how much to wager when you have an edge."/>
+    <meta name="keywords" content="Kelly Criterion explained, what is Kelly Criterion, Kelly formula simple, bet sizing explained"/>
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.betlegendpicks.com/kelly-criterion-explained.html">
+    <meta property="og:title" content="Kelly Criterion Explained in Plain English">
+    <meta property="og:description" content="A simple explanation of the Kelly Criterion formula for sports betting. No math degree required.">
+    <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kelly Criterion Explained | BetLegend">
+    <meta name="twitter:description" content="What is the Kelly Criterion and why do professional bettors use it? Simple explanation.">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Kelly Criterion Explained in Plain English",
+      "description": "A simple, jargon-free explanation of the Kelly Criterion betting formula",
+      "author": {"@type": "Organization", "name": "BetLegend Picks"},
+      "publisher": {"@type": "Organization", "name": "BetLegend Picks", "logo": {"@type": "ImageObject", "url": "https://www.betlegendpicks.com/newlogo.png"}},
+      "datePublished": "2026-01-21",
+      "dateModified": "2026-01-21"
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Rubik', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.8;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #FFD700;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 35px;
+        }
+        h2 {
+            font-size: 1.5rem;
+            color: #00e0ff;
+            margin: 40px 0 20px 0;
+            border-bottom: 1px solid rgba(0, 224, 255, 0.2);
+            padding-bottom: 10px;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+        ul, ol {
+            margin: 20px 0 25px 25px;
+        }
+        li {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            color: #ccc;
+        }
+        .highlight-box {
+            background: rgba(255, 215, 0, 0.08);
+            border-left: 4px solid #FFD700;
+            padding: 20px 25px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box p {
+            margin: 0;
+            color: #ddd;
+        }
+        .example-box {
+            background: rgba(0, 224, 255, 0.06);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+        .example-box h3 {
+            color: #00e0ff;
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+        }
+        strong {
+            color: #fff;
+        }
+        a {
+            color: #00e0ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav-footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .nav-footer a {
+            color: #888;
+            margin: 0 15px;
+            font-size: 0.95rem;
+        }
+        .nav-footer a:hover {
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Kelly Criterion Explained in Plain English</h1>
+    <p class="meta">A jargon-free guide to the formula that changed how professionals bet</p>
+
+    <p>If you have ever wondered how much you should bet on a game, you are not alone. Most bettors either pick a random amount or bet the same flat amount every time. But there is a mathematical answer to this question, and it has been around since 1956.</p>
+
+    <p>The Kelly Criterion is a formula that tells you exactly what percentage of your bankroll to wager when you have an edge. It was invented by John Kelly, a scientist at Bell Labs who was trying to solve a completely unrelated problem involving telephone signals. He probably never imagined his formula would become the gold standard for bankroll management in sports betting, poker, and investing.</p>
+
+    <h2>What Problem Does Kelly Solve?</h2>
+
+    <p>Here is the fundamental question Kelly answers: If you have a genuine advantage on a bet, how much should you risk?</p>
+
+    <p>Bet too little, and you leave money on the table. Your edge exists, but you are not capitalizing on it. Bet too much, and a few losses in a row could devastate your bankroll, even if you have a long-term edge.</p>
+
+    <p>Kelly finds the sweet spot. It calculates the exact bet size that maximizes your long-term growth rate while never risking so much that you could go broke.</p>
+
+    <h2>The Formula in Simple Terms</h2>
+
+    <p>The Kelly formula looks intimidating at first, but it boils down to a simple idea:</p>
+
+    <div class="highlight-box">
+        <p><strong>Bet a percentage of your bankroll equal to your edge divided by the odds.</strong></p>
+    </div>
+
+    <p>Your "edge" is the difference between your estimated win probability and the break-even probability implied by the odds. If the sportsbook thinks a bet has a 50% chance of winning, but you believe it has a 55% chance, your edge is 5%.</p>
+
+    <p>The formula then adjusts this edge based on the payout. Higher odds mean you can bet a smaller percentage. Lower odds mean you can bet more, if your edge is the same.</p>
+
+    <div class="example-box">
+        <h3>A Simple Example</h3>
+        <p>Imagine you have a $1,000 bankroll. You find a bet at -110 odds (standard juice), and after doing your research, you believe you have a 55% chance of winning. The break-even at -110 is about 52.4%.</p>
+        <p style="margin-top: 15px;">Your edge is 55% minus 52.4% = about 2.6%. The Kelly formula says to bet roughly 5.5% of your bankroll, or $55.</p>
+        <p style="margin-top: 15px;">That number might seem small if you are used to betting $100 or $200 per game. But Kelly is playing the long game. Over hundreds of bets, this sizing optimizes your growth.</p>
+    </div>
+
+    <h2>Why Kelly Works</h2>
+
+    <p>The genius of Kelly is that it automatically scales your bets based on two things: your edge and your bankroll.</p>
+
+    <p>When you win, your bankroll grows, and Kelly tells you to bet more in absolute dollars. When you lose, your bankroll shrinks, and Kelly tells you to bet less. This prevents you from ever going completely broke, because you are always betting a percentage, not a fixed amount.</p>
+
+    <p>At the same time, Kelly bets more when your edge is larger and less when your edge is smaller. This means you are putting more money on your best opportunities and less on marginal ones.</p>
+
+    <h2>Who Should Use Kelly?</h2>
+
+    <p>Kelly is ideal for:</p>
+
+    <ul>
+        <li><strong>Bettors with a proven edge.</strong> If you have tracked hundreds of bets and know your actual win rate is above break-even, Kelly helps you size your bets optimally.</li>
+        <li><strong>Long-term thinkers.</strong> Kelly is not about winning big tonight. It is about growing your bankroll steadily over months and years.</li>
+        <li><strong>Disciplined bettors.</strong> Kelly requires you to trust the math, even when it tells you to bet less than you want to.</li>
+    </ul>
+
+    <h2>Who Should Not Use Kelly</h2>
+
+    <p>Kelly is not for everyone:</p>
+
+    <ul>
+        <li><strong>Recreational bettors.</strong> If you bet for entertainment and do not track results carefully, Kelly adds unnecessary complexity.</li>
+        <li><strong>Bettors without data.</strong> Kelly requires you to estimate your win probability accurately. Without a track record, your estimates are guesses, and Kelly will mislead you.</li>
+        <li><strong>Bettors who cannot estimate edges.</strong> If you cannot articulate why your probability differs from the implied odds, you probably do not have an edge.</li>
+    </ul>
+
+    <h2>The Most Important Caveat</h2>
+
+    <p>Full Kelly betting assumes your edge estimate is perfectly accurate. In reality, nobody estimates edges perfectly. This is why most professionals use fractional Kelly, betting only 25% to 50% of what the formula recommends.</p>
+
+    <p>Fractional Kelly gives you most of the growth benefit with much less volatility. It is a safety buffer against the inevitable errors in your probability estimates.</p>
+
+    <div class="highlight-box">
+        <p>If you want to try Kelly for yourself, you can use a <a href="kelly-criterion.html">Kelly Criterion calculator</a> to see exactly how much to bet based on your bankroll, odds, and estimated win probability. You can also <a href="kelly-simulation.html">run a simulation</a> to see how different Kelly fractions perform over hundreds of bets.</p>
+    </div>
+
+    <h2>The Bottom Line</h2>
+
+    <p>The Kelly Criterion is one of the few betting strategies with real mathematical backing. It tells you exactly how much to bet when you have an edge, preventing both overbetting and underbetting.</p>
+
+    <p>It is not magic. It will not help you if you do not actually have an edge. But if you do have an edge, and you are playing the long game, Kelly is the optimal way to grow your bankroll over time.</p>
+
+    <div class="nav-footer">
+        <a href="kelly-criterion.html">Kelly Calculator</a>
+        <a href="kelly-simulation.html">Simulation</a>
+        <a href="fractional-kelly-vs-full-kelly.html">Fractional vs Full Kelly</a>
+        <a href="kelly-criterion-mistakes.html">Common Mistakes</a>
+        <a href="index.html">Home</a>
+    </div>
+</div>
+
+</body>
+</html>
