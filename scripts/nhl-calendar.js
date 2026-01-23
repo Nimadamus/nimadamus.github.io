@@ -91,10 +91,11 @@ if (pathname.includes('/archives/')) {
     currentPage = pathname.split('/').pop() || 'index.html';
 }
 
-// For main pages (nba.html, nhl.html, etc), ALWAYS use today's date
-// For archive pages (nba-page54.html), use the page's date
+// FIXED Jan 23, 2026: Check for FORCED_PAGE_DATE first (set by the page)
+// This ensures the calendar highlights the correct date for the page content
+const forcedDate = window.FORCED_PAGE_DATE || null;
 const isMainPage = MAIN_PAGES.includes(currentPage);
-const currentPageDate = isMainPage ? todayStr : (pageToDateMap[currentPage] || null);
+const currentPageDate = forcedDate || (isMainPage ? todayStr : (pageToDateMap[currentPage] || null));
 
 const months = new Set();
 ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });
