@@ -27,28 +27,32 @@ STATUS_ORDER = ['Out', 'Injured Reserve', 'Doubtful', 'Questionable', 'Day-To-Da
 # =============================================================================
 # NFL PLAYOFF TEAMS - UPDATE THIS LIST AS TEAMS ARE ELIMINATED
 # =============================================================================
-# Last Updated: January 18, 2026 - After Divisional Round Saturday games
+# Last Updated: January 22, 2026 - After Divisional Round complete
 #
 # HOW TO UPDATE:
 # 1. After each playoff game, remove the losing team from this list
 # 2. Update the comment with the date and round
 # 3. Push the change - GitHub Actions will regenerate the injury report
 #
-# DIVISIONAL ROUND RESULTS (Jan 18, 2026):
+# DIVISIONAL ROUND RESULTS (Jan 18-19, 2026):
 # - Seahawks 41, 49ers 6 → 49ers ELIMINATED
 # - Broncos 33, Bills 30 (OT) → Bills ELIMINATED
+# - Patriots 28, Texans 16 → Texans ELIMINATED
+# - Rams 20, Bears 17 (OT) → Bears ELIMINATED
 #
 # ELIMINATED THIS POSTSEASON:
 # - Wild Card: Steelers, Chargers, Jaguars, Panthers, Packers, Eagles
-# - Divisional: 49ers, Bills
+# - Divisional: 49ers, Bills, Texans, Bears
+#
+# CONFERENCE CHAMPIONSHIPS (Jan 25-26, 2026):
+# - AFC: Broncos vs Patriots
+# - NFC: Seahawks vs Rams
 # =============================================================================
 NFL_PLAYOFF_TEAMS = [
-    'Seattle Seahawks',      # NFC - Beat 49ers 41-6 (Divisional)
-    'Chicago Bears',         # NFC 2 seed - plays Rams Sunday
-    'Los Angeles Rams',      # NFC 5 seed - plays Bears Sunday
-    'Denver Broncos',        # AFC - Beat Bills 33-30 OT (Divisional)
-    'New England Patriots',  # AFC 2 seed - plays Texans Sunday
-    'Houston Texans',        # AFC 5 seed - plays Patriots Sunday
+    'Seattle Seahawks',      # NFC 1 seed - Beat 49ers 41-6 (Divisional)
+    'Los Angeles Rams',      # NFC 5 seed - Beat Bears 20-17 OT (Divisional)
+    'Denver Broncos',        # AFC 1 seed - Beat Bills 33-30 OT (Divisional)
+    'New England Patriots',  # AFC 2 seed - Beat Texans 28-16 (Divisional)
 ]
 
 # =============================================================================
@@ -72,30 +76,11 @@ NBA_PLAYOFF_TEAMS = [
 
 # Supplemental injuries not always captured by ESPN API
 # VERIFIED from official sources - major season-ending injuries
+# NOTE: Only include playoff teams here - eliminated teams are automatically excluded
 SUPPLEMENTAL_INJURIES = {
     'NFL': {
-        'San Francisco 49ers': [
-            {
-                'name': 'Nick Bosa',
-                'position': 'DE',
-                'status': 'Injured Reserve',
-                'injury': 'ACL',
-                'comment': 'Torn ACL in right knee (Week 3 vs Cardinals, Sept 21) - Out for season',
-                'days_out': 113,  # Sept 21 to Jan 12
-                'days_display': '4 months',
-                'date': '2025-09-21'
-            },
-            {
-                'name': 'Fred Warner',
-                'position': 'LB',
-                'status': 'Injured Reserve',
-                'injury': 'Ankle',
-                'comment': 'Dislocated/fractured right ankle (Week 6 vs Buccaneers) - Unlikely for Divisional',
-                'days_out': 89,   # Oct 15 to Jan 12
-                'days_display': '3 months',
-                'date': '2025-10-15'
-            }
-        ]
+        # 49ers eliminated in Divisional Round (Jan 18, 2026) - no longer tracking
+        # Add supplemental injuries for remaining playoff teams if needed
     }
 }
 
@@ -226,14 +211,12 @@ def parse_all_injuries(sport, teams_data):
     if sport == 'NFL':
         for playoff_team in NFL_PLAYOFF_TEAMS:
             if playoff_team not in teams:
-                # ESPN team IDs for remaining NFL playoff teams
+                # ESPN team IDs for remaining NFL playoff teams (Conference Championships)
                 team_id_map = {
                     'Seattle Seahawks': '26',
-                    'Chicago Bears': '3',
                     'Los Angeles Rams': '14',
                     'Denver Broncos': '7',
-                    'New England Patriots': '17',
-                    'Houston Texans': '34'
+                    'New England Patriots': '17'
                 }
                 teams[playoff_team] = {
                     'id': team_id_map.get(playoff_team, ''),
