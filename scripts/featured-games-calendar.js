@@ -4,7 +4,7 @@
 
 const ARCHIVE_DATA = [
     // 2026 - Individual pages with unique content
-    { date: "2026-01-22", page: "featured-game-of-the-day-page53.html", title: "Warriors @ Mavericks NBA" },
+    { date: "2026-01-22", page: "featured-game-of-the-day-page54.html", title: "Lakers @ Clippers NBA Battle of LA" },
     { date: "2026-01-21", page: "featured-game-of-the-day-page52.html", title: "Thunder @ Bucks NBA" },
     { date: "2026-01-20", page: "featured-game-of-the-day-page51.html", title: "Spurs @ Rockets NBA" },
     { date: "2026-01-19", page: "featured-game-of-the-day-page50.html", title: "Indiana vs Miami CFP National Championship" },
