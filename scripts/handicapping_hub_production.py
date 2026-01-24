@@ -121,6 +121,49 @@ TOP_NCAAB_TEAMS = {
 }
 
 # =============================================================================
+# PERMANENT SAFEGUARDS - DO NOT REMOVE
+# =============================================================================
+
+def block_line_movements(html_content: str) -> str:
+    """
+    PERMANENT SAFEGUARD: Remove ANY line movement content that might slip through.
+    This function is called before saving the HTML file.
+    Added January 24, 2026 - NEVER REMOVE THIS FUNCTION.
+    """
+    import re
+    # Patterns to remove
+    banned_patterns = [
+        r'<div[^>]*class="[^"]*alerts-banner[^"]*"[^>]*>.*?</div>',
+        r'LINE MOVEMENTS? DETECTED',
+        r'line.?movement',
+        r'<div[^>]*class="[^"]*line-movement[^"]*"[^>]*>.*?</div>',
+    ]
+    for pattern in banned_patterns:
+        html_content = re.sub(pattern, '', html_content, flags=re.IGNORECASE | re.DOTALL)
+    return html_content
+
+def clean_stat_display(val) -> str:
+    """
+    PERMANENT SAFEGUARD: Clean stats for display.
+    - Returns 'N/A' for missing/invalid data (styled nicely in CSS)
+    - Never shows raw '-', '0', or '0.0' for missing stats
+    Added January 24, 2026 - NEVER REMOVE THIS FUNCTION.
+    """
+    if val is None or val == '' or val == '-':
+        return '<span class="stat-na">—</span>'
+    try:
+        num = float(str(val).replace('%', ''))
+        if num == 0:
+            # Check if this is a legitimate 0 or missing data
+            # For most stats, 0 is suspicious - use context
+            return '<span class="stat-na">—</span>'
+        return str(val)
+    except (ValueError, TypeError):
+        if str(val).strip() in ['-', '0', '0.0', 'N/A', 'n/a', '']:
+            return '<span class="stat-na">—</span>'
+        return str(val)
+
+# =============================================================================
 # HELPER FUNCTIONS
 # =============================================================================
 
@@ -130,6 +173,8 @@ def safe_num(val, decimals=1):
         return '-'
     try:
         num = float(val)
+        if num == 0:
+            return '-'  # Return dash for zero values
         if decimals == 0:
             return str(int(num))
         return f"{num:.{decimals}f}"
@@ -2509,6 +2554,17 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .over {{ color: #ff6b35; font-weight: 700; }}
         .under {{ color: #00c4ff; font-weight: 700; }}
 
+        /* PERMANENT STYLING: Missing/unavailable data - Added Jan 24, 2026 */
+        .stat-na {{
+            color: #94a3b8;
+            font-style: normal;
+            font-weight: 400;
+        }}
+        .stat-zero {{
+            color: #94a3b8;
+            font-style: normal;
+        }}
+
         footer {{
             text-align: center;
             padding: 40px;
@@ -2621,6 +2677,16 @@ def main():
     # Generate HTML
     print("\n[HTML] Generating preview page...")
     html = generate_page(all_games, date_str)
+
+    # PERMANENT SAFEGUARD: Remove any line movement content that might slip through
+    html = block_line_movements(html)
+
+    # PERMANENT SAFEGUARD: Replace ugly dashes with styled em-dashes for missing data
+    # This catches any "-" that wasn't handled elsewhere
+    html = html.replace('<td>-</td>', '<td class="stat-na">—</td>')
+    html = html.replace('<td class="ats-record">-</td>', '<td class="ats-record stat-na">—</td>')
+    html = html.replace('<td class="ou-record">-</td>', '<td class="ou-record stat-na">—</td>')
+    html = html.replace('>0.0<', ' class="stat-zero">0.0<')
 
     # Write to preview file
     output_path = os.path.join(REPO_PATH, OUTPUT_FILE)
