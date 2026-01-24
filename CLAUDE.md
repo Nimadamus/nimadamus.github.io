@@ -649,6 +649,27 @@ NHL: FO%|PIM|SHG|GWG|OTL        | PWR|GF|GA|GD|REC
 4. DO NOT change the 4-section layout
 5. DO NOT remove any stat columns
 
+### ⛔ PERMANENTLY BANNED (January 24, 2026):
+```
+❌ LINE MOVEMENTS - NEVER add line movement alerts, banners, or any
+   "LINE MOVEMENTS DETECTED" content to the Handicapping Hub. EVER.
+   The user has explicitly banned this feature permanently.
+
+❌ HANDICAPPING_HUB_MONITOR.py - This script was deleted permanently.
+   DO NOT recreate it. DO NOT add any script that injects line movement
+   alerts into the Handicapping Hub.
+
+❌ alerts-banner divs - Never add HTML with class "alerts-banner" or
+   any red alert boxes at the top of game cards.
+```
+
+### WHAT THE HUB SHOWS (ONLY):
+- Betting lines (spread, ML, O/U) from The Odds API
+- Team stats (offense, defense, efficiency)
+- ATS/O/U records from Covers.com
+- Injury reports
+- NO LINE MOVEMENTS. EVER.
+
 ---
 
 ## ⛔⛔⛔ ZERO TOLERANCE: NO PLACEHOLDER CONTENT. EVER. ⛔⛔⛔
