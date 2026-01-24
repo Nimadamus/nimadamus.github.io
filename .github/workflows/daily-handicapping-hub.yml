@@ -82,6 +82,14 @@ jobs:
             exit 1
           fi
 
+          # CRITICAL: Block deployment if line movements are detected (PERMANENTLY BANNED Jan 24, 2026)
+          if grep -qi "line.*movement\|alerts-banner\|LINE MOVEMENTS DETECTED" handicapping-hub.html; then
+            echo "ERROR: LINE MOVEMENTS DETECTED - THIS IS PERMANENTLY BANNED!"
+            echo "The production script should NEVER generate line movement content."
+            echo "If you see this error, something has corrupted the script."
+            exit 1
+          fi
+
           echo "Validation passed: handicapping-hub.html is $FILE_SIZE bytes"
 
       - name: Commit and push changes
