@@ -708,6 +708,81 @@ def fetch_team_record(sport_path: str, team_id: str) -> str:
             pass
     return '0-0'
 
+def fetch_defensive_stats(sport_path: str, team_id: str) -> Dict:
+    """
+    Fetch defensive stats (opponent PPG, etc.) from ESPN team summary.
+    Returns dict with opp_ppg, opp_fg_pct, opp_3pt_pct
+    """
+    result = {'opp_ppg': 0, 'opp_fg_pct': '-', 'opp_3pt_pct': '-'}
+
+    # Try the team summary endpoint which often has points against
+    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}"
+    resp = fetch_with_retry(url, timeout=10, max_retries=2)
+
+    if resp:
+        try:
+            data = resp.json()
+            team = data.get('team', {})
+
+            # Check record stats for points against
+            record = team.get('record', {})
+            for item in record.get('items', []):
+                stats = item.get('stats', [])
+                for stat in stats:
+                    name = stat.get('name', '').lower()
+                    value = stat.get('value', stat.get('displayValue', 0))
+                    if 'pointsagainst' in name or 'avgpointsagainst' in name or name == 'papg':
+                        try:
+                            result['opp_ppg'] = float(value)
+                        except (ValueError, TypeError):
+                            pass
+
+            # Also check nextEvent for defensive stats
+            next_event = team.get('nextEvent', [])
+            for event in next_event:
+                for comp in event.get('competitions', []):
+                    for competitor in comp.get('competitors', []):
+                        if str(competitor.get('id', '')) == str(team_id):
+                            for stat in competitor.get('statistics', []):
+                                name = stat.get('name', '').lower()
+                                value = stat.get('displayValue', stat.get('value', ''))
+                                if 'against' in name or 'opp' in name:
+                                    try:
+                                        result['opp_ppg'] = float(value)
+                                    except (ValueError, TypeError):
+                                        pass
+
+        except (json.JSONDecodeError, KeyError):
+            pass
+
+    # Fallback: Fetch from statistics endpoint with defensive category
+    url2 = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/teams/{team_id}/statistics"
+    resp2 = fetch_with_retry(url2, timeout=10, max_retries=2)
+
+    if resp2:
+        try:
+            data = resp2.json()
+            # Look through all categories for defensive stats
+            for split in data.get('results', {}).get('splits', {}).get('categories', []):
+                cat_name = split.get('name', '').lower()
+                if 'defense' in cat_name or 'opponent' in cat_name:
+                    for stat in split.get('stats', []):
+                        name = stat.get('name', '').lower()
+                        value = stat.get('value', stat.get('displayValue', ''))
+                        if 'pointsagainst' in name or name == 'avgpointsagainst' or name == 'oppointspergame':
+                            try:
+                                result['opp_ppg'] = float(value)
+                            except (ValueError, TypeError):
+                                pass
+                        elif 'oppfieldgoalpct' in name or 'oppfg' in name:
+                            result['opp_fg_pct'] = safe_pct(value)
+                        elif 'oppthreepointpct' in name or 'opp3pt' in name:
+                            result['opp_3pt_pct'] = safe_pct(value)
+        except (json.JSONDecodeError, KeyError):
+            pass
+
+    return result
+
 def fetch_odds(sport_key: str) -> List[Dict]:
     """Fetch betting odds from The Odds API"""
     url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds"
@@ -812,12 +887,33 @@ def extract_nba_stats(raw: Dict, record: str, standings: Dict = None, l5: str = 
     fta = raw.get('avgFreeThrowsAttempted', 0)
     fgm = raw.get('avgFieldGoalsMade', 0)
     three_pm = raw.get('avgThreePointFieldGoalsMade', 0)
-    opp_ppg = raw.get('avgPointsAgainst', raw.get('oppPointsPerGame', 0))
+
+    # Calculate games played from record (e.g., "25-20" = 45 games)
+    games_played = 1
+    try:
+        parts = record.replace(' ', '').split('-')
+        games_played = sum(int(p) for p in parts if p.isdigit()) or 1
+    except (ValueError, AttributeError):
+        games_played = 1
+
+    # Get opponent PPG from merged defensive stats or fallback to other keys
+    opp_ppg_raw = raw.get('opp_ppg', raw.get('avgPointsAgainst', raw.get('oppPointsPerGame', 0)))
+
+    # If opp_ppg looks like a season total (>200), convert to per-game average
+    opp_ppg = 0
+    try:
+        opp_val = float(opp_ppg_raw)
+        if opp_val > 200:  # This is a season total, convert to average
+            opp_ppg = opp_val / games_played
+        else:
+            opp_ppg = opp_val
+    except (ValueError, TypeError):
+        opp_ppg = 0
 
     # Calculate Net Rating proxy (PPG - OPP_PPG)
     net_rtg = '-'
     try:
-        if ppg and opp_ppg:
+        if ppg and opp_ppg and float(opp_ppg) > 0:
             net_val = float(ppg) - float(opp_ppg)
             net_rtg = f"{net_val:+.1f}"
     except (ValueError, TypeError):
@@ -826,9 +922,11 @@ def extract_nba_stats(raw: Dict, record: str, standings: Dict = None, l5: str = 
     standings = standings or {}
     betting_rec = betting_rec or {}
 
-    # Opponent shooting percentages (defensive stats)
-    opp_fg_pct = safe_pct(raw.get('oppFieldGoalPct', raw.get('avgPointsAgainstPerFieldGoalAttempt')))
-    opp_3pt_pct = safe_pct(raw.get('oppThreePointPct', raw.get('oppThreePointFieldGoalPct')))
+    # Opponent shooting percentages (from merged defensive stats or fallback)
+    opp_fg_pct_val = raw.get('opp_fg_pct', raw.get('oppFieldGoalPct', raw.get('avgPointsAgainstPerFieldGoalAttempt')))
+    opp_3pt_pct_val = raw.get('opp_3pt_pct', raw.get('oppThreePointPct', raw.get('oppThreePointFieldGoalPct')))
+    opp_fg_pct = safe_pct(opp_fg_pct_val) if opp_fg_pct_val and opp_fg_pct_val != '-' else '-'
+    opp_3pt_pct = safe_pct(opp_3pt_pct_val) if opp_3pt_pct_val and opp_3pt_pct_val != '-' else '-'
 
     return {
         # Offense
@@ -1192,6 +1290,14 @@ def process_game(espn_game: Dict, sport: str, sport_path: str, odds_data: List[D
     home_record = fetch_team_record(sport_path, home_id)
     away_injuries = fetch_team_injuries(sport_path, away_id)
     home_injuries = fetch_team_injuries(sport_path, home_id)
+
+    # NEW: Fetch defensive stats (opp_ppg, etc.)
+    away_def_stats = fetch_defensive_stats(sport_path, away_id)
+    home_def_stats = fetch_defensive_stats(sport_path, home_id)
+
+    # Merge defensive stats into raw stats
+    away_stats_raw.update(away_def_stats)
+    home_stats_raw.update(home_def_stats)
 
     # NEW: Fetch situational data
     away_standings = fetch_team_standings_details(sport_path, away_id)
