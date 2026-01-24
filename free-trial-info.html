@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Start your free 5-day trial of BetLegend premium picks. No payment required. Get the same picks as paid members.">
-    <title>Start Your Free Trial | BetLegend</title>
-    <link rel="canonical" href="https://www.betlegendpicks.com/free-trial-info.html"/>
+    <meta name="robots" content="noindex, nofollow">
+    <title>Free Trial | BetLegend</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,14 +15,13 @@
             --text-secondary: #a0c4ff;
             --neon-cyan: #00f0ff;
             --neon-gold: #ffd700;
-            --win-color: #39ff14;
+            --glow-color: #00e0ff;
             --glass-bg: rgba(0, 10, 30, 0.6);
             --glass-border: rgba(0, 240, 255, 0.2);
             --font-primary: 'Orbitron', sans-serif;
             --font-secondary: 'Poppins', sans-serif;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
         body {
             font-family: var(--font-secondary);
             background: var(--bg-deep);
@@ -32,7 +30,7 @@
             overflow-x: hidden;
         }
 
-        /* Background */
+        /* EXACT Galaxy Background from Homepage */
         .background-container {
             position: fixed;
             top: 0;
@@ -53,348 +51,224 @@
             background-image: url('https://images.pexels.com/photos/956981/milky-way-starry-sky-night-sky-star-956981.jpeg?auto=compress&cs=tinysrgb&w=1920');
             background-size: cover;
             background-position: center center;
-            opacity: 0.4;
+            animation: kenburns 120s ease-in-out infinite alternate;
+        }
+        @keyframes kenburns {
+            from { transform: scale(1) translate(0, 0); }
+            to { transform: scale(1.15) translate(-2%, 2%); }
         }
 
-        /* Main Content */
-        .main-content {
+        /* Page Layout */
+        .page-wrapper {
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
-        }
-
-        .trial-container {
-            max-width: 550px;
-            width: 100%;
+            padding: 60px 30px;
         }
 
         /* Logo */
         .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .logo a {
             font-family: var(--font-primary);
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            text-decoration: none;
             color: #fff;
-            letter-spacing: 2px;
+            text-decoration: none;
+            letter-spacing: 3px;
+            margin-bottom: 50px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
         }
-        .logo a span {
+        .logo span {
             color: var(--neon-cyan);
-            text-shadow: 0 0 30px var(--neon-cyan);
+            text-shadow: 0 0 30px var(--neon-cyan), 0 0 60px var(--neon-cyan);
         }
 
         /* Main Card */
-        .trial-card {
+        .main-card {
             background: var(--glass-bg);
             border: 2px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 40px;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 800px;
+            width: 100%;
             backdrop-filter: blur(20px);
-            box-shadow: 0 10px 60px rgba(0, 240, 255, 0.15);
+            box-shadow: 0 10px 50px rgba(0, 240, 255, 0.15);
         }
 
-        .trial-card h1 {
+        h1 {
             font-family: var(--font-primary);
-            font-size: 1.6rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .trial-card .subtitle {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 1rem;
-            margin-bottom: 30px;
-        }
-
-        /* Benefits List */
-        .benefits {
-            margin-bottom: 30px;
-        }
-        .benefit-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            margin-bottom: 16px;
-            padding: 14px 18px;
-            background: rgba(0, 240, 255, 0.05);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 240, 255, 0.1);
-        }
-        .benefit-icon {
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, var(--neon-cyan), #00b4d8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-        .benefit-icon svg {
-            width: 14px;
-            height: 14px;
-            color: #000;
-        }
-        .benefit-text {
-            flex: 1;
-        }
-        .benefit-text strong {
-            display: block;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 2px;
-        }
-        .benefit-text span {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        /* Email Form */
-        .signup-form {
-            margin-top: 25px;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 16px 20px;
-            border-radius: 12px;
-            border: 2px solid rgba(0, 240, 255, 0.3);
-            background: rgba(0, 10, 30, 0.8);
-            color: #fff;
-            font-family: var(--font-secondary);
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-        .form-group input:focus {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-        }
-        .form-group input::placeholder {
-            color: rgba(160, 196, 255, 0.5);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 18px 30px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--neon-cyan), #00b4d8);
-            color: #000;
-            font-family: var(--font-primary);
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 45px rgba(0, 240, 255, 0.7);
-        }
-
-        /* Success Message */
-        .success-message {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            background: rgba(57, 255, 20, 0.1);
-            border: 2px solid var(--win-color);
-            border-radius: 12px;
-            margin-top: 20px;
-        }
-        .success-message h3 {
-            font-family: var(--font-primary);
-            font-size: 1.1rem;
-            color: var(--win-color);
-            margin-bottom: 8px;
-        }
-        .success-message p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* Trust Badges */
-        .trust-section {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-        .trust-item {
-            text-align: center;
-        }
-        .trust-item .number {
-            font-family: var(--font-primary);
-            font-size: 1.3rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--neon-gold);
-        }
-        .trust-item .label {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
+            text-align: center;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+            text-shadow: 0 0 30px var(--neon-gold);
         }
 
-        /* Back Link */
-        .back-link {
-            display: block;
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 45px;
+        }
+
+        .info-box {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        .info-box:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+        }
+        .info-box.wide {
+            grid-column: span 2;
+        }
+
+        .info-label {
+            font-family: var(--font-primary);
+            font-size: 0.7rem;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .info-value {
+            font-size: 1.15rem;
+            color: #fff;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            color: var(--neon-gold);
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        /* CTA Section */
+        .cta-section {
             text-align: center;
-            margin-top: 25px;
-            font-size: 0.9rem;
+            padding-top: 35px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .cta-button {
+            display: inline-block;
+            font-family: var(--font-primary);
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 22px 60px;
+            border-radius: 12px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #00f0ff, #00b4d8);
+            color: #000;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.6);
+            transition: all 0.3s ease;
+            animation: buttonPulse 2.5s ease-in-out infinite;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 60px rgba(0, 240, 255, 0.8);
+        }
+        @keyframes buttonPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.6); }
+            50% { box-shadow: 0 0 55px rgba(0, 240, 255, 0.8); }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            font-size: 0.95rem;
             color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
         .back-link:hover {
             color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .trial-card {
-                padding: 30px 25px;
-            }
-            .trial-card h1 {
-                font-size: 1.3rem;
-            }
-            .trust-section {
-                gap: 20px;
-            }
+        @media (max-width: 700px) {
+            .main-card { padding: 35px 25px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .info-box.wide { grid-column: span 1; }
+            h1 { font-size: 1.4rem; letter-spacing: 2px; }
+            .cta-button { padding: 18px 40px; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
     <div class="background-container"></div>
 
-    <div class="main-content">
-        <div class="trial-container">
-            <div class="logo">
-                <a href="index.html">BET<span>LEGEND</span></a>
-            </div>
+    <div class="page-wrapper">
+        <a href="index.html" class="logo">BET<span>LEGEND</span></a>
 
-            <div class="trial-card">
-                <h1>Start Your Free Trial</h1>
-                <p class="subtitle">5 days of premium picks, completely free</p>
+        <div class="main-card">
+            <h1>Free Trial Details</h1>
 
-                <div class="benefits">
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        </div>
-                        <div class="benefit-text">
-                            <strong>No Payment Required</strong>
-                            <span>Zero credit card, zero commitment</span>
-                        </div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        </div>
-                        <div class="benefit-text">
-                            <strong>Full Access</strong>
-                            <span>Same picks as paid members via private Discord</span>
-                        </div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        </div>
-                        <div class="benefit-text">
-                            <strong>Real-Time Alerts</strong>
-                            <span>Picks posted live as soon as they're locked in</span>
-                        </div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        </div>
-                        <div class="benefit-text">
-                            <strong>100% Transparent</strong>
-                            <span>Every pick tracked publicly, no deletes</span>
-                        </div>
-                    </div>
+            <p style="text-align: center; color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 35px; line-height: 1.6;">The free trial provides the same experience as paid access for evaluation purposes.</p>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="info-label">Trial Length</div>
+                    <div class="info-value"><span class="highlight">5 Days</span></div>
                 </div>
 
-                <form id="trial-form" class="signup-form">
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-                    </div>
-                    <button type="submit" class="submit-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6L12 13L2 6"/></svg>
-                        Get Free Access
-                    </button>
-                </form>
-
-                <div id="success-message" class="success-message">
-                    <h3>You're In!</h3>
-                    <p>Check your email for Discord access instructions. Welcome to BetLegend.</p>
+                <div class="info-box">
+                    <div class="info-label">Cost</div>
+                    <div class="info-value"><span class="highlight">Free</span></div>
                 </div>
 
-                <div class="trust-section">
-                    <div class="trust-item">
-                        <div class="number">5</div>
-                        <div class="label">Days Free</div>
-                    </div>
-                    <div class="trust-item">
-                        <div class="number">100%</div>
-                        <div class="label">Transparent</div>
-                    </div>
-                    <div class="trust-item">
-                        <div class="number">$0</div>
-                        <div class="label">To Start</div>
-                    </div>
+                <div class="info-box">
+                    <div class="info-label">Payment Required</div>
+                    <div class="info-value">None</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Access</div>
+                    <div class="info-value">Private Discord</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">What You Get</div>
+                    <div class="info-value">Real-time picks posted live, all sports</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Coverage</div>
+                    <div class="info-value">Same picks as paid members</div>
+                </div>
+
+                <div class="info-box wide">
+                    <div class="info-label">Record Keeping</div>
+                    <div class="info-value">Public record, all picks tracked, no deletes</div>
+                </div>
+
+                <div class="info-box wide">
+                    <div class="info-label">How Access Works</div>
+                    <div class="info-value">Manual approval via email to ensure transparency</div>
                 </div>
             </div>
 
-            <a href="index.html" class="back-link">Back to BetLegend</a>
+            <div class="cta-section">
+                <a href="mailto:betlegend2025@gmail.com?subject=Free%20Trial%20Request&body=Hi%2C%20I%27d%20like%20to%20request%20a%20free%20trial%20for%20BetLegend%20picks." class="cta-button">
+                    Request Access
+                </a>
+                <br>
+                <a href="index.html" class="back-link">← Back to home</a>
+            </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('trial-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var email = document.getElementById('email').value;
-
-            // Send email to BetLegend
-            window.location.href = 'mailto:betlegend2025@gmail.com?subject=Free%20Trial%20Request&body=Please%20send%20free%20trial%20access%20to:%20' + encodeURIComponent(email);
-
-            // Show success message
-            document.getElementById('trial-form').style.display = 'none';
-            document.getElementById('success-message').style.display = 'block';
-        });
-    </script>
 </body>
 </html>
