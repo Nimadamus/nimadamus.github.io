@@ -1610,10 +1610,10 @@ def generate_game_card_nba(game: Dict, sport: str = 'NBA') -> str:
             <div class="section defense">
                 <div class="section-title">DEFENSE</div>
                 <table class="stats-table">
-                    <thead><tr><th></th><th>OPP PPG</th><th>OPP FG%</th><th>OPP 3P%</th><th>STL</th><th>BLK</th></tr></thead>
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
                     <tbody>
-                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['opp_fg_pct']}</td><td>{away['stats']['opp_3pt_pct']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td></tr>
-                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['opp_fg_pct']}</td><td>{home['stats']['opp_3pt_pct']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td></tr>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['opp_ppg']}</td><td>{away['stats']['stl']}</td><td>{away['stats']['blk']}</td><td>{away['stats']['dreb']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['opp_ppg']}</td><td>{home['stats']['stl']}</td><td>{home['stats']['blk']}</td><td>{home['stats']['dreb']}</td></tr>
                     </tbody>
                 </table>
             </div>
