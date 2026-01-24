@@ -945,13 +945,23 @@ def extract_nba_stats(raw: Dict, record: str, standings: Dict = None, l5: str = 
     opp_ppg_raw = raw.get('opp_ppg', raw.get('avgPointsAgainst', raw.get('oppPointsPerGame', 0)))
 
     # If opp_ppg looks like a season total (>200), convert to per-game average
+    # VALIDATION: For basketball, OPP PPG should be between 50-150 (reasonable range)
+    # If the value is outside this range, it's clearly wrong data and should be hidden
     opp_ppg = 0
     try:
         opp_val = float(opp_ppg_raw)
         if opp_val > 200:  # This is a season total, convert to average
-            opp_ppg = opp_val / games_played
-        else:
+            converted = opp_val / games_played
+            # Validate the converted value is reasonable (50-150 for basketball)
+            if 50 <= converted <= 150:
+                opp_ppg = converted
+            else:
+                opp_ppg = 0  # Converted value is still invalid
+        elif 50 <= opp_val <= 150:  # Reasonable per-game value for basketball
             opp_ppg = opp_val
+        else:
+            # Value is suspicious (too low like 13.3 or too high) - treat as invalid
+            opp_ppg = 0
     except (ValueError, TypeError):
         opp_ppg = 0
 
