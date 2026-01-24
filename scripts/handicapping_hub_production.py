@@ -2420,103 +2420,92 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             color: #00f5ff;
         }}
 
-        /* === H2H SECTION - REDESIGNED === */
+        /* === H2H SECTION - PROFESSIONAL ESPN-STYLE === */
         .h2h-section {{
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 140, 0, 0.1) 100%);
-            padding: 24px;
-            border-radius: 0 0 20px 20px;
-            border-top: 3px solid #ffd700;
+            background: #f8f9fa;
+            padding: 20px 24px;
+            border-radius: 0 0 16px 16px;
+            border-top: 4px solid #1a365d;
         }}
         .h2h-section .section-title {{
-            font-family: 'Orbitron', sans-serif;
-            color: #ffd700;
-            font-size: 1rem;
-            font-weight: 800;
-            margin-bottom: 18px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            letter-spacing: 2px;
+            font-family: 'Inter', sans-serif;
+            color: #1a365d;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }}
         .h2h-summary {{
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
         }}
         .h2h-stat {{
-            background: rgba(0, 0, 0, 0.4);
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            min-width: 140px;
+            background: #fff;
+            padding: 16px 12px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }}
         .h2h-stat-label {{
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.7;
-            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
         }}
         .h2h-stat-value {{
-            font-size: 1.4rem;
-            font-weight: 900;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
         }}
-        .h2h-su {{
-            color: #ffd700;
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-        }}
-        .h2h-ats-summary {{
-            color: #00ff88;
-            border: 2px solid #00ff88;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-        }}
-        .h2h-ou-summary {{
-            color: #00c4ff;
-            border: 2px solid #00c4ff;
-            box-shadow: 0 0 20px rgba(0, 196, 255, 0.2);
-        }}
+        .h2h-su {{ border-left: 3px solid #1a365d; }}
+        .h2h-ats-summary {{ border-left: 3px solid #059669; }}
+        .h2h-ou-summary {{ border-left: 3px solid #0284c7; }}
+        .h2h-su .h2h-stat-value {{ color: #1a365d; }}
+        .h2h-ats-summary .h2h-stat-value {{ color: #059669; }}
+        .h2h-ou-summary .h2h-stat-value {{ color: #0284c7; }}
         .h2h-table {{
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.95rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
+            font-size: 0.85rem;
+            background: #fff;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid #e2e8f0;
         }}
         .h2h-table th {{
-            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
-            color: #0a0a1a;
-            padding: 14px 10px;
+            background: #1a365d;
+            color: #fff;
+            padding: 10px 8px;
             text-align: center;
-            font-weight: 800;
-            font-size: 0.85rem;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }}
         .h2h-table td {{
-            padding: 12px 10px;
+            padding: 10px 8px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-            font-weight: 600;
-            font-size: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #334155;
         }}
-        .h2h-table tr:nth-child(even) {{ background: rgba(255, 215, 0, 0.05); }}
-        .h2h-table tr:hover {{ background: rgba(255, 215, 0, 0.1); }}
-        .h2h-ats {{ color: #00ff88; font-weight: 700; }}
-        .h2h-ou {{ color: #00c4ff; font-weight: 700; }}
-        .winner-home {{ color: #00ff88; }}
-        .winner-away {{ color: #00c4ff; }}
-        .score {{ color: #fff; font-weight: 700; }}
+        .h2h-table tr:nth-child(even) {{ background: #f8fafc; }}
+        .h2h-table tr:hover {{ background: #f1f5f9; }}
+        .h2h-ats {{ color: #059669; font-weight: 600; }}
+        .h2h-ou {{ color: #0284c7; font-weight: 600; }}
+        .winner-home {{ color: #059669; font-weight: 600; }}
+        .winner-away {{ color: #1a365d; font-weight: 600; }}
+        .score {{ color: #1e293b; font-weight: 600; }}
         .over {{ color: #ff6b35; font-weight: 700; }}
         .under {{ color: #00c4ff; font-weight: 700; }}
 
