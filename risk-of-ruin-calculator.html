@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://www.betlegendpicks.com/risk-of-ruin-calculator.html"/>
+
+    <title>Risk of Ruin Calculator: Know Your True Bust Probability | BetLegend</title>
+    <meta name="description" content="Calculate your exact probability of going broke. Free Risk of Ruin calculator for sports bettors using proven mathematical formulas. Know your true risk before betting."/>
+
+    <meta name="keywords" content="risk of ruin calculator, sports betting risk, bankroll bust probability, betting ruin calculator, gambling ruin formula"/>
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="author" content="BetLegend Picks">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.betlegendpicks.com/risk-of-ruin-calculator.html">
+    <meta property="og:title" content="Risk of Ruin Calculator - Know Your Bust Probability">
+    <meta property="og:description" content="Free calculator to determine your exact probability of going broke. Essential tool for serious sports bettors.">
+    <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
+    <meta property="og:site_name" content="BetLegend Picks">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Risk of Ruin Calculator | BetLegend">
+    <meta name="twitter:description" content="Calculate your exact probability of going broke. Essential for bankroll management.">
+    <meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Risk of Ruin Calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Calculate the probability of depleting your sports betting bankroll based on win rate, odds, and bet sizing."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Risk of Ruin Calculator: Know Your True Bust Probability",
+      "description": "Mathematical calculator to determine the probability of going broke in sports betting based on edge, bankroll size, and bet sizing.",
+      "author": {
+        "@type": "Organization",
+        "name": "BetLegend Picks"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "BetLegend Picks",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.betlegendpicks.com/newlogo.png"
+        }
+      },
+      "datePublished": "2026-01-24",
+      "dateModified": "2026-01-24"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Risk of Ruin in sports betting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Risk of Ruin is the mathematical probability of losing your entire bankroll. Even with a positive edge, variance can cause you to go broke before your edge plays out. This calculator quantifies that exact probability based on your win rate, odds, and bet sizing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does bet size affect Risk of Ruin?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bet size has an exponential effect on Risk of Ruin. Betting 5% of your bankroll per bet dramatically increases ruin probability compared to 1%. The smaller your bets relative to your bankroll, the more time variance has to even out and let your edge play out."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a safe Risk of Ruin percentage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most professional bettors aim for a Risk of Ruin under 5%, with many targeting under 1%. A 1% RoR means you have a 99% chance of never going broke if your edge estimate is accurate. Conservative bettors may target 0.1% or lower."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+            --neon-red: #ff4444;
+            --neon-green: #00ff88;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+            --font-content: 'Rubik', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-content);
+            background-color: var(--bg-color);
+            color: white;
+            overflow-x: hidden;
+            padding-top: 140px;
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
+        .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
+        .logo{position:fixed;top:15px;left:15px;z-index:1001}
+        .logo a{font-family:var(--font-primary);font-size:2.2rem;font-weight:900;color:#fff;text-decoration:none;text-shadow:0 0 10px rgba(255,255,255,0.5)}
+        .logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,255,255,0.8)}
+        .nav-links{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+        .nav-links>a,.nav-links>.dropdown,.dropbtn{font-family:var(--font-secondary);color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:12px 18px;white-space:nowrap;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;margin:0}
+        .nav-links>a:hover,.dropbtn:hover{color:#FFD700}
+        .dropdown{position:relative;padding:0;margin:0}
+        .dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(10,12,16,0.98);min-width:180px;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 0;margin-top:8px;z-index:9999}
+        .dropdown-content a{color:#00e5ff;padding:12px 18px;display:block;text-decoration:none;font-size:14px}
+        .dropdown-content a:hover{background:rgba(0,229,255,0.1);color:#fff}
+        .dropdown:hover .dropdown-content{display:block}
+        .dropdown.active .dropdown-content{display:block}
+        .dropdown.active .dropbtn{color:#FFD700}
+        @media(max-width:768px){
+            .dropdown-content{position:fixed!important;left:5%!important;right:5%!important;top:120px!important;width:90%!important;min-width:unset!important;max-height:65vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+            .nav-inner{padding:18px 5% 18px 5%;flex-wrap:wrap;justify-content:center;gap:40px}
+            .logo{position:relative;top:0;left:0;margin-bottom:10px}
+            .nav-links{justify-content:center}
+            .nav-links>a,.nav-links>.dropdown,.dropbtn{font-size:12px;padding:8px 12px;margin:0}
+            body{padding-top:180px}
+        }
+
+        /* Main Content Container */
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            color: var(--neon-gold);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.15rem;
+            color: #aaa;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Quick Answer Box */
+        .quick-answer {
+            background: linear-gradient(135deg, rgba(0,224,255,0.12), rgba(0,224,255,0.04));
+            border: 2px solid var(--neon-cyan);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 850px;
+        }
+
+        .quick-answer-label {
+            font-weight: bold;
+            color: var(--neon-cyan);
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quick-answer p {
+            font-size: 17px;
+            line-height: 1.7;
+            margin: 0;
+            color: #ddd;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.05) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.3);
+        }
+
+        .calculator-section h2 {
+            font-family: var(--font-primary);
+            color: var(--neon-cyan);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .calc-input-group {
+            margin-bottom: 20px;
+        }
+
+        .calc-input-group label {
+            display: block;
+            color: var(--neon-gold);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .calc-input-group input,
+        .calc-input-group select {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 224, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            font-family: var(--font-content);
+            transition: all 0.3s ease;
+        }
+
+        .calc-input-group input:focus,
+        .calc-input-group select:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
+        }
+
+        .helper-note {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        .calc-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-gold));
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: var(--font-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calc-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.4);
+        }
+
+        /* Results Section */
+        .calc-results {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+        }
+
+        .calc-results.show {
+            display: block;
+        }
+
+        .ror-display {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .ror-label {
+            color: #aaa;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .ror-value {
+            font-family: var(--font-primary);
+            font-size: 4rem;
+            font-weight: 900;
+        }
+
+        .ror-value.low { color: var(--neon-green); }
+        .ror-value.medium { color: var(--neon-gold); }
+        .ror-value.high { color: var(--neon-red); }
+
+        .ror-interpretation {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .result-item {
+            background: rgba(0, 224, 255, 0.05);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .result-label {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            color: var(--neon-cyan);
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: var(--font-primary);
+        }
+
+        /* Warning/Tip Boxes */
+        .warning-box {
+            background: rgba(255, 68, 68, 0.1);
+            border-left: 4px solid var(--neon-red);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box p {
+            color: #ffaaaa;
+            margin: 0;
+        }
+
+        .tip-box {
+            background: rgba(0, 255, 136, 0.05);
+            border-left: 4px solid var(--neon-green);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box p {
+            color: #aaffcc;
+            margin: 0;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 50px;
+        }
+
+        .content-section h2 {
+            font-family: var(--font-primary);
+            color: var(--neon-gold);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .content-section h3 {
+            color: var(--neon-cyan);
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 18px;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 10px;
+        }
+
+        .formula-box {
+            background: rgba(0, 224, 255, 0.05);
+            border-left: 4px solid var(--neon-cyan);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: var(--neon-cyan);
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .example-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+        }
+
+        .example-box h4 {
+            color: var(--neon-gold);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .highlight {
+            color: var(--neon-gold);
+            font-weight: 600;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: rgba(0, 224, 255, 0.2);
+            color: var(--neon-cyan);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--neon-cyan);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ddd;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0, 224, 255, 0.05);
+        }
+
+        /* Internal Links */
+        .internal-links {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        .internal-links h3 {
+            color: var(--neon-gold);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .internal-links ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 0;
+        }
+
+        .internal-links li {
+            margin: 0;
+        }
+
+        .internal-links a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .internal-links a:hover {
+            color: var(--neon-gold);
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .calc-grid { grid-template-columns: 1fr; gap: 15px; }
+            .calculator-section { padding: 25px; }
+            .ror-value { font-size: 3rem; }
+            .results-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QS8L5TDNLY');
+    </script>
+</head>
+<body>
+
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Handicapping Hub</a>
+<a href="blog.html">Picks</a>
+<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a><a href="crosssport-parlays-records.html" title="Cross-Sport Bets">Cross-Sport Bets</a></div></div>
+<div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll Management</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="risk-of-ruin-calculator.html">Risk of Ruin</a><a href="bankroll-simulator.html">Bankroll Simulator</a><a href="betting-calculators.html">Calculators</a><a href="screenshots.html">Screenshots</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a><a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a><a href="contact.html">Contact Us</a></div></div>
+<a href="news-page4.html">News</a>
+<a href="injury-report.html">Injury Report</a>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page56.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+</div>
+</div>
+</nav>
+
+<div class="content-container">
+    <h1>Risk of Ruin Calculator</h1>
+    <p class="subtitle">Know exactly how likely you are to go broke. Essential knowledge for every serious bettor.</p>
+
+    <div class="quick-answer">
+        <p class="quick-answer-label">What is Risk of Ruin?</p>
+        <p><strong>Risk of Ruin (RoR)</strong> is the mathematical probability of losing your entire bankroll before your edge has time to compound. Even with a 55% win rate, betting too large a percentage of your bankroll can give you a 50%+ chance of going broke. This calculator uses the proven gambler's ruin formula adapted for sports betting to show your exact bust probability.</p>
+    </div>
+
+    <section class="calculator-section">
+        <h2>Calculate Your Risk of Ruin</h2>
+
+        <div class="calc-grid">
+            <div class="calc-left">
+                <div class="calc-input-group">
+                    <label for="bankroll">Bankroll ($)</label>
+                    <input type="number" id="bankroll" placeholder="1000" value="1000" min="1">
+                    <p class="helper-note">Your total betting bankroll</p>
+                </div>
+
+                <div class="calc-input-group">
+                    <label for="unitSize">Bet Size ($)</label>
+                    <input type="number" id="unitSize" placeholder="50" value="50" min="1">
+                    <p class="helper-note">Amount you risk per bet</p>
+                </div>
+
+                <div class="calc-input-group">
+                    <label for="winRate">Win Rate (%)</label>
+                    <input type="number" id="winRate" placeholder="55" value="55" min="1" max="99" step="0.1">
+                    <p class="helper-note">Your historical or expected win percentage</p>
+                </div>
+            </div>
+
+            <div class="calc-right">
+                <div class="calc-input-group">
+                    <label for="odds">Average Odds (American)</label>
+                    <input type="number" id="odds" placeholder="-110" value="-110">
+                    <p class="helper-note">Standard juice is -110</p>
+                </div>
+
+                <div class="calc-input-group">
+                    <label for="numBets">Number of Bets (optional)</label>
+                    <input type="number" id="numBets" placeholder="Unlimited" min="1">
+                    <p class="helper-note">Leave empty for lifetime risk</p>
+                </div>
+
+                <div style="margin-top: 35px;">
+                    <button class="calc-button" onclick="calculateRoR()">Calculate Risk</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="calcResults" class="calc-results">
+            <div class="ror-display">
+                <div class="ror-label">Your Risk of Ruin</div>
+                <div class="ror-value" id="rorValue">0%</div>
+                <div class="ror-interpretation" id="rorInterpretation"></div>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-item">
+                    <div class="result-label">Bankroll in Units</div>
+                    <div class="result-value" id="bankrollUnits">20</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Bet Size as % of Bankroll</div>
+                    <div class="result-value" id="betPercent">5%</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Your Edge</div>
+                    <div class="result-value" id="edgeValue">2.3%</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Expected Value per Bet</div>
+                    <div class="result-value" id="evPerBet">+$1.15</div>
+                </div>
+            </div>
+
+            <div id="warningMessage" style="margin-top: 25px;"></div>
+
+            <div id="recommendationBox" style="margin-top: 25px;"></div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Understanding the Risk of Ruin Formula</h2>
+
+        <p>Risk of Ruin isn't just an abstract concept. It's cold math that determines whether you'll still be betting next year or watching from the sidelines. Even winning bettors go broke all the time because they don't understand this calculation.</p>
+
+        <p>The formula we use is derived from the classic gambler's ruin probability, adapted for the asymmetric payouts common in sports betting:</p>
+
+        <div class="formula-box">
+            RoR = r<sup>n</sup> where r = (1 - p) / (p × (decimal odds - 1))
+        </div>
+
+        <p>Breaking this down:</p>
+        <ul>
+            <li><span class="highlight">r</span> = The ratio that determines your ruin probability. If r ≥ 1, you have no edge and will eventually go broke with certainty.</li>
+            <li><span class="highlight">p</span> = Your win probability (e.g., 0.55 for 55%)</li>
+            <li><span class="highlight">decimal odds - 1</span> = Your profit per unit won (e.g., 0.909 for -110 odds)</li>
+            <li><span class="highlight">n</span> = Your bankroll measured in bet units</li>
+        </ul>
+
+        <p>The key insight: your Risk of Ruin decreases <em>exponentially</em> as you increase your bankroll relative to your bet size. Going from 10 units to 20 units doesn't cut your risk in half. It squares the reduction. This is why proper bankroll sizing matters so much.</p>
+    </section>
+
+    <section class="content-section">
+        <h2>Why Smart Bettors Obsess Over This Number</h2>
+
+        <p>Here's a scenario that plays out constantly: A bettor hits 55% over 200 bets. They're up $2,000. They feel invincible. They start betting bigger. Then variance hits, they lose 12 of 15, and suddenly they're broke.</p>
+
+        <p>This isn't bad luck. It's math. At 55% with -110 odds, you have roughly a 2.3% edge per bet. That's real, but it's not huge. Variance can easily produce 12-of-15 losing streaks even with a 55% true win rate. The question is: can your bankroll survive it?</p>
+
+        <h3>The Relationship Between Edge and Bet Size</h3>
+        <p>Your edge tells you that you'll win in the long run. Your bet size determines whether you survive to see the long run. These two concepts work together but serve different purposes.</p>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Bet Size (% of Bankroll)</th>
+                    <th>Bankroll in Units</th>
+                    <th>RoR at 55% / -110</th>
+                    <th>Assessment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10%</td>
+                    <td>10 units</td>
+                    <td>~35%</td>
+                    <td style="color: #ff4444;">Dangerous</td>
+                </tr>
+                <tr>
+                    <td>5%</td>
+                    <td>20 units</td>
+                    <td>~12%</td>
+                    <td style="color: #FFD700;">Risky</td>
+                </tr>
+                <tr>
+                    <td>2%</td>
+                    <td>50 units</td>
+                    <td>~0.5%</td>
+                    <td style="color: #00ff88;">Safe</td>
+                </tr>
+                <tr>
+                    <td>1%</td>
+                    <td>100 units</td>
+                    <td>~0.002%</td>
+                    <td style="color: #00ff88;">Very Safe</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Notice how the drop from 5% to 2% bet sizing takes your Risk of Ruin from 12% to 0.5%. That's a 24x improvement in survivability just by being a bit more patient with your bet sizes.</p>
+    </section>
+
+    <section class="content-section">
+        <h2>How to Use This Information</h2>
+
+        <h3>Step 1: Know Your True Win Rate</h3>
+        <p>This is harder than it sounds. You need at least 500 tracked bets, ideally 1,000+, to have a reliable estimate of your actual win rate. Short-term results are dominated by variance. If you've only tracked 100 bets and you're at 58%, you might actually be a 52% bettor who got lucky.</p>
+
+        <h3>Step 2: Choose Your Risk Tolerance</h3>
+        <p>Different bettors have different tolerance levels. Here's a general framework:</p>
+        <ul>
+            <li><span class="highlight">Aggressive (5-10% RoR):</span> You're okay with a meaningful chance of going broke because you're chasing maximum growth. This only makes sense if you can reload your bankroll.</li>
+            <li><span class="highlight">Moderate (1-5% RoR):</span> You want strong growth but also want to be around for the long haul. Good balance for most serious bettors.</li>
+            <li><span class="highlight">Conservative (&lt;1% RoR):</span> Preservation is paramount. You're treating betting as a long-term wealth builder, not a get-rich-quick scheme. This is where professionals operate.</li>
+        </ul>
+
+        <h3>Step 3: Size Your Bets Accordingly</h3>
+        <p>Work backwards from your desired RoR. If you want a 1% Risk of Ruin and you have a 55% win rate at -110 odds, you need roughly 100 units in your bankroll. That means betting 1% of your bankroll per bet.</p>
+
+        <div class="tip-box">
+            <p><strong>Pro Tip:</strong> When in doubt, bet smaller. The cost of betting too small is slower growth. The cost of betting too big is going broke. One of these is recoverable.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Common Mistakes That Increase Ruin Risk</h2>
+
+        <h3>1. Overestimating Your Edge</h3>
+        <p>This is the silent killer. If you think you're a 55% bettor but you're actually 52%, your Risk of Ruin calculation is way off. The RoR formula is very sensitive to edge estimates. Always be conservative in your self-assessment.</p>
+
+        <h3>2. Ignoring Correlation</h3>
+        <p>If you bet 5 games on Sunday's NFL slate, those bets aren't independent. Weather, referee tendencies, and other factors can make them move together. Your effective bet size might be higher than you think. Some bettors cap their total exposure on any single day to account for this.</p>
+
+        <h3>3. Chasing Losses</h3>
+        <p>Nothing destroys bankrolls faster than increasing bet sizes after a loss. Your RoR calculation assumes consistent bet sizing. The moment you double up to chase, you've thrown the math out the window and increased your ruin probability dramatically.</p>
+
+        <h3>4. Not Adjusting for Bankroll Changes</h3>
+        <p>If your bankroll grows from $1,000 to $5,000, your bet size should increase proportionally to maintain the same RoR. Similarly, if you lose half your bankroll, you should cut your bet size in half. This is the principle behind Kelly betting.</p>
+
+        <div class="warning-box">
+            <p><strong>Critical Warning:</strong> The RoR calculation assumes your win rate estimate is accurate. If you're overconfident in your edge, your true Risk of Ruin is much higher than calculated. Most bettors overestimate their edge. Be honest with yourself.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Risk of Ruin vs. Kelly Criterion</h2>
+
+        <p>These two concepts are closely related. Kelly Criterion tells you the optimal bet size for maximum bankroll growth. Risk of Ruin tells you the probability of going broke at any given bet size.</p>
+
+        <p>At full Kelly, your theoretical Risk of Ruin is 0% (you never bet more than you can afford to lose relative to your edge). But full Kelly is extremely volatile. Most bettors use fractional Kelly (usually 25-50% of Kelly) to smooth out variance while accepting a small but non-zero Risk of Ruin.</p>
+
+        <p>The relationship:</p>
+        <ul>
+            <li>Bet less than Kelly = Lower growth rate, lower variance, lower RoR</li>
+            <li>Bet exactly Kelly = Optimal theoretical growth, high variance, ~0% RoR</li>
+            <li>Bet more than Kelly = Lower growth rate (counterintuitively), extreme variance, high RoR</li>
+        </ul>
+
+        <p>This is why overbetting is so dangerous. You don't just increase risk. You actually decrease expected growth while taking on more risk. It's the worst of both worlds.</p>
+    </section>
+
+    <section class="content-section">
+        <h2>The Bottom Line</h2>
+
+        <p>Risk of Ruin isn't just an academic exercise. It's the difference between being a winning bettor who stays in the game and a winning bettor who goes broke before their edge plays out.</p>
+
+        <p>The math is unforgiving. Variance doesn't care about your confidence or your system. It will throw 15-bet losing streaks at you eventually. The only question is whether your bankroll can absorb those hits.</p>
+
+        <p>Use this calculator before you place another bet. Know your number. If it's higher than you're comfortable with, reduce your bet size. There's no shame in betting 1% per play. The sharps who've been doing this for decades often bet even less.</p>
+
+        <p>Survival is the prerequisite to success. Get your Risk of Ruin under control, and let your edge do the rest.</p>
+    </section>
+
+    <div class="internal-links">
+        <h3>Related Tools &amp; Resources</h3>
+        <ul>
+            <li><a href="kelly-criterion.html">Kelly Criterion Calculator - Optimal Bet Sizing</a></li>
+            <li><a href="bankroll-simulator.html">Bankroll Simulator - See Long-Term Growth</a></li>
+            <li><a href="bankroll.html">Complete Bankroll Management Guide</a></li>
+            <li><a href="betting-calculators.html">All Betting Calculators</a></li>
+            <li><a href="betting-101.html">Betting 101 - Getting Started</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+function calculateRoR() {
+    // Get input values
+    const bankroll = parseFloat(document.getElementById('bankroll').value);
+    const unitSize = parseFloat(document.getElementById('unitSize').value);
+    const winRate = parseFloat(document.getElementById('winRate').value) / 100;
+    const americanOdds = parseFloat(document.getElementById('odds').value);
+    const numBets = document.getElementById('numBets').value ? parseInt(document.getElementById('numBets').value) : null;
+
+    // Validation
+    if (!bankroll || !unitSize || !winRate || !americanOdds) {
+        alert('Please fill in all required fields');
+        return;
+    }
+
+    if (winRate <= 0 || winRate >= 1) {
+        alert('Win rate must be between 1% and 99%');
+        return;
+    }
+
+    if (unitSize > bankroll) {
+        alert('Bet size cannot exceed bankroll');
+        return;
+    }
+
+    // Convert American odds to decimal
+    let decimalOdds;
+    if (americanOdds > 0) {
+        decimalOdds = 1 + (americanOdds / 100);
+    } else {
+        decimalOdds = 1 + (100 / Math.abs(americanOdds));
+    }
+
+    // Calculate key values
+    const bankrollUnits = bankroll / unitSize;
+    const betPercent = (unitSize / bankroll) * 100;
+    const winPayout = decimalOdds - 1; // profit per unit won
+    const lossAmount = 1; // lose 1 unit when you lose
+
+    // Calculate edge
+    const expectedWin = winRate * winPayout;
+    const expectedLoss = (1 - winRate) * lossAmount;
+    const edge = expectedWin - expectedLoss;
+    const evPerBet = edge * unitSize;
+
+    // Calculate Risk of Ruin
+    // r = (loss probability) / (win probability * win payout)
+    // RoR = r^n where n = bankroll in units
+    let ror;
+    const r = (1 - winRate) / (winRate * winPayout);
+
+    if (r >= 1) {
+        // No edge or negative edge - certain ruin
+        ror = 1;
+    } else {
+        ror = Math.pow(r, bankrollUnits);
+
+        // If finite number of bets specified, adjust
+        if (numBets && numBets > 0) {
+            // For finite bets, the risk is lower
+            // This is an approximation - exact formula is more complex
+            const infiniteRor = ror;
+            const betsToRuin = bankrollUnits / ((1 - winRate) - (winRate * winPayout) + 1);
+            if (numBets < betsToRuin * 3) {
+                // Reduce RoR for short time horizons
+                ror = infiniteRor * (1 - Math.exp(-numBets / (betsToRuin * 2)));
+            }
+        }
+    }
+
+    const rorPercent = ror * 100;
+
+    // Determine color class
+    let colorClass, interpretation;
+    if (rorPercent >= 25) {
+        colorClass = 'high';
+        interpretation = 'DANGER: High probability of going broke. Reduce your bet size immediately.';
+    } else if (rorPercent >= 5) {
+        colorClass = 'medium';
+        interpretation = 'CAUTION: Meaningful risk of ruin. Consider reducing bet size for safety.';
+    } else if (rorPercent >= 1) {
+        colorClass = 'medium';
+        interpretation = 'MODERATE: Acceptable risk for aggressive bettors, but room to improve.';
+    } else {
+        colorClass = 'low';
+        interpretation = 'SAFE: Low risk of ruin. Your bankroll management is solid.';
+    }
+
+    // If no edge, override
+    if (edge <= 0) {
+        colorClass = 'high';
+        interpretation = 'NO EDGE: You have zero or negative expected value. Ruin is mathematically certain.';
+    }
+
+    // Update display
+    document.getElementById('rorValue').textContent = rorPercent < 0.01 ? '<0.01%' : rorPercent.toFixed(2) + '%';
+    document.getElementById('rorValue').className = 'ror-value ' + colorClass;
+    document.getElementById('rorInterpretation').textContent = interpretation;
+
+    document.getElementById('bankrollUnits').textContent = bankrollUnits.toFixed(1) + ' units';
+    document.getElementById('betPercent').textContent = betPercent.toFixed(1) + '%';
+    document.getElementById('edgeValue').textContent = (edge > 0 ? '+' : '') + (edge * 100).toFixed(2) + '%';
+    document.getElementById('evPerBet').textContent = (evPerBet >= 0 ? '+' : '') + '$' + evPerBet.toFixed(2);
+
+    // Generate warnings/recommendations
+    let warningHtml = '';
+    let recommendationHtml = '';
+
+    if (edge <= 0) {
+        warningHtml = '<div class="warning-box"><p><strong>Critical:</strong> With your current win rate and odds, you have no mathematical edge. No amount of bankroll management can save you. Focus on improving your handicapping before betting more.</p></div>';
+    } else if (rorPercent >= 10) {
+        // Calculate recommended bet size for 1% RoR
+        const targetRor = 0.01;
+        const neededUnits = Math.log(targetRor) / Math.log(r);
+        const recommendedBetSize = bankroll / neededUnits;
+
+        warningHtml = '<div class="warning-box"><p><strong>Warning:</strong> Your current bet sizing gives you a ' + rorPercent.toFixed(1) + '% chance of going broke. That means roughly 1 in ' + Math.round(100/rorPercent) + ' bettors with your setup will lose everything.</p></div>';
+
+        recommendationHtml = '<div class="tip-box"><p><strong>Recommendation:</strong> To achieve a 1% Risk of Ruin, reduce your bet size to approximately <strong>$' + recommendedBetSize.toFixed(2) + '</strong> (' + (recommendedBetSize/bankroll*100).toFixed(1) + '% of bankroll).</p></div>';
+    } else if (rorPercent >= 1) {
+        recommendationHtml = '<div class="tip-box"><p><strong>Solid Setup:</strong> Your risk is manageable. For even more safety, consider reducing to 1-2% of bankroll per bet.</p></div>';
+    } else {
+        recommendationHtml = '<div class="tip-box"><p><strong>Excellent:</strong> Your bankroll management is professional-grade. Your edge has plenty of room to compound without risk of ruin.</p></div>';
+    }
+
+    document.getElementById('warningMessage').innerHTML = warningHtml;
+    document.getElementById('recommendationBox').innerHTML = recommendationHtml;
+
+    // Show results
+    document.getElementById('calcResults').classList.add('show');
+    document.getElementById('calcResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Allow Enter key to calculate
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('.calculator-section input');
+    inputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateRoR();
+            }
+        });
+    });
+});
+
+// Mobile dropdown toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        if (dropbtn) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(d => d.classList.remove('active'));
+        }
+    });
+});
+</script>
+
+</body>
+</html>

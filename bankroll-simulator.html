@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://www.betlegendpicks.com/bankroll-simulator.html"/>
+
+    <title>Bankroll Simulator: See Your Long-Term Growth Potential | BetLegend</title>
+    <meta name="description" content="Simulate your bankroll growth over 5, 10, or 20 years. See how compounding works with your edge. Free calculator shows expected growth and variance ranges."/>
+
+    <meta name="keywords" content="bankroll simulator, betting bankroll growth, compounding calculator, sports betting projections, long-term betting returns"/>
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="author" content="BetLegend Picks">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.betlegendpicks.com/bankroll-simulator.html">
+    <meta property="og:title" content="Bankroll Simulator - Project Your Long-Term Growth">
+    <meta property="og:description" content="Free simulator shows how your bankroll compounds over years. See expected returns, variance, and growth projections.">
+    <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
+    <meta property="og:site_name" content="BetLegend Picks">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bankroll Simulator | BetLegend">
+    <meta name="twitter:description" content="Project your bankroll growth over 5-20 years. See how compounding builds wealth.">
+    <meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Bankroll Growth Simulator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Simulate long-term bankroll growth with compounding for sports bettors. Shows expected returns over 5, 10, and 20 years."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Bankroll Simulator: See Your Long-Term Growth Potential",
+      "description": "Compounding bankroll simulator for sports bettors. Project your expected bankroll growth over years based on win rate, odds, and bet sizing.",
+      "author": {
+        "@type": "Organization",
+        "name": "BetLegend Picks"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "BetLegend Picks",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.betlegendpicks.com/newlogo.png"
+        }
+      },
+      "datePublished": "2026-01-24",
+      "dateModified": "2026-01-24"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does compounding work in sports betting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When you bet a percentage of your bankroll rather than a fixed amount, your bet sizes grow as your bankroll grows. This creates a compounding effect where wins build on wins. A $1,000 bankroll betting 2% means $20 bets initially, but after doubling to $2,000, you're betting $40. This accelerates growth over time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What win rate do I need to grow my bankroll long-term?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At standard -110 odds, you need approximately 52.4% to break even (overcome the juice). Anything above that creates positive expected value. A 55% win rate at -110 gives you about 2.3% edge per bet, which compounds significantly over thousands of bets."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does variance matter even with an edge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Even with a 55% edge, you will experience losing weeks and months due to variance. The simulator shows best-case and worst-case scenarios to illustrate this. Some bettors with a real edge might be down after 6 months purely due to variance, which is why proper bankroll management is essential."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --neon-cyan: #00e0ff;
+            --neon-gold: #FFD700;
+            --neon-green: #00ff88;
+            --neon-orange: #ff8800;
+            --neon-purple: #aa66ff;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+            --font-content: 'Rubik', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-content);
+            background-color: var(--bg-color);
+            color: white;
+            overflow-x: hidden;
+            padding-top: 140px;
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
+        .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
+        .logo{position:fixed;top:15px;left:15px;z-index:1001}
+        .logo a{font-family:var(--font-primary);font-size:2.2rem;font-weight:900;color:#fff;text-decoration:none;text-shadow:0 0 10px rgba(255,255,255,0.5)}
+        .logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,255,255,0.8)}
+        .nav-links{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+        .nav-links>a,.nav-links>.dropdown,.dropbtn{font-family:var(--font-secondary);color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:12px 18px;white-space:nowrap;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;margin:0}
+        .nav-links>a:hover,.dropbtn:hover{color:#FFD700}
+        .dropdown{position:relative;padding:0;margin:0}
+        .dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(10,12,16,0.98);min-width:180px;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 0;margin-top:8px;z-index:9999}
+        .dropdown-content a{color:#00e5ff;padding:12px 18px;display:block;text-decoration:none;font-size:14px}
+        .dropdown-content a:hover{background:rgba(0,229,255,0.1);color:#fff}
+        .dropdown:hover .dropdown-content{display:block}
+        .dropdown.active .dropdown-content{display:block}
+        .dropdown.active .dropbtn{color:#FFD700}
+        @media(max-width:768px){
+            .dropdown-content{position:fixed!important;left:5%!important;right:5%!important;top:120px!important;width:90%!important;min-width:unset!important;max-height:65vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+            .nav-inner{padding:18px 5% 18px 5%;flex-wrap:wrap;justify-content:center;gap:40px}
+            .logo{position:relative;top:0;left:0;margin-bottom:10px}
+            .nav-links{justify-content:center}
+            .nav-links>a,.nav-links>.dropdown,.dropbtn{font-size:12px;padding:8px 12px;margin:0}
+            body{padding-top:180px}
+        }
+
+        /* Main Content Container */
+        .content-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            color: var(--neon-gold);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.15rem;
+            color: #aaa;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Quick Answer Box */
+        .quick-answer {
+            background: linear-gradient(135deg, rgba(0,224,255,0.12), rgba(0,224,255,0.04));
+            border: 2px solid var(--neon-cyan);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 850px;
+        }
+
+        .quick-answer-label {
+            font-weight: bold;
+            color: var(--neon-cyan);
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quick-answer p {
+            font-size: 17px;
+            line-height: 1.7;
+            margin: 0;
+            color: #ddd;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.05) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.3);
+        }
+
+        .calculator-section h2 {
+            font-family: var(--font-primary);
+            color: var(--neon-cyan);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .calc-input-group {
+            margin-bottom: 15px;
+        }
+
+        .calc-input-group label {
+            display: block;
+            color: var(--neon-gold);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .calc-input-group input,
+        .calc-input-group select {
+            width: 100%;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 224, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-family: var(--font-content);
+            transition: all 0.3s ease;
+        }
+
+        .calc-input-group input:focus,
+        .calc-input-group select:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
+        }
+
+        .helper-note {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .calc-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-gold));
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: var(--font-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calc-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.4);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .chart-container.show {
+            display: block;
+        }
+
+        .chart-title {
+            font-family: var(--font-primary);
+            color: var(--neon-gold);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #growthChart {
+            width: 100%;
+            height: 400px;
+            background: #0d0d12;
+            border-radius: 10px;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        /* Results Grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .results-grid.show {
+            display: grid;
+        }
+
+        .result-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .result-card.expected { border-color: var(--neon-cyan); }
+        .result-card.best { border-color: var(--neon-green); }
+        .result-card.worst { border-color: var(--neon-orange); }
+        .result-card.roi { border-color: var(--neon-gold); }
+
+        .result-label {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-family: var(--font-primary);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .result-card.expected .result-value { color: var(--neon-cyan); }
+        .result-card.best .result-value { color: var(--neon-green); }
+        .result-card.worst .result-value { color: var(--neon-orange); }
+        .result-card.roi .result-value { color: var(--neon-gold); }
+
+        .result-sub {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: rgba(255, 215, 0, 0.08);
+            border-left: 4px solid var(--neon-gold);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .insight-box.show {
+            display: block;
+        }
+
+        .insight-box h3 {
+            color: var(--neon-gold);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .insight-box p {
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 50px;
+        }
+
+        .content-section h2 {
+            font-family: var(--font-primary);
+            color: var(--neon-gold);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 224, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .content-section h3 {
+            color: var(--neon-cyan);
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 18px;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: var(--neon-gold);
+            font-weight: 600;
+        }
+
+        /* Warning/Tip Boxes */
+        .warning-box {
+            background: rgba(255, 68, 68, 0.1);
+            border-left: 4px solid #ff4444;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box p {
+            color: #ffaaaa;
+            margin: 0;
+        }
+
+        .tip-box {
+            background: rgba(0, 255, 136, 0.05);
+            border-left: 4px solid var(--neon-green);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box p {
+            color: #aaffcc;
+            margin: 0;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+        }
+
+        .example-box h4 {
+            color: var(--neon-gold);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Internal Links */
+        .internal-links {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        .internal-links h3 {
+            color: var(--neon-gold);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .internal-links ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 0;
+        }
+
+        .internal-links li {
+            margin: 0;
+        }
+
+        .internal-links a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .internal-links a:hover {
+            color: var(--neon-gold);
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .calc-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .calc-grid { grid-template-columns: 1fr; }
+            .calculator-section { padding: 25px; }
+            #growthChart { height: 300px; }
+            .results-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QS8L5TDNLY');
+    </script>
+</head>
+<body>
+
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Handicapping Hub</a>
+<a href="blog.html">Picks</a>
+<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a><a href="crosssport-parlays-records.html" title="Cross-Sport Bets">Cross-Sport Bets</a></div></div>
+<div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll Management</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="risk-of-ruin-calculator.html">Risk of Ruin</a><a href="bankroll-simulator.html">Bankroll Simulator</a><a href="betting-calculators.html">Calculators</a><a href="screenshots.html">Screenshots</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a><a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a><a href="contact.html">Contact Us</a></div></div>
+<a href="news-page4.html">News</a>
+<a href="injury-report.html">Injury Report</a>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page56.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+</div>
+</div>
+</nav>
+
+<div class="content-container">
+    <h1>Bankroll Simulator</h1>
+    <p class="subtitle">See exactly what happens to your bankroll over 5, 10, or 20 years. Watch compounding turn small edges into life-changing returns.</p>
+
+    <div class="quick-answer">
+        <p class="quick-answer-label">How Compounding Works in Betting</p>
+        <p>When you bet a <strong>percentage of your bankroll</strong> instead of a flat amount, your bet sizes grow as you win. A 55% bettor at -110 has about a 2.3% edge per bet. That might seem small, but over 500 bets per year for 10 years, compounding turns $1,000 into potentially $50,000+ (expected value). This simulator runs 1,000 Monte Carlo simulations to show you realistic outcomes including variance.</p>
+    </div>
+
+    <section class="calculator-section">
+        <h2>Simulate Your Bankroll Growth</h2>
+
+        <div class="calc-grid">
+            <div class="calc-input-group">
+                <label for="startBankroll">Starting Bankroll ($)</label>
+                <input type="number" id="startBankroll" value="1000" min="100">
+            </div>
+
+            <div class="calc-input-group">
+                <label for="winRate">Win Rate (%)</label>
+                <input type="number" id="winRate" value="55" min="50" max="75" step="0.5">
+                <p class="helper-note">52.4% = breakeven at -110</p>
+            </div>
+
+            <div class="calc-input-group">
+                <label for="odds">Average Odds (American)</label>
+                <input type="number" id="odds" value="-110">
+            </div>
+
+            <div class="calc-input-group">
+                <label for="betSize">Bet Size (% of Bankroll)</label>
+                <input type="number" id="betSize" value="2" min="0.5" max="10" step="0.5">
+                <p class="helper-note">1-3% recommended</p>
+            </div>
+
+            <div class="calc-input-group">
+                <label for="betsPerWeek">Bets per Week</label>
+                <input type="number" id="betsPerWeek" value="10" min="1" max="100">
+            </div>
+
+            <div class="calc-input-group">
+                <label for="years">Years to Simulate</label>
+                <select id="years">
+                    <option value="1">1 Year</option>
+                    <option value="5" selected>5 Years</option>
+                    <option value="10">10 Years</option>
+                    <option value="20">20 Years</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="calc-button" onclick="runSimulation()">Run Simulation</button>
+    </section>
+
+    <div class="chart-container" id="chartContainer">
+        <div class="chart-title">Bankroll Growth Over Time (1,000 Simulations)</div>
+        <canvas id="growthChart"></canvas>
+        <div class="chart-legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #00ff88;"></div>
+                <span>Best 10%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #00e0ff;"></div>
+                <span>Expected (Median)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff8800;"></div>
+                <span>Worst 10%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(255,255,255,0.2);"></div>
+                <span>All Outcomes Range</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-grid" id="resultsGrid">
+        <div class="result-card expected">
+            <div class="result-label">Expected (Median)</div>
+            <div class="result-value" id="expectedValue">$0</div>
+            <div class="result-sub" id="expectedGrowth">+0%</div>
+        </div>
+        <div class="result-card best">
+            <div class="result-label">Best 10% Outcome</div>
+            <div class="result-value" id="bestValue">$0</div>
+            <div class="result-sub" id="bestGrowth">+0%</div>
+        </div>
+        <div class="result-card worst">
+            <div class="result-label">Worst 10% Outcome</div>
+            <div class="result-value" id="worstValue">$0</div>
+            <div class="result-sub" id="worstGrowth">+0%</div>
+        </div>
+        <div class="result-card roi">
+            <div class="result-label">Annual ROI</div>
+            <div class="result-value" id="annualRoi">0%</div>
+            <div class="result-sub" id="totalBets">0 bets</div>
+        </div>
+    </div>
+
+    <div class="insight-box" id="insightBox">
+        <h3>Key Insight</h3>
+        <p id="insightText">Run the simulation to see projected outcomes.</p>
+    </div>
+
+    <section class="content-section">
+        <h2>Understanding the Power of Compounding</h2>
+
+        <p>Most bettors think about betting in terms of individual wins and losses. They see 55% as "barely better than a coin flip." What they're missing is the compounding effect over thousands of bets.</p>
+
+        <p>Here's the math that changes everything: If you bet 2% of your bankroll per bet with a 55% win rate at -110 odds, your expected growth per bet is about 0.046%. That seems tiny. But over 500 bets per year, that compounds to roughly 26% annual return. Over 10 years? Your $1,000 becomes $10,000+ on average.</p>
+
+        <div class="example-box">
+            <h4>Example: 55% Win Rate, -110 Odds, 2% Bet Size</h4>
+            <p><strong>Edge per bet:</strong> ~2.3%</p>
+            <p><strong>Expected growth per bet:</strong> ~0.046% of bankroll</p>
+            <p><strong>Bets per year (10/week):</strong> 520</p>
+            <p><strong>Expected annual growth:</strong> ~27%</p>
+            <p><strong>$1,000 after 5 years:</strong> ~$3,300 (median)</p>
+            <p><strong>$1,000 after 10 years:</strong> ~$11,000 (median)</p>
+            <p>Note: These are median outcomes. Due to variance, your actual results could be significantly higher or lower.</p>
+        </div>
+
+        <h3>Why Percentage-Based Betting Matters</h3>
+        <p>The simulator assumes you bet a percentage of your current bankroll, not a fixed dollar amount. This is critical for two reasons:</p>
+        <ul>
+            <li><span class="highlight">Compounding gains:</span> As your bankroll grows, your bet sizes grow proportionally, accelerating your returns.</li>
+            <li><span class="highlight">Protecting against ruin:</span> As your bankroll shrinks during losing streaks, your bet sizes shrink too, making it nearly impossible to go broke.</li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>What the Simulation Shows</h2>
+
+        <h3>The Variance Reality</h3>
+        <p>The chart shows not just expected outcomes, but the range of possible outcomes. Even with a real edge, some unlucky bettors will be down after a year. Some lucky ones will be up 5x. This variance is built into the math, and you need to be mentally prepared for it.</p>
+
+        <p>The simulation runs 1,000 separate paths, each using random outcomes based on your win probability. The "Expected" line shows the median outcome (50th percentile). The "Best 10%" shows where the luckiest 10% ended up. The "Worst 10%" shows the unluckiest.</p>
+
+        <h3>Key Takeaways from Any Simulation</h3>
+        <ul>
+            <li><span class="highlight">Time is your friend:</span> The longer you bet with an edge, the more likely you are to see positive results. Variance smooths out over time.</li>
+            <li><span class="highlight">Bet size matters enormously:</span> Try running the simulation with 1% vs 5% bet sizes. Higher bet sizes increase both potential gains AND potential losses.</li>
+            <li><span class="highlight">Edge is everything:</span> Compare 55% vs 53% win rates. That 2% difference in skill translates to massive differences in long-term outcomes.</li>
+        </ul>
+
+        <div class="tip-box">
+            <p><strong>Try This:</strong> Run the simulation with different bet sizes (1%, 2%, 5%). Notice how higher bet sizes increase the spread between best and worst outcomes. This is the risk-reward tradeoff in action.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Realistic Expectations</h2>
+
+        <p>Before you get too excited about the projected returns, here are some reality checks:</p>
+
+        <h3>1. Win Rate Estimation is Hard</h3>
+        <p>Most bettors overestimate their win rate. You need 1,000+ tracked bets to have a reliable estimate. If you think you're at 55% but you're actually at 52%, your projections are way off. Always use conservative estimates.</p>
+
+        <h3>2. The Market Gets Harder</h3>
+        <p>As you bet larger amounts, you may move lines against yourself, get limited by sportsbooks, or find it harder to get down on good lines. The simulation assumes constant edge, which may not hold at scale.</p>
+
+        <h3>3. Discipline is Required</h3>
+        <p>The simulation assumes perfect discipline. It assumes you never chase losses, never overbet on "locks," and always stick to your percentage-based system. In reality, emotional decisions destroy more bankrolls than bad handicapping.</p>
+
+        <h3>4. Taxes Exist</h3>
+        <p>Depending on your jurisdiction, you may owe taxes on gambling winnings. This isn't factored into the simulation. Consult a tax professional.</p>
+
+        <div class="warning-box">
+            <p><strong>Important:</strong> This simulator shows what's mathematically possible with a consistent edge. It does not guarantee results. Past performance and simulated outcomes are not guarantees of future results. Only bet what you can afford to lose.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Optimizing Your Setup</h2>
+
+        <h3>Finding the Right Bet Size</h3>
+        <p>The Kelly Criterion suggests betting a percentage equal to your edge divided by the odds. For 55% at -110, full Kelly is about 4.6%. But most pros use half or quarter Kelly to reduce variance. A 1-2% bet size offers a good balance of growth and stability.</p>
+
+        <h3>Maximizing Bet Volume</h3>
+        <p>More bets = faster compounding (assuming you maintain your edge). If you can find 20 good bets per week instead of 10, your expected returns roughly double. But quality matters more than quantity. Never force bad bets just to increase volume.</p>
+
+        <h3>The Long Game</h3>
+        <p>Notice how the curves accelerate over time. Years 1-2 show modest growth. Years 8-10 show explosive growth. This is compounding in action. The bettors who win big are the ones who stay disciplined for years, not months.</p>
+    </section>
+
+    <div class="internal-links">
+        <h3>Related Tools &amp; Resources</h3>
+        <ul>
+            <li><a href="kelly-criterion.html">Kelly Criterion Calculator - Find Your Optimal Bet Size</a></li>
+            <li><a href="risk-of-ruin-calculator.html">Risk of Ruin Calculator - Know Your Bust Probability</a></li>
+            <li><a href="bankroll.html">Complete Bankroll Management Guide</a></li>
+            <li><a href="betting-calculators.html">All Betting Calculators</a></li>
+            <li><a href="records.html">View Our Verified Betting Records</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+function runSimulation() {
+    const startBankroll = parseFloat(document.getElementById('startBankroll').value) || 1000;
+    const winRate = parseFloat(document.getElementById('winRate').value) / 100 || 0.55;
+    const americanOdds = parseFloat(document.getElementById('odds').value) || -110;
+    const betSizePct = parseFloat(document.getElementById('betSize').value) / 100 || 0.02;
+    const betsPerWeek = parseInt(document.getElementById('betsPerWeek').value) || 10;
+    const years = parseInt(document.getElementById('years').value) || 5;
+
+    // Convert American odds to decimal
+    let decimalOdds;
+    if (americanOdds > 0) {
+        decimalOdds = 1 + (americanOdds / 100);
+    } else {
+        decimalOdds = 1 + (100 / Math.abs(americanOdds));
+    }
+
+    const totalBets = betsPerWeek * 52 * years;
+    const numSimulations = 1000;
+    const samplePoints = Math.min(totalBets, 100); // Points to plot on chart
+
+    // Run Monte Carlo simulations
+    const allResults = [];
+    const finalValues = [];
+
+    for (let sim = 0; sim < numSimulations; sim++) {
+        let bankroll = startBankroll;
+        const history = [startBankroll];
+        const sampleInterval = Math.max(1, Math.floor(totalBets / samplePoints));
+
+        for (let bet = 0; bet < totalBets; bet++) {
+            const betAmount = bankroll * betSizePct;
+            const won = Math.random() < winRate;
+
+            if (won) {
+                bankroll += betAmount * (decimalOdds - 1);
+            } else {
+                bankroll -= betAmount;
+            }
+
+            bankroll = Math.max(0, bankroll);
+
+            if ((bet + 1) % sampleInterval === 0 || bet === totalBets - 1) {
+                history.push(bankroll);
+            }
+        }
+
+        allResults.push(history);
+        finalValues.push(bankroll);
+    }
+
+    // Sort final values to get percentiles
+    finalValues.sort((a, b) => a - b);
+
+    const medianIdx = Math.floor(numSimulations * 0.5);
+    const best10Idx = Math.floor(numSimulations * 0.9);
+    const worst10Idx = Math.floor(numSimulations * 0.1);
+
+    const medianValue = finalValues[medianIdx];
+    const best10Value = finalValues[best10Idx];
+    const worst10Value = finalValues[worst10Idx];
+
+    // Calculate percentile paths for chart
+    const numPoints = allResults[0].length;
+    const medianPath = [];
+    const best10Path = [];
+    const worst10Path = [];
+    const minPath = [];
+    const maxPath = [];
+
+    for (let i = 0; i < numPoints; i++) {
+        const valuesAtPoint = allResults.map(r => r[i]).sort((a, b) => a - b);
+        medianPath.push(valuesAtPoint[Math.floor(numSimulations * 0.5)]);
+        best10Path.push(valuesAtPoint[Math.floor(numSimulations * 0.9)]);
+        worst10Path.push(valuesAtPoint[Math.floor(numSimulations * 0.1)]);
+        minPath.push(valuesAtPoint[Math.floor(numSimulations * 0.02)]);
+        maxPath.push(valuesAtPoint[Math.floor(numSimulations * 0.98)]);
+    }
+
+    // Draw chart
+    drawChart(medianPath, best10Path, worst10Path, minPath, maxPath, years);
+
+    // Update results
+    document.getElementById('expectedValue').textContent = '$' + formatNumber(medianValue);
+    document.getElementById('expectedGrowth').textContent = '+' + ((medianValue / startBankroll - 1) * 100).toFixed(0) + '%';
+
+    document.getElementById('bestValue').textContent = '$' + formatNumber(best10Value);
+    document.getElementById('bestGrowth').textContent = '+' + ((best10Value / startBankroll - 1) * 100).toFixed(0) + '%';
+
+    document.getElementById('worstValue').textContent = '$' + formatNumber(worst10Value);
+    document.getElementById('worstGrowth').textContent = worst10Value >= startBankroll ?
+        '+' + ((worst10Value / startBankroll - 1) * 100).toFixed(0) + '%' :
+        ((worst10Value / startBankroll - 1) * 100).toFixed(0) + '%';
+
+    const annualRoi = (Math.pow(medianValue / startBankroll, 1 / years) - 1) * 100;
+    document.getElementById('annualRoi').textContent = '+' + annualRoi.toFixed(1) + '%';
+    document.getElementById('totalBets').textContent = totalBets.toLocaleString() + ' bets';
+
+    // Generate insight
+    generateInsight(startBankroll, medianValue, best10Value, worst10Value, years, winRate);
+
+    // Show results
+    document.getElementById('chartContainer').classList.add('show');
+    document.getElementById('resultsGrid').classList.add('show');
+    document.getElementById('insightBox').classList.add('show');
+
+    document.getElementById('chartContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function formatNumber(num) {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(2) + 'M';
+    } else if (num >= 1000) {
+        return Math.round(num).toLocaleString();
+    }
+    return num.toFixed(2);
+}
+
+function drawChart(median, best, worst, min, max, years) {
+    const canvas = document.getElementById('growthChart');
+    const ctx = canvas.getContext('2d');
+
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * 2;
+    canvas.height = rect.height * 2;
+    ctx.scale(2, 2);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { top: 30, right: 30, bottom: 50, left: 80 };
+
+    // Clear
+    ctx.fillStyle = '#0d0d12';
+    ctx.fillRect(0, 0, width, height);
+
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+
+    // Find max value for scaling
+    const allValues = [...max];
+    const maxVal = Math.max(...allValues) * 1.1;
+    const minVal = 0;
+
+    // Draw grid
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.lineWidth = 0.5;
+    ctx.font = '11px Rubik';
+    ctx.fillStyle = '#666';
+
+    for (let i = 0; i <= 5; i++) {
+        const y = padding.top + (chartHeight * i / 5);
+        ctx.beginPath();
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(width - padding.right, y);
+        ctx.stroke();
+
+        const value = maxVal - (maxVal - minVal) * i / 5;
+        ctx.textAlign = 'right';
+        ctx.fillText('$' + formatNumber(value), padding.left - 10, y + 4);
+    }
+
+    // Draw range fill (between min and max)
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.beginPath();
+    for (let i = 0; i < max.length; i++) {
+        const x = padding.left + (i / (max.length - 1)) * chartWidth;
+        const y = padding.top + chartHeight - ((max[i] - minVal) / (maxVal - minVal)) * chartHeight;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    }
+    for (let i = min.length - 1; i >= 0; i--) {
+        const x = padding.left + (i / (min.length - 1)) * chartWidth;
+        const y = padding.top + chartHeight - ((min[i] - minVal) / (maxVal - minVal)) * chartHeight;
+        ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    // Draw lines
+    function drawLine(data, color, lineWidth) {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = lineWidth || 2;
+        ctx.beginPath();
+        for (let i = 0; i < data.length; i++) {
+            const x = padding.left + (i / (data.length - 1)) * chartWidth;
+            const y = padding.top + chartHeight - ((data[i] - minVal) / (maxVal - minVal)) * chartHeight;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+    }
+
+    drawLine(worst, '#ff8800', 2);
+    drawLine(best, '#00ff88', 2);
+    drawLine(median, '#00e0ff', 3);
+
+    // X-axis labels
+    ctx.fillStyle = '#666';
+    ctx.textAlign = 'center';
+    for (let i = 0; i <= years; i++) {
+        const x = padding.left + (i / years) * chartWidth;
+        ctx.fillText('Year ' + i, x, height - 15);
+    }
+}
+
+function generateInsight(start, median, best, worst, years, winRate) {
+    const medianMultiple = (median / start).toFixed(1);
+    const annualReturn = ((Math.pow(median / start, 1 / years) - 1) * 100).toFixed(1);
+    const edge = ((winRate * 1.909 - 1) * 100).toFixed(1);
+
+    let insight = '';
+
+    if (worst < start) {
+        insight = `Even with a ${(winRate * 100).toFixed(1)}% win rate (${edge}% edge), about 10% of bettors would still be down after ${years} years due to variance. `;
+        insight += `However, the median outcome is ${medianMultiple}x your starting bankroll. `;
+        insight += `This shows why patience and proper bankroll management are essential. The edge is real, but variance is brutal in the short term.`;
+    } else {
+        insight = `With a ${(winRate * 100).toFixed(1)}% win rate, even the unluckiest 10% of bettors would grow their bankroll over ${years} years. `;
+        insight += `The median bettor would turn their bankroll into ${medianMultiple}x the starting amount, averaging ${annualReturn}% annual returns. `;
+        insight += `This is the power of compounding a consistent edge over time.`;
+    }
+
+    document.getElementById('insightText').textContent = insight;
+}
+
+// Mobile dropdown toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        if (dropbtn) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(d => d.classList.remove('active'));
+        }
+    });
+});
+</script>
+
+</body>
+</html>
