@@ -1,0 +1,605 @@
+/* ==========================================================================
+   BetLegend Mobile Optimization - External Stylesheet
+   ZERO desktop changes. ALL rules are inside @media queries.
+   Desktop is completely untouched.
+   Created: January 26, 2026
+   ========================================================================== */
+
+
+/* ===== BREAKPOINT: 1024px ===== */
+@media (max-width: 1024px) {
+
+  /* Fix the 280px nav padding bug on sports/featured pages.
+     .nav-inner has padding-left: 280px to account for the calendar sidebar,
+     but the sidebar hides at 1200px. The padding must reduce too. */
+  .nav-inner {
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+  }
+
+  /* Nav links should start wrapping instead of overflowing */
+  .nav-links {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 4px !important;
+  }
+}
+
+
+/* ===== BREAKPOINT: 768px ===== */
+@media (max-width: 768px) {
+
+  /* --- UNIVERSAL NAV FIXES (all templates) --- */
+  .nav-inner {
+    padding: 15px 5% !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  .logo {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin-bottom: 8px !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .logo a {
+    font-size: 1.8rem !important;
+  }
+
+  .nav-links,
+  .nav-menu {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 4px !important;
+  }
+
+  .nav-links > a,
+  .nav-links > .dropdown,
+  .nav-links .dropbtn {
+    font-size: 11px !important;
+    padding: 8px 10px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* --- DROPDOWN FIXES (all templates) --- */
+  .dropdown-content,
+  .sports-records-dropdown {
+    position: fixed !important;
+    left: 5% !important;
+    right: 5% !important;
+    top: auto !important;
+    width: 90% !important;
+    min-width: unset !important;
+    max-width: none !important;
+    max-height: 65vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    z-index: 999999 !important;
+  }
+
+  /* --- TWO-COLUMN DROPDOWNS --- */
+  .two-columns {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .column h4 {
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+  }
+
+  .column a {
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* --- SPORTS PAGE GAME CARDS --- */
+  .game-header {
+    gap: 12px !important;
+    padding: 40px 16px 16px !important;
+  }
+
+  .team-logo {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .matchup-info h2 {
+    font-size: 18px !important;
+  }
+
+  .game-time {
+    font-size: 12px !important;
+  }
+
+  .betting-section {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    padding: 0 12px 16px !important;
+  }
+
+  .bet-box {
+    padding: 10px 6px !important;
+  }
+
+  .bet-label {
+    font-size: 9px !important;
+    letter-spacing: 1px !important;
+  }
+
+  .bet-value {
+    font-size: 14px !important;
+  }
+
+  .preview-content {
+    padding: 16px !important;
+    font-size: 15px !important;
+  }
+
+  .game-number {
+    font-size: 10px !important;
+    padding: 4px 10px !important;
+    top: 12px !important;
+    left: 12px !important;
+  }
+
+  .broadcast-badge {
+    font-size: 9px !important;
+    padding: 4px 8px !important;
+    top: 12px !important;
+    right: 12px !important;
+  }
+
+  .hero-badge {
+    font-size: 12px !important;
+    padding: 8px 18px !important;
+  }
+
+  .page-wrapper {
+    padding: 0 12px 60px !important;
+  }
+
+  /* --- FEATURED GAME PAGES --- */
+  .content-wrapper {
+    padding: 0 12px !important;
+  }
+
+  .header-section {
+    padding: 30px 12px 20px !important;
+  }
+
+  .main-title {
+    font-size: clamp(1.6rem, 4vw, 2.5rem) !important;
+  }
+
+  .subtitle {
+    font-size: 0.85rem !important;
+    letter-spacing: 2px !important;
+  }
+
+  .game-card .game-header,
+  .content-section {
+    padding: 16px !important;
+  }
+
+  .game-title {
+    font-size: clamp(1.2rem, 3vw, 1.8rem) !important;
+  }
+
+  .title-logo-inline {
+    width: 35px !important;
+    height: 35px !important;
+  }
+
+  .betting-lines {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .matchup-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .team-card {
+    padding: 16px !important;
+  }
+
+  .section-header {
+    font-size: clamp(1rem, 2.5vw, 1.4rem) !important;
+  }
+
+  /* --- BLOG PAGES --- */
+  .blog-post {
+    margin: 16px 8px !important;
+  }
+
+  .post-header {
+    font-size: 20px !important;
+    padding: 20px 16px 8px !important;
+  }
+
+  .post-time {
+    font-size: 12px !important;
+  }
+
+  .analysis-content {
+    padding: 0 16px !important;
+  }
+
+  .analysis-content p {
+    font-size: 15px !important;
+  }
+
+  .blog-post figure {
+    padding: 0 12px !important;
+  }
+
+  .verdict {
+    margin: 16px !important;
+    padding: 24px 16px !important;
+  }
+
+  .verdict-title {
+    font-size: 14px !important;
+  }
+
+  .the-pick {
+    font-size: 22px !important;
+  }
+
+  .share-buttons {
+    padding: 12px 16px !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .share-buttons a {
+    font-size: 11px !important;
+    padding: 6px 12px !important;
+  }
+
+  /* --- NEWS PAGES --- */
+  .news-container {
+    padding: 16px 12px !important;
+  }
+
+  .news-post {
+    padding: 20px !important;
+  }
+
+  .news-post h2 {
+    font-size: 18px !important;
+  }
+
+  .news-header h1 {
+    font-size: 24px !important;
+  }
+
+  /* --- FOOTER --- */
+  footer {
+    padding: 30px 16px !important;
+    font-size: 12px !important;
+  }
+}
+
+
+/* ===== BREAKPOINT: 640px ===== */
+@media (max-width: 640px) {
+
+  /* Sports page game headers - keep side-by-side but tighter */
+  .game-header {
+    gap: 8px !important;
+    padding: 36px 12px 12px !important;
+  }
+
+  .team-logo {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .matchup-info h2 {
+    font-size: 16px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* Betting section - keep 3-col but tighter */
+  .bet-value {
+    font-size: 13px !important;
+  }
+
+  .bet-label {
+    font-size: 8px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* Blog verdict box */
+  .the-pick {
+    font-size: 20px !important;
+    letter-spacing: 1px !important;
+  }
+
+  /* Featured game betting lines - stack to single column */
+  .betting-lines {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hero adjustments */
+  .hero h1 {
+    font-size: clamp(20px, 5vw, 30px) !important;
+  }
+
+  .hero p {
+    font-size: 14px !important;
+  }
+
+  .hero-sub {
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .hero-badge {
+    font-size: 10px !important;
+    padding: 6px 14px !important;
+  }
+}
+
+
+/* ===== BREAKPOINT: 480px ===== */
+@media (max-width: 480px) {
+
+  /* Nav becomes column layout */
+  .nav-inner {
+    flex-direction: column !important;
+    padding: 12px 10px !important;
+    gap: 6px !important;
+  }
+
+  .logo a {
+    font-size: 1.5rem !important;
+  }
+
+  .nav-links,
+  .nav-menu {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 3px !important;
+  }
+
+  .nav-links > a,
+  .nav-links .dropbtn,
+  .nav-link,
+  .dropdown .dropbtn {
+    font-size: 9px !important;
+    padding: 6px 8px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .hub-btn {
+    font-size: 0.7rem !important;
+    padding: 8px 14px !important;
+    margin-right: 0 !important;
+  }
+
+  /* Sports page game headers - stack vertically */
+  .game-header {
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 36px 10px 10px !important;
+  }
+
+  .team-logo {
+    width: 56px !important;
+    height: 56px !important;
+  }
+
+  .matchup-info h2 {
+    font-size: 18px !important;
+  }
+
+  /* Betting section stacks to single column */
+  .betting-section {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    padding: 0 10px 14px !important;
+  }
+
+  .bet-box {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 14px !important;
+  }
+
+  .bet-label {
+    margin-bottom: 0 !important;
+    font-size: 10px !important;
+  }
+
+  .bet-value {
+    font-size: 16px !important;
+  }
+
+  .preview-content {
+    padding: 12px 10px !important;
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+  }
+
+  /* Blog posts */
+  .blog-post {
+    margin: 12px 4px !important;
+  }
+
+  .post-header {
+    font-size: 18px !important;
+    padding: 16px 12px 6px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .analysis-content {
+    padding: 0 12px !important;
+  }
+
+  .analysis-content p {
+    font-size: 14px !important;
+  }
+
+  .blog-post figure {
+    padding: 0 8px !important;
+  }
+
+  .verdict {
+    margin: 12px 8px !important;
+    padding: 20px 12px !important;
+  }
+
+  .the-pick {
+    font-size: 18px !important;
+    letter-spacing: 1px !important;
+  }
+
+  .share-buttons {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .share-buttons a {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* Featured game pages */
+  .game-title {
+    font-size: 1.1rem !important;
+  }
+
+  .title-logo-inline {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .streak-box,
+  .history-box,
+  .danger-box,
+  .rivalry-box {
+    padding: 14px !important;
+    margin: 14px 0 !important;
+  }
+
+  .player-stats {
+    padding: 10px !important;
+  }
+
+  .section-text {
+    font-size: 0.9rem !important;
+  }
+
+  /* Dropdown: stack to single column */
+  .two-columns {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* Hero */
+  .hero {
+    padding-bottom: 20px !important;
+  }
+
+  .hero h1 {
+    font-size: clamp(18px, 5vw, 26px) !important;
+  }
+
+  .hero p {
+    font-size: 13px !important;
+  }
+
+  /* Mobile archive dropdown */
+  .mobile-archive {
+    margin-bottom: 20px !important;
+    padding: 12px 14px !important;
+  }
+}
+
+
+/* ===== BREAKPOINT: 360px (smallest phones) ===== */
+@media (max-width: 360px) {
+
+  .logo a {
+    font-size: 1.3rem !important;
+  }
+
+  .nav-links > a,
+  .nav-links .dropbtn,
+  .nav-link,
+  .dropdown .dropbtn {
+    font-size: 8px !important;
+    padding: 5px 6px !important;
+  }
+
+  .hub-btn {
+    font-size: 0.6rem !important;
+    padding: 6px 10px !important;
+  }
+
+  .matchup-info h2 {
+    font-size: 16px !important;
+  }
+
+  .post-header {
+    font-size: 16px !important;
+  }
+
+  .preview-content {
+    font-size: 13px !important;
+  }
+
+  .analysis-content p {
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+  }
+
+  .the-pick {
+    font-size: 16px !important;
+  }
+
+  .hero h1 {
+    font-size: 18px !important;
+    letter-spacing: 1px !important;
+  }
+}
+
+
+/* ===== TOUCH DEVICE OVERRIDES ===== */
+@media (hover: none) and (pointer: coarse) {
+
+  /* Disable hover transforms on touch devices to prevent double-tap issues */
+  .game-preview:hover {
+    transform: none !important;
+  }
+
+  /* Make tap targets minimum 44px for accessibility */
+  .nav-links > a,
+  .nav-links .dropbtn,
+  .nav-link,
+  .dropdown .dropbtn {
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  .column a {
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .cal-day.has-content {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+}
