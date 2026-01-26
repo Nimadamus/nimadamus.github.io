@@ -867,7 +867,7 @@ def generate_html(all_data):
                 </div>
 
                 <!-- News -->
-                <a href="news-page3.html" class="nav-link">News</a>
+                <a href="news-page4.html" class="nav-link">News</a>
 
                 <!-- Injury Report -->
                 <a href="injury-report.html" class="nav-link active">Injury Report</a>
