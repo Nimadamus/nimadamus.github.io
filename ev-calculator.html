@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="canonical" href="https://www.betlegendpicks.com/ev-calculator.html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Free Expected Value Calculator for Sports Betting | BetLegend</title>
+    <meta name="description" content="Is your bet worth taking? This free EV calculator shows your exact edge in seconds. Enter odds and win probability to find +EV bets instantly."/>
+    <meta name="keywords" content="expected value calculator, EV calculator, sports betting EV, positive EV betting, expected value sports betting"/>
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="BetLegend Picks">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.betlegendpicks.com/ev-calculator.html">
+    <meta property="og:title" content="Free Expected Value (EV) Calculator for Sports Betting">
+    <meta property="og:description" content="Calculate the expected value of any sports bet instantly. Free EV calculator with edge detection and +EV identification.">
+    <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png">
+    <meta property="og:site_name" content="BetLegend Picks">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.betlegendpicks.com/ev-calculator.html">
+    <meta name="twitter:title" content="Free EV Calculator for Sports Betting">
+    <meta name="twitter:description" content="Enter your odds and win probability to instantly see if a bet has positive expected value.">
+    <meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Expected Value Calculator and EV Guide for Sports Betting",
+      "description": "Calculate expected value for any sports bet. Understand what EV means, how it works, and why it determines long-term betting results.",
+      "author": { "@type": "Organization", "name": "BetLegend Picks" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "BetLegend Picks",
+        "logo": { "@type": "ImageObject", "url": "https://www.betlegendpicks.com/newlogo.png" }
+      },
+      "datePublished": "2026-01-26",
+      "dateModified": "2026-01-26"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Expected Value Calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Free calculator that determines expected value for sports bets based on odds and estimated win probability."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a positive EV bet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A positive expected value (+EV) bet is one where your estimated win probability exceeds the implied probability from the odds. Over a large sample of bets, +EV wagers produce a net gain."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a +EV bet still lose?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Expected value describes average outcomes over many repetitions. Any single +EV bet can lose. The math converges over hundreds or thousands of bets, not on any individual wager."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I estimate my win probability?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Two common methods: build a statistical model using historical data and situational factors, or compare odds across sharp sportsbooks to derive no-vig probabilities as a baseline."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between EV and ROI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "EV measures average profit per bet in dollars. ROI expresses profit as a percentage of amount wagered. A $5 EV on a $100 bet equals 5% ROI. Both measure the same concept in different units."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What EV percentage is considered good?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Any positive EV is mathematically worth betting. Professional bettors typically target edges of 2-5%. Even 1-2% edges are valuable at sufficient volume because they compound over time."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #eaf8ff;
+            --glow-color: #00e0ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #FFD700;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            background: var(--bg-color);
+            color: #ddd;
+            overflow-x: hidden;
+            padding-top: 140px;
+            line-height: 1.7;
+        }
+
+        /* === NAV (site-wide, shared across all BetLegend pages) === */
+        .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
+        .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
+        .logo{position:fixed;top:15px;left:15px;z-index:1001}
+        .logo a{font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:900;color:#fff;text-decoration:none;text-shadow:0 0 10px rgba(255,255,255,0.5)}
+        .logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,255,255,0.8)}
+        .nav-links{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+        .nav-links>a,.nav-links>.dropdown,.dropbtn{font-family:'Poppins',sans-serif;color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:12px 18px;white-space:nowrap;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;margin:0}
+        .nav-links>a:hover,.dropbtn:hover{color:#FFD700}
+        .dropdown{position:relative;padding:0;margin:0}
+        .dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(10,12,16,0.98);min-width:180px;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 0;margin-top:8px;z-index:9999}
+        .dropdown-content a{color:#00e5ff;padding:12px 18px;display:block;text-decoration:none;font-size:14px}
+        .dropdown-content a:hover{background:rgba(0,229,255,0.1);color:#fff}
+        .dropdown:hover .dropdown-content{display:block}
+        .dropdown.active .dropdown-content{display:block}
+        .dropdown.active .dropbtn{color:#FFD700}
+
+        /* === PAGE LAYOUT === */
+        .page-wrap {
+            max-width: 940px;
+            margin: 0 auto;
+            padding: 0 24px 80px 24px;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.6rem;
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--neon-gold);
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: #8899aa;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .breadcrumb {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        .breadcrumb a { color: #00e0ff; text-decoration: none; }
+        .breadcrumb a:hover { color: var(--neon-gold); }
+
+        /* === CALCULATOR === */
+        .ev-calc {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(0,224,255,0.25);
+            border-radius: 16px;
+            padding: 36px;
+            margin-bottom: 48px;
+        }
+
+        .ev-calc h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-cyan);
+            font-size: 1.5rem;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .ev-field {
+            margin-bottom: 22px;
+        }
+
+        .ev-field label {
+            display: block;
+            color: #aabbcc;
+            font-weight: 600;
+            font-size: 0.92rem;
+            margin-bottom: 6px;
+        }
+
+        .ev-field input {
+            width: 100%;
+            padding: 14px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(0,224,255,0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1.05rem;
+            font-family: 'Rubik', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .ev-field input:focus {
+            border-color: #00e0ff;
+            outline: none;
+        }
+
+        .ev-field input::placeholder { color: #444; }
+
+        .ev-field-hint {
+            font-size: 0.78rem;
+            color: #667;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .ev-implied-line {
+            font-size: 0.84rem;
+            color: #00e0ff;
+            margin-top: 5px;
+            min-height: 18px;
+        }
+
+        .ev-calc-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #00b8d4, #0080ff);
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.15s, box-shadow 0.15s;
+            margin-top: 8px;
+        }
+
+        .ev-calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,128,255,0.35);
+        }
+
+        /* === RESULTS === */
+        .ev-results {
+            display: none;
+            margin-top: 32px;
+            padding: 28px;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .ev-results.visible { display: block; animation: fadeUp 0.4s ease; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ev-verdict {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+        }
+
+        .ev-verdict.pos { background: rgba(0,255,120,0.08); border: 1px solid rgba(0,255,120,0.3); }
+        .ev-verdict.neg { background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.3); }
+        .ev-verdict.zero { background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.3); }
+
+        .ev-verdict-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .ev-verdict.pos .ev-verdict-label { color: #00ff88; }
+        .ev-verdict.neg .ev-verdict-label { color: #ff4444; }
+        .ev-verdict.zero .ev-verdict-label { color: #FFD700; }
+
+        .ev-verdict-explain {
+            color: #bbb;
+            font-size: 0.95rem;
+        }
+
+        .ev-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .ev-metric {
+            text-align: center;
+            padding: 14px 8px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+        }
+
+        .ev-metric-label {
+            font-size: 0.78rem;
+            color: #778;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .ev-metric-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .ev-metric-value.pos { color: #00ff88; }
+        .ev-metric-value.neg { color: #ff4444; }
+
+        .ev-after-links {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+            display: none;
+        }
+        .ev-after-links a {
+            color: #667;
+            font-size: 0.85rem;
+            text-decoration: none;
+            margin: 0 14px;
+            transition: color 0.2s;
+        }
+        .ev-after-links a:hover { color: var(--neon-gold); }
+
+        /* === CONTENT SECTIONS === */
+        .ev-section {
+            margin-bottom: 52px;
+        }
+
+        .ev-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-gold);
+            font-size: 1.55rem;
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255,215,0,0.2);
+        }
+
+        .ev-section h3 {
+            color: #00e0ff;
+            font-size: 1.15rem;
+            margin: 28px 0 12px 0;
+        }
+
+        .ev-section p {
+            font-size: 1.04rem;
+            line-height: 1.8;
+            margin-bottom: 14px;
+            color: #ccc;
+        }
+
+        .ev-section ul, .ev-section ol {
+            margin: 0 0 18px 24px;
+            font-size: 1.04rem;
+            line-height: 2;
+            color: #ccc;
+        }
+
+        .ev-section a { color: #00e0ff; text-decoration: none; }
+        .ev-section a:hover { color: var(--neon-gold); }
+
+        .ev-formula {
+            background: rgba(0,224,255,0.06);
+            border: 1px solid rgba(0,224,255,0.25);
+            padding: 22px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.15rem;
+            color: #00e0ff;
+            margin: 22px 0;
+        }
+
+        .ev-example {
+            background: rgba(0,0,0,0.25);
+            border-left: 3px solid #00e0ff;
+            padding: 20px 24px;
+            margin: 22px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .ev-example h4 {
+            color: var(--neon-gold);
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+        .ev-example p {
+            color: #bbb;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .ev-note {
+            padding: 16px 20px;
+            margin: 22px 0;
+            border-radius: 8px;
+        }
+        .ev-note.caution {
+            background: rgba(255,50,50,0.04);
+            border-left: 3px solid #ff4444;
+        }
+        .ev-note.caution p { color: #eeb; margin: 0; }
+        .ev-note.insight {
+            background: rgba(0,255,100,0.04);
+            border-left: 3px solid #00cc55;
+        }
+        .ev-note.insight p { color: #aaddb8; margin: 0; }
+
+        .ev-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 22px 0;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .ev-table th {
+            background: rgba(0,224,255,0.12);
+            color: #00e0ff;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(0,224,255,0.3);
+        }
+        .ev-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        .ev-table tr:hover { background: rgba(0,224,255,0.03); }
+
+        /* === FAQ === */
+        .ev-faq {
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,215,0,0.25);
+            border-radius: 14px;
+            padding: 32px;
+            margin-bottom: 48px;
+        }
+
+        .ev-faq h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-gold);
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .ev-faq-item {
+            margin-bottom: 24px;
+        }
+        .ev-faq-item:last-child { margin-bottom: 0; }
+
+        .ev-faq-item h3 {
+            color: #00e0ff;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .ev-faq-item p {
+            color: #bbb;
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+
+        /* === RELATED LINKS === */
+        .ev-related {
+            background: rgba(255,215,0,0.04);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .ev-related h3 {
+            color: var(--neon-gold);
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+
+        .ev-related ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .ev-related a {
+            color: #00e0ff;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .ev-related a:hover {
+            color: var(--neon-gold);
+            background: rgba(255,215,0,0.08);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .dropdown-content {
+                position: fixed !important;
+                left: 5% !important; right: 5% !important; top: 120px !important;
+                width: 90% !important; min-width: unset !important;
+                max-height: 65vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+                z-index: 999999 !important;
+            }
+            body { padding-top: 180px; }
+            .nav-inner { padding: 18px 5% 18px 5%; flex-wrap: wrap; justify-content: center; gap: 40px; }
+            .logo { position: relative; top: 0; left: 0; margin-bottom: 10px; }
+            .nav-links { justify-content: center; }
+            .nav-links>a,.nav-links>.dropdown,.dropbtn { font-size: 12px; padding: 8px 12px; margin: 0; }
+            .page-title { font-size: 1.9rem; }
+            .ev-metrics { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QS8L5TDNLY');
+    </script>
+</head>
+<body>
+
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Handicapping Hub</a>
+<a href="blog.html">Picks</a>
+<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a><a href="crosssport-parlays-records.html" title="Cross-Sport Bets">Cross-Sport Bets</a></div></div>
+<div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll Management</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="risk-of-ruin-calculator.html">Risk of Ruin</a><a href="bankroll-simulator.html">Bankroll Simulator</a><a href="betting-calculators.html">Calculators</a><a href="screenshots.html">Screenshots</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a><a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a><a href="contact.html">Contact Us</a></div></div>
+<a href="news-page4.html">News</a>
+<a href="injury-report.html">Injury Report</a>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="featured-game-of-the-day-page56.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+</div>
+</div>
+</nav>
+
+<div class="page-wrap">
+
+    <h1 class="page-title">Expected Value Calculator</h1>
+    <p class="page-subtitle">Evaluate whether a bet is worth taking before you place it.</p>
+    <p class="breadcrumb"><a href="betting-calculators.html">Calculators</a> &gt; Expected Value</p>
+
+    <!-- ========== CALCULATOR ========== -->
+    <div class="ev-calc">
+        <h2>Enter Your Bet Details</h2>
+
+        <div class="ev-field">
+            <label for="evOdds">American Odds</label>
+            <input type="number" id="evOdds" placeholder="-110 or +150" step="1" oninput="showImplied()">
+            <div id="impliedLine" class="ev-implied-line"></div>
+            <p class="ev-field-hint">The odds your sportsbook is offering. Negative for favorites, positive for underdogs.</p>
+        </div>
+
+        <div class="ev-field">
+            <label for="evProb">Your Estimated Win Probability (%)</label>
+            <input type="number" id="evProb" placeholder="55" min="1" max="99" step="0.1">
+            <p class="ev-field-hint">Your best estimate of the true likelihood this bet wins.</p>
+        </div>
+
+        <div class="ev-field">
+            <label for="evStake">Stake ($) <span style="color:#556;font-weight:400;font-size:0.82rem;">&mdash; optional, defaults to $1</span></label>
+            <input type="number" id="evStake" placeholder="100" min="0" step="1">
+        </div>
+
+        <button class="ev-calc-btn" onclick="calcEV()">Calculate EV</button>
+    </div>
+
+    <!-- ========== RESULTS ========== -->
+    <div id="evResults" class="ev-results">
+        <div id="evVerdict" class="ev-verdict zero">
+            <div id="evVerdictLabel" class="ev-verdict-label">--</div>
+            <p id="evVerdictExplain" class="ev-verdict-explain"></p>
+        </div>
+
+        <div class="ev-metrics">
+            <div class="ev-metric">
+                <div class="ev-metric-label">Implied Probability</div>
+                <div class="ev-metric-value" id="mImplied">--</div>
+            </div>
+            <div class="ev-metric">
+                <div class="ev-metric-label">Your Probability</div>
+                <div class="ev-metric-value" id="mYours">--</div>
+            </div>
+            <div class="ev-metric">
+                <div class="ev-metric-label">Your Edge</div>
+                <div class="ev-metric-value" id="mEdge">--</div>
+            </div>
+            <div class="ev-metric">
+                <div class="ev-metric-label">EV Per Dollar</div>
+                <div class="ev-metric-value" id="mEvPer">--</div>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:20px;">
+            <div class="ev-metric-label">Expected Value on Your Stake</div>
+            <div class="ev-metric-value" id="mEvTotal" style="font-size:1.8rem;">--</div>
+        </div>
+
+        <div id="evAfterLinks" class="ev-after-links">
+            <a href="kelly-criterion.html">Size this bet with Kelly</a>
+            <a href="betting-calculators.html">More calculators</a>
+        </div>
+    </div>
+
+    <!-- ========== SECTION 1: What Is Expected Value ========== -->
+    <div class="ev-section">
+        <h2>What Is Expected Value in Sports Betting?</h2>
+
+        <p>Expected value is the mathematical answer to a simple question: if you placed this exact bet a thousand times at these exact odds, would you come out ahead or behind? It strips away hope, narrative, and gut feeling and replaces them with arithmetic.</p>
+
+        <p>A positive EV means the bet earns money over time. A negative EV means it loses money over time. The sportsbook's entire business model depends on offering bets that are negative EV for the bettor. When you find a spot where that relationship flips, where your estimated probability of winning exceeds what the odds imply, you've found a bet worth taking.</p>
+
+        <p>That's the concept. The rest is execution: estimating probabilities accurately, finding odds that underprice your side, and repeating the process over a sample large enough for the math to converge.</p>
+    </div>
+
+    <!-- ========== SECTION 2: The EV Formula Explained ========== -->
+    <div class="ev-section">
+        <h2>The EV Formula Explained</h2>
+
+        <p>The formula itself is straightforward. The difficulty is in the inputs, not the math.</p>
+
+        <div class="ev-formula">EV = (Win Probability &times; Profit if Win) &minus; (Loss Probability &times; Stake)</div>
+
+        <p>Four components:</p>
+        <ul>
+            <li><strong>Win Probability</strong> &mdash; your estimate of how often this bet wins, expressed as a decimal (55% = 0.55)</li>
+            <li><strong>Profit if Win</strong> &mdash; how much you collect above your stake when the bet hits</li>
+            <li><strong>Loss Probability</strong> &mdash; 1 minus your win probability</li>
+            <li><strong>Stake</strong> &mdash; the amount you're wagering</li>
+        </ul>
+
+        <p>If the result is positive, the bet has +EV. If negative, the sportsbook has the edge. If zero, it's a breakeven proposition.</p>
+
+        <p>The calculator above handles the conversion from American odds to profit automatically. The step-by-step manual calculation, including how to convert odds formats, is covered in the companion tutorial.</p>
+    </div>
+
+    <!-- ========== SECTION 3: Worked Examples ========== -->
+    <div class="ev-section">
+        <h2>Worked Examples</h2>
+
+        <div class="ev-example">
+            <h4>Standard Spread Bet: -110 Odds, 55% Win Probability</h4>
+            <p>The implied probability at -110 is 52.4%. Your 55% estimate gives you a 2.6% edge. On a $100 stake, the EV comes out to roughly +$5.00 per bet. That's a clear +EV situation.</p>
+        </div>
+
+        <div class="ev-example">
+            <h4>Underdog Moneyline: +200 Odds, 38% Win Probability</h4>
+            <p>The implied probability at +200 is 33.3%. Your 38% estimate means a 4.7% edge. Even though this bet loses more often than it wins, the payout when it hits more than covers the losses. EV is positive.</p>
+        </div>
+
+        <div class="ev-example">
+            <h4>Trap Favorite: -200 Odds, 62% Win Probability</h4>
+            <p>The implied probability at -200 is 66.7%. Your 62% estimate is below the implied line. You think the team wins less often than the odds require. This is -EV no matter how likely the team is to win this specific game. The price is wrong for you.</p>
+        </div>
+
+        <div class="ev-note insight">
+            <p><strong>What the calculator output tells you:</strong> The verdict (+EV or -EV) answers whether to bet. The edge percentage tells you how much value you're getting. The dollar EV tells you what the average return looks like at your stake size.</p>
+        </div>
+    </div>
+
+    <!-- ========== SECTION 4: +EV vs -EV ========== -->
+    <div class="ev-section">
+        <h2>Positive EV vs Negative EV: The Only Line That Matters</h2>
+
+        <p>The boundary between +EV and -EV comes down to one comparison: is your estimated win probability higher or lower than the implied probability from the odds?</p>
+
+        <table class="ev-table">
+            <thead>
+                <tr>
+                    <th>Odds</th>
+                    <th>Implied Prob</th>
+                    <th>Your Estimate</th>
+                    <th>Edge</th>
+                    <th>EV Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>-110</td><td>52.4%</td><td>55.0%</td><td>+2.6%</td><td style="color:#00ff88;">+EV</td></tr>
+                <tr><td>+150</td><td>40.0%</td><td>45.0%</td><td>+5.0%</td><td style="color:#00ff88;">+EV</td></tr>
+                <tr><td>-150</td><td>60.0%</td><td>58.0%</td><td>-2.0%</td><td style="color:#ff4444;">-EV</td></tr>
+                <tr><td>+110</td><td>47.6%</td><td>47.0%</td><td>-0.6%</td><td style="color:#ff4444;">-EV</td></tr>
+                <tr><td>+300</td><td>25.0%</td><td>30.0%</td><td>+5.0%</td><td style="color:#00ff88;">+EV</td></tr>
+            </tbody>
+        </table>
+
+        <p>The +300 row is worth studying. That bet loses 70% of the time. Most bettors would dismiss it as too risky. But the math is clear: a 5% edge is a 5% edge regardless of the win rate. The payout structure compensates for the lower hit rate. This is the gap between how recreational bettors evaluate bets (will it win?) and how serious bettors evaluate them (is the price right?).</p>
+
+        <p>Single-bet results are noise. EV is signal. The only way to evaluate whether you're making sound bets is to track your EV over time and see whether your actual results converge toward it.</p>
+    </div>
+
+    <!-- ========== SECTION 5: Common Mistakes ========== -->
+    <div class="ev-section">
+        <h2>Where Most Bettors Go Wrong With EV</h2>
+
+        <h3>Confusing Conviction With Edge</h3>
+        <p>Feeling strongly about a team is not the same as having a mathematical edge. Edge requires a specific probability estimate that exceeds the implied probability. If you can't state your win probability as a number, you don't have an edge assessment, you have an opinion.</p>
+
+        <h3>Ignoring the Price</h3>
+        <p>A team that wins 70% of the time is not a good bet if the odds imply they should win 75% of the time. Betting is not about picking winners. It's about finding spots where the probability of winning exceeds what you're being charged to play. The price is everything.</p>
+
+        <h3>Using a Single Sportsbook</h3>
+        <p>Different books price the same game differently. Getting -105 instead of -110 on a standard bet shifts the implied probability by over a full percentage point. Over hundreds of bets, that difference determines whether you're above or below the EV line.</p>
+
+        <h3>Overestimating Win Probability</h3>
+        <p>This is the hardest problem in sports betting. You think you're a 56% bettor, but you're actually at 52%. That 4% gap turns profitable EV assessments into losing ones because every calculation is built on your probability estimate. Track your results, compare estimates to outcomes, and adjust. Honesty with your own numbers is non-negotiable.</p>
+
+        <div class="ev-note caution">
+            <p><strong>Calibration matters:</strong> Even professional bettors sustain win rates of 53-57% on standard -110 lines. If your estimated win rates consistently exceed 60%, your estimates likely need recalibrating rather than your bet sizing increasing.</p>
+        </div>
+    </div>
+
+    <!-- ========== SECTION 6: EV and Bet Sizing ========== -->
+    <div class="ev-section">
+        <h2>EV and Bet Sizing: The Connection</h2>
+
+        <p>EV answers whether a bet is worth taking. It does not answer how much to wager. Those are two separate questions, and conflating them is a common and expensive mistake.</p>
+
+        <p>A bet with a 1% edge and a bet with a 7% edge are both +EV, but they don't deserve the same stake. Larger edges justify larger bets. Smaller edges justify smaller ones. The mathematical framework for sizing bets proportional to your edge is the <a href="kelly-criterion.html">Kelly Criterion</a>, which takes your EV assessment and translates it into a specific percentage of your bankroll to wager.</p>
+
+        <p>The practical workflow is sequential: first use this calculator to confirm a bet is +EV, then use a bet sizing method to determine how much of your bankroll to commit. Skipping the first step means you might be sizing bets on losing propositions. Skipping the second means you might be risking too much on thin edges or too little on strong ones.</p>
+    </div>
+
+    <!-- ========== SECTION 7: Bottom Line ========== -->
+    <div class="ev-section">
+        <h2>The Bottom Line</h2>
+
+        <p>Expected value is not a prediction about what will happen on a single bet. It's a statement about what would happen across many bets at the same odds and probability. That distinction is the entire foundation of serious sports betting.</p>
+
+        <p>Every bet you place is either +EV or -EV before the game starts. The outcome doesn't change which one it was. A +EV bet that loses was still the right decision. A -EV bet that wins was still the wrong one. If you can internalize that, you're thinking about betting the way professionals do.</p>
+
+        <p>Use this calculator before you bet. It takes a few seconds. Over time, those seconds are the difference between being on the right side of the math and the wrong one.</p>
+    </div>
+
+    <!-- ========== FAQ ========== -->
+    <div class="ev-faq">
+        <h2>Expected Value FAQ</h2>
+
+        <div class="ev-faq-item">
+            <h3>What is a positive EV bet?</h3>
+            <p>A bet where your estimated win probability exceeds the implied probability from the odds. Over many repetitions, +EV bets produce a net gain. The size of the edge determines how much.</p>
+        </div>
+
+        <div class="ev-faq-item">
+            <h3>Can a +EV bet still lose?</h3>
+            <p>Yes. EV describes the average across many trials, not the outcome of a single bet. A coin flip at +120 odds is clearly +EV, but it still loses roughly half the time. The math converges over hundreds or thousands of bets.</p>
+        </div>
+
+        <div class="ev-faq-item">
+            <h3>How do I estimate my win probability?</h3>
+            <p>Two approaches: build a statistical model using historical data and situational factors, or compare odds at sharp sportsbooks (Pinnacle, Circa) to derive no-vig fair probabilities. Many bettors use sharp closing lines as a baseline and bet when recreational books offer better odds.</p>
+        </div>
+
+        <div class="ev-faq-item">
+            <h3>What is the difference between EV and ROI?</h3>
+            <p>EV measures average profit per bet in dollars. ROI expresses that as a percentage of amount wagered. A $5 EV on a $100 bet equals 5% ROI. They describe the same thing in different units.</p>
+        </div>
+
+        <div class="ev-faq-item">
+            <h3>What EV percentage is considered good?</h3>
+            <p>Any positive EV is mathematically sound. Professional bettors typically target 2-5% edges. Even 1-2% edges are valuable at volume because they compound over a large sample of bets.</p>
+        </div>
+    </div>
+
+    <!-- ========== RELATED LINKS ========== -->
+    <div class="ev-related">
+        <h3>Related Resources</h3>
+        <ul>
+            <li><a href="kelly-criterion.html">Kelly Criterion Calculator</a></li>
+            <li><a href="betting-calculators.html">All Betting Calculators</a></li>
+            <li><a href="bankroll.html">Bankroll Management Guide</a></li>
+            <li><a href="betting-101.html">Betting 101</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+function calcEV() {
+    var odds = parseFloat(document.getElementById('evOdds').value);
+    var prob = parseFloat(document.getElementById('evProb').value) / 100;
+    var stakeVal = document.getElementById('evStake').value;
+    var stake = stakeVal && parseFloat(stakeVal) > 0 ? parseFloat(stakeVal) : 1;
+
+    if (!odds || isNaN(odds) || odds === 0) { alert('Enter valid American odds.'); return; }
+    if (!prob || prob <= 0 || prob >= 1) { alert('Win probability must be between 1% and 99%.'); return; }
+
+    // Implied probability
+    var implied;
+    if (odds > 0) { implied = 100 / (odds + 100); }
+    else { implied = Math.abs(odds) / (Math.abs(odds) + 100); }
+
+    // Decimal odds
+    var dec;
+    if (odds > 0) { dec = 1 + odds / 100; }
+    else { dec = 1 + 100 / Math.abs(odds); }
+
+    // Core calculations
+    var edge = prob - implied;
+    var profit = stake * (dec - 1);
+    var ev = (prob * profit) - ((1 - prob) * stake);
+    var evPer = ev / stake;
+
+    // Populate metrics
+    document.getElementById('mImplied').textContent = (implied * 100).toFixed(1) + '%';
+    document.getElementById('mYours').textContent = (prob * 100).toFixed(1) + '%';
+
+    var edgeEl = document.getElementById('mEdge');
+    edgeEl.textContent = (edge >= 0 ? '+' : '') + (edge * 100).toFixed(1) + '%';
+    edgeEl.className = 'ev-metric-value ' + (edge >= 0 ? 'pos' : 'neg');
+
+    var perEl = document.getElementById('mEvPer');
+    perEl.textContent = (evPer >= 0 ? '+' : '') + '$' + Math.abs(evPer).toFixed(4);
+    perEl.className = 'ev-metric-value ' + (evPer >= 0 ? 'pos' : 'neg');
+
+    var totalEl = document.getElementById('mEvTotal');
+    totalEl.textContent = (ev >= 0 ? '+' : '-') + '$' + Math.abs(ev).toFixed(2);
+    totalEl.className = 'ev-metric-value ' + (ev >= 0 ? 'pos' : 'neg');
+
+    // Verdict
+    var vBox = document.getElementById('evVerdict');
+    var vLabel = document.getElementById('evVerdictLabel');
+    var vExplain = document.getElementById('evVerdictExplain');
+
+    if (ev > 0.001) {
+        vBox.className = 'ev-verdict pos';
+        vLabel.textContent = '+EV \u2014 Positive Expected Value';
+        vExplain.textContent = 'Your estimated probability (' + (prob*100).toFixed(1) + '%) exceeds the implied probability (' + (implied*100).toFixed(1) + '%) by ' + (edge*100).toFixed(1) + ' points. This bet has a mathematical edge.';
+    } else if (ev < -0.001) {
+        vBox.className = 'ev-verdict neg';
+        vLabel.textContent = '\u2212EV \u2014 Negative Expected Value';
+        vExplain.textContent = 'The implied probability (' + (implied*100).toFixed(1) + '%) exceeds your estimate (' + (prob*100).toFixed(1) + '%) by ' + Math.abs(edge*100).toFixed(1) + ' points. The sportsbook has the edge on this bet.';
+    } else {
+        vBox.className = 'ev-verdict zero';
+        vLabel.textContent = 'Breakeven';
+        vExplain.textContent = 'Your estimate matches the implied probability. No edge in either direction.';
+    }
+
+    // Show results
+    var r = document.getElementById('evResults');
+    r.classList.add('visible');
+    r.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // Show post-calc links
+    document.getElementById('evAfterLinks').style.display = 'block';
+}
+
+function showImplied() {
+    var odds = parseFloat(document.getElementById('evOdds').value);
+    var el = document.getElementById('impliedLine');
+    if (!odds || isNaN(odds) || odds === 0) { el.textContent = ''; return; }
+    var imp;
+    if (odds > 0) { imp = 100 / (odds + 100); }
+    else { imp = Math.abs(odds) / (Math.abs(odds) + 100); }
+    el.textContent = 'Sportsbook implied probability: ' + (imp * 100).toFixed(1) + '%';
+}
+
+// Enter key triggers calculation
+document.addEventListener('DOMContentLoaded', function() {
+    var inputs = document.querySelectorAll('.ev-calc input');
+    inputs.forEach(function(inp) {
+        inp.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calcEV();
+        });
+    });
+});
+
+// Mobile dropdown toggle
+document.addEventListener('DOMContentLoaded', function() {
+    var dds = document.querySelectorAll('.dropdown');
+    dds.forEach(function(dd) {
+        var btn = dd.querySelector('.dropbtn');
+        if (btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault(); e.stopPropagation();
+                dds.forEach(function(o) { if (o !== dd) o.classList.remove('active'); });
+                dd.classList.toggle('active');
+            });
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dds.forEach(function(d) { d.classList.remove('active'); });
+        }
+    });
+});
+</script>
+
+<!-- Clicky Analytics -->
+<a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
+<script async data-id="101485054" src="//static.getclicky.com/js"></script>
+</body>
+</html>
