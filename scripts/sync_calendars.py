@@ -155,15 +155,31 @@ MONTH_MAP = {
 }
 
 def parse_written_date(text):
-    """Parse a written date like 'December 23, 2025' or 'Dec 23 2025' into YYYY-MM-DD."""
-    # Pattern: Month Day, Year or Month Day Year
-    pattern = r'(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?\s+(\d{1,2}),?\s*(\d{4})'
-    match = re.search(pattern, text, re.I)
+    """Parse a written date like 'December 23, 2025', 'Dec 23 2025', or 'Jan 26' into YYYY-MM-DD.
+
+    Updated Jan 26, 2026: Now handles dates without year (assumes current year).
+    This supports CTR-optimized title formats like 'NBA Picks Today - Jan 26 Matchups'.
+    """
+    # Pattern 1: Month Day, Year or Month Day Year (full format with year)
+    pattern_with_year = r'(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?\s+(\d{1,2}),?\s*(\d{4})'
+    match = re.search(pattern_with_year, text, re.I)
     if match:
         month_name, day, year = match.groups()
         month_num = MONTH_MAP.get(month_name.lower())
         if month_num:
             return f"{year}-{month_num:02d}-{int(day):02d}"
+
+    # Pattern 2: Month Day without year (e.g., 'Jan 26' or 'January 26')
+    # Assumes current year. Used for CTR-optimized titles.
+    pattern_no_year = r'(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?\s+(\d{1,2})(?:\s|,|$|[^0-9])'
+    match = re.search(pattern_no_year, text, re.I)
+    if match:
+        month_name, day = match.groups()
+        month_num = MONTH_MAP.get(month_name.lower())
+        if month_num:
+            current_year = datetime.now().year
+            return f"{current_year}-{month_num:02d}-{int(day):02d}"
+
     return None
 
 def extract_date_from_page(filepath):
