@@ -353,6 +353,54 @@ The "Tonight's Featured Game" section on index.html contains:
 
 **ONE WRONG NUMBER ON THE HOMEPAGE DESTROYS CREDIBILITY. VERIFY EVERYTHING.**
 
+### MANDATORY: RUN SYNC SCRIPT AFTER CREATING/UPDATING FEATURED GAME
+
+**PERMANENTLY LOCKED - JANUARY 27, 2026**
+
+**After creating or updating ANY featured game page, you MUST run:**
+```bash
+python C:\Users\Nima\nimadamus.github.io\scripts\sync_featured_game_preview.py
+```
+
+### WHAT THIS DOES:
+- Reads the current featured game page (whichever page57, page58, etc. index.html links to)
+- Extracts ALL game data: teams, records, spread, moneyline, O/U, time, network, team colors
+- Automatically updates the index.html Featured Game preview to match
+- Ensures the header banner (team logos/names) and betting lines are ALWAYS in sync
+
+### THE PRE-COMMIT HOOK NOW BLOCKS MISMATCHES:
+The content_guard.py pre-commit hook checks that the index.html header teams match
+the betting lines teams. If they don't match, the commit is BLOCKED with:
+```
+FEATURED GAME PREVIEW - MISMATCH DETECTED
+BLOCKED - Featured Game preview is out of sync!
+FIX: python scripts/sync_featured_game_preview.py
+```
+
+### WHAT HAPPENED (January 27, 2026):
+- The header banner showed Lakers @ Bulls (correct)
+- The betting lines section showed PHI -10.5 / MIL +355 (WRONG - old stale data)
+- Users clicking "View full breakdown" saw a completely different game than the preview
+- This destroyed trust and looked broken
+
+### THE WORKFLOW FOR FEATURED GAMES:
+```
+1. CREATE the new featured game page (e.g., page58.html)
+2. RUN: python scripts/sync_featured_game_preview.py
+3. VERIFY: python scripts/sync_featured_game_preview.py --verify
+4. COMMIT both index.html and the featured game page
+5. PUSH to GitHub
+```
+
+### THE IRON RULE:
+```
+THE HOMEPAGE PREVIEW AND THE FEATURED GAME PAGE MUST ALWAYS SHOW THE SAME GAME.
+THE SYNC SCRIPT ENSURES THIS AUTOMATICALLY.
+RUN IT EVERY TIME. NO EXCEPTIONS.
+```
+
+**IF THE PREVIEW SHOWS A DIFFERENT GAME THAN THE LINKED PAGE, I HAVE FAILED.**
+
 ---
 
 ## ⛔⛔⛔ ABSOLUTE RULE #1: NO PAGINATION ON SPORTS PAGES - EVER ⛔⛔⛔
