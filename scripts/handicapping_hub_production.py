@@ -2204,26 +2204,178 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         }}
 
 
-        .nav {{
-            background: linear-gradient(180deg, rgba(10, 10, 30, 0.98) 0%, rgba(20, 20, 50, 0.95) 100%);
-            padding: 15px 25px;
+        /* ==================== NAVIGATION ==================== */
+        .nav-container {{
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
+            background: rgba(10, 10, 30, 0.95);
+            backdrop-filter: blur(15px);
             border-bottom: 2px solid #00f5ff;
+            padding: 0 30px;
             box-shadow: 0 4px 30px rgba(0, 245, 255, 0.2);
         }}
-        .nav-inner {{ max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }}
+        .nav-inner {{
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 15px 20px 15px 200px;
+        }}
         .logo {{
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            z-index: 1001;
             font-family: 'Orbitron', sans-serif;
             font-size: 1.8rem;
             font-weight: 900;
-            color: #00f5ff;
             text-decoration: none;
-            text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+            color: #00f5ff;
             letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
         }}
         .logo span {{ color: #ff6b35; text-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }}
+        .nav-menu {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }}
+        .nav-link {{
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 12px 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }}
+        .nav-link:hover {{
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }}
+        .dropdown {{
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }}
+        .dropdown .dropbtn {{
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            background: none;
+            border: none;
+            padding: 12px 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }}
+        .dropdown:hover .dropbtn,
+        .dropdown.active .dropbtn {{
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }}
+        .dropdown-content {{
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: rgba(10, 10, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+            z-index: 99999;
+        }}
+        .dropdown-content a {{
+            display: block;
+            padding: 12px 16px;
+            color: #00f5ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }}
+        .dropdown-content a:hover {{
+            background: rgba(0, 245, 255, 0.1);
+            padding-left: 22px;
+            border-left-color: #00f5ff;
+            color: #fff;
+        }}
+        .sports-records-dropdown {{
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 420px;
+            background: rgba(10, 10, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 10px;
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+            z-index: 99999;
+        }}
+        .dropdown.active .dropdown-content,
+        .dropdown.active .sports-records-dropdown {{
+            display: block;
+        }}
+        .two-columns {{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }}
+        .column h4 {{
+            color: #0a0a1a;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }}
+        .column a {{
+            display: block;
+            color: #fff;
+            padding: 10px 15px;
+            margin: 4px 0;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            background: rgba(0, 245, 255, 0.05);
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            transition: all 0.25s ease;
+        }}
+        .column a:hover {{
+            color: #fff;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 245, 255, 0.1));
+            border-color: #00f5ff;
+        }}
 
         .header {{
             background: linear-gradient(135deg, #0d0d2b 0%, #1a1a4a 50%, #0a0a2a 100%);
@@ -2691,19 +2843,183 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         footer strong {{ color: #00f5ff; }}
 
         @media (max-width: 768px) {{
+            .nav-menu {{
+                gap: 5px;
+                flex-wrap: nowrap;
+                justify-content: center;
+            }}
+            .nav-link, .dropdown .dropbtn {{
+                font-size: 0.7rem;
+                padding: 8px 10px;
+                letter-spacing: 1px;
+            }}
+            .dropdown-content,
+            .sports-records-dropdown {{
+                position: fixed !important;
+                left: 5% !important;
+                right: 5% !important;
+                top: 120px !important;
+                width: 90% !important;
+                min-width: unset !important;
+                max-width: none !important;
+                max-height: 65vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                z-index: 999999 !important;
+            }}
+            .sports-records-dropdown {{
+                padding: 15px;
+            }}
+            .two-columns {{
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }}
+            .column h4 {{
+                font-size: 10px;
+                padding: 6px 8px;
+                margin-bottom: 10px;
+            }}
+            .column a {{
+                font-size: 12px;
+                padding: 10px 12px;
+                margin: 3px 0;
+            }}
             .stats-grid {{ grid-template-columns: 1fr; }}
             .stats-grid .section:first-child {{ border-right: none; border-bottom: 1px solid rgba(0, 245, 255, 0.1); }}
             .header h1 {{ font-size: 2rem; }}
             .h2h-summary {{ flex-direction: column; align-items: center; }}
         }}
+
+        @media (max-width: 480px) {{
+            .nav-inner {{
+                flex-direction: column;
+                padding: 60px 15px 15px 15px;
+            }}
+            .nav-menu {{
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }}
+            .logo {{
+                font-size: 1.5rem;
+            }}
+            .nav-link, .dropdown .dropbtn {{
+                font-size: 0.6rem;
+                padding: 6px 8px;
+            }}
+            .two-columns {{
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }}
+        }}
     </style>
 </head>
 <body>
-    <nav class="nav">
+    <nav class="nav-container">
         <div class="nav-inner">
             <a href="index.html" class="logo">BET<span>LEGEND</span></a>
+
+            <div class="nav-menu">
+                <a href="blog.html" class="nav-link">Picks & Analysis</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Game Previews & Records &#9660;</button>
+                    <div class="sports-records-dropdown">
+                        <div class="two-columns">
+                            <div class="column">
+                                <h4>Game Previews</h4>
+                                <a href="nfl.html">NFL</a>
+                                <a href="mlb.html">MLB</a>
+                                <a href="ncaaf.html">NCAAF</a>
+                                <a href="nba.html">NBA</a>
+                                <a href="ncaab.html">NCAAB</a>
+                                <a href="nhl.html">NHL</a>
+                                <a href="soccer.html">Soccer</a>
+                            </div>
+                            <div class="column">
+                                <h4>Records</h4>
+                                <a href="records.html">DETAILED BREAKDOWN</a>
+                                <a href="mlb-records.html">MLB</a>
+                                <a href="nfl-records.html">NFL</a>
+                                <a href="ncaaf-records.html">NCAAF</a>
+                                <a href="ncaab-records.html">NCAAB</a>
+                                <a href="nhl-records.html">NHL</a>
+                                <a href="nba-records.html">NBA</a>
+                                <a href="soccer-records.html">Soccer</a>
+                                <a href="crosssport-parlays-records.html">Cross-Sport Bets</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Resources &#9660;</button>
+                    <div class="dropdown-content">
+                        <a href="proofofpicks.html">Proof of Picks</a>
+                        <a href="live-odds.html">Live Odds</a>
+                        <a href="howitworks.html">How It Works</a>
+                        <a href="bankroll.html">Bankroll Management</a>
+                        <a href="kelly-criterion.html">Kelly Criterion</a>
+                        <a href="betting-calculators.html">Betting Calculators</a>
+                        <a href="screenshots.html">Screenshots</a>
+                        <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                        <a href="betting-glossary.html">Betting Glossary</a>
+                        <a href="betting-101.html">Betting 101</a>
+                        <a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+
+                <a href="news-page4.html" class="nav-link">News</a>
+
+                <a href="injury-report.html" class="nav-link">Injury Report</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Game of the Day &#9660;</button>
+                    <div class="dropdown-content">
+                        <a href="featured-game-of-the-day-page58.html">Game of the Day</a>
+                        <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
+
+    <!-- Dropdown JavaScript -->
+    <script>
+    (function() {{
+        var dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(function(dropdown) {{
+            var btn = dropdown.querySelector('.dropbtn');
+            if (!btn) return;
+
+            function toggle(e) {{
+                e.preventDefault();
+                e.stopPropagation();
+                dropdowns.forEach(function(d) {{
+                    if (d !== dropdown) d.classList.remove('active');
+                }});
+                dropdown.classList.toggle('active');
+            }}
+
+            btn.addEventListener('touchend', toggle, {{passive: false}});
+            btn.addEventListener('click', toggle);
+        }});
+
+        document.addEventListener('touchend', function(e) {{
+            if (!e.target.closest('.dropdown')) {{
+                dropdowns.forEach(function(d) {{ d.classList.remove('active'); }});
+            }}
+        }});
+        document.addEventListener('click', function(e) {{
+            if (!e.target.closest('.dropdown')) {{
+                dropdowns.forEach(function(d) {{ d.classList.remove('active'); }});
+            }}
+        }});
+    }})();
+    </script>
     <header class="header">
         <h1>Handicapping <span>Hub</span></h1>
         <p class="subtitle">{date_str} | Real-Time Odds, Stats & Betting Trends</p>
