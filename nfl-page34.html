@@ -298,7 +298,7 @@ if(defined){
       const el=document.createElement('div');el.className='cal-day';el.textContent=d;
       const entry=items.find(x=>x.day===d);
       if(entry){el.classList.add('has-content');el.title=entry.title;el.onclick=()=>location.href=entry.page}
-      if(today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d)el.classList.add('today');
+      /* today highlight removed - use current-page only */
       if(pageDate&&pageDate.getFullYear()===y&&pageDate.getMonth()===m&&pageDate.getDate()===d)el.classList.add('current-page');
       days.appendChild(el)
     }

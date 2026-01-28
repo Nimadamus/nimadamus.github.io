@@ -414,12 +414,16 @@ def fetch_h2h_data(sport: str, team1_abbr: str, team2_abbr: str) -> Optional[Dic
         'nba': 'https://www.covers.com/sports/nba/matchups',
         'nhl': 'https://www.covers.com/sports/nhl/matchups',
         'nfl': 'https://www.covers.com/sports/nfl/matchups',
+        'ncaab': 'https://www.covers.com/sports/ncaab/matchups',
+        'ncaaf': 'https://www.covers.com/sports/ncaaf/matchups',
     }
 
     sport_paths = {
         'nba': 'basketball/nba',
         'nhl': 'hockey/nhl',
         'nfl': 'football/nfl',
+        'ncaab': 'basketball/ncaab',
+        'ncaaf': 'football/ncaaf',
     }
 
     base_url = sport_urls.get(sport.lower())
@@ -1367,7 +1371,7 @@ def process_game(espn_game: Dict, sport: str, sport_path: str, odds_data: List[D
 
     # NEW: Fetch Head-to-Head data from Covers.com
     h2h_data = None
-    if sport in ['NBA', 'NHL', 'NFL']:  # Only for pro sports (college has too many teams)
+    if sport in ['NBA', 'NHL', 'NFL', 'NCAAB', 'NCAAF']:  # All sports with Covers.com H2H
         print(f"  [H2H] Fetching H2H for {away_abbr} @ {home_abbr}...")
         h2h_data = fetch_h2h_data(sport, away_abbr, home_abbr)
         if h2h_data:
