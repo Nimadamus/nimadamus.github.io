@@ -2142,6 +2142,17 @@ def generate_game_card(game: Dict, sport: str) -> str:
 def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     """Generate complete HTML page"""
 
+    # Scan archive folder for available dates
+    archive_dir = os.path.join(REPO_PATH, 'handicapping-hub-archive')
+    archive_dates = []
+    if os.path.exists(archive_dir):
+        for f in os.listdir(archive_dir):
+            if f.startswith('hub-') and f.endswith('.html'):
+                date_part = f[4:-5]  # Extract 2026-01-15 from hub-2026-01-15.html
+                if re.match(r'\d{4}-\d{2}-\d{2}', date_part):
+                    archive_dates.append(date_part)
+    archive_dates_json = json.dumps(sorted(archive_dates))
+
     tab_buttons = ""
     sport_sections = ""
     sport_order = ['NBA', 'NFL', 'NHL', 'NCAAB', 'NCAAF']
@@ -2249,7 +2260,96 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             position: relative;
         }}
 
-        .container {{ max-width: 1300px; margin: 0 auto; padding: 30px; }}
+        /* Calendar Sidebar */
+        .calendar-sidebar {{
+            position: fixed;
+            left: 20px;
+            top: 160px;
+            width: 260px;
+            z-index: 100;
+        }}
+        .calendar-box {{
+            background: linear-gradient(135deg, rgba(20, 20, 50, 0.95) 0%, rgba(30, 30, 70, 0.95) 100%);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }}
+        .calendar-title {{
+            font-size: 14px;
+            color: #ff6b35;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            text-align: center;
+            font-weight: 700;
+        }}
+        .calendar-weekdays {{
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            margin-bottom: 8px;
+        }}
+        .calendar-weekdays span {{
+            text-align: center;
+            font-size: 11px;
+            color: #00f5ff;
+            font-weight: 600;
+        }}
+        .calendar-days {{
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }}
+        .calendar-day {{
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            border-radius: 6px;
+        }}
+        .calendar-day.has-content {{
+            background: rgba(0, 245, 255, 0.1);
+            color: #00f5ff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }}
+        .calendar-day.has-content:hover {{
+            background: rgba(0, 245, 255, 0.3);
+            transform: scale(1.1);
+        }}
+        .calendar-day.today {{
+            background: rgba(255, 107, 53, 0.3);
+            color: #ff6b35;
+            font-weight: bold;
+        }}
+        .month-nav {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }}
+        .month-nav button {{
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            color: #00f5ff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }}
+        .month-nav button:hover {{ background: rgba(0, 245, 255, 0.2); }}
+        .month-name {{
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+        }}
+        @media (max-width: 1400px) {{ .calendar-sidebar {{ display: none; }} }}
+
+        .container {{ max-width: 1300px; margin: 0 auto; padding: 30px; margin-left: 300px; }}
+        @media (max-width: 1400px) {{ .container {{ margin-left: auto; }} }}
 
         .tabs {{
             display: flex;
@@ -2608,6 +2708,18 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         <h1>Handicapping <span>Hub</span></h1>
         <p class="subtitle">{date_str} | Real-Time Odds, Stats & Betting Trends</p>
     </header>
+    <aside class="calendar-sidebar">
+        <div class="calendar-box">
+            <div class="calendar-title">Hub Archive</div>
+            <div class="month-nav">
+                <button id="prev-month">&lt;</button>
+                <span class="month-name" id="month-name"></span>
+                <button id="next-month">&gt;</button>
+            </div>
+            <div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+            <div class="calendar-days" id="calendar-days"></div>
+        </div>
+    </aside>
     <div class="container">
         <div class="tabs">
             {tab_buttons}
@@ -2626,6 +2738,36 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
                 document.getElementById(btn.dataset.sport + '-section').classList.add('active');
             }});
         }});
+        // Calendar
+        const archiveDates = {archive_dates_json};
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        function renderCalendar() {{
+            const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+            document.getElementById('month-name').textContent = monthNames[currentMonth] + ' ' + currentYear;
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const today = new Date();
+            let html = '';
+            for (let i = 0; i < firstDay; i++) html += '<div class="calendar-day"></div>';
+            for (let d = 1; d <= daysInMonth; d++) {{
+                const dateStr = currentYear + '-' + String(currentMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+                const hasContent = archiveDates.includes(dateStr);
+                const isToday = today.getFullYear() === currentYear && today.getMonth() === currentMonth && today.getDate() === d;
+                let cls = 'calendar-day';
+                if (hasContent) cls += ' has-content';
+                if (isToday) cls += ' today';
+                if (hasContent) {{
+                    html += '<a href="handicapping-hub-archive/hub-' + dateStr + '.html" class="' + cls + '">' + d + '</a>';
+                }} else {{
+                    html += '<div class="' + cls + '">' + d + '</div>';
+                }}
+            }}
+            document.getElementById('calendar-days').innerHTML = html;
+        }}
+        document.getElementById('prev-month').onclick = () => {{ currentMonth--; if (currentMonth < 0) {{ currentMonth = 11; currentYear--; }} renderCalendar(); }};
+        document.getElementById('next-month').onclick = () => {{ currentMonth++; if (currentMonth > 11) {{ currentMonth = 0; currentYear++; }} renderCalendar(); }};
+        renderCalendar();
     </script>
 </body>
 </html>'''
