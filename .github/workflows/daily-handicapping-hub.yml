@@ -31,11 +31,18 @@ jobs:
       - name: Archive previous day hub
         run: |
           YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)
+          YESTERDAY_FORMATTED=$(date -d "yesterday" +"%B %d, %Y")
           if [ -f "handicapping-hub.html" ]; then
-            mkdir -p handicapping-hub-archive
-            ARCHIVE_FILE="hub-${YESTERDAY}.html"
-            cp handicapping-hub.html "handicapping-hub-archive/${ARCHIVE_FILE}"
-            echo "Archived to handicapping-hub-archive/${ARCHIVE_FILE}"
+            # Only archive if the hub actually contains yesterday's date
+            if grep -q "$YESTERDAY_FORMATTED" handicapping-hub.html; then
+              mkdir -p handicapping-hub-archive
+              ARCHIVE_FILE="hub-${YESTERDAY}.html"
+              cp handicapping-hub.html "handicapping-hub-archive/${ARCHIVE_FILE}"
+              echo "Archived to handicapping-hub-archive/${ARCHIVE_FILE}"
+            else
+              echo "Hub does not contain yesterday's date ($YESTERDAY_FORMATTED) - skipping archive"
+              echo "This prevents archiving stale content from failed workflow days"
+            fi
           fi
 
       - name: Run Handicapping Hub Production Script
