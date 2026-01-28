@@ -16,61 +16,181 @@
             color: #e0e0e0;
             line-height: 1.5;
             min-height: 100vh;
-            padding-top: 60px;
-        }
-
-        /* ==================== SITE NAVIGATION BAR ==================== */
-        .site-topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 2000; background: rgba(10, 10, 30, 0.97); backdrop-filter: blur(15px); border-bottom: 2px solid #00f5ff; padding: 0 30px; box-shadow: 0 4px 30px rgba(0, 245, 255, 0.2); }
-        .site-topnav-inner { max-width: 1600px; margin: 0 auto; display: flex; align-items: center; justify-content: flex-end; padding: 12px 20px 12px 200px; }
-        .site-topnav .topnav-logo { position: fixed; top: 12px; left: 20px; z-index: 2001; font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 900; text-decoration: none; color: #00f5ff; letter-spacing: 3px; text-shadow: 0 0 20px rgba(0, 245, 255, 0.5); }
-        .site-topnav .topnav-logo span { color: #ff6b35; text-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
-        .topnav-menu { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
-        .topnav-link { color: #b0b0b0; text-decoration: none; padding: 10px 14px; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; transition: color 0.3s; font-family: 'Rajdhani', sans-serif; }
-        .topnav-link:hover { color: #00f5ff; }
-        .topnav-dropdown { position: relative; display: inline-block; }
-        .topnav-dropbtn { color: #b0b0b0; padding: 10px 14px; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; border: none; background: transparent; cursor: pointer; font-family: 'Rajdhani', sans-serif; transition: color 0.3s; }
-        .topnav-dropbtn:hover { color: #00f5ff; }
-        .topnav-dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(15, 15, 40, 0.98); border: 1px solid rgba(0, 245, 255, 0.3); border-radius: 8px; min-width: 200px; z-index: 2002; padding: 8px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
-        .topnav-dropdown-content a { color: #b0b0b0; padding: 10px 20px; display: block; text-decoration: none; font-size: 13px; transition: all 0.2s; font-family: 'Rajdhani', sans-serif; }
-        .topnav-dropdown-content a:hover { background: rgba(0, 245, 255, 0.1); color: #00f5ff; }
-        .topnav-dropdown-content.show { display: block; }
-        .topnav-sports-records { min-width: 420px; }
-        .topnav-two-columns { display: grid; grid-template-columns: 1fr 1fr; }
-        .topnav-column-head { color: #00f5ff; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; padding: 8px 20px 4px; font-family: 'Orbitron', sans-serif; }
-        @media (max-width: 768px) {
-            .site-topnav { padding: 0 10px; }
-            .site-topnav-inner { padding: 10px 10px 10px 140px; }
-            .site-topnav .topnav-logo { font-size: 1.2rem; }
-            .topnav-link, .topnav-dropbtn { padding: 8px 8px; font-size: 12px; }
-            .topnav-sports-records { min-width: 300px; }
-        }
-        @media (max-width: 480px) {
-            .site-topnav-inner { padding: 8px 5px 8px 110px; }
-            .site-topnav .topnav-logo { font-size: 1rem; left: 10px; }
-            .topnav-link, .topnav-dropbtn { padding: 6px 5px; font-size: 11px; }
         }
 
 
-        .nav {
-            background: linear-gradient(180deg, rgba(10, 10, 30, 0.98) 0%, rgba(20, 20, 50, 0.95) 100%);
-            padding: 15px 25px;
+        /* ==================== NAVIGATION ==================== */
+        .nav-container {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
+            background: rgba(10, 10, 30, 0.95);
+            backdrop-filter: blur(15px);
             border-bottom: 2px solid #00f5ff;
+            padding: 0 30px;
             box-shadow: 0 4px 30px rgba(0, 245, 255, 0.2);
         }
-        .nav-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 15px 20px 15px 200px;
+        }
         .logo {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            z-index: 1001;
             font-family: 'Orbitron', sans-serif;
             font-size: 1.8rem;
             font-weight: 900;
-            color: #00f5ff;
             text-decoration: none;
-            text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+            color: #00f5ff;
             letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
         }
         .logo span { color: #ff6b35; text-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+        .nav-link {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 12px 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .nav-link:hover {
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        .dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .dropdown .dropbtn {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            background: none;
+            border: none;
+            padding: 12px 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .dropdown:hover .dropbtn,
+        .dropdown.active .dropbtn {
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: rgba(10, 10, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+            z-index: 99999;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 12px 16px;
+            color: #00f5ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .dropdown-content a:hover {
+            background: rgba(0, 245, 255, 0.1);
+            padding-left: 22px;
+            border-left-color: #00f5ff;
+            color: #fff;
+        }
+        .sports-records-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 420px;
+            background: rgba(10, 10, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 10px;
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+            z-index: 99999;
+        }
+        .dropdown.active .dropdown-content,
+        .dropdown.active .sports-records-dropdown {
+            display: block;
+        }
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .column h4 {
+            color: #0a0a1a;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+        .column a {
+            display: block;
+            color: #fff;
+            padding: 10px 15px;
+            margin: 4px 0;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            background: rgba(0, 245, 255, 0.05);
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            transition: all 0.25s ease;
+        }
+        .column a:hover {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 245, 255, 0.1));
+            border-color: #00f5ff;
+        }
 
         .header {
             background: linear-gradient(135deg, #0d0d2b 0%, #1a1a4a 50%, #0a0a2a 100%);
@@ -538,81 +658,182 @@
         footer strong { color: #00f5ff; }
 
         @media (max-width: 768px) {
+            .nav-menu {
+                gap: 5px;
+                flex-wrap: nowrap;
+                justify-content: center;
+            }
+            .nav-link, .dropdown .dropbtn {
+                font-size: 0.7rem;
+                padding: 8px 10px;
+                letter-spacing: 1px;
+            }
+            .dropdown-content,
+            .sports-records-dropdown {
+                position: fixed !important;
+                left: 5% !important;
+                right: 5% !important;
+                top: 120px !important;
+                width: 90% !important;
+                min-width: unset !important;
+                max-width: none !important;
+                max-height: 65vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                z-index: 999999 !important;
+            }
+            .sports-records-dropdown {
+                padding: 15px;
+            }
+            .two-columns {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .column h4 {
+                font-size: 10px;
+                padding: 6px 8px;
+                margin-bottom: 10px;
+            }
+            .column a {
+                font-size: 12px;
+                padding: 10px 12px;
+                margin: 3px 0;
+            }
             .stats-grid { grid-template-columns: 1fr; }
             .stats-grid .section:first-child { border-right: none; border-bottom: 1px solid rgba(0, 245, 255, 0.1); }
             .header h1 { font-size: 2rem; }
             .h2h-summary { flex-direction: column; align-items: center; }
         }
+
+        @media (max-width: 480px) {
+            .nav-inner {
+                flex-direction: column;
+                padding: 60px 15px 15px 15px;
+            }
+            .nav-menu {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+            .nav-link, .dropdown .dropbtn {
+                font-size: 0.6rem;
+                padding: 6px 8px;
+            }
+            .two-columns {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-    <nav class="site-topnav">
-        <a href="index.html" class="topnav-logo">BET<span>LEGEND</span></a>
-        <div class="site-topnav-inner">
-            <div class="topnav-menu">
-                <a href="blog-page11.html" class="topnav-link">Picks & Analysis</a>
-                <div class="topnav-dropdown">
-                    <button class="topnav-dropbtn" onclick="toggleTopnavDropdown(this)">Game Previews & Records &#9662;</button>
-                    <div class="topnav-dropdown-content topnav-sports-records">
-                        <div class="topnav-two-columns">
-                            <div>
-                                <div class="topnav-column-head">Game Previews</div>
-                                <a href="nba.html">NBA Previews</a>
-                                <a href="nfl.html">NFL Previews</a>
-                                <a href="nhl.html">NHL Previews</a>
-                                <a href="ncaab.html">NCAAB Previews</a>
-                                <a href="ncaaf.html">NCAAF Previews</a>
-                                <a href="mlb.html">MLB Previews</a>
-                                <a href="soccer.html">Soccer Previews</a>
+    <nav class="nav-container">
+        <div class="nav-inner">
+            <a href="index.html" class="logo">BET<span>LEGEND</span></a>
+
+            <div class="nav-menu">
+                <a href="blog.html" class="nav-link">Picks & Analysis</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Game Previews & Records &#9660;</button>
+                    <div class="sports-records-dropdown">
+                        <div class="two-columns">
+                            <div class="column">
+                                <h4>Game Previews</h4>
+                                <a href="nfl.html">NFL</a>
+                                <a href="mlb.html">MLB</a>
+                                <a href="ncaaf.html">NCAAF</a>
+                                <a href="nba.html">NBA</a>
+                                <a href="ncaab.html">NCAAB</a>
+                                <a href="nhl.html">NHL</a>
+                                <a href="soccer.html">Soccer</a>
                             </div>
-                            <div>
-                                <div class="topnav-column-head">Records</div>
-                                <a href="nba-records.html">NBA Records</a>
-                                <a href="nfl-records.html">NFL Records</a>
-                                <a href="nhl-records.html">NHL Records</a>
-                                <a href="ncaab-records.html">NCAAB Records</a>
-                                <a href="ncaaf-records.html">NCAAF Records</a>
-                                <a href="mlb-records.html">MLB Records</a>
+                            <div class="column">
+                                <h4>Records</h4>
+                                <a href="records.html">DETAILED BREAKDOWN</a>
+                                <a href="mlb-records.html">MLB</a>
+                                <a href="nfl-records.html">NFL</a>
+                                <a href="ncaaf-records.html">NCAAF</a>
+                                <a href="ncaab-records.html">NCAAB</a>
+                                <a href="nhl-records.html">NHL</a>
+                                <a href="nba-records.html">NBA</a>
+                                <a href="soccer-records.html">Soccer</a>
+                                <a href="crosssport-parlays-records.html">Cross-Sport Bets</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="topnav-dropdown">
-                    <button class="topnav-dropbtn" onclick="toggleTopnavDropdown(this)">Resources &#9662;</button>
-                    <div class="topnav-dropdown-content">
-                        <a href="kelly-criterion.html">Kelly Criterion Calculator</a>
-                        <a href="kelly-simulation.html">Kelly Simulation</a>
-                        <a href="expected-value-calculator.html">Expected Value Calculator</a>
-                        <a href="arbitrage-calculator.html">Arbitrage Calculator</a>
-                        <a href="odds-converter.html">Odds Converter</a>
-                        <a href="parlay-calculator.html">Parlay Calculator</a>
-                        <a href="bankroll-tracker.html">Bankroll Tracker</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Resources &#9660;</button>
+                    <div class="dropdown-content">
+                        <a href="proofofpicks.html">Proof of Picks</a>
+                        <a href="live-odds.html">Live Odds</a>
+                        <a href="howitworks.html">How It Works</a>
+                        <a href="bankroll.html">Bankroll Management</a>
+                        <a href="kelly-criterion.html">Kelly Criterion</a>
+                        <a href="betting-calculators.html">Betting Calculators</a>
+                        <a href="screenshots.html">Screenshots</a>
+                        <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                        <a href="betting-glossary.html">Betting Glossary</a>
+                        <a href="betting-101.html">Betting 101</a>
+                        <a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a>
+                        <a href="contact.html">Contact Us</a>
                     </div>
                 </div>
-                <a href="news.html" class="topnav-link">News</a>
-                <a href="injury-report.html" class="topnav-link">Injury Report</a>
-                <div class="topnav-dropdown">
-                    <button class="topnav-dropbtn" onclick="toggleTopnavDropdown(this)">Game of the Day &#9662;</button>
-                    <div class="topnav-dropdown-content">
-                        <a href="featured-game-of-the-day-page58.html">Today's Featured Game</a>
+
+                <a href="news-page4.html" class="nav-link">News</a>
+
+                <a href="injury-report.html" class="nav-link">Injury Report</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Game of the Day &#9660;</button>
+                    <div class="dropdown-content">
+                        <a href="featured-game-of-the-day-page58.html">Game of the Day</a>
                         <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Dropdown JavaScript -->
     <script>
-    function toggleTopnavDropdown(btn) {
-        var content = btn.nextElementSibling;
-        var isOpen = content.classList.contains('show');
-        document.querySelectorAll('.topnav-dropdown-content').forEach(function(d) { d.classList.remove('show'); });
-        if (!isOpen) content.classList.add('show');
-    }
-    document.addEventListener('click', function(e) {
-        if (!e.target.matches('.topnav-dropbtn')) {
-            document.querySelectorAll('.topnav-dropdown-content').forEach(function(d) { d.classList.remove('show'); });
-        }
-    });
+    (function() {
+        var dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(function(dropdown) {
+            var btn = dropdown.querySelector('.dropbtn');
+            if (!btn) return;
+
+            function toggle(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdowns.forEach(function(d) {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
+                dropdown.classList.toggle('active');
+            }
+
+            btn.addEventListener('touchend', toggle, {passive: false});
+            btn.addEventListener('click', toggle);
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+    })();
     </script>
     <header class="header">
         <h1>Handicapping <span>Hub</span></h1>
@@ -662,8 +883,8 @@
                             <span class="team-name">LAL</span>
                         </td>
                         <td class="spread">+3.0</td>
-                        <td class="ml">+132</td>
-                        <td class="total">O 235.5</td>
+                        <td class="ml">+130</td>
+                        <td class="total">O 236.5</td>
                         <td class="su-record">28-17</td>
                         <td class="ats-record">24-20-1</td>
                         <td class="ou-record">26-19-0</td>
@@ -677,8 +898,8 @@
                             <span class="team-name">CLE</span>
                         </td>
                         <td class="spread">-3.0</td>
-                        <td class="ml">-156</td>
-                        <td class="total">U 235.5</td>
+                        <td class="ml">-154</td>
+                        <td class="total">U 236.5</td>
                         <td class="su-record">28-20</td>
                         <td class="ats-record">18-30-0</td>
                         <td class="ou-record">22-26-0</td>
@@ -723,6 +944,58 @@
             </div>
         </div>
         
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">LAL 2 - 3 CLE</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">LAL 2 - 3 CLE</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">3 OVER - 2 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Dec 31, '24</td>
+                <td class="winner-home"><strong>LAL</strong></td>
+                <td class="score">122-110</td>
+                <td class="h2h-ats"><strong>CLE</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Oct 30, '24</td>
+                <td class="winner-home"><strong>CLE</strong></td>
+                <td class="score">134-110</td>
+                <td class="h2h-ats"><strong>CLE</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Apr 06, '24</td>
+                <td class="winner-home"><strong>LAL</strong></td>
+                <td class="score">116-97</td>
+                <td class="h2h-ats"><strong>LAL</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Nov 25, '23</td>
+                <td class="winner-home"><strong>CLE</strong></td>
+                <td class="score">121-115</td>
+                <td class="h2h-ats"><strong>LAL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Dec 06, '22</td>
+                <td class="winner-home"><strong>CLE</strong></td>
+                <td class="score">116-102</td>
+                <td class="h2h-ats"><strong>CLE</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
     </div>
     
     <div class="game-card" data-event-id="401810527" data-sport="nba">
@@ -745,8 +1018,8 @@
                             <span class="team-name">CHI</span>
                         </td>
                         <td class="spread">-2.0</td>
-                        <td class="ml">-126</td>
-                        <td class="total">O 236.5</td>
+                        <td class="ml">-134</td>
+                        <td class="total">O 235.5</td>
                         <td class="su-record">23-23</td>
                         <td class="ats-record">23-22-1</td>
                         <td class="ou-record">22-24-0</td>
@@ -760,8 +1033,8 @@
                             <span class="team-name">IND</span>
                         </td>
                         <td class="spread">+2.0</td>
-                        <td class="ml">+108</td>
-                        <td class="total">U 236.5</td>
+                        <td class="ml">+114</td>
+                        <td class="total">U 235.5</td>
                         <td class="su-record">11-36</td>
                         <td class="ats-record">23-24-0</td>
                         <td class="ou-record">18-29-0</td>
@@ -806,6 +1079,58 @@
             </div>
         </div>
         
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">CHI 2 - 3 IND</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">CHI 1 - 4 IND</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">0 OVER - 5 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Dec 05, '25</td>
+                <td class="winner-home"><strong>CHI</strong></td>
+                <td class="score">120-105</td>
+                <td class="h2h-ats"><strong>IND</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Nov 29, '25</td>
+                <td class="winner-home"><strong>IND</strong></td>
+                <td class="score">103-101</td>
+                <td class="h2h-ats"><strong>IND</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Mar 10, '25</td>
+                <td class="winner-home"><strong>CHI</strong></td>
+                <td class="score">121-103</td>
+                <td class="h2h-ats"><strong>CHI</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Mar 02, '25</td>
+                <td class="winner-home"><strong>IND</strong></td>
+                <td class="score">127-112</td>
+                <td class="h2h-ats"><strong>IND</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Jan 08, '25</td>
+                <td class="winner-home"><strong>IND</strong></td>
+                <td class="score">129-113</td>
+                <td class="h2h-ats"><strong>IND</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
     </div>
     
     <div class="game-card" data-event-id="401810528" data-sport="nba">
@@ -828,7 +1153,7 @@
                             <span class="team-name">ATL</span>
                         </td>
                         <td class="spread">+6.5</td>
-                        <td class="ml">+205</td>
+                        <td class="ml">+190</td>
                         <td class="total">O 230.5</td>
                         <td class="su-record">23-25</td>
                         <td class="ats-record">24-24-0</td>
@@ -843,7 +1168,7 @@
                             <span class="team-name">BOS</span>
                         </td>
                         <td class="spread">-6.5</td>
-                        <td class="ml">-250</td>
+                        <td class="ml">-230</td>
                         <td class="total">U 230.5</td>
                         <td class="su-record">29-17</td>
                         <td class="ats-record">25-20-1</td>
@@ -889,6 +1214,58 @@
             </div>
         </div>
         
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">ATL 3 - 2 BOS</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">ATL 3 - 2 BOS</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">3 OVER - 2 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Jan 17, '26</td>
+                <td class="winner-home"><strong>ATL</strong></td>
+                <td class="score">132-106</td>
+                <td class="h2h-ats"><strong>BOS</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Jan 18, '25</td>
+                <td class="winner-home"><strong>BOS</strong></td>
+                <td class="score">119-115</td>
+                <td class="h2h-ats"><strong>ATL</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Nov 12, '24</td>
+                <td class="winner-home"><strong>BOS</strong></td>
+                <td class="score">117-116</td>
+                <td class="h2h-ats"><strong>ATL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Nov 04, '24</td>
+                <td class="winner-home"><strong>ATL</strong></td>
+                <td class="score">123-93</td>
+                <td class="h2h-ats"><strong>BOS</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Mar 28, '24</td>
+                <td class="winner-home"><strong>ATL</strong></td>
+                <td class="score">123-122</td>
+                <td class="h2h-ats"><strong>ATL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
     </div>
     
     <div class="game-card" data-event-id="401810529" data-sport="nba">
@@ -972,6 +1349,58 @@
             </div>
         </div>
         
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">ORL 4 - 1 MIA</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">ORL 1 - 4 MIA</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">2 OVER - 3 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Dec 09, '25</td>
+                <td class="winner-home"><strong>ORL</strong></td>
+                <td class="score">117-108</td>
+                <td class="h2h-ats"><strong>ORL</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Dec 05, '25</td>
+                <td class="winner-home"><strong>ORL</strong></td>
+                <td class="score">106-105</td>
+                <td class="h2h-ats"><strong>MIA</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Oct 22, '25</td>
+                <td class="winner-home"><strong>ORL</strong></td>
+                <td class="score">125-121</td>
+                <td class="h2h-ats"><strong>MIA</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Jan 27, '25</td>
+                <td class="winner-home"><strong>MIA</strong></td>
+                <td class="score">125-119</td>
+                <td class="h2h-ats"><strong>MIA</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Dec 26, '24</td>
+                <td class="winner-home"><strong>ORL</strong></td>
+                <td class="score">89-88</td>
+                <td class="h2h-ats"><strong>MIA</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
     </div>
     
     <div class="game-card" data-event-id="401810530" data-sport="nba">
@@ -995,7 +1424,7 @@
                         </td>
                         <td class="spread">+2.0</td>
                         <td class="ml">+108</td>
-                        <td class="total">O 224.5</td>
+                        <td class="total">O 221.5</td>
                         <td class="su-record">28-18</td>
                         <td class="ats-record">22-23-1</td>
                         <td class="ou-record">23-23-0</td>
@@ -1010,7 +1439,7 @@
                         </td>
                         <td class="spread">-2.0</td>
                         <td class="ml">-126</td>
-                        <td class="total">U 224.5</td>
+                        <td class="total">U 221.5</td>
                         <td class="su-record">29-19</td>
                         <td class="ats-record">25-23-0</td>
                         <td class="ou-record">19-29-0</td>
@@ -1077,7 +1506,7 @@
                             <span class="team-name">CHA</span>
                         </td>
                         <td class="spread">-2.0</td>
-                        <td class="ml">-134</td>
+                        <td class="ml">-130</td>
                         <td class="total">O 230.5</td>
                         <td class="su-record">19-28</td>
                         <td class="ats-record">27-20-0</td>
@@ -1092,7 +1521,7 @@
                             <span class="team-name">MEM</span>
                         </td>
                         <td class="spread">+2.0</td>
-                        <td class="ml">+114</td>
+                        <td class="ml">+110</td>
                         <td class="total">U 230.5</td>
                         <td class="su-record">18-26</td>
                         <td class="ats-record">19-24-1</td>
@@ -1138,6 +1567,58 @@
             </div>
         </div>
         
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">CHA 3 - 2 MEM</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">CHA 2 - 3 MEM</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">4 OVER - 1 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Apr 08, '25</td>
+                <td class="winner-home"><strong>CHA</strong></td>
+                <td class="score">124-100</td>
+                <td class="h2h-ats"><strong>MEM</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Jan 22, '25</td>
+                <td class="winner-home"><strong>MEM</strong></td>
+                <td class="score">132-120</td>
+                <td class="h2h-ats"><strong>MEM</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Mar 13, '24</td>
+                <td class="winner-home"><strong>MEM</strong></td>
+                <td class="score">110-98</td>
+                <td class="h2h-ats"><strong>CHA</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Feb 10, '24</td>
+                <td class="winner-home"><strong>CHA</strong></td>
+                <td class="score">115-106</td>
+                <td class="h2h-ats"><strong>CHA</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Jan 04, '23</td>
+                <td class="winner-home"><strong>CHA</strong></td>
+                <td class="score">131-107</td>
+                <td class="h2h-ats"><strong>MEM</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
     </div>
     
     <div class="game-card" data-event-id="401810532" data-sport="nba">
@@ -1160,8 +1641,8 @@
                             <span class="team-name">MIN</span>
                         </td>
                         <td class="spread">-7.0</td>
-                        <td class="ml">-260</td>
-                        <td class="total">O 232.5</td>
+                        <td class="ml">-250</td>
+                        <td class="total">O 228.5</td>
                         <td class="su-record">28-19</td>
                         <td class="ats-record">20-27-0</td>
                         <td class="ou-record">22-25-0</td>
@@ -1175,8 +1656,8 @@
                             <span class="team-name">DAL</span>
                         </td>
                         <td class="spread">+7.0</td>
-                        <td class="ml">+215</td>
-                        <td class="total">U 232.5</td>
+                        <td class="ml">+205</td>
+                        <td class="total">U 228.5</td>
                         <td class="su-record">19-27</td>
                         <td class="ats-record">21-25-0</td>
                         <td class="ou-record">21-25-0</td>
@@ -1221,6 +1702,58 @@
             </div>
         </div>
         
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">MIN 3 - 2 DAL</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">MIN 2 - 3 DAL</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">3 OVER - 2 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Nov 17, '25</td>
+                <td class="winner-home"><strong>MIN</strong></td>
+                <td class="score">120-96</td>
+                <td class="h2h-ats"><strong>MIN</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Jan 22, '25</td>
+                <td class="winner-home"><strong>DAL</strong></td>
+                <td class="score">115-114</td>
+                <td class="h2h-ats"><strong>DAL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Dec 25, '24</td>
+                <td class="winner-home"><strong>DAL</strong></td>
+                <td class="score">105-99</td>
+                <td class="h2h-ats"><strong>MIN</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Oct 29, '24</td>
+                <td class="winner-home"><strong>MIN</strong></td>
+                <td class="score">120-114</td>
+                <td class="h2h-ats"><strong>DAL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>May 30, '24</td>
+                <td class="winner-home"><strong>MIN</strong></td>
+                <td class="score">124-103</td>
+                <td class="h2h-ats"><strong>DAL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
     </div>
     
     <div class="game-card" data-event-id="401810533" data-sport="nba">
@@ -1242,8 +1775,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/gs.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">GS</span>
                         </td>
-                        <td class="spread">-10.0</td>
-                        <td class="ml">-375</td>
+                        <td class="spread">-9.5</td>
+                        <td class="ml">-355</td>
                         <td class="total">O 239.5</td>
                         <td class="su-record">26-22</td>
                         <td class="ats-record">22-25-1</td>
@@ -1257,8 +1790,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/utah.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">UTAH</span>
                         </td>
-                        <td class="spread">+10.0</td>
-                        <td class="ml">+300</td>
+                        <td class="spread">+9.5</td>
+                        <td class="ml">+285</td>
                         <td class="total">U 239.5</td>
                         <td class="su-record">15-32</td>
                         <td class="ats-record stat-na">—</td>
@@ -1325,9 +1858,9 @@
                             <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/sa.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">SA</span>
                         </td>
-                        <td class="spread">+3.0</td>
-                        <td class="ml">+128</td>
-                        <td class="total">O 221.5</td>
+                        <td class="spread">+2.5</td>
+                        <td class="ml">+126</td>
+                        <td class="total">O 220.5</td>
                         <td class="su-record">31-15</td>
                         <td class="ats-record">23-22-1</td>
                         <td class="ou-record">17-29-0</td>
@@ -1340,9 +1873,9 @@
                             <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/hou.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">HOU</span>
                         </td>
-                        <td class="spread">-3.0</td>
-                        <td class="ml">-152</td>
-                        <td class="total">U 221.5</td>
+                        <td class="spread">-2.5</td>
+                        <td class="ml">-148</td>
+                        <td class="total">U 220.5</td>
                         <td class="su-record">28-16</td>
                         <td class="ats-record">21-23-0</td>
                         <td class="ou-record">20-24-0</td>
@@ -1417,7 +1950,7 @@
                             <span class="team-name">NYR</span>
                         </td>
                         <td class="spread">+1.5</td>
-                        <td class="ml">+124</td>
+                        <td class="ml">+110</td>
                         <td class="total">O 6.5</td>
                         <td class="su-record">22-25-6</td>
                         <td class="ats-record">25-28</td>
@@ -1432,7 +1965,7 @@
                             <span class="team-name">NYI</span>
                         </td>
                         <td class="spread">-1.5</td>
-                        <td class="ml">-148</td>
+                        <td class="ml">-130</td>
                         <td class="total">U 6.5</td>
                         <td class="su-record">28-19-5</td>
                         <td class="ats-record">27-25</td>
@@ -1478,6 +2011,58 @@
             </div>
         </div>
         
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">NYR 2 - 3 NYI</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">NYR 3 - 2 NYI</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">2 OVER - 3 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Dec 27, '25</td>
+                <td class="winner-home"><strong>NYI</strong></td>
+                <td class="score">2-0</td>
+                <td class="h2h-ats"><strong>NYI</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Nov 08, '25</td>
+                <td class="winner-home"><strong>NYR</strong></td>
+                <td class="score">5-0</td>
+                <td class="h2h-ats"><strong>NYI</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Apr 10, '25</td>
+                <td class="winner-home"><strong>NYI</strong></td>
+                <td class="score">9-2</td>
+                <td class="h2h-ats"><strong>NYR</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Mar 03, '25</td>
+                <td class="winner-home"><strong>NYR</strong></td>
+                <td class="score">4-0</td>
+                <td class="h2h-ats"><strong>NYR</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Feb 25, '25</td>
+                <td class="winner-home"><strong>NYI</strong></td>
+                <td class="score">5-1</td>
+                <td class="h2h-ats"><strong>NYR</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
     </div>
     
     <div class="game-card" data-event-id="401803191" data-sport="nhl">
@@ -1500,7 +2085,7 @@
                             <span class="team-name">PHI</span>
                         </td>
                         <td class="spread">+1.5</td>
-                        <td class="ml">+114</td>
+                        <td class="ml">+120</td>
                         <td class="total">O 6.5</td>
                         <td class="su-record">24-18-9</td>
                         <td class="ats-record">30-21</td>
@@ -1515,7 +2100,7 @@
                             <span class="team-name">CBJ</span>
                         </td>
                         <td class="spread">-1.5</td>
-                        <td class="ml">-135</td>
+                        <td class="ml">-142</td>
                         <td class="total">U 6.5</td>
                         <td class="su-record">24-20-7</td>
                         <td class="ats-record stat-na">—</td>
@@ -1583,7 +2168,7 @@
                             <span class="team-name">COL</span>
                         </td>
                         <td class="spread">-1.5</td>
-                        <td class="ml">-162</td>
+                        <td class="ml">-148</td>
                         <td class="total">O 6.5</td>
                         <td class="su-record">35-6-9</td>
                         <td class="ats-record">27-23</td>
@@ -1598,7 +2183,7 @@
                             <span class="team-name">OTT</span>
                         </td>
                         <td class="spread">+1.5</td>
-                        <td class="ml">+136</td>
+                        <td class="ml">+124</td>
                         <td class="total">U 6.5</td>
                         <td class="su-record">24-21-7</td>
                         <td class="ats-record">21-31</td>
@@ -1644,6 +2229,58 @@
             </div>
         </div>
         
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">COL 3 - 2 OTT</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">COL 5 - 0 OTT</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">4 OVER - 0 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Jan 08, '26</td>
+                <td class="winner-home"><strong>COL</strong></td>
+                <td class="score">8-2</td>
+                <td class="h2h-ats"><strong>COL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Mar 20, '25</td>
+                <td class="winner-home"><strong>OTT</strong></td>
+                <td class="score">5-1</td>
+                <td class="h2h-ats"><strong>COL</strong></td>
+                <td class="h2h-ou">P6.0</td>
+            </tr><tr>
+                <td>Oct 27, '24</td>
+                <td class="winner-home"><strong>COL</strong></td>
+                <td class="score">5-4</td>
+                <td class="h2h-ats"><strong>COL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Jan 16, '24</td>
+                <td class="winner-home"><strong>OTT</strong></td>
+                <td class="score">7-4</td>
+                <td class="h2h-ats"><strong>COL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Dec 21, '23</td>
+                <td class="winner-home"><strong>COL</strong></td>
+                <td class="score">6-4</td>
+                <td class="h2h-ats"><strong>COL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
     </div>
     
             </div>
@@ -1670,7 +2307,7 @@
                             <span class="team-name">BUT</span>
                         </td>
                         <td class="spread">+12.5</td>
-                        <td class="ml">+575</td>
+                        <td class="ml">+650</td>
                         <td class="total">O 161.5</td>
                         <td class="su-record">13-7</td>
                         <td class="ats-record">12-8-0</td>
@@ -1685,7 +2322,7 @@
                             <span class="team-name">SJU</span>
                         </td>
                         <td class="spread">-12.5</td>
-                        <td class="ml">-850</td>
+                        <td class="ml">-1000</td>
                         <td class="total">U 161.5</td>
                         <td class="su-record">15-5</td>
                         <td class="ats-record">9-11-0</td>
@@ -1752,9 +2389,9 @@
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/248.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">HOU</span>
                         </td>
-                        <td class="spread">-8.5</td>
-                        <td class="ml">-395</td>
-                        <td class="total">O 137.5</td>
+                        <td class="spread">-7.5</td>
+                        <td class="ml">-425</td>
+                        <td class="total">O 136.5</td>
                         <td class="su-record">17-2</td>
                         <td class="ats-record">10-9-0</td>
                         <td class="ou-record">9-10-0</td>
@@ -1767,9 +2404,9 @@
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2628.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">TCU</span>
                         </td>
-                        <td class="spread">+8.5</td>
-                        <td class="ml">+310</td>
-                        <td class="total">U 137.5</td>
+                        <td class="spread">+7.5</td>
+                        <td class="ml">+330</td>
+                        <td class="total">U 136.5</td>
                         <td class="su-record">13-7</td>
                         <td class="ats-record">11-9-0</td>
                         <td class="ou-record">9-11-0</td>
@@ -1835,9 +2472,9 @@
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/57.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">FLA</span>
                         </td>
-                        <td class="spread">-10.5</td>
-                        <td class="ml">-550</td>
-                        <td class="total">O 151.5</td>
+                        <td class="spread">-13.5</td>
+                        <td class="ml">-950</td>
+                        <td class="total">O 152.5</td>
                         <td class="su-record">14-6</td>
                         <td class="ats-record">9-11-0</td>
                         <td class="ou-record">8-12-0</td>
@@ -1850,9 +2487,9 @@
                             <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2579.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">SC</span>
                         </td>
-                        <td class="spread">+10.5</td>
-                        <td class="ml">+410</td>
-                        <td class="total">U 151.5</td>
+                        <td class="spread">+13.5</td>
+                        <td class="ml">+625</td>
+                        <td class="total">U 152.5</td>
                         <td class="su-record">11-9</td>
                         <td class="ats-record">8-11-0</td>
                         <td class="ou-record">9-10-0</td>
