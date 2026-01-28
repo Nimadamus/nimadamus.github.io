@@ -50,10 +50,11 @@ if (pathname.includes('/archives/')) {
     currentPage = pathname.split('/').pop() || 'index.html';
 }
 
-// For main pages (nba.html, nhl.html, etc), ALWAYS use today's date
-// For archive pages (nba-page54.html), use the page's date
+// For main pages, use FORCED_PAGE_DATE if set (pre-published content), else today's date
+// For archive pages, use the page's date from the archive data
 const isMainPage = MAIN_PAGES.includes(currentPage);
-const currentPageDate = isMainPage ? todayStr : (pageToDateMap[currentPage] || null);
+const forcedDate = window.FORCED_PAGE_DATE || null;
+const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);
 
 const months = new Set();
 ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });
