@@ -240,12 +240,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <footer>
 <p>&copy; 2026 BetLegend Picks. All rights reserved. | <a href="contact.html">Contact</a> | <a href="privacy.html">Privacy Policy</a></p>
 </footer>
-<script src="ncaab-calendar-data.js"></script>
+<script src="scripts/ncaab-calendar.js"></script>
 <script>
 document.querySelectorAll('.dropdown').forEach(d=>{d.addEventListener('click',e=>{if(window.innerWidth<=768){e.preventDefault();d.classList.toggle('active')}})});
 (function(){
-const defined=typeof NCAAB_ARCHIVE_DATA!=='undefined';
-const archive=defined?NCAAB_ARCHIVE_DATA:[];
+const defined=typeof ARCHIVE_DATA!=='undefined';
+const archive=defined?ARCHIVE_DATA:[];
 const forcedDate=window.FORCED_PAGE_DATE||null;
 const monthSelect=document.getElementById('month-select');
 const calDays=document.getElementById('calendar-days');
