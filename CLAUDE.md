@@ -1000,8 +1000,35 @@ git -C "C:\Users\Nima\nimadamus.github.io" commit -m "[description]"
 git -C "C:\Users\Nima\nimadamus.github.io" push
 ```
 
-### C. VERIFY DEPLOYMENT IS LIVE
-After pushing, wait 1-2 minutes for GitHub Pages to deploy, then verify:
+### C. VERIFY DEPLOYMENT IS COMPLETE (MANDATORY)
+
+**PERMANENTLY LOCKED - JANUARY 29, 2026**
+
+**PUSHING TO GITHUB IS NOT THE SAME AS DEPLOYING. VERIFY DEPLOYMENT BEFORE CLAIMING SUCCESS.**
+
+```
+AFTER PUSHING:
+
+1. RUN: gh run list --limit 3
+2. WAIT for "pages build and deployment" to show "completed success"
+3. If "in_progress" → WAIT and check again (usually 1-2 minutes)
+4. VERIFY content on raw.githubusercontent.com:
+   https://raw.githubusercontent.com/Nimadamus/nimadamus.github.io/main/[file].html
+5. Note: GitHub Pages CDN can take 2-5 ADDITIONAL minutes after deployment
+
+THE TASK IS NOT COMPLETE UNTIL:
+□ Git push succeeded
+□ GitHub Actions deployment shows "completed success"
+□ Content verified in GitHub raw file
+□ User informed of CDN propagation time (2-5 min)
+```
+
+**WHY THIS EXISTS:** On January 29, 2026, Claude claimed a blog post was "live" when deployment hadn't finished. The push succeeded but the site showed old content due to CDN caching. User was frustrated.
+
+**PUSHING ≠ DEPLOYED ≠ VISIBLE. VERIFY ALL THREE.**
+
+### D. CONFIRM LIVE SITE
+After deployment completes AND CDN propagates:
 1. The new content appears at https://www.betlegendpicks.com/[page].html
 2. Navigation links work correctly
 3. Calendar sidebar displays correctly
