@@ -228,40 +228,99 @@ def extract_game_data(page_content):
 
 
 def generate_preview_html(data):
-    """Generate the Featured Game preview HTML for index.html."""
+    """Generate the Featured Game preview HTML for index.html (detailed format with tables)."""
+    # Parse spread to get numbers
+    away_spread = data.get('away_spread', 'PK')
+    # Try to extract numeric spread for home team (opposite sign)
+    spread_num = re.search(r'([+-]?\d+\.?\d*)', away_spread)
+    if spread_num:
+        away_spread_val = float(spread_num.group(1))
+        home_spread_val = -away_spread_val
+        home_spread = f"+{home_spread_val}" if home_spread_val > 0 else str(home_spread_val)
+        away_spread_display = f"-{abs(away_spread_val)}" if away_spread_val > 0 else f"+{abs(away_spread_val)}"
+    else:
+        away_spread_display = "PK"
+        home_spread = "PK"
+
+    # Parse moneyline
+    ml_parts = data.get('moneyline', '').split('|')
+    away_ml = ml_parts[0].strip().split()[-1] if ml_parts else '-110'
+    home_ml = ml_parts[1].strip().split()[-1] if len(ml_parts) > 1 else '+100'
+
+    # Parse total
+    total = data.get('total', 'O/U 220').replace('O/U ', '')
+
     return f'''<!-- Header Banner - Matchup Info -->
-                <div style="background: linear-gradient(135deg, {data['away_color']} 0%, {data['home_color']} 100%); padding: 10px 20px 12px 20px; border-bottom: 2px solid rgba(255,107,0,0.5);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                        <span style="font-family: var(--font-primary); font-size: 0.75rem; color: {data['away_accent']}; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">{data['sport']} on {data['network']}</span>
-                        <span style="background: #39FF14; color: #000; font-family: var(--font-primary); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; text-transform: uppercase;">{data['time']}</span>
+                <div style="background: linear-gradient(135deg, {data['away_color']} 0%, {data['home_color']} 100%); padding: 18px 20px; border-bottom: 3px solid {data['away_accent']};">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-family: var(--font-primary); font-size: 0.75rem; color: {data['away_accent']}; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Tonight's Featured Game</span>
+                        <span style="background: #39FF14; color: #000; font-family: var(--font-primary); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; text-transform: uppercase;">{data['sport']} {data['time']}</span>
                     </div>
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
                         <div style="text-align: center;">
-                            <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['away_abbr'].lower()}.png" alt="{data['away_name']}" style="width: 45px; height: 45px; margin-bottom: 4px;">
-                            <div style="font-family: var(--font-primary); font-size: 0.9rem; color: #fff; font-weight: 700;">{data['away_name']}</div>
-                            <div style="font-size: 0.75rem; color: #ddd;">({data['away_record']})</div>
+                            <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['away_abbr'].lower()}.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
+                            <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">{data['away_name']}</div>
+                            <div style="font-size: 0.85rem; color: #aaa;">({data['away_record']})</div>
                         </div>
-                        <div style="font-family: var(--font-primary); font-size: 1.3rem; color: {data['away_accent']}; font-weight: 900;">@</div>
+                        <div style="font-family: var(--font-primary); font-size: 1.5rem; color: {data['away_accent']}; font-weight: 900;">@</div>
                         <div style="text-align: center;">
-                            <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['home_abbr'].lower()}.png" alt="{data['home_name']}" style="width: 45px; height: 45px; margin-bottom: 4px;">
-                            <div style="font-family: var(--font-primary); font-size: 0.9rem; color: #fff; font-weight: 700;">{data['home_name']}</div>
-                            <div style="font-size: 0.75rem; color: #ddd;">({data['home_record']})</div>
+                            <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['home_abbr'].lower()}.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
+                            <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">{data['home_name']}</div>
+                            <div style="font-size: 0.85rem; color: #aaa;">({data['home_record']})</div>
                         </div>
                     </div>
-                    <div style="text-align: center; margin-top: 6px; font-size: 0.75rem; color: #f0d0d0;">{data['short_date']} | {data['venue']} | {data['network']}</div>
+                    <div style="text-align: center; margin-top: 10px; font-size: 0.8rem; color: #8ab4f8;">{data['short_date']} | {data['venue']} | {data['network']}</div>
                 </div>
 
-                <!-- FREE PICK - Main focus, tighter -->
-                <div style="padding: 8px 20px 12px 20px; background: linear-gradient(180deg, rgba(0,20,10,0.95) 0%, rgba(0,30,15,0.9) 100%); text-align: center; border-left: 4px solid #39FF14; border-right: 4px solid #39FF14;" onclick="gtag('event', 'free_pick_click', {{'event_category': 'engagement'}});">
-                    <div style="font-family: var(--font-primary); font-size: 0.85rem; color: #39FF14; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 700;">Tonight's Featured Game</div>
-                    <div style="font-family: var(--font-primary); font-size: 1.3rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.2); margin-bottom: 3px;">
-                        {data['away_spread']} | {data['total']}
+                <!-- Betting Lines Table -->
+                <div style="padding: 12px 20px; background: rgba(0,0,0,0.3);">
+                    <table style="width: 100%; border-collapse: collapse; font-family: var(--font-secondary);">
+                        <thead>
+                            <tr style="border-bottom: 2px solid rgba(239,97,0,0.5);">
+                                <th style="text-align: left; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">Team</th>
+                                <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">Spread</th>
+                                <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">ML</th>
+                                <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">O/U</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
+                                    <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['away_abbr'].lower()}.png" style="width: 22px; height: 22px;">
+                                    <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">{data['away_abbr']}</span>
+                                </td>
+                                <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #39FF14; font-size: 0.95rem;">{away_spread_display}</td>
+                                <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #39FF14; font-size: 0.95rem;">{away_ml}</td>
+                                <td style="text-align: center; padding: 8px 5px; font-weight: 600; color: #fff; font-size: 0.9rem;">O {total}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
+                                    <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['home_abbr'].lower()}.png" style="width: 22px; height: 22px;">
+                                    <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">{data['home_abbr']}</span>
+                                </td>
+                                <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #ff6b6b; font-size: 0.95rem;">{home_spread}</td>
+                                <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #ff6b6b; font-size: 0.95rem;">{home_ml}</td>
+                                <td style="text-align: center; padding: 8px 5px; font-weight: 600; color: #fff; font-size: 0.9rem;">U {total}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Betting Trends -->
+                <div style="padding: 12px 20px; background: rgba(0,0,0,0.25);">
+                    <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #00f0ff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Records</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #ccc;">
+                        <div><span style="color: {data['away_accent']}; font-weight: 600;">{data['away_abbr']}:</span> {data['away_record']} SU</div>
+                        <div><span style="color: {data['away_accent']}; font-weight: 600;">{data['home_abbr']}:</span> {data['home_record']} SU</div>
                     </div>
-                    <div style="font-family: var(--font-primary); font-size: 0.9rem; font-weight: 700; color: var(--neon-gold);">
-                        {data['moneyline']}
-                    </div>
-                    <div style="margin-top: 8px; font-size: 0.95rem; color: rgba(57, 255, 20, 0.9); font-family: var(--font-primary); letter-spacing: 2px; font-weight: 700;">
-                        {data['away_abbr']} @ {data['home_abbr']} | {data['time']} | {data['network']}
+                </div>
+
+                <!-- Injuries -->
+                <div style="padding: 12px 20px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(239,97,0,0.1)); border-top: 1px solid rgba(255,215,0,0.3);">
+                    <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Injuries</div>
+                    <div style="font-size: 0.8rem; color: #ddd; line-height: 1.5;">
+                        <div style="margin-bottom: 4px;"><span style="color: {data['away_accent']}; font-weight: 600;">{data['away_abbr']}:</span> Check injury report</div>
+                        <div><span style="color: {data['away_accent']}; font-weight: 600;">{data['home_abbr']}:</span> Check injury report</div>
                     </div>
                 </div>
 
@@ -381,14 +440,15 @@ def verify_sync():
     header_away = logos[0].upper()
     header_home = logos[1].upper()
 
-    # Extract team abbrs from the matchup line (e.g., "LAL @ CHI | ...")
-    matchup_match = re.search(r'>\s*(\w{2,4})\s*@\s*(\w{2,4})\s*\|', section)
-    if not matchup_match:
-        print("  WARNING: Could not find matchup line in preview section")
-        return True
-
-    lines_away = matchup_match.group(1).upper()
-    lines_home = matchup_match.group(2).upper()
+    # Extract team abbrs from the betting lines table (look for team abbreviation spans)
+    lines_abbrs = re.findall(r'<span[^>]*font-weight: 600[^>]*>\s*(\w{2,4})\s*</span>', section)
+    if len(lines_abbrs) >= 2:
+        lines_away = lines_abbrs[0].upper()
+        lines_home = lines_abbrs[1].upper()
+    else:
+        # Fallback: just use header logos
+        lines_away = header_away
+        lines_home = header_home
 
     errors = []
 
