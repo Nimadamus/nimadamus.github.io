@@ -5,6 +5,8 @@
 const ARCHIVE_DATA = [
     { date: "2026-01-29", page: "soccer-page36.html", title: "Soccer Analysis - January 29, 2026" },
     { date: "2026-01-27", page: "soccer.html", title: "Soccer Analysis - January 27, 2026" },
+    { date: "2026-01-27", page: "soccer-page35.html", title: "Soccer Analysis - January 27, 2026" },
+    { date: "2026-01-26", page: "soccer-page34.html", title: "Soccer Analysis - January 26, 2026" },
     { date: "2026-01-25", page: "soccer-page9.html", title: "SOCCER Analysis - January 25, 2026" },
     { date: "2026-01-24", page: "soccer-page33.html", title: "Soccer Analysis - January 24, 2026" },
     { date: "2026-01-23", page: "soccer-page32.html", title: "Soccer Analysis - January 23, 2026" },
@@ -23,9 +25,7 @@ const ARCHIVE_DATA = [
     { date: "2026-01-10", page: "soccer-page19.html", title: "Soccer Analysis - January 10, 2026" },
     { date: "2026-01-09", page: "soccer-page14.html", title: "Soccer Analysis - January 09, 2026" },
     { date: "2026-01-08", page: "soccer-page18.html", title: "Soccer Analysis - January 08, 2026" },
-    { date: "2026-01-07", page: "soccer-page35.html", title: "Soccer Analysis - January 27, 2026" },
     { date: "2026-01-07", page: "soccer-page17.html", title: "SOCCER Analysis - January 07, 2026" },
-    { date: "2026-01-06", page: "soccer-page34.html", title: "Soccer Analysis - January 26, 2026" },
     { date: "2026-01-06", page: "soccer-page16.html", title: "SOCCER Analysis - January 06, 2026" },
     { date: "2026-01-05", page: "soccer-page10.html", title: "Soccer Analysis - January 05, 2026" },
     { date: "2026-01-04", page: "soccer-page15.html", title: "SOCCER Analysis - January 04, 2026" },

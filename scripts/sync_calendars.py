@@ -140,8 +140,8 @@ MANUAL_DATE_OVERRIDES = {
     'ncaab-page39.html': '2026-01-07',   # January 7 NCAAB
     'ncaab-page38.html': '2026-01-06',   # January 6 NCAAB
     # Soccer archive pages (NOT main page - soccer.html extracts from title)
-    'soccer-page35.html': '2026-01-07',  # January 7 Soccer
-    'soccer-page34.html': '2026-01-06',  # January 6 Soccer
+    'soccer-page35.html': '2026-01-27',  # January 27 Soccer
+    'soccer-page34.html': '2026-01-26',  # January 26 Soccer
 }
 
 # Month name to number mapping
