@@ -40,6 +40,14 @@ SPORTS = {
 # Pages to exclude from calendar (utility pages, not content pages)
 EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index']
 
+# Dates to EXCLUDE from calendars (days when no content was posted but pages exist)
+# Format: { 'sport': ['YYYY-MM-DD', ...] }
+EXCLUDED_DATES = {
+    'nba': ['2026-01-25', '2026-01-26', '2026-01-27'],
+    'nhl': ['2026-01-25', '2026-01-26', '2026-01-27'],
+    'ncaab': ['2026-01-25', '2026-01-26', '2026-01-27'],
+}
+
 # Manual date overrides for pages where automatic extraction fails
 # Format: 'filename.html': 'YYYY-MM-DD'
 # These are used when the page title is generic and content dates are unreliable
@@ -528,6 +536,15 @@ def main():
         print(f"{'='*40}")
 
         pages = get_sport_pages(sport_config)
+
+        # Filter out excluded dates for this sport
+        excluded = EXCLUDED_DATES.get(sport_name, [])
+        if excluded:
+            before_count = len(pages)
+            pages = [p for p in pages if p['date'] not in excluded]
+            if before_count != len(pages):
+                print(f"  [EXCLUDED] Removed {before_count - len(pages)} pages with excluded dates: {excluded}")
+
         total_pages += len(pages)
         print(f"\n  Total: {len(pages)} content pages found")
 
