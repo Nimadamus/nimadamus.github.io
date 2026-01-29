@@ -6,6 +6,7 @@ const ARCHIVE_DATA = [
     // 2026 - Individual pages with unique content
     { date: "2026-01-29", page: "featured-game-of-the-day-page59.html", title: "Thunder @ Timberwolves NBA" },
     { date: "2026-01-28", page: "featured-game-of-the-day-page58.html", title: "Lakers @ Cavaliers NBA" },
+    { date: "2026-01-27", page: "featured-game-of-the-day-page57.html", title: "Lakers @ Bulls NBA" },
     { date: "2026-01-26", page: "featured-game-of-the-day-page57.html", title: "Lakers @ Bulls NBA" },
     { date: "2026-01-25", page: "featured-game-of-the-day-page56.html", title: "Patriots @ Broncos AFC Championship" },
     { date: "2026-01-24", page: "featured-game-of-the-day-page55.html", title: "Canadiens @ Bruins Original Six Rivalry" },
