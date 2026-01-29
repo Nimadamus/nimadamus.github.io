@@ -46,6 +46,7 @@ EXCLUDED_DATES = {
     'nba': ['2026-01-25', '2026-01-26', '2026-01-27'],
     'nhl': ['2026-01-25', '2026-01-26', '2026-01-27'],
     'ncaab': ['2026-01-25', '2026-01-26', '2026-01-27'],
+    'soccer': ['2026-01-25', '2026-01-26', '2026-01-27'],
 }
 
 # Manual date overrides for pages where automatic extraction fails
