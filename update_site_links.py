@@ -172,16 +172,38 @@ def update_featured_game_pagination(pages):
     return changes
 
 
+def get_page_date(filename):
+    """Extract FORCED_PAGE_DATE from a featured game page"""
+    filepath = os.path.join(SITE_DIR, filename)
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        match = re.search(r"FORCED_PAGE_DATE\s*=\s*['\"](\d{4}-\d{2}-\d{2})['\"]", content)
+        if match:
+            return match.group(1)
+    except:
+        pass
+    return "1900-01-01"  # Fallback for pages without dates
+
+
 def update_nav_links_sitewide(featured_pages):
-    """Update navigation links across ALL HTML files to point to the newest featured game page"""
+    """Update navigation links across ALL HTML files to point to the newest featured game page by DATE"""
     changes = []
 
     if not featured_pages:
         return changes
 
-    # Get the newest featured game page (highest page number)
-    max_page_num = max(p[0] for p in featured_pages)
-    newest_page = get_featured_filename(max_page_num)
+    # Get the newest featured game page by FORCED_PAGE_DATE (not page number!)
+    pages_with_dates = []
+    for page_num, filename in featured_pages:
+        date = get_page_date(filename)
+        pages_with_dates.append((date, page_num, filename))
+
+    # Sort by date descending and get the newest
+    pages_with_dates.sort(key=lambda x: x[0], reverse=True)
+    newest_page = pages_with_dates[0][2] if pages_with_dates else get_featured_filename(1)
+
+    print(f"  Newest by date: {newest_page} ({pages_with_dates[0][0] if pages_with_dates else 'unknown'})")
 
     html_files = get_all_html_files()
 
