@@ -1,5 +1,54 @@
 #!/usr/bin/env python3
 """
+⛔⛔⛔ THIS SCRIPT IS PERMANENTLY DISABLED - DO NOT RUN ⛔⛔⛔
+
+DISABLED: January 30, 2026
+
+REASON: This script was automatically overwriting manually-set featured games
+on the homepage with whatever ESPN returned first (e.g., Pro Bowl instead of
+the actual featured game like Cavaliers @ Suns).
+
+The featured game preview on index.html is now MANUALLY CONTROLLED ONLY.
+Use sync_featured_game_preview.py instead to sync from featured game pages.
+
+DO NOT:
+- Re-enable this script in the GitHub Actions workflow
+- Run this script manually
+- Create a new version of this script
+
+The user has explicitly banned automatic featured game updates PERMANENTLY.
+
+If you need to update the featured game preview, use:
+  python scripts/sync_featured_game_preview.py
+
+That script reads from the actual featured-game-of-the-day page and syncs
+to index.html, ensuring consistency.
+
+⛔⛔⛔ DO NOT RUN THIS SCRIPT ⛔⛔⛔
+"""
+
+import sys
+print("=" * 70)
+print("⛔ ERROR: THIS SCRIPT IS PERMANENTLY DISABLED")
+print("=" * 70)
+print()
+print("This script was automatically overwriting manually-set featured games.")
+print("It has been PERMANENTLY BANNED as of January 30, 2026.")
+print()
+print("To update the featured game preview, use instead:")
+print("  python scripts/sync_featured_game_preview.py")
+print()
+print("DO NOT re-enable this script or create alternatives.")
+print("=" * 70)
+sys.exit(1)
+
+# ========================================================================
+# ORIGINAL CODE BELOW - DISABLED - DO NOT UNCOMMENT
+# ========================================================================
+
+"""
+ORIGINAL DISABLED CODE:
+
 UPDATE INDEX PAGE HANDICAPPING HUB PREVIEW
 Automatically fetches today's featured game and updates the index.html preview
 with comprehensive stats, betting lines, trends, and injury info.
