@@ -51,11 +51,17 @@ jobs:
         run: |
           python scripts/handicapping_hub_production.py
 
-      - name: Update Index Page Preview
-        env:
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: |
-          python scripts/update_index_preview.py
+      # DISABLED PERMANENTLY - January 30, 2026
+      # This script was automatically overwriting manual featured game selections
+      # with whatever ESPN returned first (e.g., Pro Bowl instead of CLE @ PHX)
+      # The featured game preview on index.html is now MANUALLY controlled only.
+      # DO NOT RE-ENABLE THIS STEP.
+      #
+      # - name: Update Index Page Preview
+      #   env:
+      #     ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      #   run: |
+      #     python scripts/update_index_preview.py
 
       - name: Validate output file
         run: |
