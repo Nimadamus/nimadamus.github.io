@@ -52,16 +52,16 @@ jobs:
           python scripts/handicapping_hub_production.py
 
       # DISABLED PERMANENTLY - January 30, 2026
-      # This script was automatically overwriting manual featured game selections
-      # with whatever ESPN returned first (e.g., Pro Bowl instead of CLE @ PHX)
-      # The featured game preview on index.html is now MANUALLY controlled only.
-      # DO NOT RE-ENABLE THIS STEP.
+      # update_index_preview.py was overwriting manual featured game selections
+      # with random ESPN data. DO NOT RE-ENABLE.
       #
-      # - name: Update Index Page Preview
-      #   env:
-      #     ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-      #   run: |
-      #     python scripts/update_index_preview.py
+      # REPLACED WITH: sync_featured_game_preview.py
+      # This script reads FROM the featured-game-of-the-day page that YOU create
+      # and syncs the index.html preview to match. It respects your selections.
+
+      - name: Sync Featured Game Preview
+        run: |
+          python scripts/sync_featured_game_preview.py
 
       - name: Validate output file
         run: |

@@ -15,7 +15,8 @@ import re
 import os
 import sys
 
-REPO = r'C:\Users\Nima\nimadamus.github.io'
+# Auto-detect repo path (works on Windows locally and in GitHub Actions)
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEX_PATH = os.path.join(REPO, 'index.html')
 
 # Sport to ESPN logo path
