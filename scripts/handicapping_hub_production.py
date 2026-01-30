@@ -66,7 +66,18 @@ def fetch_with_retry(url: str, params: dict = None, timeout: int = 15, max_retri
 # CONFIGURATION
 # =============================================================================
 
-ODDS_API_KEY = os.environ.get('ODDS_API_KEY', 'deeac7e7af6a8f1a5ac84c625e04973a')
+# ESPN provides free odds data - no API key needed!
+# ODDS_API_KEY is no longer required (previously: deeac7e7af6a8f1a5ac84c625e04973a)
+
+# ESPN odds endpoints (free, powered by DraftKings data)
+ESPN_ODDS_ENDPOINTS = {
+    'basketball_nba': 'https://site.api.espn.com/apis/v2/scoreboard/header?sport=basketball&league=nba',
+    'icehockey_nhl': 'https://site.api.espn.com/apis/v2/scoreboard/header?sport=hockey&league=nhl',
+    'americanfootball_nfl': 'https://site.api.espn.com/apis/v2/scoreboard/header?sport=football&league=nfl',
+    'baseball_mlb': 'https://site.api.espn.com/apis/v2/scoreboard/header?sport=baseball&league=mlb',
+    'basketball_ncaab': 'https://site.api.espn.com/apis/v2/scoreboard/header?sport=basketball&league=mens-college-basketball',
+    'americanfootball_ncaaf': 'https://site.api.espn.com/apis/v2/scoreboard/header?sport=football&league=college-football',
+}
 REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_FILE = "handicapping-hub.html"  # Production file
 
@@ -833,44 +844,100 @@ def fetch_defensive_stats(sport_path: str, team_id: str) -> Dict:
     return result
 
 def fetch_odds(sport_key: str) -> List[Dict]:
-    """Fetch betting odds from The Odds API"""
-    url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds"
-    params = {
-        'apiKey': ODDS_API_KEY,
-        'regions': 'us',
-        'markets': 'spreads,h2h,totals',
-        'oddsFormat': 'american'
-    }
-    resp = fetch_with_retry(url, params=params, timeout=15, max_retries=3)
-    if resp:
-        try:
-            all_odds = resp.json()
-            if EASTERN:
-                now_eastern = datetime.now(EASTERN)
-            else:
-                now_eastern = datetime.now() - timedelta(hours=5)
-            today_date = now_eastern.date() if hasattr(now_eastern, 'date') else now_eastern
+    """Fetch betting odds from ESPN (free, powered by DraftKings data)"""
+    if sport_key not in ESPN_ODDS_ENDPOINTS:
+        print(f"  [ODDS] Unknown sport key: {sport_key}")
+        return []
 
-            filtered = []
-            for game in all_odds:
-                commence = game.get('commence_time', '')
-                if commence:
-                    try:
-                        game_dt = datetime.fromisoformat(commence.replace('Z', '+00:00'))
-                        if EASTERN:
-                            game_eastern = game_dt.astimezone(EASTERN)
-                            game_date = game_eastern.date()
-                        else:
-                            game_date = (game_dt.replace(tzinfo=None) - timedelta(hours=5)).date()
+    url = ESPN_ODDS_ENDPOINTS[sport_key]
+    print(f"  [ODDS] Fetching from ESPN: {sport_key}")
 
-                        if game_date == today_date:
-                            filtered.append(game)
-                    except Exception:
-                        pass
-            return filtered
-        except json.JSONDecodeError:
-            pass
-    return []
+    resp = fetch_with_retry(url, timeout=15, max_retries=3)
+    if not resp:
+        print(f"  [ODDS] Failed to fetch ESPN data for {sport_key}")
+        return []
+
+    try:
+        data = resp.json()
+        games = []
+
+        # Navigate ESPN's response structure
+        for sport in data.get('sports', []):
+            for league in sport.get('leagues', []):
+                for event in league.get('events', []):
+                    odds_data = event.get('odds', {})
+                    if not odds_data:
+                        continue
+
+                    # Get team info from odds data
+                    away_team_data = odds_data.get('awayTeamOdds', {}).get('team', {})
+                    home_team_data = odds_data.get('homeTeamOdds', {}).get('team', {})
+
+                    # Build game object in format compatible with rest of script
+                    game = {
+                        'id': event.get('id', ''),
+                        'commence_time': event.get('date', ''),
+                        'home_team': home_team_data.get('displayName', ''),
+                        'away_team': away_team_data.get('displayName', ''),
+                        'bookmakers': [{
+                            'key': 'draftkings',
+                            'title': odds_data.get('provider', {}).get('name', 'DraftKings'),
+                            'markets': []
+                        }]
+                    }
+
+                    # Build markets array
+                    markets = game['bookmakers'][0]['markets']
+
+                    # Spreads market
+                    spread = odds_data.get('spread')
+                    if spread is not None:
+                        home_spread_odds = odds_data.get('homeTeamOdds', {}).get('spreadOdds', -110)
+                        away_spread_odds = odds_data.get('awayTeamOdds', {}).get('spreadOdds', -110)
+                        markets.append({
+                            'key': 'spreads',
+                            'outcomes': [
+                                {'name': game['home_team'], 'point': spread, 'price': home_spread_odds},
+                                {'name': game['away_team'], 'point': -spread, 'price': away_spread_odds}
+                            ]
+                        })
+
+                    # Moneyline (h2h) market
+                    home_ml = odds_data.get('homeTeamOdds', {}).get('moneyLine')
+                    away_ml = odds_data.get('awayTeamOdds', {}).get('moneyLine')
+                    if home_ml is not None and away_ml is not None:
+                        markets.append({
+                            'key': 'h2h',
+                            'outcomes': [
+                                {'name': game['home_team'], 'price': home_ml},
+                                {'name': game['away_team'], 'price': away_ml}
+                            ]
+                        })
+
+                    # Totals market
+                    total = odds_data.get('overUnder')
+                    if total is not None:
+                        over_odds = odds_data.get('overOdds', -110)
+                        under_odds = odds_data.get('underOdds', -110)
+                        markets.append({
+                            'key': 'totals',
+                            'outcomes': [
+                                {'name': 'Over', 'point': total, 'price': over_odds},
+                                {'name': 'Under', 'point': total, 'price': under_odds}
+                            ]
+                        })
+
+                    games.append(game)
+
+        print(f"  [ODDS] Found {len(games)} games with odds for {sport_key}")
+        return games
+
+    except json.JSONDecodeError as e:
+        print(f"  [ODDS] JSON decode error: {e}")
+        return []
+    except Exception as e:
+        print(f"  [ODDS] Error processing ESPN data: {e}")
+        return []
 
 def fetch_team_injuries(sport_path: str, team_id: str) -> List[Dict]:
     """Fetch team injuries"""
