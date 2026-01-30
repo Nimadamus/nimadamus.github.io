@@ -171,7 +171,7 @@
         .nav-menu {
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 18px;
             flex-wrap: nowrap;
             margin-right: auto;
             padding-right: 20px;
@@ -180,7 +180,7 @@
         /* Hub Button */
         .hub-btn {
             font-family: var(--font-primary);
-            font-size: 0.85rem;
+            font-size: 0.92rem;
             font-weight: 700;
             color: #fff;
             background: linear-gradient(135deg, #ff6b00, #ff8c00);
@@ -205,14 +205,92 @@
             50% { box-shadow: 0 0 35px rgba(255, 107, 0, 0.7); }
         }
 
+        /* Hub Dropdown */
+        .hub-dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .hub-dropdown .hub-dropbtn {
+            font-family: var(--font-primary);
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 25px rgba(255, 107, 0, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: hubPulse 2s ease-in-out infinite;
+        }
+
+        .hub-dropdown:hover .hub-dropbtn {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255, 107, 0, 0.7);
+        }
+
+        .hub-dropdown .hub-dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            background: rgba(0, 5, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 107, 0, 0.4);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            box-shadow: 0 10px 40px rgba(255, 107, 0, 0.3);
+            z-index: 99999;
+        }
+
+        .hub-dropdown .hub-dropdown-content a {
+            display: block;
+            padding: 12px 16px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .hub-dropdown .hub-dropdown-content a:hover {
+            background: rgba(255, 107, 0, 0.2);
+            padding-left: 22px;
+            border-left-color: #ff6b00;
+            color: #fff;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .hub-dropdown:hover .hub-dropdown-content {
+                display: block;
+                animation: dropdownFade 0.3s ease;
+            }
+        }
+
+        .hub-dropdown.active .hub-dropdown-content {
+            display: block;
+            animation: dropdownFade 0.3s ease;
+        }
+
         /* Nav Links */
         .nav-link {
             font-family: var(--font-primary);
-            font-size: 0.82rem;
+            font-size: 0.92rem;
             font-weight: 600;
             color: #fff;
             text-decoration: none;
-            padding: 10px 7px;
+            padding: 10px 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: all 0.3s ease;
@@ -233,12 +311,12 @@
 
         .dropdown .dropbtn {
             font-family: var(--font-primary);
-            font-size: 0.82rem;
+            font-size: 0.92rem;
             font-weight: 600;
             color: #fff;
             background: none;
             border: none;
-            padding: 10px 7px;
+            padding: 10px 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             cursor: pointer;
@@ -1169,15 +1247,23 @@
             }
 
             .nav-link, .dropdown .dropbtn {
-                font-size: 0.7rem;
+                font-size: 0.75rem;
                 padding: 8px 10px;
                 letter-spacing: 1px;
             }
 
-            .hub-btn {
+            .hub-dropdown .hub-dropbtn {
                 font-size: 0.75rem;
-                padding: 10px 16px;
-                margin-right: 8px;
+                padding: 10px 14px;
+            }
+
+            .hub-dropdown .hub-dropdown-content {
+                position: fixed !important;
+                left: 5% !important;
+                right: 5% !important;
+                top: 120px !important;
+                width: 90% !important;
+                min-width: unset !important;
             }
 
             .hero {
@@ -1282,9 +1368,14 @@
                 gap: 8px;
             }
 
-            .hub-btn {
+            .hub-dropdown {
                 margin-right: 0;
                 margin-bottom: 5px;
+            }
+
+            .hub-dropdown .hub-dropbtn {
+                font-size: 0.7rem;
+                padding: 8px 12px;
             }
 
             .hero-left h1 {
@@ -1374,13 +1465,13 @@
             }
 
             .nav-link, .dropdown .dropbtn {
-                font-size: 0.6rem;
+                font-size: 0.65rem;
                 padding: 6px 8px;
             }
 
-            .hub-btn {
+            .hub-dropdown .hub-dropbtn {
                 font-size: 0.65rem;
-                padding: 8px 12px;
+                padding: 8px 10px;
             }
 
             .stats-grid {
@@ -1405,8 +1496,14 @@ crossorigin="anonymous"></script>
             <a href="index.html" class="logo">BET<span>LEGEND</span></a>
 
             <div class="nav-menu">
-                <!-- Handicapping Hub -->
-                <a href="handicapping-hub.html" class="hub-btn">Handicapping Hub</a>
+                <!-- Handicapping Hub Dropdown -->
+                <div class="hub-dropdown dropdown">
+                    <button class="hub-dropbtn">Handicapping Hub ▼</button>
+                    <div class="hub-dropdown-content">
+                        <a href="handicapping-hub.html">Handicapping Hub</a>
+                        <a href="injury-report.html">Injury Report</a>
+                    </div>
+                </div>
 
                 <!-- Picks & Analysis -->
                 <a href="blog.html" class="nav-link">Picks & Analysis</a>
@@ -1463,9 +1560,6 @@ crossorigin="anonymous"></script>
 
                 <!-- News -->
                 <a href="news-page4.html" class="nav-link">News</a>
-
-                <!-- Injury Report -->
-                <a href="injury-report.html" class="nav-link">Injury Report</a>
 
                 <!-- Podcast -->
                 <a href="podcast.html" class="nav-link">Podcast</a>
