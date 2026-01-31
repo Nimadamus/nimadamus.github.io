@@ -160,8 +160,8 @@ body::before{
   border-bottom:2px solid var(--neon-cyan);
   box-shadow:0 0 30px rgba(0,255,242,0.3);
 }
-.nav-inner{max-width:1600px;margin:0 auto;display:flex;align-items:center;justify-content:flex-end;padding:15px 20px 15px 200px}
-.logo{position:fixed;top:15px;left:20px;z-index:1001}
+.nav-inner{max-width:1600px;margin:0 auto;display:flex;align-items:center;justify-content:center;padding:15px 20px;gap:10px}
+.logo{position:relative;top:0;left:0;margin-right:20px}
 .logo a{
   font-family:var(--font-display);
   font-size:2rem;
@@ -618,7 +618,13 @@ footer a:hover{text-shadow:0 0 10px var(--neon-cyan)}
 
         <div class="nav-menu">
             <!-- Handicapping Hub -->
-            <a href="handicapping-hub.html" class="hub-btn">Handicapping Hub</a>
+            <div class="dropdown">
+                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+                <div class="dropdown-content">
+                    <a href="handicapping-hub.html">Today's Games</a>
+                    <a href="injury-report.html">Injury Report</a>
+                </div>
+            </div>
 
             <!-- Picks & Analysis -->
             <a href="blog.html" class="nav-link">Picks & Analysis</a>
@@ -675,9 +681,6 @@ footer a:hover{text-shadow:0 0 10px var(--neon-cyan)}
 
             <!-- News -->
             <a href="news-page4.html" class="nav-link">News</a>
-
-            <!-- Injury Report -->
-            <a href="injury-report.html" class="nav-link">Injury Report</a>
 
             <!-- Podcast -->
                 <a href="podcast.html" class="nav-link">Podcast</a>
