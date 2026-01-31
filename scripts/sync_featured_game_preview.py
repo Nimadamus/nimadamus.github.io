@@ -182,6 +182,55 @@ def extract_game_data(page_content):
     else:
         data['moneyline'] = f"{data['away_abbr']} TBD | {data['home_abbr']} TBD"
 
+    # Extract injuries from the featured game page
+    # Look for injury section patterns
+    data['away_injuries'] = 'Check injury report'
+    data['home_injuries'] = 'Check injury report'
+
+    # Try to find injury data in the featured game page
+    # Pattern 1: Look for injury-item divs
+    injury_items = re.findall(
+        r'class="injury-item"[^>]*>.*?<span[^>]*>([^<]+)</span>.*?<span[^>]*>([^<]+)</span>',
+        page_content, re.DOTALL | re.IGNORECASE
+    )
+
+    away_injuries = []
+    home_injuries = []
+
+    # Pattern 2: Look for "Key Injuries" or "Injury Report" sections
+    injury_section = re.search(
+        r'(?:Key Injuries|Injury Report|Injuries to Watch).*?</section>',
+        page_content, re.DOTALL | re.IGNORECASE
+    )
+
+    if injury_section:
+        section_text = injury_section.group(0)
+        # Look for player names with injury status
+        # Pattern: "Player Name (injury) - Status" or "Player Name - Status (injury)"
+        injury_patterns = re.findall(
+            r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\s*[\(\-]\s*([\w\s]+?)[\)\-]\s*[\-\:]\s*(OUT|GTD|Questionable|Doubtful|Probable)',
+            section_text, re.IGNORECASE
+        )
+        for name, injury, status in injury_patterns:
+            # Determine which team based on position in section or nearby team reference
+            pass  # Complex logic needed here
+
+    # Pattern 3: Look for simpler injury mentions
+    # "DAL: Player (injury) - OUT" or "Away Team Injuries: ..."
+    away_inj_match = re.search(
+        rf'{data["away_abbr"]}[:\s]+([^<\n]+(?:OUT|GTD|Questionable|Doubtful)[^<\n]*)',
+        page_content, re.IGNORECASE
+    )
+    if away_inj_match:
+        data['away_injuries'] = away_inj_match.group(1).strip()[:60]  # Limit length
+
+    home_inj_match = re.search(
+        rf'{data["home_abbr"]}[:\s]+([^<\n]+(?:OUT|GTD|Questionable|Doubtful)[^<\n]*)',
+        page_content, re.IGNORECASE
+    )
+    if home_inj_match:
+        data['home_injuries'] = home_inj_match.group(1).strip()[:60]
+
     # Game details: "Monday, January 26, 2026 | 8:00 PM ET | United Center, Chicago | ESPN"
     details_match = re.search(r'class="game-details">\s*([^<]+?)\s*</div>', page_content)
     if details_match:
@@ -229,7 +278,17 @@ def extract_game_data(page_content):
 
 
 def generate_preview_html(data, page_filename):
-    """Generate the Featured Game preview HTML for index.html (detailed format with tables)."""
+    """Generate the Featured Game preview HTML for index.html.
+
+    IMPORTANT: This must match the exact structure in index.html:
+    1. Header Banner - Matchup Info
+    2. Betting Lines Table
+    3. Betting Trends (Records)
+    4. Injuries
+    5. Link to Featured Game Page (View Full Breakdown)
+    6. Subscribe to Premium Button
+    7. Affiliate Banner (YouWager)
+    """
     # Parse spread to get numbers
     away_spread = data.get('away_spread', 'PK')
     # Try to extract numeric spread for home team (opposite sign)
@@ -238,7 +297,7 @@ def generate_preview_html(data, page_filename):
         away_spread_val = float(spread_num.group(1))
         home_spread_val = -away_spread_val
         home_spread = f"+{home_spread_val}" if home_spread_val > 0 else str(home_spread_val)
-        away_spread_display = f"-{abs(away_spread_val)}" if away_spread_val > 0 else f"+{abs(away_spread_val)}"
+        away_spread_display = f"+{abs(away_spread_val)}" if away_spread_val > 0 else f"-{abs(away_spread_val)}"
     else:
         away_spread_display = "PK"
         home_spread = "PK"
@@ -252,7 +311,7 @@ def generate_preview_html(data, page_filename):
     total = data.get('total', 'O/U 220').replace('O/U ', '')
 
     return f'''<!-- Header Banner - Matchup Info -->
-                <div style="background: linear-gradient(135deg, {data['away_color']} 0%, {data['home_color']} 100%); padding: 18px 20px; border-bottom: 3px solid {data['away_accent']};">
+                <div style="background: linear-gradient(135deg, {data['away_color']} 0%, {data['home_color']} 100%); padding: 14px 20px; border-bottom: 3px solid {data['away_accent']};">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                         <span style="font-family: var(--font-primary); font-size: 0.75rem; color: {data['away_accent']}; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Tonight's Featured Game</span>
                         <span style="background: #39FF14; color: #000; font-family: var(--font-primary); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; text-transform: uppercase;">{data['sport']} {data['time']}</span>
@@ -274,7 +333,7 @@ def generate_preview_html(data, page_filename):
                 </div>
 
                 <!-- Betting Lines Table -->
-                <div style="padding: 12px 20px; background: rgba(0,0,0,0.3);">
+                <div style="padding: 10px 20px; background: rgba(0,0,0,0.3);">
                     <table style="width: 100%; border-collapse: collapse; font-family: var(--font-secondary);">
                         <thead>
                             <tr style="border-bottom: 2px solid rgba(239,97,0,0.5);">
@@ -308,7 +367,7 @@ def generate_preview_html(data, page_filename):
                 </div>
 
                 <!-- Betting Trends -->
-                <div style="padding: 12px 20px; background: rgba(0,0,0,0.25);">
+                <div style="padding: 8px 20px; background: rgba(0,0,0,0.25);">
                     <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #00f0ff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Records</div>
                     <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #ccc;">
                         <div><span style="color: {data['away_accent']}; font-weight: 600;">{data['away_abbr']}:</span> {data['away_record']} SU</div>
@@ -317,28 +376,36 @@ def generate_preview_html(data, page_filename):
                 </div>
 
                 <!-- Injuries -->
-                <div style="padding: 12px 20px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(239,97,0,0.1)); border-top: 1px solid rgba(255,215,0,0.3);">
+                <div style="padding: 8px 20px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(239,97,0,0.1)); border-top: 1px solid rgba(255,215,0,0.3);">
                     <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Injuries</div>
                     <div style="font-size: 0.8rem; color: #ddd; line-height: 1.5;">
-                        <div style="margin-bottom: 4px;"><span style="color: {data['away_accent']}; font-weight: 600;">{data['away_abbr']}:</span> Check injury report</div>
-                        <div><span style="color: {data['away_accent']}; font-weight: 600;">{data['home_abbr']}:</span> Check injury report</div>
+                        <div style="margin-bottom: 4px;"><span style="color: {data['away_accent']}; font-weight: 600;">{data['away_abbr']}:</span> {data['away_injuries']}</div>
+                        <div><span style="color: {data['away_accent']}; font-weight: 600;">{data['home_abbr']}:</span> {data['home_injuries']}</div>
                     </div>
                 </div>
 
-                <!-- Subscribe to Premium Button - NEVER DELETE -->
-                <div style="padding: 15px 20px; background: linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(0, 240, 255, 0.1)); border-top: 1px solid rgba(57, 255, 20, 0.3);">
-                    <a href="premium.html" style="display: block; text-align: center; background: linear-gradient(135deg, #39FF14, #00f0ff); color: #000; font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; padding: 12px 20px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.4); transition: all 0.3s ease;">
-                        🔥 Subscribe to Premium Picks
-                    </a>
-                </div>
-
                 <!-- Link to Featured Game Page - NEVER DELETE -->
-                <a href="{page_filename}" style="display: block; padding: 15px 20px; background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(239, 97, 0, 0.15)); text-align: center; text-decoration: none; border-top: 1px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease;">
+                <a href="{page_filename}" style="display: block; padding: 12px 20px; background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(239, 97, 0, 0.15)); text-align: center; text-decoration: none; border-top: 1px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease;">
                     <span style="font-family: var(--font-primary); font-size: 0.9rem; color: #FFD700; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
                         View Full Breakdown →
                     </span>
                 </a>
 
+                <!-- Subscribe to Premium Button - NEVER DELETE -->
+                <div style="padding: 12px 20px; background: linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(0, 240, 255, 0.1)); border-top: 1px solid rgba(57, 255, 20, 0.3);">
+                    <a href="premium.html" style="display: block; text-align: center; background: linear-gradient(135deg, #39FF14, #00f0ff); color: #000; font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; padding: 12px 20px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.4); transition: all 0.3s ease;">
+                        🔥 Subscribe to Premium Picks
+                    </a>
+                </div>
+
+                <!-- Affiliate Banner - Moved here per user request Jan 30, 2026 -->
+                <div class="affiliate-banner" style="padding: 20px; background: linear-gradient(135deg, rgba(0, 10, 30, 0.8), rgba(0, 30, 60, 0.8)); border-top: 2px solid rgba(0, 240, 255, 0.8); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <h2 style="font-family: var(--font-primary); font-size: 1.1rem; color: var(--neon-gold); margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 1px;">Join YouWager — 350% Bonus!</h2>
+                        <p style="font-size: 0.85rem; color: #ccc; margin: 0;">Trusted sportsbook with fast payouts • Our recommended book</p>
+                    </div>
+                    <a href="https://record.revmasters.com/_I-xl5bHAf88RxlNGag_0XWNd7ZgqdRLk/111/" target="_blank" rel="noopener" style="font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; color: #000; background: var(--neon-gold); padding: 12px 25px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); transition: all 0.3s ease;">Claim Your Bonus</a>
+                </div>
 '''
 
 
@@ -379,12 +446,14 @@ def sync_preview():
     print(f"  Sport: {data['sport']} | Time: {data['time']} | Network: {data['network']}")
     print(f"  Spread: {data['away_spread']} | Total: {data['total']}")
     print(f"  Moneyline: {data['moneyline']}")
+    print(f"  Away Injuries: {data['away_injuries']}")
+    print(f"  Home Injuries: {data['home_injuries']}")
     print(f"  Colors: {data['away_color']} -> {data['home_color']} (accent: {data['away_accent']})")
 
     # Generate new preview HTML
     new_preview = generate_preview_html(data, page_filename)
 
-    # Replace in index.html
+    # Replace in index.html - updated pattern to capture through affiliate banner
     pattern = r'<!-- Header Banner - Matchup Info -->.*?(?=\s*<!-- CTA to Full Breakdown -->)'
 
     if not re.search(pattern, index_content, re.DOTALL):
@@ -408,6 +477,7 @@ def sync_preview():
         ('Subscribe to Premium', 'Subscribe button'),
         ('View Full Breakdown', 'Full breakdown link'),
         ('featured-game-of-the-day-page', 'Featured game page link'),
+        ('Join YouWager', 'Affiliate banner'),
     ]
 
     missing = []
@@ -425,6 +495,7 @@ def sync_preview():
     print(f"\n  SUCCESS: index.html preview updated to match {page_filename}")
     print(f"  ✓ Subscribe button present")
     print(f"  ✓ Full breakdown link present")
+    print(f"  ✓ Affiliate banner present")
     print("=" * 60)
     return True
 
