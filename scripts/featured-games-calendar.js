@@ -1,9 +1,10 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: January 30, 2026
+// Last updated: January 31, 2026
 
 const ARCHIVE_DATA = [
     // 2026 - Individual pages with unique content
+    { date: "2026-01-31", page: "featured-game-of-the-day-page62.html", title: "Mavericks @ Rockets NBA" },
     { date: "2026-01-30", page: "featured-game-of-the-day-page61.html", title: "Cavaliers @ Suns NBA" },
     { date: "2026-01-29", page: "featured-game-of-the-day-page59.html", title: "Thunder @ Timberwolves NBA" },
     { date: "2026-01-28", page: "featured-game-of-the-day-page58.html", title: "Lakers @ Cavaliers NBA" },
