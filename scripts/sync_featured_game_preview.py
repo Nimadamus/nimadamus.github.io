@@ -228,7 +228,7 @@ def extract_game_data(page_content):
     return data
 
 
-def generate_preview_html(data):
+def generate_preview_html(data, page_filename):
     """Generate the Featured Game preview HTML for index.html (detailed format with tables)."""
     # Parse spread to get numbers
     away_spread = data.get('away_spread', 'PK')
@@ -325,6 +325,20 @@ def generate_preview_html(data):
                     </div>
                 </div>
 
+                <!-- Subscribe to Premium Button - NEVER DELETE -->
+                <div style="padding: 15px 20px; background: linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(0, 240, 255, 0.1)); border-top: 1px solid rgba(57, 255, 20, 0.3);">
+                    <a href="premium.html" style="display: block; text-align: center; background: linear-gradient(135deg, #39FF14, #00f0ff); color: #000; font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; padding: 12px 20px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.4); transition: all 0.3s ease;">
+                        🔥 Subscribe to Premium Picks
+                    </a>
+                </div>
+
+                <!-- Link to Featured Game Page - NEVER DELETE -->
+                <a href="{page_filename}" style="display: block; padding: 15px 20px; background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(239, 97, 0, 0.15)); text-align: center; text-decoration: none; border-top: 1px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease;">
+                    <span style="font-family: var(--font-primary); font-size: 0.9rem; color: #FFD700; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                        View Full Breakdown →
+                    </span>
+                </a>
+
 '''
 
 
@@ -368,7 +382,7 @@ def sync_preview():
     print(f"  Colors: {data['away_color']} -> {data['home_color']} (accent: {data['away_accent']})")
 
     # Generate new preview HTML
-    new_preview = generate_preview_html(data)
+    new_preview = generate_preview_html(data, page_filename)
 
     # Replace in index.html
     pattern = r'<!-- Header Banner - Matchup Info -->.*?(?=\s*<!-- CTA to Full Breakdown -->)'
