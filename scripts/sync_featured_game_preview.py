@@ -403,7 +403,28 @@ def sync_preview():
     with open(INDEX_PATH, 'w', encoding='utf-8') as f:
         f.write(updated_content)
 
+    # SAFETY CHECK: Verify required elements are present after write
+    required_elements = [
+        ('Subscribe to Premium', 'Subscribe button'),
+        ('View Full Breakdown', 'Full breakdown link'),
+        ('featured-game-of-the-day-page', 'Featured game page link'),
+    ]
+
+    missing = []
+    for pattern, name in required_elements:
+        if pattern not in updated_content:
+            missing.append(name)
+
+    if missing:
+        print(f"\n  ERROR: Required elements missing after sync!")
+        for m in missing:
+            print(f"    [MISSING] {m}")
+        print(f"\n  This is a bug in the sync script. Please report.")
+        return False
+
     print(f"\n  SUCCESS: index.html preview updated to match {page_filename}")
+    print(f"  ✓ Subscribe button present")
+    print(f"  ✓ Full breakdown link present")
     print("=" * 60)
     return True
 
