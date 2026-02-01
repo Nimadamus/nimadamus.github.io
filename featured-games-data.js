@@ -77,6 +77,9 @@ const FEATURED_GAMES = [
     { date: "2026-01-24", page: "featured-game-of-the-day-page55.html", title: "Canadiens vs Bruins Original Six Rivalry" },
     { date: "2026-01-25", page: "featured-game-of-the-day-page56.html", title: "Patriots vs Broncos AFC Championship" },
 
+    // February 2026
+    { date: "2026-02-01", page: "featured-game-of-the-day-page63.html", title: "Lightning vs Bruins Stadium Series" },
+
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
