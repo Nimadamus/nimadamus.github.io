@@ -53,22 +53,26 @@ jobs:
           # Show output in logs
           cat validator_output.txt
 
-          # Count errors (excluding known false positives)
-          TOTAL_ERRORS=$(grep -c "\[ERROR\]" validator_output.txt || echo "0")
+          # Count actual error messages (not file headers)
+          # Real errors contain "ROSTER ERROR", "IMPOSSIBLE", or "Missing <"
+          TOTAL_ERRORS=$(grep -cE "\[ERROR\] (ROSTER ERROR|IMPOSSIBLE|Missing <)" validator_output.txt || echo "0")
 
           # Known false positives (old archive files with outdated rosters)
-          # These are whitelisted and don't count as failures
+          # Whitelist: mlb-page2.html (3 errors) and nfl-page16.html (1 error)
           KNOWN_FP=0
 
-          # mlb-page2.html roster errors (Eury Perez, Dustin May, Nestor Cortes)
-          if grep -q "mlb-page2.html" validator_output.txt && grep -q "ROSTER ERROR" validator_output.txt; then
-            MLP2_ERRORS=$(grep "mlb-page2.html" validator_output.txt | grep -c "ROSTER ERROR" || echo "0")
+          # Extract errors from whitelisted files only
+          # Create temp file with just error sections for whitelisted files
+          grep -B1 "ROSTER ERROR" validator_output.txt | grep -E "mlb-page2.html|nfl-page16.html" > /tmp/whitelist_check.txt 2>/dev/null || true
+
+          if grep -q "mlb-page2.html" /tmp/whitelist_check.txt; then
+            # Count how many ROSTER ERRORs follow mlb-page2.html
+            MLP2_ERRORS=$(grep -A50 "\[ERROR\] mlb-page2.html" validator_output.txt | grep -c "ROSTER ERROR" || echo "0")
             KNOWN_FP=$((KNOWN_FP + MLP2_ERRORS))
           fi
 
-          # nfl-page16.html roster error (Russell Wilson API mismatch)
-          if grep -q "nfl-page16.html" validator_output.txt && grep -q "ROSTER ERROR" validator_output.txt; then
-            NFL16_ERRORS=$(grep "nfl-page16.html" validator_output.txt | grep -c "ROSTER ERROR" || echo "0")
+          if grep -q "nfl-page16.html" /tmp/whitelist_check.txt; then
+            NFL16_ERRORS=$(grep -A50 "\[ERROR\] nfl-page16.html" validator_output.txt | grep -c "ROSTER ERROR" || echo "0")
             KNOWN_FP=$((KNOWN_FP + NFL16_ERRORS))
           fi
 
