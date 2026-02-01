@@ -19,6 +19,7 @@ import re
 import json
 import time
 import codecs
+import fnmatch
 from datetime import datetime, timedelta
 from pathlib import Path
 from collections import defaultdict
@@ -64,7 +65,9 @@ class Config:
     
     # Files/dirs to skip
     SKIP_DIRS = {'.git', 'node_modules', '.claude', '__pycache__', 'assets', 'images', 'css', 'js'}
-    SKIP_FILES = {'404.html', 'template.html', 'google*.html'}
+    SKIP_FILES = {'404.html', 'template.html', 'test_article.html', 'input.html'}
+    # Glob patterns for files to skip (e.g., google verification files)
+    SKIP_FILE_PATTERNS = ['google*.html']
     
     # Stat range validation (min, max, typical_min, typical_max)
     # Values outside min/max = ERROR, outside typical = WARNING
@@ -100,7 +103,8 @@ class Config:
             'display': 'RBI', 'format': '{}'
         },
         'wins_pitcher': {
-            'pattern': r'(\d{1,2})-\d{1,2}\s*(?:record|W-L|win-loss)',
+            # Only match explicit W-L or win-loss notation (not generic "record" which catches team records)
+            'pattern': r'(\d{1,2})-\d{1,2}\s*(?:W-L|win-loss|wins?\s*and\s*\d+\s*loss)',
             'min': 0, 'max': 30, 'typical_min': 0, 'typical_max': 25,
             'display': 'Pitcher Wins', 'format': '{}'
         },
@@ -781,7 +785,14 @@ class BetLegendValidator:
             for fname in filenames:
                 if Path(fname).suffix.lower() in Config.HTML_EXTENSIONS:
                     if fname not in Config.SKIP_FILES:
-                        files.append(os.path.join(root, fname))
+                        # Also check glob patterns
+                        skip = False
+                        for pattern in Config.SKIP_FILE_PATTERNS:
+                            if fnmatch.fnmatch(fname, pattern):
+                                skip = True
+                                break
+                        if not skip:
+                            files.append(os.path.join(root, fname))
         
         return sorted(files)
     
