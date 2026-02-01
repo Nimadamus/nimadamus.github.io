@@ -1,0 +1,185 @@
+name: Content Validation & Deployment Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:  # Allow manual triggering
+
+# Ensure only one deployment at a time
+concurrency:
+  group: "pages-validation"
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate Content
+    runs-on: ubuntu-latest
+    outputs:
+      validation_passed: ${{ steps.validate.outputs.passed }}
+      error_count: ${{ steps.validate.outputs.errors }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Run BetLegend Validator
+        id: validate
+        run: |
+          echo "## Content Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Time:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Run the validator and capture output
+          set +e
+          python betlegend_validator.py . > validator_output.txt 2>&1
+          VALIDATOR_EXIT=$?
+          set -e
+
+          # Show output in logs
+          cat validator_output.txt
+
+          # Count errors (excluding known false positives)
+          TOTAL_ERRORS=$(grep -c "\[ERROR\]" validator_output.txt || echo "0")
+
+          # Known false positives (old archive files with outdated rosters)
+          # These are whitelisted and don't count as failures
+          KNOWN_FP=0
+
+          # mlb-page2.html roster errors (Eury Perez, Dustin May, Nestor Cortes)
+          if grep -q "mlb-page2.html" validator_output.txt && grep -q "ROSTER ERROR" validator_output.txt; then
+            MLP2_ERRORS=$(grep "mlb-page2.html" validator_output.txt | grep -c "ROSTER ERROR" || echo "0")
+            KNOWN_FP=$((KNOWN_FP + MLP2_ERRORS))
+          fi
+
+          # nfl-page16.html roster error (Russell Wilson API mismatch)
+          if grep -q "nfl-page16.html" validator_output.txt && grep -q "ROSTER ERROR" validator_output.txt; then
+            NFL16_ERRORS=$(grep "nfl-page16.html" validator_output.txt | grep -c "ROSTER ERROR" || echo "0")
+            KNOWN_FP=$((KNOWN_FP + NFL16_ERRORS))
+          fi
+
+          # Calculate real errors (total - known false positives)
+          REAL_ERRORS=$((TOTAL_ERRORS - KNOWN_FP))
+          if [ $REAL_ERRORS -lt 0 ]; then
+            REAL_ERRORS=0
+          fi
+
+          echo "errors=$REAL_ERRORS" >> $GITHUB_OUTPUT
+
+          # Build summary
+          echo "### Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ $REAL_ERRORS -eq 0 ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+            echo "| Status | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| :white_check_mark: Real Errors | **0** |" >> $GITHUB_STEP_SUMMARY
+            echo "| :information_source: Whitelisted (old archives) | $KNOWN_FP |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "> **Validation PASSED** - Safe to deploy" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            echo "| Status | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| :x: **Real Errors** | **$REAL_ERRORS** |" >> $GITHUB_STEP_SUMMARY
+            echo "| :information_source: Whitelisted (old archives) | $KNOWN_FP |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "> :rotating_light: **Validation FAILED** - Deployment blocked" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Errors Found" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            # Show errors excluding known false positives
+            grep "\[ERROR\]" validator_output.txt | grep -v "mlb-page2.html" | grep -v "nfl-page16.html" >> $GITHUB_STEP_SUMMARY || true
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: validator_output.txt
+          retention-days: 30
+
+  # Block deployment if validation fails
+  deploy-gate:
+    name: Deployment Gate
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Check validation status
+        run: |
+          if [ "${{ needs.validate.outputs.validation_passed }}" != "true" ]; then
+            echo "::error::Deployment blocked - validation found ${{ needs.validate.outputs.error_count }} error(s)"
+            echo ""
+            echo "============================================================"
+            echo "  DEPLOYMENT BLOCKED"
+            echo "============================================================"
+            echo ""
+            echo "  Validation found errors in your content."
+            echo "  The site will NOT be deployed until errors are fixed."
+            echo ""
+            echo "  Check the 'Validate Content' job for details."
+            echo ""
+            echo "============================================================"
+            exit 1
+          fi
+          echo "Validation passed - deployment can proceed"
+
+  # Notify on failure
+  notify-failure:
+    name: Notify on Failure
+    runs-on: ubuntu-latest
+    needs: validate
+    if: failure() && github.event_name == 'push'
+
+    steps:
+      - name: Create failure issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Check if similar issue exists and is open
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'validation-failed'
+            });
+
+            if (issues.data.length > 0) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues.data[0].number,
+                body: `### New validation failure\n\n**Commit:** \`${context.sha}\`\n**Time:** ${new Date().toISOString()}\n**Errors:** ${{ needs.validate.outputs.error_count }}\n\n[View workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
+              });
+            } else {
+              // Create new issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: ':x: Content Validation Failed - Deployment Blocked',
+                body: `## Validation Failed\n\nThe content validator found **${{ needs.validate.outputs.error_count }}** error(s) in the latest push.\n\n**Commit:** \`${context.sha}\`\n**Pushed by:** @${context.actor}\n**Time:** ${new Date().toISOString()}\n\n### What to do:\n1. Check the [workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for specific errors\n2. Fix the errors in your content\n3. Push the corrected content\n\n> :warning: **The site will NOT deploy until all errors are fixed.**`,
+                labels: ['validation-failed', 'blocking']
+              });
+            }
