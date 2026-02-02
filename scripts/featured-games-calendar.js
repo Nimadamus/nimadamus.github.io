@@ -1,9 +1,11 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: January 31, 2026
+// Last updated: February 2, 2026
 
 const ARCHIVE_DATA = [
     // 2026 - Individual pages with unique content
+    { date: "2026-02-02", page: "featured-game-of-the-day-page64.html", title: "#14 Kansas vs #11 Texas Tech NCAAB" },
+    { date: "2026-02-01", page: "featured-game-of-the-day-page63.html", title: "Lightning vs Bruins NHL Stadium Series" },
     { date: "2026-01-31", page: "featured-game-of-the-day-page62.html", title: "Mavericks @ Rockets NBA" },
     { date: "2026-01-30", page: "featured-game-of-the-day-page61.html", title: "Cavaliers @ Suns NBA" },
     { date: "2026-01-29", page: "featured-game-of-the-day-page59.html", title: "Thunder @ Timberwolves NBA" },
