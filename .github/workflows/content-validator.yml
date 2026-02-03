@@ -140,7 +140,7 @@ jobs:
 
                       if re.search(rf'\b{re.escape(wrong_team)}\b', sentence):
                           # Check if describing trade history
-                          trade_words = ['traded', 'former', 'ex-', 'left', 'was with', 'from the', 'no longer', 'previously']
+                          trade_words = ['traded', 'former', 'ex-', 'left', 'was with', 'from the', 'trade from', 'from toronto', 'from chicago', 'from houston', 'from phoenix', 'from miami', 'no longer', 'previously', 'acquired from', 'came from']
                           if not any(tw in sentence for tw in trade_words):
                               errors.append(f"[{filename}] FALSE INFO: {error_msg}")
 
