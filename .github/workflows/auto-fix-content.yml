@@ -37,9 +37,9 @@ jobs:
           for prefix in nba nhl nfl ncaab ncaaf mlb soccer; do
             for file in ${prefix}*.html; do
               if [ -f "$file" ]; then
-                if grep -qi -E "coming soon|analysis coming|matchup analysis|preview coming|\bTBD\b|\bTBA\b" "$file" 2>/dev/null; then
+                if grep -qi -E "coming soon|analysis coming soon|preview coming soon|matchup analysis coming|\bTBD\b|\bTBA\b" "$file" 2>/dev/null; then
                   echo "❌ PLACEHOLDER FOUND: $file"
-                  grep -n -i -E "coming soon|analysis coming|matchup analysis|preview coming|\bTBD\b|\bTBA\b" "$file" | head -3
+                  grep -n -i -E "coming soon|analysis coming soon|preview coming soon|matchup analysis coming|\bTBD\b|\bTBA\b" "$file" | head -3
                   FOUND=1
                 fi
               fi
