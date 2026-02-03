@@ -84,6 +84,82 @@ TEAM_COLORS = {
 
 DEFAULT_COLORS = ('#1a365d', '#FFD700')
 
+# NCAAB ESPN numeric IDs to team names/abbreviations
+# The ESPN CDN uses numeric IDs for college logos (e.g., ncaa/500/2305.png)
+NCAAB_TEAM_MAP = {
+    '2305': ('Kansas', 'KU'),
+    '2641': ('Texas Tech', 'TTU'),
+    '127': ('Michigan', 'MICH'),
+    '130': ('Michigan State', 'MSU'),
+    '2': ('Auburn', 'AUB'),
+    '333': ('Alabama', 'ALA'),
+    '61': ('Georgia', 'UGA'),
+    '57': ('Florida', 'UF'),
+    '96': ('Louisville', 'LOU'),
+    '97': ('Kentucky', 'UK'),
+    '153': ('Duke', 'DUKE'),
+    '152': ('NC State', 'NCST'),
+    '153': ('Duke', 'DUKE'),
+    '99': ('North Carolina', 'UNC'),
+    '12': ('Arizona', 'ARIZ'),
+    '9': ('Arizona State', 'ASU'),
+    '2483': ('UCLA', 'UCLA'),
+    '26': ('USC', 'USC'),
+    '30': ('Stanford', 'STAN'),
+    '251': ('Texas', 'TEX'),
+    '239': ('Texas A&M', 'TAMU'),
+    '248': ('TCU', 'TCU'),
+    '66': ('Baylor', 'BAY'),
+    '156': ('Houston', 'HOU'),
+    '120': ('Iowa', 'IOWA'),
+    '84': ('Iowa State', 'ISU'),
+    '2509': ('Purdue', 'PUR'),
+    '84': ('Illinois', 'ILL'),
+    '275': ('Wisconsin', 'WISC'),
+    '356': ('UConn', 'UCONN'),
+    '258': ('Villanova', 'NOVA'),
+    '150': ('Marquette', 'MARQ'),
+    '2250': ('Gonzaga', 'GONZ'),
+    '2': ('Auburn', 'AUB'),
+    '328': ('Tennessee', 'TENN'),
+    '238': ('Ole Miss', 'MISS'),
+    '8': ('Arkansas', 'ARK'),
+    '2390': ('Miami OH', 'MIAOH'),
+    '2084': ('Buffalo', 'BUFF'),
+    '2006': ('Akron', 'AKR'),
+    '2199': ('Eastern Michigan', 'EMU'),
+    '2181': ('Canisius', 'CAN'),
+    '2430': ('Niagara', 'NIAG'),
+    '52': ('Florida State', 'FSU'),
+    '228': ('Clemson', 'CLEM'),
+    '2628': ('Syracuse', 'SYR'),
+    '259': ('Virginia', 'UVA'),
+    '258': ('Virginia Tech', 'VT'),
+    '2566': ('St. Johns', 'SJU'),
+    '164': ('Providence', 'PROV'),
+    '2507': ('Creighton', 'CREI'),
+    '2086': ('Butler', 'BUT'),
+    '2229': ('Dayton', 'DAY'),
+    '2599': ('San Diego State', 'SDSU'),
+    '68': ('Boise State', 'BSU'),
+    '2440': ('Nevada', 'NEV'),
+    '2348': ('New Mexico', 'UNM'),
+    '2439': ('UNLV', 'UNLV'),
+    '235': ('Memphis', 'MEM'),
+    '2116': ('Cincinnati', 'CIN'),
+    '197': ('Oklahoma', 'OU'),
+    '201': ('Oklahoma State', 'OKST'),
+    '2306': ('Kansas State', 'KSU'),
+    '2628': ('Colorado', 'COL'),
+    '254': ('Utah', 'UTAH'),
+    '252': ('BYU', 'BYU'),
+}
+
+
+def get_ncaab_team_info(espn_id):
+    """Get (name, abbreviation) for NCAAB team from ESPN numeric ID."""
+    return NCAAB_TEAM_MAP.get(str(espn_id), (str(espn_id), str(espn_id)))
+
 
 def get_team_colors(sport, abbr):
     """Get (primary, accent) colors for a team."""
@@ -144,6 +220,19 @@ def extract_game_data(page_content):
     else:
         data['away_name'] = data['away_abbr']
         data['home_name'] = data['home_abbr']
+
+    # For NCAAB/NCAAF: If abbreviations are numeric ESPN IDs, convert to team names
+    if data['sport'] in ('NCAAB', 'NCAAF'):
+        # Check if away_abbr is a numeric ID
+        if data['away_abbr'].isdigit():
+            away_name, away_abbr = get_ncaab_team_info(data['away_abbr'])
+            data['away_name'] = away_name
+            data['away_abbr'] = away_abbr
+        # Check if home_abbr is a numeric ID
+        if data['home_abbr'].isdigit():
+            home_name, home_abbr = get_ncaab_team_info(data['home_abbr'])
+            data['home_name'] = home_name
+            data['home_abbr'] = home_abbr
 
     # Team records: look for (XX-XX) or (XX-XX-XX) patterns
     records = re.findall(r'\((\d+-\d+(?:-\d+)?)\)', page_content)
