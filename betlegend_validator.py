@@ -122,6 +122,8 @@ class Config:
         'NFL': (30.0, 65.0),
         'NBA': (190.0, 260.0),
         'NHL': (4.0, 8.5),
+        'NCAAB': (110.0, 180.0),
+        'Soccer': (1.0, 5.5),
     }
     SPREAD_RANGE = {
         'MLB': (-3.5, 3.5),
@@ -177,6 +179,123 @@ for team_id, info in MLB_TEAMS.items():
     for alias in info['aliases']:
         TEAM_LOOKUP[alias.lower()] = team_id
 
+
+# =============================================================================
+# KNOWN FACTS DATABASE - MANDATORY CHECKS
+# =============================================================================
+# These are VERIFIED facts that override any claims in content.
+# Last updated: February 2026
+
+# Players on WRONG teams - these associations trigger ERRORS
+WRONG_PLAYER_TEAM_ASSOCIATIONS = [
+    # NBA 2025 Trades
+    ("luka doncic", "mavericks", "Luka Doncic was traded to the LAKERS in February 2025"),
+    ("luka doncic", "dallas", "Luka Doncic was traded to the LAKERS in February 2025"),
+    ("luka", "mavericks", "Luka Doncic was traded to the LAKERS in February 2025"),
+    ("luka", "dallas", "Luka Doncic was traded to the LAKERS in February 2025"),
+    ("doncic", "mavericks", "Luka Doncic was traded to the LAKERS in February 2025"),
+    ("doncic", "dallas", "Luka Doncic was traded to the LAKERS in February 2025"),
+    ("de'aaron fox", "kings", "De'Aaron Fox was traded to the SPURS in February 2025"),
+    ("deaaron fox", "kings", "De'Aaron Fox was traded to the SPURS in February 2025"),
+    ("fox", "kings", "De'Aaron Fox was traded to the SPURS in February 2025"),
+    ("fox", "sacramento", "De'Aaron Fox was traded to the SPURS in February 2025"),
+    ("de'aaron fox", "heat", "De'Aaron Fox is on the SPURS - he was NEVER on the Heat (fabricated)"),
+    ("fox", "heat", "De'Aaron Fox is on the SPURS - he was NEVER on the Heat (fabricated)"),
+    ("fox", "miami heat", "De'Aaron Fox is on the SPURS - he was NEVER on Miami Heat (fabricated)"),
+    ("kevin durant", "suns", "Kevin Durant was traded to the ROCKETS in July 2025"),
+    ("kevin durant", "phoenix", "Kevin Durant was traded to the ROCKETS in July 2025"),
+    ("durant", "suns", "Kevin Durant was traded to the ROCKETS in July 2025"),
+    ("durant", "phoenix", "Kevin Durant was traded to the ROCKETS in July 2025"),
+    ("jimmy butler", "heat", "Jimmy Butler was traded to the WARRIORS in February 2025"),
+    ("butler", "heat", "Jimmy Butler was traded to the WARRIORS in February 2025"),
+    ("butler", "miami", "Jimmy Butler was traded to the WARRIORS in February 2025"),
+    ("brandon ingram", "pelicans", "Brandon Ingram was traded to the RAPTORS in February 2025"),
+    ("ingram", "pelicans", "Brandon Ingram was traded to the RAPTORS in February 2025"),
+    ("ingram", "new orleans", "Brandon Ingram was traded to the RAPTORS in February 2025"),
+    ("zach lavine", "bulls", "Zach LaVine was traded to the KINGS in February 2025"),
+    ("lavine", "bulls", "Zach LaVine was traded to the KINGS in February 2025"),
+    ("lavine", "chicago", "Zach LaVine was traded to the KINGS in February 2025"),
+
+    # NHL 2025 Trades
+    ("mitch marner", "maple leafs", "Mitch Marner was traded to the GOLDEN KNIGHTS in July 2025"),
+    ("mitch marner", "leafs", "Mitch Marner was traded to the GOLDEN KNIGHTS in July 2025"),
+    ("mitch marner", "toronto", "Mitch Marner was traded to the GOLDEN KNIGHTS in July 2025"),
+    ("marner", "maple leafs", "Mitch Marner was traded to the GOLDEN KNIGHTS in July 2025"),
+    ("marner", "leafs", "Mitch Marner was traded to the GOLDEN KNIGHTS in July 2025"),
+    ("marner", "toronto", "Mitch Marner was traded to the GOLDEN KNIGHTS in July 2025"),
+
+    # MLB 2025-26 Signings
+    ("alex bregman", "astros", "Alex Bregman signed with the CUBS in January 2026"),
+    ("alex bregman", "houston", "Alex Bregman signed with the CUBS in January 2026"),
+    ("bregman", "astros", "Alex Bregman signed with the CUBS in January 2026"),
+    ("bregman", "houston", "Alex Bregman signed with the CUBS in January 2026"),
+    ("kyle tucker", "astros", "Kyle Tucker was traded to the DODGERS in January 2026"),
+    ("kyle tucker", "houston", "Kyle Tucker was traded to the DODGERS in January 2026"),
+    ("tucker", "astros", "Kyle Tucker was traded to the DODGERS in January 2026"),
+    ("pete alonso", "mets", "Pete Alonso signed with the ORIOLES in December 2025"),
+    ("pete alonso", "new york mets", "Pete Alonso signed with the ORIOLES in December 2025"),
+    ("alonso", "mets", "Pete Alonso signed with the ORIOLES in December 2025"),
+    ("dylan cease", "padres", "Dylan Cease signed with the BLUE JAYS in December 2025"),
+    ("dylan cease", "san diego", "Dylan Cease signed with the BLUE JAYS in December 2025"),
+    ("cease", "padres", "Dylan Cease signed with the BLUE JAYS in December 2025"),
+]
+
+# Wrong injury types - trigger ERRORS
+WRONG_INJURY_CLAIMS = [
+    ("tatum", "acl", "achilles", "Jayson Tatum has an ACHILLES injury, NOT ACL"),
+    ("jayson tatum", "acl", "achilles", "Jayson Tatum has an ACHILLES injury, NOT ACL"),
+]
+
+# Placeholder patterns - trigger ERRORS
+PLACEHOLDER_PATTERNS = [
+    (r'\bcoming soon\b', "Placeholder 'coming soon' found - incomplete content"),
+    (r'\banalysis coming\b', "Placeholder 'analysis coming' found - incomplete content"),
+    (r'\bpreview coming\b', "Placeholder 'preview coming' found - incomplete content"),
+    (r'\bmatchup analysis coming\b', "Placeholder text found - incomplete content"),
+    (r'\bTBD\b', "Placeholder 'TBD' found - incomplete content"),
+    (r'\bTBA\b', "Placeholder 'TBA' found - incomplete content"),
+    (r'\bN/A\b', "Placeholder 'N/A' found - incomplete content"),
+    (r'\{[a-zA-Z_]+\}', "Template variable found - incomplete content"),
+]
+
+# Banned content patterns - trigger ERRORS
+# Note: Line movement ban applies only to picks/analysis, NOT educational content
+BANNED_CONTENT_PATTERNS = [
+    (r'Sources?:\s*(?:ESPN|Yahoo|NFL\.com|NBA\.com|NHL\.com)', "Source citations are BANNED in articles - write as the authority"),
+]
+
+# Line movement patterns - checked separately to exclude educational files
+LINE_MOVEMENT_PATTERNS = [
+    r'line (?:opened|moved|has moved)',
+    r'sharp money (?:is |has )(?:coming|moved)',
+    r'the line has (?:ticked|shifted)',
+]
+
+# Files where line movement discussion is allowed (educational content)
+LINE_MOVEMENT_ALLOWED_FILES = [
+    'betting-101', 'how-to', 'calculator', 'explained', 'guide', 'glossary', 'tutorial'
+]
+
+# Unsigned claims that are now wrong - trigger ERRORS
+WRONG_UNSIGNED_CLAIMS = [
+    (r'bregman\s+(?:is\s+)?(?:still\s+)?unsigned', "Alex Bregman signed with Cubs on January 14, 2026"),
+    (r'alonso\s+(?:is\s+)?(?:still\s+)?unsigned', "Pete Alonso signed with Orioles in December 2025"),
+    (r'tucker\s+(?:is\s+)?(?:still\s+)?unsigned', "Kyle Tucker was traded to Dodgers in January 2026"),
+]
+
+# Impossible statistics - trigger ERRORS
+IMPOSSIBLE_STATS = [
+    (r'(\d{3,})\s*%', 100, "Percentage over 100% is impossible"),
+    (r'(\d+\.?\d*)\s*PPG', 55, "PPG over 55 is virtually impossible in NBA"),
+    (r'batting\s+(?:average|avg)[:\s]+\.?([4-9]\d{2})', 400, "Batting average over .400 is extremely rare"),
+    (r'ERA[:\s]+(\d+\.\d+)', 0, "Negative ERA is impossible"),  # Will check for negative
+]
+
+# Suspicious round betting lines - trigger WARNINGS
+SUSPICIOUS_ROUND_LINES = [
+    (r'spread[:\s]+([+-]?\d+)(?:\.0)?(?!\.\d)', "Round spread without .5 is suspicious - verify this is accurate"),
+    (r'moneyline[:\s]+([+-]\d{2}0)(?!\d)', "Round moneyline ending in 0 is suspicious - verify this is accurate"),
+]
 
 # =============================================================================
 # NFL / NBA / NHL TEAM DATA (basic validation)
@@ -681,6 +800,206 @@ class ContentValidator:
         return issues
     
     @staticmethod
+    def check_known_facts(text):
+        """Check for known false information based on CURRENT_FACTS database."""
+        issues = []
+        text_lower = text.lower()
+
+        # Check wrong player-team associations
+        for player, wrong_team, error_msg in WRONG_PLAYER_TEAM_ASSOCIATIONS:
+            # Find all occurrences of the player name
+            player_pattern = re.compile(r'\b' + re.escape(player) + r'\b', re.IGNORECASE)
+            for match in player_pattern.finditer(text_lower):
+                pos = match.start()
+                # Get surrounding context (sentence-ish)
+                start = max(0, text_lower.rfind('.', 0, pos) + 1, text_lower.rfind('\n', 0, pos) + 1)
+                end = min(len(text_lower),
+                         text_lower.find('.', pos) if text_lower.find('.', pos) != -1 else len(text_lower),
+                         text_lower.find('\n', pos) if text_lower.find('\n', pos) != -1 else len(text_lower))
+                sentence = text_lower[start:end]
+
+                # Check if wrong team is mentioned in same sentence
+                if re.search(r'\b' + re.escape(wrong_team) + r'\b', sentence):
+                    # Allow if discussing trade history or the player leaving
+                    trade_words = ['traded', 'former', 'ex-', 'left', 'was with', 'from the', 'no longer',
+                                  'previously', 'used to', 'acquired from', 'sent to', 'deal with',
+                                  'blockbuster', 'trade from', 'arriving from', 'came from']
+                    if not any(tw in sentence for tw in trade_words):
+                        context = text[max(0, pos-50):min(len(text), pos+100)]
+                        issues.append((
+                            'ERROR',
+                            f"FALSE INFO: {error_msg}",
+                            context.strip()
+                        ))
+
+        # Check wrong injury claims
+        for player, wrong_injury, correct_injury, error_msg in WRONG_INJURY_CLAIMS:
+            player_pattern = re.compile(r'\b' + re.escape(player) + r'\b', re.IGNORECASE)
+            for match in player_pattern.finditer(text_lower):
+                pos = match.start()
+                context_start = max(0, pos - 100)
+                context_end = min(len(text_lower), pos + 100)
+                context = text_lower[context_start:context_end]
+
+                if wrong_injury in context and correct_injury not in context:
+                    issues.append((
+                        'ERROR',
+                        f"WRONG INJURY: {error_msg}",
+                        text[context_start:context_end].strip()
+                    ))
+
+        return issues
+
+    @staticmethod
+    def check_placeholder_content(text, html_content):
+        """Check for placeholder content that should not be published."""
+        issues = []
+
+        for pattern, error_msg in PLACEHOLDER_PATTERNS:
+            matches = list(re.finditer(pattern, text, re.IGNORECASE))
+            for match in matches:
+                # Skip if inside script or style tags
+                pos = match.start()
+                before = html_content[:pos].lower() if pos < len(html_content) else ""
+                if '<script' in before[max(0, len(before)-500):] and '</script>' not in before[max(0, len(before)-500):]:
+                    continue
+                if '<style' in before[max(0, len(before)-500):] and '</style>' not in before[max(0, len(before)-500):]:
+                    continue
+
+                context = text[max(0, pos-30):min(len(text), pos+50)]
+                issues.append((
+                    'ERROR',
+                    f"PLACEHOLDER: {error_msg}",
+                    context.strip()
+                ))
+
+        return issues
+
+    @staticmethod
+    def check_banned_content(text, filepath=""):
+        """Check for content that is explicitly banned."""
+        issues = []
+
+        for pattern, error_msg in BANNED_CONTENT_PATTERNS:
+            matches = list(re.finditer(pattern, text, re.IGNORECASE))
+            for match in matches:
+                context = text[max(0, match.start()-30):min(len(text), match.end()+50)]
+                issues.append((
+                    'ERROR',
+                    f"BANNED CONTENT: {error_msg}",
+                    context.strip()
+                ))
+
+        # Check line movement patterns (but allow in educational content)
+        filepath_lower = filepath.lower()
+        is_educational = any(allowed in filepath_lower for allowed in LINE_MOVEMENT_ALLOWED_FILES)
+
+        if not is_educational:
+            for pattern in LINE_MOVEMENT_PATTERNS:
+                matches = list(re.finditer(pattern, text, re.IGNORECASE))
+                for match in matches:
+                    context = text[max(0, match.start()-30):min(len(text), match.end()+50)]
+                    issues.append((
+                        'ERROR',
+                        f"BANNED CONTENT: Line movement discussions are BANNED per January 24, 2026 rule",
+                        context.strip()
+                    ))
+
+        return issues
+
+    @staticmethod
+    def check_wrong_unsigned_claims(text):
+        """Check for claims that players are unsigned when they have signed."""
+        issues = []
+
+        for pattern, error_msg in WRONG_UNSIGNED_CLAIMS:
+            matches = list(re.finditer(pattern, text, re.IGNORECASE))
+            for match in matches:
+                context = text[max(0, match.start()-30):min(len(text), match.end()+50)]
+                issues.append((
+                    'ERROR',
+                    f"STALE INFO: {error_msg}",
+                    context.strip()
+                ))
+
+        return issues
+
+    @staticmethod
+    def check_impossible_statistics(text):
+        """Check for obviously impossible statistics."""
+        issues = []
+
+        # Check for percentages over 100 (but exclude marketing bonuses, vig explanations)
+        pct_pattern = r'(\d+(?:\.\d+)?)\s*%'
+        for match in re.finditer(pct_pattern, text):
+            try:
+                value = float(match.group(1))
+                if value > 100:
+                    context = text[max(0, match.start()-50):min(len(text), match.end()+50)]
+                    context_lower = context.lower()
+                    # Skip marketing/bonus percentages
+                    if any(word in context_lower for word in ['bonus', 'promo', 'welcome', 'deposit', 'match', 'vig', 'juice', 'implied', 'totaling', 'extra']):
+                        continue
+                    issues.append((
+                        'ERROR',
+                        f"IMPOSSIBLE STAT: {value}% - percentages cannot exceed 100%",
+                        context.strip()
+                    ))
+            except ValueError:
+                pass
+
+        # Check for impossible PLAYER PPG (NBA) - must be clearly player-specific
+        # Only flag if pattern clearly indicates individual player stats
+        player_ppg_pattern = r'(?:he\s+is\s+averaging|(?:is\s+)?averaging\s+(?:a\s+)?career|player\s+averaging)\s+(\d+(?:\.\d+)?)\s*(?:PPG|points)'
+        for match in re.finditer(player_ppg_pattern, text, re.IGNORECASE):
+            try:
+                value = float(match.group(1))
+                if value > 55:  # Wilt's record is 50.4
+                    context = text[max(0, match.start()-30):min(len(text), match.end()+30)]
+                    issues.append((
+                        'ERROR',
+                        f"IMPOSSIBLE STAT: {value} PPG - no NBA player has averaged over 55 PPG",
+                        context.strip()
+                    ))
+            except ValueError:
+                pass
+
+        # Check for impossible batting averages
+        ba_pattern = r'(?:batting average|avg|BA)[:\s]+\.?([5-9]\d{2}|\d{4,})'
+        for match in re.finditer(ba_pattern, text, re.IGNORECASE):
+            context = text[max(0, match.start()-30):min(len(text), match.end()+30)]
+            issues.append((
+                'ERROR',
+                f"IMPOSSIBLE STAT: Batting average .{match.group(1)} is impossible",
+                context.strip()
+            ))
+
+        return issues
+
+    @staticmethod
+    def check_suspicious_betting_lines(text):
+        """Check for betting lines that look made up (round numbers)."""
+        issues = []
+
+        # Check for round spreads (no .5) - these are suspicious
+        spread_pattern = r'(?:spread|line)[:\s]*([+-]?\d+)(?:\.0)?(?!\.\d)'
+        for match in re.finditer(spread_pattern, text, re.IGNORECASE):
+            try:
+                spread = int(match.group(1))
+                # Round spreads are unusual (except 0)
+                if spread != 0 and abs(spread) <= 20:
+                    context = text[max(0, match.start()-30):min(len(text), match.end()+50)]
+                    issues.append((
+                        'WARNING',
+                        f"SUSPICIOUS LINE: Spread {spread} is a round number - most spreads end in .5",
+                        context.strip()
+                    ))
+            except ValueError:
+                pass
+
+        return issues
+
+    @staticmethod
     def check_date_references(text):
         """Check for obviously wrong date references."""
         issues = []
@@ -835,7 +1154,31 @@ class BetLegendValidator:
         # 5. Date validation
         date_issues = ContentValidator.check_date_references(text)
         issues.extend(date_issues)
-        
+
+        # 6. Known facts validation (CRITICAL - catches player trades, injuries, etc.)
+        known_facts_issues = ContentValidator.check_known_facts(text)
+        issues.extend(known_facts_issues)
+
+        # 7. Placeholder content check
+        placeholder_issues = ContentValidator.check_placeholder_content(text, html_content)
+        issues.extend(placeholder_issues)
+
+        # 8. Banned content check (source citations, line movements)
+        banned_issues = ContentValidator.check_banned_content(text, filepath)
+        issues.extend(banned_issues)
+
+        # 9. Wrong unsigned claims check
+        unsigned_issues = ContentValidator.check_wrong_unsigned_claims(text)
+        issues.extend(unsigned_issues)
+
+        # 10. Impossible statistics check
+        impossible_stats_issues = ContentValidator.check_impossible_statistics(text)
+        issues.extend(impossible_stats_issues)
+
+        # 11. Suspicious betting lines check
+        suspicious_lines_issues = ContentValidator.check_suspicious_betting_lines(text)
+        issues.extend(suspicious_lines_issues)
+
         # Store results
         if issues:
             self.results[filepath] = issues
