@@ -1,43 +1,26 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: February 2, 2026
+// Last updated: February 03, 2026
 
 const ARCHIVE_DATA = [
-    // 2026 - Individual pages with unique content
-    { date: "2026-02-02", page: "featured-game-of-the-day-page64.html", title: "#14 Kansas vs #11 Texas Tech NCAAB" },
-    { date: "2026-02-01", page: "featured-game-of-the-day-page63.html", title: "Lightning vs Bruins NHL Stadium Series" },
-    { date: "2026-01-31", page: "featured-game-of-the-day-page62.html", title: "Mavericks @ Rockets NBA" },
-    { date: "2026-01-30", page: "featured-game-of-the-day-page61.html", title: "Cavaliers @ Suns NBA" },
-    { date: "2026-01-29", page: "featured-game-of-the-day-page59.html", title: "Thunder @ Timberwolves NBA" },
-    { date: "2026-01-28", page: "featured-game-of-the-day-page58.html", title: "Lakers @ Cavaliers NBA" },
-    { date: "2026-01-27", page: "featured-game-of-the-day-page60.html", title: "Golden Knights @ Canadiens NHL" },
-    { date: "2026-01-26", page: "featured-game-of-the-day-page57.html", title: "Lakers @ Bulls NBA" },
-    { date: "2026-01-25", page: "featured-game-of-the-day-page56.html", title: "Patriots @ Broncos AFC Championship" },
-    { date: "2026-01-24", page: "featured-game-of-the-day-page55.html", title: "Canadiens @ Bruins Original Six Rivalry" },
-    { date: "2026-01-23", page: "featured-game-of-the-day-page54.html", title: "Pacers @ Thunder NBA Finals Rematch" },
-    { date: "2026-01-22", page: "featured-game-of-the-day-page53.html", title: "Warriors @ Mavericks NBA" },
-    { date: "2026-01-21", page: "featured-game-of-the-day-page52.html", title: "Thunder @ Bucks NBA" },
-    { date: "2026-01-20", page: "featured-game-of-the-day-page51.html", title: "Spurs @ Rockets NBA" },
+    { date: "2026-02-01", page: "featured-game-of-the-day-page63.html", title: "Lightning vs Bruins Stadium Series" },
+    { date: "2026-01-25", page: "featured-game-of-the-day-page56.html", title: "Patriots vs Broncos AFC Championship" },
+    { date: "2026-01-24", page: "featured-game-of-the-day-page55.html", title: "Canadiens vs Bruins Original Six Rivalry" },
+    { date: "2026-01-23", page: "featured-game-of-the-day-page54.html", title: "Pacers vs Thunder NBA Finals Rematch" },
+    { date: "2026-01-22", page: "featured-game-of-the-day-page53.html", title: "Warriors vs Mavericks NBA" },
+    { date: "2026-01-21", page: "featured-game-of-the-day-page52.html", title: "Thunder vs Bucks NBA" },
+    { date: "2026-01-20", page: "featured-game-of-the-day-page51.html", title: "Spurs vs Rockets NBA" },
     { date: "2026-01-19", page: "featured-game-of-the-day-page50.html", title: "Indiana vs Miami CFP National Championship" },
     { date: "2026-01-18", page: "featured-game-of-the-day-page49.html", title: "Texans vs Patriots AFC Divisional" },
     { date: "2026-01-17", page: "featured-game-of-the-day-page48.html", title: "NFL Divisional Round" },
-    { date: "2026-01-16", page: "featured-game-of-the-day-page47.html", title: "Panthers vs Hurricanes NHL" },
-    { date: "2026-01-15", page: "featured-game-of-the-day-page46.html", title: "Knicks vs Warriors NBA" },
-    { date: "2026-01-14", page: "featured-game-of-the-day-page45.html", title: "Kraken vs Devils NHL" },
-    { date: "2026-01-13", page: "featured-game-of-the-day-page44.html", title: "Stars vs Ducks NHL" },
-    { date: "2026-01-12", page: "featured-game-of-the-day-page43.html", title: "Texans vs Steelers AFC Wild Card" },
-    { date: "2026-01-11", page: "featured-game-of-the-day-page42.html", title: "49ers vs Eagles NFC Wild Card" },
-    { date: "2026-01-10", page: "featured-game-of-the-day-page41.html", title: "Rams vs Panthers Wild Card" },
-    { date: "2026-01-09", page: "featured-game-of-the-day-page40.html", title: "Oregon vs Indiana Rose Bowl CFP" },
-    { date: "2026-01-08", page: "featured-game-of-the-day-page39.html", title: "Miami vs Ole Miss Fiesta Bowl CFP" },
-    { date: "2026-01-07", page: "featured-game-of-the-day-page38.html", title: "Stars vs Capitals" },
+    { date: "2026-01-16", page: "featured-game-of-the-day-page47.html", title: "Panthers vs Hurricanes" },
+    { date: "2026-01-15", page: "featured-game-of-the-day-page46.html", title: "Knicks vs Warriors" },
     { date: "2026-01-06", page: "featured-game-of-the-day-page37.html", title: "Devils vs Islanders" },
     { date: "2026-01-05", page: "featured-game-of-the-day-page36.html", title: "Bulls vs Celtics" },
     { date: "2026-01-04", page: "featured-game-of-the-day-page35.html", title: "Ravens vs Steelers AFC North Title" },
     { date: "2026-01-03", page: "featured-game-of-the-day-page34.html", title: "49ers vs Seahawks NFC West Title" },
     { date: "2026-01-02", page: "featured-game-of-the-day-page33.html", title: "Arizona vs SMU Holiday Bowl" },
-    { date: "2026-01-01", page: "featured-game-of-the-day-2026-01-01.html", title: "Indiana vs Alabama Rose Bowl" },
-    // December 2025
+    { date: "2026-01-01", page: "featured-game-of-the-day-2026-01-01.html", title: "Indiana vs Alabama Rose Bowl CFP" },
     { date: "2025-12-31", page: "featured-game-of-the-day-page32.html", title: "Miami vs Ohio State Cotton Bowl CFP" },
     { date: "2025-12-30", page: "featured-game-of-the-day-page31.html", title: "Tennessee vs Illinois Music City Bowl" },
     { date: "2025-12-29", page: "featured-game-of-the-day-page30.html", title: "Rams vs Falcons MNF" },
@@ -61,7 +44,6 @@ const ARCHIVE_DATA = [
     { date: "2025-12-04", page: "featured-game-of-the-day-page12.html", title: "Cowboys vs Lions TNF" },
     { date: "2025-12-03", page: "featured-game-of-the-day-page11.html", title: "Pistons vs Bucks" },
     { date: "2025-12-01", page: "featured-game-of-the-day-page10.html", title: "Giants vs Patriots MNF" },
-    // November 2025
     { date: "2025-11-30", page: "featured-game-of-the-day-page9.html", title: "Texans vs Colts" },
     { date: "2025-11-29", page: "featured-game-of-the-day-page8.html", title: "Vanderbilt vs Tennessee" },
     { date: "2025-11-27", page: "featured-game-of-the-day-page7.html", title: "Steelers vs Browns Thanksgiving" },
@@ -69,9 +51,25 @@ const ARCHIVE_DATA = [
     { date: "2025-11-25", page: "featured-game-of-the-day-page5.html", title: "Clippers vs Lakers" },
     { date: "2025-11-24", page: "featured-game-of-the-day-page4.html", title: "Panthers vs 49ers MNF" },
     { date: "2025-11-23", page: "featured-game-of-the-day-page3.html", title: "Rams vs Buccaneers SNF" },
-    { date: "2025-11-22", page: "featured-game-of-the-day-page2.html", title: "USC vs Oregon" }
-    // NOTE: Dates before Nov 22, 2025 had no individual pages - they were all on the same archive file
-    // Those fake entries have been removed to fix the calendar navigation
+    { date: "2025-11-22", page: "featured-game-of-the-day-page2.html", title: "USC vs Oregon" },
+    { date: "2025-11-21", page: "featured-game-of-the-day.html", title: "Archive" },
+    { date: "2025-11-19", page: "featured-game-of-the-day.html", title: "Wild Game" },
+    { date: "2025-11-17", page: "featured-game-of-the-day.html", title: "MNF" },
+    { date: "2025-11-16", page: "featured-game-of-the-day.html", title: "Seahawks @ Rams" },
+    { date: "2025-11-15", page: "featured-game-of-the-day.html", title: "Alabama Game" },
+    { date: "2025-11-13", page: "featured-game-of-the-day.html", title: "Jets vs Patriots TNF" },
+    { date: "2025-11-12", page: "featured-game-of-the-day.html", title: "NHL Tampa" },
+    { date: "2025-11-11", page: "featured-game-of-the-day.html", title: "Avalanche Game" },
+    { date: "2025-11-09", page: "featured-game-of-the-day.html", title: "49ers Game" },
+    { date: "2025-11-07", page: "featured-game-of-the-day.html", title: "USC Game" },
+    { date: "2025-11-06", page: "featured-game-of-the-day.html", title: "NHL Analysis" },
+    { date: "2025-11-05", page: "featured-game-of-the-day.html", title: "NHL Game" },
+    { date: "2025-11-03", page: "featured-game-of-the-day.html", title: "Evening Slate" },
+    { date: "2025-11-01", page: "featured-game-of-the-day.html", title: "Vanderbilt @ Texas" },
+    { date: "2025-10-31", page: "featured-game-of-the-day.html", title: "Archive" },
+    { date: "2025-10-30", page: "featured-game-of-the-day.html", title: "Archive" },
+    { date: "2025-10-29", page: "featured-game-of-the-day.html", title: "Archive" },
+    { date: "2025-10-25", page: "featured-game-of-the-day.html", title: "Archive" }
 ];
 
 const dateMap = {};
