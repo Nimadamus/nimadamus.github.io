@@ -73,14 +73,14 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
 .mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
 @media(max-width:1200px){
-  .calendar-sidebar{display:none}
-  .mobile-archive{display:block}
+ .calendar-sidebar{display:none}
+ .mobile-archive{display:block}
 }
 
 .dropdown.active .dropdown-content{display:block}
 .dropdown.active .dropbtn{color:var(--accent-gold)}
 
-    .cal-day.current-page{background:rgba(253,80,0,0.7)!important;color:#fff!important;font-weight:800!important;border:2px solid #fd5000!important;box-shadow:0 0 8px rgba(253,80,0,0.5)}
+ .cal-day.current-page{background:rgba(253,80,0,0.7)!important;color:#fff!important;font-weight:800!important;border:2px solid #fd5000!important;box-shadow:0 0 8px rgba(253,80,0,0.5)}
 
 .cal-day.today{background:rgba(253,80,0,0.25);color:var(--accent-orange);font-weight:600;border:2px solid var(--accent-gold)}
 </style>
@@ -93,12 +93,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="nav-links">
 <a href="index.html">Home</a>
 <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="handicapping-hub.html">Today's Games</a>
-                    <a href="injury-report.html">Injury Report</a>
-                </div>
-            </div>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="handicapping-hub.html">Today's Games</a>
+ <a href="injury-report.html">Injury Report</a>
+ </div>
+ </div>
 <a href="blog.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Game Previews</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a></div></div>
@@ -254,22 +254,22 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </div>
 <footer>
 <p>© 2025 BetLegend Picks | <a href="index.html">Home</a> | <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="handicapping-hub.html">Today's Games</a>
-                    <a href="injury-report.html">Injury Report</a>
-                </div>
-            </div></p>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="handicapping-hub.html">Today's Games</a>
+ <a href="injury-report.html">Injury Report</a>
+ </div>
+ </div></p>
 </footer>
 <script>
 // Archive Data
 const ARCHIVE_DATA = [
-    { date: "2025-12-22", page: "soccer.html", title: "Premier League & La Liga" },
-    { date: "2025-12-22", page: "soccer-page31.html", title: "Forest vs Fulham" },
-    { date: "2025-12-21", page: "soccer-page30.html", title: "Villa, Atlético, Barcelona" },
-    { date: "2025-12-19", page: "soccer-page2.html", title: "Dortmund, Valencia" },
-    { date: "2025-12-15", page: "soccer-page22.html", title: "Man United, La Liga" },
-    { date: "2025-11-28", page: "soccer-page3.html", title: "Bundesliga Matchday 12" }
+ { date: "2025-12-22", page: "soccer.html", title: "Premier League & La Liga" },
+ { date: "2025-12-22", page: "soccer-page31.html", title: "Forest vs Fulham" },
+ { date: "2025-12-21", page: "soccer-page30.html", title: "Villa, Atlético, Barcelona" },
+ { date: "2025-12-19", page: "soccer-page2.html", title: "Dortmund, Valencia" },
+ { date: "2025-12-15", page: "soccer-page22.html", title: "Man United, La Liga" },
+ { date: "2025-11-28", page: "soccer-page3.html", title: "Bundesliga Matchday 12" }
 ];
 
 // Build date map
@@ -279,8 +279,8 @@ ARCHIVE_DATA.forEach(item => { dateMap[item.date] = item; });
 // Get available months
 const months = new Set();
 ARCHIVE_DATA.forEach(item => {
-    const [y, m] = item.date.split('-');
-    months.add(`${y}-${m}`);
+ const [y, m] = item.date.split('-');
+ months.add(`${y}-${m}`);
 });
 
 // Add current month
@@ -294,60 +294,60 @@ const sortedMonths = Array.from(months).sort().reverse();
 
 // Month names
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                    'July', 'August', 'September', 'October', 'November', 'December'];
+ 'July', 'August', 'September', 'October', 'November', 'December'];
 
 // Populate month dropdown
 const monthSelect = document.getElementById('month-select');
 sortedMonths.forEach(m => {
-    const [year, month] = m.split('-');
-    const opt = document.createElement('option');
-    opt.value = m;
-    opt.textContent = `${monthNames[parseInt(month) - 1]} ${year}`;
-    if (m === currentMonth) opt.selected = true;
-    monthSelect.appendChild(opt);
+ const [year, month] = m.split('-');
+ const opt = document.createElement('option');
+ opt.value = m;
+ opt.textContent = `${monthNames[parseInt(month) - 1]} ${year}`;
+ if (m === currentMonth) opt.selected = true;
+ monthSelect.appendChild(opt);
 });
 
 // Get current page filename and find its date
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 let currentPageDate = null;
 ARCHIVE_DATA.forEach(item => {
-    if (item.page === currentPage) {
-        currentPageDate = item.date;
-    }
+ if (item.page === currentPage) {
+ currentPageDate = item.date;
+ }
 });
 
 // Render calendar
 function renderCalendar(yearMonth) {
-    const [year, month] = yearMonth.split('-').map(Number);
-    document.getElementById('cal-year').textContent = year;
+ const [year, month] = yearMonth.split('-').map(Number);
+ document.getElementById('cal-year').textContent = year;
 
-    const firstDay = new Date(year, month - 1, 1).getDay();
-    const daysInMonth = new Date(year, month, 0).getDate();
+ const firstDay = new Date(year, month - 1, 1).getDay();
+ const daysInMonth = new Date(year, month, 0).getDate();
 
-    const container = document.getElementById('calendar-days');
-    container.innerHTML = '';
+ const container = document.getElementById('calendar-days');
+ container.innerHTML = '';
 
-    // Empty cells before first day
-    for (let i = 0; i < firstDay; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'cal-day empty';
-        container.appendChild(cell);
-    }
+ // Empty cells before first day
+ for (let i = 0; i < firstDay; i++) {
+ const cell = document.createElement('div');
+ cell.className = 'cal-day empty';
+ container.appendChild(cell);
+ }
 
-    // Day cells
-    for (let d = 1; d <= daysInMonth; d++) {
-        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const hasData = dateMap[dateStr];
-        let classes = 'cal-day';
-        if (dateStr === todayStr) classes += ' today';
-        if (hasData) classes += ' has-content';
+ // Day cells
+ for (let d = 1; d <= daysInMonth; d++) {
+ const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+ const hasData = dateMap[dateStr];
+ let classes = 'cal-day';
+ if (dateStr === todayStr) classes += ' today';
+ if (hasData) classes += ' has-content';
 
-        if (hasData) {
-            container.innerHTML += `<div class="${classes}" title="${hasData.title}" onclick="window.location.href='${hasData.page}'">${d}</div>`;
-        } else {
-            container.innerHTML += `<div class="${classes}">${d}</div>`;
-        }
-    }
+ if (hasData) {
+ container.innerHTML += `<div class="${classes}" title="${hasData.title}" onclick="window.location.href='${hasData.page}'">${d}</div>`;
+ } else {
+ container.innerHTML += `<div class="${classes}">${d}</div>`;
+ }
+ }
 }
 
 // Initial render
@@ -355,50 +355,50 @@ renderCalendar(currentMonth);
 
 // Month change handler
 monthSelect.addEventListener('change', (e) => {
-    renderCalendar(e.target.value);
+ renderCalendar(e.target.value);
 });
 
 // Mobile archive dropdown
 const mobileSelect = document.getElementById('mobile-archive-select');
 ARCHIVE_DATA.forEach(item => {
-    const opt = document.createElement('option');
-    opt.value = item.page;
-    const dateObj = new Date(item.date + 'T12:00:00');
-    const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    opt.textContent = `${dateLabel} - ${item.title}`;
-    mobileSelect.appendChild(opt);
+ const opt = document.createElement('option');
+ opt.value = item.page;
+ const dateObj = new Date(item.date + 'T12:00:00');
+ const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+ opt.textContent = `${dateLabel} - ${item.title}`;
+ mobileSelect.appendChild(opt);
 });
 mobileSelect.addEventListener('change', (e) => {
-    if (e.target.value) window.location.href = e.target.value;
+ if (e.target.value) window.location.href = e.target.value;
 });
 </script>
 <script>
 (function() {
-    var dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(function(dropdown) {
-        var btn = dropdown.querySelector('.dropbtn');
-        if (!btn) return;
-        function toggle(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dropdowns.forEach(function(d) {
-                if (d !== dropdown) d.classList.remove('active');
-            });
-            dropdown.classList.toggle('active');
-        }
-        btn.addEventListener('touchend', toggle, {passive: false});
-        btn.addEventListener('click', toggle);
-    });
-    document.addEventListener('touchend', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(function(d) { d.classList.remove('active'); });
-        }
-    });
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(function(d) { d.classList.remove('active'); });
-        }
-    });
+ var dropdowns = document.querySelectorAll('.dropdown');
+ dropdowns.forEach(function(dropdown) {
+ var btn = dropdown.querySelector('.dropbtn');
+ if (!btn) return;
+ function toggle(e) {
+ e.preventDefault();
+ e.stopPropagation();
+ dropdowns.forEach(function(d) {
+ if (d !== dropdown) d.classList.remove('active');
+ });
+ dropdown.classList.toggle('active');
+ }
+ btn.addEventListener('touchend', toggle, {passive: false});
+ btn.addEventListener('click', toggle);
+ });
+ document.addEventListener('touchend', function(e) {
+ if (!e.target.closest('.dropdown')) {
+ dropdowns.forEach(function(d) { d.classList.remove('active'); });
+ }
+ });
+ document.addEventListener('click', function(e) {
+ if (!e.target.closest('.dropdown')) {
+ dropdowns.forEach(function(d) { d.classList.remove('active'); });
+ }
+ });
 })();
 </script>
 <script src="scripts/soccer-calendar.js"></script>

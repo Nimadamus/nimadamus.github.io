@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
+ <meta charset="utf-8"/>
 <link rel="canonical" href="https://www.betlegendpicks.com/kelly-criterion/simple-guide.html"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Kelly Criterion Explanation for Beginners | BetLegend</title>
-    <meta name="description" content="Beginner-friendly Kelly Criterion guide. Learn the basics of optimal bet sizing for sports betting in plain English."/>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root{--bg-color:#000;--neon-cyan:#00ffff;--neon-gold:#FFD700;--font-primary:'Orbitron',sans-serif;--font-content:'Rubik',sans-serif}
-        *{margin:0;padding:0}body{font-family:var(--font-content);background:#000;color:#fff;padding-top:140px;line-height:1.7}
-        .logo-container{position:fixed;top:20px;left:40px;z-index:1000}.logo-container a{color:#fff;text-decoration:none;font-family:var(--font-primary);font-size:2.5rem;font-weight:900}
-        .logo-container span{color:var(--neon-cyan)}
-        .nav-links{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;gap:18px;padding:15px 5%;background:rgba(0,0,0,0.95);border-bottom:2px solid rgba(0,224,255,0.3);z-index:999}
-        .nav-links a{text-decoration:none;color:#eaf8ff;font-weight:600;font-size:0.9rem;padding:8px 10px}
-        .content-container{max-width:900px;margin:0 auto;padding:40px 20px}
-        h1{font-family:var(--font-primary);font-size:2.5rem;color:var(--neon-gold);margin-bottom:30px;text-align:center}
-        h2{font-family:var(--font-primary);color:var(--neon-gold);font-size:1.6rem;margin:35px 0 20px 0}
-        p{font-size:1.1rem;line-height:1.8;color:#ddd;margin-bottom:20px}
-        ol{margin-left:30px;margin-bottom:20px}
-        ol li{font-size:1.1rem;line-height:1.8;color:#ddd;margin-bottom:15px}
-        .tip-box{background:rgba(0,255,100,0.05);border-left:4px solid #00ff66;padding:20px;margin:25px 0}
-        .back-link{background:rgba(255,215,0,0.1);border:2px solid rgba(255,215,0,0.3);padding:25px;border-radius:10px;margin-top:50px;text-align:center}
-        .back-link a{color:var(--neon-cyan);text-decoration:none;font-size:1.2rem;font-weight:600}
-    /* Navigation */
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Simple Kelly Criterion Explanation for Beginners | BetLegend</title>
+ <meta name="description" content="Beginner-friendly Kelly Criterion guide. Learn the basics of optimal bet sizing for sports betting in plain English."/>
+ 
+ <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <style>
+ :root{--bg-color:#000;--neon-cyan:#00ffff;--neon-gold:#FFD700;--font-primary:'Orbitron',sans-serif;--font-content:'Rubik',sans-serif}
+ *{margin:0;padding:0}body{font-family:var(--font-content);background:#000;color:#fff;padding-top:140px;line-height:1.7}
+ .logo-container{position:fixed;top:20px;left:40px;z-index:1000}.logo-container a{color:#fff;text-decoration:none;font-family:var(--font-primary);font-size:2.5rem;font-weight:900}
+ .logo-container span{color:var(--neon-cyan)}
+ .nav-links{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;gap:18px;padding:15px 5%;background:rgba(0,0,0,0.95);border-bottom:2px solid rgba(0,224,255,0.3);z-index:999}
+ .nav-links a{text-decoration:none;color:#eaf8ff;font-weight:600;font-size:0.9rem;padding:8px 10px}
+ .content-container{max-width:900px;margin:0 auto;padding:40px 20px}
+ h1{font-family:var(--font-primary);font-size:2.5rem;color:var(--neon-gold);margin-bottom:30px;text-align:center}
+ h2{font-family:var(--font-primary);color:var(--neon-gold);font-size:1.6rem;margin:35px 0 20px 0}
+ p{font-size:1.1rem;line-height:1.8;color:#ddd;margin-bottom:20px}
+ ol{margin-left:30px;margin-bottom:20px}
+ ol li{font-size:1.1rem;line-height:1.8;color:#ddd;margin-bottom:15px}
+ .tip-box{background:rgba(0,255,100,0.05);border-left:4px solid #00ff66;padding:20px;margin:25px 0}
+ .back-link{background:rgba(255,215,0,0.1);border:2px solid rgba(255,215,0,0.3);padding:25px;border-radius:10px;margin-top:50px;text-align:center}
+ .back-link a{color:var(--neon-cyan);text-decoration:none;font-size:1.2rem;font-weight:600}
+ /* Navigation */
 .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
 .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
 .logo{position:fixed;top:15px;left:15px;z-index:1001}
@@ -60,17 +60,17 @@
 <div class="nav-links">
 <a href="../index.html">Home</a>
 <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="../handicapping-hub.html">Today's Games</a>
-                    <a href="../injury-report.html">Injury Report</a>
-                </div>
-            </div>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="../handicapping-hub.html">Today's Games</a>
+ <a href="../injury-report.html">Injury Report</a>
+ </div>
+ </div>
 <a href="../blog-page12.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="../nfl.html">NFL</a><a href="../nba.html">NBA</a><a href="../nhl.html">NHL</a><a href="../ncaaf.html">NCAAF</a><a href="../ncaab.html">NCAAB</a><a href="../mlb.html">MLB</a><a href="../soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="../records.html">Detailed Breakdown</a><a href="../nfl-records.html">NFL</a><a href="../nba-records.html">NBA</a><a href="../nhl-records.html">NHL</a><a href="../ncaaf-records.html">NCAAF</a><a href="../ncaab-records.html">NCAAB</a><a href="../mlb-records.html">MLB</a><a href="../soccer-records.html">Soccer</a>
 <a href="../crosssport-parlays-records.html" title="Cross-Sport Bets">Cross-Sport Bets</a>
-        </div></div>
+ </div></div>
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="../proofofpicks.html">Proof of Picks</a><a href="../live-odds.html">Live Odds</a><a href="../howitworks.html">How It Works</a><a href="../bankroll.html">Bankroll Management</a><a href="../kelly-criterion.html">Kelly Criterion</a><a href="../risk-of-ruin-calculator.html">Risk of Ruin</a><a href="../bankroll-simulator.html">Bankroll Simulator</a><a href="../betting-calculators.html">Calculators</a><a href="../screenshots.html">Screenshots</a><a href="../bestonlinesportsbook.html">Best Sportsbook</a><a href="../betting-glossary.html">Glossary</a><a href="../betting-101.html">Betting 101</a></div></div>
 <a href="../news-page5.html">News</a>
 <a href="../injury-report.html">Injury Report</a>
@@ -81,74 +81,74 @@
 </nav>
 
 <div class="content-container">
-    <h1>Simple Kelly Criterion Guide</h1>
+ <h1>Simple Kelly Criterion Guide</h1>
 
-    <p>The Kelly Criterion answers one question: how much should I bet? It's a formula that calculates the optimal bet size based on your edge and the odds you're getting.</p>
+ <p>The Kelly Criterion answers one question: how much should I bet? It's a formula that calculates the optimal bet size based on your edge and the odds you're getting.</p>
 
-    <h2>The Basic Idea</h2>
-    <p>Bet more when you have a big edge. Bet less when your edge is small. Bet nothing when you have no edge. Kelly does this math automatically.</p>
+ <h2>The Basic Idea</h2>
+ <p>Bet more when you have a big edge. Bet less when your edge is small. Bet nothing when you have no edge. Kelly does this math automatically.</p>
 
-    <h2>How to Use It (Simple Version)</h2>
-    <ol>
-        <li>Figure out your estimated win probability (this is the hard part)</li>
-        <li>Look at the odds the sportsbook is offering</li>
-        <li>Plug both into the Kelly calculator</li>
-        <li>The calculator tells you what percentage of your bankroll to bet</li>
-        <li>Multiply that percentage by your current bankroll to get your bet amount</li>
-    </ol>
+ <h2>How to Use It (Simple Version)</h2>
+ <ol>
+ <li>Figure out your estimated win probability (this is the hard part)</li>
+ <li>Look at the odds the sportsbook is offering</li>
+ <li>Plug both into the Kelly calculator</li>
+ <li>The calculator tells you what percentage of your bankroll to bet</li>
+ <li>Multiply that percentage by your current bankroll to get your bet amount</li>
+ </ol>
 
-    <h2>The Most Important Rule</h2>
-    <p>Use half Kelly, not full Kelly. If the calculator says bet 10%, bet 5% instead. This protects you from overestimating your edge, which everyone does.</p>
+ <h2>The Most Important Rule</h2>
+ <p>Use half Kelly, not full Kelly. If the calculator says bet 10%, bet 5% instead. This protects you from overestimating your edge, which everyone does.</p>
 
-    <h2>What You Need to Get Started</h2>
-    <ol>
-        <li>A betting bankroll (money you can afford to lose)</li>
-        <li>A track record proving you can beat the closing line</li>
-        <li>Honest estimates of your win probability on each bet</li>
-        <li>The discipline to skip bets where you don't have an edge</li>
-    </ol>
+ <h2>What You Need to Get Started</h2>
+ <ol>
+ <li>A betting bankroll (money you can afford to lose)</li>
+ <li>A track record proving you can beat the closing line</li>
+ <li>Honest estimates of your win probability on each bet</li>
+ <li>The discipline to skip bets where you don't have an edge</li>
+ </ol>
 
-    <div class="tip-box">
-        <p>Don't use Kelly until you've proven you're profitable over at least 100 bets. Track everything on paper first. If you can't beat the closing line, Kelly won't save you.</p>
-    </div>
+ <div class="tip-box">
+ <p>Don't use Kelly until you've proven you're profitable over at least 100 bets. Track everything on paper first. If you can't beat the closing line, Kelly won't save you.</p>
+ </div>
 
-    <h2>Bottom Line</h2>
-    <p>Kelly Criterion helps you bet more when you should and less when you shouldn't. It prevents you from overbetting when you're confident and underbetting when you've got a real edge. But it only works if you're honest about your win probability estimates.</p>
+ <h2>Bottom Line</h2>
+ <p>Kelly Criterion helps you bet more when you should and less when you shouldn't. It prevents you from overbetting when you're confident and underbetting when you've got a real edge. But it only works if you're honest about your win probability estimates.</p>
 
-    <!-- BetLegend Perspective -->
-    <div style="background: linear-gradient(135deg, rgba(0, 224, 255, 0.08), rgba(255, 215, 0, 0.08)); border: 2px solid var(--neon-cyan); border-radius: 15px; padding: 30px; margin: 40px 0;">
-        <h2 style="color: var(--neon-cyan); margin-bottom: 20px;">BetLegend's Quick Tips</h2>
-        <p>When we first started using Kelly, we made it way too complicated. Here's the simple approach that actually works: use our <a href="/kelly-criterion.html" style="color: var(--neon-gold);">free calculator</a>, enter your bankroll and odds, and divide the suggested bet by 4 (quarter Kelly). That's it. Don't overthink it.</p>
-        <p style="margin-bottom: 0;">The hard part isn't the math—it's being honest about your win probability. If you're not sure, assume 52-53% for spreads at -110. That's conservative, but it keeps you from overbetting while you learn.</p>
-    </div>
+ <!-- BetLegend Perspective -->
+ <div style="background: linear-gradient(135deg, rgba(0, 224, 255, 0.08), rgba(255, 215, 0, 0.08)); border: 2px solid var(--neon-cyan); border-radius: 15px; padding: 30px; margin: 40px 0;">
+ <h2 style="color: var(--neon-cyan); margin-bottom: 20px;">BetLegend's Quick Tips</h2>
+ <p>When we first started using Kelly, we made it way too complicated. Here's the simple approach that actually works: use our <a href="/kelly-criterion.html" style="color: var(--neon-gold);">free calculator</a>, enter your bankroll and odds, and divide the suggested bet by 4 (quarter Kelly). That's it. Don't overthink it.</p>
+ <p style="margin-bottom: 0;">The hard part isn't the math—it's being honest about your win probability. If you're not sure, assume 52-53% for spreads at -110. That's conservative, but it keeps you from overbetting while you learn.</p>
+ </div>
 
-    <!-- Related Kelly Criterion Articles -->
-    <div style="background: rgba(255, 215, 0, 0.05); border: 2px solid rgba(255, 215, 0, 0.3); padding: 30px; border-radius: 10px; margin-top: 40px;">
-        <h3 style="color: var(--neon-gold); margin-bottom: 20px; text-align: center;">Related Kelly Criterion Articles</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-            <a href="/kelly-criterion/examples.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Real Betting Examples</a>
-            <a href="/kelly-criterion/mistakes.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Common Kelly Mistakes</a>
-            <a href="/kelly-criterion/fractional-vs-full.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Fractional vs Full Kelly</a>
-            <a href="/kelly-criterion/parlays.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Kelly for Parlays</a>
-            <a href="/kelly-criterion/bankroll-chart.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Bankroll Tracking Chart</a>
-            <a href="/kelly-criterion/faq.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Kelly FAQ</a>
-        </div>
-    </div>
+ <!-- Related Kelly Criterion Articles -->
+ <div style="background: rgba(255, 215, 0, 0.05); border: 2px solid rgba(255, 215, 0, 0.3); padding: 30px; border-radius: 10px; margin-top: 40px;">
+ <h3 style="color: var(--neon-gold); margin-bottom: 20px; text-align: center;">Related Kelly Criterion Articles</h3>
+ <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+ <a href="/kelly-criterion/examples.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Real Betting Examples</a>
+ <a href="/kelly-criterion/mistakes.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Common Kelly Mistakes</a>
+ <a href="/kelly-criterion/fractional-vs-full.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Fractional vs Full Kelly</a>
+ <a href="/kelly-criterion/parlays.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Kelly for Parlays</a>
+ <a href="/kelly-criterion/bankroll-chart.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Bankroll Tracking Chart</a>
+ <a href="/kelly-criterion/faq.html" style="color: var(--neon-cyan); text-decoration: none; padding: 10px; display: block;">→ Kelly FAQ</a>
+ </div>
+ </div>
 
-    <!-- Related Resources -->
-    <div style="background: rgba(0, 224, 255, 0.05); border: 2px solid rgba(0, 224, 255, 0.3); padding: 30px; border-radius: 10px; margin-top: 25px;">
-        <h3 style="color: var(--neon-cyan); margin-bottom: 20px; text-align: center;">More Betting Resources</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-            <a href="/bankroll-management.html" style="color: var(--neon-gold); text-decoration: none; padding: 10px; display: block;">→ Bankroll Management Guide</a>
-            <a href="/parlay-calculator.html" style="color: var(--neon-gold); text-decoration: none; padding: 10px; display: block;">→ Parlay Calculator</a>
-            <a href="/nhl-records.html" style="color: var(--neon-gold); text-decoration: none; padding: 10px; display: block;">→ NHL Verified Records</a>
-            <a href="/blog-page11.html" style="color: var(--neon-gold); text-decoration: none; padding: 10px; display: block;">→ Today's Picks & Analysis</a>
-        </div>
-    </div>
+ <!-- Related Resources -->
+ <div style="background: rgba(0, 224, 255, 0.05); border: 2px solid rgba(0, 224, 255, 0.3); padding: 30px; border-radius: 10px; margin-top: 25px;">
+ <h3 style="color: var(--neon-cyan); margin-bottom: 20px; text-align: center;">More Betting Resources</h3>
+ <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+ <a href="/bankroll-management.html" style="color: var(--neon-gold); text-decoration: none; padding: 10px; display: block;">→ Bankroll Management Guide</a>
+ <a href="/parlay-calculator.html" style="color: var(--neon-gold); text-decoration: none; padding: 10px; display: block;">→ Parlay Calculator</a>
+ <a href="/nhl-records.html" style="color: var(--neon-gold); text-decoration: none; padding: 10px; display: block;">→ NHL Verified Records</a>
+ <a href="/blog-page11.html" style="color: var(--neon-gold); text-decoration: none; padding: 10px; display: block;">→ Today's Picks & Analysis</a>
+ </div>
+ </div>
 
-    <div class="back-link">
-        <p><a href="/kelly-criterion.html">← Read the Full Kelly Criterion Guide</a></p>
-    </div>
+ <div class="back-link">
+ <p><a href="/kelly-criterion.html">← Read the Full Kelly Criterion Guide</a></p>
+ </div>
 </div>
 
 <!-- Clicky Analytics -->

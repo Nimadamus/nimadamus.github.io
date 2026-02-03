@@ -69,7 +69,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .dropdown.active .dropdown-content{display:block}
 .dropdown.active .dropbtn{color:var(--accent-gold)}
 
-    .cal-day.current-page{background:rgba(253,80,0,0.7)!important;color:#fff!important;font-weight:800!important;border:2px solid #fd5000!important;box-shadow:0 0 8px rgba(253,80,0,0.5)}
+ .cal-day.current-page{background:rgba(253,80,0,0.7)!important;color:#fff!important;font-weight:800!important;border:2px solid #fd5000!important;box-shadow:0 0 8px rgba(253,80,0,0.5)}
 </style>
 <link rel="stylesheet" href="/mobile-optimize.css" media="screen">
 </head>
@@ -80,12 +80,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="nav-links">
 <a href="index.html">Home</a>
 <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="handicapping-hub.html">Today's Games</a>
-                    <a href="injury-report.html">Injury Report</a>
-                </div>
-            </div>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="handicapping-hub.html">Today's Games</a>
+ <a href="injury-report.html">Injury Report</a>
+ </div>
+ </div>
 <a href="blog.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Game Previews</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a></div></div>
@@ -150,7 +150,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <strong>Line:</strong> LAL -2.5 | <strong>O/U:</strong> 230.5 | <strong>LAL:</strong> 12-7 | <strong>GS:</strong> 10-10
 </div>
 <div class="preview-content">
-<p>LeBron vs. Steph never gets old. The Lakers at 12-7 have been excellent, with Luka Doncic forming a devastating duo with LeBron after arriving from Dallas in February. LeBron shows no signs of slowing down at 40. This team has chemistry and purpose that's been missing in recent years.</p>
+<p>LeBron vs. Steph never gets old. The Lakers at 12-7 have been excellent, with Luka Doncic forming a devastating duo with LeBron after arriving from the Lakers in February. LeBron shows no signs of slowing down at 40. This team has chemistry and purpose that's been missing in recent years.</p>
 <p>Golden State at 10-10 is the definition of inconsistent. When Curry is cooking, they can beat anyone. When he's off, they look like a lottery team. The Warriors are still searching for their identity after the roster changes, and Chase Center hasn't been the fortress it once was.</p>
 <p>The Lakers are road favorites for a reason. They're the better team right now, with more depth and more reliable secondary scoring. But it's Steph Curry at home - you can never count him out. This has the potential to be a classic Bay Area showdown.</p>
 </div>
@@ -170,7 +170,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </div>
 <div class="preview-content">
 <p>The I-10 rivalry features two of the most intriguing teams in the West. San Antonio at 13-6 has been a revelation, with Victor Wembanyama exceeding every expectation. His combination of rim protection and perimeter skill has never existed before - he's rewriting what's possible for a big man.</p>
-<p>Houston's Kevin Durant era has started well at 11-8. KD's move from Phoenix has revitalized his career, and the Rockets have found an identity around his shot-making and playmaking. The Toyota Center crowd has embraced Durant as their new superstar.</p>
+<p>Houston's Kevin Durant era has started well at 11-8. KD's move from the franchise has revitalized his career, and the Rockets have found an identity around his shot-making and playmaking. The Toyota Center crowd has embraced Durant as their new superstar.</p>
 <p>This is a pick'em in terms of talent. Wembanyama vs. Durant is a generational clash - the future of the league against one of the greatest scorers ever. Both teams play defense and have versatile offenses. Expect a tight, competitive game decided in crunch time.</p>
 </div>
 </article>
@@ -217,41 +217,41 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </div>
 <footer>
 <p>© 2025 BetLegend Picks | <a href="index.html">Home</a> | <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="handicapping-hub.html">Today's Games</a>
-                    <a href="injury-report.html">Injury Report</a>
-                </div>
-            </div></p>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="handicapping-hub.html">Today's Games</a>
+ <a href="injury-report.html">Injury Report</a>
+ </div>
+ </div></p>
 </footer>
 <script src="scripts/nba-calendar.js"></script>
 <script>
 (function() {
-    var dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(function(dropdown) {
-        var btn = dropdown.querySelector('.dropbtn');
-        if (!btn) return;
-        function toggle(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dropdowns.forEach(function(d) {
-                if (d !== dropdown) d.classList.remove('active');
-            });
-            dropdown.classList.toggle('active');
-        }
-        btn.addEventListener('touchend', toggle, {passive: false});
-        btn.addEventListener('click', toggle);
-    });
-    document.addEventListener('touchend', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(function(d) { d.classList.remove('active'); });
-        }
-    });
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(function(d) { d.classList.remove('active'); });
-        }
-    });
+ var dropdowns = document.querySelectorAll('.dropdown');
+ dropdowns.forEach(function(dropdown) {
+ var btn = dropdown.querySelector('.dropbtn');
+ if (!btn) return;
+ function toggle(e) {
+ e.preventDefault();
+ e.stopPropagation();
+ dropdowns.forEach(function(d) {
+ if (d !== dropdown) d.classList.remove('active');
+ });
+ dropdown.classList.toggle('active');
+ }
+ btn.addEventListener('touchend', toggle, {passive: false});
+ btn.addEventListener('click', toggle);
+ });
+ document.addEventListener('touchend', function(e) {
+ if (!e.target.closest('.dropdown')) {
+ dropdowns.forEach(function(d) { d.classList.remove('active'); });
+ }
+ });
+ document.addEventListener('click', function(e) {
+ if (!e.target.closest('.dropdown')) {
+ dropdowns.forEach(function(d) { d.classList.remove('active'); });
+ }
+ });
 })();
 </script>
 </body>

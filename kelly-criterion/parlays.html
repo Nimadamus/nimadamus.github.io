@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
+ <meta charset="utf-8"/>
 <link rel="canonical" href="https://www.betlegendpicks.com/kelly-criterion/parlays.html"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelly Criterion for Parlays | Why It Usually Doesn't Work | BetLegend</title>
-    <meta name="description" content="Learn why the Kelly Criterion doesn't work well for parlay betting and what to do instead. Professional guide to bankroll management for parlays."/>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root{--bg-color:#000;--text-color:#eaf8ff;--neon-cyan:#00ffff;--neon-gold:#FFD700;--font-primary:'Orbitron',sans-serif;--font-secondary:'Poppins',sans-serif;--font-content:'Rubik',sans-serif}
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:var(--font-content);background-color:var(--bg-color);color:white;padding-top:140px;line-height:1.7}
-        .logo-container{position:fixed;top:20px;left:40px;z-index:1000}
-        .logo-container a{color:#fff;text-decoration:none;font-family:var(--font-primary);font-size:2.5rem;font-weight:900;text-transform:uppercase}
-        .logo-container span{color:var(--neon-cyan)}
-        .nav-links{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;gap:18px;padding:15px 5%;background:rgba(0,0,0,0.95);border-bottom:2px solid rgba(0,224,255,0.3);z-index:999;flex-wrap:nowrap}
-        .nav-links a{font-family:var(--font-secondary);text-decoration:none;color:var(--text-color);font-weight:600;font-size:0.9rem;text-transform:uppercase;padding:8px 10px;transition:all 0.3s}
-        .nav-links a:hover{color:var(--neon-gold)}
-        .dropdown{position:relative;padding:0;margin:0}
-        .dropdown .dropbtn{font-family:var(--font-secondary);color:var(--text-color);font-weight:600;font-size:0.9rem;text-transform:uppercase;padding:8px 10px;background:transparent;border:none;cursor:pointer}
-        .dropdown-content{display:none;position:absolute;background-color:rgba(17,17,17,0.98);min-width:200px;border-radius:8px;border:1px solid rgba(0,224,255,0.3);z-index:9999}
-        .dropdown-content a{padding:12px 16px;display:block;font-size:0.85rem}
-        /* Desktop only: show dropdown on hover */
-        @media (hover: hover) and (pointer: fine) {
-            .dropdown:hover .dropdown-content{display:block}
-        }
-        /* Both desktop and mobile: show dropdown when active (clicked/tapped) */
-        .dropdown.active .dropdown-content{display:block}
-        .dropdown.active .dropbtn{color:var(--neon-gold)}
-        .content-container{max-width:1000px;margin:0 auto;padding:40px 20px}
-        h1{font-family:var(--font-primary);font-size:2.5rem;color:var(--neon-gold);margin-bottom:30px;text-align:center}
-        h2{font-family:var(--font-primary);color:var(--neon-gold);font-size:1.8rem;margin:40px 0 20px 0;border-bottom:2px solid rgba(0,224,255,0.3);padding-bottom:10px}
-        h3{color:var(--neon-cyan);font-size:1.3rem;margin:25px 0 15px 0}
-        p{font-size:1.1rem;line-height:1.8;color:#ddd;margin-bottom:20px}
-        .warning-box{background:rgba(255,50,50,0.1);border-left:4px solid #ff3232;padding:20px;margin:25px 0}
-        .warning-box p{color:#ffaaaa;margin:0}
-        .tip-box{background:rgba(0,255,100,0.05);border-left:4px solid #00ff66;padding:20px;margin:25px 0}
-        .back-link{background:rgba(255,215,0,0.1);border:2px solid rgba(255,215,0,0.3);padding:25px;border-radius:10px;margin-top:50px;text-align:center}
-        .back-link a{color:var(--neon-cyan);text-decoration:none;font-size:1.2rem;font-weight:600}
-    
-        @media (max-width: 768px) {
-            /* Mobile dropdown fix - full width centered */
-            .dropdown-content,
-            .sports-records-dropdown {
-                position: fixed !important;
-                left: 5% !important;
-                right: 5% !important;
-                top: 120px !important;
-                width: 90% !important;
-                min-width: unset !important;
-                max-width: none !important;
-                max-height: 65vh;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                z-index: 999999 !important;
-            }
-        }
-    /* Navigation */
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Kelly Criterion for Parlays | Why It Usually Doesn't Work | BetLegend</title>
+ <meta name="description" content="Learn why the Kelly Criterion doesn't work well for parlay betting and what to do instead. Professional guide to bankroll management for parlays."/>
+ 
+ <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <style>
+ :root{--bg-color:#000;--text-color:#eaf8ff;--neon-cyan:#00ffff;--neon-gold:#FFD700;--font-primary:'Orbitron',sans-serif;--font-secondary:'Poppins',sans-serif;--font-content:'Rubik',sans-serif}
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{font-family:var(--font-content);background-color:var(--bg-color);color:white;padding-top:140px;line-height:1.7}
+ .logo-container{position:fixed;top:20px;left:40px;z-index:1000}
+ .logo-container a{color:#fff;text-decoration:none;font-family:var(--font-primary);font-size:2.5rem;font-weight:900;text-transform:uppercase}
+ .logo-container span{color:var(--neon-cyan)}
+ .nav-links{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;gap:18px;padding:15px 5%;background:rgba(0,0,0,0.95);border-bottom:2px solid rgba(0,224,255,0.3);z-index:999;flex-wrap:nowrap}
+ .nav-links a{font-family:var(--font-secondary);text-decoration:none;color:var(--text-color);font-weight:600;font-size:0.9rem;text-transform:uppercase;padding:8px 10px;transition:all 0.3s}
+ .nav-links a:hover{color:var(--neon-gold)}
+ .dropdown{position:relative;padding:0;margin:0}
+ .dropdown .dropbtn{font-family:var(--font-secondary);color:var(--text-color);font-weight:600;font-size:0.9rem;text-transform:uppercase;padding:8px 10px;background:transparent;border:none;cursor:pointer}
+ .dropdown-content{display:none;position:absolute;background-color:rgba(17,17,17,0.98);min-width:200px;border-radius:8px;border:1px solid rgba(0,224,255,0.3);z-index:9999}
+ .dropdown-content a{padding:12px 16px;display:block;font-size:0.85rem}
+ /* Desktop only: show dropdown on hover */
+ @media (hover: hover) and (pointer: fine) {
+ .dropdown:hover .dropdown-content{display:block}
+ }
+ /* Both desktop and mobile: show dropdown when active (clicked/tapped) */
+ .dropdown.active .dropdown-content{display:block}
+ .dropdown.active .dropbtn{color:var(--neon-gold)}
+ .content-container{max-width:1000px;margin:0 auto;padding:40px 20px}
+ h1{font-family:var(--font-primary);font-size:2.5rem;color:var(--neon-gold);margin-bottom:30px;text-align:center}
+ h2{font-family:var(--font-primary);color:var(--neon-gold);font-size:1.8rem;margin:40px 0 20px 0;border-bottom:2px solid rgba(0,224,255,0.3);padding-bottom:10px}
+ h3{color:var(--neon-cyan);font-size:1.3rem;margin:25px 0 15px 0}
+ p{font-size:1.1rem;line-height:1.8;color:#ddd;margin-bottom:20px}
+ .warning-box{background:rgba(255,50,50,0.1);border-left:4px solid #ff3232;padding:20px;margin:25px 0}
+ .warning-box p{color:#ffaaaa;margin:0}
+ .tip-box{background:rgba(0,255,100,0.05);border-left:4px solid #00ff66;padding:20px;margin:25px 0}
+ .back-link{background:rgba(255,215,0,0.1);border:2px solid rgba(255,215,0,0.3);padding:25px;border-radius:10px;margin-top:50px;text-align:center}
+ .back-link a{color:var(--neon-cyan);text-decoration:none;font-size:1.2rem;font-weight:600}
+ 
+ @media (max-width: 768px) {
+ /* Mobile dropdown fix - full width centered */
+ .dropdown-content,
+ .sports-records-dropdown {
+ position: fixed !important;
+ left: 5% !important;
+ right: 5% !important;
+ top: 120px !important;
+ width: 90% !important;
+ min-width: unset !important;
+ max-width: none !important;
+ max-height: 65vh;
+ overflow-y: auto;
+ -webkit-overflow-scrolling: touch;
+ z-index: 999999 !important;
+ }
+ }
+ /* Navigation */
 .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
 .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
 .logo{position:fixed;top:15px;left:15px;z-index:1001}
@@ -93,17 +93,17 @@
 <div class="nav-links">
 <a href="../index.html">Home</a>
 <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="../handicapping-hub.html">Today's Games</a>
-                    <a href="../injury-report.html">Injury Report</a>
-                </div>
-            </div>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="../handicapping-hub.html">Today's Games</a>
+ <a href="../injury-report.html">Injury Report</a>
+ </div>
+ </div>
 <a href="../blog-page12.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="../nfl.html">NFL</a><a href="../nba.html">NBA</a><a href="../nhl.html">NHL</a><a href="../ncaaf.html">NCAAF</a><a href="../ncaab.html">NCAAB</a><a href="../mlb.html">MLB</a><a href="../soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="../records.html">Detailed Breakdown</a><a href="../nfl-records.html">NFL</a><a href="../nba-records.html">NBA</a><a href="../nhl-records.html">NHL</a><a href="../ncaaf-records.html">NCAAF</a><a href="../ncaab-records.html">NCAAB</a><a href="../mlb-records.html">MLB</a><a href="../soccer-records.html">Soccer</a>
 <a href="../crosssport-parlays-records.html" title="Cross-Sport Bets">Cross-Sport Bets</a>
-        </div></div>
+ </div></div>
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="../proofofpicks.html">Proof of Picks</a><a href="../live-odds.html">Live Odds</a><a href="../howitworks.html">How It Works</a><a href="../bankroll.html">Bankroll Management</a><a href="../kelly-criterion.html">Kelly Criterion</a><a href="../risk-of-ruin-calculator.html">Risk of Ruin</a><a href="../bankroll-simulator.html">Bankroll Simulator</a><a href="../betting-calculators.html">Calculators</a><a href="../screenshots.html">Screenshots</a><a href="../bestonlinesportsbook.html">Best Sportsbook</a><a href="../betting-glossary.html">Glossary</a><a href="../betting-101.html">Betting 101</a></div></div>
 <a href="../news-page5.html">News</a>
 <a href="../injury-report.html">Injury Report</a>
@@ -114,71 +114,71 @@
 </nav>
 
 <div class="content-container">
-    <h1>Kelly Criterion for Parlays: Why It Breaks Down</h1>
+ <h1>Kelly Criterion for Parlays: Why It Breaks Down</h1>
 
-    <p>The Kelly Criterion was designed for independent bets. Parlays are the opposite of independent. Every leg must hit for you to win, which creates correlation and compound risk that Kelly wasn't built to handle.</p>
+ <p>The Kelly Criterion was designed for independent bets. Parlays are the opposite of independent. Every leg must hit for you to win, which creates correlation and compound risk that Kelly wasn't built to handle.</p>
 
-    <h2>The Fundamental Problem</h2>
-    <p>Kelly assumes each bet is separate. Win or lose, your next bet is independent of the last one. But in a three-team parlay, if the first leg loses, the entire bet is dead. The outcomes are linked.</p>
+ <h2>The Fundamental Problem</h2>
+ <p>Kelly assumes each bet is separate. Win or lose, your next bet is independent of the last one. But in a three-team parlay, if the first leg loses, the entire bet is dead. The outcomes are linked.</p>
 
-    <p>This dependency breaks the Kelly math. The formula calculates bet size based on a single probability estimate, but a parlay has multiple probabilities stacked together. Even if each individual leg has a slight edge, the combined probability of all legs hitting is much lower than most bettors realize.</p>
+ <p>This dependency breaks the Kelly math. The formula calculates bet size based on a single probability estimate, but a parlay has multiple probabilities stacked together. Even if each individual leg has a slight edge, the combined probability of all legs hitting is much lower than most bettors realize.</p>
 
-    <h2>The Math Gets Ugly Fast</h2>
-    <p>Let's say you've got three NFL picks. Each one you estimate at 55% to cover at -110 odds. Individually, these might be decent Kelly bets at 2-3% of bankroll each.</p>
+ <h2>The Math Gets Ugly Fast</h2>
+ <p>Let's say you've got three NFL picks. Each one you estimate at 55% to cover at -110 odds. Individually, these might be decent Kelly bets at 2-3% of bankroll each.</p>
 
-    <p>But if you parlay them at +600, your actual win probability isn't 55%. It's 0.55 × 0.55 × 0.55 = 16.6%. Now you're looking at an 8.3-to-1 payout on what you believe is a 16.6% shot. The edge is still there mathematically, but the variance is enormous.</p>
+ <p>But if you parlay them at +600, your actual win probability isn't 55%. It's 0.55 × 0.55 × 0.55 = 16.6%. Now you're looking at an 8.3-to-1 payout on what you believe is a 16.6% shot. The edge is still there mathematically, but the variance is enormous.</p>
 
-    <p>Kelly would suggest a larger bet size because of the plus-money payout, but you're now exposed to a single outcome with only a 16.6% chance of hitting. One bad leg and you lose everything.</p>
+ <p>Kelly would suggest a larger bet size because of the plus-money payout, but you're now exposed to a single outcome with only a 16.6% chance of hitting. One bad leg and you lose everything.</p>
 
-    <div class="warning-box">
-        <p>Most parlay bettors overestimate their edge on each leg AND underestimate the compounding effect of combining them. If each leg actually has a 52% chance instead of 55%, your parlay win rate drops from 16.6% to 14%. That's a massive difference.</p>
-    </div>
+ <div class="warning-box">
+ <p>Most parlay bettors overestimate their edge on each leg AND underestimate the compounding effect of combining them. If each leg actually has a 52% chance instead of 55%, your parlay win rate drops from 16.6% to 14%. That's a massive difference.</p>
+ </div>
 
-    <h2>When Parlays Make Sense (Rarely)</h2>
-    <p>The only time parlays make mathematical sense is when you've got correlated outcomes that you believe are priced independently by the book. For example, betting the over in a game and the favorite to cover might be correlated if you think the favorite will blow out the opponent and run up the score.</p>
+ <h2>When Parlays Make Sense (Rarely)</h2>
+ <p>The only time parlays make mathematical sense is when you've got correlated outcomes that you believe are priced independently by the book. For example, betting the over in a game and the favorite to cover might be correlated if you think the favorite will blow out the opponent and run up the score.</p>
 
-    <p>But books know this too. Most correlated parlays are either banned or priced with extra juice to account for the correlation. You're not finding free money here.</p>
+ <p>But books know this too. Most correlated parlays are either banned or priced with extra juice to account for the correlation. You're not finding free money here.</p>
 
-    <h3>The Entertainment Parlay</h3>
-    <p>If you want to bet a parlay for fun because it makes watching three games more exciting, that's fine. But treat it as entertainment, not investment. Bet small. Don't use Kelly. Think of it like buying a lottery ticket.</p>
+ <h3>The Entertainment Parlay</h3>
+ <p>If you want to bet a parlay for fun because it makes watching three games more exciting, that's fine. But treat it as entertainment, not investment. Bet small. Don't use Kelly. Think of it like buying a lottery ticket.</p>
 
-    <h2>What to Do Instead</h2>
-    <p>If you've got three picks you like, bet them as three separate straight bets and use Kelly on each one individually. You'll win more often, you'll have lower variance, and you'll be able to track which bets are actually profitable.</p>
+ <h2>What to Do Instead</h2>
+ <p>If you've got three picks you like, bet them as three separate straight bets and use Kelly on each one individually. You'll win more often, you'll have lower variance, and you'll be able to track which bets are actually profitable.</p>
 
-    <p>A bettor hitting 55% on straight bets at -110 will make steady money. A bettor hitting 16% on three-team parlays will go broke even if the math says they have an edge, because the variance will kill them before the edge pays off.</p>
+ <p>A bettor hitting 55% on straight bets at -110 will make steady money. A bettor hitting 16% on three-team parlays will go broke even if the math says they have an edge, because the variance will kill them before the edge pays off.</p>
 
-    <div class="tip-box">
-        <p>Professional bettors don't bet parlays. They bet straight bets and size them using Kelly. If you want to be profitable long-term, do what the pros do.</p>
-    </div>
+ <div class="tip-box">
+ <p>Professional bettors don't bet parlays. They bet straight bets and size them using Kelly. If you want to be profitable long-term, do what the pros do.</p>
+ </div>
 
-    <h2>If You Insist on Parlays</h2>
-    <p>Use a maximum of 0.5% to 1% of your bankroll on any parlay, regardless of what Kelly suggests. Treat it as a speculative lottery ticket, not a core part of your betting strategy. And track your parlay results separately from your straight bets so you can see how much money they're actually costing you.</p>
+ <h2>If You Insist on Parlays</h2>
+ <p>Use a maximum of 0.5% to 1% of your bankroll on any parlay, regardless of what Kelly suggests. Treat it as a speculative lottery ticket, not a core part of your betting strategy. And track your parlay results separately from your straight bets so you can see how much money they're actually costing you.</p>
 
-    <div class="back-link">
-        <p><a href="/kelly-criterion.html">← Read the Full Kelly Criterion Guide</a></p>
-    </div>
+ <div class="back-link">
+ <p><a href="/kelly-criterion.html">← Read the Full Kelly Criterion Guide</a></p>
+ </div>
 </div>
 
 <script>
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
-    const dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(dropdown => {
-        const dropbtn = dropdown.querySelector('.dropbtn');
-        if (dropbtn) {
-            dropbtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
-                dropdown.classList.toggle('active');
-            });
-        }
-    });
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(d => d.classList.remove('active'));
-        }
-    });
+ const dropdowns = document.querySelectorAll('.dropdown');
+ dropdowns.forEach(dropdown => {
+ const dropbtn = dropdown.querySelector('.dropbtn');
+ if (dropbtn) {
+ dropbtn.addEventListener('click', function(e) {
+ e.preventDefault();
+ e.stopPropagation();
+ dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+ dropdown.classList.toggle('active');
+ });
+ }
+ });
+ document.addEventListener('click', function(e) {
+ if (!e.target.closest('.dropdown')) {
+ dropdowns.forEach(d => d.classList.remove('active'));
+ }
+ });
 });
 </script>
 

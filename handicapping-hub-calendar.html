@@ -21,309 +21,309 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-    :root {
-        --primary-glow: #fd5000;
-        --primary-glow-light: #ff7733;
-        --success-color: #39FF14;
-        --warning-color: #FFD700;
-        --active-color: #00d4ff;
-        --dark-bg: #0a0a0a;
-        --card-bg: rgba(15, 20, 30, 0.95);
-        --border-color: rgba(253, 80, 0, 0.3);
-        --text-primary: #ffffff;
-        --text-secondary: #b0b0b0;
-    }
+ :root {
+ --primary-glow: #fd5000;
+ --primary-glow-light: #ff7733;
+ --success-color: #39FF14;
+ --warning-color: #FFD700;
+ --active-color: #00d4ff;
+ --dark-bg: #0a0a0a;
+ --card-bg: rgba(15, 20, 30, 0.95);
+ --border-color: rgba(253, 80, 0, 0.3);
+ --text-primary: #ffffff;
+ --text-secondary: #b0b0b0;
+ }
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
 
-    body {
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-        background-attachment: fixed;
-        font-family: 'Inter', sans-serif;
-        color: var(--text-primary);
-        padding: 40px 20px;
-        min-height: 100vh;
-    }
+ body {
+ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+ background-attachment: fixed;
+ font-family: 'Inter', sans-serif;
+ color: var(--text-primary);
+ padding: 40px 20px;
+ min-height: 100vh;
+ }
 
-    .container {
-        max-width: 1000px;
-        margin: 0 auto;
-    }
+ .container {
+ max-width: 1000px;
+ margin: 0 auto;
+ }
 
-    .header {
-        text-align: center;
-        margin-bottom: 40px;
-    }
+ .header {
+ text-align: center;
+ margin-bottom: 40px;
+ }
 
-    .title {
-        font-size: 3rem;
-        font-family: 'Orbitron', sans-serif;
-        background: linear-gradient(45deg, #fff, var(--primary-glow));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 10px;
-    }
+ .title {
+ font-size: 3rem;
+ font-family: 'Orbitron', sans-serif;
+ background: linear-gradient(45deg, #fff, var(--primary-glow));
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ margin-bottom: 10px;
+ }
 
-    .subtitle {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-    }
+ .subtitle {
+ color: var(--text-secondary);
+ font-size: 1.1rem;
+ }
 
-    .stats-bar {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        margin: 30px 0;
-        flex-wrap: wrap;
-    }
+ .stats-bar {
+ display: flex;
+ justify-content: center;
+ gap: 40px;
+ margin: 30px 0;
+ flex-wrap: wrap;
+ }
 
-    .stat-item {
-        text-align: center;
-    }
+ .stat-item {
+ text-align: center;
+ }
 
-    .stat-value {
-        font-size: 2rem;
-        font-weight: 800;
-        color: var(--primary-glow);
-        font-family: 'Orbitron', sans-serif;
-    }
+ .stat-value {
+ font-size: 2rem;
+ font-weight: 800;
+ color: var(--primary-glow);
+ font-family: 'Orbitron', sans-serif;
+ }
 
-    .stat-label {
-        font-size: 0.85rem;
-        color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
+ .stat-label {
+ font-size: 0.85rem;
+ color: var(--text-secondary);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ }
 
-    .calendar-container {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 15px;
-        padding: 30px;
-        backdrop-filter: blur(20px);
-    }
+ .calendar-container {
+ background: var(--card-bg);
+ border: 1px solid var(--border-color);
+ border-radius: 15px;
+ padding: 30px;
+ backdrop-filter: blur(20px);
+ }
 
-    .calendar-month-title {
-        font-size: 1.8rem;
-        font-family: 'Orbitron', sans-serif;
-        color: var(--primary-glow);
-        text-align: center;
-        margin-bottom: 25px;
-    }
+ .calendar-month-title {
+ font-size: 1.8rem;
+ font-family: 'Orbitron', sans-serif;
+ color: var(--primary-glow);
+ text-align: center;
+ margin-bottom: 25px;
+ }
 
-    .calendar-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 10px;
-        margin-bottom: 20px;
-    }
+ .calendar-grid {
+ display: grid;
+ grid-template-columns: repeat(7, 1fr);
+ gap: 10px;
+ margin-bottom: 20px;
+ }
 
-    .calendar-day-header {
-        text-align: center;
-        font-weight: 600;
-        color: var(--text-secondary);
-        padding: 10px;
-        font-size: 0.9rem;
-    }
+ .calendar-day-header {
+ text-align: center;
+ font-weight: 600;
+ color: var(--text-secondary);
+ padding: 10px;
+ font-size: 0.9rem;
+ }
 
-    .calendar-day {
-        aspect-ratio: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0,0,0,0.3);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 8px;
-        font-size: 1.1rem;
-        color: var(--text-secondary);
-        transition: all 0.3s ease;
-        position: relative;
-    }
+ .calendar-day {
+ aspect-ratio: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ background: rgba(0,0,0,0.3);
+ border: 1px solid rgba(255,255,255,0.1);
+ border-radius: 8px;
+ font-size: 1.1rem;
+ color: var(--text-secondary);
+ transition: all 0.3s ease;
+ position: relative;
+ }
 
-    .calendar-day .day-number {
-        font-weight: 600;
-    }
+ .calendar-day .day-number {
+ font-weight: 600;
+ }
 
-    .calendar-day .game-count {
-        font-size: 0.65rem;
-        color: var(--text-secondary);
-        margin-top: 2px;
-    }
+ .calendar-day .game-count {
+ font-size: 0.65rem;
+ color: var(--text-secondary);
+ margin-top: 2px;
+ }
 
-    /* Available days - have data but not currently viewing */
-    .calendar-day.available {
-        background: rgba(253, 80, 0, 0.15);
-        border: 2px solid rgba(253, 80, 0, 0.6);
-        color: var(--primary-glow);
-        cursor: pointer;
-        font-weight: 600;
-    }
+ /* Available days - have data but not currently viewing */
+ .calendar-day.available {
+ background: rgba(253, 80, 0, 0.15);
+ border: 2px solid rgba(253, 80, 0, 0.6);
+ color: var(--primary-glow);
+ cursor: pointer;
+ font-weight: 600;
+ }
 
-    .calendar-day.available:hover {
-        background: rgba(253, 80, 0, 0.3);
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(253, 80, 0, 0.3);
-    }
+ .calendar-day.available:hover {
+ background: rgba(253, 80, 0, 0.3);
+ transform: translateY(-2px);
+ box-shadow: 0 5px 15px rgba(253, 80, 0, 0.3);
+ }
 
-    .calendar-day.available .game-count {
-        color: var(--primary-glow-light);
-    }
+ .calendar-day.available .game-count {
+ color: var(--primary-glow-light);
+ }
 
-    /* Active day - the page you're currently viewing */
-    .calendar-day.active {
-        background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 150, 255, 0.3));
-        border: 3px solid var(--active-color);
-        color: var(--active-color);
-        font-weight: 900;
-        box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
-        transform: scale(1.05);
-    }
+ /* Active day - the page you're currently viewing */
+ .calendar-day.active {
+ background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 150, 255, 0.3));
+ border: 3px solid var(--active-color);
+ color: var(--active-color);
+ font-weight: 900;
+ box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+ transform: scale(1.05);
+ }
 
-    .calendar-day.active::after {
-        content: 'VIEWING';
-        position: absolute;
-        bottom: 2px;
-        font-size: 0.45rem;
-        color: var(--active-color);
-        font-weight: 700;
-        letter-spacing: 0.5px;
-    }
+ .calendar-day.active::after {
+ content: 'VIEWING';
+ position: absolute;
+ bottom: 2px;
+ font-size: 0.45rem;
+ color: var(--active-color);
+ font-weight: 700;
+ letter-spacing: 0.5px;
+ }
 
-    .calendar-day.active .game-count {
-        display: none;
-    }
+ .calendar-day.active .game-count {
+ display: none;
+ }
 
-    /* Today marker - shows today's date */
-    .calendar-day.today::before {
-        content: '';
-        position: absolute;
-        top: 4px;
-        right: 4px;
-        width: 8px;
-        height: 8px;
-        background: var(--warning-color);
-        border-radius: 50%;
-    }
+ /* Today marker - shows today's date */
+ .calendar-day.today::before {
+ content: '';
+ position: absolute;
+ top: 4px;
+ right: 4px;
+ width: 8px;
+ height: 8px;
+ background: var(--warning-color);
+ border-radius: 50%;
+ }
 
-    .legend {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        margin-top: 20px;
-        flex-wrap: wrap;
-    }
+ .legend {
+ display: flex;
+ justify-content: center;
+ gap: 30px;
+ margin-top: 20px;
+ flex-wrap: wrap;
+ }
 
-    .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-    }
+ .legend-item {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ font-size: 0.9rem;
+ color: var(--text-secondary);
+ }
 
-    .legend-box {
-        width: 24px;
-        height: 24px;
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.6rem;
-        font-weight: bold;
-    }
+ .legend-box {
+ width: 24px;
+ height: 24px;
+ border-radius: 4px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 0.6rem;
+ font-weight: bold;
+ }
 
-    .legend-box.available {
-        background: rgba(253, 80, 0, 0.15);
-        border: 2px solid rgba(253, 80, 0, 0.6);
-        color: var(--primary-glow);
-    }
+ .legend-box.available {
+ background: rgba(253, 80, 0, 0.15);
+ border: 2px solid rgba(253, 80, 0, 0.6);
+ color: var(--primary-glow);
+ }
 
-    .legend-box.active {
-        background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 150, 255, 0.3));
-        border: 3px solid var(--active-color);
-        color: var(--active-color);
-    }
+ .legend-box.active {
+ background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 150, 255, 0.3));
+ border: 3px solid var(--active-color);
+ color: var(--active-color);
+ }
 
-    .legend-box.today {
-        background: rgba(0,0,0,0.3);
-        border: 1px solid rgba(255,255,255,0.2);
-        position: relative;
-    }
+ .legend-box.today {
+ background: rgba(0,0,0,0.3);
+ border: 1px solid rgba(255,255,255,0.2);
+ position: relative;
+ }
 
-    .legend-box.today::before {
-        content: '';
-        position: absolute;
-        top: 2px;
-        right: 2px;
-        width: 6px;
-        height: 6px;
-        background: var(--warning-color);
-        border-radius: 50%;
-    }
+ .legend-box.today::before {
+ content: '';
+ position: absolute;
+ top: 2px;
+ right: 2px;
+ width: 6px;
+ height: 6px;
+ background: var(--warning-color);
+ border-radius: 50%;
+ }
 
-    .back-link {
-        text-align: center;
-        margin-top: 40px;
-    }
+ .back-link {
+ text-align: center;
+ margin-top: 40px;
+ }
 
-    .back-link a {
-        color: var(--primary-glow);
-        text-decoration: none;
-        font-size: 1.1rem;
-        padding: 12px 30px;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        display: inline-block;
-        transition: all 0.3s ease;
-        margin: 5px;
-    }
+ .back-link a {
+ color: var(--primary-glow);
+ text-decoration: none;
+ font-size: 1.1rem;
+ padding: 12px 30px;
+ border: 1px solid var(--border-color);
+ border-radius: 8px;
+ display: inline-block;
+ transition: all 0.3s ease;
+ margin: 5px;
+ }
 
-    .back-link a:hover {
-        background: rgba(253, 80, 0, 0.1);
-        transform: translateY(-2px);
-    }
+ .back-link a:hover {
+ background: rgba(253, 80, 0, 0.1);
+ transform: translateY(-2px);
+ }
 
-    @media (max-width: 768px) {
-        .calendar-grid {
-            gap: 5px;
-        }
+ @media (max-width: 768px) {
+ .calendar-grid {
+ gap: 5px;
+ }
 
-        .calendar-day {
-            font-size: 0.9rem;
-        }
+ .calendar-day {
+ font-size: 0.9rem;
+ }
 
-        .title {
-            font-size: 2rem;
-        }
+ .title {
+ font-size: 2rem;
+ }
 
-        .stats-bar {
-            gap: 20px;
-        }
-    }
+ .stats-bar {
+ gap: 20px;
+ }
+ }
 
-        /* BetLegend Fixed Logo */
-        .betlegend-logo {
-            position: fixed;
-            top: 15px;
-            left: 20px;
-            z-index: 1001;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            text-decoration: none;
-            color: #fff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
-        }
-        .betlegend-logo span {
-            color: #00e0ff;
-            text-shadow: 0 0 30px #00e0ff, 0 0 60px #00e0ff;
-        }
+ /* BetLegend Fixed Logo */
+ .betlegend-logo {
+ position: fixed;
+ top: 15px;
+ left: 20px;
+ z-index: 1001;
+ font-family: 'Orbitron', sans-serif;
+ font-size: 1.8rem;
+ font-weight: 900;
+ text-decoration: none;
+ color: #fff;
+ letter-spacing: 2px;
+ text-shadow: 0 0 20px rgba(255,255,255,0.5);
+ }
+ .betlegend-logo span {
+ color: #00e0ff;
+ text-shadow: 0 0 30px #00e0ff, 0 0 60px #00e0ff;
+ }
 </style>
 <link rel="stylesheet" href="/mobile-optimize.css" media="screen">
 </head>
@@ -331,182 +331,182 @@
 <a href="index.html" class="betlegend-logo">BET<span>LEGEND</span></a>
 
 <div class="container">
-    <div class="header">
-        <h1 class="title">Handicapping Hub Archive</h1>
-        <p class="subtitle">Browse historical stats, injuries, and betting lines by date</p>
-    </div>
+ <div class="header">
+ <h1 class="title">Handicapping Hub Archive</h1>
+ <p class="subtitle">Browse historical stats, injuries, and betting lines by date</p>
+ </div>
 
-    <div class="stats-bar">
-        <div class="stat-item">
-            <div class="stat-value" id="total-days">9</div>
-            <div class="stat-label">Days Archived</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value">5</div>
-            <div class="stat-label">Sports Covered</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value">30+</div>
-            <div class="stat-label">Games Per Day</div>
-        </div>
-    </div>
+ <div class="stats-bar">
+ <div class="stat-item">
+ <div class="stat-value" id="total-days">9</div>
+ <div class="stat-label">Days Archived</div>
+ </div>
+ <div class="stat-item">
+ <div class="stat-value">5</div>
+ <div class="stat-label">Sports Covered</div>
+ </div>
+ <div class="stat-item">
+ <div class="stat-value">30+</div>
+ <div class="stat-label">Games Per Day</div>
+ </div>
+ </div>
 
-    <!-- December 2025 Calendar -->
-    <div class="calendar-container">
-        <h2 class="calendar-month-title">December 2025</h2>
+ <!-- December 2025 Calendar -->
+ <div class="calendar-container">
+ <h2 class="calendar-month-title">December 2025</h2>
 
-        <div class="calendar-grid">
-            <div class="calendar-day-header">Sun</div>
-            <div class="calendar-day-header">Mon</div>
-            <div class="calendar-day-header">Tue</div>
-            <div class="calendar-day-header">Wed</div>
-            <div class="calendar-day-header">Thu</div>
-            <div class="calendar-day-header">Fri</div>
-            <div class="calendar-day-header">Sat</div>
+ <div class="calendar-grid">
+ <div class="calendar-day-header">Sun</div>
+ <div class="calendar-day-header">Mon</div>
+ <div class="calendar-day-header">Tue</div>
+ <div class="calendar-day-header">Wed</div>
+ <div class="calendar-day-header">Thu</div>
+ <div class="calendar-day-header">Fri</div>
+ <div class="calendar-day-header">Sat</div>
 
-            <!-- Week 1: Nov 30 - Dec 6 -->
-            <div class="calendar-day"><span class="day-number"></span></div>
-            <div class="calendar-day"><span class="day-number">1</span></div>
-            <div class="calendar-day"><span class="day-number">2</span></div>
-            <div class="calendar-day"><span class="day-number">3</span></div>
-            <div class="calendar-day"><span class="day-number">4</span></div>
-            <div class="calendar-day"><span class="day-number">5</span></div>
-            <div class="calendar-day"><span class="day-number">6</span></div>
+ <!-- Week 1: Nov 30 - Dec 6 -->
+ <div class="calendar-day"><span class="day-number"></span></div>
+ <div class="calendar-day"><span class="day-number">1</span></div>
+ <div class="calendar-day"><span class="day-number">2</span></div>
+ <div class="calendar-day"><span class="day-number">3</span></div>
+ <div class="calendar-day"><span class="day-number">4</span></div>
+ <div class="calendar-day"><span class="day-number">5</span></div>
+ <div class="calendar-day"><span class="day-number">6</span></div>
 
-            <!-- Week 2: Dec 7-13 -->
-            <div class="calendar-day"><span class="day-number">7</span></div>
-            <div class="calendar-day"><span class="day-number">8</span></div>
-            <div class="calendar-day"><span class="day-number">9</span></div>
-            <div class="calendar-day"><span class="day-number">10</span></div>
-            <div class="calendar-day"><span class="day-number">11</span></div>
-            <div class="calendar-day"><span class="day-number">12</span></div>
-            <div class="calendar-day"><span class="day-number">13</span></div>
+ <!-- Week 2: Dec 7-13 -->
+ <div class="calendar-day"><span class="day-number">7</span></div>
+ <div class="calendar-day"><span class="day-number">8</span></div>
+ <div class="calendar-day"><span class="day-number">9</span></div>
+ <div class="calendar-day"><span class="day-number">10</span></div>
+ <div class="calendar-day"><span class="day-number">11</span></div>
+ <div class="calendar-day"><span class="day-number">12</span></div>
+ <div class="calendar-day"><span class="day-number">13</span></div>
 
-            <!-- Week 3: Dec 14-20 -->
-            <div class="calendar-day available" data-date="2025-12-14" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-14.html')">
-                <span class="day-number">14</span>
-                <span class="game-count">Archived</span>
-            </div>
-            <div class="calendar-day available" data-date="2025-12-15" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-15.html')">
-                <span class="day-number">15</span>
-                <span class="game-count">Archived</span>
-            </div>
-            <div class="calendar-day available" data-date="2025-12-16" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-16.html')">
-                <span class="day-number">16</span>
-                <span class="game-count">Archived</span>
-            </div>
-            <div class="calendar-day available" data-date="2025-12-17" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-17.html')">
-                <span class="day-number">17</span>
-                <span class="game-count">Archived</span>
-            </div>
-            <div class="calendar-day available" data-date="2025-12-18" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-18.html')">
-                <span class="day-number">18</span>
-                <span class="game-count">Archived</span>
-            </div>
-            <div class="calendar-day available" data-date="2025-12-19" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-19.html')">
-                <span class="day-number">19</span>
-                <span class="game-count">Archived</span>
-            </div>
-            <div class="calendar-day available" data-date="2025-12-20" onclick="navigateTo('handicapping-hub-2025-12-20.html')">
-                <span class="day-number">20</span>
-                <span class="game-count">Archived</span>
-            </div>
+ <!-- Week 3: Dec 14-20 -->
+ <div class="calendar-day available" data-date="2025-12-14" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-14.html')">
+ <span class="day-number">14</span>
+ <span class="game-count">Archived</span>
+ </div>
+ <div class="calendar-day available" data-date="2025-12-15" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-15.html')">
+ <span class="day-number">15</span>
+ <span class="game-count">Archived</span>
+ </div>
+ <div class="calendar-day available" data-date="2025-12-16" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-16.html')">
+ <span class="day-number">16</span>
+ <span class="game-count">Archived</span>
+ </div>
+ <div class="calendar-day available" data-date="2025-12-17" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-17.html')">
+ <span class="day-number">17</span>
+ <span class="game-count">Archived</span>
+ </div>
+ <div class="calendar-day available" data-date="2025-12-18" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-18.html')">
+ <span class="day-number">18</span>
+ <span class="game-count">Archived</span>
+ </div>
+ <div class="calendar-day available" data-date="2025-12-19" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-19.html')">
+ <span class="day-number">19</span>
+ <span class="game-count">Archived</span>
+ </div>
+ <div class="calendar-day available" data-date="2025-12-20" onclick="navigateTo('handicapping-hub-2025-12-20.html')">
+ <span class="day-number">20</span>
+ <span class="game-count">Archived</span>
+ </div>
 
-            <!-- Week 4: Dec 21-27 -->
-            <div class="calendar-day available" data-date="2025-12-21" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-21.html')">
-                <span class="day-number">21</span>
-                <span class="game-count">Archived</span>
-            </div>
-            <div class="calendar-day available today" data-date="2025-12-22" onclick="navigateTo('handicapping-hub.html')">
-                <span class="day-number">22</span>
-                <span class="game-count">Today</span>
-            </div>
-            <div class="calendar-day"><span class="day-number">23</span></div>
-            <div class="calendar-day"><span class="day-number">24</span></div>
-            <div class="calendar-day"><span class="day-number">25</span></div>
-            <div class="calendar-day"><span class="day-number">26</span></div>
-            <div class="calendar-day"><span class="day-number">27</span></div>
+ <!-- Week 4: Dec 21-27 -->
+ <div class="calendar-day available" data-date="2025-12-21" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-21.html')">
+ <span class="day-number">21</span>
+ <span class="game-count">Archived</span>
+ </div>
+ <div class="calendar-day available today" data-date="2025-12-22" onclick="navigateTo('handicapping-hub.html')">
+ <span class="day-number">22</span>
+ <span class="game-count">Today</span>
+ </div>
+ <div class="calendar-day"><span class="day-number">23</span></div>
+ <div class="calendar-day"><span class="day-number">24</span></div>
+ <div class="calendar-day"><span class="day-number">25</span></div>
+ <div class="calendar-day"><span class="day-number">26</span></div>
+ <div class="calendar-day"><span class="day-number">27</span></div>
 
-            <!-- Week 5: Dec 28-31 -->
-            <div class="calendar-day"><span class="day-number">28</span></div>
-            <div class="calendar-day"><span class="day-number">29</span></div>
-            <div class="calendar-day"><span class="day-number">30</span></div>
-            <div class="calendar-day"><span class="day-number">31</span></div>
-        </div>
+ <!-- Week 5: Dec 28-31 -->
+ <div class="calendar-day"><span class="day-number">28</span></div>
+ <div class="calendar-day"><span class="day-number">29</span></div>
+ <div class="calendar-day"><span class="day-number">30</span></div>
+ <div class="calendar-day"><span class="day-number">31</span></div>
+ </div>
 
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-box available"></div>
-                <span>Archive Available</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-box active"></div>
-                <span>Currently Viewing</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-box today"></div>
-                <span>Today's Date</span>
-            </div>
-        </div>
-    </div>
+ <div class="legend">
+ <div class="legend-item">
+ <div class="legend-box available"></div>
+ <span>Archive Available</span>
+ </div>
+ <div class="legend-item">
+ <div class="legend-box active"></div>
+ <span>Currently Viewing</span>
+ </div>
+ <div class="legend-item">
+ <div class="legend-box today"></div>
+ <span>Today's Date</span>
+ </div>
+ </div>
+ </div>
 
-    <div class="back-link">
-        <a href="handicapping-hub.html">View Today's Hub</a>
-        <a href="index.html">Back to Home</a>
-    </div>
+ <div class="back-link">
+ <a href="handicapping-hub.html">View Today's Hub</a>
+ <a href="index.html">Back to Home</a>
+ </div>
 </div>
 
 <script>
 function navigateTo(page) {
-    window.location.href = page;
+ window.location.href = page;
 }
 
 // Detect current page and highlight it
 document.addEventListener('DOMContentLoaded', function() {
-    const currentPath = window.location.pathname;
-    const currentPage = currentPath.split('/').pop() || 'handicapping-hub-calendar.html';
+ const currentPath = window.location.pathname;
+ const currentPage = currentPath.split('/').pop() || 'handicapping-hub-calendar.html';
 
-    // Map of date to page paths
-    const dateToPage = {
-        '2025-12-14': 'handicapping-hub-archive/hub-2025-12-14.html',
-        '2025-12-15': 'handicapping-hub-archive/hub-2025-12-15.html',
-        '2025-12-16': 'handicapping-hub-archive/hub-2025-12-16.html',
-        '2025-12-17': 'handicapping-hub-archive/hub-2025-12-17.html',
-        '2025-12-18': 'handicapping-hub-archive/hub-2025-12-18.html',
-        '2025-12-19': 'handicapping-hub-archive/hub-2025-12-19.html',
-        '2025-12-20': 'handicapping-hub-2025-12-20.html',
-        '2025-12-21': 'handicapping-hub-archive/hub-2025-12-21.html',
-        '2025-12-22': 'handicapping-hub.html'
-    };
+ // Map of date to page paths
+ const dateToPage = {
+ '2025-12-14': 'handicapping-hub-archive/hub-2025-12-14.html',
+ '2025-12-15': 'handicapping-hub-archive/hub-2025-12-15.html',
+ '2025-12-16': 'handicapping-hub-archive/hub-2025-12-16.html',
+ '2025-12-17': 'handicapping-hub-archive/hub-2025-12-17.html',
+ '2025-12-18': 'handicapping-hub-archive/hub-2025-12-18.html',
+ '2025-12-19': 'handicapping-hub-archive/hub-2025-12-19.html',
+ '2025-12-20': 'handicapping-hub-2025-12-20.html',
+ '2025-12-21': 'handicapping-hub-archive/hub-2025-12-21.html',
+ '2025-12-22': 'handicapping-hub.html'
+ };
 
-    // Find and mark active day
-    document.querySelectorAll('.calendar-day[data-date]').forEach(day => {
-        const date = day.dataset.date;
-        const expectedPage = dateToPage[date];
+ // Find and mark active day
+ document.querySelectorAll('.calendar-day[data-date]').forEach(day => {
+ const date = day.dataset.date;
+ const expectedPage = dateToPage[date];
 
-        // Check if current page matches this date's page
-        if (expectedPage && (currentPage.includes(expectedPage) ||
-            currentPath.includes(expectedPage) ||
-            (date === '2025-12-22' && (currentPage === 'handicapping-hub.html' || currentPage === 'handicapping-hub-2025-12-22.html')))) {
-            day.classList.add('active');
-            day.classList.remove('available');
-        }
-    });
+ // Check if current page matches this date's page
+ if (expectedPage && (currentPage.includes(expectedPage) ||
+ currentPath.includes(expectedPage) ||
+ (date === '2025-12-22' && (currentPage === 'handicapping-hub.html' || currentPage === 'handicapping-hub-2025-12-22.html')))) {
+ day.classList.add('active');
+ day.classList.remove('available');
+ }
+ });
 
-    // Update today marker based on actual date
-    const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
+ // Update today marker based on actual date
+ const today = new Date();
+ const todayStr = today.toISOString().split('T')[0];
 
-    // Remove existing today class and add to correct day
-    document.querySelectorAll('.calendar-day.today').forEach(el => {
-        el.classList.remove('today');
-    });
+ // Remove existing today class and add to correct day
+ document.querySelectorAll('.calendar-day.today').forEach(el => {
+ el.classList.remove('today');
+ });
 
-    document.querySelectorAll('.calendar-day[data-date]').forEach(day => {
-        if (day.dataset.date === todayStr) {
-            day.classList.add('today');
-        }
-    });
+ document.querySelectorAll('.calendar-day[data-date]').forEach(day => {
+ if (day.dataset.date === todayStr) {
+ day.classList.add('today');
+ }
+ });
 });
 </script>
 

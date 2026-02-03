@@ -21,18 +21,18 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg-primary:#0a0c10;
-  --bg-card:#12151c;
-  --bg-card-hover:#181c25;
-  --accent-orange:#fd5000;
-  --accent-cyan:#00e5ff;
-  --accent-gold:#ffd54f;
-  --text-primary:#ffffff;
-  --text-secondary:#b0b8c4;
-  --text-muted:#6b7280;
-  --border-subtle:rgba(255,255,255,0.08);
-  --font-display:'Orbitron',sans-serif;
-  --font-body:'Inter',system-ui,sans-serif
+ --bg-primary:#0a0c10;
+ --bg-card:#12151c;
+ --bg-card-hover:#181c25;
+ --accent-orange:#fd5000;
+ --accent-cyan:#00e5ff;
+ --accent-gold:#ffd54f;
+ --text-primary:#ffffff;
+ --text-secondary:#b0b8c4;
+ --text-muted:#6b7280;
+ --border-subtle:rgba(255,255,255,0.08);
+ --font-display:'Orbitron',sans-serif;
+ --font-body:'Inter',system-ui,sans-serif
 }
 body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-body);line-height:1.8}
 .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-subtle)}
@@ -121,12 +121,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="nav-links">
 <a href="index.html">Home</a>
 <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="handicapping-hub.html">Today's Games</a>
-                    <a href="injury-report.html">Injury Report</a>
-                </div>
-            </div>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="handicapping-hub.html">Today's Games</a>
+ <a href="injury-report.html">Injury Report</a>
+ </div>
+ </div>
 <a href="blog.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Game Previews</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a></div></div>
@@ -239,7 +239,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 
 <p class="section-header">The Bottom Line</p>
 
-<p>Seattle opened as a 3.5-point favorite and the line has moved to -4.5, reflecting both public confidence in the NFC's top seed and sharp money on the Seahawks' elite defense. The total of 46.5 suggests oddsmakers expect a competitive but not explosive game, which tracks with two of the NFL's best defensive units squaring off. The Super Bowl MVP market has Darnold as the +130 favorite, followed by Maye at +235 and Smith-Njigba at +550.</p>
+<p>Seattle opened as a 3.5-point favorite and 5, reflecting both public confidence in the NFC's top seed and value is on the Seahawks' elite defense. The total of 46.5 suggests oddsmakers expect a competitive but not explosive game, which tracks with two of the NFL's best defensive units squaring off. The Super Bowl MVP market has Darnold as the +130 favorite, followed by Maye at +235 and Smith-Njigba at +550.</p>
 
 <p>Don't sleep on the underdog trends, though. Underdogs have covered five straight Super Bowls and won three straight outright. AFC teams are 8-3 ATS in the last 11 Super Bowls. And the Patriots have the coaching pedigree, the young franchise quarterback, and the defense to make this a one-score game deep into the fourth quarter. This is shaping up to be one of the most compelling Super Bowl matchups in years - between two teams nobody saw coming and two quarterbacks with everything to prove.</p>
 
@@ -259,32 +259,32 @@ document.addEventListener('click',()=>document.querySelectorAll('.dropdown').for
 
 const defined=typeof ARCHIVE_DATA!=='undefined';
 if(defined){
-  const data=ARCHIVE_DATA,year=document.getElementById('cal-year'),sel=document.getElementById('month-select'),days=document.getElementById('calendar-days'),mob=document.getElementById('mobile-archive-select');
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const byMonth={};
-  data.forEach(e=>{const d=new Date(e.date+'T12:00:00'),m=d.getMonth(),y=d.getFullYear();const key=y+'-'+m;if(!byMonth[key])byMonth[key]=[];byMonth[key].push({...e,day:d.getDate()})});
-  const keys=Object.keys(byMonth).sort((a,b)=>b.localeCompare(a));
-  keys.forEach((k,i)=>{const[y,m]=k.split('-');const o=document.createElement('option');o.value=k;o.textContent=months[parseInt(m)]+' '+y;sel.appendChild(o)});
-  function render(key){
-    const[y,m]=key.split('-').map(Number);year.textContent=y;
-    const first=new Date(y,m,1).getDay(),total=new Date(y,m+1,0).getDate();
-    days.innerHTML='';
-    for(let i=0;i<first;i++){const e=document.createElement('div');e.className='cal-day empty';days.appendChild(e)}
-    const items=byMonth[key]||[];
-    const today=new Date(),pageDate=window.FORCED_PAGE_DATE?new Date(window.FORCED_PAGE_DATE+'T12:00:00'):null;
-    for(let d=1;d<=total;d++){
-      const el=document.createElement('div');el.className='cal-day';el.textContent=d;
-      const entry=items.find(x=>x.day===d);
-      if(entry){el.classList.add('has-content');el.title=entry.title;el.onclick=()=>location.href=entry.page}
-      /* today highlight removed - use current-page only */
-      if(pageDate&&pageDate.getFullYear()===y&&pageDate.getMonth()===m&&pageDate.getDate()===d)el.classList.add('current-page');
-      days.appendChild(el)
-    }
-  }
-  sel.addEventListener('change',()=>render(sel.value));
-  data.forEach(e=>{const o=document.createElement('option');o.value=e.page;o.textContent=e.date+': '+e.title;mob.appendChild(o)});
-  mob.addEventListener('change',()=>{if(mob.value)location.href=mob.value});
-  if(keys.length)render(keys[0]);
+ const data=ARCHIVE_DATA,year=document.getElementById('cal-year'),sel=document.getElementById('month-select'),days=document.getElementById('calendar-days'),mob=document.getElementById('mobile-archive-select');
+ const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+ const byMonth={};
+ data.forEach(e=>{const d=new Date(e.date+'T12:00:00'),m=d.getMonth(),y=d.getFullYear();const key=y+'-'+m;if(!byMonth[key])byMonth[key]=[];byMonth[key].push({...e,day:d.getDate()})});
+ const keys=Object.keys(byMonth).sort((a,b)=>b.localeCompare(a));
+ keys.forEach((k,i)=>{const[y,m]=k.split('-');const o=document.createElement('option');o.value=k;o.textContent=months[parseInt(m)]+' '+y;sel.appendChild(o)});
+ function render(key){
+ const[y,m]=key.split('-').map(Number);year.textContent=y;
+ const first=new Date(y,m,1).getDay(),total=new Date(y,m+1,0).getDate();
+ days.innerHTML='';
+ for(let i=0;i<first;i++){const e=document.createElement('div');e.className='cal-day empty';days.appendChild(e)}
+ const items=byMonth[key]||[];
+ const today=new Date(),pageDate=window.FORCED_PAGE_DATE?new Date(window.FORCED_PAGE_DATE+'T12:00:00'):null;
+ for(let d=1;d<=total;d++){
+ const el=document.createElement('div');el.className='cal-day';el.textContent=d;
+ const entry=items.find(x=>x.day===d);
+ if(entry){el.classList.add('has-content');el.title=entry.title;el.onclick=()=>location.href=entry.page}
+ /* today highlight removed - use current-page only */
+ if(pageDate&&pageDate.getFullYear()===y&&pageDate.getMonth()===m&&pageDate.getDate()===d)el.classList.add('current-page');
+ days.appendChild(el)
+ }
+ }
+ sel.addEventListener('change',()=>render(sel.value));
+ data.forEach(e=>{const o=document.createElement('option');o.value=e.page;o.textContent=e.date+': '+e.title;mob.appendChild(o)});
+ mob.addEventListener('change',()=>{if(mob.value)location.href=mob.value});
+ if(keys.length)render(keys[0]);
 }
 </script>
 </body>

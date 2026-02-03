@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
+ <meta charset="utf-8"/>
 <link rel="canonical" href="https://www.betlegendpicks.com/kelly-criterion/fractional-vs-full.html"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fractional Kelly vs Full Kelly | BetLegend Sports Betting Guide</title>
-    <meta name="description" content="Should you use full Kelly or fractional Kelly for sports betting? Learn why professional bettors use half Kelly and quarter Kelly instead of full Kelly."/>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {--bg-color:#000;--text-color:#eaf8ff;--neon-cyan:#00ffff;--neon-gold:#FFD700;--font-primary:'Orbitron',sans-serif;--font-secondary:'Poppins',sans-serif;--font-content:'Rubik',sans-serif}
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:var(--font-content);background-color:var(--bg-color);color:white;padding-top:140px;line-height:1.7}
-        .logo-container{position:fixed;top:20px;left:40px;z-index:1000}
-        .logo-container a{color:#fff;text-decoration:none;font-family:var(--font-primary);font-size:2.5rem;font-weight:900;text-transform:uppercase}
-        .logo-container span{color:var(--neon-cyan)}
-        .nav-links{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;gap:18px;padding:15px 5%;background:rgba(0,0,0,0.95);border-bottom:2px solid rgba(0,224,255,0.3);z-index:999;flex-wrap:nowrap}
-        
-        .nav-links a{font-family:var(--font-secondary);text-decoration:none;color:var(--text-color);font-weight:600;font-size:0.9rem;text-transform:uppercase;padding:8px 10px;transition:all 0.3s}
-        .nav-links a:hover{color:var(--neon-gold)}
-        .dropdown{position:relative;padding:0;margin:0}
-        .dropdown .dropbtn{font-family:var(--font-secondary);color:var(--text-color);font-weight:600;font-size:0.9rem;text-transform:uppercase;padding:8px 10px;background:transparent;border:none;cursor:pointer}
-        .dropdown:hover .dropbtn{color:var(--neon-gold)}
-        .dropdown-content{display:none;position:absolute;background-color:rgba(17,17,17,0.98);min-width:200px;border-radius:8px;border:1px solid rgba(0,224,255,0.3);z-index:9999}
-        .dropdown-content a{padding:12px 16px;display:block;font-size:0.85rem}
-        /* Desktop only: show dropdown on hover */
-        @media (hover: hover) and (pointer: fine) {
-            .dropdown:hover .dropdown-content{display:block}
-        }
-        /* Both desktop and mobile: show dropdown when active (clicked/tapped) */
-        .dropdown.active .dropdown-content{display:block}
-        .dropdown.active .dropbtn{color:var(--neon-gold)}
-        .content-container{max-width:1000px;margin:0 auto;padding:40px 20px}
-        h1{font-family:var(--font-primary);font-size:2.5rem;color:var(--neon-gold);margin-bottom:30px;text-align:center}
-        h2{font-family:var(--font-primary);color:var(--neon-gold);font-size:1.8rem;margin:40px 0 20px 0;border-bottom:2px solid rgba(0,224,255,0.3);padding-bottom:10px}
-        p{font-size:1.1rem;line-height:1.8;color:#ddd;margin-bottom:20px}
-        .comparison-table{width:100%;border-collapse:collapse;margin:30px 0;background:rgba(0,0,0,0.3)}
-        .comparison-table th{background:rgba(0,224,255,0.2);color:var(--neon-cyan);padding:15px;font-weight:600}
-        .comparison-table td{padding:15px;border-bottom:1px solid rgba(255,255,255,0.1);color:#ddd}
-        .tip-box{background:rgba(0,255,100,0.05);border-left:4px solid #00ff66;padding:20px;margin:25px 0}
-        .back-link{background:rgba(255,215,0,0.1);border:2px solid rgba(255,215,0,0.3);padding:25px;border-radius:10px;margin-top:50px;text-align:center}
-        .back-link a{color:var(--neon-cyan);text-decoration:none;font-size:1.2rem;font-weight:600}
-    
-        @media (max-width: 768px) {
-            /* Mobile dropdown fix - full width centered */
-            .dropdown-content,
-            .sports-records-dropdown {
-                position: fixed !important;
-                left: 5% !important;
-                right: 5% !important;
-                top: 120px !important;
-                width: 90% !important;
-                min-width: unset !important;
-                max-width: none !important;
-                max-height: 65vh;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                z-index: 999999 !important;
-            }
-        }
-    /* Navigation */
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Fractional Kelly vs Full Kelly | BetLegend Sports Betting Guide</title>
+ <meta name="description" content="Should you use full Kelly or fractional Kelly for sports betting? Learn why professional bettors use half Kelly and quarter Kelly instead of full Kelly."/>
+ 
+ <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <style>
+ :root {--bg-color:#000;--text-color:#eaf8ff;--neon-cyan:#00ffff;--neon-gold:#FFD700;--font-primary:'Orbitron',sans-serif;--font-secondary:'Poppins',sans-serif;--font-content:'Rubik',sans-serif}
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{font-family:var(--font-content);background-color:var(--bg-color);color:white;padding-top:140px;line-height:1.7}
+ .logo-container{position:fixed;top:20px;left:40px;z-index:1000}
+ .logo-container a{color:#fff;text-decoration:none;font-family:var(--font-primary);font-size:2.5rem;font-weight:900;text-transform:uppercase}
+ .logo-container span{color:var(--neon-cyan)}
+ .nav-links{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;gap:18px;padding:15px 5%;background:rgba(0,0,0,0.95);border-bottom:2px solid rgba(0,224,255,0.3);z-index:999;flex-wrap:nowrap}
+ 
+ .nav-links a{font-family:var(--font-secondary);text-decoration:none;color:var(--text-color);font-weight:600;font-size:0.9rem;text-transform:uppercase;padding:8px 10px;transition:all 0.3s}
+ .nav-links a:hover{color:var(--neon-gold)}
+ .dropdown{position:relative;padding:0;margin:0}
+ .dropdown .dropbtn{font-family:var(--font-secondary);color:var(--text-color);font-weight:600;font-size:0.9rem;text-transform:uppercase;padding:8px 10px;background:transparent;border:none;cursor:pointer}
+ .dropdown:hover .dropbtn{color:var(--neon-gold)}
+ .dropdown-content{display:none;position:absolute;background-color:rgba(17,17,17,0.98);min-width:200px;border-radius:8px;border:1px solid rgba(0,224,255,0.3);z-index:9999}
+ .dropdown-content a{padding:12px 16px;display:block;font-size:0.85rem}
+ /* Desktop only: show dropdown on hover */
+ @media (hover: hover) and (pointer: fine) {
+ .dropdown:hover .dropdown-content{display:block}
+ }
+ /* Both desktop and mobile: show dropdown when active (clicked/tapped) */
+ .dropdown.active .dropdown-content{display:block}
+ .dropdown.active .dropbtn{color:var(--neon-gold)}
+ .content-container{max-width:1000px;margin:0 auto;padding:40px 20px}
+ h1{font-family:var(--font-primary);font-size:2.5rem;color:var(--neon-gold);margin-bottom:30px;text-align:center}
+ h2{font-family:var(--font-primary);color:var(--neon-gold);font-size:1.8rem;margin:40px 0 20px 0;border-bottom:2px solid rgba(0,224,255,0.3);padding-bottom:10px}
+ p{font-size:1.1rem;line-height:1.8;color:#ddd;margin-bottom:20px}
+ .comparison-table{width:100%;border-collapse:collapse;margin:30px 0;background:rgba(0,0,0,0.3)}
+ .comparison-table th{background:rgba(0,224,255,0.2);color:var(--neon-cyan);padding:15px;font-weight:600}
+ .comparison-table td{padding:15px;border-bottom:1px solid rgba(255,255,255,0.1);color:#ddd}
+ .tip-box{background:rgba(0,255,100,0.05);border-left:4px solid #00ff66;padding:20px;margin:25px 0}
+ .back-link{background:rgba(255,215,0,0.1);border:2px solid rgba(255,215,0,0.3);padding:25px;border-radius:10px;margin-top:50px;text-align:center}
+ .back-link a{color:var(--neon-cyan);text-decoration:none;font-size:1.2rem;font-weight:600}
+ 
+ @media (max-width: 768px) {
+ /* Mobile dropdown fix - full width centered */
+ .dropdown-content,
+ .sports-records-dropdown {
+ position: fixed !important;
+ left: 5% !important;
+ right: 5% !important;
+ top: 120px !important;
+ width: 90% !important;
+ min-width: unset !important;
+ max-width: none !important;
+ max-height: 65vh;
+ overflow-y: auto;
+ -webkit-overflow-scrolling: touch;
+ z-index: 999999 !important;
+ }
+ }
+ /* Navigation */
 .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
 .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
 .logo{position:fixed;top:15px;left:15px;z-index:1001}
@@ -95,17 +95,17 @@
 <div class="nav-links">
 <a href="../index.html">Home</a>
 <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="../handicapping-hub.html">Today's Games</a>
-                    <a href="../injury-report.html">Injury Report</a>
-                </div>
-            </div>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="../handicapping-hub.html">Today's Games</a>
+ <a href="../injury-report.html">Injury Report</a>
+ </div>
+ </div>
 <a href="../blog-page12.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="../nfl.html">NFL</a><a href="../nba.html">NBA</a><a href="../nhl.html">NHL</a><a href="../ncaaf.html">NCAAF</a><a href="../ncaab.html">NCAAB</a><a href="../mlb.html">MLB</a><a href="../soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="../records.html">Detailed Breakdown</a><a href="../nfl-records.html">NFL</a><a href="../nba-records.html">NBA</a><a href="../nhl-records.html">NHL</a><a href="../ncaaf-records.html">NCAAF</a><a href="../ncaab-records.html">NCAAB</a><a href="../mlb-records.html">MLB</a><a href="../soccer-records.html">Soccer</a>
 <a href="../crosssport-parlays-records.html" title="Cross-Sport Bets">Cross-Sport Bets</a>
-        </div></div>
+ </div></div>
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="../proofofpicks.html">Proof of Picks</a><a href="../live-odds.html">Live Odds</a><a href="../howitworks.html">How It Works</a><a href="../bankroll.html">Bankroll Management</a><a href="../kelly-criterion.html">Kelly Criterion</a><a href="../risk-of-ruin-calculator.html">Risk of Ruin</a><a href="../bankroll-simulator.html">Bankroll Simulator</a><a href="../betting-calculators.html">Calculators</a><a href="../screenshots.html">Screenshots</a><a href="../bestonlinesportsbook.html">Best Sportsbook</a><a href="../betting-glossary.html">Glossary</a><a href="../betting-101.html">Betting 101</a></div></div>
 <a href="../news-page5.html">News</a>
 <a href="../injury-report.html">Injury Report</a>
@@ -116,94 +116,94 @@
 </nav>
 
 <div class="content-container">
-    <h1>Fractional Kelly vs Full Kelly</h1>
+ <h1>Fractional Kelly vs Full Kelly</h1>
 
-    <p>Full Kelly maximizes long-term bankroll growth. So why does almost no professional bettor use it? Because the real world isn't a math textbook. Full Kelly assumes your edge estimate is perfect. In sports betting, it never is.</p>
+ <p>Full Kelly maximizes long-term bankroll growth. So why does almost no professional bettor use it? Because the real world isn't a math textbook. Full Kelly assumes your edge estimate is perfect. In sports betting, it never is.</p>
 
-    <h2>What the Numbers Actually Mean</h2>
-    <p>When the Kelly formula tells you to bet 10% of your bankroll, that's full Kelly. It's the mathematically optimal bet size if your win probability estimate is exactly correct.</p>
+ <h2>What the Numbers Actually Mean</h2>
+ <p>When the Kelly formula tells you to bet 10% of your bankroll, that's full Kelly. It's the mathematically optimal bet size if your win probability estimate is exactly correct.</p>
 
-    <p>But if you're off by even 2% on your edge calculation, full Kelly will have you massively overbetting. And in sports betting, being off by 2% isn't rare. It's normal.</p>
+ <p>But if you're off by even 2% on your edge calculation, full Kelly will have you massively overbetting. And in sports betting, being off by 2% isn't rare. It's normal.</p>
 
-    <table class="comparison-table">
-        <thead>
-            <tr>
-                <th>Strategy</th>
-                <th>Growth Rate</th>
-                <th>Volatility</th>
-                <th>Risk of Ruin</th>
-                <th>Who Uses It</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Full Kelly</td>
-                <td>100%</td>
-                <td>Very High</td>
-                <td>Moderate</td>
-                <td>Almost Nobody</td>
-            </tr>
-            <tr>
-                <td>Half Kelly</td>
-                <td>75%</td>
-                <td>Much Lower</td>
-                <td>Low</td>
-                <td>Most Pros</td>
-            </tr>
-            <tr>
-                <td>Quarter Kelly</td>
-                <td>~50%</td>
-                <td>Very Low</td>
-                <td>Very Low</td>
-                <td>Conservative Bettors</td>
-            </tr>
-        </tbody>
-    </table>
+ <table class="comparison-table">
+ <thead>
+ <tr>
+ <th>Strategy</th>
+ <th>Growth Rate</th>
+ <th>Volatility</th>
+ <th>Risk of Ruin</th>
+ <th>Who Uses It</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>Full Kelly</td>
+ <td>100%</td>
+ <td>Very High</td>
+ <td>Moderate</td>
+ <td>Almost Nobody</td>
+ </tr>
+ <tr>
+ <td>Half Kelly</td>
+ <td>75%</td>
+ <td>Much Lower</td>
+ <td>Low</td>
+ <td>Most Pros</td>
+ </tr>
+ <tr>
+ <td>Quarter Kelly</td>
+ <td>~50%</td>
+ <td>Very Low</td>
+ <td>Very Low</td>
+ <td>Conservative Bettors</td>
+ </tr>
+ </tbody>
+ </table>
 
-    <h2>Why Half Kelly Wins in Practice</h2>
-    <p>Half Kelly gives you 75% of the growth with dramatically less volatility. You're betting half of what full Kelly suggests, which means even if you overestimate your edge by 50%, you're still betting a reasonable amount.</p>
+ <h2>Why Half Kelly Wins in Practice</h2>
+ <p>Half Kelly gives you 75% of the growth with dramatically less volatility. You're betting half of what full Kelly suggests, which means even if you overestimate your edge by 50%, you're still betting a reasonable amount.</p>
 
-    <p>More importantly, you can actually stomach the swings. A 5% bet feels manageable. A 10% bet on a single game feels reckless. If you can't psychologically handle the bet size, you'll abandon the system during a losing streak. Half Kelly keeps you in the game.</p>
+ <p>More importantly, you can actually stomach the swings. A 5% bet feels manageable. A 10% bet on a single game feels reckless. If you can't psychologically handle the bet size, you'll abandon the system during a losing streak. Half Kelly keeps you in the game.</p>
 
-    <h2>When to Use Quarter Kelly</h2>
-    <p>If you're new to Kelly, start with quarter Kelly. If your edge estimates are unproven, use quarter Kelly. If you're betting correlated outcomes, use quarter Kelly. If you value sleep over maximum growth, use quarter Kelly.</p>
+ <h2>When to Use Quarter Kelly</h2>
+ <p>If you're new to Kelly, start with quarter Kelly. If your edge estimates are unproven, use quarter Kelly. If you're betting correlated outcomes, use quarter Kelly. If you value sleep over maximum growth, use quarter Kelly.</p>
 
-    <p>You'll grow slower, but you'll survive variance that would wipe out a full Kelly bettor who overestimated their edge.</p>
+ <p>You'll grow slower, but you'll survive variance that would wipe out a full Kelly bettor who overestimated their edge.</p>
 
-    <div class="tip-box">
-        <p>Professional syndicates with sophisticated models might use 50-75% Kelly. Individual bettors should stick to quarter or half Kelly. The math might say full Kelly is optimal, but the math assumes you're never wrong about your edge. You are.</p>
-    </div>
+ <div class="tip-box">
+ <p>Professional syndicates with sophisticated models might use 50-75% Kelly. Individual bettors should stick to quarter or half Kelly. The math might say full Kelly is optimal, but the math assumes you're never wrong about your edge. You are.</p>
+ </div>
 
-    <h2>The Practical Reality</h2>
-    <p>Sports betting isn't blackjack. You can't count cards and know your exact edge. Every bet is an estimate based on incomplete information. Fractional Kelly is your insurance policy against overconfidence.</p>
+ <h2>The Practical Reality</h2>
+ <p>Sports betting isn't blackjack. You can't count cards and know your exact edge. Every bet is an estimate based on incomplete information. Fractional Kelly is your insurance policy against overconfidence.</p>
 
-    <p>Use half Kelly if you've got a proven track record. Use quarter Kelly if you're still building one. And never use full Kelly unless you want to learn the hard way why everyone else uses fractional.</p>
+ <p>Use half Kelly if you've got a proven track record. Use quarter Kelly if you're still building one. And never use full Kelly unless you want to learn the hard way why everyone else uses fractional.</p>
 
-    <div class="back-link">
-        <p><a href="/kelly-criterion.html">← Read the Full Kelly Criterion Guide</a></p>
-    </div>
+ <div class="back-link">
+ <p><a href="/kelly-criterion.html">← Read the Full Kelly Criterion Guide</a></p>
+ </div>
 </div>
 
 <script>
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
-    const dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(dropdown => {
-        const dropbtn = dropdown.querySelector('.dropbtn');
-        if (dropbtn) {
-            dropbtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
-                dropdown.classList.toggle('active');
-            });
-        }
-    });
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(d => d.classList.remove('active'));
-        }
-    });
+ const dropdowns = document.querySelectorAll('.dropdown');
+ dropdowns.forEach(dropdown => {
+ const dropbtn = dropdown.querySelector('.dropbtn');
+ if (dropbtn) {
+ dropbtn.addEventListener('click', function(e) {
+ e.preventDefault();
+ e.stopPropagation();
+ dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+ dropdown.classList.toggle('active');
+ });
+ }
+ });
+ document.addEventListener('click', function(e) {
+ if (!e.target.closest('.dropdown')) {
+ dropdowns.forEach(d => d.classList.remove('active'));
+ }
+ });
 });
 </script>
 

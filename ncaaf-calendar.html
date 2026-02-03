@@ -5,160 +5,160 @@
 <link rel="canonical" href="https://www.betlegendpicks.com/ncaaf-calendar.html"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NCAAF Archive Calendar | BetLegend</title>
-  <meta name="description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
-  
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Ncaaf Calendar | BetLegend Picks">
-  <meta property="og:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://betlegendpicks.com/ncaaf-calendar.html">
-  <meta property="og:site_name" content="BetLegend Picks">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Ncaaf Calendar | BetLegend Picks">
-  <meta name="twitter:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+ <meta name="description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+ 
+ <meta name="robots" content="index, follow">
+ <meta property="og:title" content="Ncaaf Calendar | BetLegend Picks">
+ <meta property="og:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+ <meta property="og:type" content="website">
+ <meta property="og:url" content="https://betlegendpicks.com/ncaaf-calendar.html">
+ <meta property="og:site_name" content="BetLegend Picks">
+ <meta name="twitter:card" content="summary_large_image">
+ <meta name="twitter:title" content="Ncaaf Calendar | BetLegend Picks">
+ <meta name="twitter:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-    :root {
-        --primary-glow: #00e0ff;
-        --warning-color: #FFD700;
-        --card-bg: rgba(15, 20, 30, 0.95);
-        --border-color: rgba(0, 224, 255, 0.2);
-        --text-primary: #ffffff;
-        --text-secondary: #b0b0b0;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-        background-attachment: fixed;
-        font-family: 'Inter', sans-serif;
-        color: var(--text-primary);
-        padding: 40px 20px;
-        min-height: 100vh;
-    }
-    .container { max-width: 1000px; margin: 0 auto; }
-    .header { text-align: center; margin-bottom: 40px; }
-    .title {
-        font-size: 3rem;
-        font-family: 'Orbitron', sans-serif;
-        background: linear-gradient(45deg, #fff, var(--primary-glow));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 10px;
-    }
-    .subtitle { color: var(--text-secondary); font-size: 1.1rem; }
-    .month-selector { text-align: center; margin-bottom: 30px; }
-    .month-selector label { font-size: 1.1rem; color: var(--text-secondary); margin-right: 15px; }
-    .month-dropdown {
-        background: var(--card-bg); color: var(--text-primary);
-        border: 1px solid var(--border-color); padding: 12px 20px;
-        font-size: 1rem; border-radius: 8px; cursor: pointer;
-    }
-    .calendar-container { display: none; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 30px; }
-    .calendar-container.active { display: block; }
-    .calendar-month-title { font-size: 1.8rem; font-family: 'Orbitron', sans-serif; color: var(--primary-glow); text-align: center; margin-bottom: 25px; }
-    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 20px; }
-    .calendar-day-header { text-align: center; font-weight: 600; color: var(--text-secondary); padding: 10px; font-size: 0.9rem; }
-    .calendar-day {
-        aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
-        font-size: 1.1rem; color: var(--text-secondary); transition: all 0.3s ease; position: relative;
-    }
-    .calendar-day.available {
-        background: rgba(0, 224, 255, 0.1); border-color: var(--primary-glow);
-        color: var(--primary-glow); cursor: pointer; font-weight: 600;
-    }
-    .calendar-day.available:hover {
-        background: rgba(0, 224, 255, 0.2); transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 224, 255, 0.3);
-    }
-    .calendar-day.today {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
-        border: 2px solid var(--warning-color); color: var(--warning-color); font-weight: 900;
-    }
-    .calendar-day.today::after {
-        content: 'TODAY'; position: absolute; bottom: 2px; font-size: 0.45rem;
-        color: var(--warning-color); font-weight: 700;
-    }
-    .game-tooltip {
-        display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
-        background: rgba(0,0,0,0.95); color: var(--primary-glow); padding: 8px 12px;
-        border-radius: 6px; font-size: 0.75rem; white-space: nowrap; z-index: 100;
-        border: 1px solid var(--primary-glow); margin-bottom: 5px;
-    }
-    .calendar-day.available:hover .game-tooltip { display: block; }
-    .back-link { text-align: center; margin-top: 40px; }
-    .back-link a {
-        color: var(--primary-glow); text-decoration: none; font-size: 1.1rem;
-        padding: 12px 30px; border: 1px solid var(--border-color); border-radius: 8px;
-        display: inline-block; transition: all 0.3s ease;
-    }
-    .back-link a:hover { background: rgba(0, 224, 255, 0.1); }
-    .legend { text-align: center; margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; }
-    .legend-item { display: inline-flex; align-items: center; margin: 0 15px; font-size: 0.85rem; color: var(--text-secondary); }
-    .legend-dot { width: 12px; height: 12px; border-radius: 3px; margin-right: 8px; }
-    .legend-dot.available { background: rgba(0, 224, 255, 0.3); border: 1px solid var(--primary-glow); }
-    .legend-dot.today { background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3)); border: 1px solid var(--warning-color); }
-    .stats-bar { text-align: center; margin-bottom: 20px; padding: 15px; background: rgba(0,224,255,0.05); border-radius: 8px; border: 1px solid var(--border-color); }
-    .stats-bar span { margin: 0 20px; font-size: 0.95rem; }
-    .stats-bar strong { color: var(--primary-glow); }
-    @media (max-width: 768px) {
-        .calendar-grid { gap: 5px; }
-        .calendar-day { font-size: 0.9rem; }
-        .title { font-size: 2rem; }
-    }
+ :root {
+ --primary-glow: #00e0ff;
+ --warning-color: #FFD700;
+ --card-bg: rgba(15, 20, 30, 0.95);
+ --border-color: rgba(0, 224, 255, 0.2);
+ --text-primary: #ffffff;
+ --text-secondary: #b0b0b0;
+ }
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+ body {
+ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+ background-attachment: fixed;
+ font-family: 'Inter', sans-serif;
+ color: var(--text-primary);
+ padding: 40px 20px;
+ min-height: 100vh;
+ }
+ .container { max-width: 1000px; margin: 0 auto; }
+ .header { text-align: center; margin-bottom: 40px; }
+ .title {
+ font-size: 3rem;
+ font-family: 'Orbitron', sans-serif;
+ background: linear-gradient(45deg, #fff, var(--primary-glow));
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ margin-bottom: 10px;
+ }
+ .subtitle { color: var(--text-secondary); font-size: 1.1rem; }
+ .month-selector { text-align: center; margin-bottom: 30px; }
+ .month-selector label { font-size: 1.1rem; color: var(--text-secondary); margin-right: 15px; }
+ .month-dropdown {
+ background: var(--card-bg); color: var(--text-primary);
+ border: 1px solid var(--border-color); padding: 12px 20px;
+ font-size: 1rem; border-radius: 8px; cursor: pointer;
+ }
+ .calendar-container { display: none; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 30px; }
+ .calendar-container.active { display: block; }
+ .calendar-month-title { font-size: 1.8rem; font-family: 'Orbitron', sans-serif; color: var(--primary-glow); text-align: center; margin-bottom: 25px; }
+ .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 20px; }
+ .calendar-day-header { text-align: center; font-weight: 600; color: var(--text-secondary); padding: 10px; font-size: 0.9rem; }
+ .calendar-day {
+ aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+ background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+ font-size: 1.1rem; color: var(--text-secondary); transition: all 0.3s ease; position: relative;
+ }
+ .calendar-day.available {
+ background: rgba(0, 224, 255, 0.1); border-color: var(--primary-glow);
+ color: var(--primary-glow); cursor: pointer; font-weight: 600;
+ }
+ .calendar-day.available:hover {
+ background: rgba(0, 224, 255, 0.2); transform: translateY(-2px);
+ box-shadow: 0 5px 15px rgba(0, 224, 255, 0.3);
+ }
+ .calendar-day.today {
+ background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
+ border: 2px solid var(--warning-color); color: var(--warning-color); font-weight: 900;
+ }
+ .calendar-day.today::after {
+ content: 'TODAY'; position: absolute; bottom: 2px; font-size: 0.45rem;
+ color: var(--warning-color); font-weight: 700;
+ }
+ .game-tooltip {
+ display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+ background: rgba(0,0,0,0.95); color: var(--primary-glow); padding: 8px 12px;
+ border-radius: 6px; font-size: 0.75rem; white-space: nowrap; z-index: 100;
+ border: 1px solid var(--primary-glow); margin-bottom: 5px;
+ }
+ .calendar-day.available:hover .game-tooltip { display: block; }
+ .back-link { text-align: center; margin-top: 40px; }
+ .back-link a {
+ color: var(--primary-glow); text-decoration: none; font-size: 1.1rem;
+ padding: 12px 30px; border: 1px solid var(--border-color); border-radius: 8px;
+ display: inline-block; transition: all 0.3s ease;
+ }
+ .back-link a:hover { background: rgba(0, 224, 255, 0.1); }
+ .legend { text-align: center; margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; }
+ .legend-item { display: inline-flex; align-items: center; margin: 0 15px; font-size: 0.85rem; color: var(--text-secondary); }
+ .legend-dot { width: 12px; height: 12px; border-radius: 3px; margin-right: 8px; }
+ .legend-dot.available { background: rgba(0, 224, 255, 0.3); border: 1px solid var(--primary-glow); }
+ .legend-dot.today { background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3)); border: 1px solid var(--warning-color); }
+ .stats-bar { text-align: center; margin-bottom: 20px; padding: 15px; background: rgba(0,224,255,0.05); border-radius: 8px; border: 1px solid var(--border-color); }
+ .stats-bar span { margin: 0 20px; font-size: 0.95rem; }
+ .stats-bar strong { color: var(--primary-glow); }
+ @media (max-width: 768px) {
+ .calendar-grid { gap: 5px; }
+ .calendar-day { font-size: 0.9rem; }
+ .title { font-size: 2rem; }
+ }
 
-        /* BetLegend Fixed Logo */
-        .betlegend-logo {
-            position: fixed;
-            top: 15px;
-            left: 20px;
-            z-index: 1001;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            text-decoration: none;
-            color: #fff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
-        }
-        .betlegend-logo span {
-            color: #00e0ff;
-            text-shadow: 0 0 30px #00e0ff, 0 0 60px #00e0ff;
-        }
+ /* BetLegend Fixed Logo */
+ .betlegend-logo {
+ position: fixed;
+ top: 15px;
+ left: 20px;
+ z-index: 1001;
+ font-family: 'Orbitron', sans-serif;
+ font-size: 1.8rem;
+ font-weight: 900;
+ text-decoration: none;
+ color: #fff;
+ letter-spacing: 2px;
+ text-shadow: 0 0 20px rgba(255,255,255,0.5);
+ }
+ .betlegend-logo span {
+ color: #00e0ff;
+ text-shadow: 0 0 30px #00e0ff, 0 0 60px #00e0ff;
+ }
 </style>
 <link rel="stylesheet" href="/mobile-optimize.css" media="screen">
 </head>
 <body>
 <a href="index.html" class="betlegend-logo">BET<span>LEGEND</span></a>
 <nav style="background:#1a365d;padding:12px 20px;margin-bottom:20px;border-bottom:3px solid #fd5000;">
-    <div style="max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-        <a href="index.html" style="font-size:1.4rem;font-weight:800;color:white;text-decoration:none;">BET<span style="color:#fd5000;">LEGEND</span></a>
-        <div style="display:flex;gap:15px;flex-wrap:wrap;">
-            <a href="index.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Home</a>
-            <a href="handicapping-hub.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Hub</a>
-            <a href="records.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Records</a>
-            <a href="live-odds.html" style="color:#fd5000;text-decoration:none;font-weight:800;font-size:0.85rem;">Live Odds</a>
-            <a href="blog.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Picks</a>
-            <a href="featured-game-of-the-day-page64.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Featured</a>
-        </div>
-    </div>
+ <div style="max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+ <a href="index.html" style="font-size:1.4rem;font-weight:800;color:white;text-decoration:none;">BET<span style="color:#fd5000;">LEGEND</span></a>
+ <div style="display:flex;gap:15px;flex-wrap:wrap;">
+ <a href="index.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Home</a>
+ <a href="handicapping-hub.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Hub</a>
+ <a href="records.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Records</a>
+ <a href="live-odds.html" style="color:#fd5000;text-decoration:none;font-weight:800;font-size:0.85rem;">Live Odds</a>
+ <a href="blog.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Picks</a>
+ <a href="featured-game-of-the-day-page64.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Featured</a>
+ </div>
+ </div>
 </nav>
 
 <div class="container">
-    <div class="header">
-        <h1 class="title">NCAAF Archive</h1>
-        <p class="subtitle">Browse past picks and analysis by date</p>
-    </div>
-    <div class="stats-bar" id="stats-bar">Loading...</div>
-    <div class="month-selector">
-        <label for="month-select">Select Month:</label>
-        <select id="month-select" class="month-dropdown" onchange="showMonth(this.value)"></select>
-    </div>
-    <div id="calendars-container"></div>
-    <div class="back-link">
-        <a href="ncaaf.html">Back to Today's NCAAF</a>
-    </div>
+ <div class="header">
+ <h1 class="title">NCAAF Archive</h1>
+ <p class="subtitle">Browse past picks and analysis by date</p>
+ </div>
+ <div class="stats-bar" id="stats-bar">Loading...</div>
+ <div class="month-selector">
+ <label for="month-select">Select Month:</label>
+ <select id="month-select" class="month-dropdown" onchange="showMonth(this.value)"></select>
+ </div>
+ <div id="calendars-container"></div>
+ <div class="back-link">
+ <a href="ncaaf.html">Back to Today's NCAAF</a>
+ </div>
 </div>
 <script src="ncaaf-archive-data.js"></script>
 <script>
@@ -172,13 +172,13 @@ const sortedGames = [...DATA].sort((a, b) => b.date.localeCompare(a.date));
 const latestGame = sortedGames[0];
 
 document.getElementById('stats-bar').innerHTML =
-    '<span>Total Archive Dates: <strong>' + DATA.length + '</strong></span>' +
-    '<span>Latest: <strong>' + (latestGame ? latestGame.title : '') + '</strong></span>';
+ '<span>Total Archive Dates: <strong>' + DATA.length + '</strong></span>' +
+ '<span>Latest: <strong>' + (latestGame ? latestGame.title : '') + '</strong></span>';
 
 const months = new Set();
 DATA.forEach(game => {
-    const [year, month] = game.date.split('-');
-    months.add(year + '-' + month);
+ const [year, month] = game.date.split('-');
+ months.add(year + '-' + month);
 });
 const currentMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
 months.add(currentMonth);
@@ -188,84 +188,84 @@ const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'Jul
 
 const monthSelect = document.getElementById('month-select');
 sortedMonths.forEach((monthKey, idx) => {
-    const [year, month] = monthKey.split('-');
-    const option = document.createElement('option');
-    option.value = monthKey;
-    option.textContent = monthNames[parseInt(month) - 1] + ' ' + year;
-    if (idx === 0) option.selected = true;
-    monthSelect.appendChild(option);
+ const [year, month] = monthKey.split('-');
+ const option = document.createElement('option');
+ option.value = monthKey;
+ option.textContent = monthNames[parseInt(month) - 1] + ' ' + year;
+ if (idx === 0) option.selected = true;
+ monthSelect.appendChild(option);
 });
 
 const calendarsContainer = document.getElementById('calendars-container');
 
 sortedMonths.forEach((monthKey, idx) => {
-    const [year, month] = monthKey.split('-');
-    const calendarDiv = document.createElement('div');
-    calendarDiv.id = 'calendar-' + monthKey;
-    calendarDiv.className = 'calendar-container' + (idx === 0 ? ' active' : '');
+ const [year, month] = monthKey.split('-');
+ const calendarDiv = document.createElement('div');
+ calendarDiv.id = 'calendar-' + monthKey;
+ calendarDiv.className = 'calendar-container' + (idx === 0 ? ' active' : '');
 
-    const titleH2 = document.createElement('h2');
-    titleH2.className = 'calendar-month-title';
-    titleH2.textContent = monthNames[parseInt(month) - 1] + ' ' + year;
-    calendarDiv.appendChild(titleH2);
+ const titleH2 = document.createElement('h2');
+ titleH2.className = 'calendar-month-title';
+ titleH2.textContent = monthNames[parseInt(month) - 1] + ' ' + year;
+ calendarDiv.appendChild(titleH2);
 
-    const grid = document.createElement('div');
-    grid.className = 'calendar-grid';
+ const grid = document.createElement('div');
+ grid.className = 'calendar-grid';
 
-    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
-        const header = document.createElement('div');
-        header.className = 'calendar-day-header';
-        header.textContent = day;
-        grid.appendChild(header);
-    });
+ ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
+ const header = document.createElement('div');
+ header.className = 'calendar-day-header';
+ header.textContent = day;
+ grid.appendChild(header);
+ });
 
-    const firstDay = new Date(year, parseInt(month) - 1, 1);
-    const lastDay = new Date(year, parseInt(month), 0);
-    const daysInMonth = lastDay.getDate();
-    const startDayOfWeek = firstDay.getDay();
+ const firstDay = new Date(year, parseInt(month) - 1, 1);
+ const lastDay = new Date(year, parseInt(month), 0);
+ const daysInMonth = lastDay.getDate();
+ const startDayOfWeek = firstDay.getDay();
 
-    for (let i = 0; i < startDayOfWeek; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'calendar-day';
-        grid.appendChild(empty);
-    }
+ for (let i = 0; i < startDayOfWeek; i++) {
+ const empty = document.createElement('div');
+ empty.className = 'calendar-day';
+ grid.appendChild(empty);
+ }
 
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = year + '-' + month + '-' + String(day).padStart(2, '0');
-        const dayDiv = document.createElement('div');
-        dayDiv.className = 'calendar-day';
+ for (let day = 1; day <= daysInMonth; day++) {
+ const dateStr = year + '-' + month + '-' + String(day).padStart(2, '0');
+ const dayDiv = document.createElement('div');
+ dayDiv.className = 'calendar-day';
 
-        const game = gamesMap[dateStr];
-        if (game) {
-            dayDiv.className += ' available';
-            dayDiv.onclick = function() { window.location.href = game.page; };
-            const tooltip = document.createElement('span');
-            tooltip.className = 'game-tooltip';
-            tooltip.textContent = game.title;
-            dayDiv.appendChild(tooltip);
-        }
+ const game = gamesMap[dateStr];
+ if (game) {
+ dayDiv.className += ' available';
+ dayDiv.onclick = function() { window.location.href = game.page; };
+ const tooltip = document.createElement('span');
+ tooltip.className = 'game-tooltip';
+ tooltip.textContent = game.title;
+ dayDiv.appendChild(tooltip);
+ }
 
-        if (dateStr === todayStr) dayDiv.className += ' today';
+ if (dateStr === todayStr) dayDiv.className += ' today';
 
-        const dayNum = document.createElement('span');
-        dayNum.textContent = day;
-        dayDiv.appendChild(dayNum);
-        grid.appendChild(dayDiv);
-    }
+ const dayNum = document.createElement('span');
+ dayNum.textContent = day;
+ dayDiv.appendChild(dayNum);
+ grid.appendChild(dayDiv);
+ }
 
-    calendarDiv.appendChild(grid);
+ calendarDiv.appendChild(grid);
 
-    const legend = document.createElement('div');
-    legend.className = 'legend';
-    legend.innerHTML = '<span class="legend-item"><span class="legend-dot available"></span> Archive Available</span>' +
-        '<span class="legend-item"><span class="legend-dot today"></span> Today</span>';
-    calendarDiv.appendChild(legend);
-    calendarsContainer.appendChild(calendarDiv);
+ const legend = document.createElement('div');
+ legend.className = 'legend';
+ legend.innerHTML = '<span class="legend-item"><span class="legend-dot available"></span> Archive Available</span>' +
+ '<span class="legend-item"><span class="legend-dot today"></span> Today</span>';
+ calendarDiv.appendChild(legend);
+ calendarsContainer.appendChild(calendarDiv);
 });
 
 function showMonth(monthKey) {
-    document.querySelectorAll('.calendar-container').forEach(cal => cal.classList.remove('active'));
-    document.getElementById('calendar-' + monthKey).classList.add('active');
+ document.querySelectorAll('.calendar-container').forEach(cal => cal.classList.remove('active'));
+ document.getElementById('calendar-' + monthKey).classList.add('active');
 }
 </script>
 </body>

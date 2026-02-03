@@ -113,12 +113,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="nav-links">
 <a href="index.html">Home</a>
 <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="handicapping-hub.html">Today's Games</a>
-                    <a href="injury-report.html">Injury Report</a>
-                </div>
-            </div>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="handicapping-hub.html">Today's Games</a>
+ <a href="injury-report.html">Injury Report</a>
+ </div>
+ </div>
 <a href="blog.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Game Previews</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a></div></div>
@@ -702,116 +702,116 @@ const mobileArchiveSelect = document.getElementById('mobile-archive-select');
 const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 function getPageDate() {
-    if (window.FORCED_PAGE_DATE) {
-        return new Date(window.FORCED_PAGE_DATE + 'T12:00:00');
-    }
-    const title = document.title;
-    const match = title.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/i);
-    if (match) {
-        const monthIndex = months.findIndex(m => m.toLowerCase() === match[1].toLowerCase());
-        return new Date(parseInt(match[3]), monthIndex, parseInt(match[2]));
-    }
-    return new Date();
+ if (window.FORCED_PAGE_DATE) {
+ return new Date(window.FORCED_PAGE_DATE + 'T12:00:00');
+ }
+ const title = document.title;
+ const match = title.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/i);
+ if (match) {
+ const monthIndex = months.findIndex(m => m.toLowerCase() === match[1].toLowerCase());
+ return new Date(parseInt(match[3]), monthIndex, parseInt(match[2]));
+ }
+ return new Date();
 }
 
 function initCalendar() {
-    const pageDate = getPageDate();
-    let currentMonth = pageDate.getMonth();
-    let currentYear = pageDate.getFullYear();
+ const pageDate = getPageDate();
+ let currentMonth = pageDate.getMonth();
+ let currentYear = pageDate.getFullYear();
 
-    const years = [...new Set(ARCHIVE_DATA.map(d => new Date(d.date + 'T12:00:00').getFullYear()))].sort((a,b) => b - a);
-    const availableMonths = new Set();
-    ARCHIVE_DATA.forEach(d => {
-        const dt = new Date(d.date + 'T12:00:00');
-        if (dt.getFullYear() === currentYear) {
-            availableMonths.add(dt.getMonth());
-        }
-    });
+ const years = [...new Set(ARCHIVE_DATA.map(d => new Date(d.date + 'T12:00:00').getFullYear()))].sort((a,b) => b - a);
+ const availableMonths = new Set();
+ ARCHIVE_DATA.forEach(d => {
+ const dt = new Date(d.date + 'T12:00:00');
+ if (dt.getFullYear() === currentYear) {
+ availableMonths.add(dt.getMonth());
+ }
+ });
 
-    monthSelect.innerHTML = '';
-    months.forEach((m, i) => {
-        if (availableMonths.has(i) || i === currentMonth) {
-            const opt = document.createElement('option');
-            opt.value = i;
-            opt.textContent = m;
-            if (i === currentMonth) opt.selected = true;
-            monthSelect.appendChild(opt);
-        }
-    });
+ monthSelect.innerHTML = '';
+ months.forEach((m, i) => {
+ if (availableMonths.has(i) || i === currentMonth) {
+ const opt = document.createElement('option');
+ opt.value = i;
+ opt.textContent = m;
+ if (i === currentMonth) opt.selected = true;
+ monthSelect.appendChild(opt);
+ }
+ });
 
-    calYearDisplay.textContent = currentYear;
-    renderCalendar(currentYear, currentMonth, pageDate);
-    populateMobileDropdown();
+ calYearDisplay.textContent = currentYear;
+ renderCalendar(currentYear, currentMonth, pageDate);
+ populateMobileDropdown();
 
-    monthSelect.addEventListener('change', () => {
-        renderCalendar(currentYear, parseInt(monthSelect.value), pageDate);
-    });
+ monthSelect.addEventListener('change', () => {
+ renderCalendar(currentYear, parseInt(monthSelect.value), pageDate);
+ });
 }
 
 function renderCalendar(year, month, pageDate) {
-    calendarDays.innerHTML = '';
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const today = new Date();
+ calendarDays.innerHTML = '';
+ const firstDay = new Date(year, month, 1).getDay();
+ const daysInMonth = new Date(year, month + 1, 0).getDate();
+ const today = new Date();
 
-    for (let i = 0; i < firstDay; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'cal-day empty';
-        calendarDays.appendChild(empty);
-    }
+ for (let i = 0; i < firstDay; i++) {
+ const empty = document.createElement('div');
+ empty.className = 'cal-day empty';
+ calendarDays.appendChild(empty);
+ }
 
-    for (let d = 1; d <= daysInMonth; d++) {
-        const dayEl = document.createElement('div');
-        dayEl.className = 'cal-day';
-        dayEl.textContent = d;
+ for (let d = 1; d <= daysInMonth; d++) {
+ const dayEl = document.createElement('div');
+ dayEl.className = 'cal-day';
+ dayEl.textContent = d;
 
-        const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-        const entry = ARCHIVE_DATA.find(e => e.date === dateStr);
+ const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+ const entry = ARCHIVE_DATA.find(e => e.date === dateStr);
 
-        if (entry) {
-            dayEl.classList.add('has-content');
-            dayEl.addEventListener('click', () => {
-                window.location.href = entry.page;
-            });
-        }
+ if (entry) {
+ dayEl.classList.add('has-content');
+ dayEl.addEventListener('click', () => {
+ window.location.href = entry.page;
+ });
+ }
 
-        if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-            dayEl.classList.add('today');
-        }
+ if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+ dayEl.classList.add('today');
+ }
 
-        if (d === pageDate.getDate() && month === pageDate.getMonth() && year === pageDate.getFullYear()) {
-            dayEl.classList.add('current-page');
-        }
+ if (d === pageDate.getDate() && month === pageDate.getMonth() && year === pageDate.getFullYear()) {
+ dayEl.classList.add('current-page');
+ }
 
-        calendarDays.appendChild(dayEl);
-    }
+ calendarDays.appendChild(dayEl);
+ }
 }
 
 function populateMobileDropdown() {
-    const sorted = [...ARCHIVE_DATA].sort((a,b) => new Date(b.date) - new Date(a.date));
-    sorted.forEach(entry => {
-        const opt = document.createElement('option');
-        opt.value = entry.page;
-        const dt = new Date(entry.date + 'T12:00:00');
-        opt.textContent = `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
-        mobileArchiveSelect.appendChild(opt);
-    });
+ const sorted = [...ARCHIVE_DATA].sort((a,b) => new Date(b.date) - new Date(a.date));
+ sorted.forEach(entry => {
+ const opt = document.createElement('option');
+ opt.value = entry.page;
+ const dt = new Date(entry.date + 'T12:00:00');
+ opt.textContent = `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
+ mobileArchiveSelect.appendChild(opt);
+ });
 
-    mobileArchiveSelect.addEventListener('change', () => {
-        if (mobileArchiveSelect.value) {
-            window.location.href = mobileArchiveSelect.value;
-        }
-    });
+ mobileArchiveSelect.addEventListener('change', () => {
+ if (mobileArchiveSelect.value) {
+ window.location.href = mobileArchiveSelect.value;
+ }
+ });
 }
 
 document.addEventListener('DOMContentLoaded', initCalendar);
 document.querySelectorAll('.dropdown').forEach(dropdown => {
-    dropdown.addEventListener('click', function(e) {
-        if (window.innerWidth <= 768) {
-            e.preventDefault();
-            this.classList.toggle('active');
-        }
-    });
+ dropdown.addEventListener('click', function(e) {
+ if (window.innerWidth <= 768) {
+ e.preventDefault();
+ this.classList.toggle('active');
+ }
+ });
 });
 </script>
 </body>

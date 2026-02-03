@@ -136,12 +136,12 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <div class="nav-links">
 <a href="index.html">Home</a>
 <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
-                <div class="dropdown-content">
-                    <a href="handicapping-hub.html">Today's Games</a>
-                    <a href="injury-report.html">Injury Report</a>
-                </div>
-            </div>
+ <button class="dropbtn hub-btn">Handicapping Hub &#9660;</button>
+ <div class="dropdown-content">
+ <a href="handicapping-hub.html">Today's Games</a>
+ <a href="injury-report.html">Injury Report</a>
+ </div>
+ </div>
 <a href="blog.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Game Previews</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba.html">NBA</a><a href="nhl.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="ncaab.html">NCAAB</a><a href="mlb.html">MLB</a><a href="soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a></div></div>
@@ -367,91 +367,91 @@ const mobileSelect = document.getElementById('mobile-archive-select');
 let currentMonth, currentYear;
 
 function getPageDate() {
-  if (window.FORCED_PAGE_DATE) {
-    const [y, m, d] = window.FORCED_PAGE_DATE.split('-').map(Number);
-    return { month: m, year: y, day: d };
-  }
-  const titleMatch = document.title.match(/(\w+)\s+(\d+),\s+(\d+)/);
-  if (titleMatch) {
-    const months = { 'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
-      'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12 };
-    return { month: months[titleMatch[1]], year: parseInt(titleMatch[3]), day: parseInt(titleMatch[2]) };
-  }
-  const now = new Date();
-  return { month: now.getMonth() + 1, year: now.getFullYear(), day: now.getDate() };
+ if (window.FORCED_PAGE_DATE) {
+ const [y, m, d] = window.FORCED_PAGE_DATE.split('-').map(Number);
+ return { month: m, year: y, day: d };
+ }
+ const titleMatch = document.title.match(/(\w+)\s+(\d+),\s+(\d+)/);
+ if (titleMatch) {
+ const months = { 'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
+ 'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12 };
+ return { month: months[titleMatch[1]], year: parseInt(titleMatch[3]), day: parseInt(titleMatch[2]) };
+ }
+ const now = new Date();
+ return { month: now.getMonth() + 1, year: now.getFullYear(), day: now.getDate() };
 }
 
 function getMonthName(m) {
-  return ['January','February','March','April','May','June','July','August','September','October','November','December'][m-1];
+ return ['January','February','March','April','May','June','July','August','September','October','November','December'][m-1];
 }
 
 function buildCalendar(month, year) {
-  calendarDays.innerHTML = '';
-  const pageDate = getPageDate();
-  const today = new Date();
-  const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
-  const pageDateStr = window.FORCED_PAGE_DATE || `${pageDate.year}-${String(pageDate.month).padStart(2,'0')}-${String(pageDate.day).padStart(2,'0')}`;
-  const firstDay = new Date(year, month-1, 1).getDay();
-  const daysInMonth = new Date(year, month, 0).getDate();
-  for (let i = 0; i < firstDay; i++) {
-    const empty = document.createElement('div');
-    empty.className = 'cal-day empty';
-    calendarDays.appendChild(empty);
-  }
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dayEl = document.createElement('div');
-    dayEl.className = 'cal-day';
-    dayEl.textContent = d;
-    const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const entry = archiveData.find(e => e.date === dateStr);
-    if (entry) {
-      dayEl.classList.add('has-content');
-      dayEl.onclick = () => window.location.href = entry.page;
-    }
-    if (dateStr === todayStr) dayEl.classList.add('today');
-    if (dateStr === pageDateStr) dayEl.classList.add('current-page');
-    calendarDays.appendChild(dayEl);
-  }
+ calendarDays.innerHTML = '';
+ const pageDate = getPageDate();
+ const today = new Date();
+ const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+ const pageDateStr = window.FORCED_PAGE_DATE || `${pageDate.year}-${String(pageDate.month).padStart(2,'0')}-${String(pageDate.day).padStart(2,'0')}`;
+ const firstDay = new Date(year, month-1, 1).getDay();
+ const daysInMonth = new Date(year, month, 0).getDate();
+ for (let i = 0; i < firstDay; i++) {
+ const empty = document.createElement('div');
+ empty.className = 'cal-day empty';
+ calendarDays.appendChild(empty);
+ }
+ for (let d = 1; d <= daysInMonth; d++) {
+ const dayEl = document.createElement('div');
+ dayEl.className = 'cal-day';
+ dayEl.textContent = d;
+ const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+ const entry = archiveData.find(e => e.date === dateStr);
+ if (entry) {
+ dayEl.classList.add('has-content');
+ dayEl.onclick = () => window.location.href = entry.page;
+ }
+ if (dateStr === todayStr) dayEl.classList.add('today');
+ if (dateStr === pageDateStr) dayEl.classList.add('current-page');
+ calendarDays.appendChild(dayEl);
+ }
 }
 
 function populateMonthSelect() {
-  const months = [...new Set(archiveData.map(e => e.date.substring(0,7)))].sort().reverse();
-  const pageDate = getPageDate();
-  const currentMonthStr = `${pageDate.year}-${String(pageDate.month).padStart(2,'0')}`;
-  if (!months.includes(currentMonthStr)) months.unshift(currentMonthStr);
-  months.sort().reverse();
-  monthSelect.innerHTML = months.map(m => {
-    const [y, mo] = m.split('-');
-    return `<option value="${m}">${getMonthName(parseInt(mo))} ${y}</option>`;
-  }).join('');
-  monthSelect.value = currentMonthStr;
+ const months = [...new Set(archiveData.map(e => e.date.substring(0,7)))].sort().reverse();
+ const pageDate = getPageDate();
+ const currentMonthStr = `${pageDate.year}-${String(pageDate.month).padStart(2,'0')}`;
+ if (!months.includes(currentMonthStr)) months.unshift(currentMonthStr);
+ months.sort().reverse();
+ monthSelect.innerHTML = months.map(m => {
+ const [y, mo] = m.split('-');
+ return `<option value="${m}">${getMonthName(parseInt(mo))} ${y}</option>`;
+ }).join('');
+ monthSelect.value = currentMonthStr;
 }
 
 function populateMobileSelect() {
-  mobileSelect.innerHTML = '<option value="">Jump to date...</option>' + archiveData.slice().reverse().map(e => {
-    const [y, m, d] = e.date.split('-');
-    return `<option value="${e.page}">${getMonthName(parseInt(m))} ${parseInt(d)}, ${y}</option>`;
-  }).join('');
+ mobileSelect.innerHTML = '<option value="">Jump to date...</option>' + archiveData.slice().reverse().map(e => {
+ const [y, m, d] = e.date.split('-');
+ return `<option value="${e.page}">${getMonthName(parseInt(m))} ${parseInt(d)}, ${y}</option>`;
+ }).join('');
 }
 
 function init() {
-  const pageDate = getPageDate();
-  currentMonth = pageDate.month;
-  currentYear = pageDate.year;
-  populateMonthSelect();
-  populateMobileSelect();
-  yearDisplay.textContent = currentYear;
-  buildCalendar(currentMonth, currentYear);
-  monthSelect.addEventListener('change', function() {
-    const [y, m] = this.value.split('-');
-    currentYear = parseInt(y);
-    currentMonth = parseInt(m);
-    yearDisplay.textContent = currentYear;
-    buildCalendar(currentMonth, currentYear);
-  });
-  mobileSelect.addEventListener('change', function() {
-    if (this.value) window.location.href = this.value;
-  });
+ const pageDate = getPageDate();
+ currentMonth = pageDate.month;
+ currentYear = pageDate.year;
+ populateMonthSelect();
+ populateMobileSelect();
+ yearDisplay.textContent = currentYear;
+ buildCalendar(currentMonth, currentYear);
+ monthSelect.addEventListener('change', function() {
+ const [y, m] = this.value.split('-');
+ currentYear = parseInt(y);
+ currentMonth = parseInt(m);
+ yearDisplay.textContent = currentYear;
+ buildCalendar(currentMonth, currentYear);
+ });
+ mobileSelect.addEventListener('change', function() {
+ if (this.value) window.location.href = this.value;
+ });
 }
 
 init();
