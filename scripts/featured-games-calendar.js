@@ -3,8 +3,6 @@
 // Last updated: February 03, 2026
 
 const ARCHIVE_DATA = [
-    { date: "2026-02-03", page: "featured-game-of-the-day-page65.html", title: "Celtics @ Mavericks NBA" },
-    { date: "2026-02-02", page: "featured-game-of-the-day-page64.html", title: "Kansas vs Texas Tech NCAAB" },
     { date: "2026-02-01", page: "featured-game-of-the-day-page63.html", title: "Lightning vs Bruins Stadium Series" },
     { date: "2026-01-25", page: "featured-game-of-the-day-page56.html", title: "Patriots vs Broncos AFC Championship" },
     { date: "2026-01-24", page: "featured-game-of-the-day-page55.html", title: "Canadiens vs Bruins Original Six Rivalry" },
