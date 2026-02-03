@@ -55,7 +55,9 @@ jobs:
 
           # Count actual error messages (not file headers)
           # Real errors contain "ROSTER ERROR", "IMPOSSIBLE", or "Missing <"
-          TOTAL_ERRORS=$(grep -cE "\[ERROR\] (ROSTER ERROR|IMPOSSIBLE|Missing <)" validator_output.txt || echo "0")
+          TOTAL_ERRORS=$(grep -cE "\[ERROR\] (ROSTER ERROR|IMPOSSIBLE|Missing <)" validator_output.txt 2>/dev/null) || TOTAL_ERRORS=0
+          TOTAL_ERRORS=$(echo "$TOTAL_ERRORS" | tr -d '[:space:]')
+          : "${TOTAL_ERRORS:=0}"
 
           # Known false positives (old archive files with outdated rosters)
           # Whitelist: mlb-page2.html (3 errors) and nfl-page16.html (1 error)
@@ -65,20 +67,29 @@ jobs:
           # Create temp file with just error sections for whitelisted files
           grep -B1 "ROSTER ERROR" validator_output.txt | grep -E "mlb-page2.html|nfl-page16.html" > /tmp/whitelist_check.txt 2>/dev/null || true
 
-          if grep -q "mlb-page2.html" /tmp/whitelist_check.txt; then
+          if grep -q "mlb-page2.html" /tmp/whitelist_check.txt 2>/dev/null; then
             # Count how many ROSTER ERRORs follow mlb-page2.html
-            MLP2_ERRORS=$(grep -A50 "\[ERROR\] mlb-page2.html" validator_output.txt | grep -c "ROSTER ERROR" || echo "0")
+            MLP2_ERRORS=$(grep -A50 "\[ERROR\] mlb-page2.html" validator_output.txt 2>/dev/null | grep -c "ROSTER ERROR" 2>/dev/null) || MLP2_ERRORS=0
+            MLP2_ERRORS=$(echo "$MLP2_ERRORS" | tr -d '[:space:]')
+            : "${MLP2_ERRORS:=0}"
             KNOWN_FP=$((KNOWN_FP + MLP2_ERRORS))
           fi
 
-          if grep -q "nfl-page16.html" /tmp/whitelist_check.txt; then
-            NFL16_ERRORS=$(grep -A50 "\[ERROR\] nfl-page16.html" validator_output.txt | grep -c "ROSTER ERROR" || echo "0")
+          if grep -q "nfl-page16.html" /tmp/whitelist_check.txt 2>/dev/null; then
+            NFL16_ERRORS=$(grep -A50 "\[ERROR\] nfl-page16.html" validator_output.txt 2>/dev/null | grep -c "ROSTER ERROR" 2>/dev/null) || NFL16_ERRORS=0
+            NFL16_ERRORS=$(echo "$NFL16_ERRORS" | tr -d '[:space:]')
+            : "${NFL16_ERRORS:=0}"
             KNOWN_FP=$((KNOWN_FP + NFL16_ERRORS))
           fi
 
           # Calculate real errors (total - known false positives)
+          # Ensure variables are numeric
+          TOTAL_ERRORS=${TOTAL_ERRORS//[^0-9]/}
+          KNOWN_FP=${KNOWN_FP//[^0-9]/}
+          : "${TOTAL_ERRORS:=0}"
+          : "${KNOWN_FP:=0}"
           REAL_ERRORS=$((TOTAL_ERRORS - KNOWN_FP))
-          if [ $REAL_ERRORS -lt 0 ]; then
+          if [ "$REAL_ERRORS" -lt 0 ] 2>/dev/null; then
             REAL_ERRORS=0
           fi
 
