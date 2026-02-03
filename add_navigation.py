@@ -239,7 +239,7 @@ NAV_HTML = """
     </div>
 
     <a href="proofofpicks.html">Proof</a>
-    <a href="news-page4.html">News</a>
+    <a href="news-page5.html">News</a>
     <a href="featured-game-of-the-day-page50.html">Game of the Day</a>
 
     <div class="dropdown">

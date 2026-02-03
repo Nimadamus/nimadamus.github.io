@@ -3039,7 +3039,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
                     </div>
                 </div>
 
-                <a href="news-page4.html" class="nav-link">News</a>
+                <a href="news-page5.html" class="nav-link">News</a>
 
                 <a href="injury-report.html" class="nav-link">Injury Report</a>
 
