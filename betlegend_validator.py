@@ -273,7 +273,8 @@ LINE_MOVEMENT_PATTERNS = [
 
 # Files where line movement discussion is allowed (educational content)
 LINE_MOVEMENT_ALLOWED_FILES = [
-    'betting-101', 'how-to', 'calculator', 'explained', 'guide', 'glossary', 'tutorial'
+    'betting-101', 'how-to', 'calculator', 'explained', 'guide', 'glossary', 'tutorial',
+    'betting-lines-move', 'line-movement', 'probability', 'odds-explained', 'betting-basics'
 ]
 
 # Unsigned claims that are now wrong - trigger ERRORS
@@ -937,8 +938,15 @@ class ContentValidator:
                 if value > 100:
                     context = text[max(0, match.start()-50):min(len(text), match.end()+50)]
                     context_lower = context.lower()
-                    # Skip marketing/bonus percentages
-                    if any(word in context_lower for word in ['bonus', 'promo', 'welcome', 'deposit', 'match', 'vig', 'juice', 'implied', 'totaling', 'extra']):
+                    # Skip marketing/bonus percentages and vig/probability explanations
+                    skip_words = [
+                        'bonus', 'promo', 'welcome', 'deposit', 'match',  # Marketing
+                        'vig', 'juice', 'implied', 'totaling', 'extra',   # Vig explanations
+                        'probability', 'overround', 'combined', 'adds up', # Probability math
+                        'total implied', 'both sides', 'edge', 'margin',  # Bookmaker math
+                        'example', 'let\'s say', 'calculation', 'formula' # Educational
+                    ]
+                    if any(word in context_lower for word in skip_words):
                         continue
                     issues.append((
                         'ERROR',
