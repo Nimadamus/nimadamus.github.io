@@ -76,9 +76,16 @@ const FEATURED_GAMES = [
     { date: "2026-01-23", page: "featured-game-of-the-day-page54.html", title: "Pacers vs Thunder NBA Finals Rematch" },
     { date: "2026-01-24", page: "featured-game-of-the-day-page55.html", title: "Canadiens vs Bruins Original Six Rivalry" },
     { date: "2026-01-25", page: "featured-game-of-the-day-page56.html", title: "Patriots vs Broncos AFC Championship" },
+    { date: "2026-01-26", page: "featured-game-of-the-day-page57.html", title: "Lakers @ Bulls" },
+    { date: "2026-01-27", page: "featured-game-of-the-day-page60.html", title: "Golden Knights @ Canadiens" },
+    { date: "2026-01-28", page: "featured-game-of-the-day-page58.html", title: "Lakers @ Cavaliers" },
+    { date: "2026-01-29", page: "featured-game-of-the-day-page59.html", title: "Thunder @ Timberwolves" },
+    { date: "2026-01-30", page: "featured-game-of-the-day-page61.html", title: "Cavaliers @ Suns" },
+    { date: "2026-01-31", page: "featured-game-of-the-day-page62.html", title: "Mavericks @ Rockets" },
 
     // February 2026
     { date: "2026-02-01", page: "featured-game-of-the-day-page63.html", title: "Lightning vs Bruins Stadium Series" },
+    { date: "2026-02-02", page: "featured-game-of-the-day-page64.html", title: "#14 Kansas vs #11 Texas Tech" },
     { date: "2026-02-03", page: "featured-game-of-the-day-page65.html", title: "Celtics @ Mavericks" },
     { date: "2026-02-04", page: "featured-game-of-the-day-page66.html", title: "Thunder @ Spurs" },
 
