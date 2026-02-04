@@ -79,6 +79,8 @@ const FEATURED_GAMES = [
 
     // February 2026
     { date: "2026-02-01", page: "featured-game-of-the-day-page63.html", title: "Lightning vs Bruins Stadium Series" },
+    { date: "2026-02-03", page: "featured-game-of-the-day-page65.html", title: "Celtics @ Mavericks" },
+    { date: "2026-02-04", page: "featured-game-of-the-day-page66.html", title: "Thunder @ Spurs" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
