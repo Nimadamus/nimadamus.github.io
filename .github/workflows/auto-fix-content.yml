@@ -64,9 +64,14 @@ jobs:
           echo "📅 Syncing all sport calendars..."
           python scripts/sync_calendars.py
 
-      - name: Sync featured games calendar
+      - name: Sync featured games data (scan pages → update data file)
         run: |
-          echo "🎯 Syncing featured games calendar..."
+          echo "🎯 Scanning featured game pages for missing entries..."
+          python scripts/sync_featured_games_data.py
+
+      - name: Sync featured games calendar (data file → calendar JS)
+        run: |
+          echo "📅 Syncing featured games calendar..."
           python scripts/sync_featured_games_calendar.py
 
       - name: Sync records from Pick Tracker
