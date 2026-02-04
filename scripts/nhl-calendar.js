@@ -4,9 +4,9 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-02-04", page: "nhl.html", title: "NHL Analysis - February 4, 2026" },
-    { date: "2026-02-04", page: "nhl-page70.html", title: "NHL Analysis - February 4, 2026" },
     { date: "2026-02-04", page: "nhl-totals-trends.html", title: "NHL Totals Trends 2025-26 - O/U Records & Scoring" },
     { date: "2026-02-04", page: "nhl-team-trends.html", title: "NHL Team Trends 2025-26 - ATS Records & Puck Line Data" },
+    { date: "2026-02-04", page: "nhl-page70.html", title: "NHL Analysis - February 4, 2026" },
     { date: "2026-02-04", page: "nhl-home-away-splits.html", title: "NHL Home/Away Splits 2025-26 - Venue Records" },
     { date: "2026-02-04", page: "nhl-betting-hub.html", title: "NHL Betting Data Hub - Records, Trends & Splits" },
     { date: "2026-02-03", page: "nhl-page69.html", title: "NHL Analysis - February 3, 2026" },
