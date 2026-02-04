@@ -1,8 +1,10 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: February 03, 2026
+// Last updated: February 04, 2026
 
 const ARCHIVE_DATA = [
+    { date: "2026-02-04", page: "featured-game-of-the-day-page66.html", title: "Thunder @ Spurs" },
+    { date: "2026-02-03", page: "featured-game-of-the-day-page65.html", title: "Celtics @ Mavericks" },
     { date: "2026-02-01", page: "featured-game-of-the-day-page63.html", title: "Lightning vs Bruins Stadium Series" },
     { date: "2026-01-25", page: "featured-game-of-the-day-page56.html", title: "Patriots vs Broncos AFC Championship" },
     { date: "2026-01-24", page: "featured-game-of-the-day-page55.html", title: "Canadiens vs Bruins Original Six Rivalry" },
