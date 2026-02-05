@@ -3,6 +3,7 @@
 // Last updated: February 05, 2026
 
 const ARCHIVE_DATA = [
+    { date: "2026-02-05", page: "featured-game-of-the-day-page67.html", title: "76ers @ Lakers" },
     { date: "2026-02-04", page: "featured-game-of-the-day-page66.html", title: "Thunder @ Spurs" },
     { date: "2026-02-03", page: "featured-game-of-the-day-page65.html", title: "Celtics @ Mavericks" },
     { date: "2026-02-02", page: "featured-game-of-the-day-page64.html", title: "#14 Kansas vs #11 Texas Tech" },
