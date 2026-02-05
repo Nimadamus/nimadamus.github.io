@@ -2,84 +2,48 @@
 """
 Sync Featured Games Calendar Data
 
-This script reads from featured-games-data.js (the master source) and updates
-scripts/featured-games-calendar.js (used by the calendar sidebar).
+ARCHITECTURE (Updated Feb 5, 2026):
+- featured-games-data.js = SINGLE SOURCE OF TRUTH (defines FEATURED_GAMES array)
+- scripts/featured-games-calendar.js = RENDERING ONLY (reads from FEATURED_GAMES, no embedded data)
+- ALL featured game pages load BOTH files: data.js first, then calendar.js
 
-This ensures both files stay in sync automatically.
-
-Run this after adding new featured game entries to featured-games-data.js.
+This script now VERIFIES the setup is correct rather than syncing data between files.
+The old sync behavior (copying data into calendar.js) is no longer needed because
+calendar.js reads directly from FEATURED_GAMES at runtime.
 """
 
 import os
 import re
-import json
-from datetime import datetime
+import sys
 
 REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_FILE = os.path.join(REPO_PATH, 'featured-games-data.js')
 CALENDAR_FILE = os.path.join(REPO_PATH, 'scripts', 'featured-games-calendar.js')
 
-def parse_featured_games_data():
-    """Parse entries from featured-games-data.js"""
+def count_entries_in_data_file():
+    """Count entries in featured-games-data.js"""
     with open(DATA_FILE, 'r', encoding='utf-8') as f:
         content = f.read()
-
-    # Extract entries using regex
     pattern = r'\{\s*date:\s*"([^"]+)",\s*page:\s*"([^"]+)",\s*title:\s*"([^"]+)"\s*\}'
     matches = re.findall(pattern, content)
+    return [(d, p, t) for d, p, t in matches if d != "YYYY-MM-DD"]
 
-    entries = []
-    for date, page, title in matches:
-        # Skip template/placeholder entries from comments
-        if date == "YYYY-MM-DD" or page == "filename.html":
-            continue
-        entries.append({'date': date, 'page': page, 'title': title})
-
-    # Sort by date descending (newest first)
-    entries.sort(key=lambda x: x['date'], reverse=True)
-
-    return entries
-
-def update_calendar_file(entries):
-    """Update the calendar JS file with new entries"""
-
-    today = datetime.now().strftime("%B %d, %Y")
-
-    # Build the ARCHIVE_DATA array
-    archive_lines = []
-    for entry in entries:
-        archive_lines.append(f'    {{ date: "{entry["date"]}", page: "{entry["page"]}", title: "{entry["title"]}" }}')
-
-    archive_data = ',\n'.join(archive_lines)
-
-    # Read existing file to preserve the calendar logic
+def verify_calendar_reads_from_featured_games():
+    """Verify calendar.js reads from FEATURED_GAMES (no embedded data)"""
     with open(CALENDAR_FILE, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Replace the ARCHIVE_DATA section
-    # Find the pattern: const ARCHIVE_DATA = [ ... ];
-    pattern = r'(// Featured Games Archive Data.*?Last updated:)[^\n]*(\n\nconst ARCHIVE_DATA = \[)\n.*?(\];)'
+    reads_from_featured_games = 'typeof FEATURED_GAMES' in content
+    has_no_embedded_data = 'date: "2025-' not in content and 'date: "2026-' not in content
+    has_rendering = 'renderCalendar' in content
 
-    replacement = f'\\g<1> {today}\\g<2>\n{archive_data}\n\\3'
-
-    new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
-
-    if new_content != content:
-        with open(CALENDAR_FILE, 'w', encoding='utf-8') as f:
-            f.write(new_content)
-        print(f"[OK] Updated {CALENDAR_FILE}")
-        print(f"     Added/updated {len(entries)} entries")
-        return True
-    else:
-        print(f"[OK] {CALENDAR_FILE} is already up to date")
-        return False
+    return reads_from_featured_games, has_no_embedded_data, has_rendering
 
 def main():
     print("=" * 60)
-    print("Syncing Featured Games Calendar Data")
+    print("Featured Games Calendar - Verification")
     print("=" * 60)
 
-    # Check files exist
     if not os.path.exists(DATA_FILE):
         print(f"[ERROR] Data file not found: {DATA_FILE}")
         return 1
@@ -88,23 +52,32 @@ def main():
         print(f"[ERROR] Calendar file not found: {CALENDAR_FILE}")
         return 1
 
-    # Parse master data
-    print(f"\n[1] Reading from: featured-games-data.js")
-    entries = parse_featured_games_data()
-    print(f"    Found {len(entries)} featured game entries")
-
+    # Check data file
+    entries = count_entries_in_data_file()
+    print(f"\n[1] featured-games-data.js: {len(entries)} entries")
     if entries:
-        print(f"    Latest: {entries[0]['date']} - {entries[0]['title']}")
+        newest = max(entries, key=lambda x: x[0])
+        print(f"    Latest: {newest[0]} - {newest[2]}")
 
-    # Update calendar file
-    print(f"\n[2] Updating: scripts/featured-games-calendar.js")
-    update_calendar_file(entries)
+    # Check calendar file
+    reads_fg, no_embedded, has_render = verify_calendar_reads_from_featured_games()
+    print(f"\n[2] scripts/featured-games-calendar.js:")
+    print(f"    Reads from FEATURED_GAMES: {'YES' if reads_fg else 'NO - PROBLEM!'}")
+    print(f"    No embedded data: {'YES' if no_embedded else 'NO - PROBLEM!'}")
+    print(f"    Has rendering logic: {'YES' if has_render else 'NO - PROBLEM!'}")
+
+    if not reads_fg or not no_embedded or not has_render:
+        print("\n[WARNING] Calendar file may need repair!")
+        print("    calendar.js should read from FEATURED_GAMES (no embedded data)")
+        return 1
+
+    print(f"\n[OK] Architecture is correct:")
+    print(f"     featured-games-data.js -> defines FEATURED_GAMES ({len(entries)} entries)")
+    print(f"     scripts/featured-games-calendar.js -> reads FEATURED_GAMES, renders calendar")
+    print(f"\n     No sync needed - calendar reads data at runtime.")
 
     print("\n" + "=" * 60)
-    print("Done! Don't forget to commit and push the changes.")
-    print("=" * 60)
-
     return 0
 
 if __name__ == "__main__":
-    exit(main())
+    sys.exit(main())

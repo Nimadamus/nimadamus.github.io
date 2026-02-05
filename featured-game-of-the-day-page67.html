@@ -244,56 +244,7 @@
 </div>
 
 <script src="featured-games-data.js"></script>
-<script>
-const ARCHIVE_DATA = typeof window.FEATURED_GAMES_DATA !== 'undefined' ? window.FEATURED_GAMES_DATA : [];
-const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const monthSelect = document.getElementById('month-select');
-const calendarDays = document.getElementById('calendar-days');
-const yearDisplay = document.getElementById('cal-year');
-let currentYear = 2026;
-let currentMonth = 1;
-
-function initCalendar() {
-    monthSelect.innerHTML = months.map((m, i) => `<option value="${i}">${m}</option>`).join('');
-    const now = new Date();
-    currentYear = now.getFullYear();
-    currentMonth = now.getMonth();
-    if (window.FORCED_PAGE_DATE) {
-        const parts = window.FORCED_PAGE_DATE.split('-');
-        currentYear = parseInt(parts[0]);
-        currentMonth = parseInt(parts[1]) - 1;
-    }
-    monthSelect.value = currentMonth;
-    yearDisplay.textContent = currentYear;
-    monthSelect.addEventListener('change', () => { currentMonth = parseInt(monthSelect.value); renderCalendar(); });
-    renderCalendar();
-}
-
-function renderCalendar() {
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
-    const currentPageDate = window.FORCED_PAGE_DATE || todayStr;
-    let html = '';
-    for (let i = 0; i < firstDay; i++) html += '<div class="cal-day empty"></div>';
-    for (let d = 1; d <= daysInMonth; d++) {
-        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const entry = ARCHIVE_DATA.find(e => e.date === dateStr);
-        let classes = 'cal-day';
-        if (entry) classes += ' has-content';
-        if (dateStr === todayStr) classes += ' today';
-        if (dateStr === currentPageDate) classes += ' current-page';
-        if (entry) {
-            html += `<div class="${classes}" onclick="window.location.href='${entry.page}'" title="${entry.title}">${d}</div>`;
-        } else {
-            html += `<div class="${classes}">${d}</div>`;
-        }
-    }
-    calendarDays.innerHTML = html;
-}
-initCalendar();
-</script>
+<script src="scripts/featured-games-calendar.js"></script>
 
 </body>
 </html>
