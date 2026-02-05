@@ -1,6 +1,6 @@
 // Featured Games Archive Data - CENTRALIZED FILE
 // All featured-game-of-the-day pages should reference this file
-// Last updated: February 04, 2026
+// Last updated: February 05, 2026
 
 const ARCHIVE_DATA = [
     { date: "2026-02-04", page: "featured-game-of-the-day-page66.html", title: "Thunder @ Spurs" },
