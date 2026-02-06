@@ -1055,8 +1055,9 @@ class ContentValidator:
 class BetLegendValidator:
     """Main validator that orchestrates all checks."""
     
-    def __init__(self, target_path):
+    def __init__(self, target_path, specific_files=None):
         self.target_path = target_path
+        self.specific_files = specific_files  # List of specific files to scan (for --files mode)
         self.roster_manager = RosterManager()
         self.results = defaultdict(list)  # filepath -> list of issues
         self.summary = {'errors': 0, 'warnings': 0, 'files_scanned': 0, 'files_with_issues': 0}
@@ -1098,17 +1099,26 @@ class BetLegendValidator:
         self._print_report()
     
     def _find_files(self):
-        """Find all HTML files to scan."""
+        """Find HTML files to scan. If specific_files is set, only scan those."""
         target = Path(self.target_path)
-        
+
+        # If specific files were provided (e.g., from git staged files), use only those
+        if self.specific_files:
+            files = []
+            for f in self.specific_files:
+                full_path = os.path.join(str(target), f) if not os.path.isabs(f) else f
+                if os.path.exists(full_path) and Path(f).suffix.lower() in Config.HTML_EXTENSIONS:
+                    files.append(full_path)
+            return sorted(files)
+
         if target.is_file():
             return [str(target)]
-        
+
         files = []
         for root, dirs, filenames in os.walk(target):
             # Skip excluded directories
             dirs[:] = [d for d in dirs if d not in Config.SKIP_DIRS]
-            
+
             for fname in filenames:
                 if Path(fname).suffix.lower() in Config.HTML_EXTENSIONS:
                     if fname not in Config.SKIP_FILES:
@@ -1120,7 +1130,7 @@ class BetLegendValidator:
                                 break
                         if not skip:
                             files.append(os.path.join(root, fname))
-        
+
         return sorted(files)
     
     def _validate_file(self, filepath):
@@ -1302,28 +1312,36 @@ if __name__ == '__main__':
         print("Usage:")
         print(f"  python {sys.argv[0]} <path_to_scan>")
         print(f"  python {sys.argv[0]} <path_to_scan> --install-hook")
+        print(f"  python {sys.argv[0]} <path_to_scan> --files file1.html file2.html ...")
         print()
         print("Examples:")
         print(f"  python {sys.argv[0]} C:/Users/Nima/nimadamus.github.io")
         print(f"  python {sys.argv[0]} C:/Users/Nima/nimadamus.github.io/blog-page12.html")
         print(f"  python {sys.argv[0]} C:/Users/Nima/nimadamus.github.io --install-hook")
+        print(f"  python {sys.argv[0]} . --files moneyline-parlay-of-the-day.html blog-page12.html")
         sys.exit(1)
-    
+
     target = sys.argv[1]
-    
+
     if not os.path.exists(target):
         print(f"Error: Path does not exist: {target}")
         sys.exit(1)
-    
+
     # Install git hook if requested
     if '--install-hook' in sys.argv:
         print("Installing git pre-commit hook...")
         install_git_hook(target)
         print()
-    
+
+    # Parse --files flag for staged-only mode
+    specific_files = None
+    if '--files' in sys.argv:
+        files_idx = sys.argv.index('--files')
+        specific_files = sys.argv[files_idx + 1:]
+
     # Run validation
-    validator = BetLegendValidator(target)
+    validator = BetLegendValidator(target, specific_files=specific_files)
     validator.run()
-    
+
     # Exit with error code if errors found (useful for git hooks)
     sys.exit(1 if validator.summary['errors'] > 0 else 0)
