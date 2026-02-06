@@ -1055,9 +1055,10 @@ class ContentValidator:
 class BetLegendValidator:
     """Main validator that orchestrates all checks."""
     
-    def __init__(self, target_path, specific_files=None):
+    def __init__(self, target_path, specific_files=None, errors_only=False):
         self.target_path = target_path
         self.specific_files = specific_files  # List of specific files to scan (for --files mode)
+        self.errors_only = errors_only  # Only show errors, suppress warnings in output
         self.roster_manager = RosterManager()
         self.results = defaultdict(list)  # filepath -> list of issues
         self.summary = {'errors': 0, 'warnings': 0, 'files_scanned': 0, 'files_with_issues': 0}
@@ -1239,25 +1240,26 @@ class BetLegendValidator:
                         print(f"     Context: ...{context}...")
                 print()
         
-        # Warnings section
-        warning_files = {fp: issues for fp, issues in self.results.items()
-                        if any(s == 'WARNING' for s, _, _ in issues)}
-        
-        if warning_files:
-            print("-" * 70)
-            print("  WARNINGS (review recommended):")
-            print("-" * 70)
-            print()
-            for filepath, issues in sorted(warning_files.items()):
-                warnings = [(s, m, c) for s, m, c in issues if s == 'WARNING']
-                if warnings:
-                    rel_path = os.path.relpath(filepath, self.target_path) if os.path.isdir(self.target_path) else os.path.basename(filepath)
-                    print(f"  [WARN] {rel_path}")
-                    for severity, msg, context in warnings:
-                        print(f"     [{severity}] {msg}")
-                        if context:
-                            print(f"     Context: ...{context}...")
-                    print()
+        # Warnings section (suppressed in errors_only mode)
+        if not self.errors_only:
+            warning_files = {fp: issues for fp, issues in self.results.items()
+                            if any(s == 'WARNING' for s, _, _ in issues)}
+
+            if warning_files:
+                print("-" * 70)
+                print("  WARNINGS (review recommended):")
+                print("-" * 70)
+                print()
+                for filepath, issues in sorted(warning_files.items()):
+                    warnings = [(s, m, c) for s, m, c in issues if s == 'WARNING']
+                    if warnings:
+                        rel_path = os.path.relpath(filepath, self.target_path) if os.path.isdir(self.target_path) else os.path.basename(filepath)
+                        print(f"  [WARN] {rel_path}")
+                        for severity, msg, context in warnings:
+                            print(f"     [{severity}] {msg}")
+                            if context:
+                                print(f"     Context: ...{context}...")
+                        print()
         
         # Final verdict
         print("=" * 70)
@@ -1333,14 +1335,18 @@ if __name__ == '__main__':
         install_git_hook(target)
         print()
 
+    # Parse --errors-only flag (suppress warnings in output)
+    errors_only = '--errors-only' in sys.argv
+
     # Parse --files flag for staged-only mode
     specific_files = None
     if '--files' in sys.argv:
         files_idx = sys.argv.index('--files')
-        specific_files = sys.argv[files_idx + 1:]
+        # Collect files until we hit another flag or end of args
+        specific_files = [f for f in sys.argv[files_idx + 1:] if not f.startswith('--')]
 
     # Run validation
-    validator = BetLegendValidator(target, specific_files=specific_files)
+    validator = BetLegendValidator(target, specific_files=specific_files, errors_only=errors_only)
     validator.run()
 
     # Exit with error code if errors found (useful for git hooks)
