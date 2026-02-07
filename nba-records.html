@@ -371,11 +371,17 @@
  // Exclude cross-sport parlays
  if (league === 'cross-sport') return false;
 
+ // Exclude college basketball (belongs on NCAAB page)
+ if (league === 'ncaab' || league === 'cbb' || league === 'college basketball') return false;
+
  // Check League column first (most reliable)
  if (league === 'nba') return true;
 
  // Fallback: check Sport column for basketball
  if (sport === 'basketball') {
+ // Exclude college basketball teams/indicators
+ const collegeTeams = ['uconn', 'duke', 'gonzaga', 'kentucky', 'kansas', 'unc', 'villanova', 'purdue', 'auburn', 'tennessee', 'alabama', 'iowa state', 'marquette', 'baylor', 'creighton', 'michigan state', 'florida', 'arizona', 'st. john', 'xavier', 'memphis', 'houston cougars', 'texas tech', 'oregon', 'wisconsin', 'illinois', 'indiana hoosiers', 'south dakota', 'loyola', 'davidson', 'gonzaga', 'boise st', 'uc santa barbara', '(ncaab)', '(cbb)', '(ncaa)', 'ncaab', 'ncaa'];
+ if (collegeTeams.some(team => pick.includes(team))) return false;
  // Make sure it's not a cross-sport parlay by checking for other sport teams
  const nflTeams = ['49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'bucs', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
  return !nflTeams.some(team => pick.includes(team));
