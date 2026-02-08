@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-02-08", page: "ncaab.html", title: "NCAAB Analysis - February 8, 2026" },
+    { date: "2026-02-08", page: "ncaab-page71.html", title: "NCAAB Analysis - February 8, 2026" },
     { date: "2026-02-07", page: "ncaab-page70.html", title: "NCAAB Analysis - February 7, 2026" },
     { date: "2026-02-06", page: "ncaab-page69.html", title: "NCAAB Analysis - February 6, 2026" },
     { date: "2026-02-05", page: "ncaab-page68.html", title: "NCAAB Analysis - February 5, 2026" },
