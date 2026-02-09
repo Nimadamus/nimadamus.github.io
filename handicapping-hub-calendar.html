@@ -164,6 +164,8 @@
  font-weight: 600;
  }
 
+ a.calendar-day { text-decoration: none; }
+
  .calendar-day.available:hover {
  background: rgba(253, 80, 0, 0.3);
  transform: translateY(-2px);
@@ -338,7 +340,7 @@
 
  <div class="stats-bar">
  <div class="stat-item">
- <div class="stat-value" id="total-days">9</div>
+ <div class="stat-value" id="total-days">0</div>
  <div class="stat-label">Days Archived</div>
  </div>
  <div class="stat-item">
@@ -351,88 +353,7 @@
  </div>
  </div>
 
- <!-- December 2025 Calendar -->
- <div class="calendar-container">
- <h2 class="calendar-month-title">December 2025</h2>
-
- <div class="calendar-grid">
- <div class="calendar-day-header">Sun</div>
- <div class="calendar-day-header">Mon</div>
- <div class="calendar-day-header">Tue</div>
- <div class="calendar-day-header">Wed</div>
- <div class="calendar-day-header">Thu</div>
- <div class="calendar-day-header">Fri</div>
- <div class="calendar-day-header">Sat</div>
-
- <!-- Week 1: Nov 30 - Dec 6 -->
- <div class="calendar-day"><span class="day-number"></span></div>
- <div class="calendar-day"><span class="day-number">1</span></div>
- <div class="calendar-day"><span class="day-number">2</span></div>
- <div class="calendar-day"><span class="day-number">3</span></div>
- <div class="calendar-day"><span class="day-number">4</span></div>
- <div class="calendar-day"><span class="day-number">5</span></div>
- <div class="calendar-day"><span class="day-number">6</span></div>
-
- <!-- Week 2: Dec 7-13 -->
- <div class="calendar-day"><span class="day-number">7</span></div>
- <div class="calendar-day"><span class="day-number">8</span></div>
- <div class="calendar-day"><span class="day-number">9</span></div>
- <div class="calendar-day"><span class="day-number">10</span></div>
- <div class="calendar-day"><span class="day-number">11</span></div>
- <div class="calendar-day"><span class="day-number">12</span></div>
- <div class="calendar-day"><span class="day-number">13</span></div>
-
- <!-- Week 3: Dec 14-20 -->
- <div class="calendar-day available" data-date="2025-12-14" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-14.html')">
- <span class="day-number">14</span>
- <span class="game-count">Archived</span>
- </div>
- <div class="calendar-day available" data-date="2025-12-15" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-15.html')">
- <span class="day-number">15</span>
- <span class="game-count">Archived</span>
- </div>
- <div class="calendar-day available" data-date="2025-12-16" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-16.html')">
- <span class="day-number">16</span>
- <span class="game-count">Archived</span>
- </div>
- <div class="calendar-day available" data-date="2025-12-17" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-17.html')">
- <span class="day-number">17</span>
- <span class="game-count">Archived</span>
- </div>
- <div class="calendar-day available" data-date="2025-12-18" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-18.html')">
- <span class="day-number">18</span>
- <span class="game-count">Archived</span>
- </div>
- <div class="calendar-day available" data-date="2025-12-19" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-19.html')">
- <span class="day-number">19</span>
- <span class="game-count">Archived</span>
- </div>
- <div class="calendar-day available" data-date="2025-12-20" onclick="navigateTo('handicapping-hub-2025-12-20.html')">
- <span class="day-number">20</span>
- <span class="game-count">Archived</span>
- </div>
-
- <!-- Week 4: Dec 21-27 -->
- <div class="calendar-day available" data-date="2025-12-21" onclick="navigateTo('handicapping-hub-archive/hub-2025-12-21.html')">
- <span class="day-number">21</span>
- <span class="game-count">Archived</span>
- </div>
- <div class="calendar-day available today" data-date="2025-12-22" onclick="navigateTo('handicapping-hub.html')">
- <span class="day-number">22</span>
- <span class="game-count">Today</span>
- </div>
- <div class="calendar-day"><span class="day-number">23</span></div>
- <div class="calendar-day"><span class="day-number">24</span></div>
- <div class="calendar-day"><span class="day-number">25</span></div>
- <div class="calendar-day"><span class="day-number">26</span></div>
- <div class="calendar-day"><span class="day-number">27</span></div>
-
- <!-- Week 5: Dec 28-31 -->
- <div class="calendar-day"><span class="day-number">28</span></div>
- <div class="calendar-day"><span class="day-number">29</span></div>
- <div class="calendar-day"><span class="day-number">30</span></div>
- <div class="calendar-day"><span class="day-number">31</span></div>
- </div>
+ <div id="calendars-container"></div>
 
  <div class="legend">
  <div class="legend-item">
@@ -448,7 +369,6 @@
  <span>Today's Date</span>
  </div>
  </div>
- </div>
 
  <div class="back-link">
  <a href="handicapping-hub.html">View Today's Hub</a>
@@ -457,56 +377,87 @@
 </div>
 
 <script>
-function navigateTo(page) {
- window.location.href = page;
-}
+const archiveDates = [
+ "2025-11-30","2025-12-01","2025-12-02","2025-12-03","2025-12-04","2025-12-05","2025-12-06",
+ "2025-12-07","2025-12-08","2025-12-09","2025-12-10","2025-12-11","2025-12-12","2025-12-13",
+ "2025-12-14","2025-12-15","2025-12-16","2025-12-17","2025-12-18","2025-12-19","2025-12-20",
+ "2025-12-21","2025-12-22","2025-12-23","2025-12-24","2025-12-25","2025-12-26","2025-12-27",
+ "2025-12-28","2025-12-29","2025-12-30","2025-12-31",
+ "2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07",
+ "2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14",
+ "2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21",
+ "2026-01-22","2026-01-23","2026-01-24","2026-01-28","2026-01-29","2026-01-30","2026-01-31",
+ "2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07",
+ "2026-02-08"
+];
 
-// Detect current page and highlight it
-document.addEventListener('DOMContentLoaded', function() {
- const currentPath = window.location.pathname;
- const currentPage = currentPath.split('/').pop() || 'handicapping-hub-calendar.html';
+document.getElementById('total-days').textContent = archiveDates.length;
 
- // Map of date to page paths
- const dateToPage = {
- '2025-12-14': 'handicapping-hub-archive/hub-2025-12-14.html',
- '2025-12-15': 'handicapping-hub-archive/hub-2025-12-15.html',
- '2025-12-16': 'handicapping-hub-archive/hub-2025-12-16.html',
- '2025-12-17': 'handicapping-hub-archive/hub-2025-12-17.html',
- '2025-12-18': 'handicapping-hub-archive/hub-2025-12-18.html',
- '2025-12-19': 'handicapping-hub-archive/hub-2025-12-19.html',
- '2025-12-20': 'handicapping-hub-2025-12-20.html',
- '2025-12-21': 'handicapping-hub-archive/hub-2025-12-21.html',
- '2025-12-22': 'handicapping-hub.html'
- };
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const dayHeaders = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const today = new Date();
+const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
 
- // Find and mark active day
- document.querySelectorAll('.calendar-day[data-date]').forEach(day => {
- const date = day.dataset.date;
- const expectedPage = dateToPage[date];
+// Get unique months from archive dates
+const months = [];
+const seen = {};
+archiveDates.forEach(d => {
+ const key = d.substring(0,7);
+ if (!seen[key]) { seen[key] = true; months.push(key); }
+});
 
- // Check if current page matches this date's page
- if (expectedPage && (currentPage.includes(expectedPage) ||
- currentPath.includes(expectedPage) ||
- (date === '2025-12-22' && (currentPage === 'handicapping-hub.html' || currentPage === 'handicapping-hub-2025-12-22.html')))) {
- day.classList.add('active');
- day.classList.remove('available');
+const container = document.getElementById('calendars-container');
+
+months.forEach(monthKey => {
+ const [yr, mo] = monthKey.split('-').map(Number);
+ const firstDay = new Date(yr, mo-1, 1).getDay();
+ const daysInMonth = new Date(yr, mo, 0).getDate();
+
+ const cal = document.createElement('div');
+ cal.className = 'calendar-container';
+ cal.style.marginBottom = '30px';
+ cal.innerHTML = '<h2 class="calendar-month-title">' + monthNames[mo-1] + ' ' + yr + '</h2>';
+
+ const grid = document.createElement('div');
+ grid.className = 'calendar-grid';
+
+ dayHeaders.forEach(h => {
+  const hdr = document.createElement('div');
+  hdr.className = 'calendar-day-header';
+  hdr.textContent = h;
+  grid.appendChild(hdr);
+ });
+
+ for (let i = 0; i < firstDay; i++) {
+  const empty = document.createElement('div');
+  empty.className = 'calendar-day';
+  grid.appendChild(empty);
  }
- });
 
- // Update today marker based on actual date
- const today = new Date();
- const todayStr = today.toISOString().split('T')[0];
+ for (let d = 1; d <= daysInMonth; d++) {
+  const dateStr = yr + '-' + String(mo).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+  const hasArchive = archiveDates.includes(dateStr);
+  const isToday = dateStr === todayStr;
 
- // Remove existing today class and add to correct day
- document.querySelectorAll('.calendar-day.today').forEach(el => {
- el.classList.remove('today');
- });
-
- document.querySelectorAll('.calendar-day[data-date]').forEach(day => {
- if (day.dataset.date === todayStr) {
- day.classList.add('today');
+  if (hasArchive) {
+   const link = document.createElement('a');
+   link.className = 'calendar-day available';
+   if (isToday) link.className += ' today';
+   link.dataset.date = dateStr;
+   link.href = 'handicapping-hub-archive/hub-' + dateStr + '.html';
+   link.innerHTML = '<span class="day-number">' + d + '</span><span class="game-count">Archived</span>';
+   grid.appendChild(link);
+  } else {
+   const cell = document.createElement('div');
+   cell.className = 'calendar-day';
+   if (isToday) cell.className += ' today';
+   cell.innerHTML = '<span class="day-number">' + d + '</span>';
+   grid.appendChild(cell);
+  }
  }
- });
+
+ cal.appendChild(grid);
+ container.appendChild(cal);
 });
 </script>
 
