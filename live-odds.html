@@ -554,8 +554,8 @@ body {
 </div>
 
 <div class="controls">
- <button class="sport-btn active" onclick="changeSport('americanfootball_nfl')">NFL</button>
- <button class="sport-btn" onclick="changeSport('basketball_nba')">NBA</button>
+ <button class="sport-btn" onclick="changeSport('americanfootball_nfl')">NFL</button>
+ <button class="sport-btn active" onclick="changeSport('basketball_nba')">NBA</button>
  <button class="sport-btn" onclick="changeSport('icehockey_nhl')">NHL</button>
  <button class="sport-btn" onclick="changeSport('baseball_mlb')">MLB</button>
  <button class="sport-btn" onclick="changeSport('americanfootball_ncaaf')">NCAAF</button>
@@ -579,7 +579,7 @@ body {
 // The Odds API Configuration
 const API_KEY = 'c405ed8a7e1f4ec945d39aeeaf647e4b';
 const API_BASE_URL = 'https://api.the-odds-api.com/v4';
-let currentSport = 'americanfootball_nfl';
+let currentSport = 'basketball_nba';
 
 // Fetch ALL available bookmakers from the API (no filter = maximum coverage)
 // US region returns: DraftKings, FanDuel, BetMGM, BetRivers, Bovada, BetOnline, etc.
@@ -599,6 +599,7 @@ async function fetchOdds(sport) {
  return data;
  } catch (error) {
  console.error('Error fetching odds:', error);
+ document.getElementById('loading').innerHTML = '<div class="no-games">Unable to load odds. Please try again in a moment.</div>';
  return [];
  }
 }
@@ -744,12 +745,14 @@ function renderOdds(games) {
  oddsHTML += marketHTML;
  }
 
+ const sportEmoji = {'americanfootball_nfl':'🏈','americanfootball_ncaaf':'🏈','basketball_nba':'🏀','basketball_ncaab':'🏀','icehockey_nhl':'🏒','baseball_mlb':'⚾'}[currentSport]||'🏆';
+
  gameCard.innerHTML = `
  <div class="game-header">
  <div class="teams">
- <div class="team">🏈 ${awayTeam}</div>
- <div class="team" style="color: var(--gold);">vs</div>
- <div class="team">🏈 ${homeTeam}</div>
+ <div class="team">${sportEmoji} ${awayTeam}</div>
+ <div class="team" style="color: var(--gold);">@</div>
+ <div class="team">${sportEmoji} ${homeTeam}</div>
  </div>
  <div class="game-time">
  <div style="font-size: 16px; font-weight: 700; color: var(--accent);">${gameTime}</div>
