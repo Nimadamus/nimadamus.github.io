@@ -206,7 +206,7 @@ class SitemapGenerator:
 
 if __name__ == "__main__":
     generator = SitemapGenerator(
-        site_dir="C:/Users/Nima/betlegendpicks",
+        site_dir="C:/Users/Nima/nimadamus.github.io",
         base_url="https://www.betlegendpicks.com"
     )
 

@@ -938,26 +938,15 @@ If the user asks you to create a slate post (NBA, NHL, NFL, NCAAB, MLB), you MUS
 **EVERY TIME you create a new Featured Game of the Day:**
 
 1. Create the new page (increment page number)
-2. **IMMEDIATELY run this script to update ALL 300+ pages:**
+2. **IMMEDIATELY run the SAFE link update script (preserves canonicals):**
 
-```python
-import os, re
-REPO = r'C:\Users\Nima\nimadamus.github.io'
-NEW = 'featured-game-of-the-day-pageXX.html'  # ← UPDATE NUMBER
-
-for root, dirs, files in os.walk(REPO):
-    dirs[:] = [d for d in dirs if d != '.git']
-    for f in files:
-        if f.endswith('.html'):
-            path = os.path.join(root, f)
-            with open(path, 'r', encoding='utf-8', errors='ignore') as file:
-                c = file.read()
-            orig = c
-            c = re.sub(r'featured-game-of-the-day-page\d+\.html', NEW, c)
-            if c != orig:
-                with open(path, 'w', encoding='utf-8') as file:
-                    file.write(c)
+```bash
+python C:\Users\Nima\nimadamus.github.io\scripts\update_featured_game_links.py pageXX
 ```
+
+**WARNING: DO NOT use the old inline re.sub script - it destroys canonical tags on ALL pages!**
+**The old script caused ALL 73 pages to have canonicals pointing to the latest page,**
+**which told Google to deindex 72 of 73 pages. The new script preserves canonical and og:url tags.**
 
 3. **UPDATE CALENDAR DATA** - Add entry to `featured-games-data.js`:
 ```javascript
