@@ -5,13 +5,11 @@
 const ARCHIVE_DATA = [
     { date: "2026-02-08", page: "nfl.html", title: "NFL Super Bowl LX Analysis - February 8, 2026" },
     { date: "2026-02-08", page: "nfl-picks-predictions-against-the-spread-february-08-2026.html", title: "NFL Super Bowl LX Analysis - February 8, 2026" },
-    { date: "2026-02-01", page: "nfl-raiders-hire-klint-kubiak-head-coach-news.html", title: "Raiders Hire Klint Kubiak as Head Coach Super Bowl Architect February 2026" },
     { date: "2026-01-27", page: "nfl-picks-predictions-against-the-spread-january-27-2026.html", title: "NFL Super Bowl LX Preview - January 27, 2026" },
     { date: "2026-01-25", page: "nfl-picks-predictions-against-the-spread-january-25-2026.html", title: "NFL Conference Championships - January 25, 2026" },
     { date: "2026-01-18", page: "nfl-picks-predictions-against-the-spread-january-18-2026.html", title: "NFL Analysis - January 18, 2026" },
     { date: "2026-01-17", page: "nfl-picks-predictions-against-the-spread-january-17-2026.html", title: "NFL Analysis - January 17, 2026" },
     { date: "2026-01-17", page: "nfl-divisional-round-prediction-picks-january-17-2026.html", title: "49ers vs Seahawks NFC Divisional Picks & Prediction - January 17, 2026" },
-    { date: "2026-01-12", page: "nfl-49ers-stun-eagles-kittle-achilles-shanahan-fired-news.html", title: "49ers Stun Eagles 23-19" },
     { date: "2026-01-11", page: "nfl-picks-predictions-against-the-spread-january-11-2026.html", title: "NFL Analysis - January 11, 2026" },
     { date: "2026-01-10", page: "nfl-picks-predictions-against-the-spread-january-10-2026.html", title: "NFL Wild Card Weekend - January 10, 2026" },
     { date: "2026-01-04", page: "nfl-picks-predictions-against-the-spread-january-04-2026.html", title: "NFL Analysis - January 04, 2026" },

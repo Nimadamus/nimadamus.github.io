@@ -37,8 +37,8 @@ SPORTS = {
     'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html'], 'main': 'soccer.html', 'calendar_js': 'soccer-calendar.js'},
 }
 
-# Pages to exclude from calendar (utility pages, not content pages)
-EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index']
+# Pages to exclude from calendar (utility pages, news pages, data hubs, not daily analysis)
+EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index', '-news', 'news-', 'offseason', 'insights', 'historical', 'trends', 'splits', 'betting-hub', 'hub']
 
 # Dates to EXCLUDE from calendars (days when no content was posted but pages exist)
 # Format: { 'sport': ['YYYY-MM-DD', ...] }
