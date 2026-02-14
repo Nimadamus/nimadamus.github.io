@@ -37,7 +37,7 @@ pages = {
     'records.html': {'priority': '0.7', 'changefreq': 'weekly'},
 
     # Sport-specific pages
-    'mlb-page2.html': {'priority': '0.7', 'changefreq': 'daily'},
+    'mlb-picks-analysis-against-the-spread-january-08-2026.html': {'priority': '0.7', 'changefreq': 'daily'},
     'mlb-historical.html': {'priority': '0.6', 'changefreq': 'monthly'},
     'nfl.html': {'priority': '0.7', 'changefreq': 'daily'},
     'nba.html': {'priority': '0.7', 'changefreq': 'daily'},

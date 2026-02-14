@@ -80,7 +80,7 @@ def main():
         'nhl-records.html',
         'nba-records.html',
         'soccer-records.html',
-        'mlb-page2.html',
+        'mlb-picks-analysis-against-the-spread-january-08-2026.html',
         'mlb-historical.html',
         'nfl.html',
         'nba.html',

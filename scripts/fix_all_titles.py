@@ -130,7 +130,7 @@ page_dates = {
     'soccer-predictions-picks-best-bets-january-07-2026.html': '2026-01-07',
     'soccer-predictions-picks-best-bets-january-21-2026.html': '2025-12-21',
     'soccer-predictions-picks-best-bets-january-22-2026.html': '2025-12-22',
-    'mlb-page2.html': '2026-01-08',
+    'mlb-picks-analysis-against-the-spread-january-08-2026.html': '2026-01-08',
 }
 
 month_names = {

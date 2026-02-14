@@ -13,7 +13,7 @@ META_DESCRIPTIONS = {
     'nfl-49ers-stun-eagles-kittle-achilles-shanahan-fired-news.html': 'Latest sports betting news and headlines. Breaking updates on MLB, NFL, NBA, NHL, and betting industry. Stay informed with BetLegend News.',
     'nfl.html': 'NFL betting picks and analysis. Expert predictions for every game with verified track record. Free NFL picks, spreads, totals, and prop bets.',
     'nba.html': 'NBA betting picks and predictions. Daily basketball picks with analysis, player props, and game totals. Expert NBA betting advice.',
-    'mlb-page2.html': 'MLB betting picks and baseball predictions. Daily moneyline, run line, and total picks. Expert baseball betting analysis with verified results.',
+    'mlb-picks-analysis-against-the-spread-january-08-2026.html': 'MLB betting picks and baseball predictions. Daily moneyline, run line, and total picks. Expert baseball betting analysis with verified results.',
     'ncaaf.html': 'College football betting picks and NCAAF predictions. Expert analysis on spreads, totals, and moneylines. Free college football picks daily.',
     'betting-101.html': 'Sports betting guide for beginners. Learn how to bet on sports, understand odds, manage bankroll, and win consistently. Complete betting tutorial.',
     'live-odds.html': 'Live sports betting odds and lines. Real-time odds for MLB, NFL, NBA, NHL. Compare sportsbook lines and find the best value.',

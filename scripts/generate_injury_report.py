@@ -835,7 +835,7 @@ def generate_html(all_data):
                             <div class="column">
                                 <h4>Sports</h4>
                                 <a href="nfl.html">NFL</a>
-                                <a href="mlb-page2.html">MLB</a>
+                                <a href="mlb-picks-analysis-against-the-spread-january-08-2026.html">MLB</a>
                                 <a href="ncaaf.html">NCAAF</a>
                                 <a href="nba.html">NBA</a>
                                 <a href="ncaab.html">NCAAB</a>
