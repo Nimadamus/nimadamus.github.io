@@ -2043,7 +2043,7 @@ def generate_game_card_nhl(game: Dict) -> str:
                     <span class="h2h-stat-value">{t1_abbr} {t1_wins} - {t2_wins} {t2_abbr}</span>
                 </div>
                 <div class="h2h-stat h2h-ats-summary">
-                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-label">PUCK LINE REC</span>
                     <span class="h2h-stat-value">{t1_abbr} {ats_t1} - {ats_t2} {t2_abbr}</span>
                 </div>
                 <div class="h2h-stat h2h-ou-summary">
@@ -2052,7 +2052,7 @@ def generate_game_card_nhl(game: Dict) -> str:
                 </div>
             </div>
             <table class="h2h-table">
-                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>PL COVER</th><th>O/U</th></tr></thead>
                 <tbody>{meetings_html}</tbody>
             </table>
         </div>'''
@@ -2064,10 +2064,10 @@ def generate_game_card_nhl(game: Dict) -> str:
     if has_valid_odds(odds):
         betting_lines_html = f'''
         <div class="section betting-lines-full">
-            <div class="section-title">MATCHUP & BETTING (ScoresAndOdds Style)</div>
+            <div class="section-title">MATCHUP & BETTING</div>
             <table class="lines-table-full">
                 <thead>
-                    <tr><th class="team-col">TEAM</th><th>LINE</th><th>ML</th><th>O/U</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>GPG</th><th>GA</th><th>PWR</th></tr>
+                    <tr><th class="team-col">TEAM</th><th>ML</th><th>O/U</th><th>SU</th><th>ML REC</th><th>O/U REC</th><th>GPG</th><th>GA</th><th>PWR</th></tr>
                 </thead>
                 <tbody>
                     <tr class="away-row">
@@ -2075,7 +2075,6 @@ def generate_game_card_nhl(game: Dict) -> str:
                             <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{away['abbr']}</span>
                         </td>
-                        <td class="spread">{odds['spread_away']}</td>
                         <td class="ml">{odds['ml_away']}</td>
                         <td class="total">O {odds['total']}</td>
                         <td class="su-record">{away['record']}</td>
@@ -2090,7 +2089,6 @@ def generate_game_card_nhl(game: Dict) -> str:
                             <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">{home['abbr']}</span>
                         </td>
-                        <td class="spread">{odds['spread_home']}</td>
                         <td class="ml">{odds['ml_home']}</td>
                         <td class="total">U {odds['total']}</td>
                         <td class="su-record">{home['record']}</td>
@@ -2108,7 +2106,7 @@ def generate_game_card_nhl(game: Dict) -> str:
         <div class="section betting-lines-full">
             <div class="section-title">MATCHUP (No Odds Available)</div>
             <table class="lines-table-full">
-                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>GPG</th><th>GA</th><th>PWR</th></tr></thead>
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>O/U REC</th><th>GPG</th><th>GA</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
@@ -2116,7 +2114,6 @@ def generate_game_card_nhl(game: Dict) -> str:
                             <span class="team-name">{away['abbr']}</span>
                         </td>
                         <td class="su-record">{away['record']}</td>
-                        <td class="ats-record">{away['stats']['ats']}</td>
                         <td class="ou-record">{away['stats']['ou']}</td>
                         <td class="ppg">{away['stats']['gf']}</td>
                         <td class="opp-ppg">{away['stats']['ga']}</td>
@@ -2128,7 +2125,6 @@ def generate_game_card_nhl(game: Dict) -> str:
                             <span class="team-name">{home['abbr']}</span>
                         </td>
                         <td class="su-record">{home['record']}</td>
-                        <td class="ats-record">{home['stats']['ats']}</td>
                         <td class="ou-record">{home['stats']['ou']}</td>
                         <td class="ppg">{home['stats']['gf']}</td>
                         <td class="opp-ppg">{home['stats']['ga']}</td>
@@ -2199,6 +2195,8 @@ def generate_game_card(game: Dict, sport: str) -> str:
     elif sport == 'NCAAB':
         return generate_game_card_nba(game, 'NCAAB')
     elif sport == 'NHL':
+        return generate_game_card_nhl(game)
+    elif sport == 'MLB':
         return generate_game_card_nhl(game)
     return ''
 

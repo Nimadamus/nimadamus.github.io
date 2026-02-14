@@ -87,6 +87,7 @@ const FEATURED_GAMES = [
     { date: "2026-02-11", page: "featured-game-of-the-day-page73.html", title: "Knicks at 76ers" },
     { date: "2026-02-12", page: "featured-game-of-the-day-page74.html", title: "Bucks at Thunder" },
     { date: "2026-02-13", page: "featured-game-of-the-day-page75.html", title: "#10 Michigan State at Wisconsin" },
+    { date: "2026-02-14", page: "featured-game-of-the-day-page76.html", title: "#9 Kansas at #5 Iowa State" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
