@@ -7,7 +7,7 @@ preventing content loss when main pages are updated.
 
 The Problem (January 12, 2026):
 - Content was added to main pages (nba.html, nhl.html, etc.) without creating
-  dedicated page files (nba-page47.html, etc.)
+  dedicated page files (nba-picks-analysis-against-the-spread-january-12-2026.html, etc.)
 - When the next day's content was added, January 12 content was overwritten
 - Result: Lost all January 12 content
 

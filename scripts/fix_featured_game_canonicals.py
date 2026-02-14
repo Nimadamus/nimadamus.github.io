@@ -42,7 +42,7 @@ def fix_page(filepath):
         content = new_content
 
     # Fix 2: OG:URL with content= first format
-    # <meta content="https://www.betlegendpicks.com/featured-game-of-the-day-page74.html" property="og:url"/>
+    # <meta content="https://www.betlegendpicks.com/bucks-at-thunder-prediction-picks-february-12-2026.html" property="og:url"/>
     og_url_pattern1 = r'(<meta\s+content=")https?://[^"]*featured-game-of-the-day-page\d+\.html("\s+property="og:url")'
     og_url_replacement1 = rf'\g<1>{correct_url}\2'
     new_content, count = re.subn(og_url_pattern1, og_url_replacement1, content)
@@ -51,7 +51,7 @@ def fix_page(filepath):
         content = new_content
 
     # Fix 3: OG:URL with property= first format
-    # <meta property="og:url" content="https://betlegendpicks.com/featured-game-of-the-day-page74.html">
+    # <meta property="og:url" content="https://betlegendpicks.com/bucks-at-thunder-prediction-picks-february-12-2026.html">
     og_url_pattern2 = r'(<meta\s+property="og:url"\s+content=")https?://[^"]*featured-game-of-the-day-page\d+\.html(")'
     og_url_replacement2 = rf'\g<1>{correct_url}\2'
     new_content, count = re.subn(og_url_pattern2, og_url_replacement2, content)

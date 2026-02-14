@@ -4,28 +4,28 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-01-19", page: "ncaaf.html", title: "NCAAF Analysis - January 19, 2026" },
-    { date: "2026-01-19", page: "ncaaf-page43.html", title: "NCAAF Analysis - January 19, 2026" },
-    { date: "2026-01-09", page: "ncaaf-page5.html", title: "NCAAF Analysis - January 09, 2026" },
-    { date: "2026-01-08", page: "ncaaf-page4.html", title: "NCAAF Analysis - January 08, 2026" },
-    { date: "2026-01-06", page: "ncaaf-page42.html", title: "FCS Championship - January 6, 2026" },
-    { date: "2026-01-02", page: "ncaaf-page39.html", title: "NCAAF Bowl Games - January 2, 2026" },
+    { date: "2026-01-19", page: "college-football-picks-predictions-against-the-spread-january-19-2026.html", title: "NCAAF Analysis - January 19, 2026" },
+    { date: "2026-01-09", page: "college-football-picks-predictions-against-the-spread-january-09-2026.html", title: "NCAAF Analysis - January 09, 2026" },
+    { date: "2026-01-08", page: "college-football-picks-predictions-against-the-spread-january-08-2026.html", title: "NCAAF Analysis - January 08, 2026" },
+    { date: "2026-01-06", page: "college-football-picks-predictions-against-the-spread-january-06-2026.html", title: "FCS Championship - January 6, 2026" },
+    { date: "2026-01-02", page: "college-football-picks-predictions-against-the-spread-january-02-2026.html", title: "NCAAF Bowl Games - January 2, 2026" },
     { date: "2026-01-02", page: "archives/ncaaf/2026-01-02.html", title: "NCAAF Archive - 2026-01-02" },
-    { date: "2026-01-01", page: "ncaaf-page36.html", title: "CFP Quarterfinals - January 1, 2026" },
-    { date: "2025-12-31", page: "ncaaf-page35.html", title: "Bowl Games - December 31, 2025" },
-    { date: "2025-12-30", page: "ncaaf-page33.html", title: "NCAAF Bowl Games - December 30, 2025" },
-    { date: "2025-12-29", page: "ncaaf-page29.html", title: "NCAAF Bowl Games - December 29, 2025" },
-    { date: "2025-12-27", page: "ncaaf-page27.html", title: "NCAAF Bowl Games - December 27, 2025" },
-    { date: "2025-12-23", page: "ncaaf-page22.html", title: "NCAAF Bowl Games - December 23, 2025" },
-    { date: "2025-12-19", page: "ncaaf-page13.html", title: "NCAAF Bowl Games - December 19, 2025" },
-    { date: "2025-12-10", page: "ncaaf-page14.html", title: "NCAAF Analysis - December 10, 2025" },
-    { date: "2025-12-08", page: "ncaaf-page15.html", title: "NCAAF Analysis - December 8, 2025" },
-    { date: "2025-12-06", page: "ncaaf-page16.html", title: "NCAAF Analysis - December 6, 2025" },
-    { date: "2025-12-04", page: "ncaaf-page17.html", title: "NCAAF Analysis - December 4, 2025" },
+    { date: "2026-01-01", page: "college-football-picks-predictions-against-the-spread-january-01-2026.html", title: "CFP Quarterfinals - January 1, 2026" },
+    { date: "2025-12-31", page: "college-football-picks-predictions-against-the-spread-december-31-2025.html", title: "Bowl Games - December 31, 2025" },
+    { date: "2025-12-30", page: "college-football-picks-predictions-against-the-spread-december-30-2025.html", title: "NCAAF Bowl Games - December 30, 2025" },
+    { date: "2025-12-29", page: "college-football-picks-predictions-against-the-spread-december-29-2025.html", title: "NCAAF Bowl Games - December 29, 2025" },
+    { date: "2025-12-27", page: "college-football-picks-predictions-against-the-spread-december-27-2025.html", title: "NCAAF Bowl Games - December 27, 2025" },
+    { date: "2025-12-23", page: "college-football-picks-predictions-against-the-spread-december-23-2025.html", title: "NCAAF Bowl Games - December 23, 2025" },
+    { date: "2025-12-19", page: "college-football-picks-predictions-against-the-spread-december-19-2025.html", title: "NCAAF Bowl Games - December 19, 2025" },
+    { date: "2025-12-10", page: "college-football-picks-predictions-against-the-spread-december-10-2025.html", title: "NCAAF Analysis - December 10, 2025" },
+    { date: "2025-12-08", page: "college-football-picks-predictions-against-the-spread-december-08-2025.html", title: "NCAAF Analysis - December 8, 2025" },
+    { date: "2025-12-06", page: "college-football-picks-predictions-against-the-spread-december-06-2025.html", title: "NCAAF Analysis - December 6, 2025" },
+    { date: "2025-12-04", page: "college-football-picks-predictions-against-the-spread-december-04-2025.html", title: "NCAAF Analysis - December 4, 2025" },
     { date: "2025-12-01", page: "archives/ncaaf/2025-12-01.html", title: "NCAAF Archive - 2025-12-01" },
     { date: "2025-11-30", page: "archives/ncaaf/2025-11-30.html", title: "NCAAF Archive - 2025-11-30" },
     { date: "2025-11-29", page: "archives/ncaaf/2025-11-29.html", title: "NCAAF Archive - 2025-11-29" },
-    { date: "2025-11-28", page: "ncaaf-page2.html", title: "NCAAF Rivalry Week - November 28, 2025" },
-    { date: "2025-11-01", page: "ncaaf-page3.html", title: "College Football Picks - Week 1, November 1, 2025" },
+    { date: "2025-11-28", page: "college-football-picks-predictions-against-the-spread-november-28-2025.html", title: "NCAAF Rivalry Week - November 28, 2025" },
+    { date: "2025-11-01", page: "college-football-picks-predictions-against-the-spread-november-01-2025.html", title: "College Football Picks - Week 1, November 1, 2025" },
 ];
 
 const dateMap = {};
@@ -51,7 +51,7 @@ if (pathname.includes('/archives/')) {
 }
 
 // For main pages (nba.html, nhl.html, etc), ALWAYS use today's date
-// For archive pages (nba-page54.html), use the page's date
+// For archive pages (nba-picks-analysis-against-the-spread-january-21-2026.html), use the page's date
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
 const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);

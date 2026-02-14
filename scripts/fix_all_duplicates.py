@@ -26,7 +26,7 @@ def normalize_matchup(text):
 
 def get_page_number(filename):
     """Extract page number from filename for sorting."""
-    # soccer.html -> 0, soccer-page2.html -> 2, etc.
+    # soccer.html -> 0, soccer-predictions-picks-best-bets-december-19-2025.html -> 2, etc.
     if '-page' in filename:
         match = re.search(r'-page(\d+)', filename)
         if match:

@@ -19,7 +19,7 @@ THIS SCRIPT:
 
 Usage:
     python scripts/update_featured_game_links.py page75
-    python scripts/update_featured_game_links.py featured-game-of-the-day-page75.html
+    python scripts/update_featured_game_links.py 10-michigan-state-at-wisconsin-prediction-picks-february-13-2026.html
 """
 
 import os
@@ -84,7 +84,7 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: python scripts/update_featured_game_links.py <page_number_or_filename>")
         print("  Example: python scripts/update_featured_game_links.py page75")
-        print("  Example: python scripts/update_featured_game_links.py featured-game-of-the-day-page75.html")
+        print("  Example: python scripts/update_featured_game_links.py 10-michigan-state-at-wisconsin-prediction-picks-february-13-2026.html")
         sys.exit(1)
 
     arg = sys.argv[1]

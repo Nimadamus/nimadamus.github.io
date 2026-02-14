@@ -825,7 +825,7 @@ def generate_html(all_data):
                 <a href="handicapping-hub.html" class="hub-btn">Handicapping Hub</a>
 
                 <!-- Picks & Analysis -->
-                <a href="blog-page11.html" class="nav-link">Picks & Analysis</a>
+                <a href="betlegend-recent-betting-picks-analysis-archive-11.html" class="nav-link">Picks & Analysis</a>
 
                 <!-- Sports & Records Dropdown -->
                 <div class="dropdown">
@@ -872,7 +872,7 @@ def generate_html(all_data):
                 </div>
 
                 <!-- News -->
-                <a href="news-page5.html" class="nav-link">News</a>
+                <a href="yasiel-puig-convicted-gambling-case-sports-news.html" class="nav-link">News</a>
 
                 <!-- Injury Report -->
                 <a href="injury-report.html" class="nav-link active">Injury Report</a>
@@ -881,7 +881,7 @@ def generate_html(all_data):
                 <div class="dropdown">
                     <button class="dropbtn">Game of the Day ▼</button>
                     <div class="dropdown-content">
-                        <a href="featured-game-of-the-day-page50.html">Game of the Day</a>
+                        <a href="indiana-vs-miami-cfp-national-championship-prediction-picks-january-19-2026.html">Game of the Day</a>
                         <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
                     </div>
                 </div>

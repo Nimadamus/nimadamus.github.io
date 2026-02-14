@@ -54,64 +54,64 @@ EXCLUDED_DATES = {
 # These are used when the page title is generic and content dates are unreliable
 MANUAL_DATE_OVERRIDES = {
     # NFL archive pages with Week 16 games
-    'nfl-page10.html': '2025-11-28',  # Thanksgiving games (Week 13)
-    'nfl-page11.html': '2025-12-21',  # Week 16 Saturday games
-    'nfl-page12.html': '2025-12-19',  # Week 16 Thursday Night Football
-    'nfl-page15.html': '2025-12-20',  # Week 16 Friday/Saturday games
-    'nfl-page16.html': '2025-12-21',  # Week 16 Sunday games
-    'nfl-page17.html': '2025-12-21',  # Week 16 Sunday games (duplicate)
-    'nfl-page18.html': '2025-12-21',  # Week 16 Sunday games
-    'nfl-page19.html': '2025-12-21',  # Week 16 Sunday games
+    'nfl-picks-predictions-against-the-spread-november-28-2025.html': '2025-11-28',  # Thanksgiving games (Week 13)
+    'nfl-picks-predictions-against-the-spread-december-21-2025.html': '2025-12-21',  # Week 16 Saturday games
+    'nfl-picks-predictions-against-the-spread-december-19-2025.html': '2025-12-19',  # Week 16 Thursday Night Football
+    'nfl-picks-predictions-against-the-spread-december-20-2025.html': '2025-12-20',  # Week 16 Friday/Saturday games
+    'nfl-picks-predictions-against-the-spread-december-21-2025-part-2.html': '2025-12-21',  # Week 16 Sunday games
+    'nfl-picks-predictions-against-the-spread-december-21-2025-part-3.html': '2025-12-21',  # Week 16 Sunday games (duplicate)
+    'nfl-picks-predictions-against-the-spread-december-21-2025-part-4.html': '2025-12-21',  # Week 16 Sunday games
+    'nfl-picks-predictions-against-the-spread-december-21-2025-part-5.html': '2025-12-21',  # Week 16 Sunday games
     # NBA archive pages - CORRECTED based on actual game-time spans
-    'nba-page2.html': '2025-12-15',   # December 15 NBA (title confirms)
-    'nba-page4.html': '2025-12-20',   # December 20 NBA (game-time)
-    'nba-page5.html': '2025-12-21',   # December 21 NBA (game-time)
-    'nba-page6.html': '2025-12-15',   # December 15 NBA (title confirms)
-    'nba-page8.html': '2025-12-18',   # December 18 NBA (game-time)
-    'nba-page9.html': '2025-12-19',   # December 19 NBA (game-time)
-    'nba-page15.html': '2025-12-21',  # December 21 NBA (game-time)
-    'nba-page16.html': '2025-12-22',  # December 22 NBA
-    'nba-page17.html': '2025-12-22',  # December 22 NBA (game-time 23T = 22 ET)
-    'nba-page18.html': '2025-12-22',  # December 22 NBA (game-time 23T = 22 ET)
-    'nba-page19.html': '2025-12-23',  # December 23 NBA (game-time 24T = 23 ET)
-    'nba-page20.html': '2025-12-26',  # December 26 NBA
-    'nba-page22.html': '2025-12-21',  # December 21 NBA
-    'nba-page24.html': '2025-12-28',  # December 28 NBA
-    'nba-page25.html': '2025-12-28',  # December 28 NBA (duplicate/same day)
+    'nba-picks-analysis-against-the-spread-december-15-2025.html': '2025-12-15',   # December 15 NBA (title confirms)
+    'nba-picks-analysis-against-the-spread-december-20-2025-part-4.html': '2025-12-20',   # December 20 NBA (game-time)
+    'nba-picks-analysis-against-the-spread-december-21-2025-part-3.html': '2025-12-21',   # December 21 NBA (game-time)
+    'nba-picks-analysis-against-the-spread-december-15-2025-part-2.html': '2025-12-15',   # December 15 NBA (title confirms)
+    'nba-picks-analysis-against-the-spread-december-18-2025.html': '2025-12-18',   # December 18 NBA (game-time)
+    'nba-picks-analysis-against-the-spread-december-19-2025.html': '2025-12-19',   # December 19 NBA (game-time)
+    'nba-picks-analysis-against-the-spread-december-21-2025.html': '2025-12-21',  # December 21 NBA (game-time)
+    'nba-picks-analysis-against-the-spread-december-22-2025.html': '2025-12-22',  # December 22 NBA
+    'nba-picks-analysis-against-the-spread-december-22-2025-part-2.html': '2025-12-22',  # December 22 NBA (game-time 23T = 22 ET)
+    'nba-picks-analysis-against-the-spread-december-22-2025-part-3.html': '2025-12-22',  # December 22 NBA (game-time 23T = 22 ET)
+    'nba-picks-analysis-against-the-spread-december-23-2025.html': '2025-12-23',  # December 23 NBA (game-time 24T = 23 ET)
+    'nba-picks-analysis-against-the-spread-december-26-2025.html': '2025-12-26',  # December 26 NBA
+    'nba-picks-analysis-against-the-spread-december-21-2025-part-2.html': '2025-12-21',  # December 21 NBA
+    'nba-picks-analysis-against-the-spread-december-28-2025.html': '2025-12-28',  # December 28 NBA
+    'nba-picks-analysis-against-the-spread-december-28-2025-part-2.html': '2025-12-28',  # December 28 NBA (duplicate/same day)
     # NHL archive pages
-    'nhl-page9.html': '2025-12-09',   # December 9 NHL
-    'nhl-page17.html': '2025-12-17',  # December 17 NHL
-    'nhl-page18.html': '2025-12-18',  # December 18 NHL
-    'nhl-page19.html': '2025-12-19',  # December 19 NHL
-    'nhl-page20.html': '2025-12-20',  # December 20 NHL
-    'nhl-page21.html': '2025-12-21',  # December 21 NHL
-    'nhl-page22.html': '2025-12-22',  # December 22 NHL
-    'nhl-page23.html': '2025-12-23',  # December 23 NHL
-    'nhl-page24.html': '2025-12-23',  # December 23 NHL (evening games)
-    'nhl-page25.html': '2025-12-27',  # December 27 NHL (Saturday slate)
-    'nhl-page26.html': '2025-12-27',  # December 27 NHL (Saturday slate part 2)
-    'nhl-page27.html': '2025-12-28',  # December 28 NHL (Sunday slate)
-    'nhl-page28.html': '2025-12-28',  # December 28 NHL (Sunday slate part 2)
-    'nhl-page29.html': '2025-12-29',  # December 29 NHL (Sunday slate)
-    'nhl-page30.html': '2025-12-31',  # December 31 NHL (New Year's Eve - has ISO dates 2025-12-31)
-    'nhl-page31.html': '2025-12-31',  # December 31 NHL (New Year's Eve slate part 2)
-    'nhl-page32.html': '2026-01-01',  # January 1 NHL (New Year's Day)
-    'nhl-page33.html': '2026-01-01',  # January 1 NHL (New Year's Day part 2)
-    'nhl-page34.html': '2026-01-01',  # January 1 NHL (New Year's Day part 3)
-    'nhl-page35.html': '2026-01-03',  # January 3 NHL (Friday slate - Jets@Leafs, Caps@Sens, etc.)
+    'nhl-predictions-best-bets-tonight-december-09-2025.html': '2025-12-09',   # December 9 NHL
+    'nhl-predictions-best-bets-tonight-december-17-2025.html': '2025-12-17',  # December 17 NHL
+    'nhl-predictions-best-bets-tonight-december-18-2025.html': '2025-12-18',  # December 18 NHL
+    'nhl-predictions-best-bets-tonight-december-19-2025-part-2.html': '2025-12-19',  # December 19 NHL
+    'nhl-predictions-best-bets-tonight-december-20-2025-part-2.html': '2025-12-20',  # December 20 NHL
+    'nhl-predictions-best-bets-tonight-december-21-2025.html': '2025-12-21',  # December 21 NHL
+    'nhl-predictions-best-bets-tonight-december-22-2025.html': '2025-12-22',  # December 22 NHL
+    'nhl-predictions-best-bets-tonight-december-23-2025.html': '2025-12-23',  # December 23 NHL
+    'nhl-predictions-best-bets-tonight-december-23-2025-part-2.html': '2025-12-23',  # December 23 NHL (evening games)
+    'nhl-predictions-best-bets-tonight-december-27-2025.html': '2025-12-27',  # December 27 NHL (Saturday slate)
+    'nhl-predictions-best-bets-tonight-december-27-2025-part-2.html': '2025-12-27',  # December 27 NHL (Saturday slate part 2)
+    'nhl-predictions-best-bets-tonight-december-28-2025.html': '2025-12-28',  # December 28 NHL (Sunday slate)
+    'nhl-predictions-best-bets-tonight-december-28-2025-part-2.html': '2025-12-28',  # December 28 NHL (Sunday slate part 2)
+    'nhl-predictions-best-bets-tonight-december-29-2025.html': '2025-12-29',  # December 29 NHL (Sunday slate)
+    'nhl-predictions-best-bets-tonight-december-31-2025.html': '2025-12-31',  # December 31 NHL (New Year's Eve - has ISO dates 2025-12-31)
+    'nhl-predictions-best-bets-tonight-december-31-2025-part-2.html': '2025-12-31',  # December 31 NHL (New Year's Eve slate part 2)
+    'nhl-predictions-best-bets-tonight-january-01-2026.html': '2026-01-01',  # January 1 NHL (New Year's Day)
+    'nhl-predictions-best-bets-tonight-january-01-2026-part-2.html': '2026-01-01',  # January 1 NHL (New Year's Day part 2)
+    'nhl-predictions-best-bets-tonight-january-01-2026-part-3.html': '2026-01-01',  # January 1 NHL (New Year's Day part 3)
+    'nhl-predictions-best-bets-tonight-january-03-2026.html': '2026-01-03',  # January 3 NHL (Friday slate - Jets@Leafs, Caps@Sens, etc.)
     # NCAAB archive pages
-    'ncaab-page4.html': '2025-12-04',   # December 4 NCAAB
-    'ncaab-page5.html': '2025-12-05',   # December 5 NCAAB
-    'ncaab-page7.html': '2025-12-07',   # December 7 NCAAB
-    'ncaab-page8.html': '2025-12-08',   # December 8 NCAAB
-    'ncaab-page9.html': '2025-12-09',   # December 9 NCAAB
-    'ncaab-page16.html': '2025-12-16',  # December 16 NCAAB
-    'ncaab-page17.html': '2025-12-17',  # December 17 NCAAB
-    'ncaab-page18.html': '2025-12-18',  # December 18 NCAAB
-    'ncaab-page19.html': '2025-12-19',  # December 19 NCAAB
-    'ncaab-page20.html': '2025-12-20',  # December 20 NCAAB
-    'ncaab-page21.html': '2025-12-21',  # December 21 NCAAB
-    'ncaab-page22.html': '2025-12-22',  # December 22 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-04-2025.html': '2025-12-04',   # December 4 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-05-2025-part-2.html': '2025-12-05',   # December 5 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-07-2025-part-2.html': '2025-12-07',   # December 7 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-08-2025.html': '2025-12-08',   # December 8 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-09-2025-part-2.html': '2025-12-09',   # December 9 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-16-2025.html': '2025-12-16',  # December 16 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-17-2025.html': '2025-12-17',  # December 17 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-18-2025.html': '2025-12-18',  # December 18 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-19-2025-part-2.html': '2025-12-19',  # December 19 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-20-2025-part-2.html': '2025-12-20',  # December 20 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-21-2025.html': '2025-12-21',  # December 21 NCAAB
+    'college-basketball-picks-predictions-best-bets-december-22-2025.html': '2025-12-22',  # December 22 NCAAB
     # NCAAF archive pages - CLEANED UP Jan 8, 2026
     # Most NCAAF pages now have dates in their titles, so we removed incorrect overrides.
     # Only keep overrides for pages that DON'T have dates in their titles.
@@ -134,23 +134,23 @@ MANUAL_DATE_OVERRIDES = {
     # ============================================================
 
     # NBA archive pages (NOT main page - nba.html extracts from title)
-    'nba-page40.html': '2026-01-07',     # January 7 NBA
-    'nba-page39.html': '2026-01-05',     # January 5 NBA
-    'nba-page38.html': '2026-01-06',     # January 6 NBA
-    'nba-page35.html': '2026-01-04',     # January 4 NBA
-    'nba-page37.html': '2026-01-03',     # January 3 NBA
+    'nba-picks-analysis-against-the-spread-january-07-2026.html': '2026-01-07',     # January 7 NBA
+    'nba-picks-analysis-against-the-spread-january-05-2026.html': '2026-01-05',     # January 5 NBA
+    'nba-picks-analysis-against-the-spread-january-06-2026.html': '2026-01-06',     # January 6 NBA
+    'nba-picks-analysis-against-the-spread-january-04-2026.html': '2026-01-04',     # January 4 NBA
+    'nba-picks-analysis-against-the-spread-january-03-2026-part-2.html': '2026-01-03',     # January 3 NBA
     # NHL archive pages (NOT main page - nhl.html extracts from title)
-    'nhl-page41.html': '2026-01-07',     # January 7 NHL
-    'nhl-page40.html': '2026-01-05',     # January 5 NHL
-    'nhl-page39.html': '2026-01-06',     # January 6 NHL
-    'nhl-page36.html': '2026-01-04',     # January 4 NHL
-    'nhl-page38.html': '2026-01-03',     # January 3 NHL
+    'nhl-predictions-best-bets-tonight-january-07-2026.html': '2026-01-07',     # January 7 NHL
+    'nhl-predictions-best-bets-tonight-january-05-2026.html': '2026-01-05',     # January 5 NHL
+    'nhl-predictions-best-bets-tonight-january-06-2026.html': '2026-01-06',     # January 6 NHL
+    'nhl-predictions-best-bets-tonight-january-04-2026.html': '2026-01-04',     # January 4 NHL
+    'nhl-predictions-best-bets-tonight-january-03-2026-part-2.html': '2026-01-03',     # January 3 NHL
     # NCAAB archive pages (NOT main page - ncaab.html extracts from title)
-    'ncaab-page39.html': '2026-01-07',   # January 7 NCAAB
-    'ncaab-page38.html': '2026-01-06',   # January 6 NCAAB
+    'college-basketball-picks-predictions-best-bets-january-07-2026.html': '2026-01-07',   # January 7 NCAAB
+    'college-basketball-picks-predictions-best-bets-january-06-2026.html': '2026-01-06',   # January 6 NCAAB
     # Soccer archive pages (NOT main page - soccer.html extracts from title)
-    'soccer-page35.html': '2026-01-27',  # January 27 Soccer
-    'soccer-page34.html': '2026-01-26',  # January 26 Soccer
+    'soccer-predictions-picks-best-bets-january-27-2026.html': '2026-01-27',  # January 27 Soccer
+    'soccer-predictions-picks-best-bets-january-26-2026.html': '2026-01-26',  # January 26 Soccer
 }
 
 # Month name to number mapping

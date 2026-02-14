@@ -40,7 +40,7 @@ CLEANUP_RULES = {
     ],
 
     # Dec 28: page8 and page9 both dated Dec 28 - keep on page8, remove from page9
-    'soccer-page9.html': [
+    'soccer-predictions-picks-best-bets-january-25-2026.html': [
         'Hotspur @ Palace',
         'Internazionale @ Atalanta',
         'Napoli @ Cremonese',
@@ -50,7 +50,7 @@ CLEANUP_RULES = {
     ],
 
     # Jan 10/11: FA Cup games on Saturday (Jan 10) - remove from Jan 11 page (page20)
-    'soccer-page20.html': [
+    'soccer-predictions-picks-best-bets-january-11-2026.html': [
         'Arsenal vs Manchester United',
         'Charlton Athletic vs Chelsea',
         'Liverpool vs Accrington Stanley',
@@ -62,13 +62,13 @@ CLEANUP_RULES = {
     ],
 
     # Jan 4/9: Game "Brentford @ Everton" with Sunday Jan 4 game time - keep on page15 (Jan 4)
-    'soccer-page14.html': [
+    'soccer-predictions-picks-best-bets-january-09-2026.html': [
         'Brentford @ Everton',  # Listed as "Sunday, January 4" - belongs on Jan 4 page
     ],
 
     # Liverpool @ Fulham - appears on both page14 (Jan 9) and page15 (Jan 4)
     # Game time shows Jan 4 - keep on page15, remove from page14
-    'soccer-page14.html': [
+    'soccer-predictions-picks-best-bets-january-09-2026.html': [
         'Brentford @ Everton',
         'Liverpool @ Fulham',
     ],

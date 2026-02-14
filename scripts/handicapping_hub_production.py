@@ -3054,14 +3054,14 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
                     </div>
                 </div>
 
-                <a href="news-page5.html" class="nav-link">News</a>
+                <a href="yasiel-puig-convicted-gambling-case-sports-news.html" class="nav-link">News</a>
 
                 <a href="injury-report.html" class="nav-link">Injury Report</a>
 
                 <div class="dropdown">
                     <button class="dropbtn">Game of the Day</button>
                     <div class="dropdown-content">
-                        <a href="featured-game-of-the-day-page58.html">Game of the Day</a>
+                        <a href="lakers-at-cavaliers-prediction-picks-january-28-2026.html">Game of the Day</a>
                         <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
                     </div>
                 </div>

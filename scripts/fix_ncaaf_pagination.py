@@ -4,8 +4,8 @@ Fix NCAAF pagination across all pages.
 
 Structure:
 - ncaaf.html = NEWEST (Page 32 of 32)
-- ncaaf-page2.html = Page 31 of 32
-- ncaaf-page3.html = Page 30 of 32
+- college-football-picks-predictions-against-the-spread-november-28-2025.html = Page 31 of 32
+- college-football-picks-predictions-against-the-spread-november-01-2025.html = Page 30 of 32
 - ...
 - ncaaf-page32.html = OLDEST (Page 1 of 32)
 """

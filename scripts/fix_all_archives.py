@@ -90,10 +90,10 @@ footer a{{color:var(--accent-cyan);text-decoration:none}}
 <div class="nav-links">
 <a href="../../index.html">Home</a>
 <a href="../../handicapping-hub.html" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);color:#fff;border-radius:8px;">Hub</a>
-<a href="../../blog-page11.html">Picks</a>
+<a href="../../betlegend-recent-betting-picks-analysis-archive-11.html">Picks</a>
 <div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="../../nfl.html">NFL</a><a href="../../nba.html">NBA</a><a href="../../nhl.html">NHL</a><a href="../../ncaaf.html">NCAAF</a><a href="../../ncaab.html">NCAAB</a><a href="../../soccer.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="../../records.html">Detailed Breakdown</a><a href="../../nfl-records.html">NFL</a><a href="../../nba-records.html">NBA</a><a href="../../nhl-records.html">NHL</a><a href="../../ncaab-records.html">NCAAB</a></div></div>
-<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="../../featured-game-of-the-day-page33.html">Featured Game</a><a href="../../moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="../../arizona-vs-smu-holiday-bowl-prediction-picks-january-02-2026.html">Featured Game</a><a href="../../moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 </div>
 </div>
 </nav>

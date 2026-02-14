@@ -30,7 +30,7 @@ if (pathname.includes('/archives/')) {
 }
 
 // For main pages (nba.html, nhl.html, etc), ALWAYS use today's date
-// For archive pages (nba-page54.html), use the page's date
+// For archive pages (nba-picks-analysis-against-the-spread-january-21-2026.html), use the page's date
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
 const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);
