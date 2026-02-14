@@ -403,11 +403,11 @@
  // FAVORITE LOSS (negative odds): UNIT_RESULT = -UNITS × (|ODDS| / 100) (lose more because you risked more)
  // UNDERDOG LOSS (positive odds): UNIT_RESULT = -UNITS (lose what you risked)
  function calculateUnitResult(unitsStake, odds, result) {
- const stake = parseFloat(unitsStake);
+ const stake = parseFloat(unitsStake) || 1;
  const oddsNum = parseFloat(odds);
  const resultUpper = (result || '').toUpperCase().trim();
 
- if (isNaN(stake) || isNaN(oddsNum)) return 0;
+ if (isNaN(oddsNum) || oddsNum === 0) return 0;
 
  if (resultUpper.startsWith('W')) {
  // WIN
@@ -427,10 +427,9 @@
  // Underdog loss: you lose exactly the units (what you risked)
  return -stake;
  }
- } else {
+ }
  // Push or other
  return 0;
- }
  }
 
  // Global storage for all picks (for year filtering)
@@ -547,9 +546,10 @@
  Date: row.Date || '',
  Sport: 'NBA',
  Pick: row.Pick || '',
- Line: row.Line || row.Odds || '',
+ Line: row.Line || row.Odds || '-110',
  Result: row.Result || '',
- Units: row.Units || ''
+ Units: row.Units || '1',
+ Stake: row.Stake || row.Units || '1'
  }));
  }
 
@@ -575,17 +575,17 @@
  const allTrackerData = parseCSV(trackerCsv);
  // Filter for NBA picks only and use correct unit calculation
  trackerData = allTrackerData.filter(row => isNBAPick(row)).map(row => {
- const rawUnits = row.Units || '3'; // Default to 3 units if missing
- // parseCSV renames "Odds" to "Line", so check both
- const odds = row.Line || row.Odds || '';
+ const rawStake = row.Units || '1'; // Default to 1 unit risk
+ const odds = row.Line || row.Odds || '-110';
  const result = row.Result || '';
- const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
+ const calculatedUnits = calculateUnitResult(rawStake, odds, result);
  return {
  Date: row.Date || '',
  Pick: row.Pick || row.Picks || '',
  Odds: odds,
  Result: result,
- Units: calculatedUnits.toString()
+ Units: calculatedUnits.toString(),
+ Stake: rawStake
  };
  });
  } catch (e) {
@@ -614,7 +614,10 @@
 
  } catch (error) {
  console.error('Error loading data from Google Sheets:', error);
- document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';
+ document.getElementById('loading-message').style.display = 'none';
+ // Fall back to calculating stats from static HTML table
+ recalcUnitsFromStaticTable();
+ calculateStatsFromTable();
  }
  }
 
@@ -657,6 +660,7 @@
  </tr>`).join('');
  } else {
  console.log('Keeping static HTML (dynamic:', filteredPicks.length, 'vs static:', staticRowCount, ')');
+ recalcUnitsFromStaticTable();
  calculateStatsFromTable();
  return;
  }
@@ -694,12 +698,11 @@
  try {
  const processedPicks = mlbPicksData.map(p => {
  try {
- if (!p.Pick || !p.Units || !p.Date) return null;
+ if (!p.Pick || !p.Date) return null;
  const pickText = String(p.Pick).trim();
 
  // Try to get Result from Result column, or derive from UNIT_RESULT
  let resultText = (p.Result || '').trim().toUpperCase();
- let unitsValue = parseFloat(p.Units);
 
  // If Result is empty but UNIT_RESULT exists, derive result from it
  if (!resultText && p.UNIT_RESULT) {
@@ -708,29 +711,18 @@
  if (unitResult > 0) resultText = 'W';
  else if (unitResult < 0) resultText = 'L';
  else resultText = 'P';
- // Use UNIT_RESULT as the units value for accurate P/L
- unitsValue = unitResult;
  }
  }
 
  // Skip picks without a result
- if (!resultText) return null;
+ if (!resultText || pickText === '') return null;
 
- const units = unitsValue;
+ // Calculate units from odds and stake using standard risk model
  const line = parseFloat(p.Line || p.Odds) || -110;
- if (pickText === '' || resultText === '' || isNaN(units)) return null;
- let risk = 0;
- if (units < 0) {
- risk = Math.abs(units);
- }
- else if (units > 0) {
- if (line > 0) {
- risk = (units / (line / 100));
- }
- else {
- risk = (units * (Math.abs(line) / 100));
- }
- }
+ const stake = parseFloat(p.Stake || p.Units) || 1;
+ const units = calculateUnitResult(stake, line, resultText);
+ const risk = stake;
+
  return { ...p, units, risk, parsedDate: new Date(p.Date) };
  } catch {
  return null;
@@ -937,6 +929,24 @@
  }
  }
  }
+ }
+ });
+ }
+
+ // Recalculate units in the static HTML table using the standard risk model
+ function recalcUnitsFromStaticTable() {
+ const tbody = document.getElementById('picks-table-body');
+ if (!tbody) return;
+ const rows = tbody.querySelectorAll('tr');
+ rows.forEach(row => {
+ const cells = row.querySelectorAll('td');
+ if (cells.length >= 5) {
+ const oddsText = cells[2].textContent.trim();
+ const odds = parseFloat(oddsText.replace(/[+,]/g, '')) || -110;
+ const resultText = cells[3].textContent.trim().toUpperCase();
+ const units = calculateUnitResult(1, odds, resultText);
+ cells[4].textContent = (units >= 0 ? '+' : '') + units.toFixed(2);
+ cells[4].className = units > 0 ? 'win' : (units < 0 ? 'loss' : 'result-P');
  }
  });
  }
