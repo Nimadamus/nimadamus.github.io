@@ -21,6 +21,9 @@ ENDPOINTS = {
 # MLB Offseason: November through March - no active injuries to report
 MLB_OFFSEASON_MONTHS = [11, 12, 1, 2, 3]  # Nov, Dec, Jan, Feb, Mar
 
+# NFL Offseason: February through August - season is over after Super Bowl
+NFL_OFFSEASON_MONTHS = [2, 3, 4, 5, 6, 7, 8]  # Feb through Aug
+
 # Status display order (most severe first)
 STATUS_ORDER = ['Out', 'Injured Reserve', 'Doubtful', 'Questionable', 'Day-To-Day', 'Probable']
 
@@ -260,17 +263,19 @@ def get_indicator_class(status):
 def generate_html(all_data):
     now = datetime.now().strftime('%B %d, %Y at %I:%M %p ET')
 
-    # Check if MLB is in offseason
+    # Check if MLB/NFL are in offseason
     current_month = datetime.now().month
     is_mlb_offseason = current_month in MLB_OFFSEASON_MONTHS
+    is_nfl_offseason = current_month in NFL_OFFSEASON_MONTHS
 
-    # Count totals for stats (exclude MLB during offseason)
+    # Count totals for stats (exclude offseason sports)
     total_injuries = sum(
         sum(len(t['players']) for t in teams.values())
         for sport, teams in all_data.items()
-        if not (sport == 'MLB' and is_mlb_offseason)
+        if not (sport == 'MLB' and is_mlb_offseason) and not (sport == 'NFL' and is_nfl_offseason)
     )
-    leagues_count = 3 if is_mlb_offseason else 4
+    offseason_count = sum([is_mlb_offseason, is_nfl_offseason])
+    leagues_count = 4 - offseason_count
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -935,9 +940,22 @@ def generate_html(all_data):
         elif sport == 'NBA' and NBA_PLAYOFFS_ACTIVE:
             playoff_note = '<p style="text-align:center;color:#00d4ff;font-size:0.9rem;margin-bottom:15px;font-weight:600;">NBA Playoff Teams Only</p>'
 
-        # Check if MLB is in offseason
+        # Check if sport is in offseason
         current_month = datetime.now().month
         is_mlb_offseason = sport == 'MLB' and current_month in MLB_OFFSEASON_MONTHS
+        is_nfl_offseason = sport == 'NFL' and current_month in NFL_OFFSEASON_MONTHS
+
+        if is_nfl_offseason:
+            html += f'''
+        <div id="{sport_lower}" class="sport-content {is_active}">
+            <div style="text-align:center;padding:60px 20px;background:#1a1a1a;border-radius:10px;margin:20px 0;">
+                <p style="color:#ffd700;font-size:1.3rem;font-weight:700;margin-bottom:15px;">NFL OFFSEASON</p>
+                <p style="color:#888;font-size:1rem;">The NFL season has concluded. The 2025-26 season ended with the Super Bowl in February 2026.</p>
+                <p style="color:#888;font-size:1rem;margin-top:10px;">Injury reports will resume when the 2026 NFL season begins in September.</p>
+            </div>
+        </div>
+'''
+            continue
 
         if is_mlb_offseason:
             html += f'''
@@ -1060,11 +1078,18 @@ def main():
 
     current_month = datetime.now().month
     is_mlb_offseason = current_month in MLB_OFFSEASON_MONTHS
+    is_nfl_offseason = current_month in NFL_OFFSEASON_MONTHS
 
     all_data = {}
     for sport, url in ENDPOINTS.items():
         # Skip fetching MLB during offseason
         if sport == 'MLB' and is_mlb_offseason:
+            print(f"Skipping {sport} (offseason)...")
+            all_data[sport] = {}
+            continue
+
+        # Skip fetching NFL during offseason
+        if sport == 'NFL' and is_nfl_offseason:
             print(f"Skipping {sport} (offseason)...")
             all_data[sport] = {}
             continue
