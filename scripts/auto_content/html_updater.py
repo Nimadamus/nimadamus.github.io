@@ -22,12 +22,13 @@ class HTMLUpdater:
     def __init__(self, repo_path: str = None):
         self.repo_path = repo_path or REPO_PATH
 
-    def get_page_path(self, sport: str, page_num: int = None) -> str:
+    def get_page_path(self, sport: str, page_num: int = None, date_str: str = None) -> str:
         """Get the file path for a sport page.
 
         Args:
             sport: Sport code (nba, nhl, etc.)
-            page_num: Page number (None for main page, 2+ for archives)
+            page_num: Page number (None for main page, only used for legacy lookup)
+            date_str: Date string for new keyword-rich filenames (e.g., "february-14-2026")
         """
         config = SPORTS.get(sport.lower())
         if not config:
@@ -35,8 +36,17 @@ class HTMLUpdater:
 
         if page_num is None or page_num == 1:
             filename = config['main_page']
+        elif date_str:
+            # New keyword-rich filename format
+            filename = f"{config['page_prefix']}-{date_str}.html"
         else:
-            filename = f"{config['page_prefix']}{page_num}.html"
+            # Legacy: check if old page## file exists first, then try keyword format
+            old_filename = f"{sport}-page{page_num}.html"
+            old_path = os.path.join(self.repo_path, old_filename)
+            if os.path.exists(old_path):
+                filename = old_filename
+            else:
+                filename = f"{config['page_prefix']}-{page_num}.html"
 
         return os.path.join(self.repo_path, filename)
 
@@ -334,13 +344,20 @@ class HTMLUpdater:
                 for elem in content_soup.children:
                     main_elem.append(elem)
 
-        # Update title and meta
+        # Update title and meta - use date from content if available
         title_tag = soup.find('title')
         if title_tag:
-            title_tag.string = f"{sport_name} Analysis Archive - Page {page_num} | BetLegend"
+            # Extract date from archived content if possible
+            content_str = ' '.join(content)
+            date_match = re.search(r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}', content_str)
+            if date_match:
+                title_tag.string = f"{sport_name} Analysis - {date_match.group()} | BetLegend"
+            else:
+                title_tag.string = f"{sport_name} Analysis - {datetime.now().strftime('%B %d, %Y')} | BetLegend"
 
-        # Write new page
-        new_page_path = self.get_page_path(sport, page_num)
+        # Generate date-based filename for new page
+        date_for_file = datetime.now().strftime("%B-%d-%Y").lower()
+        new_page_path = self.get_page_path(sport, page_num, date_str=date_for_file)
         self.write_page(new_page_path, str(soup))
         print(f"Created archive page: {new_page_path}")
 
