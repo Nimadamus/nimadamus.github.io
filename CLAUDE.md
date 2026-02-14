@@ -100,6 +100,92 @@ WRONG (BANNED):
 
 ---
 
+## ⛔⛔⛔ ABSOLUTE RULE: KEYWORD-RICH URLs FOR ALL NEW PAGES ⛔⛔⛔
+
+### PERMANENTLY LOCKED - FEBRUARY 14, 2026
+
+**EVERY new page MUST have a unique, keyword-rich URL. The old page## numbering is DEAD.**
+
+### THE NAMING CONVENTION:
+
+```
+BANNED FOREVER (old format):
+❌ nba-page76.html
+❌ nhl-page71.html
+❌ featured-game-of-the-day-page77.html
+❌ soccer-page52.html
+❌ Any file named [sport]-page[number].html
+
+REQUIRED (new format):
+✅ nba-picks-analysis-against-the-spread-february-15-2026.html
+✅ nhl-predictions-best-bets-tonight-february-15-2026.html
+✅ lakers-vs-celtics-prediction-picks-february-15-2026.html
+✅ soccer-predictions-picks-best-bets-february-15-2026.html
+```
+
+### URL FORMULAS BY PAGE TYPE:
+
+**Sport daily pages (NBA, NHL, NFL, NCAAB, NCAAF, Soccer):**
+```
+nba-picks-analysis-against-the-spread-[month]-[day]-[year].html
+nhl-predictions-best-bets-tonight-[month]-[day]-[year].html
+nfl-picks-predictions-against-the-spread-[month]-[day]-[year].html
+college-basketball-picks-predictions-best-bets-[month]-[day]-[year].html
+college-football-picks-predictions-against-the-spread-[month]-[day]-[year].html
+soccer-predictions-picks-best-bets-[month]-[day]-[year].html
+```
+
+**Featured Game pages:**
+```
+[away-team]-vs-[home-team]-prediction-picks-[month]-[day]-[year].html
+
+Examples:
+lakers-vs-celtics-prediction-picks-february-15-2026.html
+panthers-vs-lightning-nhl-prediction-picks-february-15-2026.html
+duke-at-north-carolina-prediction-picks-february-15-2026.html
+```
+
+**Blog pages:**
+```
+betlegend-daily-picks-analysis-[month]-[year].html
+```
+
+**News pages:**
+```
+[descriptive-slug]-sports-news.html
+```
+
+### CALENDAR INTEGRATION (UNCHANGED):
+
+The calendar system works exactly the same way. The only difference is the filename.
+
+```
+OLD WAY:
+  1. Create nba-page76.html
+  2. Calendar JS references nba-page76.html
+
+NEW WAY:
+  1. Create nba-picks-analysis-against-the-spread-february-15-2026.html
+  2. Calendar JS references nba-picks-analysis-against-the-spread-february-15-2026.html
+  3. sync_calendars.py still extracts dates from titles and builds calendars
+  4. featured-games-data.js still gets entries with the new filename
+```
+
+Everything downstream (calendars, navigation, data files) works the same.
+The ONLY change is the filename itself.
+
+### WHY THIS EXISTS (February 14, 2026):
+- Google was treating page43, page44, page45 as pagination junk
+- ~90 URLs were showing as 404 in Search Console
+- Pages were not being indexed because URLs looked like archive pagination
+- On Feb 14, 2026: Renamed all 415 pages to keyword-rich URLs
+- Redirect stubs created at all old URLs
+- Google needs to see unique, keyword-rich URLs to index content properly
+
+**THE PAGE## ERA IS OVER. EVERY NEW PAGE GETS A UNIQUE, DESCRIPTIVE URL.**
+
+---
+
 ## ⛔⛔⛔ ABSOLUTE RULE: ALWAYS CREATE DEDICATED PAGE FILES ⛔⛔⛔
 
 ### PERMANENTLY LOCKED - JANUARY 14, 2026
@@ -110,12 +196,12 @@ WRONG (BANNED):
 ```
 When adding daily sports content:
 1. Update the main page (nba.html, nhl.html, etc.)
-2. ALSO create a dedicated page file (nba-page48.html, etc.)
+2. ALSO create a dedicated page file with a KEYWORD-RICH filename
 3. The page file preserves content when main page is updated tomorrow
 
 CORRECT (Content Preserved):
   nba.html         ← Today's content (will be overwritten tomorrow)
-  nba-page48.html  ← Today's content (PERMANENT archive)
+  nba-picks-analysis-against-the-spread-february-15-2026.html  ← PERMANENT archive
 
 WRONG (Content LOST):
   nba.html         ← Today's content (will be overwritten tomorrow)
