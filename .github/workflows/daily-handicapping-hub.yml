@@ -105,6 +105,14 @@ jobs:
             exit 1
           fi
 
+          # CRITICAL: Block deployment if calendar sidebar is missing (Feb 14, 2026)
+          if ! grep -q "calendar-sidebar" handicapping-hub.html; then
+            echo "ERROR: Calendar sidebar is MISSING from handicapping-hub.html!"
+            echo "The production script must include the calendar sidebar."
+            echo "Something has overwritten the hub with an old version."
+            exit 1
+          fi
+
           echo "Validation passed: handicapping-hub.html is $FILE_SIZE bytes"
 
       - name: Commit and push changes
