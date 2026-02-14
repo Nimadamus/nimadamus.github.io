@@ -2207,16 +2207,33 @@ def generate_game_card(game: Dict, sport: str) -> str:
 def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     """Generate complete HTML page"""
 
-    # Scan archive folder for available dates
+    # Auto-recover: copy root-level handicapping-hub-YYYY-MM-DD.html files
+    # that are missing from the archive folder. This prevents calendar gaps
+    # when hubs are created manually outside the GitHub Actions workflow.
     archive_dir = os.path.join(REPO_PATH, 'handicapping-hub-archive')
-    archive_dates = []
-    if os.path.exists(archive_dir):
-        for f in os.listdir(archive_dir):
-            if f.startswith('hub-') and f.endswith('.html'):
-                date_part = f[4:-5]  # Extract 2026-01-15 from hub-2026-01-15.html
-                if re.match(r'\d{4}-\d{2}-\d{2}', date_part):
-                    archive_dates.append(date_part)
-    archive_dates_json = json.dumps(sorted(archive_dates))
+    os.makedirs(archive_dir, exist_ok=True)
+
+    existing_archive_dates = set()
+    for f in os.listdir(archive_dir):
+        if f.startswith('hub-') and f.endswith('.html'):
+            date_part = f[4:-5]
+            if re.match(r'\d{4}-\d{2}-\d{2}', date_part):
+                existing_archive_dates.add(date_part)
+
+    # Scan root for dated hub files and copy any missing to archive
+    for f in os.listdir(REPO_PATH):
+        if f.startswith('handicapping-hub-') and f.endswith('.html') and f != 'handicapping-hub.html':
+            date_part = f[len('handicapping-hub-'):-5]  # Extract YYYY-MM-DD
+            if re.match(r'\d{4}-\d{2}-\d{2}', date_part) and date_part not in existing_archive_dates:
+                src = os.path.join(REPO_PATH, f)
+                dst = os.path.join(archive_dir, f'hub-{date_part}.html')
+                shutil.copy2(src, dst)
+                existing_archive_dates.add(date_part)
+                print(f"  [RECOVERED] Copied {f} -> handicapping-hub-archive/hub-{date_part}.html")
+
+    # Build final archive dates list from the now-complete archive folder
+    archive_dates = sorted(existing_archive_dates)
+    archive_dates_json = json.dumps(archive_dates)
 
     tab_buttons = ""
     sport_sections = ""
