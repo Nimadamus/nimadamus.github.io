@@ -28,28 +28,12 @@ jobs:
         run: |
           pip install requests beautifulsoup4
 
-      - name: Archive previous day hub
+      - name: Recover any missing archive files from root
         run: |
-          YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)
-          YESTERDAY_FORMATTED=$(date -d "yesterday" +"%B %d, %Y")
+          # The production script now archives immediately on generation,
+          # but this step catches any edge cases where root-level dated files
+          # exist without a matching archive entry (e.g. manual creation).
           mkdir -p handicapping-hub-archive
-          if [ -f "handicapping-hub.html" ]; then
-            # Only archive if the hub actually contains yesterday's date
-            if grep -q "$YESTERDAY_FORMATTED" handicapping-hub.html; then
-              ARCHIVE_FILE="hub-${YESTERDAY}.html"
-              cp handicapping-hub.html "handicapping-hub-archive/${ARCHIVE_FILE}"
-              echo "Archived to handicapping-hub-archive/${ARCHIVE_FILE}"
-            else
-              echo "Hub does not contain yesterday's date ($YESTERDAY_FORMATTED) - skipping archive"
-              echo "This prevents archiving stale content from failed workflow days"
-            fi
-          fi
-
-      - name: Recover missing archive files from root
-        run: |
-          # Copy any root-level handicapping-hub-YYYY-MM-DD.html files
-          # that are missing from the archive folder. This fixes calendar gaps
-          # caused by manual hub creation outside the workflow.
           RECOVERED=0
           for f in handicapping-hub-20??-??-??.html; do
             [ -f "$f" ] || continue

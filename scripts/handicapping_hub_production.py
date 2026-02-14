@@ -3242,18 +3242,34 @@ def main():
     html = html.replace('<td class="ou-record">-</td>', '<td class="ou-record stat-na">—</td>')
     html = html.replace('>0.0<', ' class="stat-zero">0.0<')
 
-    # Write to preview file
+    # Write to main hub file
     output_path = os.path.join(REPO_PATH, OUTPUT_FILE)
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(html)
+    print(f"\n[SUCCESS] Hub saved to: {output_path}")
 
-    print(f"\n[SUCCESS] PREVIEW saved to: {output_path}")
-    print("\n" + "=" * 60)
-    print("NEXT STEPS:")
-    print("1. Open handicapping-hub-preview.html in browser")
-    print("2. Review the new SITUATIONAL section in each game card")
-    print("3. Check L5, Home/Away, Streak data")
-    print("4. If approved, update production script")
+    # IMMEDIATELY archive today's hub - don't rely on tomorrow's workflow
+    # This is the bulletproof fix: every hub is archived the instant it's created.
+    if EASTERN:
+        today_iso = datetime.now(EASTERN).strftime('%Y-%m-%d')
+    else:
+        today_iso = (datetime.now() - timedelta(hours=5)).strftime('%Y-%m-%d')
+
+    # Save dated copy in root (backup)
+    dated_root = os.path.join(REPO_PATH, f'handicapping-hub-{today_iso}.html')
+    with open(dated_root, 'w', encoding='utf-8') as f:
+        f.write(html)
+    print(f"[ARCHIVE] Root backup: handicapping-hub-{today_iso}.html")
+
+    # Save directly to archive folder (what the calendar reads)
+    archive_dir = os.path.join(REPO_PATH, 'handicapping-hub-archive')
+    os.makedirs(archive_dir, exist_ok=True)
+    archive_path = os.path.join(archive_dir, f'hub-{today_iso}.html')
+    with open(archive_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    print(f"[ARCHIVE] Calendar entry: handicapping-hub-archive/hub-{today_iso}.html")
+
+    print("\n[SUCCESS] Hub generated and archived for calendar.")
     print("=" * 60)
 
 if __name__ == '__main__':
