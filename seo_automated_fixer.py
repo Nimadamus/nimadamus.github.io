@@ -36,12 +36,12 @@ class SEOFixer:
         title_map = {
             'nfl_analysis_example': 'NFL Game Analysis Example | BetLegend',
             'nfl_week9_analysis_REAL': 'NFL Week 9 Analysis | BetLegend Picks',
-            'blog-page2': 'BetLegend Blog - Page 2 | Expert Betting Insights',
-            'blog-page3': 'BetLegend Blog - Page 3 | Expert Betting Insights',
-            'blog-page4': 'BetLegend Blog - Page 4 | Expert Betting Insights',
-            'blog-page5': 'BetLegend Blog - Page 5 | Expert Betting Insights',
-            'blog-page6': 'BetLegend Blog - Page 6 | Expert Betting Insights',
-            'blog-page7': 'BetLegend Blog - Page 7 | Expert Betting Insights',
+            'betlegend-free-betting-picks-archive-page-2': 'BetLegend Blog - Page 2 | Expert Betting Insights',
+            'betlegend-free-betting-picks-nfl-mlb-ncaaf-archive-3': 'BetLegend Blog - Page 3 | Expert Betting Insights',
+            'betlegend-betting-picks-spreads-totals-moneylines-archive-4': 'BetLegend Blog - Page 4 | Expert Betting Insights',
+            'betlegend-data-driven-betting-picks-analysis-archive-5': 'BetLegend Blog - Page 5 | Expert Betting Insights',
+            'betlegend-mlb-nfl-college-betting-picks-archive-6': 'BetLegend Blog - Page 6 | Expert Betting Insights',
+            'betlegend-nfl-mlb-ncaaf-expert-picks-archive-7': 'BetLegend Blog - Page 7 | Expert Betting Insights',
         }
 
         if base in title_map:

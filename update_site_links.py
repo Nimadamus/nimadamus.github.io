@@ -20,7 +20,7 @@ def get_all_html_files():
 
 
 def detect_blog_pages():
-    """Detect blog pages: blog.html, blog-page2.html, etc."""
+    """Detect blog pages: blog.html, betlegend-free-betting-picks-archive-page-2.html, etc."""
     html_files = [os.path.basename(f) for f in get_all_html_files()]
     pages = []
 
@@ -57,7 +57,7 @@ def get_blog_filename(page_num):
 
 def get_featured_filename(page_num):
     if page_num == 1:
-        return 'featured-game-of-the-day.html'
+        return 'archive-prediction-picks-november-21-2025.html'
     return f'featured-game-of-the-day-page{page_num}.html'
 
 

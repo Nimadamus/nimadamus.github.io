@@ -21,7 +21,7 @@ HOW THE SYSTEM WORKS:
 
 POSTING NEW CONTENT:
 1. Run: python update_sports_pages.py shift-pages NBA
-   - This moves nba.html -> nba-page2.html, nba-page2 -> nba-page3, etc.
+   - This moves nba.html -> nba-picks-analysis-against-the-spread-december-15-2025.html, nba-page2 -> nba-page3, etc.
 2. Edit nba.html with your new content
 3. Run: python update_sports_pages.py fix-pagination
    - This updates all "Page X of Y" numbers
@@ -212,8 +212,8 @@ def shift_pages(sport):
     """
     Shift all pages for a sport to make room for new content.
 
-    Before: nba.html (newest), nba-page2.html, nba-page3.html
-    After:  nba.html (empty for new), nba-page2.html (was nba.html), nba-page3.html (was page2)
+    Before: nba.html (newest), nba-picks-analysis-against-the-spread-december-15-2025.html, nba-picks-analysis-against-the-spread-november-24-2025.html
+    After:  nba.html (empty for new), nba-picks-analysis-against-the-spread-december-15-2025.html (was nba.html), nba-picks-analysis-against-the-spread-november-24-2025.html (was page2)
     """
     sport = sport.lower()
     if sport not in SPORTS:

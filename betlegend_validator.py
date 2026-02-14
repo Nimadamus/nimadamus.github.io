@@ -8,7 +8,7 @@ and content problems BEFORE they go live on betlegendpicks.com.
 Usage:
     python betlegend_validator.py [path_to_html_files_or_single_file]
     python betlegend_validator.py C:/Users/Nima/nimadamus.github.io
-    python betlegend_validator.py C:/Users/Nima/nimadamus.github.io/blog-page12.html
+    python betlegend_validator.py C:/Users/Nima/nimadamus.github.io/betlegend-daily-picks-analysis-january-2026.html
 
 Run this AFTER Claude Code makes changes and BEFORE committing/pushing.
 """
@@ -1318,9 +1318,9 @@ if __name__ == '__main__':
         print()
         print("Examples:")
         print(f"  python {sys.argv[0]} C:/Users/Nima/nimadamus.github.io")
-        print(f"  python {sys.argv[0]} C:/Users/Nima/nimadamus.github.io/blog-page12.html")
+        print(f"  python {sys.argv[0]} C:/Users/Nima/nimadamus.github.io/betlegend-daily-picks-analysis-january-2026.html")
         print(f"  python {sys.argv[0]} C:/Users/Nima/nimadamus.github.io --install-hook")
-        print(f"  python {sys.argv[0]} . --files moneyline-parlay-of-the-day.html blog-page12.html")
+        print(f"  python {sys.argv[0]} . --files moneyline-parlay-of-the-day.html betlegend-daily-picks-analysis-january-2026.html")
         sys.exit(1)
 
     target = sys.argv[1]

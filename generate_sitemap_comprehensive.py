@@ -28,7 +28,7 @@ class SitemapGenerator:
             'email.html',
             'best-online-sportsbook-old.html',
             'nfl-records-broken-backup.html',
-            'blog-page8.html.backup',
+            'betlegend-expert-analysis-betting-picks-archive-8.html.backup',
             'ncaab-records.html.backup'
         ]
 

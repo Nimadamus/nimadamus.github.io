@@ -129,11 +129,11 @@ def main():
             'Sports Betting News | Latest Updates | BetLegend',
             'Latest sports betting news, legal updates, industry insights, and analysis from BetLegend\'s expert team.'
         ),
-        'news-page2.html': (
+        'betlegend-sports-betting-news-archive-2.html': (
             'Sports Betting News - Page 2 | BetLegend',
             'More sports betting news, trends, and analysis from BetLegend covering all major sports and betting markets.'
         ),
-        'news-page3.html': (
+        'nfl-49ers-stun-eagles-kittle-achilles-shanahan-fired-news.html': (
             'Sports Betting News - Page 3 | BetLegend',
             'Additional sports betting news and insights from BetLegend\'s coverage of the betting industry.'
         ),

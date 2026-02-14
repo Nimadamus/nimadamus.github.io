@@ -28,7 +28,7 @@ META_REFRESH_PAGES = {
 
 # Issue 2: Pages with multiple canonical tags
 MULTIPLE_CANONICAL_PAGES = [
-    "blog-page8.html",
+    "betlegend-expert-analysis-betting-picks-archive-8.html",
     "MLB.html"
 ]
 

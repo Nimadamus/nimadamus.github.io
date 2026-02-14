@@ -206,7 +206,7 @@ NAV_HTML = """
 <!-- Navigation -->
 <nav class="nav-links">
     <a href="index.html">HOME</a>
-    <a href="blog-page8.html">PICKS & ANALYSIS</a>
+    <a href="betlegend-expert-analysis-betting-picks-archive-8.html">PICKS & ANALYSIS</a>
 
     <div class="dropdown">
         <button class="dropbtn">Records</button>
@@ -245,8 +245,8 @@ NAV_HTML = """
     </div>
 
     <a href="proofofpicks.html">Proof</a>
-    <a href="news-page5.html">News</a>
-    <a href="featured-game-of-the-day-page50.html">Game of the Day</a>
+    <a href="yasiel-puig-convicted-gambling-case-sports-news.html">News</a>
+    <a href="indiana-vs-miami-cfp-national-championship-prediction-picks-january-19-2026.html">Game of the Day</a>
 
     <div class="dropdown">
         <button class="dropbtn">Community</button>
@@ -359,7 +359,7 @@ def main():
         'parlay-calculator.html',
 
         # Feature pages
-        'featured-game-of-the-day-page50.html',
+        'indiana-vs-miami-cfp-national-championship-prediction-picks-january-19-2026.html',
         'betting-101.html',
         'bestonlinesportsbook.html',
         'live-odds.html',

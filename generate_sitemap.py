@@ -14,18 +14,18 @@ pages = {
 
     # Blog/Picks pages - very high priority (main content)
     'blog.html': {'priority': '0.9', 'changefreq': 'daily'},
-    'blog-page2.html': {'priority': '0.9', 'changefreq': 'daily'},
-    'blog-page3.html': {'priority': '0.9', 'changefreq': 'daily'},
-    'blog-page4.html': {'priority': '0.9', 'changefreq': 'daily'},
-    'blog-page5.html': {'priority': '0.9', 'changefreq': 'daily'},
-    'blog-page6.html': {'priority': '0.9', 'changefreq': 'daily'},
-    'blog-page7.html': {'priority': '0.9', 'changefreq': 'daily'},
-    'blog-page8.html': {'priority': '0.9', 'changefreq': 'daily'},
+    'betlegend-free-betting-picks-archive-page-2.html': {'priority': '0.9', 'changefreq': 'daily'},
+    'betlegend-free-betting-picks-nfl-mlb-ncaaf-archive-3.html': {'priority': '0.9', 'changefreq': 'daily'},
+    'betlegend-betting-picks-spreads-totals-moneylines-archive-4.html': {'priority': '0.9', 'changefreq': 'daily'},
+    'betlegend-data-driven-betting-picks-analysis-archive-5.html': {'priority': '0.9', 'changefreq': 'daily'},
+    'betlegend-mlb-nfl-college-betting-picks-archive-6.html': {'priority': '0.9', 'changefreq': 'daily'},
+    'betlegend-nfl-mlb-ncaaf-expert-picks-archive-7.html': {'priority': '0.9', 'changefreq': 'daily'},
+    'betlegend-expert-analysis-betting-picks-archive-8.html': {'priority': '0.9', 'changefreq': 'daily'},
 
     # News pages - high priority (updated frequently)
     'news.html': {'priority': '0.8', 'changefreq': 'daily'},
-    'news-page2.html': {'priority': '0.8', 'changefreq': 'daily'},
-    'news-page3.html': {'priority': '0.8', 'changefreq': 'daily'},
+    'betlegend-sports-betting-news-archive-2.html': {'priority': '0.8', 'changefreq': 'daily'},
+    'nfl-49ers-stun-eagles-kittle-achilles-shanahan-fired-news.html': {'priority': '0.8', 'changefreq': 'daily'},
 
     # Records pages - high priority (important for SEO)
     'betlegend-verified-records.html': {'priority': '0.8', 'changefreq': 'weekly'},
@@ -53,7 +53,7 @@ pages = {
     'kelly-criterion.html': {'priority': '0.6', 'changefreq': 'monthly'},
 
     # Feature pages
-    'featured-game-of-the-day.html': {'priority': '0.7', 'changefreq': 'daily'},
+    'archive-prediction-picks-november-21-2025.html': {'priority': '0.7', 'changefreq': 'daily'},
     'betting-101.html': {'priority': '0.6', 'changefreq': 'monthly'},
     'bestonlinesportsbook.html': {'priority': '0.6', 'changefreq': 'monthly'},
     'live-odds.html': {'priority': '0.7', 'changefreq': 'daily'},

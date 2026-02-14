@@ -28,13 +28,13 @@ SCRIPTS_DIR = REPO_DIR / 'scripts'
 
 # Sport configurations
 SPORTS = {
-    'nba': {'prefix': 'nba', 'main': 'nba.html', 'calendar_js': 'nba-calendar.js'},
-    'nhl': {'prefix': 'nhl', 'main': 'nhl.html', 'calendar_js': 'nhl-calendar.js'},
-    'ncaab': {'prefix': 'ncaab', 'main': 'ncaab.html', 'calendar_js': 'ncaab-calendar.js'},
-    'ncaaf': {'prefix': 'ncaaf', 'main': 'ncaaf.html', 'calendar_js': 'ncaaf-calendar.js'},
-    'nfl': {'prefix': 'nfl', 'main': 'nfl.html', 'calendar_js': 'nfl-calendar.js'},
-    'mlb': {'prefix': 'mlb', 'main': 'mlb.html', 'calendar_js': 'mlb-calendar.js'},
-    'soccer': {'prefix': 'soccer', 'main': 'soccer.html', 'calendar_js': 'soccer-calendar.js'},
+    'nba': {'prefix': 'nba', 'globs': ['nba*.html'], 'main': 'nba.html', 'calendar_js': 'nba-calendar.js'},
+    'nhl': {'prefix': 'nhl', 'globs': ['nhl*.html'], 'main': 'nhl.html', 'calendar_js': 'nhl-calendar.js'},
+    'ncaab': {'prefix': 'ncaab', 'globs': ['ncaab*.html', 'college-basketball-*.html'], 'main': 'ncaab.html', 'calendar_js': 'ncaab-calendar.js'},
+    'ncaaf': {'prefix': 'ncaaf', 'globs': ['ncaaf*.html', 'college-football-*.html'], 'main': 'ncaaf.html', 'calendar_js': 'ncaaf-calendar.js'},
+    'nfl': {'prefix': 'nfl', 'globs': ['nfl*.html'], 'main': 'nfl.html', 'calendar_js': 'nfl-calendar.js'},
+    'mlb': {'prefix': 'mlb', 'globs': ['mlb*.html'], 'main': 'mlb.html', 'calendar_js': 'mlb-calendar.js'},
+    'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html'], 'main': 'soccer.html', 'calendar_js': 'soccer-calendar.js'},
 }
 
 # Pages to exclude from calendar (utility pages, not content pages)
@@ -116,15 +116,15 @@ MANUAL_DATE_OVERRIDES = {
     # Most NCAAF pages now have dates in their titles, so we removed incorrect overrides.
     # Only keep overrides for pages that DON'T have dates in their titles.
     # Pages with correct title dates will extract automatically:
-    # - ncaaf-page13.html: December 19, 2025 (title)
-    # - ncaaf-page22.html: December 23, 2025 (title)
-    # - ncaaf-page27.html: December 27, 2025 (title)
-    # - ncaaf-page29.html: December 29, 2025 (title)
-    # - ncaaf-page33.html: December 30, 2025 (title)
-    # - ncaaf-page35.html: December 31, 2025 (title)
-    # - ncaaf-page36.html: January 1, 2026 (title)
-    # - ncaaf-page39.html: January 2, 2026 (title)
-    # - ncaaf-page42.html: January 6, 2026 (title)
+    # - college-football-picks-predictions-against-the-spread-december-19-2025.html: December 19, 2025 (title)
+    # - college-football-picks-predictions-against-the-spread-december-23-2025.html: December 23, 2025 (title)
+    # - college-football-picks-predictions-against-the-spread-december-27-2025.html: December 27, 2025 (title)
+    # - college-football-picks-predictions-against-the-spread-december-29-2025.html: December 29, 2025 (title)
+    # - college-football-picks-predictions-against-the-spread-december-30-2025.html: December 30, 2025 (title)
+    # - college-football-picks-predictions-against-the-spread-december-31-2025.html: December 31, 2025 (title)
+    # - college-football-picks-predictions-against-the-spread-january-01-2026.html: January 1, 2026 (title)
+    # - college-football-picks-predictions-against-the-spread-january-02-2026.html: January 2, 2026 (title)
+    # - college-football-picks-predictions-against-the-spread-january-06-2026.html: January 6, 2026 (title)
     # ============================================================
     # IMPORTANT: MAIN PAGES ARE NOT IN THIS LIST!
     # nba.html, nhl.html, ncaab.html, soccer.html, nfl.html, mlb.html
@@ -308,30 +308,45 @@ def get_sport_pages(sport_config):
     prefix = sport_config['prefix']
     pages = []
 
-    # Scan main directory for sport pages
-    for filepath in REPO_DIR.glob(f'{prefix}*.html'):
-        filename = filepath.name
+    # Scan main directory for sport pages using multiple glob patterns
+    glob_patterns = sport_config.get('globs', [f'{prefix}*.html'])
+    seen_files = set()
+    for pattern in glob_patterns:
+        for filepath in REPO_DIR.glob(pattern):
+            filename = filepath.name
+            if filename in seen_files:
+                continue
+            seen_files.add(filename)
 
-        # Skip utility pages
-        skip = False
-        for pattern in EXCLUDE_PATTERNS:
-            if pattern in filename.lower():
-                skip = True
-                break
-        if skip:
-            continue
+            # Skip utility pages
+            skip = False
+            for excl_pattern in EXCLUDE_PATTERNS:
+                if excl_pattern in filename.lower():
+                    skip = True
+                    break
+            if skip:
+                continue
 
-        # This is a content page
-        date = extract_date_from_page(filepath)
-        title = extract_title_from_page(filepath, prefix)
+            # Skip redirect stubs (renamed pages that now just redirect)
+            try:
+                with open(filepath, 'r', encoding='utf-8', errors='ignore') as peek:
+                    first_500 = peek.read(500)
+                    if 'Page Moved' in first_500 or 'http-equiv="refresh"' in first_500:
+                        continue
+            except:
+                pass
 
-        if date:
-            pages.append({
-                'date': date,
-                'page': filename,
-                'title': title
-            })
-            print(f"    {filename}: {date}")
+            # This is a content page
+            date = extract_date_from_page(filepath)
+            title = extract_title_from_page(filepath, prefix)
+
+            if date:
+                pages.append({
+                    'date': date,
+                    'page': filename,
+                    'title': title
+                })
+                print(f"    {filename}: {date}")
 
     # Also scan archives folder for this sport (e.g., archives/nba/)
     archives_dir = REPO_DIR / 'archives' / prefix
@@ -398,7 +413,7 @@ def generate_calendar_js(sport_name, sport_config, pages):
         '}',
         '',
         '// For main pages (nba.html, nhl.html, etc), ALWAYS use today\'s date',
-        '// For archive pages (nba-page54.html), use the page\'s date',
+        '// For archive pages (nba-picks-analysis-against-the-spread-january-21-2026.html), use the page\'s date',
         'const isMainPage = MAIN_PAGES.includes(currentPage);',
         'const forcedDate = window.FORCED_PAGE_DATE || null;',
         'const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);',

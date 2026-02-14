@@ -9,8 +9,8 @@ import os
 
 # Meta descriptions for each page
 META_DESCRIPTIONS = {
-    'blog-page8.html': 'Free daily sports betting picks with full analysis. Expert MLB, NFL, NBA, NHL predictions backed by data. Verified 65% win rate. Get today\'s free picks now.',
-    'news-page3.html': 'Latest sports betting news and headlines. Breaking updates on MLB, NFL, NBA, NHL, and betting industry. Stay informed with BetLegend News.',
+    'betlegend-expert-analysis-betting-picks-archive-8.html': 'Free daily sports betting picks with full analysis. Expert MLB, NFL, NBA, NHL predictions backed by data. Verified 65% win rate. Get today\'s free picks now.',
+    'nfl-49ers-stun-eagles-kittle-achilles-shanahan-fired-news.html': 'Latest sports betting news and headlines. Breaking updates on MLB, NFL, NBA, NHL, and betting industry. Stay informed with BetLegend News.',
     'nfl.html': 'NFL betting picks and analysis. Expert predictions for every game with verified track record. Free NFL picks, spreads, totals, and prop bets.',
     'nba.html': 'NBA betting picks and predictions. Daily basketball picks with analysis, player props, and game totals. Expert NBA betting advice.',
     'mlb-page2.html': 'MLB betting picks and baseball predictions. Daily moneyline, run line, and total picks. Expert baseball betting analysis with verified results.',
@@ -18,7 +18,7 @@ META_DESCRIPTIONS = {
     'betting-101.html': 'Sports betting guide for beginners. Learn how to bet on sports, understand odds, manage bankroll, and win consistently. Complete betting tutorial.',
     'live-odds.html': 'Live sports betting odds and lines. Real-time odds for MLB, NFL, NBA, NHL. Compare sportsbook lines and find the best value.',
     'proofofpicks.html': 'Verified betting picks and results. Transparent track record with screenshots and proof. See our documented wins and losses.',
-    'featured-game-of-the-day.html': 'Featured game of the day betting pick. In-depth analysis on today\'s best betting opportunity. Expert prediction with full breakdown.',
+    'archive-prediction-picks-november-21-2025.html': 'Featured game of the day betting pick. In-depth analysis on today\'s best betting opportunity. Expert prediction with full breakdown.',
 }
 
 # Open Graph tags template
