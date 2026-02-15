@@ -898,7 +898,7 @@ footer a:hover{text-shadow:0 0 10px var(--neon-cyan)}
  </div>
 
  <!-- News -->
- <a href="yasiel-puig-convicted-gambling-case-sports-news.html" class="nav-link">News</a>
+ <a href="news.html" class="nav-link">News</a>
 
  <!-- Podcast -->
  <a href="podcast.html" class="nav-link">Podcast</a>
@@ -1160,33 +1160,6 @@ footer a:hover{text-shadow:0 0 10px var(--neon-cyan)}
 
  </style>
 <script>
- // IIFE to keep variables local and avoid conflicts
- (function() {
- // -- Define your custom page sequence here ---
- const pageOrder = [
- 'betlegend-data-driven-betting-picks-analysis-archive-5.html',
- 'betlegend-betting-picks-spreads-totals-moneylines-archive-4.html',
- 'betlegend-free-betting-picks-nfl-mlb-ncaaf-archive-3.html',
- 'betlegend-free-betting-picks-archive-page-2.html',
- 'blog.html'
- ];
- // -- Logic to generate the correct buttons ---
- const currentPage = window.location.pathname.split('/').pop();
- const currentIndex = pageOrder.indexOf(currentPage);
- if (currentIndex === -1) {
- return;
- }
- const prevPage = currentIndex > 0 ? pageOrder[currentIndex - 1] : null;
- const nextPage = currentIndex < pageOrder.length - 1 ? pageOrder[currentIndex + 1] : null;
- const container = document.getElementById('custom-pagination-container');
- if (!container) return;
- let paginationHTML = '<nav class="pagination-nav" aria-label="Blog post navigation">';
- if (prevPage) { paginationHTML += `<a href="${prevPage}">&#9664; Previous</a>`; } else { paginationHTML += `<span>&#9664; Previous</span>`; }
- if (nextPage) { paginationHTML += `<a href="${nextPage}">Next &#9654;</a>`; } else { paginationHTML += `<span>Next &#9654;</span>`; }
- paginationHTML += '</nav>';
- container.innerHTML = paginationHTML;
- })();
-
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
  const dropdowns = document.querySelectorAll('.dropdown');
@@ -3366,7 +3339,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="verdict-title">The pick</p>
 <p class="the-pick">Cleveland Guardians Moneyline -170</p>
 </div>
-</div><div class="pagination" style="text-align:center;margin:30px 0;"><a href="betlegend-expert-analysis-betting-picks-archive-8.html">← Previous</a><span>   </span><a href="betlegend-mlb-nfl-college-betting-picks-archive-6.html">Next →</a></div>
+</div><div class="pagination" style="text-align:center;margin:30px 0;"><a href="betlegend-mlb-nfl-college-betting-picks-archive-6.html">&larr; Older Picks</a><span>   </span><a href="betlegend-expert-analysis-betting-picks-archive-8.html">Newer Picks &rarr;</a></div>
 <!-- Related Picks & Internal Links -->
 <div class="related-picks" style="max-width: 1140px; margin: 70px auto; padding: 30px; background: #1a1a1a; border-left: 4px solid gold; border-radius: 8px;">
 <h3 style="color: gold; font-size: 22px; margin-bottom: 20px; text-align: center;">Related Picks &amp; Resources</h3>
