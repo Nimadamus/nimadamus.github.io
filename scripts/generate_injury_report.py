@@ -872,7 +872,7 @@ def generate_html(all_data):
                 </div>
 
                 <!-- News -->
-                <a href="yasiel-puig-convicted-gambling-case-sports-news.html" class="nav-link">News</a>
+                <a href="news.html" class="nav-link">News</a>
 
                 <!-- Injury Report -->
                 <a href="injury-report.html" class="nav-link active">Injury Report</a>

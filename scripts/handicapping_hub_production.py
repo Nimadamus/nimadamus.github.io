@@ -3054,7 +3054,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
                     </div>
                 </div>
 
-                <a href="yasiel-puig-convicted-gambling-case-sports-news.html" class="nav-link">News</a>
+                <a href="news.html" class="nav-link">News</a>
 
                 <a href="injury-report.html" class="nav-link">Injury Report</a>
 
