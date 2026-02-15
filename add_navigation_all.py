@@ -245,7 +245,7 @@ NAV_HTML = """
     </div>
 
     <a href="proofofpicks.html">Proof</a>
-    <a href="yasiel-puig-convicted-gambling-case-sports-news.html">News</a>
+    <a href="news.html">News</a>
     <a href="indiana-vs-miami-cfp-national-championship-prediction-picks-january-19-2026.html">Game of the Day</a>
 
     <div class="dropdown">
