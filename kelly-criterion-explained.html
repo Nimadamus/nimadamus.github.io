@@ -140,13 +140,9 @@
 
  <p>The Kelly Criterion is a formula that tells you exactly what percentage of your bankroll to wager when you have an edge. It was invented by John Kelly, a scientist at Bell Labs who was trying to solve a completely unrelated problem involving telephone signals. He probably never imagined his formula would become the gold standard for <a href="bankroll-management.html">bankroll management</a> in sports betting, poker, and investing.</p>
 
- <h2>The Origin Story: John Kelly and Bell Labs</h2>
+ <h2>Where the Kelly Criterion Came From</h2>
 
- <p>In 1956, a researcher named John Larry Kelly Jr. was working at AT&T's Bell Laboratories in Murray Hill, New Jersey. Kelly wasn't a gambler. He was a physicist working on information theory, the branch of mathematics concerned with transmitting signals through noisy channels. His colleague Claude Shannon had recently published groundbreaking work on how much information could be sent through a telephone wire, and Kelly was extending those ideas.</p>
-
- <p>Kelly noticed something interesting. The math behind optimizing signal transmission was eerily similar to the math behind optimizing bets. If you think of a "noisy signal" as imperfect information about a sporting event, and you think of "channel capacity" as the maximum rate at which you can grow your bankroll, the same equations apply. His 1956 paper, "A New Interpretation of Information Rate," showed that a bettor with partial information about outcomes should wager a specific fraction of their wealth on each bet to maximize long-term growth.</p>
-
- <p>The paper didn't make a splash in the gambling world right away. It was an academic work published in the Bell System Technical Journal, read mostly by engineers and mathematicians. But over the following decades, professional gamblers and investors discovered Kelly's formula and realized it solved one of the most important problems in betting: how much to risk when you have an edge. Today, everyone from horse racing syndicates to hedge fund managers to sharp sports bettors uses some version of the Kelly Criterion to size their positions.</p>
+ <p>Here is all you need to know about the backstory: a physicist at Bell Labs in 1956 realized that the math behind sending clear signals through noisy telephone wires was the same math behind growing a bankroll with imperfect information. John Kelly was not thinking about sports betting. He was solving an engineering problem. But the formula he published turned out to answer one of gambling's hardest questions: given that you have an edge, how much should you risk? If you want the full history, including how the formula traveled from an obscure academic journal to the desks of Wall Street traders and Las Vegas syndicates, our <a href="kelly-criterion.html">Kelly Criterion pillar page</a> tells the complete story. For this guide, what matters is the idea: Kelly treats your bankroll the way an engineer treats a signal, and it finds the exact bandwidth for maximum growth.</p>
 
  <h2>What Problem Does Kelly Solve?</h2>
 
@@ -168,38 +164,21 @@
 
  <p>The formula then adjusts this edge based on the payout. Higher odds mean you can bet a smaller percentage. Lower odds mean you can bet more, if your edge is the same.</p>
 
- <h2>Breaking Down the Formula Variable by Variable</h2>
+ <h2>How the Formula Actually Works (Intuition, Not Variables)</h2>
 
- <p>Let's get specific. The Kelly Criterion formula in its standard form looks like this:</p>
+ <p>You have probably seen the formula written as f* = (bp - q) / b. If you want a variable-by-variable walkthrough and an interactive calculator, that is what our <a href="kelly-criterion.html">Kelly Criterion calculator page</a> is built for. Here, let's focus on what the formula is actually doing under the hood, because understanding the logic matters more than memorizing the notation.</p>
 
- <div class="highlight-box">
- <p><strong>f* = (bp - q) / b</strong></p>
- </div>
+ <p>The formula asks two questions. First: how much better are my chances than break-even? That is your edge. If the sportsbook's odds imply a 50% win rate, but you estimate 55%, your edge is 5%. Second: how much do I get paid when I win? That is the payout. A bet at even money pays 1-to-1. A bet at +200 pays 2-to-1.</p>
 
- <p>Where:</p>
+ <p>Kelly then divides your edge by the payout. A bigger edge means a bigger bet. A bigger payout means a smaller bet (because you do not need as much money on high-payout wagers to capture the same growth). And if your edge is zero or negative, the formula returns zero, telling you to sit this one out. That zero result is one of the most underrated features of the Kelly Criterion: it forces you to skip bets where you do not have an advantage, which is something most bettors never discipline themselves to do.</p>
 
- <ul>
- <li><strong>f*</strong> is the fraction of your bankroll to bet. This is the answer you are solving for. If f* comes out to 0.05, that means bet 5% of your bankroll.</li>
- <li><strong>b</strong> is the decimal odds minus 1, or the net payout you receive on a winning bet. If you bet $100 and win $200 total (your $100 back plus $100 profit), then b = 1. If you win $300 total, b = 2.</li>
- <li><strong>p</strong> is your estimated probability of winning the bet. This is the hard part, and it is where your skill as a handicapper matters. If you believe a team has a 60% chance of covering, p = 0.60.</li>
- <li><strong>q</strong> is the probability of losing, which is simply 1 minus p. If p = 0.60, then q = 0.40.</li>
- </ul>
+ <h2>Handling American Odds</h2>
 
- <p>The formula multiplies your win probability by the payout (bp), subtracts the probability of losing (q), and divides by the payout (b). The result is the mathematically optimal bet size. If the answer is zero or negative, the formula is telling you something important: you don't have an edge, and you shouldn't bet at all.</p>
-
- <h2>How to Convert American Odds for the Kelly Formula</h2>
-
- <p>Most American sportsbooks display odds in the format you are used to seeing: -110, +150, -200, and so on. The Kelly formula needs decimal odds, so you need to convert. Here is how.</p>
-
- <p>For <strong>negative American odds</strong> (favorites), divide the absolute value of the odds by 100. For example, -110 odds means you risk $110 to win $100, so b = 100/110 = 0.909. For -150, b = 100/150 = 0.667. For -200, b = 100/200 = 0.50.</p>
-
- <p>For <strong>positive American odds</strong> (underdogs), divide the odds by 100. So +150 means you win $150 on a $100 bet, giving you b = 150/100 = 1.50. For +200, b = 2.00. For +300, b = 3.00.</p>
-
- <p>Once you have b, plug it into the Kelly formula along with your estimated probability. If you want to skip the manual math, our <a href="kelly-criterion.html">Kelly Criterion calculator</a> handles the conversion automatically. Just enter your American odds and your estimated win probability, and it does the rest.</p>
+ <p>The Kelly formula technically uses decimal odds, but you do not need to memorize conversion tables. Our <a href="kelly-criterion.html">Kelly Criterion calculator</a> accepts American odds directly and handles the conversion automatically. The short version: for favorites like -110, the payout factor is 100 divided by the odds number (so 0.909). For underdogs like +150, it is the odds number divided by 100 (so 1.50). But honestly, just use the calculator and focus your energy on estimating your win probability accurately, which is the part that actually requires skill.</p>
 
  <div class="example-box">
  <h3>A Simple Example</h3>
- <p>Imagine you have a $1,000 bankroll. You find a bet at -110 odds (standard juice), and after doing your research, you believe you have a 55% chance of winning. The break-even at -110 is about 52.4%.</p>
+ <p>Imagine you have a $1,000 bankroll. You find a bet at -110 odds (standard juice), and after doing your research, you believe you have a 55% chance of winning. The <a href="bankroll-management/risk-of-ruin.html">break-even at -110 is about 52.4%</a>.</p>
  <p style="margin-top: 15px;">Your edge is 55% minus 52.4% = about 2.6%. The Kelly formula says to bet roughly 5.5% of your bankroll, or $55.</p>
  <p style="margin-top: 15px;">That number might seem small if you are used to betting $100 or $200 per game. But Kelly is playing the long game. Over hundreds of bets, this sizing optimizes your growth. You can find more worked scenarios like this in our <a href="kelly-criterion/examples.html">Kelly Criterion examples</a> page.</p>
  </div>
@@ -258,7 +237,7 @@
 
  <p>Full Kelly betting assumes your edge estimate is perfectly accurate. In reality, nobody estimates edges perfectly. This is why most professionals use fractional Kelly, betting only 25% to 50% of what the formula recommends.</p>
 
- <p>Fractional Kelly gives you most of the growth benefit with much less volatility. It is a safety buffer against the inevitable errors in your probability estimates. The math is elegant here: half Kelly gives you 75% of the growth rate of full Kelly but with dramatically smoother results. Quarter Kelly gives you roughly half the growth rate but feels almost boring in terms of bankroll swings. For most sports bettors, especially those still building their track record, something in the range of 25% to 50% Kelly is the sweet spot.</p>
+ <p>Fractional Kelly gives you most of the growth benefit with much less volatility. It is a safety buffer against the inevitable errors in your probability estimates. The mathematics are surprisingly generous: cutting your bet size in half costs you far less than half of your long-term growth rate, while dramatically smoothing out the ride. For most sports bettors, especially those still building their track record, something in the range of 25% to 50% Kelly is the sweet spot. Our <a href="kelly-criterion/fractional-vs-full.html">fractional vs full Kelly comparison</a> covers the exact tradeoffs between different fractions.</p>
 
  <p>The choice between different Kelly fractions depends on your confidence in your edge estimates, your tolerance for bankroll swings, and how large your sample size is. If you have 2,000 tracked bets and a well-documented 54% win rate at -110, you can confidently use a higher Kelly fraction. If you have 100 bets and a 57% win rate that might just be a hot streak, dial it way down. We cover the tradeoffs in detail in our <a href="kelly-criterion/fractional-vs-full.html">fractional vs full Kelly comparison</a>.</p>
 
