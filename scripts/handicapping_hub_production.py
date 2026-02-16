@@ -345,8 +345,9 @@ def fetch_covers_betting_records(sport: str) -> Dict[str, Dict]:
                 team_cell = cells[0]
                 team_text = team_cell.get_text(strip=True)
 
-                # Look for abbreviation pattern (2-3 uppercase letters)
-                match = re.search(r'([A-Z]{2,3})', team_text)
+                # Look for abbreviation pattern (2-5 uppercase letters)
+                # Changed from {2,3} to {2,5} to capture NCAAB abbrs like INST, FAMU, UCONN
+                match = re.search(r'([A-Z]{2,5})', team_text)
                 if match:
                     team_abbr = match.group(1)
 
@@ -371,11 +372,21 @@ def fetch_covers_betting_records(sport: str) -> Dict[str, Dict]:
 
         # Normalize abbreviations
         normalized = {}
+        # Pro sports abbreviation mapping
         abbr_map = {
             'GS': 'GSW', 'NO': 'NOP', 'NY': 'NYK', 'SA': 'SAS',
             'LA': 'LAK', 'NJ': 'NJD', 'TB': 'TBL', 'SJ': 'SJS',
             'JAC': 'JAX', 'LAR': 'LA'
         }
+        # NCAAB: Covers.com abbr -> ESPN abbr (bidirectional mapping)
+        # Added Feb 15, 2026 - fixes blank ATS for teams where ESPN/Covers differ
+        ncaab_map = {
+            'IND': 'IU',     # Indiana (Covers=IND, ESPN=IU)
+            'MIZ': 'MIZZ',   # Missouri
+            'UCONN': 'CONN', # UConn
+        }
+        if sport.lower() in ('ncaab', 'ncaaf'):
+            abbr_map.update(ncaab_map)
 
         for abbr, data in records.items():
             # Store under both the original and normalized abbreviation
@@ -785,17 +796,30 @@ def fetch_defensive_stats(sport_path: str, team_id: str) -> Dict:
             team = data.get('team', {})
 
             # Check record stats for points against
+            # IMPORTANT: Prefer avgpointsagainst (per-game) over pointsagainst (season total)
+            # The substring check 'pointsagainst' in name was matching BOTH, and the season
+            # total (e.g. 686.0) was overwriting the per-game average (e.g. 76.2).
+            # Fixed Feb 15, 2026.
             record = team.get('record', {})
+            best_opp_ppg = None
             for item in record.get('items', []):
                 stats = item.get('stats', [])
                 for stat in stats:
                     name = stat.get('name', '').lower()
                     value = stat.get('value', stat.get('displayValue', 0))
-                    if 'pointsagainst' in name or 'avgpointsagainst' in name or name == 'papg':
-                        try:
-                            result['opp_ppg'] = float(value)
-                        except (ValueError, TypeError):
-                            pass
+                    try:
+                        fval = float(value)
+                    except (ValueError, TypeError):
+                        continue
+                    # Prefer the per-game average stat over the season total
+                    if name == 'avgpointsagainst' or name == 'papg':
+                        if best_opp_ppg is None or fval < 200:
+                            best_opp_ppg = fval
+                    elif name == 'pointsagainst' and best_opp_ppg is None:
+                        # Only use season total as fallback if no average found yet
+                        best_opp_ppg = fval
+            if best_opp_ppg is not None and best_opp_ppg > 0:
+                result['opp_ppg'] = best_opp_ppg
 
             # Also check nextEvent for defensive stats
             next_event = team.get('nextEvent', [])
@@ -1354,6 +1378,50 @@ def is_game_completed(game: Dict) -> bool:
     state = status.get('type', {}).get('state', '')
     return state.lower() == 'post'
 
+# All-Star / Exhibition game IDs and abbreviations that are NOT real teams
+_EXHIBITION_TEAM_ABBRS = {
+    'WORLD', 'STARS', 'TBD', 'STRIPES', 'USA', 'TEAM',
+    'EAST', 'WEST', 'AFC', 'NFC', 'AL', 'NL',
+    'RISING', 'ROOKIE', 'SOPH', 'CELEB',
+}
+
+def is_exhibition_game(game: Dict) -> bool:
+    """
+    Detect All-Star, Rising Stars, exhibition, and other non-regular-season events.
+    ESPN misleadingly labels these as season_type=2/regular-season, so we check
+    team abbreviations and event names instead.
+    Added February 15, 2026 - fixes blank data on All-Star weekends.
+    """
+    # Check event name for All-Star keywords
+    name = game.get('name', '').lower()
+    short_name = game.get('shortName', '').lower()
+    for keyword in ['all-star', 'all star', 'rising stars', 'skills challenge',
+                    'three-point', '3-point', 'dunk contest', 'slam dunk',
+                    'celebrity', 'exhibition', 'futures game']:
+        if keyword in name or keyword in short_name:
+            return True
+
+    # Check team abbreviations - exhibition teams have non-standard abbrs
+    comp = game.get('competitions', [{}])[0]
+    competitors = comp.get('competitors', [])
+    for team in competitors:
+        abbr = team.get('team', {}).get('abbreviation', '').upper()
+        if abbr in _EXHIBITION_TEAM_ABBRS:
+            return True
+
+    # Check for extremely high team IDs (real NBA teams are 1-30ish range)
+    # All-Star teams get IDs like 111386, 132374, 132375
+    for team in competitors:
+        team_id = team.get('team', {}).get('id', '')
+        try:
+            tid = int(team_id)
+            if tid > 100000:
+                return True
+        except (ValueError, TypeError):
+            pass
+
+    return False
+
 def is_important_ncaab_game(game: Dict, has_odds: bool = False) -> bool:
     if has_odds:
         return True
@@ -1432,9 +1500,26 @@ def process_game(espn_game: Dict, sport: str, sport_path: str, odds_data: List[D
     home_l5 = fetch_team_l5_record(sport_path, home_id)
 
     # NEW: Get ATS/O/U betting records from Covers.com
+    # NCAAB abbreviation mapping: ESPN uses different abbrs than Covers.com
+    # Added Feb 15, 2026 - fixes blank ATS/O/U for NCAAB teams
+    _ESPN_TO_COVERS_NCAAB = {
+        'IU': 'IND',     # Indiana
+        'MIZZ': 'MIZ',   # Missouri
+        'MSST': 'MSSP',  # Mississippi State
+        'ARK': 'ARK',
+        'CONN': 'UCONN', # UConn
+    }
     betting_records = betting_records or {}
     away_betting = betting_records.get(away_abbr, {})
+    if not away_betting and sport in ('NCAAB', 'NCAAF'):
+        alt_abbr = _ESPN_TO_COVERS_NCAAB.get(away_abbr, '')
+        if alt_abbr:
+            away_betting = betting_records.get(alt_abbr, {})
     home_betting = betting_records.get(home_abbr, {})
+    if not home_betting and sport in ('NCAAB', 'NCAAF'):
+        alt_abbr = _ESPN_TO_COVERS_NCAAB.get(home_abbr, '')
+        if alt_abbr:
+            home_betting = betting_records.get(alt_abbr, {})
 
     # NEW: Fetch Head-to-Head data from Covers.com
     h2h_data = None
@@ -3212,6 +3297,12 @@ def main():
         # Process games
         processed = []
         for game in games:
+            # Filter out All-Star / exhibition games (Feb 15, 2026 fix)
+            if is_exhibition_game(game):
+                skipped_name = game.get('shortName', game.get('name', 'Unknown'))
+                print(f"  [SKIP] Exhibition/All-Star: {skipped_name}")
+                continue
+
             # NCAAB/NCAAF filtering
             if sport == 'NCAAB':
                 odds_match = match_game_odds(game, odds_data)
