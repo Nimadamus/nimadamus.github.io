@@ -89,6 +89,7 @@ const FEATURED_GAMES = [
     { date: "2026-02-13", page: "10-michigan-state-at-wisconsin-prediction-picks-february-13-2026.html", title: "#10 Michigan State at Wisconsin" },
     { date: "2026-02-14", page: "9-kansas-at-5-iowa-state-prediction-picks-february-14-2026.html", title: "#9 Kansas at #5 Iowa State" },
     { date: "2026-02-15", page: "nba-all-star-game-2026-usa-vs-world-prediction-picks-february-15-2026.html", title: "NBA All-Star Game 2026: USA vs World" },
+    { date: "2026-02-16", page: "houston-at-iowa-state-prediction-picks-february-16-2026.html", title: "#3 Houston at #5 Iowa State" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];

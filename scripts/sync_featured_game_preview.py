@@ -168,7 +168,16 @@ def get_team_colors(sport, abbr):
 
 def get_current_featured_page(index_content):
     """Find which featured game page index.html links to."""
+    # Try old format first
     match = re.search(r'href="(featured-game-of-the-day-page\d+\.html)"', index_content)
+    if match:
+        return match.group(1)
+    # Try new keyword-rich format (link near "View Full Breakdown")
+    match = re.search(r'href="([^"]+prediction-picks[^"]+\.html)"[^>]*>\s*<span[^>]*>\s*View Full Breakdown', index_content)
+    if match:
+        return match.group(1)
+    # Fallback: any link right before "View Full Breakdown"
+    match = re.search(r'href="([^"]+\.html)"[^>]*>\s*<span[^>]*>\s*View Full Breakdown', index_content)
     return match.group(1) if match else None
 
 
