@@ -93,14 +93,40 @@
 <div class="content-container">
  <h1>Risk of Ruin: Your Probability of Going Broke</h1>
 
- <p>Risk of ruin is the mathematical probability that you'll lose your entire bankroll before doubling it. It's not about one bad bet. It's about the cumulative effect of variance over hundreds of bets, even when you have an edge.</p>
+ <p>Risk of ruin is the mathematical probability that you'll lose your entire bankroll before doubling it. It's not about one bad bet. It's about the cumulative effect of variance over hundreds of bets, even when you have an edge. Every sports bettor who has ever gone broke, no matter how sharp their handicapping was, lost because they ignored this number or didn't know it existed.</p>
 
  <p>Understanding this number changes how you bet. A 55% winner betting 10% per game has about a 10% risk of ruin. That same 55% winner betting 2% per game has less than 1% risk of ruin. The math is brutal and it doesn't care how confident you feel. See our <a href="unit-sizing.html" style="color:#00ffff;">unit sizing guide</a> to find the right percentage for you.</p>
+
+ <p>Here's the uncomfortable truth that most bettors never confront: your handicapping ability is only half the equation. The other half is whether your bet sizing gives you enough runway to survive the inevitable losing streaks that <a href="variance.html" style="color:#00ffff;">variance</a> throws at you. Risk of ruin connects those two halves into a single number that tells you, with mathematical precision, whether your current approach will survive or self-destruct.</p>
 
  <h2>How Risk of Ruin Works</h2>
  <p>Even if you're a profitable bettor long-term, short-term variance can destroy you if you're betting too much per game. Risk of ruin calculates the chance that a string of losses wipes you out before your edge can recover the bankroll.</p>
 
- <p>The formula depends on three things: your win percentage, your average odds, and what percentage of your bankroll you're betting per game. Increase any of those and your risk of ruin changes dramatically.</p>
+ <p>The formula depends on three things: your win percentage, your average odds, and what percentage of your bankroll you're betting per game. Change any one of those variables and your risk of ruin shifts dramatically.</p>
+
+ <h2>The Risk of Ruin Formula Explained</h2>
+
+ <p>The simplified risk of ruin formula for sports betting at standard -110 odds looks like this:</p>
+
+ <div class="warning-box" style="border-left-color:#00ffff;background:rgba(0,224,255,0.05);">
+ <p style="font-family:var(--font-primary);color:#00ffff;text-align:center;font-size:1.2rem;">Risk of Ruin = ((1 - Edge) / (1 + Edge)) ^ (Bankroll / Unit Size)</p>
+ </div>
+
+ <p>Your "edge" is derived from your win rate and the odds you're betting at. At -110 odds, you need to win 52.4% just to break even because of the vig. A 55% winner at -110 has a true edge of about 4.5%. That sounds small, and it is, which is exactly why bet sizing matters so much.</p>
+
+ <p>The exponent in that formula, "Bankroll / Unit Size," is where the magic happens. If your bankroll is $1,000 and your unit size is $100 (10%), the exponent is 10. If your unit size is $20 (2%), the exponent is 50. Raising a fraction to the 50th power produces a dramatically smaller number than raising it to the 10th power. That's why cutting your unit size in half doesn't just cut your risk of ruin in half. It drops it exponentially.</p>
+
+ <p>You don't need to memorize the formula. You can plug your numbers into our <a href="../risk-of-ruin-calculator.html" style="color:#00ffff;">risk of ruin calculator</a> and get your exact number in seconds. But understanding the mechanics helps you see why professional bettors are so obsessive about unit sizing. The math rewards discipline more than it rewards talent.</p>
+
+ <h2>Concrete Examples: What the Numbers Actually Look Like</h2>
+
+ <p>Let's walk through three bettors who all have the same $5,000 bankroll and the same 55% win rate at -110 odds. The only difference is how much they bet per game.</p>
+
+ <p><strong>Bettor A: 10% units ($500 per bet).</strong> With a bankroll of just 10 units, a bad stretch of 7-8 straight losses (which happens more often than you think at 55%) puts them in a hole they may never climb out of. Their risk of ruin is roughly 10%. That means if you cloned Bettor A and ran 100 parallel universes, about 10 of those clones would go completely broke before doubling their bankroll. One in ten isn't rare. It's a coin flip away from disaster.</p>
+
+ <p><strong>Bettor B: 3% units ($150 per bet).</strong> Now the bankroll stretches to about 33 units. A seven-game losing streak hurts, but it only takes the bankroll down to around $3,950. Painful, yes. Survivable, absolutely. The risk of ruin drops to approximately 1.5%. This bettor will almost certainly survive long enough for their edge to compound.</p>
+
+ <p><strong>Bettor C: 1% units ($50 per bet).</strong> With 100 units of runway, this bettor can absorb a devastating 15-game losing streak and still have $4,250 left. Their risk of ruin is effectively 0%, so small it rounds to zero. Bettor C will never go broke. The tradeoff is patience. Growing a $5,000 bankroll at $50 per bet takes time. But this bettor is still betting in two years when Bettor A is long gone.</p>
 
  <h2>Risk of Ruin by Unit Size (55% Winner at -110)</h2>
 
@@ -143,30 +169,144 @@
 
  <p>These numbers assume you're hitting 55% at standard -110 odds. If your win rate drops to 53%, your risk of ruin at every bet size roughly doubles. If you're hitting 52%, you're barely profitable and your risk of ruin skyrockets even at small unit sizes.</p>
 
+ <h2>How Win Rate Changes Everything</h2>
+
+ <p>Unit size isn't the only variable that controls your survival. Your win rate has an enormous impact on risk of ruin, and even small differences in win percentage produce massive differences in your probability of going broke.</p>
+
+ <table>
+ <thead>
+ <tr>
+ <th>Win Rate</th>
+ <th>Edge at -110</th>
+ <th>RoR at 5% Units</th>
+ <th>RoR at 2% Units</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>52.4%</td>
+ <td>~0% (Breakeven)</td>
+ <td>~50%</td>
+ <td>~50%</td>
+ </tr>
+ <tr>
+ <td>53%</td>
+ <td>~1.1%</td>
+ <td>~20%</td>
+ <td>~8%</td>
+ </tr>
+ <tr>
+ <td>54%</td>
+ <td>~2.7%</td>
+ <td>~8%</td>
+ <td>~2%</td>
+ </tr>
+ <tr>
+ <td>55%</td>
+ <td>~4.5%</td>
+ <td>~3%</td>
+ <td>< 1%</td>
+ </tr>
+ <tr>
+ <td>57%</td>
+ <td>~8.5%</td>
+ <td>< 0.5%</td>
+ <td>< 0.01%</td>
+ </tr>
+ </tbody>
+ </table>
+
+ <p>Notice how a breakeven bettor (52.4% at -110) has a 50% risk of ruin no matter what unit size they use. That's because they have no edge. They're flipping a coin against the vig, and eventually the house wins. This is why knowing your true win rate matters just as much as knowing your unit size. If you're not tracking your results over at least 500 bets, you don't actually know your win rate, and you can't calculate a meaningful risk of ruin.</p>
+
+ <p>Also notice the 53% bettor. They're technically profitable, but at 5% unit sizing, they have a 20% chance of going broke. One in five. That's not a comfortable position. Drop to 2% units and they're still at 8%. For bettors with thin edges, <a href="../kelly-criterion.html" style="color:#00ffff;">the Kelly Criterion</a> becomes essential for finding the optimal bet size that maximizes growth without blowing up.</p>
+
  <h2>Why Good Bettors Still Go Broke</h2>
  <p>You can be a 54% winner and still go broke if you're betting 15% per game. <a href="variance.html" style="color:#00ffff;">Variance</a> doesn't care about your long-term edge. It only cares about whether you survive long enough to see that edge pay off.</p>
 
- <p>This is why bankroll management matters more than handicapping for most bettors. You can be slightly above breakeven and make money for years if you manage your bankroll correctly. You can be a sharp handicapper and go broke in two months if you bet too big.</p>
+ <p>This is why <a href="../bankroll-management.html" style="color:#00ffff;">bankroll management</a> matters more than handicapping for most bettors. You can be slightly above breakeven and make money for years if you manage your bankroll correctly. You can be a sharp handicapper and go broke in two months if you bet too big.</p>
+
+ <p>Here's why it happens so often. A bettor starts with a $2,000 bankroll, bets $200 per game (10%), and goes 6-4 in their first ten bets. They're up $280 and feeling invincible. Their win rate is 60%. They bump their bets to $300 because why not, they're crushing it. Then a 4-9 stretch hits. Not a historically unlikely run, just normal variance for a 55% bettor. Suddenly they're down to $800 and panicking. They either chase losses with bigger bets and go broke within days, or they quit. Either way, a winning bettor just lost their bankroll, not because of bad handicapping, but because of bad sizing.</p>
+
+ <p>The cruel irony is that the more confident you are in your edge, the more aggressively you tend to bet, and the more likely you are to blow up. Confidence and survival are at war with each other unless you let the math make the sizing decision for you.</p>
 
  <div class="warning-box">
  <p>If your risk of ruin is above 5%, you're gambling, not investing. Professional bettors target risk of ruin under 1%. They survive downswings that would destroy recreational bettors because their unit sizing protects them.</p>
  </div>
 
  <h2>How to Lower Your Risk of Ruin</h2>
- <p>Three ways: increase your win rate, decrease your unit size, or both.</p>
+ <p>Three ways: increase your win rate, decrease your unit size, or both. But only one of those is fully within your control.</p>
 
- <p>You can't control variance. You can't will yourself to hit 60% when your true win rate is 54%. But you can control how much you bet per game. Lower your unit size and your risk of ruin drops exponentially.</p>
+ <p>You can't control variance. You can't will yourself to hit 60% when your true win rate is 54%. But you can control how much you bet per game. Lower your <a href="unit-sizing.html" style="color:#00ffff;">unit size</a> and your risk of ruin drops exponentially.</p>
 
  <p>If you're betting 5% per game and your risk of ruin feels too high, cut your unit to 2.5%. Your profits grow slower, but you're nearly guaranteed to survive long enough to actually see those profits.</p>
+
+ <h2>Practical Guidelines: Keeping Risk of Ruin Under 1%</h2>
+
+ <p>Professional bettors and serious recreational bettors should aim for a risk of ruin below 1%. That means your probability of going broke is less than one in a hundred. Here's how to get there based on your estimated true win rate at -110 odds:</p>
+
+ <table>
+ <thead>
+ <tr>
+ <th>Your Win Rate</th>
+ <th>Maximum Unit Size for &lt;1% RoR</th>
+ <th>Minimum Bankroll Units</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>53%</td>
+ <td>1% of bankroll</td>
+ <td>100 units</td>
+ </tr>
+ <tr>
+ <td>54%</td>
+ <td>2% of bankroll</td>
+ <td>50 units</td>
+ </tr>
+ <tr>
+ <td>55%</td>
+ <td>2-3% of bankroll</td>
+ <td>35-50 units</td>
+ </tr>
+ <tr>
+ <td>56%+</td>
+ <td>3-4% of bankroll</td>
+ <td>25-35 units</td>
+ </tr>
+ </tbody>
+ </table>
+
+ <p>If you don't know your true win rate yet (and most bettors don't until they've tracked 500+ bets), default to 1-2% units. It's the conservative play, and in risk of ruin terms, conservative is smart. You can always increase your unit size later once you have enough data to confirm your edge. You can't un-go-broke.</p>
+
+ <p>A few more practical rules that professional bettors follow to keep their risk of ruin in check:</p>
+
+ <p><strong>Never increase unit size after a winning streak.</strong> Your bankroll is bigger, sure, but your edge hasn't changed. If you switch from flat betting to percentage-based betting, your unit size naturally scales with your bankroll. But manually bumping your unit because you're "feeling it" is how profitable bettors become broke bettors. Check our guide on <a href="increasing-unit-size.html" style="color:#00ffff;">when to increase your unit size</a> for the right way to scale up.</p>
+
+ <p><strong>Never bet more than one unit on a single game.</strong> Even if it feels like a lock. Locks lose all the time. The moment you start putting 3-5 units on "sure things," your effective risk of ruin triples or quintuples for that bet. Over time, those over-sized bets erode the protection that disciplined unit sizing provides.</p>
+
+ <p><strong>Track everything.</strong> You can't manage what you don't measure. Record every bet, every result, and review your actual win rate every month. If your win rate is lower than you assumed when you set your unit size, adjust your unit size down before variance catches up to you.</p>
+
+ <h2>Unit Size and Survival Probability: The Inverse Relationship</h2>
+
+ <p>There's a clean, inverse relationship between how much you bet per game and how likely you are to survive. To put it as simply as possible: the bigger your bets relative to your bankroll, the more likely you are to go broke, regardless of your skill level.</p>
+
+ <p>Think of your bankroll as a buffer between you and zero. Every bet you place either adds to that buffer or erodes it. When you bet 1% per game, each loss only shaves a tiny sliver off your buffer. You'd need to lose 50 straight bets to lose half your bankroll, and a 50-game losing streak for a 55% winner is astronomically unlikely. But when you bet 10% per game, you only need 7 straight losses to lose half your bankroll, and a 7-game losing streak for a 55% winner happens roughly once every 150 bets. If you're betting 3-4 games per day, that's once every 5-6 weeks. It will happen.</p>
+
+ <p>This is why survival probability and unit size are inversely exponential, not linear. Cutting your unit size from 10% to 5% doesn't double your survival odds. It might increase them tenfold. Cutting from 5% to 2% might increase them another twenty-fold. The math overwhelmingly rewards smaller bet sizes with longer survival windows, which is another way of saying it rewards patience over aggression.</p>
 
  <h2>The Long-Term Reality</h2>
  <p>Sports betting is a marathon, not a sprint. The goal isn't to double your bankroll in a month. The goal is to still be betting in six months with more money than you started with.</p>
 
- <p>Risk of ruin is the single most important number in bankroll management. Keep it under 2% and you'll almost certainly survive. Let it drift above 10% and you're one bad week away from starting over.</p>
+ <p>Risk of ruin is the single most important number in <a href="../bankroll-management.html" style="color:#00ffff;">bankroll management</a>. Keep it under 2% and you'll almost certainly survive. Let it drift above 10% and you're one bad week away from starting over.</p>
+
+ <p>The bettors who build real, sustainable profits over years aren't the ones who hit 60% for a month. They're the ones who hit 54-56% consistently and bet small enough to survive the months where they dip to 48%. They let the math work for them instead of against them. They understand that a 2% unit size isn't timid. It's the most aggressive bet they can make while keeping their risk of ruin in the safety zone. Use our <a href="../risk-of-ruin-calculator.html" style="color:#00ffff;">risk of ruin calculator</a> to find your exact number, then size your bets accordingly. Your future self will thank you for it.</p>
 
  <div style="background:rgba(0,224,255,0.05);border:1px solid rgba(0,224,255,0.2);padding:20px;border-radius:10px;margin-top:40px;">
  <p style="color:#00ffff;font-weight:600;margin-bottom:15px;">Related Reading:</p>
  <p style="margin-bottom:8px;">• <a href="unit-sizing.html" style="color:#ddd;">How Much Should You Actually Bet?</a></p>
+ <p style="margin-bottom:8px;">• <a href="../risk-of-ruin-calculator.html" style="color:#ddd;">Risk of Ruin Calculator: Plug In Your Numbers</a></p>
+ <p style="margin-bottom:8px;">• <a href="../kelly-criterion.html" style="color:#ddd;">Kelly Criterion: The Optimal Bet Sizing Formula</a></p>
+ <p style="margin-bottom:8px;">• <a href="variance.html" style="color:#ddd;">Understanding Variance in Sports Betting</a></p>
  <p style="margin-bottom:8px;">• <a href="simulations.html" style="color:#ddd;">What 10,000 Bets Actually Looks Like</a></p>
  <p style="margin-bottom:8px;">• <a href="mistakes.html" style="color:#ddd;">7 Bankroll Mistakes That Will Empty Your Account</a></p>
  </div>

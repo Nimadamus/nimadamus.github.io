@@ -92,43 +92,134 @@
 <div class="content-container">
  <h1>Simple Kelly Criterion Guide</h1>
 
- <p>The Kelly Criterion answers one question: how much should I bet? It's a formula that calculates the optimal bet size based on your edge and the odds you're getting.</p>
+ <p>The Kelly Criterion answers one question: how much should I bet? It's a formula that calculates the optimal bet size based on your edge and the odds you're getting. If you've ever stared at a bet you loved and wondered whether to put $50 or $500 on it, Kelly gives you a disciplined, mathematical answer instead of leaving it to gut instinct.</p>
 
- <h2>The Basic Idea</h2>
- <p>Bet more when you have a big edge. Bet less when your edge is small. Bet nothing when you have no edge. Kelly does this math automatically.</p>
+ <p>This kelly criterion beginner guide walks you through everything from the basic concept to a fully worked example, with no advanced math required. Whether you're brand new to sports betting or you've been placing bets for years without a real sizing strategy, this is where you start.</p>
+
+ <h2>What Is the Kelly Criterion, Exactly?</h2>
+
+ <p>The Kelly Criterion is a formula developed by John Kelly Jr. at Bell Labs in 1956. He originally designed it for a completely different problem, optimizing signal noise in telephone lines, but gamblers quickly realized it solved one of the hardest questions in betting: how much of your bankroll should you risk on a single wager?</p>
+
+ <p>Here's the core principle. Bet more when you have a big edge. Bet less when your edge is small. Bet nothing when you have no edge. Kelly does this math automatically, and it does it in a way that maximizes the long-term growth rate of your bankroll. Not your short-term winnings on a single Saturday, but the compounding growth of your money over hundreds or thousands of bets.</p>
+
+ <p>Think of it this way. If a coin flip paid you 3-to-1 on heads, you obviously have an edge. But would you bet your entire bankroll on one flip? Of course not, because a 50% chance of losing everything is reckless regardless of the payout. Kelly tells you the exact sweet spot between betting too much (and risking ruin) and betting too little (and leaving money on the table). For a deeper dive into the math and interactive tools, check out our <a href="/kelly-criterion.html" style="color: var(--neon-gold);">full Kelly Criterion guide and calculator</a>.</p>
+
+ <h2>The Formula in Plain English</h2>
+
+ <p>The Kelly formula looks intimidating the first time you see it, but it breaks down into something surprisingly simple. Here it is:</p>
+
+ <p style="text-align: center; font-size: 1.3rem; color: var(--neon-cyan); padding: 20px 0;"><strong>Kelly % = (bp - q) / b</strong></p>
+
+ <p>Let's define each piece:</p>
+
+ <ol>
+ <li><strong>b</strong> = the decimal odds minus 1 (this represents your potential profit per dollar wagered). If you're getting +150 odds, that's 2.50 in decimal, so b = 1.50.</li>
+ <li><strong>p</strong> = your estimated probability of winning the bet. This is a number between 0 and 1. If you think you have a 55% chance of winning, p = 0.55.</li>
+ <li><strong>q</strong> = the probability of losing the bet, which is just 1 minus p. So if p = 0.55, then q = 0.45.</li>
+ </ol>
+
+ <p>In even plainer English: the formula takes your edge (how much better your estimated win rate is than what the odds imply) and converts it into a bankroll percentage. A bigger edge means a bigger bet. A tiny edge means a tiny bet. And if you have no edge at all, the formula spits out zero, telling you to pass.</p>
+
+ <h2>A Step-by-Step Worked Example</h2>
+
+ <p>Let's walk through a real scenario so you can see exactly how this works in practice.</p>
+
+ <p><strong>The Situation:</strong> You're looking at an NBA spread. The sportsbook has Team A at -110 odds (standard juice). You've done your research, run your models, checked the injury reports, and you honestly believe Team A has a 57% chance of covering the spread.</p>
+
+ <p><strong>Step 1: Convert the odds.</strong> American odds of -110 convert to decimal odds of 1.909. So b = 1.909 - 1 = 0.909.</p>
+
+ <p><strong>Step 2: Identify your probabilities.</strong> You estimate a 57% win probability, so p = 0.57. That makes q = 1 - 0.57 = 0.43.</p>
+
+ <p><strong>Step 3: Plug into the formula.</strong> Kelly % = (0.909 x 0.57 - 0.43) / 0.909 = (0.518 - 0.43) / 0.909 = 0.088 / 0.909 = 0.0968, which is roughly 9.7%.</p>
+
+ <p><strong>Step 4: Apply to your bankroll.</strong> If your bankroll is $1,000, full Kelly says to bet $97 on this game.</p>
+
+ <p><strong>Step 5: Use fractional Kelly.</strong> Here's the critical part that most beginners miss. You should almost never use full Kelly. Half Kelly (4.85%, or about $48 on a $1,000 bankroll) is far more practical. Quarter Kelly ($24) is even safer. Why? Because your 57% estimate might be wrong. It probably is, at least slightly. Fractional Kelly gives you a cushion for those inevitable estimation errors. We break this down in detail in our <a href="/kelly-criterion/fractional-vs-full.html" style="color: var(--neon-gold);">fractional vs full Kelly comparison</a>.</p>
 
  <h2>How to Use It (Simple Version)</h2>
  <ol>
- <li>Figure out your estimated win probability (this is the hard part)</li>
+ <li>Figure out your estimated win probability (this is the hard part, and we'll talk about it below)</li>
  <li>Look at the odds the sportsbook is offering</li>
- <li>Plug both into the Kelly calculator</li>
+ <li>Plug both into the <a href="/kelly-criterion.html" style="color: var(--neon-gold);">Kelly calculator</a></li>
  <li>The calculator tells you what percentage of your bankroll to bet</li>
- <li>Multiply that percentage by your current bankroll to get your bet amount</li>
+ <li>Divide that percentage by 2 (half Kelly) or 4 (quarter Kelly) for a safer approach</li>
+ <li>Multiply the adjusted percentage by your current bankroll to get your bet amount</li>
  </ol>
 
+ <p>That's the entire process. You don't need a math degree. You don't need custom software. You need honest probability estimates and the discipline to follow through, even when your gut says "bet bigger."</p>
+
  <h2>The Most Important Rule</h2>
- <p>Use half Kelly, not full Kelly. If the calculator says bet 10%, bet 5% instead. This protects you from overestimating your edge, which everyone does.</p>
+ <p>Use half Kelly, not full Kelly. If the calculator says bet 10%, bet 5% instead. This protects you from overestimating your edge, which everyone does, even professionals. Full Kelly is mathematically optimal only if your probability estimates are perfectly accurate. They never are. Nobody's are. Half Kelly captures roughly 75% of the growth rate of full Kelly while cutting your variance almost in half. That's one of the best deals in all of gambling math.</p>
+
+ <p>If you're just starting out, quarter Kelly is even better. It reduces variance dramatically while still sizing your bets intelligently. You can always move toward half Kelly once you've built confidence in your win probability estimates over a large sample of bets.</p>
+
+ <h2>When to Use Kelly (and When Not To)</h2>
+
+ <p>Kelly is a powerful tool, but it's not for everyone, and it's not for every situation. Here's when it makes sense and when it doesn't.</p>
+
+ <p><strong>Use Kelly when:</strong></p>
+ <ol>
+ <li>You have a proven, documented edge. This means at least 200-500 tracked bets showing consistent profitability.</li>
+ <li>You can make honest probability estimates. If you can't estimate your win rate with some accuracy, Kelly's output is meaningless.</li>
+ <li>You have a dedicated bankroll. Money you can afford to lose, completely separate from rent, groceries, and bills.</li>
+ <li>You have the emotional discipline to follow the formula. If a bad week makes you want to double your bet sizes to "get even," Kelly won't help you.</li>
+ </ol>
+
+ <p><strong>Don't use Kelly when:</strong></p>
+ <ol>
+ <li>You're a recreational bettor placing bets for fun. Kelly is a bankroll management system for serious bettors.</li>
+ <li>You can't honestly assess your win probability. Garbage in, garbage out. Kelly will tell you to bet big on games where you have no real edge if you feed it inflated numbers.</li>
+ <li>You're betting parlays heavily. Kelly works best on single bets. Parlay sizing is a different beast entirely (though we cover some approaches in our <a href="/kelly-criterion/parlays.html" style="color: var(--neon-cyan);">Kelly for Parlays guide</a>).</li>
+ <li>You're brand new to sports betting. Get your fundamentals right first. Learn how odds work, build a tracking system, and prove you can be profitable before adding Kelly to your toolkit. Our <a href="/bankroll-management.html" style="color: var(--neon-gold);">bankroll management guide</a> is a better starting point for total beginners.</li>
+ </ol>
 
  <h2>What You Need to Get Started</h2>
  <ol>
- <li>A betting bankroll (money you can afford to lose)</li>
- <li>A track record proving you can beat the closing line</li>
- <li>Honest estimates of your win probability on each bet</li>
- <li>The discipline to skip bets where you don't have an edge</li>
+ <li>A betting bankroll (money you can afford to lose, completely separate from your living expenses)</li>
+ <li>A track record proving you can beat the closing line consistently</li>
+ <li>Honest estimates of your win probability on each bet, not what you hope, but what you genuinely believe</li>
+ <li>The discipline to skip bets where you don't have an edge, even when the game looks exciting</li>
+ <li>A spreadsheet or tracking tool to log every bet, your estimated probability, the Kelly recommendation, and the actual result</li>
  </ol>
 
  <div class="tip-box">
- <p>Don't use Kelly until you've proven you're profitable over at least 100 bets. Track everything on paper first. If you can't beat the closing line, Kelly won't save you.</p>
+ <p><strong>The Beginner's Rule:</strong> Don't use Kelly until you've proven you're profitable over at least 200 bets. Track everything on paper first. If you can't beat the closing line over a meaningful sample, Kelly won't save you. It will actually make things worse, because it will tell you to bet larger on games where your "edge" is actually a mirage.</p>
  </div>
 
+ <h2>Common Beginner Pitfalls</h2>
+
+ <p>After working with Kelly for years, we've seen the same mistakes show up over and over. Here's what trips most people up.</p>
+
+ <p><strong>1. Overestimating your win probability.</strong> This is the number one killer. If you think you win 60% of your bets but you actually win 53%, Kelly will have you betting way too much, and your bankroll will shrink instead of grow. Be brutally honest. If anything, round your probability estimate down, not up.</p>
+
+ <p><strong>2. Using full Kelly instead of fractional Kelly.</strong> Full Kelly maximizes long-term growth on paper, but the drawdowns are stomach-churning. We're talking 30-50% bankroll drops that are completely normal under full Kelly. Most people can't handle that emotionally. Half or quarter Kelly smooths the ride considerably.</p>
+
+ <p><strong>3. Ignoring the "bet zero" signal.</strong> When Kelly says your optimal bet size is 0% (or negative), that means you don't have an edge on this game. A lot of bettors override this because they "feel good" about the pick. Don't. The whole point of the system is to remove emotion from sizing decisions.</p>
+
+ <p><strong>4. Not adjusting your bankroll.</strong> Kelly is based on your current bankroll, not your starting bankroll. If you started with $1,000 and you're now at $800 after a rough stretch, your Kelly bet sizes should shrink accordingly. If you're at $1,400 after a hot streak, they should grow. Recalculate every time.</p>
+
+ <p><strong>5. Applying Kelly to correlated bets.</strong> If you're betting the same NBA game on the spread and the total, those bets are correlated. Kelly assumes each bet is independent. Betting full Kelly on two correlated wagers can put way more of your bankroll at risk than you intended. For more on this and other traps, see our <a href="/kelly-criterion/mistakes.html" style="color: var(--neon-cyan);">common Kelly mistakes guide</a>.</p>
+
+ <h2>Where to Go Next</h2>
+
+ <p>If you've made it this far, you understand the core idea behind Kelly, the formula, how to work through a real example, and the biggest traps to avoid. Here's the natural next step depending on where you are in your betting journey.</p>
+
+ <p><strong>If you want to practice with real numbers,</strong> head to our <a href="/kelly-criterion/examples.html" style="color: var(--neon-gold);">real betting examples page</a>. It walks through Kelly calculations on actual game scenarios across multiple sports so you can see how the formula behaves with different odds and probabilities.</p>
+
+ <p><strong>If you want to understand fractional Kelly better,</strong> our <a href="/kelly-criterion/fractional-vs-full.html" style="color: var(--neon-gold);">fractional vs full Kelly guide</a> compares quarter, half, and full Kelly side by side with simulated bankroll curves so you can see the real impact on variance and growth.</p>
+
+ <p><strong>If you want to see how Kelly fits into a broader money management plan,</strong> our <a href="/bankroll-management.html" style="color: var(--neon-gold);">bankroll management guide</a> covers the full picture, from setting up a dedicated bankroll to choosing your unit sizing method to managing drawdowns without panicking.</p>
+
  <h2>Bottom Line</h2>
- <p>Kelly Criterion helps you bet more when you should and less when you shouldn't. It prevents you from overbetting when you're confident and underbetting when you've got a real edge. But it only works if you're honest about your win probability estimates.</p>
+ <p>Kelly Criterion helps you bet more when you should and less when you shouldn't. It prevents you from overbetting when you're confident and underbetting when you've got a real edge. But it only works if you're honest about your win probability estimates. The formula itself is the easy part. The hard part, the part that separates winning bettors from losing ones, is generating accurate probability estimates and having the discipline to follow the system even when every instinct tells you to go bigger.</p>
+
+ <p>Start with quarter Kelly. Track everything. Be honest about your edge. And don't rush the process. The bettors who succeed with Kelly are the ones who treat it as a long-term compounding engine, not a get-rich-quick shortcut.</p>
 
  <!-- BetLegend Perspective -->
  <div style="background: linear-gradient(135deg, rgba(0, 224, 255, 0.08), rgba(255, 215, 0, 0.08)); border: 2px solid var(--neon-cyan); border-radius: 15px; padding: 30px; margin: 40px 0;">
  <h2 style="color: var(--neon-cyan); margin-bottom: 20px;">BetLegend's Quick Tips</h2>
  <p>When we first started using Kelly, we made it way too complicated. Here's the simple approach that actually works: use our <a href="/kelly-criterion.html" style="color: var(--neon-gold);">free calculator</a>, enter your bankroll and odds, and divide the suggested bet by 4 (quarter Kelly). That's it. Don't overthink it.</p>
- <p style="margin-bottom: 0;">The hard part isn't the math—it's being honest about your win probability. If you're not sure, assume 52-53% for spreads at -110. That's conservative, but it keeps you from overbetting while you learn.</p>
+ <p style="margin-bottom: 0;">The hard part isn't the math, it's being honest about your win probability. If you're not sure, assume 52-53% for spreads at -110. That's conservative, but it keeps you from overbetting while you learn.</p>
  </div>
 
  <!-- Related Kelly Criterion Articles -->

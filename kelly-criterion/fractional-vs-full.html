@@ -127,12 +127,16 @@
 <div class="content-container">
  <h1>Fractional Kelly vs Full Kelly</h1>
 
- <p>Full Kelly maximizes long-term bankroll growth. So why does almost no professional bettor use it? Because the real world isn't a math textbook. Full Kelly assumes your edge estimate is perfect. In sports betting, it never is.</p>
+ <p>Full Kelly maximizes long-term bankroll growth. So why does almost no professional bettor use it? Because the real world isn't a math textbook. Full Kelly assumes your edge estimate is perfect. In sports betting, it never is. That gap between theoretical optimality and practical survival is where fractional Kelly vs full Kelly becomes the most important bet sizing decision you'll make.</p>
+
+ <p>If you're new to the Kelly formula entirely, start with our <a href="../kelly-criterion-explained.html" style="color:var(--neon-cyan);">complete Kelly Criterion explanation</a> before diving into the fractional debate. Understanding the base formula makes everything below click into place.</p>
 
  <h2>What the Numbers Actually Mean</h2>
- <p>When the Kelly formula tells you to bet 10% of your bankroll, that's full Kelly. It's the mathematically optimal bet size if your win probability estimate is exactly correct.</p>
+ <p>When the <a href="../kelly-criterion.html" style="color:var(--neon-cyan);">Kelly Criterion calculator</a> tells you to bet 10% of your bankroll, that's full Kelly. It's the mathematically optimal bet size if your win probability estimate is exactly correct. The formula is elegant: (bp - q) / b, where b is the decimal odds minus one, p is your win probability, and q is your loss probability.</p>
 
- <p>But if you're off by even 2% on your edge calculation, full Kelly will have you massively overbetting. And in sports betting, being off by 2% isn't rare. It's normal.</p>
+ <p>But if you're off by even 2% on your edge calculation, full Kelly will have you massively overbetting. And in sports betting, being off by 2% isn't rare. It's normal. If you believe a team has a 55% chance of covering the spread, the true probability might be anywhere from 52% to 58%. That uncertainty is the entire reason fractional Kelly exists.</p>
+
+ <p>Full Kelly was designed for situations where you know your exact edge, like card counting in blackjack. Sports betting doesn't work that way. Every edge estimate is exactly that, an estimate. When your estimates carry uncertainty, betting as if they're gospel is a recipe for bankroll destruction.</p>
 
  <table class="comparison-table">
  <thead>
@@ -169,27 +173,72 @@
  </tbody>
  </table>
 
- <h2>Why Half Kelly Wins in Practice</h2>
- <p>Half Kelly gives you 75% of the growth with dramatically less volatility. You're betting half of what full Kelly suggests, which means even if you overestimate your edge by 50%, you're still betting a reasonable amount.</p>
+ <h2>The Math Behind Fractional Kelly</h2>
+ <p>Fractional Kelly is exactly what it sounds like: you take whatever the full Kelly formula recommends and multiply it by a fraction. Half Kelly means you bet 50% of the recommended amount. Quarter Kelly means 25%. The fraction you choose determines how much growth you sacrifice in exchange for stability.</p>
 
- <p>More importantly, you can actually stomach the swings. A 5% bet feels manageable. A 10% bet on a single game feels reckless. If you can't psychologically handle the bet size, you'll abandon the system during a losing streak. Half Kelly keeps you in the game.</p>
+ <p>Here's what makes fractional Kelly mathematically interesting. When you cut your bet size in half, you don't lose half of your expected growth. You lose about 25%. That's because the Kelly growth curve isn't linear. It's a parabola that peaks at full Kelly and drops to zero at double Kelly. The left side of that curve is relatively flat near the top, meaning you can reduce your bet size significantly without giving up much long-term growth at all.</p>
+
+ <p>If full Kelly gives you a theoretical compound growth rate of 4% per bet, half Kelly gives you roughly 3%. Quarter Kelly gives you around 1.9%. You're trading a small slice of growth for a massive reduction in the chance that any single bad streak puts you out of business. For a deeper dive into how these numbers play out over hundreds of bets, check out our <a href="examples.html" style="color:var(--neon-cyan);">Kelly Criterion examples page</a>.</p>
+
+ <h2>Why Half Kelly Wins in Practice</h2>
+ <p>Half Kelly gives you 75% of the growth with dramatically less volatility. Even if you overestimate your edge by 50%, you're still betting a reasonable amount. This is the core insight that separates profitable bettors from busted ones.</p>
+
+ <p>More importantly, you can actually stomach the swings. A 5% bet feels manageable. A 10% bet on a single game feels reckless. If you can't psychologically handle the bet size, you'll abandon the system during a losing streak. Half Kelly keeps you in the game. The <a href="mistakes.html" style="color:var(--neon-cyan);">psychological mistakes page</a> goes deeper on why emotional tolerance matters just as much as mathematical optimization.</p>
+
+ <p>There's another reason half Kelly dominates: it buffers against estimation error. You might think you have a 4% edge, but your real edge could be 2% or 6%. At half Kelly, even if your real edge is half what you estimated, you're still betting at the Kelly-optimal level for your true edge. You land on the correct bet size even when your inputs are wrong. That's a powerful built-in safety net.</p>
 
  <h2>When to Use Quarter Kelly</h2>
  <p>If you're new to Kelly, start with quarter Kelly. If your edge estimates are unproven, use quarter Kelly. If you're betting correlated outcomes, use quarter Kelly. If you value sleep over maximum growth, use quarter Kelly.</p>
 
- <p>You'll grow slower, but you'll survive variance that would wipe out a full Kelly bettor who overestimated their edge.</p>
+ <p>You'll grow slower, but you'll survive <a href="../bankroll-management/variance.html" style="color:var(--neon-cyan);">variance</a> that would wipe out a full Kelly bettor who overestimated their edge. Quarter Kelly cuts your maximum drawdowns roughly in half compared to half Kelly. During a 20-bet losing streak, a full Kelly bettor might see their bankroll drop 80% or more. A quarter Kelly bettor is looking at closer to 30-40%. That's the difference between staying in the game and walking away forever.</p>
+
+ <p>Quarter Kelly also shines when you're betting multiple correlated outcomes. If you have three NBA bets that all depend on similar factors, like fading every home favorite on a given night, those bets aren't truly independent. Full Kelly or even half Kelly would overexpose you because the formula assumes each bet stands alone. Quarter Kelly naturally corrects for that correlation without requiring complex multi-variable models.</p>
 
  <div class="tip-box">
- <p>Professional syndicates with sophisticated models might use 50-75% Kelly. Individual bettors should stick to quarter or half Kelly. The math might say full Kelly is optimal, but the math assumes you're never wrong about your edge. You are.</p>
+ <p>Professional syndicates with sophisticated models might use 50-75% Kelly. Individual bettors should stick to quarter or half Kelly. The math might say full Kelly is optimal, but the math assumes you're never wrong about your edge. You are. If you're just starting out, our <a href="simple-guide.html" style="color:var(--neon-cyan);">beginner-friendly Kelly guide</a> breaks this down in even simpler terms.</p>
  </div>
 
- <h2>The Practical Reality</h2>
- <p>Sports betting isn't blackjack. You can't count cards and know your exact edge. Every bet is an estimate based on incomplete information. Fractional Kelly is your insurance policy against overconfidence.</p>
+ <h2>Volatility and Drawdown: The Real Comparison</h2>
+ <p>Most discussions about fractional Kelly vs full Kelly focus on growth rates, but the more important comparison is volatility. Growth rate is what you'll achieve over thousands of bets. Volatility is what you'll experience on Tuesday night when three underdogs all cover.</p>
 
- <p>Use half Kelly if you've got a proven track record. Use quarter Kelly if you're still building one. And never use full Kelly unless you want to learn the hard way why everyone else uses fractional.</p>
+ <p>At full Kelly, your bankroll swings are violent. It's not unusual to double in a week and then lose 60% the following week. The math says this works out over the long run, but "the long run" might mean 5,000+ bets. Most bettors don't survive that many at full Kelly because they abandon the system during an inevitable rough patch.</p>
+
+ <p>At half Kelly, the swings calm down considerably. You might see a 30% drawdown instead of a 60% one, and that difference is psychologically enormous. You can look at a 30% loss and tell yourself "the system works, stay the course." A 60% loss makes you question everything. At quarter Kelly, the ride gets surprisingly smooth, with drawdowns rarely exceeding 20% and month-to-month returns resembling a steady upward slope.</p>
+
+ <h2>The Half Kelly Sweet Spot</h2>
+ <p>There's a reason the phrase "half Kelly" comes up more than any other fraction in professional betting circles. It sits at a genuine mathematical sweet spot where the tradeoffs are most favorable.</p>
+
+ <p>At half Kelly, you retain 75% of the theoretical growth rate while cutting your variance roughly in half. Going from full to half Kelly, you give up 25% of your growth but eliminate roughly 50% of your volatility. Going from half to quarter Kelly, you give up another 33% of your remaining growth but only reduce volatility by another 25-30%. The marginal benefit of each additional reduction gets smaller, making half Kelly the clear efficiency sweet spot.</p>
+
+ <p>Half Kelly also has an elegant error-correction property. If your estimated edge is exactly right, you're betting at half the optimal rate. If you've overestimated your edge by 100% (meaning you have no edge at all), half Kelly has you betting zero. And if you've overestimated by 50%, half Kelly happens to be the true full Kelly for your actual edge. It gracefully handles the most common estimation errors without ever catastrophically overbetting.</p>
+
+ <p>This is why the majority of <a href="../bankroll-management.html" style="color:var(--neon-cyan);">bankroll management strategies</a> used by professional bettors center around half Kelly. It's not because they lack courage. It's because they've run the simulations and know that half Kelly, applied consistently over thousands of bets, gets them nearly as far with far fewer sleepless nights.</p>
+
+ <h2>Choosing Your Kelly Fraction</h2>
+ <p>So which fraction should you use? The answer depends on how confident you are in your edge estimates, how many simultaneous bets you typically make, and your personal tolerance for drawdowns.</p>
+
+ <p><strong>Use half Kelly (50%) if:</strong> you have a proven model with at least a year of tracked results, your edge estimates have been back-tested, and you can handle seeing your bankroll drop 30% without panicking.</p>
+
+ <p><strong>Use third Kelly (33%) if:</strong> you're reasonably experienced but your model hasn't been proven over a large sample. You sometimes bet on correlated markets and prefer steadier growth with fewer bad weeks.</p>
+
+ <p><strong>Use quarter Kelly (25%) if:</strong> you're still refining your handicapping approach, betting based on judgment rather than a systematic model, or betting multiple correlated outcomes. This gives you the smoothest ride while still growing your bankroll.</p>
+
+ <p><strong>Never use full Kelly (100%)</strong> unless you have absolute certainty in your probability estimates. In sports betting, that situation essentially doesn't exist. Even the sharpest syndicates in the world scale down because they know the market is too dynamic for perfect edge estimation.</p>
+
+ <h2>Common Fractional Kelly Mistakes</h2>
+ <p>The most common <a href="../kelly-criterion-mistakes.html" style="color:var(--neon-cyan);">Kelly Criterion mistake</a> with fractional Kelly is applying it inconsistently. Bettors use half Kelly on normal plays and then bump up to full Kelly on their "locks." This defeats the entire purpose. If you're using half Kelly, use it on every bet. The system only works when applied uniformly.</p>
+
+ <p>Another frequent error is adjusting the fraction based on recent results. Rounding down during losing streaks and bumping up during winning streaks is just emotional betting dressed up in Kelly terminology. Your fraction should be predetermined and fixed. Half Kelly during your best week, half Kelly during your worst week. No exceptions.</p>
+
+ <p>Finally, some bettors apply fractional Kelly without having a genuine edge. Fractional Kelly reduces the damage of overbetting, but it doesn't create an edge where none exists. If you're betting randomly at half Kelly, you're still losing, just more slowly. The <a href="simple-guide.html" style="color:var(--neon-cyan);">Kelly basics guide</a> covers how to assess whether you have an edge worth sizing around.</p>
+
+ <h2>The Practical Reality</h2>
+ <p>Sports betting isn't blackjack. You can't count cards and know your exact edge. Every bet is an estimate based on incomplete information. Fractional Kelly is your insurance policy against overconfidence, the difference between a bettor who thrives for decades and one who blows through three bankrolls in a year.</p>
+
+ <p>The fractional Kelly vs full Kelly debate isn't really a debate among experienced bettors. It's settled. Full Kelly is a theoretical concept that lives in textbooks. Fractional Kelly is a practical tool that lives in the real world. Use half Kelly if you've got a proven track record. Use quarter Kelly if you're still building one. And never use full Kelly unless you want to learn the hard way why everyone else stopped.</p>
 
  <div class="back-link">
- <p><a href="/kelly-criterion.html">← Read the Full Kelly Criterion Guide</a></p>
+ <p><a href="/kelly-criterion.html">← Use the Kelly Criterion Calculator</a> | <a href="../kelly-criterion-explained.html" style="color:var(--neon-cyan);">Kelly Criterion Explained →</a></p>
  </div>
 </div>
 

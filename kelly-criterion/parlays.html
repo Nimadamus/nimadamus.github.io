@@ -125,12 +125,16 @@
 <div class="content-container">
  <h1>Kelly Criterion for Parlays: Why It Breaks Down</h1>
 
- <p>The Kelly Criterion was designed for independent bets. Parlays are the opposite of independent. Every leg must hit for you to win, which creates correlation and compound risk that Kelly wasn't built to handle.</p>
+ <p>The <a href="../kelly-criterion-explained.html" style="color:var(--neon-cyan);">Kelly Criterion</a> was designed for independent bets. Parlays are the opposite of independent. Every leg must hit for you to win, which creates correlation and compound risk that Kelly wasn't built to handle. If you've been trying to plug parlay odds into the standard Kelly formula and wondering why the results feel off, you're not alone. The math breaks down in ways that can seriously hurt your bankroll.</p>
 
  <h2>The Fundamental Problem</h2>
  <p>Kelly assumes each bet is separate. Win or lose, your next bet is independent of the last one. But in a three-team parlay, if the first leg loses, the entire bet is dead. The outcomes are linked.</p>
 
  <p>This dependency breaks the Kelly math. The formula calculates bet size based on a single probability estimate, but a parlay has multiple probabilities stacked together. Even if each individual leg has a slight edge, the combined probability of all legs hitting is much lower than most bettors realize.</p>
+
+ <p>Think about what happens when you apply Kelly to a single straight bet. You estimate your edge, you estimate the probability, and Kelly tells you what percentage of your bankroll to risk. Simple. But with a parlay, you now have two, three, five, or even ten separate probability estimates feeding into one combined wager. Every single one of those estimates carries uncertainty. And here's the kicker: those uncertainties don't just add together. They multiply. A small overestimate on each leg compounds into a massive overestimate on the full parlay. This is what mathematicians call the compound probability problem, and it's the core reason Kelly and parlays don't mix well.</p>
+
+ <p>Even the sharpest bettors in the world don't hit 60% on straight bets consistently. Most truly profitable bettors hover around 53-56%. When you stack three 55% probabilities together, your parlay win rate drops below 17%. Stack five of them and you're under 5%. The Kelly formula sees that big payout and wants to bet aggressively, but the actual probability of collecting is brutally low.</p>
 
  <h2>The Math Gets Ugly Fast</h2>
  <p>Let's say you've got three NFL picks. Each one you estimate at 55% to cover at -110 odds. Individually, these might be decent Kelly bets at 2-3% of bankroll each.</p>
@@ -139,8 +143,12 @@
 
  <p>Kelly would suggest a larger bet size because of the plus-money payout, but you're now exposed to a single outcome with only a 16.6% chance of hitting. One bad leg and you lose everything.</p>
 
+ <p>Now compare that to betting the three games individually. With straight bets, you might lose one and win two, netting a profit on the night. With the parlay, that same 1-2 split gives you nothing. Zero. You need perfection, and perfection is expensive. The <a href="../bankroll-management/variance.html" style="color:var(--neon-cyan);">variance</a> on parlays is dramatically higher than on straight bets, even when the expected value looks similar on paper. That's a critical distinction most bettors miss.</p>
+
+ <p>Here's another way to see it. If you bet $100 on each of three straight bets at -110 with a 55% hit rate, your expected profit per bet is about $4.55. Over three bets, that's $13.65 in expected value with moderate swings. If you bet $300 on the parlay at +600, your expected value is $300 times (0.166 times 7 minus 1), which works out to roughly $48.60. Sounds better, right? But the standard deviation on that parlay bet is enormous. You'll lose that $300 roughly 83% of the time. Over a 100-parlay sample, you could easily hit a 20-bet losing streak. Your bankroll might not survive long enough for the math to work itself out. That's the <a href="../bankroll-management/risk-of-ruin.html" style="color:var(--neon-cyan);">risk of ruin</a> problem in action.</p>
+
  <div class="warning-box">
- <p>Most parlay bettors overestimate their edge on each leg AND underestimate the compounding effect of combining them. If each leg actually has a 52% chance instead of 55%, your parlay win rate drops from 16.6% to 14%. That's a massive difference.</p>
+ <p>Most parlay bettors overestimate their edge on each leg AND underestimate the compounding effect of combining them. If each leg actually has a 52% chance instead of 55%, your parlay win rate drops from 16.6% to 14%. That's a massive difference. And be honest with yourself: how confident are you that you're really hitting 55% and not 52%? Even a tiny calibration error on individual legs creates a huge gap in parlay profitability.</p>
  </div>
 
  <h2>When Parlays Make Sense (Rarely)</h2>
@@ -151,10 +159,28 @@
  <h3>The Entertainment Parlay</h3>
  <p>If you want to bet a parlay for fun because it makes watching three games more exciting, that's fine. But treat it as entertainment, not investment. Bet small. Don't use Kelly. Think of it like buying a lottery ticket.</p>
 
- <h2>What to Do Instead</h2>
- <p>If you've got three picks you like, bet them as three separate straight bets and use Kelly on each one individually. You'll win more often, you'll have lower variance, and you'll be able to track which bets are actually profitable.</p>
+ <h2>The Correlated Leg Trap</h2>
+ <p>One argument parlay advocates make is that correlated legs can create real mathematical edges. And in theory, they're right. If you genuinely believe two outcomes are more likely to happen together than the odds imply, there's value in combining them. The classic example is betting the over on a game total and the favorite to cover a big spread, because a blowout almost always means lots of points scored.</p>
 
- <p>A bettor hitting 55% on straight bets at -110 will make steady money. A bettor hitting 16% on three-team parlays will go broke even if the math says they have an edge, because the variance will kill them before the edge pays off.</p>
+ <p>But here's where reality gets uncomfortable. Sportsbooks aren't stupid. They've been in this business for decades, and they price correlated outcomes accordingly. Most books either restrict same-game parlays to their own curated markets (where they've already baked the correlation into the pricing), or they simply don't allow the combinations that would give you a real edge. The "correlated parlays" that books let you bet are usually the ones where they've already captured the correlation value in the juice.</p>
+
+ <p>Even when you do find a genuine correlated parlay opportunity, applying Kelly becomes even more complicated. The standard Kelly formula assumes you know the true probability of the combined outcome. But estimating the joint probability of correlated events is significantly harder than estimating individual probabilities. You need to understand the degree of correlation between the legs, and getting that wrong by even a small amount can flip your bet from positive expected value to negative. If you're interested in how small estimation errors compound into <a href="mistakes.html" style="color:var(--neon-cyan);">costly psychological mistakes</a>, that's a topic worth studying on its own.</p>
+
+ <h2>Practical Parlay Sizing Guidelines</h2>
+ <p>So if standard Kelly doesn't work for parlays, what should you actually do when you want to size a parlay bet? Here are some practical guidelines that professional bettors use.</p>
+
+ <p>First, calculate what Kelly would recommend for each leg as a straight bet. If Kelly says 2% on Game A, 1.5% on Game B, and 3% on Game C, the smallest of those is 1.5%. A reasonable parlay bet size is some fraction of that smallest Kelly bet, typically between one-quarter and one-half. So in this example, you'd bet somewhere around 0.4% to 0.75% of your bankroll on the parlay. This approach respects the fact that the parlay is riskier than any individual leg while still letting you take a shot when you see correlated value.</p>
+
+ <p>Second, never let parlay bets exceed 1% of your total bankroll. Period. Even if you've found what you believe is the sharpest three-leg parlay in the history of sports betting, capping your exposure at 1% protects you from the catastrophic downswings that parlays inevitably produce. This is closely related to the <a href="fractional-vs-full.html" style="color:var(--neon-cyan);">fractional Kelly approach</a>, where you deliberately bet less than the full Kelly amount to reduce variance. With parlays, fractional Kelly isn't just smart, it's mandatory for survival.</p>
+
+ <p>Third, limit the number of legs. Every leg you add multiplies the variance and shrinks your win probability. Two-leg parlays are the least destructive. Three legs are the practical maximum for anyone trying to use a disciplined staking strategy. If you're building four, five, or six-leg parlays, you've left the realm of bankroll management and entered the lottery.</p>
+
+ <h2>What to Do Instead</h2>
+ <p>If you've got three picks you like, bet them as three separate straight bets and <a href="../kelly-criterion.html" style="color:var(--neon-cyan);">use the Kelly Criterion calculator</a> on each one individually. You'll win more often, you'll have lower variance, and you'll be able to track which bets are actually profitable.</p>
+
+ <p>A bettor hitting 55% on straight bets at -110 will make steady money. A bettor hitting 16% on three-team parlays will go broke even if the math says they have an edge, because the variance will kill them before the edge pays off. The math is straightforward: straight bets with proper <a href="../bankroll-management.html" style="color:var(--neon-cyan);">bankroll management</a> compound your edge steadily over time, while parlays create a boom-or-bust cycle that's almost impossible to sustain.</p>
+
+ <p>There's also a tracking advantage to straight bets that most people overlook. When you bet three games separately, you can see exactly which picks are winning and which are losing. You can identify patterns: maybe you're great at NBA unders but terrible at NFL sides. That feedback loop lets you sharpen your approach over time. With parlays, all you know is whether the whole thing hit or missed. A 2-out-of-3 night looks identical to an 0-for-3 night in your parlay P&L. You can't improve what you can't measure. If you want to see how Kelly sizing works on real-world <a href="examples.html" style="color:var(--neon-cyan);">betting examples</a>, that's the better path to long-term profit.</p>
 
  <div class="tip-box">
  <p>Professional bettors don't bet parlays. They bet straight bets and size them using Kelly. If you want to be profitable long-term, do what the pros do.</p>
@@ -162,6 +188,8 @@
 
  <h2>If You Insist on Parlays</h2>
  <p>Use a maximum of 0.5% to 1% of your bankroll on any parlay, regardless of what Kelly suggests. Treat it as a speculative lottery ticket, not a core part of your betting strategy. And track your parlay results separately from your straight bets so you can see how much money they're actually costing you.</p>
+
+ <p>Keep a dedicated spreadsheet for your parlays. Log every one, every leg, every result. After 50 or 100 parlays, look at the numbers honestly. Almost every bettor who does this exercise discovers that their straight bets are profitable (or close to it) while their parlays are a money pit. The data doesn't lie, and it's the fastest way to convince yourself that Kelly plus straight bets is the winning formula. The sportsbooks didn't start pushing same-game parlays because they're great for bettors. They push them because they're great for the books. Let that sink in.</p>
 
  <div class="back-link">
  <p><a href="/kelly-criterion.html">← Read the Full Kelly Criterion Guide</a></p>
