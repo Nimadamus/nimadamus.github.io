@@ -735,7 +735,12 @@ def fetch_team_l5_record(sport_path: str, team_id: str) -> str:
 def fetch_espn_scoreboard(sport_path: str) -> List[Dict]:
     """Fetch today's games from ESPN Scoreboard API"""
     date_str = datetime.now().strftime('%Y%m%d')
-    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/scoreboard?dates={date_str}"
+    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/scoreboard?dates={date_str}&limit=200"
+    # NCAAB/NCAAF: ESPN returns only ~1 featured game without groups=50
+    # groups=50 returns all Top 25 + major conference games (30-50 games)
+    # Fixed Feb 15, 2026 - was returning 1 game instead of 32
+    if 'college' in sport_path or 'mens-college' in sport_path:
+        url += '&groups=50'
     resp = fetch_with_retry(url, timeout=15, max_retries=3)
     if resp:
         return resp.json().get('events', [])
@@ -1450,8 +1455,11 @@ def is_bowl_game(game: Dict) -> bool:
 
 def process_game(espn_game: Dict, sport: str, sport_path: str, odds_data: List[Dict], betting_records: Dict = None) -> Optional[Dict]:
     """Process a single game with all data including new situational stats and ATS/O/U"""
-    if is_game_completed(espn_game):
-        return None
+    # NOTE: Do NOT skip completed games. The hub shows the full day's slate
+    # with pre-game stats/odds regardless of whether games have finished.
+    # Previously returned None for completed games, causing entire slate to
+    # appear empty when all games for the day had finished.
+    # Fixed Feb 15, 2026.
 
     comp = espn_game.get('competitions', [{}])[0]
     competitors = comp.get('competitors', [])
