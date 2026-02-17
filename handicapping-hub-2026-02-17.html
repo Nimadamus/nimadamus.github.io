@@ -1,0 +1,3427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handicapping Hub PREVIEW - February 17, 2026 | BetLegend</title>
+    <meta name="description" content="PREVIEW VERSION - Enhanced with advanced stats and situational data">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* === FUTURISTIC DARK THEME === */
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0d0d2b 100%);
+            color: #e0e0e0;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+
+        /* ==================== NAVIGATION ==================== */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 30, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 2px solid #00f5ff;
+            padding: 0 30px;
+            box-shadow: 0 4px 30px rgba(0, 245, 255, 0.2);
+        }
+        .nav-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 15px 20px 15px 200px;
+        }
+        .logo {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            z-index: 1001;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-decoration: none;
+            color: #00f5ff;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+        }
+        .logo span { color: #ff6b35; text-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+        .nav-link {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 12px 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .nav-link:hover {
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        .dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .dropdown .dropbtn {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            background: none;
+            border: none;
+            padding: 12px 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .dropdown:hover .dropbtn,
+        .dropdown.active .dropbtn {
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: rgba(10, 10, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+            z-index: 99999;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 12px 16px;
+            color: #00f5ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .dropdown-content a:hover {
+            background: rgba(0, 245, 255, 0.1);
+            padding-left: 22px;
+            border-left-color: #00f5ff;
+            color: #fff;
+        }
+        .sports-records-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 420px;
+            background: rgba(10, 10, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 10px;
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+            z-index: 99999;
+        }
+        .dropdown.active .dropdown-content,
+        .dropdown.active .sports-records-dropdown {
+            display: block;
+        }
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .column h4 {
+            color: #0a0a1a;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+        .column a {
+            display: block;
+            color: #fff;
+            padding: 10px 15px;
+            margin: 4px 0;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            background: rgba(0, 245, 255, 0.05);
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            transition: all 0.25s ease;
+        }
+        .column a:hover {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 245, 255, 0.1));
+            border-color: #00f5ff;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0d0d2b 0%, #1a1a4a 50%, #0a0a2a 100%);
+            color: white;
+            padding: 90px 20px 35px;
+            text-align: center;
+            border-bottom: 3px solid #00f5ff;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
+        }
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+            position: relative;
+        }
+        .header h1 span { color: #ff6b35; text-shadow: 0 0 30px rgba(255, 107, 53, 0.5); }
+        .header .subtitle {
+            opacity: 0.9;
+            font-size: 1.2rem;
+            color: #00f5ff;
+            font-weight: 600;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        /* Calendar Sidebar */
+        .calendar-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 160px;
+            width: 260px;
+            z-index: 100;
+        }
+        .calendar-box {
+            background: linear-gradient(135deg, rgba(20, 20, 50, 0.95) 0%, rgba(30, 30, 70, 0.95) 100%);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .calendar-title {
+            font-size: 14px;
+            color: #ff6b35;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            text-align: center;
+            font-weight: 700;
+        }
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            margin-bottom: 8px;
+        }
+        .calendar-weekdays span {
+            text-align: center;
+            font-size: 11px;
+            color: #00f5ff;
+            font-weight: 600;
+        }
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            border-radius: 6px;
+        }
+        .calendar-day.has-content {
+            background: rgba(0, 245, 255, 0.1);
+            color: #00f5ff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .calendar-day.has-content:hover {
+            background: rgba(0, 245, 255, 0.3);
+            transform: scale(1.1);
+        }
+        .calendar-day.today {
+            background: rgba(255, 107, 53, 0.3);
+            color: #ff6b35;
+            font-weight: bold;
+        }
+        .month-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .month-nav button {
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            color: #00f5ff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .month-nav button:hover { background: rgba(0, 245, 255, 0.2); }
+        .month-name {
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        @media (max-width: 1400px) { .calendar-sidebar { display: none; } }
+
+        .container { max-width: 1300px; margin: 0 auto; padding: 30px; margin-left: 300px; }
+        @media (max-width: 1400px) { .container { margin-left: auto; } }
+
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, rgba(20, 20, 50, 0.9) 0%, rgba(30, 30, 70, 0.9) 100%);
+            padding: 18px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+        }
+        .tab-btn {
+            padding: 14px 28px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #a0a0a0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .tab-btn:hover {
+            background: rgba(0, 245, 255, 0.1);
+            border-color: #00f5ff;
+            color: #00f5ff;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #00f5ff 0%, #00c4cc 100%);
+            color: #0a0a1a;
+            border-color: #00f5ff;
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+        }
+
+        .sport-section { display: none; }
+        .sport-section.active { display: block; }
+        .no-games {
+            background: rgba(30, 30, 60, 0.8);
+            padding: 60px;
+            text-align: center;
+            border-radius: 15px;
+            color: #888;
+            font-size: 1.2rem;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+        }
+
+        /* === GAME CARDS === */
+        .game-card {
+            background: linear-gradient(135deg, rgba(20, 20, 50, 0.95) 0%, rgba(30, 30, 70, 0.95) 100%);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 245, 255, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .game-card:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 245, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .game-header {
+            background: linear-gradient(135deg, #0d0d2b 0%, #1a1a4a 100%);
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 700;
+            border-bottom: 2px solid #00f5ff;
+        }
+        .game-time {
+            color: #00f5ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+        }
+        .game-venue { color: #a0a0a0; font-size: 0.95rem; }
+        .game-network {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section { padding: 18px 24px; border-bottom: 1px solid rgba(0, 245, 255, 0.1); }
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #00f5ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ff6b35;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid rgba(0, 245, 255, 0.1); }
+        .stats-grid .section { border-bottom: none; }
+        .stats-grid .section:first-child { border-right: 1px solid rgba(0, 245, 255, 0.1); }
+
+        .lines-table, .stats-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+        .lines-table th, .stats-table th {
+            text-align: center;
+            padding: 12px 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #00f5ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(0, 245, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+        }
+        .lines-table td, .stats-table td {
+            text-align: center;
+            padding: 14px 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #e0e0e0;
+        }
+
+        .team-col { text-align: left !important; min-width: 160px; display: flex; align-items: center; gap: 12px; }
+        .team-logo { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
+        .team-name { font-weight: 800; font-size: 1.1rem; color: #fff; }
+        .team-record { font-size: 0.9rem; color: #888; font-weight: 600; }
+        .team-abbr {
+            font-weight: 800;
+            color: #00f5ff;
+            text-align: left !important;
+            padding-left: 12px !important;
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+
+        .spread { color: #ffd700; font-weight: 800; font-size: 1.15rem; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        .ml { color: #00ff88; font-weight: 800; font-size: 1.15rem; }
+        .total { color: #ff6b35; font-weight: 700; }
+        .away-row { background: rgba(0, 0, 0, 0.2); }
+        .home-row { background: rgba(0, 245, 255, 0.05); }
+
+        /* ScoresAndOdds-style full width table */
+        .betting-lines-full { margin-bottom: 20px; }
+        .lines-table-full { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        .lines-table-full th {
+            text-align: center;
+            padding: 10px 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 107, 53, 0.1) 100%);
+            border-bottom: 2px solid #ffd700;
+        }
+        .lines-table-full td {
+            text-align: center;
+            padding: 12px 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #e0e0e0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        .lines-table-full .team-col { text-align: left !important; min-width: 100px; }
+        .su-record { color: #fff; }
+        .ats-record { color: #00ff88; font-weight: 800; }
+        .ou-record { color: #00c4ff; font-weight: 800; }
+        .ppg { color: #ff6b35; font-weight: 800; }
+        .opp-ppg { color: #ff4757; }
+        .pwr { color: #ffd700; font-weight: 800; }
+
+        .ats-record {
+            color: #00ff88;
+            font-weight: 800;
+            font-size: 1.1rem;
+            background: rgba(0, 255, 136, 0.15);
+            padding: 8px 12px !important;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+        .ou-record {
+            color: #00c4ff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            background: rgba(0, 196, 255, 0.15);
+            padding: 8px 12px !important;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 196, 255, 0.3);
+            text-shadow: 0 0 10px rgba(0, 196, 255, 0.3);
+        }
+
+        /* === INJURIES SECTION === */
+        .injuries-section {
+            padding: 16px 24px;
+            border-top: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        .injuries-section .section-title {
+            color: #ff6b35;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        .injuries-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .team-injuries {
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.5;
+        }
+        .team-injuries strong {
+            color: #00f5ff;
+        }
+
+        /* === H2H SECTION - PROFESSIONAL ESPN-STYLE === */
+        .h2h-section {
+            background: #f8f9fa;
+            padding: 20px 24px;
+            border-radius: 0 0 16px 16px;
+            border-top: 4px solid #1a365d;
+        }
+        .h2h-section .section-title {
+            font-family: 'Inter', sans-serif;
+            color: #1a365d;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .h2h-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .h2h-stat {
+            background: #fff;
+            padding: 16px 12px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .h2h-stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .h2h-stat-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .h2h-su { border-left: 3px solid #1a365d; }
+        .h2h-ats-summary { border-left: 3px solid #059669; }
+        .h2h-ou-summary { border-left: 3px solid #0284c7; }
+        .h2h-su .h2h-stat-value { color: #1a365d; }
+        .h2h-ats-summary .h2h-stat-value { color: #059669; }
+        .h2h-ou-summary .h2h-stat-value { color: #0284c7; }
+        .h2h-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .h2h-table th {
+            background: #1a365d;
+            color: #fff;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .h2h-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #334155;
+        }
+        .h2h-table tr:nth-child(even) { background: #f8fafc; }
+        .h2h-table tr:hover { background: #f1f5f9; }
+        .h2h-ats { color: #059669; font-weight: 600; }
+        .h2h-ou { color: #0284c7; font-weight: 600; }
+        .winner-home { color: #059669; font-weight: 600; }
+        .winner-away { color: #1a365d; font-weight: 600; }
+        .score { color: #1e293b; font-weight: 600; }
+        .over { color: #ff6b35; font-weight: 700; }
+        .under { color: #00c4ff; font-weight: 700; }
+
+        /* PERMANENT STYLING: Missing/unavailable data - Added Jan 24, 2026 */
+        .stat-na {
+            color: #94a3b8;
+            font-style: normal;
+            font-weight: 400;
+        }
+        .stat-zero {
+            color: #94a3b8;
+            font-style: normal;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1rem;
+            background: rgba(0,0,0,0.3);
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 245, 255, 0.1);
+        }
+        footer strong { color: #00f5ff; }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 5px;
+                flex-wrap: nowrap;
+                justify-content: center;
+            }
+            .nav-link, .dropdown .dropbtn {
+                font-size: 0.7rem;
+                padding: 8px 10px;
+                letter-spacing: 1px;
+            }
+            .dropdown-content,
+            .sports-records-dropdown {
+                position: fixed !important;
+                left: 5% !important;
+                right: 5% !important;
+                top: 120px !important;
+                width: 90% !important;
+                min-width: unset !important;
+                max-width: none !important;
+                max-height: 65vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                z-index: 999999 !important;
+            }
+            .sports-records-dropdown {
+                padding: 15px;
+            }
+            .two-columns {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .column h4 {
+                font-size: 10px;
+                padding: 6px 8px;
+                margin-bottom: 10px;
+            }
+            .column a {
+                font-size: 12px;
+                padding: 10px 12px;
+                margin: 3px 0;
+            }
+            .stats-grid { grid-template-columns: 1fr; }
+            .stats-grid .section:first-child { border-right: none; border-bottom: 1px solid rgba(0, 245, 255, 0.1); }
+            .header h1 { font-size: 2rem; }
+            .h2h-summary { flex-direction: column; align-items: center; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-inner {
+                flex-direction: column;
+                padding: 60px 15px 15px 15px;
+            }
+            .nav-menu {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+            .nav-link, .dropdown .dropbtn {
+                font-size: 0.6rem;
+                padding: 6px 8px;
+            }
+            .two-columns {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="nav-inner">
+            <a href="index.html" class="logo">BET<span>LEGEND</span></a>
+
+            <div class="nav-menu">
+                <a href="blog.html" class="nav-link">Picks & Analysis</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Game Previews & Records</button>
+                    <div class="sports-records-dropdown">
+                        <div class="two-columns">
+                            <div class="column">
+                                <h4>Game Previews</h4>
+                                <a href="nfl.html">NFL</a>
+                                <a href="mlb.html">MLB</a>
+                                <a href="ncaaf.html">NCAAF</a>
+                                <a href="nba.html">NBA</a>
+                                <a href="ncaab.html">NCAAB</a>
+                                <a href="nhl.html">NHL</a>
+                                <a href="soccer.html">Soccer</a>
+                            </div>
+                            <div class="column">
+                                <h4>Records</h4>
+                                <a href="records.html">DETAILED BREAKDOWN</a>
+                                <a href="mlb-records.html">MLB</a>
+                                <a href="nfl-records.html">NFL</a>
+                                <a href="ncaaf-records.html">NCAAF</a>
+                                <a href="ncaab-records.html">NCAAB</a>
+                                <a href="nhl-records.html">NHL</a>
+                                <a href="nba-records.html">NBA</a>
+                                <a href="soccer-records.html">Soccer</a>
+                                <a href="crosssport-parlays-records.html">Cross-Sport Bets</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Resources</button>
+                    <div class="dropdown-content">
+                        <a href="proofofpicks.html">Proof of Picks</a>
+                        <a href="live-odds.html">Live Odds</a>
+                        <a href="howitworks.html">How It Works</a>
+                        <a href="bankroll.html">Bankroll Management</a>
+                        <a href="kelly-criterion.html">Kelly Criterion</a>
+                        <a href="betting-calculators.html">Betting Calculators</a>
+                        <a href="screenshots.html">Screenshots</a>
+                        <a href="bestonlinesportsbook.html">Best Sportsbook</a>
+                        <a href="betting-glossary.html">Betting Glossary</a>
+                        <a href="betting-101.html">Betting 101</a>
+                        <a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+
+                <a href="news.html" class="nav-link">News</a>
+
+                <a href="injury-report.html" class="nav-link">Injury Report</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Game of the Day</button>
+                    <div class="dropdown-content">
+                        <a href="lakers-at-cavaliers-prediction-picks-january-28-2026.html">Game of the Day</a>
+                        <a href="moneyline-parlay-of-the-day.html">ML Parlay of the Day</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dropdown JavaScript -->
+    <script>
+    (function() {
+        var dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(function(dropdown) {
+            var btn = dropdown.querySelector('.dropbtn');
+            if (!btn) return;
+
+            function toggle(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdowns.forEach(function(d) {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
+                dropdown.classList.toggle('active');
+            }
+
+            btn.addEventListener('touchend', toggle, {passive: false});
+            btn.addEventListener('click', toggle);
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(function(d) { d.classList.remove('active'); });
+            }
+        });
+    })();
+    </script>
+    <header class="header">
+        <h1>Handicapping <span>Hub</span></h1>
+        <p class="subtitle">February 17, 2026 | Real-Time Odds, Stats & Betting Trends</p>
+    </header>
+    <aside class="calendar-sidebar">
+        <div class="calendar-box">
+            <div class="calendar-title">Hub Archive</div>
+            <div class="month-nav">
+                <button id="prev-month">&lt;</button>
+                <span class="month-name" id="month-name"></span>
+                <button id="next-month">&gt;</button>
+            </div>
+            <div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+            <div class="calendar-days" id="calendar-days"></div>
+        </div>
+    </aside>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" data-sport="nba">NBA <span class="count">(0)</span></button>
+<button class="tab-btn " data-sport="nfl">NFL <span class="count">(0)</span></button>
+<button class="tab-btn " data-sport="nhl">NHL <span class="count">(0)</span></button>
+<button class="tab-btn " data-sport="ncaab">NCAAB <span class="count">(30)</span></button>
+<button class="tab-btn " data-sport="ncaaf">NCAAF <span class="count">(0)</span></button>
+
+        </div>
+        
+                <div class="sport-section active" id="nba-section">
+                    <div class="no-games">No NBA games scheduled for today</div>
+                </div>
+            
+                <div class="sport-section " id="nfl-section">
+                    <div class="no-games">No NFL games scheduled for today</div>
+                </div>
+            
+                <div class="sport-section " id="nhl-section">
+                    <div class="no-games">No NHL games scheduled for today</div>
+                </div>
+            
+            <div class="sport-section " id="ncaab-section">
+                
+    <div class="game-card" data-event-id="401823930" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">06:00 PM ET</span>
+            <span class="game-venue">Buccaneer Fieldhouse</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2241.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">GWEB</span>
+                        </td>
+                        <td class="su-record">3-24</td>
+                        <td class="ats-record stat-na">—</td>
+                        <td class="ou-record stat-na">—</td>
+                        <td class="ppg">68.7</td>
+                        <td class="opp-ppg">91.0</td>
+                        <td class="pwr">11</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2127.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">CHSO</span>
+                        </td>
+                        <td class="su-record">12-15</td>
+                        <td class="ats-record">11-13-0</td>
+                        <td class="ou-record">15-9-0</td>
+                        <td class="ppg">83.0</td>
+                        <td class="opp-ppg">81.2</td>
+                        <td class="pwr">44</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GWEB</td><td>68.7</td><td>42.8%</td><td>31.6%</td><td>68.3%</td><td>10.4</td><td>30.5</td></tr>
+                        <tr><td class="team-abbr">CHSO</td><td>83.0</td><td>45.3%</td><td>35.5%</td><td>64.6%</td><td>16.9</td><td>42.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GWEB</td><td>91.0</td><td>6.1</td><td>2.4</td><td>21.9</td></tr>
+                        <tr><td class="team-abbr">CHSO</td><td>81.2</td><td>4.8</td><td>5.0</td><td>30.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>GWEB:</strong> GWEB: No reported injuries</div>
+                <div class="team-injuries"><strong>CHSO:</strong> CHSO: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401820748" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">06:00 PM ET</span>
+            <span class="game-venue">Tucker Center</span>
+            <span class="game-network">ACC Network</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/103.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">BC</span>
+                        </td>
+                        <td class="su-record">9-16</td>
+                        <td class="ats-record">11-14-0</td>
+                        <td class="ou-record">9-16-0</td>
+                        <td class="ppg">67.4</td>
+                        <td class="opp-ppg">71.9</td>
+                        <td class="pwr">36</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/52.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">FSU</span>
+                        </td>
+                        <td class="su-record">12-13</td>
+                        <td class="ats-record">14-11-0</td>
+                        <td class="ou-record">11-14-0</td>
+                        <td class="ppg">80.4</td>
+                        <td class="opp-ppg">80.2</td>
+                        <td class="pwr">48</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BC</td><td>67.4</td><td>40.9%</td><td>29.7%</td><td>65.3%</td><td>11.2</td><td>36.8</td></tr>
+                        <tr><td class="team-abbr">FSU</td><td>80.4</td><td>42.5%</td><td>31.7%</td><td>71.5%</td><td>14.6</td><td>36.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BC</td><td>71.9</td><td>4.7</td><td>4.4</td><td>26.2</td></tr>
+                        <tr><td class="team-abbr">FSU</td><td>80.2</td><td>8.0</td><td>3.8</td><td>24.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>BC:</strong> BC: No reported injuries</div>
+                <div class="team-injuries"><strong>FSU:</strong> FSU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401825524" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">06:30 PM ET</span>
+            <span class="game-venue">Mackey Arena</span>
+            <span class="game-network">Peacock</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/130.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">MICH</span>
+                        </td>
+                        <td class="su-record">24-1</td>
+                        <td class="ats-record">13-12-0</td>
+                        <td class="ou-record">10-15-0</td>
+                        <td class="ppg">90.6</td>
+                        <td class="opp-ppg">71.0</td>
+                        <td class="pwr">96</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2509.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">PUR</span>
+                        </td>
+                        <td class="su-record">21-4</td>
+                        <td class="ats-record">12-13-0</td>
+                        <td class="ou-record">10-15-0</td>
+                        <td class="ppg">82.6</td>
+                        <td class="opp-ppg">68.9</td>
+                        <td class="pwr">84</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MICH</td><td>90.6</td><td>51.4%</td><td>35.4%</td><td>73.2%</td><td>19.4</td><td>41.6</td></tr>
+                        <tr><td class="team-abbr">PUR</td><td>82.6</td><td>50.2%</td><td>37.8%</td><td>73.9%</td><td>19.8</td><td>36.9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MICH</td><td>71.0</td><td>6.2</td><td>6.1</td><td>30.0</td></tr>
+                        <tr><td class="team-abbr">PUR</td><td>68.9</td><td>5.8</td><td>2.9</td><td>25.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>MICH:</strong> MICH: No reported injuries</div>
+                <div class="team-injuries"><strong>PUR:</strong> PUR: No reported injuries</div>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">MICH 3 - 2 PUR</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">MICH 2 - 3 PUR</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">4 OVER - 1 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Mar 14, '25</td>
+                <td class="winner-home"><strong>MICH</strong></td>
+                <td class="score">86-68</td>
+                <td class="h2h-ats"><strong>MICH</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Feb 11, '25</td>
+                <td class="winner-home"><strong>MICH</strong></td>
+                <td class="score">75-73</td>
+                <td class="h2h-ats"><strong>PUR</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Jan 24, '25</td>
+                <td class="winner-home"><strong>PUR</strong></td>
+                <td class="score">91-64</td>
+                <td class="h2h-ats"><strong>PUR</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Feb 25, '24</td>
+                <td class="winner-home"><strong>MICH</strong></td>
+                <td class="score">84-76</td>
+                <td class="h2h-ats"><strong>MICH</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Jan 23, '24</td>
+                <td class="winner-home"><strong>PUR</strong></td>
+                <td class="score">99-67</td>
+                <td class="h2h-ats"><strong>PUR</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401822947" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">06:30 PM ET</span>
+            <span class="game-venue">Cintas Center</span>
+            <span class="game-network">FS1</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/222.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">VILL</span>
+                        </td>
+                        <td class="su-record">20-5</td>
+                        <td class="ats-record">17-8-0</td>
+                        <td class="ou-record">15-10-0</td>
+                        <td class="ppg">77.8</td>
+                        <td class="opp-ppg">71.0</td>
+                        <td class="pwr">80</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2752.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">XAV</span>
+                        </td>
+                        <td class="su-record">13-12</td>
+                        <td class="ats-record">13-12-0</td>
+                        <td class="ou-record">19-6-0</td>
+                        <td class="ppg">77.8</td>
+                        <td class="opp-ppg">83.6</td>
+                        <td class="pwr">52</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">VILL</td><td>77.8</td><td>46.0%</td><td>36.2%</td><td>69.1%</td><td>15.2</td><td>35.6</td></tr>
+                        <tr><td class="team-abbr">XAV</td><td>77.8</td><td>43.8%</td><td>36.6%</td><td>70.7%</td><td>17.9</td><td>34.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">VILL</td><td>71.0</td><td>7.4</td><td>2.1</td><td>23.3</td></tr>
+                        <tr><td class="team-abbr">XAV</td><td>83.6</td><td>6.9</td><td>4.1</td><td>24.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>VILL:</strong> VILL: No reported injuries</div>
+                <div class="team-injuries"><strong>XAV:</strong> XAV: No reported injuries</div>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">VILL 2 - 3 XAV</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">VILL 3 - 2 XAV</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">1 OVER - 4 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Feb 09, '25</td>
+                <td class="winner-home"><strong>VILL</strong></td>
+                <td class="score">80-68</td>
+                <td class="h2h-ats"><strong>VILL</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Jan 14, '25</td>
+                <td class="winner-home"><strong>XAV</strong></td>
+                <td class="score">69-63</td>
+                <td class="h2h-ats"><strong>XAV</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Feb 07, '24</td>
+                <td class="winner-home"><strong>XAV</strong></td>
+                <td class="score">56-53</td>
+                <td class="h2h-ats"><strong>VILL</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Jan 03, '24</td>
+                <td class="winner-home"><strong>VILL</strong></td>
+                <td class="score">66-65</td>
+                <td class="h2h-ats"><strong>XAV</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Feb 21, '23</td>
+                <td class="winner-home"><strong>XAV</strong></td>
+                <td class="score">64-63</td>
+                <td class="h2h-ats"><strong>VILL</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401814573" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">06:30 PM ET</span>
+            <span class="game-venue">Alumni Arena</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2459.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">NIU</span>
+                        </td>
+                        <td class="su-record">8-16</td>
+                        <td class="ats-record">11-11-0</td>
+                        <td class="ou-record">7-15-0</td>
+                        <td class="ppg">71.0</td>
+                        <td class="opp-ppg">78.5</td>
+                        <td class="pwr">33</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2084.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">BUF</span>
+                        </td>
+                        <td class="su-record">15-10</td>
+                        <td class="ats-record stat-na">—</td>
+                        <td class="ou-record stat-na">—</td>
+                        <td class="ppg">78.6</td>
+                        <td class="opp-ppg">73.1</td>
+                        <td class="pwr">60</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NIU</td><td>71.0</td><td>41.5%</td><td>31.5%</td><td>66.4%</td><td>12.8</td><td>35.8</td></tr>
+                        <tr><td class="team-abbr">BUF</td><td>78.6</td><td>47.6%</td><td>38.6%</td><td>74.1%</td><td>14.8</td><td>32.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NIU</td><td>78.5</td><td>6.3</td><td>1.9</td><td>23.0</td></tr>
+                        <tr><td class="team-abbr">BUF</td><td>73.1</td><td>7.5</td><td>2.6</td><td>23.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>NIU:</strong> NIU: No reported injuries</div>
+                <div class="team-injuries"><strong>BUF:</strong> BUF: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401814570" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">06:30 PM ET</span>
+            <span class="game-venue">Gervin GameAbove Center</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2117.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">CMU</span>
+                        </td>
+                        <td class="su-record">8-17</td>
+                        <td class="ats-record">13-10-0</td>
+                        <td class="ou-record">10-13-0</td>
+                        <td class="ppg">74.0</td>
+                        <td class="opp-ppg">86.6</td>
+                        <td class="pwr">32</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2199.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">EMU</span>
+                        </td>
+                        <td class="su-record">9-17</td>
+                        <td class="ats-record">18-7-0</td>
+                        <td class="ou-record">7-18-0</td>
+                        <td class="ppg">71.2</td>
+                        <td class="opp-ppg">77.1</td>
+                        <td class="pwr">35</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CMU</td><td>74.0</td><td>46.8%</td><td>32.7%</td><td>70.5%</td><td>15.4</td><td>33.1</td></tr>
+                        <tr><td class="team-abbr">EMU</td><td>71.2</td><td>44.7%</td><td>33.0%</td><td>72.1%</td><td>12.8</td><td>35.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">CMU</td><td>86.6</td><td>6.3</td><td>4.3</td><td>23.0</td></tr>
+                        <tr><td class="team-abbr">EMU</td><td>77.1</td><td>6.1</td><td>4.0</td><td>25.2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>CMU:</strong> CMU: No reported injuries</div>
+                <div class="team-injuries"><strong>EMU:</strong> EMU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401808241" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">07:00 PM ET</span>
+            <span class="game-venue">Stephen C. O'Connell Center</span>
+            <span class="game-network">SEC Network</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2579.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SC</span>
+                        </td>
+                        <td class="su-record">11-14</td>
+                        <td class="ats-record">9-13-0</td>
+                        <td class="ou-record">9-13-0</td>
+                        <td class="ppg">76.4</td>
+                        <td class="opp-ppg">82.9</td>
+                        <td class="pwr">44</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/57.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">FLA</span>
+                        </td>
+                        <td class="su-record">19-6</td>
+                        <td class="ats-record">13-12-0</td>
+                        <td class="ou-record">9-16-0</td>
+                        <td class="ppg">86.5</td>
+                        <td class="opp-ppg">71.0</td>
+                        <td class="pwr">76</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SC</td><td>76.4</td><td>44.1%</td><td>30.6%</td><td>79.0%</td><td>13.7</td><td>33.0</td></tr>
+                        <tr><td class="team-abbr">FLA</td><td>86.5</td><td>47.0%</td><td>29.5%</td><td>70.4%</td><td>16.2</td><td>46.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SC</td><td>82.9</td><td>5.7</td><td>2.4</td><td>23.9</td></tr>
+                        <tr><td class="team-abbr">FLA</td><td>71.0</td><td>6.8</td><td>5.1</td><td>29.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>SC:</strong> SC: No reported injuries</div>
+                <div class="team-injuries"><strong>FLA:</strong> FLA: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401820752" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">07:00 PM ET</span>
+            <span class="game-venue">Lenovo Center</span>
+            <span class="game-network">ESPN</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/153.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">UNC</span>
+                        </td>
+                        <td class="su-record">20-5</td>
+                        <td class="ats-record">12-11-0</td>
+                        <td class="ou-record">12-11-0</td>
+                        <td class="ppg">81.8</td>
+                        <td class="opp-ppg">81.4</td>
+                        <td class="pwr">80</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/152.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">NCSU</span>
+                        </td>
+                        <td class="su-record">18-8</td>
+                        <td class="ats-record stat-na">—</td>
+                        <td class="ou-record stat-na">—</td>
+                        <td class="ppg">85.0</td>
+                        <td class="opp-ppg">81.2</td>
+                        <td class="pwr">69</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">UNC</td><td>81.8</td><td>47.6%</td><td>34.5%</td><td>69.2%</td><td>16.8</td><td>38.8</td></tr>
+                        <tr><td class="team-abbr">NCSU</td><td>85.0</td><td>47.8%</td><td>39.4%</td><td>76.4%</td><td>16.3</td><td>35.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">UNC</td><td>81.4</td><td>5.7</td><td>3.5</td><td>27.7</td></tr>
+                        <tr><td class="team-abbr">NCSU</td><td>81.2</td><td>8.4</td><td>3.2</td><td>25.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>UNC:</strong> UNC: No reported injuries</div>
+                <div class="team-injuries"><strong>NCSU:</strong> NCSU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401828431" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">07:00 PM ET</span>
+            <span class="game-venue">Thomas M. Ryan Center</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/139.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SLU</span>
+                        </td>
+                        <td class="su-record">24-1</td>
+                        <td class="ats-record">15-9-0</td>
+                        <td class="ou-record">13-11-0</td>
+                        <td class="ppg">90.8</td>
+                        <td class="opp-ppg">69.1</td>
+                        <td class="pwr">96</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/227.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">URI</span>
+                        </td>
+                        <td class="su-record">14-11</td>
+                        <td class="ats-record">11-14-0</td>
+                        <td class="ou-record">11-14-0</td>
+                        <td class="ppg">72.2</td>
+                        <td class="opp-ppg">71.0</td>
+                        <td class="pwr">56</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SLU</td><td>90.8</td><td>52.0%</td><td>40.9%</td><td>73.6%</td><td>19.4</td><td>42.1</td></tr>
+                        <tr><td class="team-abbr">URI</td><td>72.2</td><td>45.0%</td><td>31.2%</td><td>71.8%</td><td>11.4</td><td>32.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SLU</td><td>69.1</td><td>7.4</td><td>3.4</td><td>31.2</td></tr>
+                        <tr><td class="team-abbr">URI</td><td>71.0</td><td>8.9</td><td>3.7</td><td>22.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>SLU:</strong> SLU: No reported injuries</div>
+                <div class="team-injuries"><strong>URI:</strong> URI: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401820749" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">07:00 PM ET</span>
+            <span class="game-venue">Moody Coliseum (Dallas)</span>
+            <span class="game-network">ESPN2</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/97.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">LOU</span>
+                        </td>
+                        <td class="su-record">19-6</td>
+                        <td class="ats-record">13-12-0</td>
+                        <td class="ou-record">10-15-0</td>
+                        <td class="ppg">86.9</td>
+                        <td class="opp-ppg">77.7</td>
+                        <td class="pwr">76</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2567.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SMU</span>
+                        </td>
+                        <td class="su-record">17-8</td>
+                        <td class="ats-record">11-14-0</td>
+                        <td class="ou-record">14-11-0</td>
+                        <td class="ppg">86.2</td>
+                        <td class="opp-ppg">79.8</td>
+                        <td class="pwr">68</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LOU</td><td>86.9</td><td>47.3%</td><td>35.7%</td><td>77.2%</td><td>17.9</td><td>39.9</td></tr>
+                        <tr><td class="team-abbr">SMU</td><td>86.2</td><td>49.5%</td><td>37.8%</td><td>76.2%</td><td>17.6</td><td>38.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LOU</td><td>77.7</td><td>7.0</td><td>3.4</td><td>28.1</td></tr>
+                        <tr><td class="team-abbr">SMU</td><td>79.8</td><td>7.4</td><td>3.8</td><td>25.9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>LOU:</strong> LOU: No reported injuries</div>
+                <div class="team-injuries"><strong>SMU:</strong> SMU: No reported injuries</div>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 4 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">LOU 2 - 2 SMU</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">LOU 3 - 1 SMU</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">2 OVER - 2 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Jan 31, '26</td>
+                <td class="winner-home"><strong>LOU</strong></td>
+                <td class="score">88-74</td>
+                <td class="h2h-ats"><strong>LOU</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Jan 21, '25</td>
+                <td class="winner-home"><strong>SMU</strong></td>
+                <td class="score">98-73</td>
+                <td class="h2h-ats"><strong>LOU</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Mar 05, '14</td>
+                <td class="winner-home"><strong>SMU</strong></td>
+                <td class="score">84-71</td>
+                <td class="h2h-ats"><strong>LOU</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Jan 12, '14</td>
+                <td class="winner-home"><strong>LOU</strong></td>
+                <td class="score">71-63</td>
+                <td class="h2h-ats"><strong>SMU</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401814572" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">07:00 PM ET</span>
+            <span class="game-venue">Mullins Center</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/193.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">M-OH</span>
+                        </td>
+                        <td class="su-record">25-0</td>
+                        <td class="ats-record stat-na">—</td>
+                        <td class="ou-record stat-na">—</td>
+                        <td class="ppg">92.6</td>
+                        <td class="opp-ppg">77.2</td>
+                        <td class="pwr">100</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/113.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">MASS</span>
+                        </td>
+                        <td class="su-record">15-11</td>
+                        <td class="ats-record">11-14-0</td>
+                        <td class="ou-record">16-9-0</td>
+                        <td class="ppg">81.0</td>
+                        <td class="opp-ppg">83.0</td>
+                        <td class="pwr">58</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">M-OH</td><td>92.6</td><td>53.6%</td><td>40.1%</td><td>76.7%</td><td>17.0</td><td>36.0</td></tr>
+                        <tr><td class="team-abbr">MASS</td><td>81.0</td><td>46.9%</td><td>35.5%</td><td>67.2%</td><td>17.5</td><td>37.5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">M-OH</td><td>77.2</td><td>7.7</td><td>3.6</td><td>27.6</td></tr>
+                        <tr><td class="team-abbr">MASS</td><td>83.0</td><td>6.9</td><td>2.2</td><td>25.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>M-OH:</strong> M-OH: No reported injuries</div>
+                <div class="team-injuries"><strong>MASS:</strong> MASS: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401827687" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">07:00 PM ET</span>
+            <span class="game-venue">Addition Financial Arena</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2628.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">TCU</span>
+                        </td>
+                        <td class="su-record">16-9</td>
+                        <td class="ats-record">13-12-0</td>
+                        <td class="ou-record">12-13-0</td>
+                        <td class="ppg">78.9</td>
+                        <td class="opp-ppg">83.7</td>
+                        <td class="pwr">64</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2116.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">UCF</span>
+                        </td>
+                        <td class="su-record">17-7</td>
+                        <td class="ats-record">12-12-0</td>
+                        <td class="ou-record">10-14-0</td>
+                        <td class="ppg">81.8</td>
+                        <td class="opp-ppg">82.6</td>
+                        <td class="pwr">71</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">TCU</td><td>78.9</td><td>45.4%</td><td>33.8%</td><td>71.4%</td><td>15.9</td><td>35.8</td></tr>
+                        <tr><td class="team-abbr">UCF</td><td>81.8</td><td>47.1%</td><td>37.1%</td><td>74.5%</td><td>16.0</td><td>37.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">TCU</td><td>83.7</td><td>7.5</td><td>5.0</td><td>24.1</td></tr>
+                        <tr><td class="team-abbr">UCF</td><td>82.6</td><td>5.5</td><td>2.9</td><td>24.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>TCU:</strong> TCU: No reported injuries</div>
+                <div class="team-injuries"><strong>UCF:</strong> UCF: No reported injuries</div>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 4 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">TCU 2 - 2 UCF</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">TCU 2 - 2 UCF</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">2 OVER - 2 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Mar 01, '25</td>
+                <td class="winner-home"><strong>TCU</strong></td>
+                <td class="score">89-78</td>
+                <td class="h2h-ats"><strong>TCU</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Jan 25, '25</td>
+                <td class="winner-home"><strong>UCF</strong></td>
+                <td class="score">85-58</td>
+                <td class="h2h-ats"><strong>UCF</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Mar 09, '24</td>
+                <td class="winner-home"><strong>TCU</strong></td>
+                <td class="score">79-77</td>
+                <td class="h2h-ats"><strong>UCF</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Mar 28, '17</td>
+                <td class="winner-home"><strong>UCF</strong></td>
+                <td class="score">68-53</td>
+                <td class="h2h-ats"><strong>TCU</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401814571" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">07:00 PM ET</span>
+            <span class="game-venue">Stroh Center</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2309.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">KENT</span>
+                        </td>
+                        <td class="su-record">19-7</td>
+                        <td class="ats-record">9-15-0</td>
+                        <td class="ou-record">15-9-0</td>
+                        <td class="ppg">86.0</td>
+                        <td class="opp-ppg">76.6</td>
+                        <td class="pwr">73</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/189.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">BGSU</span>
+                        </td>
+                        <td class="su-record">16-10</td>
+                        <td class="ats-record">11-12-0</td>
+                        <td class="ou-record">7-16-0</td>
+                        <td class="ppg">82.3</td>
+                        <td class="opp-ppg">74.3</td>
+                        <td class="pwr">62</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">KENT</td><td>86.0</td><td>45.8%</td><td>35.1%</td><td>74.3%</td><td>16.5</td><td>40.4</td></tr>
+                        <tr><td class="team-abbr">BGSU</td><td>82.3</td><td>48.4%</td><td>34.5%</td><td>73.8%</td><td>14.7</td><td>36.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">KENT</td><td>76.6</td><td>6.7</td><td>3.7</td><td>27.2</td></tr>
+                        <tr><td class="team-abbr">BGSU</td><td>74.3</td><td>10.7</td><td>3.6</td><td>25.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>KENT:</strong> KENT: No reported injuries</div>
+                <div class="team-injuries"><strong>BGSU:</strong> BGSU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401814569" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">07:00 PM ET</span>
+            <span class="game-venue">Convocation Center (OH)</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2050.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">BALL</span>
+                        </td>
+                        <td class="su-record">8-17</td>
+                        <td class="ats-record">9-14-0</td>
+                        <td class="ou-record">7-16-0</td>
+                        <td class="ppg">66.4</td>
+                        <td class="opp-ppg">73.3</td>
+                        <td class="pwr">32</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/195.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">OHIO</span>
+                        </td>
+                        <td class="su-record">13-13</td>
+                        <td class="ats-record">9-15-0</td>
+                        <td class="ou-record">13-11-0</td>
+                        <td class="ppg">77.6</td>
+                        <td class="opp-ppg">82.7</td>
+                        <td class="pwr">50</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BALL</td><td>66.4</td><td>41.3%</td><td>30.5%</td><td>69.8%</td><td>12.2</td><td>31.5</td></tr>
+                        <tr><td class="team-abbr">OHIO</td><td>77.6</td><td>46.7%</td><td>30.5%</td><td>69.7%</td><td>13.5</td><td>33.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BALL</td><td>73.3</td><td>7.8</td><td>2.6</td><td>21.9</td></tr>
+                        <tr><td class="team-abbr">OHIO</td><td>82.7</td><td>6.5</td><td>3.5</td><td>23.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>BALL:</strong> BALL: No reported injuries</div>
+                <div class="team-injuries"><strong>OHIO:</strong> OHIO: No reported injuries</div>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last 5 Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">BALL 3 - 2 OHIO</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">ATS RECORD</span>
+                    <span class="h2h-stat-value">BALL 1 - 4 OHIO</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">4 OVER - 1 UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>COVERED</th><th>O/U</th></tr></thead>
+                <tbody><tr>
+                <td>Jan 16, '26</td>
+                <td class="winner-home"><strong>BALL</strong></td>
+                <td class="score">76-71</td>
+                <td class="h2h-ats"><strong>BALL</strong></td>
+                <td class="h2h-ou"><span class="under">UNDER</span></td>
+            </tr><tr>
+                <td>Jan 14, '25</td>
+                <td class="winner-home"><strong>OHIO</strong></td>
+                <td class="score">86-71</td>
+                <td class="h2h-ats"><strong>OHIO</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Feb 06, '24</td>
+                <td class="winner-home"><strong>BALL</strong></td>
+                <td class="score">84-79</td>
+                <td class="h2h-ats"><strong>OHIO</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Mar 09, '23</td>
+                <td class="winner-home"><strong>BALL</strong></td>
+                <td class="score">90-70</td>
+                <td class="h2h-ats"><strong>OHIO</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr><tr>
+                <td>Jan 10, '23</td>
+                <td class="winner-home"><strong>OHIO</strong></td>
+                <td class="score">76-71</td>
+                <td class="h2h-ats"><strong>OHIO</strong></td>
+                <td class="h2h-ou"><span class="over">OVER</span></td>
+            </tr></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="game-card" data-event-id="401814568" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">07:00 PM ET</span>
+            <span class="game-venue">University Arena (MI)</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2006.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">AKR</span>
+                        </td>
+                        <td class="su-record">20-5</td>
+                        <td class="ats-record">12-11-0</td>
+                        <td class="ou-record">12-11-0</td>
+                        <td class="ppg">89.9</td>
+                        <td class="opp-ppg">72.8</td>
+                        <td class="pwr">80</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2711.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">WMU</span>
+                        </td>
+                        <td class="su-record">9-16</td>
+                        <td class="ats-record">12-11-0</td>
+                        <td class="ou-record">13-10-0</td>
+                        <td class="ppg">74.8</td>
+                        <td class="opp-ppg">84.8</td>
+                        <td class="pwr">36</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">AKR</td><td>89.9</td><td>50.4%</td><td>37.2%</td><td>77.4%</td><td>19.2</td><td>37.7</td></tr>
+                        <tr><td class="team-abbr">WMU</td><td>74.8</td><td>44.4%</td><td>35.0%</td><td>72.9%</td><td>13.2</td><td>36.9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">AKR</td><td>72.8</td><td>7.6</td><td>3.2</td><td>26.2</td></tr>
+                        <tr><td class="team-abbr">WMU</td><td>84.8</td><td>5.0</td><td>2.6</td><td>25.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>AKR:</strong> AKR: No reported injuries</div>
+                <div class="team-injuries"><strong>WMU:</strong> WMU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401828430" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">08:00 PM ET</span>
+            <span class="game-venue">Siegel Center</span>
+            <span class="game-network">CBSSN</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/45.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">GW</span>
+                        </td>
+                        <td class="su-record">15-11</td>
+                        <td class="ats-record">13-12-0</td>
+                        <td class="ou-record">11-14-0</td>
+                        <td class="ppg">83.2</td>
+                        <td class="opp-ppg">78.0</td>
+                        <td class="pwr">58</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2670.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">VCU</span>
+                        </td>
+                        <td class="su-record">20-6</td>
+                        <td class="ats-record">12-14-0</td>
+                        <td class="ou-record">13-13-0</td>
+                        <td class="ppg">83.5</td>
+                        <td class="opp-ppg">73.6</td>
+                        <td class="pwr">77</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GW</td><td>83.2</td><td>47.0%</td><td>35.7%</td><td>73.6%</td><td>15.8</td><td>38.0</td></tr>
+                        <tr><td class="team-abbr">VCU</td><td>83.5</td><td>46.5%</td><td>36.4%</td><td>74.2%</td><td>14.5</td><td>37.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GW</td><td>78.0</td><td>7.6</td><td>3.4</td><td>25.3</td></tr>
+                        <tr><td class="team-abbr">VCU</td><td>73.6</td><td>7.4</td><td>4.7</td><td>25.5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>GW:</strong> GW: No reported injuries</div>
+                <div class="team-injuries"><strong>VCU:</strong> VCU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401820751" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">08:00 PM ET</span>
+            <span class="game-venue">Watsco Center</span>
+            <span class="game-network">ACC Network</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/259.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">VT</span>
+                        </td>
+                        <td class="su-record">17-9</td>
+                        <td class="ats-record">15-11-0</td>
+                        <td class="ou-record">14-12-0</td>
+                        <td class="ppg">79.2</td>
+                        <td class="opp-ppg">78.3</td>
+                        <td class="pwr">65</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2390.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">MIA</span>
+                        </td>
+                        <td class="su-record">20-5</td>
+                        <td class="ats-record">13-12-0</td>
+                        <td class="ou-record">15-10-0</td>
+                        <td class="ppg">83.6</td>
+                        <td class="opp-ppg">71.6</td>
+                        <td class="pwr">80</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">VT</td><td>79.2</td><td>45.0%</td><td>35.3%</td><td>73.5%</td><td>14.0</td><td>35.1</td></tr>
+                        <tr><td class="team-abbr">MIA</td><td>83.6</td><td>50.8%</td><td>33.3%</td><td>67.2%</td><td>16.8</td><td>38.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">VT</td><td>78.3</td><td>6.7</td><td>3.3</td><td>24.1</td></tr>
+                        <tr><td class="team-abbr">MIA</td><td>71.6</td><td>7.9</td><td>3.4</td><td>26.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>VT:</strong> VT: No reported injuries</div>
+                <div class="team-injuries"><strong>MIA:</strong> MIA: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401825521" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">08:30 PM ET</span>
+            <span class="game-venue">Breslin Center</span>
+            <span class="game-network">Peacock</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/26.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">UCLA</span>
+                        </td>
+                        <td class="su-record">17-8</td>
+                        <td class="ats-record">10-15-0</td>
+                        <td class="ou-record">12-13-0</td>
+                        <td class="ppg">77.9</td>
+                        <td class="opp-ppg">74.7</td>
+                        <td class="pwr">68</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/127.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">MSU</span>
+                        </td>
+                        <td class="su-record">20-5</td>
+                        <td class="ats-record">13-12-0</td>
+                        <td class="ou-record">10-15-0</td>
+                        <td class="ppg">78.8</td>
+                        <td class="opp-ppg">70.3</td>
+                        <td class="pwr">80</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">UCLA</td><td>77.9</td><td>46.8%</td><td>38.1%</td><td>76.3%</td><td>15.4</td><td>32.7</td></tr>
+                        <tr><td class="team-abbr">MSU</td><td>78.8</td><td>46.6%</td><td>34.6%</td><td>75.5%</td><td>18.5</td><td>41.2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">UCLA</td><td>74.7</td><td>6.5</td><td>3.2</td><td>22.5</td></tr>
+                        <tr><td class="team-abbr">MSU</td><td>70.3</td><td>5.5</td><td>4.3</td><td>28.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>UCLA:</strong> UCLA: No reported injuries</div>
+                <div class="team-injuries"><strong>MSU:</strong> MSU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401825522" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">08:30 PM ET</span>
+            <span class="game-venue">Value City Arena</span>
+            <span class="game-network">FS1</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/275.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">WIS</span>
+                        </td>
+                        <td class="su-record">18-7</td>
+                        <td class="ats-record">14-11-0</td>
+                        <td class="ou-record">15-10-0</td>
+                        <td class="ppg">83.7</td>
+                        <td class="opp-ppg">84.3</td>
+                        <td class="pwr">72</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/194.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">OSU</span>
+                        </td>
+                        <td class="su-record">16-9</td>
+                        <td class="ats-record">11-14-0</td>
+                        <td class="ou-record">12-13-0</td>
+                        <td class="ppg">81.0</td>
+                        <td class="opp-ppg">74.1</td>
+                        <td class="pwr">64</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">WIS</td><td>83.7</td><td>45.0%</td><td>35.4%</td><td>77.8%</td><td>15.8</td><td>36.8</td></tr>
+                        <tr><td class="team-abbr">OSU</td><td>81.0</td><td>48.8%</td><td>34.3%</td><td>78.6%</td><td>14.8</td><td>34.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">WIS</td><td>84.3</td><td>5.7</td><td>3.2</td><td>26.2</td></tr>
+                        <tr><td class="team-abbr">OSU</td><td>74.1</td><td>5.1</td><td>2.6</td><td>24.5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>WIS:</strong> WIS: No reported injuries</div>
+                <div class="team-injuries"><strong>OSU:</strong> OSU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401828933" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">08:30 PM ET</span>
+            <span class="game-venue">Arena-Auditorium</span>
+            <span class="game-network">MWN</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/278.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">FRES</span>
+                        </td>
+                        <td class="su-record">12-13</td>
+                        <td class="ats-record">17-7-0</td>
+                        <td class="ou-record">11-13-0</td>
+                        <td class="ppg">73.7</td>
+                        <td class="opp-ppg">76.2</td>
+                        <td class="pwr">48</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2751.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">WYO</span>
+                        </td>
+                        <td class="su-record">13-12</td>
+                        <td class="ats-record">10-14-0</td>
+                        <td class="ou-record">13-11-0</td>
+                        <td class="ppg">77.4</td>
+                        <td class="opp-ppg">76.4</td>
+                        <td class="pwr">52</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">FRES</td><td>73.7</td><td>44.3%</td><td>31.9%</td><td>74.6%</td><td>13.2</td><td>35.0</td></tr>
+                        <tr><td class="team-abbr">WYO</td><td>77.4</td><td>45.1%</td><td>33.1%</td><td>74.1%</td><td>13.9</td><td>36.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">FRES</td><td>76.2</td><td>7.2</td><td>2.0</td><td>25.2</td></tr>
+                        <tr><td class="team-abbr">WYO</td><td>76.4</td><td>6.7</td><td>2.4</td><td>23.9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>FRES:</strong> FRES: No reported injuries</div>
+                <div class="team-injuries"><strong>WYO:</strong> WYO: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401806491" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">08:30 PM ET</span>
+            <span class="game-venue">Kathleen and Tom Elam Center</span>
+            <span class="game-network">ESPN+</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2546.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SEMO</span>
+                        </td>
+                        <td class="su-record">16-11</td>
+                        <td class="ats-record">11-13-0</td>
+                        <td class="ou-record">12-12-0</td>
+                        <td class="ppg">75.7</td>
+                        <td class="opp-ppg">77.8</td>
+                        <td class="pwr">59</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2630.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">UTM</span>
+                        </td>
+                        <td class="su-record">20-7</td>
+                        <td class="ats-record">14-10-0</td>
+                        <td class="ou-record">8-16-0</td>
+                        <td class="ppg">72.5</td>
+                        <td class="opp-ppg">70.1</td>
+                        <td class="pwr">74</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SEMO</td><td>75.7</td><td>46.0%</td><td>30.7%</td><td>68.5%</td><td>13.1</td><td>33.5</td></tr>
+                        <tr><td class="team-abbr">UTM</td><td>72.5</td><td>43.6%</td><td>31.6%</td><td>67.2%</td><td>14.1</td><td>40.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">SEMO</td><td>77.8</td><td>6.7</td><td>3.5</td><td>23.7</td></tr>
+                        <tr><td class="team-abbr">UTM</td><td>70.1</td><td>9.0</td><td>4.4</td><td>26.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>SEMO:</strong> SEMO: No reported injuries</div>
+                <div class="team-injuries"><strong>UTM:</strong> UTM: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401825520" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">09:00 PM ET</span>
+            <span class="game-venue">Carver-Hawkeye Arena</span>
+            <span class="game-network">BTN</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/158.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">NEB</span>
+                        </td>
+                        <td class="su-record">22-3</td>
+                        <td class="ats-record">14-11-0</td>
+                        <td class="ou-record">8-17-0</td>
+                        <td class="ppg">79.4</td>
+                        <td class="opp-ppg">69.1</td>
+                        <td class="pwr">88</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2294.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">IOWA</span>
+                        </td>
+                        <td class="su-record">18-7</td>
+                        <td class="ats-record">15-10-0</td>
+                        <td class="ou-record">16-9-0</td>
+                        <td class="ppg">77.0</td>
+                        <td class="opp-ppg">70.0</td>
+                        <td class="pwr">72</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NEB</td><td>79.4</td><td>47.1%</td><td>36.0%</td><td>76.1%</td><td>18.4</td><td>35.6</td></tr>
+                        <tr><td class="team-abbr">IOWA</td><td>77.0</td><td>50.1%</td><td>36.8%</td><td>76.4%</td><td>15.6</td><td>29.9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NEB</td><td>69.1</td><td>7.2</td><td>2.7</td><td>26.8</td></tr>
+                        <tr><td class="team-abbr">IOWA</td><td>70.0</td><td>7.3</td><td>2.2</td><td>20.9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>NEB:</strong> NEB: No reported injuries</div>
+                <div class="team-injuries"><strong>IOWA:</strong> IOWA: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401827688" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">09:00 PM ET</span>
+            <span class="game-venue">Bramlage Coliseum</span>
+            <span class="game-network">ESPN2</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/239.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">BAY</span>
+                        </td>
+                        <td class="su-record">13-12</td>
+                        <td class="ats-record">10-14-0</td>
+                        <td class="ou-record">13-11-0</td>
+                        <td class="ppg">83.4</td>
+                        <td class="opp-ppg">71.1</td>
+                        <td class="pwr">52</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2306.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">KSU</span>
+                        </td>
+                        <td class="su-record">10-15</td>
+                        <td class="ats-record">10-15-0</td>
+                        <td class="ou-record">13-12-0</td>
+                        <td class="ppg">80.2</td>
+                        <td class="opp-ppg">81.9</td>
+                        <td class="pwr">40</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BAY</td><td>83.4</td><td>47.9%</td><td>35.4%</td><td>73.0%</td><td>15.8</td><td>37.8</td></tr>
+                        <tr><td class="team-abbr">KSU</td><td>80.2</td><td>45.7%</td><td>36.4%</td><td>70.9%</td><td>17.8</td><td>34.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">BAY</td><td>71.1</td><td>6.5</td><td>4.6</td><td>25.1</td></tr>
+                        <tr><td class="team-abbr">KSU</td><td>81.9</td><td>6.9</td><td>3.7</td><td>23.7</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>BAY:</strong> BAY: No reported injuries</div>
+                <div class="team-injuries"><strong>KSU:</strong> KSU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401820571" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">09:00 PM ET</span>
+            <span class="game-venue">The Pit</span>
+            <span class="game-network">MWN</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2005.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">AF</span>
+                        </td>
+                        <td class="su-record">3-22</td>
+                        <td class="ats-record stat-na">—</td>
+                        <td class="ou-record stat-na">—</td>
+                        <td class="ppg">61.4</td>
+                        <td class="opp-ppg">78.8</td>
+                        <td class="pwr">12</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/167.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">UNM</span>
+                        </td>
+                        <td class="su-record">19-6</td>
+                        <td class="ats-record">13-11-0</td>
+                        <td class="ou-record">16-8-0</td>
+                        <td class="ppg">80.8</td>
+                        <td class="opp-ppg">69.2</td>
+                        <td class="pwr">76</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">AF</td><td>61.4</td><td>42.7%</td><td>31.5%</td><td>64.7%</td><td>12.4</td><td>29.1</td></tr>
+                        <tr><td class="team-abbr">UNM</td><td>80.8</td><td>45.9%</td><td>36.0%</td><td>74.9%</td><td>14.8</td><td>36.2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">AF</td><td>78.8</td><td>5.7</td><td>2.6</td><td>22.1</td></tr>
+                        <tr><td class="team-abbr">UNM</td><td>69.2</td><td>7.8</td><td>2.9</td><td>26.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>AF:</strong> AF: No reported injuries</div>
+                <div class="team-injuries"><strong>UNM:</strong> UNM: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401808245" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">09:00 PM ET</span>
+            <span class="game-venue">Rupp Arena</span>
+            <span class="game-network">ESPN</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/61.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">UGA</span>
+                        </td>
+                        <td class="su-record">17-8</td>
+                        <td class="ats-record">11-14-0</td>
+                        <td class="ou-record">12-13-0</td>
+                        <td class="ppg">90.3</td>
+                        <td class="opp-ppg">79.9</td>
+                        <td class="pwr">68</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/96.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">UK</span>
+                        </td>
+                        <td class="su-record">17-8</td>
+                        <td class="ats-record">12-13-0</td>
+                        <td class="ou-record">12-13-0</td>
+                        <td class="ppg">81.6</td>
+                        <td class="opp-ppg">83.7</td>
+                        <td class="pwr">68</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">UGA</td><td>90.3</td><td>46.6%</td><td>31.7%</td><td>74.7%</td><td>14.6</td><td>39.7</td></tr>
+                        <tr><td class="team-abbr">UK</td><td>81.6</td><td>47.0%</td><td>34.9%</td><td>72.4%</td><td>16.2</td><td>37.9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">UGA</td><td>79.9</td><td>8.6</td><td>6.6</td><td>26.0</td></tr>
+                        <tr><td class="team-abbr">UK</td><td>83.7</td><td>7.3</td><td>4.8</td><td>26.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>UGA:</strong> UGA: No reported injuries</div>
+                <div class="team-injuries"><strong>UK:</strong> UK: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401808243" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">09:00 PM ET</span>
+            <span class="game-venue">Moody Center</span>
+            <span class="game-network">SEC Network</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/99.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">LSU</span>
+                        </td>
+                        <td class="su-record">14-11</td>
+                        <td class="ats-record">14-11-0</td>
+                        <td class="ou-record">10-15-0</td>
+                        <td class="ppg">80.7</td>
+                        <td class="opp-ppg">78.9</td>
+                        <td class="pwr">56</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/251.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">TEX</span>
+                        </td>
+                        <td class="su-record">16-9</td>
+                        <td class="ats-record">15-9-0</td>
+                        <td class="ou-record">15-9-0</td>
+                        <td class="ppg">85.2</td>
+                        <td class="opp-ppg">79.0</td>
+                        <td class="pwr">64</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LSU</td><td>80.7</td><td>47.3%</td><td>32.1%</td><td>76.2%</td><td>14.5</td><td>36.8</td></tr>
+                        <tr><td class="team-abbr">TEX</td><td>85.2</td><td>49.3%</td><td>34.6%</td><td>75.3%</td><td>12.8</td><td>39.1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">LSU</td><td>78.9</td><td>6.2</td><td>3.8</td><td>25.7</td></tr>
+                        <tr><td class="team-abbr">TEX</td><td>79.0</td><td>6.2</td><td>2.8</td><td>26.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>LSU:</strong> LSU: No reported injuries</div>
+                <div class="team-injuries"><strong>TEX:</strong> TEX: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401829318" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">10:00 PM ET</span>
+            <span class="game-venue">Provident Credit Union Event Center</span>
+            <span class="game-network">MWN</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2440.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">NEV</span>
+                        </td>
+                        <td class="su-record">17-8</td>
+                        <td class="ats-record">14-11-0</td>
+                        <td class="ou-record">14-11-0</td>
+                        <td class="ppg">76.2</td>
+                        <td class="opp-ppg">74.2</td>
+                        <td class="pwr">68</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/23.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SJSU</span>
+                        </td>
+                        <td class="su-record">6-19</td>
+                        <td class="ats-record">12-12-0</td>
+                        <td class="ou-record">14-10-0</td>
+                        <td class="ppg">70.2</td>
+                        <td class="opp-ppg">80.8</td>
+                        <td class="pwr">24</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NEV</td><td>76.2</td><td>43.6%</td><td>38.0%</td><td>75.7%</td><td>14.2</td><td>35.8</td></tr>
+                        <tr><td class="team-abbr">SJSU</td><td>70.2</td><td>42.5%</td><td>35.8%</td><td>74.2%</td><td>10.6</td><td>29.8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">NEV</td><td>74.2</td><td>6.6</td><td>3.8</td><td>24.2</td></tr>
+                        <tr><td class="team-abbr">SJSU</td><td>80.8</td><td>5.8</td><td>1.9</td><td>19.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>NEV:</strong> NEV: No reported injuries</div>
+                <div class="team-injuries"><strong>SJSU:</strong> SJSU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401823782" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">10:00 PM ET</span>
+            <span class="game-venue">Viejas Arena</span>
+            <span class="game-network">CBSSN</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2253.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">GCU</span>
+                        </td>
+                        <td class="su-record">16-9</td>
+                        <td class="ats-record stat-na">—</td>
+                        <td class="ou-record stat-na">—</td>
+                        <td class="ppg">75.3</td>
+                        <td class="opp-ppg">71.9</td>
+                        <td class="pwr">64</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/21.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">SDSU</span>
+                        </td>
+                        <td class="su-record">18-6</td>
+                        <td class="ats-record">13-10-0</td>
+                        <td class="ou-record">10-13-0</td>
+                        <td class="ppg">79.8</td>
+                        <td class="opp-ppg">65.6</td>
+                        <td class="pwr">75</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GCU</td><td>75.3</td><td>44.9%</td><td>30.1%</td><td>75.5%</td><td>12.6</td><td>36.4</td></tr>
+                        <tr><td class="team-abbr">SDSU</td><td>79.8</td><td>48.2%</td><td>36.0%</td><td>75.0%</td><td>15.8</td><td>35.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">GCU</td><td>71.9</td><td>6.9</td><td>3.6</td><td>25.5</td></tr>
+                        <tr><td class="team-abbr">SDSU</td><td>65.6</td><td>8.5</td><td>4.6</td><td>25.5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>GCU:</strong> GCU: No reported injuries</div>
+                <div class="team-injuries"><strong>SDSU:</strong> SDSU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401825523" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">10:30 PM ET</span>
+            <span class="game-venue">Matthew Knight Arena</span>
+            <span class="game-network">FS1</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/135.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">MINN</span>
+                        </td>
+                        <td class="su-record">11-14</td>
+                        <td class="ats-record">10-15-0</td>
+                        <td class="ou-record">9-16-0</td>
+                        <td class="ppg">71.0</td>
+                        <td class="opp-ppg">77.2</td>
+                        <td class="pwr">44</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2483.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">ORE</span>
+                        </td>
+                        <td class="su-record">9-16</td>
+                        <td class="ats-record">8-17-0</td>
+                        <td class="ou-record">12-13-0</td>
+                        <td class="ppg">72.2</td>
+                        <td class="opp-ppg">76.9</td>
+                        <td class="pwr">36</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MINN</td><td>71.0</td><td>45.4%</td><td>33.4%</td><td>69.1%</td><td>17.3</td><td>32.4</td></tr>
+                        <tr><td class="team-abbr">ORE</td><td>72.2</td><td>42.7%</td><td>32.9%</td><td>71.8%</td><td>14.1</td><td>35.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">MINN</td><td>77.2</td><td>6.8</td><td>2.8</td><td>23.1</td></tr>
+                        <tr><td class="team-abbr">ORE</td><td>76.9</td><td>5.9</td><td>4.0</td><td>23.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>MINN:</strong> MINN: No reported injuries</div>
+                <div class="team-injuries"><strong>ORE:</strong> ORE: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="game-card" data-event-id="401827686" data-sport="ncaab">
+        <div class="game-header">
+            <span class="game-time">11:00 PM ET</span>
+            <span class="game-venue">Desert Financial Arena</span>
+            <span class="game-network">ESPN2</span>
+        </div>
+        
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2641.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">TTU</span>
+                        </td>
+                        <td class="su-record">19-6</td>
+                        <td class="ats-record">14-11-0</td>
+                        <td class="ou-record">11-14-0</td>
+                        <td class="ppg">82.0</td>
+                        <td class="opp-ppg">74.3</td>
+                        <td class="pwr">76</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/9.png" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">ASU</span>
+                        </td>
+                        <td class="su-record">13-12</td>
+                        <td class="ats-record">15-10-0</td>
+                        <td class="ou-record">13-12-0</td>
+                        <td class="ppg">78.7</td>
+                        <td class="opp-ppg">85.2</td>
+                        <td class="pwr">52</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: OFFENSE vs DEFENSE -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">OFFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>PPG</th><th>FG%</th><th>3P%</th><th>FT%</th><th>AST</th><th>REB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">TTU</td><td>82.0</td><td>46.5%</td><td>38.9%</td><td>70.9%</td><td>16.1</td><td>37.7</td></tr>
+                        <tr><td class="team-abbr">ASU</td><td>78.7</td><td>44.9%</td><td>34.1%</td><td>75.0%</td><td>14.0</td><td>33.3</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">DEFENSE</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>OPP PPG</th><th>STL</th><th>BLK</th><th>DREB</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">TTU</td><td>74.3</td><td>6.4</td><td>3.5</td><td>25.6</td></tr>
+                        <tr><td class="team-abbr">ASU</td><td>85.2</td><td>7.2</td><td>4.6</td><td>22.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>TTU:</strong> TTU: No reported injuries</div>
+                <div class="team-injuries"><strong>ASU:</strong> ASU: No reported injuries</div>
+            </div>
+        </div>
+        
+    </div>
+    
+            </div>
+        
+                <div class="sport-section " id="ncaaf-section">
+                    <div class="no-games">No NCAAF games scheduled for today</div>
+                </div>
+            
+    </div>
+    <footer>
+        <p>Data from ESPN & The Odds API | Updated Daily</p>
+    </footer>
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.sport-section').forEach(s => s.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.sport + '-section').classList.add('active');
+            });
+        });
+        // Calendar
+        const archiveDates = ["2025-11-30", "2025-12-01", "2025-12-02", "2025-12-03", "2025-12-04", "2025-12-05", "2025-12-06", "2025-12-07", "2025-12-08", "2025-12-09", "2025-12-10", "2025-12-11", "2025-12-12", "2025-12-13", "2025-12-14", "2025-12-15", "2025-12-16", "2025-12-17", "2025-12-18", "2025-12-19", "2025-12-20", "2025-12-21", "2025-12-22", "2025-12-23", "2025-12-24", "2025-12-25", "2025-12-26", "2025-12-27", "2025-12-28", "2025-12-29", "2025-12-30", "2025-12-31", "2026-01-01", "2026-01-02", "2026-01-03", "2026-01-04", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-11", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-18", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-15", "2026-02-16"];
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        function renderCalendar() {
+            const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+            document.getElementById('month-name').textContent = monthNames[currentMonth] + ' ' + currentYear;
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const today = new Date();
+            let html = '';
+            for (let i = 0; i < firstDay; i++) html += '<div class="calendar-day"></div>';
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = currentYear + '-' + String(currentMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+                const hasContent = archiveDates.includes(dateStr);
+                const isToday = today.getFullYear() === currentYear && today.getMonth() === currentMonth && today.getDate() === d;
+                let cls = 'calendar-day';
+                if (hasContent) cls += ' has-content';
+                if (isToday) cls += ' today';
+                if (hasContent) {
+                    html += '<a href="handicapping-hub-archive/hub-' + dateStr + '.html" class="' + cls + '">' + d + '</a>';
+                } else {
+                    html += '<div class="' + cls + '">' + d + '</div>';
+                }
+            }
+            document.getElementById('calendar-days').innerHTML = html;
+        }
+        document.getElementById('prev-month').onclick = () => { currentMonth--; if (currentMonth < 0) { currentMonth = 11; currentYear--; } renderCalendar(); };
+        document.getElementById('next-month').onclick = () => { currentMonth++; if (currentMonth > 11) { currentMonth = 0; currentYear++; } renderCalendar(); };
+        renderCalendar();
+    </script>
+</body>
+</html>
