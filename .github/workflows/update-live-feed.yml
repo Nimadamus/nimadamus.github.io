@@ -1,8 +1,9 @@
 name: Update Live Feed Daily
 
+# DISABLED Feb 19, 2026 - scripts/update_feed.py never existed.
+# This workflow was failing every single day sending email notifications.
+# Keeping workflow_dispatch so it can be manually triggered if the script is ever created.
 on:
-  schedule:
-    - cron: '30 13 * * *'  # Runs every day at 6:30 AM Pacific (staggered to prevent conflicts)
   workflow_dispatch:       # Allows manual run in Actions tab
 
 jobs:
@@ -12,6 +13,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+
+      - name: Check if script exists
+        run: |
+          if [ ! -f "scripts/update_feed.py" ]; then
+            echo "scripts/update_feed.py does not exist. Skipping."
+            exit 0
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v4

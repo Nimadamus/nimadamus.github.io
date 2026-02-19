@@ -35,4 +35,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add injury-report.html
           git commit -m "Update injury report - $(date +'%Y-%m-%d %H:%M') UTC"
-          git push
+          git push || echo "WARNING: Push failed (likely transient network issue). Will retry next hour."

@@ -1,9 +1,10 @@
 name: Update Odds Page Daily
 
+# DISABLED Feb 19, 2026 - scripts/fetchOdds.js never existed.
+# Odds are handled by handicapping_hub_production.py instead.
+# Keeping workflow_dispatch so it can be manually triggered if the script is ever created.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 13 * * *' # Runs daily at 6AM PST (staggered to prevent conflicts)
 
 jobs:
   update-odds:
@@ -12,6 +13,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+
+      - name: Check if script exists
+        run: |
+          if [ ! -f "scripts/fetchOdds.js" ]; then
+            echo "scripts/fetchOdds.js does not exist. Skipping."
+            echo "Odds are handled by handicapping_hub_production.py instead."
+            exit 0
+          fi
 
       - name: Set up Node.js
         uses: actions/setup-node@v3

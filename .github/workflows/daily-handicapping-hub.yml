@@ -62,8 +62,9 @@ jobs:
       # and syncs the index.html preview to match. It respects your selections.
 
       - name: Sync Featured Game Preview
+        continue-on-error: true
         run: |
-          python scripts/sync_featured_game_preview.py
+          python scripts/sync_featured_game_preview.py || echo "WARNING: Featured game preview sync failed (non-critical for hub update)"
 
       - name: Validate output file
         run: |
