@@ -99,10 +99,9 @@
  color: #00e0ff;
  text-shadow: 0 0 30px #00e0ff, 0 0 60px #00e0ff;
  }
-</style><meta name="description" content="Verified betting records with full graded history and cumulative units. Transparent tracking for NBA betting.">
- 
+</style>
  <meta name="robots" content="index, follow">
-<meta name="keywords" content="MLB betting record, verified picks record, win loss units, graded bets history, MLB units tracker, transparent betting results">
+<meta name="keywords" content="NBA betting record, verified picks record, win loss units, graded bets history, NBA units tracker, transparent betting results">
 
 <meta property="og:title" content="NBA Verified Records - BetLegend">
 <meta property="og:description" content="Verified betting records with full graded history and cumulative units. Transparent tracking for NBA betting.">
@@ -281,79 +280,114 @@
  </div>
  </section>
 
+ <!-- Bet Type Breakdown -->
+ <h2 class="section-title">Breakdown by Bet Type</h2>
+ <div class="table-container">
+ <table>
+ <thead><tr><th>Bet Type</th><th>Record</th><th>Win %</th><th>Units</th><th>ROI</th></tr></thead>
+ <tbody id="bet-type-breakdown"></tbody>
+ </table>
+ </div>
+
+ <!-- Monthly Breakdown -->
+ <h2 class="section-title">Monthly Breakdown</h2>
+ <div class="table-container">
+ <table>
+ <thead><tr><th>Month</th><th>Record</th><th>Win %</th><th>Units</th><th>ROI</th></tr></thead>
+ <tbody id="monthly-breakdown"></tbody>
+ </table>
+ </div>
+
+ <!-- Parlay Breakdown -->
+ <h2 class="section-title">Parlay Breakdown</h2>
+ <div class="table-container">
+ <table>
+ <thead><tr><th>Parlay Type</th><th>Record</th><th>Win %</th><th>Units</th><th>ROI</th></tr></thead>
+ <tbody id="parlay-breakdown"></tbody>
+ </table>
+ </div>
+
+ <!-- Total Bets (Over/Under) Breakdown -->
+ <h2 class="section-title">Total Bets (Over/Under) Breakdown</h2>
+ <div class="table-container">
+ <table>
+ <thead><tr><th>Category</th><th>Record</th><th>Win %</th><th>Units</th><th>ROI</th></tr></thead>
+ <tbody id="total-bets-breakdown"></tbody>
+ </table>
+ </div>
+
  <h2 class="section-title">Full Betting History</h2>
- <div class="loading-message" id="loading-message">Loading records from Google Sheets...</div>
+ <div class="loading-message" id="loading-message" style="display:none">Loading records from Google Sheets...</div>
  <div class="table-container">
  <table>
  <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
  <tbody id="picks-table-body">
                     <tr><td>2/6/2026</td><td>Miami Heat +6.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
-                    <tr><td>2/6/2026</td><td>UCONN ML</td><td>-140</td><td class="result-L">L</td><td class="loss">-2.10</td></tr>
                     <tr><td>2/6/2026</td><td>Pelicans/Wolves under 236.5</td><td>-110</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
                     <tr><td>1/30/2026</td><td>Kings +12.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
                     <tr><td>1/30/2026</td><td>Portland Trailblazers +7.5</td><td>-115</td><td class="result-L">L</td><td class="loss">-1.15</td></tr>
                     <tr><td>1/30/2026</td><td>Warriors ML</td><td>-140</td><td class="result-L">L</td><td class="loss">-2.80</td></tr>
                     <tr><td>1/5/2026</td><td>Bulls +10.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
                     <tr><td>12/25/2025</td><td>Lakers/Rockets over 231</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
-                    <tr><td>12/10/2025</td><td>3 Team Parlay: Lakers ML, Thunder ML, Boise St ML</td><td>-160</td><td class="result-P">P</td><td class="loss">-4.80</td></tr>
-                    <tr><td>12/6/2025</td><td>3 Team Parlay: Texas Tech ML (NCAAF) Wolves ML (NBA) UC SANTA BARBARA ML (NCAA)</td><td>-187</td><td class="result-P">P</td><td class="win">+3.00</td></tr>
-                    <tr><td>11/28/2025</td><td>4 Team Parlay: Lakers ML, Thunder ML, Loyola Marymount ML, Davidson ML</td><td>-141</td><td class="result-P">P</td><td class="loss">-2.82</td></tr>
-                    <tr><td>11/28/2025</td><td>Lakers 2nd half -7.5</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>11/26/2025</td><td>Grizzlies ML</td><td>-155</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>11/26/2025</td><td>Grizzlies/Pelicans over 235.5</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>11/26/2025</td><td>Heat/Bucks over 237</td><td>-110</td><td class="result-P">P</td><td class="loss">-2.20</td></tr>
-                    <tr><td>11/26/2025</td><td>Suns ML</td><td>-175</td><td class="result-P">P</td><td class="win">+2.00</td></tr>
-                    <tr><td>11/25/2025</td><td>2 Team Parlay: Lakers ML, Gonzaga ML (NCAAB)</td><td>-204</td><td class="result-P">P</td><td class="win">+3.00</td></tr>
-                    <tr><td>11/24/2025</td><td>Nuggets/Grizzlies over 235</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>11/21/2025</td><td>2 team parlay: Warriors ML, South Dakota St ML (NCAAB)</td><td>-223</td><td class="result-P">P</td><td class="loss">-4.46</td></tr>
-                    <tr><td>11/19/2025</td><td>Kings/Thunder over 232</td><td>-110</td><td class="result-P">P</td><td class="loss">-2.20</td></tr>
-                    <tr><td>11-17-2025</td><td>2 Team Parlay: Pistons ML, Raptors ML</td><td>-184</td><td class="result-P">P</td><td class="win">+3.00</td></tr>
-                    <tr><td>11/15/2025</td><td>2 Team Parlay: Cavaliers ML, Raptors ML</td><td>-166</td><td class="result-P">P</td><td class="win">+3.00</td></tr>
-                    <tr><td>11/15/2025</td><td>Cleveland Cavaliers -115</td><td>-110</td><td class="result-P">P</td><td class="loss">-2.20</td></tr>
-                    <tr><td>11-14-2025</td><td>Pistons ML</td><td>-170</td><td class="result-P">P</td><td class="win">+3.00</td></tr>
-                    <tr><td>11-13-2025</td><td>Suns ML</td><td>-180</td><td class="result-P">P</td><td class="win">+3.00</td></tr>
+                    <tr><td>12/10/2025</td><td>3 Team Parlay: Lakers ML, Thunder ML, Boise St ML</td><td>-160</td><td class="result-L">L</td><td class="loss">-4.80</td></tr>
+                    <tr><td>12/6/2025</td><td>3 Team Parlay: Texas Tech ML (NCAAF) Wolves ML (NBA) UC SANTA BARBARA ML (NCAA)</td><td>-187</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>11/28/2025</td><td>4 Team Parlay: Lakers ML, Thunder ML, Loyola Marymount ML, Davidson ML</td><td>-141</td><td class="result-L">L</td><td class="loss">-2.82</td></tr>
+                    <tr><td>11/28/2025</td><td>Lakers 2nd half -7.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>11/26/2025</td><td>Grizzlies ML</td><td>-155</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>11/26/2025</td><td>Grizzlies/Pelicans over 235.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>11/26/2025</td><td>Heat/Bucks over 237</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
+                    <tr><td>11/26/2025</td><td>Suns ML</td><td>-175</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
+                    <tr><td>11/25/2025</td><td>2 Team Parlay: Lakers ML, Gonzaga ML (NCAAB)</td><td>-204</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>11/24/2025</td><td>Nuggets/Grizzlies over 235</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>11/21/2025</td><td>2 team parlay: Warriors ML, South Dakota St ML (NCAAB)</td><td>-223</td><td class="result-L">L</td><td class="loss">-4.46</td></tr>
+                    <tr><td>11/19/2025</td><td>Kings/Thunder over 232</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
+                    <tr><td>11-17-2025</td><td>2 Team Parlay: Pistons ML, Raptors ML</td><td>-184</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>11/15/2025</td><td>2 Team Parlay: Cavaliers ML, Raptors ML</td><td>-166</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>11/15/2025</td><td>Cleveland Cavaliers -115</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
+                    <tr><td>11-14-2025</td><td>Pistons ML</td><td>-170</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>11-13-2025</td><td>Suns ML</td><td>-180</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>11-11-2025</td><td>Warriors/Thunder over 228</td><td>-110</td><td class="result-P">P</td><td class="result-P">0.00</td></tr>
-                    <tr><td>11-10-2025</td><td>Blazers +2</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.10</td></tr>
-                    <tr><td>11-9-2025</td><td>Magic/Celtics over 227.5</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.10</td></tr>
-                    <tr><td>11-8-2025</td><td>Suns/Clippers over 227</td><td>-110</td><td class="result-P">P</td><td class="loss">-2.20</td></tr>
-                    <tr><td>11-8-2025</td><td>Spurs -11</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.65</td></tr>
-                    <tr><td>11-7-2025</td><td>Thunder/Kings over 234</td><td>-110</td><td class="result-P">P</td><td class="loss">-2.20</td></tr>
-                    <tr><td>11-7-2025</td><td>Cavs/Wizards over 241</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>11-7-2025</td><td>Nets +10.5</td><td>-110</td><td class="result-P">P</td><td class="loss">-3.30</td></tr>
-                    <tr><td>11-5-2025</td><td>Spurs PK</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.65</td></tr>
-                    <tr><td>11-5-2025</td><td>Warriors/Kings over 223.5</td><td>-110</td><td class="result-P">P</td><td class="win">+3.00</td></tr>
-                    <tr><td>11-4-2025</td><td>76ers +1</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.10</td></tr>
-                    <tr><td>11-3-2025</td><td>Pacers +6</td><td>-110</td><td class="result-P">P</td><td class="win">+0.50</td></tr>
-                    <tr><td>11-2-2025</td><td>Spurs -5.5</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.10</td></tr>
-                    <tr><td>11-2-2025</td><td>76ers -5</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>11-2-2025</td><td>Bulls +7`</td><td>-105</td><td class="result-P">P</td><td class="loss">-1.57</td></tr>
-                    <tr><td>11-2-2025</td><td>Thunder -13</td><td>-110</td><td class="result-P">P</td><td class="win">+2.00</td></tr>
-                    <tr><td>11-1-2025</td><td>Rockets -5.5</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>11-1-2025</td><td>Pistons -8</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>11-1-2025</td><td>Warriors ML, Bucks ML (2 Team Parlay)</td><td>-152</td><td class="result-P">P</td><td class="loss">-4.56</td></tr>
-                    <tr><td>11-1-2025</td><td>Hornets +4.5</td><td>-110</td><td class="result-P">P</td><td class="loss">-2.20</td></tr>
-                    <tr><td>11-1-2025</td><td>Magic/Wizards under 234.5</td><td>-110</td><td class="result-P">P</td><td class="win">+2.00</td></tr>
-                    <tr><td>10-31-2025</td><td>Pacers +2.5</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.10</td></tr>
-                    <tr><td>10-31-2025</td><td>Bulls +5.5</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>10-31-2025</td><td>76ers 2nd half -3</td><td>-110</td><td class="result-P">P</td><td class="win">+3.00</td></tr>
-                    <tr><td>10-31-2025</td><td>76ers pk</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.65</td></tr>
-                    <tr><td>10-30-2025</td><td>Warriors ML, Ravens ML</td><td>-164</td><td class="result-P">P</td><td class="loss">-3.28</td></tr>
-                    <tr><td>10-29-2025</td><td>Timberwolves 2nd half -6.5</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.10</td></tr>
-                    <tr><td>10-29-2025</td><td>Wolves ML + Nuggets ML</td><td>-185</td><td class="result-P">P</td><td class="loss">-1.85</td></tr>
-                    <tr><td>10-28-2025</td><td>Warriors ML</td><td>110</td><td class="result-P">P</td><td class="win">+2.20</td></tr>
-                    <tr><td>10-27-2025</td><td>Suns/Jazz second half under 111.5</td><td>-110</td><td class="result-P">P</td><td class="loss">-2.75</td></tr>
-                    <tr><td>10-27-2025</td><td>Suns/Jazz first half under 118</td><td>-110</td><td class="result-P">P</td><td class="win">+1.10</td></tr>
-                    <tr><td>10-26-2025</td><td>Raptors pk</td><td>-110</td><td class="result-P">P</td><td class="loss">-2.20</td></tr>
-                    <tr><td>10-25-2025</td><td>Magic/Bulls over 233.5</td><td>-110</td><td class="result-P">P</td><td class="loss">-0.55</td></tr>
-                    <tr><td>10-25-2025</td><td>Suns/Nuggets over 234</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>10-25-2025</td><td>Bulls +6</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.10</td></tr>
-                    <tr><td>10-25-2025</td><td>Pacers/Grizzlies over 238</td><td>-110</td><td class="result-P">P</td><td class="loss">-2.20</td></tr>
-                    <tr><td>10-24-2025</td><td>Warriors 2nd half -6.5</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.65</td></tr>
-                    <tr><td>10-24-2025</td><td>Spurs -4.5</td><td>-108</td><td class="result-P">P</td><td class="loss">-1.08</td></tr>
-                    <tr><td>10-24-2025</td><td>Warriors -2</td><td>-110</td><td class="result-P">P</td><td class="loss">-1.10</td></tr>
-                    <tr><td>10-24-2025</td><td>Timberwolves -1.5</td><td>-108</td><td class="result-P">P</td><td class="loss">-1.08</td></tr>
-                    <tr><td>10-24-2025</td><td>Celtics/Knicks under 230.5</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
-                    <tr><td>10-24-2025</td><td>Warriors/Blazers over 227.5</td><td>-110</td><td class="result-P">P</td><td class="win">+1.00</td></tr>
+                    <tr><td>11-10-2025</td><td>Blazers +2</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
+                    <tr><td>11-9-2025</td><td>Magic/Celtics over 227.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
+                    <tr><td>11-8-2025</td><td>Suns/Clippers over 227</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
+                    <tr><td>11-8-2025</td><td>Spurs -11</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
+                    <tr><td>11-7-2025</td><td>Thunder/Kings over 234</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
+                    <tr><td>11-7-2025</td><td>Cavs/Wizards over 241</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>11-7-2025</td><td>Nets +10.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
+                    <tr><td>11-5-2025</td><td>Spurs PK</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
+                    <tr><td>11-5-2025</td><td>Warriors/Kings over 223.5</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>11-4-2025</td><td>76ers +1</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
+                    <tr><td>11-3-2025</td><td>Pacers +6</td><td>-110</td><td class="result-W">W</td><td class="win">+0.50</td></tr>
+                    <tr><td>11-2-2025</td><td>Spurs -5.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
+                    <tr><td>11-2-2025</td><td>76ers -5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>11-2-2025</td><td>Bulls +7`</td><td>-105</td><td class="result-L">L</td><td class="loss">-1.57</td></tr>
+                    <tr><td>11-2-2025</td><td>Thunder -13</td><td>-110</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
+                    <tr><td>11-1-2025</td><td>Rockets -5.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>11-1-2025</td><td>Pistons -8</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>11-1-2025</td><td>Warriors ML, Bucks ML (2 Team Parlay)</td><td>-152</td><td class="result-L">L</td><td class="loss">-4.56</td></tr>
+                    <tr><td>11-1-2025</td><td>Hornets +4.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
+                    <tr><td>11-1-2025</td><td>Magic/Wizards under 234.5</td><td>-110</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
+                    <tr><td>10-31-2025</td><td>Pacers +2.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
+                    <tr><td>10-31-2025</td><td>Bulls +5.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>10-31-2025</td><td>76ers 2nd half -3</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>10-31-2025</td><td>76ers pk</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
+                    <tr><td>10-30-2025</td><td>Warriors ML, Ravens ML</td><td>-164</td><td class="result-L">L</td><td class="loss">-3.28</td></tr>
+                    <tr><td>10-29-2025</td><td>Timberwolves 2nd half -6.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
+                    <tr><td>10-29-2025</td><td>Wolves ML + Nuggets ML</td><td>-185</td><td class="result-L">L</td><td class="loss">-1.85</td></tr>
+                    <tr><td>10-28-2025</td><td>Warriors ML</td><td>110</td><td class="result-W">W</td><td class="win">+2.20</td></tr>
+                    <tr><td>10-27-2025</td><td>Suns/Jazz second half under 111.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.75</td></tr>
+                    <tr><td>10-27-2025</td><td>Suns/Jazz first half under 118</td><td>-110</td><td class="result-W">W</td><td class="win">+1.10</td></tr>
+                    <tr><td>10-26-2025</td><td>Raptors pk</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
+                    <tr><td>10-25-2025</td><td>Magic/Bulls over 233.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-0.55</td></tr>
+                    <tr><td>10-25-2025</td><td>Suns/Nuggets over 234</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>10-25-2025</td><td>Bulls +6</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
+                    <tr><td>10-25-2025</td><td>Pacers/Grizzlies over 238</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
+                    <tr><td>10-24-2025</td><td>Warriors 2nd half -6.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
+                    <tr><td>10-24-2025</td><td>Spurs -4.5</td><td>-108</td><td class="result-L">L</td><td class="loss">-1.08</td></tr>
+                    <tr><td>10-24-2025</td><td>Warriors -2</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.10</td></tr>
+                    <tr><td>10-24-2025</td><td>Timberwolves -1.5</td><td>-108</td><td class="result-L">L</td><td class="loss">-1.08</td></tr>
+                    <tr><td>10-24-2025</td><td>Celtics/Knicks under 230.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>10-24-2025</td><td>Warriors/Blazers over 227.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
                 </tbody>
  </table>
  </div>
@@ -618,6 +652,8 @@
  // Fall back to calculating stats from static HTML table
  recalcUnitsFromStaticTable();
  calculateStatsFromTable();
+ buildPicksFromStaticTable();
+ renderAllBreakdowns();
  }
  }
 
@@ -662,6 +698,7 @@
  console.log('Keeping static HTML (dynamic:', filteredPicks.length, 'vs static:', staticRowCount, ')');
  recalcUnitsFromStaticTable();
  calculateStatsFromTable();
+ renderAllBreakdowns();
  return;
  }
 
@@ -676,6 +713,7 @@
  roiEl.className = summaryStats.roi >= 0 ? 'roi-win' : 'roi-loss';
 
  setTimeout(createChart, 100);
+ renderAllBreakdowns();
  }
 
  // Aggregate stats function
@@ -933,7 +971,7 @@
  });
  }
 
- // Recalculate units in the static HTML table using the standard risk model
+ // Fix static HTML table: ensure Result column matches unit values
  function recalcUnitsFromStaticTable() {
  const tbody = document.getElementById('picks-table-body');
  if (!tbody) return;
@@ -941,12 +979,46 @@
  rows.forEach(row => {
  const cells = row.querySelectorAll('td');
  if (cells.length >= 5) {
- const oddsText = cells[2].textContent.trim();
- const odds = parseFloat(oddsText.replace(/[+,]/g, '')) || -110;
+ // Read existing unit value (already correct in static HTML)
+ const existingUnits = parseFloat(cells[4].textContent.trim().replace(/[+,]/g, '')) || 0;
+ // Fix Result column if it says P but units show W or L
+ if (existingUnits > 0 && cells[3].textContent.trim().toUpperCase() === 'P') {
+ cells[3].textContent = 'W';
+ cells[3].className = 'result-W';
+ } else if (existingUnits < 0 && cells[3].textContent.trim().toUpperCase() === 'P') {
+ cells[3].textContent = 'L';
+ cells[3].className = 'result-L';
+ }
+ }
+ });
+ }
+
+ // Build allProcessedPicks from static HTML table (fallback when Google Sheets fails)
+ function buildPicksFromStaticTable() {
+ const tbody = document.getElementById('picks-table-body');
+ if (!tbody) return;
+ const rows = tbody.querySelectorAll('tr');
+ allProcessedPicks = [];
+ rows.forEach(row => {
+ const cells = row.querySelectorAll('td');
+ if (cells.length >= 5) {
+ const date = cells[0].textContent.trim();
+ const pick = cells[1].textContent.trim();
+ const line = cells[2].textContent.trim();
  const resultText = cells[3].textContent.trim().toUpperCase();
- const units = calculateUnitResult(1, odds, resultText);
- cells[4].textContent = (units >= 0 ? '+' : '') + units.toFixed(2);
- cells[4].className = units > 0 ? 'win' : (units < 0 ? 'loss' : 'result-P');
+ const unitsText = cells[4].textContent.trim().replace(/[+,]/g, '');
+ const unitsVal = parseFloat(unitsText) || 0;
+ // Derive result from units if result is P but units are non-zero
+ let result = resultText;
+ if (result === 'P' && unitsVal > 0) result = 'W';
+ if (result === 'P' && unitsVal < 0) result = 'L';
+ const odds = parseFloat(line.replace(/[+,]/g, '')) || -110;
+ const risk = Math.abs(unitsVal) > 0 ? (odds < 0 ? Math.abs(unitsVal) * (Math.abs(odds) / 100) : Math.abs(unitsVal)) : 1;
+ allProcessedPicks.push({
+ Date: date, Pick: pick, Line: line, Result: result,
+ units: unitsVal, risk: result.startsWith('P') ? 0 : risk,
+ parsedDate: new Date(date)
+ });
  }
  });
  }
@@ -1103,6 +1175,191 @@
 
  // Recreate chart with visible rows only
  setTimeout(createChart, 100);
+ }
+
+ // Calculate stats from an array of pick objects
+ function calcBreakdownStats(picks) {
+ let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
+ picks.forEach(p => {
+ const result = (p.Result || '').trim().toUpperCase();
+ const units = p.units || 0;
+ const stake = p.risk || Math.abs(units) || 1;
+ if (result.startsWith('W')) { wins++; totalUnits += units; totalRisk += stake; }
+ else if (result.startsWith('L')) { losses++; totalUnits += units; totalRisk += stake; }
+ else { pushes++; }
+ });
+ const totalBets = wins + losses;
+ const winPct = totalBets > 0 ? (wins / totalBets) * 100 : 0;
+ const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
+ return { wins, losses, pushes, totalUnits, winPct, roi, record: `${wins}-${losses}-${pushes}` };
+ }
+
+ // Render a breakdown row
+ function renderBreakdownRow(tbody, name, stats, bold) {
+ const row = document.createElement('tr');
+ if (bold) { row.style.fontWeight = 'bold'; row.style.backgroundColor = 'rgba(0, 224, 255, 0.1)'; }
+ row.innerHTML = `
+ <td>${bold ? '<strong>' + name + '</strong>' : name}</td>
+ <td class="${stats.winPct > 50 ? 'win' : (stats.winPct < 50 && stats.wins + stats.losses > 0 ? 'loss' : '')}">${stats.record}</td>
+ <td class="${stats.winPct > 50 ? 'win' : ''}">${stats.winPct.toFixed(1)}%</td>
+ <td class="${stats.totalUnits >= 0 ? 'win' : 'loss'}">${stats.totalUnits >= 0 ? '+' : ''}${stats.totalUnits.toFixed(2)}u</td>
+ <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>`;
+ tbody.appendChild(row);
+ }
+
+ // Bet Type Breakdown
+ function calculateBetTypeBreakdown() {
+ const filteredPicks = filterPicksByYear(allProcessedPicks, currentYearFilter);
+ const tbody = document.getElementById('bet-type-breakdown');
+ if (!tbody) return;
+ tbody.innerHTML = '';
+
+ const betTypes = [
+ { name: 'Spread', filter: p => { const t = p.Pick.toLowerCase(); return (t.includes('+') || t.match(/-\d/)) && !t.includes('over') && !t.includes('under') && !t.includes('ml') && !t.includes('moneyline') && !t.includes('parlay') && !t.includes('pk'); }},
+ { name: 'Moneyline', filter: p => { const t = p.Pick.toLowerCase(); return (t.includes('ml') || t.includes('moneyline')) && !t.includes('parlay'); }},
+ { name: 'Over', filter: p => p.Pick.toLowerCase().includes('over') && !p.Pick.toLowerCase().includes('parlay') },
+ { name: 'Under', filter: p => p.Pick.toLowerCase().includes('under') && !p.Pick.toLowerCase().includes('parlay') },
+ { name: 'Parlay', filter: p => p.Pick.toLowerCase().includes('parlay') },
+ { name: 'PK/Pick', filter: p => p.Pick.toLowerCase().includes('pk') && !p.Pick.toLowerCase().includes('parlay') },
+ { name: '2nd Half', filter: p => p.Pick.toLowerCase().includes('2nd half') || p.Pick.toLowerCase().includes('second half') }
+ ];
+
+ betTypes.forEach(bt => {
+ const matching = filteredPicks.filter(bt.filter);
+ if (matching.length > 0) {
+ const stats = calcBreakdownStats(matching);
+ renderBreakdownRow(tbody, bt.name, stats, false);
+ }
+ });
+
+ // Total row
+ if (filteredPicks.length > 0) {
+ const totalStats = calcBreakdownStats(filteredPicks);
+ renderBreakdownRow(tbody, 'TOTAL', totalStats, true);
+ }
+ }
+
+ // Monthly Breakdown
+ function calculateMonthlyBreakdown() {
+ const filteredPicks = filterPicksByYear(allProcessedPicks, currentYearFilter);
+ const tbody = document.getElementById('monthly-breakdown');
+ if (!tbody) return;
+ tbody.innerHTML = '';
+
+ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+ const monthData = {};
+
+ filteredPicks.forEach(p => {
+ const d = new Date(p.Date);
+ if (isNaN(d.getTime())) return;
+ const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2, '0')}`;
+ const label = `${months[d.getMonth()]} ${d.getFullYear()}`;
+ if (!monthData[key]) monthData[key] = { label, picks: [] };
+ monthData[key].picks.push(p);
+ });
+
+ const sortedKeys = Object.keys(monthData).sort();
+ sortedKeys.forEach(key => {
+ const stats = calcBreakdownStats(monthData[key].picks);
+ renderBreakdownRow(tbody, monthData[key].label, stats, false);
+ });
+
+ if (filteredPicks.length > 0) {
+ const totalStats = calcBreakdownStats(filteredPicks);
+ renderBreakdownRow(tbody, 'TOTAL', totalStats, true);
+ }
+ }
+
+ // Parlay Breakdown
+ function calculateParlayBreakdown() {
+ const filteredPicks = filterPicksByYear(allProcessedPicks, currentYearFilter);
+ const tbody = document.getElementById('parlay-breakdown');
+ if (!tbody) return;
+ tbody.innerHTML = '';
+
+ const parlays = filteredPicks.filter(p => p.Pick.toLowerCase().includes('parlay'));
+ if (parlays.length === 0) {
+ tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#888;">No parlay data available</td></tr>';
+ return;
+ }
+
+ const parlayTypes = [
+ { name: '2-Team Parlay', pattern: '2' },
+ { name: '3-Team Parlay', pattern: '3' },
+ { name: '4-Team Parlay', pattern: '4' },
+ { name: '5+ Team Parlay', patterns: ['5', '6', '7', '8'] }
+ ];
+
+ parlayTypes.forEach(pt => {
+ const matching = parlays.filter(p => {
+ const text = p.Pick.toLowerCase();
+ if (pt.patterns) {
+ return pt.patterns.some(pat => new RegExp(pat + '\\s*(team|leg)', 'i').test(text));
+ }
+ return new RegExp(pt.pattern + '\\s*(team|leg)', 'i').test(text);
+ });
+ if (matching.length > 0) {
+ const stats = calcBreakdownStats(matching);
+ renderBreakdownRow(tbody, pt.name, stats, false);
+ }
+ });
+
+ const totalStats = calcBreakdownStats(parlays);
+ renderBreakdownRow(tbody, 'TOTAL PARLAYS', totalStats, true);
+ }
+
+ // Total Bets (Over/Under) Breakdown
+ function calculateTotalBetsBreakdown() {
+ const filteredPicks = filterPicksByYear(allProcessedPicks, currentYearFilter);
+ const tbody = document.getElementById('total-bets-breakdown');
+ if (!tbody) return;
+ tbody.innerHTML = '';
+
+ const totalBets = filteredPicks.filter(p => {
+ const t = p.Pick.toLowerCase();
+ return (t.includes('over') || t.includes('under')) && !t.includes('parlay');
+ });
+
+ if (totalBets.length === 0) {
+ tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#888;">No over/under data available</td></tr>';
+ return;
+ }
+
+ // All totals
+ const allStats = calcBreakdownStats(totalBets);
+ renderBreakdownRow(tbody, 'All Total Bets', allStats, true);
+
+ // Overs
+ const overs = totalBets.filter(p => p.Pick.toLowerCase().includes('over'));
+ if (overs.length > 0) {
+ const overStats = calcBreakdownStats(overs);
+ renderBreakdownRow(tbody, 'Over Bets', overStats, false);
+ }
+
+ // Unders
+ const unders = totalBets.filter(p => p.Pick.toLowerCase().includes('under'));
+ if (unders.length > 0) {
+ const underStats = calcBreakdownStats(unders);
+ renderBreakdownRow(tbody, 'Under Bets', underStats, false);
+ }
+
+ // First half totals
+ const firstHalf = totalBets.filter(p => {
+ const t = p.Pick.toLowerCase();
+ return t.includes('first half') || t.includes('1st half') || t.includes('2nd half') || t.includes('second half');
+ });
+ if (firstHalf.length > 0) {
+ const fhStats = calcBreakdownStats(firstHalf);
+ renderBreakdownRow(tbody, 'Half Bets', fhStats, false);
+ }
+ }
+
+ // Render all breakdown sections
+ function renderAllBreakdowns() {
+ calculateBetTypeBreakdown();
+ calculateMonthlyBreakdown();
+ calculateParlayBreakdown();
+ calculateTotalBetsBreakdown();
  }
 
  // Load data when page loads
