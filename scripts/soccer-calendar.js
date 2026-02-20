@@ -5,6 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-02-20", page: "soccer.html", title: "Soccer Predictions Picks Best Bets Friday February 20 2026" },
     { date: "2026-02-20", page: "soccer-predictions-picks-best-bets-february-20-2026.html", title: "Soccer Predictions Picks Best Bets Friday February 20 2026" },
+    { date: "2026-02-19", page: "soccer-predictions-picks-best-bets-february-19-2026.html", title: "Soccer Predictions Picks Best Bets Thursday February 19 2026" },
     { date: "2026-02-18", page: "soccer-predictions-picks-best-bets-february-18-2026.html", title: "Soccer Picks Best Bets February 18 2026" },
     { date: "2026-02-17", page: "soccer-predictions-picks-best-bets-february-17-2026.html", title: "Soccer Picks Best Bets February 17 2026" },
     { date: "2026-02-16", page: "soccer-predictions-picks-best-bets-february-16-2026.html", title: "Soccer Predictions Picks Best Bets Monday February 16 2026" },
