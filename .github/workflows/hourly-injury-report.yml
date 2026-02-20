@@ -2,8 +2,13 @@ name: Hourly Injury Report Update
 
 on:
   schedule:
-    # Run every hour at minute 15 (e.g., 1:15, 2:15, 3:15...)
-    - cron: '15 * * * *'
+    # Run 3x per day instead of every hour (reduced from 24x to 3x on Feb 19, 2026)
+    # 11:15 AM ET (16:15 UTC) - morning update
+    # 4:15 PM ET (21:15 UTC) - afternoon update
+    # 9:15 PM ET (02:15 UTC next day) - evening update
+    - cron: '15 16 * * *'
+    - cron: '15 21 * * *'
+    - cron: '15 2 * * *'
   workflow_dispatch:  # Allow manual trigger
 
 jobs:
