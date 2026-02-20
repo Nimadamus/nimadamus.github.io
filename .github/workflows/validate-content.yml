@@ -1,10 +1,10 @@
 name: Content Validation & Deployment Gate
 
-# CHANGED Feb 20, 2026: Removed push trigger to stop email spam cascade
-# We validate locally with publish.py + accuracy_filter.py before every push
-# This workflow is now manual-only for spot-checking
+# Runs on every push - notifications are disabled at repo level so no email spam
 on:
-  workflow_dispatch:  # Manual triggering only
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 # Ensure only one deployment at a time
 concurrency:
