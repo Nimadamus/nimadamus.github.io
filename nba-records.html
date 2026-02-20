@@ -583,7 +583,8 @@
  Line: row.Line || row.Odds || '-110',
  Result: row.Result || '',
  Units: row.Units || '1',
- Stake: row.Stake || row.Units || '1'
+ Stake: row.Stake || '1',
+ UNIT_RESULT: row.UNIT_RESULT || null
  }));
  }
 
@@ -597,6 +598,14 @@
  });
  const originalCsv = await originalResponse.text();
  const originalData = parseCSV(originalCsv);
+
+ // Original sheet's "Units" column contains pre-calculated unit results, not stakes
+ // Mark them as UNIT_RESULT so processPicksData uses them directly
+ originalData.forEach(row => {
+ if (row.Units) {
+ row.UNIT_RESULT = row.Units;
+ }
+ });
 
  // Fetch from pick tracker
  let trackerData = [];
@@ -755,11 +764,20 @@
  // Skip picks without a result
  if (!resultText || pickText === '') return null;
 
- // Calculate units from odds and stake using standard risk model
+ // Use pre-calculated UNIT_RESULT if available (original sheet data)
+ // Otherwise calculate from stake and odds (tracker data)
  const line = parseFloat(p.Line || p.Odds) || -110;
+ let units, risk;
+ const preCalc = parseFloat(p.UNIT_RESULT);
+ if (!isNaN(preCalc)) {
+ // Original sheet already has the correct unit result
+ units = preCalc;
+ risk = Math.abs(units) > 0 ? (units < 0 ? Math.abs(units) : (line < 0 ? units * (Math.abs(line) / 100) : units / (line / 100))) : 1;
+ } else {
  const stake = parseFloat(p.Stake || p.Units) || 1;
- const units = calculateUnitResult(stake, line, resultText);
- const risk = stake;
+ units = calculateUnitResult(stake, line, resultText);
+ risk = stake;
+ }
 
  return { ...p, units, risk, parsedDate: new Date(p.Date) };
  } catch {
