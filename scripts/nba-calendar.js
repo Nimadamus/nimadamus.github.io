@@ -5,7 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-02-20", page: "nba.html", title: "NBA Picks Against the Spread February 20 2026" },
     { date: "2026-02-20", page: "nba-picks-analysis-against-the-spread-february-20-2026.html", title: "NBA Picks Against the Spread February 20 2026" },
-    { date: "2026-02-15", page: "nba-picks-analysis-against-the-spread-february-15-2026.html", title: "NBA Analysis - February 15, 2026" },
+    { date: "2026-02-15", page: "nba-picks-analysis-against-the-spread-february-15-2026.html", title: "NBA All-Star Game Analysis February 15 2026" },
     { date: "2026-02-15", page: "nba-all-star-game-2026-usa-vs-world-prediction-picks-february-15-2026.html", title: "NBA All-Star Game 2026 USA vs World Round Robin Preview Analysis February 15 2026" },
     { date: "2026-02-12", page: "nba-picks-analysis-against-the-spread-february-12-2026.html", title: "NBA Analysis - February 12, 2026" },
     { date: "2026-02-11", page: "nba-picks-analysis-against-the-spread-february-11-2026.html", title: "NBA Analysis - February 11, 2026" },
