@@ -1,10 +1,11 @@
 name: Update Internal Links
 
+# CHANGED Feb 20, 2026: Removed push trigger to stop cascade spam
+# This was firing on every push, pushing its own commit, which triggered
+# validate-content + auto-fix-content, which pushed more commits...
+# Now manual-only. We update links locally via scripts when needed.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '*.html'
+  workflow_dispatch:  # Manual trigger only
 
 jobs:
   update-links:
