@@ -574,9 +574,12 @@ def sync_preview():
     required_elements = [
         ('Subscribe to Premium', 'Subscribe button'),
         ('View Full Breakdown', 'Full breakdown link'),
-        ('featured-game-of-the-day-page', 'Featured game page link'),
         ('Join YouWager', 'Affiliate banner'),
     ]
+
+    # Also verify the featured game link exists (old or new URL format)
+    if 'featured-game-of-the-day-page' not in updated_content and 'prediction-picks' not in updated_content:
+        missing.append('Featured game page link')
 
     missing = []
     for pattern, name in required_elements:
