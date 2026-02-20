@@ -5,7 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-02-20", page: "ncaab.html", title: "NCAAB Picks Best Bets February 20 2026" },
     { date: "2026-02-20", page: "college-basketball-picks-predictions-best-bets-february-20-2026.html", title: "NCAAB Picks Best Bets February 20 2026" },
-    { date: "2026-02-19", page: "college-basketball-picks-predictions-best-bets-february-19-2026.html", title: "College Basketball Picks Predictions Best Bets Thursday February 19 2026" },
+    { date: "2026-02-19", page: "college-basketball-picks-predictions-best-bets-february-19-2026.html", title: "NCAAB Picks Best Bets February 19 2026" },
     { date: "2026-02-18", page: "college-basketball-picks-predictions-best-bets-february-18-2026.html", title: "NCAAB Picks Best Bets February 18 2026" },
     { date: "2026-02-17", page: "college-basketball-picks-predictions-best-bets-february-17-2026.html", title: "NCAAB Picks Best Bets February 17 2026" },
     { date: "2026-02-16", page: "college-basketball-picks-predictions-best-bets-february-16-2026.html", title: "NCAAB Picks Best Bets Monday February 16 2026" },
