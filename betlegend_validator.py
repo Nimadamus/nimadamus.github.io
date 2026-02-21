@@ -822,9 +822,11 @@ class ContentValidator:
                 # Check if wrong team is mentioned in same sentence
                 if re.search(r'\b' + re.escape(wrong_team) + r'\b', sentence):
                     # Allow if discussing trade history or the player leaving
-                    trade_words = ['traded', 'former', 'ex-', 'left', 'was with', 'from the', 'no longer',
-                                  'previously', 'used to', 'acquired from', 'sent to', 'deal with',
-                                  'blockbuster', 'trade from', 'arriving from', 'came from']
+                    trade_words = ['traded', 'trading', 'trade', 'former', 'ex-', 'left', 'was with',
+                                  'from the', 'no longer', 'previously', 'used to', 'acquired from',
+                                  'sent to', 'deal with', 'blockbuster', 'trade from', 'arriving from',
+                                  'came from', 'post-', 'departure', 'era in', 'without',
+                                  'moved from', 'before joining', 'prior to']
                     if not any(tw in sentence for tw in trade_words):
                         context = text[max(0, pos-50):min(len(text), pos+100)]
                         issues.append((
