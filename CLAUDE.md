@@ -116,33 +116,40 @@ BANNED FOREVER (old format):
 ❌ soccer-page52.html
 ❌ Any file named [sport]-page[number].html
 
-REQUIRED (new format):
-✅ nba-picks-analysis-against-the-spread-february-15-2026.html
-✅ nhl-predictions-best-bets-tonight-february-15-2026.html
-✅ lakers-vs-celtics-prediction-picks-february-15-2026.html
-✅ soccer-predictions-picks-best-bets-february-15-2026.html
+REQUIRED (new format - NO picks/predictions/best-bets in URLs):
+✅ nba-game-previews-analysis-february-15-2026.html
+✅ nhl-game-previews-analysis-february-15-2026.html
+✅ lakers-vs-celtics-analysis-stats-preview-february-15-2026.html
+✅ soccer-game-previews-analysis-february-15-2026.html
 ```
 
 ### URL FORMULAS BY PAGE TYPE:
 
-**Sport daily pages (NBA, NHL, NFL, NCAAB, NCAAF, Soccer):**
+**Sport daily pages (NBA, NHL, NFL, NCAAB, NCAAF, Soccer, MLB):**
 ```
-nba-picks-analysis-against-the-spread-[month]-[day]-[year].html
-nhl-predictions-best-bets-tonight-[month]-[day]-[year].html
-nfl-picks-predictions-against-the-spread-[month]-[day]-[year].html
-college-basketball-picks-predictions-best-bets-[month]-[day]-[year].html
-college-football-picks-predictions-against-the-spread-[month]-[day]-[year].html
-soccer-predictions-picks-best-bets-[month]-[day]-[year].html
+BANNED WORDS IN URLs: picks, predictions, best bets, against the spread, betting
+These are analysis/preview pages - URLs must reflect that.
+
+nba-game-previews-analysis-[month]-[day]-[year].html
+nhl-game-previews-analysis-[month]-[day]-[year].html
+nfl-game-previews-analysis-[month]-[day]-[year].html
+college-basketball-game-previews-[month]-[day]-[year].html
+college-football-game-previews-[month]-[day]-[year].html
+soccer-game-previews-analysis-[month]-[day]-[year].html
+mlb-game-previews-analysis-[month]-[day]-[year].html
+
+You can vary the wording (e.g., "matchup-previews", "pregame-analysis",
+"game-day-preview") but NEVER use picks/predictions/best-bets/betting.
 ```
 
-**Featured Game pages:**
+**Featured Game pages (ANALYSIS ONLY - no predictions/picks):**
 ```
-[away-team]-vs-[home-team]-prediction-picks-[month]-[day]-[year].html
+[away-team]-vs-[home-team]-analysis-stats-preview-[month]-[day]-[year].html
 
 Examples:
-lakers-vs-celtics-prediction-picks-february-15-2026.html
-panthers-vs-lightning-nhl-prediction-picks-february-15-2026.html
-duke-at-north-carolina-prediction-picks-february-15-2026.html
+lakers-vs-celtics-analysis-stats-preview-february-15-2026.html
+panthers-vs-lightning-nhl-analysis-stats-preview-february-15-2026.html
+duke-at-north-carolina-analysis-stats-preview-february-15-2026.html
 ```
 
 **Blog pages:**
@@ -165,8 +172,8 @@ OLD WAY:
   2. Calendar JS references nba-page76.html
 
 NEW WAY:
-  1. Create nba-picks-analysis-against-the-spread-february-15-2026.html
-  2. Calendar JS references nba-picks-analysis-against-the-spread-february-15-2026.html
+  1. Create nba-game-previews-analysis-february-15-2026.html
+  2. Calendar JS references nba-game-previews-analysis-february-15-2026.html
   3. sync_calendars.py still extracts dates from titles and builds calendars
   4. featured-games-data.js still gets entries with the new filename
 ```
@@ -201,7 +208,7 @@ When adding daily sports content:
 
 CORRECT (Content Preserved):
   nba.html         ← Today's content (will be overwritten tomorrow)
-  nba-picks-analysis-against-the-spread-february-15-2026.html  ← PERMANENT archive
+  nba-game-previews-analysis-february-15-2026.html  ← PERMANENT archive
 
 WRONG (Content LOST):
   nba.html         ← Today's content (will be overwritten tomorrow)
