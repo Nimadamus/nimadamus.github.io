@@ -1,0 +1,367 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spurs vs Pistons Under 232.5 | BetLegend Picks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Sora:wght@600&family=Rubik&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg-black:#000000;
+      --bg-dark:#0a0a0a;
+      --neon-cyan:#00fff2;
+      --neon-pink:#ff00aa;
+      --neon-gold:#ffd000;
+      --neon-green:#39ff14;
+      --text-white:#ffffff;
+      --text-gray:#888888;
+      --font-display:'Orbitron',sans-serif;
+      --font-body:'Poppins',sans-serif;
+    }
+    
+    *{margin:0;padding:0;box-sizing:border-box}
+    
+    /* PULSE GREEN ANIMATION */
+    @keyframes pulse-green{
+      0%,100%{text-shadow:0 0 10px var(--neon-green),0 0 20px var(--neon-green)}
+      50%{text-shadow:0 0 20px var(--neon-green),0 0 40px var(--neon-green),0 0 60px var(--neon-green)}
+    }
+    
+    body{
+      background:var(--bg-black);
+      color:var(--text-white);
+      font-family:var(--font-body);
+      line-height:1.7;
+      overflow-x:hidden;
+      padding-top:80px;
+    }
+    
+    /* ANIMATED BACKGROUND */
+    body::before{
+      content:'';
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:
+        linear-gradient(90deg,transparent 49%,rgba(0,255,242,0.03) 50%,transparent 51%),
+        linear-gradient(180deg,transparent 49%,rgba(0,255,242,0.03) 50%,transparent 51%);
+      background-size:80px 80px;
+      pointer-events:none;
+      z-index:-1;
+    }
+    
+    /* NAV */
+    .nav-container{
+      position:fixed;top:0;left:0;right:0;z-index:1000;
+      background:rgba(0,0,0,0.9);
+      border-bottom:2px solid var(--neon-cyan);
+      box-shadow:0 0 30px rgba(0,255,242,0.3);
+    }
+    .nav-inner{max-width:1600px;margin:0 auto;display:flex;align-items:center;justify-content:center;padding:15px 20px;gap:10px}
+    .logo{position:relative;top:0;left:0;margin-right:20px}
+    .logo a{
+      font-family:var(--font-display);
+      font-size:2rem;
+      font-weight:800;
+      color:var(--neon-cyan);
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:4px;
+      text-shadow:0 0 10px var(--neon-cyan),0 0 20px var(--neon-cyan),0 0 40px var(--neon-cyan);
+    }
+    .logo a span{color:#fff}
+    .nav-menu{display:flex;align-items:center;gap:20px;flex-wrap:nowrap;flex:1;justify-content:space-evenly}
+    .hub-btn{
+      font-family:var(--font-display);
+      font-size:0.9rem;
+      font-weight:700;
+      color:#fff;
+      background:linear-gradient(135deg,#ff6b00,#ff8c00);
+      padding:12px 24px;
+      border-radius:10px;
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:1.5px;
+      box-shadow:0 0 25px rgba(255,107,0,0.5);
+      transition:all 0.3s ease;
+      margin-right:15px;
+    }
+    .hub-btn:hover{transform:scale(1.05);box-shadow:0 0 40px rgba(255,107,0,0.7)}
+    .nav-link{
+      font-family:var(--font-display);
+      font-size:0.85rem;
+      font-weight:600;
+      color:#fff;
+      text-decoration:none;
+      padding:12px 18px;
+      text-transform:uppercase;
+      letter-spacing:1.5px;
+      transition:all 0.3s ease;
+      white-space:nowrap;
+    }
+    .nav-link:hover{color:var(--neon-gold);text-shadow:0 0 15px var(--neon-gold)}
+    
+    /* BLOG POST - NEON CARD */
+    .blog-post{
+      background:linear-gradient(180deg,rgba(10,10,10,0.95),rgba(0,0,0,0.98));
+      border:2px solid var(--neon-cyan);
+      margin:40px auto 60px;
+      max-width:1000px;
+      position:relative;
+      overflow:hidden;
+      transition:all 0.3s;
+      border-radius:0;
+      padding:0;
+      box-shadow:none;
+      border-left:2px solid var(--neon-cyan);
+    }
+    .blog-post::before{
+      content:'';
+      position:absolute;
+      top:-2px;left:-2px;right:-2px;bottom:-2px;
+      background:linear-gradient(45deg,var(--neon-cyan),var(--neon-pink),var(--neon-cyan));
+      z-index:-1;
+      filter:blur(15px);
+      opacity:0;
+      transition:opacity 0.3s;
+    }
+    .blog-post:hover::before{opacity:0.5}
+    .blog-post:hover{
+      box-shadow:0 0 40px rgba(0,255,242,0.4),0 0 80px rgba(255,0,170,0.2);
+    }
+    
+    /* CORNER DECORATIONS */
+    .blog-post::after{
+      content:'';
+      position:absolute;
+      top:10px;right:10px;
+      width:30px;height:30px;
+      border-top:3px solid var(--neon-gold);
+      border-right:3px solid var(--neon-gold);
+    }
+    
+    /* POST HEADER */
+    .post-header{
+      font-family:var(--font-display);
+      font-size:28px;
+      font-weight:700;
+      color:var(--text-white);
+      padding:30px 30px 10px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      line-height:1.3;
+      text-align:center;
+      text-shadow:0 0 10px var(--neon-cyan),0 0 20px var(--neon-cyan),0 0 40px var(--neon-cyan),0 0 80px var(--neon-cyan);
+      animation:flicker 3s infinite;
+      margin-bottom:20px;
+    }
+    
+    @keyframes flicker{
+      0%,100%{opacity:1}
+      92%{opacity:1}
+      93%{opacity:0.8}
+      94%{opacity:1}
+      95%{opacity:0.9}
+      96%{opacity:1}
+    }
+    
+    .post-time{
+      font-size:14px;
+      color:var(--neon-cyan);
+      padding:0 30px 20px;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      text-align:center;
+    }
+    
+    /* THE PICK */
+    .the-pick{
+      font-family:var(--font-display);
+      font-size:32px;
+      font-weight:800;
+      color:var(--neon-green);
+      text-transform:uppercase;
+      letter-spacing:2px;
+      text-shadow:0 0 10px var(--neon-green),0 0 20px var(--neon-green),0 0 40px var(--neon-green);
+      animation:pulse-green 2s ease-in-out infinite;
+      margin:10px 0 0 0;
+    }
+    
+    .the-pick strong{
+      display:block;
+      font-size:16px;
+      margin-bottom:15px;
+      color:var(--neon-gold);
+    }
+    
+    /* CONTENT */
+    .blog-post p{
+      padding:0 30px;
+      color:#ccc;
+      font-size:17px;
+      font-weight:500;
+      line-height:1.8;
+      margin-bottom:20px;
+    }
+    
+    .blog-post img{
+      border:1px solid var(--neon-cyan);
+    }
+    
+    .blog-post figure{
+      padding:0 30px;
+      margin:20px 0;
+    }
+    
+    /* SECTION HEADERS */
+    .blog-post p[style*="color: #FFD700"], .blog-post p[style*="color:#FFD700"]{
+      font-family:var(--font-display);
+      font-size:22px;
+      font-weight:700;
+      color:var(--neon-gold)!important;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      margin:36px 30px 16px!important;
+      padding:0 0 10px 0!important;
+      border-bottom:2px solid var(--neon-gold);
+      text-shadow:0 0 10px rgba(255,208,0,0.5);
+    }
+    
+    /* VERDICT - ELECTRIC */
+    .verdict{
+      margin:30px;
+      background:linear-gradient(135deg,rgba(0,255,242,0.1),rgba(255,0,170,0.1));
+      border:3px solid var(--neon-gold);
+      border-radius:10px;
+      padding:40px;
+      text-align:center;
+      position:relative;
+    }
+    
+    .verdict-title{
+      font-family:var(--font-display);
+      font-size:16px;
+      font-weight:700;
+      color:var(--neon-gold);
+      text-transform:uppercase;
+      letter-spacing:4px;
+      margin:0 0 15px 0;
+    }
+    
+    /* SHARE */
+    .share-buttons{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:16px;
+      padding:16px 30px;
+      background:rgba(0,255,242,0.05);
+      border-top:1px solid rgba(0,255,242,0.2);
+      border-bottom:1px solid rgba(0,255,242,0.2);
+      margin:20px 0;
+    }
+    
+    .share-buttons p{
+      font-family:var(--font-display);
+      font-size:12px;
+      font-weight:700;
+      color:var(--neon-gold);
+      text-transform:uppercase;
+      letter-spacing:2px;
+      margin:0;
+    }
+    
+    .share-buttons a{
+      padding:8px 16px;
+      font-family:var(--font-display);
+      font-size:12px;
+      font-weight:600;
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      border:1px solid;
+      transition:all 0.3s;
+      border-radius:0;
+    }
+    
+    .share-buttons a:hover{
+      transform:translateY(-2px);
+      box-shadow:0 0 20px currentColor;
+    }
+    
+    .stat-highlight{color:var(--neon-gold);font-weight:700}
+  </style>
+</head>
+<body>
+  <nav class="nav-container">
+    <div class="nav-inner">
+      <div class="logo"><a href="/">BetLegend<span>Picks</span></a></div>
+      <div class="nav-menu">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/blog/" class="nav-link">Picks</a>
+        <div class="dropdown">
+          <button class="dropbtn">Sports <span style="font-size:0.7em;">▼</span></button>
+        </div>
+        <a href="/" class="hub-btn">Picks Hub</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+    <h1 class="post-header" itemprop="headline">Spurs vs Pistons Under 232.5</h1>
+    <div class="post-time" itemprop="datePublished" content="2026-02-23T09:24:00">February 23, 2026 at 9:24 AM</div>
+    
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Victor_Wembanyama_%28cropped%29.jpg/800px-Victor_Wembanyama_%28cropped%29.jpg" alt="Victor Wembanyama" style="width:100%;max-width:800px;display:block;margin:0 auto;">
+    </figure>
+    
+    <div class="the-pick">
+      <strong>Official BetLegend Pick</strong>
+      UNDER 232.5 (-110)<br>
+      <span style="font-size:24px;">[3 UNITS]</span>
+    </div>
+    
+    <p style="color: #FFD700;">The Paint Fortress: Wembanyama's Dominion</p>
+    
+    <p>The San Antonio Spurs have transformed into a defensive juggernaut, and it all starts with Victor Wembanyama anchoring the paint. Over the last three weeks, the Spurs rank in the 94th percentile for defensive efficiency, allowing just <span class="stat-highlight">108.2 points per 100 possessions</span>. But the real story is rim protection — Wemby has been a revelation, contesting everything within six feet and transforming the Spurs into a team opponents simply don't want to attack.</p>
+
+    <p>The numbers are staggering. San Antonio is holding opponents to <span class="stat-highlight">41.2% from the field</span> and a brutal <span class="stat-highlight">52.3% at the rim</span> over their last ten games. That's top-tier rim protection territory, and it's why Detroit's paint-heavy attack tonight is going to struggle.</p>
+
+    <p style="color: #FFD700;">Pace Suppression: The Tempo Factor</p>
+
+    <p>Here's where the handicap gets interesting. Both these teams have been playing at a snail's pace recently. The Spurs have averaged just <span class="stat-highlight">97.2 possessions per game</span> over their last five, while Detroit has been even slower at <span class="stat-highlight">98.4</span>. That's bottom-five pace territory for both squads, and it's by design.</p>
+
+    <p>San Antonio knows they can't outscore teams in a track meet with their current offensive limitations. Gregg Popovich has them grinding possessions, milking the clock, and making opponents work for every bucket. Detroit, meanwhile, has been experimenting with lineups and playing their younger guys heavy minutes — a recipe for disjointed offense and longer possessions.</p>
+
+    <p style="color: #FFD700;">The Kicker: Detroit's Shooting Woes</p>
+
+    <div class="verdict">
+      <div class="verdict-title">Key Stat</div>
+      <p style="padding:0;text-align:center;">Pistons shooting just <span class="stat-highlight">33.8%</span> from 3 and <span class="stat-highlight">41.2%</span> overall in last 10 games</p>
+    </div>
+
+    <p>The Pistons come into this game ice cold from the perimeter. Over their last ten contests, they're hitting just <span class="stat-highlight">33.8% from three</span> and <span class="stat-highlight">41.2%</span> overall from the field. Those aren't just bad numbers — they're borderline unplayable against a defense as disciplined as San Antonio's. When you combine that with Wembanyama's rim protection and the Spurs' ability to force tough mid-range looks, you're looking at a recipe for offensive futility.</p>
+
+    <p>Their last two meetings this season went <span class="stat-highlight">198 and 216</span> — both staying well under this number. Tonight's total reflects public perception of "pace" without accounting for the defensive improvement San Antonio has made or Detroit's offensive limitations.</p>
+
+    <p style="color: #FFD700;">Closing Argument</p>
+
+    <p>This is a perfect storm for an under. You've got two teams playing at a glacial pace, one with elite rim protection and the other with shooting woes, in a game that historically trends low. The market hasn't caught up to how good this Spurs defense has become, and they're getting the perfect opponent to showcase it against.</p>
+
+    <div class="verdict">
+      <div class="verdict-title">Final Verdict</div>
+      <p style="padding:0;text-align:center;font-size:20px;">Take the <span class="stat-highlight">UNDER 232.5 (-110) [3 UNITS]</span><br>This game stays low in a defensive grinder.</p>
+    </div>
+
+    <div class="share-buttons">
+      <p>Share This Pick:</p>
+      <a href="#" style="color:var(--neon-cyan);border-color:var(--neon-cyan);">Twitter</a>
+      <a href="#" style="color:var(--neon-gold);border-color:var(--neon-gold);">Copy Link</a>
+    </div>
+  </article>
+
+  <footer style="text-align:center;padding:40px;color:var(--text-gray);font-size:14px;">
+    <p style="padding:0;">© 2026 BetLegend Picks. All rights reserved.</p>
+    <p style="padding:0;">Bet responsibly. 21+ only.</p>
+  </footer>
+</body>
+</html>
