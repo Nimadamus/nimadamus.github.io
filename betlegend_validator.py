@@ -1057,10 +1057,11 @@ class ContentValidator:
 class BetLegendValidator:
     """Main validator that orchestrates all checks."""
     
-    def __init__(self, target_path, specific_files=None, errors_only=False):
+    def __init__(self, target_path, specific_files=None, errors_only=False, diff_only=False):
         self.target_path = target_path
         self.specific_files = specific_files  # List of specific files to scan (for --files mode)
         self.errors_only = errors_only  # Only show errors, suppress warnings in output
+        self.diff_only = diff_only  # Only validate added/changed lines from git diff
         self.roster_manager = RosterManager()
         self.results = defaultdict(list)  # filepath -> list of issues
         self.summary = {'errors': 0, 'warnings': 0, 'files_scanned': 0, 'files_with_issues': 0}
@@ -1136,11 +1137,29 @@ class BetLegendValidator:
 
         return sorted(files)
     
+    def _get_diff_content(self, filepath):
+        """Get only the added lines from git diff --cached for a file."""
+        import subprocess
+        try:
+            result = subprocess.run(
+                ['git', 'diff', '--cached', '-U0', '--', os.path.basename(filepath)],
+                capture_output=True, text=True, cwd=self.target_path
+            )
+            if result.returncode == 0:
+                added_lines = []
+                for line in result.stdout.splitlines():
+                    if line.startswith('+') and not line.startswith('+++'):
+                        added_lines.append(line[1:])  # Strip the leading '+'
+                return '\n'.join(added_lines)
+        except Exception:
+            pass
+        return None
+
     def _validate_file(self, filepath):
         """Run all validations on a single file."""
         self.summary['files_scanned'] += 1
         issues = []
-        
+
         try:
             with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
                 html_content = f.read()
@@ -1148,8 +1167,15 @@ class BetLegendValidator:
             issues.append(('ERROR', f'Could not read file: {e}', ''))
             self.results[filepath] = issues
             return
-        
-        # Extract text content
+
+        # If diff_only mode, validate only the new/changed lines for content checks
+        diff_content = None
+        if self.diff_only and self.specific_files:
+            diff_content = self._get_diff_content(filepath)
+
+        # Extract text content - use diff content for content checks if available
+        text_for_content_checks = ContentExtractor.extract_text_from_html(diff_content) if diff_content else ContentExtractor.extract_text_from_html(html_content)
+        # Always use full HTML for structural checks (title, meta, OG tags, etc.)
         text = ContentExtractor.extract_text_from_html(html_content)
         
         # 1. HTML structure validation
@@ -1157,47 +1183,50 @@ class BetLegendValidator:
         for severity, msg in struct_issues:
             issues.append((severity, msg, ''))
         
+        # Use diff-only text for content checks (avoids flagging old content)
+        ct = text_for_content_checks
+
         # 2. Statistical validation
-        stats = ContentExtractor.extract_stats(text)
+        stats = ContentExtractor.extract_stats(ct)
         stat_issues = ContentValidator.validate_stats(stats)
         issues.extend(stat_issues)
-        
+
         # 3. Betting line validation
-        betting_lines = ContentExtractor.extract_betting_lines(text)
+        betting_lines = ContentExtractor.extract_betting_lines(ct)
         line_issues = ContentValidator.validate_betting_lines(betting_lines)
         issues.extend(line_issues)
-        
+
         # 4. Roster validation
-        player_refs = ContentExtractor.extract_player_team_refs(text)
+        player_refs = ContentExtractor.extract_player_team_refs(ct)
         roster_issues = ContentValidator.validate_roster(player_refs, self.roster_manager)
         issues.extend(roster_issues)
-        
+
         # 5. Date validation
-        date_issues = ContentValidator.check_date_references(text)
+        date_issues = ContentValidator.check_date_references(ct)
         issues.extend(date_issues)
 
         # 6. Known facts validation (CRITICAL - catches player trades, injuries, etc.)
-        known_facts_issues = ContentValidator.check_known_facts(text)
+        known_facts_issues = ContentValidator.check_known_facts(ct)
         issues.extend(known_facts_issues)
 
         # 7. Placeholder content check
-        placeholder_issues = ContentValidator.check_placeholder_content(text, html_content)
+        placeholder_issues = ContentValidator.check_placeholder_content(ct, diff_content if diff_content else html_content)
         issues.extend(placeholder_issues)
 
         # 8. Banned content check (source citations, line movements)
-        banned_issues = ContentValidator.check_banned_content(text, filepath)
+        banned_issues = ContentValidator.check_banned_content(ct, filepath)
         issues.extend(banned_issues)
 
         # 9. Wrong unsigned claims check
-        unsigned_issues = ContentValidator.check_wrong_unsigned_claims(text)
+        unsigned_issues = ContentValidator.check_wrong_unsigned_claims(ct)
         issues.extend(unsigned_issues)
 
         # 10. Impossible statistics check
-        impossible_stats_issues = ContentValidator.check_impossible_statistics(text)
+        impossible_stats_issues = ContentValidator.check_impossible_statistics(ct)
         issues.extend(impossible_stats_issues)
 
         # 11. Suspicious betting lines check
-        suspicious_lines_issues = ContentValidator.check_suspicious_betting_lines(text)
+        suspicious_lines_issues = ContentValidator.check_suspicious_betting_lines(ct)
         issues.extend(suspicious_lines_issues)
 
         # Store results
@@ -1347,8 +1376,11 @@ if __name__ == '__main__':
         # Collect files until we hit another flag or end of args
         specific_files = [f for f in sys.argv[files_idx + 1:] if not f.startswith('--')]
 
+    # Parse --diff-only flag (only validate added/changed lines)
+    diff_only = '--diff-only' in sys.argv
+
     # Run validation
-    validator = BetLegendValidator(target, specific_files=specific_files, errors_only=errors_only)
+    validator = BetLegendValidator(target, specific_files=specific_files, errors_only=errors_only, diff_only=diff_only)
     validator.run()
 
     # Exit with error code if errors found (useful for git hooks)
