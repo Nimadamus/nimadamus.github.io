@@ -80,6 +80,19 @@ TEAM_COLORS = {
     ('NHL', 'UTA'): ('#6CACE4', '#010101'), ('NHL', 'VAN'): ('#00205B', '#00843D'),
     ('NHL', 'VGK'): ('#B4975A', '#333F42'), ('NHL', 'WPG'): ('#041E42', '#004C97'),
     ('NHL', 'WSH'): ('#C8102E', '#041E42'),
+    # NCAAB (common teams)
+    ('NCAAB', 'MICH'): ('#00274C', '#FFCB05'), ('NCAAB', 'MSU'): ('#18453B', '#FFFFFF'),
+    ('NCAAB', 'ILL'): ('#E84A27', '#13294B'), ('NCAAB', 'PUR'): ('#CEB888', '#000000'),
+    ('NCAAB', 'ISU'): ('#C8102E', '#F1BE48'), ('NCAAB', 'IOWA'): ('#FFCD00', '#000000'),
+    ('NCAAB', 'WISC'): ('#C5050C', '#FFFFFF'), ('NCAAB', 'OSU'): ('#BB0000', '#666666'),
+    ('NCAAB', 'IND'): ('#990000', '#EEEDEB'), ('NCAAB', 'KU'): ('#0051BA', '#E8000D'),
+    ('NCAAB', 'DUKE'): ('#003087', '#FFFFFF'), ('NCAAB', 'UNC'): ('#7BAFD4', '#FFFFFF'),
+    ('NCAAB', 'UK'): ('#0033A0', '#FFFFFF'), ('NCAAB', 'AUB'): ('#0C2340', '#E87722'),
+    ('NCAAB', 'ALA'): ('#9E1B32', '#FFFFFF'), ('NCAAB', 'TENN'): ('#FF8200', '#FFFFFF'),
+    ('NCAAB', 'UF'): ('#0021A5', '#FA4616'), ('NCAAB', 'GONZ'): ('#002967', '#C8102E'),
+    ('NCAAB', 'HOU'): ('#C8102E', '#FFFFFF'), ('NCAAB', 'MARQ'): ('#003366', '#FFCC00'),
+    ('NCAAB', 'UCONN'): ('#000E2F', '#FFFFFF'), ('NCAAB', 'TEX'): ('#BF5700', '#FFFFFF'),
+    ('NCAAB', 'TTU'): ('#CC0000', '#000000'), ('NCAAB', 'BAY'): ('#003015', '#FFB81C'),
 }
 
 DEFAULT_COLORS = ('#1a365d', '#FFD700')
@@ -87,72 +100,97 @@ DEFAULT_COLORS = ('#1a365d', '#FFD700')
 # NCAAB ESPN numeric IDs to team names/abbreviations
 # The ESPN CDN uses numeric IDs for college logos (e.g., ncaa/500/2305.png)
 NCAAB_TEAM_MAP = {
-    '2305': ('Kansas', 'KU'),
-    '2641': ('Texas Tech', 'TTU'),
-    '127': ('Michigan', 'MICH'),
-    '130': ('Michigan State', 'MSU'),
+    # Big Ten
+    '130': ('Michigan', 'MICH'),
+    '127': ('Michigan State', 'MSU'),
+    '356': ('Illinois', 'ILL'),
+    '2509': ('Purdue', 'PUR'),
+    '84': ('Iowa State', 'ISU'),
+    '120': ('Iowa', 'IOWA'),
+    '275': ('Wisconsin', 'WISC'),
+    '135': ('Minnesota', 'MINN'),
+    '158': ('Northwestern', 'NW'),
+    '194': ('Ohio State', 'OSU'),
+    '213': ('Penn State', 'PSU'),
+    '77': ('Indiana', 'IND'),
+    '164': ('Rutgers', 'RUT'),
+    '219': ('Maryland', 'MD'),
+    '276': ('Nebraska', 'NEB'),
+    '26': ('USC', 'USC'),
+    '2483': ('UCLA', 'UCLA'),
+    '2630': ('Washington', 'WASH'),
+    '264': ('Oregon', 'ORE'),
+    # SEC
     '2': ('Auburn', 'AUB'),
     '333': ('Alabama', 'ALA'),
     '61': ('Georgia', 'UGA'),
     '57': ('Florida', 'UF'),
-    '96': ('Louisville', 'LOU'),
     '97': ('Kentucky', 'UK'),
-    '153': ('Duke', 'DUKE'),
-    '152': ('NC State', 'NCST'),
-    '153': ('Duke', 'DUKE'),
-    '99': ('North Carolina', 'UNC'),
-    '12': ('Arizona', 'ARIZ'),
-    '9': ('Arizona State', 'ASU'),
-    '2483': ('UCLA', 'UCLA'),
-    '26': ('USC', 'USC'),
-    '30': ('Stanford', 'STAN'),
-    '251': ('Texas', 'TEX'),
-    '239': ('Texas A&M', 'TAMU'),
-    '248': ('TCU', 'TCU'),
-    '66': ('Baylor', 'BAY'),
-    '156': ('Houston', 'HOU'),
-    '120': ('Iowa', 'IOWA'),
-    '84': ('Iowa State', 'ISU'),
-    '2509': ('Purdue', 'PUR'),
-    '84': ('Illinois', 'ILL'),
-    '275': ('Wisconsin', 'WISC'),
-    '356': ('UConn', 'UCONN'),
-    '258': ('Villanova', 'NOVA'),
-    '150': ('Marquette', 'MARQ'),
-    '2250': ('Gonzaga', 'GONZ'),
-    '2': ('Auburn', 'AUB'),
     '328': ('Tennessee', 'TENN'),
     '238': ('Ole Miss', 'MISS'),
     '8': ('Arkansas', 'ARK'),
+    '2633': ('Vanderbilt', 'VAN'),
+    '2579': ('South Carolina', 'SC'),
+    '142': ('Missouri', 'MIZ'),
+    '99': ('LSU', 'LSU'),
+    '2032': ('Mississippi State', 'MSST'),
+    '251': ('Texas', 'TEX'),
+    '239': ('Texas A&M', 'TAMU'),
+    '201': ('Oklahoma', 'OU'),
+    # Big 12
+    '2305': ('Kansas', 'KU'),
+    '2306': ('Kansas State', 'KSU'),
+    '2641': ('Texas Tech', 'TTU'),
+    '248': ('TCU', 'TCU'),
+    '66': ('Baylor', 'BAY'),
+    '156': ('Houston', 'HOU'),
+    '2116': ('Cincinnati', 'CIN'),
+    '252': ('BYU', 'BYU'),
+    '254': ('Utah', 'UTAH'),
+    '38': ('Colorado', 'COL'),
+    '12': ('Arizona', 'ARIZ'),
+    '9': ('Arizona State', 'ASU'),
+    '197': ('Oklahoma State', 'OKST'),
+    '277': ('West Virginia', 'WVU'),
+    '2636': ('UCF', 'UCF'),
+    # ACC
+    '150': ('Duke', 'DUKE'),
+    '152': ('NC State', 'NCST'),
+    '153': ('North Carolina', 'UNC'),
+    '228': ('Clemson', 'CLEM'),
+    '96': ('Louisville', 'LOU'),
+    '52': ('Florida State', 'FSU'),
+    '259': ('Virginia', 'UVA'),
+    '258': ('Virginia Tech', 'VT'),
+    '2579': ('Syracuse', 'SYR'),
+    '2507': ('Pittsburgh', 'PITT'),
+    # Big East
+    '41': ('UConn', 'UCONN'),
+    '261': ('Villanova', 'NOVA'),
+    '269': ('Marquette', 'MARQ'),
+    '2566': ('St. Johns', 'SJU'),
+    '2250': ('Creighton', 'CREI'),
+    '2086': ('Butler', 'BUT'),
+    '2550': ('Seton Hall', 'HALL'),
+    '2184': ('Xavier', 'XAV'),
+    '2229': ('DePaul', 'DEP'),
+    # WCC
+    '2250': ('Gonzaga', 'GONZ'),
+    # Other
+    '30': ('Stanford', 'STAN'),
+    '235': ('Memphis', 'MEM'),
+    '2599': ('San Diego State', 'SDSU'),
+    '68': ('Boise State', 'BSU'),
+    '2440': ('Nevada', 'NEV'),
+    '2348': ('New Mexico', 'UNM'),
+    '2439': ('UNLV', 'UNLV'),
     '2390': ('Miami OH', 'MIAOH'),
     '2084': ('Buffalo', 'BUFF'),
     '2006': ('Akron', 'AKR'),
     '2199': ('Eastern Michigan', 'EMU'),
     '2181': ('Canisius', 'CAN'),
     '2430': ('Niagara', 'NIAG'),
-    '52': ('Florida State', 'FSU'),
-    '228': ('Clemson', 'CLEM'),
-    '2628': ('Syracuse', 'SYR'),
-    '259': ('Virginia', 'UVA'),
-    '258': ('Virginia Tech', 'VT'),
-    '2566': ('St. Johns', 'SJU'),
-    '164': ('Providence', 'PROV'),
-    '2507': ('Creighton', 'CREI'),
-    '2086': ('Butler', 'BUT'),
     '2229': ('Dayton', 'DAY'),
-    '2599': ('San Diego State', 'SDSU'),
-    '68': ('Boise State', 'BSU'),
-    '2440': ('Nevada', 'NEV'),
-    '2348': ('New Mexico', 'UNM'),
-    '2439': ('UNLV', 'UNLV'),
-    '235': ('Memphis', 'MEM'),
-    '2116': ('Cincinnati', 'CIN'),
-    '197': ('Oklahoma', 'OU'),
-    '201': ('Oklahoma State', 'OKST'),
-    '2306': ('Kansas State', 'KSU'),
-    '2628': ('Colorado', 'COL'),
-    '254': ('Utah', 'UTAH'),
-    '252': ('BYU', 'BYU'),
 }
 
 
@@ -181,16 +219,57 @@ def get_current_featured_page(index_content):
     return match.group(1) if match else None
 
 
+def detect_sport(page_content):
+    """Detect the sport from the page content using multiple strategies."""
+    # Strategy 1: Title format "SPORT: Team @ Team - ..."
+    title_match = re.search(r'<title>\s*(NBA|NFL|NHL|MLB|NCAAB|NCAAF|Soccer)\s*:', page_content)
+    if title_match:
+        return title_match.group(1)
+
+    # Strategy 2: "SPORT Regular Season" or "SPORT Playoffs" in post-date or content
+    season_match = re.search(r'(NBA|NFL|NHL|MLB|NCAAB|NCAAF|Soccer)\s+(?:Regular Season|Playoffs|Postseason|Bowl|Tournament)', page_content)
+    if season_match:
+        return season_match.group(1)
+
+    # Strategy 3: Detect from logo URLs in <img> tags (most reliable)
+    # Check which sport path appears in teamlogos URLs
+    sport_counts = {}
+    for sport, path in SPORT_LOGO_PATH.items():
+        count = len(re.findall(rf'<img[^>]+teamlogos/{re.escape(path)}/500/', page_content, re.IGNORECASE))
+        if count > 0:
+            sport_counts[sport] = count
+    if sport_counts:
+        # ncaa path matches both NCAAB and NCAAF - check content for which one
+        best_sport = max(sport_counts, key=sport_counts.get)
+        if best_sport in ('NCAAB', 'NCAAF'):
+            # Disambiguate: check for basketball vs football keywords
+            if re.search(r'basketball|KenPom|Big Ten|ACC|SEC|Big 12|Big East|March Madness|NCAA Tournament|conference play', page_content, re.IGNORECASE):
+                return 'NCAAB'
+            elif re.search(r'football|CFP|College Football|bowl game|touchdown|quarterback', page_content, re.IGNORECASE):
+                return 'NCAAF'
+            return 'NCAAB'  # Default for ncaa logos
+        return best_sport
+
+    # Strategy 4: Check filename in the page URL/canonical
+    canonical = re.search(r'rel="canonical"\s+href="[^"]*?(nba|nhl|nfl|mlb|ncaab|ncaaf|soccer|college-basketball|college-football)', page_content, re.IGNORECASE)
+    if canonical:
+        sport_map = {'nba': 'NBA', 'nhl': 'NHL', 'nfl': 'NFL', 'mlb': 'MLB',
+                     'ncaab': 'NCAAB', 'ncaaf': 'NCAAF', 'soccer': 'Soccer',
+                     'college-basketball': 'NCAAB', 'college-football': 'NCAAF'}
+        return sport_map.get(canonical.group(1).lower(), 'NBA')
+
+    return 'NBA'  # Last resort fallback
+
+
 def extract_game_data(page_content):
     """Extract all game data from a featured game page."""
     data = {}
 
-    # Sport from title: "NBA: Lakers @ Bulls - January 26, 2026 | BetLegend"
-    title_match = re.search(r'<title>\s*(NBA|NFL|NHL|MLB|NCAAB|NCAAF|Soccer)\s*:', page_content)
-    data['sport'] = title_match.group(1) if title_match else 'NBA'
+    # Detect sport using robust multi-strategy detection
+    data['sport'] = detect_sport(page_content)
     data['sport_path'] = SPORT_LOGO_PATH.get(data['sport'], 'nba')
 
-    # Team abbreviations from <img> tag logo URLs only (skip meta tags)
+    # Team abbreviations from <img> tag logo URLs - try sport-specific path first
     logo_pattern = rf'<img[^>]+teamlogos/{re.escape(data["sport_path"])}/500/(\w+)\.png'
     logos_raw = re.findall(logo_pattern, page_content, re.IGNORECASE)
     # Deduplicate preserving order of first appearance
@@ -206,42 +285,72 @@ def extract_game_data(page_content):
         data['home_abbr'] = logos[1]
     else:
         # Fallback: try any sport path in <img> tags
-        all_logos_raw = re.findall(r'<img[^>]+teamlogos/\w+/500/(\w+)\.png', page_content, re.IGNORECASE)
+        all_logos_raw = re.findall(r'<img[^>]+teamlogos/(\w+)/500/(\w+)\.png', page_content, re.IGNORECASE)
         seen2 = set()
         all_logos = []
-        for logo in all_logos_raw:
+        detected_path = None
+        for sport_path, logo in all_logos_raw:
             upper = logo.upper()
             if upper not in seen2:
                 seen2.add(upper)
                 all_logos.append(upper)
+                if not detected_path:
+                    detected_path = sport_path.lower()
         if len(all_logos) >= 2:
             data['away_abbr'] = all_logos[0]
             data['home_abbr'] = all_logos[1]
+            # Update sport_path if we detected from fallback (critical for logo URLs)
+            if detected_path:
+                data['sport_path'] = detected_path
         else:
             print("ERROR: Could not extract team abbreviations from featured game page")
             return None
 
-    # Team short names from title: "NBA: Lakers @ Bulls - ..."
+    # For NCAAB/NCAAF: ALWAYS check if abbreviations are numeric ESPN IDs and convert
+    # This runs regardless of detected sport, because ncaa logos always use numeric IDs
+    if data['away_abbr'].isdigit():
+        away_name, away_abbr = get_ncaab_team_info(data['away_abbr'])
+        data['away_name'] = away_name
+        data['away_display_abbr'] = away_abbr  # Short abbr for tables
+        # Keep the numeric ID for logo URLs
+        data['away_logo_id'] = data['away_abbr']
+        data['away_abbr'] = away_abbr
+        # If we got a valid name, this is definitely college
+        if data['sport'] not in ('NCAAB', 'NCAAF'):
+            data['sport'] = 'NCAAB'
+            data['sport_path'] = 'ncaa'
+    else:
+        data['away_name'] = data['away_abbr']
+        data['away_logo_id'] = data['away_abbr'].lower()
+
+    if data['home_abbr'].isdigit():
+        home_name, home_abbr = get_ncaab_team_info(data['home_abbr'])
+        data['home_name'] = home_name
+        data['home_display_abbr'] = home_abbr
+        data['home_logo_id'] = data['home_abbr']
+        data['home_abbr'] = home_abbr
+        if data['sport'] not in ('NCAAB', 'NCAAF'):
+            data['sport'] = 'NCAAB'
+            data['sport_path'] = 'ncaa'
+    else:
+        data['home_name'] = data['home_abbr']
+        data['home_logo_id'] = data['home_abbr'].lower()
+
+    # Team short names from title: "NBA: Lakers @ Bulls - ..." or "Team at Team Analysis..."
     name_match = re.search(r'<title>\s*\w+:\s*(.+?)\s*@\s*(.+?)\s*-', page_content)
     if name_match:
         data['away_name'] = name_match.group(1).strip()
         data['home_name'] = name_match.group(2).strip()
     else:
-        data['away_name'] = data['away_abbr']
-        data['home_name'] = data['home_abbr']
-
-    # For NCAAB/NCAAF: If abbreviations are numeric ESPN IDs, convert to team names
-    if data['sport'] in ('NCAAB', 'NCAAF'):
-        # Check if away_abbr is a numeric ID
-        if data['away_abbr'].isdigit():
-            away_name, away_abbr = get_ncaab_team_info(data['away_abbr'])
-            data['away_name'] = away_name
-            data['away_abbr'] = away_abbr
-        # Check if home_abbr is a numeric ID
-        if data['home_abbr'].isdigit():
-            home_name, home_abbr = get_ncaab_team_info(data['home_abbr'])
-            data['home_name'] = home_name
-            data['home_abbr'] = home_abbr
+        # Try "Team at Team" format from keyword-rich titles
+        name_match2 = re.search(r'<title>\s*(.+?)\s+at\s+(.+?)\s+(?:Analysis|Preview|Prediction)', page_content, re.IGNORECASE)
+        if name_match2:
+            data['away_name'] = name_match2.group(1).strip()
+            data['home_name'] = name_match2.group(2).strip()
+        elif data['away_name'] == data['away_abbr']:
+            # Names weren't set by NCAAB conversion either - last resort
+            data['away_name'] = data['away_abbr']
+            data['home_name'] = data['home_abbr']
 
     # Team records: look for (XX-XX) or (XX-XX-XX) patterns
     records = re.findall(r'\((\d+-\d+(?:-\d+)?)\)', page_content)
@@ -408,6 +517,10 @@ def generate_preview_html(data, page_filename):
     # Parse total
     total = data.get('total', 'O/U 220').replace('O/U ', '')
 
+    # Use logo IDs for ESPN URLs (numeric for college, abbreviation for pro)
+    away_logo = data.get('away_logo_id', data['away_abbr'].lower())
+    home_logo = data.get('home_logo_id', data['home_abbr'].lower())
+
     return f'''<!-- Header Banner - Matchup Info -->
                 <div style="background: linear-gradient(135deg, {data['away_color']} 0%, {data['home_color']} 100%); padding: 14px 20px; border-bottom: 3px solid {data['away_accent']};">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -416,13 +529,13 @@ def generate_preview_html(data, page_filename):
                     </div>
                     <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
                         <div style="text-align: center;">
-                            <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['away_abbr'].lower()}.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
+                            <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{away_logo}.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
                             <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">{data['away_name']}</div>
                             <div style="font-size: 0.85rem; color: #aaa;">({data['away_record']})</div>
                         </div>
                         <div style="font-family: var(--font-primary); font-size: 1.5rem; color: {data['away_accent']}; font-weight: 900;">@</div>
                         <div style="text-align: center;">
-                            <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['home_abbr'].lower()}.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
+                            <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{home_logo}.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
                             <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">{data['home_name']}</div>
                             <div style="font-size: 0.85rem; color: #aaa;">({data['home_record']})</div>
                         </div>
@@ -444,7 +557,7 @@ def generate_preview_html(data, page_filename):
                         <tbody>
                             <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                                 <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
-                                    <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['away_abbr'].lower()}.png" style="width: 22px; height: 22px;">
+                                    <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{away_logo}.png" style="width: 22px; height: 22px;">
                                     <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">{data['away_abbr']}</span>
                                 </td>
                                 <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #39FF14; font-size: 0.95rem;">{away_spread_display}</td>
@@ -453,7 +566,7 @@ def generate_preview_html(data, page_filename):
                             </tr>
                             <tr>
                                 <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
-                                    <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{data['home_abbr'].lower()}.png" style="width: 22px; height: 22px;">
+                                    <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{home_logo}.png" style="width: 22px; height: 22px;">
                                     <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">{data['home_abbr']}</span>
                                 </td>
                                 <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #ff6b6b; font-size: 0.95rem;">{home_spread}</td>
@@ -577,11 +690,11 @@ def sync_preview():
         ('Join YouWager', 'Affiliate banner'),
     ]
 
-    # Also verify the featured game link exists (old or new URL format)
-    if 'featured-game-of-the-day-page' not in updated_content and 'prediction-picks' not in updated_content:
-        missing.append('Featured game page link')
-
     missing = []
+
+    # Also verify the featured game link exists (old or new URL format)
+    if 'featured-game-of-the-day-page' not in updated_content and 'prediction-picks' not in updated_content and 'analysis-stats-preview' not in updated_content:
+        missing.append('Featured game page link')
     for pattern, name in required_elements:
         if pattern not in updated_content:
             missing.append(name)
