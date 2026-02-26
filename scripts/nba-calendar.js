@@ -12,6 +12,7 @@ const ARCHIVE_DATA = [
     { date: "2026-02-23", page: "nba-picks-february-23-2026.html", title: "Spurs vs Pistons Under 232.5 Prediction Picks Monday February 23 2026" },
     { date: "2026-02-23", page: "nba-picks-analysis-against-the-spread-february-23-2026.html", title: "NBA Analysis - February 23, 2026" },
     { date: "2026-02-22", page: "nba-picks-analysis-against-the-spread-february-22-2026.html", title: "NBA Analysis - February 22, 2026" },
+    { date: "2026-02-21", page: "nba-game-previews-analysis-february-21-2026.html", title: "NBA Game Previews Analysis Saturday February 21 2026" },
     { date: "2026-02-20", page: "nba-picks-analysis-against-the-spread-february-20-2026.html", title: "NBA Picks Against the Spread February 20 2026" },
     { date: "2026-02-15", page: "nba-picks-analysis-against-the-spread-february-15-2026.html", title: "NBA All-Star Game Analysis February 15 2026" },
     { date: "2026-02-15", page: "nba-all-star-game-2026-usa-vs-world-prediction-picks-february-15-2026.html", title: "NBA All-Star Game 2026 USA vs World Round Robin Preview Analysis February 15 2026" },
