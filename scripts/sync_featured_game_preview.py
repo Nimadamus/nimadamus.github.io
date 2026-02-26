@@ -661,6 +661,30 @@ def sync_preview():
     print(f"  Home Injuries: {data['home_injuries']}")
     print(f"  Colors: {data['away_color']} -> {data['home_color']} (accent: {data['away_accent']})")
 
+    # SAFETY GATE: Block sync if data looks broken
+    # This prevents the homepage from ever showing numeric IDs, blank names, or wrong sport
+    safety_errors = []
+    if data['away_name'].isdigit():
+        safety_errors.append(f"Away team name is a raw number '{data['away_name']}' - NCAAB team map is missing this ID")
+    if data['home_name'].isdigit():
+        safety_errors.append(f"Home team name is a raw number '{data['home_name']}' - NCAAB team map is missing this ID")
+    if data['away_abbr'].isdigit():
+        safety_errors.append(f"Away abbreviation is a raw number '{data['away_abbr']}' - not converted to team abbr")
+    if data['home_abbr'].isdigit():
+        safety_errors.append(f"Home abbreviation is a raw number '{data['home_abbr']}' - not converted to team abbr")
+    if len(data['away_name']) <= 2 and not data['away_name'].isalpha():
+        safety_errors.append(f"Away team name looks invalid: '{data['away_name']}'")
+    if len(data['home_name']) <= 2 and not data['home_name'].isalpha():
+        safety_errors.append(f"Home team name looks invalid: '{data['home_name']}'")
+
+    if safety_errors:
+        print(f"\n  BLOCKED: Preview would display broken data!")
+        for err in safety_errors:
+            print(f"    [BLOCKED] {err}")
+        print(f"\n  FIX: Add the missing ESPN team ID to NCAAB_TEAM_MAP in this script.")
+        print(f"  The homepage was NOT modified. No damage done.")
+        return False
+
     # Generate new preview HTML
     new_preview = generate_preview_html(data, page_filename)
 
@@ -752,38 +776,58 @@ def verify_sync():
 
     section = section_match.group(1)
 
-    # Extract team abbrs from logos in the section
+    # Extract team logo IDs from the section (could be numeric for NCAA or abbreviations for pro)
     logos = re.findall(r'teamlogos/\w+/500/(\w+)\.png', section, re.IGNORECASE)
     if len(logos) < 2:
         print("  WARNING: Could not find team logos in preview section")
         return True
 
-    header_away = logos[0].upper()
-    header_home = logos[1].upper()
+    header_away_logo = logos[0].upper()
+    header_home_logo = logos[1].upper()
+
+    # For NCAA teams, logo IDs are numeric (130, 356) but abbreviations are text (MICH, ILL)
+    # Convert numeric logo IDs to abbreviations for comparison
+    if header_away_logo.isdigit():
+        _, header_away = get_ncaab_team_info(header_away_logo)
+        header_away = header_away.upper()
+    else:
+        header_away = header_away_logo
+
+    if header_home_logo.isdigit():
+        _, header_home = get_ncaab_team_info(header_home_logo)
+        header_home = header_home.upper()
+    else:
+        header_home = header_home_logo
 
     # Extract team abbrs from the betting lines table (look for team abbreviation spans)
-    lines_abbrs = re.findall(r'<span[^>]*font-weight: 600[^>]*>\s*(\w{2,4})\s*</span>', section)
+    lines_abbrs = re.findall(r'<span[^>]*font-weight: 600[^>]*>\s*(\w{2,5})\s*</span>', section)
     if len(lines_abbrs) >= 2:
         lines_away = lines_abbrs[0].upper()
         lines_home = lines_abbrs[1].upper()
     else:
-        # Fallback: just use header logos
         lines_away = header_away
         lines_home = header_home
 
     errors = []
 
-    # Check header logos match betting lines
+    # Check header logos match betting lines (abbreviations should match)
     if header_away != lines_away:
-        errors.append(f"Header logo shows {header_away} but betting lines show {lines_away}")
+        errors.append(f"Header team {header_away} but betting lines show {lines_away}")
     if header_home != lines_home:
-        errors.append(f"Header logo shows {header_home} but betting lines show {lines_home}")
+        errors.append(f"Header team {header_home} but betting lines show {lines_home}")
 
     # Check index.html matches featured game page
-    if header_away != data['away_abbr']:
+    if header_away != data['away_abbr'].upper():
         errors.append(f"Index shows {header_away} but {page_filename} has {data['away_abbr']}")
-    if header_home != data['home_abbr']:
+    if header_home != data['home_abbr'].upper():
         errors.append(f"Index shows {header_home} but {page_filename} has {data['home_abbr']}")
+
+    # CRITICAL: Check for raw numeric IDs displayed as team names (the bug that broke the homepage)
+    team_name_spans = re.findall(r'font-weight: 700[^>]*>([^<]+)</div>', section)
+    for name in team_name_spans:
+        name = name.strip()
+        if name.isdigit():
+            errors.append(f"Team name is showing raw number '{name}' instead of a real team name - BROKEN!")
 
     if errors:
         print(f"\n  MISMATCH DETECTED:")
