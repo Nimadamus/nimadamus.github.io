@@ -100,7 +100,7 @@ const FEATURED_GAMES = [
     { date: "2026-02-25", page: "maple-leafs-vs-lightning-nhl-analysis-stats-preview-february-25-2026.html", title: "Maple Leafs at Lightning" },
     { date: "2026-02-26", page: "michigan-at-illinois-analysis-stats-preview-february-27-2026.html", title: "Michigan at Illinois" },
     { date: "2026-02-27", page: "knicks-at-bucks-analysis-stats-preview-february-27-2026.html", title: "Knicks at Bucks" },
-    { date: "2026-03-01", page: "spurs-at-knicks-nba-analysis-stats-preview-march-1-2026.html", title: "Spurs at Knicks" },
+    { date: "2026-02-28", page: "spurs-at-knicks-nba-analysis-stats-preview-march-1-2026.html", title: "Spurs at Knicks" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
