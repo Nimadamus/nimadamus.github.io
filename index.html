@@ -2405,30 +2405,175 @@ function closeEmailPopup() {
 <script>
 (function() {
     'use strict';
+
     var SPORT_ORDER = ['NHL', 'MLB', 'NFL', 'NCAAF'];
+    var SPORT_CONFIG = {
+        NHL:   { displayName: 'NHL',              recordsLink: 'nhl-records.html',               htmlPage: 'nhl-records.html' },
+        NFL:   { displayName: 'NFL',              recordsLink: 'nfl-records.html',               htmlPage: 'nfl-records.html' },
+        NCAAF: { displayName: 'College Football', recordsLink: 'ncaaf-records.html',             htmlPage: 'ncaaf-records.html' },
+        MLB:   { displayName: 'MLB',              recordsLink: 'betlegend-verified-records.html', htmlPage: null }
+    };
+
+    var PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+    var MLB_SHEETS_URL   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+
+    var LEAGUE_MAP = { 'nhl':'NHL','hockey':'NHL','nfl':'NFL','football':'NFL','ncaaf':'NCAAF','college football':'NCAAF','cfb':'NCAAF' };
+
     var currentIndex = 0;
     var totalSlides = SPORT_ORDER.length;
     var interval = 5000;
     var timer = null;
 
-    function formatUnits(val) {
-        return (val >= 0 ? '+' : '') + val.toFixed(1);
+    function formatUnits(val) { return (val >= 0 ? '+' : '') + val.toFixed(1); }
+
+    /* ---- CSV parser (handles quoted fields) ---- */
+    function parseCSVLine(line) {
+        var vals = [], cur = '', inQ = false;
+        for (var i = 0; i < line.length; i++) {
+            var c = line[i];
+            if (c === '"') { inQ = !inQ; }
+            else if (c === ',' && !inQ) { vals.push(cur.trim()); cur = ''; }
+            else { cur += c; }
+        }
+        vals.push(cur.trim());
+        return vals;
     }
 
-    function buildSlides() {
+    function parseCSV(text) {
+        var lines = text.trim().split('\n');
+        if (lines.length < 2) return [];
+        var hdrs = parseCSVLine(lines[0]);
+        var rows = [];
+        for (var i = 1; i < lines.length; i++) {
+            var v = parseCSVLine(lines[i]);
+            var obj = {};
+            for (var j = 0; j < hdrs.length; j++) obj[hdrs[j]] = v[j] || '';
+            rows.push(obj);
+        }
+        return rows;
+    }
+
+    /* ---- Unit calculation (mirrors CLAUDE.md formula) ---- */
+    function calcUnits(stake, odds, result) {
+        var s = parseFloat(stake) || 3, o = parseFloat(odds) || -110;
+        var r = (result || '').toUpperCase().charAt(0);
+        if (r === 'W') return o < 0 ? s : s * (o / 100);
+        if (r === 'L') return o < 0 ? -(s * (Math.abs(o) / 100)) : -s;
+        return 0;
+    }
+
+    /* ---- Parse HTML records page table rows ---- */
+    function parseHTMLRecords(html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var rows = doc.querySelectorAll('#picks-table-body tr');
+        var picks = {};
+        rows.forEach(function(row) {
+            var c = row.querySelectorAll('td');
+            if (c.length < 5) return;
+            var date = c[0].textContent.trim();
+            var pick = c[1].textContent.trim().toLowerCase();
+            var r = '';
+            if (c[3].classList.contains('result-W')) r = 'W';
+            else if (c[3].classList.contains('result-L')) r = 'L';
+            else if (c[3].classList.contains('result-P')) r = 'P';
+            else r = c[3].textContent.trim().toUpperCase().charAt(0);
+            var u = parseFloat(c[4].textContent.replace('+','')) || 0;
+            picks[date + '|' + pick] = { result: r, units: u };
+        });
+        return picks;
+    }
+
+    /* ---- Parse Pick Tracker CSV grouped by sport ---- */
+    function parsePickTracker(rows) {
+        var out = {};
+        rows.forEach(function(row) {
+            var league = (row.League || '').toLowerCase().trim();
+            if (league === 'cross-sport') return;
+            var key = LEAGUE_MAP[league];
+            if (!key) { var sp = (row.Sport || '').toLowerCase().trim(); key = LEAGUE_MAP[sp]; }
+            if (!key) return;
+            var result = (row.Result || '').trim().toUpperCase();
+            if (!result) return;
+            var date = (row.Date || '').trim();
+            var pick = (row.Pick || row.Picks || '').trim().toLowerCase();
+            var units = calcUnits(row.Units || '3', row.Line || row.Odds || '-110', result);
+            if (!out[key]) out[key] = {};
+            out[key][date + '|' + pick] = { result: result.charAt(0), units: units };
+        });
+        return out;
+    }
+
+    /* ---- Parse MLB Google Sheet ---- */
+    function parseMLBSheet(rows) {
+        var w = 0, l = 0, p = 0, tu = 0;
+        rows.forEach(function(row) {
+            var r = '';
+            if (row.Result) r = row.Result.trim().toUpperCase();
+            if (!r) { for (var k in row) { var v = (row[k]||'').trim().toUpperCase(); if (v==='W'||v==='L'||v==='P'){r=v;break;} } }
+            if (!r) return;
+            if (r.charAt(0)==='W') w++; else if (r.charAt(0)==='L') l++; else if (r.charAt(0)==='P') p++; else return;
+            var us = row.ProfitLoss || row['Profit/Loss'] || row.Units || row['P/L'] || '';
+            tu += parseFloat(us.replace('+','').replace('$','')) || 0;
+        });
+        var tp = w+l+p, wp = (w+l)>0 ? w/(w+l)*100 : 0;
+        return { displayName:'MLB', recordsLink:'betlegend-verified-records.html', wins:w, losses:l, pushes:p, totalPicks:tp, totalUnits:Math.round(tu*100)/100, winPct:Math.round(wp*10)/10 };
+    }
+
+    /* ---- Tally merged picks into stats ---- */
+    function tallyPicks(picks, cfg) {
+        var w=0,l=0,p=0,tu=0;
+        for (var k in picks) { var x=picks[k]; if(x.result==='W')w++; else if(x.result==='L')l++; else if(x.result==='P')p++; tu+=x.units; }
+        var tp=w+l+p, wp=(w+l)>0?w/(w+l)*100:0;
+        return { displayName:cfg.displayName, recordsLink:cfg.recordsLink, wins:w, losses:l, pushes:p, totalPicks:tp, totalUnits:Math.round(tu*100)/100, winPct:Math.round(wp*10)/10 };
+    }
+
+    /* ---- Fetch live data from records pages + Google Sheets ---- */
+    function fetchLiveData() {
+        var cb = '&cache=' + Date.now();
+        return Promise.allSettled([
+            fetch('nhl-records.html',  {cache:'no-store'}).then(function(r){return r.text();}),
+            fetch('nfl-records.html',  {cache:'no-store'}).then(function(r){return r.text();}),
+            fetch('ncaaf-records.html',{cache:'no-store'}).then(function(r){return r.text();}),
+            fetch(PICK_TRACKER_URL + cb, {cache:'no-store'}).then(function(r){return r.text();}),
+            fetch(MLB_SHEETS_URL + '&cache=' + Date.now(), {cache:'no-store'}).then(function(r){return r.text();})
+        ]).then(function(results) {
+            var nhlR=results[0], nflR=results[1], ncaafR=results[2], trackerR=results[3], mlbR=results[4];
+            var trackerPicks = {};
+            if (trackerR.status === 'fulfilled') {
+                try { trackerPicks = parsePickTracker(parseCSV(trackerR.value)); } catch(e){}
+            }
+
+            var live = {};
+            var htmlMap = { NHL: nhlR, NFL: nflR, NCAAF: ncaafR };
+            for (var sport in htmlMap) {
+                if (htmlMap[sport].status === 'fulfilled') {
+                    try {
+                        var picks = parseHTMLRecords(htmlMap[sport].value);
+                        if (trackerPicks[sport]) { for (var k in trackerPicks[sport]) picks[k] = trackerPicks[sport][k]; }
+                        live[sport] = tallyPicks(picks, SPORT_CONFIG[sport]);
+                    } catch(e){}
+                }
+            }
+
+            if (mlbR.status === 'fulfilled') {
+                try { live.MLB = parseMLBSheet(parseCSV(mlbR.value)); } catch(e){}
+            }
+            return live;
+        });
+    }
+
+    /* ---- Build carousel slides from data object ---- */
+    function buildSlides(data) {
         var carousel = document.getElementById('rw-carousel');
         var dotsContainer = document.getElementById('rw-dots');
-        if (!carousel || !dotsContainer || typeof TRANSPARENCY_DATA === 'undefined') return;
+        if (!carousel || !dotsContainer) return;
 
-        var slidesHTML = '';
-        var dotsHTML = '';
-
+        var slidesHTML = '', dotsHTML = '';
         SPORT_ORDER.forEach(function(key, i) {
-            var s = TRANSPARENCY_DATA.sports[key];
+            var s = data[key];
             if (!s) return;
             var isActive = i === 0 ? ' active' : '';
             var unitsClass = s.totalUnits >= 0 ? 'pos' : 'neg';
-
             slidesHTML +=
                 '<div class="rw-slide' + isActive + '" data-index="' + i + '">' +
                     '<div class="rw-league">' + s.displayName + '</div>' +
@@ -2443,18 +2588,13 @@ function closeEmailPopup() {
                         '<div class="rw-stat"><div class="rw-stat-value count">' + s.totalPicks + '</div><div class="rw-stat-label">Total Picks</div></div>' +
                     '</div>' +
                 '</div>';
-
             dotsHTML += '<button class="rw-dot' + isActive + '" data-index="' + i + '" aria-label="' + s.displayName + '"></button>';
         });
 
         carousel.innerHTML = slidesHTML;
         dotsContainer.innerHTML = dotsHTML;
-
         document.querySelectorAll('.rw-dot').forEach(function(dot) {
-            dot.addEventListener('click', function() {
-                goTo(parseInt(this.dataset.index));
-                startTimer();
-            });
+            dot.addEventListener('click', function() { goTo(parseInt(this.dataset.index)); startTimer(); });
         });
     }
 
@@ -2469,26 +2609,35 @@ function closeEmailPopup() {
         dots[currentIndex].classList.add('active');
     }
 
-    function next() {
-        goTo((currentIndex + 1) % totalSlides);
-    }
+    function next() { goTo((currentIndex + 1) % totalSlides); }
 
     function startTimer() {
         if (timer) clearInterval(timer);
         timer = setInterval(next, interval);
     }
 
-    buildSlides();
+    /* ---- Initialize: show static data instantly, then fetch live ---- */
+    if (typeof TRANSPARENCY_DATA !== 'undefined') {
+        buildSlides(TRANSPARENCY_DATA.sports);
+    }
     startTimer();
 
-    var carousel = document.getElementById('rw-carousel');
-    if (carousel) {
-        carousel.addEventListener('mouseenter', function() {
-            if (timer) clearInterval(timer);
-        });
-        carousel.addEventListener('mouseleave', function() {
-            startTimer();
-        });
+    fetchLiveData().then(function(live) {
+        var hasLive = false;
+        for (var k in live) { hasLive = true; break; }
+        if (hasLive) {
+            var merged = {};
+            SPORT_ORDER.forEach(function(key) {
+                merged[key] = live[key] || (typeof TRANSPARENCY_DATA !== 'undefined' ? TRANSPARENCY_DATA.sports[key] : null);
+            });
+            buildSlides(merged);
+        }
+    }).catch(function(){});
+
+    var el = document.getElementById('rw-carousel');
+    if (el) {
+        el.addEventListener('mouseenter', function() { if (timer) clearInterval(timer); });
+        el.addEventListener('mouseleave', function() { startTimer(); });
     }
 })();
 </script>
