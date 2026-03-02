@@ -461,10 +461,10 @@
         .hero {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 10px 30px 40px 30px;
+            padding: 8px 30px 30px 30px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 40px;
             align-items: start;
         }
 
@@ -476,8 +476,8 @@
             font-family: var(--font-primary);
             font-size: 3.2rem;
             font-weight: 900;
-            line-height: 1.15;
-            margin-bottom: 20px;
+            line-height: 1.1;
+            margin-bottom: 12px;
             text-transform: uppercase;
             text-shadow: 0 0 30px rgba(255,255,255,0.3);
         }
@@ -499,8 +499,8 @@
 
         /* Curry GIF */
         .curry-container {
-            max-width: 500px;
-            margin: 0 auto 25px;
+            max-width: 420px;
+            margin: 0 auto 14px;
             border: 3px solid var(--glow-color);
             border-radius: 16px;
             overflow: hidden;
@@ -523,16 +523,16 @@
         }
 
         .taglines {
-            margin-bottom: 25px;
+            margin-bottom: 14px;
         }
 
         .tagline {
             font-family: var(--font-primary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #ffffff;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin: 8px 0;
+            margin: 5px 0;
             text-shadow: 0 0 15px rgba(0, 240, 255, 0.6), 0 0 30px rgba(0, 240, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
@@ -540,9 +540,9 @@
         .cta-buttons {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 14px;
         }
 
         .btn-primary {
@@ -1483,6 +1483,176 @@
                 font-size: 0.7rem;
             }
         }
+
+        /* ==================== VERIFIED RECORDS BLOCK ==================== */
+        .records-block {
+            max-width: 460px;
+            margin: 0 auto 16px;
+            background: rgba(0, 8, 25, 0.75);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 14px;
+            padding: 16px 24px;
+            backdrop-filter: blur(12px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .records-block::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px; right: -1px; bottom: -1px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), transparent 40%, transparent 60%, rgba(255, 215, 0, 0.15));
+            z-index: -1;
+            animation: borderRotate 8s linear infinite;
+        }
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        .records-block-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--neon-gold);
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+            margin-bottom: 12px;
+        }
+        .records-carousel {
+            position: relative;
+            height: 90px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .records-slide {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+        }
+        .records-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .records-sport {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+            margin-bottom: 5px;
+        }
+        .records-record {
+            font-family: var(--font-primary);
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .records-record .rw { color: var(--win-color); text-shadow: 0 0 8px rgba(57, 255, 20, 0.4); }
+        .records-record .rl { color: #ff6b6b; text-shadow: 0 0 6px rgba(255, 107, 107, 0.3); }
+        .records-record .rp { color: rgba(255, 255, 255, 0.45); }
+        .records-record .rs { color: rgba(255, 255, 255, 0.25); margin: 0 3px; }
+        .records-stats-row {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+        }
+        .records-stat {
+            font-family: var(--font-primary);
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .records-stat .stat-val.pos { color: var(--neon-gold); text-shadow: 0 0 6px rgba(255, 215, 0, 0.3); }
+        .records-stat .stat-val.neg { color: #ff6b6b; }
+        .records-stat .stat-val.pct { color: var(--win-color); }
+        .records-stat .stat-val.cnt { color: #fff; }
+        .records-stat .stat-lbl {
+            font-family: var(--font-secondary);
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(160, 196, 255, 0.45);
+            margin-left: 4px;
+        }
+        .records-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .records-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.12);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .records-dot.active {
+            background: var(--neon-cyan);
+            box-shadow: 0 0 6px rgba(0, 240, 255, 0.6);
+            transform: scale(1.3);
+        }
+        .records-dot:hover:not(.active) { background: rgba(0, 240, 255, 0.35); }
+        .records-trust {
+            border-top: 1px solid rgba(0, 240, 255, 0.12);
+            padding-top: 10px;
+        }
+        .records-trust p {
+            font-family: var(--font-secondary);
+            font-size: 11px;
+            color: rgba(160, 196, 255, 0.55);
+            letter-spacing: 0.5px;
+            line-height: 1.7;
+            margin: 0;
+        }
+        .records-trust .trust-highlight {
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+        .records-cta {
+            display: inline-block;
+            margin-top: 8px;
+            font-family: var(--font-primary);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #000;
+            background: linear-gradient(135deg, var(--neon-gold), #e6c200);
+            padding: 7px 18px;
+            border-radius: 6px;
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
+            transition: all 0.3s ease;
+        }
+        .records-cta:hover {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .records-block { padding: 14px 16px; }
+            .records-sport { font-size: 16px; }
+            .records-record { font-size: 22px; }
+            .records-stat { font-size: 12px; }
+            .records-carousel { height: 85px; }
+        }
+        /* ==================== END RECORDS BLOCK ==================== */
     </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3955543166394162"
 crossorigin="anonymous"></script>
@@ -1635,8 +1805,24 @@ crossorigin="anonymous"></script>
                     <p class="tagline">Get Daily Proven +EV Picks</p>
                 </div>
 
+                <!-- ============ VERIFIED RECORDS BLOCK ============ -->
+                <div class="records-block">
+                    <div class="records-block-title">All-Time Verified Records</div>
+                    <div class="records-carousel" id="records-carousel"></div>
+                    <div class="records-dots" id="records-dots"></div>
+                    <div class="records-trust">
+                        <p>
+                            <span class="trust-highlight">Updated daily.</span>
+                            All picks always transparent.
+                            Posted in Discord before games start.
+                        </p>
+                        <a href="betlegend-verified-records.html" class="records-cta">View Every Pick We've Ever Made</a>
+                    </div>
+                </div>
+                <!-- ============ END RECORDS BLOCK ============ -->
+
                 <!-- Free Trial CTA Button -->
-                <div style="margin-bottom: 20px; text-align: center;">
+                <div style="margin-bottom: 12px; text-align: center;">
                     <a href="free-trial-info.html" style="
                         display: inline-flex;
                         align-items: center;
@@ -2190,6 +2376,103 @@ function closeEmailPopup() {
             <p style="color: #888; font-size: 0.85rem;">✓ Free daily picks  ✓ No spam  ✓ Unsubscribe anytime</p>
         </div>
     </div>
+
+<!-- ==================== VERIFIED RECORDS CAROUSEL JS ==================== -->
+<script>
+const RECORDS_DATA = [
+    { sport: "NHL", wins: 67, losses: 54, pushes: 2, units: 5.28, winPct: 55.4, picks: 123 },
+    { sport: "MLB", wins: 278, losses: 216, pushes: 27, units: 31.40, winPct: 56.3, picks: 521 },
+    { sport: "NFL", wins: 32, losses: 43, pushes: 1, units: -34.26, winPct: 42.7, picks: 76 },
+    { sport: "College Football", wins: 38, losses: 40, pushes: 3, units: -9.11, winPct: 48.7, picks: 81 }
+];
+</script>
+<script>
+(function() {
+    'use strict';
+    var ROTATION_INTERVAL = 4500;
+    var currentIndex = 0;
+    var rotationTimer = null;
+
+    function formatUnits(val) {
+        return (val >= 0 ? '+' : '') + val.toFixed(1);
+    }
+
+    function buildSlides() {
+        var carousel = document.getElementById('records-carousel');
+        var dotsContainer = document.getElementById('records-dots');
+        if (!carousel || !dotsContainer) return;
+
+        var slidesHTML = '';
+        var dotsHTML = '';
+
+        RECORDS_DATA.forEach(function(sport, i) {
+            var isActive = i === 0 ? ' active' : '';
+            var unitsClass = sport.units >= 0 ? 'pos' : 'neg';
+
+            slidesHTML +=
+                '<div class="records-slide' + isActive + '" data-index="' + i + '">' +
+                    '<div class="records-sport">' + sport.sport + '</div>' +
+                    '<div class="records-record">' +
+                        '<span class="rw">' + sport.wins + '</span><span class="rs"> - </span><span class="rl">' + sport.losses + '</span><span class="rs"> - </span><span class="rp">' + sport.pushes + '</span>' +
+                    '</div>' +
+                    '<div class="records-stats-row">' +
+                        '<div class="records-stat"><span class="stat-val ' + unitsClass + '">' + formatUnits(sport.units) + '</span><span class="stat-lbl">units</span></div>' +
+                        '<div class="records-stat"><span class="stat-val pct">' + sport.winPct + '%</span><span class="stat-lbl">win rate</span></div>' +
+                        '<div class="records-stat"><span class="stat-val cnt">' + sport.picks + '</span><span class="stat-lbl">picks</span></div>' +
+                    '</div>' +
+                '</div>';
+
+            dotsHTML += '<div class="records-dot' + isActive + '" data-index="' + i + '"></div>';
+        });
+
+        carousel.innerHTML = slidesHTML;
+        dotsContainer.innerHTML = dotsHTML;
+
+        document.querySelectorAll('.records-dot').forEach(function(dot) {
+            dot.addEventListener('click', function() {
+                goToSlide(parseInt(this.dataset.index));
+                resetTimer();
+            });
+        });
+    }
+
+    function goToSlide(index) {
+        var slides = document.querySelectorAll('.records-slide');
+        var dots = document.querySelectorAll('.records-dot');
+        if (slides.length === 0) return;
+        slides[currentIndex].classList.remove('active');
+        dots[currentIndex].classList.remove('active');
+        currentIndex = index;
+        slides[currentIndex].classList.add('active');
+        dots[currentIndex].classList.add('active');
+    }
+
+    function nextSlide() {
+        var slides = document.querySelectorAll('.records-slide');
+        if (slides.length === 0) return;
+        goToSlide((currentIndex + 1) % slides.length);
+    }
+
+    function resetTimer() {
+        if (rotationTimer) clearInterval(rotationTimer);
+        rotationTimer = setInterval(nextSlide, ROTATION_INTERVAL);
+    }
+
+    buildSlides();
+    resetTimer();
+
+    var block = document.querySelector('.records-block');
+    if (block) {
+        block.addEventListener('mouseenter', function() {
+            if (rotationTimer) clearInterval(rotationTimer);
+        });
+        block.addEventListener('mouseleave', function() {
+            resetTimer();
+        });
+    }
+})();
+</script>
+<!-- ==================== END RECORDS CAROUSEL JS ==================== -->
 
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
