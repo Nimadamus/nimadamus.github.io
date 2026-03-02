@@ -1234,6 +1234,11 @@
             .affiliate-banner h2 {
                 font-size: 1.2rem;
             }
+
+            .rw-header-left h2 { font-size: 0.95rem; }
+            .rw-record { font-size: 3.2rem; }
+            .rw-stat-value { font-size: 1.55rem; }
+            .rw-carousel { height: 260px; }
         }
 
         @media (max-width: 768px) {
@@ -1346,6 +1351,16 @@
             .curry-container {
                 max-width: 100%;
             }
+
+            .rw-header-left h2 { font-size: 0.9rem; }
+            .rw-header-right a { font-size: 0.68rem; padding: 8px 14px; }
+            .rw-league { font-size: 0.92rem; letter-spacing: 5px; }
+            .rw-record { font-size: 2.8rem; margin-bottom: 28px; }
+            .rw-stat-value { font-size: 1.4rem; }
+            .rw-stats { max-width: 420px; }
+            .rw-stat { padding: 0 16px; }
+            .rw-stat-label { font-size: 0.6rem; }
+            .rw-carousel { height: 250px; }
         }
 
         @media (max-width: 480px) {
@@ -1458,6 +1473,20 @@
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
+
+            .records-widget-wrap { margin-top: 24px; }
+            .rw-header { flex-direction: column; gap: 8px; align-items: flex-start; padding: 14px 18px; }
+            .rw-header-left h2 { font-size: 0.82rem; }
+            .rw-header-right a { font-size: 0.62rem; padding: 7px 12px; }
+            .rw-league { font-size: 0.82rem; letter-spacing: 4px; }
+            .rw-carousel { height: 230px; }
+            .rw-record { font-size: 2.2rem; letter-spacing: 1px; margin-bottom: 24px; }
+            .rw-record .sep { margin: 0 5px; }
+            .rw-stat-value { font-size: 1.15rem; }
+            .rw-stat-label { font-size: 0.54rem; letter-spacing: 1.5px; }
+            .rw-stat { padding: 0 10px; }
+            .rw-dots { padding: 0 18px 16px; }
+            .rw-footer { padding: 10px 18px; font-size: 0.6rem; }
         }
 
         @media (max-width: 380px) {
@@ -1484,175 +1513,170 @@
             }
         }
 
-        /* ==================== VERIFIED RECORDS BLOCK ==================== */
-        .records-block {
-            max-width: 460px;
-            margin: 0 auto 16px;
-            background: rgba(0, 8, 25, 0.75);
-            border: 1px solid rgba(0, 240, 255, 0.25);
+        /* ==================== VERIFIED RECORDS WIDGET ==================== */
+        .records-widget-wrap {
+            margin-top: 44px;
+        }
+        .records-widget {
+            background: #141c32;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-top: 2px solid rgba(57,255,20,0.35);
             border-radius: 14px;
-            padding: 16px 24px;
-            backdrop-filter: blur(12px);
-            text-align: center;
-            position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 60px rgba(0,10,30,0.4);
         }
-        .records-block::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: -1px; right: -1px; bottom: -1px;
-            border-radius: 15px;
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), transparent 40%, transparent 60%, rgba(255, 215, 0, 0.15));
-            z-index: -1;
-            animation: borderRotate 8s linear infinite;
+        .rw-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            background: rgba(255,255,255,0.015);
         }
-        @keyframes borderRotate {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-        .records-block-title {
+        .rw-header-left h2 {
             font-family: var(--font-primary);
-            font-size: 13px;
+            font-size: 1.15rem;
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 3.5px;
             text-transform: uppercase;
-            color: var(--neon-gold);
-            text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
-            margin-bottom: 12px;
+            color: rgba(255,255,255,0.95);
+            margin: 0 0 4px 0;
         }
-        .records-carousel {
+        .rw-header-left p {
+            font-family: var(--font-secondary);
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 0.3px;
+            margin: 0;
+        }
+        .rw-header-right a {
+            font-family: var(--font-primary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            color: #000;
+            background: var(--win-color);
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            box-shadow: none;
+            outline: none;
             position: relative;
-            height: 100px;
-            overflow: hidden;
-            margin-bottom: 12px;
+            z-index: 1;
+            transition: opacity 0.2s ease;
         }
-        .records-slide {
+        .rw-header-right a:hover {
+            opacity: 0.85;
+        }
+        .rw-carousel {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+        .rw-slide {
             position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: opacity 0.8s ease;
             pointer-events: none;
         }
-        .records-slide.active {
+        .rw-slide.active {
             opacity: 1;
-            transform: translateY(0);
             pointer-events: auto;
         }
-        .records-sport {
+        .rw-league {
             font-family: var(--font-primary);
-            font-size: 20px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 18px;
+        }
+        .rw-record {
+            font-family: var(--font-primary);
+            font-size: 3.4rem;
             font-weight: 900;
             letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
-            margin-bottom: 5px;
+            margin-bottom: 36px;
+            line-height: 1;
         }
-        .records-record {
+        .rw-record .w { color: #ffffff; text-shadow: 0 0 20px rgba(255,255,255,0.15); }
+        .rw-record .sep { color: rgba(255,255,255,0.14); margin: 0 8px; font-weight: 300; }
+        .rw-record .l { color: rgba(255,255,255,0.5); }
+        .rw-record .p { color: rgba(255,255,255,0.28); }
+        .rw-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            width: 100%;
+            max-width: 500px;
+        }
+        .rw-stat {
+            text-align: center;
+            padding: 0 22px;
+            border-right: 1px solid rgba(255,255,255,0.06);
+        }
+        .rw-stat:last-child { border-right: none; }
+        .rw-stat-value {
             font-family: var(--font-primary);
-            font-size: 28px;
+            font-size: 1.65rem;
             font-weight: 900;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
+            line-height: 1;
+            margin-bottom: 7px;
         }
-        .records-record .rw { color: var(--win-color); text-shadow: 0 0 8px rgba(57, 255, 20, 0.4); }
-        .records-record .rl { color: #ff6b6b; text-shadow: 0 0 6px rgba(255, 107, 107, 0.3); }
-        .records-record .rp { color: rgba(255, 255, 255, 0.45); }
-        .records-record .rs { color: rgba(255, 255, 255, 0.25); margin: 0 3px; }
-        .records-stats-row {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-        }
-        .records-stat {
-            font-family: var(--font-primary);
-            font-size: 20px;
-            font-weight: 900;
-        }
-        .records-stat .stat-val.pos { color: var(--neon-gold); text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
-        .records-stat .stat-val.neg { color: #ff6b6b; text-shadow: 0 0 8px rgba(255, 107, 107, 0.3); }
-        .records-stat .stat-val.pct { color: var(--win-color); text-shadow: 0 0 10px rgba(57, 255, 20, 0.3); }
-        .records-stat .stat-val.cnt { color: #fff; }
-        .records-stat .stat-lbl {
+        .rw-stat-value.pos { color: var(--win-color); }
+        .rw-stat-value.neg { color: #ef4444; }
+        .rw-stat-value.rate { color: rgba(255,255,255,0.9); }
+        .rw-stat-value.count { color: rgba(255,255,255,0.6); }
+        .rw-stat-label {
             font-family: var(--font-secondary);
-            font-size: 9px;
+            font-size: 0.66rem;
             font-weight: 500;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            color: rgba(160, 196, 255, 0.45);
-            margin-left: 4px;
+            color: rgba(255,255,255,0.3);
         }
-        .records-dots {
+        .rw-dots {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin-bottom: 10px;
+            gap: 11px;
+            padding: 0 28px 24px;
         }
-        .records-dot {
-            width: 7px; height: 7px;
+        .rw-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: rgba(0, 240, 255, 0.12);
-            border: 1px solid rgba(0, 240, 255, 0.3);
+            background: rgba(255,255,255,0.1);
+            border: none;
             cursor: pointer;
             transition: all 0.3s ease;
+            padding: 0;
         }
-        .records-dot.active {
-            background: var(--neon-cyan);
-            box-shadow: 0 0 6px rgba(0, 240, 255, 0.6);
-            transform: scale(1.3);
+        .rw-dot.active {
+            background: var(--win-color);
+            box-shadow: 0 0 8px rgba(57,255,20,0.4);
         }
-        .records-dot:hover:not(.active) { background: rgba(0, 240, 255, 0.35); }
-        .records-trust {
-            border-top: 1px solid rgba(0, 240, 255, 0.12);
-            padding-top: 10px;
+        .rw-dot:hover:not(.active) {
+            background: rgba(255,255,255,0.2);
         }
-        .records-trust p {
+        .rw-footer {
+            padding: 14px 28px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
             font-family: var(--font-secondary);
-            font-size: 11px;
-            color: rgba(160, 196, 255, 0.55);
-            letter-spacing: 0.5px;
-            line-height: 1.7;
-            margin: 0;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.25);
+            letter-spacing: 0.8px;
         }
-        .records-trust .trust-highlight {
-            color: var(--neon-cyan);
-            font-weight: 600;
-        }
-        .records-cta {
-            display: inline-block;
-            margin-top: 8px;
-            font-family: var(--font-primary);
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: #000;
-            background: linear-gradient(135deg, var(--neon-gold), #e6c200);
-            padding: 7px 18px;
-            border-radius: 6px;
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
-            transition: all 0.3s ease;
-        }
-        .records-cta:hover {
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            transform: translateY(-1px);
-        }
-
-        @media (max-width: 768px) {
-            .records-block { padding: 14px 16px; }
-            .records-sport { font-size: 16px; }
-            .records-record { font-size: 22px; }
-            .records-stat { font-size: 12px; }
-            .records-carousel { height: 85px; }
-        }
-        /* ==================== END RECORDS BLOCK ==================== */
+        /* ==================== END RECORDS WIDGET ==================== */
     </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3955543166394162"
 crossorigin="anonymous"></script>
@@ -1805,21 +1829,24 @@ crossorigin="anonymous"></script>
                     <p class="tagline">Get Daily Proven +EV Picks</p>
                 </div>
 
-                <!-- ============ VERIFIED RECORDS BLOCK ============ -->
-                <div class="records-block">
-                    <div class="records-block-title">All-Time Verified Records</div>
-                    <div class="records-carousel" id="records-carousel"></div>
-                    <div class="records-dots" id="records-dots"></div>
-                    <div class="records-trust">
-                        <p>
-                            <span class="trust-highlight">Updated daily.</span>
-                            All picks always transparent.
-                            Posted in Discord before games start.
-                        </p>
-                        <a href="betlegend-verified-records.html" class="records-cta">View Every Pick We've Ever Made</a>
+                <!-- ============ VERIFIED RECORDS WIDGET ============ -->
+                <div class="records-widget-wrap">
+                    <div class="records-widget">
+                        <div class="rw-header">
+                            <div class="rw-header-left">
+                                <h2>All-Time Verified Records</h2>
+                                <p>Every pick posted before games start</p>
+                            </div>
+                            <div class="rw-header-right">
+                                <a href="betlegend-verified-records.html">View Full Record &rarr;</a>
+                            </div>
+                        </div>
+                        <div class="rw-carousel" id="rw-carousel"></div>
+                        <div class="rw-dots" id="rw-dots"></div>
+                        <div class="rw-footer">Updated daily &middot; Every pick posted in Discord before games start</div>
                     </div>
                 </div>
-                <!-- ============ END RECORDS BLOCK ============ -->
+                <!-- ============ END RECORDS WIDGET ============ -->
 
             </div>
 
@@ -2374,68 +2401,67 @@ function closeEmailPopup() {
         </div>
     </div>
 
-<!-- ==================== VERIFIED RECORDS CAROUSEL JS ==================== -->
-<script>
-const RECORDS_DATA = [
-    { sport: "NHL", wins: 224, losses: 162, pushes: 10, units: 52.06, winPct: 58.0, picks: 396 },
-    { sport: "MLB", wins: 337, losses: 250, pushes: 30, units: 30.13, winPct: 57.4, picks: 617 },
-    { sport: "NFL", wins: 99, losses: 93, pushes: 1, units: -21.26, winPct: 51.6, picks: 193 },
-    { sport: "College Football", wins: 101, losses: 91, pushes: 3, units: 2.39, winPct: 52.6, picks: 195 }
-];
-</script>
+<!-- ==================== VERIFIED RECORDS WIDGET JS ==================== -->
+<script src="transparency-widget-data.js"></script>
 <script>
 (function() {
     'use strict';
-    var ROTATION_INTERVAL = 4500;
+    var SPORT_ORDER = ['NHL', 'MLB', 'NFL', 'NCAAF'];
     var currentIndex = 0;
-    var rotationTimer = null;
+    var totalSlides = SPORT_ORDER.length;
+    var interval = 5000;
+    var timer = null;
 
     function formatUnits(val) {
         return (val >= 0 ? '+' : '') + val.toFixed(1);
     }
 
     function buildSlides() {
-        var carousel = document.getElementById('records-carousel');
-        var dotsContainer = document.getElementById('records-dots');
-        if (!carousel || !dotsContainer) return;
+        var carousel = document.getElementById('rw-carousel');
+        var dotsContainer = document.getElementById('rw-dots');
+        if (!carousel || !dotsContainer || typeof TRANSPARENCY_DATA === 'undefined') return;
 
         var slidesHTML = '';
         var dotsHTML = '';
 
-        RECORDS_DATA.forEach(function(sport, i) {
+        SPORT_ORDER.forEach(function(key, i) {
+            var s = TRANSPARENCY_DATA.sports[key];
+            if (!s) return;
             var isActive = i === 0 ? ' active' : '';
-            var unitsClass = sport.units >= 0 ? 'pos' : 'neg';
+            var unitsClass = s.totalUnits >= 0 ? 'pos' : 'neg';
 
             slidesHTML +=
-                '<div class="records-slide' + isActive + '" data-index="' + i + '">' +
-                    '<div class="records-sport">' + sport.sport + '</div>' +
-                    '<div class="records-record">' +
-                        '<span class="rw">' + sport.wins + '</span><span class="rs"> - </span><span class="rl">' + sport.losses + '</span><span class="rs"> - </span><span class="rp">' + sport.pushes + '</span>' +
+                '<div class="rw-slide' + isActive + '" data-index="' + i + '">' +
+                    '<div class="rw-league">' + s.displayName + '</div>' +
+                    '<div class="rw-record">' +
+                        '<span class="w">' + s.wins + '</span><span class="sep">&ndash;</span>' +
+                        '<span class="l">' + s.losses + '</span><span class="sep">&ndash;</span>' +
+                        '<span class="p">' + s.pushes + '</span>' +
                     '</div>' +
-                    '<div class="records-stats-row">' +
-                        '<div class="records-stat"><span class="stat-val ' + unitsClass + '">' + formatUnits(sport.units) + '</span><span class="stat-lbl">units</span></div>' +
-                        '<div class="records-stat"><span class="stat-val pct">' + sport.winPct + '%</span><span class="stat-lbl">win rate</span></div>' +
-                        '<div class="records-stat"><span class="stat-val cnt">' + sport.picks + '</span><span class="stat-lbl">picks</span></div>' +
+                    '<div class="rw-stats">' +
+                        '<div class="rw-stat"><div class="rw-stat-value ' + unitsClass + '">' + formatUnits(s.totalUnits) + '</div><div class="rw-stat-label">Units</div></div>' +
+                        '<div class="rw-stat"><div class="rw-stat-value rate">' + s.winPct + '%</div><div class="rw-stat-label">Win Rate</div></div>' +
+                        '<div class="rw-stat"><div class="rw-stat-value count">' + s.totalPicks + '</div><div class="rw-stat-label">Total Picks</div></div>' +
                     '</div>' +
                 '</div>';
 
-            dotsHTML += '<div class="records-dot' + isActive + '" data-index="' + i + '"></div>';
+            dotsHTML += '<button class="rw-dot' + isActive + '" data-index="' + i + '" aria-label="' + s.displayName + '"></button>';
         });
 
         carousel.innerHTML = slidesHTML;
         dotsContainer.innerHTML = dotsHTML;
 
-        document.querySelectorAll('.records-dot').forEach(function(dot) {
+        document.querySelectorAll('.rw-dot').forEach(function(dot) {
             dot.addEventListener('click', function() {
-                goToSlide(parseInt(this.dataset.index));
-                resetTimer();
+                goTo(parseInt(this.dataset.index));
+                startTimer();
             });
         });
     }
 
-    function goToSlide(index) {
-        var slides = document.querySelectorAll('.records-slide');
-        var dots = document.querySelectorAll('.records-dot');
+    function goTo(index) {
+        var slides = document.querySelectorAll('.rw-slide');
+        var dots = document.querySelectorAll('.rw-dot');
         if (slides.length === 0) return;
         slides[currentIndex].classList.remove('active');
         dots[currentIndex].classList.remove('active');
@@ -2444,32 +2470,30 @@ const RECORDS_DATA = [
         dots[currentIndex].classList.add('active');
     }
 
-    function nextSlide() {
-        var slides = document.querySelectorAll('.records-slide');
-        if (slides.length === 0) return;
-        goToSlide((currentIndex + 1) % slides.length);
+    function next() {
+        goTo((currentIndex + 1) % totalSlides);
     }
 
-    function resetTimer() {
-        if (rotationTimer) clearInterval(rotationTimer);
-        rotationTimer = setInterval(nextSlide, ROTATION_INTERVAL);
+    function startTimer() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(next, interval);
     }
 
     buildSlides();
-    resetTimer();
+    startTimer();
 
-    var block = document.querySelector('.records-block');
-    if (block) {
-        block.addEventListener('mouseenter', function() {
-            if (rotationTimer) clearInterval(rotationTimer);
+    var carousel = document.getElementById('rw-carousel');
+    if (carousel) {
+        carousel.addEventListener('mouseenter', function() {
+            if (timer) clearInterval(timer);
         });
-        block.addEventListener('mouseleave', function() {
-            resetTimer();
+        carousel.addEventListener('mouseleave', function() {
+            startTimer();
         });
     }
 })();
 </script>
-<!-- ==================== END RECORDS CAROUSEL JS ==================== -->
+<!-- ==================== END RECORDS WIDGET JS ==================== -->
 
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
