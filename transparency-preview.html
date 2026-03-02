@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparency Widget Preview | BetLegend</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #010008;
+            --text-primary: #ffffff;
+            --text-secondary: #a0c4ff;
+            --neon-cyan: #00f0ff;
+            --neon-gold: #ffd700;
+            --neon-orange: #ff6b00;
+            --glow-color: #00e0ff;
+            --win-color: #39ff14;
+            --glass-bg: rgba(0, 10, 30, 0.6);
+            --glass-border: rgba(0, 240, 255, 0.2);
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-secondary);
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Preview context label */
+        .preview-label {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--neon-orange);
+            margin-bottom: 40px;
+            padding: 8px 20px;
+            border: 1px solid rgba(255, 107, 0, 0.4);
+            border-radius: 20px;
+            background: rgba(255, 107, 0, 0.08);
+        }
+
+        /* ==================== TRANSPARENCY WIDGET ==================== */
+        .transparency-widget {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        /* Title Section */
+        .widget-title-section {
+            margin-bottom: 32px;
+        }
+
+        .widget-title {
+            font-family: var(--font-primary);
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .widget-subtitle {
+            font-family: var(--font-secondary);
+            font-size: 14px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .widget-subtitle-gold {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--neon-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Rotating Card Container */
+        .card-carousel {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .card-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+        }
+
+        .card-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .record-card {
+            background: linear-gradient(145deg, rgba(0, 15, 40, 0.85), rgba(0, 8, 25, 0.95));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 32px 36px;
+            backdrop-filter: blur(12px);
+            box-shadow:
+                0 0 30px rgba(0, 240, 255, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .record-card-league {
+            font-family: var(--font-primary);
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            margin-bottom: 24px;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .record-stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .record-stat {
+            text-align: center;
+        }
+
+        .record-stat-value {
+            font-family: var(--font-primary);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .record-stat-value.units-positive {
+            color: var(--neon-gold);
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+        }
+
+        .record-stat-value.units-negative {
+            color: #ff6b6b;
+            text-shadow: 0 0 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .record-stat-value.win-pct {
+            color: var(--win-color);
+            text-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+        }
+
+        .record-stat-value.total-picks {
+            color: var(--neon-cyan);
+        }
+
+        .record-stat-label {
+            font-family: var(--font-secondary);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .record-card-updated {
+            font-family: var(--font-secondary);
+            font-size: 12px;
+            color: rgba(160, 196, 255, 0.5);
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* Navigation Dots */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.15);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            transform: scale(1.15);
+        }
+
+        .carousel-dot:hover:not(.active) {
+            background: rgba(0, 240, 255, 0.35);
+        }
+
+        /* CTA Buttons */
+        .widget-cta-row {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .widget-cta {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .widget-cta-primary {
+            background: linear-gradient(135deg, var(--neon-gold), #e6c200);
+            color: #000;
+            border: none;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .widget-cta-primary:hover {
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .widget-cta-secondary {
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 1px solid var(--glass-border);
+        }
+
+        .widget-cta-secondary:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Last Updated Timestamp */
+        .widget-timestamp {
+            margin-top: 20px;
+            font-size: 11px;
+            color: rgba(160, 196, 255, 0.35);
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .widget-title { font-size: 22px; letter-spacing: 2px; }
+            .record-card-league { font-size: 26px; }
+            .record-stats-row { gap: 24px; }
+            .record-stat-value { font-size: 24px; }
+            .record-card { padding: 24px 20px; }
+            .widget-cta { padding: 12px 20px; font-size: 11px; }
+            .card-carousel { height: 260px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="preview-label">PREVIEW BUILD - NOT LIVE</div>
+
+    <!-- ==================== TRANSPARENCY WIDGET ==================== -->
+    <div class="transparency-widget" id="transparency-widget">
+
+        <!-- Title -->
+        <div class="widget-title-section">
+            <div class="widget-title">Verified All Time Record</div>
+            <div class="widget-subtitle">Tracked Since Day 1 Inside Discord</div>
+            <div class="widget-subtitle-gold">Updated Daily</div>
+        </div>
+
+        <!-- Rotating Card Carousel -->
+        <div class="card-carousel" id="card-carousel">
+            <!-- Slides injected by JS -->
+        </div>
+
+        <!-- Navigation Dots -->
+        <div class="carousel-dots" id="carousel-dots">
+            <!-- Dots injected by JS -->
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="widget-cta-row">
+            <a href="betlegend-verified-records.html" class="widget-cta widget-cta-primary">View Full Verified Record</a>
+            <a href="howitworks.html" class="widget-cta widget-cta-secondary">How We Track Everything</a>
+        </div>
+
+        <!-- Timestamp -->
+        <div class="widget-timestamp" id="widget-timestamp"></div>
+    </div>
+
+    <!-- Load data file -->
+    <script src="transparency-widget-data.js"></script>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // Rotation order
+        const SPORT_ORDER = ['NHL', 'MLB', 'NFL', 'NCAAF'];
+        const ROTATION_INTERVAL = 5000; // 5 seconds
+
+        let currentIndex = 0;
+        let rotationTimer = null;
+
+        function formatUnits(val) {
+            const sign = val >= 0 ? '+' : '';
+            return sign + val.toFixed(1);
+        }
+
+        function buildSlides() {
+            const carousel = document.getElementById('card-carousel');
+            const dotsContainer = document.getElementById('carousel-dots');
+
+            if (typeof TRANSPARENCY_DATA === 'undefined') {
+                carousel.innerHTML = '<div style="color:#ff6b6b;padding:40px;">Data file not loaded. Run: python scripts/generate_transparency_data.py</div>';
+                return;
+            }
+
+            const sports = TRANSPARENCY_DATA.sports;
+            let slidesHTML = '';
+            let dotsHTML = '';
+
+            SPORT_ORDER.forEach(function(key, i) {
+                const sport = sports[key];
+                if (!sport) return;
+
+                const isActive = i === 0 ? ' active' : '';
+                const unitsClass = sport.totalUnits >= 0 ? 'units-positive' : 'units-negative';
+
+                slidesHTML += `
+                    <div class="card-slide${isActive}" data-index="${i}">
+                        <div class="record-card">
+                            <div class="record-card-league">${sport.displayName}</div>
+                            <div class="record-stats-row">
+                                <div class="record-stat">
+                                    <div class="record-stat-value ${unitsClass}">${formatUnits(sport.totalUnits)}</div>
+                                    <div class="record-stat-label">Total Units</div>
+                                </div>
+                                <div class="record-stat">
+                                    <div class="record-stat-value win-pct">${sport.winPct}%</div>
+                                    <div class="record-stat-label">Win Rate</div>
+                                </div>
+                                <div class="record-stat">
+                                    <div class="record-stat-value total-picks">${sport.totalPicks}</div>
+                                    <div class="record-stat-label">Total Picks</div>
+                                </div>
+                            </div>
+                            <div class="record-card-updated">Updated Daily</div>
+                        </div>
+                    </div>
+                `;
+
+                dotsHTML += `<div class="carousel-dot${isActive}" data-index="${i}"></div>`;
+            });
+
+            carousel.innerHTML = slidesHTML;
+            dotsContainer.innerHTML = dotsHTML;
+
+            // Set timestamp
+            document.getElementById('widget-timestamp').textContent =
+                'Data last synced: ' + TRANSPARENCY_DATA.lastUpdated;
+
+            // Attach dot click handlers
+            document.querySelectorAll('.carousel-dot').forEach(function(dot) {
+                dot.addEventListener('click', function() {
+                    goToSlide(parseInt(this.dataset.index));
+                    resetTimer();
+                });
+            });
+        }
+
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.card-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            if (slides.length === 0) return;
+
+            // Deactivate current
+            slides[currentIndex].classList.remove('active');
+            dots[currentIndex].classList.remove('active');
+
+            // Activate new
+            currentIndex = index;
+            slides[currentIndex].classList.add('active');
+            dots[currentIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            const slides = document.querySelectorAll('.card-slide');
+            if (slides.length === 0) return;
+            const next = (currentIndex + 1) % slides.length;
+            goToSlide(next);
+        }
+
+        function resetTimer() {
+            if (rotationTimer) clearInterval(rotationTimer);
+            rotationTimer = setInterval(nextSlide, ROTATION_INTERVAL);
+        }
+
+        // Initialize
+        buildSlides();
+        resetTimer();
+
+        // Pause rotation on hover, resume on leave
+        var widget = document.getElementById('card-carousel');
+        widget.addEventListener('mouseenter', function() {
+            if (rotationTimer) clearInterval(rotationTimer);
+        });
+        widget.addEventListener('mouseleave', function() {
+            resetTimer();
+        });
+    })();
+    </script>
+
+</body>
+</html>
