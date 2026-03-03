@@ -290,9 +290,10 @@ class AutoContentOrchestrator:
             message = f"Auto-update sports content for {date}"
 
         try:
-            # Add all changes
+            # Add only tracked/modified files (NOT untracked files from other sessions)
+            # Using -u flag to avoid sweeping up stale SLATE/Claude files
             subprocess.run(
-                ['git', '-C', REPO_PATH, 'add', '-A'],
+                ['git', '-C', REPO_PATH, 'add', '-u'],
                 check=True, capture_output=True
             )
 
