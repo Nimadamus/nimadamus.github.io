@@ -537,10 +537,86 @@ def remove_pagination_from_sports_pages():
         print(f"  [OK] No pagination found - all clean!")
     return count
 
+def fix_main_page_canonicals():
+    """
+    PERMANENTLY ensures main sport pages (nba.html, nhl.html, etc.) have
+    self-referential canonical and og:url tags.
+
+    WHY: SLATE copies archive page content into main pages, bringing along
+    the archive page's canonical/og:url. This tells Google the main page is
+    a duplicate of the archive page, which destroys SEO on the main pages.
+
+    This runs automatically with every calendar sync (which runs after every SLATE).
+    Added March 5, 2026.
+    """
+    print("\n[CANONICAL FIX] Enforcing self-referential canonicals on main sport pages...")
+    MAIN_PAGES = {
+        'nba.html': 'https://www.betlegendpicks.com/nba.html',
+        'nhl.html': 'https://www.betlegendpicks.com/nhl.html',
+        'ncaab.html': 'https://www.betlegendpicks.com/ncaab.html',
+        'ncaaf.html': 'https://www.betlegendpicks.com/ncaaf.html',
+        'nfl.html': 'https://www.betlegendpicks.com/nfl.html',
+        'mlb.html': 'https://www.betlegendpicks.com/mlb.html',
+        'soccer.html': 'https://www.betlegendpicks.com/soccer.html',
+    }
+    fixed_count = 0
+
+    for filename, correct_url in MAIN_PAGES.items():
+        filepath = REPO_DIR / filename
+        if not filepath.exists():
+            continue
+
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+
+        original = content
+
+        # Fix canonical tag - replace any href value with the correct self-referential URL
+        content = re.sub(
+            r'(<link\s[^>]*rel="canonical"[^>]*href=")[^"]*(")',
+            rf'\g<1>{correct_url}\2',
+            content
+        )
+        # Also handle reversed attribute order: href before rel
+        content = re.sub(
+            r'(<link\s[^>]*href=")[^"]*("[^>]*rel="canonical")',
+            rf'\g<1>{correct_url}\2',
+            content
+        )
+
+        # Fix og:url tag
+        content = re.sub(
+            r'(<meta\s[^>]*property="og:url"[^>]*content=")[^"]*(")',
+            rf'\g<1>{correct_url}\2',
+            content
+        )
+        # Also handle reversed attribute order
+        content = re.sub(
+            r'(<meta\s[^>]*content=")[^"]*("[^>]*property="og:url")',
+            rf'\g<1>{correct_url}\2',
+            content
+        )
+
+        if content != original:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
+            fixed_count += 1
+            print(f"  [FIXED] {filename} - canonical/og:url now points to itself")
+
+    if fixed_count == 0:
+        print("  [OK] All main pages already have correct canonicals")
+    else:
+        print(f"  [OK] Fixed {fixed_count} main page(s)")
+    return fixed_count
+
+
 def main():
     print("=" * 60)
     print("BetLegend Calendar Sync (Enhanced Date Extraction)")
     print("=" * 60)
+
+    # ALWAYS fix main page canonicals first (prevents SLATE from breaking SEO)
+    fix_main_page_canonicals()
 
     # ALWAYS remove pagination first - sports pages use calendar only
     remove_pagination_from_sports_pages()
