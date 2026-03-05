@@ -1037,7 +1037,7 @@ async function fetchAllData() {
  const odds = row.Odds || row.Line || '-110';
  const result = row.Result || '';
  // Use sport-specific default stakes to match individual records pages
- const sportDefaults = { 'NFL': '2', 'NBA': '1', 'NHL': '3', 'MLB': '1', 'NCAAF': '1', 'NCAAB': '1', 'Soccer': '1' };
+ const sportDefaults = { 'NFL': '2', 'NBA': '1', 'NHL': '3', 'MLB': '1', 'NCAAF': '3', 'NCAAB': '3', 'Soccer': '1' };
  const stake = row.Units || sportDefaults[detectedSport] || '1';
  return {
  ...row,
