@@ -1007,10 +1007,17 @@ async function fetchAllData() {
  const csv = await response.text();
  const rows = parseCSV(csv);
  console.log(`📊 ${sheetSport} sheet: ${rows.length} rows`);
- return rows.map(row => ({
+ return rows.map(row => {
+ const result = (row.Result || row.result || '').toUpperCase().trim();
+ const hasResult = result === 'W' || result === 'WIN' || result === 'L' || result === 'LOSS' || result === 'P' || result === 'PUSH';
+ const rawUnits = parseFloat(row.Units || row.units || 0);
+ return {
  ...row,
- sport: sheetSport
- }));
+ sport: sheetSport,
+ // Sport sheets: Units column is pre-calculated P/L - use directly
+ unitPL: hasResult && !isNaN(rawUnits) ? rawUnits : null
+ };
+ });
  } catch (error) {
  console.error(`Error fetching ${sheetSport} data:`, error);
  return [];
@@ -1027,11 +1034,16 @@ async function fetchAllData() {
  return rows.map(row => {
  const detectedSport = detectSportFromPick(row);
  if (!detectedSport) return null;
+ const odds = row.Odds || row.Line || '-110';
+ const result = row.Result || '';
+ const stake = row.Units || '3';
  return {
  ...row,
  sport: detectedSport,
- Line: row.Odds || row.Line || '',
- fromPickTracker: true
+ Line: odds,
+ fromPickTracker: true,
+ // Pick Tracker: Units = STAKE, calculate P/L (same as sport records pages)
+ unitPL: result ? calculateUnitResult(stake, odds, result) : null
  };
  }).filter(row => row !== null);
  } catch (error) {
@@ -1196,8 +1208,8 @@ function calculateSportBreakdown() {
  <td><span class="badge badge-${sport.toLowerCase()}">${sport}</span></td>
  <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
  <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+ <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
  `;
  tbody.appendChild(row);
@@ -1266,8 +1278,8 @@ function calculateBetTypeBreakdown() {
  <td><strong>${betType.name}</strong></td>
  <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
  <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+ <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${findBestSport(betType.data)}</td>
  `;
  tbody.appendChild(row);
@@ -1341,8 +1353,8 @@ function calculateMonthlyBreakdown() {
  <td><strong>${month.name}</strong></td>
  <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
  <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+ <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${bestSport}</td>
  `;
  tbody.appendChild(row);
@@ -1545,45 +1557,42 @@ function calculateStats(data, useActualBetSizes = false) {
  return;
  }
 
- // Get the actual bet size (stake) for accurate calculations
- const betSize = useActualBetSizes ? extractBetSize(row) : 1;
- const odds = extractOdds(line) || -110; // Default to -110 if can't parse
-
- // Count wins, losses, pushes and CALCULATE unit profit/loss
+ const odds = extractOdds(line) || -110;
  const resultUpper = result.toUpperCase();
 
- // Calculate actual risk based on odds (CLAUDE.md formula)
- // betSize = Units = what you're trying to WIN
- // Favorites: risk = betSize × |odds|/100 (risk more to win target)
- // Underdogs: risk = betSize (risk target to win more)
- const actualRisk = odds < 0 ? betSize * (Math.abs(odds) / 100) : betSize;
+ // Use pre-computed P/L (unitPL) when available for accurate unit totals.
+ // This matches the calculation used on individual sport records pages
+ // (e.g., nhl-records.html) which read P/L directly rather than
+ // reverse-engineering stakes through extractBetSize().
+ const hasPrecomputedPL = row.unitPL !== undefined && row.unitPL !== null && !isNaN(row.unitPL);
 
  if (resultUpper === 'W' || resultUpper === 'WIN') {
  wins++;
- totalRisked += actualRisk;
- // Calculate profit based on CLAUDE.md formula
- // Favorites (negative odds): profit = stake (win what you were trying to win)
- // Underdogs (positive odds): profit = stake × (odds / 100)
- if (odds < 0) {
- totalUnits += betSize; // Favorite win: profit = stake
+ if (hasPrecomputedPL) {
+ totalUnits += row.unitPL;
+ // Derive risk from P/L + odds (same formula as sport records pages)
+ totalRisked += odds < 0 ? row.unitPL * (Math.abs(odds) / 100) : (odds > 0 ? row.unitPL / (odds / 100) : row.unitPL);
  } else {
- totalUnits += betSize * (odds / 100); // Underdog win: profit = stake × (odds/100)
+ const betSize = useActualBetSizes ? extractBetSize(row) : 1;
+ totalRisked += odds < 0 ? betSize * (Math.abs(odds) / 100) : betSize;
+ totalUnits += odds < 0 ? betSize : betSize * (odds / 100);
  }
  } else if (resultUpper === 'L' || resultUpper === 'LOSS') {
  losses++;
- totalRisked += actualRisk;
- // Calculate loss based on CLAUDE.md formula
- // Favorites (negative odds): loss = stake × (|odds| / 100)
- // Underdogs (positive odds): loss = stake
- if (odds < 0) {
- totalUnits -= betSize * (Math.abs(odds) / 100); // Favorite loss: lose stake × (|odds|/100)
+ if (hasPrecomputedPL) {
+ totalUnits += row.unitPL; // Already negative
+ totalRisked += Math.abs(row.unitPL);
  } else {
- totalUnits -= betSize; // Underdog loss: lose stake
+ const betSize = useActualBetSizes ? extractBetSize(row) : 1;
+ const actualRisk = odds < 0 ? betSize * (Math.abs(odds) / 100) : betSize;
+ totalRisked += actualRisk;
+ totalUnits -= odds < 0 ? betSize * (Math.abs(odds) / 100) : betSize;
  }
  } else if (resultUpper === 'P' || resultUpper === 'PUSH') {
  pushes++;
- totalRisked += actualRisk;
- // Pushes are 0 profit/loss, but still risked capital
+ // Pushes: 0 P/L but still risked capital
+ const betSize = useActualBetSizes ? extractBetSize(row) : 1;
+ totalRisked += odds < 0 ? betSize * (Math.abs(odds) / 100) : betSize;
  }
 
  // Track odds - ONLY for straight bets (exclude parlays/teasers) but INCLUDE pushes
@@ -1677,8 +1686,8 @@ function calculateTeaserBreakdown() {
  <td><strong>📊 TOTAL TEASERS</strong></td>
  <td class="${totalStats.winRate > 50 ? 'win' : 'loss'}">${totalStats.record}</td>
  <td class="${totalStats.winRate > 50 ? 'win' : ''}">${totalStats.winRate.toFixed(1)}%</td>
- <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(1)}u</td>
- <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(1)}%</td>
+ <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
+ <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(allTeasersData)}</td>
  `;
  tbody.appendChild(totalRow);
@@ -1712,8 +1721,8 @@ function calculateTeaserBreakdown() {
  <td><strong>${teaserType.name}</strong></td>
  <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
  <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+ <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${findBestSport(typeData)}</td>
  `;
  tbody.appendChild(row);
@@ -1773,8 +1782,8 @@ function calculateParlayBreakdown() {
  <td><strong>${parlayType.name}</strong></td>
  <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
  <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+ <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${findBestSport(typeData)}</td>
  `;
  tbody.appendChild(row);
@@ -1798,8 +1807,8 @@ function calculateParlayBreakdown() {
  <td style="color: var(--accent);"><strong>TOTAL PARLAYS</strong></td>
  <td class="${totalStats.winRate > 50 ? 'win' : 'loss'}">${totalStats.record}</td>
  <td class="${totalStats.winRate > 50 ? 'win' : ''}">${totalStats.winRate.toFixed(1)}%</td>
- <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(1)}u</td>
- <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(1)}%</td>
+ <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
+ <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(allParlayData)}</td>
  `;
  tbody.appendChild(totalRow);
@@ -1853,8 +1862,8 @@ function calculateFiveInningBreakdown() {
  <td><strong>${betType.name}</strong></td>
  <td class="${stats.winRate > 50 ? 'win' : 'loss'}">${stats.record}</td>
  <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+ <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
  `;
  tbody.appendChild(row);
@@ -1890,8 +1899,8 @@ function calculateTotalBetsBreakdown() {
  <td><strong>All Total Bets</strong></td>
  <td class="${allTotalsStats.winRate > 50 ? 'win' : 'loss'}">${allTotalsStats.record}</td>
  <td class="${allTotalsStats.winRate > 50 ? 'win' : ''}">${allTotalsStats.winRate.toFixed(1)}%</td>
- <td class="${allTotalsStats.units >= 0 ? 'win' : 'loss'}">${allTotalsStats.units >= 0 ? '+' : ''}${allTotalsStats.units.toFixed(1)}u</td>
- <td class="${allTotalsStats.roi >= 0 ? 'win' : 'loss'}">${allTotalsStats.roi >= 0 ? '+' : ''}${allTotalsStats.roi.toFixed(1)}%</td>
+ <td class="${allTotalsStats.units >= 0 ? 'win' : 'loss'}">${allTotalsStats.units >= 0 ? '+' : ''}${allTotalsStats.units.toFixed(2)}u</td>
+ <td class="${allTotalsStats.roi >= 0 ? 'win' : 'loss'}">${allTotalsStats.roi >= 0 ? '+' : ''}${allTotalsStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(totalBetsData)}</td>
  `;
  tbody.appendChild(row);
@@ -1909,8 +1918,8 @@ function calculateTotalBetsBreakdown() {
  <td><strong>Over Bets</strong></td>
  <td class="${overStats.winRate > 50 ? 'win' : 'loss'}">${overStats.record}</td>
  <td class="${overStats.winRate > 50 ? 'win' : ''}">${overStats.winRate.toFixed(1)}%</td>
- <td class="${overStats.units >= 0 ? 'win' : 'loss'}">${overStats.units >= 0 ? '+' : ''}${overStats.units.toFixed(1)}u</td>
- <td class="${overStats.roi >= 0 ? 'win' : 'loss'}">${overStats.roi >= 0 ? '+' : ''}${overStats.roi.toFixed(1)}%</td>
+ <td class="${overStats.units >= 0 ? 'win' : 'loss'}">${overStats.units >= 0 ? '+' : ''}${overStats.units.toFixed(2)}u</td>
+ <td class="${overStats.roi >= 0 ? 'win' : 'loss'}">${overStats.roi >= 0 ? '+' : ''}${overStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(overData)}</td>
  `;
  tbody.appendChild(row);
@@ -1929,8 +1938,8 @@ function calculateTotalBetsBreakdown() {
  <td><strong>Under Bets</strong></td>
  <td class="${underStats.winRate > 50 ? 'win' : 'loss'}">${underStats.record}</td>
  <td class="${underStats.winRate > 50 ? 'win' : ''}">${underStats.winRate.toFixed(1)}%</td>
- <td class="${underStats.units >= 0 ? 'win' : 'loss'}">${underStats.units >= 0 ? '+' : ''}${underStats.units.toFixed(1)}u</td>
- <td class="${underStats.roi >= 0 ? 'win' : 'loss'}">${underStats.roi >= 0 ? '+' : ''}${underStats.roi.toFixed(1)}%</td>
+ <td class="${underStats.units >= 0 ? 'win' : 'loss'}">${underStats.units >= 0 ? '+' : ''}${underStats.units.toFixed(2)}u</td>
+ <td class="${underStats.roi >= 0 ? 'win' : 'loss'}">${underStats.roi >= 0 ? '+' : ''}${underStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(underData)}</td>
  `;
  tbody.appendChild(row);
@@ -1951,8 +1960,8 @@ function calculateTotalBetsBreakdown() {
  <td><strong>Team Totals</strong></td>
  <td class="${ttStats.winRate > 50 ? 'win' : 'loss'}">${ttStats.record}</td>
  <td class="${ttStats.winRate > 50 ? 'win' : ''}">${ttStats.winRate.toFixed(1)}%</td>
- <td class="${ttStats.units >= 0 ? 'win' : 'loss'}">${ttStats.units >= 0 ? '+' : ''}${ttStats.units.toFixed(1)}u</td>
- <td class="${ttStats.roi >= 0 ? 'win' : 'loss'}">${ttStats.roi >= 0 ? '+' : ''}${ttStats.roi.toFixed(1)}%</td>
+ <td class="${ttStats.units >= 0 ? 'win' : 'loss'}">${ttStats.units >= 0 ? '+' : ''}${ttStats.units.toFixed(2)}u</td>
+ <td class="${ttStats.roi >= 0 ? 'win' : 'loss'}">${ttStats.roi >= 0 ? '+' : ''}${ttStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(teamTotalData)}</td>
  `;
  tbody.appendChild(row);
@@ -1973,8 +1982,8 @@ function calculateTotalBetsBreakdown() {
  <td><strong>Game Totals</strong></td>
  <td class="${gameStats.winRate > 50 ? 'win' : 'loss'}">${gameStats.record}</td>
  <td class="${gameStats.winRate > 50 ? 'win' : ''}">${gameStats.winRate.toFixed(1)}%</td>
- <td class="${gameStats.units >= 0 ? 'win' : 'loss'}">${gameStats.units >= 0 ? '+' : ''}${gameStats.units.toFixed(1)}u</td>
- <td class="${gameStats.roi >= 0 ? 'win' : 'loss'}">${gameStats.roi >= 0 ? '+' : ''}${gameStats.roi.toFixed(1)}%</td>
+ <td class="${gameStats.units >= 0 ? 'win' : 'loss'}">${gameStats.units >= 0 ? '+' : ''}${gameStats.units.toFixed(2)}u</td>
+ <td class="${gameStats.roi >= 0 ? 'win' : 'loss'}">${gameStats.roi >= 0 ? '+' : ''}${gameStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(gameTotalData)}</td>
  `;
  tbody.appendChild(row);
@@ -1995,8 +2004,8 @@ function calculateTotalBetsBreakdown() {
  <td><strong>First Half Totals</strong></td>
  <td class="${fhStats.winRate > 50 ? 'win' : 'loss'}">${fhStats.record}</td>
  <td class="${fhStats.winRate > 50 ? 'win' : ''}">${fhStats.winRate.toFixed(1)}%</td>
- <td class="${fhStats.units >= 0 ? 'win' : 'loss'}">${fhStats.units >= 0 ? '+' : ''}${fhStats.units.toFixed(1)}u</td>
- <td class="${fhStats.roi >= 0 ? 'win' : 'loss'}">${fhStats.roi >= 0 ? '+' : ''}${fhStats.roi.toFixed(1)}%</td>
+ <td class="${fhStats.units >= 0 ? 'win' : 'loss'}">${fhStats.units >= 0 ? '+' : ''}${fhStats.units.toFixed(2)}u</td>
+ <td class="${fhStats.roi >= 0 ? 'win' : 'loss'}">${fhStats.roi >= 0 ? '+' : ''}${fhStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(firstHalfData)}</td>
  `;
  tbody.appendChild(row);
@@ -2031,8 +2040,8 @@ function calculateTeamTotalsBySport() {
  <td><span class="badge badge-${sport.toLowerCase()}">${sport}</span></td>
  <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.record}</td>
  <td class="${stats.winRate >= 50 ? 'win' : 'loss'}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(1)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(1)}%</td>
+ <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
  `;
  tbody.appendChild(row);
@@ -2077,7 +2086,7 @@ function createPerformanceChart() {
  margin-bottom: 10px;
  text-shadow: 0 0 10px ${isPositive ? '#39FF14' : '#FF3131'};
  ">
- ${sport.units >= 0 ? '+' : ''}${sport.units.toFixed(1)}u
+ ${sport.units >= 0 ? '+' : ''}${sport.units.toFixed(2)}u
  </div>
  <div style="
  width: 80px;
@@ -2366,7 +2375,7 @@ async function init() {
 
  // Overall stats
  const overallStats = calculateStats(allData, true);
- console.log(`Overall Record: ${overallStats.record}, Units: ${overallStats.units.toFixed(1)}u, Total Risked: ${overallStats.totalRisked.toFixed(1)}u, ROI: ${overallStats.roi.toFixed(1)}%`);
+ console.log(`Overall Record: ${overallStats.record}, Units: ${overallStats.units.toFixed(2)}u, Total Risked: ${overallStats.totalRisked.toFixed(2)}u, ROI: ${overallStats.roi.toFixed(2)}%`);
 
  // Sport breakdown verification
  let sportTotalWins = 0, sportTotalLosses = 0, sportTotalPushes = 0, sportTotalUnits = 0;
@@ -2380,7 +2389,7 @@ async function init() {
  sportTotalUnits += stats.units;
  }
  });
- console.log(`Sport Breakdown Total: ${sportTotalWins}-${sportTotalLosses}-${sportTotalPushes}, Units: ${sportTotalUnits.toFixed(1)}u`);
+ console.log('Sport Breakdown Total: ' + sportTotalWins + '-' + sportTotalLosses + '-' + sportTotalPushes + ', Units: ' + sportTotalUnits.toFixed(2) + 'u');
  console.log(`Match Overall: ${sportTotalWins === overallStats.wins && sportTotalLosses === overallStats.losses && sportTotalPushes === overallStats.pushes ? '✓ YES' : '✗ NO'}`);
 
  // Unit sizing verification
