@@ -4,8 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-03-06", page: "wolves-liverpool-fa-cup-revenge-psg-monaco-le-classique-soccer-march-6-2026.html", title: "Soccer Analysis Friday March 6 2026 Wolves Liverpool FA Cup PSG Monaco Le Classique" },
-    { date: "2026-03-05", page: "spurs-relegation-crisis-crystal-palace-coupe-de-france-lens-soccer-march-5-2026.html", title: "Soccer Analysis Thursday March 5 2026 Spurs Relegation Crisis Crystal Palace" },
-    { date: "2026-03-04", page: "soccer.html", title: "Soccer Game Previews Analysis Wednesday March 4 2026" },
+    { date: "2026-03-06", page: "soccer.html", title: "Soccer Analysis Friday March 6 2026 Wolves Liverpool FA Cup PSG Monaco Le Classique" },
+    { date: "2026-03-05", page: "spurs-relegation-crisis-crystal-palace-coupe-de-france-lens-soccer-march-5-2026.html", title: "Soccer Analysis Thursday March 5 2026 Spurs Relegation Crisis Crystal Palace Coupe de France" },
     { date: "2026-03-04", page: "brighton-arsenal-man-city-forest-premier-league-soccer-march-4-2026.html", title: "Soccer Game Previews Analysis Wednesday March 4 2026" },
     { date: "2026-03-03", page: "wolves-liverpool-premier-league-title-race-soccer-march-3-2026.html", title: "Soccer Game Previews Analysis Tuesday March 3 2026" },
     { date: "2026-03-02", page: "real-madrid-getafe-serie-a-la-liga-soccer-march-2-2026.html", title: "Soccer Game Previews Analysis Monday March 2 2026" },
