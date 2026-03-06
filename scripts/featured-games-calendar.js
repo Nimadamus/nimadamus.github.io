@@ -1,7 +1,14 @@
 // Featured Games Calendar - RENDERING ENGINE ONLY
 // Data comes from featured-games-data.js (loaded before this script)
 // This file contains ONLY rendering logic - NO embedded data
-// Last updated: February 16, 2026
+// Last updated: March 6, 2026
+//
+// !! CRITICAL - DO NOT CHANGE THE activeDate LOGIC !!
+// activeDate MUST equal: pageDate || newestDate
+// This ensures the calendar highlights the page you're VIEWING.
+// If you set activeDate = newestDate alone, the highlight will be
+// stuck on the newest date no matter which page the user visits.
+// The pre-commit hook enforces this. See March 6 2026 fix.
 
 // Read data from FEATURED_GAMES (defined by featured-games-data.js)
 // Sort newest-first for display purposes
