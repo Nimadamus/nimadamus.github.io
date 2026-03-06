@@ -1011,6 +1011,61 @@ If the user asks you to create a slate post (NBA, NHL, NFL, NCAAB, MLB), you MUS
 
 ---
 
+## ⛔⛔⛔ ABSOLUTE RULE: EVERY ACTIVE SPORT GETS A PAGE EVERY DAY ⛔⛔⛔
+
+### PERMANENTLY LOCKED - MARCH 6, 2026
+
+**When running SLATE, EVERY sport that has games today MUST get its own dedicated page. NO EXCEPTIONS. NO SKIPPING.**
+
+### MANDATORY DAILY SPORT CHECKLIST:
+```
+BEFORE considering SLATE complete, VERIFY each sport:
+
+□ NBA page created?     (October - June: EVERY DAY)
+□ NHL page created?     (October - June: EVERY DAY)
+□ Soccer page created?  (YEAR-ROUND: EVERY DAY - Premier League, La Liga, Serie A, Bundesliga, Champions League, etc.)
+□ NCAAB page created?   (November - March: EVERY DAY with games)
+□ NFL page created?     (September - February: EVERY game day)
+□ NCAAF page created?   (August - January: EVERY game day)
+□ MLB page created?     (March - October: EVERY DAY)
+□ Featured Game created? (EVERY DAY - one marquee matchup)
+
+IF A SPORT HAS GAMES TODAY AND NO PAGE WAS CREATED → SLATE IS NOT COMPLETE.
+```
+
+### SOCCER IS YEAR-ROUND - NEVER SKIP IT:
+```
+Soccer ALWAYS has games. Major leagues play nearly every day:
+- Premier League (England)
+- La Liga (Spain)
+- Serie A (Italy)
+- Bundesliga (Germany)
+- Ligue 1 (France)
+- Champions League / Europa League (Tuesdays/Wednesdays)
+- MLS (March - November)
+
+SEARCH "soccer schedule [today's date]" and cover the top matchups.
+Soccer is NOT seasonal. It runs 365 days a year.
+```
+
+### WHY THIS EXISTS (March 6, 2026):
+- Soccer pages were created March 1-4 but SKIPPED on March 5 and 6
+- User discovered the gap and had to ask why soccer was missing
+- This should never require user intervention - EVERY sport gets covered EVERY day
+
+### THE COMPLETION CHECK:
+```
+After creating all SLATE content, mentally run through the checklist:
+"Did I create pages for NBA? NHL? Soccer? NCAAB? Featured Game?"
+
+If ANY active sport is missing → GO BACK AND CREATE IT.
+SLATE is not done until ALL active sports have pages.
+```
+
+**IF I SKIP A SPORT THAT HAS GAMES TODAY, I HAVE FAILED.**
+
+---
+
 ## STEP 4: POSTING LOCATIONS
 
 - **Blog picks/analysis**: blog-page10.html (add to TOP)
@@ -1018,7 +1073,9 @@ If the user asks you to create a slate post (NBA, NHL, NFL, NCAAB, MLB), you MUS
 - **NHL slate posts**: nhl.html (add to TOP)
 - **NCAAB posts**: ncaab.html (add to TOP)
 - **NFL posts**: nfl.html (add to TOP)
-- **Featured Game of the Day**: featured-game-of-the-day-page20.html (current - Dec 18, 2025)
+- **Soccer posts**: soccer.html (add to TOP)
+- **MLB slate posts**: mlb.html (add to TOP)
+- **Featured Game of the Day**: Latest keyword-rich featured game page
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
 
 ### ⛔ CRITICAL: FEATURED GAME OF THE DAY = ANALYSIS ONLY, NO PICKS ⛔

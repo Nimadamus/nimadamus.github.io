@@ -7,8 +7,7 @@
 // Sort newest-first for display purposes
 const ARCHIVE_DATA = (typeof FEATURED_GAMES !== 'undefined') ? [...FEATURED_GAMES].sort((a, b) => b.date.localeCompare(a.date)) : [];
 
-// The newest entry is ALWAYS the active date in the calendar
-// This ensures: add a new page -> calendar immediately shows that date
+// newestDate = fallback for pages not in the calendar (homepage, sport pages)
 const newestDate = ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : null;
 
 const dateMap = {};
@@ -19,12 +18,7 @@ ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });
 
 const currentPage = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || 'index.html';
 
-// The calendar ALWAYS highlights the newest entry in featured-games-data.js
-// This way, whenever you add a new page, every calendar across the site
-// immediately shows that new date as the active/highlighted one
-const activeDate = newestDate;
-
-// pageDate is the date of the specific page being viewed (for month display fallback)
+// pageDate = the date of the specific page being viewed
 const pageDate = window.FORCED_PAGE_DATE || pageToDateMap[currentPage] || (function() {
     const title = document.title || '';
     const mNames = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -42,6 +36,11 @@ const pageDate = window.FORCED_PAGE_DATE || pageToDateMap[currentPage] || (funct
     return null;
 })();
 
+// Highlight the DATE OF THE PAGE YOU'RE ACTUALLY VIEWING
+// If you're on a featured game page, highlight THAT date
+// Only fall back to newest date on non-featured pages (homepage, sport pages, etc.)
+const activeDate = pageDate || newestDate;
+
 // Auto-add current page to dateMap if not already there
 if (pageDate && !dateMap[pageDate]) {
     dateMap[pageDate] = { date: pageDate, page: currentPage, title: document.title.split('|')[0].trim() };
@@ -55,14 +54,15 @@ if (newestDate) { const [y, m] = newestDate.split('-'); months.add(y + '-' + m);
 const sortedMonths = Array.from(months).sort().reverse();
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-// Calendar ALWAYS opens to the newest entry's month
+// Calendar opens to the ACTIVE date's month (the page you're viewing)
+// This ensures the highlighted day is always visible when the calendar loads
 let displayMonth;
-if (newestDate) {
+if (activeDate) {
+    const [ay, am] = activeDate.split('-');
+    displayMonth = ay + '-' + am;
+} else if (newestDate) {
     const [ny, nm] = newestDate.split('-');
     displayMonth = ny + '-' + nm;
-} else if (pageDate) {
-    const [py, pm] = pageDate.split('-');
-    displayMonth = py + '-' + pm;
 } else {
     const today = new Date();
     displayMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
@@ -100,7 +100,7 @@ function renderCalendar(yearMonth) {
         const cell = document.createElement('div');
         cell.className = 'cal-day';
         cell.textContent = d;
-        // Gold highlight = newest entry (the "current" featured game)
+        // Gold highlight = the page you're currently viewing (or newest if on homepage)
         if (dateStr === activeDate) cell.classList.add('current-page');
         if (dateMap[dateStr]) {
             cell.classList.add('has-content');
