@@ -116,11 +116,18 @@ BANNED FOREVER (old format):
 ❌ soccer-page52.html
 ❌ Any file named [sport]-page[number].html
 
-REQUIRED (new format - NO picks/predictions/best-bets in URLs):
-✅ nba-game-previews-analysis-february-15-2026.html
-✅ nhl-game-previews-analysis-february-15-2026.html
+REQUIRED (new format - UNIQUE STORYLINE-DRIVEN URLs):
+✅ knicks-seek-revenge-in-denver-tatum-returns-nba-march-6-2026.html
+✅ nhl-trade-deadline-day-avalanche-stars-showdown-march-6-2026.html
+✅ miami-ohio-perfect-season-on-the-line-ncaab-march-6-2026.html
+✅ arsenal-chelsea-london-derby-premier-league-soccer-march-1-2026.html
 ✅ lakers-vs-celtics-analysis-stats-preview-february-15-2026.html
-✅ soccer-game-previews-analysis-february-15-2026.html
+
+ALSO BANNED (too generic, just date-stamped):
+❌ nba-game-previews-analysis-february-15-2026.html
+❌ nhl-game-previews-analysis-february-15-2026.html
+❌ college-basketball-game-previews-february-15-2026.html
+❌ soccer-game-previews-analysis-february-15-2026.html
 ```
 
 ### URL FORMULAS BY PAGE TYPE:
@@ -130,16 +137,20 @@ REQUIRED (new format - NO picks/predictions/best-bets in URLs):
 BANNED WORDS IN URLs: picks, predictions, best bets, against the spread, betting
 These are analysis/preview pages - URLs must reflect that.
 
-nba-game-previews-analysis-[month]-[day]-[year].html
-nhl-game-previews-analysis-[month]-[day]-[year].html
-nfl-game-previews-analysis-[month]-[day]-[year].html
-college-basketball-game-previews-[month]-[day]-[year].html
-college-football-game-previews-[month]-[day]-[year].html
-soccer-game-previews-analysis-[month]-[day]-[year].html
-mlb-game-previews-analysis-[month]-[day]-[year].html
+EACH URL MUST BE UNIQUE AND STORYLINE-DRIVEN:
+[storyline-or-marquee-matchup]-[sport]-[month]-[day]-[year].html
 
-You can vary the wording (e.g., "matchup-previews", "pregame-analysis",
-"game-day-preview") but NEVER use picks/predictions/best-bets/betting.
+The URL should highlight the day's BEST storyline:
+- A rivalry game: cavaliers-bucks-battle-for-east-supremacy-nba-february-25-2026.html
+- A key player: tatum-returns-celtics-host-mavericks-nba-march-6-2026.html
+- A milestone: miami-ohio-perfect-season-on-the-line-ncaab-march-6-2026.html
+- A big event: nhl-trade-deadline-day-avalanche-stars-showdown-march-6-2026.html
+- A competition: champions-league-atletico-inter-newcastle-soccer-february-24-2026.html
+
+The sport abbreviation MUST appear in the URL (nba, nhl, ncaab, ncaaf, nfl, mlb, soccer)
+so the calendar sync script can identify the sport.
+
+NEVER use the same generic pattern every day. Every URL must be DIFFERENT.
 ```
 
 **Featured Game pages (ANALYSIS ONLY - no predictions/picks):**
