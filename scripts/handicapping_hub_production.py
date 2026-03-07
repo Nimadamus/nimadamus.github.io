@@ -2324,6 +2324,11 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
                 existing_archive_dates.add(date_part)
                 print(f"  [RECOVERED] Copied {f} -> handicapping-hub-archive/hub-{date_part}.html")
 
+    # Include today's date so the calendar always shows today as clickable
+    # (the archive file for today is saved AFTER HTML generation, so without
+    # this, today would always be missing from the calendar - off-by-one bug)
+    existing_archive_dates.add(date_str)
+
     # Build final archive dates list from the now-complete archive folder
     archive_dates = sorted(existing_archive_dates)
     archive_dates_json = json.dumps(archive_dates)
