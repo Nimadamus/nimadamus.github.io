@@ -689,11 +689,11 @@ def sync_preview():
     new_preview = generate_preview_html(data, page_filename)
 
     # Replace in index.html - updated pattern to capture through affiliate banner
-    pattern = r'<!-- Header Banner - Matchup Info -->.*?(?=\s*<!-- CTA to Full Breakdown -->)'
+    pattern = r'<!-- Header Banner - Matchup Info -->.*?(?=\s*<!-- Social Links -->)'
 
     if not re.search(pattern, index_content, re.DOTALL):
         print("\n  ERROR: Could not find Featured Game preview section in index.html")
-        print("  Looking for: <!-- Header Banner - Matchup Info --> ... <!-- CTA to Full Breakdown -->")
+        print("  Looking for: <!-- Header Banner - Matchup Info --> ... <!-- Social Links -->")
         return False
 
     updated_content = re.sub(pattern, new_preview.rstrip(), index_content, flags=re.DOTALL)
@@ -731,9 +731,9 @@ def sync_preview():
         return False
 
     print(f"\n  SUCCESS: index.html preview updated to match {page_filename}")
-    print(f"  ✓ Subscribe button present")
-    print(f"  ✓ Full breakdown link present")
-    print(f"  ✓ Affiliate banner present")
+    print(f"  [OK] Subscribe button present")
+    print(f"  [OK] Full breakdown link present")
+    print(f"  [OK] Affiliate banner present")
     print("=" * 60)
     return True
 
@@ -767,7 +767,7 @@ def verify_sync():
 
     # Check internal consistency of index.html
     section_match = re.search(
-        r'<!-- Header Banner - Matchup Info -->(.+?)<!-- CTA to Full Breakdown -->',
+        r'<!-- Header Banner - Matchup Info -->(.+?)<!-- Social Links -->',
         index_content, re.DOTALL
     )
     if not section_match:
