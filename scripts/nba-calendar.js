@@ -5,7 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-03-08", page: "nba.html", title: "NBA Game Previews Analysis Sunday March 8 2026" },
     { date: "2026-03-08", page: "celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html", title: "NBA Game Previews Analysis Sunday March 8 2026" },
-    { date: "2026-03-07", page: "warriors-vs-thunder-nba-analysis-stats-preview-march-7-2026.html", title: "Warriors at Thunder NBA Analysis Stats Preview March 7 2026" },
+    { date: "2026-03-07", page: "knicks-vs-lakers-analysis-stats-preview-march-8-2026.html", title: "Warriors at Thunder NBA Analysis Stats Preview March 7 2026" },
     { date: "2026-03-07", page: "pistons-first-in-east-warriors-thunder-abc-showcase-nba-march-7-2026.html", title: "NBA Game Previews Analysis Saturday March 7 2026" },
     { date: "2026-03-07", page: "nba-college-basketball-picks-predictions-analysis-february-2026.html", title: "NBA College Basketball Picks Predictions Feb 2026" },
     { date: "2026-03-06", page: "knicks-seek-revenge-in-denver-tatum-returns-nba-march-6-2026.html", title: "NBA Game Previews Analysis Friday March 6 2026" },
