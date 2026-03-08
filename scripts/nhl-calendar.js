@@ -101,7 +101,7 @@ const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });
 
 // FIXED Jan 21, 2026: Main pages ALWAYS show today's date, archive pages show their date
-const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html'];
+const MAIN_PAGES = ['celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html', 'lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html', 'michigan-state-michigan-big-ten-finale-ncaab-march-8-2026.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'fa-cup-fifth-round-leeds-fulham-la-liga-bundesliga-soccer-march-8-2026.html'];
 const today = new Date();
 const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
@@ -116,7 +116,7 @@ if (pathname.includes('/archives/')) {
     currentPage = pathname.split('/').pop() || 'index.html';
 }
 
-// For main pages (nba.html, nhl.html, etc), ALWAYS use today's date
+// For main pages (celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html, lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html, etc), ALWAYS use today's date
 // For archive pages (nba-picks-analysis-against-the-spread-january-21-2026.html), use the page's date
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
