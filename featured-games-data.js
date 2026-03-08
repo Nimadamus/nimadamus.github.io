@@ -107,6 +107,7 @@ const FEATURED_GAMES = [
     { date: "2026-03-05", page: "lakers-vs-nuggets-nba-analysis-stats-preview-march-5-2026.html", title: "Lakers at Nuggets" },
     { date: "2026-03-06", page: "avalanche-vs-stars-nhl-analysis-stats-preview-march-6-2026.html", title: "Avalanche at Stars" },
     { date: "2026-03-07", page: "warriors-vs-thunder-nba-analysis-stats-preview-march-7-2026.html", title: "Warriors at Thunder" },
+    { date: "2026-03-08", page: "knicks-vs-lakers-analysis-stats-preview-march-8-2026.html", title: "Knicks at Lakers" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
