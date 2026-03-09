@@ -107,10 +107,6 @@
  }
  </script>
 
- <link rel="preconnect" href="https://fonts.googleapis.com"/>
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
- <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-
  <!-- Google Analytics -->
  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
  <script>
@@ -121,520 +117,97 @@
  </script>
 
  <style>
- :root {
- --bg-color: #000;
- --text-color: #eaf8ff;
- --glow-color: #00e0ff;
- --neon-cyan: #00ffff;
- --neon-gold: #FFD700;
- --font-primary: 'Orbitron', sans-serif;
- --font-secondary: 'Poppins', sans-serif;
- }
-
  * { margin: 0; padding: 0; box-sizing: border-box; }
  html { scroll-behavior: smooth; }
-
- body {
- font-family: var(--font-secondary);
- background-color: var(--bg-color);
- color: white;
- overflow-x: hidden;
- padding-top: 100px;
- line-height: 1.8;
- }
-
- /* Navigation */
- .nav-container {
- position: fixed;
- top: 0;
- left: 0;
- right: 0;
- z-index: 1000;
- background: rgba(10, 12, 16, 0.95);
- backdrop-filter: blur(12px);
- border-bottom: 1px solid rgba(255, 255, 255, 0.08);
- }
-
- .nav-inner {
- max-width: 1400px;
- margin: 0 auto;
- display: flex;
- align-items: center;
- justify-content: center;
- gap: 12px;
- padding: 18px 5% 18px 280px;
- }
-
- .logo {
- position: fixed;
- top: 15px;
- left: 15px;
- z-index: 1001;
- }
-
- .logo a {
- font-family: var(--font-primary);
- font-size: 2.2rem;
- font-weight: 900;
- color: #fff;
- text-decoration: none;
- text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
- }
-
- .logo a span {
- color: #00e5ff;
- text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
- }
-
- .nav-links {
- display: flex;
- align-items: center;
- gap: 8px;
- flex-wrap: nowrap;
- }
-
- .nav-links > a, .dropbtn {
- font-family: var(--font-secondary);
- color: #fff;
- text-decoration: none;
- font-size: 14px;
- font-weight: 600;
- padding: 8px 14px;
- border-radius: 8px;
- background: none;
- border: none;
- cursor: pointer;
- text-transform: uppercase;
- letter-spacing: 1px;
- transition: all 0.2s;
- }
-
- .nav-links > a:hover, .dropbtn:hover {
- color: #FFD700;
- }
-
- .dropdown {
- position: relative;
- }
-
- .dropdown-content {
- display: none;
- position: absolute;
- top: 100%;
- left: 0;
- background: rgba(10, 12, 16, 0.98);
- min-width: 180px;
- border: 1px solid rgba(255, 255, 255, 0.08);
- border-radius: 10px;
- padding: 10px 0;
- margin-top: 8px;
- z-index: 9999;
- }
-
- .dropdown-content a {
- color: #00e5ff;
- padding: 12px 18px;
- display: block;
- text-decoration: none;
- font-size: 14px;
- }
-
- .dropdown-content a:hover {
- background: rgba(0, 229, 255, 0.1);
- color: #fff;
- }
-
- .dropdown:hover .dropdown-content {
- display: block;
- }
-
- .dropdown.active .dropdown-content {
- display: block;
- }
-
- .dropdown.active .dropbtn {
- color: #FFD700;
- }
-
- /* Main Content Container */
- .guide-container {
- max-width: 900px;
- margin: 40px auto 80px;
- padding: 0 25px;
- }
-
- /* Page Header */
- .guide-header {
- text-align: center;
- margin-bottom: 60px;
- padding-bottom: 40px;
- border-bottom: 2px solid rgba(0, 224, 255, 0.2);
- }
-
- .guide-header h1 {
- font-family: var(--font-primary);
- font-size: 2.8rem;
- color: var(--neon-gold);
- text-shadow: 0 0 30px var(--neon-gold);
- margin-bottom: 20px;
- line-height: 1.2;
- }
-
- .guide-header .subtitle {
- font-size: 1.3rem;
- color: var(--text-color);
- max-width: 700px;
- margin: 0 auto;
- line-height: 1.7;
- }
-
- /* Table of Contents */
- .toc {
- background: rgba(0, 0, 0, 0.6);
- border: 1px solid rgba(0, 224, 255, 0.3);
- border-radius: 12px;
- padding: 30px 35px;
- margin-bottom: 50px;
- }
-
- .toc h2 {
- font-family: var(--font-primary);
- font-size: 1.4rem;
- color: var(--neon-cyan);
- margin-bottom: 20px;
- }
-
- .toc ul {
- list-style: none;
- columns: 2;
- column-gap: 40px;
- }
-
- .toc li {
- margin-bottom: 12px;
- }
-
- .toc a {
- color: var(--text-color);
- text-decoration: none;
- font-size: 1rem;
- transition: all 0.2s;
- display: block;
- padding: 4px 0;
- }
-
- .toc a:hover {
- color: var(--neon-gold);
- padding-left: 8px;
- }
-
- /* Section Styling */
- .guide-section {
- margin-bottom: 60px;
- }
-
- .guide-section h2 {
- font-family: var(--font-primary);
- font-size: 1.8rem;
- color: var(--neon-gold);
- margin-bottom: 25px;
- padding-bottom: 12px;
- border-bottom: 3px solid var(--neon-cyan);
- }
-
- .guide-section h3 {
- font-family: var(--font-primary);
- font-size: 1.3rem;
- color: var(--neon-cyan);
- margin: 35px 0 18px;
- }
-
- .guide-section p {
- font-size: 1.1rem;
- color: var(--text-color);
- margin-bottom: 20px;
- line-height: 1.9;
- }
-
- /* Example Boxes */
- .example-box {
- background: rgba(255, 215, 0, 0.08);
- border-left: 4px solid var(--neon-gold);
- padding: 20px 25px;
- margin: 25px 0;
- border-radius: 0 10px 10px 0;
- }
-
- .example-box strong {
- color: var(--neon-gold);
- font-weight: 700;
- }
-
- .example-box p {
- margin-bottom: 10px;
- }
-
- .example-box p:last-child {
- margin-bottom: 0;
- }
-
- /* Info Callout */
- .info-callout {
- background: rgba(0, 224, 255, 0.08);
- border: 1px solid rgba(0, 224, 255, 0.3);
- padding: 25px;
- margin: 30px 0;
- border-radius: 10px;
- }
-
- .info-callout h4 {
- color: var(--neon-cyan);
- font-family: var(--font-primary);
- font-size: 1.1rem;
- margin-bottom: 12px;
- }
-
- /* Warning Box */
- .warning-box {
- background: rgba(255, 100, 100, 0.1);
- border-left: 4px solid #ff6b6b;
- padding: 20px 25px;
- margin: 25px 0;
- border-radius: 0 10px 10px 0;
- }
-
- .warning-box strong {
- color: #ff6b6b;
- }
-
- /* Comparison Table */
- .odds-table {
- width: 100%;
- border-collapse: collapse;
- margin: 30px 0;
- background: rgba(0, 0, 0, 0.5);
- border-radius: 10px;
- overflow: hidden;
- }
-
- .odds-table th {
- background: rgba(0, 224, 255, 0.15);
- color: var(--neon-cyan);
- font-family: var(--font-primary);
- font-size: 0.95rem;
- padding: 15px 20px;
- text-align: left;
- border-bottom: 2px solid rgba(0, 224, 255, 0.3);
- }
-
- .odds-table td {
- padding: 14px 20px;
- border-bottom: 1px solid rgba(255, 255, 255, 0.08);
- color: var(--text-color);
- font-size: 1rem;
- }
-
- .odds-table tr:hover {
- background: rgba(0, 224, 255, 0.05);
- }
-
- /* Math Formula Display */
- .formula {
- background: rgba(0, 0, 0, 0.7);
- border: 1px solid rgba(255, 215, 0, 0.3);
- padding: 20px 30px;
- margin: 25px 0;
- border-radius: 10px;
- font-family: 'Courier New', monospace;
- font-size: 1.1rem;
- color: var(--neon-gold);
- text-align: center;
- }
-
- /* Key Takeaway */
- .key-takeaway {
- background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 224, 255, 0.05));
- border: 2px solid var(--neon-gold);
- padding: 25px 30px;
- margin: 40px 0;
- border-radius: 12px;
- }
-
- .key-takeaway h4 {
- color: var(--neon-gold);
- font-family: var(--font-primary);
- font-size: 1.1rem;
- margin-bottom: 12px;
- }
-
- /* Footer */
- footer {
- background: rgba(0, 0, 0, 0.9);
- border-top: 1px solid rgba(0, 224, 255, 0.2);
- padding: 40px 20px;
- text-align: center;
- }
-
- footer p {
- color: #888;
- font-size: 0.9rem;
- }
-
- footer a {
- color: var(--neon-cyan);
- text-decoration: none;
- }
-
- footer a:hover {
- color: var(--neon-gold);
- }
-
- /* Responsive */
+ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100vh; color: #e0e0e0; line-height: 1.8; }
+ header { background: rgba(0, 0, 0, 0.3); padding: 20px; text-align: center; border-bottom: 3px solid #FFD700; }
+ .logo-title { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px; flex-wrap: wrap; }
+ .logo-title img { height: 60px; width: auto; }
+ header h1 { font-size: 28px; color: #FFD700; margin: 0; }
+ nav { margin-top: 15px; }
+ nav a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: 500; transition: color 0.3s; }
+ nav a:hover { color: #FFD700; }
+ main { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+ .article-header { text-align: center; margin-bottom: 40px; }
+ .article-header h1 { font-size: 42px; color: #FFD700; margin-bottom: 15px; line-height: 1.2; }
+ .article-header .subtitle { font-size: 20px; color: #aaa; font-style: italic; }
+ .content-section { background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 35px; margin-bottom: 30px; border-left: 4px solid #FFD700; }
+ .content-section h2 { color: #FFD700; font-size: 28px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 215, 0, 0.3); }
+ .content-section h3 { color: #87CEEB; font-size: 22px; margin: 25px 0 15px 0; }
+ .content-section p { margin-bottom: 18px; font-size: 17px; color: #d0d0d0; }
+ .content-section ul, .content-section ol { margin: 15px 0 20px 25px; color: #d0d0d0; }
+ .content-section li { margin-bottom: 10px; font-size: 17px; }
+ .highlight-box { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; padding: 20px; margin: 25px 0; }
+ .highlight-box h4 { color: #FFD700; font-size: 18px; margin-bottom: 12px; }
+ .highlight-box p { margin-bottom: 10px; color: #FFD700; font-weight: 500; }
+ .highlight-box p:last-child { margin-bottom: 0; }
+ .example-box { background: rgba(135, 206, 235, 0.1); border: 1px solid rgba(135, 206, 235, 0.3); border-radius: 10px; padding: 20px; margin: 20px 0; }
+ .example-box p { color: #87CEEB; margin-bottom: 10px; }
+ .example-box p:last-child { margin-bottom: 0; }
+ .example-box h3, .example-box h4 { color: #87CEEB; margin-bottom: 12px; }
+ .example-box strong { color: #87CEEB; font-weight: 700; }
+ .warning-box { background: rgba(255, 152, 0, 0.1); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 10px; padding: 20px; margin: 25px 0; }
+ .warning-box p { color: #d0d0d0; }
+ .warning-box strong { color: #FF9800; }
+ .toc { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 12px; padding: 25px 30px; margin-bottom: 35px; }
+ .toc h3 { color: #FFD700; font-size: 20px; margin-bottom: 15px; }
+ .toc ol { margin-left: 20px; }
+ .toc ul { list-style: none; columns: 2; column-gap: 40px; padding: 0; }
+ .toc li { margin-bottom: 8px; }
+ .toc a { color: #87CEEB; text-decoration: none; font-size: 16px; display: block; padding: 4px 0; transition: all 0.2s; }
+ .toc a:hover { color: #FFD700; padding-left: 8px; }
+ .formula { background: rgba(135, 206, 235, 0.08); border: 1px solid rgba(135, 206, 235, 0.2); border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center; font-size: 18px; color: #87CEEB; font-weight: 600; }
+ .odds-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+ .odds-table th { background: rgba(255, 215, 0, 0.15); color: #FFD700; padding: 12px 15px; text-align: left; border-bottom: 2px solid rgba(255, 215, 0, 0.3); font-size: 15px; }
+ .odds-table td { padding: 12px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: #d0d0d0; font-size: 15px; }
+ .odds-table tr:hover { background: rgba(255, 255, 255, 0.05); }
+ .internal-link { color: #87CEEB; text-decoration: none; border-bottom: 1px dotted #87CEEB; transition: color 0.3s; }
+ .internal-link:hover { color: #FFD700; }
+ .continue-learning { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 12px; padding: 30px; margin-top: 40px; }
+ .continue-learning h3 { color: #FFD700; font-size: 20px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #FFD700; letter-spacing: 1px; text-transform: uppercase; }
+ .continue-learning-links { display: flex; flex-direction: column; gap: 10px; }
+ .continue-learning-links a { display: block; padding: 12px 16px; background: rgba(255, 215, 0, 0.06); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 8px; color: #FFD700; text-decoration: none; font-size: 15px; font-weight: 500; transition: all 0.2s ease; }
+ .continue-learning-links a:hover { background: rgba(255, 215, 0, 0.12); transform: translateX(5px); }
+ footer { background: rgba(0, 0, 0, 0.4); padding: 30px 20px; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
+ footer p { color: #888; font-size: 14px; }
  @media (max-width: 768px) {
- .dropdown-content {
- position: fixed !important;
- left: 5% !important;
- right: 5% !important;
- top: 120px !important;
- width: 90% !important;
- min-width: unset !important;
- max-height: 65vh;
- overflow-y: auto;
- -webkit-overflow-scrolling: touch;
- }
-
- .nav-inner {
- padding: 18px 5% 18px 5%;
- flex-wrap: wrap;
- justify-content: center;
- gap: 40px;
- }
-
- .logo {
- position: relative;
- top: 0;
- left: 0;
- margin-bottom: 10px;
- }
-
- .nav-links {
- justify-content: center;
- }
-
- .nav-links > a, .dropbtn {
- font-size: 12px;
- padding: 8px 12px;
- }
-
- body {
- padding-top: 140px;
- }
-
- .guide-header h1 {
- font-size: 1.8rem;
- }
-
- .guide-header .subtitle {
- font-size: 1.1rem;
- }
-
- .toc ul {
- columns: 1;
- }
-
- .guide-section h2 {
- font-size: 1.5rem;
- }
-
- .odds-table {
- font-size: 0.9rem;
- }
-
- .odds-table th, .odds-table td {
- padding: 10px 12px;
- }
+  .article-header h1 { font-size: 32px; }
+  .content-section { padding: 25px 20px; }
+  .content-section h2 { font-size: 24px; }
+  nav a { display: block; margin: 10px 0; }
+  .odds-table { font-size: 13px; }
+  .odds-table th, .odds-table td { padding: 8px 10px; }
+  .toc ul { columns: 1; }
  }
  </style>
 <link rel="stylesheet" href="/mobile-optimize.css" media="screen">
 </head>
 <body>
 
-<nav class="nav-container">
- <div class="nav-inner">
- <div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
- <div class="nav-links">
+<header>
+ <div class="logo-title">
+ <a href="index.html"><img alt="BetLegend Logo" src="newlogo.png"/></a>
+ <h1>BetLegend Picks</h1>
+ </div>
+ <nav>
  <a href="index.html">Home</a>
- <div class="dropdown">
- <button class="dropbtn hub-btn">Handicapping Hub</button>
- <div class="dropdown-content">
- <a href="handicapping-hub.html">Today's Games</a>
- <a href="injury-report.html">Injury Report</a>
- </div>
- </div>
- <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">Picks</a>
- <div class="dropdown">
- <button class="dropbtn">Sports</button>
- <div class="dropdown-content">
+ <a href="nba.html">NBA</a>
+ <a href="nhl.html">NHL</a>
+ <a href="ncaab.html">NCAAB</a>
  <a href="nfl.html">NFL</a>
- <a href="celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html">NBA</a>
- <a href="lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html">NHL</a>
- <a href="ncaaf.html">NCAAF</a>
- <a href="michigan-state-michigan-big-ten-finale-ncaab-march-8-2026.html">NCAAB</a>
- <a href="mlb.html">MLB</a>
- <a href="fa-cup-fifth-round-leeds-fulham-la-liga-bundesliga-soccer-march-8-2026.html">Soccer</a>
- </div>
- </div>
- <div class="dropdown">
- <button class="dropbtn">Records</button>
- <div class="dropdown-content">
- <a href="records.html">Detailed Breakdown</a>
- <a href="nfl-records.html">NFL</a>
- <a href="nba-records.html">NBA</a>
- <a href="nhl-records.html">NHL</a>
- <a href="ncaaf-records.html">NCAAF</a>
- <a href="ncaab-records.html">NCAAB</a>
- <a href="mlb-records.html">MLB</a>
- <a href="soccer-records.html">Soccer</a>
- <a href="crosssport-parlays-records.html">Cross-Sport Bets</a>
- </div>
- </div>
- <div class="dropdown">
- <button class="dropbtn">Resources</button>
- <div class="dropdown-content">
- <a href="proofofpicks.html">Proof of Picks</a>
- <a href="live-odds.html">Live Odds</a>
- <a href="howitworks.html">How It Works</a>
- <a href="bankroll.html">Bankroll Management</a>
- <a href="kelly-criterion.html">Kelly Criterion</a>
- <a href="betting-calculators.html">Calculators</a>
- <a href="screenshots.html">Screenshots</a>
- <a href="bestonlinesportsbook.html">Best Sportsbook</a>
- <a href="betting-glossary.html">Glossary</a>
- <a href="betting-101.html">Betting 101</a>
- <a href="contact.html">Contact Us</a>
- </div>
- </div>
- <a href="yasiel-puig-convicted-gambling-case-sports-news.html">News</a>
- <div class="dropdown">
- <button class="dropbtn">Game of Day</button>
- <div class="dropdown-content">
- <a href="knicks-vs-lakers-analysis-stats-preview-march-8-2026.html">Featured Game</a>
- <a href="moneyline-parlay-of-the-day.html">ML Parlay</a>
- </div>
- </div>
- </div>
- </div>
-</nav>
+ </nav>
+</header>
 
-<div class="guide-container">
+<main>
+<article>
 
- <header class="guide-header">
+ <div class="article-header">
  <h1>How Sports Betting Odds Work</h1>
  <p class="subtitle">A complete beginner's guide to understanding betting odds, calculating payouts, and making sense of the numbers that drive sports wagering.</p>
- </header>
+ </div>
 
- <nav class="toc">
- <h2>What You'll Learn</h2>
+ <div class="toc">
+ <h3>What You'll Learn</h3>
  <ul>
  <li><a href="#what-are-odds">What Sports Betting Odds Are</a></li>
  <li><a href="#why-odds-exist">Why Sportsbooks Use Odds</a></li>
@@ -650,10 +223,10 @@
  <li><a href="#common-mistakes">Common Beginner Mistakes</a></li>
  <li><a href="#long-term">Understanding Odds for Long-Term Success</a></li>
  </ul>
- </nav>
+ </div>
 
  <!-- Section 1: What Are Odds -->
- <section class="guide-section" id="what-are-odds">
+ <section class="content-section" id="what-are-odds">
  <h2>What Sports Betting Odds Are</h2>
 
  <p>Sports betting odds are numbers that tell you two essential pieces of information: how likely a sportsbook believes an outcome is to happen, and how much money you stand to win if your bet is correct. That's really all they are at their core, even though they might look intimidating when you first encounter them.</p>
@@ -664,9 +237,9 @@
 
  <p>What makes odds particularly important to understand is that they're not just abstract numbers. They directly affect how much money flows into or out of your pocket. Two bets on the exact same outcome can have different odds at different sportsbooks, which means you could win more or less money depending on where you place your wager. This is why understanding odds isn't optional if you want to bet intelligently. It's the fundamental skill that everything else builds upon.</p>
 
- <div class="info-callout">
+ <div class="highlight-box">
  <h4>The Two Things Odds Tell You</h4>
- <p>1. <strong>Implied Probability:</strong> How likely the sportsbook thinks this outcome is to occur. Our <a href="implied-probability-sports-betting.html" style="color: var(--neon-cyan);">complete guide to implied probability</a> shows you exactly how to calculate and use this.</p>
+ <p>1. <strong>Implied Probability:</strong> How likely the sportsbook thinks this outcome is to occur. Our <a href="implied-probability-sports-betting.html" class="internal-link">complete guide to implied probability</a> shows you exactly how to calculate and use this.</p>
  <p>2. <strong>Potential Payout:</strong> How much you'll win relative to how much you wager.</p>
  </div>
 
@@ -674,7 +247,7 @@
  </section>
 
  <!-- Section 2: Why Odds Exist -->
- <section class="guide-section" id="why-odds-exist">
+ <section class="content-section" id="why-odds-exist">
  <h2>Why Sportsbooks Use Odds</h2>
 
  <p>Sportsbooks aren't charities. They're businesses, and like any business, they need to make money to survive. Odds exist as the mechanism that allows them to do exactly that while still offering bettors a fair shot at winning. Understanding why odds are structured the way they are will help you think more clearly about what you're actually doing when you place a bet.</p>
@@ -694,7 +267,7 @@
  </section>
 
  <!-- Section 3: How Odds Determine Payouts -->
- <section class="guide-section" id="payouts">
+ <section class="content-section" id="payouts">
  <h2>How Odds Determine Payouts</h2>
 
  <p>The payout calculation is where odds become more than just numbers on a screen. It's where they directly impact your bank account. Understanding how to calculate what you'll win from any set of odds is a skill you absolutely need before placing any real money bets. The good news is that once you understand the logic, it becomes second nature.</p>
@@ -711,16 +284,16 @@
  Implied Probability = Risk Amount / Total Potential Return
  </div>
 
- <p>This formula works regardless of the odds format you're using, as long as you know how to calculate your potential return. It's a powerful tool for comparing different bets and determining where your money is best spent. We'll show you specific calculations for each odds format in the sections that follow, and you can use our <a href="betting-calculators.html" style="color: var(--neon-cyan);">betting calculators</a> to quickly run these numbers yourself.</p>
+ <p>This formula works regardless of the odds format you're using, as long as you know how to calculate your potential return. It's a powerful tool for comparing different bets and determining where your money is best spent. We'll show you specific calculations for each odds format in the sections that follow, and you can use our <a href="betting-calculators.html" class="internal-link">betting calculators</a> to quickly run these numbers yourself.</p>
 
- <div class="key-takeaway">
+ <div class="highlight-box">
  <h4>Key Concept: Value Betting</h4>
  <p>Finding value means betting when you believe the true probability of an outcome is higher than the implied probability in the odds. If a team has -150 odds (40% implied probability) but you genuinely believe they have a 50% chance of winning, you've found value. This is the foundation of profitable long-term betting.</p>
  </div>
  </section>
 
  <!-- Section 4: Favorites vs Underdogs -->
- <section class="guide-section" id="favorites-underdogs">
+ <section class="content-section" id="favorites-underdogs">
  <h2>Favorites vs Underdogs Explained</h2>
 
  <p>Every betting market involves at least two possible outcomes, and in most cases, the sportsbook believes one outcome is more likely than another. The outcome they view as more likely is called the favorite. The outcome they view as less likely is called the underdog. These terms apply whether you're betting on a team to win, a total to go over or under, or a player to exceed a certain statistical threshold.</p>
@@ -746,7 +319,7 @@
  </section>
 
  <!-- Section 5: Overview of Odds Formats -->
- <section class="guide-section" id="odds-formats">
+ <section class="content-section" id="odds-formats">
  <h2>Overview of Odds Formats</h2>
 
  <p>Sports betting odds can be displayed in three main formats: American, Decimal, and Fractional. All three formats communicate the same underlying information, but they express it differently. Which format you encounter most often depends largely on where you live and which sportsbooks you use. American odds dominate in the United States. Decimal odds are standard in Europe, Canada, and Australia. Fractional odds are traditional in the United Kingdom, particularly for horse racing.</p>
@@ -788,7 +361,7 @@
  </section>
 
  <!-- Section 6: American Odds -->
- <section class="guide-section" id="american-odds">
+ <section class="content-section" id="american-odds">
  <h2>American Odds Explained</h2>
 
  <p>American odds are the format you'll encounter most often if you bet in the United States. They use plus and minus signs to distinguish between favorites and underdogs, with the numbers representing different things depending on which sign is attached. This dual nature is what trips up beginners most often, but once you understand the logic, it becomes straightforward.</p>
@@ -845,7 +418,7 @@
  </section>
 
  <!-- Section 7: Decimal Odds -->
- <section class="guide-section" id="decimal-odds">
+ <section class="content-section" id="decimal-odds">
  <h2>Decimal Odds Explained</h2>
 
  <p>Decimal odds are arguably the most intuitive format once you understand what the number represents. The decimal figure shows your total return for every $1 you wager. Not your profit, but your total return, which includes getting your original stake back. This makes calculating potential returns remarkably simple.</p>
@@ -888,7 +461,7 @@
  </section>
 
  <!-- Section 8: Fractional Odds -->
- <section class="guide-section" id="fractional-odds">
+ <section class="content-section" id="fractional-odds">
  <h2>Fractional Odds Explained</h2>
 
  <p>Fractional odds are the oldest format and remain popular in the United Kingdom, especially for horse racing and soccer. They express the ratio of profit to stake. If you see odds of 5/1 (pronounced "five to one"), you're being told that for every $1 you stake, you'll win $5 in profit if your bet is successful.</p>
@@ -925,10 +498,10 @@
  </section>
 
  <!-- Section 9: What -110 Means -->
- <section class="guide-section" id="minus-110">
+ <section class="content-section" id="minus-110">
  <h2>What -110 Means and Why It Matters</h2>
 
- <p>If there's one number you'll see more than any other in sports betting, it's -110. This is the standard odds for most point spread and over/under bets across all major sports. Understanding what -110 means and why it's so common will give you fundamental insight into how the betting market operates. For an even deeper exploration of this crucial number, see our dedicated guide on <a href="what-does-minus-110-mean.html" style="color: var(--neon-cyan);">what -110 means in betting</a>.</p>
+ <p>If there's one number you'll see more than any other in sports betting, it's -110. This is the standard odds for most point spread and over/under bets across all major sports. Understanding what -110 means and why it's so common will give you fundamental insight into how the betting market operates. For an even deeper exploration of this crucial number, see our dedicated guide on <a href="what-does-minus-110-mean.html" class="internal-link">what -110 means in betting</a>.</p>
 
  <p>At -110 odds, you need to wager $110 to win $100 in profit. If you bet $110 and win, you receive $210 back, which is your original $110 stake plus $100 in winnings. If you lose, you lose your $110. That extra $10 you're required to risk is the sportsbook's commission, and it's the reason -110 is so prevalent.</p>
 
@@ -952,7 +525,7 @@
 
  <p>Some sportsbooks offer reduced juice as a promotional feature, with odds like -105 instead of -110 on standard bets. This might seem like a small difference, but it matters significantly over time. At -105 odds, you only need to win 51.2% of your bets to break even. That 1.2% difference is enormous over hundreds or thousands of bets.</p>
 
- <div class="key-takeaway">
+ <div class="highlight-box">
  <h4>The Impact of Reduced Juice</h4>
  <p>Over 1,000 bets at $100 each with a true 53% win rate:</p>
  <p>At -110: You profit approximately $1,360</p>
@@ -962,10 +535,10 @@
  </section>
 
  <!-- Section 10: The Vig -->
- <section class="guide-section" id="vig">
+ <section class="content-section" id="vig">
  <h2>How Sportsbooks Make Money: The Vig Explained</h2>
 
- <p>The vig, also called the juice or vigorish, is the commission that sportsbooks charge on bets. It's built directly into the odds, and it's how sportsbooks guarantee themselves a profit margin over time regardless of which teams win or lose. Understanding the vig is essential because it's the invisible cost of every bet you place. If you want to explore more betting terminology, our <a href="betting-glossary.html" style="color: var(--neon-cyan);">complete betting glossary</a> covers all the terms you'll encounter.</p>
+ <p>The vig, also called the juice or vigorish, is the commission that sportsbooks charge on bets. It's built directly into the odds, and it's how sportsbooks guarantee themselves a profit margin over time regardless of which teams win or lose. Understanding the vig is essential because it's the invisible cost of every bet you place. If you want to explore more betting terminology, our <a href="betting-glossary.html" class="internal-link">complete betting glossary</a> covers all the terms you'll encounter.</p>
 
  <p>The vig works by ensuring that the implied probabilities from both sides of a bet add up to more than 100%. In a fair world with no vig, if one team had a 60% chance of winning, the other would have a 40% chance. Those add up to exactly 100%. But sportsbooks don't offer fair odds. They shade the probabilities in their favor.</p>
 
@@ -998,7 +571,7 @@
  </section>
 
  <!-- Section 11: Line Movement -->
- <section class="guide-section" id="line-movement">
+ <section class="content-section" id="line-movement">
  <h2>How Odds Move and Why Lines Change</h2>
 
  <p>Odds aren't set in stone. From the moment a sportsbook releases an opening line until the game begins, the odds are likely to shift, sometimes dramatically. Understanding why lines move helps you time your bets more strategically and interpret what the market is telling you about a particular matchup.</p>
@@ -1015,7 +588,7 @@
 
  <p>Public money, in contrast, tends to come from recreational bettors who follow favorites and popular teams. Sportsbooks are generally less reactive to public money because these bettors tend to lose over time. Sometimes, heavy public action on one side actually makes the other side more attractive to sharps.</p>
 
- <div class="info-callout">
+ <div class="highlight-box">
  <h4>betting analysis</h4>
  <p>Sometimes you'll see a line move in the opposite direction of the betting percentages. If 70% of bets are on Team A but the line moves in favor of Team B, that's called betting analysis. It usually indicates that while more people are betting Team A, more money (likely from sharps) is on Team B. The dollar volume matters more than the bet count.</p>
  </div>
@@ -1034,7 +607,7 @@
  </section>
 
  <!-- Section 12: Common Mistakes -->
- <section class="guide-section" id="common-mistakes">
+ <section class="content-section" id="common-mistakes">
  <h2>Common Beginner Mistakes When Reading Odds</h2>
 
  <p>Understanding odds intellectually is one thing. Avoiding the mental traps that trip up new bettors is another. Here are the mistakes we see most often, along with how to avoid them.</p>
@@ -1073,7 +646,7 @@
  </section>
 
  <!-- Section 13: Long-Term Success -->
- <section class="guide-section" id="long-term">
+ <section class="content-section" id="long-term">
  <h2>How Understanding Odds Helps You Long-Term</h2>
 
  <p>Everything we've covered in this guide builds toward one goal: making you a smarter, more informed bettor. Understanding odds isn't just about calculating payouts, though that matters. It's about developing the foundation you need to make good decisions over time.</p>
@@ -1086,9 +659,9 @@
 
  <h3>Managing Your Bankroll</h3>
 
- <p>Your bankroll is the total amount of money you've set aside for betting. Protecting it requires understanding odds. Knowing the implied probabilities helps you size your bets appropriately. Knowing the vig helps you understand how much you're paying in commission over time. Knowing how different odds affect your break-even win rate helps you set realistic expectations. For a deeper dive into protecting and growing your betting funds, see our guide to <a href="bankroll.html" style="color: var(--neon-cyan);">bankroll management</a>.</p>
+ <p>Your bankroll is the total amount of money you've set aside for betting. Protecting it requires understanding odds. Knowing the implied probabilities helps you size your bets appropriately. Knowing the vig helps you understand how much you're paying in commission over time. Knowing how different odds affect your break-even win rate helps you set realistic expectations. For a deeper dive into protecting and growing your betting funds, see our guide to <a href="bankroll.html" class="internal-link">bankroll management</a>.</p>
 
- <p>Smart bankroll management usually involves betting a small, consistent percentage of your bankroll on each wager. This approach, combined with finding value, gives you the best chance of growing your bankroll over time while surviving the inevitable losing streaks. Advanced bettors often use the <a href="kelly-criterion.html" style="color: var(--neon-cyan);">Kelly Criterion</a> to determine optimal bet sizing based on their edge and the odds offered.</p>
+ <p>Smart bankroll management usually involves betting a small, consistent percentage of your bankroll on each wager. This approach, combined with finding value, gives you the best chance of growing your bankroll over time while surviving the inevitable losing streaks. Advanced bettors often use the <a href="kelly-criterion.html" class="internal-link">Kelly Criterion</a> to determine optimal bet sizing based on their edge and the odds offered.</p>
 
  <h3>Emotional Discipline</h3>
 
@@ -1098,20 +671,20 @@
 
  <p>The concepts in this guide are foundational, but they're just the beginning. Sports betting is a deep field with layers of complexity. You can study specific sports, develop analytical models, learn about market inefficiencies, and refine your approach over years of practice. Understanding odds is the prerequisite for all of this deeper learning.</p>
 
- <div class="key-takeaway">
+ <div class="highlight-box">
  <h4>The Long-Term Mindset</h4>
  <p>Professional bettors think in terms of hundreds or thousands of bets, not individual wins and losses. They know that any single bet can go either way, but that disciplined, value-focused betting produces profits over large sample sizes. Adopting this mindset is arguably more important than any specific strategy or system.</p>
  </div>
 
  <h3>Where to Go From Here</h3>
 
- <p>Now that you understand how odds work, you're ready to explore more specific betting concepts. You might dive deeper into <a href="point-spread-betting-explained.html" style="color: var(--neon-cyan);">point spread betting</a> or <a href="moneyline-betting-explained.html" style="color: var(--neon-cyan);">moneyline betting</a>, learn about live betting and how in-game odds shift, study how totals are set and where value can be found, or explore player props and alternative markets. Each of these areas builds on the foundational knowledge you've gained here.</p>
+ <p>Now that you understand how odds work, you're ready to explore more specific betting concepts. You might dive deeper into <a href="point-spread-betting-explained.html" class="internal-link">point spread betting</a> or <a href="moneyline-betting-explained.html" class="internal-link">moneyline betting</a>, learn about live betting and how in-game odds shift, study how totals are set and where value can be found, or explore player props and alternative markets. Each of these areas builds on the foundational knowledge you've gained here.</p>
 
  <p>The betting market rewards those who put in the work to understand it. Most casual bettors never take the time to learn what we've covered in this guide. By understanding odds at this level, you've already separated yourself from the majority. The question now is what you'll build on this foundation.</p>
  </section>
 
  <!-- Summary Section -->
- <section class="guide-section">
+ <section class="content-section">
  <h2>Summary: The Essentials of Betting Odds</h2>
 
  <p>Odds are the language of sports betting. They communicate probability, they determine payouts, and they reveal the sportsbook's built-in profit margin. Mastering this language is the first step toward making informed, intelligent wagers.</p>
@@ -1133,58 +706,30 @@
  <p>Armed with this knowledge, you're prepared to engage with the betting market more thoughtfully than most participants ever will. Use it wisely.</p>
  </section>
 
-</div>
+ <!-- Continue Learning Section -->
+ <div class="continue-learning">
+ <h3>Continue Learning</h3>
+ <div class="continue-learning-links">
+ <a href="betting-101.html">Betting 101 - The Complete Beginner's Guide</a>
+ <a href="implied-probability-sports-betting.html">Implied Probability in Sports Betting</a>
+ <a href="parlay-betting-guide.html">Parlay Betting Guide</a>
+ <a href="bankroll.html">Bankroll Management Strategy</a>
+ <a href="kelly-criterion.html">Kelly Criterion Calculator</a>
+ <a href="betting-glossary.html">Sports Betting Glossary</a>
+ <a href="betting-education-hub.html">Betting Education Hub</a>
+ </div>
+ </div>
 
+</article>
+</main>
 
-    <!-- Related Analysis Section - Internal Linking -->
-    <section style="max-width:900px;margin:40px auto;padding:32px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:12px;">
-        <h3 style="font-size:18px;font-weight:700;color:#FFD700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #FFD700;letter-spacing:1px;text-transform:uppercase;">Related Analysis</h3>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-            <a href="/celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NBA Analysis</a>
-            <a href="/lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NHL Analysis</a>
-            <a href="/nfl.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NFL Analysis</a>
-            <a href="/handicapping-hub.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">Handicapping Hub</a>
-        </div>
-    </section>
-
-    <footer>
- <p>&copy; BetLegend Picks. All rights reserved.</p>
- <p style="margin-top: 10px;"><a href="betting-glossary.html">Betting Glossary</a> | <a href="bankroll.html">Bankroll Management</a> | <a href="kelly-criterion.html">Kelly Criterion Calculator</a></p>
+<footer>
+ <p>BetLegend Picks - Educational Sports Betting Content</p>
 </footer>
 
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script async data-id="101485054" src="//static.getclicky.com/js"></script>
-
-<script>
-(function() {
- var dropdowns = document.querySelectorAll('.dropdown');
- dropdowns.forEach(function(dropdown) {
- var btn = dropdown.querySelector('.dropbtn');
- if (!btn) return;
- function toggle(e) {
- e.preventDefault();
- e.stopPropagation();
- dropdowns.forEach(function(d) {
- if (d !== dropdown) d.classList.remove('active');
- });
- dropdown.classList.toggle('active');
- }
- btn.addEventListener('touchend', toggle, {passive: false});
- btn.addEventListener('click', toggle);
- });
- document.addEventListener('touchend', function(e) {
- if (!e.target.closest('.dropdown')) {
- dropdowns.forEach(function(d) { d.classList.remove('active'); });
- }
- });
- document.addEventListener('click', function(e) {
- if (!e.target.closest('.dropdown')) {
- dropdowns.forEach(function(d) { d.classList.remove('active'); });
- }
- });
-})();
-</script>
 
 </body>
 </html>

@@ -9,7 +9,7 @@
  <title>Bankroll Management for Sports Betting: The Complete Guide | BetLegend</title>
  <meta name="title" content="Bankroll Management for Sports Betting: The Complete Guide | BetLegend">
  <meta name="description" content="Master bankroll management for sports betting. Learn unit sizing theory, risk of ruin mathematics, Kelly Criterion fundamentals, and the psychology of disciplined wagering."/>
- 
+
  <meta name="keywords" content="bankroll management, sports betting bankroll, unit sizing, risk of ruin, betting money management"/>
  <meta name="robots" content="index, follow">
  <meta property="og:title" content="Bankroll Management for Sports Betting: The Complete Guide | BetLegend">
@@ -50,324 +50,52 @@
 }
 </script>
 
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-
  <style>
- :root {
- --bg-color: #000;
- --text-color: #eaf8ff;
- --neon-cyan: #00ffff;
- --neon-gold: #FFD700;
- --font-primary: 'Orbitron', sans-serif;
- --font-secondary: 'Poppins', sans-serif;
- --font-content: 'Rubik', sans-serif;
- }
-
- * { margin: 0; padding: 0; box-sizing: border-box; }
- html { scroll-behavior: smooth; }
- body {
- font-family: var(--font-content);
- background-color: var(--bg-color);
- color: white;
- overflow-x: hidden;
- padding-top: 140px;
- line-height: 1.7;
- }
-
- .logo-container {
- position: fixed;
- top: 20px;
- left: 40px;
- z-index: 1000;
- }
-
- .logo-container a {
- color: #fff;
- text-decoration: none;
- font-family: var(--font-primary);
- font-size: 2.5rem;
- font-weight: 900;
- text-transform: uppercase;
- text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
- }
-
- .logo-container span {
- color: var(--neon-cyan);
- text-shadow: 0 0 15px rgba(0, 255, 255, 1);
- }
-
- .nav-links {
- position: fixed;
- top: 0;
- left: 0;
- right: 0;
- display: flex;
- justify-content: center;
- gap: 18px;
- padding: 15px 5%;
- background: rgba(0, 0, 0, 0.95);
- backdrop-filter: blur(10px);
- border-bottom: 2px solid rgba(0, 224, 255, 0.3);
- z-index: 999;
- flex-wrap: nowrap;
- }
-
- .nav-links a {
- font-family: var(--font-secondary);
- text-decoration: none;
- color: var(--text-color);
- font-weight: 600;
- font-size: 0.9rem;
- text-transform: uppercase;
- padding: 8px 10px;
- border-radius: 5px;
- transition: all 0.3s ease;
- white-space: nowrap;
- }
-
- .nav-links a:hover {
- color: var(--neon-gold);
- }
-
- .dropdown {
- position: relative;
- }
-
- .dropdown .dropbtn {
- font-family: var(--font-secondary);
- color: var(--text-color);
- font-weight: 600;
- font-size: 0.9rem;
- text-transform: uppercase;
- padding: 8px 10px;
- background: transparent;
- border: none;
- cursor: pointer;
- transition: all 0.3s;
- }
-
- .dropdown:hover .dropbtn {
- color: var(--neon-gold);
- }
-
- .dropdown-content {
- display: none;
- position: absolute;
- background-color: rgba(17, 17, 17, 0.98);
- min-width: 200px;
- box-shadow: 0px 8px 16px 0px rgba(0,224,255,0.2);
- z-index: 9999;
- border-radius: 8px;
- border: 1px solid rgba(0, 224, 255, 0.3);
- }
-
- .dropdown-content a {
- padding: 12px 16px;
- display: block;
- font-size: 0.85rem;
- }
-
- /* Desktop only: show dropdown on hover */
- @media (hover: hover) and (pointer: fine) {
- .dropdown:hover .dropdown-content {
- display: block;
- }
- }
-
- /* Both desktop and mobile: show dropdown when active (clicked/tapped) */
- .dropdown.active .dropdown-content {
- display: block;
- }
-
- .dropdown.active .dropbtn {
- color: var(--neon-gold);
- text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
- }
-
- .content-container {
- max-width: 1200px;
- margin: 0 auto;
- padding: 40px 20px;
- }
-
- h1 {
- font-family: var(--font-primary);
- font-size: 2.8rem;
- color: var(--neon-gold);
- text-align: center;
- margin-bottom: 20px;
- text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
- }
-
- .subtitle {
- text-align: center;
- font-size: 1.2rem;
- color: #aaa;
- margin-bottom: 50px;
- }
-
- .content-section {
- margin-bottom: 60px;
- }
-
- .content-section h2 {
- font-family: var(--font-primary);
- color: var(--neon-gold);
- font-size: 2rem;
- margin-bottom: 25px;
- border-bottom: 2px solid rgba(0, 224, 255, 0.3);
- padding-bottom: 10px;
- }
-
- .content-section h3 {
- color: var(--neon-cyan);
- font-size: 1.5rem;
- margin: 30px 0 15px 0;
- }
-
- .content-section p {
- font-size: 1.1rem;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+ min-height: 100vh;
+ color: #e0e0e0;
  line-height: 1.8;
- color: #ddd;
- margin-bottom: 20px;
- }
-
- .content-section ul, .content-section ol {
- margin-left: 30px;
- margin-bottom: 20px;
- }
-
- .content-section li {
- font-size: 1.1rem;
- line-height: 1.8;
- color: #ddd;
- margin-bottom: 12px;
- }
-
- .tip-box {
- background: rgba(0, 255, 100, 0.05);
- border-left: 4px solid #00ff66;
- padding: 20px;
- margin: 25px 0;
- border-radius: 8px;
- }
-
- .tip-box p {
- color: #aaffcc;
- margin: 0;
- }
-
- .warning-box {
- background: rgba(255, 50, 50, 0.1);
- border-left: 4px solid #ff3232;
- padding: 20px;
- margin: 25px 0;
- border-radius: 8px;
- }
-
- .warning-box p {
- color: #ffaaaa;
- margin: 0;
- }
-
- .example-box {
- background: rgba(255, 215, 0, 0.05);
- border: 2px solid rgba(255, 215, 0, 0.3);
- padding: 25px;
- margin: 30px 0;
- border-radius: 10px;
- }
-
- .internal-links {
- background: rgba(255, 215, 0, 0.05);
- border: 2px solid rgba(255, 215, 0, 0.3);
- padding: 30px;
- border-radius: 10px;
- margin-top: 50px;
- }
-
- .internal-links h3 {
- color: var(--neon-gold);
- margin-bottom: 20px;
- text-align: center;
- }
-
- .internal-links ul {
- list-style: none;
- display: grid;
- grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
- gap: 15px;
- margin: 0;
- }
-
- .internal-links li {
- margin: 0;
- }
-
- .internal-links a {
- color: var(--neon-cyan);
- text-decoration: none;
- transition: all 0.3s ease;
- display: block;
- padding: 10px;
- border-radius: 5px;
- }
-
- .internal-links a:hover {
- color: var(--neon-gold);
- background: rgba(255, 215, 0, 0.1);
- transform: translateX(5px);
- }
-
- @media (max-width: 768px) {
- /* Mobile dropdown fix - full width centered */
- .dropdown-content,
- .sports-records-dropdown {
- position: fixed !important;
- left: 5% !important;
- right: 5% !important;
- top: 120px !important;
- width: 90% !important;
- min-width: unset !important;
- max-width: none !important;
- max-height: 65vh;
- overflow-y: auto;
- -webkit-overflow-scrolling: touch;
- z-index: 999999 !important;
- }
-
- body {
- padding-top: 180px;
- }
-
- h1 {
- font-size: 2rem;
- }
- }
- /* Navigation */
-.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
-.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
-.logo{position:fixed;top:15px;left:15px;z-index:1001}
-.logo a{font-family:var(--font-display,'Orbitron',sans-serif);font-size:2.2rem;font-weight:900;color:#fff;text-decoration:none;text-shadow:0 0 10px rgba(255,255,255,0.5)}
-.logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,255,255,0.8)}
-.nav-links{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
-.nav-links>a,.nav-links>.dropdown,.dropbtn{font-family:var(--font-body,'Poppins',sans-serif);color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:12px 18px;white-space:nowrap;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;margin:0}
-.nav-links>a:hover,.dropbtn:hover{color:#FFD700}
-.dropdown{position:relative;padding:0;margin:0}
-.dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(10,12,16,0.98);min-width:180px;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 0;margin-top:8px;z-index:9999}
-.dropdown-content a{color:#00e5ff;padding:12px 18px;display:block;text-decoration:none;font-size:14px}
-.dropdown-content a:hover{background:rgba(0,229,255,0.1);color:#fff}
-.dropdown:hover .dropdown-content{display:block}
-.dropdown.active .dropdown-content{display:block}
-.dropdown.active .dropbtn{color:#FFD700}
-@media(max-width:768px){
-.dropdown-content{position:fixed!important;left:5%!important;right:5%!important;top:120px!important;width:90%!important;min-width:unset!important;max-height:65vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.nav-inner{padding:18px 5% 18px 5%;flex-wrap:wrap;justify-content:center;gap:40px}
-.logo{position:relative;top:0;left:0;margin-bottom:10px}
-.nav-links{justify-content:center}
-.nav-links>a,.nav-links>.dropdown,.dropbtn{font-size:12px;padding:8px 12px;margin:0}
+}
+header { background: rgba(0, 0, 0, 0.3); padding: 20px; text-align: center; border-bottom: 3px solid #FFD700; }
+.logo-title { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px; flex-wrap: wrap; }
+.logo-title img { height: 60px; width: auto; }
+header h1 { font-size: 28px; color: #FFD700; margin: 0; }
+nav { margin-top: 15px; }
+nav a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: 500; transition: color 0.3s; }
+nav a:hover { color: #FFD700; }
+main { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+.article-header { text-align: center; margin-bottom: 40px; }
+.article-header h1 { font-size: 42px; color: #FFD700; margin-bottom: 15px; line-height: 1.2; }
+.article-header .subtitle { font-size: 20px; color: #aaa; font-style: italic; }
+.content-section { background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 35px; margin-bottom: 30px; border-left: 4px solid #FFD700; }
+.content-section h2 { color: #FFD700; font-size: 28px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 215, 0, 0.3); }
+.content-section h3 { color: #87CEEB; font-size: 22px; margin: 25px 0 15px 0; }
+.content-section p { margin-bottom: 18px; font-size: 17px; color: #d0d0d0; }
+.content-section ul, .content-section ol { margin: 15px 0 20px 25px; color: #d0d0d0; }
+.content-section li { margin-bottom: 10px; font-size: 17px; }
+.highlight-box { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; padding: 20px; margin: 25px 0; }
+.highlight-box p { margin-bottom: 0; color: #FFD700; font-weight: 500; }
+.example-box { background: rgba(135, 206, 235, 0.1); border: 1px solid rgba(135, 206, 235, 0.3); border-radius: 10px; padding: 20px; margin: 20px 0; }
+.example-box p { color: #87CEEB; }
+.example-box h4 { color: #87CEEB; font-size: 20px; margin-bottom: 12px; }
+.tip-box { background: rgba(76, 175, 80, 0.1); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 10px; padding: 20px; margin: 25px 0; }
+.tip-box p { color: #d0d0d0; font-size: 17px; margin: 0; }
+.tip-box strong { color: #4CAF50; font-size: 18px; }
+.warning-box { background: rgba(255, 152, 0, 0.1); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 10px; padding: 20px; margin: 25px 0; }
+.warning-box p { color: #d0d0d0; margin: 0; }
+.warning-box strong { color: #FF9800; }
+.internal-link { color: #87CEEB; text-decoration: none; border-bottom: 1px dotted #87CEEB; transition: color 0.3s; }
+.internal-link:hover { color: #FFD700; }
+footer { background: rgba(0, 0, 0, 0.4); padding: 30px 20px; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
+footer p { color: #888; font-size: 14px; }
+@media (max-width: 768px) {
+ .article-header h1 { font-size: 32px; }
+ .content-section { padding: 25px 20px; }
+ .content-section h2 { font-size: 24px; }
+ nav a { display: block; margin: 10px 0; }
 }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
@@ -382,34 +110,27 @@
 </head>
 <body>
 
-<nav class="nav-container">
-<div class="nav-inner">
-<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
-<div class="nav-links">
-<a href="index.html">Home</a>
-<div class="dropdown">
- <button class="dropbtn hub-btn">Handicapping Hub</button>
- <div class="dropdown-content">
- <a href="handicapping-hub.html">Today's Games</a>
- <a href="injury-report.html">Injury Report</a>
+<header>
+ <div class="logo-title">
+ <a href="index.html"><img alt="BetLegend Logo" src="newlogo.png"/></a>
+ <h1>BetLegend Picks</h1>
  </div>
- </div>
-<a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">Picks</a>
-<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html">NBA</a><a href="lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="michigan-state-michigan-big-ten-finale-ncaab-march-8-2026.html">NCAAB</a><a href="mlb.html">MLB</a><a href="fa-cup-fifth-round-leeds-fulham-la-liga-bundesliga-soccer-march-8-2026.html">Soccer</a></div></div>
-<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a>
-<a href="crosssport-parlays-records.html" title="Cross-Sport Bets">Cross-Sport Bets</a>
- </div></div>
-<div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll Management</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="risk-of-ruin-calculator.html">Risk of Ruin</a><a href="bankroll-simulator.html">Bankroll Simulator</a><a href="betting-calculators.html">Calculators</a><a href="screenshots.html">Screenshots</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a><a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a><a href="contact.html">Contact Us</a></div></div>
-<a href="yasiel-puig-convicted-gambling-case-sports-news.html">News</a>
-<a href="podcast.html">Podcast</a>
-<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="knicks-vs-lakers-analysis-stats-preview-march-8-2026.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
-</div>
-</div>
-</nav>
+ <nav>
+ <a href="index.html">Home</a>
+ <a href="nba.html">NBA</a>
+ <a href="nhl.html">NHL</a>
+ <a href="ncaab.html">NCAAB</a>
+ <a href="nfl.html">NFL</a>
+ </nav>
+</header>
 
-<div class="content-container">
+<main>
+<article>
+
+ <div class="article-header">
  <h1>Bankroll Management for Sports Betting: The Complete Guide</h1>
  <p class="subtitle">The Foundation of Long-Term Profitability</p>
+ </div>
 
  <section class="content-section">
  <h2>Why Bankroll Management Matters More Than Picking Winners</h2>
@@ -439,7 +160,7 @@
 
  <section class="content-section">
  <h2>Unit Sizing Theory: How Professional Bettors Size Wagers</h2>
- <p>A unit is your standard bet size, expressed as a percentage of your total bankroll. Most professional bettors use 1-5% per bet depending on their edge and risk tolerance. Our dedicated <a href="bankroll-management/unit-sizing.html" style="color: var(--neon-cyan);">unit sizing guide</a> covers the full theory behind choosing and adjusting your unit size.</p>
+ <p>A unit is your standard bet size, expressed as a percentage of your total bankroll. Most professional bettors use 1-5% per bet depending on their edge and risk tolerance. Our dedicated <a href="bankroll-management/unit-sizing.html" class="internal-link">unit sizing guide</a> covers the full theory behind choosing and adjusting your unit size.</p>
 
  <h3>The Standard Approach</h3>
  <p>If your bankroll is $5,000 and you're betting 2% per game, your unit size is $100. When your bankroll grows to $6,000, your unit grows to $120. When it drops to $4,000, your unit drops to $80.</p>
@@ -461,7 +182,7 @@
 
  <section class="content-section">
  <h2>Risk of Ruin: The Mathematics of Survival</h2>
- <p>Risk of ruin is the mathematical probability that you'll lose your entire bankroll before doubling it. Even if you're a long-term winner, short-term variance can wipe you out if you're betting too much per game. For the full mathematical framework and worked calculations, see our <a href="bankroll-management/risk-of-ruin.html" style="color: var(--neon-cyan);">risk of ruin deep dive</a>.</p>
+ <p>Risk of ruin is the mathematical probability that you'll lose your entire bankroll before doubling it. Even if you're a long-term winner, short-term variance can wipe you out if you're betting too much per game. For the full mathematical framework and worked calculations, see our <a href="bankroll-management/risk-of-ruin.html" class="internal-link">risk of ruin deep dive</a>.</p>
 
  <p>A 55% bettor at -110 odds betting 10% per game has about a 10% chance of going broke. That same bettor at 2% per game has less than 1% risk of ruin. The difference is survival.</p>
 
@@ -505,7 +226,7 @@
  <p>Your bankroll changes every week. If you start the season at $5,000 and you're up to $6,200 three months later, you should be betting based on $6,200, not $5,000. Recalculate weekly.</p>
 
  <h3>2. Chasing Losses with Bigger Bets</h3>
- <p>You lose three in a row, so you bet double on the next game to get it back. This is the Martingale system and it's a fast track to ruin. Your bet size should stay consistent or decrease after losses, never increase. Our <a href="bankroll-management/chasing-losses.html" style="color: var(--neon-cyan);">chasing losses guide</a> explains the psychology behind this trap and how to break the cycle.</p>
+ <p>You lose three in a row, so you bet double on the next game to get it back. This is the Martingale system and it's a fast track to ruin. Your bet size should stay consistent or decrease after losses, never increase. Our <a href="bankroll-management/chasing-losses.html" class="internal-link">chasing losses guide</a> explains the psychology behind this trap and how to break the cycle.</p>
 
  <h3>3. Betting on Credit or Borrowed Money</h3>
  <p>If you're betting with money you don't have, stop. Immediately. Bankroll management only works when you're betting with dedicated funds you can afford to lose.</p>
@@ -522,81 +243,31 @@
 
  <p>Protect your bankroll like it's your job. Bet a consistent percentage. Track everything. Adjust your sizing as your roll grows or shrinks. And never, ever bet more than you can afford to lose on any single game.</p>
 
- <p>That's how you win long-term in sports betting. Not by hitting every bet. But by surviving long enough for your edge to overcome variance. If you want a deeper look at how discipline and bet sizing work together in practice, read our guide on <a href="bankroll-discipline-bet-sizing.html" style="color: var(--neon-cyan);">bankroll discipline and bet sizing strategy</a>.</p>
+ <p>That's how you win long-term in sports betting. Not by hitting every bet. But by surviving long enough for your edge to overcome variance. If you want a deeper look at how discipline and bet sizing work together in practice, read our guide on <a href="bankroll-discipline-bet-sizing.html" class="internal-link">bankroll discipline and bet sizing strategy</a>.</p>
  </section>
 
- <!-- Bankroll Management Articles -->
- <div class="internal-links" style="margin-bottom: 40px;">
- <h3>Related Bankroll Management Articles</h3>
- <ul>
- <li><a href="bankroll-management/mistakes.html">→ Common Bankroll Mistakes</a></li>
- <li><a href="bankroll-management/unit-sizing.html">→ Unit Sizing Guide</a></li>
- <li><a href="bankroll-management/risk-of-ruin.html">→ Risk of Ruin Explained</a></li>
- <li><a href="bankroll-management/variance.html">→ Understanding Variance</a></li>
- <li><a href="bankroll-management/chasing-losses.html">→ Stop Chasing Losses</a></li>
- <li><a href="bankroll-management/stop-loss-methods.html">→ Stop-Loss Methods</a></li>
- <li><a href="bankroll-management/downswings-and-psychology.html">→ Surviving Downswings</a></li>
- <li><a href="bankroll-management/increasing-unit-size.html">→ When to Increase Units</a></li>
- <li><a href="bankroll-management/modern-bankroll-models.html">→ Modern Bankroll Models</a></li>
- <li><a href="bankroll-management/simulations.html">→ Bankroll Growth Simulations</a></li>
- </ul>
- </div>
+</article>
+</main>
 
- <!-- Related Resources -->
- <div class="internal-links">
- <h3>Related Resources</h3>
- <ul>
- <li><a href="kelly-criterion.html">→ Kelly Criterion: Calculate Your Optimal Bet Size</a></li>
- <li><a href="bankroll.html">→ Bankroll Management Basics</a></li>
- <li><a href="betting-101.html">→ Betting 101</a></li>
- <li><a href="betlegend-verified-records.html">→ Our Verified Records</a></li>
- <li><a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">→ Today's Picks</a></li>
- </ul>
- </div>
+<!-- Continue Learning -->
+<section style="max-width:900px;margin:40px auto;padding:32px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:12px;">
+<h3 style="font-size:18px;font-weight:700;color:#FFD700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #FFD700;letter-spacing:1px;text-transform:uppercase;">Continue Learning</h3>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<a href="bankroll-management/unit-sizing.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;">Unit Sizing Guide</a>
+<a href="bankroll-management/risk-of-ruin.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;">Risk of Ruin Explained</a>
+<a href="bankroll-management/variance.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;">Understanding Variance</a>
+<a href="kelly-criterion.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;">Kelly Criterion Calculator</a>
+<a href="bankroll-discipline-bet-sizing.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;">Bankroll Discipline and Bet Sizing</a>
+<a href="betting-101.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;">Betting 101</a>
+<a href="betting-education.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;">Betting Education Hub</a>
 </div>
+</section>
+
+<footer><p>BetLegend Picks - Educational Sports Betting Content</p></footer>
 
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script async data-id="101485054" src="//static.getclicky.com/js"></script>
-<script>
-(function() {
- var dropdowns = document.querySelectorAll('.dropdown');
- dropdowns.forEach(function(dropdown) {
- var btn = dropdown.querySelector('.dropbtn');
- if (!btn) return;
- function toggle(e) {
- e.preventDefault();
- e.stopPropagation();
- dropdowns.forEach(function(d) {
- if (d !== dropdown) d.classList.remove('active');
- });
- dropdown.classList.toggle('active');
- }
- btn.addEventListener('touchend', toggle, {passive: false});
- btn.addEventListener('click', toggle);
- });
- document.addEventListener('touchend', function(e) {
- if (!e.target.closest('.dropdown')) {
- dropdowns.forEach(function(d) { d.classList.remove('active'); });
- }
- });
- document.addEventListener('click', function(e) {
- if (!e.target.closest('.dropdown')) {
- dropdowns.forEach(function(d) { d.classList.remove('active'); });
- }
- });
-})();
-</script>
 
-    <!-- Related Analysis Section - Internal Linking -->
-    <section style="max-width:900px;margin:40px auto;padding:32px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:12px;">
-        <h3 style="font-size:18px;font-weight:700;color:#FFD700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #FFD700;letter-spacing:1px;text-transform:uppercase;">Related Analysis</h3>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-            <a href="/bankroll-simulator.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">Bankroll Simulator</a>
-            <a href="/bankroll-discipline-bet-sizing.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">Bet Sizing Discipline</a>
-            <a href="/handicapping-hub.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">Handicapping Hub</a>
-        </div>
-    </section>
-
-    </body>
+</body>
 </html>

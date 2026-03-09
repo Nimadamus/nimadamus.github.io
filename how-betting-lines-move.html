@@ -99,10 +99,6 @@
     }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
     <script>
@@ -113,468 +109,86 @@
     </script>
 
     <style>
-        :root {
-            --bg-color: #000;
-            --text-color: #eaf8ff;
-            --glow-color: #00e0ff;
-            --neon-cyan: #00ffff;
-            --neon-gold: #FFD700;
-            --font-primary: 'Orbitron', sans-serif;
-            --font-secondary: 'Poppins', sans-serif;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--font-secondary);
-            background-color: var(--bg-color);
-            color: white;
-            overflow-x: hidden;
-            padding-top: 100px;
-            line-height: 1.8;
-        }
-
-        /* Navigation */
-        .nav-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(10, 12, 16, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .nav-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 18px 5% 18px 280px;
-        }
-
-        .logo {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 1001;
-        }
-
-        .logo a {
-            font-family: var(--font-primary);
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #fff;
-            text-decoration: none;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .logo a span {
-            color: #00e5ff;
-            text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: nowrap;
-        }
-
-        .nav-links > a, .dropbtn {
-            font-family: var(--font-secondary);
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 8px 14px;
-            border-radius: 8px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-        }
-
-        .nav-links > a:hover, .dropbtn:hover {
-            color: #FFD700;
-        }
-
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(10, 12, 16, 0.98);
-            min-width: 180px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 10px 0;
-            margin-top: 8px;
-            z-index: 9999;
-        }
-
-        .dropdown-content a {
-            color: #00e5ff;
-            padding: 12px 18px;
-            display: block;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .dropdown-content a:hover {
-            background: rgba(0, 229, 255, 0.1);
-            color: #fff;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown.active .dropdown-content {
-            display: block;
-        }
-
-        .dropdown.active .dropbtn {
-            color: #FFD700;
-        }
-
-        /* Main Content Container */
-        .guide-container {
-            max-width: 900px;
-            margin: 40px auto 80px;
-            padding: 0 25px;
-        }
-
-        /* Page Header */
-        .guide-header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding-bottom: 40px;
-            border-bottom: 2px solid rgba(0, 224, 255, 0.2);
-        }
-
-        .guide-header h1 {
-            font-family: var(--font-primary);
-            font-size: 2.8rem;
-            color: var(--neon-gold);
-            text-shadow: 0 0 30px var(--neon-gold);
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .guide-header .subtitle {
-            font-size: 1.3rem;
-            color: var(--text-color);
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-
-        /* Table of Contents */
-        .toc {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(0, 224, 255, 0.3);
-            border-radius: 12px;
-            padding: 30px 35px;
-            margin-bottom: 50px;
-        }
-
-        .toc h2 {
-            font-family: var(--font-primary);
-            font-size: 1.4rem;
-            color: var(--neon-cyan);
-            margin-bottom: 20px;
-        }
-
-        .toc ul {
-            list-style: none;
-            columns: 2;
-            column-gap: 40px;
-        }
-
-        .toc li {
-            margin-bottom: 12px;
-        }
-
-        .toc a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.2s;
-            display: block;
-            padding: 4px 0;
-        }
-
-        .toc a:hover {
-            color: var(--neon-gold);
-            padding-left: 8px;
-        }
-
-        /* Section Styling */
-        .guide-section {
-            margin-bottom: 60px;
-        }
-
-        .guide-section h2 {
-            font-family: var(--font-primary);
-            font-size: 1.8rem;
-            color: var(--neon-gold);
-            margin-bottom: 25px;
-            padding-bottom: 12px;
-            border-bottom: 3px solid var(--neon-cyan);
-        }
-
-        .guide-section h3 {
-            font-family: var(--font-primary);
-            font-size: 1.3rem;
-            color: var(--neon-cyan);
-            margin: 35px 0 18px;
-        }
-
-        .guide-section p {
-            font-size: 1.1rem;
-            color: var(--text-color);
-            margin-bottom: 20px;
-            line-height: 1.9;
-        }
-
-        /* Example Boxes */
-        .example-box {
-            background: rgba(255, 215, 0, 0.08);
-            border-left: 4px solid var(--neon-gold);
-            padding: 20px 25px;
-            margin: 25px 0;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .example-box strong {
-            color: var(--neon-gold);
-            font-weight: 700;
-        }
-
-        .example-box p {
-            margin-bottom: 10px;
-        }
-
-        .example-box p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Info Callout */
-        .info-callout {
-            background: rgba(0, 224, 255, 0.08);
-            border: 1px solid rgba(0, 224, 255, 0.3);
-            padding: 25px;
-            margin: 30px 0;
-            border-radius: 10px;
-        }
-
-        .info-callout h4 {
-            color: var(--neon-cyan);
-            font-family: var(--font-primary);
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-        }
-
-        /* Warning Box */
-        .warning-box {
-            background: rgba(255, 100, 100, 0.1);
-            border-left: 4px solid #ff6b6b;
-            padding: 20px 25px;
-            margin: 25px 0;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .warning-box strong {
-            color: #ff6b6b;
-        }
-
-        /* Key Takeaway */
-        .key-takeaway {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 224, 255, 0.05));
-            border: 2px solid var(--neon-gold);
-            padding: 25px 30px;
-            margin: 40px 0;
-            border-radius: 12px;
-        }
-
-        .key-takeaway h4 {
-            color: var(--neon-gold);
-            font-family: var(--font-primary);
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(0, 0, 0, 0.9);
-            border-top: 1px solid rgba(0, 224, 255, 0.2);
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        footer p {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        footer a {
-            color: var(--neon-cyan);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            color: var(--neon-gold);
-        }
-
-        /* Responsive */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100vh; color: #e0e0e0; line-height: 1.8; }
+        header { background: rgba(0, 0, 0, 0.3); padding: 20px; text-align: center; border-bottom: 3px solid #FFD700; }
+        .logo-title { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px; flex-wrap: wrap; }
+        .logo-title img { height: 60px; width: auto; }
+        header h1 { font-size: 28px; color: #FFD700; margin: 0; }
+        nav { margin-top: 15px; }
+        nav a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: #FFD700; }
+        main { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .article-header { text-align: center; margin-bottom: 40px; }
+        .article-header h1 { font-size: 42px; color: #FFD700; margin-bottom: 15px; line-height: 1.2; }
+        .article-header .subtitle { font-size: 20px; color: #aaa; font-style: italic; }
+        .content-section { background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 35px; margin-bottom: 30px; border-left: 4px solid #FFD700; }
+        .content-section h2 { color: #FFD700; font-size: 28px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 215, 0, 0.3); }
+        .content-section h3 { color: #87CEEB; font-size: 22px; margin: 25px 0 15px 0; }
+        .content-section p { margin-bottom: 18px; font-size: 17px; color: #d0d0d0; }
+        .content-section ul, .content-section ol { margin: 15px 0 20px 25px; color: #d0d0d0; }
+        .content-section li { margin-bottom: 10px; font-size: 17px; }
+        .highlight-box { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; padding: 20px; margin: 25px 0; }
+        .highlight-box p { margin-bottom: 0; color: #FFD700; font-weight: 500; }
+        .highlight-box h4 { color: #FFD700; font-size: 20px; margin-bottom: 12px; }
+        .example-box { background: rgba(135, 206, 235, 0.1); border: 1px solid rgba(135, 206, 235, 0.3); border-radius: 10px; padding: 20px; margin: 20px 0; }
+        .example-box p { color: #87CEEB; }
+        .example-box h3, .example-box h4 { color: #87CEEB; margin-bottom: 12px; }
+        .example-box strong { color: #87CEEB; }
+        .warning-box { background: rgba(255, 152, 0, 0.1); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 10px; padding: 20px; margin: 25px 0; }
+        .warning-box p { color: #d0d0d0; }
+        .warning-box strong { color: #FF9800; }
+        .toc { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 12px; padding: 25px 30px; margin-bottom: 35px; }
+        .toc h3 { color: #FFD700; font-size: 20px; margin-bottom: 15px; }
+        .toc ol { margin-left: 20px; }
+        .toc li { margin-bottom: 8px; }
+        .toc a { color: #87CEEB; text-decoration: none; font-size: 16px; }
+        .toc a:hover { color: #FFD700; }
+        .toc ul { list-style: none; columns: 2; column-gap: 40px; padding: 0; margin: 0; }
+        .internal-link { color: #87CEEB; text-decoration: none; border-bottom: 1px dotted #87CEEB; transition: color 0.3s; }
+        .internal-link:hover { color: #FFD700; }
+        .continue-learning { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 12px; padding: 30px; margin-top: 40px; }
+        .continue-learning h3 { color: #FFD700; font-size: 22px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 215, 0, 0.3); }
+        .continue-learning a { display: block; padding: 12px 16px; background: rgba(255, 215, 0, 0.06); border: 1px solid rgba(255, 215, 0, 0.15); border-radius: 8px; color: #87CEEB; text-decoration: none; font-size: 16px; font-weight: 500; transition: all 0.2s ease; margin-bottom: 8px; }
+        .continue-learning a:hover { background: rgba(255, 215, 0, 0.15); color: #FFD700; }
+        footer { background: rgba(0, 0, 0, 0.4); padding: 30px 20px; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
+        footer p { color: #888; font-size: 14px; }
         @media (max-width: 768px) {
-            .dropdown-content {
-                position: fixed !important;
-                left: 5% !important;
-                right: 5% !important;
-                top: 120px !important;
-                width: 90% !important;
-                min-width: unset !important;
-                max-height: 65vh;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .nav-inner {
-                padding: 18px 5% 18px 5%;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 40px;
-            }
-
-            .logo {
-                position: relative;
-                top: 0;
-                left: 0;
-                margin-bottom: 10px;
-            }
-
-            .nav-links {
-                justify-content: center;
-            }
-
-            .nav-links > a, .dropbtn {
-                font-size: 12px;
-                padding: 8px 12px;
-            }
-
-            body {
-                padding-top: 140px;
-            }
-
-            .guide-header h1 {
-                font-size: 1.8rem;
-            }
-
-            .guide-header .subtitle {
-                font-size: 1.1rem;
-            }
-
-            .toc ul {
-                columns: 1;
-            }
-
-            .guide-section h2 {
-                font-size: 1.5rem;
-            }
+            .article-header h1 { font-size: 32px; }
+            .content-section { padding: 25px 20px; }
+            .content-section h2 { font-size: 24px; }
+            nav a { display: block; margin: 10px 0; }
+            .toc ul { columns: 1; }
         }
     </style>
 <link rel="stylesheet" href="/mobile-optimize.css" media="screen">
 </head>
 <body>
 
-<nav class="nav-container">
-    <div class="nav-inner">
-        <div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <div class="dropdown">
-                <button class="dropbtn hub-btn">Handicapping Hub</button>
-                <div class="dropdown-content">
-                    <a href="handicapping-hub.html">Today's Games</a>
-                    <a href="injury-report.html">Injury Report</a>
-                </div>
-            </div>
-            <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">Picks</a>
-            <div class="dropdown">
-                <button class="dropbtn">Sports</button>
-                <div class="dropdown-content">
-                    <a href="nfl.html">NFL</a>
-                    <a href="celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html">NBA</a>
-                    <a href="lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html">NHL</a>
-                    <a href="ncaaf.html">NCAAF</a>
-                    <a href="michigan-state-michigan-big-ten-finale-ncaab-march-8-2026.html">NCAAB</a>
-                    <a href="mlb.html">MLB</a>
-                    <a href="fa-cup-fifth-round-leeds-fulham-la-liga-bundesliga-soccer-march-8-2026.html">Soccer</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Records</button>
-                <div class="dropdown-content">
-                    <a href="records.html">Detailed Breakdown</a>
-                    <a href="nfl-records.html">NFL</a>
-                    <a href="nba-records.html">NBA</a>
-                    <a href="nhl-records.html">NHL</a>
-                    <a href="ncaaf-records.html">NCAAF</a>
-                    <a href="ncaab-records.html">NCAAB</a>
-                    <a href="mlb-records.html">MLB</a>
-                    <a href="soccer-records.html">Soccer</a>
-                    <a href="crosssport-parlays-records.html">Cross-Sport Bets</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Resources</button>
-                <div class="dropdown-content">
-                    <a href="proofofpicks.html">Proof of Picks</a>
-                    <a href="live-odds.html">Live Odds</a>
-                    <a href="howitworks.html">How It Works</a>
-                    <a href="bankroll.html">Bankroll Management</a>
-                    <a href="kelly-criterion.html">Kelly Criterion</a>
-                    <a href="betting-calculators.html">Calculators</a>
-                    <a href="screenshots.html">Screenshots</a>
-                    <a href="bestonlinesportsbook.html">Best Sportsbook</a>
-                    <a href="betting-glossary.html">Glossary</a>
-                    <a href="betting-101.html">Betting 101</a>
-                    <a href="contact.html">Contact Us</a>
-                </div>
-            </div>
-            <a href="yasiel-puig-convicted-gambling-case-sports-news.html">News</a>
-            <div class="dropdown">
-                <button class="dropbtn">Game of Day</button>
-                <div class="dropdown-content">
-                    <a href="knicks-vs-lakers-analysis-stats-preview-march-8-2026.html">Featured Game</a>
-                    <a href="moneyline-parlay-of-the-day.html">ML Parlay</a>
-                </div>
-            </div>
-        </div>
+<header>
+    <div class="logo-title">
+        <img src="newlogo.png" alt="BetLegend Logo">
+        <h1>BetLegend Picks</h1>
     </div>
-</nav>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="nba.html">NBA</a>
+        <a href="nhl.html">NHL</a>
+        <a href="ncaab.html">NCAAB</a>
+        <a href="nfl.html">NFL</a>
+    </nav>
+</header>
 
-<div class="guide-container">
+<main>
+    <article>
 
-    <header class="guide-header">
+    <div class="article-header">
         <h1>How Betting Lines Move</h1>
         <p class="subtitle">Understanding why odds shift, what different types of line movement mean, and how to interpret market signals without falling for common misconceptions.</p>
-    </header>
+    </div>
 
-    <nav class="toc">
-        <h2>What You'll Learn</h2>
+    <div class="toc">
+        <h3>What You'll Learn</h3>
         <ul>
             <li><a href="#what-is-line-movement">What Line Movement Actually Is</a></li>
             <li><a href="#opening-lines">How Opening Lines Are Set</a></li>
@@ -589,13 +203,13 @@
             <li><a href="#myths">Common Myths About Line Movement</a></li>
             <li><a href="#practical-use">How to Actually Use This Information</a></li>
         </ul>
-    </nav>
+    </div>
 
     <!-- Section 1: What Line Movement Actually Is -->
-    <section class="guide-section" id="what-is-line-movement">
+    <section class="content-section" id="what-is-line-movement">
         <h2>What Line Movement Actually Is</h2>
 
-        <p>A betting line isn't a fixed number carved in stone. It's a living, breathing reflection of market activity. From the moment a sportsbook posts an opening number until the final whistle blows and betting closes, the line can shift dozens of times. Sometimes the movement is barely noticeable, a half-point here or there. Other times it's dramatic, multiple points in a matter of hours. Understanding what's behind these shifts is one of the more useful skills a bettor can develop. (If you're still getting comfortable with <a href="how-sports-betting-odds-work.html" style="color: var(--neon-cyan);">how betting odds work</a>, start there first.)</p>
+        <p>A betting line isn't a fixed number carved in stone. It's a living, breathing reflection of market activity. From the moment a sportsbook posts an opening number until the final whistle blows and betting closes, the line can shift dozens of times. Sometimes the movement is barely noticeable, a half-point here or there. Other times it's dramatic, multiple points in a matter of hours. Understanding what's behind these shifts is one of the more useful skills a bettor can develop. (If you're still getting comfortable with <a href="how-sports-betting-odds-work.html" class="internal-link">how betting odds work</a>, start there first.)</p>
 
         <p>At its core, line movement is simply the sportsbook adjusting its prices. They're not doing this randomly or based on hunches. Every move has a reason, whether that's balancing their risk exposure, reacting to sharp action, or incorporating new information about the game. The trick is learning to read these signals accurately and, just as importantly, knowing when not to read too much into them.</p>
 
@@ -605,7 +219,7 @@
     </section>
 
     <!-- Section 2: How Opening Lines Are Set -->
-    <section class="guide-section" id="opening-lines">
+    <section class="content-section" id="opening-lines">
         <h2>How Opening Lines Are Set</h2>
 
         <p>Before a line can move, it has to exist. Understanding how sportsbooks create their opening numbers gives you context for everything that happens afterward. The process is more sophisticated than most people realize, and it varies depending on the book's role in the market.</p>
@@ -633,7 +247,7 @@
     </section>
 
     <!-- Section 3: The Lifecycle of a Betting Line -->
-    <section class="guide-section" id="lifecycle">
+    <section class="content-section" id="lifecycle">
         <h2>The Lifecycle of a Betting Line</h2>
 
         <p>A betting line goes through distinct phases from opening to closing, and each phase has different characteristics. Knowing where you are in that lifecycle helps you understand what kind of action is likely driving any movement you observe.</p>
@@ -656,14 +270,14 @@
 
         <p>Late movement can be dramatic. Injury news that drops close to game time can cause multi-point swings. Steam moves from betting syndicates can hit in the final hour. And sometimes, heavy public action on a popular side pushes the line in ways that actually create value on the other side.</p>
 
-        <div class="info-callout">
+        <div class="highlight-box">
             <h4>Closing Line Value</h4>
             <p>Professional bettors measure their success partly by whether they beat the closing line. If you bet the Packers -3 and the line closes at -4, you got a better number than the market settled on. Consistently beating the closing line is one of the strongest indicators of long-term betting skill.</p>
         </div>
     </section>
 
     <!-- Section 4: Understanding Public Money -->
-    <section class="guide-section" id="public-money">
+    <section class="content-section" id="public-money">
         <h2>Understanding Public Money</h2>
 
         <p>Public money comes from recreational bettors, the millions of people who bet casually on sports without sophisticated analysis or professional-level bankrolls. Understanding how public money behaves helps explain a significant portion of line movement, especially as games approach.</p>
@@ -687,7 +301,7 @@
     </section>
 
     <!-- Section 5: Understanding Sharp Money -->
-    <section class="guide-section" id="sharp-money">
+    <section class="content-section" id="sharp-money">
         <h2>Understanding Sharp Money</h2>
 
         <p>Sharp money is the opposite of public action. It comes from professional bettors, syndicates, and respected handicappers who have demonstrated the ability to beat the market over time. Sportsbooks track these bettors meticulously and react to their wagers much differently than they react to recreational action.</p>
@@ -714,7 +328,7 @@
     </section>
 
     <!-- Section 6: Why Sportsbooks React Differently -->
-    <section class="guide-section" id="why-books-react">
+    <section class="content-section" id="why-books-react">
         <h2>Why Sportsbooks React Differently to Sharp vs. Public Action</h2>
 
         <p>This is one of the most important concepts to understand about line movement. Not all dollars are treated equally by sportsbooks, and their asymmetric reactions explain patterns that might otherwise seem puzzling.</p>
@@ -740,7 +354,7 @@
     </section>
 
     <!-- Section 7: Steam Moves and Syndicate Action -->
-    <section class="guide-section" id="steam-moves">
+    <section class="content-section" id="steam-moves">
         <h2>Steam Moves and Syndicate Action</h2>
 
         <p>If you follow betting long enough, you'll hear about steam moves. These are dramatic, sudden line shifts that occur simultaneously across multiple sportsbooks. Understanding what causes them helps you interpret these events when you see them.</p>
@@ -763,7 +377,7 @@
     </section>
 
     <!-- Section 8: Reverse Line Movement Explained -->
-    <section class="guide-section" id="reverse-line-movement">
+    <section class="content-section" id="reverse-line-movement">
         <h2>Reverse Line Movement Explained</h2>
 
         <p>Reverse line movement is one of the most discussed concepts among bettors trying to follow sharp action. It's also one of the most misunderstood. Let's clarify what it actually is and what it actually means.</p>
@@ -789,14 +403,14 @@
 
         <p>Additionally, by the time RLM is visible to the public, the value is often gone. If the line has already moved from Lakers -4 to Lakers -3, betting the Celtics now doesn't capture the same value that the original sharp bettors got at +4.</p>
 
-        <div class="key-takeaway">
+        <div class="highlight-box">
             <h4>RLM as Confirmation, Not a System</h4>
             <p>Think of reverse line movement as one input among many. It shouldn't be your sole reason for making a bet, but it can strengthen confidence in a position you've already analyzed. Blindly betting every instance of RLM is not a winning long-term strategy.</p>
         </div>
     </section>
 
     <!-- Section 9: Key Numbers and Their Gravity -->
-    <section class="guide-section" id="key-numbers">
+    <section class="content-section" id="key-numbers">
         <h2>Key Numbers and Their Gravity</h2>
 
         <p>In certain sports, specific point spreads occur as final margins far more often than others. These key numbers create natural resistance points in line movement. Understanding them helps explain why some lines are stickier than others.</p>
@@ -815,14 +429,14 @@
 
         <p>College football shares NFL's key numbers but with more variance due to different offensive styles and competitive imbalances. The key numbers exist but exert slightly less gravitational pull.</p>
 
-        <div class="info-callout">
+        <div class="highlight-box">
             <h4>Buying Points Around Key Numbers</h4>
             <p>Some sportsbooks let you buy points, paying extra to move the line a half-point in your favor. This is typically bad value except around key numbers. Buying from -3 to -2.5 in the NFL can be worth the cost because you're avoiding the most common margin. Buying from -5 to -4.5 is rarely worth it.</p>
         </div>
     </section>
 
     <!-- Section 10: When to Place Your Bets -->
-    <section class="guide-section" id="timing">
+    <section class="content-section" id="timing">
         <h2>When to Place Your Bets</h2>
 
         <p>Timing matters in betting. The same wager placed at different times can have meaningfully different expected value based on how the line has moved. But the optimal timing depends on your situation and strategy.</p>
@@ -850,7 +464,7 @@
     </section>
 
     <!-- Section 11: Common Myths About Line Movement -->
-    <section class="guide-section" id="myths">
+    <section class="content-section" id="myths">
         <h2>Common Myths About Line Movement</h2>
 
         <p>Line movement generates a lot of misunderstanding. Here are the most persistent myths and the reality behind them.</p>
@@ -877,7 +491,7 @@
     </section>
 
     <!-- Section 12: How to Actually Use This Information -->
-    <section class="guide-section" id="practical-use">
+    <section class="content-section" id="practical-use">
         <h2>How to Actually Use This Information</h2>
 
         <p>Understanding line movement is valuable, but only if you apply it correctly. Here's a practical framework for incorporating line movement into your betting process without overweighting it.</p>
@@ -898,14 +512,14 @@
 
         <p>Ultimately, profitable betting requires finding genuine edge through analysis, not through reading market tea leaves. Line movement can help you time your bets and confirm your views, but it's not a shortcut to winning. The bettors who succeed long-term do so because they understand the games they're betting on, not because they've mastered the art of following smart money.</p>
 
-        <div class="key-takeaway">
+        <div class="highlight-box">
             <h4>The Bottom Line</h4>
             <p>Line movement is information, not a strategy. Use it to understand market sentiment, time your bets more effectively, and validate your own analysis. But don't expect it to replace the hard work of actually handicapping games. The sharps whose moves you're trying to follow got sharp by developing genuine expertise, not by following other sharps.</p>
         </div>
     </section>
 
     <!-- Summary Section -->
-    <section class="guide-section">
+    <section class="content-section">
         <h2>Summary: Making Sense of Market Movement</h2>
 
         <p>Lines move because markets move. Sportsbooks are constantly adjusting their prices in response to betting action, new information, and their own risk management needs. Understanding the forces behind those adjustments helps you navigate the betting market more intelligently.</p>
@@ -929,58 +543,29 @@
         <p>Use this knowledge to supplement your own analysis, not replace it. Line movement is a tool. What you do with the tool determines whether it helps you.</p>
     </section>
 
-</div>
+    <!-- Continue Learning Section -->
+    <div class="continue-learning">
+        <h3>Continue Learning</h3>
+        <a href="how-sports-betting-odds-work.html">How Sports Betting Odds Work</a>
+        <a href="implied-probability.html">Understanding Implied Probability</a>
+        <a href="betting-101.html">Betting 101 - Complete Beginner's Guide</a>
+        <a href="parlay-guide.html">Parlay Betting Guide</a>
+        <a href="bankroll.html">Bankroll Management</a>
+        <a href="kelly-criterion.html">Kelly Criterion Calculator</a>
+        <a href="betting-glossary.html">Sports Betting Glossary</a>
+        <a href="betting-education-hub.html">Betting Education Hub</a>
+    </div>
 
+    </article>
+</main>
 
-    <!-- Related Analysis Section - Internal Linking -->
-    <section style="max-width:900px;margin:40px auto;padding:32px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:12px;">
-        <h3 style="font-size:18px;font-weight:700;color:#FFD700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #FFD700;letter-spacing:1px;text-transform:uppercase;">Related Analysis</h3>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-            <a href="/celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NBA Analysis</a>
-            <a href="/lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NHL Analysis</a>
-            <a href="/nfl.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NFL Analysis</a>
-            <a href="/handicapping-hub.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">Handicapping Hub</a>
-        </div>
-    </section>
-
-    <footer>
-    <p>&copy; BetLegend Picks. All rights reserved.</p>
-    <p style="margin-top: 10px;"><a href="betting-glossary.html">Betting Glossary</a> | <a href="bankroll.html">Bankroll Management</a> | <a href="kelly-criterion.html">Kelly Criterion Calculator</a></p>
+<footer>
+    <p>BetLegend Picks - Educational Sports Betting Content</p>
 </footer>
 
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script async data-id="101485054" src="//static.getclicky.com/js"></script>
-
-<script>
-(function() {
-    var dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(function(dropdown) {
-        var btn = dropdown.querySelector('.dropbtn');
-        if (!btn) return;
-        function toggle(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dropdowns.forEach(function(d) {
-                if (d !== dropdown) d.classList.remove('active');
-            });
-            dropdown.classList.toggle('active');
-        }
-        btn.addEventListener('touchend', toggle, {passive: false});
-        btn.addEventListener('click', toggle);
-    });
-    document.addEventListener('touchend', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(function(d) { d.classList.remove('active'); });
-        }
-    });
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(function(d) { d.classList.remove('active'); });
-        }
-    });
-})();
-</script>
 
 </body>
 </html>

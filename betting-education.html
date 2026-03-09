@@ -15,106 +15,83 @@
 <meta name="twitter:title" content="Betting Education | Learn Sports Betting Fundamentals | BetLegend"/>
 <meta name="twitter:description" content="Learn how sports betting works. Educational guides covering bankroll management, variance, risk of ruin, unit sizing, and betting psychology."/>
 
- <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
  <style>
- :root{--bg-color:#000;--neon-cyan:#00ffff;--neon-gold:#FFD700;--font-primary:'Orbitron',sans-serif;--font-content:'Rubik',sans-serif}
- *{margin:0;padding:0;box-sizing:border-box}
- body{font-family:var(--font-content);background:#000;color:#fff;padding-top:140px;line-height:1.7}
- .content-container{max-width:900px;margin:0 auto;padding:40px 20px}
- h1{font-family:var(--font-primary);font-size:2.2rem;color:var(--neon-gold);margin-bottom:20px;text-align:center}
- .intro{font-size:1.1rem;line-height:1.8;color:#ccc;margin-bottom:40px;text-align:center;max-width:700px;margin-left:auto;margin-right:auto}
- h2{font-family:var(--font-primary);color:var(--neon-gold);font-size:1.4rem;margin:50px 0 25px 0;border-bottom:2px solid rgba(0,224,255,0.3);padding-bottom:10px}
- .guide-list{list-style:none;padding:0;margin:0}
- .guide-list li{margin-bottom:20px;padding:20px;background:rgba(0,224,255,0.03);border:1px solid rgba(0,224,255,0.15);border-radius:8px;transition:all 0.2s}
- .guide-list li:hover{background:rgba(0,224,255,0.08);border-color:rgba(0,224,255,0.3)}
- .guide-list a{color:var(--neon-cyan);text-decoration:none;font-size:1.1rem;font-weight:600;display:block;margin-bottom:6px}
- .guide-list a:hover{color:#fff}
- .guide-list p{color:#aaa;font-size:0.95rem;margin:0;line-height:1.6}
- .back-link{background:rgba(255,215,0,0.1);border:2px solid rgba(255,215,0,0.3);padding:25px;border-radius:10px;margin-top:50px;text-align:center}
- .back-link a{color:var(--neon-cyan);text-decoration:none;font-size:1.1rem;font-weight:600}
-
- /* Navigation */
- .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
- .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
- .logo{position:fixed;top:15px;left:15px;z-index:1001}
- .logo a{font-family:var(--font-primary);font-size:2.2rem;font-weight:900;color:#fff;text-decoration:none;text-shadow:0 0 10px rgba(255,255,255,0.5)}
- .logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,255,255,0.8)}
- .nav-links{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
- .nav-links>a,.nav-links>.dropdown,.dropbtn{font-family:'Poppins',sans-serif;color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:12px 18px;white-space:nowrap;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;margin:0}
- .nav-links>a:hover,.dropbtn:hover{color:#FFD700}
- .dropdown{position:relative;padding:0;margin:0}
- .dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(10,12,16,0.98);min-width:180px;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 0;margin-top:8px;z-index:9999}
- .dropdown-content a{color:#00e5ff;padding:12px 18px;display:block;text-decoration:none;font-size:14px}
- .dropdown-content a:hover{background:rgba(0,229,255,0.1);color:#fff}
- .dropdown:hover .dropdown-content{display:block}
- .dropdown.active .dropdown-content{display:block}
- .dropdown.active .dropbtn{color:#FFD700}
- @media(max-width:768px){
- .dropdown-content{position:fixed!important;left:5%!important;right:5%!important;top:120px!important;width:90%!important;min-width:unset!important;max-height:65vh;overflow-y:auto}
- .nav-inner{padding:18px 5% 18px 5%;flex-wrap:wrap;justify-content:center;gap:40px}
- .logo{position:relative;top:0;left:0;margin-bottom:10px}
- .nav-links{justify-content:center}
- .nav-links>a,.nav-links>.dropdown,.dropbtn{font-size:12px;padding:8px 12px;margin:0}
- h1{font-size:1.8rem}
- }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+ min-height: 100vh;
+ color: #e0e0e0;
+ line-height: 1.8;
+}
+header { background: rgba(0, 0, 0, 0.3); padding: 20px; text-align: center; border-bottom: 3px solid #FFD700; }
+.logo-title { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px; flex-wrap: wrap; }
+.logo-title img { height: 60px; width: auto; }
+header h1 { font-size: 28px; color: #FFD700; margin: 0; }
+nav { margin-top: 15px; }
+nav a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: 500; transition: color 0.3s; }
+nav a:hover { color: #FFD700; }
+main { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+.article-header { text-align: center; margin-bottom: 40px; }
+.article-header h1 { font-size: 42px; color: #FFD700; margin-bottom: 15px; line-height: 1.2; }
+.article-header .subtitle { font-size: 20px; color: #aaa; font-style: italic; }
+.content-section { background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 35px; margin-bottom: 30px; border-left: 4px solid #FFD700; }
+.content-section h2 { color: #FFD700; font-size: 28px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 215, 0, 0.3); }
+.content-section h3 { color: #87CEEB; font-size: 22px; margin: 25px 0 15px 0; }
+.content-section p { margin-bottom: 18px; font-size: 17px; color: #d0d0d0; }
+.content-section ul, .content-section ol { margin: 15px 0 20px 25px; color: #d0d0d0; }
+.content-section li { margin-bottom: 10px; font-size: 17px; }
+.highlight-box { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; padding: 20px; margin: 25px 0; }
+.highlight-box p { margin-bottom: 0; color: #FFD700; font-weight: 500; }
+.internal-link { color: #87CEEB; text-decoration: none; border-bottom: 1px dotted #87CEEB; transition: color 0.3s; }
+.internal-link:hover { color: #FFD700; }
+.guide-list { list-style: none; padding: 0; margin: 0; }
+.guide-list li { margin-bottom: 15px; padding: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.15); border-radius: 10px; transition: all 0.2s; }
+.guide-list li:hover { background: rgba(255, 215, 0, 0.08); border-color: rgba(255, 215, 0, 0.3); }
+.guide-list a { color: #87CEEB; text-decoration: none; font-size: 17px; font-weight: 600; display: block; margin-bottom: 6px; }
+.guide-list a:hover { color: #FFD700; }
+.guide-list p { color: #aaa; font-size: 15px; margin: 0; line-height: 1.6; }
+footer { background: rgba(0, 0, 0, 0.4); padding: 30px 20px; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
+footer p { color: #888; font-size: 14px; }
+.back-link { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; padding: 25px; margin-top: 40px; text-align: center; }
+.back-link a { color: #87CEEB; text-decoration: none; font-size: 17px; font-weight: 600; transition: color 0.3s; }
+.back-link a:hover { color: #FFD700; }
+@media (max-width: 768px) {
+ .article-header h1 { font-size: 32px; }
+ .content-section { padding: 25px 20px; }
+ .content-section h2 { font-size: 24px; }
+ nav a { display: block; margin: 10px 0; }
+}
  </style>
  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
 <link rel="stylesheet" href="/mobile-optimize.css" media="screen">
 </head>
 <body>
-<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
-<nav class="nav-container">
-<div class="nav-inner">
-<div class="nav-links">
-<a href="index.html">Home</a>
-<div class="dropdown">
- <button class="dropbtn hub-btn">Handicapping Hub</button>
- <div class="dropdown-content">
- <a href="handicapping-hub.html">Today's Games</a>
- <a href="injury-report.html">Injury Report</a>
- </div>
- </div>
-<a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">Picks & Analysis</a>
-<div class="dropdown">
-<button class="dropbtn">Game Previews & Records ▼</button>
-<div class="dropdown-content">
-<a href="nfl.html">NFL</a>
-<a href="celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html">NBA</a>
-<a href="lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html">NHL</a>
-<a href="michigan-state-michigan-big-ten-finale-ncaab-march-8-2026.html">NCAAB</a>
-<a href="ncaaf.html">NCAAF</a>
-<a href="mlb.html">MLB</a>
-<a href="fa-cup-fifth-round-leeds-fulham-la-liga-bundesliga-soccer-march-8-2026.html">Soccer</a>
-<a href="records.html">Records</a>
-</div>
-</div>
-<div class="dropdown">
-<button class="dropbtn">Resources ▼</button>
-<div class="dropdown-content">
-<a href="bankroll.html">Bankroll Management</a>
-<a href="kelly-criterion.html">Kelly Criterion</a>
-<a href="betting-calculators.html">Betting Calculators</a>
-<a href="betting-glossary.html">Betting Glossary</a>
-<a href="betting-101.html">Betting 101</a>
-<a href="contact.html">Contact Us</a>
-</div>
-</div>
-<a href="yasiel-puig-convicted-gambling-case-sports-news.html">News</a>
-<a href="9-kansas-at-5-iowa-state-prediction-picks-february-14-2026.html">Game of the Day</a>
-</div>
-</div>
-</nav>
 
-<script>
-(function(){var dropdowns=document.querySelectorAll('.dropdown');dropdowns.forEach(function(dropdown){var btn=dropdown.querySelector('.dropbtn');if(!btn)return;function toggle(e){e.preventDefault();e.stopPropagation();dropdowns.forEach(function(d){if(d!==dropdown)d.classList.remove('active')});dropdown.classList.toggle('active')}btn.addEventListener('touchend',toggle,{passive:false});btn.addEventListener('click',toggle)});document.addEventListener('touchend',function(e){if(!e.target.closest('.dropdown')){dropdowns.forEach(function(d){d.classList.remove('active')})}});document.addEventListener('click',function(e){if(!e.target.closest('.dropdown')){dropdowns.forEach(function(d){d.classList.remove('active')})}})})();
-</script>
+<header>
+ <div class="logo-title">
+ <a href="index.html"><img alt="BetLegend Logo" src="newlogo.png"/></a>
+ <h1>BetLegend Picks</h1>
+ </div>
+ <nav>
+ <a href="index.html">Home</a>
+ <a href="nba.html">NBA</a>
+ <a href="nhl.html">NHL</a>
+ <a href="ncaab.html">NCAAB</a>
+ <a href="nfl.html">NFL</a>
+ </nav>
+</header>
 
-<div class="content-container">
+<main>
+<article>
+
+ <div class="article-header">
  <h1>Betting Education</h1>
+ <p class="subtitle">This section covers the fundamentals of sports betting, from understanding how odds work to managing your bankroll responsibly. These guides are designed to help you make informed decisions.</p>
+ </div>
 
- <p class="intro">This section covers the fundamentals of sports betting, from understanding how odds work to managing your bankroll responsibly. These guides are designed to help you make informed decisions.</p>
-
+ <div class="content-section">
  <h2>Bankroll Management Guides</h2>
 
  <ul class="guide-list">
@@ -159,23 +136,60 @@
  <p>Strategies for setting and sticking to loss limits.</p>
  </li>
  </ul>
+ </div>
+
+ <div class="content-section">
+ <h2>Continue Learning</h2>
+
+ <ul class="guide-list">
+ <li>
+ <a href="betting-101.html">Betting 101</a>
+ <p>Start here if you're new to sports betting. Learn the basics of how it all works.</p>
+ </li>
+ <li>
+ <a href="parlay-guide.html">Parlay Guide</a>
+ <p>Everything you need to know about parlays, from strategy to payout calculations.</p>
+ </li>
+ <li>
+ <a href="odds-guide.html">Odds Guide</a>
+ <p>Understand American, decimal, and fractional odds and how to read them.</p>
+ </li>
+ <li>
+ <a href="implied-probability.html">Implied Probability</a>
+ <p>Learn how to convert betting odds into implied probabilities to find value.</p>
+ </li>
+ <li>
+ <a href="bankroll.html">Bankroll Management</a>
+ <p>Protect your bankroll with proven money management strategies.</p>
+ </li>
+ <li>
+ <a href="kelly-criterion.html">Kelly Criterion</a>
+ <p>The mathematical formula for optimal bet sizing used by professional bettors.</p>
+ </li>
+ <li>
+ <a href="betting-glossary.html">Betting Glossary</a>
+ <p>A comprehensive glossary of sports betting terms and definitions.</p>
+ </li>
+ <li>
+ <a href="how-betting-lines-move.html">How Betting Lines Move</a>
+ <p>Understand why and how betting lines shift before game time.</p>
+ </li>
+ </ul>
+ </div>
 
  <div class="back-link">
- <a href="index.html">← Back to Home</a>
+ <a href="index.html">&larr; Back to Home</a>
  </div>
-</div>
 
+</article>
+</main>
 
-    <!-- Related Analysis Section - Internal Linking -->
-    <section style="max-width:900px;margin:40px auto;padding:32px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:12px;">
-        <h3 style="font-size:18px;font-weight:700;color:#FFD700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #FFD700;letter-spacing:1px;text-transform:uppercase;">Related Analysis</h3>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-            <a href="/celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NBA Analysis</a>
-            <a href="/lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NHL Analysis</a>
-            <a href="/nfl.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NFL Analysis</a>
-            <a href="/handicapping-hub.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">Handicapping Hub</a>
-        </div>
-    </section>
+<footer>
+<p>BetLegend Picks - Educational Sports Betting Content</p>
+</footer>
 
-    </body>
+<a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
+<script async data-id="101485054" src="//static.getclicky.com/js"></script>
+
+</body>
 </html>
