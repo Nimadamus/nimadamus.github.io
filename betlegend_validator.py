@@ -1371,7 +1371,13 @@ if __name__ == '__main__':
 
     # Parse --files flag for staged-only mode
     specific_files = None
-    if '--files' in sys.argv:
+    if '--files-from' in sys.argv:
+        # Read file list from a file (one per line) - avoids "Argument list too long"
+        ff_idx = sys.argv.index('--files-from')
+        if ff_idx + 1 < len(sys.argv):
+            with open(sys.argv[ff_idx + 1], 'r') as ff:
+                specific_files = [line.strip() for line in ff if line.strip() and not line.startswith('--')]
+    elif '--files' in sys.argv:
         files_idx = sys.argv.index('--files')
         # Collect files until we hit another flag or end of args
         specific_files = [f for f in sys.argv[files_idx + 1:] if not f.startswith('--')]
