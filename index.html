@@ -454,12 +454,12 @@
 
         /* ==================== HERO SECTION ==================== */
         .hero {
-            max-width: 1400px;
+            max-width: 1800px;
             margin: 0 auto;
-            padding: 10px 30px 80px 30px;
+            padding: 10px 30px 30px 30px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
             align-items: start;
         }
 
@@ -659,12 +659,8 @@
 
         /* ==================== HERO RIGHT - Featured Game ==================== */
         .hero-right {
-            background: var(--glass-bg);
-            border: 2px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 25px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 10px 50px rgba(0, 240, 255, 0.15);
+            display: flex;
+            flex-direction: column;
         }
 
         .featured-header {
@@ -1242,7 +1238,7 @@
             .rw-header-left h2 { font-size: 0.95rem; }
             .rw-record { font-size: 3.2rem; }
             .rw-stat-value { font-size: 1.55rem; }
-            .rw-carousel { height: 155px; }
+            .rw-carousel { min-height: 155px; }
         }
 
         @media (max-width: 768px) {
@@ -1355,7 +1351,7 @@
             .rw-stats { max-width: 420px; }
             .rw-stat { padding: 0 16px; }
             .rw-stat-label { font-size: 0.6rem; }
-            .rw-carousel { height: 145px; }
+            .rw-carousel { min-height: 145px; }
         }
 
         @media (max-width: 480px) {
@@ -1469,7 +1465,7 @@
             .rw-header-left h2 { font-size: 0.82rem; }
             .rw-header-right a { font-size: 0.62rem; padding: 7px 12px; }
             .rw-league { font-size: 0.82rem; letter-spacing: 4px; }
-            .rw-carousel { height: 135px; }
+            .rw-carousel { min-height: 135px; }
             .rw-record { font-size: 2.2rem; letter-spacing: 1px; margin-bottom: 24px; }
             .rw-record .sep { margin: 0 5px; }
             .rw-stat-value { font-size: 1.15rem; }
@@ -1505,7 +1501,10 @@
 
         /* ==================== VERIFIED RECORDS WIDGET ==================== */
         .records-widget-wrap {
-            margin-top: 44px;
+            margin-top: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         .records-widget {
             background: #141c32;
@@ -1514,6 +1513,9 @@
             border-radius: 14px;
             overflow: hidden;
             box-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 60px rgba(0,10,30,0.4);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         .rw-header {
             display: flex;
@@ -1563,7 +1565,8 @@
         }
         .rw-carousel {
             position: relative;
-            height: 155px;
+            min-height: 155px;
+            flex: 1;
             overflow: hidden;
         }
         .rw-slide {
@@ -1667,6 +1670,231 @@
             letter-spacing: 0.8px;
         }
         /* ==================== END RECORDS WIDGET ==================== */
+
+        .hero-center {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .featured-game-stack {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 50px rgba(0, 240, 255, 0.15);
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr !important;
+                gap: 30px !important;
+            }
+        }
+
+        /* ==================== LATEST PICKS FEED ==================== */
+        .latest-picks-section {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 10px 30px 40px 30px;
+        }
+
+        .latest-picks-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .latest-picks-header h2 {
+            font-family: var(--font-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--neon-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .latest-picks-header a {
+            font-family: var(--font-primary);
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .latest-picks-header a:hover {
+            color: #fff;
+        }
+
+        .picks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .pick-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pick-card:hover {
+            border-color: rgba(0, 240, 255, 0.35);
+            box-shadow: 0 8px 40px rgba(0, 240, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .pick-card-img-wrap {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+            overflow: hidden;
+        }
+
+        .pick-card-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .pick-card:hover .pick-card-img {
+            transform: scale(1.04);
+        }
+
+        .pick-card-body {
+            padding: 18px 22px 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .pick-card-sport {
+            font-family: var(--font-primary);
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--win-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .pick-card-title {
+            font-family: var(--font-secondary);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .pick-card-excerpt {
+            font-family: var(--font-secondary);
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+
+        .pick-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 14px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .pick-card-date {
+            font-family: var(--font-secondary);
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .pick-card-link {
+            font-family: var(--font-primary);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .pick-card:hover .pick-card-link {
+            color: #fff;
+        }
+
+        .picks-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 28px;
+        }
+
+        .picks-pagination a, .picks-pagination span {
+            font-family: var(--font-primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .picks-pagination a {
+            color: var(--text-secondary);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+        }
+
+        .picks-pagination a:hover {
+            color: #fff;
+            border-color: var(--neon-cyan);
+        }
+
+        .picks-pagination .active {
+            color: #000;
+            background: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
+        }
+
+        @media (max-width: 1024px) {
+            .picks-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .latest-picks-section {
+                padding: 10px 20px 30px;
+            }
+            .picks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* ==================== END LATEST PICKS FEED ==================== */
     </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3955543166394162"
 crossorigin="anonymous"></script>
@@ -1695,8 +1923,8 @@ crossorigin="anonymous"></script>
                     </div>
                 </div>
 
-                <!-- Picks & Analysis -->
-                <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html" class="nav-link">Picks & Analysis</a>
+                <!-- Picks Archive -->
+                <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html" class="nav-link">Picks Archive</a>
 
                 <!-- Sports & Records Dropdown -->
                 <div class="dropdown">
@@ -1804,8 +2032,9 @@ crossorigin="anonymous"></script>
 
     <!-- ==================== MAIN CONTENT ==================== -->
     <main class="main-content">
+        <!-- ==================== ROW 1: Three-Column Hero ==================== -->
         <section class="hero">
-            <!-- LEFT: Headline + Credibility + CTA -->
+            <!-- COLUMN 1 (LEFT): Simulation Has Been Hacked -->
             <div class="hero-left">
                 <h1>The Simulation<br>Has Been <span>Hacked.</span></h1>
 
@@ -1828,8 +2057,105 @@ crossorigin="anonymous"></script>
                     <a href="https://discord.gg/betlegend">Join Discord</a>
                 </div>
 
-                <!-- ============ VERIFIED RECORDS WIDGET ============ -->
-                <div class="records-widget-wrap" style="margin-top: 20px;">
+                <!-- YouWager Affiliate Banner -->
+                <div class="affiliate-banner" style="margin-top: 20px; padding: 20px; background: linear-gradient(135deg, rgba(0, 10, 30, 0.8), rgba(0, 30, 60, 0.8)); border: 2px solid rgba(0, 240, 255, 0.8); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-radius: 16px;">
+                    <div>
+                        <h2 style="font-family: var(--font-primary); font-size: 1.1rem; color: var(--neon-gold); margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 1px;">Join YouWager -- 350% Bonus!</h2>
+                        <p style="font-size: 0.85rem; color: #ccc; margin: 0;">Trusted sportsbook with fast payouts</p>
+                    </div>
+                    <a href="https://record.revmasters.com/_I-xl5bHAf88RxlNGag_0XWNd7ZgqdRLk/111/" target="_blank" rel="noopener" style="font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; color: #000; background: var(--neon-gold); padding: 12px 25px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); transition: all 0.3s ease;">Claim Your Bonus</a>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 (CENTER): Today's Featured Game -->
+            <div class="hero-center">
+                <div class="featured-game-stack">
+                    <!-- Header Banner - Matchup Info -->
+                    <div style="background: linear-gradient(135deg, #FEBE10 0%, #6CABDD 100%); padding: 14px 20px; border-bottom: 3px solid #FEC524; border-radius: 20px 20px 0 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-family: var(--font-primary); font-size: 0.75rem; color: #000; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Today's Featured Game</span>
+                            <span style="background: #39FF14; color: #000; font-family: var(--font-primary); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; text-transform: uppercase;">UCL 4:00 PM ET</span>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                            <div style="text-align: center;">
+                                <img src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
+                                <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">Real Madrid</div>
+                                <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">(2nd La Liga)</div>
+                            </div>
+                            <div style="font-family: var(--font-primary); font-size: 1.5rem; color: #fff; font-weight: 900;">vs</div>
+                            <div style="text-align: center;">
+                                <img src="https://a.espncdn.com/i/teamlogos/soccer/500/382.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
+                                <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">Man City</div>
+                                <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">(2nd PL)</div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 10px; font-size: 0.8rem; color: #fff;">March 11 | Santiago Bernabeu | Paramount+</div>
+                    </div>
+
+                    <!-- Betting Lines Table -->
+                    <div style="padding: 10px 20px; background: rgba(0,0,0,0.3);">
+                        <table style="width: 100%; border-collapse: collapse; font-family: var(--font-secondary);">
+                            <thead>
+                                <tr style="border-bottom: 2px solid rgba(239,97,0,0.5);">
+                                    <th style="text-align: left; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">Team</th>
+                                    <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">ML</th>
+                                    <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">Draw</th>
+                                    <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">O/U</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                    <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
+                                        <img src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" style="width: 22px; height: 22px;">
+                                        <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">RMA</span>
+                                    </td>
+                                    <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #ff6b6b; font-size: 0.95rem;">+240</td>
+                                    <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #aaa; font-size: 0.95rem;">+245</td>
+                                    <td style="text-align: center; padding: 8px 5px; font-weight: 600; color: #fff; font-size: 0.9rem;">O 2.5</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
+                                        <img src="https://a.espncdn.com/i/teamlogos/soccer/500/382.png" style="width: 22px; height: 22px;">
+                                        <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">MCI</span>
+                                    </td>
+                                    <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #39FF14; font-size: 0.95rem;">+100</td>
+                                    <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #aaa; font-size: 0.95rem;"></td>
+                                    <td style="text-align: center; padding: 8px 5px; font-weight: 600; color: #fff; font-size: 0.9rem;">U 2.5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Betting Trends -->
+                    <div style="padding: 8px 20px; background: rgba(0,0,0,0.25);">
+                        <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #00f0ff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Records</div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #ccc;">
+                            <div><span style="color: #FEC524; font-weight: 600;">RMA:</span> 2nd La Liga (63 pts)</div>
+                            <div><span style="color: #FEC524; font-weight: 600;">MCI:</span> 2nd PL (60 pts)</div>
+                        </div>
+                    </div>
+
+                    <!-- Injuries -->
+                    <div style="padding: 8px 20px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(239,97,0,0.1)); border-top: 1px solid rgba(255,215,0,0.3);">
+                        <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Key Notes</div>
+                        <div style="font-size: 0.8rem; color: #ddd; line-height: 1.5;">
+                            <div style="margin-bottom: 4px;"><span style="color: #FEC524; font-weight: 600;">RMA:</span> Mbappe OUT (knee), Bellingham OUT (hamstring)</div>
+                            <div><span style="color: #FEC524; font-weight: 600;">MCI:</span> Haaland rested, ready. City 11-match unbeaten run</div>
+                        </div>
+                    </div>
+
+                    <!-- Link to Featured Game Page - NEVER DELETE -->
+                    <a href="real-madrid-vs-manchester-city-analysis-stats-preview-march-11-2026.html" style="display: block; padding: 12px 20px; background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(239, 97, 0, 0.15)); text-align: center; text-decoration: none; border-top: 1px solid rgba(255, 215, 0, 0.3); border-radius: 0 0 20px 20px; transition: all 0.3s ease;">
+                        <span style="font-family: var(--font-primary); font-size: 0.9rem; color: #FFD700; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                            View Full Breakdown →
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- COLUMN 3 (RIGHT): All-Time Verified Records -->
+            <div class="hero-right">
+                <div class="records-widget-wrap">
                     <div class="records-widget">
                         <div class="rw-header">
                             <div class="rw-header-left">
@@ -1845,10 +2171,9 @@ crossorigin="anonymous"></script>
                         <div class="rw-footer">Updated daily &bull; All picks fully transparent &bull; Posted before games start</div>
                     </div>
                 </div>
-                <!-- ============ END RECORDS WIDGET ============ -->
 
-                <!-- World Cup 2026 Promo Banner (left column, above nav area) -->
-                <div style="margin-top: 20px; margin-bottom: 80px; position: relative; bottom: 15px;">
+                <!-- FIFA World Cup 2026 Guide -->
+                <div style="margin-top: 20px;">
                     <a href="2026-fifa-world-cup-betting-guide-odds-predictions-favorites-how-to-bet.html" style="display: block; text-decoration: none; background: linear-gradient(135deg, #1a472a 0%, #0d2818 50%, #1a472a 100%); border: 2px solid #39FF14; border-radius: 16px; padding: 20px 25px; box-shadow: 0 0 30px rgba(57, 255, 20, 0.15); transition: all 0.3s ease; position: relative; overflow: hidden;"
                        onmouseover="this.style.boxShadow='0 0 50px rgba(57, 255, 20, 0.3)'; this.style.transform='translateY(-3px)';"
                        onmouseout="this.style.boxShadow='0 0 30px rgba(57, 255, 20, 0.15)'; this.style.transform='translateY(0)';">
@@ -1864,116 +2189,23 @@ crossorigin="anonymous"></script>
                         </div>
                     </a>
                 </div>
-
-            </div>
-
-                                                                                                                                                                                                                                                                                                                                    <!-- RIGHT: Subscribe + Featured Game + Promo Stack -->
-            <!-- RIGHT: Clean vertical stack -->
-            <div class="hero-right" style="padding: 0; overflow: visible; margin-top: 0;">
-
-                <!-- Subscribe to Premium Picks - TOP OF RIGHT COLUMN -->
-                <div style="padding: 16px 20px; background: linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(0, 240, 255, 0.1)); border-bottom: 2px solid rgba(57, 255, 20, 0.4); border-radius: 20px 20px 0 0;">
-                    <div style="text-align: center;">
-                        <div style="font-family: var(--font-primary); font-size: 0.75rem; color: rgba(57, 255, 20, 0.9); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 10px;">Subscribe to Premium Picks</div>
-                        <a href="premium.html" style="display: inline-block; background: linear-gradient(135deg, #39FF14, #00f0ff); color: #000; font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; padding: 12px 30px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.4); transition: all 0.3s ease;">
-                            Get Premium Access
-                        </a>
-                        <div style="margin-top: 8px; font-size: 0.72rem; color: rgba(255,255,255,0.45); font-family: var(--font-secondary);">Daily picks + Full transparency + Verified records</div>
-                    </div>
-                </div>
-
-<!-- Header Banner - Matchup Info -->
-                <div style="background: linear-gradient(135deg, #FEBE10 0%, #6CABDD 100%); padding: 14px 20px; border-bottom: 3px solid #FEC524;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <span style="font-family: var(--font-primary); font-size: 0.75rem; color: #000; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Today's Featured Game</span>
-                        <span style="background: #39FF14; color: #000; font-family: var(--font-primary); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; text-transform: uppercase;">UCL 4:00 PM ET</span>
-                    </div>
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-                        <div style="text-align: center;">
-                            <img src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
-                            <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">Real Madrid</div>
-                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">(2nd La Liga)</div>
-                        </div>
-                        <div style="font-family: var(--font-primary); font-size: 1.5rem; color: #fff; font-weight: 900;">vs</div>
-                        <div style="text-align: center;">
-                            <img src="https://a.espncdn.com/i/teamlogos/soccer/500/382.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
-                            <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">Man City</div>
-                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">(2nd PL)</div>
-                        </div>
-                    </div>
-                    <div style="text-align: center; margin-top: 10px; font-size: 0.8rem; color: #fff;">March 11 | Santiago Bernabeu | Paramount+</div>
-                </div>
-
-                <!-- Betting Lines Table -->
-                <div style="padding: 10px 20px; background: rgba(0,0,0,0.3);">
-                    <table style="width: 100%; border-collapse: collapse; font-family: var(--font-secondary);">
-                        <thead>
-                            <tr style="border-bottom: 2px solid rgba(239,97,0,0.5);">
-                                <th style="text-align: left; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">Team</th>
-                                <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">ML</th>
-                                <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">Draw</th>
-                                <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">O/U</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
-                                    <img src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" style="width: 22px; height: 22px;">
-                                    <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">RMA</span>
-                                </td>
-                                <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #ff6b6b; font-size: 0.95rem;">+240</td>
-                                <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #aaa; font-size: 0.95rem;">+245</td>
-                                <td style="text-align: center; padding: 8px 5px; font-weight: 600; color: #fff; font-size: 0.9rem;">O 2.5</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
-                                    <img src="https://a.espncdn.com/i/teamlogos/soccer/500/382.png" style="width: 22px; height: 22px;">
-                                    <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">MCI</span>
-                                </td>
-                                <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #39FF14; font-size: 0.95rem;">+100</td>
-                                <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #aaa; font-size: 0.95rem;"></td>
-                                <td style="text-align: center; padding: 8px 5px; font-weight: 600; color: #fff; font-size: 0.9rem;">U 2.5</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Betting Trends -->
-                <div style="padding: 8px 20px; background: rgba(0,0,0,0.25);">
-                    <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #00f0ff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Records</div>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #ccc;">
-                        <div><span style="color: #FEC524; font-weight: 600;">RMA:</span> 2nd La Liga (63 pts)</div>
-                        <div><span style="color: #FEC524; font-weight: 600;">MCI:</span> 2nd PL (60 pts)</div>
-                    </div>
-                </div>
-
-                <!-- Injuries -->
-                <div style="padding: 8px 20px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(239,97,0,0.1)); border-top: 1px solid rgba(255,215,0,0.3);">
-                    <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Key Notes</div>
-                    <div style="font-size: 0.8rem; color: #ddd; line-height: 1.5;">
-                        <div style="margin-bottom: 4px;"><span style="color: #FEC524; font-weight: 600;">RMA:</span> Mbappe OUT (knee), Bellingham OUT (hamstring)</div>
-                        <div><span style="color: #FEC524; font-weight: 600;">MCI:</span> Haaland rested, ready. City 11-match unbeaten run</div>
-                    </div>
-                </div>
-
-                <!-- Link to Featured Game Page - NEVER DELETE -->
-                <a href="real-madrid-vs-manchester-city-analysis-stats-preview-march-11-2026.html" style="display: block; padding: 12px 20px; background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(239, 97, 0, 0.15)); text-align: center; text-decoration: none; border-top: 1px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease;">
-                    <span style="font-family: var(--font-primary); font-size: 0.9rem; color: #FFD700; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
-                        View Full Breakdown →
-                    </span>
-                </a>
-
-                <!-- Affiliate Banner (YouWager) - stays in right column -->
-                <div class="affiliate-banner" style="margin-top: 55px; margin-bottom: 80px; padding: 20px; background: linear-gradient(135deg, rgba(0, 10, 30, 0.8), rgba(0, 30, 60, 0.8)); border: 2px solid rgba(0, 240, 255, 0.8); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-radius: 0 0 20px 20px; position: relative; bottom: 15px;">
-                    <div>
-                        <h2 style="font-family: var(--font-primary); font-size: 1.1rem; color: var(--neon-gold); margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 1px;">Join YouWager -- 350% Bonus!</h2>
-                        <p style="font-size: 0.85rem; color: #ccc; margin: 0;">Trusted sportsbook with fast payouts</p>
-                    </div>
-                    <a href="https://record.revmasters.com/_I-xl5bHAf88RxlNGag_0XWNd7ZgqdRLk/111/" target="_blank" rel="noopener" style="font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; color: #000; background: var(--neon-gold); padding: 12px 25px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); transition: all 0.3s ease;">Claim Your Bonus</a>
-                </div>
-
             </div>
         </section>
+
+        <!-- ==================== LATEST PICKS AND ANALYSIS ==================== -->
+        <section class="latest-picks-section">
+            <div class="latest-picks-header">
+                <h2>Latest Picks &amp; Analysis</h2>
+                <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">View All Picks &rarr;</a>
+            </div>
+            <div class="picks-grid" id="picks-grid">
+                <!-- Cards populated by JS from homepage-picks-data.js -->
+            </div>
+            <div class="picks-pagination" id="picks-pagination">
+                <!-- Pagination populated by JS -->
+            </div>
+        </section>
+        <!-- ==================== END LATEST PICKS ==================== -->
 
         <!-- ADDED: Micro Trust/Proof Strip (Jan 23, 2026) -->
         <div style="max-width: 1400px; margin: 0 auto 20px; padding: 0 30px;">
@@ -2665,6 +2897,108 @@ function closeEmailPopup() {
 })();
 </script>
 <!-- ==================== END RECORDS WIDGET JS ==================== -->
+
+<!-- Homepage Picks Data -->
+<script src="homepage-picks-data.js"></script>
+<script>
+// Latest Picks & Analysis - Card Rotation System
+// ------------------------------------------------
+// HOMEPAGE_PICKS array is ordered newest-first.
+// Homepage shows the first 6 entries (positions 0-5).
+// Layout: left-to-right, top-to-bottom (standard reading order).
+//   Row 1: [0] [1] [2]
+//   Row 2: [3] [4] [5]
+//
+// When a 7th post is added to the TOP of the array,
+// position 6+ automatically falls to archive pagination.
+//
+// Pagination: 6 cards per page. Page 1 = newest 6, Page 2 = next 6, etc.
+
+(function() {
+    var CARDS_PER_PAGE = 6;
+    var grid = document.getElementById('picks-grid');
+    var paginationEl = document.getElementById('picks-pagination');
+    if (!grid || typeof HOMEPAGE_PICKS === 'undefined') return;
+
+    function renderPage(page) {
+        var total = HOMEPAGE_PICKS.length;
+        var totalPages = Math.max(1, Math.ceil(total / CARDS_PER_PAGE));
+        var start = (page - 1) * CARDS_PER_PAGE;
+        var pagePicks = HOMEPAGE_PICKS.slice(start, start + CARDS_PER_PAGE);
+
+        // Render cards - left to right, newest first
+        grid.innerHTML = '';
+        for (var i = 0; i < pagePicks.length; i++) {
+            var pick = pagePicks[i];
+            var card = document.createElement('a');
+            card.href = pick.url;
+            card.className = 'pick-card';
+            card.innerHTML =
+                '<div class="pick-card-img-wrap"><img class="pick-card-img" src="' + pick.image + '" alt="' + pick.title + '"></div>' +
+                '<div class="pick-card-body">' +
+                    '<div class="pick-card-sport">' + pick.sport + '</div>' +
+                    '<div class="pick-card-title">' + pick.title + '</div>' +
+                    '<div class="pick-card-excerpt">' + pick.excerpt + '</div>' +
+                    '<div class="pick-card-footer">' +
+                        '<span class="pick-card-date">' + pick.date + '</span>' +
+                        '<span class="pick-card-link">Read Full Breakdown &rarr;</span>' +
+                    '</div>' +
+                '</div>';
+            grid.appendChild(card);
+        }
+
+        // Render pagination (only when more than 6 total picks)
+        paginationEl.innerHTML = '';
+        if (totalPages > 1) {
+            // Previous arrow
+            if (page > 1) {
+                var prev = document.createElement('a');
+                prev.href = '#';
+                prev.innerHTML = '&larr; Prev';
+                prev.setAttribute('data-page', page - 1);
+                prev.addEventListener('click', handlePageClick);
+                paginationEl.appendChild(prev);
+            }
+
+            // Page numbers
+            for (var p = 1; p <= totalPages; p++) {
+                if (p === page) {
+                    var span = document.createElement('span');
+                    span.className = 'active';
+                    span.textContent = p;
+                    paginationEl.appendChild(span);
+                } else {
+                    var a = document.createElement('a');
+                    a.href = '#';
+                    a.textContent = p;
+                    a.setAttribute('data-page', p);
+                    a.addEventListener('click', handlePageClick);
+                    paginationEl.appendChild(a);
+                }
+            }
+
+            // Next arrow
+            if (page < totalPages) {
+                var next = document.createElement('a');
+                next.href = '#';
+                next.innerHTML = 'Next &rarr;';
+                next.setAttribute('data-page', page + 1);
+                next.addEventListener('click', handlePageClick);
+                paginationEl.appendChild(next);
+            }
+        }
+    }
+
+    function handlePageClick(e) {
+        e.preventDefault();
+        var p = parseInt(this.getAttribute('data-page'));
+        renderPage(p);
+        document.querySelector('.latest-picks-section').scrollIntoView({behavior: 'smooth'});
+    }
+
+    renderPage(1);
+})();
+</script>
 
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
