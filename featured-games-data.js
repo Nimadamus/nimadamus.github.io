@@ -109,8 +109,8 @@ const FEATURED_GAMES = [
     { date: "2026-03-07", page: "warriors-vs-thunder-nba-analysis-stats-preview-march-7-2026.html", title: "Warriors at Thunder" },
     { date: "2026-03-08", page: "knicks-vs-lakers-analysis-stats-preview-march-8-2026.html", title: "Knicks at Lakers" },
     { date: "2026-03-09", page: "nuggets-vs-thunder-nba-analysis-stats-preview-march-9-2026.html", title: "Nuggets at Thunder" },
-
-        { date: "2026-03-12", page: "celtics-vs-thunder-nba-analysis-stats-preview-march-12-2026.html", title: "Celtics at Thunder" },
+    { date: "2026-03-10", page: "newcastle-vs-barcelona-analysis-stats-preview-march-10-2026.html", title: "Newcastle vs Barcelona" },
+    { date: "2026-03-12", page: "celtics-vs-thunder-nba-analysis-stats-preview-march-12-2026.html", title: "Celtics at Thunder" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];

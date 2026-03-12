@@ -30,8 +30,8 @@ SCRIPTS_DIR = REPO_DIR / 'scripts'
 SPORTS = {
     'nba': {'prefix': 'nba', 'globs': ['nba*.html', '*-nba-*.html'], 'main': 'nba.html', 'calendar_js': 'nba-calendar.js'},
     'nhl': {'prefix': 'nhl', 'globs': ['nhl*.html', '*-nhl-*.html'], 'main': 'nhl.html', 'calendar_js': 'nhl-calendar.js'},
-    'ncaab': {'prefix': 'ncaab', 'globs': ['ncaab*.html', 'college-basketball-*.html', '*-ncaab-*.html'], 'main': 'ncaab.html', 'calendar_js': 'ncaab-calendar.js'},
-    'ncaaf': {'prefix': 'ncaaf', 'globs': ['ncaaf*.html', 'college-football-*.html', '*-ncaaf-*.html'], 'main': 'ncaaf.html', 'calendar_js': 'ncaaf-calendar.js'},
+    'ncaab': {'prefix': 'ncaab', 'globs': ['ncaab*.html', 'college-basketball-*.html', '*-ncaab-*.html', '*-college-basketball-*.html'], 'main': 'ncaab.html', 'calendar_js': 'ncaab-calendar.js'},
+    'ncaaf': {'prefix': 'ncaaf', 'globs': ['ncaaf*.html', 'college-football-*.html', '*-ncaaf-*.html', '*-college-football-*.html'], 'main': 'ncaaf.html', 'calendar_js': 'ncaaf-calendar.js'},
     'nfl': {'prefix': 'nfl', 'globs': ['nfl*.html', '*-nfl-*.html'], 'main': 'nfl.html', 'calendar_js': 'nfl-calendar.js'},
     'mlb': {'prefix': 'mlb', 'globs': ['mlb*.html', '*-mlb-*.html'], 'main': 'mlb.html', 'calendar_js': 'mlb-calendar.js'},
     'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html', '*-soccer-*.html'], 'main': 'soccer.html', 'calendar_js': 'soccer-calendar.js'},
