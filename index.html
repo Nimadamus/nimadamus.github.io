@@ -1810,6 +1810,153 @@
                 font-size: 1.05rem;
             }
         }
+        /* ==================== COMPACT PICKS GRID ==================== */
+        .compact-picks-section {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 30px 40px 30px;
+        }
+
+        .compact-picks-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .pick-card-sm {
+            background: rgba(0, 8, 20, 0.85);
+            border: 1px solid rgba(0, 180, 200, 0.12);
+            border-radius: 8px;
+            overflow: hidden;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .pick-card-sm:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .pick-card-sm-title {
+            font-family: var(--font-primary);
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+            padding: 8px 8px 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            text-align: center;
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pick-card-sm-date {
+            font-family: var(--font-secondary);
+            font-size: 0.55rem;
+            color: rgba(0, 200, 220, 0.7);
+            text-align: center;
+            padding: 0 8px 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .pick-card-sm-img-wrap {
+            position: relative;
+            width: 100%;
+            padding-top: 60%;
+            overflow: hidden;
+        }
+
+        .pick-card-sm-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .pick-card-sm:hover .pick-card-sm-img {
+            transform: scale(1.08);
+        }
+
+        .compact-picks-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .compact-picks-pagination button {
+            font-family: var(--font-primary);
+            font-size: 0.65rem;
+            color: var(--neon-cyan);
+            background: rgba(0, 8, 20, 0.7);
+            border: 1px solid rgba(0, 180, 200, 0.2);
+            border-radius: 4px;
+            padding: 5px 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .compact-picks-pagination button:hover {
+            background: rgba(0, 180, 200, 0.15);
+            border-color: rgba(0, 240, 255, 0.4);
+        }
+
+        .compact-picks-pagination button.active {
+            background: rgba(0, 180, 200, 0.25);
+            border-color: var(--neon-cyan);
+            color: #fff;
+        }
+
+        .compact-picks-pagination button:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        @media (max-width: 1200px) {
+            .compact-picks-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .compact-picks-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .compact-picks-section {
+                padding: 0 15px 30px;
+            }
+            .compact-picks-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .compact-picks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* ==================== END COMPACT PICKS GRID ==================== */
+
         /* ==================== END LATEST PICKS FEED ==================== */
     </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3955543166394162"
@@ -2120,6 +2267,13 @@ crossorigin="anonymous"></script>
             <div class="picks-grid" id="picks-grid"></div>
         </section>
         <!-- ==================== END LATEST PICKS ==================== -->
+
+        <!-- ==================== COMPACT PICKS GRID ==================== -->
+        <section class="compact-picks-section">
+            <div class="compact-picks-grid" id="compact-picks-grid"></div>
+            <div class="compact-picks-pagination" id="compact-picks-pagination"></div>
+        </section>
+        <!-- ==================== END COMPACT PICKS GRID ==================== -->
 
         <!-- ADDED: Micro Trust/Proof Strip (Jan 23, 2026) -->
         <div style="max-width: 1400px; margin: 0 auto 20px; padding: 0 30px;">
@@ -2815,29 +2969,89 @@ function closeEmailPopup() {
 <!-- Homepage Picks Data -->
 <script src="homepage-picks-data.js"></script>
 <script>
-// Latest Picks & Analysis - Overlay Card System
-// Shows 3 cards with text overlaid on action images.
-// Each card links to the full blog post.
+// Latest Picks & Analysis - Featured + Compact Grid System
+// Top 3 picks = large featured cards
+// Remaining picks = compact 10-per-row grid with pagination
 
 (function() {
+    if (typeof HOMEPAGE_PICKS === 'undefined') return;
+
+    // === FEATURED CARDS (top 3) ===
     var grid = document.getElementById('picks-grid');
-    if (!grid || typeof HOMEPAGE_PICKS === 'undefined') return;
+    if (grid) {
+        var featured = HOMEPAGE_PICKS.slice(0, 3);
+        grid.innerHTML = '';
+        for (var i = 0; i < featured.length; i++) {
+            var pick = featured[i];
+            var card = document.createElement('a');
+            card.href = pick.url;
+            card.className = 'pick-card';
+            card.innerHTML =
+                '<div class="pick-card-title">' + pick.title + '</div>' +
+                '<div class="pick-card-img-wrap">' +
+                    '<img class="pick-card-img" src="' + pick.image + '" alt="' + pick.title + '">' +
+                '</div>';
+            grid.appendChild(card);
+        }
+    }
 
-    // Show the 3 most recent picks
-    var picks = HOMEPAGE_PICKS.slice(0, 3);
+    // === COMPACT GRID (picks 4+) ===
+    var compactGrid = document.getElementById('compact-picks-grid');
+    var paginationEl = document.getElementById('compact-picks-pagination');
+    if (!compactGrid || !paginationEl) return;
 
-    grid.innerHTML = '';
-    for (var i = 0; i < picks.length; i++) {
-        var pick = picks[i];
-        var card = document.createElement('a');
-        card.href = pick.url;
-        card.className = 'pick-card';
-        card.innerHTML =
-            '<div class="pick-card-title">' + pick.title + '</div>' +
-            '<div class="pick-card-img-wrap">' +
-                '<img class="pick-card-img" src="' + pick.image + '" alt="' + pick.title + '">' +
-            '</div>';
-        grid.appendChild(card);
+    var compactPicks = HOMEPAGE_PICKS.slice(3);
+    var perPage = 20;
+    var currentPage = 0;
+    var totalPages = Math.ceil(compactPicks.length / perPage);
+
+    function renderCompactPage(page) {
+        currentPage = page;
+        var start = page * perPage;
+        var end = Math.min(start + perPage, compactPicks.length);
+        var pagePicks = compactPicks.slice(start, end);
+
+        compactGrid.innerHTML = '';
+        for (var i = 0; i < pagePicks.length; i++) {
+            var p = pagePicks[i];
+            var card = document.createElement('a');
+            card.href = p.url;
+            card.className = 'pick-card-sm';
+            card.innerHTML =
+                '<div class="pick-card-sm-title">' + p.title + '</div>' +
+                '<div class="pick-card-sm-date">' + p.date + '</div>' +
+                '<div class="pick-card-sm-img-wrap">' +
+                    '<img class="pick-card-sm-img" src="' + p.image + '" alt="' + p.title + '">' +
+                '</div>';
+            compactGrid.appendChild(card);
+        }
+
+        // Pagination
+        if (totalPages <= 1) { paginationEl.innerHTML = ''; return; }
+        paginationEl.innerHTML = '';
+        var prev = document.createElement('button');
+        prev.textContent = '\u2190 Prev';
+        prev.disabled = page === 0;
+        prev.onclick = function() { renderCompactPage(currentPage - 1); };
+        paginationEl.appendChild(prev);
+
+        for (var pg = 0; pg < totalPages; pg++) {
+            var btn = document.createElement('button');
+            btn.textContent = pg + 1;
+            if (pg === page) btn.className = 'active';
+            (function(p) { btn.onclick = function() { renderCompactPage(p); }; })(pg);
+            paginationEl.appendChild(btn);
+        }
+
+        var next = document.createElement('button');
+        next.textContent = 'Next \u2192';
+        next.disabled = page === totalPages - 1;
+        next.onclick = function() { renderCompactPage(currentPage + 1); };
+        paginationEl.appendChild(next);
+    }
+
+    if (compactPicks.length > 0) {
+        renderCompactPage(0);
     }
 })();
 </script>
