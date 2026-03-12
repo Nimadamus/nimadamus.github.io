@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "March 11, 2026",
         result: "",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260311-mtl-ott-over",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_png/prd/fheppawnueem5lvuoywk.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/prd/vkgkfvdixytkm895noud"
     },
     {
         sport: "NHL",
@@ -36,7 +36,7 @@ var HOMEPAGE_PICKS = [
         date: "March 10, 2026",
         result: "",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260310-sharks-sabres-over",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_auto/prd/po2acmf2h1bkk60rcfu0.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/prd/lcinpywuo8anxcnwrmrp.png"
     },
     {
         sport: "NHL",
