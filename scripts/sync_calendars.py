@@ -341,6 +341,12 @@ def get_sport_pages(sport_config):
             title = extract_title_from_page(filepath, prefix)
 
             if date:
+                # Skip future dates - don't add pages to calendar before their date arrives
+                today_str = datetime.now().strftime('%Y-%m-%d')
+                if date > today_str:
+                    print(f"    {filename}: {date} [SKIPPED - future date]")
+                    continue
+
                 pages.append({
                     'date': date,
                     'page': filename,
