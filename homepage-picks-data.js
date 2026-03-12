@@ -36,7 +36,7 @@ var HOMEPAGE_PICKS = [
         date: "March 10, 2026",
         result: "",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260310-sharks-sabres-over",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/prd/lcinpywuo8anxcnwrmrp.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_png/prd/l7gi4bqbrdj6wtfa8ukg.png"
     },
     {
         sport: "NHL",
