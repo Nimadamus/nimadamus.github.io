@@ -149,13 +149,20 @@ if (document.readyState === 'loading') { document.addEventListener('DOMContentLo
 
 // DYNAMIC DATA REFRESH - Prevents stale cache issues permanently
 // After the initial render, dynamically reload featured-games-data.js with a
-// timestamp cache buster. If the data has changed, re-render the calendar.
+// timestamp cache buster. If the data has changed in ANY way, re-render.
+// We fingerprint the data (count + newest date + newest page) so changes
+// are detected even when the entry count stays the same.
 (function() {
-    var initialCount = (typeof FEATURED_GAMES !== 'undefined') ? FEATURED_GAMES.length : 0;
+    function dataFingerprint() {
+        if (typeof FEATURED_GAMES === 'undefined' || !FEATURED_GAMES.length) return '';
+        var sorted = FEATURED_GAMES.slice().sort(function(a, b) { return b.date.localeCompare(a.date); });
+        return FEATURED_GAMES.length + '|' + sorted[0].date + '|' + sorted[0].page;
+    }
+    var initialFingerprint = dataFingerprint();
     var script = document.createElement('script');
     script.src = 'featured-games-data.js?_=' + Date.now();
     script.onload = function() {
-        if (typeof FEATURED_GAMES !== 'undefined' && FEATURED_GAMES.length !== initialCount) {
+        if (dataFingerprint() !== initialFingerprint) {
             // Data changed - rebuild state and re-render
             _calState = buildCalendarState();
             initFeaturedGamesCalendar();
