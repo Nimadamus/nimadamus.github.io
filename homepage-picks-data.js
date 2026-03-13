@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Blues +1.5 (-180)",
+        date: "March 13, 2026",
+        result: "",
+        url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260313-blues-puckline",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_png/v1773366397/prd/ckwxgsj13uyzf1c4ciuz.png"
+    },
+    {
+        sport: "NHL",
         title: "Canadiens at Senators OVER 6.5 (-120)",
         date: "March 11, 2026",
         result: "",
