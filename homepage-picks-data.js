@@ -24,9 +24,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Rangers +167 / +1.5 (-150)",
+        date: "March 14, 2026",
+        result: "",
+        url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl-march-14-2026.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/knaaqusdwv2s17yyffq1.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Blues +1.5 (-180)",
         date: "March 13, 2026",
-        result: "",
+        result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260313-blues-puckline",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_png/v1773366397/prd/ckwxgsj13uyzf1c4ciuz.png"
     },
@@ -34,7 +42,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Canadiens at Senators OVER 6.5 (-120)",
         date: "March 11, 2026",
-        result: "",
+        result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260311-mtl-ott-over",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/prd/vkgkfvdixytkm895noud"
     },
