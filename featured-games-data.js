@@ -113,6 +113,8 @@ var FEATURED_GAMES = [
     { date: "2026-03-10", page: "newcastle-vs-barcelona-analysis-stats-preview-march-10-2026.html", title: "Newcastle vs Barcelona" },
     { date: "2026-03-11", page: "real-madrid-vs-manchester-city-analysis-stats-preview-march-11-2026.html", title: "Real Madrid vs Manchester City" },
     { date: "2026-03-12", page: "celtics-vs-thunder-nba-analysis-stats-preview-march-12-2026.html", title: "Celtics at Thunder" },
+    { date: "2026-03-13", page: "duke-vs-clemson-acc-semifinal-analysis-stats-preview-march-13-2026.html", title: "Duke vs Clemson ACC Semifinal" },
+    { date: "2026-03-14", page: "nuggets-vs-lakers-nba-analysis-stats-preview-march-14-2026.html", title: "Nuggets vs Lakers" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
