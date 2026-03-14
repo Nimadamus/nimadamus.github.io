@@ -24,11 +24,11 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
-        title: "Rangers +167 / +1.5 (-150)",
+        title: "Rangers +167 / +1.5 -150 (3u)",
         date: "March 14, 2026",
         result: "",
         url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl-march-14-2026.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/knaaqusdwv2s17yyffq1.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlx0hqpifhq8kfmt1y9x"
     },
     {
         sport: "NHL",
