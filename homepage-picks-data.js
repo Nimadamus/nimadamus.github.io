@@ -24,9 +24,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Sharks +180 (1u) / +1.5 -140 (3u)",
+        date: "March 15, 2026",
+        result: "",
+        url: "sharks-moneyline-puck-line-value-at-canadiens-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1772057935/prd/v3ftqvttong49pvykmt0"
+    },
+    {
+        sport: "NHL",
         title: "Rangers +167 / +1.5 -150 (3u)",
         date: "March 14, 2026",
-        result: "",
+        result: "W",
         url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl-march-14-2026.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlx0hqpifhq8kfmt1y9x"
     },
