@@ -8,6 +8,78 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
+## ☠️☠️☠️ ABSOLUTE RULE: PICKS ARE STANDALONE PAGES ONLY ☠️☠️☠️
+
+### PERMANENTLY LOCKED - MARCH 16, 2026
+
+**All BetLegend picks MUST be standalone pages. The old picks archive system is permanently retired.**
+
+### THE RULES:
+
+```
+1. EVERY pick gets its own standalone HTML page
+   - Full site template (nav, hero, blog-post card, footer)
+   - Full SEO (title, meta, OG, Twitter, JSON-LD)
+   - Share buttons, related links section
+
+2. PICKS ARE NEVER POSTED TO THE PICKS ARCHIVE PAGE
+   - The archive page (blog-pageXX.html) is retired for new picks
+   - All new picks = standalone pages only
+
+3. UNIQUE URL SLUG WITHOUT DATE
+   - BANNED: penguins-avalanche-over-6-5-march-16-2026.html
+   - REQUIRED: penguins-avalanche-over-6-5-nhl.html
+   - Slug should be clean, descriptive, keyword-rich
+   - NO date in the URL slug
+   - Include sport abbreviation (nhl, nba, etc.)
+
+4. HIGH QUALITY ACTION SHOT PREVIEW IMAGE
+   - Every pick page MUST have a real action photo
+   - Verified HTTP 200 before publishing
+   - No logos, no headshots, no generic graphics
+   - Real game moments only
+
+5. HOMEPAGE CARD ROTATION
+   - New pick entry goes to TOP of HOMEPAGE_PICKS array
+     in homepage-picks-data.js
+   - Top 3 entries = large featured cards
+   - Entries 4+ = compact grid with pagination
+   - Older picks shift down automatically
+
+6. ELITE JOURNALISM STANDARD
+   - Human tone, conversational, passionate
+   - Verified stats and trends from search results
+   - No generic filler language
+   - Strong analytical sections with gold-bordered headers
+   - Clear explanation of the betting angle
+
+7. ALL INFORMATION MUST BE VERIFIED
+   - Search for odds, stats, records, injuries BEFORE writing
+   - Never guess betting lines
+   - Every stat comes from a search result
+```
+
+### THE WORKFLOW FOR EVERY NEW PICK:
+```
+1. SEARCH to verify odds, stats, injuries, records
+2. FIND a real action shot image and verify HTTP 200
+3. CREATE standalone HTML page with full site template
+4. ADD new entry to TOP of homepage-picks-data.js
+5. RUN validators (accuracy_filter.py, validate_news_before_publish.py)
+6. PUBLISH via publish.py or git push
+7. VERIFY the card appears on the homepage
+```
+
+### WHY THIS EXISTS (March 16, 2026):
+The old system posted picks to a monolithic archive page (blog-pageXX.html).
+This made individual picks impossible to share, hard to find via search,
+and created a cluttered experience. Standalone pages give every pick its
+own URL, its own SEO, and its own shareable card on the homepage.
+
+**THE ARCHIVE ERA IS OVER. EVERY PICK IS A STANDALONE PAGE.**
+
+---
+
 ## 🔴🔴🔴 RULE #0: BEST POSSIBLE OUTPUT. ALWAYS. 🔴🔴🔴
 
 ### PERMANENTLY LOCKED - JANUARY 16, 2026

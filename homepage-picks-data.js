@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Penguins at Avalanche OVER 6.5 (-120)",
+        date: "March 16, 2026",
+        result: "",
+        url: "penguins-avalanche-over-6-5-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlvywrl77gjjekmzt3qg"
+    },
+    {
+        sport: "NHL",
         title: "Sharks +180 (1u) / +1.5 -140 (3u)",
         date: "March 15, 2026",
         result: "",
