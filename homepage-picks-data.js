@@ -34,7 +34,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Sharks +180 (1u) / +1.5 -140 (3u)",
         date: "March 15, 2026",
-        result: "",
+        result: "L",
         url: "sharks-moneyline-puck-line-value-at-canadiens-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1772057935/prd/v3ftqvttong49pvykmt0"
     },
