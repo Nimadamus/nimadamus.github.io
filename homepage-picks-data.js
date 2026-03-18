@@ -34,7 +34,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Panthers TT Under 3.5 (-135)",
         date: "March 17, 2026",
-        result: "",
+        result: "W",
         url: "panthers-team-total-under-3-5-at-canucks-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/al0kehobnis0ep3ehn3s.jpg"
     },
