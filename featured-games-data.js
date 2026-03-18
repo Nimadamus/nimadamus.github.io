@@ -118,6 +118,7 @@ var FEATURED_GAMES = [
     { date: "2026-03-15", page: "michigan-vs-purdue-big-ten-championship-analysis-stats-preview-march-15-2026.html", title: "Michigan vs Purdue Big Ten Championship" },
     { date: "2026-03-16", page: "lakers-vs-rockets-analysis-stats-preview-march-16-2026.html", title: "Lakers vs Rockets" },
     { date: "2026-03-17", page: "man-city-vs-real-madrid-analysis-stats-preview-march-17-2026.html", title: "Man City vs Real Madrid Champions League" },
+    { date: "2026-03-18", page: "stars-vs-avalanche-nhl-analysis-stats-preview-march-18-2026.html", title: "Stars vs Avalanche NHL" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];

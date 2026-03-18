@@ -18,6 +18,15 @@ import shutil
 import re
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Tuple
+
+# Import Hub Trends Engine for historical trend analysis
+try:
+    from hub_trends_engine import generate_trends_html, get_trends_css
+    TRENDS_AVAILABLE = True
+    print("[TRENDS] Hub Trends Engine loaded successfully")
+except ImportError:
+    TRENDS_AVAILABLE = False
+    print("[TRENDS] Hub Trends Engine not available - trends section will be skipped")
 from bs4 import BeautifulSoup
 
 # Timezone handling
@@ -2277,21 +2286,124 @@ def generate_game_card_nhl(game: Dict) -> str:
     </div>
     '''
 
+def _get_game_trends_html(game: Dict, sport: str) -> str:
+    """Generate trends HTML for a game card using Hub Trends Engine"""
+    if not TRENDS_AVAILABLE:
+        return ''
+    try:
+        away = game.get('away', {})
+        home = game.get('home', {})
+        odds = game.get('odds', {})
+
+        home_abbr = home.get('abbr', '')
+        away_abbr = away.get('abbr', '')
+
+        # Parse spread - determine home spread
+        spread = 0
+        for spread_key in ['spread_home', 'spread', 'line']:
+            raw_spread = odds.get(spread_key)
+            if raw_spread is not None and str(raw_spread).strip() not in ('', '-', 'N/A'):
+                try:
+                    spread = float(str(raw_spread))
+                    break
+                except (ValueError, TypeError):
+                    pass
+
+        # If no spread available, derive from moneyline
+        if spread == 0:
+            try:
+                ml_home = float(str(odds.get('ml_home', 0)).replace('+', ''))
+                ml_away = float(str(odds.get('ml_away', 0)).replace('+', ''))
+                if ml_home and ml_away:
+                    # Home favorite if ML is negative
+                    if ml_home < ml_away:
+                        spread = -1.5  # Default puck/run line for favorites
+                    elif ml_home > ml_away:
+                        spread = 1.5
+            except (ValueError, TypeError):
+                pass
+
+        total = 0
+        raw_total = odds.get('total', 0)
+        if raw_total is not None and str(raw_total).strip() not in ('', '-', 'N/A'):
+            try:
+                total = float(str(raw_total).replace('O ', '').replace('U ', ''))
+            except (ValueError, TypeError):
+                total = 0
+
+        # Parse streak to integer
+        def parse_streak(s):
+            if not s or s == '-':
+                return 0
+            s = str(s).strip()
+            if s.startswith('W'):
+                try: return int(s[1:])
+                except: return 0
+            elif s.startswith('L'):
+                try: return -int(s[1:])
+                except: return 0
+            return 0
+
+        home_streak = parse_streak(home.get('stats', {}).get('streak', '-'))
+        away_streak = parse_streak(away.get('stats', {}).get('streak', '-'))
+
+        # Win pct from record
+        def parse_wpct(rec):
+            try:
+                parts = str(rec).replace(' ', '').split('-')
+                w = int(parts[0])
+                l = int(parts[1])
+                gp = w + l + (int(parts[2]) if len(parts) > 2 else 0)
+                return w / gp if gp > 0 else 0.5
+            except:
+                return 0.5
+
+        home_wpct = parse_wpct(home.get('record', '0-0'))
+        away_wpct = parse_wpct(away.get('record', '0-0'))
+
+        return generate_trends_html(
+            sport=sport,
+            home_abbr=home_abbr,
+            away_abbr=away_abbr,
+            home_spread=spread,
+            total=total,
+            home_streak=home_streak,
+            away_streak=away_streak,
+            home_wpct=home_wpct,
+            away_wpct=away_wpct,
+        )
+    except Exception as e:
+        print(f"  [TRENDS] Error generating trends for {game.get('away', {}).get('abbr', '?')} @ {game.get('home', {}).get('abbr', '?')}: {e}")
+        return ''
+
+
 def generate_game_card(game: Dict, sport: str) -> str:
-    """Route to sport-specific card generator"""
+    """Route to sport-specific card generator, then append trends"""
     if sport == 'NFL':
-        return generate_game_card_nfl(game, 'NFL')
+        card = generate_game_card_nfl(game, 'NFL')
     elif sport == 'NCAAF':
-        return generate_game_card_nfl(game, 'NCAAF')
+        card = generate_game_card_nfl(game, 'NCAAF')
     elif sport == 'NBA':
-        return generate_game_card_nba(game, 'NBA')
+        card = generate_game_card_nba(game, 'NBA')
     elif sport == 'NCAAB':
-        return generate_game_card_nba(game, 'NCAAB')
+        card = generate_game_card_nba(game, 'NCAAB')
     elif sport == 'NHL':
-        return generate_game_card_nhl(game)
+        card = generate_game_card_nhl(game)
     elif sport == 'MLB':
-        return generate_game_card_nhl(game)
-    return ''
+        card = generate_game_card_nhl(game)
+    else:
+        return ''
+
+    # Inject trends section before the closing </div> of the game card
+    if TRENDS_AVAILABLE and card:
+        trends_html = _get_game_trends_html(game, sport)
+        if trends_html:
+            # Insert trends before the last </div> (closing game-card div)
+            last_div = card.rfind('</div>')
+            if last_div >= 0:
+                card = card[:last_div] + trends_html + '\n    ' + card[last_div:]
+
+    return card
 
 # =============================================================================
 # PAGE GENERATION
@@ -3094,6 +3206,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
                 gap: 15px;
             }}
         }}
+        {get_trends_css() if TRENDS_AVAILABLE else ''}
     </style>
 </head>
 <body>
