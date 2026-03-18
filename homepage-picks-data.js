@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Senators TT Under 3.5 (-155)",
+        date: "March 18, 2026",
+        result: "",
+        url: "senators-team-total-under-3-5-at-capitals-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1773114872/prd/e3gfsrtvzz0kxmyd7vaa"
+    },
+    {
+        sport: "NHL",
         title: "Panthers TT Under 3.5 (-135)",
         date: "March 17, 2026",
         result: "",
