@@ -176,6 +176,7 @@ NCAAB_TEAM_MAP = {
     '2229': ('DePaul', 'DEP'),
     # WCC
     '2250': ('Gonzaga', 'GONZ'),
+    '2541': ('Santa Clara', 'SCU'),
     # Other
     '30': ('Stanford', 'STAN'),
     '235': ('Memphis', 'MEM'),
