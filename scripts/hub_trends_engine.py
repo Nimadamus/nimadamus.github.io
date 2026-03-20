@@ -216,6 +216,17 @@ def _load_games(sport: str) -> list:
     _cached_games = games
     _cached_sport = sport
     print(f"  [TRENDS] {len(games):,} {sport} games loaded")
+
+    # Automatic ATS integrity check
+    try:
+        from ats_integrity_check import check_ats_integrity, print_integrity_report
+        result = check_ats_integrity(games, sport)
+        print_integrity_report(result, sport)
+        if not result['passed']:
+            print(f"  [TRENDS] *** WARNING: ATS integrity check failed for {sport} ***")
+    except ImportError:
+        pass
+
     return games
 
 
