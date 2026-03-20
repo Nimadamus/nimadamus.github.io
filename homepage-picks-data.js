@@ -24,9 +24,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Devils +110 at Capitals",
+        date: "March 20, 2026",
+        result: "",
+        url: "devils-moneyline-plus-110-at-capitals-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/cbns2zgn6vlmx9fhzr3e.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Bruins TT Under 3.5 (-150)",
         date: "March 19, 2026",
-        result: "",
+        result: "L",
         url: "bruins-team-total-under-3-5-jets-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/mowaqhfcoindv24tzzax.jpg"
     },
