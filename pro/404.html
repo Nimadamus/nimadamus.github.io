@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BetLegend Pro</title>
+  <script>
+    // SPA redirect for GitHub Pages
+    // Converts /pro/dashboard, /pro/odds, etc. to /pro/?/dashboard, /pro/?/odds
+    // The main index.html reads the query param and navigates to the correct route
+    var path = window.location.pathname;
+    var search = window.location.search;
+    var hash = window.location.hash;
+    // Remove /pro prefix to get the route
+    var route = path.replace('/pro', '');
+    window.location.replace('/pro/?p=' + encodeURIComponent(route) + search + hash);
+  </script>
+</head>
+<body>
+</body>
+</html>
