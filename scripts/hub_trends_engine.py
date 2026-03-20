@@ -95,9 +95,21 @@ def _load_games(sport: str) -> list:
         data = pickle.load(f)
     all_games = data[0]
 
-    games = [g for g in all_games if g.get('Sport') == sport
-             and g.get('HomeTeam') and g.get('AwayTeam')
-             and g.get('HomeScore') is not None and g.get('AwayScore') is not None]
+    raw_games = [g for g in all_games if g.get('Sport') == sport
+                 and g.get('HomeTeam') and g.get('AwayTeam')
+                 and g.get('HomeScore') is not None and g.get('AwayScore') is not None]
+
+    # Filter out years with unreliable ATS spread data
+    try:
+        sys.path.insert(0, r"C:\Users\Nima\handicapping_tool")
+        from data_quality import filter_reliable_games
+        games = filter_reliable_games(raw_games, sport, include_marginal=True)
+        excluded = len(raw_games) - len(games)
+        if excluded > 0:
+            print(f"  [TRENDS] Excluded {excluded:,} games from unreliable ATS years")
+    except ImportError:
+        games = raw_games
+
     games.sort(key=lambda x: x.get('Date', ''))
 
     # Build running state
