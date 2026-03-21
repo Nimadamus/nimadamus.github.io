@@ -23,12 +23,20 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NBA",
+        title: "Hawks +2.5 at Rockets",
+        date: "March 20, 2026",
+        result: "",
+        url: "hawks-plus-2-5-at-rockets-nba.html",
+        image: "https://www.orlandosentinel.com/wp-content/uploads/2026/03/Magic-Hawks-Basketball-5.jpg?w=1600&resize=1600,900"
+    },
+    {
         sport: "NHL",
         title: "Devils +110 at Capitals",
         date: "March 20, 2026",
         result: "",
         url: "devils-moneyline-plus-110-at-capitals-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/cbns2zgn6vlmx9fhzr3e.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/tpbwnrywwviqgfjksubg.jpg"
     },
     {
         sport: "NHL",

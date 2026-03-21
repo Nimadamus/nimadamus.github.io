@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Redesign Preview | BetLegend</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --font-primary: 'Orbitron', sans-serif;
+    --font-secondary: 'Poppins', sans-serif;
+    --neon-cyan: #00f0ff;
+    --neon-gold: #ffd000;
+    --glass-bg: rgba(4, 12, 28, 0.92);
+    --glass-border: rgba(0, 180, 200, 0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: #060a14;
+    color: #fff;
+    font-family: var(--font-secondary);
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+h1 {
+    font-family: var(--font-primary);
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.preview-label {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #ff4444;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 50px;
+    font-family: var(--font-primary);
+}
+
+.section-label {
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    color: var(--neon-gold);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    margin: 50px auto 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 208, 0, 0.15);
+    max-width: 1400px;
+}
+
+/* ======================================================================
+   REDESIGNED FEATURED CARDS - IMAGE-DOMINANT, LOCKED STRUCTURE
+   ====================================================================== */
+
+.picks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.pick-card {
+    display: flex;
+    flex-direction: column;
+    height: 480px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+}
+
+.pick-card:hover {
+    border-color: rgba(0, 240, 255, 0.35);
+    box-shadow:
+        0 8px 40px rgba(0, 240, 255, 0.12),
+        0 0 0 1px rgba(0, 240, 255, 0.08);
+    transform: translateY(-4px);
+}
+
+/* IMAGE FIRST - dominates the card */
+.pick-card-img-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+}
+
+.pick-card-img-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to top, rgba(4, 12, 28, 0.85) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pick-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.pick-card:hover .pick-card-img {
+    transform: scale(1.04);
+}
+
+/* TITLE - overlaid on the image gradient */
+.pick-card-title-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 16px 18px 14px;
+}
+
+.pick-card-title {
+    font-family: var(--font-secondary);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.35;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* TAG ROW - tight, anchored */
+.pick-card-meta {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 18px;
+    background: rgba(0, 0, 0, 0.35);
+    border-top: 1px solid rgba(0, 180, 200, 0.06);
+    flex-shrink: 0;
+}
+
+/* DATE FOOTER - clean, minimal */
+.pick-card-footer {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    flex-shrink: 0;
+    border-top: 1px solid rgba(0, 180, 200, 0.04);
+}
+
+.pick-card-date {
+    font-family: var(--font-secondary);
+    font-size: 0.72rem;
+    color: rgba(0, 200, 220, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    font-weight: 500;
+}
+
+/* Sport Tag */
+.pick-sport-tag {
+    font-family: var(--font-primary);
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #0a0e1a;
+    background: var(--neon-cyan);
+    padding: 3px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    flex-shrink: 0;
+}
+
+/* Result Badges */
+.pick-result-badge {
+    font-family: var(--font-primary);
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pick-result-badge.win {
+    background: rgba(57, 255, 20, 0.15);
+    color: #39ff14;
+    border: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+.pick-result-badge.loss {
+    background: rgba(255, 49, 49, 0.15);
+    color: #ff3131;
+    border: 1px solid rgba(255, 49, 49, 0.3);
+}
+
+.pick-result-badge.push {
+    background: rgba(160, 160, 160, 0.15);
+    color: #aaa;
+    border: 1px solid rgba(160, 160, 160, 0.3);
+}
+
+.pick-result-badge.pending {
+    background: rgba(0, 200, 220, 0.08);
+    color: rgba(0, 200, 220, 0.6);
+    border: 1px solid rgba(0, 200, 220, 0.15);
+    font-weight: 600;
+}
+
+/* ======================================================================
+   COMPACT CARDS (4+)
+   ====================================================================== */
+
+.compact-picks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.pick-card-sm {
+    display: flex;
+    flex-direction: column;
+    height: 320px;
+    background: rgba(4, 12, 28, 0.88);
+    border: 1px solid rgba(0, 180, 200, 0.10);
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+}
+
+.pick-card-sm:hover {
+    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow: 0 6px 28px rgba(0, 240, 255, 0.10);
+    transform: translateY(-3px);
+}
+
+.pick-card-sm-img-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+}
+
+.pick-card-sm-img-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to top, rgba(4, 12, 28, 0.85) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pick-card-sm-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    transition: transform 0.35s ease;
+}
+
+.pick-card-sm:hover .pick-card-sm-img {
+    transform: scale(1.04);
+}
+
+.pick-card-sm-title-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 12px 14px 10px;
+}
+
+.pick-card-sm-title {
+    font-family: var(--font-secondary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.8);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pick-card-sm-meta {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(0, 180, 200, 0.05);
+    flex-shrink: 0;
+}
+
+.pick-card-sm-meta .pick-sport-tag {
+    font-size: 0.52rem;
+    padding: 2px 7px;
+}
+
+.pick-card-sm-meta .pick-result-badge {
+    font-size: 0.58rem;
+    padding: 3px 9px;
+}
+
+.pick-card-sm-footer {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    flex-shrink: 0;
+    border-top: 1px solid rgba(0, 180, 200, 0.03);
+}
+
+.pick-card-sm-date {
+    font-family: var(--font-secondary);
+    font-size: 0.68rem;
+    color: rgba(0, 200, 220, 0.50);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+}
+
+/* ======================================================================
+   RESPONSIVE
+   ====================================================================== */
+
+@media (max-width: 1024px) {
+    .picks-grid { grid-template-columns: repeat(2, 1fr); }
+    .pick-card { height: 440px; }
+}
+
+@media (max-width: 768px) {
+    .picks-grid { grid-template-columns: 1fr; padding: 0 15px; }
+    .pick-card { height: 400px; }
+    .pick-card-title { font-size: 0.85rem; }
+    .compact-picks-grid { grid-template-columns: 1fr 1fr; padding: 0 15px; }
+    .pick-card-sm { height: 280px; }
+}
+
+@media (max-width: 480px) {
+    .compact-picks-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<h1>Card Redesign v2</h1>
+<p class="preview-label">Preview Only - Not Live</p>
+
+<!-- ==================== NEW DESIGN - FEATURED ==================== -->
+<p class="section-label" style="margin-top: 10px;">Featured Cards (Top 3)</p>
+
+<div class="picks-grid">
+    <a href="#" class="pick-card">
+        <div class="pick-card-img-wrap">
+            <img class="pick-card-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/tpbwnrywwviqgfjksubg.jpg" alt="Devils +110 at Capitals">
+            <div class="pick-card-title-bar"><span class="pick-card-title">Devils +110 at Capitals</span></div>
+        </div>
+        <div class="pick-card-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge pending">PENDING</span></div>
+        <div class="pick-card-footer"><span class="pick-card-date">March 20, 2026</span></div>
+    </a>
+    <a href="#" class="pick-card">
+        <div class="pick-card-img-wrap">
+            <img class="pick-card-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/mowaqhfcoindv24tzzax.jpg" alt="Bruins TT Under 3.5">
+            <div class="pick-card-title-bar"><span class="pick-card-title">Bruins TT Under 3.5 (-150)</span></div>
+        </div>
+        <div class="pick-card-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge loss">LOSS</span></div>
+        <div class="pick-card-footer"><span class="pick-card-date">March 19, 2026</span></div>
+    </a>
+    <a href="#" class="pick-card">
+        <div class="pick-card-img-wrap">
+            <img class="pick-card-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1773114872/prd/e3gfsrtvzz0kxmyd7vaa" alt="Senators TT Under 3.5">
+            <div class="pick-card-title-bar"><span class="pick-card-title">Senators TT Under 3.5 (-155)</span></div>
+        </div>
+        <div class="pick-card-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge win">WIN</span></div>
+        <div class="pick-card-footer"><span class="pick-card-date">March 18, 2026</span></div>
+    </a>
+</div>
+
+<!-- ==================== NEW DESIGN - COMPACT ==================== -->
+<p class="section-label">Compact Grid (Picks 4+)</p>
+
+<div class="compact-picks-grid">
+    <a href="#" class="pick-card-sm">
+        <div class="pick-card-sm-img-wrap">
+            <img class="pick-card-sm-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/al0kehobnis0ep3ehn3s.jpg" alt="Panthers TT Under 3.5">
+            <div class="pick-card-sm-title-bar"><span class="pick-card-sm-title">Panthers TT Under 3.5 (-135)</span></div>
+        </div>
+        <div class="pick-card-sm-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge win">WIN</span></div>
+        <div class="pick-card-sm-footer"><span class="pick-card-sm-date">March 17, 2026</span></div>
+    </a>
+    <a href="#" class="pick-card-sm">
+        <div class="pick-card-sm-img-wrap">
+            <img class="pick-card-sm-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlvywrl77gjjekmzt3qg" alt="Penguins Avalanche Over">
+            <div class="pick-card-sm-title-bar"><span class="pick-card-sm-title">Penguins at Avs OVER 6.5 (-120)</span></div>
+        </div>
+        <div class="pick-card-sm-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge win">WIN</span></div>
+        <div class="pick-card-sm-footer"><span class="pick-card-sm-date">March 16, 2026</span></div>
+    </a>
+    <a href="#" class="pick-card-sm">
+        <div class="pick-card-sm-img-wrap">
+            <img class="pick-card-sm-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1772057935/prd/v3ftqvttong49pvykmt0" alt="Sharks value play">
+            <div class="pick-card-sm-title-bar"><span class="pick-card-sm-title">Sharks +180 / +1.5 -140 (3u)</span></div>
+        </div>
+        <div class="pick-card-sm-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge loss">LOSS</span></div>
+        <div class="pick-card-sm-footer"><span class="pick-card-sm-date">March 15, 2026</span></div>
+    </a>
+    <a href="#" class="pick-card-sm">
+        <div class="pick-card-sm-img-wrap">
+            <img class="pick-card-sm-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlx0hqpifhq8kfmt1y9x" alt="Rangers ML value">
+            <div class="pick-card-sm-title-bar"><span class="pick-card-sm-title">Rangers +167 / +1.5 -150 (3u)</span></div>
+        </div>
+        <div class="pick-card-sm-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge win">WIN</span></div>
+        <div class="pick-card-sm-footer"><span class="pick-card-sm-date">March 14, 2026</span></div>
+    </a>
+    <a href="#" class="pick-card-sm">
+        <div class="pick-card-sm-img-wrap">
+            <img class="pick-card-sm-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_png/v1773366397/prd/ckwxgsj13uyzf1c4ciuz.png" alt="Blues puck line">
+            <div class="pick-card-sm-title-bar"><span class="pick-card-sm-title">Blues +1.5 (-180)</span></div>
+        </div>
+        <div class="pick-card-sm-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge win">WIN</span></div>
+        <div class="pick-card-sm-footer"><span class="pick-card-sm-date">March 13, 2026</span></div>
+    </a>
+    <a href="#" class="pick-card-sm">
+        <div class="pick-card-sm-img-wrap">
+            <img class="pick-card-sm-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size40/prd/vkgkfvdixytkm895noud" alt="Canadiens Senators Over">
+            <div class="pick-card-sm-title-bar"><span class="pick-card-sm-title">Canadiens/Senators OVER 6.5</span></div>
+        </div>
+        <div class="pick-card-sm-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge loss">LOSS</span></div>
+        <div class="pick-card-sm-footer"><span class="pick-card-sm-date">March 11, 2026</span></div>
+    </a>
+</div>
+
+</body>
+</html>
