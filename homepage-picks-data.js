@@ -36,7 +36,7 @@ var HOMEPAGE_PICKS = [
         date: "March 20, 2026",
         result: "",
         url: "devils-moneyline-plus-110-at-capitals-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/tpbwnrywwviqgfjksubg.jpg"
+        image: "https://platform.allaboutthejersey.com/wp-content/uploads/sites/6/2026/03/gettyimages-2266728853.jpg"
     },
     {
         sport: "NHL",
