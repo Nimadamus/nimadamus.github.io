@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "March 21, 2026",
         result: "",
         url: "kraken-blue-jackets-under-6-5-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/ikorjbzzs8duluosfdxc.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/xrvcgou7nncebdksdrg1.jpg"
     },
     {
         sport: "NBA",
