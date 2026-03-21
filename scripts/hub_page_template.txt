@@ -1,0 +1,408 @@
+<!-- ============================================================
+     SPORT HUB PAGE TEMPLATE - EVERGREEN DAILY ANALYSIS
+     ============================================================
+     USE: Replace content daily during SLATE. Never create new files.
+     FILES: nba-picks-today.html, nhl-picks-today.html, etc.
+     ============================================================ -->
+
+<!-- ==================== META DESCRIPTION TEMPLATE ==================== -->
+<!--
+    Dynamic meta description formula (update daily):
+
+    <meta name="description" content="[SPORT] picks today [FULL DATE] - AI-powered analysis
+    for [GAME COUNT] games. [MARQUEE MATCHUP]. 10,000 simulations per game. Expert previews
+    with spreads, totals & injury reports | BetLegend">
+
+    EXAMPLES:
+    NBA: "NBA picks today March 21, 2026 - AI-powered analysis for 8 games. Hawks at Rockets
+         on NBA TV headline a loaded Friday. 10,000 simulations per game. Expert previews
+         with spreads, totals & injury reports | BetLegend"
+
+    NHL: "NHL picks today March 21, 2026 - AI-powered analysis for 12 games. Avalanche host
+         Panthers in a Stanley Cup Finals rematch. 10,000 simulations per game. Expert previews
+         with puck lines, totals & injury reports | BetLegend"
+
+    RULES:
+    - Always include today's date (auto-updated each SLATE run)
+    - Always include game count
+    - Always reference the marquee matchup
+    - Keep under 160 characters
+    - Include "AI-powered" and "simulations" keywords
+-->
+
+<!-- ==================== TITLE TAG TEMPLATE ==================== -->
+<!--
+    <title>[SPORT] Picks Today [Month Day, Year] - AI Game Simulations | BetLegend</title>
+
+    EXAMPLES:
+    <title>NBA Picks Today March 21, 2026 - AI Game Simulations | BetLegend</title>
+    <title>NHL Picks Today March 21, 2026 - AI Game Simulations | BetLegend</title>
+    <title>NCAAB Picks Today March 21, 2026 - AI Game Simulations | BetLegend</title>
+-->
+
+<!-- ==================== CANONICAL TAG ==================== -->
+<!--
+    ALWAYS self-referencing (never changes):
+    <link rel="canonical" href="https://www.betlegendpicks.com/nba-picks-today.html">
+-->
+
+<!-- ==================== SPORTSEVENT JSON-LD TEMPLATE ==================== -->
+<!--
+    Generate ONE SportsEvent block PER GAME inside the hub page.
+    Place each inside a <script type="application/ld+json"> tag within
+    or immediately before each game's <details> accordion.
+-->
+
+<!-- SINGLE GAME EXAMPLE: -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SportsEvent",
+    "name": "Atlanta Hawks at Houston Rockets",
+    "description": "NBA game preview and AI-powered analysis with betting lines, injury reports, and advanced metrics.",
+    "startDate": "2026-03-21T19:00:00-05:00",
+    "endDate": "2026-03-21T21:30:00-05:00",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+        "@type": "Place",
+        "name": "Toyota Center",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Houston",
+            "addressRegion": "TX",
+            "addressCountry": "US"
+        }
+    },
+    "homeTeam": {
+        "@type": "SportsTeam",
+        "name": "Houston Rockets",
+        "sport": "Basketball"
+    },
+    "awayTeam": {
+        "@type": "SportsTeam",
+        "name": "Atlanta Hawks",
+        "sport": "Basketball"
+    },
+    "organizer": {
+        "@type": "Organization",
+        "name": "NBA",
+        "url": "https://www.nba.com"
+    },
+    "offers": {
+        "@type": "AggregateOffer",
+        "url": "https://www.betlegendpicks.com/nba-picks-today.html",
+        "availability": "https://schema.org/InStock"
+    }
+}
+</script>
+
+<!-- ==================== ACCORDION GAME PREVIEW TEMPLATE ==================== -->
+<!--
+    Each game uses <details>/<summary> for accordion behavior.
+    First game: <details open> (expanded by default)
+    All others: <details> (collapsed)
+-->
+
+<!-- EXAMPLE GAME ACCORDION: -->
+<details open class="game-accordion">
+    <summary class="game-accordion-header">
+        <div class="ga-matchup-row">
+            <div class="ga-team">
+                <img src="https://a.espncdn.com/i/teamlogos/nba/500/atl.png" alt="Atlanta Hawks" class="ga-logo">
+                <div class="ga-team-info">
+                    <span class="ga-team-name">Hawks</span>
+                    <span class="ga-team-record">(38-31)</span>
+                </div>
+            </div>
+            <div class="ga-at">@</div>
+            <div class="ga-team">
+                <img src="https://a.espncdn.com/i/teamlogos/nba/500/hou.png" alt="Houston Rockets" class="ga-logo">
+                <div class="ga-team-info">
+                    <span class="ga-team-name">Rockets</span>
+                    <span class="ga-team-record">(41-27)</span>
+                </div>
+            </div>
+            <div class="ga-game-meta">
+                <span class="ga-time">7:00 PM ET</span>
+                <span class="ga-network">NBA TV</span>
+            </div>
+        </div>
+        <div class="ga-lines-row">
+            <div class="ga-line-box">
+                <span class="ga-line-label">SPREAD</span>
+                <span class="ga-line-value">HOU -2.5</span>
+            </div>
+            <div class="ga-line-box">
+                <span class="ga-line-label">ML</span>
+                <span class="ga-line-value">-140 / +118</span>
+            </div>
+            <div class="ga-line-box">
+                <span class="ga-line-label">O/U</span>
+                <span class="ga-line-value">230.5</span>
+            </div>
+        </div>
+        <div class="ga-chevron">&#9660;</div>
+    </summary>
+
+    <div class="ga-analysis">
+        <!-- 3-4 paragraphs of analysis go here -->
+        <p>Analysis paragraph 1...</p>
+        <p>Analysis paragraph 2...</p>
+        <p>Analysis paragraph 3...</p>
+    </div>
+</details>
+
+<!-- ==================== FULL PAGE STRUCTURE ==================== -->
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://www.betlegendpicks.com/[sport]-picks-today.html">
+    <title>[SPORT] Picks Today [Date] - AI Game Simulations | BetLegend</title>
+    <meta name="description" content="[Dynamic per SLATE run]">
+
+    [OG tags, Twitter cards, favicon, fonts]
+
+    [CSS - same sport page dark theme + accordion styles]
+</head>
+<body>
+    [Full BetLegend nav bar - copy from existing sport pages]
+
+    <div class="hub-hero">
+        <div class="hub-badge">UPDATED DAILY</div>
+        <h1>[SPORT] Picks Today</h1>
+        <p class="hub-subtitle">AI-Powered Game Simulations & Expert Analysis</p>
+        <p class="hub-updated">Last Updated: [Month Day, Year] - [Time] ET</p>
+    </div>
+
+    <main class="page-wrapper">
+        [SportsEvent JSON-LD for Game 1]
+        <details open class="game-accordion">...</details>
+
+        [SportsEvent JSON-LD for Game 2]
+        <details class="game-accordion">...</details>
+
+        [Repeat for all games]
+    </main>
+
+    <footer>...</footer>
+</body>
+</html>
+-->
+
+<!-- ==================== ACCORDION CSS ==================== -->
+<style>
+/* Game Accordion Styles */
+.game-accordion {
+    background: linear-gradient(145deg, #14171f 0%, #0f1218 100%);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.game-accordion[open] {
+    border-color: rgba(253, 80, 0, 0.3);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 20px rgba(253, 80, 0, 0.08);
+}
+
+.game-accordion-header {
+    cursor: pointer;
+    padding: 20px 24px;
+    list-style: none;
+    position: relative;
+    user-select: none;
+}
+
+.game-accordion-header::-webkit-details-marker {
+    display: none;
+}
+
+.game-accordion-header::marker {
+    display: none;
+    content: '';
+}
+
+.ga-matchup-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 14px;
+}
+
+.ga-team {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ga-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.1));
+}
+
+.ga-team-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.ga-team-name {
+    font-family: var(--font-display, 'Orbitron', sans-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.ga-team-record {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+}
+
+.ga-at {
+    font-family: var(--font-display, 'Orbitron', sans-serif);
+    font-size: 1rem;
+    color: rgba(255,255,255,0.3);
+    font-weight: 700;
+}
+
+.ga-game-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: auto;
+}
+
+.ga-time {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-cyan, #00e5ff);
+}
+
+.ga-network {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ga-lines-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.ga-line-box {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 8px 18px;
+    text-align: center;
+    flex: 1;
+    max-width: 160px;
+}
+
+.ga-line-label {
+    display: block;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 4px;
+}
+
+.ga-line-value {
+    display: block;
+    font-family: var(--font-display, 'Orbitron', sans-serif);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent-gold, #ffd54f);
+}
+
+.ga-chevron {
+    text-align: center;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+}
+
+.game-accordion[open] .ga-chevron {
+    transform: rotate(180deg);
+}
+
+.ga-analysis {
+    padding: 0 28px 28px;
+    color: var(--text-secondary, #b0b8c4);
+    font-size: 1rem;
+    line-height: 1.85;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.ga-analysis p {
+    margin: 18px 0;
+}
+
+.ga-analysis p:first-child {
+    margin-top: 24px;
+}
+
+/* Mobile accordion */
+@media (max-width: 768px) {
+    .ga-matchup-row {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .ga-game-meta {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        gap: 12px;
+        align-items: center;
+        margin-left: 0;
+        margin-top: 6px;
+    }
+
+    .ga-lines-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .ga-line-box {
+        max-width: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+    }
+
+    .ga-line-label {
+        margin-bottom: 0;
+    }
+
+    .ga-logo {
+        width: 38px;
+        height: 38px;
+    }
+
+    .ga-team-name {
+        font-size: 0.95rem;
+    }
+
+    .ga-analysis {
+        padding: 0 18px 20px;
+        font-size: 0.95rem;
+    }
+
+    .game-accordion-header {
+        padding: 16px 18px;
+    }
+}
+</style>

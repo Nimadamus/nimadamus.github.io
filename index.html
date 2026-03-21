@@ -10,19 +10,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <meta name="robots" content="index, follow">
-    <meta name="description" content="Get free daily NFL, NBA, and NHL picks with a fully transparent track record. Every pick graded, every result posted. See the proof before you follow."/>
+    <meta name="description" content="BetLegend runs 10,000 AI-powered game simulations daily for NFL, NBA, NHL, MLB &amp; NCAAB picks. Every pick posted pre-game, every result verified. See our transparent track record."/>
     <meta name="keywords" content="sports betting picks, NFL picks, NBA picks, NHL picks, betting analysis, sports predictions"/>
-    <meta property="og:title" content="Free Sports Betting Picks Today (Verified Winners) | BetLegend"/>
-    <meta property="og:description" content="Join bettors winning with our verified picks. Free daily NFL, NBA, NHL picks with 100% transparent records."/>
+    <meta property="og:title" content="AI-Powered Sports Betting Simulations &amp; Expert Picks | BetLegend"/>
+    <meta property="og:description" content="10,000 AI game simulations daily. NFL, NBA, NHL, MLB &amp; NCAAB picks with fully verified, transparent records. See the data before you bet."/>
     <meta property="og:url" content="https://www.betlegendpicks.com/"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="BetLegend"/>
 <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png"/>
   <meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Free Sports Betting Picks Today (Verified Winners)">
-  <meta name="twitter:description" content="Join bettors winning with verified picks. Free daily NFL, NBA, NHL picks with 100% transparent records.">
-    <title>Free Sports Betting Picks With Verified Proof | BetLegend</title>
+  <meta name="twitter:title" content="AI-Powered Sports Betting Simulations &amp; Expert Picks | BetLegend">
+  <meta name="twitter:description" content="10,000 AI game simulations daily. NFL, NBA, NHL, MLB &amp; NCAAB picks with fully verified, transparent records.">
+    <title>AI-Powered Sports Betting Simulations &amp; Expert Picks | BetLegend</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -654,7 +654,303 @@
             box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
         }
 
-        /* ==================== HERO RIGHT - Featured Game ==================== */
+        /* ==================== FEATURED GAME WIDGET ==================== */
+        .hero-center {
+            min-width: 0;
+        }
+
+        .featured-game-stack {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+        }
+
+        .fg-header {
+            background: linear-gradient(135deg, #0051BA 0%, #1a365d 100%);
+            padding: 14px 20px;
+            border-bottom: 3px solid #E8000D;
+        }
+
+        .fg-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .fg-header-label {
+            font-family: var(--font-primary);
+            font-size: 0.75rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .fg-time-badge {
+            background: #39FF14;
+            color: #000;
+            font-family: var(--font-primary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .fg-matchup {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .fg-team {
+            text-align: center;
+        }
+
+        .fg-team img {
+            width: 55px;
+            height: 55px;
+            margin-bottom: 6px;
+        }
+
+        .fg-team-name {
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .fg-team-record {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .fg-vs {
+            font-family: var(--font-primary);
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: 900;
+        }
+
+        .fg-venue {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .fg-lines {
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .fg-lines table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-secondary);
+        }
+
+        .fg-lines th {
+            text-align: center;
+            padding: 6px 5px;
+            font-size: 0.7rem;
+            color: #888;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .fg-lines th:first-child {
+            text-align: left;
+        }
+
+        .fg-lines td {
+            padding: 8px 5px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .fg-lines .fg-team-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+        }
+
+        .fg-lines .fg-team-cell img {
+            width: 22px;
+            height: 22px;
+        }
+
+        .fg-lines .fg-team-cell span {
+            font-weight: 600;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .fg-fav { color: #39FF14; }
+        .fg-dog { color: #ff6b6b; }
+
+        .fg-records-bar {
+            padding: 8px 20px;
+            background: rgba(0,0,0,0.25);
+        }
+
+        .fg-records-label {
+            font-family: var(--font-primary);
+            font-size: 0.7rem;
+            color: #00f0ff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .fg-records-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #ccc;
+        }
+
+        .fg-injuries-bar {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(239,97,0,0.1));
+            border-top: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .fg-injuries-label {
+            font-family: var(--font-primary);
+            font-size: 0.7rem;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .fg-injuries-list {
+            font-size: 0.8rem;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        .fg-injuries-list div {
+            margin-bottom: 4px;
+        }
+
+        .fg-injuries-list div:last-child {
+            margin-bottom: 0;
+        }
+
+        .fg-team-tag {
+            color: #FEC524;
+            font-weight: 600;
+        }
+
+        .fg-breakdown-btn {
+            display: block;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(239, 97, 0, 0.2));
+            text-align: center;
+            text-decoration: none;
+            border-top: 2px solid rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+            animation: btnPulse 2.5s ease-in-out infinite;
+        }
+
+        .fg-breakdown-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.35), rgba(239, 97, 0, 0.3));
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.05); }
+            50% { box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.15); }
+        }
+
+        .fg-breakdown-btn span {
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            color: #FFD700;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Mobile: Featured Game Widget */
+        @media (max-width: 768px) {
+            .fg-matchup {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .fg-vs {
+                font-size: 1rem;
+            }
+
+            .fg-team img {
+                width: 45px;
+                height: 45px;
+            }
+
+            .fg-header {
+                padding: 12px 16px;
+            }
+
+            .fg-header-top {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+
+            .fg-lines {
+                padding: 10px 12px;
+            }
+
+            .fg-lines td, .fg-lines th {
+                padding: 6px 3px;
+                font-size: 0.8rem;
+            }
+
+            .fg-breakdown-btn {
+                padding: 18px 16px;
+            }
+
+            .fg-breakdown-btn span {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fg-team-name {
+                font-size: 0.9rem;
+            }
+
+            .fg-team-record {
+                font-size: 0.75rem;
+            }
+
+            .fg-lines td {
+                font-size: 0.75rem;
+                padding: 5px 2px;
+            }
+
+            .fg-lines .fg-team-cell span {
+                font-size: 0.8rem;
+            }
+
+            .fg-lines .fg-team-cell img {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        /* ==================== HERO RIGHT - Featured Game (legacy) ==================== */
         .hero-right {
             display: flex;
             flex-direction: column;
@@ -820,6 +1116,100 @@
         .view-hub-link:hover {
             background: rgba(0, 240, 255, 0.2);
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        /* ==================== HOW IT WORKS - 3 STEP PROCESS ==================== */
+        .how-it-works {
+            max-width: 1100px;
+            margin: 0 auto 40px;
+            padding: 0 30px;
+        }
+
+        .hiw-title {
+            font-family: var(--font-primary);
+            font-size: 1.1rem;
+            color: var(--neon-gold);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 28px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .hiw-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .hiw-step {
+            background: rgba(0, 8, 20, 0.7);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            border-radius: 16px;
+            padding: 28px 22px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hiw-step:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 240, 255, 0.15);
+        }
+
+        .hiw-step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-cyan), #0088aa);
+            color: #000;
+            font-family: var(--font-primary);
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .hiw-step h3 {
+            font-family: var(--font-primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+
+        .hiw-step .hiw-stat {
+            font-family: var(--font-primary);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .hiw-step p {
+            font-family: var(--font-secondary);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .hiw-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .hiw-step {
+                padding: 22px 18px;
+            }
         }
 
         /* ==================== SUBSCRIPTION PLANS TICKER ==================== */
@@ -2201,12 +2591,12 @@ crossorigin="anonymous"></script>
         <section class="hero">
             <!-- COLUMN 1 (LEFT): Simulation Has Been Hacked -->
             <div class="hero-left">
-                <h1>The Simulation<br>Has Been <span>Hacked.</span></h1>
+                <h1>BetLegend: AI-Powered Sports Betting <span>Simulations</span> &amp; Expert Picks</h1>
 
                 <p class="credibility-line">
-                    <strong>Every pick posted before the game starts.</strong>
-                    Every result tracked. Full transparency since day one.
-                    No hidden losses. No deleted picks. Just the record.
+                    <strong>10,000 game simulations. Every pick posted pre-game.</strong>
+                    AI-driven analysis, fully verified results, 100% transparent records.
+                    No hidden losses. No deleted picks. Just the data.
                 </p>
 
                 <a href="betlegend-verified-records.html" class="hero-cta">
@@ -2227,93 +2617,85 @@ crossorigin="anonymous"></script>
             <!-- COLUMN 2 (CENTER): Today's Featured Game -->
             <div class="hero-center">
                 <div class="featured-game-stack">
-                    <!-- Header Banner - Matchup Info -->
-                    <div style="background: linear-gradient(135deg, #0051BA 0%, #1a365d 100%); padding: 14px 20px; border-bottom: 3px solid #E8000D; border-radius: 20px 20px 0 0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <span style="font-family: var(--font-primary); font-size: 0.75rem; color: #fff; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Today's Featured Game</span>
-                            <span style="background: #39FF14; color: #000; font-family: var(--font-primary); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; text-transform: uppercase;">NCAAB 12:15 PM ET</span>
+                    <!-- Header Banner -->
+                    <div class="fg-header">
+                        <div class="fg-header-top">
+                            <span class="fg-header-label">Today's Featured Game</span>
+                            <span class="fg-time-badge">NCAAB 12:15 PM ET</span>
                         </div>
-                        <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-                            <div style="text-align: center;">
-                                <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
-                                <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">Kansas</div>
-                                <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">(21-13)</div>
+                        <div class="fg-matchup">
+                            <div class="fg-team">
+                                <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png" alt="Kansas Jayhawks">
+                                <div class="fg-team-name">Kansas</div>
+                                <div class="fg-team-record">(21-13)</div>
                             </div>
-                            <div style="font-family: var(--font-primary); font-size: 1.5rem; color: #fff; font-weight: 900;">@</div>
-                            <div style="text-align: center;">
-                                <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2541.png" style="width: 55px; height: 55px; margin-bottom: 6px;">
-                                <div style="font-family: var(--font-primary); font-size: 1rem; color: #fff; font-weight: 700;">Santa Clara</div>
-                                <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">(26-8)</div>
+                            <div class="fg-vs">@</div>
+                            <div class="fg-team">
+                                <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2541.png" alt="Santa Clara Broncos">
+                                <div class="fg-team-name">Santa Clara</div>
+                                <div class="fg-team-record">(26-8)</div>
                             </div>
                         </div>
-                        <div style="text-align: center; margin-top: 10px; font-size: 0.8rem; color: #fff;">March 20 | Enterprise Center | CBS</div>
+                        <div class="fg-venue">March 20 | Enterprise Center | CBS</div>
                     </div>
 
                     <!-- Betting Lines Table -->
-                    <div style="padding: 10px 20px; background: rgba(0,0,0,0.3);">
-                        <table style="width: 100%; border-collapse: collapse; font-family: var(--font-secondary);">
+                    <div class="fg-lines">
+                        <table>
                             <thead>
                                 <tr style="border-bottom: 2px solid rgba(239,97,0,0.5);">
-                                    <th style="text-align: left; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">Team</th>
-                                    <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">Spread</th>
-                                    <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">ML</th>
-                                    <th style="text-align: center; padding: 6px 5px; font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 600;">O/U</th>
+                                    <th style="text-align: left;">Team</th>
+                                    <th>Spread</th>
+                                    <th>ML</th>
+                                    <th>O/U</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                    <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
-                                        <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png" style="width: 22px; height: 22px;">
-                                        <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">KU</span>
-                                    </td>
-                                    <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #39FF14; font-size: 0.95rem;">-3.5</td>
-                                    <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #39FF14; font-size: 0.95rem;">-162</td>
-                                    <td style="text-align: center; padding: 8px 5px; font-weight: 600; color: #fff; font-size: 0.9rem;">O 160.5</td>
+                                    <td class="fg-team-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png" alt="KU"><span>KU</span></td>
+                                    <td class="fg-fav">-3.5</td>
+                                    <td class="fg-fav">-162</td>
+                                    <td style="color: #fff; font-weight: 600; font-size: 0.9rem;">O 160.5</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px 5px; display: flex; align-items: center; gap: 8px;">
-                                        <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2541.png" style="width: 22px; height: 22px;">
-                                        <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">SCU</span>
-                                    </td>
-                                    <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #ff6b6b; font-size: 0.95rem;">+3.5</td>
-                                    <td style="text-align: center; padding: 8px 5px; font-weight: 700; color: #ff6b6b; font-size: 0.95rem;">+136</td>
-                                    <td style="text-align: center; padding: 8px 5px; font-weight: 600; color: #fff; font-size: 0.9rem;">U 160.5</td>
+                                    <td class="fg-team-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2541.png" alt="SCU"><span>SCU</span></td>
+                                    <td class="fg-dog">+3.5</td>
+                                    <td class="fg-dog">+136</td>
+                                    <td style="color: #fff; font-weight: 600; font-size: 0.9rem;">U 160.5</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <!-- Betting Trends -->
-                    <div style="padding: 8px 20px; background: rgba(0,0,0,0.25);">
-                        <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #00f0ff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Records</div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #ccc;">
-                            <div><span style="color: #FEC524; font-weight: 600;">KU:</span> 21-13 SU</div>
-                            <div><span style="color: #FEC524; font-weight: 600;">SCU:</span> 26-8 SU</div>
+                    <!-- Records -->
+                    <div class="fg-records-bar">
+                        <div class="fg-records-label">Records</div>
+                        <div class="fg-records-row">
+                            <div><span class="fg-team-tag">KU:</span> 21-13 SU</div>
+                            <div><span class="fg-team-tag">SCU:</span> 26-8 SU</div>
                         </div>
                     </div>
 
                     <!-- Injuries -->
-                    <div style="padding: 8px 20px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(239,97,0,0.1)); border-top: 1px solid rgba(255,215,0,0.3);">
-                        <div style="font-family: var(--font-primary); font-size: 0.7rem; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">Key Injuries</div>
-                        <div style="font-size: 0.8rem; color: #ddd; line-height: 1.5;">
-                            <div style="margin-bottom: 4px;"><span style="color: #FEC524; font-weight: 600;">KU:</span> Check injury report</div>
-                            <div><span style="color: #FEC524; font-weight: 600;">SCU:</span> Check injury report</div>
+                    <div class="fg-injuries-bar">
+                        <div class="fg-injuries-label">Key Injuries</div>
+                        <div class="fg-injuries-list">
+                            <div><span class="fg-team-tag">KU:</span> Check injury report</div>
+                            <div><span class="fg-team-tag">SCU:</span> Check injury report</div>
                         </div>
                     </div>
 
                     <!-- Link to Featured Game Page - NEVER DELETE -->
-                    <a href="kentucky-vs-santa-clara-analysis-stats-preview-march-20-2026.html" style="display: block; padding: 12px 20px; background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(239, 97, 0, 0.15)); text-align: center; text-decoration: none; border-top: 1px solid rgba(255, 215, 0, 0.3); border-radius: 0 0 20px 20px; transition: all 0.3s ease;">
-                        <span style="font-family: var(--font-primary); font-size: 0.9rem; color: #FFD700; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
-                            View Full Breakdown →
-                        </span>
+                    <a href="kentucky-vs-santa-clara-analysis-stats-preview-march-20-2026.html" class="fg-breakdown-btn">
+                        <span>View Full Breakdown &rarr;</span>
                     </a>
                 </div>
 
             </div>
         </section>
 
-        <!-- ==================== ROW 2: ALL-TIME VERIFIED RECORDS ==================== -->
-        <section style="max-width: 900px; margin: 0 auto 40px; padding: 0 30px;">
+        <!-- ==================== ROW 2: ALL-TIME VERIFIED RECORDS (above the fold) ==================== -->
+        <section style="max-width: 900px; margin: -10px auto 30px; padding: 0 30px;">
             <div class="records-widget-wrap">
                 <div class="records-widget">
                     <div class="rw-header">
@@ -2328,6 +2710,31 @@ crossorigin="anonymous"></script>
                     <div class="rw-carousel" id="rw-carousel"></div>
                     <div class="rw-dots" id="rw-dots"></div>
                     <div class="rw-footer">Updated daily &bull; All picks fully transparent &bull; Posted before games start</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ROW 2.5: HOW THE SIMULATION WORKS ==================== -->
+        <section class="how-it-works">
+            <h2 class="hiw-title">How the Simulation Works</h2>
+            <div class="hiw-grid">
+                <div class="hiw-step">
+                    <div class="hiw-step-number">1</div>
+                    <h3>Data Ingestion</h3>
+                    <div class="hiw-stat">1,000+</div>
+                    <p>Real-time data points processed per game: injuries, weather, line movement, matchup history, advanced metrics, and situational trends.</p>
+                </div>
+                <div class="hiw-step">
+                    <div class="hiw-step-number">2</div>
+                    <h3>Simulation Engine</h3>
+                    <div class="hiw-stat">10,000</div>
+                    <p>Game iterations run through Engine v9 for every matchup. Each simulation accounts for variance, pace, and scoring distributions.</p>
+                </div>
+                <div class="hiw-step">
+                    <div class="hiw-step-number">3</div>
+                    <h3>The Edge</h3>
+                    <div class="hiw-stat">Top 3%</div>
+                    <p>Only the highest-probability value plays survive. We publish the picks where our model finds the widest gap between true odds and the market line.</p>
                 </div>
             </div>
         </section>
