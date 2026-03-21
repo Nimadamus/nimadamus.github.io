@@ -143,6 +143,41 @@
             font-weight: 500; letter-spacing: 0.3px;
         }
 
+        /* EXAMPLE QUERIES */
+        .examples {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+            max-width: 700px; width: 100%; margin-bottom: 48px;
+        }
+        .example-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 18px 20px; text-align: left;
+            transition: border-color 0.2s;
+        }
+        .example-card:hover { border-color: rgba(245,158,11,0.3); }
+        .example-query {
+            font-size: 14px; color: var(--text-secondary);
+            margin-bottom: 10px; line-height: 1.5;
+        }
+        .example-sport {
+            display: inline-block; font-size: 10px; font-weight: 700;
+            padding: 2px 8px; border-radius: 4px;
+            background: rgba(59,130,246,0.15); color: #60a5fa;
+            margin-right: 6px; vertical-align: middle; letter-spacing: 0.5px;
+        }
+        .example-sport.nfl { background: rgba(16,185,129,0.15); color: #34d399; }
+        .example-sport.mlb { background: rgba(239,68,68,0.15); color: #f87171; }
+        .example-sport.nhl { background: rgba(168,85,247,0.15); color: #c084fc; }
+        .example-sport.nba { background: rgba(59,130,246,0.15); color: #60a5fa; }
+        .example-result {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px; color: var(--text-muted);
+        }
+        .example-result strong { color: var(--gold); }
+        .example-cta {
+            border-style: dashed; border-color: rgba(245,158,11,0.25);
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
         /* CAPABILITY LIST */
         .capabilities {
             max-width: 600px; width: 100%;
@@ -198,6 +233,7 @@
         @media (max-width: 600px) {
             .capabilities { grid-template-columns: 1fr; }
             .features { grid-template-columns: 1fr 1fr; }
+            .examples { grid-template-columns: 1fr; }
             .hero { padding: 120px 20px 40px; }
         }
     </style>
@@ -247,6 +283,51 @@
             <div class="feature-card">
                 <div class="feature-num">4</div>
                 <div class="feature-label">Major Sports</div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE QUERIES -->
+        <h2 style="font-size:24px;font-weight:700;margin-bottom:8px;">See What You Can Look Up</h2>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:24px;">Real queries. Real results from the database.</p>
+        <div class="examples">
+            <div class="example-card">
+                <div class="example-query">
+                    <span class="example-sport">NBA</span>
+                    "Celtics as road underdogs"
+                </div>
+                <div class="example-result">482 games &middot; <strong>157-323-2 ATS (32.7%)</strong></div>
+            </div>
+            <div class="example-card">
+                <div class="example-query">
+                    <span class="example-sport nfl">NFL</span>
+                    "Chiefs as home favorites"
+                </div>
+                <div class="example-result">132 games &middot; <strong>51-80-1 ATS (38.9%)</strong></div>
+            </div>
+            <div class="example-card">
+                <div class="example-query">
+                    <span class="example-sport mlb">MLB</span>
+                    "Yankees as away underdogs"
+                </div>
+                <div class="example-result">508 games &middot; <strong>243-265 SU (47.8%)</strong></div>
+            </div>
+            <div class="example-card">
+                <div class="example-query">
+                    <span class="example-sport nba">NBA</span>
+                    "Lakers as home favorites"
+                </div>
+                <div class="example-result">250 games &middot; <strong>67-178-5 ATS (27.3%)</strong></div>
+            </div>
+            <div class="example-card">
+                <div class="example-query">
+                    <span class="example-sport nfl">NFL</span>
+                    "Cowboys as road underdogs"
+                </div>
+                <div class="example-result">226 games &middot; <strong>46-177-3 ATS (20.6%)</strong></div>
+            </div>
+            <div class="example-card example-cta">
+                <div style="font-size:14px;color:var(--gold);font-weight:600;margin-bottom:6px;">Any team. Any situation.</div>
+                <div style="font-size:13px;color:var(--text-muted);">Home, away, favorite, underdog, after a win, after a loss, on a streak, on rest, by spread range, by division, by conference, by season...</div>
             </div>
         </div>
 
