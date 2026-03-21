@@ -23,10 +23,18 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Kraken vs Blue Jackets Under 6.5 (-120)",
+        date: "March 21, 2026",
+        result: "",
+        url: "kraken-blue-jackets-under-6-5-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/ikorjbzzs8duluosfdxc.jpg"
+    },
+    {
         sport: "NBA",
         title: "Hawks +2.5 at Rockets",
         date: "March 20, 2026",
-        result: "",
+        result: "L",
         url: "hawks-plus-2-5-at-rockets-nba.html",
         image: "https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_0,w_5007,h_2816/c_fill,w_1200,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/all_hawks/01km4h5hnhx16m52ctv3.jpg"
     },
@@ -34,7 +42,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Devils +110 at Capitals",
         date: "March 20, 2026",
-        result: "",
+        result: "L",
         url: "devils-moneyline-plus-110-at-capitals-nhl.html",
         image: "https://platform.allaboutthejersey.com/wp-content/uploads/sites/6/2026/03/gettyimages-2266728853.jpg"
     },
