@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="newlogo.png">
+    <title>BetLegend - Verified Sports Picks &amp; Transparent Records</title>
+    <meta name="description" content="Get free daily NFL, NBA, and NHL picks with a fully transparent track record. Every pick graded, every result posted.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Organization","name":"BetLegend","url":"https://www.betlegendpicks.com","logo":"https://www.betlegendpicks.com/newlogo.png"}
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QS8L5TDNLY');</script>
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --bg: #0a0e17;
+    --bg-card: #111827;
+    --bg-elevated: #171f2e;
+    --border: #1f2937;
+    --border-hover: #374151;
+    --gold: #f59e0b;
+    --gold-dim: #b45309;
+    --gold-glow: rgba(245,158,11,0.10);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.12);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.12);
+    --cyan: #06b6d4;
+    --text: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --text-faint: #475569;
+    --radius: 14px;
+    --radius-sm: 10px;
+}
+html { scroll-behavior: smooth; }
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ===== NAV ===== */
+.nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(10,14,23,0.88);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center;
+    padding: 0 24px; height: 60px;
+}
+.nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text);
+    margin-right: 40px; flex-shrink: 0;
+}
+.nav-logo {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--gold-glow); border: 1px solid rgba(245,158,11,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: var(--gold);
+}
+.nav-title { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
+.nav-title em { font-style: normal; color: var(--gold); }
+.nav-links { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.nav-links a, .nav-dd-btn {
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    text-decoration: none; padding: 8px 12px; border-radius: 8px;
+    transition: all 0.15s; white-space: nowrap; border: none;
+    background: none; cursor: pointer; font-family: inherit;
+}
+.nav-links a:hover, .nav-dd-btn:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.nav-dd { position: relative; }
+.nav-dd-panel {
+    display: none; position: absolute; top: calc(100% + 8px); left: 0;
+    min-width: 200px; background: var(--bg-elevated);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 8px; z-index: 9999;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+}
+.nav-dd.open .nav-dd-panel { display: block; }
+.nav-dd-panel a {
+    display: block; padding: 10px 14px; font-size: 13px;
+    color: var(--text-secondary); text-decoration: none;
+    border-radius: 8px; transition: all 0.15s;
+}
+.nav-dd-panel a:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+.nav-dd-wide {
+    min-width: 420px; padding: 16px;
+    display: none; position: absolute; top: calc(100% + 8px); left: 0;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: var(--radius); z-index: 9999;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+}
+.nav-dd.open .nav-dd-wide { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.nav-dd-col h5 {
+    font-size: 10px; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    padding: 8px 14px; margin-bottom: 4px;
+}
+.nav-cta {
+    margin-left: auto; font-size: 13px; font-weight: 600;
+    color: #000; background: var(--gold); padding: 8px 18px;
+    border-radius: 8px; text-decoration: none;
+    transition: all 0.15s; flex-shrink: 0;
+}
+.nav-cta:hover { filter: brightness(1.1); }
+
+/* mobile nav */
+.nav-hamburger { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+@media (max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--bg-elevated); border-bottom: 1px solid var(--border); padding: 12px; gap: 2px; }
+    .nav-hamburger { display: block; margin-left: auto; }
+    .nav-cta { display: none; }
+    .nav-dd-panel, .nav-dd-wide { position: static; box-shadow: none; border: none; min-width: 100%; background: rgba(255,255,255,0.02); }
+    .nav-dd.open .nav-dd-wide { display: flex; flex-direction: column; }
+}
+
+/* ===== HERO ===== */
+.hero {
+    max-width: 720px; margin: 0 auto;
+    padding: 140px 24px 80px;
+    text-align: center; position: relative;
+}
+.hero::before {
+    content: ''; position: absolute; top: 30%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,0.05) 0%, transparent 65%);
+    pointer-events: none;
+}
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px; border-radius: 50px;
+    background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2);
+    font-size: 12px; font-weight: 600; color: var(--green);
+    letter-spacing: 0.3px; margin-bottom: 28px;
+}
+.hero-badge .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+.hero h1 {
+    font-size: clamp(32px, 5.5vw, 52px);
+    font-weight: 800; letter-spacing: -1.5px;
+    line-height: 1.08; margin-bottom: 20px;
+}
+.hero h1 .gold {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24, #f59e0b);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.hero-sub {
+    font-size: 17px; line-height: 1.7;
+    color: var(--text-secondary); max-width: 520px;
+    margin: 0 auto 36px;
+}
+.hero-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 700;
+    color: #000; background: var(--gold);
+    padding: 14px 32px; border-radius: var(--radius-sm);
+    text-decoration: none; letter-spacing: -0.2px;
+    transition: all 0.2s;
+}
+.hero-cta:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 24px rgba(245,158,11,0.25); }
+.hero-links {
+    margin-top: 16px; display: flex; justify-content: center; gap: 20px;
+}
+.hero-links a {
+    font-size: 13px; color: var(--text-muted); text-decoration: none;
+    transition: color 0.15s;
+}
+.hero-links a:hover { color: var(--text-secondary); }
+
+/* ===== RECORDS PROOF ===== */
+.proof {
+    max-width: 900px; margin: 0 auto 80px; padding: 0 24px;
+}
+.proof-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+}
+.proof-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px; border-bottom: 1px solid var(--border);
+}
+.proof-top h2 { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: var(--text); }
+.proof-top .proof-link {
+    font-size: 12px; font-weight: 600; color: var(--gold);
+    text-decoration: none; transition: opacity 0.15s;
+}
+.proof-top .proof-link:hover { opacity: 0.8; }
+.rw-carousel { position: relative; min-height: 165px; overflow: hidden; }
+.rw-slide {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.6s ease; pointer-events: none;
+}
+.rw-slide.active { opacity: 1; pointer-events: auto; }
+.rw-league {
+    font-size: 11px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px;
+}
+.rw-record {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 42px; font-weight: 700;
+    letter-spacing: 2px; margin-bottom: 18px; line-height: 1;
+}
+.rw-record .w { color: var(--text); }
+.rw-record .sep { color: var(--text-faint); margin: 0 6px; font-weight: 400; }
+.rw-record .l { color: var(--text-muted); }
+.rw-record .p { color: var(--text-faint); }
+.rw-stats { display: flex; gap: 40px; }
+.rw-stat { text-align: center; }
+.rw-stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px; font-weight: 700; margin-bottom: 4px;
+}
+.rw-stat-value.pos { color: var(--green); }
+.rw-stat-value.neg { color: var(--red); }
+.rw-stat-value.rate { color: var(--text); }
+.rw-stat-value.count { color: var(--text-muted); }
+.rw-stat-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--text-faint);
+}
+.rw-dots { display: flex; justify-content: center; gap: 8px; padding: 0 24px 18px; }
+.rw-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--border); border: none; cursor: pointer;
+    transition: all 0.2s; padding: 0;
+}
+.rw-dot.active { background: var(--gold); }
+.rw-dot:hover:not(.active) { background: var(--text-faint); }
+.rw-footer {
+    padding: 12px 24px; border-top: 1px solid var(--border);
+    text-align: center; font-size: 11px; color: var(--text-faint);
+}
+.sport-pills { display: flex; justify-content: center; gap: 6px; margin-top: 16px; flex-wrap: wrap; }
+.sport-pills a {
+    font-size: 12px; font-weight: 500; color: var(--text-muted);
+    text-decoration: none; padding: 6px 14px;
+    border: 1px solid var(--border); border-radius: 50px;
+    transition: all 0.15s;
+}
+.sport-pills a:hover { border-color: var(--border-hover); color: var(--text-secondary); }
+
+/* ===== FEATURED GAME ===== */
+.featured {
+    max-width: 680px; margin: 0 auto 80px; padding: 0 24px;
+}
+.section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 16px; text-align: center;
+}
+.game-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+}
+.game-header {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
+    border-bottom: 1px solid var(--border);
+}
+.game-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+}
+.game-meta .league {
+    font-size: 11px; font-weight: 700; color: var(--text-muted);
+    letter-spacing: 1.5px; text-transform: uppercase;
+}
+.game-meta .time {
+    font-size: 12px; font-weight: 600; color: var(--gold);
+    padding: 4px 10px; border-radius: 6px;
+    background: var(--gold-glow); border: 1px solid rgba(245,158,11,0.15);
+}
+.game-teams {
+    display: flex; align-items: center; justify-content: center; gap: 28px;
+}
+.game-team { text-align: center; }
+.game-team img { width: 48px; height: 48px; margin-bottom: 6px; }
+.game-team .name { font-size: 15px; font-weight: 700; color: var(--text); }
+.game-team .record { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.game-at { font-size: 16px; font-weight: 800; color: var(--text-faint); }
+.game-venue { text-align: center; margin-top: 12px; font-size: 12px; color: var(--text-faint); }
+.game-lines {
+    display: grid; grid-template-columns: auto 1fr 1fr 1fr;
+    gap: 0; font-size: 13px;
+}
+.game-lines .gl-header {
+    padding: 10px 16px; font-size: 10px; font-weight: 700;
+    color: var(--text-faint); text-transform: uppercase;
+    letter-spacing: 1px; border-bottom: 1px solid var(--border);
+}
+.game-lines .gl-cell {
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    text-align: center;
+}
+.game-lines .gl-team {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px; font-weight: 600; color: var(--text);
+    border-bottom: 1px solid var(--border); text-align: left;
+}
+.game-lines .gl-team img { width: 18px; height: 18px; }
+.gl-fav { color: var(--green); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+.gl-dog { color: var(--red); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+.gl-ou { color: var(--text-secondary); font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+.game-cta {
+    display: block; text-align: center; padding: 14px;
+    font-size: 13px; font-weight: 600; color: var(--gold);
+    text-decoration: none; border-top: 1px solid var(--border);
+    transition: all 0.15s;
+}
+.game-cta:hover { background: rgba(245,158,11,0.04); }
+
+/* ===== LATEST PICKS ===== */
+.picks-section {
+    max-width: 1100px; margin: 0 auto 80px; padding: 0 24px;
+}
+.section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+.section-header h2 { font-size: 15px; font-weight: 700; }
+.section-header a {
+    font-size: 12px; font-weight: 600; color: var(--text-muted);
+    text-decoration: none; transition: color 0.15s;
+}
+.section-header a:hover { color: var(--text-secondary); }
+.picks-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-bottom: 20px;
+}
+.pick-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    text-decoration: none; transition: all 0.2s;
+    display: flex; flex-direction: column;
+}
+.pick-card:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+.pick-card-img { width: 100%; height: 220px; object-fit: cover; display: block; }
+.pick-card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+.pick-card-title {
+    font-size: 14px; font-weight: 700; color: var(--text);
+    line-height: 1.4; margin-bottom: 12px;
+}
+.pick-card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: auto;
+}
+.pick-sport-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+    padding: 3px 8px; border-radius: 4px;
+    background: rgba(6,182,212,0.12); color: var(--cyan);
+}
+.pick-result-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 4px;
+}
+.pick-result-badge.win { background: var(--green-dim); color: var(--green); }
+.pick-result-badge.loss { background: var(--red-dim); color: var(--red); }
+.pick-result-badge.push { background: rgba(100,116,139,0.15); color: var(--text-muted); }
+.pick-result-badge.pending { background: rgba(255,255,255,0.04); color: var(--text-faint); }
+.pick-card-date { font-size: 11px; color: var(--text-faint); }
+
+/* Compact picks */
+.compact-picks-section { max-width: 1100px; margin: 0 auto 80px; padding: 0 24px; }
+.compact-picks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.pick-card-sm {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); overflow: hidden;
+    text-decoration: none; transition: all 0.2s;
+    display: flex; flex-direction: column;
+}
+.pick-card-sm:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+.pick-card-sm-img { width: 100%; height: 140px; object-fit: cover; display: block; }
+.pick-card-sm-body { padding: 12px; flex: 1; display: flex; flex-direction: column; }
+.pick-card-sm-title { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 8px; }
+.pick-card-sm-meta { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.pick-card-sm-meta .pick-sport-tag { font-size: 9px; padding: 2px 6px; }
+.pick-card-sm-meta .pick-result-badge { font-size: 10px; padding: 2px 8px; }
+.pick-card-sm-date { font-size: 10px; color: var(--text-faint); margin-top: 6px; }
+
+.compact-picks-pagination { display: flex; justify-content: center; gap: 6px; margin-top: 16px; }
+.compact-picks-pagination button {
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+    color: var(--text-muted); background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 14px; cursor: pointer; transition: all 0.15s;
+}
+.compact-picks-pagination button:hover { border-color: var(--border-hover); color: var(--text-secondary); }
+.compact-picks-pagination button.active { background: var(--bg-elevated); border-color: var(--border-hover); color: var(--text); }
+.compact-picks-pagination button:disabled { opacity: 0.3; cursor: default; }
+
+/* ===== RESOURCES ===== */
+.resources {
+    max-width: 1100px; margin: 0 auto 80px; padding: 0 24px;
+}
+.resources-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.resource-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 20px;
+    text-decoration: none; transition: all 0.2s;
+}
+.resource-card:hover { border-color: rgba(245,158,11,0.25); }
+.resource-card h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.resource-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+/* ===== AFFILIATE ===== */
+.affiliate {
+    max-width: 900px; margin: 0 auto 80px; padding: 0 24px;
+}
+.affiliate-bar {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+}
+.affiliate-bar h3 { font-size: 14px; font-weight: 700; color: var(--text); }
+.affiliate-bar p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.affiliate-bar a {
+    font-size: 13px; font-weight: 600; color: #000;
+    background: var(--gold); padding: 10px 20px;
+    border-radius: 8px; text-decoration: none;
+    transition: all 0.15s;
+}
+.affiliate-bar a:hover { filter: brightness(1.1); }
+
+/* ===== FOOTER ===== */
+.footer {
+    max-width: 1100px; margin: 0 auto;
+    padding: 48px 24px 24px;
+    border-top: 1px solid var(--border);
+}
+.footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 32px; }
+.footer-col h4 {
+    font-size: 10px; font-weight: 700; color: var(--text-faint);
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px;
+}
+.footer-col a {
+    display: block; font-size: 13px; color: var(--text-muted);
+    text-decoration: none; padding: 3px 0; transition: color 0.15s;
+}
+.footer-col a:hover { color: var(--text-secondary); }
+.footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 20px; border-top: 1px solid var(--border);
+    flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom p { font-size: 12px; color: var(--text-faint); }
+.footer-bottom-links { display: flex; gap: 16px; }
+.footer-bottom-links a { font-size: 12px; color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+.footer-bottom-links a:hover { color: var(--text-secondary); }
+.footer-spacer { height: 56px; }
+
+/* ===== TICKER ===== */
+.ticker-wrap {
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    background: rgba(10,14,23,0.95); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 8px 0; z-index: 1001; overflow: hidden;
+}
+.ticker {
+    display: inline-block; white-space: nowrap;
+    padding-left: 100%; animation: ticker-scroll 85s linear infinite;
+}
+@keyframes ticker-scroll { 0%{transform:translateX(0);} 100%{transform:translateX(-100%);} }
+.ticker__item {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0 2rem; font-size: 12px; color: var(--text-muted);
+}
+.ticker__item .pick-text { font-weight: 600; color: var(--text-secondary); }
+.ticker__item .grade {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700; font-size: 10px;
+    padding: 2px 7px; border-radius: 3px;
+}
+.ticker__item .grade.win { background: var(--green-dim); color: var(--green); }
+.ticker__item .grade.loss { background: var(--red-dim); color: var(--red); }
+.ticker__separator { color: var(--text-faint); font-size: 14px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .picks-grid, .compact-picks-grid, .resources-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    .game-lines { font-size: 12px; }
+}
+@media (max-width: 600px) {
+    .hero { padding: 120px 20px 60px; }
+    .hero h1 { font-size: 28px; letter-spacing: -1px; }
+    .picks-grid, .compact-picks-grid, .resources-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .affiliate-bar { flex-direction: column; text-align: center; }
+    .game-teams { gap: 16px; }
+    .game-team img { width: 40px; height: 40px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+            <div class="nav-logo">BL</div>
+            <span class="nav-title">BetLegend <em>PICKS</em></span>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="handicapping-hub.html">Hub</a>
+            <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">Pick Archive</a>
+            <div class="nav-dd">
+                <button class="nav-dd-btn" onclick="this.parentElement.classList.toggle('open')">Previews &#9662;</button>
+                <div class="nav-dd-wide">
+                    <div class="nav-dd-col">
+                        <h5>Game Previews</h5>
+                        <a href="nfl.html">NFL</a>
+                        <a href="mlb.html">MLB</a>
+                        <a href="ncaaf.html">NCAAF</a>
+                        <a href="nuggets-thunder-defending-champs-headline-monday-nba-march-9-2026.html">NBA</a>
+                        <a href="gonzaga-wcc-tournament-conference-championship-week-ncaab-march-9-2026.html">NCAAB</a>
+                        <a href="blue-jackets-surge-rangers-flyers-rivalry-nhl-march-9-2026.html">NHL</a>
+                        <a href="fa-cup-west-ham-brentford-la-liga-serie-a-soccer-march-9-2026.html">Soccer</a>
+                    </div>
+                    <div class="nav-dd-col">
+                        <h5>Records</h5>
+                        <a href="records.html">Full Breakdown</a>
+                        <a href="nhl-records.html">NHL</a>
+                        <a href="nfl-records.html">NFL</a>
+                        <a href="nba-records.html">NBA</a>
+                        <a href="mlb-records.html">MLB</a>
+                        <a href="ncaaf-records.html">NCAAF</a>
+                        <a href="ncaab-records.html">NCAAB</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-dd">
+                <button class="nav-dd-btn" onclick="this.parentElement.classList.toggle('open')">Resources &#9662;</button>
+                <div class="nav-dd-panel">
+                    <a href="howitworks.html">How It Works</a>
+                    <a href="bankroll.html">Bankroll Management</a>
+                    <a href="kelly-criterion.html">Kelly Criterion</a>
+                    <a href="betting-calculators.html">Betting Calculators</a>
+                    <a href="live-odds.html">Live Odds</a>
+                    <a href="betting-101.html">Betting 101</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+            <a href="pro/index.html" style="color: var(--gold); font-weight: 700;">Pro</a>
+            <a href="kentucky-vs-santa-clara-analysis-stats-preview-march-20-2026.html">Game of Day</a>
+        </div>
+        <a href="betlegend-verified-records.html" class="nav-cta">Free Trial</a>
+        <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge"><span class="dot"></span> Verified &amp; Transparent</div>
+    <h1>The Simulation<br>Has Been <span class="gold">Hacked.</span></h1>
+    <p class="hero-sub">Every pick posted before the game starts. Every result tracked. No hidden losses. No deleted picks. Just the record.</p>
+    <a href="betlegend-verified-records.html" class="hero-cta">Start Free Trial &rarr;</a>
+    <div class="hero-links">
+        <a href="betlegend-verified-records.html">View Records</a>
+        <a href="howitworks.html">How It Works</a>
+        <a href="https://discord.gg/betlegend">Discord</a>
+    </div>
+</section>
+
+<!-- RECORDS PROOF -->
+<section class="proof">
+    <div class="proof-card">
+        <div class="proof-top">
+            <h2>All-Time Verified Records</h2>
+            <a href="betlegend-verified-records.html" class="proof-link">View Full Record &rarr;</a>
+        </div>
+        <div class="rw-carousel" id="rw-carousel"></div>
+        <div class="rw-dots" id="rw-dots"></div>
+        <div class="rw-footer">Updated daily &bull; Every pick fully transparent &bull; Posted before games start</div>
+    </div>
+    <div class="sport-pills">
+        <a href="nhl-records.html">NHL</a>
+        <a href="nfl-records.html">NFL</a>
+        <a href="nba-records.html">NBA</a>
+        <a href="mlb-records.html">MLB</a>
+        <a href="ncaaf-records.html">NCAAF</a>
+        <a href="ncaab-records.html">NCAAB</a>
+    </div>
+</section>
+
+<!-- FEATURED GAME -->
+<section class="featured">
+    <div class="section-label">Today's Featured Game</div>
+    <div class="game-card">
+        <div class="game-header">
+            <div class="game-meta">
+                <span class="league">NCAAB</span>
+                <span class="time">12:15 PM ET &bull; CBS</span>
+            </div>
+            <div class="game-teams">
+                <div class="game-team">
+                    <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png" alt="Kansas">
+                    <div class="name">Kansas</div>
+                    <div class="record">21-13</div>
+                </div>
+                <div class="game-at">@</div>
+                <div class="game-team">
+                    <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2541.png" alt="Santa Clara">
+                    <div class="name">Santa Clara</div>
+                    <div class="record">26-8</div>
+                </div>
+            </div>
+            <div class="game-venue">Enterprise Center, St. Louis</div>
+        </div>
+        <div class="game-lines">
+            <div class="gl-header" style="text-align:left;">Team</div>
+            <div class="gl-header">Spread</div>
+            <div class="gl-header">ML</div>
+            <div class="gl-header">O/U</div>
+            <div class="gl-team"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png" alt="KU"> KU</div>
+            <div class="gl-cell"><span class="gl-fav">-3.5</span></div>
+            <div class="gl-cell"><span class="gl-fav">-162</span></div>
+            <div class="gl-cell"><span class="gl-ou">O 160.5</span></div>
+            <div class="gl-team"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2541.png" alt="SCU"> SCU</div>
+            <div class="gl-cell"><span class="gl-dog">+3.5</span></div>
+            <div class="gl-cell"><span class="gl-dog">+136</span></div>
+            <div class="gl-cell"><span class="gl-ou">U 160.5</span></div>
+        </div>
+        <a href="kentucky-vs-santa-clara-analysis-stats-preview-march-20-2026.html" class="game-cta">View Full Breakdown &rarr;</a>
+    </div>
+</section>
+
+<!-- LATEST PICKS -->
+<section class="picks-section">
+    <div class="section-header">
+        <h2>Latest Picks</h2>
+        <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">View All &rarr;</a>
+    </div>
+    <div class="picks-grid" id="picks-grid"></div>
+</section>
+
+<section class="compact-picks-section">
+    <div class="compact-picks-grid" id="compact-picks-grid"></div>
+    <div class="compact-picks-pagination" id="compact-picks-pagination"></div>
+</section>
+
+<!-- RESOURCES -->
+<section class="resources">
+    <div class="section-label">Tools &amp; Resources</div>
+    <div class="resources-grid">
+        <a href="kelly-criterion.html" class="resource-card"><h3>Kelly Criterion</h3><p>Calculate optimal bet sizing with the formula pros use.</p></a>
+        <a href="bankroll.html" class="resource-card"><h3>Bankroll Management</h3><p>Unit sizing, risk of ruin, and money management strategies.</p></a>
+        <a href="handicapping-hub.html" class="resource-card"><h3>Handicapping Hub</h3><p>Daily matchup stats, live odds, injuries across all sports.</p></a>
+        <a href="betting-calculators.html" class="resource-card"><h3>Betting Calculators</h3><p>Odds conversion, EV, implied probability, and more.</p></a>
+        <a href="best-bets-today.html" class="resource-card"><h3>Best Bets Today</h3><p>Top picks and opportunities, updated daily.</p></a>
+        <a href="betting-education.html" class="resource-card"><h3>Betting Education</h3><p>Fundamentals for building a long-term edge.</p></a>
+    </div>
+</section>
+
+<!-- AFFILIATE -->
+<section class="affiliate">
+    <div class="affiliate-bar">
+        <div>
+            <h3>Bet These Picks at YouWager</h3>
+            <p>350% Welcome Bonus &bull; Fast payouts &bull; Trusted since 1998</p>
+        </div>
+        <a href="https://record.revmasters.com/_I-xl5bHAf88RxlNGag_0XWNd7ZgqdRLk/111/" target="_blank" rel="noopener">Claim Bonus &rarr;</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-grid">
+        <div class="footer-col"><h4>Tools</h4><a href="handicapping-hub.html">Handicapping Hub</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="ev-calculator.html">EV Calculator</a><a href="parlay-calculator.html">Parlay Calculator</a><a href="pro/index.html">Pro Tools</a></div>
+        <div class="footer-col"><h4>Learn</h4><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll Guide</a><a href="betting-101.html">Betting 101</a><a href="betting-glossary.html">Glossary</a><a href="betting-education.html">Education</a><a href="live-odds.html">Live Odds</a></div>
+        <div class="footer-col"><h4>Sports</h4><a href="nfl.html">NFL</a><a href="nuggets-thunder-defending-champs-headline-monday-nba-march-9-2026.html">NBA</a><a href="blue-jackets-surge-rangers-flyers-rivalry-nhl-march-9-2026.html">NHL</a><a href="mlb.html">MLB</a><a href="ncaaf.html">NCAAF</a><a href="fa-cup-west-ham-brentford-la-liga-serie-a-soccer-march-9-2026.html">Soccer</a></div>
+        <div class="footer-col"><h4>Company</h4><a href="proofofpicks.html">Proof of Picks</a><a href="free-trial-info.html">Free Trial</a><a href="podcast.html">Podcast</a><a href="contact.html">Contact</a><a href="sitemap.html">Sitemap</a></div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 BetLegend. All rights reserved.</p>
+        <div class="footer-bottom-links">
+            <a href="https://twitter.com/BetLegend2025" target="_blank">X / Twitter</a>
+            <a href="https://discord.gg/D2yRvgttOK" target="_blank">Discord</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+</footer>
+<div class="footer-spacer"></div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+    <div class="ticker" id="ticker-content"><div class="ticker__item">Loading recent results...</div></div>
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Close dropdowns on outside click
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-dd')) document.querySelectorAll('.nav-dd.open').forEach(function(d){d.classList.remove('open');});
+    });
+
+    const SHEET_URLS = {
+        MLB:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv',
+        NFL:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv',
+        NCAAF:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv',
+        NCAAB:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv',
+        NHL:'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv',
+        NBA:'https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv',
+        Soccer:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv'
+    };
+    const PICK_TRACKER_URL='https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/gviz/tq?tqx=out:csv&gid=0';
+    const tickerContent=document.getElementById('ticker-content');
+    if(!tickerContent) return;
+    function parseDate(s){if(!s||typeof s!=='string')return null;var p=s.trim().split(/[-/]/);if(p.length===3){var m=parseInt(p[0])-1,d=parseInt(p[1]),y=parseInt(p[2]);if(y<100)y+=2000;if(y>2000&&m>=0&&m<12&&d>0&&d<=31)return new Date(y,m,d);}return null;}
+    function calcRec(picks){var r={w:0,l:0,p:0,u:0,t:0};for(var i=0;i<picks.length;i++){var res=(picks[i].Result||'').trim().toUpperCase(),u=parseFloat(picks[i].Units);if(res&&!isNaN(u)){r.t++;if(res==='W'||res==='WIN')r.w++;else if(res==='L'||res==='LOSS')r.l++;else if(res==='P'||res==='PUSH')r.p++;r.u+=u;}}return r;}
+    async function fetchAll(){
+        var sd={};
+        for(var[sp,url] of Object.entries(SHEET_URLS)){try{var res=await fetch(url);var csv=await res.text();var parsed=Papa.parse(csv,{header:true,skipEmptyLines:'greedy',transformHeader:function(h){return h.trim();}});sd[sp]={record:calcRec(parsed.data.filter(function(p){return p.Pick&&p.Pick.trim();})),picks:parsed.data};}catch(e){sd[sp]={record:{w:0,l:0,p:0,u:0,t:0},picks:[]};}}
+        try{var tr=await fetch(PICK_TRACKER_URL);var tc=await tr.text();var tp=Papa.parse(tc,{header:true,skipEmptyLines:'greedy',transformHeader:function(h){return h.trim();}});for(var row of tp.data){if(!row.Pick||!row.Result)continue;var r=(row.Result||'').trim().toUpperCase();if(r!=='W'&&r!=='L'&&r!=='P')continue;var sp2=(row.League||'').trim().toUpperCase();if(sp2==='CROSS-SPORT')sp2='Parlay';if(!sd[sp2])sd[sp2]={record:{w:0,l:0,p:0,u:0,t:0},picks:[]};sd[sp2].picks.push({Date:row.Date,Pick:row.Pick,Result:r,Units:row.UNIT_RESULT||row.Units||'0',sport:sp2});}}catch(e){}
+        return sd;
+    }
+    function updateTicker(sd){
+        var all=[];for(var[sp,d] of Object.entries(sd)){if(sp==='Overall')continue;for(var pk of d.picks)all.push(Object.assign({},pk,{sport:sp}));}
+        var graded=all.filter(function(p){return p.Result&&p.Result.trim()&&p.Date&&parseDate(p.Date);});
+        if(!graded.length){tickerContent.innerHTML='<div class="ticker__item">Loading...</div>';return;}
+        var now=new Date(),week=new Date(now-7*864e5);
+        var recent=graded.filter(function(p){return parseDate(p.Date)>=week;}).sort(function(a,b){return parseDate(b.Date)-parseDate(a.Date);}).slice(0,20);
+        var show=recent.length?recent:graded.sort(function(a,b){return parseDate(b.Date)-parseDate(a.Date);}).slice(0,10);
+        var h='';show.forEach(function(pk,i){
+            var r=pk.Result.trim().toUpperCase(),cls=(r==='W'||r==='WIN')?'win':'loss',txt=(r==='W'||r==='WIN')?'W':(r==='P'||r==='PUSH')?'P':'L';
+            h+='<div class="ticker__item"><span style="color:var(--text-faint);font-weight:600;">'+pk.sport+'</span><span class="pick-text">'+pk.Pick.trim()+'</span><span class="grade '+cls+'">'+txt+'</span></div>';
+            if(i<show.length-1)h+='<span class="ticker__separator">&bull;</span>';
+        });
+        tickerContent.innerHTML=h;
+    }
+    fetchAll().then(updateTicker).catch(function(){});
+});
+</script>
+
+<!-- Records Widget -->
+<script src="transparency-widget-data.js"></script>
+<script>
+(function(){
+    'use strict';
+    var ORDER=['NHL','MLB','NFL','NCAAF'],CFG={NHL:{d:'NHL',l:'nhl-records.html',h:'nhl-records.html'},NFL:{d:'NFL',l:'nfl-records.html',h:'nfl-records.html'},NCAAF:{d:'College Football',l:'ncaaf-records.html',h:'ncaaf-records.html'},MLB:{d:'MLB',l:'betlegend-verified-records.html',h:null}};
+    var TRACKER='https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+    var MLB_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+    var LMAP={'nhl':'NHL','hockey':'NHL','nfl':'NFL','football':'NFL','ncaaf':'NCAAF','college football':'NCAAF','cfb':'NCAAF'};
+    var ci=0,tot=ORDER.length,iv=5000,tmr=null;
+    function fmt(v){return(v>=0?'+':'')+v.toFixed(1);}
+    function csvLine(l){var v=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(ch==='"')q=!q;else if(ch===','&&!q){v.push(c.trim());c='';}else c+=ch;}v.push(c.trim());return v;}
+    function csv(t){var ls=t.trim().split('\n');if(ls.length<2)return[];var h=csvLine(ls[0]),rs=[];for(var i=1;i<ls.length;i++){var v=csvLine(ls[i]),o={};for(var j=0;j<h.length;j++)o[h[j]]=v[j]||'';rs.push(o);}return rs;}
+    function cU(s,o,r){var st=parseFloat(s)||3,od=parseFloat(o)||-110,res=(r||'').toUpperCase().charAt(0);if(res==='W')return od<0?st:st*(od/100);if(res==='L')return od<0?-(st*(Math.abs(od)/100)):-st;return 0;}
+    function parseHTML(h){var d=new DOMParser().parseFromString(h,'text/html'),rows=d.querySelectorAll('#picks-table-body tr'),pk={};rows.forEach(function(row){var c=row.querySelectorAll('td');if(c.length<5)return;var dt=c[0].textContent.trim(),p=c[1].textContent.trim().toLowerCase(),r='';if(c[3].classList.contains('result-W'))r='W';else if(c[3].classList.contains('result-L'))r='L';else if(c[3].classList.contains('result-P'))r='P';else r=c[3].textContent.trim().toUpperCase().charAt(0);pk[dt+'|'+p]={result:r,units:parseFloat(c[4].textContent.replace('+',''))||0};});return pk;}
+    function parseTrk(rows){var o={};rows.forEach(function(r){var lg=(r.League||'').toLowerCase().trim();if(lg==='cross-sport')return;var k=LMAP[lg];if(!k){var sp=(r.Sport||'').toLowerCase().trim();k=LMAP[sp];}if(!k)return;var res=(r.Result||'').trim().toUpperCase();if(!res)return;if(!o[k])o[k]={};o[k][(r.Date||'').trim()+'|'+(r.Pick||'').trim().toLowerCase()]={result:res.charAt(0),units:cU(r.Units||'3',r.Line||r.Odds||'-110',res)};});return o;}
+    function parseMLB(rows){var w=0,l=0,p=0,tu=0;rows.forEach(function(r){var res='';if(r.Result)res=r.Result.trim().toUpperCase();if(!res){for(var k in r){var v=(r[k]||'').trim().toUpperCase();if(v==='W'||v==='L'||v==='P'){res=v;break;}}}if(!res)return;if(res.charAt(0)==='W')w++;else if(res.charAt(0)==='L')l++;else if(res.charAt(0)==='P')p++;else return;tu+=parseFloat((r.ProfitLoss||r['Profit/Loss']||r.Units||r['P/L']||'').replace('+','').replace('$',''))||0;});var tp=w+l+p,wp=(w+l)>0?w/(w+l)*100:0;return{d:'MLB',l:'betlegend-verified-records.html',wins:w,losses:l,pushes:p,tp:tp,tu:Math.round(tu*100)/100,wp:Math.round(wp*10)/10};}
+    function tally(pk,cf){var w=0,l=0,p=0,tu=0;for(var k in pk){var x=pk[k];if(x.result==='W')w++;else if(x.result==='L')l++;else if(x.result==='P')p++;tu+=x.units;}var tp=w+l+p,wp=(w+l)>0?w/(w+l)*100:0;return{d:cf.d,l:cf.l,wins:w,losses:l,pushes:p,tp:tp,tu:Math.round(tu*100)/100,wp:Math.round(wp*10)/10};}
+    function fetchLive(){var cb='&cache='+Date.now();return Promise.allSettled([fetch('nhl-records.html',{cache:'no-store'}).then(function(r){return r.text();}),fetch('nfl-records.html',{cache:'no-store'}).then(function(r){return r.text();}),fetch('ncaaf-records.html',{cache:'no-store'}).then(function(r){return r.text();}),fetch(TRACKER+cb,{cache:'no-store'}).then(function(r){return r.text();}),fetch(MLB_URL+'&cache='+Date.now(),{cache:'no-store'}).then(function(r){return r.text();})]).then(function(res){var trkP={};if(res[3].status==='fulfilled')try{trkP=parseTrk(csv(res[3].value));}catch(e){}var live={},hm={NHL:res[0],NFL:res[1],NCAAF:res[2]};for(var sp in hm){if(hm[sp].status==='fulfilled')try{var pk=parseHTML(hm[sp].value);if(trkP[sp])for(var k in trkP[sp])pk[k]=trkP[sp][k];live[sp]=tally(pk,CFG[sp]);}catch(e){}}if(res[4].status==='fulfilled')try{live.MLB=parseMLB(csv(res[4].value));}catch(e){}return live;});}
+    function build(data){var car=document.getElementById('rw-carousel'),dots=document.getElementById('rw-dots');if(!car||!dots)return;var sh='',dh='';ORDER.forEach(function(k,i){var s=data[k];if(!s)return;var a=i===0?' active':'',uc=s.tu>=0?'pos':'neg';sh+='<div class="rw-slide'+a+'" data-index="'+i+'"><div class="rw-league">'+s.d+'</div><div class="rw-record"><span class="w">'+s.wins+'</span><span class="sep">&ndash;</span><span class="l">'+s.losses+'</span><span class="sep">&ndash;</span><span class="p">'+s.pushes+'</span></div><div class="rw-stats"><div class="rw-stat"><div class="rw-stat-value '+uc+'">'+fmt(s.tu)+'</div><div class="rw-stat-label">Units</div></div><div class="rw-stat"><div class="rw-stat-value rate">'+s.wp+'%</div><div class="rw-stat-label">Win Rate</div></div><div class="rw-stat"><div class="rw-stat-value count">'+s.tp+'</div><div class="rw-stat-label">Picks</div></div></div></div>';dh+='<button class="rw-dot'+a+'" data-index="'+i+'"></button>';});car.innerHTML=sh;dots.innerHTML=dh;document.querySelectorAll('.rw-dot').forEach(function(d){d.addEventListener('click',function(){go(parseInt(this.dataset.index));start();});});}
+    function go(n){var s=document.querySelectorAll('.rw-slide'),d=document.querySelectorAll('.rw-dot');if(!s.length)return;s[ci].classList.remove('active');d[ci].classList.remove('active');ci=n;s[ci].classList.add('active');d[ci].classList.add('active');}
+    function next(){go((ci+1)%tot);}
+    function start(){if(tmr)clearInterval(tmr);tmr=setInterval(next,iv);}
+    if(typeof TRANSPARENCY_DATA!=='undefined')build(TRANSPARENCY_DATA.sports);
+    start();
+    fetchLive().then(function(live){var has=false;for(var k in live){has=true;break;}if(has){var m={};ORDER.forEach(function(k){m[k]=live[k]||(typeof TRANSPARENCY_DATA!=='undefined'?TRANSPARENCY_DATA.sports[k]:null);});build(m);}}).catch(function(){});
+    var el=document.getElementById('rw-carousel');if(el){el.addEventListener('mouseenter',function(){if(tmr)clearInterval(tmr);});el.addEventListener('mouseleave',function(){start();});}
+})();
+</script>
+
+<!-- Picks -->
+<script src="homepage-picks-data.js"></script>
+<script>
+(function(){
+    if(typeof HOMEPAGE_PICKS==='undefined')return;
+    function badge(r){
+        if(!r)return '<span class="pick-result-badge pending">PENDING</span>';
+        if(r.indexOf('-')!==-1){var p=r.split('-'),w=parseInt(p[0]),l=parseInt(p[1]),c=w>l?'win':w<l?'loss':'push';return '<span class="pick-result-badge '+c+'">'+r+'</span>';}
+        var c=r==='W'?'win':r==='L'?'loss':'push',lb=r==='W'?'WIN':r==='L'?'LOSS':'PUSH';
+        return '<span class="pick-result-badge '+c+'">'+lb+'</span>';
+    }
+    // Featured (top 3)
+    var g=document.getElementById('picks-grid');
+    if(g){g.innerHTML='';HOMEPAGE_PICKS.slice(0,3).forEach(function(pk){
+        var a=document.createElement('a');a.href=pk.url;a.className='pick-card';
+        a.innerHTML='<img class="pick-card-img" src="'+pk.image+'" alt="'+pk.title+'">'+'<div class="pick-card-body"><div class="pick-card-title">'+pk.title+'</div><div class="pick-card-footer"><span class="pick-sport-tag">'+(pk.sport||'PICK')+'</span>'+badge(pk.result)+'</div><div class="pick-card-date">'+pk.date+'</div></div>';
+        g.appendChild(a);
+    });}
+    // Compact
+    var cg=document.getElementById('compact-picks-grid'),pg=document.getElementById('compact-picks-pagination');
+    if(!cg||!pg)return;
+    var cp=HOMEPAGE_PICKS.slice(3),pp=9,cur=0,tp=Math.ceil(cp.length/pp);
+    function render(page){
+        cur=page;var s=page*pp,e=Math.min(s+pp,cp.length),slice=cp.slice(s,e);
+        cg.innerHTML='';slice.forEach(function(pk){
+            var a=document.createElement('a');a.href=pk.url;a.className='pick-card-sm';
+            a.innerHTML='<img class="pick-card-sm-img" src="'+pk.image+'" alt="'+pk.title+'">'+'<div class="pick-card-sm-body"><div class="pick-card-sm-title">'+pk.title+'</div><div class="pick-card-sm-meta"><span class="pick-sport-tag">'+(pk.sport||'PICK')+'</span>'+badge(pk.result)+'</div><div class="pick-card-sm-date">'+pk.date+'</div></div>';
+            cg.appendChild(a);
+        });
+        if(tp<=1){pg.innerHTML='';return;}
+        pg.innerHTML='';
+        var prev=document.createElement('button');prev.textContent='\u2190';prev.disabled=page===0;prev.onclick=function(){render(cur-1);};pg.appendChild(prev);
+        for(var i=0;i<tp;i++){var b=document.createElement('button');b.textContent=i+1;if(i===page)b.className='active';(function(n){b.onclick=function(){render(n);};})(i);pg.appendChild(b);}
+        var nxt=document.createElement('button');nxt.textContent='\u2192';nxt.disabled=page===tp-1;nxt.onclick=function(){render(cur+1);};pg.appendChild(nxt);
+    }
+    if(cp.length>0)render(0);
+})();
+</script>
+
+<script async data-id="101485054" src="//static.getclicky.com/js"></script>
+</body>
+</html>
