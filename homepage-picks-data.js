@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "March 20, 2026",
         result: "",
         url: "hawks-plus-2-5-at-rockets-nba.html",
-        image: "https://www.orlandosentinel.com/wp-content/uploads/2026/03/Magic-Hawks-Basketball-5.jpg?w=1600&resize=1600,900"
+        image: "https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_0,w_5007,h_2816/c_fill,w_1200,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/all_hawks/01km4h5hnhx16m52ctv3.jpg"
     },
     {
         sport: "NHL",
