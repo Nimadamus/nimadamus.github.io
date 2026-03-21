@@ -95,6 +95,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            padding-bottom: 60px;
         }
 
         /* ==================== GALAXY BACKGROUND ==================== */
@@ -446,6 +447,7 @@
         /* ==================== MAIN CONTENT ==================== */
         .main-content {
             padding-top: 52px;
+            padding-bottom: 60px;
             min-height: 100vh;
         }
 
@@ -457,18 +459,21 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
-            align-items: center;
+            align-items: start;
         }
 
         .hero-left {
             padding-top: 0;
+            padding-right: 40px;
+            margin-right: auto !important;
+            margin-left: 0 !important;
         }
 
         .hero-left h1 {
             font-family: var(--font-primary);
-            font-size: 3.4rem;
+            font-size: 42px;
             font-weight: 900;
-            line-height: 1.08;
+            line-height: 1.1;
             margin-bottom: 12px;
             text-transform: uppercase;
             color: #fff;
@@ -476,6 +481,7 @@
 
         .hero-left h1 span {
             color: var(--win-color);
+            font-weight: 600;
             text-shadow: 0 0 20px rgba(57,255,20,0.25);
         }
 
@@ -1118,65 +1124,59 @@
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
         }
 
-        /* ==================== HOW IT WORKS - 3 STEP PROCESS ==================== */
+        /* ==================== HOW IT WORKS - TERMINAL CARDS ==================== */
         .how-it-works {
-            max-width: 1100px;
-            margin: 0 auto 40px;
-            padding: 0 30px;
+            margin-top: 32px;
         }
 
         .hiw-title {
             font-family: var(--font-primary);
-            font-size: 1.1rem;
-            color: var(--neon-gold);
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.35);
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 28px;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            letter-spacing: 5px;
+            margin-bottom: 20px;
         }
 
         .hiw-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 16px;
         }
 
         .hiw-step {
-            background: rgba(0, 8, 20, 0.7);
-            border: 1px solid rgba(0, 240, 255, 0.15);
-            border-radius: 16px;
-            padding: 28px 22px;
+            background: rgba(4, 4, 10, 0.9);
+            border: 2px solid rgba(57, 255, 20, 0.3);
+            border-radius: 10px;
+            padding: 24px 20px;
             text-align: center;
             position: relative;
             transition: all 0.3s ease;
+            overflow: hidden;
         }
 
+
         .hiw-step:hover {
-            border-color: rgba(0, 240, 255, 0.4);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 240, 255, 0.15);
+            border-color: rgba(57, 255, 20, 0.6);
+            box-shadow: 0 0 4px rgba(57,255,20,0.3), 0 0 15px rgba(57, 255, 20, 0.1);
+            transform: translateY(-2px);
         }
 
         .hiw-step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-cyan), #0088aa);
-            color: #000;
-            font-family: var(--font-primary);
-            font-size: 1.1rem;
-            font-weight: 900;
-            margin-bottom: 16px;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            font-family: 'Roboto Mono', 'Orbitron', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--win-color);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            opacity: 0.7;
         }
 
         .hiw-step h3 {
             font-family: var(--font-primary);
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             font-weight: 700;
             color: #fff;
             text-transform: uppercase;
@@ -1185,32 +1185,30 @@
         }
 
         .hiw-step .hiw-stat {
-            font-family: var(--font-primary);
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--neon-cyan);
+            font-family: 'Roboto Mono', 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--win-color);
             margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
         }
 
         .hiw-step p {
             font-family: var(--font-secondary);
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
+            font-size: 0.8rem;
+            color: rgba(160,160,160,0.6);
+            line-height: 1.55;
             margin: 0;
         }
 
         @media (max-width: 768px) {
             .hiw-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 12px;
             }
-
-            .hiw-step {
-                padding: 22px 18px;
-            }
+            .hiw-step { padding: 20px 16px; }
         }
+        /* ==================== END HOW IT WORKS ==================== */
 
         /* ==================== SUBSCRIPTION PLANS TICKER ==================== */
         .plans-ticker {
@@ -1446,7 +1444,7 @@
 
         /* Footer spacer */
         .footer-spacer {
-            height: 120px;
+            height: 60px;
         }
 
         /* ==================== FREE PICK OF THE DAY ==================== */
@@ -1625,7 +1623,6 @@
             .rw-header-left h2 { font-size: 0.8rem; }
             .rw-record { font-size: 2.2rem; }
             .rw-stat-value { font-size: 1.1rem; }
-            .rw-carousel { min-height: 160px; }
         }
 
         @media (max-width: 768px) {
@@ -1738,7 +1735,6 @@
             .rw-stats { max-width: 420px; }
             .rw-stat { padding: 10px 16px; }
             .rw-stat-label { font-size: 0.6rem; }
-            .rw-carousel { min-height: 165px; }
         }
 
         @media (max-width: 480px) {
@@ -1852,13 +1848,11 @@
             .rw-header-left h2 { font-size: 0.82rem; }
             .rw-header-right > a { font-size: 0.62rem; padding: 7px 12px; }
             .rw-league { font-size: 0.7rem; letter-spacing: 4px; }
-            .rw-carousel { min-height: 180px; }
             .rw-record { font-size: 1.9rem; letter-spacing: 1px; margin-bottom: 16px; }
             .rw-record .sep { margin: 0 5px; }
             .rw-stat-value { font-size: 1.05rem; }
             .rw-stat-label { font-size: 0.54rem; letter-spacing: 1.5px; }
             .rw-stat { padding: 0 10px; }
-            .rw-dots { padding: 0 18px 16px; }
             .rw-footer { padding: 10px 18px; font-size: 0.6rem; }
         }
 
@@ -1886,183 +1880,192 @@
             }
         }
 
-        /* ==================== VERIFIED RECORDS WIDGET - DIGITAL COCKPIT v2 ==================== */
-        @keyframes rw-glitch {
-            0% { opacity: 1; transform: translate(0); }
-            20% { opacity: 0.7; transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
-            40% { opacity: 0.85; transform: translate(1px, -1px); }
-            60% { opacity: 0.6; transform: translate(1px, 0); filter: hue-rotate(0deg); }
-            80% { opacity: 0.9; transform: translate(-1px, 1px); }
-            100% { opacity: 1; transform: translate(0); filter: hue-rotate(0deg); }
+        /* ==================== COMMAND CENTER WRAPPER ==================== */
+        .command-center {
+            position: relative;
+            max-width: 960px;
+            margin: -10px auto 0;
+            padding: 0 30px 0;
+            margin-bottom: 30px;
+            overflow: visible;
         }
-        @keyframes rw-scanline {
-            0% { top: -2px; }
-            100% { top: 100%; }
+
+        /* Kill any stray green artifacts */
+        .command-center::before,
+        .command-center::after,
+        .hero::after {
+            display: none !important;
+            content: none !important;
         }
+
+
+
+        /* ==================== RECORDS WIDGET V2 - TERMINAL ==================== */
         .records-widget-wrap {
             margin-top: 0;
             display: flex;
             flex-direction: column;
         }
+
         .records-widget {
-            background: rgba(4, 8, 4, 0.92);
+            background: rgba(4, 4, 10, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(57, 255, 20, 0.2);
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow:
-                0 0 20px rgba(57, 255, 20, 0.15),
-                0 0 60px rgba(57, 255, 20, 0.05),
-                inset 0 1px 0 rgba(57, 255, 20, 0.08),
-                0 4px 30px rgba(0,0,0,0.5);
+            border: 2px solid #39ff14;
+            border-radius: 12px;
+            overflow: visible !important;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
             display: flex;
             flex-direction: column;
             position: relative;
+            z-index: 100;
         }
-        /* Scanline overlay for CRT/hacker feel */
-        .records-widget::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: rgba(57, 255, 20, 0.06);
-            z-index: 5;
-            pointer-events: none;
-            animation: rw-scanline 4s linear infinite;
-        }
+
+
         .rw-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 28px;
-            border-bottom: 1px solid rgba(57, 255, 20, 0.1);
-            background: rgba(57, 255, 20, 0.02);
+            padding: 14px 24px;
+            border-bottom: 1px solid rgba(57, 255, 20, 0.4);
+            position: relative;
+            z-index: 2;
         }
+
         .rw-header-left h2 {
-            font-family: 'Orbitron', var(--font-primary), monospace;
-            font-size: 0.7rem;
+            font-family: var(--font-primary);
+            font-size: 0.82rem;
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            color: rgba(57, 255, 20, 0.7);
-            text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
-            margin: 0 0 3px 0;
+            color: rgba(255,255,255,0.85);
+            margin: 0 0 2px 0;
         }
+
         .rw-header-left p {
-            font-family: 'Roboto Mono', var(--font-secondary), monospace;
-            font-size: 0.65rem;
-            color: rgba(255,255,255,0.25);
-            letter-spacing: 0.5px;
+            font-family: var(--font-secondary);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 0.3px;
             margin: 0;
         }
+
         .rw-header-right {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
-        /* Copy button - moved to far right, with tooltip */
-        .rw-copy-btn {
-            background: none;
-            border: 1px solid rgba(57, 255, 20, 0.15);
-            border-radius: 6px;
-            padding: 7px 9px;
-            cursor: pointer;
-            color: rgba(57, 255, 20, 0.4);
-            transition: all 0.25s ease;
-            display: flex;
+
+        .rw-verified-badge {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            order: 2;
-        }
-        .rw-copy-btn:hover {
-            border-color: var(--win-color);
-            color: var(--win-color);
-            box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
-            background: rgba(57, 255, 20, 0.05);
-        }
-        /* Tooltip on hover */
-        .rw-copy-btn::after {
-            content: 'Copy for Social';
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(10, 10, 10, 0.95);
-            border: 1px solid rgba(57, 255, 20, 0.25);
-            color: rgba(57, 255, 20, 0.8);
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.55rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            padding: 4px 10px;
-            border-radius: 4px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            z-index: 10;
-        }
-        .rw-copy-btn:hover::after { opacity: 1; }
-        .rw-copy-btn.copied::after { content: 'Copied!'; opacity: 1; }
-        .rw-copy-btn svg { width: 16px; height: 16px; }
-        .rw-copy-btn .copy-icon { display: block; }
-        .rw-copy-btn .check-icon { display: none; }
-        .rw-copy-btn.copied .copy-icon { display: none; }
-        .rw-copy-btn.copied .check-icon { display: block; }
-        .rw-copy-btn.copied {
-            border-color: var(--win-color);
-            color: var(--win-color);
-            box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
-        }
-        .rw-copy-toast {
-            position: absolute;
-            top: -32px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--win-color);
-            color: #000;
-            font-family: 'Orbitron', monospace;
-            font-size: 0.55rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            padding: 4px 10px;
-            border-radius: 4px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .rw-copy-btn.copied .rw-copy-toast { opacity: 1; }
-        .rw-header-right > a {
-            font-family: 'Orbitron', var(--font-primary), monospace;
+            gap: 5px;
+            font-family: var(--font-primary);
             font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--win-color);
+            border: 1px solid rgba(57, 255, 20, 0.4);
+            background: rgba(57, 255, 20, 0.06);
+            padding: 5px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .rw-verified-badge:hover {
+            background: rgba(57, 255, 20, 0.15);
+            border-color: rgba(57, 255, 20, 0.7);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.25);
+        }
+
+        .rw-verified-badge svg { width: 12px; height: 12px; }
+
+        .rw-view-full {
+            font-family: var(--font-primary);
+            font-size: 0.62rem;
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             text-decoration: none;
             display: inline-block;
-            color: var(--neon-gold);
-            background: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: 1px solid rgba(196, 162, 0, 0.25);
+            color: var(--win-color);
+            background: transparent;
+            padding: 6px 14px;
+            border-radius: 4px;
+            border: 1px solid rgba(57, 255, 20, 0.35);
             transition: all 0.2s ease;
-            order: 1;
         }
-        .rw-header-right > a:hover {
-            border-color: rgba(196, 162, 0, 0.6);
-            background: rgba(196, 162, 0, 0.08);
-            box-shadow: 0 0 10px rgba(196, 162, 0, 0.15);
+
+        .rw-view-full:hover {
+            background: var(--win-color);
+            color: #000;
+            border-color: var(--win-color);
+            box-shadow: 0 0 12px rgba(57, 255, 20, 0.4);
         }
-        .rw-carousel {
+
+        .rw-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            padding: 0;
+            border-bottom: 1px solid rgba(57, 255, 20, 0.3);
             position: relative;
-            min-height: 185px;
-            flex: 1;
-            overflow: hidden;
+            z-index: 2;
+            background: rgba(57, 255, 20, 0.02);
         }
-        .rw-slide {
+
+        .rw-tab {
+            font-family: var(--font-primary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            background: none;
+            border: none;
+            padding: 12px 28px;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s ease, background 0.2s ease;
+        }
+
+        .rw-tab + .rw-tab { border-left: 1px solid rgba(255,255,255,0.08); }
+
+        .rw-tab:hover {
+            color: rgba(255,255,255,0.7);
+            background: rgba(57, 255, 20, 0.03);
+        }
+
+        .rw-tab.active {
+            color: var(--win-color);
+            background: rgba(57, 255, 20, 0.05);
+        }
+
+        .rw-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 20%;
+            width: 0;
+            height: 2px;
+            background: var(--win-color);
+            box-shadow: 0 0 4px #39ff14, 0 0 10px rgba(57, 255, 20, 0.6);
+            transition: width 0.25s ease, left 0.25s ease;
+            border-radius: 1px;
+        }
+
+        .rw-tab.active::after { width: 60%; left: 20%; }
+
+        .rw-panels {
+            position: relative;
+            min-height: 155px;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .rw-panel {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
@@ -2072,151 +2075,197 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            padding: 14px 20px;
-            transition: opacity 0.08s ease-out;
+            padding: 16px 20px 14px;
+            transition: opacity 0.3s ease;
         }
-        .rw-slide.active {
-            opacity: 1;
-            pointer-events: auto;
-            animation: rw-glitch 0.12s ease-out 1;
+
+        .rw-panel.active { opacity: 1; pointer-events: auto; }
+
+        .rw-panel.flickering { animation: dataFlicker 120ms steps(3) 1; }
+
+        @keyframes dataFlicker {
+            0%   { opacity: 0.15; }
+            33%  { opacity: 0.6; }
+            66%  { opacity: 0.2; }
+            100% { opacity: 1; }
         }
-        /* Sport label with glowing active underline */
+
         .rw-league {
-            font-family: 'Orbitron', var(--font-primary), monospace;
-            font-size: 0.8rem;
-            font-weight: 800;
+            font-family: var(--font-primary);
+            font-size: 0.68rem;
+            font-weight: 700;
             letter-spacing: 6px;
             text-transform: uppercase;
-            color: var(--win-color);
-            text-shadow: 0 0 10px rgba(57, 255, 20, 0.4), 0 0 20px rgba(57, 255, 20, 0.15);
-            margin-bottom: 14px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--win-color);
-            box-shadow: 0 2px 8px rgba(57, 255, 20, 0.25);
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 10px;
+        }
+
+        .rw-record-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 14px;
+            margin-bottom: 14px;
         }
-        .rw-league-icon {
-            width: 16px;
-            height: 16px;
-            opacity: 0.7;
-        }
-        /* HERO RECORD - massive monospaced digital readout */
+
         .rw-record {
-            font-family: 'Orbitron', monospace;
-            font-size: 3.6rem;
-            font-weight: 900;
-            letter-spacing: 5px;
-            margin-bottom: 20px;
+            font-family: 'Roboto Mono', 'Orbitron', monospace;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
             line-height: 1;
         }
-        .rw-record .w {
-            color: #ffffff;
-            text-shadow: 0 0 12px rgba(255,255,255,0.25), 0 0 30px rgba(57, 255, 20, 0.1);
-        }
-        .rw-record .sep {
-            color: rgba(57, 255, 20, 0.15);
-            margin: 0 10px;
-            font-weight: 300;
-        }
-        .rw-record .l {
-            color: rgba(255,255,255,0.3);
-            text-shadow: 0 0 6px rgba(255,255,255,0.05);
-        }
-        .rw-record .p {
+
+        .rw-record .w { color: #fff; text-shadow: 0 0 8px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.08); }
+        .rw-record .sep { color: rgba(255,255,255,0.15); margin: 0 6px; font-weight: 300; text-shadow: none; }
+        .rw-record .l { color: rgba(255,255,255,0.45); text-shadow: 0 0 6px rgba(255,255,255,0.12); }
+        .rw-record .p { color: rgba(255,255,255,0.25); text-shadow: 0 0 4px rgba(255,255,255,0.06); }
+
+        .rw-copy-inline {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 3px;
+            padding: 5px 6px;
+            cursor: pointer;
             color: rgba(255,255,255,0.18);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
         }
-        /* Stats in distinct data cells / cockpit readout boxes */
+
+        .rw-copy-inline:hover {
+            border-color: rgba(57, 255, 20, 0.5);
+            color: var(--win-color);
+            box-shadow: 0 0 6px rgba(57, 255, 20, 0.15);
+        }
+
+        .rw-copy-inline svg { width: 11px; height: 11px; }
+        .rw-copy-inline .copy-icon { display: block; }
+        .rw-copy-inline .check-icon { display: none; }
+        .rw-copy-inline.copied .copy-icon { display: none; }
+        .rw-copy-inline.copied .check-icon { display: block; }
+        .rw-copy-inline.copied { border-color: var(--win-color); color: var(--win-color); }
+
+        .rw-copy-toast {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--win-color);
+            color: #000;
+            font-family: var(--font-primary);
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .rw-copy-inline.copied .rw-copy-toast { opacity: 1; }
+
         .rw-stats {
             display: flex;
-            gap: 12px;
+            gap: 0;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 6px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.015);
         }
+
         .rw-stat {
             text-align: center;
-            padding: 10px 24px;
+            padding: 10px 26px;
             position: relative;
-            background: rgba(57, 255, 20, 0.03);
-            border: 1px solid rgba(57, 255, 20, 0.08);
-            border-radius: 8px;
-            min-width: 110px;
         }
-        .rw-stat:last-child { border-right-color: rgba(57, 255, 20, 0.08); }
+
+        .rw-stat + .rw-stat::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background: rgba(255,255,255,0.1);
+        }
+
         .rw-stat-value {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.35rem;
-            font-weight: 900;
+            font-family: 'Roboto Mono', 'Orbitron', monospace;
+            font-size: 1.15rem;
+            font-weight: 700;
             line-height: 1;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
-        .rw-stat-value.pos {
-            color: var(--win-color);
-            text-shadow: 0 0 12px rgba(57, 255, 20, 0.4), 0 0 25px rgba(57, 255, 20, 0.15);
-        }
-        .rw-stat-value.pos::before { content: '\25B2 '; font-size: 0.6rem; vertical-align: middle; }
-        .rw-stat-value.neg {
-            color: #ef4444;
-            text-shadow: 0 0 12px rgba(239, 68, 68, 0.4), 0 0 25px rgba(239, 68, 68, 0.15);
-        }
-        .rw-stat-value.neg::before { content: '\25BC '; font-size: 0.6rem; vertical-align: middle; }
-        .rw-stat-value.rate {
-            color: rgba(255,255,255,0.95);
-            text-shadow: 0 0 8px rgba(255,255,255,0.1);
-        }
-        .rw-stat-value.count {
-            color: rgba(0,229,255,0.7);
-            text-shadow: 0 0 10px rgba(0,229,255,0.25);
-        }
+
+        .rw-stat-value.pos { color: var(--win-color); text-shadow: 0 0 5px rgba(57, 255, 20, 0.5), 0 0 12px rgba(57, 255, 20, 0.2); }
+        .rw-stat-value.pos::before { content: '\25B2 '; font-size: 0.55rem; vertical-align: middle; }
+        .rw-stat-value.neg { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.5), 0 0 12px rgba(239, 68, 68, 0.2); }
+        .rw-stat-value.neg::before { content: '\25BC '; font-size: 0.55rem; vertical-align: middle; }
+        .rw-stat-value.rate { color: #fff; text-shadow: 0 0 4px rgba(255,255,255,0.15); }
+        .rw-stat-value.count { color: #00e5ff; text-shadow: 0 0 5px rgba(0,229,255,0.3); }
+
         .rw-stat-label {
-            font-family: 'Roboto Mono', var(--font-secondary), monospace;
-            font-size: 0.58rem;
+            font-family: var(--font-primary);
+            font-size: 0.55rem;
             font-weight: 500;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.22);
+            color: rgba(160,160,160,0.5);
         }
-        /* Navigation dots with glow */
-        .rw-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 4px 28px 16px;
-        }
-        .rw-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: rgba(57, 255, 20, 0.1);
-            border: 1px solid rgba(57, 255, 20, 0.08);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 0;
-        }
-        .rw-dot.active {
-            background: var(--win-color);
-            border-color: var(--win-color);
-            box-shadow: 0 0 8px rgba(57, 255, 20, 0.5), 0 0 16px rgba(57, 255, 20, 0.2);
-            transform: scale(1.3);
-        }
-        .rw-dot:hover:not(.active) {
-            background: rgba(57, 255, 20, 0.25);
-            border-color: rgba(57, 255, 20, 0.3);
-        }
+
         .rw-footer {
-            padding: 8px 28px;
-            border-top: 1px solid rgba(57, 255, 20, 0.06);
+            padding: 7px 24px;
+            border-top: 1px solid rgba(57, 255, 20, 0.3);
             text-align: center;
-            font-family: 'Roboto Mono', var(--font-secondary), monospace;
-            font-size: 0.6rem;
-            color: rgba(57, 255, 20, 0.18);
-            letter-spacing: 1px;
+            font-family: var(--font-secondary);
+            font-size: 0.62rem;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
         }
-        @media (max-width: 600px) {
-            .rw-stats { flex-direction: column; gap: 8px; align-items: center; }
-            .rw-stat { border-right: none; padding: 8px 28px; min-width: 160px; }
-            .rw-record { font-size: 2.6rem; letter-spacing: 3px; }
-            .rw-league { font-size: 0.7rem; letter-spacing: 4px; }
-            .rw-copy-btn::after { display: none; }
+
+        /* ---- Records widget responsive ---- */
+        @media (max-width: 768px) {
+            .rw-header { flex-direction: column; gap: 8px; align-items: flex-start; padding: 12px 16px; }
+            .rw-header-left h2 { font-size: 0.78rem; }
+            .rw-tabs { overflow-x: auto; }
+            .rw-tab { padding: 10px 18px; font-size: 0.62rem; letter-spacing: 1.5px; }
+            .rw-panels { min-height: 170px; }
+            .rw-league { font-size: 0.62rem; letter-spacing: 4px; }
+            .rw-record { font-size: 1.9rem; letter-spacing: 1px; }
+            .rw-record .sep { margin: 0 4px; }
+            .rw-record-row { margin-bottom: 12px; }
+            .rw-stat-value { font-size: 1rem; }
+            .rw-stat-label { font-size: 0.5rem; letter-spacing: 1.5px; }
+            .rw-stat { padding: 8px 14px; }
+            .rw-footer { padding: 8px 16px; font-size: 0.58rem; }
+        }
+
+        @media (max-width: 480px) {
+            .rw-tabs { gap: 0; padding: 0; }
+            .rw-tab { padding: 10px 14px; font-size: 0.58rem; letter-spacing: 1px; flex-shrink: 0; }
+            .rw-record { font-size: 1.8rem; }
+            .rw-stats { flex-direction: column; gap: 0; border-radius: 4px; }
+            .rw-stat { padding: 8px 20px; }
+            .rw-stat + .rw-stat::before { left: 20%; top: 0; height: 1px; width: 60%; }
+            .command-center { padding: 0 16px 30px; }
+        }
+
+        @media (min-width: 1200px) {
+            .rw-header-left h2 { font-size: 0.88rem; }
+            .rw-league { font-size: 0.7rem; }
+            .rw-record { font-size: 2.6rem; }
+            .rw-stat-value { font-size: 1.15rem; }
+            .rw-stats { max-width: 440px; }
+            .rw-stat { padding: 10px 22px; }
+            .rw-stat-label { font-size: 0.55rem; }
+            .rw-panels { min-height: 155px; }
         }
         /* ==================== END RECORDS WIDGET ==================== */
 
@@ -2869,8 +2918,9 @@ crossorigin="anonymous"></script>
             </div>
         </section>
 
-        <!-- ==================== ROW 2: ALL-TIME VERIFIED RECORDS (above the fold) ==================== -->
-        <section style="max-width: 900px; margin: -10px auto 30px; padding: 0 30px;">
+        <!-- ==================== COMMAND CENTER: Records + How It Works ==================== -->
+        <section class="command-center">
+            <!-- Records Terminal -->
             <div class="records-widget-wrap">
                 <div class="records-widget">
                     <div class="rw-header">
@@ -2879,54 +2929,47 @@ crossorigin="anonymous"></script>
                             <p>Updated daily &bull; <strong>Every pick posted before games start</strong></p>
                         </div>
                         <div class="rw-header-right">
-                            <button class="rw-copy-btn" id="rw-copy-btn" title="Copy record to clipboard">
-                                <span class="rw-copy-toast">COPIED</span>
-                                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                            </button>
-                            <a href="betlegend-verified-records.html">View Full Record &rarr;</a>
+                            <a href="betlegend-verified-records.html" class="rw-verified-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                Verified Record
+                            </a>
+                            <a href="betlegend-verified-records.html" class="rw-view-full">View Full Record &rarr;</a>
                         </div>
                     </div>
-                    <div class="rw-carousel" id="rw-carousel"></div>
-                    <div class="rw-dots" id="rw-dots"></div>
+                    <div class="rw-tabs" id="rw-tabs"></div>
+                    <div class="rw-panels" id="rw-panels"></div>
+                    <div style="padding: 14px 24px; margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; position: relative; z-index: 100;">
+                        <span style="font-family: var(--font-secondary); font-size: 0.68rem; color: rgba(130,130,130,0.6); letter-spacing: 0.3px;">Official Betting Partner: <strong style="color: var(--win-color);">YouWager</strong></span>
+                        <span style="color: rgba(255,255,255,0.08);">|</span>
+                        <a href="https://record.revmasters.com/_I-xl5bHAf88RxlNGag_0XWNd7ZgqdRLk/111/" target="_blank" rel="noopener" style="font-family: var(--font-primary); font-size: 0.55rem; font-weight: 700; color: #000; background: var(--win-color); padding: 4px 14px; border-radius: 3px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 6px rgba(57,255,20,0.25);">100% Match Bonus</a>
+                    </div>
                     <div class="rw-footer">Updated daily &bull; All picks fully transparent &bull; Posted before games start</div>
                 </div>
             </div>
-        </section>
 
-        <!-- ==================== ROW 2.5: HOW THE SIMULATION WORKS ==================== -->
-        <section class="how-it-works">
-            <h2 class="hiw-title">How the Simulation Works</h2>
-            <div class="hiw-grid">
-                <div class="hiw-step">
-                    <div class="hiw-step-number">1</div>
-                    <h3>Data Ingestion</h3>
-                    <div class="hiw-stat">1,000+</div>
-                    <p>Real-time data points processed per game: injuries, weather, line movement, matchup history, advanced metrics, and situational trends.</p>
+            <!-- How It Works - Terminal Cards -->
+            <div class="how-it-works">
+                <h2 class="hiw-title">How the Simulation Works</h2>
+                <div class="hiw-grid">
+                    <div class="hiw-step">
+                        <div class="hiw-step-number">01_INGESTION</div>
+                        <h3>Data Ingestion</h3>
+                        <div class="hiw-stat">1,000+</div>
+                        <p>Real-time data points processed per game: injuries, weather, line movement, matchup history, advanced metrics, and situational trends.</p>
+                    </div>
+                    <div class="hiw-step">
+                        <div class="hiw-step-number">02_SIMULATION</div>
+                        <h3>Simulation Engine</h3>
+                        <div class="hiw-stat">10,000</div>
+                        <p>Game iterations run through Engine v9 for every matchup. Each simulation accounts for variance, pace, and scoring distributions.</p>
+                    </div>
+                    <div class="hiw-step">
+                        <div class="hiw-step-number">03_EDGE</div>
+                        <h3>The Edge</h3>
+                        <div class="hiw-stat">Top 3%</div>
+                        <p>Only the highest-probability value plays survive. We publish the picks where our model finds the widest gap between true odds and the market line.</p>
+                    </div>
                 </div>
-                <div class="hiw-step">
-                    <div class="hiw-step-number">2</div>
-                    <h3>Simulation Engine</h3>
-                    <div class="hiw-stat">10,000</div>
-                    <p>Game iterations run through Engine v9 for every matchup. Each simulation accounts for variance, pace, and scoring distributions.</p>
-                </div>
-                <div class="hiw-step">
-                    <div class="hiw-step-number">3</div>
-                    <h3>The Edge</h3>
-                    <div class="hiw-stat">Top 3%</div>
-                    <p>Only the highest-probability value plays survive. We publish the picks where our model finds the widest gap between true odds and the market line.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== ROW 3: YOUWAGER AFFILIATE ==================== -->
-        <section class="affiliate-section">
-            <div class="affiliate-banner">
-                <div>
-                    <h2 style="font-family: var(--font-primary); font-size: 1.1rem; color: var(--neon-gold); margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 1px;">Bet These Picks at YouWager</h2>
-                    <p style="font-size: 0.85rem; color: #ccc; margin: 0;">350% Welcome Bonus &bull; Fast payouts &bull; Trusted sportsbook</p>
-                </div>
-                <a href="https://record.revmasters.com/_I-xl5bHAf88RxlNGag_0XWNd7ZgqdRLk/111/" target="_blank" rel="noopener" class="affiliate-btn">Claim Your Bonus</a>
             </div>
         </section>
 
@@ -3528,14 +3571,12 @@ function closeEmailPopup() {
 
     var LEAGUE_MAP = { 'nhl':'NHL','hockey':'NHL','nfl':'NFL','football':'NFL','ncaaf':'NCAAF','college football':'NCAAF','cfb':'NCAAF' };
 
-    var currentIndex = 0;
-    var totalSlides = SPORT_ORDER.length;
-    var interval = 5000;
-    var timer = null;
+    var activeTab = 0;
+    var switching = false;
 
     function formatUnits(val) { return (val >= 0 ? '+' : '') + val.toFixed(1); }
 
-    /* ---- CSV parser (handles quoted fields) ---- */
+    /* ---- CSV parser ---- */
     function parseCSVLine(line) {
         var vals = [], cur = '', inQ = false;
         for (var i = 0; i < line.length; i++) {
@@ -3549,121 +3590,115 @@ function closeEmailPopup() {
     }
 
     function parseCSV(text) {
-        var lines = text.trim().split('\n');
+        var lines = text.split(/\r?\n/).filter(function(l) { return l.trim(); });
         if (lines.length < 2) return [];
-        var hdrs = parseCSVLine(lines[0]);
+        var headers = parseCSVLine(lines[0]).map(function(h) { return h.toLowerCase().replace(/[^a-z0-9]/g, ''); });
         var rows = [];
         for (var i = 1; i < lines.length; i++) {
-            var v = parseCSVLine(lines[i]);
+            var vals = parseCSVLine(lines[i]);
             var obj = {};
-            for (var j = 0; j < hdrs.length; j++) obj[hdrs[j]] = v[j] || '';
+            headers.forEach(function(h, j) { obj[h] = vals[j] || ''; });
             rows.push(obj);
         }
         return rows;
     }
 
-    /* ---- Unit calculation (mirrors CLAUDE.md formula) ---- */
-    function calcUnits(stake, odds, result) {
-        var s = parseFloat(stake) || 3, o = parseFloat(odds) || -110;
-        var r = (result || '').toUpperCase().charAt(0);
-        if (r === 'W') return o < 0 ? s : s * (o / 100);
-        if (r === 'L') return o < 0 ? -(s * (Math.abs(o) / 100)) : -s;
-        return 0;
-    }
-
-    /* ---- Parse HTML records page table rows ---- */
-    function parseHTMLRecords(html) {
-        var doc = new DOMParser().parseFromString(html, 'text/html');
-        var rows = doc.querySelectorAll('#picks-table-body tr');
+    function parseTrackerPicks(rows) {
         var picks = {};
-        rows.forEach(function(row) {
-            var c = row.querySelectorAll('td');
-            if (c.length < 5) return;
-            var date = c[0].textContent.trim();
-            var pick = c[1].textContent.trim().toLowerCase();
-            var r = '';
-            if (c[3].classList.contains('result-W')) r = 'W';
-            else if (c[3].classList.contains('result-L')) r = 'L';
-            else if (c[3].classList.contains('result-P')) r = 'P';
-            else r = c[3].textContent.trim().toUpperCase().charAt(0);
-            var u = parseFloat(c[4].textContent.replace('+','')) || 0;
-            picks[date + '|' + pick] = { result: r, units: u };
+        rows.forEach(function(r) {
+            var league = (r.league || r.sport || '').toLowerCase().trim();
+            var mapped = LEAGUE_MAP[league];
+            if (!mapped) return;
+            var result = (r.result || '').trim().toUpperCase();
+            if (result !== 'W' && result !== 'L' && result !== 'P') return;
+            var units = parseFloat(r.units || r.unitresult || '0') || 0;
+            var key = (r.date || '') + '|' + (r.pick || r.game || '');
+            if (!picks[mapped]) picks[mapped] = {};
+            picks[mapped][key] = { result: result, units: units };
         });
         return picks;
     }
 
-    /* ---- Parse Pick Tracker CSV grouped by sport ---- */
-    function parsePickTracker(rows) {
-        var out = {};
-        rows.forEach(function(row) {
-            var league = (row.League || '').toLowerCase().trim();
-            if (league === 'cross-sport') return;
-            var key = LEAGUE_MAP[league];
-            if (!key) { var sp = (row.Sport || '').toLowerCase().trim(); key = LEAGUE_MAP[sp]; }
-            if (!key) return;
-            var result = (row.Result || '').trim().toUpperCase();
-            if (!result) return;
-            var date = (row.Date || '').trim();
-            var pick = (row.Pick || row.Picks || '').trim().toLowerCase();
-            var units = calcUnits(row.Units || '3', row.Line || row.Odds || '-110', result);
-            if (!out[key]) out[key] = {};
-            out[key][date + '|' + pick] = { result: result.charAt(0), units: units };
-        });
-        return out;
-    }
-
-    /* ---- Parse MLB Google Sheet ---- */
     function parseMLBSheet(rows) {
-        var w = 0, l = 0, p = 0, tu = 0;
-        rows.forEach(function(row) {
-            var r = '';
-            if (row.Result) r = row.Result.trim().toUpperCase();
-            if (!r) { for (var k in row) { var v = (row[k]||'').trim().toUpperCase(); if (v==='W'||v==='L'||v==='P'){r=v;break;} } }
-            if (!r) return;
-            if (r.charAt(0)==='W') w++; else if (r.charAt(0)==='L') l++; else if (r.charAt(0)==='P') p++; else return;
-            var us = row.ProfitLoss || row['Profit/Loss'] || row.Units || row['P/L'] || '';
-            tu += parseFloat(us.replace('+','').replace('$','')) || 0;
+        var w = 0, l = 0, p = 0, u = 0, total = 0;
+        rows.forEach(function(r) {
+            var result = (r.result || '').trim().toUpperCase();
+            if (result === 'W') { w++; }
+            else if (result === 'L') { l++; }
+            else if (result === 'P' || result === 'PUSH') { p++; }
+            else return;
+            total++;
+            u += parseFloat(r.units || r.unitresult || '0') || 0;
         });
-        var tp = w+l+p, wp = (w+l)>0 ? w/(w+l)*100 : 0;
-        return { displayName:'MLB', recordsLink:'betlegend-verified-records.html', wins:w, losses:l, pushes:p, totalPicks:tp, totalUnits:Math.round(tu*100)/100, winPct:Math.round(wp*10)/10 };
+        if (total === 0) return null;
+        return { displayName: 'MLB', wins: w, losses: l, pushes: p, totalUnits: u, winPct: Math.round(w / (w + l) * 100) || 0, totalPicks: total };
     }
 
-    /* ---- Tally merged picks into stats ---- */
+    /* ---- Parse HTML records pages ---- */
+    function parseHTMLRecords(html) {
+        var picks = {};
+        var rows = html.match(/<tr[^>]*>[\s\S]*?<\/tr>/gi) || [];
+        rows.forEach(function(row) {
+            var cells = row.match(/<td[^>]*>([\s\S]*?)<\/td>/gi);
+            if (!cells || cells.length < 4) return;
+            var strip = function(s) { return s.replace(/<[^>]*>/g, '').trim(); };
+            var date = strip(cells[0]);
+            var game = strip(cells[1]);
+            var result = strip(cells[cells.length - 2]).toUpperCase();
+            var units = parseFloat(strip(cells[cells.length - 1])) || 0;
+            if (result !== 'W' && result !== 'L' && result !== 'P') return;
+            var key = date + '|' + game;
+            picks[key] = { result: result, units: units };
+        });
+        return picks;
+    }
+
     function tallyPicks(picks, cfg) {
-        var w=0,l=0,p=0,tu=0;
-        for (var k in picks) { var x=picks[k]; if(x.result==='W')w++; else if(x.result==='L')l++; else if(x.result==='P')p++; tu+=x.units; }
-        var tp=w+l+p, wp=(w+l)>0?w/(w+l)*100:0;
-        return { displayName:cfg.displayName, recordsLink:cfg.recordsLink, wins:w, losses:l, pushes:p, totalPicks:tp, totalUnits:Math.round(tu*100)/100, winPct:Math.round(wp*10)/10 };
+        var w = 0, l = 0, p = 0, u = 0, total = 0;
+        for (var k in picks) {
+            var pk = picks[k];
+            if (pk.result === 'W') w++;
+            else if (pk.result === 'L') l++;
+            else if (pk.result === 'P') p++;
+            total++;
+            u += pk.units || 0;
+        }
+        if (total === 0) return null;
+        return { displayName: cfg.displayName, wins: w, losses: l, pushes: p, totalUnits: u, winPct: Math.round(w / (w + l) * 100) || 0, totalPicks: total };
     }
 
-    /* ---- Fetch live data from records pages + Google Sheets ---- */
     function fetchLiveData() {
-        var cb = '&cache=' + Date.now();
+        var cb = '&cb=' + Date.now();
+        var htmlFetches = {};
+        for (var sport in SPORT_CONFIG) {
+            if (SPORT_CONFIG[sport].htmlPage) {
+                htmlFetches[sport] = fetch(SPORT_CONFIG[sport].htmlPage + '?cb=' + Date.now(), {cache:'no-store'}).then(function(r){return r.text();});
+            }
+        }
         return Promise.allSettled([
-            fetch('nhl-records.html',  {cache:'no-store'}).then(function(r){return r.text();}),
-            fetch('nfl-records.html',  {cache:'no-store'}).then(function(r){return r.text();}),
-            fetch('ncaaf-records.html',{cache:'no-store'}).then(function(r){return r.text();}),
             fetch(PICK_TRACKER_URL + cb, {cache:'no-store'}).then(function(r){return r.text();}),
-            fetch(MLB_SHEETS_URL + '&cache=' + Date.now(), {cache:'no-store'}).then(function(r){return r.text();})
+            fetch(MLB_SHEETS_URL + '&cache=' + Date.now(), {cache:'no-store'}).then(function(r){return r.text();}),
+            Promise.allSettled(Object.keys(htmlFetches).map(function(k) { return htmlFetches[k].then(function(v) { return {sport: k, value: v}; }); }))
         ]).then(function(results) {
-            var nhlR=results[0], nflR=results[1], ncaafR=results[2], trackerR=results[3], mlbR=results[4];
+            var trackerR = results[0], mlbR = results[1], htmlR = results[2];
+            var live = {};
             var trackerPicks = {};
             if (trackerR.status === 'fulfilled') {
-                try { trackerPicks = parsePickTracker(parseCSV(trackerR.value)); } catch(e){}
+                try { trackerPicks = parseTrackerPicks(parseCSV(trackerR.value)); } catch(e){}
             }
-
-            var live = {};
-            var htmlMap = { NHL: nhlR, NFL: nflR, NCAAF: ncaafR };
-            for (var sport in htmlMap) {
-                if (htmlMap[sport].status === 'fulfilled') {
+            if (htmlR.status === 'fulfilled' && htmlR.value) {
+                htmlR.value.forEach(function(r) {
+                    if (r.status !== 'fulfilled' || !r.value) return;
+                    var sport = r.value.sport;
+                    var htmlMap = {};
+                    htmlMap[sport] = r.value;
                     try {
                         var picks = parseHTMLRecords(htmlMap[sport].value);
                         if (trackerPicks[sport]) { for (var k in trackerPicks[sport]) picks[k] = trackerPicks[sport][k]; }
                         live[sport] = tallyPicks(picks, SPORT_CONFIG[sport]);
                     } catch(e){}
-                }
+                });
             }
-
             if (mlbR.status === 'fulfilled') {
                 try { live.MLB = parseMLBSheet(parseCSV(mlbR.value)); } catch(e){}
             }
@@ -3671,25 +3706,35 @@ function closeEmailPopup() {
         });
     }
 
-    /* ---- Build carousel slides from data object ---- */
-    function buildSlides(data) {
-        var carousel = document.getElementById('rw-carousel');
-        var dotsContainer = document.getElementById('rw-dots');
-        if (!carousel || !dotsContainer) return;
+    /* ---- Build tabbed panels from data ---- */
+    function buildTabs(data) {
+        var tabsEl = document.getElementById('rw-tabs');
+        var panelsEl = document.getElementById('rw-panels');
+        if (!tabsEl || !panelsEl) return;
 
-        var slidesHTML = '', dotsHTML = '';
+        var tabsHTML = '', panelsHTML = '';
         SPORT_ORDER.forEach(function(key, i) {
             var s = data[key];
             if (!s) return;
-            var isActive = i === 0 ? ' active' : '';
+            var isActive = i === activeTab ? ' active' : '';
             var unitsClass = s.totalUnits >= 0 ? 'pos' : 'neg';
-            slidesHTML +=
-                '<div class="rw-slide' + isActive + '" data-index="' + i + '">' +
+
+            tabsHTML += '<button class="rw-tab' + isActive + '" data-index="' + i + '">' + key + '</button>';
+
+            panelsHTML +=
+                '<div class="rw-panel' + isActive + '" data-index="' + i + '" data-sport="' + key + '">' +
                     '<div class="rw-league">' + s.displayName + '</div>' +
-                    '<div class="rw-record">' +
-                        '<span class="w">' + s.wins + '</span><span class="sep">&ndash;</span>' +
-                        '<span class="l">' + s.losses + '</span><span class="sep">&ndash;</span>' +
-                        '<span class="p">' + s.pushes + '</span>' +
+                    '<div class="rw-record-row">' +
+                        '<div class="rw-record">' +
+                            '<span class="w">' + s.wins + '</span><span class="sep">&ndash;</span>' +
+                            '<span class="l">' + s.losses + '</span><span class="sep">&ndash;</span>' +
+                            '<span class="p">' + s.pushes + '</span>' +
+                        '</div>' +
+                        '<button class="rw-copy-inline" title="Copy to clipboard">' +
+                            '<span class="rw-copy-toast">COPIED</span>' +
+                            '<svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' +
+                            '<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+                        '</button>' +
                     '</div>' +
                     '<div class="rw-stats">' +
                         '<div class="rw-stat"><div class="rw-stat-value ' + unitsClass + '">' + formatUnits(s.totalUnits) + '</div><div class="rw-stat-label">Units</div></div>' +
@@ -3697,39 +3742,74 @@ function closeEmailPopup() {
                         '<div class="rw-stat"><div class="rw-stat-value count">' + s.totalPicks + '</div><div class="rw-stat-label">Total Picks</div></div>' +
                     '</div>' +
                 '</div>';
-            dotsHTML += '<button class="rw-dot' + isActive + '" data-index="' + i + '" aria-label="' + s.displayName + '"></button>';
         });
 
-        carousel.innerHTML = slidesHTML;
-        dotsContainer.innerHTML = dotsHTML;
-        document.querySelectorAll('.rw-dot').forEach(function(dot) {
-            dot.addEventListener('click', function() { goTo(parseInt(this.dataset.index)); startTimer(); });
+        tabsEl.innerHTML = tabsHTML;
+        panelsEl.innerHTML = panelsHTML;
+
+        document.querySelectorAll('.rw-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                var idx = parseInt(this.dataset.index);
+                if (idx !== activeTab && !switching) switchTab(idx);
+            });
+        });
+
+        document.querySelectorAll('.rw-copy-inline').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var panel = this.closest('.rw-panel');
+                if (!panel) return;
+                copyRecord(panel, this);
+            });
         });
     }
 
-    function goTo(index) {
-        var slides = document.querySelectorAll('.rw-slide');
-        var dots = document.querySelectorAll('.rw-dot');
-        if (slides.length === 0) return;
-        slides[currentIndex].classList.remove('active');
-        dots[currentIndex].classList.remove('active');
-        currentIndex = index;
-        slides[currentIndex].classList.add('active');
-        dots[currentIndex].classList.add('active');
+    function switchTab(index) {
+        switching = true;
+        var tabs = document.querySelectorAll('.rw-tab');
+        var panels = document.querySelectorAll('.rw-panel');
+        if (tabs.length === 0) return;
+        tabs[activeTab].classList.remove('active');
+        panels[activeTab].classList.remove('active');
+        activeTab = index;
+        var newPanel = panels[activeTab];
+        tabs[activeTab].classList.add('active');
+        newPanel.classList.add('active');
+        newPanel.classList.add('flickering');
+        setTimeout(function() {
+            newPanel.classList.remove('flickering');
+            switching = false;
+        }, 130);
     }
 
-    function next() { goTo((currentIndex + 1) % totalSlides); }
-
-    function startTimer() {
-        if (timer) clearInterval(timer);
-        timer = setInterval(next, interval);
+    function copyRecord(panel, btn) {
+        var league = panel.querySelector('.rw-league');
+        var record = panel.querySelector('.rw-record');
+        var stats = panel.querySelectorAll('.rw-stat');
+        var leagueName = league ? league.textContent.trim() : '';
+        var w = record ? record.querySelector('.w') : null;
+        var l = record ? record.querySelector('.l') : null;
+        var p = record ? record.querySelector('.p') : null;
+        var recordStr = (w ? w.textContent : '0') + '-' + (l ? l.textContent : '0') + '-' + (p ? p.textContent : '0');
+        var units = '', winRate = '';
+        stats.forEach(function(s) {
+            var label = s.querySelector('.rw-stat-label');
+            var val = s.querySelector('.rw-stat-value');
+            if (!label || !val) return;
+            var lt = label.textContent.trim().toLowerCase();
+            if (lt === 'units') units = val.textContent.trim();
+            if (lt === 'win rate') winRate = val.textContent.trim();
+        });
+        var text = '\uD83D\uDD25 BetLegend ' + leagueName + ' Record: ' + recordStr + ' (' + units + ' Units | ' + winRate + ' WR) \u2014 Verified at betlegendpicks.com';
+        navigator.clipboard.writeText(text).then(function() {
+            btn.classList.add('copied');
+            setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+        });
     }
 
-    /* ---- Initialize: show static data instantly, then fetch live ---- */
+    /* ---- Init: static data first, then fetch live ---- */
     if (typeof TRANSPARENCY_DATA !== 'undefined') {
-        buildSlides(TRANSPARENCY_DATA.sports);
+        buildTabs(TRANSPARENCY_DATA.sports);
     }
-    startTimer();
 
     fetchLiveData().then(function(live) {
         var hasLive = false;
@@ -3739,46 +3819,9 @@ function closeEmailPopup() {
             SPORT_ORDER.forEach(function(key) {
                 merged[key] = live[key] || (typeof TRANSPARENCY_DATA !== 'undefined' ? TRANSPARENCY_DATA.sports[key] : null);
             });
-            buildSlides(merged);
+            buildTabs(merged);
         }
     }).catch(function(){});
-
-    var el = document.getElementById('rw-carousel');
-    if (el) {
-        el.addEventListener('mouseenter', function() { if (timer) clearInterval(timer); });
-        el.addEventListener('mouseleave', function() { startTimer(); });
-    }
-
-    /* ---- Copy to Clipboard ---- */
-    var copyBtn = document.getElementById('rw-copy-btn');
-    if (copyBtn) {
-        copyBtn.addEventListener('click', function() {
-            var activeSlide = document.querySelector('.rw-slide.active');
-            if (!activeSlide) return;
-            var league = activeSlide.querySelector('.rw-league');
-            var record = activeSlide.querySelector('.rw-record');
-            var stats = activeSlide.querySelectorAll('.rw-stat');
-            var leagueName = league ? league.textContent.trim() : '';
-            var w = record ? record.querySelector('.w') : null;
-            var l = record ? record.querySelector('.l') : null;
-            var p = record ? record.querySelector('.p') : null;
-            var recordStr = (w ? w.textContent : '0') + '-' + (l ? l.textContent : '0') + '-' + (p ? p.textContent : '0');
-            var units = '', winRate = '';
-            stats.forEach(function(s) {
-                var label = s.querySelector('.rw-stat-label');
-                var val = s.querySelector('.rw-stat-value');
-                if (!label || !val) return;
-                var lt = label.textContent.trim().toLowerCase();
-                if (lt === 'units') units = val.textContent.trim();
-                if (lt === 'win rate') winRate = val.textContent.trim();
-            });
-            var text = '\uD83D\uDD25 BetLegend ' + leagueName + ' Record: ' + recordStr + ' (' + units + ' Units | ' + winRate + ' WR) \u2014 Verified at betlegendpicks.com';
-            navigator.clipboard.writeText(text).then(function() {
-                copyBtn.classList.add('copied');
-                setTimeout(function() { copyBtn.classList.remove('copied'); }, 2000);
-            });
-        });
-    }
 })();
 </script>
 <!-- ==================== END RECORDS WIDGET JS ==================== -->
