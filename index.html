@@ -1625,7 +1625,7 @@
             .rw-header-left h2 { font-size: 0.8rem; }
             .rw-record { font-size: 2.2rem; }
             .rw-stat-value { font-size: 1.1rem; }
-            .rw-carousel { min-height: 130px; }
+            .rw-carousel { min-height: 160px; }
         }
 
         @media (max-width: 768px) {
@@ -1731,14 +1731,14 @@
             }
 
             .rw-header-left h2 { font-size: 0.9rem; }
-            .rw-header-right a { font-size: 0.68rem; padding: 8px 14px; }
-            .rw-league { font-size: 0.92rem; letter-spacing: 5px; }
-            .rw-record { font-size: 2.4rem; margin-bottom: 28px; }
-            .rw-stat-value { font-size: 1.2rem; }
+            .rw-header-right > a { font-size: 0.68rem; padding: 8px 14px; }
+            .rw-league { font-size: 0.72rem; letter-spacing: 5px; }
+            .rw-record { font-size: 2.4rem; margin-bottom: 20px; }
+            .rw-stat-value { font-size: 1.1rem; }
             .rw-stats { max-width: 420px; }
-            .rw-stat { padding: 0 16px; }
+            .rw-stat { padding: 10px 16px; }
             .rw-stat-label { font-size: 0.6rem; }
-            .rw-carousel { min-height: 145px; }
+            .rw-carousel { min-height: 165px; }
         }
 
         @media (max-width: 480px) {
@@ -1850,10 +1850,10 @@
             .records-widget-wrap { margin-top: 24px; }
             .rw-header { flex-direction: column; gap: 8px; align-items: flex-start; padding: 14px 18px; }
             .rw-header-left h2 { font-size: 0.82rem; }
-            .rw-header-right a { font-size: 0.62rem; padding: 7px 12px; }
-            .rw-league { font-size: 0.82rem; letter-spacing: 4px; }
-            .rw-carousel { min-height: 135px; }
-            .rw-record { font-size: 1.9rem; letter-spacing: 1px; margin-bottom: 24px; }
+            .rw-header-right > a { font-size: 0.62rem; padding: 7px 12px; }
+            .rw-league { font-size: 0.7rem; letter-spacing: 4px; }
+            .rw-carousel { min-height: 180px; }
+            .rw-record { font-size: 1.9rem; letter-spacing: 1px; margin-bottom: 16px; }
             .rw-record .sep { margin: 0 5px; }
             .rw-stat-value { font-size: 1.05rem; }
             .rw-stat-label { font-size: 0.54rem; letter-spacing: 1.5px; }
@@ -1893,20 +1893,23 @@
             flex-direction: column;
         }
         .records-widget {
-            background: rgba(0, 8, 20, 0.6);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 14px;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(57, 255, 20, 0.15);
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.12), 0 4px 30px rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
+            position: relative;
         }
         .rw-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 28px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 16px 28px;
+            border-bottom: 1px solid rgba(57, 255, 20, 0.08);
         }
         .rw-header-left h2 {
             font-family: var(--font-primary);
@@ -1924,7 +1927,58 @@
             letter-spacing: 0.3px;
             margin: 0;
         }
-        .rw-header-right a {
+        .rw-header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .rw-copy-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            padding: 7px 9px;
+            cursor: pointer;
+            color: rgba(255,255,255,0.4);
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .rw-copy-btn:hover {
+            border-color: var(--win-color);
+            color: var(--win-color);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+        }
+        .rw-copy-btn svg { width: 16px; height: 16px; }
+        .rw-copy-btn .copy-icon { display: block; }
+        .rw-copy-btn .check-icon { display: none; }
+        .rw-copy-btn.copied .copy-icon { display: none; }
+        .rw-copy-btn.copied .check-icon { display: block; }
+        .rw-copy-btn.copied {
+            border-color: var(--win-color);
+            color: var(--win-color);
+        }
+        .rw-copy-toast {
+            position: absolute;
+            top: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--win-color);
+            color: #000;
+            font-family: var(--font-primary);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .rw-copy-btn.copied .rw-copy-toast { opacity: 1; }
+        .rw-header-right > a {
             font-family: var(--font-primary);
             font-size: 0.68rem;
             font-weight: 700;
@@ -1939,13 +1993,13 @@
             border: 1px solid rgba(196, 162, 0, 0.3);
             transition: all 0.2s ease;
         }
-        .rw-header-right a:hover {
+        .rw-header-right > a:hover {
             border-color: rgba(196, 162, 0, 0.6);
             background: rgba(196, 162, 0, 0.08);
         }
         .rw-carousel {
             position: relative;
-            min-height: 140px;
+            min-height: 155px;
             flex: 1;
             overflow: hidden;
         }
@@ -1960,6 +2014,7 @@
             opacity: 0;
             transition: opacity 0.8s ease;
             pointer-events: none;
+            padding: 10px 20px;
         }
         .rw-slide.active {
             opacity: 1;
@@ -1967,50 +2022,64 @@
         }
         .rw-league {
             font-family: var(--font-primary);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 5px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.4);
-            margin-bottom: 14px;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rw-league-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.5;
         }
         .rw-record {
-            font-family: var(--font-primary);
-            font-size: 2.4rem;
+            font-family: 'Orbitron', var(--font-primary), monospace;
+            font-size: 2.8rem;
             font-weight: 900;
-            letter-spacing: 2px;
-            margin-bottom: 14px;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
             line-height: 1;
         }
-        .rw-record .w { color: #ffffff; }
-        .rw-record .sep { color: rgba(255,255,255,0.12); margin: 0 6px; font-weight: 300; }
-        .rw-record .l { color: rgba(255,255,255,0.45); }
-        .rw-record .p { color: rgba(255,255,255,0.25); }
+        .rw-record .w { color: #ffffff; text-shadow: 0 0 8px rgba(255,255,255,0.15); }
+        .rw-record .sep { color: rgba(255,255,255,0.1); margin: 0 8px; font-weight: 300; }
+        .rw-record .l { color: rgba(255,255,255,0.35); }
+        .rw-record .p { color: rgba(255,255,255,0.2); }
         .rw-stats {
             display: flex;
-            gap: 36px;
+            gap: 0;
         }
         .rw-stat {
             text-align: center;
+            padding: 12px 28px;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            position: relative;
         }
+        .rw-stat:last-child { border-right: none; }
         .rw-stat-value {
-            font-family: var(--font-primary);
-            font-size: 1.15rem;
+            font-family: 'Orbitron', var(--font-primary), monospace;
+            font-size: 1.2rem;
             font-weight: 900;
             line-height: 1;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
-        .rw-stat-value.pos { color: var(--win-color); }
-        .rw-stat-value.neg { color: #ef4444; }
-        .rw-stat-value.rate { color: rgba(255,255,255,0.9); }
-        .rw-stat-value.count { color: rgba(255,255,255,0.6); }
+        .rw-stat-value.pos { color: var(--win-color); text-shadow: 0 0 10px rgba(57, 255, 20, 0.3); }
+        .rw-stat-value.pos::before { content: '\25B2 '; font-size: 0.6rem; vertical-align: middle; }
+        .rw-stat-value.neg { color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.3); }
+        .rw-stat-value.neg::before { content: '\25BC '; font-size: 0.6rem; vertical-align: middle; }
+        .rw-stat-value.rate { color: rgba(255,255,255,0.95); }
+        .rw-stat-value.count { color: rgba(0,229,255,0.6); }
         .rw-stat-label {
             font-family: var(--font-secondary);
-            font-size: 0.66rem;
+            font-size: 0.62rem;
             font-weight: 500;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.25);
         }
         .rw-dots {
             display: flex;
@@ -2022,26 +2091,33 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
             padding: 0;
         }
         .rw-dot.active {
-            background: var(--neon-gold);
+            background: var(--win-color);
+            box-shadow: 0 0 6px rgba(57, 255, 20, 0.4);
         }
         .rw-dot:hover:not(.active) {
             background: rgba(255,255,255,0.2);
         }
         .rw-footer {
             padding: 8px 28px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(57, 255, 20, 0.06);
             text-align: center;
             font-family: var(--font-secondary);
             font-size: 0.68rem;
-            color: rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.18);
             letter-spacing: 0.5px;
+        }
+        @media (max-width: 600px) {
+            .rw-stats { flex-direction: column; gap: 0; }
+            .rw-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 10px 20px; }
+            .rw-stat:last-child { border-bottom: none; }
+            .rw-record { font-size: 2.2rem; }
         }
         /* ==================== END RECORDS WIDGET ==================== */
 
@@ -2704,6 +2780,11 @@ crossorigin="anonymous"></script>
                             <p>Updated daily &bull; <strong>Every pick posted before games start</strong></p>
                         </div>
                         <div class="rw-header-right">
+                            <button class="rw-copy-btn" id="rw-copy-btn" title="Copy record to clipboard">
+                                <span class="rw-copy-toast">COPIED</span>
+                                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            </button>
                             <a href="betlegend-verified-records.html">View Full Record &rarr;</a>
                         </div>
                     </div>
@@ -3567,6 +3648,37 @@ function closeEmailPopup() {
     if (el) {
         el.addEventListener('mouseenter', function() { if (timer) clearInterval(timer); });
         el.addEventListener('mouseleave', function() { startTimer(); });
+    }
+
+    /* ---- Copy to Clipboard ---- */
+    var copyBtn = document.getElementById('rw-copy-btn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function() {
+            var activeSlide = document.querySelector('.rw-slide.active');
+            if (!activeSlide) return;
+            var league = activeSlide.querySelector('.rw-league');
+            var record = activeSlide.querySelector('.rw-record');
+            var stats = activeSlide.querySelectorAll('.rw-stat');
+            var leagueName = league ? league.textContent.trim() : '';
+            var w = record ? record.querySelector('.w') : null;
+            var l = record ? record.querySelector('.l') : null;
+            var p = record ? record.querySelector('.p') : null;
+            var recordStr = (w ? w.textContent : '0') + '-' + (l ? l.textContent : '0') + '-' + (p ? p.textContent : '0');
+            var units = '', winRate = '';
+            stats.forEach(function(s) {
+                var label = s.querySelector('.rw-stat-label');
+                var val = s.querySelector('.rw-stat-value');
+                if (!label || !val) return;
+                var lt = label.textContent.trim().toLowerCase();
+                if (lt === 'units') units = val.textContent.trim();
+                if (lt === 'win rate') winRate = val.textContent.trim();
+            });
+            var text = '\uD83D\uDD25 BetLegend ' + leagueName + ' Record: ' + recordStr + ' (' + units + ' Units | ' + winRate + ' WR) \u2014 Verified at betlegendpicks.com';
+            navigator.clipboard.writeText(text).then(function() {
+                copyBtn.classList.add('copied');
+                setTimeout(function() { copyBtn.classList.remove('copied'); }, 2000);
+            });
+        });
     }
 })();
 </script>
