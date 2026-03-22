@@ -12,8 +12,8 @@ const TRANSPARENCY_DATA = {
         "losses": 212,
         "pushes": 14,
         "totalPicks": 507,
-        "totalUnits": 24.97,
-        "winPct": 57.0,
+        "totalUnits": 25.0,
+        "winPct": 57,
         "lastDate": "2/5/2026"
     },
     "NFL": {

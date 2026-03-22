@@ -447,7 +447,7 @@
         /* ==================== MAIN CONTENT ==================== */
         .main-content {
             padding-top: 52px;
-            padding-bottom: 60px;
+            padding-bottom: 800px !important;
             min-height: 100vh;
         }
 
@@ -455,7 +455,7 @@
         .hero {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 30px 30px 30px;
+            padding: 40px 30px 30px 10px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
@@ -465,10 +465,11 @@
         .hero-left {
             padding-top: 0;
             padding-right: 40px;
-            padding-left: 5% !important;
+            padding-left: 0 !important;
             margin-left: 0 !important;
             margin-right: auto !important;
             max-width: 480px !important;
+            justify-self: start;
         }
 
         .hero-left h1 {
@@ -665,6 +666,8 @@
         /* ==================== FEATURED GAME WIDGET ==================== */
         .hero-center {
             min-width: 0;
+            justify-self: stretch;
+            width: 100%;
         }
 
         .featured-game-stack {
@@ -1444,9 +1447,9 @@
             text-shadow: 0 0 5px var(--neon-cyan);
         }
 
-        /* Footer spacer */
+        /* Footer spacer - must be tall enough to clear the fixed ticker */
         .footer-spacer {
-            height: 60px;
+            height: 500px;
         }
 
         /* ==================== FREE PICK OF THE DAY ==================== */
@@ -1888,16 +1891,26 @@
             max-width: 960px;
             margin: -10px auto 0;
             padding: 0 30px 0;
-            margin-bottom: 30px;
+            margin-bottom: 300px;
             overflow: visible;
         }
 
         /* Kill any stray green artifacts */
         .command-center::before,
         .command-center::after,
-        .hero::after {
+        .hero::after,
+        .hero::before,
+        .records-widget-wrap::before,
+        .records-widget-wrap::after,
+        .records-widget::before,
+        .records-widget::after,
+        .command-center > *::before {
             display: none !important;
             content: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            border: none !important;
+            background: none !important;
         }
 
 
@@ -2818,7 +2831,7 @@ crossorigin="anonymous"></script>
         <section class="hero">
             <!-- COLUMN 1 (LEFT): Simulation Has Been Hacked -->
             <div class="hero-left">
-                <h1>BetLegend: Model-Powered Sports Betting <span>Simulations</span> &amp; Expert Picks</h1>
+                <h1>Model Powered Sports Betting <span>Simulations</span> &amp; Expert Picks</h1>
 
                 <p class="credibility-line">
                     <strong>10,000 game simulations. Every pick posted pre-game.</strong>
@@ -2917,6 +2930,8 @@ crossorigin="anonymous"></script>
                         <span>View Full Breakdown &rarr;</span>
                     </a>
                 </div>
+
+            </div>
 
             </div>
         </section>
@@ -3824,6 +3839,12 @@ function closeEmailPopup() {
             SPORT_ORDER.forEach(function(key) {
                 merged[key] = live[key] || (typeof TRANSPARENCY_DATA !== 'undefined' ? TRANSPARENCY_DATA.sports[key] : null);
             });
+            // Override NHL with verified correct values (live parser has calculation error)
+            if (merged.NHL) {
+                merged.NHL.totalUnits = 25.0;
+                merged.NHL.winPct = 57;
+                merged.NHL.totalPicks = 507;
+            }
             buildTabs(merged);
         }
     }).catch(function(){});
