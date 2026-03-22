@@ -1888,14 +1888,10 @@
         }
 
         .records-terminal {
-            position: absolute !important;
-            top: 580px !important;
-            margin-bottom: 0 !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            z-index: 100 !important;
-            width: 75% !important;
-            max-width: 900px !important;
+            position: relative !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-top: 20px !important;
         }
 
         /* Kill any stray green artifacts */
@@ -2824,14 +2820,35 @@ crossorigin="anonymous"></script>
     <!-- ==================== MAIN CONTENT ==================== -->
     <main class="main-content">
         <!-- ==================== ROW 1: Three-Column Hero ==================== -->
-        <section class="hero-container" style="display: flex !important; justify-content: space-between !important; align-items: flex-start !important; padding: 60px 5% 30px !important; gap: 40px !important; max-width: 1400px; margin: 0 auto;">
-            <div class="hero-left" style="flex: 0 0 450px !important; margin-left: 0 !important; text-align: left !important;">
-                <h1 style="font-size: 44px; line-height: 1.1; margin-bottom: 18px; font-family: var(--font-primary); font-weight: 900; text-transform: uppercase; color: #fff;">BETLEGEND: MODEL-POWERED SPORTS <span style="color: #39FF14;">SIMULATIONS</span> &amp; EXPERT PICKS</h1>
-                <p style="font-size: 17px; color: #aaa; margin-bottom: 25px; font-family: var(--font-secondary);">10,000 game simulations. Every pick posted pre-game. Model-driven analysis, fully verified results, 100% transparent records.</p>
-                <a href="betlegend-verified-records.html" class="btn-primary" style="background: #39FF14; color: #000; padding: 15px 30px; border-radius: 8px; font-weight: 900; text-decoration: none; display: inline-block; font-family: var(--font-primary); text-transform: uppercase; letter-spacing: 2px;">GET A FREE 3-DAY TRIAL</a>
+        <section class="hero-container" style="display: flex !important; justify-content: space-between !important; align-items: flex-start !important; padding: 30px 5% 20px !important; gap: 30px !important; max-width: 1400px; margin: 0 auto;">
+            <div class="hero-left" style="flex: 1 1 500px !important; margin-left: 0 !important; text-align: left !important;">
+                <h1 style="font-size: 36px; line-height: 1.1; margin-bottom: 12px; font-family: var(--font-primary); font-weight: 900; text-transform: uppercase; color: #fff;">BETLEGEND: MODEL-POWERED SPORTS <span style="color: #39FF14;">SIMULATIONS</span> &amp; EXPERT PICKS</h1>
+                <p style="font-size: 15px; color: #aaa; margin-bottom: 18px; font-family: var(--font-secondary);">10,000 game simulations. Every pick posted pre-game. Model-driven analysis, fully verified results, 100% transparent records.</p>
+                <a href="betlegend-verified-records.html" class="btn-primary" style="background: #39FF14; color: #000; padding: 12px 24px; border-radius: 8px; font-weight: 900; text-decoration: none; display: inline-block; font-family: var(--font-primary); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem;">GET A FREE 3-DAY TRIAL</a>
+
+                <!-- Records Widget (under headline) -->
+                <section class="records-terminal">
+                    <div class="terminal-box" style="border: 2px solid #39FF14; background: rgba(0,0,0,0.9); border-radius: 10px; padding: 12px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);">
+                        <div class="rw-header" style="display: flex; justify-content: space-between; align-items: center; padding: 0 0 8px 0; border-bottom: 1px solid rgba(57, 255, 20, 0.4); margin-bottom: 8px;">
+                            <div>
+                                <h2 style="font-family: var(--font-primary); font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin: 0 0 2px 0;">All-Time Verified Records</h2>
+                                <p style="font-family: var(--font-secondary); font-size: 0.6rem; color: rgba(255,255,255,0.3); margin: 0;">Updated daily &bull; <strong>Every pick posted before games start</strong></p>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <a href="betlegend-verified-records.html" class="rw-verified-badge" style="font-size: 0.55rem; padding: 4px 8px;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    Verified
+                                </a>
+                                <a href="betlegend-verified-records.html" class="rw-view-full" style="font-size: 0.55rem; padding: 4px 10px;">Full Record &rarr;</a>
+                            </div>
+                        </div>
+                        <div class="rw-tabs" id="rw-tabs"></div>
+                        <div class="rw-panels" id="rw-panels"></div>
+                    </div>
+                </section>
             </div>
 
-            <div class="featured-game-card" style="flex: 1 !important; max-width: 550px !important;">
+            <div class="featured-game-card" style="flex: 0 0 420px !important; max-width: 420px !important;">
             <div class="hero-center">
                 <div class="featured-game-stack">
                     <!-- Header Banner -->
@@ -2914,29 +2931,7 @@ crossorigin="anonymous"></script>
             </div>
         </section>
 
-        <section class="records-terminal">
-            <div class="terminal-box" style="border: 2px solid #39FF14; background: rgba(0,0,0,0.9); border-radius: 10px; padding: 14px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);">
-                <div class="rw-header" style="display: flex; justify-content: space-between; align-items: center; padding: 0 0 10px 0; border-bottom: 1px solid rgba(57, 255, 20, 0.4); margin-bottom: 12px;">
-                    <div>
-                        <h2 style="font-family: var(--font-primary); font-size: 0.82rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin: 0 0 2px 0;">All-Time Verified Records</h2>
-                        <p style="font-family: var(--font-secondary); font-size: 0.7rem; color: rgba(255,255,255,0.3); margin: 0;">Updated daily &bull; <strong>Every pick posted before games start</strong></p>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <a href="betlegend-verified-records.html" class="rw-verified-badge">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            Verified Record
-                        </a>
-                        <a href="betlegend-verified-records.html" class="rw-view-full">View Full Record &rarr;</a>
-                    </div>
-                </div>
-                <div class="rw-tabs" id="rw-tabs"></div>
-                <div class="rw-panels" id="rw-panels"></div>
-
-                <p style="color: #555; font-size: 11px; text-align: center; margin: 8px 0 0 0;">Updated daily &bull; Every pick posted before games start</p>
-            </div>
-        </section>
-
-        <div style="height: 400px; width: 100%; clear: both; pointer-events: none;"></div>
+        <!-- spacer removed - records widget now in hero-left -->
 
         <!-- ==================== ROW 4: LATEST PICKS ==================== -->
         <section style="max-width: 1400px; margin: 0 auto; padding: 0 30px;">
@@ -2959,20 +2954,6 @@ crossorigin="anonymous"></script>
         </section>
         <!-- ==================== END COMPACT PICKS GRID ==================== -->
 
-
-        <!-- ==================== AFFILIATE BANNER (STANDALONE) ==================== -->
-        <section style="max-width: 1200px; margin: 30px auto; padding: 0 30px;">
-            <a href="https://www.youwager.lv/affiliate/babs123" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; text-decoration: none; background: linear-gradient(135deg, #000033, #001166, #000033); border: 2px solid var(--neon-cyan); border-radius: 14px; padding: 20px 30px; box-shadow: 0 0 25px rgba(0, 255, 255, 0.15); transition: all 0.3s ease;"
-               onmouseover="this.style.boxShadow='0 0 40px rgba(0, 255, 255, 0.3)'; this.style.transform='translateY(-2px)';"
-               onmouseout="this.style.boxShadow='0 0 25px rgba(0, 255, 255, 0.15)'; this.style.transform='translateY(0)';">
-                <div>
-                    <div style="font-family: var(--font-primary); font-size: 0.6rem; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">Official Betting Partner</div>
-                    <div style="font-family: var(--font-primary); font-size: 1.3rem; font-weight: 900; color: var(--neon-gold); text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);">YOUWAGER</div>
-                    <div style="font-family: var(--font-secondary); font-size: 0.85rem; color: #fff; margin-top: 4px;">Claim your 100% deposit match bonus today</div>
-                </div>
-                <span style="display: inline-block; font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; color: #000; background: var(--neon-gold); padding: 12px 28px; border-radius: 8px; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); flex-shrink: 0;">Claim Bonus &rarr;</span>
-            </a>
-        </section>
 
         <!-- FIFA World Cup 2026 Guide (moved from hero) -->
         <section style="max-width: 1200px; margin: 30px auto; padding: 0 30px;">
@@ -3248,6 +3229,20 @@ crossorigin="anonymous"></script>
                 <a href="free-trial-info.html" style="color: #8fa8c8; text-decoration: none; margin: 0 12px; transition: color 0.2s;">Free Trial</a>
             </p>
             <p style="font-size: 0.75rem; color: #444; margin: 10px 0 0 0;">&copy; 2026 BetLegend. All rights reserved.</p>
+        </section>
+
+        <!-- ==================== AFFILIATE BANNER (ABOVE TICKER) ==================== -->
+        <section style="max-width: 1200px; margin: 30px auto 20px; padding: 0 30px;">
+            <a href="https://www.youwager.lv/affiliate/babs123" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; text-decoration: none; background: linear-gradient(135deg, #000033, #001166, #000033); border: 2px solid var(--neon-cyan); border-radius: 14px; padding: 18px 28px; box-shadow: 0 0 25px rgba(0, 255, 255, 0.15); transition: all 0.3s ease;"
+               onmouseover="this.style.boxShadow='0 0 40px rgba(0, 255, 255, 0.3)'; this.style.transform='translateY(-2px)';"
+               onmouseout="this.style.boxShadow='0 0 25px rgba(0, 255, 255, 0.15)'; this.style.transform='translateY(0)';">
+                <div>
+                    <div style="font-family: var(--font-primary); font-size: 0.6rem; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">Official Betting Partner</div>
+                    <div style="font-family: var(--font-primary); font-size: 1.3rem; font-weight: 900; color: var(--neon-gold); text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);">YOUWAGER</div>
+                    <div style="font-family: var(--font-secondary); font-size: 0.85rem; color: #fff; margin-top: 4px;">Claim your 100% deposit match bonus today</div>
+                </div>
+                <span style="display: inline-block; font-family: var(--font-primary); font-size: 0.85rem; font-weight: 700; color: #000; background: var(--neon-gold); padding: 12px 28px; border-radius: 8px; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); flex-shrink: 0;">Claim Bonus &rarr;</span>
+            </a>
         </section>
 
         <div class="footer-spacer"></div>
