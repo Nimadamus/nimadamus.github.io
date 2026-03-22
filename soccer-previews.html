@@ -83,6 +83,8 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .broadcast-badge{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#1a365d,#2d4a7c);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;z-index:2}
 .broadcast-badge.national{background:linear-gradient(135deg,#b8860b,#daa520)}
 .game-header{display:flex;align-items:center;justify-content:center;gap:24px;padding:50px 32px 28px;position:relative}
+.team-logo{width:72px;height:72px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(255,255,255,0.15));transition:transform 0.3s,filter 0.3s}
+.game-preview:hover .team-logo{transform:scale(1.08);filter:drop-shadow(0 0 25px rgba(253,80,0,0.3))}
 .matchup-info{text-align:center}
 .matchup-info h2{font-family:var(--font-display);font-size:26px;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:1px}
 .game-time{font-size:14px;color:var(--text-muted)}
@@ -113,7 +115,7 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 footer{text-align:center;padding:50px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
 footer a{color:var(--accent-cyan);text-decoration:none}
 @media(max-width:1200px){.calendar-sidebar{display:none}.mobile-archive{display:block}}
-@media(max-width:768px){.hero{padding:130px 20px 40px}.game-preview{padding:0}.matchup-info h2{font-size:20px}.game-header{gap:16px;padding:40px 20px 20px}.betting-section{padding:0 20px 20px;gap:8px}.extra-lines{padding:8px 20px 16px;gap:8px}.bet-box{padding:12px}.bet-value{font-size:16px}.extra-line .bet-value{font-size:14px}.preview-content{padding:20px}.nav-inner{padding:14px 10px 14px 70px}.logo a{font-size:1.4rem}.nav-links{gap:8px}.nav-links>a,.dropbtn{font-size:11px;padding:8px 10px}}
+@media(max-width:768px){.hero{padding:130px 20px 40px}.game-preview{padding:0}.team-logo{width:56px;height:56px}.matchup-info h2{font-size:20px}.game-header{gap:16px;padding:40px 20px 20px}.betting-section{padding:0 20px 20px;gap:8px}.extra-lines{padding:8px 20px 16px;gap:8px}.bet-box{padding:12px}.bet-value{font-size:16px}.extra-line .bet-value{font-size:14px}.preview-content{padding:20px}.nav-inner{padding:14px 10px 14px 70px}.logo a{font-size:1.4rem}.nav-links{gap:8px}.nav-links>a,.dropbtn{font-size:11px;padding:8px 10px}}
 </style>
 </head>
 <body>
@@ -169,11 +171,13 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <article class="game-preview marquee">
 <div class="game-number">Match 1 - Marquee</div>
 <div class="broadcast-badge national">La Liga</div>
-<div class="game-header" style="justify-content:center;">
+<div class="game-header">
+<img alt="Real Madrid" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png"/>
 <div class="matchup-info">
 <h2>Real Madrid vs Atletico Madrid</h2>
 <span class="game-time">Sunday, 3:00 PM ET | Santiago Bernabeu, Madrid</span>
 </div>
+<img alt="Atletico Madrid" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/1068.png"/>
 </div>
 <div class="betting-section">
 <div class="bet-box"><div class="bet-label">Home Win</div><div class="bet-value">-120</div></div>
@@ -197,11 +201,13 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <article class="game-preview">
 <div class="game-number">Match 2</div>
 <div class="broadcast-badge">Premier League</div>
-<div class="game-header" style="justify-content:center;">
+<div class="game-header">
+<img alt="Newcastle" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/361.png"/>
 <div class="matchup-info">
 <h2>Newcastle vs Sunderland</h2>
 <span class="game-time">Sunday, 8:00 AM ET | St James' Park, Newcastle</span>
 </div>
+<img alt="Sunderland" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/366.png"/>
 </div>
 <div class="betting-section">
 <div class="bet-box"><div class="bet-label">Home Win</div><div class="bet-value">-145</div></div>
@@ -225,11 +231,13 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <article class="game-preview marquee">
 <div class="game-number">Match 3 - Marquee</div>
 <div class="broadcast-badge national">Premier League</div>
-<div class="game-header" style="justify-content:center;">
+<div class="game-header">
+<img alt="Tottenham" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/367.png"/>
 <div class="matchup-info">
 <h2>Tottenham vs Nottingham Forest</h2>
 <span class="game-time">Sunday, 10:15 AM ET | Tottenham Hotspur Stadium, London</span>
 </div>
+<img alt="Nottingham Forest" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/174.png"/>
 </div>
 <div class="betting-section">
 <div class="bet-box"><div class="bet-label">Home Win</div><div class="bet-value">+140</div></div>
@@ -253,11 +261,13 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <article class="game-preview">
 <div class="game-number">Match 4</div>
 <div class="broadcast-badge">Serie A</div>
-<div class="game-header" style="justify-content:center;">
+<div class="game-header">
+<img alt="Fiorentina" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/109.png"/>
 <div class="matchup-info">
 <h2>Fiorentina vs Inter Milan</h2>
 <span class="game-time">Sunday, 3:45 PM ET | Stadio Artemio Franchi, Florence</span>
 </div>
+<img alt="Inter Milan" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/110.png"/>
 </div>
 <div class="betting-section">
 <div class="bet-box"><div class="bet-label">Home Win</div><div class="bet-value">+120</div></div>
@@ -277,11 +287,13 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <article class="game-preview">
 <div class="game-number">Match 5</div>
 <div class="broadcast-badge">Premier League</div>
-<div class="game-header" style="justify-content:center;">
+<div class="game-header">
+<img alt="Aston Villa" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/362.png"/>
 <div class="matchup-info">
 <h2>Aston Villa vs West Ham</h2>
 <span class="game-time">Sunday, 9:15 AM ET | Villa Park, Birmingham</span>
 </div>
+<img alt="West Ham" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/399.png"/>
 </div>
 <div class="betting-section">
 <div class="bet-box"><div class="bet-label">Home Win</div><div class="bet-value">-139</div></div>
@@ -301,11 +313,13 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <article class="game-preview">
 <div class="game-number">Match 6</div>
 <div class="broadcast-badge">Bundesliga</div>
-<div class="game-header" style="justify-content:center;">
+<div class="game-header">
+<img alt="Mainz" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/2950.png"/>
 <div class="matchup-info">
 <h2>Mainz vs Eintracht Frankfurt</h2>
 <span class="game-time">Sunday, 9:30 AM ET | Mewa Arena, Mainz</span>
 </div>
+<img alt="Eintracht Frankfurt" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/125.png"/>
 </div>
 <div class="betting-section">
 <div class="bet-box"><div class="bet-label">Home Win</div><div class="bet-value">+120</div></div>
@@ -325,11 +339,13 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <article class="game-preview">
 <div class="game-number">Match 7</div>
 <div class="broadcast-badge">La Liga</div>
-<div class="game-header" style="justify-content:center;">
+<div class="game-header">
+<img alt="Barcelona" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/83.png"/>
 <div class="matchup-info">
 <h2>Barcelona vs Rayo Vallecano</h2>
 <span class="game-time">Sunday, 8:00 AM ET | Camp Nou, Barcelona</span>
 </div>
+<img alt="Rayo Vallecano" class="team-logo" src="https://a.espncdn.com/i/teamlogos/soccer/500/101.png"/>
 </div>
 <div class="betting-section">
 <div class="bet-box"><div class="bet-label">Home Win</div><div class="bet-value">-400</div></div>
