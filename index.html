@@ -1375,10 +1375,19 @@
         }
 
         /* ==================== BOTTOM TICKER ==================== */
-        .ticker-wrap {
-            position: sticky;
-            bottom: 0;
+        .ticker-wrap,
+        .ticker {
+            position: static !important;
+            bottom: auto !important;
+            left: auto !important;
             width: 100%;
+        }
+
+        [class*="ticker"] {
+            position: static !important;
+        }
+
+        .ticker-wrap {
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             padding: 12px 0;
@@ -3956,5 +3965,15 @@ function closeEmailPopup() {
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script async data-id="101485054" src="//static.getclicky.com/js"></script>
+<script>
+const t = document.querySelector('[class*="ticker"]');
+if (t) {
+  t.style.display = 'block';
+  t.style.position = 'static';
+  t.style.height = 'auto';
+  t.style.visibility = 'visible';
+  t.style.opacity = '1';
+}
+</script>
 </body>
 </html>
