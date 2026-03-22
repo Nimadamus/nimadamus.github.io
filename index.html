@@ -447,7 +447,7 @@
         /* ==================== MAIN CONTENT ==================== */
         .main-content {
             padding-top: 52px;
-            min-height: auto;
+            min-height: 100vh;
         }
 
         /* ==================== HERO SECTION ==================== */
@@ -1375,23 +1375,15 @@
         }
 
         /* ==================== BOTTOM TICKER ==================== */
-        .ticker-wrap,
-        .ticker {
-            position: static !important;
-            bottom: auto !important;
-            left: auto !important;
-            width: 100%;
-        }
-
-        [class*="ticker"] {
-            position: static !important;
-        }
-
         .ticker-wrap {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             padding: 12px 0;
-            z-index: 10;
+            z-index: 1001;
             overflow: hidden;
             border-top: 2px solid rgba(0, 224, 255, 0.4);
         }
@@ -1456,7 +1448,7 @@
 
         /* Footer spacer - clears the fixed ticker */
         .footer-spacer {
-            height: 120px;
+            height: 80px;
         }
 
         /* ==================== FREE PICK OF THE DAY ==================== */
@@ -1925,7 +1917,6 @@
         /* ==================== RECORDS WIDGET V2 - TERMINAL ==================== */
         .records-widget-wrap {
             margin-top: 0;
-            margin-bottom: 120px;
             display: flex;
             flex-direction: column;
         }
@@ -3965,15 +3956,5 @@ function closeEmailPopup() {
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script async data-id="101485054" src="//static.getclicky.com/js"></script>
-<script>
-const t = document.querySelector('[class*="ticker"]');
-if (t) {
-  t.style.display = 'block';
-  t.style.position = 'static';
-  t.style.height = 'auto';
-  t.style.visibility = 'visible';
-  t.style.opacity = '1';
-}
-</script>
 </body>
 </html>
