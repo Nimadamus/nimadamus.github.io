@@ -93,8 +93,8 @@
             font-family: var(--font-secondary);
             background: var(--bg-deep);
             color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
+            min-height: 200vh !important;
+            overflow-x: hidden !important;
             padding-bottom: 600px !important;
         }
 
@@ -1884,12 +1884,18 @@
 
         /* ==================== COMMAND CENTER WRAPPER ==================== */
         .command-center {
-            position: relative;
-            max-width: 960px;
-            margin: -10px auto 0;
-            padding: 0 30px 0;
-            margin-bottom: 30px;
-            overflow: visible;
+            display: none;
+        }
+
+        .records-terminal {
+            position: absolute !important;
+            top: 620px !important;
+            margin-bottom: 0 !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            z-index: 100 !important;
+            width: 90% !important;
+            max-width: 1100px !important;
         }
 
         /* Kill any stray green artifacts */
@@ -1920,19 +1926,10 @@
         }
 
         .records-widget {
-            background: rgba(4, 4, 10, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 2px solid #39ff14;
-            border-radius: 12px;
-            overflow: visible !important;
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            position: relative !important;
-            z-index: 10 !important;
-            margin-bottom: 400px !important;
+            background: none;
+            border: none;
+            box-shadow: none;
+            overflow: hidden !important;
         }
 
 
@@ -2827,10 +2824,10 @@ crossorigin="anonymous"></script>
     <!-- ==================== MAIN CONTENT ==================== -->
     <main class="main-content">
         <!-- ==================== ROW 1: Three-Column Hero ==================== -->
-        <section class="hero-container" style="display: flex !important; justify-content: space-between !important; align-items: flex-start !important; padding: 80px 5% !important; gap: 40px !important; max-width: 1400px; margin: 0 auto;">
-            <div class="hero-left" style="flex: 1 !important; max-width: 500px !important; margin-left: 0 !important; text-align: left !important;">
-                <h1 style="font-size: 48px; line-height: 1.1; margin-bottom: 20px; font-family: var(--font-primary); font-weight: 900; text-transform: uppercase; color: #fff;">BETLEGEND: MODEL-POWERED SPORTS <span style="color: #39FF14;">SIMULATIONS</span> &amp; EXPERT PICKS</h1>
-                <p style="font-size: 18px; color: #aaa; margin-bottom: 30px; font-family: var(--font-secondary);">10,000 game simulations. Every pick posted pre-game. Model-driven analysis, fully verified results, 100% transparent records.</p>
+        <section class="hero-container" style="display: flex !important; justify-content: space-between !important; align-items: flex-start !important; padding: 55px 5% 30px !important; gap: 30px !important; max-width: 1400px; margin: 0 auto;">
+            <div class="hero-left" style="flex: 0 0 450px !important; margin-left: 0 !important; text-align: left !important;">
+                <h1 style="font-size: 40px; line-height: 1.1; margin-bottom: 14px; font-family: var(--font-primary); font-weight: 900; text-transform: uppercase; color: #fff;">BETLEGEND: MODEL-POWERED SPORTS <span style="color: #39FF14;">SIMULATIONS</span> &amp; EXPERT PICKS</h1>
+                <p style="font-size: 16px; color: #aaa; margin-bottom: 20px; font-family: var(--font-secondary);">10,000 game simulations. Every pick posted pre-game. Model-driven analysis, fully verified results, 100% transparent records.</p>
                 <a href="betlegend-verified-records.html" class="btn-primary" style="background: #39FF14; color: #000; padding: 15px 30px; border-radius: 8px; font-weight: 900; text-decoration: none; display: inline-block; font-family: var(--font-primary); text-transform: uppercase; letter-spacing: 2px;">GET A FREE 3-DAY TRIAL</a>
             </div>
 
@@ -2917,58 +2914,34 @@ crossorigin="anonymous"></script>
             </div>
         </section>
 
-        <!-- ==================== COMMAND CENTER: Records + How It Works ==================== -->
-        <section class="command-center">
-            <!-- Records Terminal -->
-            <div class="records-widget-wrap">
-                <div class="records-widget">
-                    <div class="rw-header">
-                        <div class="rw-header-left">
-                            <h2>All-Time Verified Records</h2>
-                            <p>Updated daily &bull; <strong>Every pick posted before games start</strong></p>
-                        </div>
-                        <div class="rw-header-right">
-                            <a href="betlegend-verified-records.html" class="rw-verified-badge">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                Verified Record
-                            </a>
-                            <a href="betlegend-verified-records.html" class="rw-view-full">View Full Record &rarr;</a>
-                        </div>
+        <section class="records-terminal">
+            <div class="terminal-box" style="border: 2px solid #39FF14; background: rgba(0,0,0,0.9); border-radius: 12px; padding: 20px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);">
+                <div class="rw-header" style="display: flex; justify-content: space-between; align-items: center; padding: 0 0 10px 0; border-bottom: 1px solid rgba(57, 255, 20, 0.4); margin-bottom: 12px;">
+                    <div>
+                        <h2 style="font-family: var(--font-primary); font-size: 0.82rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin: 0 0 2px 0;">All-Time Verified Records</h2>
+                        <p style="font-family: var(--font-secondary); font-size: 0.7rem; color: rgba(255,255,255,0.3); margin: 0;">Updated daily &bull; <strong>Every pick posted before games start</strong></p>
                     </div>
-                    <div class="rw-tabs" id="rw-tabs"></div>
-                    <div class="rw-panels" id="rw-panels"></div>
-                    <div style="text-align: center; padding: 15px; background: rgba(0,0,0,0.5); margin: 10px 0; border-radius: 5px;"><a href="https://www.youwager.lv/affiliate/babs123" target="_blank" style="color: #39FF14; font-weight: bold; text-transform: uppercase;">Partner: YouWager | [CLAIM 100% BONUS]</a></div>
-                    <div class="rw-footer">Updated daily &bull; All picks fully transparent &bull; Posted before games start</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <a href="betlegend-verified-records.html" class="rw-verified-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Verified Record
+                        </a>
+                        <a href="betlegend-verified-records.html" class="rw-view-full">View Full Record &rarr;</a>
+                    </div>
                 </div>
-            </div>
+                <div class="rw-tabs" id="rw-tabs"></div>
+                <div class="rw-panels" id="rw-panels"></div>
 
-            <!-- How It Works - Terminal Cards -->
-            <div class="how-it-works">
-                <h2 class="hiw-title">How the Simulation Works</h2>
-                <div class="hiw-grid">
-                    <div class="hiw-step">
-                        <div class="hiw-step-number">01_INGESTION</div>
-                        <h3>Data Ingestion</h3>
-                        <div class="hiw-stat">1,000+</div>
-                        <p>Real-time data points processed per game: injuries, weather, line movement, matchup history, advanced metrics, and situational trends.</p>
-                    </div>
-                    <div class="hiw-step">
-                        <div class="hiw-step-number">02_SIMULATION</div>
-                        <h3>Simulation Engine</h3>
-                        <div class="hiw-stat">10,000</div>
-                        <p>Game iterations run through Engine v9 for every matchup. Each simulation accounts for variance, pace, and scoring distributions.</p>
-                    </div>
-                    <div class="hiw-step">
-                        <div class="hiw-step-number">03_EDGE</div>
-                        <h3>The Edge</h3>
-                        <div class="hiw-stat">Top 3%</div>
-                        <p>Only the highest-probability value plays survive. We publish the picks where our model finds the widest gap between true odds and the market line.</p>
-                    </div>
+                <div class="partner-box" style="text-align: center; padding: 12px; border-top: 1px solid #39FF14; background: rgba(57, 255, 20, 0.1); margin: 12px 0;">
+                    <span style="color: #aaa; font-size: 12px; text-transform: uppercase;">Official Betting Partner:</span><br>
+                    <a href="https://www.youwager.lv/affiliate/babs123" target="_blank" style="color: #39FF14; font-weight: 900; font-size: 20px; text-decoration: none;">YOUWAGER | [CLAIM 100% MATCH BONUS]</a>
                 </div>
+
+                <p style="color: #555; font-size: 12px; text-align: center; margin: 10px 0 0 0;">Updated daily &bull; Every pick posted before games start</p>
             </div>
         </section>
 
-        <div style="height: 500px; width: 100%; background: transparent; clear: both;"></div>
+        <div style="height: 500px; width: 100%; clear: both; pointer-events: none;"></div>
 
         <!-- ==================== ROW 4: LATEST PICKS ==================== -->
         <section style="max-width: 1400px; margin: 0 auto; padding: 0 30px;">
@@ -3934,5 +3907,6 @@ function closeEmailPopup() {
 <!-- Clicky Analytics -->
 <a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script async data-id="101485054" src="//static.getclicky.com/js"></script>
+<div style="height: 1200px; width: 100%;"></div>
 </body>
 </html>
