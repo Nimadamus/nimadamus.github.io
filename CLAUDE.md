@@ -104,6 +104,8 @@ WRONG (BANNED):
 
 ### PERMANENTLY LOCKED - FEBRUARY 14, 2026
 
+**NOTE (March 22, 2026): Daily sport preview pages are NO LONGER created as individual files. They use the Rolling Hub system (see "ROLLING HUB SYSTEM" section). This keyword-rich URL rule still applies to Featured Game pages, blog posts, news articles, and standalone content - just NOT to daily sport previews.**
+
 **EVERY new page MUST have a unique, keyword-rich URL. The old page## numbering is DEAD.**
 
 ### THE NAMING CONVENTION:
@@ -204,96 +206,70 @@ The ONLY change is the filename itself.
 
 ---
 
-## ⛔⛔⛔ ABSOLUTE RULE: ALWAYS CREATE DEDICATED PAGE FILES ⛔⛔⛔
+## ⛔⛔⛔ ROLLING HUB SYSTEM - REPLACES DAILY DATED PAGES ⛔⛔⛔
 
-### PERMANENTLY LOCKED - JANUARY 14, 2026
+### PERMANENTLY LOCKED - MARCH 22, 2026
 
-**EVERY day's sports content MUST be saved to BOTH the main page AND a dedicated page file.**
+**The old system of creating daily dated pages (nba-page76.html, nba-game-previews-march-20-2026.html, etc.) is PERMANENTLY RETIRED. It has been replaced by the Rolling Hub model.**
 
-### THE RULE:
+### THE NEW SYSTEM:
+
+| Sport | Permanent Hub URL | Archive Pattern |
+|-------|-------------------|-----------------|
+| NBA | nba-previews.html | nba-previews-archive-[month]-[year].html |
+| NHL | nhl-previews.html | nhl-previews-archive-[month]-[year].html |
+| MLB | mlb-previews.html | mlb-previews-archive-[month]-[year].html |
+| NCAAB | college-basketball-previews.html | college-basketball-previews-archive-[month]-[year].html |
+| Soccer | soccer-previews.html | soccer-previews-archive-[month]-[year].html |
+
+### HOW IT WORKS:
+
 ```
-When adding daily sports content:
-1. Update the main page (nba.html, nhl.html, etc.)
-2. ALSO create a dedicated page file with a KEYWORD-RICH filename
-3. The page file preserves content when main page is updated tomorrow
-
-CORRECT (Content Preserved):
-  nba.html         ← Today's content (will be overwritten tomorrow)
-  nba-game-previews-analysis-february-15-2026.html  ← PERMANENT archive
-
-WRONG (Content LOST):
-  nba.html         ← Today's content (will be overwritten tomorrow)
-  [no page file]   ← CONTENT LOST FOREVER when tomorrow's update comes!
-```
-
-### WHAT HAPPENED (January 12, 2026):
-- January 12 content was added to main pages (nba.html, nhl.html, etc.)
-- NO dedicated page files were created
-- When January 13 updates were made, main pages were overwritten
-- Result: ALL January 12 content was LOST
-- Had to recover from git history
-
-### THE PRE-COMMIT HOOK NOW BLOCKS THIS:
-The pre-commit hook will BLOCK commits that update main sports pages
-without having a corresponding dedicated page file for that date.
-
-### WHEN CREATING DAILY SPORTS CONTENT:
-```bash
-# 1. Find next page number
-ls nba-page*.html | tail -1  # e.g., nba-page47.html
-
-# 2. Create BOTH files
-# Main page (for "latest" view):
-#   Update nba.html with today's content
-
-# Archive page (PERMANENT):
-#   Create nba-page48.html with same content
-#   Update canonical URL to nba-page48.html
-
-# 3. Sync calendars
-python scripts/sync_calendars.py
-
-# 4. Commit BOTH files together
-git add nba.html nba-page48.html
+1. Each sport has ONE permanent hub page that accumulates all SEO authority
+2. Hub pages are updated daily with fresh content (replacing yesterday's)
+3. Before updating, run the rotation script to archive yesterday's content
+4. Archives are noindexed monthly files (no crawl budget waste)
+5. Hub pages self-canonicalize (canonical points to themselves)
+6. Archives canonical-point to the hub (passes authority up)
 ```
 
-### VALIDATION SCRIPT:
-Run this to check for missing page files:
-```bash
-python scripts/validate_daily_pages.py
+### DAILY SLATE WORKFLOW (UPDATED):
+
+```
+STEP 1: Archive yesterday's content
+  python scripts/rotate_all_hubs.py
+
+STEP 2: Update each hub page with today's content
+  - Replace content between DAILY CONTENT START/END markers
+  - Update the "Last Updated" line
+  - Update JSON-LD SportsEvent schema
+  - Update hero badge (e.g., "8-Game Tuesday Slate")
+  - Update hero h1 (e.g., "NBA Previews Today")
+  - Update hero description paragraph
+
+STEP 3: Run validators and push
+  python accuracy_filter.py [file]
+  python validate_news_before_publish.py [file]
+  git add . && git commit && git push
 ```
 
-**IF I UPDATE MAIN PAGES WITHOUT CREATING PAGE FILES, CONTENT WILL BE LOST.**
-
-**THIS HAPPENED ONCE. IT WILL NEVER HAPPEN AGAIN.**
-
-### BEFORE CREATING ANY SPORTS PAGE:
+### BANNED FOREVER (OLD SYSTEM):
 ```
-1. ALWAYS include the date in the <title> tag
-2. Format: "[Sport] Analysis - [Full Date] | BetLegend"
-3. NEVER use "Archive - Page X" format
-4. Run sync_calendars.py after creating pages
-5. Verify the date appears in the calendar
+❌ Creating new dated page files (nba-game-previews-march-22-2026.html)
+❌ Creating page-numbered files (nba-page77.html)
+❌ Creating any new sport preview URL that isn't one of the 5 hubs
+❌ Using nba.html, nhl.html, etc. as the primary sport pages
+❌ The old nba-picks-today.html, nhl-picks-today.html URLs
 ```
 
-### THE PRE-COMMIT HOOK BLOCKS THIS:
-The pre-commit hook will BLOCK commits with generic "Archive - Page X" titles.
-If a commit is blocked - FIX THE TITLES BEFORE PUSHING.
+### WHY THIS EXISTS (March 22, 2026):
+- 500+ dated preview pages were diluting domain authority
+- Google was flagging thin, near-identical programmatic content
+- Crawl budget was being wasted on hundreds of low-value URLs
+- Rankings were dropping because link equity was spread across 500+ pages
+- The Rolling Hub model consolidates ALL authority onto 5 permanent URLs
 
-**GENERIC TITLES = INVISIBLE PAGES. ALWAYS INCLUDE DATES.**
-
-### CALENDAR GAP DETECTION SCRIPT:
-Run this script to check for calendar issues BEFORE committing:
-```bash
-python scripts/detect_calendar_gaps.py
-```
-
-This script detects:
-1. **CRITICAL**: Pages with generic/missing date titles
-2. **WARNING**: Duplicate dates (multiple pages for same date)
-3. **INFO**: Recent gaps (may be intentional if no games)
-
-**RUN THIS BEFORE EVERY COMMIT TO SPORTS PAGES.**
+**IF I CREATE A NEW DATED SPORT PREVIEW PAGE INSTEAD OF UPDATING THE HUB, I HAVE FAILED.**
 
 ---
 
@@ -1069,12 +1045,12 @@ SLATE is not done until ALL active sports have pages.
 ## STEP 4: POSTING LOCATIONS
 
 - **Blog picks/analysis**: blog-page10.html (add to TOP)
-- **NBA slate posts**: nba.html (add to TOP)
-- **NHL slate posts**: nhl.html (add to TOP)
-- **NCAAB posts**: ncaab.html (add to TOP)
+- **NBA slate posts**: nba-previews.html (Rolling Hub)
+- **NHL slate posts**: nhl-previews.html (Rolling Hub)
+- **NCAAB posts**: college-basketball-previews.html (Rolling Hub)
 - **NFL posts**: nfl.html (add to TOP)
-- **Soccer posts**: soccer.html (add to TOP)
-- **MLB slate posts**: mlb.html (add to TOP)
+- **Soccer posts**: soccer-previews.html (Rolling Hub)
+- **MLB slate posts**: mlb-previews.html (Rolling Hub)
 - **Featured Game of the Day**: Latest keyword-rich featured game page
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
 
