@@ -244,8 +244,17 @@ STEP 2: Update each hub page with today's content
   - Update the "Last Updated" line
   - Update JSON-LD SportsEvent schema
   - Update hero badge (e.g., "8-Game Tuesday Slate")
-  - Update hero h1 (e.g., "NBA Previews Today")
+  - Update hero h1 (keeps as "NBA Previews Today" etc.)
   - Update hero description paragraph
+
+  CONTENT STANDARD PER GAME (same as old nba.html format):
+  - Team logos from ESPN CDN (verified HTTP 200)
+  - Game number badge + broadcast badge
+  - .game-preview card (or .game-preview.marquee for top games)
+  - Full betting section: Spread/Puck Line, Moneyline, Total
+  - 4 substantial paragraphs of in-depth analysis
+  - .game-divider between games
+  - Analysis only, no picks
 
 STEP 3: Run validators and push
   python accuracy_filter.py [file]
