@@ -4,6 +4,12 @@ on:
   schedule:
     # Run at 11:00 AM ET (16:00 UTC) every day
     - cron: '0 16 * * *'
+  push:
+    paths:
+      - 'nhl-records.html'
+      - 'nfl-records.html'
+      - 'ncaaf-records.html'
+      - 'scripts/generate_transparency_data.py'
   workflow_dispatch:  # Allow manual trigger
 
 jobs:

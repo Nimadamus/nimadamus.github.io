@@ -3629,153 +3629,10 @@ function closeEmailPopup() {
         MLB:   { displayName: 'MLB',              recordsLink: 'betlegend-verified-records.html', htmlPage: null }
     };
 
-    var PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
-    var MLB_SHEETS_URL   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
-
-    var LEAGUE_MAP = { 'nhl':'NHL','hockey':'NHL','nfl':'NFL','football':'NFL','ncaaf':'NCAAF','college football':'NCAAF','cfb':'NCAAF' };
-
     var activeTab = 0;
     var switching = false;
 
     function formatUnits(val) { return (val >= 0 ? '+' : '') + val.toFixed(1); }
-
-    /* ---- CSV parser ---- */
-    function parseCSVLine(line) {
-        var vals = [], cur = '', inQ = false;
-        for (var i = 0; i < line.length; i++) {
-            var c = line[i];
-            if (c === '"') { inQ = !inQ; }
-            else if (c === ',' && !inQ) { vals.push(cur.trim()); cur = ''; }
-            else { cur += c; }
-        }
-        vals.push(cur.trim());
-        return vals;
-    }
-
-    function parseCSV(text) {
-        var lines = text.split(/\r?\n/).filter(function(l) { return l.trim(); });
-        if (lines.length < 2) return [];
-        var headers = parseCSVLine(lines[0]).map(function(h) { return h.toLowerCase().replace(/[^a-z0-9]/g, ''); });
-        var rows = [];
-        for (var i = 1; i < lines.length; i++) {
-            var vals = parseCSVLine(lines[i]);
-            var obj = {};
-            headers.forEach(function(h, j) { obj[h] = vals[j] || ''; });
-            rows.push(obj);
-        }
-        return rows;
-    }
-
-    function calcUnitResult(stake, odds, result) {
-        if (result === 'W') return odds < 0 ? stake : stake * (odds / 100);
-        if (result === 'L') return odds < 0 ? -stake * (Math.abs(odds) / 100) : -stake;
-        return 0;
-    }
-
-    function parseTrackerPicks(rows) {
-        var picks = {};
-        rows.forEach(function(r) {
-            var league = (r.league || r.sport || '').toLowerCase().trim();
-            var mapped = LEAGUE_MAP[league];
-            if (!mapped) return;
-            var result = (r.result || '').trim().toUpperCase();
-            if (result !== 'W' && result !== 'L' && result !== 'P') return;
-            var stake = parseFloat(r.units || '3') || 3;
-            var odds = parseFloat(r.odds || r.line || '-110') || -110;
-            var unitResult = calcUnitResult(stake, odds, result);
-            var key = (r.date || '') + '|' + (r.pick || r.game || '');
-            if (!picks[mapped]) picks[mapped] = {};
-            picks[mapped][key] = { result: result, units: unitResult };
-        });
-        return picks;
-    }
-
-    function parseMLBSheet(rows) {
-        var w = 0, l = 0, p = 0, u = 0, total = 0;
-        rows.forEach(function(r) {
-            var result = (r.result || '').trim().toUpperCase();
-            if (result === 'W' || result === 'WIN') { w++; }
-            else if (result === 'L' || result === 'LOSS') { l++; }
-            else if (result === 'P' || result === 'PUSH') { p++; }
-            else return;
-            total++;
-            u += parseFloat(r.units || '0') || 0;
-        });
-        if (total === 0) return null;
-        return { displayName: 'MLB', wins: w, losses: l, pushes: p, totalUnits: u, winPct: Math.round(w / (w + l) * 100) || 0, totalPicks: total };
-    }
-
-    /* ---- Parse HTML records pages ---- */
-    function parseHTMLRecords(html) {
-        var picks = {};
-        var rows = html.match(/<tr[^>]*>[\s\S]*?<\/tr>/gi) || [];
-        rows.forEach(function(row) {
-            var cells = row.match(/<td[^>]*>([\s\S]*?)<\/td>/gi);
-            if (!cells || cells.length < 4) return;
-            var strip = function(s) { return s.replace(/<[^>]*>/g, '').trim(); };
-            var date = strip(cells[0]);
-            var game = strip(cells[1]);
-            var result = strip(cells[cells.length - 2]).toUpperCase();
-            var units = parseFloat(strip(cells[cells.length - 1])) || 0;
-            if (result !== 'W' && result !== 'L' && result !== 'P') return;
-            var key = date + '|' + game;
-            picks[key] = { result: result, units: units };
-        });
-        return picks;
-    }
-
-    function tallyPicks(picks, cfg) {
-        var w = 0, l = 0, p = 0, u = 0, total = 0;
-        for (var k in picks) {
-            var pk = picks[k];
-            if (pk.result === 'W') w++;
-            else if (pk.result === 'L') l++;
-            else if (pk.result === 'P') p++;
-            total++;
-            u += pk.units || 0;
-        }
-        if (total === 0) return null;
-        return { displayName: cfg.displayName, wins: w, losses: l, pushes: p, totalUnits: u, winPct: Math.round(w / (w + l) * 100) || 0, totalPicks: total };
-    }
-
-    function fetchLiveData() {
-        var cb = '&cb=' + Date.now();
-        var htmlFetches = {};
-        for (var sport in SPORT_CONFIG) {
-            if (SPORT_CONFIG[sport].htmlPage) {
-                htmlFetches[sport] = fetch(SPORT_CONFIG[sport].htmlPage + '?cb=' + Date.now(), {cache:'no-store'}).then(function(r){return r.text();});
-            }
-        }
-        return Promise.allSettled([
-            fetch(PICK_TRACKER_URL + cb, {cache:'no-store'}).then(function(r){return r.text();}),
-            fetch(MLB_SHEETS_URL + '&cache=' + Date.now(), {cache:'no-store'}).then(function(r){return r.text();}),
-            Promise.allSettled(Object.keys(htmlFetches).map(function(k) { return htmlFetches[k].then(function(v) { return {sport: k, value: v}; }); }))
-        ]).then(function(results) {
-            var trackerR = results[0], mlbR = results[1], htmlR = results[2];
-            var live = {};
-            var trackerPicks = {};
-            if (trackerR.status === 'fulfilled') {
-                try { trackerPicks = parseTrackerPicks(parseCSV(trackerR.value)); } catch(e){}
-            }
-            if (htmlR.status === 'fulfilled' && htmlR.value) {
-                htmlR.value.forEach(function(r) {
-                    if (r.status !== 'fulfilled' || !r.value) return;
-                    var sport = r.value.sport;
-                    var htmlMap = {};
-                    htmlMap[sport] = r.value;
-                    try {
-                        var picks = parseHTMLRecords(htmlMap[sport].value);
-                        if (trackerPicks[sport]) { for (var k in trackerPicks[sport]) picks[k] = trackerPicks[sport][k]; }
-                        live[sport] = tallyPicks(picks, SPORT_CONFIG[sport]);
-                    } catch(e){}
-                });
-            }
-            if (mlbR.status === 'fulfilled') {
-                try { live.MLB = parseMLBSheet(parseCSV(mlbR.value)); } catch(e){}
-            }
-            return live;
-        });
-    }
 
     /* ---- Build tabbed panels from data ---- */
     function buildTabs(data) {
@@ -3880,7 +3737,10 @@ function closeEmailPopup() {
         });
     }
 
-    /* ---- Init: static data first, then fetch live ---- */
+    /* ---- Init: use pre-generated data from transparency-widget-data.js ---- */
+    /* Data is generated by scripts/generate_transparency_data.py which reads  */
+    /* the actual records pages + Google Sheets with verified calculations.     */
+    /* No client-side CSV parsing - single source of truth, zero parsing bugs. */
     if (typeof TRANSPARENCY_DATA !== 'undefined') {
         buildTabs(TRANSPARENCY_DATA.sports);
     }
@@ -3900,18 +3760,7 @@ function closeEmailPopup() {
         startRotation();
     }
 
-    fetchLiveData().then(function(live) {
-        var hasLive = false;
-        for (var k in live) { hasLive = true; break; }
-        if (hasLive) {
-            var merged = {};
-            SPORT_ORDER.forEach(function(key) {
-                merged[key] = live[key] || (typeof TRANSPARENCY_DATA !== 'undefined' ? TRANSPARENCY_DATA.sports[key] : null);
-            });
-            buildTabs(merged);
-        }
-        startRotation();
-    }).catch(function(){ startRotation(); });
+    startRotation();
 })();
 </script>
 <!-- ==================== END RECORDS WIDGET JS ==================== -->
