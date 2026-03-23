@@ -3621,9 +3621,10 @@ function closeEmailPopup() {
 (function() {
     'use strict';
 
-    var SPORT_ORDER = ['NHL', 'MLB', 'NFL', 'NCAAF'];
+    var SPORT_ORDER = ['NHL', 'NBA', 'MLB', 'NFL', 'NCAAF'];
     var SPORT_CONFIG = {
         NHL:   { displayName: 'NHL',              recordsLink: 'nhl-records.html',               htmlPage: 'nhl-records.html' },
+        NBA:   { displayName: 'NBA',              recordsLink: 'nba-records.html',               htmlPage: 'nba-records.html' },
         NFL:   { displayName: 'NFL',              recordsLink: 'nfl-records.html',               htmlPage: 'nfl-records.html' },
         NCAAF: { displayName: 'College Football', recordsLink: 'ncaaf-records.html',             htmlPage: 'ncaaf-records.html' },
         MLB:   { displayName: 'MLB',              recordsLink: 'betlegend-verified-records.html', htmlPage: null }
@@ -3632,7 +3633,7 @@ function closeEmailPopup() {
     var PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
     var MLB_SHEETS_URL   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
 
-    var LEAGUE_MAP = { 'nhl':'NHL','hockey':'NHL','nfl':'NFL','football':'NFL','ncaaf':'NCAAF','college football':'NCAAF','cfb':'NCAAF' };
+    var LEAGUE_MAP = { 'nhl':'NHL','hockey':'NHL','nba':'NBA','basketball':'NBA','nfl':'NFL','football':'NFL','ncaaf':'NCAAF','college football':'NCAAF','cfb':'NCAAF' };
 
     var activeTab = 0;
     var switching = false;
@@ -3813,7 +3814,10 @@ function closeEmailPopup() {
         document.querySelectorAll('.rw-tab').forEach(function(tab) {
             tab.addEventListener('click', function() {
                 var idx = parseInt(this.dataset.index);
-                if (idx !== activeTab && !switching) switchTab(idx);
+                if (idx !== activeTab && !switching) {
+                    switchTab(idx);
+                    resetRotation();
+                }
             });
         });
 
@@ -3874,6 +3878,21 @@ function closeEmailPopup() {
         buildTabs(TRANSPARENCY_DATA.sports);
     }
 
+    /* ---- Auto-rotation timer ---- */
+    var rotationInterval = null;
+    function startRotation() {
+        if (rotationInterval) clearInterval(rotationInterval);
+        rotationInterval = setInterval(function() {
+            var tabs = document.querySelectorAll('.rw-tab');
+            if (tabs.length === 0) return;
+            var next = (activeTab + 1) % tabs.length;
+            switchTab(next);
+        }, 5000);
+    }
+    function resetRotation() {
+        startRotation();
+    }
+
     fetchLiveData().then(function(live) {
         var hasLive = false;
         for (var k in live) { hasLive = true; break; }
@@ -3882,15 +3901,10 @@ function closeEmailPopup() {
             SPORT_ORDER.forEach(function(key) {
                 merged[key] = live[key] || (typeof TRANSPARENCY_DATA !== 'undefined' ? TRANSPARENCY_DATA.sports[key] : null);
             });
-            // Override NHL with verified correct values (live parser has calculation error)
-            if (merged.NHL) {
-                merged.NHL.totalUnits = 25.0;
-                merged.NHL.winPct = 57;
-                merged.NHL.totalPicks = 507;
-            }
             buildTabs(merged);
         }
-    }).catch(function(){});
+        startRotation();
+    }).catch(function(){ startRotation(); });
 })();
 </script>
 <!-- ==================== END RECORDS WIDGET JS ==================== -->
