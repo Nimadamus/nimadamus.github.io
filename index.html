@@ -3694,8 +3694,8 @@ function closeEmailPopup() {
         var w = 0, l = 0, p = 0, u = 0, total = 0;
         rows.forEach(function(r) {
             var result = (r.result || '').trim().toUpperCase();
-            if (result === 'W') { w++; }
-            else if (result === 'L') { l++; }
+            if (result === 'W' || result === 'WIN') { w++; }
+            else if (result === 'L' || result === 'LOSS') { l++; }
             else if (result === 'P' || result === 'PUSH') { p++; }
             else return;
             total++;
