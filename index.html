@@ -3666,6 +3666,12 @@ function closeEmailPopup() {
         return rows;
     }
 
+    function calcUnitResult(stake, odds, result) {
+        if (result === 'W') return odds < 0 ? stake : stake * (odds / 100);
+        if (result === 'L') return odds < 0 ? -stake * (Math.abs(odds) / 100) : -stake;
+        return 0;
+    }
+
     function parseTrackerPicks(rows) {
         var picks = {};
         rows.forEach(function(r) {
@@ -3674,10 +3680,12 @@ function closeEmailPopup() {
             if (!mapped) return;
             var result = (r.result || '').trim().toUpperCase();
             if (result !== 'W' && result !== 'L' && result !== 'P') return;
-            var units = parseFloat(r.units || r.unitresult || '0') || 0;
+            var stake = parseFloat(r.units || '3') || 3;
+            var odds = parseFloat(r.line || r.odds || '-110') || -110;
+            var unitResult = calcUnitResult(stake, odds, result);
             var key = (r.date || '') + '|' + (r.pick || r.game || '');
             if (!picks[mapped]) picks[mapped] = {};
-            picks[mapped][key] = { result: result, units: units };
+            picks[mapped][key] = { result: result, units: unitResult };
         });
         return picks;
     }
@@ -3691,7 +3699,14 @@ function closeEmailPopup() {
             else if (result === 'P' || result === 'PUSH') { p++; }
             else return;
             total++;
-            u += parseFloat(r.units || r.unitresult || '0') || 0;
+            var pl = r.profitloss || r.pl || r.unitresult || '';
+            if (pl) {
+                u += parseFloat(pl.replace('+','')) || 0;
+            } else {
+                var stake = parseFloat(r.units || '3') || 3;
+                var odds = parseFloat(r.line || r.odds || '-110') || -110;
+                u += calcUnitResult(stake, odds, result);
+            }
         });
         if (total === 0) return null;
         return { displayName: 'MLB', wins: w, losses: l, pushes: p, totalUnits: u, winPct: Math.round(w / (w + l) * 100) || 0, totalPicks: total };
