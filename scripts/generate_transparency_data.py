@@ -26,7 +26,6 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Records pages with embedded HTML tables (sport key -> filename)
 HTML_RECORDS_PAGES = {
     "NHL": "nhl-records.html",
-    "NBA": "nba-records.html",
     "NFL": "nfl-records.html",
     "NCAAF": "ncaaf-records.html",
 }
@@ -41,8 +40,6 @@ PICK_TRACKER_URL = "https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8Qp
 LEAGUE_MAP = {
     "nhl": "NHL",
     "hockey": "NHL",
-    "nba": "NBA",
-    "basketball": "NBA",
     "nfl": "NFL",
     "football": "NFL",
     "ncaaf": "NCAAF",
@@ -53,7 +50,6 @@ LEAGUE_MAP = {
 # Display names for the widget
 DISPLAY_NAMES = {
     "NHL": "NHL",
-    "NBA": "NBA",
     "MLB": "MLB",
     "NFL": "NFL",
     "NCAAF": "College Football",
@@ -62,7 +58,6 @@ DISPLAY_NAMES = {
 # Links to full records pages
 RECORDS_LINKS = {
     "NHL": "nhl-records.html",
-    "NBA": "nba-records.html",
     "MLB": "betlegend-verified-records.html",
     "NFL": "nfl-records.html",
     "NCAAF": "ncaaf-records.html",

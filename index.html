@@ -3146,7 +3146,7 @@ crossorigin="anonymous"></script>
                 <a href="nhl.html" class="quick-link-card">
                     <div class="card-icon">🏒</div>
                     <h3>NHL Analysis</h3>
-                    <p>Tonight's NHL matchups with goalie stats, power play trends, and puck line analysis for every game.</p>
+                    <p>Tonight's NHL matchups with goalie stats, power play trends, puck line analysis, and <a href="nhl-home-away-splits.html" style="color:#FFD700;text-decoration:none;border-bottom:1px solid rgba(255,215,0,0.3);">home ice performance data</a> for every game.</p>
                 </a>
                 <a href="ncaab.html" class="quick-link-card">
                     <div class="card-icon">🏀</div>
@@ -3621,10 +3621,9 @@ function closeEmailPopup() {
 (function() {
     'use strict';
 
-    var SPORT_ORDER = ['NHL', 'NBA', 'MLB', 'NFL', 'NCAAF'];
+    var SPORT_ORDER = ['NHL', 'MLB', 'NFL', 'NCAAF'];
     var SPORT_CONFIG = {
         NHL:   { displayName: 'NHL',              recordsLink: 'nhl-records.html',               htmlPage: 'nhl-records.html' },
-        NBA:   { displayName: 'NBA',              recordsLink: 'nba-records.html',               htmlPage: 'nba-records.html' },
         NFL:   { displayName: 'NFL',              recordsLink: 'nfl-records.html',               htmlPage: 'nfl-records.html' },
         NCAAF: { displayName: 'College Football', recordsLink: 'ncaaf-records.html',             htmlPage: 'ncaaf-records.html' },
         MLB:   { displayName: 'MLB',              recordsLink: 'betlegend-verified-records.html', htmlPage: null }
@@ -3633,7 +3632,7 @@ function closeEmailPopup() {
     var PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
     var MLB_SHEETS_URL   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
 
-    var LEAGUE_MAP = { 'nhl':'NHL','hockey':'NHL','nba':'NBA','basketball':'NBA','nfl':'NFL','football':'NFL','ncaaf':'NCAAF','college football':'NCAAF','cfb':'NCAAF' };
+    var LEAGUE_MAP = { 'nhl':'NHL','hockey':'NHL','nfl':'NFL','football':'NFL','ncaaf':'NCAAF','college football':'NCAAF','cfb':'NCAAF' };
 
     var activeTab = 0;
     var switching = false;
