@@ -24,9 +24,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Blackhawks +1.5 (-170) / ML (+145)",
+        date: "March 24, 2026",
+        result: "",
+        url: "blackhawks-puck-line-moneyline-at-islanders-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/v1774379795/prd/gkcvaq2emfye76x5ek5k.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Kraken vs Blue Jackets Under 6.5 (-120)",
         date: "March 21, 2026",
-        result: "",
+        result: "L",
         url: "kraken-blue-jackets-under-6-5-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/xrvcgou7nncebdksdrg1.jpg"
     },
