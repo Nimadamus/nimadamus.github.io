@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "March 24, 2026",
         result: "",
         url: "blackhawks-puck-line-moneyline-at-islanders-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/v1774379795/prd/gkcvaq2emfye76x5ek5k.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/p02oc3irhchowhosjttd"
     },
     {
         sport: "NHL",
