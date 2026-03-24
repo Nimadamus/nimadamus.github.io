@@ -1,0 +1,134 @@
+NHL DATA SYSTEM - HANDOFF SUMMARY
+Created: March 22, 2026
+
+
+DATA SOURCE
+
+API Endpoint: https://api-web.nhle.com/v1/standings/now
+Authority: Official NHL API, verified against ESPN
+
+
+FILES
+
+JSON (single source of truth): nhl-standings-data.json (repo root)
+Sync script: scripts/sync_nhl_data.py
+GitHub Actions workflow: .github/workflows/daily-nhl-data.yml
+
+
+AUTOMATION SCHEDULE
+
+Runs daily at 11:00 AM ET (16:00 UTC)
+Trigger: cron 0 16 * * * plus manual workflow_dispatch
+
+
+VALIDATION CHECKS
+
+1. Team count must equal 32
+2. No null or missing values in any required field
+3. Home W + Road W = Total W (every team)
+4. Home L + Road L = Total L (every team)
+5. Home OTL + Road OTL = Total OTL (every team)
+6. Home GP + Away GP = Total GP (every team)
+7. Pre-write validation runs before saving any files
+8. Post-write validation re-reads JSON after all pages are written
+
+
+FAILURE HANDLING
+
+API fetch fails or returns fewer than 32 teams: exit code 1, no files touched
+Pre-write validation fails: exit code 1, no files touched
+Post-write validation fails: JSON restored from .bak backup, exit code 1
+GitHub Actions: commit and push step only runs if sync script exits 0
+
+
+PAGES USING THIS DATA
+
+nhl-home-away-splits.html
+  All 32 team records, home/away splits, win percentages, points percentages, league-wide summary
+
+nhl-totals-trends.html
+  GF/GP, GA/GP, combined goals per game, league averages, summary stat cards
+
+nhl-team-trends.html
+  Overall records only (ATS and O/U sourced from Action Network, not automated)
+
+nhl-betting-hub.html
+  Date reference only
+
+nhl-records.html
+  Own pick history, separate system, not API-driven
+
+
+INTERNAL LINKS TO /nhl-home-away-splits.html
+
+33 pages total (excluding self-references)
+
+Homepage: index.html
+
+NHL data hub pages: nhl-betting-hub.html, nhl-team-trends.html, nhl-totals-trends.html, nhl-previews.html
+
+Pre-existing navigation: nhl-page10.html, golden-knights-marner-visits-capitals-nhl-february-27-2026.html
+
+Standalone NHL pick pages:
+  devils-moneyline-plus-110-at-capitals-nhl.html
+  penguins-avalanche-over-6-5-nhl.html
+  rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl-march-14-2026.html
+
+Featured game analysis pages:
+  avalanche-vs-stars-nhl-analysis-stats-preview-march-6-2026.html
+  lightning-vs-wild-nhl-analysis-stats-preview-march-3-2026.html
+  maple-leafs-vs-lightning-nhl-analysis-stats-preview-february-25-2026.html
+  stars-vs-avalanche-nhl-analysis-stats-preview-march-18-2026.html
+
+NHL daily preview pages:
+  maple-leafs-lightning-atlantic-division-nhl-february-25-2026.html
+  wild-avalanche-central-division-battle-nhl-february-26-2026.html
+  golden-knights-penguins-cross-conference-nhl-march-1-2026.html
+  stars-canucks-pacific-division-nhl-march-2-2026.html
+  panthers-devils-defending-champs-visit-jersey-nhl-march-3-2026.html
+  hurricanes-canucks-cross-conference-showdown-nhl-march-4-2026.html
+  maple-leafs-rangers-original-six-rivalry-nhl-march-5-2026.html
+  nhl-trade-deadline-day-avalanche-stars-showdown-march-6-2026.html
+  capitals-bruins-rangers-devils-abc-doubleheader-nhl-march-7-2026.html
+  lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html
+  blue-jackets-surge-rangers-flyers-rivalry-nhl-march-9-2026.html
+  mcdavid-mackinnon-showdown-leafs-canadiens-rivalry-nhl-march-10-2026.html
+  battle-of-ontario-capitals-flyers-metro-showdown-nhl-march-11-2026.html
+  oilers-stars-western-showdown-sabres-lead-atlantic-nhl-march-12-2026.html
+  mcdavid-oilers-visit-blues-kings-islanders-nhl-march-13-2026.html
+  avalanche-jets-bruins-capitals-14-game-saturday-nhl-march-14-2026.html
+  wild-host-maple-leafs-panthers-visit-kraken-nhl-march-15-2026.html
+  bruins-devils-playoff-push-avs-best-in-hockey-nhl-march-16-2026.html
+  bruins-canadiens-rivalry-sabres-surge-wild-streak-nhl-march-17-2026.html
+  hudson-river-rivalry-stars-avalanche-elite-showdown-nhl-march-18-2026.html
+  hurricanes-leafs-avalanche-roll-panthers-west-nhl-march-20-2026.html
+
+
+LOCKED RULES
+
+No changes to JSON schema
+No changes to data structure
+No changes to sync script logic
+No changes to validation checks
+No changes to page rendering or layout
+No changes to GitHub Actions workflow
+NHL API is the only source of truth for standings data
+Action Network is the source for ATS and O/U data (not updated by script)
+
+
+ALLOWED FUTURE CHANGES
+
+Updating API endpoint URL if NHL changes it
+Fixing critical bugs if they occur
+Updating ATS and O/U data manually from Action Network (not automated)
+
+
+KNOWN RISKS
+
+1. ATS and O/U data is not automated. Action Network data on nhl-team-trends.html and nhl-totals-trends.html requires manual updates. The sync script only updates overall records and GF/GA on those pages.
+
+2. NHL API schema changes. If NHL changes field names such as homeWins, the parser will fail gracefully (validation catches it), but the script will need a code fix.
+
+3. Team name mapping. The script maps Utah Hockey Club to Utah Mammoth. If another franchise relocates or rebrands, TEAM_NAME_MAP in the script needs updating.
+
+4. Season rollover. When the 2026-27 season starts, the season field in JSON and date patterns in HTML regex need updating.
