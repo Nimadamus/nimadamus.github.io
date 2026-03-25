@@ -23,6 +23,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Yankees at Giants OVER 7 (-110)",
+        date: "March 25, 2026",
+        url: "yankees-giants-over-7-opening-day-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-images/image/upload/t_16x9/t_w1024/mlb/i8rrz7i5pyfxit8mo78l"
+    },
+    {
         sport: "NHL",
         title: "Blackhawks +1.5 (-170) / ML (+145)",
         date: "March 24, 2026",
