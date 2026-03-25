@@ -27,18 +27,24 @@ else:
 SCRIPTS_DIR = REPO_DIR / 'scripts'
 
 # Sport configurations
+# 'hub' = the rolling hub page (nba-previews.html, etc.) - always represents today's content
 SPORTS = {
-    'nba': {'prefix': 'nba', 'globs': ['nba*.html', '*-nba-*.html'], 'main': 'nba.html', 'calendar_js': 'nba-calendar.js'},
-    'nhl': {'prefix': 'nhl', 'globs': ['nhl*.html', '*-nhl-*.html'], 'main': 'nhl.html', 'calendar_js': 'nhl-calendar.js'},
-    'ncaab': {'prefix': 'ncaab', 'globs': ['ncaab*.html', 'college-basketball-*.html', '*-ncaab-*.html', '*-college-basketball-*.html'], 'main': 'ncaab.html', 'calendar_js': 'ncaab-calendar.js'},
-    'ncaaf': {'prefix': 'ncaaf', 'globs': ['ncaaf*.html', 'college-football-*.html', '*-ncaaf-*.html', '*-college-football-*.html'], 'main': 'ncaaf.html', 'calendar_js': 'ncaaf-calendar.js'},
-    'nfl': {'prefix': 'nfl', 'globs': ['nfl*.html', '*-nfl-*.html'], 'main': 'nfl.html', 'calendar_js': 'nfl-calendar.js'},
-    'mlb': {'prefix': 'mlb', 'globs': ['mlb*.html', '*-mlb-*.html'], 'main': 'mlb.html', 'calendar_js': 'mlb-calendar.js'},
-    'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html', '*-soccer-*.html'], 'main': 'soccer.html', 'calendar_js': 'soccer-calendar.js'},
+    'nba': {'prefix': 'nba', 'globs': ['nba*.html', '*-nba-*.html'], 'main': 'nba.html', 'hub': 'nba-previews.html', 'calendar_js': 'nba-calendar.js', 'archive_pattern': 'nba-previews-archive-*.html'},
+    'nhl': {'prefix': 'nhl', 'globs': ['nhl*.html', '*-nhl-*.html'], 'main': 'nhl.html', 'hub': 'nhl-previews.html', 'calendar_js': 'nhl-calendar.js', 'archive_pattern': 'nhl-previews-archive-*.html'},
+    'ncaab': {'prefix': 'ncaab', 'globs': ['ncaab*.html', 'college-basketball-*.html', '*-ncaab-*.html', '*-college-basketball-*.html'], 'main': 'ncaab.html', 'hub': 'college-basketball-previews.html', 'calendar_js': 'ncaab-calendar.js', 'archive_pattern': 'college-basketball-previews-archive-*.html'},
+    'ncaaf': {'prefix': 'ncaaf', 'globs': ['ncaaf*.html', 'college-football-*.html', '*-ncaaf-*.html', '*-college-football-*.html'], 'main': 'ncaaf.html', 'hub': None, 'calendar_js': 'ncaaf-calendar.js', 'archive_pattern': None},
+    'nfl': {'prefix': 'nfl', 'globs': ['nfl*.html', '*-nfl-*.html'], 'main': 'nfl.html', 'hub': None, 'calendar_js': 'nfl-calendar.js', 'archive_pattern': None},
+    'mlb': {'prefix': 'mlb', 'globs': ['mlb*.html', '*-mlb-*.html'], 'main': 'mlb.html', 'hub': 'mlb-previews.html', 'calendar_js': 'mlb-calendar.js', 'archive_pattern': 'mlb-previews-archive-*.html'},
+    'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html', '*-soccer-*.html'], 'main': 'soccer.html', 'hub': 'soccer-previews.html', 'calendar_js': 'soccer-calendar.js', 'archive_pattern': 'soccer-previews-archive-*.html'},
 }
 
+# Hub pages - these always represent today's content, not a fixed date
+HUB_PAGES = {cfg['hub'] for cfg in SPORTS.values() if cfg.get('hub')}
+
 # Pages to exclude from calendar (utility pages, news pages, data hubs, not daily analysis)
-EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index', '-news', 'news-', 'offseason', 'insights', 'historical', 'trends', 'splits', 'betting-hub', 'hub']
+# NOTE: 'archive' excludes *-archive-* files from page scanning (dates from archives are extracted separately)
+# NOTE: hub pages are handled specially (not excluded, but assigned today's date)
+EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index', '-news', 'news-', 'offseason', 'insights', 'historical', 'trends', 'splits', 'betting-hub', 'handicapping-hub']
 
 # Dates to EXCLUDE from calendars (days when no content was posted but pages exist)
 # Format: { 'sport': ['YYYY-MM-DD', ...] }
@@ -191,11 +197,62 @@ def parse_written_date(text):
 
     return None
 
+def extract_dates_from_rotation_archive(filepath):
+    """
+    Extract ALL dates from a rotation archive file (e.g., nba-previews-archive-march-2026.html).
+    These files contain <div class="archive-day" id="YYYY-MM-DD"> sections for each archived day.
+    Also looks for date headers like "Tuesday, March 24, 2026" inside archive content.
+    Returns a list of date strings (YYYY-MM-DD).
+    """
+    dates = []
+    try:
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+
+        # Method 1: Extract from archive-day div IDs
+        archive_day_ids = re.findall(r'<div[^>]*class="archive-day"[^>]*id="(\d{4}-\d{2}-\d{2})"', content)
+        dates.extend(archive_day_ids)
+
+        # Method 2: Extract from archive-date headings like "Tuesday, March 24, 2026"
+        archive_headings = re.findall(r'<h2[^>]*class="archive-date"[^>]*>([^<]+)</h2>', content)
+        for heading in archive_headings:
+            date = parse_written_date(heading)
+            if date and date not in dates:
+                dates.append(date)
+
+        # Method 3: Extract from updated-line paragraphs within archived sections
+        updated_lines = re.findall(r'<p[^>]*class="updated-line"[^>]*>[^<]*(?:Updated|Last Updated)[^<]*(\w+ \d{1,2},? \d{4})', content)
+        for line in updated_lines:
+            date = parse_written_date(line)
+            if date and date not in dates:
+                dates.append(date)
+
+        # Method 4: Extract from HTML comment date markers like <!-- ===== MARCH 23, 2026 ===== -->
+        comment_dates = re.findall(r'<!--\s*=+\s*(\w+ \d{1,2},? \d{4})\s*=+\s*-->', content)
+        for cd in comment_dates:
+            date = parse_written_date(cd)
+            if date and date not in dates:
+                dates.append(date)
+
+        # Method 5: Extract from h2 headings with inline style (rotation archives use these)
+        h2_dates = re.findall(r'<h2[^>]*>(\w+ \d{1,2},? \d{4})</h2>', content)
+        for hd in h2_dates:
+            date = parse_written_date(hd)
+            if date and date not in dates:
+                dates.append(date)
+
+    except Exception as e:
+        print(f"  ERROR reading rotation archive {filepath}: {e}")
+
+    return sorted(set(dates))
+
+
 def extract_date_from_page(filepath):
     """
     Extract date from page content using multiple methods.
     Searches in order of reliability:
-    0. Manual override (for pages with unreliable dates)
+    0. Hub pages (rolling hubs) - always return today's date
+    0a. Manual override (for pages with unreliable dates)
     1. Title tag
     2. Meta description
     3. Hero section
@@ -207,13 +264,16 @@ def extract_date_from_page(filepath):
     try:
         filename = filepath.name if hasattr(filepath, 'name') else os.path.basename(filepath)
 
-        # Method 0: Check manual override first
+        # Method 0: Hub pages ALWAYS represent today's content
+        # Their titles are evergreen (no date), so we assign today's date
+        if filename in HUB_PAGES:
+            return datetime.now().strftime('%Y-%m-%d')
+
+        # Method 0a: Check manual override
         if filename in MANUAL_DATE_OVERRIDES:
             return MANUAL_DATE_OVERRIDES[filename]
 
         # UPDATED Jan 10, 2026: Main pages now extract date from TITLE
-        # This allows posting tomorrow's content today and having it appear on the correct calendar date
-        # Previously forced today's date, but this broke when content was prepared in advance
         MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html']
 
         with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
@@ -365,8 +425,42 @@ def get_sport_pages(sport_config):
                 })
                 print(f"    {relative_path}: {date}")
 
+    # Also scan rotation archive files (e.g., nba-previews-archive-march-2026.html)
+    # These contain archived daily content with date markers
+    hub_page = sport_config.get('hub')
+    archive_pattern = sport_config.get('archive_pattern')
+    if archive_pattern:
+        existing_dates = {p['date'] for p in pages}
+        for filepath in REPO_DIR.glob(archive_pattern):
+            archive_dates = extract_dates_from_rotation_archive(filepath)
+            for date in archive_dates:
+                if date not in existing_dates:
+                    # Link archived dates to the hub page (the permanent URL)
+                    pages.append({
+                        'date': date,
+                        'page': hub_page or f'{prefix}.html',
+                        'title': f'{prefix.upper()} Analysis - {date}'
+                    })
+                    existing_dates.add(date)
+                    print(f"    [FROM ARCHIVE] {hub_page}: {date}")
+
     # Sort by date (newest first) then by page name
     pages.sort(key=lambda x: (x['date'], x['page']), reverse=True)
+
+    # Deduplicate: for each date, prefer specific analysis pages over generic main/hub pages
+    # The calendar shows only one page per date (dateMap uses first match),
+    # so we order entries to put specific pages BEFORE hub/main pages for each date
+    generic_pages = {sport_config.get('main', ''), sport_config.get('hub', '')}
+    generic_pages.discard(None)
+    generic_pages.discard('')
+
+    def sort_key(entry):
+        """Sort by date desc, then specific pages before generic ones."""
+        is_generic = 1 if entry['page'] in generic_pages else 0
+        return (-int(entry['date'].replace('-', '')), is_generic, entry['page'])
+
+    pages.sort(key=sort_key)
+
     return pages
 
 def generate_calendar_js(sport_name, sport_config, pages):
@@ -388,6 +482,13 @@ def generate_calendar_js(sport_name, sport_config, pages):
     lines.append('];')
     lines.append('')
 
+    # Build the MAIN_PAGES list dynamically - includes both legacy main pages AND hub pages
+    hub_page = sport_config.get('hub')
+    main_pages_list = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html']
+    if hub_page and hub_page not in main_pages_list:
+        main_pages_list.append(hub_page)
+    main_pages_js = ', '.join(f"'{p}'" for p in main_pages_list)
+
     # Add the rest of the calendar JS code
     lines.extend([
         'const dateMap = {};',
@@ -396,10 +497,13 @@ def generate_calendar_js(sport_name, sport_config, pages):
         'const pageToDateMap = {};',
         'ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });',
         '',
-        '// FIXED Jan 21, 2026: Main pages ALWAYS show today\'s date, archive pages show their date',
-        "const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html'];",
+        '// Main pages and hub pages ALWAYS show today\'s date and highlight today on the calendar',
+        f"const MAIN_PAGES = [{main_pages_js}];",
         "const today = new Date();",
         "const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');",
+        '',
+        '// Ensure today\'s month is always in the month list (even if no archived content yet)',
+        "const todayMonth = todayStr.substring(0, 7);",
         '',
         '// Handle both root pages and archive pages',
         'const pathname = window.location.pathname;',
@@ -412,16 +516,18 @@ def generate_calendar_js(sport_name, sport_config, pages):
         "    currentPage = pathname.split('/').pop() || 'index.html';",
         '}',
         '',
-        '// For main pages (nba.html, nhl.html, etc), ALWAYS use today\'s date',
-        '// For archive pages (nba-picks-analysis-against-the-spread-january-21-2026.html), use the page\'s date',
+        '// For main/hub pages, ALWAYS use today\'s date',
+        '// For archive pages, use the page\'s mapped date',
         'const isMainPage = MAIN_PAGES.includes(currentPage);',
         'const forcedDate = window.FORCED_PAGE_DATE || null;',
         'const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);',
         '',
         'const months = new Set();',
         "ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });",
+        '// Always include today\'s month so the calendar can show it',
+        "months.add(todayMonth);",
         '',
-        '// UPDATED Jan 21, 2026: Main pages show today\'s month, archive pages show their month',
+        '// Main/hub pages show today\'s month; archive pages show their month',
         'const sortedMonths = Array.from(months).sort().reverse();',
         "const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];",
         '',
