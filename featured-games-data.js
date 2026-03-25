@@ -121,6 +121,8 @@ var FEATURED_GAMES = [
     { date: "2026-03-18", page: "stars-vs-avalanche-nhl-analysis-stats-preview-march-18-2026.html", title: "Stars vs Avalanche NHL" },
     { date: "2026-03-19", page: "lakers-vs-heat-analysis-stats-preview-march-19-2026.html", title: "Lakers vs Heat NBA" },
     { date: "2026-03-20", page: "kentucky-vs-santa-clara-analysis-stats-preview-march-20-2026.html", title: "Kentucky vs Santa Clara NCAA Tournament" },
+    { date: "2026-03-24", page: "nuggets-vs-suns-analysis-stats-preview-march-24-2026.html", title: "Denver Nuggets vs Phoenix Suns NBA Preview" },
+    { date: "2026-03-25", page: "yankees-vs-giants-analysis-stats-preview-march-25-2026.html", title: "Yankees vs Giants MLB Opening Night" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
