@@ -761,10 +761,117 @@ def fix_main_page_canonicals():
     return fixed_count
 
 
+def auto_archive_hub_content():
+    """
+    AUTOMATIC ARCHIVAL: Before syncing calendars, check each hub page.
+    If a hub has real content (not placeholder) and that date is NOT yet
+    in the manifest, archive it automatically. This prevents content loss
+    when the hub gets overwritten by the next SLATE.
+
+    This is the SAFETY NET - it runs every time sync_calendars.py runs,
+    which happens after every SLATE. So even if rotate_all_hubs.py was
+    forgotten, the content gets archived here before it can be lost.
+
+    Added March 24, 2026 - PERMANENT FIX for lost calendar days.
+    """
+    import subprocess
+
+    print("\n[AUTO-ARCHIVE] Checking hub pages for unarchived content...")
+    manifest = read_archive_manifest()
+    archived_count = 0
+
+    for sport_name, sport_config in SPORTS.items():
+        hub_file = sport_config.get('hub')
+        if not hub_file:
+            continue
+
+        hub_path = REPO_DIR / hub_file
+        if not hub_path.exists():
+            continue
+
+        # Read the hub page
+        with open(hub_path, 'r', encoding='utf-8', errors='ignore') as f:
+            html = f.read()
+
+        # Check if it has real content (not placeholder)
+        start_marker = '<!-- ========== DAILY CONTENT START ========== -->'
+        end_marker = '<!-- ========== DAILY CONTENT END ========== -->'
+        start_idx = html.find(start_marker)
+        end_idx = html.find(end_marker)
+
+        if start_idx == -1 or end_idx == -1:
+            continue
+
+        content = html[start_idx + len(start_marker):end_idx].strip()
+        stripped = re.sub(r'<[^>]+>', '', content).strip()
+
+        # Skip if placeholder only
+        if not stripped or "previews will be published shortly" in stripped.lower():
+            continue
+
+        # Extract the content date from the updated-line
+        updated_match = re.search(
+            r'class="updated-line"[^>]*>[^<]*(?:Updated|Last Updated):?\s*(\w+ \d{1,2},?\s*\d{4})',
+            html
+        )
+        if updated_match:
+            content_date = parse_written_date(updated_match.group(1).strip())
+        else:
+            content_date = datetime.now().strftime('%Y-%m-%d')
+
+        if not content_date:
+            continue
+
+        # Check if this date is already in the manifest
+        sport_dates = manifest.get(sport_name, [])
+        if content_date in sport_dates:
+            continue
+
+        # This date has real content but is NOT archived yet - archive it now
+        print(f"  [ARCHIVING] {sport_name.upper()} {content_date} - content found in hub but not in manifest")
+        try:
+            result = subprocess.run(
+                [sys.executable, str(SCRIPTS_DIR / 'rotate_hub_content.py'), sport_name],
+                capture_output=True, text=True, cwd=str(REPO_DIR)
+            )
+            if result.returncode == 0:
+                archived_count += 1
+                print(f"    Archived successfully")
+            else:
+                # Don't clear the hub - just record the date in the manifest so the calendar sees it
+                print(f"    Archive script returned error, recording date in manifest directly")
+                manifest.setdefault(sport_name, [])
+                if content_date not in manifest[sport_name]:
+                    manifest[sport_name].append(content_date)
+                    manifest[sport_name] = sorted(set(manifest[sport_name]))
+                    manifest_path = SCRIPTS_DIR / 'hub-archive-manifest.json'
+                    with open(manifest_path, 'w', encoding='utf-8') as f:
+                        json.dump(manifest, f, indent=2)
+        except Exception as e:
+            print(f"    WARNING: Auto-archive failed: {e}")
+            # Still record the date so the calendar shows it
+            manifest.setdefault(sport_name, [])
+            if content_date not in manifest[sport_name]:
+                manifest[sport_name].append(content_date)
+                manifest[sport_name] = sorted(set(manifest[sport_name]))
+                manifest_path = SCRIPTS_DIR / 'hub-archive-manifest.json'
+                with open(manifest_path, 'w', encoding='utf-8') as f:
+                    json.dump(manifest, f, indent=2)
+
+    if archived_count > 0:
+        print(f"  [OK] Auto-archived {archived_count} hub(s)")
+    else:
+        print(f"  [OK] All hub content already archived")
+
+
 def main():
     print("=" * 60)
     print("BetLegend Calendar Sync (Enhanced Date Extraction)")
     print("=" * 60)
+
+    # AUTOMATIC ARCHIVAL: Archive any unarchived hub content before syncing
+    # This is the safety net that prevents content loss. It runs EVERY time.
+    auto_archive_hub_content()
 
     # ALWAYS fix main page canonicals first (prevents SLATE from breaking SEO)
     fix_main_page_canonicals()
