@@ -5,6 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-03-25", page: "soccer-previews.html", title: "Soccer Previews Today - Daily Match Analysis & Betting Lines" },
     { date: "2026-03-24", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-24" },
+    { date: "2026-03-23", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-23" },
     { date: "2026-03-22", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-22" },
     { date: "2026-03-21", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-21" },
     { date: "2026-03-20", page: "bournemouth-man-united-premier-league-friday-villarreal-sociedad-soccer-march-20-2026.html", title: "Soccer Analysis - March 20, 2026" },
