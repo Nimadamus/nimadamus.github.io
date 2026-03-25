@@ -107,6 +107,12 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .archive-link{text-align:center;margin-top:24px;padding:16px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px}
 .archive-link a{color:var(--accent-cyan);text-decoration:none;font-size:14px;font-weight:600}
 .archive-link a:hover{color:#fff}
+.calendar-days .cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-muted);background:rgba(0,0,0,0.2);border-radius:6px;cursor:default;position:relative}
+.calendar-days .cal-day.empty{background:transparent}
+.calendar-days .cal-day.has-content{color:var(--accent-cyan);background:rgba(0,229,255,0.1);cursor:pointer;font-weight:700}
+.calendar-days .cal-day.has-content:hover{background:rgba(0,229,255,0.25);transform:scale(1.1);box-shadow:0 0 10px rgba(0,229,255,0.3)}
+.calendar-days .cal-day.current-page{background:var(--accent-orange) !important;color:#fff !important;box-shadow:0 0 15px rgba(253,80,0,0.5)}
+.calendar-days .cal-day.today{border:2px solid var(--accent-gold)}
 footer{text-align:center;padding:50px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border-subtle)}
 footer a{color:var(--accent-cyan);text-decoration:none}
 @media(max-width:900px){
@@ -514,8 +520,13 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </div>
 
 <aside class="calendar-sidebar">
-<h3>NCAAB Archive</h3>
-<div id="ncaab-calendar"></div>
+<div class="calendar-box" style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:24px;">
+<div class="calendar-title" style="font-family:var(--font-display);font-size:16px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;text-align:center;">NCAAB Archive</div>
+<div class="year-display" id="cal-year" style="font-family:var(--font-display);font-size:24px;color:var(--accent-gold,#ffd700);text-align:center;margin-bottom:12px;">2026</div>
+<select class="month-select" id="month-select" style="width:100%;background:var(--bg-card-hover,#1a2744);color:var(--text-primary,#fff);border:1px solid var(--border-subtle,#263354);padding:12px 16px;font-size:14px;border-radius:8px;cursor:pointer;margin-bottom:16px;"></select>
+<div class="calendar-weekdays" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;"><span style="text-align:center;font-size:12px;font-weight:600;color:var(--text-muted,#8594b0);padding:6px 0;">Su</span><span style="text-align:center;font-size:12px;font-weight:600;color:var(--text-muted,#8594b0);padding:6px 0;">Mo</span><span style="text-align:center;font-size:12px;font-weight:600;color:var(--text-muted,#8594b0);padding:6px 0;">Tu</span><span style="text-align:center;font-size:12px;font-weight:600;color:var(--text-muted,#8594b0);padding:6px 0;">We</span><span style="text-align:center;font-size:12px;font-weight:600;color:var(--text-muted,#8594b0);padding:6px 0;">Th</span><span style="text-align:center;font-size:12px;font-weight:600;color:var(--text-muted,#8594b0);padding:6px 0;">Fr</span><span style="text-align:center;font-size:12px;font-weight:600;color:var(--text-muted,#8594b0);padding:6px 0;">Sa</span></div>
+<div class="calendar-days" id="calendar-days" style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px;"></div>
+</div>
 </aside>
 </div>
 

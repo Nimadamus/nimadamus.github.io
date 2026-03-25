@@ -388,8 +388,27 @@ def main():
         print(f'No content to archive for {sport} - hub has placeholder only')
         sys.exit(0)
 
-    # Determine date and archive path
-    today = datetime.now()
+    # Determine the content date from the hub's "Last Updated" line
+    # This is more accurate than datetime.now() because the hub might have
+    # yesterday's content (if rotation runs the morning after)
+    content_date = datetime.now()
+    updated_match = re.search(r'class="updated-line"[^>]*>[^<]*(?:Updated|Last Updated):?\s*(\w+ \d{1,2},?\s*\d{4})', html)
+    if updated_match:
+        date_text = updated_match.group(1).strip()
+        # Parse the date from the updated line
+        for fmt in ['%B %d, %Y', '%B %d %Y', '%b %d, %Y', '%b %d %Y']:
+            try:
+                content_date = datetime.strptime(date_text, fmt)
+                print(f'  Content date extracted from hub: {content_date.strftime("%Y-%m-%d")}')
+                break
+            except ValueError:
+                continue
+        else:
+            print(f'  WARNING: Could not parse date from updated-line "{date_text}", using today')
+    else:
+        print(f'  WARNING: No updated-line found in hub, using today\'s date')
+
+    today = content_date
     archive_filename = get_archive_filename(sport, today)
     archive_path = os.path.join(REPO_ROOT, archive_filename)
 

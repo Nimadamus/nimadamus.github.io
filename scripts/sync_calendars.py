@@ -198,11 +198,30 @@ def parse_written_date(text):
 
     return None
 
+def read_archive_manifest():
+    """
+    Read the hub-archive-manifest.json - the SINGLE SOURCE OF TRUTH for archived dates.
+    The rotation script writes to this manifest every time it archives content.
+    Returns dict like {'nba': ['2026-03-19', '2026-03-20', ...], 'nhl': [...], ...}
+    """
+    manifest_path = SCRIPTS_DIR / 'hub-archive-manifest.json'
+    try:
+        if manifest_path.exists():
+            import json
+            with open(manifest_path, 'r', encoding='utf-8') as f:
+                manifest = json.load(f)
+            return manifest
+    except Exception as e:
+        print(f"  WARNING: Could not read archive manifest: {e}")
+    return {}
+
+
 def extract_dates_from_rotation_archive(filepath):
     """
     Extract ALL dates from a rotation archive file (e.g., nba-previews-archive-march-2026.html).
     These files contain <div class="archive-day" id="YYYY-MM-DD"> sections for each archived day.
     Also looks for date headers like "Tuesday, March 24, 2026" inside archive content.
+    This is the FALLBACK method - the manifest is the primary source.
     Returns a list of date strings (YYYY-MM-DD).
     """
     dates = []
