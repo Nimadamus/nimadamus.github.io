@@ -15,6 +15,7 @@ ENHANCED: December 25, 2025 - Improved date extraction to find dates in:
 
 import os
 import re
+import json
 from datetime import datetime
 from pathlib import Path
 
@@ -425,24 +426,49 @@ def get_sport_pages(sport_config):
                 })
                 print(f"    {relative_path}: {date}")
 
-    # Also scan rotation archive files (e.g., nba-previews-archive-march-2026.html)
-    # These contain archived daily content with date markers
+    # =========================================================================
+    # ARCHIVE DATE RECOVERY: Read from JSON manifest (primary) + HTML (fallback)
+    # The manifest is the single source of truth, written by rotate_hub_content.py.
+    # HTML parsing is a fallback for dates that predate the manifest.
+    # =========================================================================
     hub_page = sport_config.get('hub')
     archive_pattern = sport_config.get('archive_pattern')
-    if archive_pattern:
-        existing_dates = {p['date'] for p in pages}
-        for filepath in REPO_DIR.glob(archive_pattern):
-            archive_dates = extract_dates_from_rotation_archive(filepath)
-            for date in archive_dates:
+    existing_dates = {p['date'] for p in pages}
+    manifest_dates = set()
+
+    # PRIMARY: Read from hub-archive-manifest.json
+    manifest_path = SCRIPTS_DIR / 'hub-archive-manifest.json'
+    if manifest_path.exists():
+        try:
+            with open(manifest_path, 'r', encoding='utf-8') as f:
+                manifest = json.load(f)
+            sport_dates = manifest.get(prefix, [])
+            for date in sport_dates:
                 if date not in existing_dates:
-                    # Link archived dates to the hub page (the permanent URL)
                     pages.append({
                         'date': date,
                         'page': hub_page or f'{prefix}.html',
                         'title': f'{prefix.upper()} Analysis - {date}'
                     })
                     existing_dates.add(date)
-                    print(f"    [FROM ARCHIVE] {hub_page}: {date}")
+                    manifest_dates.add(date)
+                    print(f"    [FROM MANIFEST] {hub_page}: {date}")
+        except Exception as e:
+            print(f"  WARNING: Could not read manifest: {e}")
+
+    # FALLBACK: Also scan rotation archive HTML files for dates not in manifest
+    if archive_pattern:
+        for filepath in REPO_DIR.glob(archive_pattern):
+            archive_dates = extract_dates_from_rotation_archive(filepath)
+            for date in archive_dates:
+                if date not in existing_dates:
+                    pages.append({
+                        'date': date,
+                        'page': hub_page or f'{prefix}.html',
+                        'title': f'{prefix.upper()} Analysis - {date}'
+                    })
+                    existing_dates.add(date)
+                    print(f"    [FROM ARCHIVE HTML] {hub_page}: {date}")
 
     # Sort by date (newest first) then by page name
     pages.sort(key=lambda x: (x['date'], x['page']), reverse=True)

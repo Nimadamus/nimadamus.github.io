@@ -20,6 +20,7 @@ The archive files are noindexed and canonical-point to the main hub page.
 import os
 import sys
 import re
+import json
 from datetime import datetime
 
 # Resolve paths relative to the script location (repo root)
@@ -299,6 +300,34 @@ def append_to_archive(archive_path, content, date, sport):
     return True
 
 
+MANIFEST_PATH = os.path.join(SCRIPT_DIR, 'hub-archive-manifest.json')
+
+
+def update_manifest(sport, date_str):
+    """Record this archived date in the JSON manifest so sync_calendars.py can find it."""
+    try:
+        if os.path.exists(MANIFEST_PATH):
+            with open(MANIFEST_PATH, 'r', encoding='utf-8') as f:
+                manifest = json.load(f)
+        else:
+            manifest = {}
+
+        if sport not in manifest:
+            manifest[sport] = []
+
+        if date_str not in manifest[sport]:
+            manifest[sport].append(date_str)
+            manifest[sport] = sorted(set(manifest[sport]))
+
+        with open(MANIFEST_PATH, 'w', encoding='utf-8') as f:
+            json.dump(manifest, f, indent=2)
+
+        print(f'  Manifest updated: {sport} += {date_str}')
+    except Exception as e:
+        print(f'  WARNING: Could not update manifest: {e}')
+        # Non-fatal - the HTML fallback in sync_calendars.py still works
+
+
 def clear_hub_content(hub_path, html, content_start_idx, content_end_idx):
     """Replace the hub content area with the placeholder message."""
     new_html = (
@@ -374,6 +403,9 @@ def main():
 
     if success:
         print(f'  Archived {sport} content for {today.strftime("%Y-%m-%d")} to {archive_filename}')
+
+        # Record in manifest (the single source of truth for sync_calendars.py)
+        update_manifest(sport, today.strftime('%Y-%m-%d'))
 
         # Clear hub content
         clear_hub_content(hub_path, html, start_idx, end_idx)
