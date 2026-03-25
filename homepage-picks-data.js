@@ -26,7 +26,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Blackhawks +1.5 (-170) / ML (+145)",
         date: "March 24, 2026",
-        result: "",
+        result: "W",
         url: "blackhawks-puck-line-moneyline-at-islanders-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/p02oc3irhchowhosjttd"
     },
