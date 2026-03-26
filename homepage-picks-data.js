@@ -24,6 +24,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Red Sox ML -158 at Reds",
+        date: "March 26, 2026",
+        url: "red-sox-moneyline-crochet-reds-opening-day-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/676979/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Yankees at Giants OVER 7 (-110)",
         date: "March 25, 2026",
         url: "yankees-giants-over-7-opening-day-mlb.html",
