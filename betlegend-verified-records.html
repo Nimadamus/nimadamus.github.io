@@ -230,8 +230,8 @@
  <div class="year-filter-subtitle">Click 2025 to see full season records • 2026 shows current year picks only</div>
  <div class="year-filter-container">
  <button class="year-filter-btn" data-year="2025">2025</button>
- <button class="year-filter-btn active" data-year="2026">2026</button>
- <button class="year-filter-btn" data-year="all">All Time</button>
+ <button class="year-filter-btn" data-year="2026">2026</button>
+ <button class="year-filter-btn active" data-year="all">All Time</button>
  </div>
  </div>
 
@@ -289,7 +289,7 @@
 
  // Global storage for all picks (for year filtering)
  let allProcessedPicks = [];
- let currentYearFilter = '2026'; // Default to 2026
+ let currentYearFilter = 'all'; // Default to All Time so all data shows on load
 
  // Team arrays for cross-sport parlay detection
  const NFL_TEAMS = ['49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'giants', 'jaguars', 'jags', 'jets', 'lions', 'packers', 'panthers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings', 'washington'];
@@ -464,10 +464,22 @@
  const unitsEl = document.getElementById('summary-units');
  unitsEl.textContent = `${summaryStats.totalUnits >= 0 ? '+' : ''}${summaryStats.totalUnits.toFixed(2)}`;
  unitsEl.className = summaryStats.totalUnits >= 0 ? 'units-win' : 'units-loss';
- document.getElementById('summary-win-pct').textContent = summaryStats.wins + summaryStats.losses > 0 ? `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%` : '';
+ document.getElementById('summary-win-pct').textContent = summaryStats.wins + summaryStats.losses > 0 ? `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%` : '0.0%';
  const roiEl = document.getElementById('summary-roi');
  roiEl.textContent = `${summaryStats.roi >= 0 ? '+' : ''}${summaryStats.roi.toFixed(2)}%`;
  roiEl.className = summaryStats.roi >= 0 ? 'roi-win' : 'roi-loss';
+
+ // Update start date based on filtered data
+ if (filteredPicks.length > 0) {
+ const oldest = filteredPicks[filteredPicks.length - 1];
+ const d = new Date(oldest.Date);
+ if (!isNaN(d.getTime())) {
+ const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+ document.getElementById('chart-start-date').textContent = months[d.getMonth()] + ' ' + d.getDate();
+ }
+ } else {
+ document.getElementById('chart-start-date').textContent = '--';
+ }
 
  setTimeout(createChart, 100);
  }
@@ -492,9 +504,13 @@
  try {
  const processedPicks = mlbPicksData.map(p => {
  try {
- if (!p.Pick || !p.Result || !p.Units || !p.Line || !p.Date) return null;
+ if (!p.Pick || !p.Result || p.Units === undefined || p.Units === '' || !p.Line || !p.Date) return null;
  const pickText = String(p.Pick).trim();
- const resultText = String(p.Result).trim().toUpperCase();
+ let resultText = String(p.Result).trim().toUpperCase();
+ // Normalize Win/Loss/Push to W/L/P
+ if (resultText === 'WIN') resultText = 'W';
+ else if (resultText === 'LOSS') resultText = 'L';
+ else if (resultText === 'PUSH') resultText = 'P';
  const units = parseFloat(p.Units);
  const line = parseFloat(p.Line);
  if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
@@ -510,7 +526,15 @@
  risk = (units * (Math.abs(line) / 100));
  }
  }
- return { ...p, units, risk, parsedDate: new Date(p.Date) };
+ // Robust date parsing for M-D-YYYY or M/D/YYYY formats
+ const dateParts = p.Date.split(/[-\/]/);
+ let parsedDate;
+ if (dateParts.length === 3) {
+ parsedDate = new Date(parseInt(dateParts[2]), parseInt(dateParts[0]) - 1, parseInt(dateParts[1]));
+ } else {
+ parsedDate = new Date(p.Date);
+ }
+ return { ...p, Result: resultText, units, risk, parsedDate };
  } catch {
  return null;
  }
