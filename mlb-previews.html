@@ -46,24 +46,33 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .hero p{color:var(--text-secondary);font-size:18px;max-width:750px;margin:0 auto;position:relative;z-index:1}
 .page-wrapper{max-width:900px;margin:0 auto;padding:0 24px 80px}
 .updated-line{text-align:center;color:var(--accent-gold);font-size:14px;font-weight:600;letter-spacing:1px;margin-bottom:32px;text-transform:uppercase}
-details{background:rgba(0,8,20,0.75);border:1px solid rgba(0,180,200,0.12);border-radius:12px;margin-bottom:16px;overflow:hidden}
-summary{padding:18px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:#fff;list-style:none}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'▼';font-size:0.7rem;color:var(--accent-cyan);transition:transform 0.3s}
-details[open] summary::after{transform:rotate(180deg)}
-details[open] summary{border-bottom:1px solid rgba(0,180,200,0.12)}
-details .game-content{padding:20px 24px}
-details .game-content p{color:var(--text-secondary);font-size:16px;line-height:1.9;margin-bottom:16px}
-details .game-content p:last-child{margin-bottom:0}
-.game-odds{display:flex;gap:20px;margin-top:4px;flex-wrap:wrap}
-.game-odds span{font-family:'Poppins',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.5)}
-.game-meta-line{font-size:0.8rem;color:rgba(0,200,220,0.7);margin-top:4px}
-.summary-left{display:flex;flex-direction:column;gap:2px}
-.summary-teams{font-size:1rem}
-.bet-pills{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.bet-pill{background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.15);padding:8px 16px;border-radius:8px;text-align:center;min-width:110px}
-.bet-pill .pill-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:4px}
-.bet-pill .pill-value{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--accent-gold)}
+.game-preview{background:linear-gradient(145deg,#14171f 0%,#0f1218 100%);border:1px solid rgba(255,255,255,0.06);border-radius:20px;padding:0;margin-bottom:40px;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}
+.game-preview::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--accent-orange),transparent);opacity:0;transition:opacity 0.3s}
+.game-preview:hover{border-color:rgba(253,80,0,0.3);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.4),0 0 30px rgba(253,80,0,0.1)}
+.game-preview:hover::before{opacity:1}
+.game-preview.marquee{border:2px solid rgba(255,213,79,0.3);background:linear-gradient(145deg,#1a1d26 0%,#12151c 100%)}
+.game-preview.marquee::before{background:linear-gradient(90deg,var(--accent-gold),var(--accent-orange),var(--accent-gold));opacity:1;height:4px}
+.game-preview.marquee::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top,rgba(255,213,79,0.05) 0%,transparent 70%);pointer-events:none}
+.game-number{position:absolute;top:16px;left:16px;background:rgba(253,80,0,0.15);border:1px solid rgba(253,80,0,0.3);padding:6px 14px;border-radius:20px;font-family:var(--font-display);font-size:11px;font-weight:700;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;z-index:2}
+.game-preview.marquee .game-number{background:linear-gradient(135deg,rgba(255,213,79,0.2),rgba(253,80,0,0.2));border-color:rgba(255,213,79,0.4);color:var(--accent-gold)}
+.broadcast-badge{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#1a365d,#2d4a7c);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;z-index:2}
+.broadcast-badge.national{background:linear-gradient(135deg,#b8860b,#daa520)}
+.game-header{display:flex;align-items:center;justify-content:center;gap:24px;padding:50px 32px 28px;position:relative}
+.team-logo{width:72px;height:72px;object-fit:contain;transition:all 0.4s}
+.game-preview:hover .team-logo{transform:scale(1.08);filter:drop-shadow(0 0 25px rgba(253,80,0,0.3))}
+.matchup-info{text-align:center}
+.matchup-info h2{font-family:var(--font-display);font-size:26px;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:1px}
+.matchup-info .game-time{font-size:14px;color:var(--text-muted)}
+.betting-section{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 32px 28px;border-bottom:1px solid var(--border-subtle)}
+.bet-box{background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:16px;text-align:center;transition:all 0.3s}
+.bet-box:hover{background:rgba(253,80,0,0.08);border-color:rgba(253,80,0,0.2)}
+.bet-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:6px}
+.bet-value{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--accent-gold)}
+.preview-content{padding:28px 32px 32px;color:var(--text-secondary);font-size:16px;line-height:1.9}
+.preview-content p{margin-bottom:20px}
+.preview-content p:last-child{margin-bottom:0}
+.game-divider{display:flex;align-items:center;justify-content:center;margin:10px 0 30px}
+.game-divider::before,.game-divider::after{content:'';flex:1;max-width:200px;height:1px;background:linear-gradient(90deg,transparent,rgba(253,80,0,0.3),transparent)}
 .internal-links{margin-top:40px;padding:24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;text-align:center}
 .internal-links h3{font-family:var(--font-display);font-size:16px;color:var(--accent-orange);margin-bottom:16px;text-transform:uppercase;letter-spacing:1.5px}
 .internal-links a{color:var(--accent-cyan);text-decoration:none;margin:0 12px;font-size:14px;font-weight:600}
@@ -75,12 +84,14 @@ footer{text-align:center;padding:50px 24px;color:var(--text-muted);font-size:13p
 footer a{color:var(--accent-cyan);text-decoration:none}
 @media(max-width:768px){
 .hero{padding:130px 20px 40px}
-summary{padding:14px 16px;font-size:0.88rem}
-details .game-content{padding:16px}
-.game-odds{gap:10px}
-.bet-pills{gap:8px}
-.bet-pill{min-width:90px;padding:6px 10px}
-.bet-pill .pill-value{font-size:13px}
+.game-preview{padding:0}
+.team-logo{width:56px;height:56px}
+.matchup-info h2{font-size:20px}
+.game-header{gap:16px;padding:40px 20px 20px}
+.betting-section{padding:0 20px 20px;gap:8px}
+.bet-box{padding:12px}
+.bet-value{font-size:16px}
+.preview-content{padding:20px}
 .nav-inner{padding:14px 10px 14px 70px}
 .logo a{font-size:1.4rem}
 .nav-links{gap:8px}
@@ -108,46 +119,25 @@ details .game-content{padding:16px}
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll Management</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="risk-of-ruin-calculator.html">Risk of Ruin</a><a href="bankroll-simulator.html">Bankroll Simulator</a><a href="betting-calculators.html">Calculators</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a><a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a><a href="contact.html">Contact Us</a></div></div>
 <a href="yasiel-puig-convicted-gambling-case-sports-news.html">News</a>
 <a href="podcast.html">Podcast</a>
-<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="yankees-vs-giants-analysis-stats-preview-march-25-2026.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="diamondbacks-vs-dodgers-analysis-stats-preview-march-27-2026.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
 </div>
 </div>
 </nav>
 
 <header class="hero">
-<div class="hero-badge">Opening Night</div>
+<div class="hero-badge">8-Game Opening Week Slate</div>
 <h1>MLB Previews Today</h1>
-<p>The 2026 MLB season begins tonight with a historic Opening Night exclusively on Netflix. The New York Yankees visit Oracle Park to face the San Francisco Giants in an ace-versus-ace showdown between Max Fried and Logan Webb, featuring the debut of the ABS Challenge System.</p>
+<p>Opening Week rolls into Day 2 with an absolutely loaded eight-game Friday slate. The defending champion Dodgers host Arizona at Dodger Stadium, the Royals bring Cole Ragans' elite strikeout stuff to Atlanta for a showdown with Chris Sale, the Yankees look to go 2-0 behind rising star Cam Schlittler at Oracle Park, and Framber Valdez makes his highly anticipated Tigers debut in San Diego after signing a $115 million deal.</p>
 </header>
 
 <div class="page-wrapper">
-<p class="updated-line">Last Updated: March 25, 2026</p>
+<p class="updated-line">Last Updated: March 27, 2026</p>
 
 <!-- ========== DAILY CONTENT START ========== -->
-
-<div class="game-preview marquee">
-<span class="game-number">Opening Night</span>
-<span class="broadcast-badge national">Netflix</span>
-<div class="game-header">
-<img class="team-logo" src="https://a.espncdn.com/i/teamlogos/mlb/500/nyy.png" alt="New York Yankees">
-<div class="matchup-info">
-<h2>New York Yankees @ San Francisco Giants</h2>
-<span class="game-time">Wednesday, 4:05 PM ET | Oracle Park</span>
+<div style="text-align:center;padding:60px 24px;color:var(--text-muted);">
+<p style="font-size:18px;font-family:var(--font-display);letter-spacing:1.5px;text-transform:uppercase;">Today's previews will be published shortly</p>
+<p style="margin-top:12px;font-size:14px;">Check back soon for full game analysis, betting lines, and previews.</p>
 </div>
-<img class="team-logo" src="https://a.espncdn.com/i/teamlogos/mlb/500/sf.png" alt="San Francisco Giants">
-</div>
-<div class="betting-section">
-<div class="bet-box"><div class="bet-label">Run Line</div><div class="bet-value">NYY -1.5 (+135)</div></div>
-<div class="bet-box"><div class="bet-label">Moneyline</div><div class="bet-value">NYY -140 / SF +120</div></div>
-<div class="bet-box"><div class="bet-label">Total</div><div class="bet-value">O/U 7.0</div></div>
-</div>
-<div class="preview-content">
-<p>The 2026 MLB season opens with a blockbuster: Max Fried on the mound for the Yankees against Logan Webb and the Giants, exclusively on Netflix. It's the first regular-season game streamed solely on the platform, and it comes with a historic wrinkle: the debut of the ABS Challenge System, which allows teams to challenge ball/strike calls via automated technology. Baseball is stepping into a new era tonight, and there's no better stage than Oracle Park under the lights.</p>
-<p>The Yankees enter the season with massive expectations after a disappointing 2025 that ended with a first-round exit. Aaron Judge remains the centerpiece, and the addition of Fried via a massive free-agent deal gives New York the ace they've been chasing. Fried went 11-10 with a 3.25 ERA for the Braves in 2025, and his ground-ball-heavy approach should play well in Oracle Park's spacious outfield. He's historically been dominant in high-leverage situations, and there's no bigger stage for a pitcher than Opening Day with a new team.</p>
-<p>San Francisco is banking on Logan Webb to set the tone for what they hope is a competitive season. Webb was the Giants' most reliable arm in 2025, posting a 3.44 ERA across 33 starts with elite contact management. His sinker-slider combination is tailor-made for Oracle Park, where the marine layer can turn potential home runs into warning-track flyouts. The Giants' lineup has been retooled around their offseason acquisitions, and the home crowd will bring energy that only a Bay Area Opening Night can deliver.</p>
-<p>For bettors, Opening Day is always a tricky proposition. Spring training stats are largely meaningless for projecting regular-season performance, and the early-season weather at Oracle Park tends to suppress offense. The 7.0 total reflects the pitcher-friendly environment and the caliber of arms on the mound. Both Fried and Webb are capable of dealing six-plus innings of quality ball, so this has the makings of a tight, low-scoring affair decided by one big swing or a bullpen mistake. The ABS Challenge System adds an unpredictable wild card, as neither team has used it in a real game setting. Welcome to 2026 baseball.</p>
-</div>
-</div>
-
 <!-- ========== DAILY CONTENT END ========== -->
 
 <div class="archive-link">
