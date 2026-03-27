@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Blue Jays ML -170 vs Athletics",
+        date: "March 27, 2026",
+        result: "",
+        url: "blue-jays-moneyline-gausman-athletics-opening-series-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592332/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Red Sox ML -158 at Reds",
         date: "March 26, 2026",
         result: "W",
