@@ -125,6 +125,7 @@ var FEATURED_GAMES = [
     { date: "2026-03-25", page: "yankees-vs-giants-analysis-stats-preview-march-25-2026.html", title: "Yankees vs Giants MLB Opening Night" },
 
     { date: "2026-03-27", page: "diamondbacks-vs-dodgers-analysis-stats-preview-march-27-2026.html", title: "D-backs vs Dodgers MLB Opening Week" },
+    { date: "2026-03-28", page: "purdue-vs-arizona-elite-eight-west-regional-analysis-stats-preview-march-28-2026.html", title: "Purdue vs Arizona Elite Eight West Regional Final" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
