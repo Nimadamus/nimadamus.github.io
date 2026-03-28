@@ -24,9 +24,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Yankees at Giants UNDER 8.5 (-110)",
+        date: "March 28, 2026",
+        result: "",
+        url: "yankees-giants-under-8-5-oracle-park-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/701542/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Blue Jays ML -170 vs Athletics",
         date: "March 27, 2026",
-        result: "",
+        result: "W",
         url: "blue-jays-moneyline-gausman-athletics-opening-series-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592332/action/hero/current"
     },
