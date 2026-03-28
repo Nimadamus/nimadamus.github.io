@@ -17,7 +17,7 @@
 <meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AI Picks Board - MLB March 28, 2026 | BetLegend">
-<meta name="twitter:description" content="4 AI models. 49 picks. One sportsbook. ChatGPT vs Grok vs Claude vs Gemini.">
+<meta name="twitter:description" content="4 AI models. 49 picks. Combined 27-7-1 through 3 days.">
 <title>AI Picks Board - MLB March 28, 2026 | BetLegend</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,11 +29,14 @@
 {"@context":"https://schema.org","@type":"Article","headline":"AI Picks Board - MLB March 28, 2026","description":"Side-by-side MLB picks from ChatGPT, Grok, Claude, and Gemini with verified DraftKings lines.","author":{"@type":"Organization","name":"BetLegend"},"publisher":{"@type":"Organization","name":"BetLegend Picks","logo":{"@type":"ImageObject","url":"https://www.betlegendpicks.com/newlogo.png"}},"datePublished":"2026-03-28","mainEntityOfPage":"https://www.betlegendpicks.com/ai-picks-board-mlb-march-28-2026.html"}
 </script>
 <style>
-:root{--bg-deep:#010008;--text-primary:#fff;--text-secondary:#8fa8c8;--neon-cyan:#00b8c4;--neon-gold:#c4a200;--win-color:#39ff14;--loss-color:#ff3131;--glass-bg:rgba(0,8,20,0.75);--glass-border:rgba(0,180,200,0.12);--font-primary:'Orbitron',sans-serif;--font-secondary:'Poppins',sans-serif}
+:root{--bg-deep:#010008;--text-primary:#fff;--text-secondary:#8fa8c8;--neon-cyan:#00b8c4;--neon-gold:#c4a200;--win-color:#39ff14;--loss-color:#ff3131;--glass-bg:rgba(0,8,20,0.82);--glass-border:rgba(0,180,200,0.12);--font-primary:'Orbitron',sans-serif;--font-secondary:'Poppins',sans-serif;--chatgpt:#10a37f;--grok:#1da1f2;--claude:#d4a574;--gemini:#8b5cf6}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--font-secondary);background:var(--bg-deep);color:var(--text-primary);min-height:100vh;overflow-x:hidden}
-.background-container{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;background:#000}
-.background-container::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#000510 0%,#001020 50%,#000818 100%)}
+
+/* STADIUM BACKDROP */
+.stadium-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2}
+.stadium-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(0.25) saturate(0.7)}
+.stadium-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,0,8,0.6) 0%,rgba(1,0,8,0.85) 40%,rgba(1,0,8,0.95) 100%)}
 
 /* NAV */
 .nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(0,0,0,0.92);backdrop-filter:blur(15px);border-bottom:1px solid rgba(255,255,255,0.06);padding:0 5px}
@@ -47,8 +50,8 @@ body{font-family:var(--font-secondary);background:var(--bg-deep);color:var(--tex
 .dropdown .dropbtn{font-family:var(--font-primary);font-size:0.75rem;font-weight:600;color:#fff;background:none;border:none;padding:10px 8px;text-transform:uppercase;letter-spacing:0.5px;cursor:pointer;white-space:nowrap}
 .dropdown:hover .dropbtn{color:var(--win-color)}
 .dropdown-content{display:none;position:absolute;top:100%;left:0;min-width:220px;background:rgba(0,5,20,0.98);backdrop-filter:blur(20px);border:2px solid var(--glass-border);border-radius:12px;padding:12px;margin-top:10px;box-shadow:0 10px 40px rgba(0,240,255,0.3);z-index:99999}
-.dropdown-content a{display:block;padding:10px 14px;color:var(--neon-cyan);text-decoration:none;font-size:0.85rem;border-radius:8px;border-left:3px solid transparent;transition:all 0.2s}
-.dropdown-content a:hover{background:rgba(0,240,255,0.1);padding-left:20px;border-left-color:var(--neon-cyan);color:#fff}
+.dropdown-content a{display:block;padding:10px 14px;color:var(--neon-cyan);text-decoration:none;font-size:0.85rem;border-radius:8px;transition:all 0.2s}
+.dropdown-content a:hover{background:rgba(0,240,255,0.1);color:#fff}
 .sports-records-dropdown{display:none;position:absolute;top:100%;left:0;min-width:420px;background:rgba(0,5,20,0.98);backdrop-filter:blur(20px);border:2px solid var(--glass-border);border-radius:12px;padding:20px;margin-top:10px;box-shadow:0 10px 40px rgba(0,240,255,0.3);z-index:99999}
 .two-columns{display:grid;grid-template-columns:1fr 1fr;gap:25px}
 .two-columns h4{color:var(--neon-gold);font-family:var(--font-primary);font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(196,162,0,0.3)}
@@ -63,48 +66,82 @@ body{font-family:var(--font-secondary);background:var(--bg-deep);color:var(--tex
 .hub-dropdown-content a:hover{background:rgba(57,255,20,0.15)}
 @media(hover:hover)and(pointer:fine){.hub-dropdown:hover .hub-dropdown-content{display:block}}
 
-/* MAIN CONTENT */
-.page-content{max-width:1200px;margin:80px auto 40px;padding:20px}
-.hero{text-align:center;padding:40px 20px;margin-bottom:40px}
+/* HERO */
+.page-content{max-width:1200px;margin:80px auto 40px;padding:20px;position:relative;z-index:1}
+.hero{text-align:center;padding:50px 20px 40px;background:rgba(0,0,0,0.4);border-radius:20px;border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(10px);margin-bottom:30px}
 .hero-badge{display:inline-block;background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;font-family:var(--font-primary);font-size:0.7rem;font-weight:700;padding:6px 16px;border-radius:20px;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
-.hero h1{font-family:var(--font-primary);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:12px;line-height:1.2}
+.hero h1{font-family:var(--font-primary);font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;line-height:1.2;text-shadow:0 2px 20px rgba(0,0,0,0.5)}
 .hero h1 em{font-style:normal;color:#f59e0b}
 .hero p{color:var(--text-secondary);font-size:1.05rem;max-width:700px;margin:0 auto;line-height:1.6}
-.book-badge{display:inline-block;margin-top:16px;background:rgba(57,255,20,0.1);border:1px solid rgba(57,255,20,0.3);color:var(--win-color);font-family:var(--font-primary);font-size:0.7rem;padding:8px 20px;border-radius:8px;letter-spacing:1.5px}
+.hero-combined{display:inline-block;margin-top:16px;background:rgba(57,255,20,0.1);border:1px solid rgba(57,255,20,0.3);color:var(--win-color);font-family:'Roboto Mono',monospace;font-size:1.3rem;font-weight:700;padding:10px 28px;border-radius:10px;letter-spacing:1px}
 
-/* MASTER ODDS TABLE */
-.section-title{font-family:var(--font-primary);font-size:1.1rem;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin:40px 0 20px;padding-bottom:10px;border-bottom:2px solid rgba(245,158,11,0.3)}
-.odds-table{width:100%;border-collapse:collapse;margin-bottom:40px;font-size:0.85rem}
-.odds-table th{background:rgba(245,158,11,0.15);color:#f59e0b;font-family:var(--font-primary);font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;padding:12px 8px;text-align:center;border-bottom:2px solid rgba(245,158,11,0.3)}
-.odds-table td{padding:10px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--text-secondary);font-family:'Roboto Mono',monospace;font-size:0.8rem}
+/* SCOREBOARD CARDS */
+.scoreboard{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px}
+.sb-card{background:var(--glass-bg);border-radius:16px;padding:24px 16px;text-align:center;border:1px solid rgba(255,255,255,0.08);position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s}
+.sb-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.sb-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.sb-card.c-gemini::before{background:linear-gradient(90deg,var(--gemini),#a78bfa)}
+.sb-card.c-grok::before{background:linear-gradient(90deg,var(--grok),#38bdf8)}
+.sb-card.c-claude::before{background:linear-gradient(90deg,var(--claude),#e8c08a)}
+.sb-card.c-chatgpt::before{background:linear-gradient(90deg,var(--chatgpt),#34d399)}
+.sb-rank{font-family:var(--font-primary);font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;padding:3px 10px;border-radius:10px;display:inline-block;margin-bottom:8px}
+.sb-rank.r1{background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid rgba(245,158,11,0.3)}
+.sb-rank.r2{background:rgba(192,192,192,0.1);color:#c0c0c0;border:1px solid rgba(192,192,192,0.2)}
+.sb-rank.r3{background:rgba(205,127,50,0.1);color:#cd7f32;border:1px solid rgba(205,127,50,0.2)}
+.sb-rank.r4{background:rgba(107,114,128,0.1);color:#9ca3af;border:1px solid rgba(107,114,128,0.2)}
+.sb-name{font-family:var(--font-primary);font-size:1.3rem;font-weight:700;margin-bottom:12px}
+.sb-record{font-family:'Roboto Mono',monospace;font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:4px}
+.sb-units{font-family:'Roboto Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--win-color)}
+.sb-meta{color:var(--text-secondary);font-size:0.75rem;margin-top:6px}
+
+/* CHARTS */
+.charts-section{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:30px}
+.chart-card{background:var(--glass-bg);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;backdrop-filter:blur(8px)}
+.chart-title{font-family:var(--font-primary);font-size:0.8rem;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;text-align:center}
+.bar-chart{display:flex;flex-direction:column;gap:14px}
+.bar-row{display:flex;align-items:center;gap:12px}
+.bar-label{font-family:var(--font-primary);font-size:0.75rem;width:80px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:32px;background:rgba(255,255,255,0.05);border-radius:8px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-family:'Roboto Mono',monospace;font-size:0.8rem;font-weight:700;color:#fff;transition:width 1s ease;min-width:40px}
+.bar-fill.gemini{background:linear-gradient(90deg,rgba(139,92,246,0.3),var(--gemini))}
+.bar-fill.grok{background:linear-gradient(90deg,rgba(29,161,242,0.3),var(--grok))}
+.bar-fill.claude{background:linear-gradient(90deg,rgba(212,165,116,0.3),var(--claude))}
+.bar-fill.chatgpt{background:linear-gradient(90deg,rgba(16,163,127,0.3),var(--chatgpt))}
+/* Win rate donut */
+.donut-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.donut-item{text-align:center}
+.donut-ring{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;position:relative}
+.donut-ring::before{content:'';position:absolute;inset:6px;border-radius:50%;background:rgba(0,8,20,0.9)}
+.donut-pct{position:relative;z-index:1;font-family:'Roboto Mono',monospace;font-size:0.9rem;font-weight:700}
+.donut-name{font-family:var(--font-primary);font-size:0.6rem;text-transform:uppercase;letter-spacing:1px}
+
+/* SECTION TITLES */
+.section-title{font-family:var(--font-primary);font-size:1rem;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin:30px 0 16px;padding-bottom:10px;border-bottom:2px solid rgba(245,158,11,0.3)}
+
+/* ODDS TABLE */
+.odds-table{width:100%;border-collapse:collapse;margin-bottom:30px;font-size:0.8rem}
+.odds-table th{background:rgba(245,158,11,0.12);color:#f59e0b;font-family:var(--font-primary);font-size:0.6rem;text-transform:uppercase;letter-spacing:1px;padding:10px 6px;text-align:center;border-bottom:2px solid rgba(245,158,11,0.3)}
+.odds-table td{padding:8px 6px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-secondary);font-family:'Roboto Mono',monospace;font-size:0.75rem}
 .odds-table tr:hover{background:rgba(255,255,255,0.03)}
-.odds-table .game-col{text-align:left;color:#fff;font-family:var(--font-secondary);font-weight:600;font-size:0.85rem}
-.fav{color:var(--win-color)}
-.dog{color:var(--text-secondary)}
+.odds-table .gc{text-align:left;color:#fff;font-family:var(--font-secondary);font-weight:600;font-size:0.8rem}
+.fav{color:var(--win-color)}.dog{color:var(--text-secondary)}
 
-/* AI SECTIONS */
-.ai-section{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:28px;margin-bottom:30px}
-.ai-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid}
-.ai-header h2{font-family:var(--font-primary);font-size:1.1rem;text-transform:uppercase;letter-spacing:2px}
-.ai-header .pick-count{font-size:0.8rem;color:var(--text-secondary);font-weight:400}
-.ai-header .units-total{margin-left:auto;font-family:'Roboto Mono',monospace;font-size:0.85rem}
-.chatgpt .ai-header{border-color:#10a37f}
-.chatgpt .ai-header h2{color:#10a37f}
-.grok .ai-header{border-color:#1da1f2}
-.grok .ai-header h2{color:#1da1f2}
-.claude .ai-header{border-color:#d4a574}
-.claude .ai-header h2{color:#d4a574}
-.gemini .ai-header{border-color:#8b5cf6}
-.gemini .ai-header h2{color:#8b5cf6}
-
-.picks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
-.pick-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
-.pick-card:hover{border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.05)}
-.pick-info{flex:1}
-.pick-name{font-weight:600;color:#fff;font-size:0.9rem;margin-bottom:2px}
-.pick-line{color:var(--text-secondary);font-family:'Roboto Mono',monospace;font-size:0.75rem}
-.pick-units{text-align:right}
-.units-badge{display:inline-block;font-family:'Roboto Mono',monospace;font-weight:700;font-size:0.85rem;padding:4px 12px;border-radius:6px}
+/* AI PICK SECTIONS */
+.ai-section{background:var(--glass-bg);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;margin-bottom:24px;backdrop-filter:blur(8px)}
+.ai-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid}
+.ai-header h2{font-family:var(--font-primary);font-size:1rem;text-transform:uppercase;letter-spacing:2px}
+.ai-header .pc{font-size:0.8rem;color:var(--text-secondary)}
+.ai-header .ut{margin-left:auto;font-family:'Roboto Mono',monospace;font-size:0.9rem;font-weight:700;color:var(--win-color)}
+.chatgpt-s .ai-header{border-color:var(--chatgpt)}.chatgpt-s .ai-header h2{color:var(--chatgpt)}
+.grok-s .ai-header{border-color:var(--grok)}.grok-s .ai-header h2{color:var(--grok)}
+.claude-s .ai-header{border-color:var(--claude)}.claude-s .ai-header h2{color:var(--claude)}
+.gemini-s .ai-header{border-color:var(--gemini)}.gemini-s .ai-header h2{color:var(--gemini)}
+.picks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
+.pk{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+.pk:hover{border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.05)}
+.pk-name{font-weight:600;color:#fff;font-size:0.88rem;margin-bottom:2px}
+.pk-line{color:var(--text-secondary);font-family:'Roboto Mono',monospace;font-size:0.72rem}
+.ub{display:inline-block;font-family:'Roboto Mono',monospace;font-weight:700;font-size:0.85rem;padding:4px 12px;border-radius:6px}
 .u3{background:rgba(255,59,48,0.2);color:#ff6b6b;border:1px solid rgba(255,59,48,0.3)}
 .u25{background:rgba(245,158,11,0.2);color:#f59e0b;border:1px solid rgba(245,158,11,0.3)}
 .u2{background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.3)}
@@ -112,83 +149,38 @@ body{font-family:var(--font-secondary);background:var(--bg-deep);color:var(--tex
 .u1{background:rgba(55,65,81,0.2);color:#6b7280;border:1px solid rgba(55,65,81,0.3)}
 
 /* CONSENSUS */
-.consensus{background:rgba(245,158,11,0.05);border:2px solid rgba(245,158,11,0.2);border-radius:16px;padding:28px;margin:40px 0}
-.consensus h2{font-family:var(--font-primary);font-size:1rem;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
-.consensus-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
-.consensus-item{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06)}
-.consensus-pick{color:#fff;font-weight:600;font-size:0.85rem}
-.consensus-ais{color:var(--text-secondary);font-size:0.75rem}
-.consensus-count{font-family:var(--font-primary);font-weight:700;font-size:0.9rem;color:#f59e0b}
+.consensus{background:rgba(245,158,11,0.05);border:2px solid rgba(245,158,11,0.2);border-radius:16px;padding:24px;margin:30px 0;backdrop-filter:blur(8px)}
+.consensus h2{font-family:var(--font-primary);font-size:0.9rem;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.ci{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06)}
+.ci-pick{color:#fff;font-weight:600;font-size:0.85rem}
+.ci-ais{color:var(--text-secondary);font-size:0.72rem}
+.ci-ct{font-family:var(--font-primary);font-weight:700;font-size:0.9rem;color:#f59e0b}
 
-/* FOOTER */
-footer{text-align:center;padding:40px 20px;border-top:1px solid rgba(255,255,255,0.06);margin-top:60px}
+footer{text-align:center;padding:40px 20px;border-top:1px solid rgba(255,255,255,0.06);margin-top:50px}
 footer p{color:var(--text-secondary);font-size:0.8rem}
 footer a{color:var(--neon-cyan);text-decoration:none}
 
-/* RESPONSIVE */
-@media(max-width:768px){
-.nav-menu{display:none}
-.hero h1{font-size:1.5rem}
-.picks-grid{grid-template-columns:1fr}
-.odds-table{font-size:0.7rem}
-.odds-table th,.odds-table td{padding:6px 4px}
-.page-content{padding:10px}
-}
+@media(max-width:900px){.scoreboard{grid-template-columns:repeat(2,1fr)}.charts-section{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-menu{display:none}.hero h1{font-size:1.5rem}.picks-grid{grid-template-columns:1fr}.scoreboard{grid-template-columns:1fr}.donut-grid{grid-template-columns:repeat(2,1fr)}.page-content{padding:10px}}
 </style>
 </head>
 <body>
-<div class="background-container"></div>
 
+<!-- STADIUM BACKDROP -->
+<div class="stadium-bg">
+<img src="https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=1920&q=80" alt="MLB Stadium at night" loading="eager">
+</div>
+
+<!-- NAV -->
 <nav class="nav-container">
 <div class="nav-inner">
 <a href="index.html" class="logo">BET<span>LEGEND</span></a>
 <div class="nav-menu">
-<div class="hub-dropdown">
-<button class="hub-dropbtn">Handicapping Hub &#9660;</button>
-<div class="hub-dropdown-content">
-<a href="handicapping-hub.html">Today's Games</a>
-<a href="injury-report.html">Injury Report</a>
-</div>
-</div>
+<div class="hub-dropdown"><button class="hub-dropbtn">Handicapping Hub &#9660;</button><div class="hub-dropdown-content"><a href="handicapping-hub.html">Today's Games</a><a href="injury-report.html">Injury Report</a></div></div>
 <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html" class="nav-link">Pick Archive</a>
-<div class="dropdown">
-<button class="dropbtn">Previews &amp; Records &#9660;</button>
-<div class="sports-records-dropdown">
-<div class="two-columns">
-<div class="column">
-<h4>Game Previews</h4>
-<a href="mlb-previews.html">MLB</a>
-<a href="nba-previews.html">NBA</a>
-<a href="nhl-previews.html">NHL</a>
-<a href="college-basketball-previews.html">NCAAB</a>
-<a href="soccer-previews.html">Soccer</a>
-<a href="nfl.html">NFL</a>
-</div>
-<div class="column">
-<h4>Records</h4>
-<a href="records.html">Detailed Breakdown</a>
-<a href="mlb-records.html">MLB</a>
-<a href="nba-records.html">NBA</a>
-<a href="nhl-records.html">NHL</a>
-<a href="ncaab-records.html">NCAAB</a>
-<a href="soccer-records.html">Soccer</a>
-</div>
-</div>
-</div>
-</div>
-<div class="dropdown">
-<button class="dropbtn">Resources &#9660;</button>
-<div class="dropdown-content">
-<a href="live-odds.html">Live Odds</a>
-<a href="bankroll.html">Bankroll Management</a>
-<a href="kelly-criterion.html">Kelly Criterion</a>
-<a href="betting-calculators.html">Betting Calculators</a>
-<a href="ev-calculator.html">EV Calculator</a>
-<a href="betting-glossary.html">Betting Glossary</a>
-<a href="betting-101.html">Betting 101</a>
-<a href="contact.html">Contact Us</a>
-</div>
-</div>
+<div class="dropdown"><button class="dropbtn">Previews &amp; Records &#9660;</button><div class="sports-records-dropdown"><div class="two-columns"><div class="column"><h4>Game Previews</h4><a href="mlb-previews.html">MLB</a><a href="nba-previews.html">NBA</a><a href="nhl-previews.html">NHL</a><a href="college-basketball-previews.html">NCAAB</a><a href="soccer-previews.html">Soccer</a><a href="nfl.html">NFL</a></div><div class="column"><h4>Records</h4><a href="records.html">Detailed Breakdown</a><a href="mlb-records.html">MLB</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaab-records.html">NCAAB</a></div></div></div></div>
+<div class="dropdown"><button class="dropbtn">Resources &#9660;</button><div class="dropdown-content"><a href="live-odds.html">Live Odds</a><a href="bankroll.html">Bankroll</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="betting-calculators.html">Calculators</a><a href="betting-glossary.html">Glossary</a><a href="contact.html">Contact</a></div></div>
 <a href="pro/index.html" class="nav-link" style="color:#f59e0b;font-weight:700;">Pro Tools</a>
 </div>
 </div>
@@ -196,195 +188,206 @@ footer a{color:var(--neon-cyan);text-decoration:none}
 
 <main class="page-content">
 
+<!-- HERO -->
 <div class="hero">
-<div class="hero-badge">AI Handicapping Contest</div>
+<div class="hero-badge">AI Handicapping Contest - Day 4</div>
 <h1>AI Picks Board <em>MLB</em></h1>
-<p>Saturday, March 28, 2026 - 15-Game Slate</p>
-<p style="margin-top:8px">Four AI models. One sportsbook. Every pick tracked and graded.</p>
-<div class="book-badge">ALL LINES: DRAFTKINGS SPORTSBOOK</div>
+<p>Saturday, March 28, 2026 - 15-Game Slate - 49 Total Picks</p>
+<p style="margin-top:6px;font-size:0.9rem">Four AI models. One sportsbook. Every pick tracked and graded.</p>
+<div class="hero-combined">COMBINED: 27-7-1 | +26.95u</div>
+<div style="margin-top:10px;font-family:var(--font-primary);font-size:0.65rem;color:var(--text-secondary);letter-spacing:2px;text-transform:uppercase">All Lines: DraftKings Sportsbook</div>
 </div>
 
-<!-- ============ SEASON STANDINGS (Through Mar 27) ============ -->
-<div style="max-width:1200px;margin:0 auto 30px;padding:0 20px">
-<h2 class="section-title">Season Standings (Through March 27)</h2>
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
-<div style="background:rgba(66,133,244,0.08);border:1px solid rgba(66,133,244,0.25);border-radius:12px;padding:20px;text-align:center;border-top:3px solid #4285f4">
-<div style="font-family:var(--font-primary);font-size:0.7rem;color:#4285f4;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">1st Place</div>
-<div style="font-family:var(--font-primary);font-size:1.2rem;color:#4285f4;font-weight:700">GEMINI</div>
-<div style="font-family:'Roboto Mono',monospace;font-size:1.4rem;color:#fff;font-weight:700;margin:8px 0">8-2</div>
-<div style="font-family:'Roboto Mono',monospace;font-size:1.1rem;color:var(--win-color);font-weight:700">+11.50u</div>
-<div style="color:var(--text-secondary);font-size:0.8rem;margin-top:4px">80.0% Win | +57.5% ROI</div>
+<!-- SCOREBOARD -->
+<div class="scoreboard">
+<div class="sb-card c-gemini">
+<div class="sb-rank r1">1st</div>
+<div class="sb-name" style="color:var(--gemini)">Gemini</div>
+<div class="sb-record">8-2</div>
+<div class="sb-units">+11.50u</div>
+<div class="sb-meta">80.0% Win | +57.5% ROI</div>
 </div>
-<div style="background:rgba(29,161,242,0.08);border:1px solid rgba(29,161,242,0.25);border-radius:12px;padding:20px;text-align:center;border-top:3px solid #1da1f2">
-<div style="font-family:var(--font-primary);font-size:0.7rem;color:#1da1f2;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">2nd Place</div>
-<div style="font-family:var(--font-primary);font-size:1.2rem;color:#1da1f2;font-weight:700">GROK</div>
-<div style="font-family:'Roboto Mono',monospace;font-size:1.4rem;color:#fff;font-weight:700;margin:8px 0">8-2</div>
-<div style="font-family:'Roboto Mono',monospace;font-size:1.1rem;color:var(--win-color);font-weight:700">+6.49u</div>
-<div style="color:var(--text-secondary);font-size:0.8rem;margin-top:4px">80.0% Win | +37.1% ROI</div>
+<div class="sb-card c-grok">
+<div class="sb-rank r2">2nd</div>
+<div class="sb-name" style="color:var(--grok)">Grok</div>
+<div class="sb-record">8-2</div>
+<div class="sb-units">+6.49u</div>
+<div class="sb-meta">80.0% Win | +37.1% ROI</div>
 </div>
-<div style="background:rgba(212,165,116,0.08);border:1px solid rgba(212,165,116,0.25);border-radius:12px;padding:20px;text-align:center;border-top:3px solid #d4a574">
-<div style="font-family:var(--font-primary);font-size:0.7rem;color:#d4a574;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">3rd Place</div>
-<div style="font-family:var(--font-primary);font-size:1.2rem;color:#d4a574;font-weight:700">CLAUDE</div>
-<div style="font-family:'Roboto Mono',monospace;font-size:1.4rem;color:#fff;font-weight:700;margin:8px 0">6-1</div>
-<div style="font-family:'Roboto Mono',monospace;font-size:1.1rem;color:var(--win-color);font-weight:700">+5.90u</div>
-<div style="color:var(--text-secondary);font-size:0.8rem;margin-top:4px">85.7% Win | +59.0% ROI</div>
+<div class="sb-card c-claude">
+<div class="sb-rank r3">3rd</div>
+<div class="sb-name" style="color:var(--claude)">Claude</div>
+<div class="sb-record">6-1</div>
+<div class="sb-units">+5.90u</div>
+<div class="sb-meta">85.7% Win | +59.0% ROI</div>
 </div>
-<div style="background:rgba(16,163,127,0.08);border:1px solid rgba(16,163,127,0.25);border-radius:12px;padding:20px;text-align:center;border-top:3px solid #10a37f">
-<div style="font-family:var(--font-primary);font-size:0.7rem;color:#10a37f;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">4th Place</div>
-<div style="font-family:var(--font-primary);font-size:1.2rem;color:#10a37f;font-weight:700">CHATGPT</div>
-<div style="font-family:'Roboto Mono',monospace;font-size:1.4rem;color:#fff;font-weight:700;margin:8px 0">5-2-1</div>
-<div style="font-family:'Roboto Mono',monospace;font-size:1.1rem;color:var(--win-color);font-weight:700">+3.06u</div>
-<div style="color:var(--text-secondary);font-size:0.8rem;margin-top:4px">71.4% Win | +30.6% ROI</div>
+<div class="sb-card c-chatgpt">
+<div class="sb-rank r4">4th</div>
+<div class="sb-name" style="color:var(--chatgpt)">ChatGPT</div>
+<div class="sb-record">5-2-1</div>
+<div class="sb-units">+3.06u</div>
+<div class="sb-meta">71.4% Win | +30.6% ROI</div>
 </div>
-</div>
-<div style="text-align:center;margin-top:12px;color:var(--text-secondary);font-size:0.8rem">Combined: <strong style="color:#fff">27-7-1</strong> | +26.95 units | All 4 AIs profitable through 3 days</div>
 </div>
 
-<!-- ============ MASTER ODDS ============ -->
-<h2 class="section-title">Verified DraftKings Lines - March 28, 2026</h2>
+<!-- CHARTS -->
+<div class="charts-section">
+<!-- Unit Profit Chart -->
+<div class="chart-card">
+<div class="chart-title">Unit Profit (Through Mar 27)</div>
+<div class="bar-chart">
+<div class="bar-row"><div class="bar-label" style="color:var(--gemini)">Gemini</div><div class="bar-track"><div class="bar-fill gemini" style="width:100%">+11.50u</div></div></div>
+<div class="bar-row"><div class="bar-label" style="color:var(--grok)">Grok</div><div class="bar-track"><div class="bar-fill grok" style="width:56%">+6.49u</div></div></div>
+<div class="bar-row"><div class="bar-label" style="color:var(--claude)">Claude</div><div class="bar-track"><div class="bar-fill claude" style="width:51%">+5.90u</div></div></div>
+<div class="bar-row"><div class="bar-label" style="color:var(--chatgpt)">ChatGPT</div><div class="bar-track"><div class="bar-fill chatgpt" style="width:27%">+3.06u</div></div></div>
+</div>
+</div>
+<!-- Win Rate Donuts -->
+<div class="chart-card">
+<div class="chart-title">Win Rate</div>
+<div class="donut-grid">
+<div class="donut-item">
+<div class="donut-ring" style="background:conic-gradient(var(--claude) 0% 85.7%,rgba(255,255,255,0.08) 85.7% 100%)"><div class="donut-pct" style="color:var(--claude)">85.7%</div></div>
+<div class="donut-name" style="color:var(--claude)">Claude</div>
+</div>
+<div class="donut-item">
+<div class="donut-ring" style="background:conic-gradient(var(--gemini) 0% 80%,rgba(255,255,255,0.08) 80% 100%)"><div class="donut-pct" style="color:var(--gemini)">80.0%</div></div>
+<div class="donut-name" style="color:var(--gemini)">Gemini</div>
+</div>
+<div class="donut-item">
+<div class="donut-ring" style="background:conic-gradient(var(--grok) 0% 80%,rgba(255,255,255,0.08) 80% 100%)"><div class="donut-pct" style="color:var(--grok)">80.0%</div></div>
+<div class="donut-name" style="color:var(--grok)">Grok</div>
+</div>
+<div class="donut-item">
+<div class="donut-ring" style="background:conic-gradient(var(--chatgpt) 0% 71.4%,rgba(255,255,255,0.08) 71.4% 100%)"><div class="donut-pct" style="color:var(--chatgpt)">71.4%</div></div>
+<div class="donut-name" style="color:var(--chatgpt)">ChatGPT</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- MASTER ODDS TABLE -->
+<h2 class="section-title">DraftKings Lines - March 28, 2026</h2>
 <div style="overflow-x:auto">
 <table class="odds-table">
-<thead>
-<tr><th>Game</th><th>Fav ML</th><th>Dog ML</th><th>Run Line</th><th>Total</th><th>Fav TT</th><th>Dog TT</th><th>F5 Total</th></tr>
-</thead>
+<thead><tr><th>Game</th><th>Fav ML</th><th>Dog ML</th><th>Run Line</th><th>Total</th><th>Fav TT</th><th>Dog TT</th><th>F5 Tot</th></tr></thead>
 <tbody>
-<tr><td class="game-col">TB Rays @ STL Cardinals</td><td class="fav">TB -115</td><td class="dog">STL -105</td><td>TB -1.5</td><td>7.5</td><td>TB 4.0</td><td>STL 3.5</td><td>4.0</td></tr>
-<tr><td class="game-col">WSH Nationals @ CHI Cubs</td><td class="fav">CHC -252</td><td class="dog">WSH +205</td><td>CHC -1.5 (-118)</td><td>8.5</td><td>CHC 5.0</td><td>WSH 3.5</td><td>4.5</td></tr>
-<tr><td class="game-col">OAK Athletics @ TOR Blue Jays</td><td class="fav">TOR -199</td><td class="dog">OAK +165</td><td>TOR -1.5 (+109)</td><td>8.0</td><td>TOR 4.5</td><td>OAK 3.5</td><td>4.5</td></tr>
-<tr><td class="game-col">MIN Twins @ BAL Orioles</td><td class="fav">BAL -171</td><td class="dog">MIN +142</td><td>BAL -1.5 (+129)</td><td>7.5</td><td>BAL 4.0</td><td>MIN 3.5</td><td>4.0</td></tr>
-<tr><td class="game-col">TEX Rangers @ PHI Phillies</td><td class="fav">PHI -154</td><td class="dog">TEX +128</td><td>PHI -1.5 (+137)</td><td>7.5</td><td>PHI 4.0</td><td>TEX 3.5</td><td>4.0</td></tr>
-<tr><td class="game-col">BOS Red Sox @ CIN Reds</td><td class="fav">BOS -136</td><td class="dog">CIN +115</td><td>BOS -1.5 (+123)</td><td>7.5</td><td>BOS 4.0</td><td>CIN 3.5</td><td>4.0</td></tr>
-<tr><td class="game-col">COL Rockies @ MIA Marlins</td><td class="fav">MIA -193</td><td class="dog">COL +162</td><td>MIA -1.5 (+113)</td><td>7.5</td><td>MIA 4.5</td><td>COL 3.0</td><td>4.0</td></tr>
-<tr><td class="game-col">PIT Pirates @ NY Mets</td><td class="fav">NYM -175</td><td class="dog">PIT +147</td><td>NYM -1.5 (+129)</td><td>7.5</td><td>NYM 4.0</td><td>PIT 3.5</td><td>4.0</td></tr>
-<tr><td class="game-col">LAA Angels @ HOU Astros</td><td class="fav">HOU -149</td><td class="dog">LAA +123</td><td>HOU -1.5 (+139)</td><td>8.5</td><td>HOU 4.5</td><td>LAA 4.0</td><td>4.5</td></tr>
-<tr><td class="game-col">CHW White Sox @ MIL Brewers</td><td class="fav">MIL -194</td><td class="dog">CWS +161</td><td>MIL -1.5 (+109)</td><td>8.5</td><td>MIL 5.0</td><td>CWS 3.5</td><td>4.5</td></tr>
-<tr><td class="game-col">KC Royals @ ATL Braves</td><td class="fav">ATL -149</td><td class="dog">KC +123</td><td>ATL -1.5 (+139)</td><td>8.5</td><td>ATL 4.5</td><td>KC 4.0</td><td>4.5</td></tr>
-<tr><td class="game-col">NYY Yankees @ SF Giants</td><td class="fav">NYY -131</td><td class="dog">SF +109</td><td>NYY -1.5 (+129)</td><td>8.5</td><td>NYY 4.5</td><td>SF 4.0</td><td>4.5</td></tr>
-<tr><td class="game-col">DET Tigers @ SD Padres</td><td class="fav">SD -110</td><td class="dog">DET -110</td><td>Pick'em</td><td>8.0</td><td>SD 4.0</td><td>DET 4.0</td><td>4.5</td></tr>
-<tr><td class="game-col">ARI D-backs @ LA Dodgers</td><td class="fav">LAD -246</td><td class="dog">ARI +203</td><td>LAD -1.5 (-115)</td><td>9.0</td><td>LAD 5.5</td><td>ARI 3.5</td><td>4.5</td></tr>
-<tr><td class="game-col">CLE Guardians @ SEA Mariners</td><td class="fav">SEA -186</td><td class="dog">CLE +158</td><td>SEA -1.5 (+119)</td><td>7.0</td><td>SEA 4.0</td><td>CLE 3.0</td><td>3.5</td></tr>
+<tr><td class="gc">TB @ STL</td><td class="fav">TB -115</td><td class="dog">STL -105</td><td>TB -1.5</td><td>7.5</td><td>4.0</td><td>3.5</td><td>4.0</td></tr>
+<tr><td class="gc">WSH @ CHC</td><td class="fav">CHC -252</td><td class="dog">WSH +205</td><td>CHC -1.5 (-118)</td><td>8.5</td><td>5.0</td><td>3.5</td><td>4.5</td></tr>
+<tr><td class="gc">OAK @ TOR</td><td class="fav">TOR -199</td><td class="dog">OAK +165</td><td>TOR -1.5 (+109)</td><td>8.0</td><td>4.5</td><td>3.5</td><td>4.5</td></tr>
+<tr><td class="gc">MIN @ BAL</td><td class="fav">BAL -171</td><td class="dog">MIN +142</td><td>BAL -1.5 (+129)</td><td>7.5</td><td>4.0</td><td>3.5</td><td>4.0</td></tr>
+<tr><td class="gc">TEX @ PHI</td><td class="fav">PHI -154</td><td class="dog">TEX +128</td><td>PHI -1.5 (+137)</td><td>7.5</td><td>4.0</td><td>3.5</td><td>4.0</td></tr>
+<tr><td class="gc">BOS @ CIN</td><td class="fav">BOS -136</td><td class="dog">CIN +115</td><td>BOS -1.5 (+123)</td><td>7.5</td><td>4.0</td><td>3.5</td><td>4.0</td></tr>
+<tr><td class="gc">COL @ MIA</td><td class="fav">MIA -193</td><td class="dog">COL +162</td><td>MIA -1.5 (+113)</td><td>7.5</td><td>4.5</td><td>3.0</td><td>4.0</td></tr>
+<tr><td class="gc">PIT @ NYM</td><td class="fav">NYM -175</td><td class="dog">PIT +147</td><td>NYM -1.5 (+129)</td><td>7.5</td><td>4.0</td><td>3.5</td><td>4.0</td></tr>
+<tr><td class="gc">LAA @ HOU</td><td class="fav">HOU -149</td><td class="dog">LAA +123</td><td>HOU -1.5 (+139)</td><td>8.5</td><td>4.5</td><td>4.0</td><td>4.5</td></tr>
+<tr><td class="gc">CWS @ MIL</td><td class="fav">MIL -194</td><td class="dog">CWS +161</td><td>MIL -1.5 (+109)</td><td>8.5</td><td>5.0</td><td>3.5</td><td>4.5</td></tr>
+<tr><td class="gc">KC @ ATL</td><td class="fav">ATL -149</td><td class="dog">KC +123</td><td>ATL -1.5 (+139)</td><td>8.5</td><td>4.5</td><td>4.0</td><td>4.5</td></tr>
+<tr><td class="gc">NYY @ SF</td><td class="fav">NYY -131</td><td class="dog">SF +109</td><td>NYY -1.5 (+129)</td><td>8.5</td><td>4.5</td><td>4.0</td><td>4.5</td></tr>
+<tr><td class="gc">DET @ SD</td><td class="fav">SD -110</td><td class="dog">DET -110</td><td>Pick'em</td><td>8.0</td><td>4.0</td><td>4.0</td><td>4.5</td></tr>
+<tr><td class="gc">ARI @ LAD</td><td class="fav">LAD -246</td><td class="dog">ARI +203</td><td>LAD -1.5 (-115)</td><td>9.0</td><td>5.5</td><td>3.5</td><td>4.5</td></tr>
+<tr><td class="gc">CLE @ SEA</td><td class="fav">SEA -186</td><td class="dog">CLE +158</td><td>SEA -1.5 (+119)</td><td>7.0</td><td>4.0</td><td>3.0</td><td>3.5</td></tr>
 </tbody>
 </table>
 </div>
 
-<!-- ============ CHATGPT ============ -->
-<div class="ai-section chatgpt">
-<div class="ai-header">
-<h2>ChatGPT</h2>
-<span class="pick-count">8 Picks</span>
-<span class="units-total">20.5 Units Risked</span>
-</div>
+<!-- CHATGPT -->
+<div class="ai-section chatgpt-s">
+<div class="ai-header"><h2>ChatGPT</h2><span class="pc">8 Picks | Season: 5-2-1</span><span class="ut">+3.06u YTD</span></div>
 <div class="picks-grid">
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Blue Jays ML</div><div class="pick-line">TOR -199 | ATH @ TOR | O/U 8.0</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Marlins ML</div><div class="pick-line">MIA -193 | COL @ MIA | O/U 7.5</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Blue Jays F5 ML</div><div class="pick-line">TOR F5 -189 | F5 Total 4.5</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Marlins F5 ML</div><div class="pick-line">MIA F5 -184 | F5 Total 4.0</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Braves Team Total Over 4.5</div><div class="pick-line">ATL TT O 4.5 | KC @ ATL | Game Total 8.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Astros Team Total Over 4.5</div><div class="pick-line">HOU TT O 4.5 | LAA @ HOU | Game Total 8.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Dodgers F5 ML</div><div class="pick-line">LAD F5 -230 | F5 Total 4.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Phillies Team Total Over 4.0</div><div class="pick-line">PHI TT O 4.0 | TEX @ PHI | Game Total 7.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-</div>
-</div>
+<div class="pk"><div><div class="pk-name">Blue Jays ML</div><div class="pk-line">TOR -199 | O/U 8.0</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Marlins ML</div><div class="pk-line">MIA -193 | O/U 7.5</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Blue Jays F5 ML</div><div class="pk-line">TOR F5 -189 | F5 Tot 4.5</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Marlins F5 ML</div><div class="pk-line">MIA F5 -184 | F5 Tot 4.0</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Braves TT Over 4.5</div><div class="pk-line">ATL TT O 4.5 | Game Tot 8.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Astros TT Over 4.5</div><div class="pk-line">HOU TT O 4.5 | Game Tot 8.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">Dodgers F5 ML</div><div class="pk-line">LAD F5 -230 | F5 Tot 4.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">Phillies TT Over 4.0</div><div class="pk-line">PHI TT O 4.0 | Game Tot 7.5</div></div><span class="ub u2">2u</span></div>
+</div></div>
 
-<!-- ============ GROK ============ -->
-<div class="ai-section grok">
-<div class="ai-header">
-<h2>Grok</h2>
-<span class="pick-count">20 Picks</span>
-<span class="units-total">45.5 Units Risked</span>
-</div>
+<!-- GROK -->
+<div class="ai-section grok-s">
+<div class="ai-header"><h2>Grok</h2><span class="pc">20 Picks | Season: 8-2</span><span class="ut">+6.49u YTD</span></div>
 <div class="picks-grid">
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Cardinals ML</div><div class="pick-line">STL -105 | TB @ STL | O/U 7.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">TB/STL Under 7.5</div><div class="pick-line">U 7.5 | Game Total 7.5</div></div><div class="pick-units"><span class="units-badge u15">1.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Cubs ML</div><div class="pick-line">CHC -252 | WSH @ CHC | O/U 8.5</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Cubs -1.5</div><div class="pick-line">CHC -1.5 (-118) | WSH @ CHC</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Cubs Team Total Over 5.0</div><div class="pick-line">CHC TT O 5.0 | WSH @ CHC | Game Total 8.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Blue Jays ML</div><div class="pick-line">TOR -199 | ATH @ TOR | O/U 8.0</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Blue Jays Team Total Over 4.5</div><div class="pick-line">TOR TT O 4.5 | ATH @ TOR | Game Total 8.0</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Phillies ML</div><div class="pick-line">PHI -154 | TEX @ PHI | O/U 7.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Phillies Team Total Over 4.0</div><div class="pick-line">PHI TT O 4.0 | TEX @ PHI | Game Total 7.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Red Sox ML</div><div class="pick-line">BOS -136 | BOS @ CIN | O/U 7.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Marlins ML</div><div class="pick-line">MIA -193 | COL @ MIA | O/U 7.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Brewers ML</div><div class="pick-line">MIL -194 | CWS @ MIL | O/U 8.5</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Brewers -1.5</div><div class="pick-line">MIL -1.5 (+109) | CWS @ MIL</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Braves ML</div><div class="pick-line">ATL -149 | KC @ ATL | O/U 8.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Tigers ML</div><div class="pick-line">DET -110 | DET @ SD | O/U 8.0</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Dodgers ML</div><div class="pick-line">LAD -246 | ARI @ LAD | O/U 9.0</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Dodgers -1.5</div><div class="pick-line">LAD -1.5 (-115) | ARI @ LAD</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Dodgers Team Total Over 5.5</div><div class="pick-line">LAD TT O 5.5 | ARI @ LAD | Game Total 9.0</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">NYY/SF Under 8.5</div><div class="pick-line">U 8.5 | NYY @ SF | Game Total 8.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">CLE/SEA Under 7.0</div><div class="pick-line">U 7.0 | CLE @ SEA | Game Total 7.0</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-</div>
-</div>
+<div class="pk"><div><div class="pk-name">Cardinals ML</div><div class="pk-line">STL -105 | O/U 7.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">TB/STL Under 7.5</div><div class="pk-line">U 7.5 | Game Total 7.5</div></div><span class="ub u15">1.5u</span></div>
+<div class="pk"><div><div class="pk-name">Cubs ML</div><div class="pk-line">CHC -252 | O/U 8.5</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Cubs -1.5</div><div class="pk-line">CHC -1.5 (-118)</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">Cubs TT Over 5.0</div><div class="pk-line">CHC TT O 5.0 | Game Tot 8.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Blue Jays ML</div><div class="pk-line">TOR -199 | O/U 8.0</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Blue Jays TT Over 4.5</div><div class="pk-line">TOR TT O 4.5 | Game Tot 8.0</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Phillies ML</div><div class="pk-line">PHI -154 | O/U 7.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Phillies TT Over 4.0</div><div class="pk-line">PHI TT O 4.0 | Game Tot 7.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">Red Sox ML</div><div class="pk-line">BOS -136 | O/U 7.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">Marlins ML</div><div class="pk-line">MIA -193 | O/U 7.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Brewers ML</div><div class="pk-line">MIL -194 | O/U 8.5</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Brewers -1.5</div><div class="pk-line">MIL -1.5 (+109)</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">Braves ML</div><div class="pk-line">ATL -149 | O/U 8.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Tigers ML</div><div class="pk-line">DET -110 | O/U 8.0</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">Dodgers ML</div><div class="pk-line">LAD -246 | O/U 9.0</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Dodgers -1.5</div><div class="pk-line">LAD -1.5 (-115)</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Dodgers TT Over 5.5</div><div class="pk-line">LAD TT O 5.5 | Game Tot 9.0</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">NYY/SF Under 8.5</div><div class="pk-line">U 8.5 | Game Total 8.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">CLE/SEA Under 7.0</div><div class="pk-line">U 7.0 | Game Total 7.0</div></div><span class="ub u2">2u</span></div>
+</div></div>
 
-<!-- ============ CLAUDE ============ -->
-<div class="ai-section claude">
-<div class="ai-header">
-<h2>Claude</h2>
-<span class="pick-count">14 Picks</span>
-<span class="units-total">25.5 Units Risked</span>
-</div>
+<!-- CLAUDE -->
+<div class="ai-section claude-s">
+<div class="ai-header"><h2>Claude</h2><span class="pc">14 Picks | Season: 6-1</span><span class="ut">+5.90u YTD</span></div>
 <div class="picks-grid">
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Giants Team Total Under 4.0</div><div class="pick-line">SF TT U 4.0 | NYY @ SF | Game Total 8.5</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">NYY/SF F5 Under 4.5</div><div class="pick-line">F5 U 4.5 | NYY @ SF | F5 Total 4.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Yankees ML</div><div class="pick-line">NYY -131 | NYY @ SF | O/U 8.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">NYY/SF Under 8.5</div><div class="pick-line">U 8.5 | NYY @ SF | Game Total 8.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Royals Team Total Under 4.0</div><div class="pick-line">KC TT U 4.0 | KC @ ATL | Game Total 8.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">ATL/KC F5 Under 4.5</div><div class="pick-line">F5 U 4.5 | KC @ ATL | F5 Total 4.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">ATL/KC Under 8.5</div><div class="pick-line">U 8.5 | KC @ ATL | Game Total 8.5</div></div><div class="pick-units"><span class="units-badge u15">1.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">D-backs Team Total Under 3.5</div><div class="pick-line">ARI TT U 3.5 | ARI @ LAD | Game Total 9.0</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">LAD/ARI Under 9.0</div><div class="pick-line">U 9.0 | ARI @ LAD | Game Total 9.0</div></div><div class="pick-units"><span class="units-badge u15">1.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">LAD/ARI F5 Under 4.5</div><div class="pick-line">F5 U 4.5 | ARI @ LAD | F5 Total 4.5</div></div><div class="pick-units"><span class="units-badge u15">1.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Reds Team Total Under 3.5</div><div class="pick-line">CIN TT U 3.5 | BOS @ CIN | Game Total 7.5</div></div><div class="pick-units"><span class="units-badge u2">2u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Red Sox F5 ML</div><div class="pick-line">BOS F5 -133 | BOS @ CIN | F5 Total 4.0</div></div><div class="pick-units"><span class="units-badge u15">1.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Brewers -1.5</div><div class="pick-line">MIL -1.5 (+109) | CWS @ MIL</div></div><div class="pick-units"><span class="units-badge u15">1.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Brewers ML</div><div class="pick-line">MIL -194 | CWS @ MIL | O/U 8.5</div></div><div class="pick-units"><span class="units-badge u1">1u</span></div></div>
-</div>
-</div>
+<div class="pk"><div><div class="pk-name">Giants TT Under 4.0</div><div class="pk-line">SF TT U 4.0 | Game Tot 8.5</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">NYY/SF F5 Under 4.5</div><div class="pk-line">F5 U 4.5 | F5 Total 4.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Yankees ML</div><div class="pk-line">NYY -131 | O/U 8.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">NYY/SF Under 8.5</div><div class="pk-line">U 8.5 | Game Total 8.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">Royals TT Under 4.0</div><div class="pk-line">KC TT U 4.0 | Game Tot 8.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">ATL/KC F5 Under 4.5</div><div class="pk-line">F5 U 4.5 | F5 Total 4.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">ATL/KC Under 8.5</div><div class="pk-line">U 8.5 | Game Total 8.5</div></div><span class="ub u15">1.5u</span></div>
+<div class="pk"><div><div class="pk-name">D-backs TT Under 3.5</div><div class="pk-line">ARI TT U 3.5 | Game Tot 9.0</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">LAD/ARI Under 9.0</div><div class="pk-line">U 9.0 | Game Total 9.0</div></div><span class="ub u15">1.5u</span></div>
+<div class="pk"><div><div class="pk-name">LAD/ARI F5 Under 4.5</div><div class="pk-line">F5 U 4.5 | F5 Total 4.5</div></div><span class="ub u15">1.5u</span></div>
+<div class="pk"><div><div class="pk-name">Reds TT Under 3.5</div><div class="pk-line">CIN TT U 3.5 | Game Tot 7.5</div></div><span class="ub u2">2u</span></div>
+<div class="pk"><div><div class="pk-name">Red Sox F5 ML</div><div class="pk-line">BOS F5 -133 | F5 Tot 4.0</div></div><span class="ub u15">1.5u</span></div>
+<div class="pk"><div><div class="pk-name">Brewers -1.5</div><div class="pk-line">MIL -1.5 (+109)</div></div><span class="ub u15">1.5u</span></div>
+<div class="pk"><div><div class="pk-name">Brewers ML</div><div class="pk-line">MIL -194 | O/U 8.5</div></div><span class="ub u1">1u</span></div>
+</div></div>
 
-<!-- ============ GEMINI ============ -->
-<div class="ai-section gemini">
-<div class="ai-header">
-<h2>Gemini</h2>
-<span class="pick-count">7 Picks</span>
-<span class="units-total">19.0 Units Risked</span>
-</div>
+<!-- GEMINI -->
+<div class="ai-section gemini-s">
+<div class="ai-header"><h2>Gemini</h2><span class="pc">7 Picks | Season: 8-2</span><span class="ut">+11.50u YTD</span></div>
 <div class="picks-grid">
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Yankees ML</div><div class="pick-line">NYY -131 | NYY @ SF | O/U 8.5</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Dodgers -1.5</div><div class="pick-line">LAD -1.5 (-115) | ARI @ LAD</div></div><div class="pick-units"><span class="units-badge u3">3u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Yankees Team Total Over 4.5</div><div class="pick-line">NYY TT O 4.5 | NYY @ SF | Game Total 8.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Dodgers F5 ML</div><div class="pick-line">LAD F5 -230 | ARI @ LAD | F5 Total 4.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Rockies Team Total Under 3.0</div><div class="pick-line">COL TT U 3.0 | COL @ MIA | Game Total 7.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">Marlins ML</div><div class="pick-line">MIA -193 | COL @ MIA | O/U 7.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-<div class="pick-card"><div class="pick-info"><div class="pick-name">PHI/TEX Under 7.5</div><div class="pick-line">U 7.5 | TEX @ PHI | Game Total 7.5</div></div><div class="pick-units"><span class="units-badge u25">2.5u</span></div></div>
-</div>
-</div>
+<div class="pk"><div><div class="pk-name">Yankees ML</div><div class="pk-line">NYY -131 | O/U 8.5</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Dodgers -1.5</div><div class="pk-line">LAD -1.5 (-115)</div></div><span class="ub u3">3u</span></div>
+<div class="pk"><div><div class="pk-name">Yankees TT Over 4.5</div><div class="pk-line">NYY TT O 4.5 | Game Tot 8.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Dodgers F5 ML</div><div class="pk-line">LAD F5 -230 | F5 Tot 4.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Rockies TT Under 3.0</div><div class="pk-line">COL TT U 3.0 | Game Tot 7.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">Marlins ML</div><div class="pk-line">MIA -193 | O/U 7.5</div></div><span class="ub u25">2.5u</span></div>
+<div class="pk"><div><div class="pk-name">PHI/TEX Under 7.5</div><div class="pk-line">U 7.5 | Game Total 7.5</div></div><span class="ub u25">2.5u</span></div>
+</div></div>
 
-<!-- ============ CONSENSUS ============ -->
+<!-- CONSENSUS -->
 <div class="consensus">
 <h2>Multi-AI Consensus Picks</h2>
-<p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:16px">Games where 2+ AI models agree on the same side</p>
-<div class="consensus-grid">
-<div class="consensus-item"><div><div class="consensus-pick">Marlins ML (-193)</div><div class="consensus-ais">ChatGPT, Grok, Gemini</div></div><div class="consensus-count">3 AIs</div></div>
-<div class="consensus-item"><div><div class="consensus-pick">Blue Jays ML (-199)</div><div class="consensus-ais">ChatGPT, Grok</div></div><div class="consensus-count">2 AIs</div></div>
-<div class="consensus-item"><div><div class="consensus-pick">Yankees ML (-131)</div><div class="consensus-ais">Claude, Gemini</div></div><div class="consensus-count">2 AIs</div></div>
-<div class="consensus-item"><div><div class="consensus-pick">Dodgers -1.5 (-115)</div><div class="consensus-ais">Grok, Gemini</div></div><div class="consensus-count">2 AIs</div></div>
-<div class="consensus-item"><div><div class="consensus-pick">Dodgers F5 ML (-230)</div><div class="consensus-ais">ChatGPT, Gemini</div></div><div class="consensus-count">2 AIs</div></div>
-<div class="consensus-item"><div><div class="consensus-pick">Brewers ML (-194)</div><div class="consensus-ais">Grok, Claude</div></div><div class="consensus-count">2 AIs</div></div>
-<div class="consensus-item"><div><div class="consensus-pick">Brewers -1.5 (+109)</div><div class="consensus-ais">Grok, Claude</div></div><div class="consensus-count">2 AIs</div></div>
-<div class="consensus-item"><div><div class="consensus-pick">NYY/SF Under 8.5</div><div class="consensus-ais">Grok, Claude</div></div><div class="consensus-count">2 AIs</div></div>
-<div class="consensus-item"><div><div class="consensus-pick">Braves TT Over 4.5 / Braves ML</div><div class="consensus-ais">ChatGPT (TT), Grok (ML)</div></div><div class="consensus-count">2 AIs</div></div>
-<div class="consensus-item"><div><div class="consensus-pick">Phillies TT Over 4.0 / Phillies ML</div><div class="consensus-ais">ChatGPT (TT), Grok (ML+TT)</div></div><div class="consensus-count">2 AIs</div></div>
+<p style="color:var(--text-secondary);font-size:0.82rem;margin-bottom:14px">Games where 2+ AI models agree on the same side</p>
+<div class="cg">
+<div class="ci"><div><div class="ci-pick">Marlins ML (-193)</div><div class="ci-ais">ChatGPT + Grok + Gemini</div></div><div class="ci-ct">3 AIs</div></div>
+<div class="ci"><div><div class="ci-pick">Blue Jays ML (-199)</div><div class="ci-ais">ChatGPT + Grok</div></div><div class="ci-ct">2 AIs</div></div>
+<div class="ci"><div><div class="ci-pick">Yankees ML (-131)</div><div class="ci-ais">Claude + Gemini</div></div><div class="ci-ct">2 AIs</div></div>
+<div class="ci"><div><div class="ci-pick">Dodgers -1.5 (-115)</div><div class="ci-ais">Grok + Gemini</div></div><div class="ci-ct">2 AIs</div></div>
+<div class="ci"><div><div class="ci-pick">Dodgers F5 ML (-230)</div><div class="ci-ais">ChatGPT + Gemini</div></div><div class="ci-ct">2 AIs</div></div>
+<div class="ci"><div><div class="ci-pick">Brewers ML (-194)</div><div class="ci-ais">Grok + Claude</div></div><div class="ci-ct">2 AIs</div></div>
+<div class="ci"><div><div class="ci-pick">Brewers -1.5 (+109)</div><div class="ci-ais">Grok + Claude</div></div><div class="ci-ct">2 AIs</div></div>
+<div class="ci"><div><div class="ci-pick">NYY/SF Under 8.5</div><div class="ci-ais">Grok + Claude</div></div><div class="ci-ct">2 AIs</div></div>
+<div class="ci"><div><div class="ci-pick">Phillies TT Over 4.0</div><div class="ci-ais">ChatGPT + Grok</div></div><div class="ci-ct">2 AIs</div></div>
+<div class="ci"><div><div class="ci-pick">Braves ML/TT Over</div><div class="ci-ais">ChatGPT (TT) + Grok (ML)</div></div><div class="ci-ct">2 AIs</div></div>
 </div>
 </div>
 
-<!-- ============ LINES NORMALIZED ============ -->
-<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-top:30px">
-<h3 style="font-family:var(--font-primary);font-size:0.8rem;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px">Lines Normalization Log</h3>
-<p style="color:var(--text-secondary);font-size:0.8rem;line-height:1.7">
-<strong style="color:#fff">All totals standardized to DraftKings posted lines:</strong><br>
-NYY/SF total: 8.5 (all AIs aligned) | ATL/KC total: 8.5 (Claude corrected from 7.5) | LAD/ARI total: 9.0 (Claude corrected from 8.0) | CLE/SEA total: 7.0 (Grok corrected from 7.5) | CHC TT: 5.0 (Grok corrected from 4.5) | LAD TT: 5.5 (Grok corrected from 5.0) | PHI TT: 4.0 (Grok corrected from 4.5) | STL ML: -105 (underdog per DK, Grok's pick stands)<br><br>
-<strong style="color:#fff">Sources:</strong> Full game lines via ESPN API (DraftKings provider). F5 lines cross-referenced from MyBookie. Team totals derived from game totals and implied moneyline margins.
+<!-- NOTES -->
+<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-top:20px">
+<h3 style="font-family:var(--font-primary);font-size:0.75rem;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px">Lines Normalization Log</h3>
+<p style="color:var(--text-secondary);font-size:0.78rem;line-height:1.7">
+<strong style="color:#fff">All totals standardized to DraftKings:</strong> NYY/SF = 8.5 | ATL/KC = 8.5 | LAD/ARI = 9.0 | CLE/SEA = 7.0 | CHC TT = 5.0 | LAD TT = 5.5 | PHI TT = 4.0<br>
+<strong style="color:#fff">Sources:</strong> Full game lines via ESPN API (DraftKings). F5 lines cross-referenced. Team totals derived from game totals + moneyline margins.
 </p>
 </div>
 
@@ -392,7 +395,7 @@ NYY/SF total: 8.5 (all AIs aligned) | ATL/KC total: 8.5 (Claude corrected from 7
 
 <footer>
 <p>&copy; 2026 <a href="index.html">BetLegend Picks</a> | AI Picks Board is for entertainment and tracking purposes only.</p>
-<p style="margin-top:8px">All odds from DraftKings Sportsbook. Lines subject to movement. Always verify before placing wagers.</p>
+<p style="margin-top:8px">All odds from DraftKings Sportsbook. Lines subject to movement.</p>
 </footer>
 
 </body>
