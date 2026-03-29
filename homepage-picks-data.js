@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "March 29, 2026",
         result: "",
         url: "brewers-moneyline-sproat-white-sox-sweep-mlb.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/641857/action/hero/current"
+        image: "https://a.espncdn.com/photo/2026/0326/r1634325_1296x729_16-9.jpg"
     },
     {
         sport: "MLB",
