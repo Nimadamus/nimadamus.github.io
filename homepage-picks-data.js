@@ -24,9 +24,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Brewers ML -157 vs White Sox",
+        date: "March 29, 2026",
+        result: "",
+        url: "brewers-moneyline-sproat-white-sox-sweep-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/641857/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Yankees at Giants UNDER 8.5 (-110)",
         date: "March 28, 2026",
-        result: "",
+        result: "W",
         url: "yankees-giants-under-8-5-oracle-park-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/701542/action/hero/current"
     },
