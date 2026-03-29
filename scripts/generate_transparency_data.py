@@ -28,9 +28,7 @@ HTML_RECORDS_PAGES = {
     "NHL": "nhl-records.html",
     "NFL": "nfl-records.html",
     "NCAAF": "ncaaf-records.html",
-    "NBA": "nba-records.html",
     "NCAAB": "ncaab-records.html",
-    "Soccer": "soccer-records.html",
 }
 
 # MLB uses Google Sheets - CSV endpoint
@@ -47,19 +45,13 @@ LEAGUE_MAP = {
     "ncaaf": "NCAAF",
     "college football": "NCAAF",
     "cfb": "NCAAF",
-    "nba": "NBA",
-    "basketball": "NBA",
     "ncaab": "NCAAB",
     "college basketball": "NCAAB",
     "cbb": "NCAAB",
-    "soccer": "Soccer",
-    "futbol": "Soccer",
     "mlb": "MLB",
     "baseball": "MLB",
     "football": "NFL",
-    "backetball": "NBA",
     "basetball": "NCAAB",
-    "basketbalL": "NCAAB",
 }
 
 # Display names for the widget
@@ -68,9 +60,7 @@ DISPLAY_NAMES = {
     "MLB": "MLB",
     "NFL": "NFL",
     "NCAAF": "College Football",
-    "NBA": "NBA",
     "NCAAB": "College Basketball",
-    "Soccer": "Soccer",
 }
 
 # Links to full records pages
@@ -79,9 +69,7 @@ RECORDS_LINKS = {
     "MLB": "betlegend-verified-records.html",
     "NFL": "nfl-records.html",
     "NCAAF": "ncaaf-records.html",
-    "NBA": "nba-records.html",
     "NCAAB": "ncaab-records.html",
-    "Soccer": "soccer-records.html",
 }
 
 
