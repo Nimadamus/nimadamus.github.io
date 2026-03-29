@@ -284,11 +284,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
- // Google Sheets CSV URL - Old MLB Sheet (2025 historical data)
+ // Google Sheets CSV URL - Old MLB Sheet (correct data)
  const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
-
- // Pick Tracker (2026 picks)
- const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
 
  // Global storage for all picks (for year filtering)
  let allProcessedPicks = [];
@@ -397,98 +394,27 @@
  }));
  }
 
- // CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md)
- // Units = what you're trying to WIN
- // Fav win: +units, Fav loss: -units*(|odds|/100)
- // Dog win: +units*(odds/100), Dog loss: -units
- function calculateUnitResult(unitsStake, odds, result) {
- const stake = parseFloat(unitsStake);
- const oddsNum = parseFloat(odds);
- const resultUpper = (result || '').toUpperCase().trim();
- if (isNaN(stake) || isNaN(oddsNum)) return 0;
- if (resultUpper.startsWith('W')) {
- return oddsNum < 0 ? stake : stake * (oddsNum / 100);
- } else if (resultUpper.startsWith('L')) {
- return oddsNum < 0 ? -stake * (Math.abs(oddsNum) / 100) : -stake;
- }
- return 0;
- }
-
- // Filter for MLB picks from the Pick Tracker
- function isMLBPick(row) {
- const league = (row.League || '').toLowerCase().trim();
- const sport = (row.Sport || '').toLowerCase().trim();
- if (league === 'cross-sport') return false;
- if (league === 'mlb' || league === 'baseball') return true;
- if (sport === 'baseball' || sport === 'mlb') return true;
- return false;
- }
-
- // Load data from BOTH the MLB sheet (2025) and Pick Tracker (2026)
+ // Load data from Google Sheets and process it
  async function loadDataFromSheets() {
  try {
- let allPicksData = [];
-
- // SOURCE 1: MLB-specific sheet (2025 historical data with pre-calculated units)
- try {
  const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
- cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
+ cache: 'no-store',
+ headers: { 'Cache-Control': 'no-store' }
  });
  const csvText = await response.text();
- const sheetData = parseCSV(csvText);
- allPicksData = allPicksData.concat(convertToMLBFormat(sheetData));
- } catch (e) {
- console.error('Error loading MLB sheet:', e);
- }
+ const filteredData = parseCSV(csvText);
 
- // SOURCE 2: Pick Tracker (2026 MLB picks - needs unit calculation)
- try {
- const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
- cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
- });
- const trackerCsv = await trackerResponse.text();
- const trackerData = parseCSV(trackerCsv);
- const mlbTrackerPicks = trackerData.filter(row => isMLBPick(row));
- const trackerFormatted = mlbTrackerPicks.map(row => {
- const result = (row.Result || '').trim();
- if (!result) return null;
- const rawUnits = row.Units || '1';
- const odds = row.Line || row.Odds || '-110';
- const units = calculateUnitResult(rawUnits, odds, result);
- return {
- Date: row.Date || '',
- Sport: 'MLB',
- Pick: row.Pick || row.Picks || '',
- Line: odds,
- Result: result,
- Units: String(units)
- };
- }).filter(Boolean);
- allPicksData = allPicksData.concat(trackerFormatted);
- } catch (e) {
- console.error('Error loading Pick Tracker:', e);
- }
-
+ const mlbPicksData = convertToMLBFormat(filteredData);
+ 
  // Hide loading message
  document.getElementById('loading-message').style.display = 'none';
-
- // Deduplicate by Date+Pick
- const seen = new Set();
- const deduped = [];
- allPicksData.forEach(p => {
- const key = (p.Date + '|' + p.Pick).toLowerCase();
- if (!seen.has(key)) {
- seen.add(key);
- deduped.push(p);
- }
- });
-
- // Process the merged data
- processPicksData(deduped);
-
+ 
+ // Process the data using the original logic
+ processPicksData(mlbPicksData);
+ 
  } catch (error) {
- console.error('Error loading data:', error);
- document.getElementById('loading-message').textContent = 'Error loading data. Please try again later.';
+ console.error('Error loading data from Google Sheets:', error);
+ document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';
  }
  }
 
