@@ -295,7 +295,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
- // Pick Tracker URL for dynamic loading
+ // MLB-specific Google Sheet (historical 2025 season data)
+ const MLB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+
+ // Pick Tracker URL (2026 picks)
  const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
 
  // Filter for MLB picks from the tracker
@@ -359,31 +362,7 @@
  }
 
  async function loadDataFromSheets() {
- try {
- const response = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
- cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
- });
- const csv = await response.text();
- const allData = parseCSV(csv);
- const mlbPicks = allData.filter(row => isMLBPick(row)).map(row => {
- const rawUnits = row.Units || '3';
- const odds = row.Line || row.Odds || '-110';
- const result = row.Result || '';
- const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
- return {
- Date: row.Date || '',
- Pick: row.Pick || row.Picks || '',
- Line: odds,
- Result: result,
- Units: calculatedUnits
- };
- }).filter(p => p.Result);
-
- if (mlbPicks.length > 0) {
- mlbPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-
  const tbody = document.getElementById('picks-table-body');
-
  const existingPicks = new Set();
  tbody.querySelectorAll('tr').forEach(tr => {
  const cells = tr.querySelectorAll('td');
@@ -394,20 +373,69 @@
  }
  });
 
- mlbPicks.forEach(p => {
+ function addPickToTable(p) {
  const pickKey = p.Date + '|' + p.Pick.toLowerCase();
- if (!existingPicks.has(pickKey)) {
- const resultClass = p.Result.toUpperCase().startsWith('W') ? 'result-W' :
- p.Result.toUpperCase().startsWith('L') ? 'result-L' : 'result-P';
+ if (existingPicks.has(pickKey)) return;
+ const resultChar = (p.Result || '').toUpperCase().charAt(0);
+ const resultClass = resultChar === 'W' ? 'result-W' : resultChar === 'L' ? 'result-L' : 'result-P';
  const unitsClass = p.Units > 0 ? 'win' : (p.Units < 0 ? 'loss' : 'result-P');
  const unitsText = (p.Units >= 0 ? '+' : '') + p.Units.toFixed(2);
  const newRow = document.createElement('tr');
- newRow.innerHTML = `<td>${p.Date}</td><td>${p.Pick}</td><td>${p.Line}</td><td class="${resultClass}">${p.Result}</td><td class="${unitsClass}">${unitsText}</td>`;
- tbody.insertBefore(newRow, tbody.firstChild);
+ newRow.innerHTML = `<td>${p.Date}</td><td>${p.Pick}</td><td>${p.Line}</td><td class="${resultClass}">${resultChar}</td><td class="${unitsClass}">${unitsText}</td>`;
+ tbody.appendChild(newRow);
  existingPicks.add(pickKey);
  }
- });
 
+ // SOURCE 1: MLB-specific sheet (historical 2025 data with pre-calculated units)
+ try {
+ const mlbResponse = await fetch(MLB_SHEET_URL + '&cache=' + Date.now(), {
+ cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
+ });
+ const mlbCsv = await mlbResponse.text();
+ const mlbData = parseCSV(mlbCsv);
+ mlbData.forEach(row => {
+ const result = (row.Result || '').trim();
+ if (!result) return;
+ // This sheet has pre-calculated Units column
+ const units = parseFloat((row.Units || '0').replace(/[+,]/g, '')) || 0;
+ addPickToTable({
+ Date: row.Date || '',
+ Pick: row.Pick || row.Picks || '',
+ Line: row.Line || row.Odds || '-110',
+ Result: result,
+ Units: units
+ });
+ });
+ } catch (e) {
+ console.error('Error loading MLB sheet:', e);
+ }
+
+ // SOURCE 2: Pick Tracker (2026 picks - needs unit calculation)
+ try {
+ const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
+ cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
+ });
+ const trackerCsv = await trackerResponse.text();
+ const trackerData = parseCSV(trackerCsv);
+ trackerData.filter(row => isMLBPick(row)).forEach(row => {
+ const result = (row.Result || '').trim();
+ if (!result) return;
+ const rawUnits = row.Units || '1';
+ const odds = row.Line || row.Odds || '-110';
+ const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
+ addPickToTable({
+ Date: row.Date || '',
+ Pick: row.Pick || row.Picks || '',
+ Line: odds,
+ Result: result,
+ Units: calculatedUnits
+ });
+ });
+ } catch (e) {
+ console.error('Error loading Pick Tracker:', e);
+ }
+
+ // Sort all rows by date descending
  const rows = Array.from(tbody.querySelectorAll('tr'));
  rows.sort((a, b) => {
  const dateA = new Date(a.cells[0].textContent.trim());
@@ -416,12 +444,9 @@
  });
  rows.forEach(row => tbody.appendChild(row));
 
+ // Recalculate stats for current year filter
  const activeYear = document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || '2026';
  filterByYear(activeYear);
- }
- } catch (error) {
- console.error('Error loading from Pick Tracker:', error);
- }
  }
 
  // CHART FUNCTION
