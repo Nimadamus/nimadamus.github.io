@@ -1393,14 +1393,11 @@
 
  // Load data when page loads
  document.addEventListener('DOMContentLoaded', function () {
- // Calculate stats from static HTML rows first
+ // Calculate stats from static HTML rows
  calculateStatsFromTable();
 
- // Filter to 2026 first (this calculates stats for filtered rows only)
- filterByYear('2026');
-
- // Load from Pick Tracker to get new graded picks
- loadDataFromSheets();
+ // Default to All Time view
+ filterByYear('all');
 
  // Year filter buttons
  const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
@@ -1413,9 +1410,6 @@
  });
  });
  });
-
- // Refresh data every 5 minutes
- setInterval(loadDataFromSheets, 300000);
 
 // Mobile dropdown menu functionality
 document.addEventListener('DOMContentLoaded', function() {
