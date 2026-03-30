@@ -988,27 +988,13 @@
 
  async function loadDataFromSheets() {
  const tbody = document.getElementById('picks-table-body');
- const existingPicks = new Set();
- tbody.querySelectorAll('tr').forEach(tr => {
- const cells = tr.querySelectorAll('td');
- if (cells.length >= 2) {
- const date = cells[0].textContent.trim();
- const pick = cells[1].textContent.trim().toLowerCase();
- existingPicks.add(date + '|' + pick);
- }
- });
+ const allPicks = new Map(); // key = "date|pick_lower" -> pick object
 
- function addPickToTable(p) {
- const pickKey = p.Date + '|' + p.Pick.toLowerCase();
- if (existingPicks.has(pickKey)) return;
- const resultChar = (p.Result || '').toUpperCase().charAt(0);
- const resultClass = resultChar === 'W' ? 'result-W' : resultChar === 'L' ? 'result-L' : 'result-P';
- const unitsClass = p.Units > 0 ? 'win' : (p.Units < 0 ? 'loss' : 'result-P');
- const unitsText = (p.Units >= 0 ? '+' : '') + p.Units.toFixed(2);
- const newRow = document.createElement('tr');
- newRow.innerHTML = `<td>${p.Date}</td><td>${p.Pick}</td><td>${p.Line}</td><td class="${resultClass}">${resultChar}</td><td class="${unitsClass}">${unitsText}</td>`;
- tbody.appendChild(newRow);
- existingPicks.add(pickKey);
+ function addPick(p) {
+ const key = p.Date.trim() + '|' + p.Pick.trim().toLowerCase();
+ if (!allPicks.has(key)) {
+ allPicks.set(key, p);
+ }
  }
 
  // SOURCE 1: MLB-specific sheet (historical 2025 data with pre-calculated units)
@@ -1021,9 +1007,8 @@
  mlbData.forEach(row => {
  const result = (row.Result || '').trim();
  if (!result) return;
- // This sheet has pre-calculated Units column
  const units = parseFloat((row.Units || '0').replace(/[+,]/g, '')) || 0;
- addPickToTable({
+ addPick({
  Date: row.Date || '',
  Pick: row.Pick || row.Picks || '',
  Line: row.Line || row.Odds || '-110',
@@ -1035,7 +1020,7 @@
  console.error('Error loading MLB sheet:', e);
  }
 
- // SOURCE 2: Pick Tracker (2026 picks - needs unit calculation)
+ // SOURCE 2: Pick Tracker (2026+ picks - needs unit calculation)
  try {
  const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
  cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
@@ -1048,7 +1033,7 @@
  const rawUnits = row.Units || '1';
  const odds = row.Line || row.Odds || '-110';
  const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
- addPickToTable({
+ addPick({
  Date: row.Date || '',
  Pick: row.Pick || row.Picks || '',
  Line: odds,
@@ -1060,18 +1045,31 @@
  console.error('Error loading Pick Tracker:', e);
  }
 
- // Sort all rows by date descending
- const rows = Array.from(tbody.querySelectorAll('tr'));
- rows.sort((a, b) => {
- const dateA = new Date(a.cells[0].textContent.trim());
- const dateB = new Date(b.cells[0].textContent.trim());
- return dateB - dateA;
- });
- rows.forEach(row => tbody.appendChild(row));
+ // Clear static table and rebuild entirely from Google Sheets
+ tbody.innerHTML = '';
+ const picks = Array.from(allPicks.values());
 
- // Recalculate stats for current year filter
- const activeYear = document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || '2026';
- filterByYear(activeYear);
+ // Sort by date descending
+ picks.sort((a, b) => {
+ const da = new Date(a.Date.replace(/(\d+)[-\/](\d+)[-\/](\d+)/, '$3-$1-$2'));
+ const db = new Date(b.Date.replace(/(\d+)[-\/](\d+)[-\/](\d+)/, '$3-$1-$2'));
+ return db - da;
+ });
+
+ picks.forEach(p => {
+ const resultChar = (p.Result || '').toUpperCase().charAt(0);
+ const resultClass = resultChar === 'W' ? 'result-W' : resultChar === 'L' ? 'result-L' : 'result-P';
+ const unitsClass = p.Units > 0 ? 'win' : (p.Units < 0 ? 'loss' : 'result-P');
+ const unitsText = (p.Units >= 0 ? '+' : '') + p.Units.toFixed(2);
+ const row = document.createElement('tr');
+ row.innerHTML = '<td>' + p.Date + '</td><td>' + p.Pick + '</td><td>' + p.Line + '</td><td class="' + resultClass + '">' + resultChar + '</td><td class="' + unitsClass + '">' + unitsText + '</td>';
+ tbody.appendChild(row);
+ });
+
+ // Recalculate stats from the fresh data
+ const activeYear = document.querySelector('.year-filter-btn.active');
+ const yearFilter = activeYear ? activeYear.getAttribute('data-year') : 'all';
+ filterByYear(yearFilter);
  }
 
  // CHART FUNCTION
@@ -1400,11 +1398,12 @@
 
  // Load data when page loads
  document.addEventListener('DOMContentLoaded', function () {
- // Calculate stats from static HTML table (synced daily from Pick Tracker)
+ // Show static HTML stats immediately while Sheets load
  calculateStatsFromTable();
-
- // Default to All Time view
  filterByYear('all');
+
+ // Then fetch live data from Google Sheets and replace the table
+ loadDataFromSheets();
 
  // Year filter buttons
  const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
