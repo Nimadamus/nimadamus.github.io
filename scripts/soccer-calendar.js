@@ -5,7 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-03-30", page: "soccer-previews.html", title: "Soccer Previews Today - Daily Match Analysis & Betting Lines" },
     { date: "2026-03-29", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-29" },
-    { date: "2026-03-28", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-28" },
+    { date: "2026-03-28", page: "soccer-march28-content.html", title: "SOCCER Analysis" },
     { date: "2026-03-27", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-24" },

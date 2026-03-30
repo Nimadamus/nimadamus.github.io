@@ -5,7 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-03-30", page: "college-basketball-previews.html", title: "College Basketball Previews Today - Daily NCAAB Analysis & Betting Lines" },
     { date: "2026-03-29", page: "nba-college-basketball-picks-predictions-analysis-february-2026.html", title: "NBA College Basketball Picks Predictions Feb 2026" },
-    { date: "2026-03-28", page: "college-basketball-previews.html", title: "NCAAB Analysis - 2026-03-28" },
+    { date: "2026-03-28", page: "ncaab-march28-content.html", title: "NCAAB Analysis" },
     { date: "2026-03-27", page: "college-basketball-previews.html", title: "NCAAB Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "college-basketball-previews.html", title: "NCAAB Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "college-basketball-previews.html", title: "NCAAB Analysis - 2026-03-24" },

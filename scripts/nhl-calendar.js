@@ -5,7 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-03-30", page: "nhl-previews.html", title: "NHL Game Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-03-29", page: "nhl-previews.html", title: "NHL Analysis - 2026-03-29" },
-    { date: "2026-03-28", page: "nhl-previews.html", title: "NHL Analysis - 2026-03-28" },
+    { date: "2026-03-28", page: "nhl-march28-content.html", title: "NHL Analysis" },
     { date: "2026-03-27", page: "nhl-previews.html", title: "NHL Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "nhl-previews.html", title: "NHL Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "nhl-previews.html", title: "NHL Analysis - 2026-03-24" },
