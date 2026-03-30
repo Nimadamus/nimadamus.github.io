@@ -34,7 +34,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Brewers ML -157 vs White Sox",
         date: "March 29, 2026",
-        result: "",
+        result: "W",
         url: "brewers-moneyline-sproat-white-sox-sweep-mlb.html",
         image: "https://a.espncdn.com/photo/2026/0326/r1634325_1296x729_16-9.jpg"
     },
