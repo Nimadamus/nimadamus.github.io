@@ -9,7 +9,6 @@ const ARCHIVE_DATA = [
     { date: "2026-03-27", page: "soccer-previews-archive-march-2026.html#2026-03-27", title: "SOCCER Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "soccer-previews-archive-march-2026.html#2026-03-25", title: "SOCCER Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "soccer-previews-archive-march-2026.html#2026-03-24", title: "SOCCER Analysis - 2026-03-24" },
-    { date: "2026-03-22", page: "soccer-previews-archive-march-2026.html#2026-03-22", title: "SOCCER Analysis - 2026-03-22" },
     { date: "2026-03-21", page: "soccer-previews-archive-march-2026.html#2026-03-21", title: "SOCCER Analysis - 2026-03-21" },
     { date: "2026-03-20", page: "bournemouth-man-united-premier-league-friday-villarreal-sociedad-soccer-march-20-2026.html", title: "Soccer Analysis - March 20, 2026" },
     { date: "2026-03-20", page: "soccer.html", title: "Soccer Analysis - March 20, 2026" },

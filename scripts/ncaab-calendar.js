@@ -9,7 +9,6 @@ const ARCHIVE_DATA = [
     { date: "2026-03-27", page: "college-basketball-previews-archive-march-2026.html#2026-03-27", title: "NCAAB Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "college-basketball-previews-archive-march-2026.html#2026-03-25", title: "NCAAB Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "college-basketball-previews-archive-march-2026.html#2026-03-24", title: "NCAAB Analysis - 2026-03-24" },
-    { date: "2026-03-22", page: "college-basketball-previews-archive-march-2026.html#2026-03-22", title: "NCAAB Analysis - 2026-03-22" },
     { date: "2026-03-21", page: "college-basketball-previews-archive-march-2026.html#2026-03-21", title: "NCAAB Analysis - 2026-03-21" },
     { date: "2026-03-20", page: "march-madness-first-round-friday-florida-arizona-uconn-kentucky-college-basketball-march-20-2026.html", title: "NCAAB Analysis - March 20, 2026" },
     { date: "2026-03-20", page: "ncaab.html", title: "NCAAB Analysis - March 20, 2026" },
