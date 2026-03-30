@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Brewers ML -156 vs Rays",
+        date: "March 30, 2026",
+        result: "",
+        url: "brewers-moneyline-harrison-rays-series-opener-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/690986/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Brewers ML -157 vs White Sox",
         date: "March 29, 2026",
         result: "",
