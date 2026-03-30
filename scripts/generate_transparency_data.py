@@ -29,6 +29,7 @@ HTML_RECORDS_PAGES = {
     "NFL": "nfl-records.html",
     "NCAAF": "ncaaf-records.html",
     "NCAAB": "ncaab-records.html",
+    "MLB": "mlb-records.html",
 }
 
 # MLB uses Google Sheets - CSV endpoint
@@ -66,7 +67,7 @@ DISPLAY_NAMES = {
 # Links to full records pages
 RECORDS_LINKS = {
     "NHL": "nhl-records.html",
-    "MLB": "betlegend-verified-records.html",
+    "MLB": "mlb-records.html",
     "NFL": "nfl-records.html",
     "NCAAF": "ncaaf-records.html",
     "NCAAB": "ncaab-records.html",
@@ -329,20 +330,21 @@ def main():
               f"Units: {stats['totalUnits']:+.2f} | Win%: {stats['winPct']}% | "
               f"Picks: {stats['totalPicks']}")
 
-    # Fetch MLB from Google Sheets
-    print("Fetching MLB data from Google Sheets...")
-    mlb_stats = fetch_mlb_from_sheets()
-    if mlb_stats:
-        data["MLB"] = {
-            "displayName": DISPLAY_NAMES["MLB"],
-            "recordsLink": RECORDS_LINKS["MLB"],
-            **mlb_stats,
-        }
-        print(f"MLB: {mlb_stats['wins']}-{mlb_stats['losses']}-{mlb_stats['pushes']} | "
-              f"Units: {mlb_stats['totalUnits']:+.2f} | Win%: {mlb_stats['winPct']}% | "
-              f"Picks: {mlb_stats['totalPicks']}")
-    else:
-        print("WARNING: MLB data unavailable, will be excluded from widget")
+    # Fetch MLB from Google Sheets only if not already loaded from HTML records page
+    if "MLB" not in data:
+        print("Fetching MLB data from Google Sheets (fallback)...")
+        mlb_stats = fetch_mlb_from_sheets()
+        if mlb_stats:
+            data["MLB"] = {
+                "displayName": DISPLAY_NAMES["MLB"],
+                "recordsLink": RECORDS_LINKS["MLB"],
+                **mlb_stats,
+            }
+            print(f"MLB: {mlb_stats['wins']}-{mlb_stats['losses']}-{mlb_stats['pushes']} | "
+                  f"Units: {mlb_stats['totalUnits']:+.2f} | Win%: {mlb_stats['winPct']}% | "
+                  f"Picks: {mlb_stats['totalPicks']}")
+        else:
+            print("WARNING: MLB data unavailable, will be excluded from widget")
 
     # Generate the JS data file
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
