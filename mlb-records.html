@@ -359,7 +359,8 @@
  const allPicks = new Map(); // key = "date|pick_lower" -> pick object
 
  function addPick(p) {
- const key = p.Date.trim() + '|' + p.Pick.trim().toLowerCase();
+ p.Date = fixDate(p.Date.trim());
+ const key = p.Date + '|' + p.Pick.trim().toLowerCase();
  if (!allPicks.has(key)) {
  allPicks.set(key, p);
  }
@@ -686,9 +687,29 @@
  setTimeout(createChart, 100);
  }
 
+ // Fix common date typos (e.g., "3/29/2926" -> "3/29/2026", "9-12-205" -> "9-12-2025")
+ function fixDate(dateStr) {
+ if (!dateStr) return dateStr;
+ const parts = dateStr.split(/[-\/]/);
+ if (parts.length === 3) {
+ let yr = parts[2].trim();
+ // Fix missing digit: "205" -> "2025"
+ if (/^\d{3}$/.test(yr) && yr.startsWith('20')) yr = yr.slice(0, 2) + '2' + yr.slice(2);
+ // Fix typo decade: "2926" -> "2026", "2825" -> "2025"
+ if (/^\d{4}$/.test(yr) && parseInt(yr) > 2030) {
+ const lastTwo = yr.slice(-2);
+ yr = '20' + lastTwo;
+ }
+ parts[2] = yr;
+ return parts.join(dateStr.includes('/') ? '/' : '-');
+ }
+ return dateStr;
+ }
+
  // Extract year from date string
  function getYearFromDate(dateStr) {
  if (!dateStr) return null;
+ dateStr = fixDate(dateStr);
  const parts = dateStr.split(/[-\/]/);
  if (parts.length === 3) {
  const year = parseInt(parts[2], 10);
