@@ -9,8 +9,6 @@ const ARCHIVE_DATA = [
     { date: "2026-03-27", page: "nhl-previews-archive-march-2026.html#2026-03-27", title: "NHL Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "nhl-previews-archive-march-2026.html#2026-03-25", title: "NHL Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "nhl-previews-archive-march-2026.html#2026-03-24", title: "NHL Analysis - 2026-03-24" },
-    { date: "2026-03-23", page: "nhl-previews.html", title: "NHL Analysis - 2026-03-23" },
-    { date: "2026-03-22", page: "nhl-previews.html", title: "NHL Analysis - 2026-03-22" },
     { date: "2026-03-21", page: "nhl-previews-archive-march-2026.html#2026-03-21", title: "NHL Analysis - 2026-03-21" },
     { date: "2026-03-20", page: "hurricanes-leafs-avalanche-roll-panthers-west-nhl-march-20-2026.html", title: "NHL Analysis - March 20, 2026" },
     { date: "2026-03-20", page: "nhl.html", title: "NHL Analysis - March 20, 2026" },
