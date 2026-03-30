@@ -1393,14 +1393,11 @@
 
  // Load data when page loads
  document.addEventListener('DOMContentLoaded', function () {
- // Calculate stats from static HTML rows first
+ // Calculate stats from static HTML table (synced daily from Pick Tracker)
  calculateStatsFromTable();
 
  // Default to All Time view
  filterByYear('all');
-
- // Then load fresh data from Google Sheets and recalculate
- loadDataFromSheets();
 
  // Year filter buttons
  const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
