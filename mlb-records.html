@@ -810,7 +810,6 @@
                     <tr><td>7/18/2025</td><td>Twins Team Total over 5.5</td><td>-140</td><td class="result-L">L</td><td class="loss">-1.40</td></tr>
                     <tr><td>7/18/2025</td><td>Tigers F5 MlL</td><td>-135</td><td class="result-L">L</td><td class="loss">-1.35</td></tr>
                     <tr><td>7/13/2025</td><td>Astrros/Rangers F5 under 3.5</td><td>-125</td><td class="result-L">L</td><td class="loss">-1.25</td></tr>
-                    <tr><td>7/12/2025</td><td></td><td>-127</td><td class="result-L">L</td><td class="loss">-1.27</td></tr>
                     <tr><td>7/12/2025</td><td>Blue Jays ML</td><td>-157</td><td class="result-L">L</td><td class="loss">-1.57</td></tr>
                     <tr><td>7/12/2025</td><td>Angels First 5 Innings ML</td><td>-125</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
                     <tr><td>7/12/2025</td><td>Rangers/Astros First 5 Innings Under 3.5</td><td>-125</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
@@ -1394,11 +1393,14 @@
 
  // Load data when page loads
  document.addEventListener('DOMContentLoaded', function () {
- // Calculate stats from static HTML rows
+ // Calculate stats from static HTML rows first
  calculateStatsFromTable();
 
  // Default to All Time view
  filterByYear('all');
+
+ // Then load fresh data from Google Sheets and recalculate
+ loadDataFromSheets();
 
  // Year filter buttons
  const yearFilterBtns = document.querySelectorAll('.year-filter-btn');
