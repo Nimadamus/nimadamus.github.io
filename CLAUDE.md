@@ -2,6 +2,41 @@
 
 ### SESSION VERIFICATION CODE: REPO-PROTOCOL-2026
 
+## ☠️☠️☠️ ABSOLUTE RULE: PICKS = STANDALONE PAGES ONLY. NEVER POST TO BLOG ARCHIVE. ☠️☠️☠️
+
+### PERMANENTLY LOCKED - MARCH 30, 2026
+
+**Picks are STANDALONE PAGES ONLY. NEVER post a pick to the blog archive page.**
+
+### THE RULE:
+```
+WHEN CREATING A NEW PICK:
+1. Create a standalone HTML page (keyword-rich URL, no date in slug)
+2. Add a card entry to homepage-picks-data.js
+3. DONE. That's it. Two files only.
+
+NEVER TOUCH:
+❌ nba-college-basketball-picks-predictions-analysis-february-2026.html
+❌ Any blog-page*.html file
+❌ Any archive page
+
+The blog archive is FROZEN. It contains historical picks from before
+March 14, 2026. No new picks should ever be added to it.
+```
+
+### WHY THIS EXISTS (March 30, 2026):
+A Brewers ML -157 pick was posted to BOTH a standalone page AND the blog
+archive, creating duplicate content. Same full analysis on two URLs.
+Google penalizes duplicate content. This must never happen again.
+
+### AUTOMATED PROTECTION:
+- Pre-commit hook BLOCKS any commit adding new blog-post divs to the archive
+- Run `python scripts/validate_no_duplicate_picks.py` to check for duplicates
+
+**IF I ADD A PICK TO THE BLOG ARCHIVE, THE COMMIT WILL BE BLOCKED.**
+
+---
+
 ## CRITICAL: READ BEFORE DOING ANYTHING
 
 **This file is automatically loaded at the start of every Claude Code session in this repository.**
