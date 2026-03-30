@@ -13,7 +13,7 @@ def get_archive_template(sport, sport_title, games_html, calendar_js, date_displ
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{sport_title} - January 2, 2026 | BetLegend</title>
 <meta name="description" content="{sport_title} archive for January 2, 2026.">

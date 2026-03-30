@@ -98,6 +98,26 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .team-logo{width:40px;height:40px}
 .team-name{font-size:13px}
 }
+
+.calendar-sidebar{position:fixed;left:20px;top:120px;width:280px;z-index:100}
+.calendar-box{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:24px;margin-bottom:20px}
+.calendar-title{font-family:var(--font-display);font-size:16px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;text-align:center}
+.year-display{font-family:var(--font-display);font-size:24px;color:var(--accent-gold);text-align:center;margin-bottom:12px}
+.month-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 18px;font-size:15px;font-family:var(--font-body);border-radius:8px;cursor:pointer;margin-bottom:18px}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
+.calendar-weekdays span{text-align:center;font-size:12px;font-weight:600;color:var(--text-muted);padding:6px 0}
+.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-muted);background:rgba(0,0,0,0.2);border-radius:6px;cursor:default}
+.cal-day.empty{background:transparent}
+.cal-day.has-content{cursor:pointer;background:rgba(253,80,0,0.15);color:var(--accent-orange);font-weight:600}
+.cal-day.has-content:hover{background:rgba(253,80,0,0.2)}
+.cal-day.today{background:rgba(253,80,0,0.25);color:var(--accent-orange);font-weight:600;border:2px solid var(--accent-gold)}
+.cal-day.current-page{background:rgba(253,80,0,0.7)!important;color:#fff!important;font-weight:800!important;border:2px solid #fd5000!important;box-shadow:0 0 8px rgba(253,80,0,0.5)}
+.mobile-archive{display:none;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;padding:16px 20px;margin-bottom:32px}
+.mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
+@media(max-width:1200px){.calendar-sidebar{display:none}.mobile-archive{display:block}}
+
 </style>
 <link rel="stylesheet" href="/mobile-optimize.css" media="screen">
 </head>
@@ -131,6 +151,20 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 </header>
 
 <div class="page-wrapper">
+<aside class="calendar-sidebar">
+<div class="calendar-box">
+<div class="calendar-title">NCAAB Archive</div>
+<div class="year-display" id="cal-year">2026</div>
+<select class="month-select" id="month-select"></select>
+<div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+<div class="calendar-days" id="calendar-days"></div>
+</div>
+</aside>
+<div class="mobile-archive">
+<div class="mobile-archive-title">NCAAB Archive</div>
+<select class="mobile-archive-select" id="mobile-archive-select"><option value="">Jump to date...</option></select>
+</div>
+
 
 <p class="updated-line">Saturday, March 28, 2026</p>
 
@@ -227,5 +261,6 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 document.querySelectorAll('.dropdown').forEach(d=>{d.addEventListener('click',function(e){if(window.innerWidth<=768){e.stopPropagation();this.classList.toggle('active')}})});
 document.addEventListener('click',()=>document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('active')));
 </script>
+<script src="scripts/ncaab-calendar.js?v=20260330"></script>
 </body>
 </html>

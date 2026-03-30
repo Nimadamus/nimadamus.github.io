@@ -14,7 +14,7 @@ This script:
 4. Appends the content to a monthly archive file (creating it if needed)
 5. Clears the hub content area with the placeholder message
 
-The archive files are noindexed and canonical-point to the main hub page.
+The archive files are indexed and canonical-point to themselves.
 """
 
 import os
@@ -68,20 +68,21 @@ def build_archive_page(sport, date, hub_filename):
     """Create a new monthly archive HTML page."""
     display = SPORT_DISPLAY[sport]
     month_year = date.strftime('%B %Y')
+    archive_filename = get_archive_filename(sport, date)
 
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="robots" content="noindex, follow"/>
-<link href="https://www.betlegendpicks.com/{hub_filename}" rel="canonical"/>
+<meta name="robots" content="index, follow"/>
+<link href="https://www.betlegendpicks.com/{archive_filename}" rel="canonical"/>
 <title>{display} Previews Archive - {month_year} | BetLegend</title>
 <meta name="description" content="Archive of {display} game previews and analysis from {month_year}. Daily betting analysis, spreads, moneylines, and totals."/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="{display} Previews Archive - {month_year} | BetLegend" property="og:title"/>
 <meta content="Archive of {display} game previews from {month_year}." property="og:description"/>
 <meta content="website" property="og:type"/>
-<meta content="https://www.betlegendpicks.com/{hub_filename}" property="og:url"/>
+<meta content="https://www.betlegendpicks.com/{archive_filename}" property="og:url"/>
 <meta content="BetLegend Picks" property="og:site_name"/>
 <meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png"/>
 <meta content="summary_large_image" name="twitter:card"/>
