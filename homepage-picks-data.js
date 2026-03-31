@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Giants ML +131 at Padres",
+        date: "March 31, 2026",
+        result: "",
+        url: "giants-moneyline-webb-padres-petco-park-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/v1773507436/mlb/rsxmjlczbv0elpmrsm6c.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Brewers ML -156 vs Rays",
         date: "March 30, 2026",
         result: "",
