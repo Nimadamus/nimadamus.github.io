@@ -3624,10 +3624,11 @@ function closeEmailPopup() {
 
     var SPORT_ORDER = ['NHL', 'MLB', 'NFL', 'NCAAF', 'NCAAB'];
     var SPORT_CONFIG = {
-        NHL:   { displayName: 'NHL',              recordsLink: 'nhl-records.html',               htmlPage: 'nhl-records.html' },
-        NFL:   { displayName: 'NFL',              recordsLink: 'nfl-records.html',               htmlPage: 'nfl-records.html' },
-        NCAAF: { displayName: 'College Football', recordsLink: 'ncaaf-records.html',             htmlPage: 'ncaaf-records.html' },
-        MLB:   { displayName: 'MLB',              recordsLink: 'betlegend-verified-records.html', htmlPage: null }
+        NHL:   { displayName: 'NHL',              recordsLink: 'nhl-records.html' },
+        MLB:   { displayName: 'MLB',              recordsLink: 'mlb-records.html' },
+        NFL:   { displayName: 'NFL',              recordsLink: 'nfl-records.html' },
+        NCAAF: { displayName: 'College Football', recordsLink: 'ncaaf-records.html' },
+        NCAAB: { displayName: 'College Basketball', recordsLink: 'ncaab-records.html' }
     };
 
     var activeTab = 0;
@@ -3738,15 +3739,22 @@ function closeEmailPopup() {
         });
     }
 
-    /* ---- Init: use pre-generated data, then refresh MLB live from Sheets ---- */
+    /* ---- Init: show pre-generated data immediately, then live-refresh ALL sports ---- */
     if (typeof TRANSPARENCY_DATA !== 'undefined') {
         buildTabs(TRANSPARENCY_DATA.sports);
     }
 
-    /* ---- Live MLB refresh from Google Sheets ---- */
-    (function refreshMLBFromSheets() {
-        var MLB_SHEET = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
+    /* ---- Live refresh ALL sports from Pick Tracker Google Sheet ---- */
+    (function refreshAllSportsFromSheets() {
         var TRACKER = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
+        var LEAGUE_MAP = {
+            'nhl': 'NHL', 'hockey': 'NHL',
+            'nfl': 'NFL', 'football': 'NFL',
+            'ncaaf': 'NCAAF', 'college football': 'NCAAF', 'cfb': 'NCAAF',
+            'ncaab': 'NCAAB', 'college basketball': 'NCAAB', 'cbb': 'NCAAB',
+            'mlb': 'MLB', 'baseball': 'MLB'
+        };
 
         function csvToRows(text) {
             var lines = text.split('\n');
@@ -3778,61 +3786,55 @@ function closeEmailPopup() {
             return 0;
         }
 
-        Promise.all([
-            fetch(MLB_SHEET + '&t=' + Date.now()).then(function(r) { return r.text(); }),
-            fetch(TRACKER + '&t=' + Date.now()).then(function(r) { return r.text(); })
-        ]).then(function(results) {
-            var seen = {};
-            var w = 0, l = 0, p = 0, units = 0, lastDate = '';
+        fetch(TRACKER + '&t=' + Date.now()).then(function(r) { return r.text(); }).then(function(csvText) {
+            var rows = csvToRows(csvText);
+            var sports = {};
 
-            // 2025 MLB Sheet
-            csvToRows(results[0]).forEach(function(row) {
-                var res = (row.Result || '').trim().toUpperCase();
-                if (!res) return;
-                var key = (row.Date || '') + '|' + ((row.Pick || row.Picks || '') + '').toLowerCase();
-                if (seen[key]) return;
-                seen[key] = true;
-                var u = parseFloat((row.Units || '0').replace(/[+,]/g, '')) || 0;
-                if (res.charAt(0) === 'W') { w++; units += u; }
-                else if (res.charAt(0) === 'L') { l++; units += u; }
-                else if (res.charAt(0) === 'P') p++;
-                if (!lastDate && row.Date) lastDate = row.Date;
-            });
-
-            // 2026 Pick Tracker
-            csvToRows(results[1]).forEach(function(row) {
+            rows.forEach(function(row) {
                 var league = (row.League || '').toLowerCase().trim();
-                var sport = (row.Sport || '').toLowerCase().trim();
-                if (league !== 'mlb' && league !== 'baseball' && sport !== 'baseball' && sport !== 'mlb') return;
                 if (league === 'cross-sport') return;
+                var sportKey = LEAGUE_MAP[league];
+                if (!sportKey) {
+                    var sport = (row.Sport || '').toLowerCase().trim();
+                    sportKey = LEAGUE_MAP[sport];
+                }
+                if (!sportKey) return;
+
                 var res = (row.Result || '').trim().toUpperCase();
                 if (!res) return;
-                var key = (row.Date || '') + '|' + ((row.Pick || row.Picks || '') + '').toLowerCase();
-                if (seen[key]) return;
-                seen[key] = true;
+
+                if (!sports[sportKey]) sports[sportKey] = { w: 0, l: 0, p: 0, units: 0 };
+
                 var odds = row.Line || row.Odds || '-110';
                 var stake = row.Units || '1';
                 var u = calcUnit(stake, odds, res);
-                if (res.charAt(0) === 'W') { w++; units += u; }
-                else if (res.charAt(0) === 'L') { l++; units += u; }
-                else if (res.charAt(0) === 'P') p++;
-                if (row.Date && (!lastDate || row.Date > lastDate)) lastDate = row.Date;
+
+                if (res.charAt(0) === 'W') { sports[sportKey].w++; sports[sportKey].units += u; }
+                else if (res.charAt(0) === 'L') { sports[sportKey].l++; sports[sportKey].units += u; }
+                else if (res.charAt(0) === 'P') { sports[sportKey].p++; }
             });
 
-            // Update the MLB panel in the widget
+            // Merge live data into widget - live data OVERRIDES static for matching sports
             if (typeof TRANSPARENCY_DATA !== 'undefined') {
-                TRANSPARENCY_DATA.sports.MLB = {
-                    displayName: 'MLB',
-                    recordsLink: 'mlb-records.html',
-                    wins: w, losses: l, pushes: p,
-                    totalPicks: w + l + p,
-                    totalUnits: Math.round(units * 100) / 100,
-                    winPct: (w + l) > 0 ? Math.round((w / (w + l)) * 1000) / 10 : 0,
-                    lastDate: lastDate
-                };
+                Object.keys(sports).forEach(function(key) {
+                    var s = sports[key];
+                    var cfg = SPORT_CONFIG[key];
+                    if (!cfg) return;
+                    // Only override if tracker has picks for this sport
+                    if (s.w + s.l + s.p > 0) {
+                        TRANSPARENCY_DATA.sports[key] = {
+                            displayName: cfg.displayName,
+                            recordsLink: cfg.recordsLink,
+                            wins: s.w, losses: s.l, pushes: s.p,
+                            totalPicks: s.w + s.l + s.p,
+                            totalUnits: Math.round(s.units * 100) / 100,
+                            winPct: (s.w + s.l) > 0 ? Math.round((s.w / (s.w + s.l)) * 1000) / 10 : 0
+                        };
+                    }
+                });
                 buildTabs(TRANSPARENCY_DATA.sports);
             }
-        }).catch(function(e) { console.error('MLB live refresh error:', e); });
+        }).catch(function(e) { console.error('Live records refresh error:', e); });
     })();
 
     /* ---- Auto-rotation timer ---- */
