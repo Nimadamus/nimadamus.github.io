@@ -131,6 +131,8 @@ def main():
         os.path.join(REPO_ROOT, 'archive-prediction-picks-november-21-2025.html'),
         os.path.join(REPO_ROOT, 'featured-game-of-the-day-page*.html'),
         os.path.join(REPO_ROOT, 'featured-game-of-the-day-*.html'),
+        os.path.join(REPO_ROOT, '*-analysis-stats-preview-*.html'),
+        os.path.join(REPO_ROOT, '*-prediction-picks-*.html'),
     ]
 
     page_files = set()
