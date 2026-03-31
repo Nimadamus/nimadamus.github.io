@@ -124,6 +124,13 @@ def fetch_pick_tracker_picks():
             continue
 
         date = (row.get("Date", "") or "").strip()
+        # Fix known date typos - normalize any non-2025/2026 year to 2026
+        parts = re.split(r'[/\-]', date)
+        if len(parts) == 3:
+            yr = parts[2]
+            if yr not in ('2025', '2026') and len(yr) >= 4:
+                parts[2] = '2026'
+                date = '/'.join(parts)
         pick = (row.get("Pick", "") or row.get("Picks", "") or "").strip().lower()
         stake = row.get("Units", "") or "3"
         odds = row.get("Line", "") or row.get("Odds", "") or "-110"
