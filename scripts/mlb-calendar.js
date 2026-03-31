@@ -4,13 +4,12 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-03-30", page: "how-to-bet-mlb-totals.html", title: "How to Bet MLB Totals - Complete Guide" },
-    { date: "2026-03-30", page: "mlb-previews.html", title: "MLB Game Previews Today - Daily Analysis & Betting Lines" },
-    { date: "2026-03-29", page: "mlb-previews.html", title: "MLB Analysis - 2026-03-29" },
+    { date: "2026-03-30", page: "mlb-previews-archive-march-2026.html#2026-03-30", title: "MLB Game Previews Today - Daily Analysis & Betting Lines" },
+    { date: "2026-03-29", page: "mlb-previews-archive-march-2026.html#2026-03-29", title: "MLB Analysis - 2026-03-29" },
     { date: "2026-03-28", page: "mlb-march28-content.html", title: "MLB Analysis - Saturday, March 28, 2026" },
-    { date: "2026-03-27", page: "mlb-previews.html", title: "MLB Analysis - 2026-03-27" },
-    { date: "2026-03-25", page: "mlb-previews.html", title: "MLB Analysis - 2026-03-25" },
-    { date: "2026-03-24", page: "mlb-previews.html", title: "MLB Analysis - 2026-03-24" },
-    { date: "2026-03-23", page: "mlb-previews.html", title: "MLB Analysis - 2026-03-23" },
+    { date: "2026-03-27", page: "mlb-previews-archive-march-2026.html#2026-03-27", title: "MLB Analysis - 2026-03-27" },
+    { date: "2026-03-25", page: "mlb-previews-archive-march-2026.html#2026-03-25", title: "MLB Analysis - 2026-03-25" },
+    { date: "2026-03-24", page: "mlb-previews-archive-march-2026.html#2026-03-24", title: "MLB Analysis - 2026-03-24" },
     { date: "2026-03-18", page: "spring-training-heat-wave-cubs-bregman-dodgers-tucker-mlb-march-18-2026.html", title: "MLB Analysis - March 18, 2026" },
     { date: "2026-03-18", page: "mlb.html", title: "MLB Analysis - March 18, 2026" },
     { date: "2026-01-08", page: "mlb-picks-analysis-against-the-spread-january-08-2026.html", title: "MLB Analysis - January 08, 2026" },
