@@ -139,7 +139,7 @@ WRONG (BANNED):
 
 ### PERMANENTLY LOCKED - FEBRUARY 14, 2026
 
-**NOTE (March 22, 2026): Daily sport preview pages are NO LONGER created as individual files. They use the Rolling Hub system (see "ROLLING HUB SYSTEM" section). This keyword-rich URL rule still applies to Featured Game pages, blog posts, news articles, and standalone content - just NOT to daily sport previews.**
+**NOTE (March 30, 2026): The Rolling Hub system is PERMANENTLY RETIRED. We are BACK to creating individual standalone pages per day per sport. This keyword-rich URL rule applies to ALL pages including daily sport previews. Every day, every sport gets its own unique standalone page with a unique storyline-driven URL.**
 
 **EVERY new page MUST have a unique, keyword-rich URL. The old page## numbering is DEAD.**
 
@@ -241,11 +241,29 @@ The ONLY change is the filename itself.
 
 ---
 
-## ⛔⛔⛔ ROLLING HUB SYSTEM - REPLACES DAILY DATED PAGES ⛔⛔⛔
+## ⛔⛔⛔ ROLLING HUB SYSTEM - !!RETIRED MARCH 30, 2026!! ⛔⛔⛔
 
-### PERMANENTLY LOCKED - MARCH 22, 2026
+### !!RETIRED!! - This system caused too many problems and has been PERMANENTLY ABANDONED.
 
-**The old system of creating daily dated pages (nba-page76.html, nba-game-previews-march-20-2026.html, etc.) is PERMANENTLY RETIRED. It has been replaced by the Rolling Hub model.**
+**As of March 30, 2026, we are BACK to standalone daily pages. Each SLATE creates individual files per sport with UNIQUE storyline-driven URLs. The hub pages (nba-previews.html, etc.) now serve as landing/redirect pages to today's content. No more daily overwriting, no more archive rotation, no more lost content.**
+
+**THE CURRENT SYSTEM (March 30, 2026+):**
+```
+Each SLATE creates standalone files:
+- [unique-theme]-nba-[month]-[day]-[year].html
+- [unique-theme]-nhl-[month]-[day]-[year].html
+- [unique-theme]-mlb-[month]-[day]-[year].html
+- [unique-theme]-soccer-[month]-[day]-[year].html
+- [unique-theme]-college-basketball-[month]-[day]-[year].html (when in season)
+- [away]-vs-[home]-analysis-stats-preview-[month]-[day]-[year].html (Featured Game)
+
+EVERY URL must be UNIQUE and STORYLINE-DRIVEN.
+NEVER use generic date-only patterns.
+Calendar links point directly to standalone files.
+Hub pages redirect to today's standalone page.
+```
+
+**!!THE BELOW SECTION IS HISTORICAL ONLY - DO NOT FOLLOW!!**
 
 ### THE NEW SYSTEM:
 
@@ -1088,15 +1106,16 @@ SLATE is not done until ALL active sports have pages.
 
 ## STEP 4: POSTING LOCATIONS
 
-- **Blog picks/analysis**: blog-page10.html (add to TOP)
-- **NBA slate posts**: nba-previews.html (Rolling Hub)
-- **NHL slate posts**: nhl-previews.html (Rolling Hub)
-- **NCAAB posts**: college-basketball-previews.html (Rolling Hub)
+- **NBA slate posts**: NEW standalone page each day: `[unique-theme]-nba-[month]-[day]-[year].html`
+- **NHL slate posts**: NEW standalone page each day: `[unique-theme]-nhl-[month]-[day]-[year].html`
+- **MLB slate posts**: NEW standalone page each day: `[unique-theme]-mlb-[month]-[day]-[year].html`
+- **Soccer posts**: NEW standalone page each day: `[unique-theme]-soccer-[month]-[day]-[year].html`
+- **NCAAB posts**: NEW standalone page each day: `[unique-theme]-college-basketball-[month]-[day]-[year].html`
 - **NFL posts**: nfl.html (add to TOP)
-- **Soccer posts**: soccer-previews.html (Rolling Hub)
-- **MLB slate posts**: mlb-previews.html (Rolling Hub)
-- **Featured Game of the Day**: Latest keyword-rich featured game page
+- **Featured Game of the Day**: `[away]-vs-[home]-analysis-stats-preview-[month]-[day]-[year].html`
+- **Blog picks/analysis**: Standalone pick pages (NOT blog archive)
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
+- **Hub pages** (nba-previews.html, etc.): Update redirect to point to today's standalone page
 
 ### ⛔ CRITICAL: FEATURED GAME OF THE DAY = ANALYSIS ONLY, NO PICKS ⛔
 
