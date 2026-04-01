@@ -129,6 +129,9 @@ const FEATURED_GAMES = [
     { date: "2026-03-30", page: "pistons-vs-thunder-nba-analysis-stats-preview-march-30-2026.html", title: "Pistons vs Thunder Analysis Stats Preview March 30 2026" },
     { date: "2026-03-31", page: "cavaliers-vs-lakers-nba-analysis-stats-preview-march-31-2026.html", title: "Cavaliers vs Lakers Analysis Stats Preview March 31 2026" },
 
+    // April 2026
+    { date: "2026-04-01", page: "spurs-vs-warriors-nba-analysis-stats-preview-april-1-2026.html", title: "Spurs vs Warriors Analysis Stats Preview April 1 2026" },
+
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 

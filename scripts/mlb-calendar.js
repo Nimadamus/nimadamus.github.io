@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-01", page: "how-to-bet-mlb-totals.html", title: "How to Bet MLB Totals - Complete Guide" },
+    { date: "2026-04-01", page: "skubal-sale-dominate-early-pitching-duels-yankees-dodgers-mlb-april-1-2026.html", title: "MLB Analysis - April 1, 2026" },
     { date: "2026-04-01", page: "mlb-previews.html", title: "MLB Game Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-03-31", page: "ohtani-pitches-dodgers-degrom-returns-fried-gilbert-duel-mlb-march-31-2026.html", title: "MLB Analysis - March 31, 2026" },
     { date: "2026-03-30", page: "mlb-previews.html", title: "MLB Analysis - 2026-03-30" },
