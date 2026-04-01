@@ -337,21 +337,50 @@ def main():
               f"Units: {stats['totalUnits']:+.2f} | Win%: {stats['winPct']}% | "
               f"Picks: {stats['totalPicks']}")
 
-    # Fetch MLB from Google Sheets only if not already loaded from HTML records page
-    if "MLB" not in data:
-        print("Fetching MLB data from Google Sheets (fallback)...")
-        mlb_stats = fetch_mlb_from_sheets()
-        if mlb_stats:
+    # MLB: Always fetch Google Sheets (2025 historical data) and combine with
+    # Pick Tracker (2026 data). The mlb-records.html table is empty because it
+    # loads data dynamically via JavaScript, so the HTML parse above only gets
+    # Pick Tracker picks. We need to merge both sources for all-time totals.
+    print("Fetching MLB 2025 historical data from Google Sheets...")
+    mlb_sheets_stats = fetch_mlb_from_sheets()
+    if mlb_sheets_stats:
+        existing_mlb = data.get("MLB")
+        if existing_mlb:
+            # Combine: Google Sheets (2025) + Pick Tracker (2026) already in data["MLB"]
+            combined_wins = mlb_sheets_stats["wins"] + existing_mlb["wins"]
+            combined_losses = mlb_sheets_stats["losses"] + existing_mlb["losses"]
+            combined_pushes = mlb_sheets_stats["pushes"] + existing_mlb["pushes"]
+            combined_units = round(mlb_sheets_stats["totalUnits"] + existing_mlb["totalUnits"], 2)
+            combined_picks = combined_wins + combined_losses + combined_pushes
+            combined_win_pct = round((combined_wins / (combined_wins + combined_losses) * 100) if (combined_wins + combined_losses) > 0 else 0.0, 1)
+            last_date = existing_mlb["lastDate"] or mlb_sheets_stats["lastDate"]
             data["MLB"] = {
                 "displayName": DISPLAY_NAMES["MLB"],
                 "recordsLink": RECORDS_LINKS["MLB"],
-                **mlb_stats,
+                "wins": combined_wins,
+                "losses": combined_losses,
+                "pushes": combined_pushes,
+                "totalPicks": combined_picks,
+                "totalUnits": combined_units,
+                "winPct": combined_win_pct,
+                "lastDate": last_date,
             }
-            print(f"MLB: {mlb_stats['wins']}-{mlb_stats['losses']}-{mlb_stats['pushes']} | "
-                  f"Units: {mlb_stats['totalUnits']:+.2f} | Win%: {mlb_stats['winPct']}% | "
-                  f"Picks: {mlb_stats['totalPicks']}")
+            print(f"MLB (2025 sheets): {mlb_sheets_stats['wins']}-{mlb_sheets_stats['losses']}-{mlb_sheets_stats['pushes']} | Units: {mlb_sheets_stats['totalUnits']:+.2f}")
+            print(f"MLB (2026 tracker): {existing_mlb['wins']}-{existing_mlb['losses']}-{existing_mlb['pushes']} | Units: {existing_mlb['totalUnits']:+.2f}")
+            print(f"MLB (ALL-TIME): {combined_wins}-{combined_losses}-{combined_pushes} | Units: {combined_units:+.2f} | Win%: {combined_win_pct}%")
         else:
-            print("WARNING: MLB data unavailable, will be excluded from widget")
+            # No tracker data, just use Google Sheets
+            data["MLB"] = {
+                "displayName": DISPLAY_NAMES["MLB"],
+                "recordsLink": RECORDS_LINKS["MLB"],
+                **mlb_sheets_stats,
+            }
+            print(f"MLB: {mlb_sheets_stats['wins']}-{mlb_sheets_stats['losses']}-{mlb_sheets_stats['pushes']} | "
+                  f"Units: {mlb_sheets_stats['totalUnits']:+.2f} | Win%: {mlb_sheets_stats['winPct']}%")
+    else:
+        print("WARNING: MLB Google Sheets data unavailable")
+        if "MLB" not in data:
+            print("WARNING: MLB data completely unavailable, will be excluded from widget")
 
     # Generate the JS data file
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
