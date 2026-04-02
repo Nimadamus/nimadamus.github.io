@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Twins/Royals UNDER 8.5 (-120)",
+        date: "April 1, 2026",
+        result: "",
+        url: "twins-royals-under-8-5-joe-ryan-kauffman-mlb.html",
+        image: "http://res.cloudinary.com/ybmedia/image/upload/c_crop,e_improve,h_513,w_912,x_0,y_0/c_fill,f_auto,h_900,q_auto,w_1600/v1/m/9/e/9e1649e8af5186e9ea20d235baeb9c780cf47287/01kmp1d5y8pw48g3nscg.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Giants ML -131 at Padres",
         date: "March 31, 2026",
         result: "W",
