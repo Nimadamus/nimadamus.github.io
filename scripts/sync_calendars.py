@@ -49,11 +49,8 @@ EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index', '-news', 'news-',
 
 # Dates to EXCLUDE from calendars (days when no content was posted but pages exist)
 # Format: { 'sport': ['YYYY-MM-DD', ...] }
+# NOTE: Jan 25-27 exclusion was removed April 2, 2026 - pages exist and should be in calendar
 EXCLUDED_DATES = {
-    'nba': ['2026-01-25', '2026-01-26', '2026-01-27'],
-    'nhl': ['2026-01-25', '2026-01-26', '2026-01-27'],
-    'ncaab': ['2026-01-25', '2026-01-26', '2026-01-27'],
-    'soccer': ['2026-01-25', '2026-01-26', '2026-01-27'],
 }
 
 # Manual date overrides for pages where automatic extraction fails
