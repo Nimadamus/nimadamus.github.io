@@ -288,6 +288,33 @@
  <table>
  <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
  <tbody id="picks-table-body">
+                    <tr><td>1/19/2026</td><td>Miami Florida +7.5</td><td>-105</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>1/9/2026</td><td>Oregon +3.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.75</td></tr>
+                    <tr><td>1/8/2026</td><td>Miami ML</td><td>-165</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>1/8/2026</td><td>Miami -3</td><td>-125</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
+                    <tr><td>1/1/2026</td><td>Alabama +7</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
+                    <tr><td>1/1/2026</td><td>Alabama ML</td><td>205</td><td class="result-L">L</td><td class="loss">-1.00</td></tr>
+                    <tr><td>1/1/2026</td><td>Texas Tech +1</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
+                    <tr><td>1/1/2026</td><td>2 Team 7 Point Teaser: Texas Tech +8, Alabama +14</td><td>-135</td><td class="result-L">L</td><td class="loss">-4.05</td></tr>
+                    <tr><td>1/1/2026</td><td>Alabama Team Total over 20.5</td><td>-115</td><td class="result-L">L</td><td class="loss">-3.45</td></tr>
+                    <tr><td>1/1/2026</td><td>Alabama/Indiana 2nd half over 21</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>1/1/2026</td><td>Mississippi/Georgia under 53.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
+                    <tr><td>1/1/2026</td><td>Mississppi Team Total under 23.5</td><td>105</td><td class="result-L">L</td><td class="loss">-2.00</td></tr>
+                    <tr><td>12/31/2025</td><td>Michigan +5</td><td>-125</td><td class="result-L">L</td><td class="loss">-3.75</td></tr>
+                    <tr><td>12/31/2025</td><td>Michigan Team Total over 20.5</td><td>-135</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>12/31/2025</td><td>Miami Florida +7.5</td><td>-105</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>12/30/2025</td><td>Illlinois +3</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>12/30/2025</td><td>2 Team 7 Point Teaser: Coastal Carolina +17, Illinois +10</td><td>-135</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>12/30/2025</td><td>Coastal Carolina +10</td><td>-110</td><td class="result-W">W</td><td class="win">+1.50</td></tr>
+                    <tr><td>12/30/2025</td><td>TCU +5</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>12/27/2025</td><td>Clemson -2.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
+                    <tr><td>12/27/2025</td><td>BYU -3</td><td>-125</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
+                    <tr><td>12/27/2025</td><td>Missouri -3</td><td>-130</td><td class="result-L">L</td><td class="loss">-3.90</td></tr>
+                    <tr><td>12/27/2025</td><td>Army/Uconn under 41.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
+                    <tr><td>12/26/2025</td><td>New Mexico ML</td><td>100</td><td class="result-L">L</td><td class="loss">-3.00</td></tr>
+                    <tr><td>12/26/2025</td><td>Central Michigan +12.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.75</td></tr>
+                    <tr><td>12/26/2025</td><td>2 Team 7 Point Teaser: Central Michigan +19.5, New Mexico +8</td><td>-135</td><td class="result-L">L</td><td class="loss">-4.05</td></tr>
+                    <tr><td>12/26/2025</td><td>New Mexico/Minnesota under 44.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.50</td></tr>
                     <tr><td>2/8/2026</td><td>Seattle Seahawks -4.5</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>1/25/2026</td><td>Broncos +4</td><td>-110</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
                     <tr><td>1/25/2026</td><td>Rams +3</td><td>-125</td><td class="result-L">L</td><td class="loss">-2.50</td></tr>
@@ -553,13 +580,13 @@
 
  if (nflPicks.length === 0) return;
 
- // Get existing picks from table
+ // Get existing picks from table (using normalizeDate for consistent keys)
  const tbody = document.getElementById('picks-table-body');
  const existingKeys = new Set();
  tbody.querySelectorAll('tr').forEach(row => {
  const cells = row.querySelectorAll('td');
  if (cells.length >= 2) {
- const key = (cells[0].textContent.trim() + '|' + cells[1].textContent.trim()).toLowerCase();
+ const key = (normalizeDate(cells[0].textContent.trim()) + '|' + cells[1].textContent.trim()).toLowerCase();
  existingKeys.add(key);
  }
  });
@@ -567,7 +594,7 @@
  // Add new picks that aren't already in the table
  let addedCount = 0;
  nflPicks.forEach(pick => {
- const key = (pick.Date + '|' + pick.Pick).toLowerCase();
+ const key = (normalizeDate(pick.Date) + '|' + pick.Pick).toLowerCase();
  if (!existingKeys.has(key)) {
  const units = calculateUnitResult(pick.Units || '2', pick.Odds || pick.Line || '-110', pick.Result);
  const result = pick.Result.toUpperCase().trim()[0];
