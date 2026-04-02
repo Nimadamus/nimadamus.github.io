@@ -28,6 +28,10 @@ jobs:
         run: |
           pip install requests beautifulsoup4
 
+      - name: Pull latest before generating
+        run: |
+          git pull origin main
+
       - name: Recover any missing archive files from root
         run: |
           # The production script now archives immediately on generation,
@@ -127,12 +131,28 @@ jobs:
           else
             git commit -m "Auto-update handicapping hub ${DATE}"
             # Pull latest and rebase to handle concurrent commits
+            REBASE_OK=false
             for i in 1 2 3; do
               if git pull --rebase origin main; then
+                REBASE_OK=true
                 break
               fi
-              echo "Rebase attempt $i failed, retrying..."
+              echo "Rebase attempt $i failed, aborting rebase and retrying..."
+              git rebase --abort 2>/dev/null || true
               sleep 5
             done
+
+            if [ "$REBASE_OK" = false ]; then
+              echo "ERROR: Rebase failed after 3 attempts. Aborting to prevent merge conflicts."
+              git rebase --abort 2>/dev/null || true
+              exit 1
+            fi
+
+            # Re-validate after rebase - ensure no conflict markers snuck in
+            if grep -qE "^<<<<<<|^======|^>>>>>>" handicapping-hub.html; then
+              echo "ERROR: Merge conflict markers found AFTER rebase! Aborting push."
+              exit 1
+            fi
+
             git push
           fi
