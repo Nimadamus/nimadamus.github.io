@@ -576,10 +576,10 @@
  // Combine both datasets
  const combinedData = [...originalData, ...trackerData];
 
- // Deduplicate by Date + Pick
+ // Deduplicate by normalized Date + Pick
  const seen = new Set();
  const uniqueData = combinedData.filter(row => {
- const key = `${row.Date}|${row.Pick}`;
+ const key = `${normalizeDate(row.Date)}|${row.Pick}`;
  if (seen.has(key)) return false;
  seen.add(key);
  return true;
@@ -973,17 +973,47 @@
  setTimeout(createChart, 100);
  }
 
- // Extract year from date string (handles M/D/YYYY, M-D-YYYY, MM/DD/YYYY formats)
+ // Normalize date string to M/D/YYYY canonical form for consistent comparison
+ // Also fixes common year typos: 206->2026, 0206->2026, 2926->2026
+ function normalizeDate(dateStr) {
+ if (!dateStr) return '';
+ dateStr = dateStr.trim();
+ var parts = dateStr.split(/[-\/]/);
+ if (parts.length === 3) {
+ var m = parseInt(parts[0], 10);
+ var d = parseInt(parts[1], 10);
+ var yStr = parts[2].trim();
+ var y = parseInt(yStr, 10);
+ // Fix leading-zero typos: 0206->2026, 0025->2025
+ if (/^0\d+$/.test(yStr)) {
+ yStr = yStr.replace(/^0+/, '');
+ y = parseInt(yStr, 10);
+ }
+ // Fix 3-digit year typos (missing digit): 206->2026, 205->2025
+ if (/^\d{3}$/.test(yStr) && yStr.startsWith('20')) {
+ y = parseInt(yStr.slice(0, 2) + '2' + yStr.slice(2), 10);
+ }
+ // Fix 4-digit year typos beyond 2030: 2926->2026, 2825->2025
+ if (y > 2030 && y < 3000) {
+ y = parseInt('20' + String(y).slice(-2), 10);
+ }
+ if (!isNaN(m) && !isNaN(d) && !isNaN(y) && y >= 2020 && y <= 2030) {
+ return m + '/' + d + '/' + y;
+ }
+ }
+ return dateStr;
+ }
+
+ // Extract year from date string - uses normalizeDate to fix typos first
  function getYearFromDate(dateStr) {
  if (!dateStr) return null;
- // Try splitting by dash or slash
- const parts = dateStr.split(/[-\/]/);
+ var normalized = normalizeDate(dateStr);
+ var parts = normalized.split(/[-\/]/);
  if (parts.length === 3) {
- const year = parseInt(parts[2], 10);
+ var year = parseInt(parts[2], 10);
  if (year >= 2020 && year <= 2030) return year;
  }
- // Fallback: try to find 4-digit year anywhere in string
- const yearMatch = dateStr.match(/20\d{2}/);
+ var yearMatch = dateStr.match(/20\d{2}/);
  if (yearMatch) {
  return parseInt(yearMatch[0], 10);
  }

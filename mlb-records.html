@@ -360,7 +360,7 @@
 
  function addPick(p) {
  p.Date = fixDate(p.Date.trim());
- const key = p.Date + '|' + p.Pick.trim().toLowerCase();
+ const key = normalizeDate(p.Date) + '|' + p.Pick.trim().toLowerCase();
  if (!allPicks.has(key)) {
  allPicks.set(key, p);
  }
@@ -706,16 +706,44 @@
  return dateStr;
  }
 
- // Extract year from date string
+ // Normalize date string to M/D/YYYY canonical form for consistent comparison
+ // Also fixes common year typos: 206->2026, 0206->2026, 2926->2026
+ function normalizeDate(dateStr) {
+ if (!dateStr) return '';
+ dateStr = fixDate(dateStr.trim());
+ var parts = dateStr.split(/[-\/]/);
+ if (parts.length === 3) {
+ var m = parseInt(parts[0], 10);
+ var d = parseInt(parts[1], 10);
+ var yStr = parts[2].trim();
+ var y = parseInt(yStr, 10);
+ if (/^0\d+$/.test(yStr)) {
+ yStr = yStr.replace(/^0+/, '');
+ y = parseInt(yStr, 10);
+ }
+ if (/^\d{3}$/.test(yStr) && yStr.startsWith('20')) {
+ y = parseInt(yStr.slice(0, 2) + '2' + yStr.slice(2), 10);
+ }
+ if (y > 2030 && y < 3000) {
+ y = parseInt('20' + String(y).slice(-2), 10);
+ }
+ if (!isNaN(m) && !isNaN(d) && !isNaN(y) && y >= 2020 && y <= 2030) {
+ return m + '/' + d + '/' + y;
+ }
+ }
+ return dateStr;
+ }
+
+ // Extract year from date string - uses normalizeDate to fix typos first
  function getYearFromDate(dateStr) {
  if (!dateStr) return null;
- dateStr = fixDate(dateStr);
- const parts = dateStr.split(/[-\/]/);
+ var normalized = normalizeDate(dateStr);
+ var parts = normalized.split(/[-\/]/);
  if (parts.length === 3) {
- const year = parseInt(parts[2], 10);
+ var year = parseInt(parts[2], 10);
  if (year >= 2020 && year <= 2030) return year;
  }
- const yearMatch = dateStr.match(/20\d{2}/);
+ var yearMatch = dateStr.match(/20\d{2}/);
  if (yearMatch) {
  return parseInt(yearMatch[0], 10);
  }

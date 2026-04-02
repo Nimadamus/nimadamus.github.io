@@ -293,6 +293,7 @@
  <table>
  <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
  <tbody id="picks-table-body">
+                    <tr><td>4/1/2026</td><td>Sharks/Ducks over 6.5</td><td>-130</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>3/30/2026</td><td>Canucks/Golden Knights under 6.5</td><td>-110</td><td class="result-W">W</td><td class="win">+2.50</td></tr>
                     <tr><td>3/30/2026</td><td>Canucks Team Total under 2.5</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>3/30/2026</td><td>Blues Team Total over 2.5</td><td>-110</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
@@ -325,6 +326,7 @@
                     <tr><td>3/22/2026</td><td>Sabres/Ducks over 6.5</td><td>-130</td><td class="result-W">W</td><td class="win">+2.50</td></tr>
                     <tr><td>3/22/2026</td><td>Penguins Team Total over 2.5</td><td>-165</td><td class="result-L">L</td><td class="loss">-4.95</td></tr>
                     <tr><td>3/22/2026</td><td>Penguins +1.5</td><td>-200</td><td class="result-L">L</td><td class="loss">-5.00</td></tr>
+                    <tr><td>3/22/2026</td><td>Islanders ML</td><td>105</td><td class="result-W">W</td><td class="win">+1.58</td></tr>
                     <tr><td>3/21/2026</td><td>Kraken/Blue Jackets under 6.5</td><td>-120</td><td class="result-L">L</td><td class="loss">-3.60</td></tr>
                     <tr><td>3/21/2026</td><td>Sharks/Flyers under 6</td><td>-105</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
                     <tr><td>3/21/2026</td><td>Red Wings Team Total under 3.5</td><td>-165</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
@@ -836,7 +838,6 @@
                     <tr><td>10-8-2025</td><td>Kraken ML</td><td>-125</td><td class="result-W">W</td><td class="win">+0.50</td></tr>
                     <tr><td>10-8-2025</td><td>Golden Knights to win in Regulation</td><td>-125</td><td class="result-L">L</td><td class="loss">-1.25</td></tr>
                     <tr><td>10-8-2025</td><td>Maple Leafs to win in Regulation</td><td>-115</td><td class="result-W">W</td><td class="win">+0.50</td></tr>
-                    <tr><td>3/22/2026</td><td>Islanders ML</td><td>105</td><td class="result-W">W</td><td class="win">+1.58</td></tr>
                 </tbody>
  </table>
  </div>
@@ -936,19 +937,19 @@
  // Update table with new picks
  const tbody = document.getElementById('picks-table-body');
 
- // Get existing picks by Date+Pick combination
+ // Get existing picks by normalized Date+Pick combination
  const existingPicks = new Set();
  tbody.querySelectorAll('tr').forEach(tr => {
  const cells = tr.querySelectorAll('td');
  if (cells.length >= 2) {
- const date = cells[0].textContent.trim();
+ const date = normalizeDate(cells[0].textContent.trim());
  const pick = cells[1].textContent.trim().toLowerCase();
  existingPicks.add(date + '|' + pick);
  }
  });
 
  nhlPicks.forEach(p => {
- const pickKey = p.Date + '|' + p.Pick.toLowerCase();
+ const pickKey = normalizeDate(p.Date) + '|' + p.Pick.toLowerCase();
  if (!existingPicks.has(pickKey)) {
  const resultClass = p.Result.toUpperCase().startsWith('W') ? 'result-W' :
  p.Result.toUpperCase().startsWith('L') ? 'result-L' : 'result-P';
@@ -1226,17 +1227,47 @@
  setTimeout(createChart, 100);
  }
 
- // Extract year from date string (handles M/D/YYYY, M-D-YYYY, MM/DD/YYYY formats)
+ // Normalize date string to M/D/YYYY canonical form for consistent comparison
+ // Also fixes common year typos: 206->2026, 0206->2026, 2926->2026
+ function normalizeDate(dateStr) {
+ if (!dateStr) return '';
+ dateStr = dateStr.trim();
+ var parts = dateStr.split(/[-\/]/);
+ if (parts.length === 3) {
+ var m = parseInt(parts[0], 10);
+ var d = parseInt(parts[1], 10);
+ var yStr = parts[2].trim();
+ var y = parseInt(yStr, 10);
+ // Fix leading-zero typos: 0206->2026, 0025->2025
+ if (/^0\d+$/.test(yStr)) {
+ yStr = yStr.replace(/^0+/, '');
+ y = parseInt(yStr, 10);
+ }
+ // Fix 3-digit year typos (missing digit): 206->2026, 205->2025
+ if (/^\d{3}$/.test(yStr) && yStr.startsWith('20')) {
+ y = parseInt(yStr.slice(0, 2) + '2' + yStr.slice(2), 10);
+ }
+ // Fix 4-digit year typos beyond 2030: 2926->2026, 2825->2025
+ if (y > 2030 && y < 3000) {
+ y = parseInt('20' + String(y).slice(-2), 10);
+ }
+ if (!isNaN(m) && !isNaN(d) && !isNaN(y) && y >= 2020 && y <= 2030) {
+ return m + '/' + d + '/' + y;
+ }
+ }
+ return dateStr;
+ }
+
+ // Extract year from date string - uses normalizeDate to fix typos first
  function getYearFromDate(dateStr) {
  if (!dateStr) return null;
- // Try splitting by dash or slash
- const parts = dateStr.split(/[-\/]/);
+ var normalized = normalizeDate(dateStr);
+ var parts = normalized.split(/[-\/]/);
  if (parts.length === 3) {
- const year = parseInt(parts[2], 10);
+ var year = parseInt(parts[2], 10);
  if (year >= 2020 && year <= 2030) return year;
  }
- // Fallback: try to find 4-digit year anywhere in string
- const yearMatch = dateStr.match(/20\d{2}/);
+ var yearMatch = dateStr.match(/20\d{2}/);
  if (yearMatch) {
  return parseInt(yearMatch[0], 10);
  }
