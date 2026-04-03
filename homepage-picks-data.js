@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Blues/Ducks UNDER 6 (-105)",
+        date: "April 3, 2026",
+        result: "",
+        url: "blues-ducks-under-6-honda-center-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/btwtujci49zhm95003ov"
+    },
+    {
         sport: "MLB",
         title: "Twins/Royals UNDER 8.5 (-120)",
         date: "April 1, 2026",
