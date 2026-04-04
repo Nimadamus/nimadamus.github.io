@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Red Sox ML -139 vs Padres",
+        date: "April 4, 2026",
+        result: "",
+        url: "red-sox-moneyline-early-padres-fenway-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/813349/action/hero/current"
+    },
+    {
         sport: "NHL",
         title: "Blues/Ducks UNDER 6 (-105)",
         date: "April 3, 2026",
