@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Mariners ML -162 at Angels",
+        date: "April 5, 2026",
+        result: "",
+        url: "mariners-moneyline-castillo-angels-rubber-match-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/mlb/vtmwkwrwxgev9wnb0hwg.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Red Sox ML -139 vs Padres",
         date: "April 4, 2026",
         result: "L",
