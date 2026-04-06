@@ -63,6 +63,141 @@ SPORT_CONFIG = {
     }
 }
 
+# ============================================================
+# TEAM NAME VALIDATION - prevents sports from leaking into
+# wrong sections (e.g., college picks appearing in NFL records)
+# ============================================================
+
+NFL_TEAMS = {
+    '49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs',
+    'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins',
+    'eagles', 'falcons', 'giants', 'jaguars', 'jets', 'lions', 'packers', 'panthers',
+    'patriots', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers',
+    'texans', 'titans', 'vikings',
+    'san francisco', 'chicago', 'cincinnati', 'buffalo', 'denver', 'cleveland',
+    'tampa bay', 'arizona', 'los angeles', 'kansas city', 'indianapolis',
+    'washington', 'dallas', 'miami', 'philadelphia', 'atlanta', 'new york',
+    'jacksonville', 'detroit', 'green bay', 'carolina', 'new england',
+    'las vegas', 'baltimore', 'new orleans', 'seattle', 'pittsburgh',
+    'houston', 'tennessee', 'minnesota',
+}
+
+COLLEGE_TEAMS = {
+    'alabama', 'auburn', 'clemson', 'florida', 'georgia', 'lsu', 'michigan',
+    'ohio state', 'oklahoma', 'oregon', 'penn state', 'texas', 'usc',
+    'notre dame', 'wisconsin', 'iowa', 'michigan state', 'tennessee',
+    'texas a&m', 'florida state', 'miami florida', 'virginia tech', 'nc state',
+    'north carolina', 'duke', 'louisville', 'wake forest', 'syracuse',
+    'boston college', 'pitt', 'pittsburgh', 'kentucky', 'south carolina',
+    'mississippi', 'ole miss', 'mississippi state', 'arkansas', 'missouri',
+    'vanderbilt', 'texas tech', 'tcu', 'baylor', 'oklahoma state', 'kansas',
+    'kansas state', 'iowa state', 'west virginia', 'byu', 'ucf', 'cincinnati',
+    'houston', 'colorado', 'utah', 'arizona state', 'washington state',
+    'oregon state', 'stanford', 'california', 'cal', 'ucla',
+    'army', 'navy', 'air force', 'boise state', 'memphis', 'smu', 'tulane',
+    'unlv', 'fresno state', 'san jose state', 'new mexico', 'wyoming',
+    'hawaii', 'san diego state', 'nevada', 'colorado state',
+    'coastal carolina', 'appalachian state', 'james madison', 'liberty',
+    'marshall', 'old dominion', 'troy', 'south alabama', 'georgia southern',
+    'central michigan', 'western michigan', 'eastern michigan', 'ball state',
+    'toledo', 'bowling green', 'ohio', 'akron', 'kent state', 'buffalo',
+    'northern illinois', 'niu', 'indiana', 'illinois', 'purdue', 'northwestern',
+    'minnesota', 'nebraska', 'maryland', 'rutgers',
+    'uconn', 'connecticut', 'umass', 'massachusetts',
+}
+
+NBA_TEAMS = {
+    'lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat', 'bucks',
+    'sixers', '76ers', 'suns', 'mavericks', 'mavs', 'nuggets', 'clippers',
+    'rockets', 'thunder', 'timberwolves', 'wolves', 'pelicans', 'grizzlies',
+    'cavaliers', 'cavs', 'raptors', 'bulls', 'hawks', 'hornets', 'magic',
+    'pacers', 'pistons', 'wizards', 'kings', 'spurs', 'trail blazers',
+    'blazers', 'jazz',
+}
+
+NHL_TEAMS = {
+    'avalanche', 'blackhawks', 'blue jackets', 'blues', 'bruins', 'canadiens',
+    'canucks', 'capitals', 'coyotes', 'devils', 'ducks', 'flames', 'flyers',
+    'golden knights', 'hurricanes', 'islanders', 'jets', 'kings', 'kraken',
+    'lightning', 'maple leafs', 'oilers', 'panthers', 'penguins', 'predators',
+    'rangers', 'red wings', 'sabres', 'senators', 'sharks', 'stars', 'wild',
+    'utah hockey',
+}
+
+MLB_TEAMS = {
+    'astros', 'athletics', 'blue jays', 'braves', 'brewers', 'cardinals',
+    'cubs', 'diamondbacks', 'd-backs', 'dodgers', 'giants', 'guardians',
+    'mariners', 'marlins', 'mets', 'nationals', 'orioles', 'padres',
+    'phillies', 'pirates', 'rangers', 'rays', 'red sox', 'reds', 'rockies',
+    'royals', 'tigers', 'twins', 'white sox', 'yankees',
+}
+
+
+def _pick_mentions_team(pick_text, team_set):
+    """Check if a pick's text mentions any team from the given set."""
+    pick_lower = pick_text.lower()
+    for team in team_set:
+        if team in pick_lower:
+            return True
+    return False
+
+
+def validate_pick_for_sport(sport_key, pick_text):
+    """
+    Validate that a pick actually belongs to the claimed sport.
+    Returns True if the pick is valid for the sport, False if it looks wrong.
+    If we can't determine (e.g., teaser with no recognizable teams), allow it.
+    """
+    if not pick_text:
+        return True
+
+    pick_lower = pick_text.lower()
+
+    if sport_key == 'nfl':
+        # NFL picks must mention NFL teams and must NOT mention college-only teams
+        has_nfl = _pick_mentions_team(pick_lower, NFL_TEAMS)
+        has_college_only = False
+        for team in COLLEGE_TEAMS:
+            if team in pick_lower:
+                # Some names overlap (e.g., "giants" is both NFL and college)
+                # Only flag if it's a college-only team not in NFL
+                if team not in NFL_TEAMS:
+                    has_college_only = True
+                    break
+        if has_college_only and not has_nfl:
+            return False
+        return True
+
+    elif sport_key == 'ncaaf':
+        # NCAAF picks must NOT be clearly NFL-only teams
+        nfl_only_teams = NFL_TEAMS - COLLEGE_TEAMS  # Teams that are NFL but not college
+        for team in nfl_only_teams:
+            if team in pick_lower:
+                return False
+        return True
+
+    elif sport_key == 'nba':
+        # NBA picks should mention NBA teams
+        if _pick_mentions_team(pick_lower, NBA_TEAMS):
+            return True
+        # Reject if it mentions college-only or NFL-only teams
+        if _pick_mentions_team(pick_lower, COLLEGE_TEAMS - NBA_TEAMS):
+            return False
+        return True
+
+    elif sport_key == 'nhl':
+        if _pick_mentions_team(pick_lower, NHL_TEAMS):
+            return True
+        return True
+
+    elif sport_key == 'mlb':
+        if _pick_mentions_team(pick_lower, MLB_TEAMS):
+            return True
+        return True
+
+    # For ncaab, soccer, etc. - allow by default
+    return True
+
 
 def fetch_pick_tracker():
     """Fetch all data from the Pick Tracker Google Sheet."""
@@ -321,13 +456,19 @@ def main():
     for sport_key in SPORT_CONFIG.keys():
         # Filter picks for this sport
         sport_picks = []
+        rejected = []
         for row in all_records:
             if is_sport_pick(row, sport_key):
                 result = row.get('Result', '').strip()
                 if result and result.upper() in ['W', 'WIN', 'L', 'LOSS', 'P', 'PUSH']:
+                    pick_text = row.get('Pick', '') or row.get('Picks', '')
+                    # TEAM VALIDATION: reject picks that don't belong to this sport
+                    if not validate_pick_for_sport(sport_key, pick_text):
+                        rejected.append(pick_text)
+                        continue
                     pick_data = {
                         'Date': format_date(row.get('Date', '')),
-                        'Pick': row.get('Pick', '') or row.get('Picks', ''),
+                        'Pick': pick_text,
                         'Line': row.get('Odds', '') or row.get('Line', '') or '-110',
                         'Result': result[0].upper(),
                         'Units': calculate_unit_result(
@@ -338,6 +479,12 @@ def main():
                     }
                     if pick_data['Pick']:  # Only add if there's a pick
                         sport_picks.append(pick_data)
+        if rejected:
+            print(f"  {sport_key.upper()}: REJECTED {len(rejected)} picks (wrong sport):")
+            for r in rejected[:5]:
+                print(f"    - {r}")
+            if len(rejected) > 5:
+                print(f"    ... and {len(rejected) - 5} more")
 
         # Update the records page
         added = update_records_page(sport_key, sport_picks)

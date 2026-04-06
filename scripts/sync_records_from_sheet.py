@@ -183,6 +183,52 @@ def build_row_html(date, pick, odds, result, units_val):
     )
 
 
+def _pick_mentions_team(pick_lower, team_set):
+    for team in team_set:
+        if team in pick_lower:
+            return True
+    return False
+
+
+# Team lists for cross-sport validation
+_NFL_TEAMS = {
+    '49ers', 'bears', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs',
+    'cardinals', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins',
+    'eagles', 'falcons', 'giants', 'jaguars', 'jets', 'lions', 'packers', 'panthers',
+    'patriots', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers',
+    'texans', 'titans', 'vikings',
+}
+_COLLEGE_TEAMS = {
+    'alabama', 'auburn', 'clemson', 'oregon', 'michigan', 'ohio state', 'texas tech',
+    'tcu', 'byu', 'missouri', 'army', 'uconn', 'new mexico', 'central michigan',
+    'coastal carolina', 'illinois', 'miami florida', 'mississippi', 'indiana',
+    'boise state', 'memphis', 'smu', 'tulane', 'unlv', 'fresno state', 'ole miss',
+    'notre dame', 'penn state', 'lsu', 'georgia', 'florida', 'florida state',
+    'oklahoma', 'oklahoma state', 'iowa', 'iowa state', 'wisconsin', 'purdue',
+    'northwestern', 'nebraska', 'maryland', 'rutgers', 'michigan state',
+    'james madison', 'liberty', 'appalachian state', 'marshall',
+}
+
+
+def validate_pick_for_sport(sport_name, pick_text):
+    """Reject picks that clearly belong to a different sport."""
+    if not pick_text:
+        return True
+    pick_lower = pick_text.lower()
+
+    if sport_name == 'NFL':
+        # Reject college-only teams in NFL
+        for team in _COLLEGE_TEAMS:
+            if team in pick_lower and not _pick_mentions_team(pick_lower, _NFL_TEAMS):
+                return False
+    elif sport_name == 'NCAAF':
+        nfl_only = _NFL_TEAMS - _COLLEGE_TEAMS
+        for team in nfl_only:
+            if team in pick_lower:
+                return False
+    return True
+
+
 def sync_sport(sport_name, config, all_rows, dry_run=False):
     """Sync a single sport's records page with sheet data."""
     filepath = os.path.join(REPO_DIR, config['file'])
@@ -195,12 +241,18 @@ def sync_sport(sport_name, config, all_rows, dry_run=False):
 
     # Find picks in sheet but not in static HTML
     new_picks = []
+    rejected = []
     for r in sheet_picks:
         date = (r.get('Date', '') or '').strip()
         pick = (r.get('Pick', '') or r.get('Picks', '')).strip()
         odds = (r.get('Odds', '') or r.get('Line', '') or '-110').strip()
         result = (r.get('Result', '') or '').strip()
         units_stake = (r.get('Units', '') or '3').strip()
+
+        # TEAM VALIDATION: reject picks that don't belong to this sport
+        if not validate_pick_for_sport(sport_name, pick):
+            rejected.append(pick)
+            continue
 
         key = normalize_date(date) + '|' + pick.lower()
         if key not in existing_keys:
@@ -214,6 +266,9 @@ def sync_sport(sport_name, config, all_rows, dry_run=False):
                 'norm_date': normalize_date(date),
             })
             existing_keys.add(key)  # Prevent duplicates within sheet
+
+    if rejected:
+        print(f'  {sport_name}: REJECTED {len(rejected)} picks (wrong sport): {rejected[:3]}')
 
     if not new_picks:
         print(f'  {sport_name}: Already synced ({len(sheet_picks)} sheet picks, all in HTML)')

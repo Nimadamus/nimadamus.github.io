@@ -532,10 +532,34 @@
  return records;
  }
 
- // Check if pick is NFL
+ // Check if pick is NFL (with team validation to prevent college leaking in)
+ const NFL_TEAM_NAMES = ['49ers','bears','bengals','bills','broncos','browns','buccaneers','bucs',
+ 'cardinals','chargers','chiefs','colts','commanders','cowboys','dolphins','eagles','falcons',
+ 'giants','jaguars','jets','lions','packers','panthers','patriots','raiders','rams','ravens',
+ 'saints','seahawks','steelers','texans','titans','vikings',
+ 'san francisco','chicago','cincinnati','buffalo','denver','cleveland','tampa bay','arizona',
+ 'kansas city','indianapolis','washington','dallas','philadelphia','atlanta',
+ 'jacksonville','detroit','green bay','carolina','new england','las vegas','baltimore',
+ 'new orleans','seattle','pittsburgh','houston','tennessee','minnesota'];
+ const COLLEGE_ONLY_NAMES = ['alabama','auburn','clemson','oregon','michigan','ohio state',
+ 'texas tech','tcu','byu','missouri','army','uconn','new mexico','central michigan',
+ 'coastal carolina','illinois','miami florida','mississippi','indiana','boise state',
+ 'memphis','smu','tulane','unlv','fresno state','ole miss','notre dame','penn state',
+ 'lsu','georgia','florida','florida state','oklahoma','iowa','wisconsin','purdue',
+ 'northwestern','nebraska','maryland','rutgers','michigan state','james madison','liberty'];
+
  function isNFLPick(row) {
  const league = (row.League || '').toLowerCase().trim();
- return league === 'nfl';
+ if (league !== 'nfl') return false;
+ // Team validation: reject if pick mentions college-only teams but no NFL teams
+ const pick = (row.Pick || row.Picks || '').toLowerCase();
+ const hasNFL = NFL_TEAM_NAMES.some(t => pick.includes(t));
+ const hasCollegeOnly = COLLEGE_ONLY_NAMES.some(t => pick.includes(t));
+ if (hasCollegeOnly && !hasNFL) {
+ console.warn('Rejected non-NFL pick from tracker:', row.Pick);
+ return false;
+ }
+ return true;
  }
 
  // Fetch and merge picks from Pick Tracker
