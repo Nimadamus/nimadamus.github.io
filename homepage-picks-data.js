@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Brewers ML -115 at Red Sox",
+        date: "April 6, 2026",
+        result: "",
+        url: "brewers-woodruff-dominance-red-sox-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/605540/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Mariners ML -162 at Angels",
         date: "April 5, 2026",
         result: "",
