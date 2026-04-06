@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Braves F5 ML -150 at Angels",
+        date: "April 6, 2026",
+        result: "",
+        url: "braves-f5-moneyline-sale-dominates-angels-mlb.html",
+        image: "https://a.espncdn.com/photo/2026/0401/r1637364_1296x729_16-9.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Mariners ML -162 at Angels",
         date: "April 5, 2026",
         result: "",
