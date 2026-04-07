@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Blues +1.5 (-190) & ML (+130) vs Avalanche",
+        date: "April 7, 2026",
+        result: "",
+        url: "blues-puck-line-moneyline-avalanche-enterprise-center-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1775448838/prd/trepka02swudorxhugpg"
+    },
+    {
         sport: "MLB",
         title: "Braves F5 ML -150 at Angels",
         date: "April 6, 2026",
