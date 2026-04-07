@@ -116,6 +116,11 @@ SPORTS = {
         'odds_key': 'americanfootball_ncaaf',
         'logo_path': 'ncaa',
     },
+    'MLB': {
+        'espn_path': 'baseball/mlb',
+        'odds_key': 'baseball_mlb',
+        'logo_path': 'mlb',
+    },
 }
 
 TOP_NCAAB_TEAMS = {
@@ -220,6 +225,24 @@ def safe_pct(val):
     except (ValueError, TypeError):
         return str(val) if val else '-'
 
+def safe_batting_avg(val):
+    """Format baseball batting average / OBP / SLG as decimal (e.g., .265)"""
+    if val is None or val == '' or val == '-':
+        return '-'
+    try:
+        s = str(val).strip().rstrip('%')
+        num = float(s)
+        if num > 1:
+            # Already looks like a percentage (e.g., 26.5) - convert back
+            num = num / 100
+        return f".{int(num * 1000):03d}"
+    except (ValueError, TypeError):
+        # Maybe it's already formatted like ".265"
+        s = str(val).strip()
+        if s.startswith('.') and len(s) == 4:
+            return s
+        return '-'
+
 def get_power_rating(record: str) -> str:
     """Calculate simple power rating from record"""
     try:
@@ -298,6 +321,7 @@ def fetch_covers_betting_records(sport: str) -> Dict[str, Dict]:
         'nba': 'https://www.covers.com/sport/basketball/nba/standings',
         'nhl': 'https://www.covers.com/sport/hockey/nhl/standings',
         'nfl': 'https://www.covers.com/sport/football/nfl/standings',
+        'mlb': 'https://www.covers.com/sport/baseball/mlb/standings',
         'ncaab': 'https://www.covers.com/sport/basketball/ncaab/standings',
         'ncaaf': 'https://www.covers.com/sport/football/ncaaf/standings',
     }
@@ -325,6 +349,7 @@ def fetch_covers_betting_records(sport: str) -> Dict[str, Dict]:
         valid_nba = {'ATL','BOS','BKN','CHA','CHI','CLE','DAL','DEN','DET','GS','GSW','HOU','IND','LAC','LAL','MEM','MIA','MIL','MIN','NO','NOP','NY','NYK','OKC','ORL','PHI','PHX','POR','SAC','SA','SAS','TOR','UTA','WAS'}
         valid_nhl = {'ANA','ARI','BOS','BUF','CAR','CBJ','CGY','CHI','COL','DAL','DET','EDM','FLA','LA','LAK','MIN','MTL','NJ','NJD','NSH','NYI','NYR','OTT','PHI','PIT','SEA','SJ','SJS','STL','TB','TBL','TOR','UTA','VAN','VGK','WPG','WSH'}
         valid_nfl = {'ARI','ATL','BAL','BUF','CAR','CHI','CIN','CLE','DAL','DEN','DET','GB','HOU','IND','JAC','JAX','KC','LAC','LAR','LV','MIA','MIN','NE','NO','NYG','NYJ','PHI','PIT','SEA','SF','TB','TEN','WAS'}
+        valid_mlb = {'ARI','ATL','BAL','BOS','CHC','CHW','CIN','CLE','COL','DET','HOU','KC','LAA','LAD','MIA','MIL','MIN','NYM','NYY','OAK','PHI','PIT','SD','SEA','SF','STL','TB','TEX','TOR','WSH'}
 
         if sport.lower() == 'nba':
             valid_teams = valid_nba
@@ -332,6 +357,8 @@ def fetch_covers_betting_records(sport: str) -> Dict[str, Dict]:
             valid_teams = valid_nhl
         elif sport.lower() == 'nfl':
             valid_teams = valid_nfl
+        elif sport.lower() == 'mlb':
+            valid_teams = valid_mlb
         else:
             valid_teams = set()  # For college, we'll be more lenient
 
@@ -445,6 +472,7 @@ def fetch_h2h_data(sport: str, team1_abbr: str, team2_abbr: str) -> Optional[Dic
         'nba': 'https://www.covers.com/sports/nba/matchups',
         'nhl': 'https://www.covers.com/sports/nhl/matchups',
         'nfl': 'https://www.covers.com/sports/nfl/matchups',
+        'mlb': 'https://www.covers.com/sports/mlb/matchups',
         'ncaab': 'https://www.covers.com/sports/ncaab/matchups',
         'ncaaf': 'https://www.covers.com/sports/ncaaf/matchups',
     }
@@ -453,6 +481,7 @@ def fetch_h2h_data(sport: str, team1_abbr: str, team2_abbr: str) -> Optional[Dic
         'nba': 'basketball/nba',
         'nhl': 'hockey/nhl',
         'nfl': 'football/nfl',
+        'mlb': 'baseball/mlb',
         'ncaab': 'basketball/ncaab',
         'ncaaf': 'football/ncaaf',
     }
@@ -500,6 +529,11 @@ def fetch_h2h_data(sport: str, team1_abbr: str, team2_abbr: str) -> Optional[Dic
             'fla': 'panthers', 'mtl': 'canadiens', 'njd': 'devils',
             'nyr': 'rangers', 'ott': 'senators', 'tbl': 'lightning',
             'stl': 'blues', 'nsh': 'predators', 'ari': 'coyotes',
+            # MLB
+            'nyy': 'yankees', 'nym': 'mets', 'lad': 'dodgers', 'laa': 'angels',
+            'chc': 'cubs', 'chw': 'white sox', 'sf': 'giants', 'sd': 'padres',
+            'tb': 'rays', 'tex': 'rangers', 'bal': 'orioles', 'kc': 'royals',
+            'cin': 'reds', 'cle': 'guardians', 'oak': 'athletics',
         }
 
         # Get all game IDs
@@ -764,15 +798,33 @@ def fetch_team_statistics(sport_path: str, team_id: str) -> Dict:
         try:
             data = resp.json()
             for cat in data.get('results', {}).get('stats', {}).get('categories', []):
+                cat_name = cat.get('name', '').lower()
                 for stat in cat.get('stats', []):
                     name = stat.get('name', '')
                     value = stat.get('displayValue', stat.get('value', ''))
-                    stats[name] = value
-            for split in data.get('results', {}).get('splits', {}).get('categories', []):
-                for stat in split.get('stats', []):
-                    name = stat.get('name', '')
-                    value = stat.get('displayValue', stat.get('value', ''))
-                    stats[name] = value
+                    # For baseball: prefix duplicate keys with category to avoid collisions
+                    # e.g., batting 'runs' vs pitching 'runs'
+                    if name in stats and cat_name in ('batting', 'pitching', 'fielding'):
+                        stats[f"{cat_name}_{name}"] = value
+                    else:
+                        stats[name] = value
+                    # Always store prefixed version for baseball stats
+                    if cat_name in ('batting', 'pitching', 'fielding'):
+                        stats[f"{cat_name}_{name}"] = value
+            splits = data.get('results', {}).get('splits', {})
+            if isinstance(splits, dict):
+                for split in splits.get('categories', []):
+                    for stat in split.get('stats', []):
+                        name = stat.get('name', '')
+                        value = stat.get('displayValue', stat.get('value', ''))
+                        stats[name] = value
+            elif isinstance(splits, list):
+                for split_item in splits:
+                    for cat in split_item.get('categories', []):
+                        for stat in cat.get('stats', []):
+                            name = stat.get('name', '')
+                            value = stat.get('displayValue', stat.get('value', ''))
+                            stats[name] = value
         except json.JSONDecodeError:
             pass
     return stats
@@ -861,9 +913,16 @@ def fetch_defensive_stats(sport_path: str, team_id: str) -> Dict:
         try:
             data = resp2.json()
             # Look through all categories for defensive stats
-            for split in data.get('results', {}).get('splits', {}).get('categories', []):
+            splits = data.get('results', {}).get('splits', {})
+            categories = []
+            if isinstance(splits, dict):
+                categories = splits.get('categories', [])
+            elif isinstance(splits, list):
+                for s in splits:
+                    categories.extend(s.get('categories', []))
+            for split in categories:
                 cat_name = split.get('name', '').lower()
-                if 'defense' in cat_name or 'opponent' in cat_name:
+                if 'defense' in cat_name or 'opponent' in cat_name or 'pitching' in cat_name:
                     for stat in split.get('stats', []):
                         name = stat.get('name', '').lower()
                         value = stat.get('value', stat.get('displayValue', ''))
@@ -1306,6 +1365,134 @@ def extract_ncaab_stats(raw: Dict, record: str, standings: Dict = None, l5: str 
 def extract_ncaaf_stats(raw: Dict, record: str, standings: Dict = None, l5: str = '-', betting_rec: Dict = None) -> Dict:
     return extract_nfl_stats(raw, record, standings, l5, betting_rec)
 
+def extract_mlb_stats(raw: Dict, record: str, standings: Dict = None, l5: str = '-', betting_rec: Dict = None) -> Dict:
+    """Extract comprehensive MLB stats including batting, pitching, ATS/O/U"""
+    games = get_games_played(record)
+    standings = standings or {}
+    betting_rec = betting_rec or {}
+
+    # Runs scored / allowed (total or per-game)
+    # ESPN baseball stats are prefixed: batting_runs = runs scored, pitching_runs = runs allowed
+    runs_total = raw.get('batting_runs', raw.get('runs', raw.get('runsScored', 0)))
+    # Prefer pitching_runs (total runs allowed) over teamEarnedRuns (only earned runs)
+    ra_total = raw.get('pitching_runs', raw.get('runsAgainst', raw.get('runsAllowed', 0)))
+    if not ra_total:
+        ra_total = raw.get('teamEarnedRuns', 0)
+
+    try:
+        rpg = f"{float(runs_total) / games:.1f}" if games > 0 and runs_total else '-'
+    except (ValueError, TypeError, ZeroDivisionError):
+        rpg = safe_num(raw.get('runsPerGame', raw.get('avgRuns')))
+
+    try:
+        rapg = f"{float(ra_total) / games:.1f}" if games > 0 and ra_total else '-'
+    except (ValueError, TypeError, ZeroDivisionError):
+        rapg = safe_num(raw.get('runsAgainstPerGame', raw.get('avgRunsAgainst')))
+
+    rd = '-'
+    try:
+        rd_val = float(rpg) - float(rapg)
+        rd = f"{rd_val:+.1f}"
+    except (ValueError, TypeError):
+        pass
+
+    # Batting stats (use safe_batting_avg for decimal format like .265)
+    avg = safe_batting_avg(raw.get('battingAverage', raw.get('avg', raw.get('AVG'))))
+    obp = safe_batting_avg(raw.get('onBasePct', raw.get('OBP', raw.get('onBasePercentage'))))
+    slg = safe_batting_avg(raw.get('slugAvg', raw.get('sluggingPct', raw.get('SLG', raw.get('sluggingPercentage')))))
+    ops = safe_batting_avg(raw.get('OPS', raw.get('ops')))
+
+    # Try to compute OPS from OBP + SLG if not directly available
+    if ops == '-' and obp != '-' and slg != '-':
+        try:
+            obp_val = float(obp)
+            slg_val = float(slg)
+            ops_val = obp_val + slg_val
+            ops = f".{int(ops_val * 1000):03d}"
+        except (ValueError, TypeError):
+            pass
+
+    hr_total = raw.get('batting_homeRuns', raw.get('homeRuns', raw.get('HR', 0)))
+    try:
+        hr_pg = f"{float(hr_total) / games:.1f}" if games > 0 and hr_total else '-'
+    except (ValueError, TypeError, ZeroDivisionError):
+        hr_pg = safe_num(raw.get('homeRunsPerGame'))
+
+    hits_total = raw.get('batting_hits', raw.get('hits', raw.get('H', 0)))
+    try:
+        hits_pg = f"{float(hits_total) / games:.1f}" if games > 0 and hits_total else '-'
+    except (ValueError, TypeError, ZeroDivisionError):
+        hits_pg = safe_num(raw.get('hitsPerGame'))
+
+    # Pitching stats
+    era = safe_num(raw.get('ERA', raw.get('earnedRunAverage', raw.get('era'))))
+    whip = safe_num(raw.get('WHIP', raw.get('whip')))
+
+    k_total = raw.get('pitching_strikeouts', raw.get('strikeouts', raw.get('SO', raw.get('strikeoutsTotal', 0))))
+    try:
+        k_pg = f"{float(k_total) / games:.1f}" if games > 0 and k_total else '-'
+    except (ValueError, TypeError, ZeroDivisionError):
+        k_pg = safe_num(raw.get('strikeoutsPerGame', raw.get('kPerGame')))
+
+    bb_total = raw.get('pitching_walks', raw.get('walks', raw.get('BB', raw.get('basesOnBalls', 0))))
+    try:
+        bb_pg = f"{float(bb_total) / games:.1f}" if games > 0 and bb_total else '-'
+    except (ValueError, TypeError, ZeroDivisionError):
+        bb_pg = safe_num(raw.get('walksPerGame', raw.get('bbPerGame')))
+
+    sv = safe_num(raw.get('saves', raw.get('SV', 0)), 0)
+    qa = safe_num(raw.get('qualityStarts', raw.get('QS', 0)), 0)
+
+    # Fielding
+    errors_total = raw.get('errors', raw.get('E', 0))
+    try:
+        errors_pg = f"{float(errors_total) / games:.2f}" if games > 0 and errors_total else '-'
+    except (ValueError, TypeError, ZeroDivisionError):
+        errors_pg = safe_num(raw.get('errorsPerGame'))
+
+    fld_pct = safe_pct(raw.get('fieldingPercentage', raw.get('fieldingPct')))
+
+    # Stolen bases
+    sb_total = raw.get('stolenBases', raw.get('SB', 0))
+    try:
+        sb_pg = f"{float(sb_total) / games:.1f}" if games > 0 and sb_total else '-'
+    except (ValueError, TypeError, ZeroDivisionError):
+        sb_pg = safe_num(raw.get('stolenBasesPerGame'))
+
+    return {
+        # Offense (batting)
+        'rpg': rpg,
+        'avg': avg,
+        'obp': obp,
+        'slg': slg,
+        'ops': ops,
+        'hr_pg': hr_pg,
+        'hits_pg': hits_pg,
+        'sb_pg': sb_pg,
+        # Pitching / Defense
+        'rapg': rapg,
+        'era': era,
+        'whip': whip,
+        'k_pg': k_pg,
+        'bb_pg': bb_pg,
+        'sv': sv,
+        'qa': qa,
+        'errors_pg': errors_pg,
+        'fld_pct': fld_pct,
+        # Differentials
+        'rd': rd,
+        # Power
+        'pwr': get_power_rating(record),
+        # Situational
+        'home_rec': standings.get('home_rec', '-'),
+        'away_rec': standings.get('away_rec', '-'),
+        'streak': standings.get('streak', '-'),
+        'l5': l5,
+        # ATS/O/U from Covers.com
+        'ats': betting_rec.get('ats', '-'),
+        'ou': betting_rec.get('ou', '-'),
+    }
+
 # =============================================================================
 # ODDS MATCHING
 # =============================================================================
@@ -1540,7 +1727,7 @@ def process_game(espn_game: Dict, sport: str, sport_path: str, odds_data: List[D
 
     # NEW: Fetch Head-to-Head data from Covers.com
     h2h_data = None
-    if sport in ['NBA', 'NHL', 'NFL', 'NCAAB', 'NCAAF']:  # All sports with Covers.com H2H
+    if sport in ['NBA', 'NHL', 'NFL', 'MLB', 'NCAAB', 'NCAAF']:  # All sports with Covers.com H2H
         print(f"  [H2H] Fetching H2H for {away_abbr} @ {home_abbr}...")
         h2h_data = fetch_h2h_data(sport, away_abbr, home_abbr)
         if h2h_data:
@@ -1553,6 +1740,9 @@ def process_game(espn_game: Dict, sport: str, sport_path: str, odds_data: List[D
     elif sport in ['NFL', 'NCAAF']:
         away_stats = extract_nfl_stats(away_stats_raw, away_record, away_standings, away_l5, away_betting)
         home_stats = extract_nfl_stats(home_stats_raw, home_record, home_standings, home_l5, home_betting)
+    elif sport == 'MLB':
+        away_stats = extract_mlb_stats(away_stats_raw, away_record, away_standings, away_l5, away_betting)
+        home_stats = extract_mlb_stats(home_stats_raw, home_record, home_standings, home_l5, home_betting)
     else:  # NHL
         away_stats = extract_nhl_stats(away_stats_raw, away_record, away_standings, away_l5, away_betting)
         home_stats = extract_nhl_stats(home_stats_raw, home_record, home_standings, home_l5, home_betting)
@@ -2286,6 +2476,233 @@ def generate_game_card_nhl(game: Dict) -> str:
     </div>
     '''
 
+def generate_game_card_mlb(game: Dict) -> str:
+    """Generate MLB game card with batting, pitching, and H2H sections"""
+    away = game['away']
+    home = game['home']
+    odds = game['odds']
+    h2h = game.get('h2h')
+
+    away_inj_html = format_injuries_html(away.get('injuries', []), away['abbr'])
+    home_inj_html = format_injuries_html(home.get('injuries', []), home['abbr'])
+
+    # Generate H2H section HTML if data available
+    h2h_html = ''
+    if h2h and h2h.get('total_games', 0) > 0:
+        import re as re_h2h
+        meetings_html = ''
+        for m in h2h.get('meetings', [])[:5]:
+            scores = re_h2h.findall(r'(\d+)', m['result'])
+            home_team = m['home'].upper()
+            if len(scores) >= 2:
+                home_score = int(scores[0])
+                away_score = int(scores[1])
+                if home_score > away_score:
+                    winner = home_team
+                    winner_class = 'winner-home'
+                else:
+                    winner = away['abbr'] if home_team == home['abbr'] else home['abbr']
+                    winner_class = 'winner-away'
+                score_display = f"{home_score}-{away_score}"
+            else:
+                winner = "—"
+                winner_class = ''
+                score_display = m['result']
+
+            ats_match = re_h2h.match(r'([A-Z]+)', m['ats'])
+            covered_team = ats_match.group(1) if ats_match else "—"
+
+            ou_val = m['ou'].lower()
+            if ou_val.startswith('o'):
+                ou_display = '<span class="over">OVER</span>'
+            elif ou_val.startswith('u'):
+                ou_display = '<span class="under">UNDER</span>'
+            else:
+                ou_display = m['ou']
+
+            meetings_html += f'''<tr>
+                <td>{m["date"]}</td>
+                <td class="{winner_class}"><strong>{winner}</strong></td>
+                <td class="score">{score_display}</td>
+                <td class="h2h-ats"><strong>{covered_team}</strong></td>
+                <td class="h2h-ou">{ou_display}</td>
+            </tr>'''
+
+        t1_abbr = away['abbr']
+        t2_abbr = home['abbr']
+
+        su_parts = h2h['h2h_su'].split()
+        su_record = su_parts[1] if len(su_parts) > 1 else "0-0"
+        su_wins = su_record.split('-')
+        t1_wins = su_wins[0] if len(su_wins) > 0 else "0"
+        t2_wins = su_wins[1] if len(su_wins) > 1 else "0"
+
+        ats_parts = h2h['h2h_ats'].split()
+        ats_record = ats_parts[0] if len(ats_parts) > 0 else "0-0"
+        ats_wins = ats_record.split('-')
+        ats_t1 = ats_wins[0] if len(ats_wins) > 0 else "0"
+        ats_t2 = ats_wins[1] if len(ats_wins) > 1 else "0"
+
+        ou_str = h2h['h2h_ou']
+        ou_match = re_h2h.match(r'(\d+)O-(\d+)U', ou_str)
+        if ou_match:
+            overs = ou_match.group(1)
+            unders = ou_match.group(2)
+        else:
+            overs = "0"
+            unders = "0"
+
+        h2h_html = f'''
+        <!-- SECTION: HEAD-TO-HEAD -->
+        <div class="h2h-section">
+            <div class="section-title">HEAD-TO-HEAD (Last {h2h['total_games']} Meetings)</div>
+            <div class="h2h-summary">
+                <div class="h2h-stat h2h-su">
+                    <span class="h2h-stat-label">STRAIGHT UP</span>
+                    <span class="h2h-stat-value">{t1_abbr} {t1_wins} - {t2_wins} {t2_abbr}</span>
+                </div>
+                <div class="h2h-stat h2h-ats-summary">
+                    <span class="h2h-stat-label">RUN LINE REC</span>
+                    <span class="h2h-stat-value">{t1_abbr} {ats_t1} - {ats_t2} {t2_abbr}</span>
+                </div>
+                <div class="h2h-stat h2h-ou-summary">
+                    <span class="h2h-stat-label">OVER / UNDER</span>
+                    <span class="h2h-stat-value">{overs} OVER - {unders} UNDER</span>
+                </div>
+            </div>
+            <table class="h2h-table">
+                <thead><tr><th>DATE</th><th>WINNER</th><th>SCORE</th><th>RL COVER</th><th>O/U</th></tr></thead>
+                <tbody>{meetings_html}</tbody>
+            </table>
+        </div>'''
+
+    away_logo = f"https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/{away['abbr'].lower()}.png"
+    home_logo = f"https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/{home['abbr'].lower()}.png"
+
+    betting_lines_html = ''
+    if has_valid_odds(odds):
+        betting_lines_html = f'''
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP & BETTING</div>
+            <table class="lines-table-full">
+                <thead>
+                    <tr><th class="team-col">TEAM</th><th>ML</th><th>O/U</th><th>SU</th><th>RL REC</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr>
+                </thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{away['abbr']}</span>
+                        </td>
+                        <td class="ml">{odds['ml_away']}</td>
+                        <td class="total">O {odds['total']}</td>
+                        <td class="su-record">{away['record']}</td>
+                        <td class="ats-record">{away['stats']['ats']}</td>
+                        <td class="ou-record">{away['stats']['ou']}</td>
+                        <td class="ppg">{away['stats']['rpg']}</td>
+                        <td class="opp-ppg">{away['stats']['rapg']}</td>
+                        <td class="pwr">{away['stats']['pwr']}</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{home['abbr']}</span>
+                        </td>
+                        <td class="ml">{odds['ml_home']}</td>
+                        <td class="total">U {odds['total']}</td>
+                        <td class="su-record">{home['record']}</td>
+                        <td class="ats-record">{home['stats']['ats']}</td>
+                        <td class="ou-record">{home['stats']['ou']}</td>
+                        <td class="ppg">{home['stats']['rpg']}</td>
+                        <td class="opp-ppg">{home['stats']['rapg']}</td>
+                        <td class="pwr">{home['stats']['pwr']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>'''
+    else:
+        betting_lines_html = f'''
+        <div class="section betting-lines-full">
+            <div class="section-title">MATCHUP (No Odds Available)</div>
+            <table class="lines-table-full">
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr></thead>
+                <tbody>
+                    <tr class="away-row">
+                        <td class="team-col">
+                            <img src="{away_logo}" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{away['abbr']}</span>
+                        </td>
+                        <td class="su-record">{away['record']}</td>
+                        <td class="ou-record">{away['stats']['ou']}</td>
+                        <td class="ppg">{away['stats']['rpg']}</td>
+                        <td class="opp-ppg">{away['stats']['rapg']}</td>
+                        <td class="pwr">{away['stats']['pwr']}</td>
+                    </tr>
+                    <tr class="home-row">
+                        <td class="team-col">
+                            <img src="{home_logo}" class="team-logo" onerror="this.style.display='none'">
+                            <span class="team-name">{home['abbr']}</span>
+                        </td>
+                        <td class="su-record">{home['record']}</td>
+                        <td class="ou-record">{home['stats']['ou']}</td>
+                        <td class="ppg">{home['stats']['rpg']}</td>
+                        <td class="opp-ppg">{home['stats']['rapg']}</td>
+                        <td class="pwr">{home['stats']['pwr']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>'''
+
+    # Format injuries section
+    injuries_html = ''
+    if away_inj_html != 'No reported injuries' or home_inj_html != 'No reported injuries':
+        injuries_html = f'''
+        <div class="section injuries-section">
+            <div class="section-title">INJURIES</div>
+            <div class="injuries-content">
+                <div class="team-injuries"><strong>{away['abbr']}:</strong> {away_inj_html}</div>
+                <div class="team-injuries"><strong>{home['abbr']}:</strong> {home_inj_html}</div>
+            </div>
+        </div>'''
+
+    return f'''
+    <div class="game-card" data-event-id="{game.get('event_id', '')}" data-sport="mlb">
+        <div class="game-header">
+            <span class="game-time">{game['time']}</span>
+            <span class="game-venue">{game['venue']}</span>
+            <span class="game-network">{game['network']}</span>
+        </div>
+        {betting_lines_html}
+
+        <!-- SECTION 2: BATTING vs PITCHING -->
+        <div class="stats-grid">
+            <div class="section offense">
+                <div class="section-title">BATTING</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>R/G</th><th>AVG</th><th>OBP</th><th>SLG</th><th>HR</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['rpg']}</td><td>{away['stats']['avg']}</td><td>{away['stats']['obp']}</td><td>{away['stats']['slg']}</td><td>{away['stats']['hr_pg']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['rpg']}</td><td>{home['stats']['avg']}</td><td>{home['stats']['obp']}</td><td>{home['stats']['slg']}</td><td>{home['stats']['hr_pg']}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section defense">
+                <div class="section-title">PITCHING</div>
+                <table class="stats-table">
+                    <thead><tr><th></th><th>ERA</th><th>WHIP</th><th>K/G</th><th>BB/G</th><th>RD</th></tr></thead>
+                    <tbody>
+                        <tr><td class="team-abbr">{away['abbr']}</td><td>{away['stats']['era']}</td><td>{away['stats']['whip']}</td><td>{away['stats']['k_pg']}</td><td>{away['stats']['bb_pg']}</td><td>{away['stats']['rd']}</td></tr>
+                        <tr><td class="team-abbr">{home['abbr']}</td><td>{home['stats']['era']}</td><td>{home['stats']['whip']}</td><td>{home['stats']['k_pg']}</td><td>{home['stats']['bb_pg']}</td><td>{home['stats']['rd']}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {injuries_html}
+        {h2h_html}
+    </div>
+    '''
+
 def _get_game_trends_html(game: Dict, sport: str) -> str:
     """Generate trends HTML for a game card using Hub Trends Engine"""
     if not TRENDS_AVAILABLE:
@@ -2390,7 +2807,7 @@ def generate_game_card(game: Dict, sport: str) -> str:
     elif sport == 'NHL':
         card = generate_game_card_nhl(game)
     elif sport == 'MLB':
-        card = generate_game_card_nhl(game)
+        card = generate_game_card_mlb(game)
     else:
         return ''
 
@@ -2447,7 +2864,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
 
     tab_buttons = ""
     sport_sections = ""
-    sport_order = ['NBA', 'NFL', 'NHL', 'NCAAB', 'NCAAF']
+    sport_order = ['NBA', 'NFL', 'NHL', 'MLB', 'NCAAB', 'NCAAF']
 
     for i, sport in enumerate(sport_order):
         games = all_games.get(sport, [])
