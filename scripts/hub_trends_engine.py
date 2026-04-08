@@ -19,7 +19,7 @@ from typing import Dict, List, Optional, Tuple
 DATA_FILE = r"C:\Users\Nima\universal_games.pkl"
 
 # Thresholds
-MIN_SAMPLE = {1: 15, 2: 12, 3: 8, 4: 6}
+MIN_SAMPLE = {1: 30, 2: 20, 3: 15, 4: 12}
 MIN_EDGE = {1: 8.0, 2: 10.0, 3: 12.0, 4: 15.0}
 MAX_COMBO_DEPTH = 4
 MONSTER_PCT = 70.0
@@ -370,9 +370,9 @@ def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spr
     filters.append(("after W as dog", lambda g, p=p: g.get(p + 'last_won') is True and g.get(p + 'last_was_fav') is False, "ROLE_RES", ["after L as fav"]))
     filters.append(("after L as fav", lambda g, p=p: g.get(p + 'last_won') is False and g.get(p + 'last_was_fav') is True, "ROLE_RES", ["after W as dog"]))
 
-    # ---- SECOND HALF OF SEASON (games played > 40) ----
-    if wpct is not None:
-        filters.append(("in 2nd half of season", lambda g, p=p: (g.get(p + 'w', 0) + g.get(p + 'l', 0)) > 40, "SEASON_HALF", []))
+    # ---- SECOND HALF OF SEASON - REMOVED (April 2026) ----
+    # This filter was generating irrelevant trends (e.g., "second half of season" in April).
+    # Removed to keep trends contextually relevant to current situation.
 
     return filters
 
@@ -513,7 +513,7 @@ def _format_trend_description(team_name: str, venue: str, labels: list) -> str:
         "after home L": "coming off a home loss",
         "on weekend": "playing on a weekend",
         "on weekday": "playing on a weekday",
-        "in 2nd half of season": "in the second half of the season",
+        # "in 2nd half of season" filter removed - not contextually relevant
     })
 
     # Month and day labels
@@ -718,7 +718,7 @@ def generate_trends_html(sport: str, home_abbr: str, away_abbr: str,
     fades = [r for r in results if r["rec"]["pct"] <= (100 - HOT_PCT) and r["rec"]["games"] >= MIN_SAMPLE.get(r["depth"], 6)]
 
     # O/U extremes
-    ou_extremes = [r for r in results if r["ou_edge"] >= 15 and r["rec"]["games"] >= MIN_SAMPLE.get(r["depth"], 6)]
+    ou_extremes = [r for r in results if r["ou_edge"] >= 15 and r["rec"]["games"] >= max(MIN_SAMPLE.get(r["depth"], 12), 15)]
     ou_extremes.sort(key=lambda x: x["ou_edge"], reverse=True)
 
     # Build HTML rows
@@ -779,30 +779,8 @@ def generate_trends_html(sport: str, home_abbr: str, away_abbr: str,
             </table>
         </div>'''
 
-    # Verdict
-    home_covers = len([r for r in results if r["side"] == "home" and r["rec"]["pct"] >= NOTABLE_PCT])
-    home_fades_count = len([r for r in results if r["side"] == "home" and r["rec"]["pct"] <= 100 - NOTABLE_PCT])
-    away_covers = len([r for r in results if r["side"] == "away" and r["rec"]["pct"] >= NOTABLE_PCT])
-    away_fades_count = len([r for r in results if r["side"] == "away" and r["rec"]["pct"] <= 100 - NOTABLE_PCT])
-
-    home_score = home_covers + away_fades_count
-    away_score = away_covers + home_fades_count
-
-    if home_score > away_score + 3:
-        verdict = f"<strong>STRONG LEAN: {home_abbr}</strong>"
-        verdict_class = "verdict-strong"
-    elif away_score > home_score + 3:
-        verdict = f"<strong>STRONG LEAN: {away_abbr}</strong>"
-        verdict_class = "verdict-strong"
-    elif home_score > away_score:
-        verdict = f"LEAN: {home_abbr} ({home_score} vs {away_score})"
-        verdict_class = "verdict-lean"
-    elif away_score > home_score:
-        verdict = f"LEAN: {away_abbr} ({away_score} vs {home_score})"
-        verdict_class = "verdict-lean"
-    else:
-        verdict = "NO CLEAR EDGE"
-        verdict_class = "verdict-neutral"
+    # Verdict/lean section REMOVED (April 2026) - user does not want picks or leans on this page.
+    # The Handicapping Hub shows data only - no recommendations.
 
     return f'''
     <div class="section trends-section">
@@ -812,7 +790,6 @@ def generate_trends_html(sport: str, home_abbr: str, away_abbr: str,
             <tbody>{"".join(rows)}</tbody>
         </table>
         {ou_html}
-        <div class="trends-verdict {verdict_class}">{verdict}</div>
     </div>'''
 
 
@@ -957,31 +934,5 @@ def get_trends_css() -> str:
         font-weight: 700;
         font-size: 1.05rem;
     }
-    .trends-verdict {
-        margin-top: 16px;
-        padding: 14px 20px;
-        border-radius: 10px;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.1rem;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-align: center;
-    }
-    .verdict-strong {
-        background: rgba(255, 50, 50, 0.15);
-        border: 2px solid rgba(255, 50, 50, 0.4);
-        color: #ff5555;
-        text-shadow: 0 0 15px rgba(255,50,50,0.4);
-    }
-    .verdict-lean {
-        background: rgba(0, 245, 255, 0.1);
-        border: 2px solid rgba(0, 245, 255, 0.3);
-        color: #00f5ff;
-        text-shadow: 0 0 12px rgba(0,245,255,0.3);
-    }
-    .verdict-neutral {
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px solid rgba(255, 255, 255, 0.15);
-        color: #999;
-    }
+    /* Verdict/lean CSS removed - Hub shows data only, no picks */
     '''
