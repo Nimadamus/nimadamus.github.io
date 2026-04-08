@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Cardinals/Nationals OVER 8.5 (-110)",
+        date: "April 8, 2026",
+        result: "",
+        url: "cardinals-nationals-over-8-5-runs-nationals-park-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/680694/action/hero/current"
+    },
+    {
         sport: "NHL",
         title: "Blues +1.5 (-190) & ML (+130) vs Avalanche",
         date: "April 7, 2026",
