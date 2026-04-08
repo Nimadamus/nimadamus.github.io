@@ -4,7 +4,6 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-08", page: "ohtani-cease-world-series-rematch-coors-field-fireworks-mlb-april-8-2026.html", title: "MLB Analysis - April 8, 2026" },
-    { date: "2026-04-07", page: "how-to-bet-mlb-totals.html", title: "How to Bet MLB Totals - Complete Guide" },
     { date: "2026-04-07", page: "world-series-rematch-dodgers-blue-jays-skenes-skubal-ace-duels-mlb-april-7-2026.html", title: "MLB Analysis - April 7, 2026" },
     { date: "2026-04-07", page: "mlb-previews.html", title: "MLB Game Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-04-06", page: "dodgers-blue-jays-world-series-rematch-brewers-surge-mlb-april-6-2026.html", title: "MLB Analysis - April 6, 2026" },

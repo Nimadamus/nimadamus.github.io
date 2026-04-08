@@ -45,7 +45,7 @@ HUB_PAGES = {cfg['hub'] for cfg in SPORTS.values() if cfg.get('hub')}
 # Pages to exclude from calendar (utility pages, news pages, data hubs, not daily analysis)
 # NOTE: 'archive' excludes *-archive-* files from page scanning (dates from archives are extracted separately)
 # NOTE: hub pages are handled specially (not excluded, but assigned today's date)
-EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index', '-news', 'news-', 'offseason', 'insights', 'historical', 'trends', 'splits', 'betting-hub', 'handicapping-hub']
+EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index', '-news', 'news-', 'offseason', 'insights', 'historical', 'trends', 'splits', 'betting-hub', 'handicapping-hub', 'how-to-bet', '-guide', 'complete-guide', 'line-shopping']
 
 # Dates to EXCLUDE from calendars (days when no content was posted but pages exist)
 # Format: { 'sport': ['YYYY-MM-DD', ...] }
