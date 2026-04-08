@@ -231,8 +231,9 @@ def _load_games(sport: str) -> list:
 
 
 def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spread, total, wpct, month,
-                    opp_wpct=0.5, opp_rest=3, ats_streak=0):
-    """Build situational filters for one side - comprehensive set"""
+                    opp_wpct=0.5, opp_rest=3, ats_streak=0, sport="NBA"):
+    """Build situational filters for one side - comprehensive set.
+    Sport-aware: skips filters that are meaningless for certain sports."""
     p = '_h_' if side == "home" else '_a_'
     opp_p = '_a_' if side == "home" else '_h_'
     is_fav = (side == "home" and home_spread < 0) or (side == "away" and home_spread > 0)
@@ -247,11 +248,12 @@ def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spr
     else:
         filters.append(("as DOG", lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) > 0) or (p == '_a_' and float(g['Spread'] or 0) < 0)), "ROLE", ["as FAV"]))
 
-    # ---- SPREAD SIZE ----
-    if spread_abs >= 5:
-        filters.append(("big spread 5+", lambda g: g.get('_spread_abs', 0) >= 5, "SPREAD_SIZE", ["small spread 1-3"]))
-    elif spread_abs <= 3 and spread_abs > 0:
-        filters.append(("small spread 1-3", lambda g: 0 < g.get('_spread_abs', 0) <= 3, "SPREAD_SIZE", ["big spread 5+"]))
+    # ---- SPREAD SIZE (NBA/NFL only - NHL/MLB spreads are almost always 1-1.5) ----
+    if sport in ("NBA", "NFL", "NCAAB", "NCAAF"):
+        if spread_abs >= 5:
+            filters.append(("big spread 5+", lambda g: g.get('_spread_abs', 0) >= 5, "SPREAD_SIZE", ["small spread 1-3"]))
+        elif spread_abs <= 3 and spread_abs > 0:
+            filters.append(("small spread 1-3", lambda g: 0 < g.get('_spread_abs', 0) <= 3, "SPREAD_SIZE", ["big spread 5+"]))
 
     # ---- REST ----
     if rest_days == 1:
@@ -273,8 +275,8 @@ def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spr
     elif last_won is False:
         filters.append(("after L", lambda g, p=p: g.get(p + 'last_won') is False, "LAST", ["after W"]))
 
-    # ---- SCORING THRESHOLDS ----
-    if last_gf is not None:
+    # ---- SCORING THRESHOLDS (NHL/MLB only - these thresholds are meaningless for NBA where teams score 90-130) ----
+    if sport in ("NHL", "MLB") and last_gf is not None:
         if last_gf >= 4:
             filters.append(("after scoring 4+", lambda g, p=p: g.get(p + 'last_gf') is not None and g[p + 'last_gf'] >= 4, "GF", ["after scoring 0-1", "after scoring 2-3"]))
         elif last_gf <= 1:
@@ -282,22 +284,23 @@ def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spr
         else:
             filters.append(("after scoring 2-3", lambda g, p=p: g.get(p + 'last_gf') is not None and 2 <= g[p + 'last_gf'] <= 3, "GF", ["after scoring 4+", "after scoring 0-1"]))
 
-    # ---- GOALS ALLOWED ----
-    if last_ga is not None:
+    # ---- GOALS/RUNS ALLOWED (NHL/MLB only) ----
+    if sport in ("NHL", "MLB") and last_ga is not None:
         if last_ga >= 4:
             filters.append(("after allowing 4+", lambda g, p=p: g.get(p + 'last_ga') is not None and g[p + 'last_ga'] >= 4, "GA", ["after allowing 0-1"]))
         elif last_ga <= 1:
             filters.append(("after allowing 0-1", lambda g, p=p: g.get(p + 'last_ga') is not None and g[p + 'last_ga'] <= 1, "GA", ["after allowing 4+"]))
 
-    # ---- GAME TYPE ----
-    if last_margin >= 3:
-        filters.append(("after blowout W", lambda g, p=p: g.get(p + 'last_margin') is not None and g[p + 'last_margin'] >= 3, "TYPE", ["after blowout L", "after shutout", "after 1-goal game"]))
-    elif last_margin <= -3:
-        filters.append(("after blowout L", lambda g, p=p: g.get(p + 'last_margin') is not None and g[p + 'last_margin'] <= -3, "TYPE", ["after blowout W", "after shutout", "after 1-goal game"]))
-    elif abs(last_margin) <= 1 and (last_gf or 0) > 0:
-        filters.append(("after 1-goal game", lambda g, p=p: g.get(p + 'last_margin') is not None and abs(g[p + 'last_margin']) <= 1, "TYPE", ["after blowout W", "after blowout L", "after shutout"]))
-    if (last_gf or 0) == 0 and last_gf is not None:
-        filters.append(("after shutout", lambda g, p=p: g.get(p + 'last_gf') is not None and g[p + 'last_gf'] == 0, "TYPE", []))
+    # ---- GAME TYPE (NHL only - "blowout 3+ goals", "1-goal game", "shutout" are hockey concepts) ----
+    if sport == "NHL":
+        if last_margin >= 3:
+            filters.append(("after blowout W", lambda g, p=p: g.get(p + 'last_margin') is not None and g[p + 'last_margin'] >= 3, "TYPE", ["after blowout L", "after shutout", "after 1-goal game"]))
+        elif last_margin <= -3:
+            filters.append(("after blowout L", lambda g, p=p: g.get(p + 'last_margin') is not None and g[p + 'last_margin'] <= -3, "TYPE", ["after blowout W", "after shutout", "after 1-goal game"]))
+        elif abs(last_margin) <= 1 and (last_gf or 0) > 0:
+            filters.append(("after 1-goal game", lambda g, p=p: g.get(p + 'last_margin') is not None and abs(g[p + 'last_margin']) <= 1, "TYPE", ["after blowout W", "after blowout L", "after shutout"]))
+        if (last_gf or 0) == 0 and last_gf is not None:
+            filters.append(("after shutout", lambda g, p=p: g.get(p + 'last_gf') is not None and g[p + 'last_gf'] == 0, "TYPE", []))
 
     # ---- SU STREAKS ----
     if streak >= 3:
@@ -360,11 +363,12 @@ def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spr
     else:
         filters.append(("on weekday", lambda g: g.get('_day_of_week', 0) < 4, "WEEKEND", ["on weekend"]))
 
-    # ---- TOTAL RANGE ----
-    if total >= 6.0:
-        filters.append(("total 6.0+", lambda g: g.get('Total') and float(g['Total'] or 0) >= 6.0, "TRANGE", ["total 5.5-"]))
-    elif total and total <= 5.5:
-        filters.append(("total 5.5-", lambda g: g.get('Total') and float(g['Total'] or 0) <= 5.5, "TRANGE", ["total 6.0+"]))
+    # ---- TOTAL RANGE (NHL only - meaningless for NBA/MLB where all totals are far above 6.0) ----
+    if sport == "NHL":
+        if total >= 6.0:
+            filters.append(("total 6.0+", lambda g: g.get('Total') and float(g['Total'] or 0) >= 6.0, "TRANGE", ["total 5.5-"]))
+        elif total and total <= 5.5:
+            filters.append(("total 5.5-", lambda g: g.get('Total') and float(g['Total'] or 0) <= 5.5, "TRANGE", ["total 6.0+"]))
 
     # ---- ROLE + RESULT COMBOS ----
     filters.append(("after W as dog", lambda g, p=p: g.get(p + 'last_won') is True and g.get(p + 'last_was_fav') is False, "ROLE_RES", ["after L as fav"]))
@@ -666,10 +670,10 @@ def get_trends_for_game(sport: str, home_abbr: str, away_abbr: str,
 
     home_filters = _build_filters("home", home_rest, home_streak, home_last_won,
                                    home_last_gf, home_last_ga, home_spread, total, home_wpct, month,
-                                   opp_wpct=away_wpct, opp_rest=away_rest)
+                                   opp_wpct=away_wpct, opp_rest=away_rest, sport=sport)
     away_filters = _build_filters("away", away_rest, away_streak, away_last_won,
                                    away_last_gf, away_last_ga, home_spread, total, away_wpct, month,
-                                   opp_wpct=home_wpct, opp_rest=home_rest)
+                                   opp_wpct=home_wpct, opp_rest=home_rest, sport=sport)
 
     home_results = _run_combos(home_games, "home", home_filters)
     away_results = _run_combos(away_games, "away", away_filters)
