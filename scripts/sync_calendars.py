@@ -904,10 +904,64 @@ def main():
 
             print(f"  Updated {sport_config['calendar_js']}")
 
+    # Update cache busters on all preview hub pages so browsers load fresh calendar JS
+    update_calendar_cache_busters()
+
     print("\n" + "=" * 60)
     print(f"Calendar sync complete! Total: {total_pages} pages across all sports")
     print("Don't forget to commit and push the changes.")
     print("=" * 60)
+
+
+def update_calendar_cache_busters():
+    """
+    Updates the ?v= cache buster on calendar JS script tags in all hub pages.
+    This ensures browsers always load the latest calendar data after sync.
+    Without this, browsers serve stale calendar JS and show wrong months/dates.
+
+    Added April 7, 2026 - fixes bug where calendars showed March instead of current month.
+    """
+    from datetime import datetime
+    today_stamp = datetime.now().strftime('%Y%m%d')
+
+    hub_calendar_map = {
+        'nba-previews.html': 'nba-calendar.js',
+        'nhl-previews.html': 'nhl-calendar.js',
+        'mlb-previews.html': 'mlb-calendar.js',
+        'soccer-previews.html': 'soccer-calendar.js',
+        'college-basketball-previews.html': 'ncaab-calendar.js',
+    }
+
+    print(f"\n[CACHE BUSTER] Updating calendar JS versions to {today_stamp}...")
+    updated = 0
+
+    for hub_page, cal_js in hub_calendar_map.items():
+        filepath = REPO_DIR / hub_page
+        if not filepath.exists():
+            continue
+
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+
+        original = content
+        # Match the calendar JS script tag and update its version parameter
+        content = re.sub(
+            rf'{re.escape(cal_js)}\?v=\d+',
+            f'{cal_js}?v={today_stamp}',
+            content
+        )
+
+        if content != original:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
+            updated += 1
+            print(f"  [UPDATED] {hub_page} -> {cal_js}?v={today_stamp}")
+
+    if updated == 0:
+        print("  [OK] All cache busters already current")
+    else:
+        print(f"  [OK] Updated {updated} hub page(s)")
+
 
 if __name__ == '__main__':
     main()
