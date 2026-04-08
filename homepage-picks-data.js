@@ -23,46 +23,6 @@
 
 var HOMEPAGE_PICKS = [
     {
-        sport: "MLB",
-        title: "Skubal Under 1.5 ER (-160) vs Twins",
-        date: "April 7, 2026",
-        result: "",
-        url: "skubal-earned-runs-under-tigers-twins-ace-dominance-mlb.html",
-        image: "https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_150,w_3095,h_1740/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/tigers_baseball_report/01kmn9g8hn5n6majqkec.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Alcantara ER Under vs Reds",
-        date: "April 7, 2026",
-        result: "",
-        url: "alcantara-earned-runs-under-marlins-shutdown-reds-mlb.html",
-        image: "https://static.outkick.com/www.outkick.com/content/uploads/2024/01/gettyimages-1479860710-594x594-1.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Skenes ER Under vs Padres",
-        date: "April 7, 2026",
-        result: "",
-        url: "skenes-earned-runs-under-pirates-pitchers-duel-padres-mlb.html",
-        image: "https://a.espncdn.com/photo/2026/0401/r1637361_1296x729_16-9.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Crochet ER Under vs Brewers",
-        date: "April 7, 2026",
-        result: "",
-        url: "crochet-earned-runs-under-red-sox-strikeout-fest-brewers-mlb.html",
-        image: "https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_0,w_5724,h_3219/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/14/01kn7g0zr3f0eyvr4rwp.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Heim Hits Under vs Angels",
-        date: "April 7, 2026",
-        result: "",
-        url: "heim-hits-under-braves-cold-bat-angels-mlb.html",
-        image: "https://heavy.com/wp-content/uploads/2026/04/GettyImages-2269255459.jpg?quality=65&strip=all&w=780"
-    },
-    {
         sport: "NHL",
         title: "Blues +1.5 (-190) & ML (+130) vs Avalanche",
         date: "April 7, 2026",
