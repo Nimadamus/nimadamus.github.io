@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Rangers/Dodgers UNDER 9 (-138)",
+        date: "April 10, 2026",
+        result: "",
+        url: "rangers-dodgers-under-9-glasnow-rocker-dodger-stadium-mlb.html",
+        image: "https://s.yimg.com/ny/api/res/1.2/HqcroW3GImre9XroruA3JQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTY0MDtjZj13ZWJw/https://media.zenfs.com/en/sb_nation_articles_115/86a2eb1cf719d6ae40ecf1f6f95863f9"
+    },
+    {
+        sport: "MLB",
         title: "Cardinals/Nationals OVER 8.5 (-110)",
         date: "April 8, 2026",
         result: "",
