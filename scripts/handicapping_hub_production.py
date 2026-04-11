@@ -2897,7 +2897,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handicapping Hub PREVIEW - {date_str} | BetLegend</title>
+    <title>Handicapping and Trends Hub PREVIEW - {date_str} | BetLegend</title>
     <meta name="description" content="PREVIEW VERSION - Enhanced with advanced stats and situational data">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -3731,7 +3731,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     }})();
     </script>
     <header class="header">
-        <h1>Handicapping <span>Hub</span></h1>
+        <h1>Handicapping <span>and Trends Hub</span></h1>
         <p class="subtitle">{date_str} | Real-Time Odds, Stats & Betting Trends</p>
     </header>
     <aside class="calendar-sidebar">
