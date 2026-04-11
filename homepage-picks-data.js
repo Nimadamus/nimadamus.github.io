@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Giants ML -114 at Orioles (3u)",
+        date: "April 11, 2026",
+        result: "",
+        url: "giants-moneyline-webb-orioles-camden-yards-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/v1773507436/mlb/rsxmjlczbv0elpmrsm6c.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Rangers/Dodgers UNDER 9 (-138)",
         date: "April 10, 2026",
         result: "",
