@@ -3824,20 +3824,32 @@ function closeEmailPopup() {
     }
 
     // Parse the picks-table-body rows out of a records-page HTML string.
-    // Mirrors scripts/generate_transparency_data.py::parse_html_records_page.
-    function parseRecordsPageRows(html) {
+    // Isolates #picks-table-body first so unrelated <tr> elements can't
+    // pollute the tally, then reads each row's 5 cells. Units cell is the
+    // source of truth (records pages tally by units sign, not result class),
+    // so added attributes or tweaked classes won't silently break sync.
+    function parseRecordsPageRows(html, sportLabel) {
         var rows = new Map(); // key -> { units }
-        // Same 5-column <tr> shape the records pages seed: date, pick, odds, result(class), units(class)
-        var re = /<tr>\s*<td[^>]*>([^<]*)<\/td>\s*<td[^>]*>([^<]*)<\/td>\s*<td[^>]*>[^<]*<\/td>\s*<td[^>]*class="result-[WLP][^"]*"[^>]*>[^<]*<\/td>\s*<td[^>]*class="(?:win|loss|result-P)"[^>]*>([^<]*)<\/td>\s*<\/tr>/gi;
-        var m;
-        while ((m = re.exec(html)) !== null) {
-            var date = (m[1] || '').trim();
-            var pick = (m[2] || '').trim().toLowerCase();
-            var unitsStr = (m[3] || '').trim().replace(/[+,]/g, '');
+        var tbodyMatch = html.match(/<tbody[^>]*id=["']picks-table-body["'][^>]*>([\s\S]*?)<\/tbody>/i);
+        var scope = tbodyMatch ? tbodyMatch[1] : html;
+        var trRe = /<tr\b[^>]*>([\s\S]*?)<\/tr>/gi;
+        var tr;
+        while ((tr = trRe.exec(scope)) !== null) {
+            var cells = [];
+            var cellRe = /<td\b[^>]*>([\s\S]*?)<\/td>/gi;
+            var cm;
+            while ((cm = cellRe.exec(tr[1])) !== null) {
+                cells.push(cm[1].replace(/<[^>]*>/g, '').trim());
+                if (cells.length >= 5) break;
+            }
+            if (cells.length < 5) continue;
+            var unitsStr = cells[4].replace(/[+,]/g, '');
             var units = parseFloat(unitsStr);
-            if (isNaN(units)) units = 0;
-            var key = date + '|' + pick;
-            rows.set(key, { units: units });
+            if (isNaN(units)) continue;
+            rows.set(cells[0] + '|' + cells[1].toLowerCase(), { units: units });
+        }
+        if (rows.size === 0 && sportLabel && typeof console !== 'undefined') {
+            console.warn('[widget-sync] parsed 0 rows from ' + sportLabel + ' records page - selector or markup may have changed');
         }
         return rows;
     }
@@ -3900,7 +3912,7 @@ function closeEmailPopup() {
             return fetch(RECORDS_SPORTS[sport], { cache: 'no-store' })
                 .then(function(r) { return r.text(); })
                 .then(function(html) {
-                    var seeded = parseRecordsPageRows(html);
+                    var seeded = parseRecordsPageRows(html, sport);
                     seeded.forEach(function(v, k) { sportPicks[sport].set(k, v); });
                 }).catch(function() {});
         });
