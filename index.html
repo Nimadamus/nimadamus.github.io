@@ -3896,40 +3896,53 @@ function closeEmailPopup() {
     function fetchLiveRecords() {
         if (typeof TRANSPARENCY_DATA === 'undefined') return;
 
-        // Fetch from the SAME Google Sheets the records pages use.
-        // No HTML parsing, no CDN caching issues. Same source = same numbers.
+        // Each records page uses up to 3 data sources:
+        //   1. Static HTML tbody rows (historical picks baked into the page)
+        //   2. Sport-specific Google Sheet (if one exists)
+        //   3. Pick Tracker Google Sheet (supplements all sports)
+        // The widget must fetch ALL THREE for each sport, exactly matching
+        // what each records page does on load.
+
+        // Sport-specific Google Sheets (same URLs as records pages)
         var SPORT_SHEETS = {
-            'NHL':   null,  // NHL uses HTML tbody + Pick Tracker (no dedicated sheet)
-            'NFL':   null,  // NFL uses HTML tbody + Pick Tracker (no dedicated sheet)
-            'NCAAF': null,  // NCAAF uses HTML tbody + Pick Tracker (no dedicated sheet)
             'NCAAB': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv',
             'MLB':   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv'
         };
 
-        // Sports that need HTML tbody for historical picks (no dedicated sheet)
-        var HTML_SPORTS = {
+        // ALL sports have HTML tbody with historical picks
+        var HTML_PAGES = {
             'NHL':   'nhl-records.html',
             'NFL':   'nfl-records.html',
-            'NCAAF': 'ncaaf-records.html'
+            'NCAAF': 'ncaaf-records.html',
+            'NCAAB': 'ncaab-records.html',
+            'MLB':   'mlb-records.html'
         };
 
         var sportPicks = {};
-        Object.keys(SPORT_SHEETS).forEach(function(s) { sportPicks[s] = new Map(); });
+        ['NHL', 'NFL', 'NCAAF', 'NCAAB', 'MLB'].forEach(function(s) { sportPicks[s] = new Map(); });
 
         var fetches = [];
 
-        // 1. Fetch sport-specific Google Sheets (same URLs the records pages use)
+        // 1. Fetch HTML tbody for ALL sports (historical picks)
+        Object.keys(HTML_PAGES).forEach(function(sport) {
+            var p = fetch(HTML_PAGES[sport] + '?v=' + Date.now(), { cache: 'no-store' })
+                .then(function(r) { return r.text(); })
+                .then(function(html) {
+                    var seeded = parseRecordsPageRows(html, sport);
+                    seeded.forEach(function(v, k) { sportPicks[sport].set(k, v); });
+                }).catch(function(e) { console.warn('[widget-sync] ' + sport + ' HTML fetch failed:', e); });
+            fetches.push(p);
+        });
+
+        // 2. Fetch sport-specific Google Sheets (NCAAB, MLB have dedicated sheets)
         Object.keys(SPORT_SHEETS).forEach(function(sport) {
-            var sheetUrl = SPORT_SHEETS[sport];
-            if (!sheetUrl) return;
-            var p = fetch(sheetUrl + '&cache=' + Date.now(), { cache: 'no-store' })
+            var p = fetch(SPORT_SHEETS[sport] + '&cache=' + Date.now(), { cache: 'no-store' })
                 .then(function(r) { return r.text(); })
                 .then(function(csv) {
                     var rows = parseWidgetCSV(csv);
                     rows.forEach(function(row) {
                         var result = (row.Result || '').trim().toUpperCase();
-                        if (!result) return;
-                        if (!result.match(/^[WLP]/)) return;
+                        if (!result || !result.match(/^[WLP]/)) return;
                         var unitsVal = parseFloat((row.Units || row.ProfitLoss || '0').replace(/[+,]/g, '')) || 0;
                         var pick = (row.Pick || row.Picks || '').toLowerCase();
                         var key = (row.Date || '') + '|' + pick;
@@ -3938,17 +3951,6 @@ function closeEmailPopup() {
                         }
                     });
                 }).catch(function(e) { console.warn('[widget-sync] ' + sport + ' sheet fetch failed:', e); });
-            fetches.push(p);
-        });
-
-        // 2. Fetch HTML tbody for sports without dedicated sheets (NHL, NFL, NCAAF)
-        Object.keys(HTML_SPORTS).forEach(function(sport) {
-            var p = fetch(HTML_SPORTS[sport] + '?v=' + Date.now(), { cache: 'no-store' })
-                .then(function(r) { return r.text(); })
-                .then(function(html) {
-                    var seeded = parseRecordsPageRows(html, sport);
-                    seeded.forEach(function(v, k) { sportPicks[sport].set(k, v); });
-                }).catch(function(e) { console.warn('[widget-sync] ' + sport + ' HTML fetch failed:', e); });
             fetches.push(p);
         });
 
