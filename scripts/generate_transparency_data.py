@@ -25,9 +25,9 @@ import io
 import urllib.request
 from datetime import datetime
 
-# Year filter: must match the records pages' default filterByYear() call
-# and the WIDGET_YEAR_FILTER in index.html. Change when the year rolls over.
-YEAR_FILTER = "2026"
+# Year filter: empty string = all-time (no filtering).
+# Must match WIDGET_YEAR_FILTER in index.html and the records pages' default view.
+YEAR_FILTER = ""
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

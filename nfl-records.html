@@ -241,8 +241,8 @@
  <div class="year-filter-subtitle">Click 2025 to see full season records • 2026 shows current year picks only</div>
  <div class="year-filter-container">
  <button class="year-filter-btn" data-year="2025">2025</button>
- <button class="year-filter-btn active" data-year="2026">2026</button>
- <button class="year-filter-btn" data-year="all">All Time</button>
+ <button class="year-filter-btn" data-year="2026">2026</button>
+ <button class="year-filter-btn active" data-year="all">All Time</button>
  </div>
  </div>
 
@@ -608,7 +608,7 @@
  if (addedCount > 0) {
  console.log('Added ' + addedCount + ' new NFL picks from Pick Tracker');
  // Recalculate stats for current year filter
- filterByYear(document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || '2026');
+ filterByYear(document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || 'all');
  }
  } catch (e) {
  console.log('Pick Tracker fetch failed, using static HTML:', e);
@@ -977,7 +977,7 @@
  // Load data when page loads
  document.addEventListener('DOMContentLoaded', function () {
  // Filter to 2026 first (this calculates stats for filtered rows only)
- filterByYear('2026');
+ filterByYear('all');
 
  // Then fetch fresh data from Pick Tracker and merge
  fetchAndMergePicks();
