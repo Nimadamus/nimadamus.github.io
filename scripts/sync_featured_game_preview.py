@@ -206,16 +206,40 @@ def get_team_colors(sport, abbr):
 
 
 def get_current_featured_page(index_content):
-    """Find which featured game page index.html links to."""
-    # Try old format first
+    """Find which featured game page to sync from.
+
+    Primary source of truth: featured-games-data.js — returns the entry with
+    the latest date (the most recently added featured game). Falls back to
+    scanning index.html only if the data file can't be read.
+    """
+    # PRIMARY: read featured-games-data.js and pick the latest-dated entry
+    try:
+        data_path = os.path.join(REPO, 'featured-games-data.js')
+        with open(data_path, 'r', encoding='utf-8', errors='ignore') as f:
+            data_content = f.read()
+        entries = re.findall(
+            r'\{\s*date:\s*"(\d{4}-\d{2}-\d{2})"\s*,\s*page:\s*"([^"]+\.html)"',
+            data_content
+        )
+        if entries:
+            entries.sort(key=lambda e: e[0])
+            latest_page = entries[-1][1]
+            page_path = os.path.join(REPO, latest_page)
+            if os.path.exists(page_path):
+                return latest_page
+            print(f"  WARNING: Latest featured game in data file not found on disk: {latest_page}")
+    except Exception as e:
+        print(f"  WARNING: Could not read featured-games-data.js: {e}")
+
+    # FALLBACK: try old format in index.html
     match = re.search(r'href="(featured-game-of-the-day-page\d+\.html)"', index_content)
     if match:
         return match.group(1)
     # Try new keyword-rich format (link near "View Full Breakdown")
-    match = re.search(r'href="([^"]+prediction-picks[^"]+\.html)"[^>]*>\s*<span[^>]*>\s*View Full Breakdown', index_content)
+    match = re.search(r'href="([^"]+-analysis-stats-preview[^"]+\.html)"[^>]*>\s*<span[^>]*>\s*View Full Breakdown', index_content)
     if match:
         return match.group(1)
-    # Fallback: any link right before "View Full Breakdown"
+    # Last resort: any link right before "View Full Breakdown"
     match = re.search(r'href="([^"]+\.html)"[^>]*>\s*<span[^>]*>\s*View Full Breakdown', index_content)
     return match.group(1) if match else None
 
