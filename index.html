@@ -3823,11 +3823,62 @@ function closeEmailPopup() {
         return { wins: w, losses: l, pushes: p, totalPicks: total, totalUnits: Math.round(units * 100) / 100, winPct: winPct };
     }
 
+    // Parse the picks-table-body rows out of a records-page HTML string.
+    // Mirrors scripts/generate_transparency_data.py::parse_html_records_page.
+    function parseRecordsPageRows(html) {
+        var rows = new Map(); // key -> { units }
+        // Same 5-column <tr> shape the records pages seed: date, pick, odds, result(class), units(class)
+        var re = /<tr>\s*<td[^>]*>([^<]*)<\/td>\s*<td[^>]*>([^<]*)<\/td>\s*<td[^>]*>[^<]*<\/td>\s*<td[^>]*class="result-[WLP][^"]*"[^>]*>[^<]*<\/td>\s*<td[^>]*class="(?:win|loss|result-P)"[^>]*>([^<]*)<\/td>\s*<\/tr>/gi;
+        var m;
+        while ((m = re.exec(html)) !== null) {
+            var date = (m[1] || '').trim();
+            var pick = (m[2] || '').trim().toLowerCase();
+            var unitsStr = (m[3] || '').trim().replace(/[+,]/g, '');
+            var units = parseFloat(unitsStr);
+            if (isNaN(units)) units = 0;
+            var key = date + '|' + pick;
+            rows.set(key, { units: units });
+        }
+        return rows;
+    }
+
+    // Tally a Map or array of { units } entries the same way the records pages do:
+    // units > 0 = W, < 0 = L, == 0 = P. Matches filterByYear() and the Python generator.
+    function tallyByUnits(entries) {
+        var w = 0, l = 0, p = 0, units = 0;
+        entries.forEach(function(e) {
+            var u = e.units;
+            if (u > 0) w++;
+            else if (u < 0) l++;
+            else p++;
+            units += u;
+        });
+        var total = w + l + p;
+        var winPct = (w + l) > 0 ? Math.round(w / (w + l) * 1000) / 10 : 0;
+        return { wins: w, losses: l, pushes: p, totalPicks: total, totalUnits: Math.round(units * 100) / 100, winPct: winPct };
+    }
+
     function fetchLiveRecords() {
         if (typeof TRANSPARENCY_DATA === 'undefined') return;
-        var sportPicks = {}; // sport -> Map(key -> {result, units})
 
-        // Fetch both sources in parallel
+        // For each non-MLB sport that has a records page, we replicate exactly
+        // what that page does on load:
+        //   1. Seed from the static <tr> rows baked into the records HTML
+        //   2. Merge in any Pick Tracker rows not already in the seed
+        //   3. Tally by units sign (W/L/P) - same formula as filterByYear()
+        // This keeps the widget in lockstep with the records pages without
+        // needing the Python cron job to have re-run.
+        var RECORDS_SPORTS = {
+            'NHL':   'nhl-records.html',
+            'NFL':   'nfl-records.html',
+            'NCAAF': 'ncaaf-records.html',
+            'NCAAB': 'ncaab-records.html'
+        };
+
+        var sportPicks = {}; // sport -> Map(key -> { units })
+        Object.keys(RECORDS_SPORTS).forEach(function(s) { sportPicks[s] = new Map(); });
+
+        // Parallel fetch: MLB public sheet, Pick Tracker, and each records page HTML
         var mlbDone = fetch(MLB_SHEET_URL + '&cache=' + Date.now(), { cache: 'no-store' })
             .then(function(r) { return r.text(); })
             .then(function(csv) {
@@ -3840,10 +3891,19 @@ function closeEmailPopup() {
                     var pick = (row.Pick || row.Picks || '').toLowerCase();
                     var key = (row.Date || '') + '|' + pick;
                     if (!sportPicks['MLB'].has(key)) {
-                        sportPicks['MLB'].set(key, { result: result.charAt(0), units: unitsVal });
+                        sportPicks['MLB'].set(key, { units: unitsVal });
                     }
                 });
             }).catch(function() {});
+
+        var recordsDone = Object.keys(RECORDS_SPORTS).map(function(sport) {
+            return fetch(RECORDS_SPORTS[sport], { cache: 'no-store' })
+                .then(function(r) { return r.text(); })
+                .then(function(html) {
+                    var seeded = parseRecordsPageRows(html);
+                    seeded.forEach(function(v, k) { sportPicks[sport].set(k, v); });
+                }).catch(function() {});
+        });
 
         var trackerDone = fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), { cache: 'no-store' })
             .then(function(r) { return r.text(); })
@@ -3861,35 +3921,38 @@ function closeEmailPopup() {
                     var unitsVal = calcUnits(stake, odds, result);
                     var pick = (row.Pick || row.Picks || '').toLowerCase();
                     var key = (row.Date || '') + '|' + pick;
-                    // For MLB: add to the MLB map (tracker picks supplement the sheet data)
-                    if (sportKey === 'MLB') {
-                        if (!sportPicks['MLB']) sportPicks['MLB'] = new Map();
-                        sportPicks['MLB'].set(key, { result: result.charAt(0), units: unitsVal });
+                    if (!sportPicks[sportKey]) sportPicks[sportKey] = new Map();
+                    // Only ADD picks not already in the seeded HTML - same dedup
+                    // order the records pages use (static rows take precedence).
+                    if (!sportPicks[sportKey].has(key)) {
+                        sportPicks[sportKey].set(key, { units: unitsVal });
                     }
                 });
             }).catch(function() {});
 
-        Promise.all([mlbDone, trackerDone]).then(function() {
+        Promise.all([mlbDone, trackerDone].concat(recordsDone)).then(function() {
             var changed = false;
             var data = TRANSPARENCY_DATA.sports;
 
-            // Only update MLB from live sheets (other sports stay from static file
-            // since their HTML tables contain historical data we can't fetch client-side)
-            if (sportPicks['MLB'] && sportPicks['MLB'].size > 0) {
-                var picksArr = [];
-                sportPicks['MLB'].forEach(function(val) { picksArr.push(val); });
-                var stats = tallyPicks(picksArr);
-                if (stats.wins !== data['MLB'].wins || stats.losses !== data['MLB'].losses ||
-                    stats.pushes !== data['MLB'].pushes || stats.totalUnits !== data['MLB'].totalUnits) {
-                    data['MLB'].wins = stats.wins;
-                    data['MLB'].losses = stats.losses;
-                    data['MLB'].pushes = stats.pushes;
-                    data['MLB'].totalPicks = stats.totalPicks;
-                    data['MLB'].totalUnits = stats.totalUnits;
-                    data['MLB'].winPct = stats.winPct;
+            function applyStats(sport) {
+                if (!data[sport] || !sportPicks[sport] || sportPicks[sport].size === 0) return;
+                var arr = [];
+                sportPicks[sport].forEach(function(v) { arr.push(v); });
+                var stats = tallyByUnits(arr);
+                var d = data[sport];
+                if (stats.wins !== d.wins || stats.losses !== d.losses ||
+                    stats.pushes !== d.pushes || stats.totalUnits !== d.totalUnits) {
+                    d.wins = stats.wins;
+                    d.losses = stats.losses;
+                    d.pushes = stats.pushes;
+                    d.totalPicks = stats.totalPicks;
+                    d.totalUnits = stats.totalUnits;
+                    d.winPct = stats.winPct;
                     changed = true;
                 }
             }
+
+            ['MLB', 'NHL', 'NFL', 'NCAAF', 'NCAAB'].forEach(applyStats);
 
             if (changed) {
                 var savedTab = activeTab;
