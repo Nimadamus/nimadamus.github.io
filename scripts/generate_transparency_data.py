@@ -6,6 +6,10 @@ Reads the HTML tables in each sport's records page, calculates
 total units, win percentage, and total picks, then writes
 transparency-widget-data.js for the homepage widget to consume.
 
+IMPORTANT: This script filters to the CURRENT YEAR (matching the
+records pages' default filterByYear view) so the homepage widget
+and records pages always show the same numbers.
+
 For MLB: fetches data from the Google Sheets CSV endpoint since the
 MLB records page loads data dynamically via JavaScript.
 
@@ -20,6 +24,10 @@ import json
 import io
 import urllib.request
 from datetime import datetime
+
+# Year filter: must match the records pages' default filterByYear() call
+# and the WIDGET_YEAR_FILTER in index.html. Change when the year rolls over.
+YEAR_FILTER = "2026"
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -102,6 +110,24 @@ def normalize_date(date_str):
     return date_str
 
 
+def extract_year(date_str):
+    """Extract the 4-digit year from a date string like '4/5/2026' or '12-31-2025'.
+    Returns the year as a string, or None if not parseable."""
+    if not date_str:
+        return None
+    normalized = normalize_date(date_str)
+    parts = re.split(r"[-/]", normalized)
+    if len(parts) == 3:
+        try:
+            y = int(parts[2])
+            if 2020 <= y <= 2030:
+                return str(y)
+        except ValueError:
+            pass
+    m = re.search(r"20\d{2}", date_str)
+    return m.group(0) if m else None
+
+
 def calculate_unit_result(stake_str, odds_str, result):
     """Calculate unit profit/loss using the correct formula from CLAUDE.md."""
     try:
@@ -152,6 +178,11 @@ def fetch_pick_tracker_picks():
             continue
 
         date = normalize_date((row.get("Date", "") or "").strip())
+
+        # Year filter: skip picks not matching the target year
+        if YEAR_FILTER and extract_year(date) != YEAR_FILTER:
+            continue
+
         pick = (row.get("Pick", "") or row.get("Picks", "") or "").strip().lower()
         stake = row.get("Units", "") or "3"
         odds = row.get("Line", "") or row.get("Odds", "") or "-110"
@@ -196,6 +227,10 @@ def parse_html_records_page(filepath, tracker_picks=None):
         pick_str = match.group(2).strip().lower()
         result = match.group(4).upper()
         units_str = match.group(5).strip()
+
+        # Year filter: skip rows not matching the target year
+        if YEAR_FILTER and extract_year(date_str) != YEAR_FILTER:
+            continue
 
         try:
             units_val = float(units_str.replace("+", ""))
@@ -295,6 +330,11 @@ def fetch_mlb_from_sheets():
         if not result:
             continue
 
+        # Year filter: skip picks not matching the target year
+        date_str = row.get("Date", "").strip()
+        if YEAR_FILTER and extract_year(date_str) != YEAR_FILTER:
+            continue
+
         if result.startswith("W"):
             wins += 1
         elif result.startswith("L"):
@@ -318,7 +358,6 @@ def fetch_mlb_from_sheets():
             pass
 
         # Track most recent date
-        date_str = row.get("Date", "").strip()
         if last_date is None and date_str:
             last_date = date_str
 
@@ -362,16 +401,16 @@ def main():
               f"Units: {stats['totalUnits']:+.2f} | Win%: {stats['winPct']}% | "
               f"Picks: {stats['totalPicks']}")
 
-    # MLB: Always fetch Google Sheets (2025 historical data) and combine with
-    # Pick Tracker (2026 data). The mlb-records.html table is empty because it
-    # loads data dynamically via JavaScript, so the HTML parse above only gets
-    # Pick Tracker picks. We need to merge both sources for all-time totals.
-    print("Fetching MLB 2025 historical data from Google Sheets...")
+    # MLB: Fetch Google Sheets data (all historical MLB data lives here).
+    # The mlb-records.html table is empty (loads via JavaScript), so the HTML
+    # parse above only gets Pick Tracker picks. We also fetch the sheets data
+    # and merge with tracker data (both filtered to YEAR_FILTER).
+    print(f"Fetching MLB data from Google Sheets (filtered to {YEAR_FILTER})...")
     mlb_sheets_stats = fetch_mlb_from_sheets()
     if mlb_sheets_stats:
         existing_mlb = data.get("MLB")
-        if existing_mlb:
-            # Combine: Google Sheets (2025) + Pick Tracker (2026) already in data["MLB"]
+        if existing_mlb and existing_mlb["totalPicks"] > 0:
+            # Combine sheets data with Pick Tracker data (both already year-filtered)
             combined_wins = mlb_sheets_stats["wins"] + existing_mlb["wins"]
             combined_losses = mlb_sheets_stats["losses"] + existing_mlb["losses"]
             combined_pushes = mlb_sheets_stats["pushes"] + existing_mlb["pushes"]
@@ -390,17 +429,17 @@ def main():
                 "winPct": combined_win_pct,
                 "lastDate": last_date,
             }
-            print(f"MLB (2025 sheets): {mlb_sheets_stats['wins']}-{mlb_sheets_stats['losses']}-{mlb_sheets_stats['pushes']} | Units: {mlb_sheets_stats['totalUnits']:+.2f}")
-            print(f"MLB (2026 tracker): {existing_mlb['wins']}-{existing_mlb['losses']}-{existing_mlb['pushes']} | Units: {existing_mlb['totalUnits']:+.2f}")
-            print(f"MLB (ALL-TIME): {combined_wins}-{combined_losses}-{combined_pushes} | Units: {combined_units:+.2f} | Win%: {combined_win_pct}%")
+            print(f"MLB (sheets {YEAR_FILTER}): {mlb_sheets_stats['wins']}-{mlb_sheets_stats['losses']}-{mlb_sheets_stats['pushes']} | Units: {mlb_sheets_stats['totalUnits']:+.2f}")
+            print(f"MLB (tracker {YEAR_FILTER}): {existing_mlb['wins']}-{existing_mlb['losses']}-{existing_mlb['pushes']} | Units: {existing_mlb['totalUnits']:+.2f}")
+            print(f"MLB ({YEAR_FILTER}): {combined_wins}-{combined_losses}-{combined_pushes} | Units: {combined_units:+.2f} | Win%: {combined_win_pct}%")
         else:
-            # No tracker data, just use Google Sheets
+            # No tracker data for this year, just use sheets
             data["MLB"] = {
                 "displayName": DISPLAY_NAMES["MLB"],
                 "recordsLink": RECORDS_LINKS["MLB"],
                 **mlb_sheets_stats,
             }
-            print(f"MLB: {mlb_sheets_stats['wins']}-{mlb_sheets_stats['losses']}-{mlb_sheets_stats['pushes']} | "
+            print(f"MLB ({YEAR_FILTER}): {mlb_sheets_stats['wins']}-{mlb_sheets_stats['losses']}-{mlb_sheets_stats['pushes']} | "
                   f"Units: {mlb_sheets_stats['totalUnits']:+.2f} | Win%: {mlb_sheets_stats['winPct']}%")
     else:
         print("WARNING: MLB Google Sheets data unavailable")

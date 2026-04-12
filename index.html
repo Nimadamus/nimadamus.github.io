@@ -3755,6 +3755,10 @@ function closeEmailPopup() {
     }
 
     /* ---- Live sync: fetch latest from Google Sheets to stay in sync with records pages ---- */
+    /* Records pages default to filterByYear('2026'). The widget MUST use the same
+       year filter so the numbers always match. Change this when the year rolls over. */
+    var WIDGET_YEAR_FILTER = '2026';
+
     var MLB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
     var PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
 
@@ -3824,11 +3828,26 @@ function closeEmailPopup() {
         return { wins: w, losses: l, pushes: p, totalPicks: total, totalUnits: Math.round(units * 100) / 100, winPct: winPct };
     }
 
+    // Extract the year from a date string like "4/5/2026" or "12/31/2025".
+    // Matches the normalizeDate/getYearFromDate logic on the records pages.
+    function extractYearFromDate(dateStr) {
+        if (!dateStr) return null;
+        var parts = dateStr.trim().split(/[-\/]/);
+        if (parts.length === 3) {
+            var y = parseInt(parts[2], 10);
+            if (y >= 2020 && y <= 2030) return String(y);
+        }
+        var m = dateStr.match(/20\d{2}/);
+        return m ? m[0] : null;
+    }
+
     // Parse the picks-table-body rows out of a records-page HTML string.
     // Isolates #picks-table-body first so unrelated <tr> elements can't
     // pollute the tally, then reads each row's 5 cells. Units cell is the
     // source of truth (records pages tally by units sign, not result class),
     // so added attributes or tweaked classes won't silently break sync.
+    // YEAR FILTER: Only includes rows matching WIDGET_YEAR_FILTER so the
+    // widget matches the records pages' default filterByYear() view.
     function parseRecordsPageRows(html, sportLabel) {
         var rows = new Map(); // key -> { units }
         var tbodyMatch = html.match(/<tbody[^>]*id=["']picks-table-body["'][^>]*>([\s\S]*?)<\/tbody>/i);
@@ -3844,6 +3863,9 @@ function closeEmailPopup() {
                 if (cells.length >= 5) break;
             }
             if (cells.length < 5) continue;
+            // Year filter: skip rows not matching the target year
+            var rowYear = extractYearFromDate(cells[0]);
+            if (WIDGET_YEAR_FILTER && rowYear !== WIDGET_YEAR_FILTER) continue;
             var unitsStr = cells[4].replace(/[+,]/g, '');
             var units = parseFloat(unitsStr);
             if (isNaN(units)) continue;
@@ -3900,6 +3922,9 @@ function closeEmailPopup() {
                 rows.forEach(function(row) {
                     var result = (row.Result || '').trim().toUpperCase();
                     if (!result) return;
+                    // Year filter: skip picks not matching the target year
+                    var pickYear = extractYearFromDate(row.Date || '');
+                    if (WIDGET_YEAR_FILTER && pickYear !== WIDGET_YEAR_FILTER) return;
                     var unitsVal = parseFloat((row.Units || row.ProfitLoss || '0').replace(/[+,]/g, '')) || 0;
                     var pick = (row.Pick || row.Picks || '').toLowerCase();
                     var key = (row.Date || '') + '|' + pick;
@@ -3929,6 +3954,9 @@ function closeEmailPopup() {
                     if (!sportKey) return;
                     var result = (row.Result || '').trim().toUpperCase();
                     if (!result) return;
+                    // Year filter: skip picks not matching the target year
+                    var pickYear = extractYearFromDate(row.Date || '');
+                    if (WIDGET_YEAR_FILTER && pickYear !== WIDGET_YEAR_FILTER) return;
                     var stake = row.Units || '1';
                     var odds = row.Line || row.Odds || '-110';
                     var unitsVal = calcUnits(stake, odds, result);
