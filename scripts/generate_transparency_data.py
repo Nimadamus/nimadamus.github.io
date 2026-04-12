@@ -74,6 +74,34 @@ RECORDS_LINKS = {
 }
 
 
+def normalize_date(date_str):
+    """Normalize date to M/D/YYYY format. Matches JS normalizeDate() in records pages."""
+    if not date_str:
+        return ""
+    date_str = date_str.strip()
+    parts = re.split(r"[-/]", date_str)
+    if len(parts) == 3:
+        try:
+            m = int(parts[0])
+            d = int(parts[1])
+            y_str = parts[2].strip()
+            # Strip leading zeros from year: 0206 -> 206
+            if re.match(r"^0\d+$", y_str):
+                y_str = y_str.lstrip("0")
+            y = int(y_str)
+            # Fix 3-digit year: 206 -> 2026
+            if re.match(r"^\d{3}$", y_str) and y_str.startswith("20"):
+                y = int(y_str[:2] + "2" + y_str[2:])
+            # Fix 4-digit year beyond 2030: 2926 -> 2026
+            if 2030 < y < 3000:
+                y = int("20" + str(y)[-2:])
+            if 2020 <= y <= 2030:
+                return f"{m}/{d}/{y}"
+        except (ValueError, IndexError):
+            pass
+    return date_str
+
+
 def calculate_unit_result(stake_str, odds_str, result):
     """Calculate unit profit/loss using the correct formula from CLAUDE.md."""
     try:
@@ -123,14 +151,7 @@ def fetch_pick_tracker_picks():
         if not result:
             continue
 
-        date = (row.get("Date", "") or "").strip()
-        # Fix known date typos - normalize any non-2025/2026 year to 2026
-        parts = re.split(r'[/\-]', date)
-        if len(parts) == 3:
-            yr = parts[2]
-            if yr not in ('2025', '2026') and len(yr) >= 4:
-                parts[2] = '2026'
-                date = '/'.join(parts)
+        date = normalize_date((row.get("Date", "") or "").strip())
         pick = (row.get("Pick", "") or row.get("Picks", "") or "").strip().lower()
         stake = row.get("Units", "") or "3"
         odds = row.get("Line", "") or row.get("Odds", "") or "-110"
@@ -171,7 +192,7 @@ def parse_html_records_page(filepath, tracker_picks=None):
     last_date = None
 
     for match in row_pattern.finditer(html):
-        date_str = match.group(1).strip()
+        date_str = normalize_date(match.group(1).strip())
         pick_str = match.group(2).strip().lower()
         result = match.group(4).upper()
         units_str = match.group(5).strip()
@@ -187,33 +208,37 @@ def parse_html_records_page(filepath, tracker_picks=None):
         if last_date is None and date_str:
             last_date = date_str
 
-    # Merge Pick Tracker picks (tracker takes precedence for duplicates,
-    # and adds picks that aren't in the static HTML)
+    # Merge Pick Tracker picks: only ADD picks not already in the static HTML.
+    # This matches the JS behavior in the records pages (which skip duplicates
+    # rather than overwriting), so the widget and records page stay in sync.
     if tracker_picks:
         new_count = 0
         for key, (result, units) in tracker_picks.items():
             if key not in merged:
+                merged[key] = (result, units)
                 new_count += 1
-            merged[key] = (result, units)
-            # Update last_date if tracker has newer picks
-            tracker_date = key.split("|")[0]
-            if tracker_date and (last_date is None):
-                last_date = tracker_date
+                tracker_date = key.split("|")[0]
+                if tracker_date and (last_date is None):
+                    last_date = tracker_date
         if new_count:
             print(f"  Merged {new_count} new picks from Pick Tracker")
 
-    # Calculate totals from merged data
+    # Calculate totals from merged data.
+    # IMPORTANT: classify W/L/P by units value (matches the JS logic in the
+    # records pages: units > 0 = W, units < 0 = L, units == 0 = P). Using
+    # the result column can diverge from units and cause the widget and
+    # records page to show different records.
     wins = 0
     losses = 0
     pushes = 0
     total_units = 0.0
 
     for key, (result, units) in merged.items():
-        if result == "W":
+        if units > 0:
             wins += 1
-        elif result == "L":
+        elif units < 0:
             losses += 1
-        elif result == "P":
+        else:
             pushes += 1
         total_units += units
 
