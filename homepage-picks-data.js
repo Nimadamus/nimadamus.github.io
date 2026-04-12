@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Mammoth/Flames UNDER 6 (-110)",
+        date: "April 12, 2026",
+        result: "",
+        url: "mammoth-flames-under-6-saddledome-calgary-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/c1c01ufph2bsqfq0npsu.jpg"
+    },
+    {
         sport: "MLB",
         title: "Giants ML -114 at Orioles (3u)",
         date: "April 11, 2026",
