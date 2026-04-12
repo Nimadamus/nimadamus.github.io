@@ -3896,54 +3896,64 @@ function closeEmailPopup() {
     function fetchLiveRecords() {
         if (typeof TRANSPARENCY_DATA === 'undefined') return;
 
-        // For each non-MLB sport that has a records page, we replicate exactly
-        // what that page does on load:
-        //   1. Seed from the static <tr> rows baked into the records HTML
-        //   2. Merge in any Pick Tracker rows not already in the seed
-        //   3. Tally by units sign (W/L/P) - same formula as filterByYear()
-        // This keeps the widget in lockstep with the records pages without
-        // needing the Python cron job to have re-run.
-        var RECORDS_SPORTS = {
-            'NHL':   'nhl-records.html',
-            'NFL':   'nfl-records.html',
-            'NCAAF': 'ncaaf-records.html',
-            'NCAAB': 'ncaab-records.html'
+        // Fetch from the SAME Google Sheets the records pages use.
+        // No HTML parsing, no CDN caching issues. Same source = same numbers.
+        var SPORT_SHEETS = {
+            'NHL':   null,  // NHL uses HTML tbody + Pick Tracker (no dedicated sheet)
+            'NFL':   null,  // NFL uses HTML tbody + Pick Tracker (no dedicated sheet)
+            'NCAAF': null,  // NCAAF uses HTML tbody + Pick Tracker (no dedicated sheet)
+            'NCAAB': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv',
+            'MLB':   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv'
         };
 
-        var sportPicks = {}; // sport -> Map(key -> { units })
-        Object.keys(RECORDS_SPORTS).forEach(function(s) { sportPicks[s] = new Map(); });
+        // Sports that need HTML tbody for historical picks (no dedicated sheet)
+        var HTML_SPORTS = {
+            'NHL':   'nhl-records.html',
+            'NFL':   'nfl-records.html',
+            'NCAAF': 'ncaaf-records.html'
+        };
 
-        // Parallel fetch: MLB public sheet, Pick Tracker, and each records page HTML
-        var mlbDone = fetch(MLB_SHEET_URL + '&cache=' + Date.now(), { cache: 'no-store' })
-            .then(function(r) { return r.text(); })
-            .then(function(csv) {
-                var rows = parseWidgetCSV(csv);
-                if (!sportPicks['MLB']) sportPicks['MLB'] = new Map();
-                rows.forEach(function(row) {
-                    var result = (row.Result || '').trim().toUpperCase();
-                    if (!result) return;
-                    // Year filter: skip picks not matching the target year
-                    var pickYear = extractYearFromDate(row.Date || '');
-                    if (WIDGET_YEAR_FILTER && pickYear !== WIDGET_YEAR_FILTER) return;
-                    var unitsVal = parseFloat((row.Units || row.ProfitLoss || '0').replace(/[+,]/g, '')) || 0;
-                    var pick = (row.Pick || row.Picks || '').toLowerCase();
-                    var key = (row.Date || '') + '|' + pick;
-                    if (!sportPicks['MLB'].has(key)) {
-                        sportPicks['MLB'].set(key, { units: unitsVal });
-                    }
-                });
-            }).catch(function() {});
+        var sportPicks = {};
+        Object.keys(SPORT_SHEETS).forEach(function(s) { sportPicks[s] = new Map(); });
 
-        var recordsDone = Object.keys(RECORDS_SPORTS).map(function(sport) {
-            return fetch(RECORDS_SPORTS[sport], { cache: 'no-store' })
+        var fetches = [];
+
+        // 1. Fetch sport-specific Google Sheets (same URLs the records pages use)
+        Object.keys(SPORT_SHEETS).forEach(function(sport) {
+            var sheetUrl = SPORT_SHEETS[sport];
+            if (!sheetUrl) return;
+            var p = fetch(sheetUrl + '&cache=' + Date.now(), { cache: 'no-store' })
+                .then(function(r) { return r.text(); })
+                .then(function(csv) {
+                    var rows = parseWidgetCSV(csv);
+                    rows.forEach(function(row) {
+                        var result = (row.Result || '').trim().toUpperCase();
+                        if (!result) return;
+                        if (!result.match(/^[WLP]/)) return;
+                        var unitsVal = parseFloat((row.Units || row.ProfitLoss || '0').replace(/[+,]/g, '')) || 0;
+                        var pick = (row.Pick || row.Picks || '').toLowerCase();
+                        var key = (row.Date || '') + '|' + pick;
+                        if (!sportPicks[sport].has(key)) {
+                            sportPicks[sport].set(key, { units: unitsVal });
+                        }
+                    });
+                }).catch(function(e) { console.warn('[widget-sync] ' + sport + ' sheet fetch failed:', e); });
+            fetches.push(p);
+        });
+
+        // 2. Fetch HTML tbody for sports without dedicated sheets (NHL, NFL, NCAAF)
+        Object.keys(HTML_SPORTS).forEach(function(sport) {
+            var p = fetch(HTML_SPORTS[sport] + '?v=' + Date.now(), { cache: 'no-store' })
                 .then(function(r) { return r.text(); })
                 .then(function(html) {
                     var seeded = parseRecordsPageRows(html, sport);
                     seeded.forEach(function(v, k) { sportPicks[sport].set(k, v); });
-                }).catch(function() {});
+                }).catch(function(e) { console.warn('[widget-sync] ' + sport + ' HTML fetch failed:', e); });
+            fetches.push(p);
         });
 
-        var trackerDone = fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), { cache: 'no-store' })
+        // 3. Fetch Pick Tracker (supplements ALL sports with recent graded picks)
+        var trackerP = fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), { cache: 'no-store' })
             .then(function(r) { return r.text(); })
             .then(function(csv) {
                 var rows = parseWidgetCSV(csv);
@@ -3954,24 +3964,21 @@ function closeEmailPopup() {
                     if (!sportKey) return;
                     var result = (row.Result || '').trim().toUpperCase();
                     if (!result) return;
-                    // Year filter: skip picks not matching the target year
-                    var pickYear = extractYearFromDate(row.Date || '');
-                    if (WIDGET_YEAR_FILTER && pickYear !== WIDGET_YEAR_FILTER) return;
                     var stake = row.Units || '1';
                     var odds = row.Line || row.Odds || '-110';
                     var unitsVal = calcUnits(stake, odds, result);
                     var pick = (row.Pick || row.Picks || '').toLowerCase();
                     var key = (row.Date || '') + '|' + pick;
                     if (!sportPicks[sportKey]) sportPicks[sportKey] = new Map();
-                    // Only ADD picks not already in the seeded HTML - same dedup
-                    // order the records pages use (static rows take precedence).
                     if (!sportPicks[sportKey].has(key)) {
                         sportPicks[sportKey].set(key, { units: unitsVal });
                     }
                 });
-            }).catch(function() {});
+            }).catch(function(e) { console.warn('[widget-sync] Pick Tracker fetch failed:', e); });
+        fetches.push(trackerP);
 
-        Promise.all([mlbDone, trackerDone].concat(recordsDone)).then(function() {
+        // 4. When all fetches complete, tally and update widget
+        Promise.all(fetches).then(function() {
             var changed = false;
             var data = TRANSPARENCY_DATA.sports;
 
