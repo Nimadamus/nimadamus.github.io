@@ -361,21 +361,34 @@ def extract_game_data(page_content):
         data['home_name'] = data['home_abbr']
         data['home_logo_id'] = data['home_abbr'].lower()
 
-    # Team short names from title: "NBA: Lakers @ Bulls - ..." or "Team at Team Analysis..."
+    # Team short names from title. Supported formats:
+    #   "NBA: Lakers @ Bulls - ..."
+    #   "Lakers at Bulls Analysis..."
+    #   "Lakers vs Bulls Analysis..."
+    #   "Suns vs Lakers NBA Preview April 10 2026 | BetLegend"
+    # Try the subtitle pattern too: <p class="subtitle">NBA Regular Season - Phoenix Suns vs Los Angeles Lakers</p>
+    matched = False
     name_match = re.search(r'<title>\s*\w+:\s*(.+?)\s*@\s*(.+?)\s*-', page_content)
     if name_match:
         data['away_name'] = name_match.group(1).strip()
         data['home_name'] = name_match.group(2).strip()
-    else:
-        # Try "Team at Team" format from keyword-rich titles
-        name_match2 = re.search(r'<title>\s*(.+?)\s+at\s+(.+?)\s+(?:Analysis|Preview|Prediction)', page_content, re.IGNORECASE)
-        if name_match2:
-            data['away_name'] = name_match2.group(1).strip()
-            data['home_name'] = name_match2.group(2).strip()
-        elif data['away_name'] == data['away_abbr']:
-            # Names weren't set by NCAAB conversion either - last resort
-            data['away_name'] = data['away_abbr']
-            data['home_name'] = data['home_abbr']
+        matched = True
+    if not matched:
+        nm = re.search(r'<title>\s*(.+?)\s+(?:at|vs\.?|@)\s+(.+?)\s+(?:NBA|NHL|NFL|MLB|NCAAB|NCAAF|Soccer|Analysis|Preview|Prediction)', page_content, re.IGNORECASE)
+        if nm:
+            data['away_name'] = nm.group(1).strip()
+            data['home_name'] = nm.group(2).strip()
+            matched = True
+    if not matched:
+        nm = re.search(r'class="subtitle"[^>]*>\s*[^<]*?-\s*([^<]+?)\s+(?:vs\.?|at|@)\s+([^<]+?)\s*</', page_content, re.IGNORECASE)
+        if nm:
+            # Subtitle uses full city+team; keep just the last 1-2 words as short name
+            data['away_name'] = nm.group(1).strip().split()[-1]
+            data['home_name'] = nm.group(2).strip().split()[-1]
+            matched = True
+    if not matched and data.get('away_name') == data['away_abbr']:
+        data['away_name'] = data['away_abbr']
+        data['home_name'] = data['home_abbr']
 
     # Team records: look for (XX-XX) or (XX-XX-XX) patterns
     records = re.findall(r'\((\d+-\d+(?:-\d+)?)\)', page_content)
@@ -397,9 +410,9 @@ def extract_game_data(page_content):
     else:
         data['away_spread'] = f"{data['away_abbr']} PK"
 
-    # Total (O/U)
+    # Total (O/U) — may be labelled "Total", "Over/Under", or "O/U"
     total_match = re.search(
-        r'Total</div>.*?class="line-value">\s*([^<]+?)\s*</div>',
+        r'(?:Total|Over/Under|O/U)</div>.*?class="line-value">\s*([^<]+?)\s*</div>',
         page_content, re.DOTALL | re.IGNORECASE
     )
     data['total'] = total_match.group(1).strip() if total_match else 'O/U TBD'
@@ -414,90 +427,100 @@ def extract_game_data(page_content):
     else:
         data['moneyline'] = f"{data['away_abbr']} TBD | {data['home_abbr']} TBD"
 
-    # Extract injuries from the featured game page
-    # Look for injury section patterns
-    data['away_injuries'] = 'Check injury report'
-    data['home_injuries'] = 'Check injury report'
+    # Extract injuries from the featured game page.
+    # The canonical pattern in our featured pages is:
+    #   <div class="player-name"><span class="injury-alert">NAME - STATUS (Injury)</span></div>
+    # These sit inside team-card blocks. Split on team-card boundaries so we can
+    # attribute each injury to the right team. First team-card = away (post 2025
+    # convention); second = home.
+    def _clean_injury_text(txt, limit=90):
+        txt = re.sub(r'\s+', ' ', txt).strip().rstrip(',')
+        return txt[:limit]
 
-    # Try to find injury data in the featured game page
-    # Pattern 1: Look for injury-item divs
-    injury_items = re.findall(
-        r'class="injury-item"[^>]*>.*?<span[^>]*>([^<]+)</span>.*?<span[^>]*>([^<]+)</span>',
-        page_content, re.DOTALL | re.IGNORECASE
-    )
-
-    away_injuries = []
-    home_injuries = []
-
-    # Pattern 2: Look for "Key Injuries" or "Injury Report" sections
-    injury_section = re.search(
-        r'(?:Key Injuries|Injury Report|Injuries to Watch).*?</section>',
-        page_content, re.DOTALL | re.IGNORECASE
-    )
-
-    if injury_section:
-        section_text = injury_section.group(0)
-        # Look for player names with injury status
-        # Pattern: "Player Name (injury) - Status" or "Player Name - Status (injury)"
-        injury_patterns = re.findall(
-            r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\s*[\(\-]\s*([\w\s]+?)[\)\-]\s*[\-\:]\s*(OUT|GTD|Questionable|Doubtful|Probable)',
-            section_text, re.IGNORECASE
+    def _grab_injuries(section_html):
+        items = re.findall(
+            r'<span[^>]*class="injury-alert"[^>]*>\s*([^<]+?)\s*</span>',
+            section_html, re.IGNORECASE
         )
-        for name, injury, status in injury_patterns:
-            # Determine which team based on position in section or nearby team reference
-            pass  # Complex logic needed here
+        # Filter to player-style items (contain a status token)
+        players = [i for i in items if re.search(r'\b(OUT|GTD|DAY-TO-DAY|Questionable|Doubtful|Probable|Day to Day)\b', i, re.IGNORECASE)]
+        if not players:
+            return ''
+        return _clean_injury_text(', '.join(players[:3]))
 
-    # Pattern 3: Look for simpler injury mentions
-    # "DAL: Player (injury) - OUT" or "Away Team Injuries: ..."
-    away_inj_match = re.search(
-        rf'{data["away_abbr"]}[:\s]+([^<\n]+(?:OUT|GTD|Questionable|Doubtful)[^<\n]*)',
-        page_content, re.IGNORECASE
+    away_inj = ''
+    home_inj = ''
+
+    # Split by team-card blocks. Each match is the content of one team section.
+    card_blocks = re.findall(
+        r'class="team-card[^"]*"[^>]*>(.*?)(?=class="team-card|</section>|</main>)',
+        page_content, re.DOTALL | re.IGNORECASE
     )
-    if away_inj_match:
-        data['away_injuries'] = away_inj_match.group(1).strip()[:60]  # Limit length
+    if len(card_blocks) >= 2:
+        away_inj = _grab_injuries(card_blocks[0])
+        home_inj = _grab_injuries(card_blocks[1])
 
-    home_inj_match = re.search(
-        rf'{data["home_abbr"]}[:\s]+([^<\n]+(?:OUT|GTD|Questionable|Doubtful)[^<\n]*)',
-        page_content, re.IGNORECASE
-    )
-    if home_inj_match:
-        data['home_injuries'] = home_inj_match.group(1).strip()[:60]
+    # Fallback: grab all injury-alert player rows on the page and split in half
+    if not away_inj and not home_inj:
+        all_items = re.findall(
+            r'<span[^>]*class="injury-alert"[^>]*>\s*([^<]+?)\s*</span>',
+            page_content, re.IGNORECASE
+        )
+        players = [i for i in all_items if re.search(r'\b(OUT|GTD|DAY-TO-DAY|Questionable|Doubtful|Probable)\b', i, re.IGNORECASE)]
+        if players:
+            mid = max(1, len(players) // 2)
+            away_inj = _clean_injury_text(', '.join(players[:mid]))
+            home_inj = _clean_injury_text(', '.join(players[mid:mid+3]))
 
-    # Game details: "Monday, January 26, 2026 | 8:00 PM ET | United Center, Chicago | ESPN"
+    data['away_injuries'] = away_inj or 'Check injury report'
+    data['home_injuries'] = home_inj or 'Check injury report'
+
+    # Game details: pipe-separated. Order varies — detect each part by shape.
+    # Examples seen:
+    #   "Monday, January 26, 2026 | 8:00 PM ET | United Center, Chicago | ESPN"
+    #   "Friday, April 10, 2026 | 10:30 PM ET | Crypto.com Arena, Los Angeles, CA"
+    #   "8:00 PM ET | United Center | ESPN"
     details_match = re.search(r'class="game-details">\s*([^<]+?)\s*</div>', page_content)
+    data['time'] = '7:00 PM ET'
+    data['venue'] = ''
+    data['network'] = ''
+    data['short_date'] = 'Today'
     if details_match:
         details = details_match.group(1).strip()
-        parts = [p.strip() for p in details.split('|')]
-
-        if len(parts) >= 4:
-            date_str = parts[0]
-            data['time'] = parts[1]
-            # Venue: take name only, strip city after comma
-            venue_full = parts[2]
-            data['venue'] = venue_full.split(',')[0].strip()
-            data['network'] = parts[3]
-
-            # Short date: "January 26" from "Monday, January 26, 2026"
-            month_match = re.search(
-                r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d+',
-                date_str
-            )
-            data['short_date'] = month_match.group(0) if month_match else date_str
-        elif len(parts) >= 3:
-            data['time'] = parts[0]
-            data['venue'] = parts[1].split(',')[0].strip()
-            data['network'] = parts[2]
-            data['short_date'] = 'Today'
-        else:
-            data['time'] = '7:00 PM ET'
-            data['venue'] = 'TBD'
-            data['network'] = 'TBD'
-            data['short_date'] = 'Today'
-    else:
-        data['time'] = '7:00 PM ET'
+        parts = [p.strip() for p in details.split('|') if p.strip()]
+        month_re = r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d+'
+        time_re = r'\b\d{1,2}:\d{2}\s*(?:AM|PM)\s*ET\b'
+        network_tokens = (
+            'ESPN', 'ABC', 'NBC', 'CBS', 'FOX', 'TBS', 'TNT', 'USA', 'MLB Network',
+            'NBA TV', 'NHL Network', 'NFL Network', 'Peacock', 'Paramount', 'Prime',
+            'Apple TV', 'Hulu', 'Max', 'ESPN+', 'FS1', 'FS2', 'BTN', 'SECN',
+        )
+        used = set()
+        for i, p in enumerate(parts):
+            # Date part
+            m = re.search(month_re, p)
+            if m and 'date' not in used:
+                data['short_date'] = m.group(0)
+                used.add('date')
+                continue
+            # Time part
+            if re.search(time_re, p, re.IGNORECASE) and 'time' not in used:
+                data['time'] = re.search(time_re, p, re.IGNORECASE).group(0)
+                used.add('time')
+                continue
+            # Network part (exact token match, case-insensitive)
+            if any(tok.lower() == p.lower() or p.lower().startswith(tok.lower() + ' ') for tok in network_tokens) and 'network' not in used:
+                data['network'] = p
+                used.add('network')
+                continue
+            # Otherwise treat as venue (keep first one)
+            if 'venue' not in used:
+                data['venue'] = p.split(',')[0].strip()
+                used.add('venue')
+    if not data.get('venue'):
         data['venue'] = 'TBD'
-        data['network'] = 'TBD'
-        data['short_date'] = 'Today'
+    if not data.get('network'):
+        data['network'] = ''
 
     # Team colors
     away_primary, away_accent = get_team_colors(data['sport'], data['away_abbr'])
@@ -512,40 +535,137 @@ def extract_game_data(page_content):
 def generate_preview_html(data, page_filename):
     """Generate the Featured Game preview HTML for index.html.
 
-    IMPORTANT: This must match the exact structure in index.html:
-    1. Header Banner - Matchup Info
-    2. Betting Lines Table
-    3. Betting Trends (Records)
-    4. Injuries
-    5. Link to Featured Game Page (View Full Breakdown)
-    6. Subscribe to Premium Button
-    7. Affiliate Banner (YouWager)
+    Emits the fg-* markup (matching the current homepage structure) that
+    sits between <!-- FEATURED-GAME-PREVIEW-START --> and
+    <!-- FEATURED-GAME-PREVIEW-END -->.
     """
-    # Parse spread to get numbers
-    away_spread = data.get('away_spread', 'PK')
-    # Try to extract numeric spread for home team (opposite sign)
-    spread_num = re.search(r'([+-]?\d+\.?\d*)', away_spread)
+    # Parse away spread. extract_game_data returns e.g. "PHX -2.5" or "-2.5".
+    away_spread_raw = data.get('away_spread', 'PK')
+    spread_num = re.search(r'([+-]?\d+\.?\d*)', away_spread_raw)
     if spread_num:
         away_spread_val = float(spread_num.group(1))
         home_spread_val = -away_spread_val
-        home_spread = f"+{home_spread_val}" if home_spread_val > 0 else str(home_spread_val)
-        away_spread_display = f"+{abs(away_spread_val)}" if away_spread_val > 0 else f"-{abs(away_spread_val)}"
+        home_spread = f"+{home_spread_val}" if home_spread_val > 0 else f"{home_spread_val}"
+        away_spread_display = f"+{away_spread_val}" if away_spread_val > 0 else f"{away_spread_val}"
     else:
         away_spread_display = "PK"
         home_spread = "PK"
 
-    # Parse moneyline
+    # Parse moneyline — value like "PHX -142 | LAL +120" or "-142 | +120"
     ml_parts = data.get('moneyline', '').split('|')
-    away_ml = ml_parts[0].strip().split()[-1] if ml_parts else '-110'
-    home_ml = ml_parts[1].strip().split()[-1] if len(ml_parts) > 1 else '+100'
+    def _extract_ml(token, default):
+        token = token.strip()
+        m = re.search(r'([+-]\d+)', token)
+        return m.group(1) if m else default
+    away_ml = _extract_ml(ml_parts[0], '-110') if ml_parts else '-110'
+    home_ml = _extract_ml(ml_parts[1], '+100') if len(ml_parts) > 1 else '+100'
 
-    # Parse total
-    total = data.get('total', 'O/U 220').replace('O/U ', '')
+    # Parse total — "O/U 218.5" -> "218.5"
+    total_raw = data.get('total', 'O/U TBD')
+    total_num_match = re.search(r'(\d+\.?\d*)', total_raw)
+    total = total_num_match.group(1) if total_num_match else 'TBD'
 
     # Use logo IDs for ESPN URLs (numeric for college, abbreviation for pro)
     away_logo = data.get('away_logo_id', data['away_abbr'].lower())
     home_logo = data.get('home_logo_id', data['home_abbr'].lower())
 
+    # Header badge time: prefer the ET time string, fall back
+    time_badge = data.get('time', '').strip() or 'TBD'
+
+    # Venue line under matchup — "April 10 | Crypto.com Arena | NBA Regular Season"
+    venue_bits = [data.get('short_date', '').strip()]
+    if data.get('venue'):
+        venue_bits.append(data['venue'])
+    venue_bits.append(f"{data['sport']} Regular Season")
+    venue_line = ' | '.join([b for b in venue_bits if b])
+
+    away_inj = (data.get('away_injuries') or 'Check injury report').strip()
+    home_inj = (data.get('home_injuries') or 'Check injury report').strip()
+
+    return f'''<!-- FEATURED-GAME-PREVIEW-START (auto-synced by scripts/sync_featured_game_preview.py) -->
+                    <!-- Header Banner -->
+                    <div class="fg-header">
+                        <div class="fg-header-top">
+                            <span class="fg-header-label">Today's Featured Game</span>
+                            <span class="fg-time-badge">{data['sport']} {time_badge}</span>
+                        </div>
+                        <div class="fg-matchup">
+                            <div class="fg-team">
+                                <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{away_logo}.png" alt="{data['away_name']}">
+                                <div class="fg-team-name">{data['away_name']}</div>
+                                <div class="fg-team-record">({data['away_record']})</div>
+                            </div>
+                            <div class="fg-vs">@</div>
+                            <div class="fg-team">
+                                <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{home_logo}.png" alt="{data['home_name']}">
+                                <div class="fg-team-name">{data['home_name']}</div>
+                                <div class="fg-team-record">({data['home_record']})</div>
+                            </div>
+                        </div>
+                        <div class="fg-venue">{venue_line}</div>
+                    </div>
+
+                    <!-- Betting Lines Table -->
+                    <div class="fg-lines">
+                        <table>
+                            <thead>
+                                <tr style="border-bottom: 2px solid rgba(239,97,0,0.5);">
+                                    <th style="text-align: left;">Team</th>
+                                    <th>Spread</th>
+                                    <th>ML</th>
+                                    <th>O/U</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                    <td class="fg-team-cell"><img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{away_logo}.png" alt="{data['away_abbr']}"><span>{data['away_abbr']}</span></td>
+                                    <td class="{'fg-fav' if away_spread_display.startswith('-') else 'fg-dog'}">{away_spread_display}</td>
+                                    <td class="{'fg-fav' if away_ml.startswith('-') else 'fg-dog'}">{away_ml}</td>
+                                    <td style="color: #fff; font-weight: 600; font-size: 0.9rem;">O {total}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fg-team-cell"><img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{home_logo}.png" alt="{data['home_abbr']}"><span>{data['home_abbr']}</span></td>
+                                    <td class="{'fg-fav' if home_spread.startswith('-') else 'fg-dog'}">{home_spread}</td>
+                                    <td class="{'fg-fav' if home_ml.startswith('-') else 'fg-dog'}">{home_ml}</td>
+                                    <td style="color: #fff; font-weight: 600; font-size: 0.9rem;">U {total}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Records -->
+                    <div class="fg-records-bar">
+                        <div class="fg-records-label">Records</div>
+                        <div class="fg-records-row">
+                            <div><span class="fg-team-tag">{data['away_abbr']}:</span> {data['away_record']} SU</div>
+                            <div><span class="fg-team-tag">{data['home_abbr']}:</span> {data['home_record']} SU</div>
+                        </div>
+                    </div>
+
+                    <!-- Injuries -->
+                    <div class="fg-injuries-bar">
+                        <div class="fg-injuries-label">Key Injuries</div>
+                        <div class="fg-injuries-list">
+                            <div><span class="fg-team-tag">{data['away_abbr']}:</span> {away_inj}</div>
+                            <div><span class="fg-team-tag">{data['home_abbr']}:</span> {home_inj}</div>
+                        </div>
+                    </div>
+
+                    <!-- Link to Featured Game Page - NEVER DELETE -->
+                    <a href="{page_filename}" class="fg-breakdown-btn">
+                        <span>View Full Breakdown &rarr;</span>
+                    </a>
+                    <!-- FEATURED-GAME-PREVIEW-END -->'''
+
+
+def _unused_legacy_preview(data, page_filename):
+    away_logo = data.get('away_logo_id', data['away_abbr'].lower())
+    home_logo = data.get('home_logo_id', data['home_abbr'].lower())
+    away_spread_display = 'PK'
+    home_spread = 'PK'
+    away_ml = '-110'
+    home_ml = '+100'
+    total = 'TBD'
     return f'''<!-- Header Banner - Matchup Info -->
                 <div style="background: linear-gradient(135deg, {data['away_color']} 0%, {data['home_color']} 100%); padding: 14px 20px; border-bottom: 3px solid {data['away_accent']};">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -713,52 +833,40 @@ def sync_preview():
     # Generate new preview HTML
     new_preview = generate_preview_html(data, page_filename)
 
-    # Replace in index.html - updated pattern to capture through affiliate banner
-    pattern = r'<!-- Header Banner - Matchup Info -->.*?(?=\s*<!-- Social Links -->)'
+    # Replace between the stable markers
+    pattern = r'<!-- FEATURED-GAME-PREVIEW-START.*?<!-- FEATURED-GAME-PREVIEW-END -->'
 
     if not re.search(pattern, index_content, re.DOTALL):
-        print("\n  ERROR: Could not find Featured Game preview section in index.html")
-        print("  Looking for: <!-- Header Banner - Matchup Info --> ... <!-- Social Links -->")
+        print("\n  ERROR: Could not find FEATURED-GAME-PREVIEW markers in index.html")
+        print("  Add these two HTML comments around the fg-* preview block:")
+        print("    <!-- FEATURED-GAME-PREVIEW-START -->")
+        print("    <!-- FEATURED-GAME-PREVIEW-END -->")
         return False
 
     updated_content = re.sub(pattern, new_preview.rstrip(), index_content, flags=re.DOTALL)
 
-    # Verify something actually changed (or already synced)
     if updated_content == index_content:
         print("\n  Already in sync - no changes needed.")
         return True
 
-    # Write updated index.html
     with open(INDEX_PATH, 'w', encoding='utf-8') as f:
         f.write(updated_content)
 
-    # SAFETY CHECK: Verify required elements are present after write
-    required_elements = [
-        ('Subscribe to Premium', 'Subscribe button'),
-        ('View Full Breakdown', 'Full breakdown link'),
-        ('Join YouWager', 'Affiliate banner'),
-    ]
-
+    # Sanity checks on the new content
     missing = []
-
-    # Also verify the featured game link exists (old or new URL format)
-    if 'featured-game-of-the-day-page' not in updated_content and 'prediction-picks' not in updated_content and 'analysis-stats-preview' not in updated_content:
-        missing.append('Featured game page link')
-    for pattern, name in required_elements:
-        if pattern not in updated_content:
-            missing.append(name)
-
+    if 'FEATURED-GAME-PREVIEW-END' not in updated_content:
+        missing.append('End marker')
+    if page_filename not in updated_content:
+        missing.append(f'Link to {page_filename}')
+    if 'fg-breakdown-btn' not in updated_content:
+        missing.append('View Full Breakdown button')
     if missing:
         print(f"\n  ERROR: Required elements missing after sync!")
         for m in missing:
             print(f"    [MISSING] {m}")
-        print(f"\n  This is a bug in the sync script. Please report.")
         return False
 
     print(f"\n  SUCCESS: index.html preview updated to match {page_filename}")
-    print(f"  [OK] Subscribe button present")
-    print(f"  [OK] Full breakdown link present")
-    print(f"  [OK] Affiliate banner present")
     print("=" * 60)
     return True
 
