@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Wild/Blues UNDER 5.5 (-105) 3u",
+        date: "April 13, 2026",
+        result: "",
+        url: "wild-blues-under-5-5-gustavsson-hofer-enterprise-center-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/slh8fgt2yfqan3ys4vit.jpg"
+    },
+    {
         sport: "MLB",
         title: "Yankees/Angels UNDER 9.5 (-115)",
         date: "April 13, 2026",
