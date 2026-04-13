@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Yankees/Angels UNDER 9.5 (-115)",
+        date: "April 13, 2026",
+        result: "",
+        url: "yankees-angels-under-9-5-warren-kikuchi-yankee-stadium-mlb.html",
+        image: "https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_239,w_3174,h_1785/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/inside_the_pinstripes/01kk6p6ywmpepmzg6g9m.jpg"
+    },
+    {
         sport: "NHL",
         title: "Mammoth/Flames UNDER 6 (-110)",
         date: "April 12, 2026",
