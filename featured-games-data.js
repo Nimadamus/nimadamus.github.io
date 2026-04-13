@@ -138,8 +138,8 @@ const FEATURED_GAMES = [
     { date: "2026-04-07", page: "real-madrid-vs-bayern-munich-analysis-stats-preview-april-7-2026.html", title: "Real Madrid vs Bayern Munich Champions League Preview" },
     { date: "2026-04-08", page: "psg-vs-liverpool-analysis-stats-preview-april-8-2026.html", title: "PSG vs Liverpool Champions League Preview April 8 2026" },
     { date: "2026-04-10", page: "suns-vs-lakers-analysis-stats-preview-april-10-2026.html", title: "Suns vs Lakers NBA Preview April 10 2026" },
-
     { date: "2026-04-12", page: "nuggets-vs-spurs-nba-analysis-stats-preview-april-12-2026.html", title: "Nuggets vs Spurs NBA - Wembanyama Awards Eligibility Game" },
+    { date: "2026-04-13", page: "mets-vs-dodgers-analysis-stats-preview-april-13-2026.html", title: "Mets vs Dodgers MLB Preview April 13 2026" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
