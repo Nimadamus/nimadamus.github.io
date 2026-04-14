@@ -283,7 +283,21 @@ def build_stats(picks_map):
             odds_values.append(odds)
     total_picks = wins + losses + pushes
     win_pct = round((wins / (wins + losses) * 100) if (wins + losses) else 0.0, 1)
-    avg_odds = round(sum(odds_values) / len(odds_values)) if odds_values else -110
+    # Convert each American odd to implied probability, average, convert back
+    if odds_values:
+        probs = []
+        for o in odds_values:
+            if o < 0:
+                probs.append(abs(o) / (abs(o) + 100))
+            else:
+                probs.append(100 / (o + 100))
+        avg_prob = sum(probs) / len(probs)
+        if avg_prob >= 0.5:
+            avg_odds = round(-(avg_prob / (1 - avg_prob)) * 100)
+        else:
+            avg_odds = round(((1 - avg_prob) / avg_prob) * 100)
+    else:
+        avg_odds = -110
     return {
         "wins": wins,
         "losses": losses,
