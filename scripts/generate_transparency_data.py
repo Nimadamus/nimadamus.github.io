@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """
-Generate homepage transparency widget data from the same live sources that power
-the records pages.
+Generate homepage transparency widget data by reading the RECORDS PAGES directly.
 
-The homepage widget must stay in sync with:
-  - the sport-specific records pages
-  - the all-records dashboard
+The records pages are the source of truth. They contain:
+  1. Embedded HTML tables with historical picks
+  2. Some also fetch from Google Sheets for additional data
+  3. All also fetch from the Pick Tracker for recent picks
 
-To do that, this script mirrors the records-page data model:
-  1. pull each sport's historical/current Google Sheet
-  2. pull the master Pick Tracker sheet for recent picks
-  3. classify tracker picks conservatively, especially basketball
-  4. deduplicate by normalized date + pick text
-  5. write transparency-widget-data.js
+This script mirrors that exact logic:
+  1. Parse each sport's records page HTML table
+  2. For sports that also use Google Sheets (NBA, MLB, NCAAB, Soccer), fetch those too
+  3. Fetch the Pick Tracker for recent picks
+  4. Merge all three, deduplicating by date+pick
+  5. Write transparency-widget-data.js
 
 Usage:
     python scripts/generate_transparency_data.py
@@ -22,17 +22,28 @@ import csv
 import io
 import json
 import os
+import re
 import urllib.request
 from datetime import datetime
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Records pages with embedded HTML tables
+HTML_RECORDS_PAGES = {
+    "NHL": "nhl-records.html",
+    "NFL": "nfl-records.html",
+    "NCAAF": "ncaaf-records.html",
+    "NCAAB": "ncaab-records.html",
+    "MLB": "mlb-records.html",
+    "NBA": "nba-records.html",
+    "Soccer": "soccer-records.html",
+}
+
+# Google Sheets URLs - only for sports whose records pages ALSO load from sheets
+# (extracted from the GOOGLE_SHEETS_CSV_URL in each records page)
 SHEET_URLS = {
-    "NFL": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQgB4WcyyEpMBp_XI_ya6hC7Y8kRaHzrOvuLMq9voGF0nzfqi4lkmAWVb92nDkxUhLVhzr4RTWtZRxq/pub?output=csv",
     "NBA": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv",
-    "NHL": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv",
     "MLB": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv",
-    "NCAAF": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv",
     "NCAAB": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv",
     "Soccer": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv",
 }
@@ -41,6 +52,8 @@ PICK_TRACKER_URL = (
     "https://docs.google.com/spreadsheets/d/"
     "1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0"
 )
+
+ALL_SPORTS = ["NHL", "MLB", "NFL", "NBA", "NCAAF", "NCAAB", "Soccer"]
 
 DISPLAY_NAMES = {
     "NHL": "NHL",
@@ -88,13 +101,8 @@ TRACKER_LEAGUE_MAP = {
 }
 
 SPORT_DEFAULT_STAKES = {
-    "NFL": "2",
-    "NBA": "1",
-    "NHL": "3",
-    "MLB": "1",
-    "NCAAF": "3",
-    "NCAAB": "3",
-    "Soccer": "1",
+    "NFL": "2", "NBA": "1", "NHL": "3", "MLB": "1",
+    "NCAAF": "3", "NCAAB": "3", "Soccer": "1",
 }
 
 NBA_KEYWORDS = {
@@ -109,25 +117,13 @@ NBA_KEYWORDS = {
 NCAAB_KEYWORDS = {
     "duke", "uconn", "gonzaga", "kentucky", "kansas", "unc", "north carolina",
     "villanova", "purdue", "auburn", "tennessee", "alabama", "iowa state",
-    "marquette", "baylor", "creighton", "michigan state", "florida state",
-    "florida", "arizona", "st. john", "st john", "xavier", "memphis",
-    "houston cougars", "houston", "texas tech", "oregon", "wisconsin",
-    "illinois", "indiana", "cincinnati", "california", "cal", "nc state",
-    "virginia", "wake forest", "syracuse", "louisville", "pitt", "maryland",
-    "rutgers", "nebraska", "ucla", "usc", "utah", "notre dame", "ole miss",
-    "byu", "ucf", "ncaab", "cbb", "ncaa",
+    "marquette", "baylor", "creighton", "michigan state", "florida",
+    "arizona", "memphis", "houston", "texas tech", "oregon", "wisconsin",
+    "illinois", "indiana", "ncaab", "cbb", "ncaa",
 }
 
 
-def fetch_csv_rows(url):
-    req = urllib.request.Request(
-        url,
-        headers={"User-Agent": "Mozilla/5.0 (BetLegend Transparency Widget)"},
-    )
-    with urllib.request.urlopen(req, timeout=30) as response:
-        csv_text = response.read().decode("utf-8-sig")
-    return list(csv.DictReader(io.StringIO(csv_text)))
-
+# ---- Utility functions ----
 
 def safe_float(value, default=0.0):
     if value is None:
@@ -164,7 +160,6 @@ def normalize_date(date_str):
             return f"{dt.month}/{dt.day}/{dt.year}"
         except ValueError:
             continue
-
     parts = raw.replace("-", "/").split("/")
     if len(parts) == 3:
         try:
@@ -182,7 +177,6 @@ def normalize_date(date_str):
                 return f"{month}/{day}/{year}"
         except ValueError:
             pass
-
     return raw
 
 
@@ -203,12 +197,12 @@ def make_pick_key(date_str, pick_text):
 def calculate_unit_result(stake_str, odds_str, result):
     stake = safe_float(stake_str)
     odds = safe_float(odds_str, default=-110.0)
-    normalized_result = normalize_result(result)
-    if not normalized_result:
+    r = normalize_result(result)
+    if not r:
         return 0.0
-    if normalized_result == "W":
+    if r == "W":
         return stake if odds < 0 else stake * (odds / 100)
-    if normalized_result == "L":
+    if r == "L":
         return -stake * (abs(odds) / 100) if odds < 0 else -stake
     return 0.0
 
@@ -216,7 +210,7 @@ def calculate_unit_result(stake_str, odds_str, result):
 def latest_date_from_keys(picks_map):
     if not picks_map:
         return ""
-    latest_key = max(picks_map.keys(), key=lambda key: date_sort_key(key.split("|", 1)[0]))
+    latest_key = max(picks_map.keys(), key=lambda k: date_sort_key(k.split("|", 1)[0]))
     return latest_key.split("|", 1)[0]
 
 
@@ -244,17 +238,78 @@ def build_stats(picks_map):
     }
 
 
-def rows_to_pick_map(rows, units_field="Units"):
+# ---- Data source parsers ----
+
+def parse_html_table(filepath):
+    """Parse the embedded HTML table in a records page. Returns a pick map."""
+    if not os.path.exists(filepath):
+        return {}
+
+    with open(filepath, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    picks = {}
+    # Match rows like: <tr><td>4/5/2026</td><td>Pick text</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+    row_pattern = re.compile(
+        r'<tr>\s*<td[^>]*>([^<]*)</td>'   # date
+        r'\s*<td[^>]*>([^<]*)</td>'        # pick
+        r'\s*<td[^>]*>([^<]*)</td>'        # line/odds
+        r'\s*<td[^>]*[^>]*>([^<]*)</td>'   # result (W/L/P)
+        r'\s*<td[^>]*[^>]*>([^<]*)</td>'   # units
+        r'\s*</tr>',
+        re.IGNORECASE
+    )
+
+    for match in row_pattern.finditer(html):
+        date_str = match.group(1).strip()
+        pick_text = match.group(2).strip()
+        result_text = match.group(4).strip()
+        units_str = match.group(5).strip()
+
+        result = normalize_result(result_text)
+        if not result:
+            # Derive from units
+            u = safe_float(units_str)
+            if u > 0:
+                result = "W"
+            elif u < 0:
+                result = "L"
+            elif pick_text:
+                result = "P"
+            else:
+                continue
+
+        if not date_str or not pick_text:
+            continue
+
+        units = safe_float(units_str)
+        key = make_pick_key(date_str, pick_text)
+        picks[key] = (result, units)
+
+    return picks
+
+
+def fetch_csv_rows(url):
+    """Fetch CSV from a URL and return list of dicts."""
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "Mozilla/5.0 (BetLegend Transparency Widget)"},
+    )
+    with urllib.request.urlopen(req, timeout=30) as response:
+        csv_text = response.read().decode("utf-8-sig")
+    return list(csv.DictReader(io.StringIO(csv_text)))
+
+
+def sheet_rows_to_pick_map(rows):
+    """Parse Google Sheet CSV rows into a pick map."""
     picks = {}
     for row in rows:
         result = normalize_result(row.get("Result") or row.get("result"))
         if not result:
-            # Derive result from Units column if Result is missing
+            # Derive result from Units/ProfitLoss column if Result is missing
             units_val = safe_float(
-                row.get(units_field)
-                or row.get("ProfitLoss")
-                or row.get("Profit/Loss")
-                or row.get("P/L")
+                row.get("Units") or row.get("ProfitLoss")
+                or row.get("Profit/Loss") or row.get("P/L")
                 or row.get("UNIT_RESULT")
             )
             if units_val > 0:
@@ -262,35 +317,34 @@ def rows_to_pick_map(rows, units_field="Units"):
             elif units_val < 0:
                 result = "L"
             else:
-                # Check if there's actually a pick to avoid counting empty rows
-                pick_text = row.get("Pick") or row.get("Picks") or row.get("pick") or ""
-                if pick_text.strip():
+                pick_text = (row.get("Pick") or row.get("Picks") or "").strip()
+                if pick_text:
                     result = "P"
                 else:
                     continue
         if not result:
             continue
+
         date_str = row.get("Date", "")
         pick_text = row.get("Pick") or row.get("Picks") or row.get("pick") or ""
         if not date_str or not pick_text:
             continue
-        key = make_pick_key(date_str, pick_text)
+
         units = safe_float(
-            row.get(units_field)
-            or row.get("ProfitLoss")
-            or row.get("Profit/Loss")
-            or row.get("P/L")
+            row.get("Units") or row.get("ProfitLoss")
+            or row.get("Profit/Loss") or row.get("P/L")
             or row.get("UNIT_RESULT")
         )
+        key = make_pick_key(date_str, pick_text)
         picks[key] = (result, units)
     return picks
 
 
 def detect_basketball_sport(row):
     pick_text = (row.get("Pick") or row.get("Picks") or "").lower()
-    if any(keyword in pick_text for keyword in NBA_KEYWORDS):
+    if any(kw in pick_text for kw in NBA_KEYWORDS):
         return "NBA"
-    if any(keyword in pick_text for keyword in NCAAB_KEYWORDS):
+    if any(kw in pick_text for kw in NCAAB_KEYWORDS):
         return "NCAAB"
     return None
 
@@ -301,13 +355,10 @@ def detect_tracker_sport(row):
 
     if league == "cross-sport":
         return None
-
     if league in TRACKER_LEAGUE_MAP:
         return TRACKER_LEAGUE_MAP[league]
-
     if sport == "basketball" or league == "basketball" or league == "basetball":
         return detect_basketball_sport(row)
-
     if sport == "football":
         return "NFL"
     if sport == "hockey":
@@ -316,18 +367,24 @@ def detect_tracker_sport(row):
         return "MLB"
     if sport == "soccer":
         return "Soccer"
-
     return None
 
 
-def tracker_rows_to_pick_maps(rows):
-    sport_maps = {sport: {} for sport in SHEET_URLS}
-    skipped_ambiguous = 0
+def fetch_tracker_pick_maps():
+    """Fetch Pick Tracker and return per-sport pick maps."""
+    sport_maps = {sport: {} for sport in ALL_SPORTS}
+    skipped = 0
+
+    try:
+        rows = fetch_csv_rows(PICK_TRACKER_URL)
+    except Exception as e:
+        print(f"  WARNING: Could not fetch Pick Tracker: {e}")
+        return sport_maps, 0
 
     for row in rows:
         sport = detect_tracker_sport(row)
         if not sport:
-            skipped_ambiguous += 1
+            skipped += 1
             continue
 
         result = normalize_result(row.get("Result"))
@@ -345,50 +402,98 @@ def tracker_rows_to_pick_maps(rows):
         key = make_pick_key(date_str, pick_text)
         sport_maps[sport][key] = (result, units)
 
-    return sport_maps, skipped_ambiguous
+    return sport_maps, skipped
 
+
+# ---- Main ----
 
 def main():
-    print("Fetching sport sheets...")
-    sheet_pick_maps = {}
-    for sport, url in SHEET_URLS.items():
-        rows = fetch_csv_rows(url)
-        pick_map = rows_to_pick_map(rows)
-        sheet_pick_maps[sport] = pick_map
+    # STEP 1: Parse HTML tables from records pages (primary source of truth)
+    print("Step 1: Parsing records page HTML tables...")
+    html_picks = {}
+    for sport, filename in HTML_RECORDS_PAGES.items():
+        filepath = os.path.join(REPO_ROOT, filename)
+        pick_map = parse_html_table(filepath)
+        html_picks[sport] = pick_map
         stats = build_stats(pick_map)
         print(
-            f"  {sport}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
-            f"Units: {stats['totalUnits']:+.2f} | Picks: {stats['totalPicks']}"
+            f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
+            f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} picks from HTML"
         )
 
-    print("Fetching Pick Tracker...")
-    tracker_rows = fetch_csv_rows(PICK_TRACKER_URL)
-    tracker_maps, skipped_ambiguous = tracker_rows_to_pick_maps(tracker_rows)
-    if skipped_ambiguous:
-        print(f"  Skipped {skipped_ambiguous} ambiguous tracker rows")
+    # STEP 2: Fetch Google Sheets for sports that also use them
+    print("\nStep 2: Fetching Google Sheets (for sports that use them)...")
+    sheet_picks = {}
+    for sport, url in SHEET_URLS.items():
+        try:
+            rows = fetch_csv_rows(url)
+            pick_map = sheet_rows_to_pick_map(rows)
+            sheet_picks[sport] = pick_map
+            stats = build_stats(pick_map)
+            print(
+                f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
+                f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} picks from Sheet"
+            )
+        except Exception as e:
+            print(f"  {sport:8s}: ERROR fetching sheet - {e}")
+            sheet_picks[sport] = {}
 
+    # STEP 3: Fetch Pick Tracker
+    print("\nStep 3: Fetching Pick Tracker...")
+    tracker_picks, skipped = fetch_tracker_pick_maps()
+    if skipped:
+        print(f"  Skipped {skipped} ambiguous tracker rows")
+    for sport in ALL_SPORTS:
+        count = len(tracker_picks.get(sport, {}))
+        if count:
+            print(f"  {sport:8s}: {count} picks from Tracker")
+
+    # STEP 4: Merge all three sources (HTML first, then Sheet, then Tracker)
+    # Duplicates are resolved by key (date+pick) - later sources overwrite earlier
+    # This matches how the records pages work: HTML table is base, Sheet adds more,
+    # Tracker adds the most recent picks
+    print("\nStep 4: Merging all sources...")
     combined_data = {}
-    for sport in SHEET_URLS:
-        combined = dict(sheet_pick_maps.get(sport, {}))
-        for key, value in tracker_maps.get(sport, {}).items():
-            combined[key] = value
-        stats = build_stats(combined)
+    for sport in ALL_SPORTS:
+        merged = {}
+
+        # Start with HTML table data
+        merged.update(html_picks.get(sport, {}))
+        html_count = len(merged)
+
+        # Add Sheet data (won't overwrite existing HTML entries with same key)
+        sheet_data = sheet_picks.get(sport, {})
+        for key, value in sheet_data.items():
+            if key not in merged:
+                merged[key] = value
+        sheet_added = len(merged) - html_count
+
+        # Add Tracker data (won't overwrite existing entries with same key)
+        tracker_data = tracker_picks.get(sport, {})
+        pre_tracker = len(merged)
+        for key, value in tracker_data.items():
+            if key not in merged:
+                merged[key] = value
+        tracker_added = len(merged) - pre_tracker
+
+        stats = build_stats(merged)
         combined_data[sport] = {
             "displayName": DISPLAY_NAMES[sport],
             "recordsLink": RECORDS_LINKS[sport],
             **stats,
         }
-        tracker_added = max(0, len(combined) - len(sheet_pick_maps.get(sport, {})))
         print(
-            f"  {sport} merged: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
-            f"Units: {stats['totalUnits']:+.2f} | Picks: {stats['totalPicks']} | "
-            f"Tracker additions: {tracker_added}"
+            f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
+            f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} total "
+            f"(HTML:{html_count} +Sheet:{sheet_added} +Tracker:{tracker_added})"
         )
 
+    # STEP 5: Write JS file
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     js_content = (
         f"// Auto-generated by scripts/generate_transparency_data.py\n"
         f"// Last updated: {now}\n"
+        f"// Source: records page HTML tables + Google Sheets + Pick Tracker\n"
         f"// DO NOT EDIT MANUALLY - run the script to regenerate\n\n"
         f"const TRANSPARENCY_DATA = {{\n"
         f"  lastUpdated: \"{now}\",\n"
