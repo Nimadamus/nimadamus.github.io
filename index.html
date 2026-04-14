@@ -3646,6 +3646,8 @@ function closeEmailPopup() {
     var activeTab = 0;
     var switching = false;
 
+    function formatUnits(val) { return (val >= 0 ? '+' : '') + val.toFixed(1); }
+
     /* ---- Build tabbed panels from data ---- */
     function buildTabs(data) {
         var tabsEl = document.getElementById('rw-tabs');
@@ -3657,6 +3659,7 @@ function closeEmailPopup() {
             var s = data[key];
             if (!s) return;
             var isActive = i === activeTab ? ' active' : '';
+            var unitsClass = s.totalUnits >= 0 ? 'pos' : 'neg';
 
             tabsHTML += '<button class="rw-tab' + isActive + '" data-index="' + i + '">' + key + '</button>';
 
@@ -3676,6 +3679,7 @@ function closeEmailPopup() {
                         '</button>' +
                     '</div>' +
                     '<div class="rw-stats">' +
+                        '<div class="rw-stat"><div class="rw-stat-value ' + unitsClass + '">' + formatUnits(s.totalUnits) + '</div><div class="rw-stat-label">Units</div></div>' +
                         '<div class="rw-stat"><div class="rw-stat-value rate">' + s.winPct + '%</div><div class="rw-stat-label">Win Rate</div></div>' +
                         '<div class="rw-stat"><div class="rw-stat-value count">' + s.totalPicks + '</div><div class="rw-stat-label">Total Picks</div></div>' +
                     '</div>' +
@@ -3731,15 +3735,16 @@ function closeEmailPopup() {
         var l = record ? record.querySelector('.l') : null;
         var p = record ? record.querySelector('.p') : null;
         var recordStr = (w ? w.textContent : '0') + '-' + (l ? l.textContent : '0') + '-' + (p ? p.textContent : '0');
-        var winRate = '';
+        var units = '', winRate = '';
         stats.forEach(function(s) {
             var label = s.querySelector('.rw-stat-label');
             var val = s.querySelector('.rw-stat-value');
             if (!label || !val) return;
             var lt = label.textContent.trim().toLowerCase();
+            if (lt === 'units') units = val.textContent.trim();
             if (lt === 'win rate') winRate = val.textContent.trim();
         });
-        var text = '\uD83D\uDD25 BetLegend ' + leagueName + ' Record: ' + recordStr + ' (' + winRate + ' Win Rate) \u2014 Verified at betlegendpicks.com';
+        var text = '\uD83D\uDD25 BetLegend ' + leagueName + ' Record: ' + recordStr + ' (' + units + ' Units | ' + winRate + ' WR) \u2014 Verified at betlegendpicks.com';
         navigator.clipboard.writeText(text).then(function() {
             btn.classList.add('copied');
             setTimeout(function() { btn.classList.remove('copied'); }, 2000);
