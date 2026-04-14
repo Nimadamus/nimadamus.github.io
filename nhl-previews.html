@@ -184,6 +184,16 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 
 <script src="scripts/nhl-calendar.js?v=20260413"></script>
 <script>
+// Auto-redirect to latest daily page
+if (typeof ARCHIVE_DATA !== 'undefined' && ARCHIVE_DATA.length > 0) {
+    var latestPage = ARCHIVE_DATA[0].page;
+    var currentPage = window.location.pathname.split('/').pop();
+    if (latestPage && latestPage !== currentPage) {
+        window.location.replace('/' + latestPage);
+    }
+}
+</script>
+<script>
 document.querySelectorAll('.dropdown').forEach(d=>{d.addEventListener('click',function(e){if(window.innerWidth<=768){e.stopPropagation();this.classList.toggle('active')}})});
 document.addEventListener('click',()=>document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('active')));
 </script>

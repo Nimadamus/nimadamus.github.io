@@ -191,6 +191,16 @@ document.querySelectorAll('.dropdown').forEach(d=>{d.addEventListener('click',fu
 document.addEventListener('click',()=>document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('active')));
 </script>
 <script src="scripts/soccer-calendar.js?v=20260413"></script>
+<script>
+// Auto-redirect to latest daily page
+if (typeof ARCHIVE_DATA !== 'undefined' && ARCHIVE_DATA.length > 0) {
+    var latestPage = ARCHIVE_DATA[0].page;
+    var currentPage = window.location.pathname.split('/').pop();
+    if (latestPage && latestPage !== currentPage) {
+        window.location.replace('/' + latestPage);
+    }
+}
+</script>
 
 </body>
 </html>
