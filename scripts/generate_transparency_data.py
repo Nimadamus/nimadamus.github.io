@@ -39,13 +39,26 @@ HTML_RECORDS_PAGES = {
     "Soccer": "soccer-records.html",
 }
 
-# Google Sheets URLs - only for sports whose records pages ALSO load from sheets
-# (extracted from the GOOGLE_SHEETS_CSV_URL in each records page)
+# Google Sheets URLs (extracted from each records page's JS)
 SHEET_URLS = {
     "NBA": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBoPl-dhj7ZAVpRIafqrFBf10r6sg3jpEKxmuymugAckdoMp-czkj1hscpDnV42GGJsIvNx5EniLVz/pub?output=csv",
     "MLB": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv",
     "NCAAB": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv",
     "Soccer": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv",
+}
+
+# How each records page actually works:
+# "html_then_tracker" = HTML table is primary, Pick Tracker supplements (NHL, NFL, NCAAF)
+# "sheet_then_tracker" = Google Sheet is primary, Pick Tracker supplements (NBA, NCAAB, MLB)
+# "sheet_only" = Google Sheet only, no tracker (Soccer)
+SPORT_DATA_MODE = {
+    "NHL": "html_then_tracker",
+    "NFL": "html_then_tracker",
+    "NCAAF": "html_then_tracker",
+    "NBA": "sheet_then_tracker",
+    "NCAAB": "sheet_then_tracker",
+    "MLB": "sheet_then_tracker",
+    "Soccer": "sheet_only",
 }
 
 PICK_TRACKER_URL = (
@@ -411,21 +424,34 @@ def fetch_tracker_pick_maps():
 # ---- Main ----
 
 def main():
-    # STEP 1: Parse HTML tables from records pages (primary source of truth)
-    print("Step 1: Parsing records page HTML tables...")
-    html_picks = {}
-    for sport, filename in HTML_RECORDS_PAGES.items():
-        filepath = os.path.join(REPO_ROOT, filename)
-        pick_map = parse_html_table(filepath)
-        html_picks[sport] = pick_map
-        stats = build_stats(pick_map)
-        print(
-            f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
-            f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} picks from HTML"
-        )
+    # Each sport's records page uses a specific data flow. We mirror it exactly.
+    #
+    # "html_then_tracker" (NHL, NFL, NCAAF):
+    #   HTML table is primary, Pick Tracker supplements with new picks
+    #
+    # "sheet_then_tracker" (NBA, NCAAB, MLB):
+    #   Google Sheet is primary, Pick Tracker supplements with new picks
+    #   (HTML table is just a static snapshot, NOT used for calculations)
+    #
+    # "sheet_only" (Soccer):
+    #   Google Sheet only, no Pick Tracker
 
-    # STEP 2: Fetch Google Sheets for sports that also use them
-    print("\nStep 2: Fetching Google Sheets (for sports that use them)...")
+    # STEP 1: Parse HTML tables (for html_then_tracker sports)
+    print("Step 1: Parsing HTML tables (NHL, NFL, NCAAF)...")
+    html_picks = {}
+    for sport in ALL_SPORTS:
+        if SPORT_DATA_MODE[sport] == "html_then_tracker":
+            filepath = os.path.join(REPO_ROOT, HTML_RECORDS_PAGES[sport])
+            pick_map = parse_html_table(filepath)
+            html_picks[sport] = pick_map
+            stats = build_stats(pick_map)
+            print(
+                f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
+                f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} picks"
+            )
+
+    # STEP 2: Fetch Google Sheets (for sheet-based sports)
+    print("\nStep 2: Fetching Google Sheets (NBA, NCAAB, MLB, Soccer)...")
     sheet_picks = {}
     for sport, url in SHEET_URLS.items():
         try:
@@ -435,7 +461,7 @@ def main():
             stats = build_stats(pick_map)
             print(
                 f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
-                f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} picks from Sheet"
+                f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} picks"
             )
         except Exception as e:
             print(f"  {sport:8s}: ERROR fetching sheet - {e}")
@@ -451,33 +477,37 @@ def main():
         if count:
             print(f"  {sport:8s}: {count} picks from Tracker")
 
-    # STEP 4: Merge all three sources (HTML first, then Sheet, then Tracker)
-    # Duplicates are resolved by key (date+pick) - later sources overwrite earlier
-    # This matches how the records pages work: HTML table is base, Sheet adds more,
-    # Tracker adds the most recent picks
-    print("\nStep 4: Merging all sources...")
+    # STEP 4: Merge per sport using the CORRECT data flow
+    print("\nStep 4: Merging (matching each records page's logic)...")
     combined_data = {}
     for sport in ALL_SPORTS:
+        mode = SPORT_DATA_MODE[sport]
         merged = {}
 
-        # Start with HTML table data
-        merged.update(html_picks.get(sport, {}))
-        html_count = len(merged)
+        if mode == "html_then_tracker":
+            # Start with HTML table, add tracker picks not already present
+            merged.update(html_picks.get(sport, {}))
+            base_count = len(merged)
+            for key, value in tracker_picks.get(sport, {}).items():
+                if key not in merged:
+                    merged[key] = value
+            added = len(merged) - base_count
+            source_desc = f"HTML:{base_count} +Tracker:{added}"
 
-        # Add Sheet data (won't overwrite existing HTML entries with same key)
-        sheet_data = sheet_picks.get(sport, {})
-        for key, value in sheet_data.items():
-            if key not in merged:
-                merged[key] = value
-        sheet_added = len(merged) - html_count
+        elif mode == "sheet_then_tracker":
+            # Start with Google Sheet, add tracker picks not already present
+            merged.update(sheet_picks.get(sport, {}))
+            base_count = len(merged)
+            for key, value in tracker_picks.get(sport, {}).items():
+                if key not in merged:
+                    merged[key] = value
+            added = len(merged) - base_count
+            source_desc = f"Sheet:{base_count} +Tracker:{added}"
 
-        # Add Tracker data (won't overwrite existing entries with same key)
-        tracker_data = tracker_picks.get(sport, {})
-        pre_tracker = len(merged)
-        for key, value in tracker_data.items():
-            if key not in merged:
-                merged[key] = value
-        tracker_added = len(merged) - pre_tracker
+        elif mode == "sheet_only":
+            # Google Sheet only
+            merged.update(sheet_picks.get(sport, {}))
+            source_desc = f"Sheet:{len(merged)}"
 
         stats = build_stats(merged)
         combined_data[sport] = {
@@ -488,7 +518,7 @@ def main():
         print(
             f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
             f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} total "
-            f"(HTML:{html_count} +Sheet:{sheet_added} +Tracker:{tracker_added})"
+            f"({source_desc})"
         )
 
     # STEP 5: Write JS file
