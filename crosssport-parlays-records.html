@@ -529,8 +529,23 @@
  // Skip picks without a result
  if (!resultText) return null;
 
- const units = unitsValue;
  const line = parseFloat(p.Line || p.Odds) || -110;
+
+ // Calculate proper P/L units
+ // Sport sheets have pre-calculated P/L (losses are already negative)
+ // Pick Tracker has bet size (always positive) - need to calculate P/L
+ let units = unitsValue;
+ if (resultText.startsWith('L') && unitsValue > 0) {
+ // Loss with positive units = bet size from Pick Tracker, calculate actual loss
+ // Favorite loss: -units × (|odds|/100)
+ // Underdog loss: -units (flat)
+ if (line < 0) {
+ units = -(unitsValue * (Math.abs(line) / 100));
+ } else {
+ units = -unitsValue;
+ }
+ }
+
  if (pickText === '' || resultText === '' || isNaN(units)) return null;
 
  let risk = 0;
