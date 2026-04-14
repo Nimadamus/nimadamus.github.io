@@ -490,9 +490,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
- // NCAAF-specific Google Sheet (historical data with pre-calculated units)
- const NCAAF_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9c45xiuXWNe-fAXYMoNb00kCBHfMf4Yn-Xr2LUqdCIiuoiXXDgrDa5mq1PZqxjg8hx-5KnS0L4uVU/pub?output=csv';
-
  // Pick Tracker URL for dynamic loading
  const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
 
@@ -526,7 +523,7 @@
  let headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
  headers = headers.map((h, idx) => {
  if (h.toLowerCase() === 'odds') return 'Line';
- if (h === '') return 'Column' + idx;
+ if (h === '') return `Column${idx}`;
  return h;
  });
  const records = [];
@@ -558,69 +555,31 @@
  }
 
  async function loadDataFromSheets() {
- const allPicks = new Map(); // key = "normalizedDate|pick_lower" -> pick object
-
- function addPick(p) {
- const key = normalizeDate(p.Date) + '|' + p.Pick.trim().toLowerCase();
- if (!allPicks.has(key)) {
- allPicks.set(key, p);
- }
- }
-
- // SOURCE 1: NCAAF-specific sheet (historical data with pre-calculated P/L units)
  try {
- const sheetResponse = await fetch(NCAAF_SHEET_URL + '&cache=' + Date.now(), {
+ const response = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
  cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
  });
- const sheetCsv = await sheetResponse.text();
- const sheetData = parseCSV(sheetCsv);
- sheetData.forEach(row => {
- const result = (row.Result || '').trim();
- if (!result) return;
- const units = parseFloat((row.Units || '0').replace(/[+,]/g, '')) || 0;
- addPick({
- Date: row.Date || '',
- Pick: row.Pick || row.Picks || '',
- Line: row.Line || row.Odds || '-110',
- Result: result,
- Units: units
- });
- });
- } catch (e) {
- console.error('Error loading NCAAF sheet:', e);
- }
-
- // SOURCE 2: Pick Tracker (needs unit calculation from stake)
- try {
- const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
- cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
- });
- const trackerCsv = await trackerResponse.text();
- const trackerData = parseCSV(trackerCsv);
- trackerData.filter(row => isNCAAFPick(row)).forEach(row => {
- const result = (row.Result || '').trim();
- if (!result) return;
+ const csv = await response.text();
+ const allData = parseCSV(csv);
+ const ncaafPicks = allData.filter(row => isNCAAFPick(row)).map(row => {
  const rawUnits = row.Units || '3';
  const odds = row.Line || row.Odds || '-110';
+ const result = row.Result || '';
  const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
- addPick({
+ return {
  Date: row.Date || '',
  Pick: row.Pick || row.Picks || '',
  Line: odds,
  Result: result,
  Units: calculatedUnits
- });
- });
- } catch (e) {
- console.error('Error loading Pick Tracker:', e);
- }
-
- // Build table from merged data
- const ncaafPicks = Array.from(allPicks.values());
+ };
+ }).filter(p => p.Result); // Only graded picks
 
  if (ncaafPicks.length > 0) {
+ // Sort by date descending
  ncaafPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
 
+ // Update table with new picks
  const tbody = document.getElementById('picks-table-body');
 
  // Get existing picks by normalized Date+Pick combination
@@ -653,12 +612,16 @@
  rows.sort((a, b) => {
  const dateA = new Date(a.cells[0].textContent.trim());
  const dateB = new Date(b.cells[0].textContent.trim());
- return dateB - dateA;
+ return dateB - dateA; // Newest first
  });
  rows.forEach(row => tbody.appendChild(row));
 
+ // Recalculate stats for current year filter
  const activeYear = document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || 'all';
  filterByYear(activeYear);
+ }
+ } catch (error) {
+ console.error('Error loading from Pick Tracker:', error);
  }
  }
 
