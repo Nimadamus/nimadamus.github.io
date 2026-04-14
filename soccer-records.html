@@ -289,6 +289,66 @@
  // Google Sheets CSV URL - Old Soccer Sheet (correct data)
  const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv';
 
+ // Pick Tracker URL (2026 picks)
+ const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
+
+ // Filter for Soccer picks from the tracker
+ function isSoccerPick(row) {
+   const league = (row.League || '').toLowerCase().trim();
+   const sport = (row.Sport || '').toLowerCase().trim();
+   if (league === 'cross-sport') return false;
+   if (league === 'soccer' || league === 'mls') return true;
+   if (sport === 'soccer' || sport === 'mls') return true;
+   return false;
+ }
+
+ // CORRECT UNIT CALCULATION FORMULA (from CLAUDE.md)
+ function calculateUnitResult(unitsStake, odds, result) {
+   const stake = parseFloat(unitsStake);
+   const oddsNum = parseFloat(odds);
+   const resultUpper = (result || '').toUpperCase().trim();
+   if (isNaN(stake) || isNaN(oddsNum)) return 0;
+   if (resultUpper.startsWith('W')) {
+     return oddsNum < 0 ? stake : stake * (oddsNum / 100);
+   } else if (resultUpper.startsWith('L')) {
+     return oddsNum < 0 ? -stake * (Math.abs(oddsNum) / 100) : -stake;
+   }
+   return 0;
+ }
+
+ // Fix common date typos
+ function fixDate(dateStr) {
+   if (!dateStr) return dateStr;
+   const parts = dateStr.split(/[-\/]/);
+   if (parts.length === 3) {
+     let yr = parts[2].trim();
+     if (/^\d{3}$/.test(yr) && yr.startsWith('20')) yr = yr.slice(0, 2) + '2' + yr.slice(2);
+     if (/^\d{4}$/.test(yr) && parseInt(yr) > 2030) {
+       const lastTwo = yr.slice(-2);
+       yr = '20' + lastTwo;
+     }
+     parts[2] = yr;
+     return parts.join(dateStr.includes('/') ? '/' : '-');
+   }
+   return dateStr;
+ }
+
+ // Normalize date string to M/D/YYYY canonical form for deduplication
+ function normalizeDate(dateStr) {
+   if (!dateStr) return '';
+   dateStr = fixDate(dateStr.trim());
+   var parts = dateStr.split(/[-\/]/);
+   if (parts.length === 3) {
+     var m = parseInt(parts[0], 10);
+     var d = parseInt(parts[1], 10);
+     var y = parseInt(parts[2], 10);
+     if (!isNaN(m) && !isNaN(d) && !isNaN(y)) {
+       return m + '/' + d + '/' + y;
+     }
+   }
+   return dateStr;
+ }
+
  // Global storage for all picks (for year filtering)
  let allProcessedPicks = [];
  let currentYearFilter = 'all'; // Default to All Time (matches homepage widget)
@@ -333,7 +393,7 @@
  if (h === '' || h === undefined) {
  const existingHeaders = headers.filter(x => x && x !== '');
  if (!existingHeaders.includes('Result') && !existingHeaders.includes('result')) return 'Result';
- return `Column${idx}`;
+ return 'Column' + idx;
  }
  return h;
  });
@@ -399,19 +459,74 @@
  // Load data from Google Sheets and process it
  async function loadDataFromSheets() {
  try {
- const response = await fetch('all-records.json?v=1763178663');
- const jsonData = await response.json();
- // Filter for Soccer picks only
- const filteredData = jsonData.filter(pick => pick.Sport === 'Soccer');
+ const allPicks = new Map(); // key = "normalizedDate|pick_lower" -> pick object
 
- const mlbPicksData = convertToMLBFormat(filteredData);
- 
+ function addPick(p) {
+   p.Date = fixDate((p.Date || '').trim());
+   const key = normalizeDate(p.Date) + '|' + (p.Pick || '').trim().toLowerCase();
+   if (!allPicks.has(key)) {
+     allPicks.set(key, p);
+   }
+ }
+
+ // SOURCE 1: Soccer sport sheet (all-records.json filtered for Soccer)
+ try {
+   const response = await fetch('all-records.json?v=' + Date.now());
+   const jsonData = await response.json();
+   const filteredData = jsonData.filter(pick => pick.Sport === 'Soccer');
+   const soccerPicks = convertToMLBFormat(filteredData);
+   soccerPicks.forEach(p => {
+     const result = (p.Result || '').trim();
+     if (!result) return;
+     const units = parseFloat(p.Units) || 0;
+     addPick({
+       Date: p.Date || '',
+       Sport: p.Sport || 'Soccer',
+       Pick: p.Pick || '',
+       Line: p.Line || '-110',
+       Result: result,
+       Units: units
+     });
+   });
+ } catch (e) {
+   console.error('Error loading Soccer sheet:', e);
+ }
+
+ // SOURCE 2: Pick Tracker (2026+ picks - needs unit calculation)
+ try {
+   const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
+     cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
+   });
+   const trackerCsv = await trackerResponse.text();
+   const trackerData = parseCSV(trackerCsv);
+   trackerData.filter(row => isSoccerPick(row)).forEach(row => {
+     const result = (row.Result || '').trim();
+     if (!result) return;
+     const rawUnits = row.Units || '1';
+     const odds = row.Line || row.Odds || '-110';
+     const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
+     addPick({
+       Date: row.Date || '',
+       Sport: 'Soccer',
+       Pick: row.Pick || row.Picks || '',
+       Line: odds,
+       Result: result,
+       Units: calculatedUnits
+     });
+   });
+ } catch (e) {
+   console.error('Error loading Pick Tracker:', e);
+ }
+
+ // Convert Map to array for processing
+ const mergedPicks = Array.from(allPicks.values());
+
  // Hide loading message
  document.getElementById('loading-message').style.display = 'none';
- 
+
  // Process the data using the original logic
- processPicksData(mlbPicksData);
- 
+ processPicksData(mergedPicks);
+
  } catch (error) {
  console.error('Error loading data from Google Sheets:', error);
  document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';

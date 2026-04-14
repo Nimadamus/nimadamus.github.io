@@ -853,7 +853,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
- // Pick Tracker URL for dynamic loading
+ // NHL-specific Google Sheet (historical data with pre-calculated units)
+ const NHL_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaRwsGOmbXrqAX0xqrDc9XwRCSaAOkuW68TArz3XQp7SMmLirKbdYqU5-zSM_A-MDNKG6sbdwZac6I/pub?output=csv';
+
+ // Pick Tracker URL (current picks)
  const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';
 
  // Filter for NHL picks from the tracker
@@ -885,7 +888,7 @@
  let headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
  headers = headers.map((h, idx) => {
  if (h.toLowerCase() === 'odds') return 'Line';
- if (h === '') return `Column${idx}`;
+ if (h === '') return 'Column' + idx;
  return h;
  });
  const records = [];
@@ -917,32 +920,68 @@
  }
 
  async function loadDataFromSheets() {
+ const tbody = document.getElementById('picks-table-body');
+ const allPicks = new Map(); // key = "normalizedDate|pick_lower" -> pick object
+
+ function addPick(p) {
+ const key = normalizeDate(p.Date) + '|' + p.Pick.trim().toLowerCase();
+ if (!allPicks.has(key)) {
+ allPicks.set(key, p);
+ }
+ }
+
+ // SOURCE 1: NHL-specific sheet (historical data with pre-calculated units)
  try {
- const response = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
+ const nhlResponse = await fetch(NHL_SHEET_URL + '&cache=' + Date.now(), {
  cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
  });
- const csv = await response.text();
- const allData = parseCSV(csv);
- const nhlPicks = allData.filter(row => isNHLPick(row)).map(row => {
+ const nhlCsv = await nhlResponse.text();
+ const nhlData = parseCSV(nhlCsv);
+ nhlData.forEach(row => {
+ const result = (row.Result || row.Column3 || '').trim();
+ if (!result) return;
+ const units = parseFloat((row.Units || row.Column4 || '0').replace(/[+,]/g, '')) || 0;
+ addPick({
+ Date: row.Date || '',
+ Pick: row.Pick || row.Picks || '',
+ Line: row.Line || row.Odds || '-110',
+ Result: result,
+ Units: units
+ });
+ });
+ } catch (e) {
+ console.error('Error loading NHL sheet:', e);
+ }
+
+ // SOURCE 2: Pick Tracker (current picks - needs unit calculation)
+ try {
+ const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
+ cache: 'no-store', headers: { 'Cache-Control': 'no-store' }
+ });
+ const trackerCsv = await trackerResponse.text();
+ const trackerData = parseCSV(trackerCsv);
+ trackerData.filter(row => isNHLPick(row)).forEach(row => {
+ const result = (row.Result || '').trim();
+ if (!result) return;
  const rawUnits = row.Units || '3';
  const odds = row.Line || row.Odds || '-110';
- const result = row.Result || '';
  const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
- return {
+ addPick({
  Date: row.Date || '',
  Pick: row.Pick || row.Picks || '',
  Line: odds,
  Result: result,
  Units: calculatedUnits
- };
- }).filter(p => p.Result); // Only graded picks
+ });
+ });
+ } catch (e) {
+ console.error('Error loading Pick Tracker:', e);
+ }
 
+ // Render all picks into the table
+ const nhlPicks = Array.from(allPicks.values());
  if (nhlPicks.length > 0) {
- // Sort by date descending
  nhlPicks.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-
- // Update table with new picks
- const tbody = document.getElementById('picks-table-body');
 
  // Get existing picks by normalized Date+Pick combination
  const existingPicks = new Set();
@@ -981,9 +1020,6 @@
  // Recalculate stats for current year filter
  const activeYear = document.querySelector('.year-filter-btn.active')?.getAttribute('data-year') || 'all';
  filterByYear(activeYear);
- }
- } catch (error) {
- console.error('Error loading from Pick Tracker:', error);
  }
  }
 
