@@ -535,68 +535,36 @@
  }));
  }
 
- // Load data from BOTH Google Sheets and combine them
+ // Load data from the HTML table (source of truth - kept in sync by generate_transparency_data.py)
  async function loadDataFromSheets() {
  try {
- // Fetch from original NCAAB sheet
- const originalResponse = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
- cache: 'no-store',
- headers: { 'Cache-Control': 'no-store' }
+ // Read picks directly from the HTML table already on the page
+ const tbody = document.getElementById('picks-table-body');
+ const rows = tbody.querySelectorAll('tr');
+ const picksData = [];
+ rows.forEach(row => {
+ const cells = row.querySelectorAll('td');
+ if (cells.length >= 5) {
+ picksData.push({
+ Date: cells[0].textContent.trim(),
+ Pick: cells[1].textContent.trim(),
+ Line: cells[2].textContent.trim(),
+ Result: cells[3].textContent.trim(),
+ Units: cells[4].textContent.trim()
  });
- const originalCsv = await originalResponse.text();
- const originalData = parseCSV(originalCsv);
-
- // Fetch from pick tracker
- let trackerData = [];
- try {
- const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now(), {
- cache: 'no-store',
- headers: { 'Cache-Control': 'no-store' }
- });
- const trackerCsv = await trackerResponse.text();
- const allTrackerData = parseCSV(trackerCsv);
- // Filter for NCAAB picks only and use correct unit calculation
- trackerData = allTrackerData.filter(row => isNCAABPick(row)).map(row => {
- const rawUnits = row.Units || '3'; // Default to 3 units if missing
- // parseCSV renames "Odds" to "Line", so check both
- const odds = row.Line || row.Odds || '';
- const result = row.Result || '';
- const calculatedUnits = calculateUnitResult(rawUnits, odds, result);
- return {
- Date: row.Date || '',
- Pick: row.Pick || row.Picks || '',
- Odds: odds,
- Result: result,
- Units: calculatedUnits.toString()
- };
- });
- } catch (e) {
- console.log('Pick tracker fetch failed, using original data only');
  }
-
- // Combine both datasets
- const combinedData = [...originalData, ...trackerData];
-
- // Deduplicate by normalized Date + Pick
- const seen = new Set();
- const uniqueData = combinedData.filter(row => {
- const key = `${normalizeDate(row.Date)}|${row.Pick}`;
- if (seen.has(key)) return false;
- seen.add(key);
- return true;
  });
-
- const mlbPicksData = convertToMLBFormat(uniqueData);
 
  // Hide loading message
  document.getElementById('loading-message').style.display = 'none';
 
- // Process the data using the original logic
+ // Process using existing logic
+ const mlbPicksData = convertToMLBFormat(picksData);
  processPicksData(mlbPicksData);
 
  } catch (error) {
- console.error('Error loading data from Google Sheets:', error);
- document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';
+ console.error('Error loading data:', error);
+ document.getElementById('loading-message').textContent = 'Error loading data. Please try again later.';
  }
  }
 
