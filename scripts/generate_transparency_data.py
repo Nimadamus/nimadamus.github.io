@@ -215,14 +215,17 @@ def latest_date_from_keys(picks_map):
 
 
 def build_stats(picks_map):
+    """Calculate stats matching how the records pages do it:
+    classify W/L/P by UNITS VALUE (positive=W, negative=L, zero=P),
+    NOT by the result text column."""
     wins = losses = pushes = 0
     total_units = 0.0
     for result, units in picks_map.values():
-        if result == "W":
+        if units > 0:
             wins += 1
-        elif result == "L":
+        elif units < 0:
             losses += 1
-        elif result == "P":
+        else:
             pushes += 1
         total_units += units
     total_picks = wins + losses + pushes
