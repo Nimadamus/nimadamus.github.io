@@ -1551,7 +1551,7 @@ function calculateUnitSizingBreakdown() {
 function calculateStats(data, useActualBetSizes = false) {
  let wins = 0, losses = 0, pushes = 0;
  let totalUnits = 0;
- let totalOdds = 0, oddsCount = 0;
+ let totalOdds = 0, oddsCount = 0, totalDecimalOdds = 0;
  let totalRisked = 0;
 
  // Process each row
@@ -1615,6 +1615,9 @@ function calculateStats(data, useActualBetSizes = false) {
  const odds = extractOdds(line);
  if (odds) {
  totalOdds += odds;
+ // Convert to decimal odds for proper averaging
+ const decOdds = odds > 0 ? (odds / 100) + 1 : (100 / Math.abs(odds)) + 1;
+ totalDecimalOdds += decOdds;
  oddsCount++;
  }
  }
@@ -1627,11 +1630,18 @@ function calculateStats(data, useActualBetSizes = false) {
  // ROI = profit / total risked
  const roi = totalRisked > 0 ? (totalUnits / totalRisked) * 100 : 0;
 
- // Calculate average odds - round to nearest standard line
- let avgOdds = oddsCount > 0 ? Math.round(totalOdds / oddsCount) : -110;
- // Ensure avg odds makes sense (American odds can't be between -100 and +100)
- if (avgOdds > -100 && avgOdds < 100) {
- avgOdds = avgOdds < 0 ? -110 : 100; // Default to -110 for small negatives, +100 for positives
+ // Calculate average odds using decimal conversion (arithmetic mean of American odds is invalid)
+ let avgOdds = -110; // default
+ if (oddsCount > 0) {
+ // Convert each odds to decimal, average, convert back
+ // totalOdds was sum of American odds - we need to recalculate using decimal
+ // Instead, use totalDecimalOdds / oddsCount approach
+ const avgDecimal = totalDecimalOdds / oddsCount;
+ if (avgDecimal >= 2.0) {
+ avgOdds = Math.round((avgDecimal - 1) * 100); // positive American
+ } else {
+ avgOdds = Math.round(-100 / (avgDecimal - 1)); // negative American
+ }
  }
 
  return {
@@ -2302,7 +2312,7 @@ async function init() {
  if (sportData.length === 0) return;
 
  // Manual calculation for verification
- let oddsSum = 0, oddsCount = 0, excludedCount = 0, pushCount = 0;
+ let oddsSum = 0, oddsCount = 0, excludedCount = 0, pushCount = 0, decimalSum = 0;
  const sampleOdds = [];
 
  sportData.forEach(row => {
@@ -2332,6 +2342,8 @@ async function init() {
  const odds = extractOdds(line);
  if (odds) {
  oddsSum += odds;
+ const dec = odds > 0 ? (odds / 100) + 1 : (100 / Math.abs(odds)) + 1;
+ decimalSum += dec;
  oddsCount++;
  if (sampleOdds.length < 5) {
  sampleOdds.push(`${odds} (${pick.substring(0, 25)}...)`);
@@ -2339,7 +2351,11 @@ async function init() {
  }
  });
 
- const avgOdds = oddsCount > 0 ? Math.round(oddsSum / oddsCount) : -110;
+ let avgOdds = -110;
+ if (oddsCount > 0) {
+ const avgDec = decimalSum / oddsCount;
+ avgOdds = avgDec >= 2.0 ? Math.round((avgDec - 1) * 100) : Math.round(-100 / (avgDec - 1));
+ }
  console.log(`${sport}:`);
  console.log(` Total bets: ${sportData.length}`);
  console.log(` Included in avg: ${oddsCount}`);
