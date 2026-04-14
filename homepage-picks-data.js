@@ -24,6 +24,22 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Caps/Blue Jackets UNDER 6.5 (-115) 2u",
+        date: "April 14, 2026",
+        result: "",
+        url: "capitals-blue-jackets-under-6-5-thompson-greaves-nationwide-arena-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/ejaxkor8ko1pw8gjtcdv.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Rangers ML (-111) at Athletics 2.5u",
+        date: "April 14, 2026",
+        result: "",
+        url: "rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656427/action/hero/current"
+    },
+    {
+        sport: "NHL",
         title: "Wild/Blues UNDER 5.5 (-105) 3u",
         date: "April 13, 2026",
         result: "",
