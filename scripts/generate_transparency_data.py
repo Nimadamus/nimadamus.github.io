@@ -249,6 +249,26 @@ def rows_to_pick_map(rows, units_field="Units"):
     for row in rows:
         result = normalize_result(row.get("Result") or row.get("result"))
         if not result:
+            # Derive result from Units column if Result is missing
+            units_val = safe_float(
+                row.get(units_field)
+                or row.get("ProfitLoss")
+                or row.get("Profit/Loss")
+                or row.get("P/L")
+                or row.get("UNIT_RESULT")
+            )
+            if units_val > 0:
+                result = "W"
+            elif units_val < 0:
+                result = "L"
+            else:
+                # Check if there's actually a pick to avoid counting empty rows
+                pick_text = row.get("Pick") or row.get("Picks") or row.get("pick") or ""
+                if pick_text.strip():
+                    result = "P"
+                else:
+                    continue
+        if not result:
             continue
         date_str = row.get("Date", "")
         pick_text = row.get("Pick") or row.get("Picks") or row.get("pick") or ""
