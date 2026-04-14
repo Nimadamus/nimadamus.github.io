@@ -256,10 +256,18 @@ def latest_date_from_keys(picks_map):
 def build_stats(picks_map):
     """Calculate stats matching how the records pages do it:
     - Filter out cross-sport parlays
-    - Classify W/L/P by UNITS VALUE (positive=W, negative=L, zero=P)"""
+    - Classify W/L/P by UNITS VALUE (positive=W, negative=L, zero=P)
+    - Calculate average odds across all picks"""
     wins = losses = pushes = 0
     total_units = 0.0
-    for key, (result, units) in picks_map.items():
+    odds_values = []
+    for key, entry in picks_map.items():
+        # Support both (result, units) and (result, units, odds) tuples
+        if len(entry) == 3:
+            result, units, odds = entry
+        else:
+            result, units = entry
+            odds = None
         # Extract pick text from key (format: "date|pick_text")
         pick_text = key.split("|", 1)[1] if "|" in key else ""
         if is_cross_sport_parlay(pick_text):
@@ -271,8 +279,11 @@ def build_stats(picks_map):
         else:
             pushes += 1
         total_units += units
+        if odds is not None and odds != 0:
+            odds_values.append(odds)
     total_picks = wins + losses + pushes
     win_pct = round((wins / (wins + losses) * 100) if (wins + losses) else 0.0, 1)
+    avg_odds = round(sum(odds_values) / len(odds_values)) if odds_values else -110
     return {
         "wins": wins,
         "losses": losses,
@@ -280,6 +291,7 @@ def build_stats(picks_map):
         "totalPicks": total_picks,
         "totalUnits": round(total_units, 2),
         "winPct": win_pct,
+        "avgOdds": avg_odds,
         "lastDate": latest_date_from_keys(picks_map),
     }
 
@@ -309,6 +321,7 @@ def parse_html_table(filepath):
     for match in row_pattern.finditer(html):
         date_str = match.group(1).strip()
         pick_text = match.group(2).strip()
+        odds_str = match.group(3).strip()
         result_text = match.group(4).strip()
         units_str = match.group(5).strip()
 
@@ -329,8 +342,9 @@ def parse_html_table(filepath):
             continue
 
         units = safe_float(units_str)
+        odds = safe_float(odds_str, default=0.0)
         key = make_pick_key(date_str, pick_text)
-        picks[key] = (result, units)
+        picks[key] = (result, units, odds)
 
     return picks
 
@@ -381,8 +395,11 @@ def sheet_rows_to_pick_map(rows):
             or row.get("Profit/Loss") or row.get("P/L")
             or row.get("UNIT_RESULT")
         )
+        odds = safe_float(
+            row.get("Line") or row.get("Odds") or row.get("odds") or "0"
+        )
         key = make_pick_key(date_str, pick_text)
-        picks[key] = (result, units)
+        picks[key] = (result, units, odds)
     return picks
 
 
@@ -442,11 +459,12 @@ def fetch_tracker_pick_maps():
         if not date_str or not pick_text:
             continue
 
-        odds = row.get("Line") or row.get("Odds") or "-110"
+        odds_str = row.get("Line") or row.get("Odds") or "-110"
         stake = row.get("Units") or SPORT_DEFAULT_STAKES.get(sport, "1")
-        units = calculate_unit_result(stake, odds, result)
+        units = calculate_unit_result(stake, odds_str, result)
+        odds_val = safe_float(odds_str, default=0.0)
         key = make_pick_key(date_str, pick_text)
-        sport_maps[sport][key] = (result, units)
+        sport_maps[sport][key] = (result, units, odds_val)
 
     return sport_maps, skipped
 

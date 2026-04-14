@@ -2309,6 +2309,7 @@
         .rw-stat-value.neg { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.5), 0 0 12px rgba(239, 68, 68, 0.2); }
         .rw-stat-value.neg::before { content: '\25BC '; font-size: 0.55rem; vertical-align: middle; }
         .rw-stat-value.rate { color: #fff; text-shadow: 0 0 4px rgba(255,255,255,0.15); }
+        .rw-stat-value.odds { color: #fbbf24; text-shadow: 0 0 5px rgba(251,191,36,0.3); }
         .rw-stat-value.count { color: #00e5ff; text-shadow: 0 0 5px rgba(0,229,255,0.3); }
 
         .rw-stat-label {
@@ -3677,6 +3678,7 @@ function closeEmailPopup() {
                     '</div>' +
                     '<div class="rw-stats">' +
                         '<div class="rw-stat"><div class="rw-stat-value rate">' + s.winPct + '%</div><div class="rw-stat-label">Win Rate</div></div>' +
+                        '<div class="rw-stat"><div class="rw-stat-value odds">' + (s.avgOdds >= 0 ? '+' : '') + s.avgOdds + '</div><div class="rw-stat-label">Avg Odds</div></div>' +
                         '<div class="rw-stat"><div class="rw-stat-value count">' + s.totalPicks + '</div><div class="rw-stat-label">Total Picks</div></div>' +
                     '</div>' +
                 '</div>';
