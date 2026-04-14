@@ -282,6 +282,7 @@
  <table>
  <thead><tr><th>Date</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
  <tbody id="picks-table-body">
+                    <tr><td>4/5/2026</td><td>Michigan ML</td><td>-300</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>3/4/2026</td><td>Florida St -3</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
                     <tr><td>3/3/2026</td><td>Cincinnati ML</td><td>-145</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
                     <tr><td>3/3/2026</td><td>Illinois -18</td><td>-110</td><td class="result-W">W</td><td class="win">+0.50</td></tr>
@@ -302,7 +303,7 @@
                     <tr><td>2/21/2026</td><td>Houston -4.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
                     <tr><td>2/21/2026</td><td>Kentucky +3</td><td>-110</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
                     <tr><td>2/21/2026</td><td>DePaul -1.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-3.30</td></tr>
-                    <tr><td>2/21/2026</td><td>LSU +7</td><td>-110</td><td class="result-P">P</td><td class="result-P">0.00</td></tr>
+                    <tr><td>2/21/2026</td><td>LSU +7</td><td>-110</td><td class="result-P">P</td><td class="result-P">+0.00</td></tr>
                     <tr><td>2/21/2026</td><td>Arkansas -10</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.20</td></tr>
                     <tr><td>2/20/2026</td><td>Purdue -11</td><td>-110</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
                     <tr><td>2/20/2026</td><td>Miami Ohio -8</td><td>-110</td><td class="result-W">W</td><td class="win">+1.50</td></tr>
@@ -337,6 +338,7 @@
                     <tr><td>2/13/2026</td><td>Michigan St -1</td><td>-110</td><td class="result-L">L</td><td class="loss">-2.75</td></tr>
                     <tr><td>2/13/2026</td><td>Mount St Marys/Rider under 141.5</td><td>-110</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>2/6/2026</td><td>UCONN ML</td><td>-140</td><td class="result-L">L</td><td class="loss">-2.10</td></tr>
+                    <tr><td>12/3/2025</td><td>3 Team Parlay: Knicks ML (NBA) N. Kentucky ML (NCAAB) Vanderbilt ML(NCAAB)</td><td>-163</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                     <tr><td>12/2/2025</td><td>Jackson St/Kennesaw St under 155.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
                     <tr><td>12/2/2025</td><td>3 Team Parlay: Mercer ML, Penn St ML, Timberwolves ML (NBA)</td><td>-215</td><td class="result-W">W</td><td class="win">+2.50</td></tr>
                     <tr><td>12/1/2025</td><td>Bowling Green/Kansas St 1st half under 76</td><td>-115</td><td class="result-L">L</td><td class="loss">-2.30</td></tr>
@@ -344,7 +346,7 @@
                     <tr><td>11/26/2025</td><td>St Marys/Wichita St over 140.5</td><td>-110</td><td class="result-L">L</td><td class="loss">-1.65</td></tr>
                     <tr><td>11/26/2025</td><td>3 Team Parlay: Raptors ML, Alabama ML (NCAAB), Saint Marys ML (NCAAB)</td><td>-182</td><td class="result-W">W</td><td class="win">+2.00</td></tr>
                     <tr><td>11/26/2025</td><td>Navy/Gardner Webb under 153.5</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
-                    <tr><td>11/20/2025</td><td>2 team parlay: St Bonaventure ML, UNLV ML</td><td>-288</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
+                    <tr><td>11/20/2025</td><td>2 team parlay: St Bonaventure ML, UNLV ML,</td><td>-288</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
                     <tr><td>11/20/2025</td><td>Tennessee St +32</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
                     <tr><td>11/19/2025</td><td>Utah Valley/Cal Irvine over 150</td><td>-110</td><td class="result-W">W</td><td class="win">+1.00</td></tr>
                     <tr><td>11/18/2025</td><td>3 Team Parlay: Lakers ML, Utah Utes ML, Duke ML</td><td>-218</td><td class="result-W">W</td><td class="win">+1.50</td></tr>
@@ -645,16 +647,15 @@
  setTimeout(createChart, 100);
  }
 
- // Aggregate stats function
+ // Aggregate stats function - classify by units value (matches homepage widget)
  function aggregateStats(picks) {
  let wins = 0, losses = 0, pushes = 0, totalUnits = 0, totalRisk = 0;
  picks.forEach(p => {
- const result = p.Result.trim().toUpperCase();
- if (result.startsWith('W')) wins++;
- else if (result.startsWith('L')) losses++;
- else if (result.startsWith('P')) pushes++;
+ if (p.units > 0) wins++;
+ else if (p.units < 0) losses++;
+ else pushes++;
  totalUnits += p.units;
- if(!result.startsWith('P')) totalRisk += p.risk;
+ if(p.units !== 0) totalRisk += p.risk;
  });
  const roi = totalRisk > 0 ? (totalUnits / totalRisk) * 100 : 0;
  return { wins, losses, pushes, totalUnits, roi };
