@@ -207,6 +207,32 @@ def make_pick_key(date_str, pick_text):
     return f"{normalize_date(date_str)}|{(pick_text or '').strip().lower()}"
 
 
+def is_cross_sport_parlay(pick_text):
+    """Detect cross-sport parlays (matching the records page JS logic).
+    These are excluded from single-sport records pages."""
+    text = (pick_text or "").lower()
+    if "teaser" in text:
+        return False
+    if "parlay" not in text:
+        return False
+    sports = set()
+    if "(nfl)" in text:
+        sports.add("NFL")
+    if "(cfb)" in text or "(ncaaf)" in text:
+        sports.add("CFB")
+    if "(nba)" in text:
+        sports.add("NBA")
+    if "(nhl)" in text:
+        sports.add("NHL")
+    if "(mlb)" in text:
+        sports.add("MLB")
+    if "(ncaab)" in text or "(cbb)" in text:
+        sports.add("NCAAB")
+    if "(soccer)" in text or "(mls)" in text:
+        sports.add("Soccer")
+    return len(sports) > 1
+
+
 def calculate_unit_result(stake_str, odds_str, result):
     stake = safe_float(stake_str)
     odds = safe_float(odds_str, default=-110.0)
@@ -229,11 +255,15 @@ def latest_date_from_keys(picks_map):
 
 def build_stats(picks_map):
     """Calculate stats matching how the records pages do it:
-    classify W/L/P by UNITS VALUE (positive=W, negative=L, zero=P),
-    NOT by the result text column."""
+    - Filter out cross-sport parlays
+    - Classify W/L/P by UNITS VALUE (positive=W, negative=L, zero=P)"""
     wins = losses = pushes = 0
     total_units = 0.0
-    for result, units in picks_map.values():
+    for key, (result, units) in picks_map.items():
+        # Extract pick text from key (format: "date|pick_text")
+        pick_text = key.split("|", 1)[1] if "|" in key else ""
+        if is_cross_sport_parlay(pick_text):
+            continue
         if units > 0:
             wins += 1
         elif units < 0:
