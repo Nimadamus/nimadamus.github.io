@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Kraken +1.5 (-108) at Golden Knights",
+        date: "April 15, 2026",
+        result: "",
+        url: "kraken-plus-1-5-puck-line-daccord-tortorella-vegas-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/lqcetp0mtaoqdh8rvirg.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Caps/Blue Jackets UNDER 6.5 (-115) 2u",
         date: "April 14, 2026",
         result: "",
