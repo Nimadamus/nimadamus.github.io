@@ -84,7 +84,7 @@ var HOMEPAGE_PICKS = [
         date: "April 10, 2026",
         result: "",
         url: "rangers-dodgers-under-9-glasnow-rocker-dodger-stadium-mlb.html",
-        image: "https://s.yimg.com/ny/api/res/1.2/HqcroW3GImre9XroruA3JQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTY0MDtjZj13ZWJw/https://media.zenfs.com/en/sb_nation_articles_115/86a2eb1cf719d6ae40ecf1f6f95863f9"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607192/action/hero/current"
     },
     {
         sport: "MLB",
@@ -92,7 +92,7 @@ var HOMEPAGE_PICKS = [
         date: "April 8, 2026",
         result: "",
         url: "cardinals-nationals-over-8-5-runs-nationals-park-mlb.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/680694/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/676475/action/hero/current"
     },
     {
         sport: "NHL",
