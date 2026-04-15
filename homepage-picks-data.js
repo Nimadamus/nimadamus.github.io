@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Maple Leafs +1.5 (-145) at Senators 2.5u",
+        date: "April 15, 2026",
+        result: "",
+        url: "maple-leafs-plus-1-5-puck-line-battle-of-ontario-senators-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_auto/prd/nddutvzzhwrmdkiociq4.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Kraken +1.5 (-108) at Golden Knights",
         date: "April 15, 2026",
         result: "",
