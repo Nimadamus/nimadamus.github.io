@@ -4,12 +4,12 @@
 <link rel="canonical" href="https://www.betlegendpicks.com/nfl.html"/>
 
 <meta charset="utf-8"/>
-<link href="https://www.betlegendpicks.com/nfl.html" rel="canonical"/>
+
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>NFL Super Bowl LX Analysis - February 8, 2026 | BetLegend</title>
-<meta name="description" content="Let that sink in for a moment. When the 2025 NFL season kicked off back in September, you could have gotten the Seattle Seahawks at 60-to-1 and the New...">
+<meta name="description" content="NFL betting analysis, predictions, and matchup previews from BetLegend with verified records, market context, and model-driven notes."/>
 <meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
-<meta content="Super Bowl LX Analysis: Seattle Seahawks (-4.5) vs New England Patriots at Levi's Stadium, February 8, 2026. Drake Maye vs Sam Darnold, full betting..." name="description"/>
+
 <meta content="index, follow" name="robots"/>
 <meta content="NFL Super Bowl LX Analysis - February 8, 2026 | BetLegend" property="og:title"/>
 <meta content="Super Bowl LX: Seahawks (-4.5) vs Patriots at Levi's Stadium. Two 14-3 teams nobody predicted. Full analysis with verified odds and expert breakdown." property="og:description"/>
@@ -133,7 +133,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
  </div>
  </div>
 <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">Picks</a>
-<div class="dropdown"><button class="dropbtn">Game Previews</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html">NBA</a><a href="lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="michigan-state-michigan-big-ten-finale-ncaab-march-8-2026.html">NCAAB</a><a href="mlb.html">MLB</a><a href="fa-cup-fifth-round-leeds-fulham-la-liga-bundesliga-soccer-march-8-2026.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Game Previews</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba-previews.html">NBA</a><a href="nhl-previews.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="college-basketball-previews.html">NCAAB</a><a href="mlb-previews.html">MLB</a><a href="soccer-previews.html">Soccer</a></div></div>
 <div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a></div></div>
 <div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll Management</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="risk-of-ruin-calculator.html">Risk of Ruin</a><a href="bankroll-simulator.html">Bankroll Simulator</a><a href="betting-calculators.html">Calculators</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a><a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a><a href="contact.html">Contact Us</a></div></div>
 <a href="nba-play-in-tournament-2026-full-preview-matchups-analysis.html">News</a>
@@ -307,39 +307,10 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 <p>&copy; 2026 BetLegend Picks. All Rights Reserved.</p>
 <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a> | <a href="contact.html">Contact</a></p>
 </footer>
-<script src="scripts/nfl-calendar.js?v=20260316c"></script>
+<script src="scripts/nfl-calendar.js?v=20260415"></script>
 <script>
 document.querySelectorAll('.dropdown').forEach(d=>{d.addEventListener('click',function(e){if(window.innerWidth<=768){e.stopPropagation();this.classList.toggle('active')}})});
 document.addEventListener('click',()=>document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('active')));
-
-if(defined){
- const data=ARCHIVE_DATA,year=document.getElementById('cal-year'),sel=document.getElementById('month-select'),days=document.getElementById('calendar-days'),mob=document.getElementById('mobile-archive-select');
- const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
- const byMonth={};
- data.forEach(e=>{const d=new Date(e.date+'T12:00:00'),m=d.getMonth(),y=d.getFullYear();const key=y+'-'+m;if(!byMonth[key])byMonth[key]=[];byMonth[key].push({...e,day:d.getDate()})});
- const keys=Object.keys(byMonth).sort((a,b)=>b.localeCompare(a));
- keys.forEach((k,i)=>{const[y,m]=k.split('-');const o=document.createElement('option');o.value=k;o.textContent=months[parseInt(m)]+' '+y;sel.appendChild(o)});
- function render(key){
- const[y,m]=key.split('-').map(Number);year.textContent=y;
- const first=new Date(y,m,1).getDay(),total=new Date(y,m+1,0).getDate();
- days.innerHTML='';
- for(let i=0;i<first;i++){const e=document.createElement('div');e.className='cal-day empty';days.appendChild(e)}
- const items=byMonth[key]||[];
- const today=new Date(),pageDate=window.FORCED_PAGE_DATE?new Date(window.FORCED_PAGE_DATE+'T12:00:00'):null;
- for(let d=1;d<=total;d++){
- const el=document.createElement('div');el.className='cal-day';el.textContent=d;
- const entry=items.find(x=>x.day===d);
- if(entry){el.classList.add('has-content');el.title=entry.title;el.onclick=()=>location.href=entry.page}
- /* today highlight removed - use current-page only */
- if(pageDate&&pageDate.getFullYear()===y&&pageDate.getMonth()===m&&pageDate.getDate()===d)el.classList.add('current-page');
- days.appendChild(el)
- }
- }
- sel.addEventListener('change',()=>render(sel.value));
- data.forEach(e=>{const o=document.createElement('option');o.value=e.page;o.textContent=e.date+': '+e.title;mob.appendChild(o)});
- mob.addEventListener('change',()=>{if(mob.value)location.href=mob.value});
- if(keys.length)render(keys[0]);
-}
 </script>
 </body>
 </html>

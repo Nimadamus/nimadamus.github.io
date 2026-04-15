@@ -4,7 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-15", page: "bayern-real-madrid-classic-rivalry-arsenal-sporting-ucl-quarterfinals-soccer-april-15-2026.html", title: "Soccer Analysis - April 15, 2026" },
-    { date: "2026-04-15", page: "soccer-previews.html", title: "Soccer Previews Today - Daily Match Analysis & Betting Lines" },
+    { date: "2026-04-15", page: "soccer-previews.html", title: "Soccer Previews Today - Daily Analysis & Betting Lines" },
+    { date: "2026-04-15", page: "soccer.html", title: "Soccer Picks &amp; Predictions Today" },
     { date: "2026-04-14", page: "champions-league-quarterfinal-anfield-miracle-atletico-barcelona-soccer-april-14-2026.html", title: "Soccer Analysis - April 14, 2026" },
     { date: "2026-04-13", page: "roses-rivalry-man-united-leeds-premier-league-soccer-april-13-2026.html", title: "Soccer Analysis - April 13, 2026" },
     { date: "2026-04-12", page: "chelsea-man-city-title-race-tottenham-relegation-battle-soccer-april-12-2026.html", title: "Soccer Analysis - April 12, 2026" },
@@ -26,7 +27,6 @@ const ARCHIVE_DATA = [
     { date: "2026-03-24", page: "soccer-previews-archive-march-2026.html#2026-03-24", title: "SOCCER Analysis - 2026-03-24" },
     { date: "2026-03-21", page: "soccer-previews-archive-march-2026.html#2026-03-21", title: "SOCCER Analysis - 2026-03-21" },
     { date: "2026-03-20", page: "bournemouth-man-united-premier-league-friday-villarreal-sociedad-soccer-march-20-2026.html", title: "Soccer Analysis - March 20, 2026" },
-    { date: "2026-03-20", page: "soccer.html", title: "Soccer Analysis - March 20, 2026" },
     { date: "2026-03-19", page: "soccer-previews-archive-march-2026.html#2026-03-19", title: "SOCCER Analysis - 2026-03-19" },
     { date: "2026-03-18", page: "champions-league-r16-barcelona-newcastle-liverpool-galatasaray-bayern-soccer-march-18-2026.html", title: "Soccer Analysis - March 18, 2026" },
     { date: "2026-03-17", page: "champions-league-r16-city-madrid-arsenal-leverkusen-chelsea-psg-soccer-march-17-2026.html", title: "Soccer Analysis - March 17, 2026" },
@@ -120,13 +120,14 @@ const SPORT_HUB_PAGE = 'soccer-previews.html';
 const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);
 window.LATEST_CONTENT_PAGE = latestContentEntry ? latestContentEntry.page : null;
 
-// Main pages and hub pages ALWAYS show today's date and highlight today on the calendar
+// Main pages and hub pages show today when today has data; otherwise show the latest available content
 const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html', 'soccer-previews.html'];
 const today = new Date();
 const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
-// Ensure today's month is always in the month list (even if no archived content yet)
 const todayMonth = todayStr.substring(0, 7);
+const latestAvailableDate = ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : todayStr;
+const todayHasData = !!dateMap[todayStr];
 
 // Handle both root pages and archive pages
 const pathname = window.location.pathname;
@@ -139,16 +140,16 @@ if (pathname.includes('/archives/')) {
     currentPage = pathname.split('/').pop() || 'index.html';
 }
 
-// For main/hub pages, ALWAYS use today's date
+// For main/hub pages, prefer today when populated, then fall back to latest available content
 // For archive pages, use the page's mapped date
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
-const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);
+const currentPageDate = isMainPage ? (forcedDate || (todayHasData ? todayStr : latestAvailableDate)) : (pageToDateMap[currentPage] || null);
 
 const months = new Set();
 ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });
-// Always include today's month so the calendar can show it
-months.add(todayMonth);
+// Include today's month only when that sport has content today
+if (todayHasData) months.add(todayMonth);
 
 // Main/hub pages show today's month; archive pages show their month
 const sortedMonths = Array.from(months).sort().reverse();

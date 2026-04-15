@@ -4,12 +4,12 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-15", page: "sabres-division-title-celebrini-chases-history-season-finale-nhl-april-15-2026.html", title: "NHL Analysis - April 15, 2026" },
-    { date: "2026-04-15", page: "nhl-previews.html", title: "NHL Game Previews Today - Daily Analysis & Betting Lines" },
+    { date: "2026-04-15", page: "nhl-previews.html", title: "NHL Previews Today - Daily Analysis & Betting Lines" },
+    { date: "2026-04-15", page: "nhl.html", title: "NHL Picks &amp; Predictions Today" },
     { date: "2026-04-14", page: "avalanche-presidents-trophy-bruins-playoff-clinch-9-game-tuesday-nhl-april-14-2026.html", title: "NHL Analysis - April 14, 2026" },
     { date: "2026-04-13", page: "avalanche-oilers-showdown-kings-playoff-push-10-game-monday-nhl-april-13-2026.html", title: "NHL Analysis - April 13, 2026" },
     { date: "2026-04-12", page: "penguins-capitals-home-and-home-bruins-streak-playoff-push-nhl-april-12-2026.html", title: "NHL Analysis - April 12, 2026" },
     { date: "2026-04-09", page: "atlantic-playoff-race-lightning-canadiens-wild-stars-14-game-nhl-april-9-2026.html", title: "NHL Analysis - April 9, 2026" },
-    { date: "2026-04-09", page: "nhl.html", title: "NHL Analysis - April 9, 2026" },
     { date: "2026-04-08", page: "sabres-surge-capitals-oilers-playoff-push-nhl-april-8-2026.html", title: "NHL Analysis - April 8, 2026" },
     { date: "2026-04-07", page: "playoff-push-bruins-hurricanes-avalanche-oilers-wild-card-nhl-april-7-2026.html", title: "NHL Analysis - April 7, 2026" },
     { date: "2026-04-06", page: "lightning-sabres-atlantic-clash-predators-kings-wild-card-nhl-april-6-2026.html", title: "NHL Analysis - April 6, 2026" },
@@ -143,13 +143,14 @@ const SPORT_HUB_PAGE = 'nhl-previews.html';
 const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);
 window.LATEST_CONTENT_PAGE = latestContentEntry ? latestContentEntry.page : null;
 
-// Main pages and hub pages ALWAYS show today's date and highlight today on the calendar
+// Main pages and hub pages show today when today has data; otherwise show the latest available content
 const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html', 'nhl-previews.html'];
 const today = new Date();
 const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
-// Ensure today's month is always in the month list (even if no archived content yet)
 const todayMonth = todayStr.substring(0, 7);
+const latestAvailableDate = ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : todayStr;
+const todayHasData = !!dateMap[todayStr];
 
 // Handle both root pages and archive pages
 const pathname = window.location.pathname;
@@ -162,16 +163,16 @@ if (pathname.includes('/archives/')) {
     currentPage = pathname.split('/').pop() || 'index.html';
 }
 
-// For main/hub pages, ALWAYS use today's date
+// For main/hub pages, prefer today when populated, then fall back to latest available content
 // For archive pages, use the page's mapped date
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
-const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);
+const currentPageDate = isMainPage ? (forcedDate || (todayHasData ? todayStr : latestAvailableDate)) : (pageToDateMap[currentPage] || null);
 
 const months = new Set();
 ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });
-// Always include today's month so the calendar can show it
-months.add(todayMonth);
+// Include today's month only when that sport has content today
+if (todayHasData) months.add(todayMonth);
 
 // Main/hub pages show today's month; archive pages show their month
 const sortedMonths = Array.from(months).sort().reverse();

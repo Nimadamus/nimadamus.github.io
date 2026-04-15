@@ -4,14 +4,14 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-15", page: "play-in-elimination-warriors-clippers-magic-sixers-nba-april-15-2026.html", title: "NBA Analysis - April 15, 2026" },
-    { date: "2026-04-15", page: "nba-previews.html", title: "NBA Game Previews Today - Daily Analysis & Betting Lines" },
+    { date: "2026-04-15", page: "nba-previews.html", title: "NBA Previews Today - Daily Analysis & Betting Lines" },
+    { date: "2026-04-15", page: "nba.html", title: "NBA Picks &amp; Predictions Today" },
     { date: "2026-04-14", page: "play-in-tournament-heat-hornets-blazers-suns-nba-april-14-2026.html", title: "NBA Analysis - April 14, 2026" },
     { date: "2026-04-13", page: "nba-play-in-tournament-2026-full-preview-matchups-analysis.html", title: "2026 NBA Play-In Tournament Preview: Every Game Analyzed" },
     { date: "2026-04-12", page: "nuggets-vs-spurs-nba-analysis-stats-preview-april-12-2026.html", title: "Nuggets vs Spurs NBA Preview April 12 2026" },
     { date: "2026-04-12", page: "wembanyama-awards-game-regular-season-finale-15-game-sunday-nba-april-12-2026.html", title: "NBA Analysis - April 12, 2026" },
     { date: "2026-04-10", page: "suns-lakers-west-showdown-spurs-dominance-15-game-friday-nba-april-10-2026.html", title: "NBA Analysis - April 10, 2026" },
     { date: "2026-04-09", page: "celtics-knicks-east-heavyweight-lakers-warriors-rivalry-nba-april-9-2026.html", title: "NBA Analysis - April 9, 2026" },
-    { date: "2026-04-09", page: "nba.html", title: "NBA Analysis - April 9, 2026" },
     { date: "2026-04-08", page: "pistons-historic-season-thunder-dominant-regular-season-finale-nba-april-8-2026.html", title: "NBA Analysis - April 8, 2026" },
     { date: "2026-04-07", page: "thunder-historic-66-win-pace-luka-sidelined-rockets-suns-showdown-nba-april-7-2026.html", title: "NBA Analysis - April 7, 2026" },
     { date: "2026-04-06", page: "pistons-number-one-seed-spurs-fox-dominance-final-week-nba-april-6-2026.html", title: "NBA Analysis - April 6, 2026" },
@@ -167,13 +167,14 @@ const SPORT_HUB_PAGE = 'nba-previews.html';
 const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);
 window.LATEST_CONTENT_PAGE = latestContentEntry ? latestContentEntry.page : null;
 
-// Main pages and hub pages ALWAYS show today's date and highlight today on the calendar
+// Main pages and hub pages show today when today has data; otherwise show the latest available content
 const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html', 'nba-previews.html'];
 const today = new Date();
 const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
-// Ensure today's month is always in the month list (even if no archived content yet)
 const todayMonth = todayStr.substring(0, 7);
+const latestAvailableDate = ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : todayStr;
+const todayHasData = !!dateMap[todayStr];
 
 // Handle both root pages and archive pages
 const pathname = window.location.pathname;
@@ -186,16 +187,16 @@ if (pathname.includes('/archives/')) {
     currentPage = pathname.split('/').pop() || 'index.html';
 }
 
-// For main/hub pages, ALWAYS use today's date
+// For main/hub pages, prefer today when populated, then fall back to latest available content
 // For archive pages, use the page's mapped date
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
-const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);
+const currentPageDate = isMainPage ? (forcedDate || (todayHasData ? todayStr : latestAvailableDate)) : (pageToDateMap[currentPage] || null);
 
 const months = new Set();
 ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });
-// Always include today's month so the calendar can show it
-months.add(todayMonth);
+// Include today's month only when that sport has content today
+if (todayHasData) months.add(todayMonth);
 
 // Main/hub pages show today's month; archive pages show their month
 const sortedMonths = Array.from(months).sort().reverse();

@@ -21,10 +21,7 @@ from pathlib import Path
 
 # Auto-detect repo directory (works on Windows locally and Linux in GitHub Actions)
 import sys
-if sys.platform == 'win32':
-    REPO_DIR = Path(r'C:\Users\Nima\nimadamus.github.io')
-else:
-    REPO_DIR = Path(__file__).parent.parent  # scripts/ -> repo root
+REPO_DIR = Path(__file__).resolve().parent.parent  # scripts/ -> repo root
 SCRIPTS_DIR = REPO_DIR / 'scripts'
 
 # Sport configurations
@@ -281,9 +278,22 @@ def extract_date_from_page(filepath):
     try:
         filename = filepath.name if hasattr(filepath, 'name') else os.path.basename(filepath)
 
-        # Method 0: Hub pages ALWAYS represent today's content
-        # Their titles are evergreen (no date), so we assign today's date
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()  # Read full file to find game-time dates
+
+        # Method 0: Hub pages represent today's content only when the daily
+        # block contains real preview content. Placeholder hubs should not
+        # become the newest calendar entry because they create empty first views.
         if filename in HUB_PAGES:
+            start_marker = '<!-- ========== DAILY CONTENT START ========== -->'
+            end_marker = '<!-- ========== DAILY CONTENT END ========== -->'
+            start_idx = content.find(start_marker)
+            end_idx = content.find(end_marker)
+            if start_idx != -1 and end_idx != -1:
+                daily_content = content[start_idx + len(start_marker):end_idx].strip()
+                stripped = re.sub(r'<[^>]+>', '', daily_content).strip().lower()
+                if not stripped or 'previews will be published shortly' in stripped:
+                    return None
             return datetime.now().strftime('%Y-%m-%d')
 
         # Method 0a: Check manual override
@@ -292,9 +302,6 @@ def extract_date_from_page(filepath):
 
         # UPDATED Jan 10, 2026: Main pages now extract date from TITLE
         MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html']
-
-        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
-            content = f.read()  # Read full file to find game-time dates
 
         # Method 1: Look for date in title
         title_match = re.search(r'<title>([^<]+)</title>', content[:5000], re.I)
@@ -575,13 +582,14 @@ def generate_calendar_js(sport_name, sport_config, pages):
         "const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);",
         "window.LATEST_CONTENT_PAGE = latestContentEntry ? latestContentEntry.page : null;",
         '',
-        '// Main pages and hub pages ALWAYS show today\'s date and highlight today on the calendar',
+        '// Main pages and hub pages show today when today has data; otherwise show the latest available content',
         f"const MAIN_PAGES = [{main_pages_js}];",
         "const today = new Date();",
         "const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');",
         '',
-        '// Ensure today\'s month is always in the month list (even if no archived content yet)',
         "const todayMonth = todayStr.substring(0, 7);",
+        "const latestAvailableDate = ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : todayStr;",
+        "const todayHasData = !!dateMap[todayStr];",
         '',
         '// Handle both root pages and archive pages',
         'const pathname = window.location.pathname;',
@@ -594,16 +602,16 @@ def generate_calendar_js(sport_name, sport_config, pages):
         "    currentPage = pathname.split('/').pop() || 'index.html';",
         '}',
         '',
-        '// For main/hub pages, ALWAYS use today\'s date',
+        '// For main/hub pages, prefer today when populated, then fall back to latest available content',
         '// For archive pages, use the page\'s mapped date',
         'const isMainPage = MAIN_PAGES.includes(currentPage);',
         'const forcedDate = window.FORCED_PAGE_DATE || null;',
-        'const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);',
+        'const currentPageDate = isMainPage ? (forcedDate || (todayHasData ? todayStr : latestAvailableDate)) : (pageToDateMap[currentPage] || null);',
         '',
         'const months = new Set();',
         "ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });",
-        '// Always include today\'s month so the calendar can show it',
-        "months.add(todayMonth);",
+        '// Include today\'s month only when that sport has content today',
+        "if (todayHasData) months.add(todayMonth);",
         '',
         '// Main/hub pages show today\'s month; archive pages show their month',
         'const sortedMonths = Array.from(months).sort().reverse();',
@@ -966,6 +974,8 @@ def update_calendar_cache_busters():
         'mlb-previews.html': 'mlb-calendar.js',
         'soccer-previews.html': 'soccer-calendar.js',
         'college-basketball-previews.html': 'ncaab-calendar.js',
+        'nfl.html': 'nfl-calendar.js',
+        'ncaaf.html': 'ncaaf-calendar.js',
     }
 
     print(f"\n[CACHE BUSTER] Updating calendar JS versions to {today_stamp}...")

@@ -148,7 +148,7 @@
 <body>
 <a href="index.html" class="betlegend-logo">BET<span>LEGEND</span></a>
  <div class="container">
- <div class="header"><h1>⚾ MLB<span> Verified Records</span></h1></div>
+ <div class="header"><h1>BetLegend<span> Verified Records</span></h1></div>
 
  <!-- Static SEO Content Section -->
 
@@ -176,7 +176,7 @@
  <button class="dropbtn" aria-label="Sports Categories">Sports</button>
  <div class="dropdown-content">
  <a href="nfl.html" title="Free NFL Picks and Predictions">NFL</a>
- <a href="mlb.html" title="MLB Picks and Analysis">MLB</a>
+ <a href="mlb-previews.html" title="MLB Picks and Analysis">MLB</a>
  <a href="ncaaf.html" title="College Football Picks">NCAAF</a>
  <a href="celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html" title="NBA Picks and Analysis">NBA</a>
 <a href="michigan-state-michigan-big-ten-finale-ncaab-march-8-2026.html" title="College Basketball Picks and Analysis">NCAAB</a>
@@ -236,10 +236,10 @@
  </div>
 
  <div class="stats-container">
- <div class="stat-box"><h3>Overall Record</h3><p id="summary-record">--</p></div>
- <div class="stat-box"><h3>Total Units</h3><p id="summary-units">--</p></div>
- <div class="stat-box"><h3>Win Percentage</h3><p id="summary-win-pct">--</p></div>
- <div class="stat-box"><h3>ROI</h3><p id="summary-roi">--</p></div>
+ <div class="stat-box"><h3>Overall Record</h3><p id="summary-record">489-409-36</p></div>
+ <div class="stat-box"><h3>Total Units</h3><p id="summary-units" class="units-loss">-30.09</p></div>
+ <div class="stat-box"><h3>Win Percentage</h3><p id="summary-win-pct">54.5%</p></div>
+ <div class="stat-box"><h3>ROI</h3><p id="summary-roi" class="roi-loss">-1.74%</p></div>
  </div>
 
  <!-- CHART SECTION -->
@@ -258,21 +258,21 @@
  </div>
  <div style="text-align:center">
  <div style="font-size:12px;color:#9bb3c9;text-transform:uppercase;margin-bottom:5px">Total Bets</div>
- <div style="font-size:18px;font-weight:700;color:#00e0ff" id="chart-total-bets">--</div>
+ <div style="font-size:18px;font-weight:700;color:#00e0ff" id="chart-total-bets">934</div>
  </div>
  <div style="text-align:center">
  <div style="font-size:12px;color:#9bb3c9;text-transform:uppercase;margin-bottom:5px">Current Units</div>
- <div style="font-size:18px;font-weight:700" id="chart-current-units">--</div>
+ <div style="font-size:18px;font-weight:700" id="chart-current-units">-30.09u</div>
  </div>
  <div style="text-align:center">
  <div style="font-size:12px;color:#9bb3c9;text-transform:uppercase;margin-bottom:5px">Peak Units</div>
- <div style="font-size:18px;font-weight:700;color:#39FF14" id="chart-peak-units">--</div>
+ <div style="font-size:18px;font-weight:700;color:#39FF14" id="chart-peak-units">+23.05u</div>
  </div>
  </div>
  </section>
 
  <h2 class="section-title">Full Betting History</h2>
- <div class="loading-message" id="loading-message">Loading records from Google Sheets...</div>
+ <div class="loading-message" id="loading-message" style="display:none">Preparing verified records...</div>
  <div class="table-container">
  <table>
  <thead><tr><th>Date</th><th>Sport</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
@@ -284,7 +284,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
- // Google Sheets CSV URL - Old MLB Sheet (correct data)
+ // Verified records are stored locally so the page renders complete, stable stats without a third-party loading state.
+ const VERIFIED_RECORDS_JSON_URL = 'all-records.json';
+ // Legacy remote CSV URL kept only as a fallback if the local JSON cannot be loaded.
  const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';
 
  // Global storage for all picks (for year filtering)
@@ -382,7 +384,7 @@
  return values;
  }
 
- // Function to convert Google Sheets data to the format expected by the original script
+ // Function to convert verified records data to the format expected by the original script
  function convertToMLBFormat(sheetData) {
  return sheetData.map(row => ({
  Date: row.Date || '',
@@ -394,15 +396,14 @@
  }));
  }
 
- // Load data from Google Sheets and process it
+ // Load verified local data and process it
  async function loadDataFromSheets() {
  try {
- const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
+ const response = await fetch(VERIFIED_RECORDS_JSON_URL + '?cache=' + Date.now(), {
  cache: 'no-store',
  headers: { 'Cache-Control': 'no-store' }
  });
- const csvText = await response.text();
- const filteredData = parseCSV(csvText);
+ const filteredData = await response.json();
 
  const mlbPicksData = convertToMLBFormat(filteredData);
  
@@ -413,8 +414,20 @@
  processPicksData(mlbPicksData);
  
  } catch (error) {
- console.error('Error loading data from Google Sheets:', error);
- document.getElementById('loading-message').textContent = 'Error loading data from Google Sheets. Please try again later.';
+ console.error('Error loading local verified records:', error);
+ try {
+ const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cache=' + Date.now(), {
+ cache: 'no-store',
+ headers: { 'Cache-Control': 'no-store' }
+ });
+ const csvText = await response.text();
+ const filteredData = parseCSV(csvText);
+ processPicksData(convertToMLBFormat(filteredData));
+ } catch (fallbackError) {
+ console.error('Error loading fallback records:', fallbackError);
+ document.getElementById('loading-message').style.display = 'block';
+ document.getElementById('loading-message').textContent = 'Verified records are temporarily unavailable.';
+ }
  }
  }
 

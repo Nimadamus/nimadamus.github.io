@@ -4,13 +4,12 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-15", page: "ohtani-mound-return-imanaga-luzardo-duel-fifteen-game-wednesday-mlb-april-15-2026.html", title: "MLB Analysis - April 15, 2026" },
-    { date: "2026-04-15", page: "mlb-previews.html", title: "MLB Game Previews Today - Daily Analysis & Betting Lines" },
+    { date: "2026-04-15", page: "mlb-previews.html", title: "MLB Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-04-14", page: "yamamoto-nola-mets-dodgers-cubs-phillies-15-game-tuesday-mlb-april-14-2026.html", title: "MLB Analysis - April 14, 2026" },
     { date: "2026-04-13", page: "skenes-crochet-mets-dodgers-espn-10-game-monday-mlb-april-13-2026.html", title: "MLB Analysis - April 13, 2026" },
     { date: "2026-04-12", page: "degrom-sasaki-ace-duel-alcantara-dominance-saturday-mlb-april-12-2026.html", title: "MLB Analysis - April 12, 2026" },
     { date: "2026-04-10", page: "glasnow-dodgers-host-rangers-yankees-rays-15-game-friday-mlb-april-10-2026.html", title: "MLB Analysis - April 10, 2026" },
     { date: "2026-04-09", page: "lowder-meyer-young-arms-severino-yankee-stadium-mlb-april-9-2026.html", title: "MLB Analysis - April 9, 2026" },
-    { date: "2026-04-09", page: "mlb.html", title: "MLB Analysis - April 9, 2026" },
     { date: "2026-04-08", page: "ohtani-cease-world-series-rematch-coors-field-fireworks-mlb-april-8-2026.html", title: "MLB Analysis - April 8, 2026" },
     { date: "2026-04-07", page: "world-series-rematch-dodgers-blue-jays-skenes-skubal-ace-duels-mlb-april-7-2026.html", title: "MLB Analysis - April 7, 2026" },
     { date: "2026-04-06", page: "dodgers-blue-jays-world-series-rematch-brewers-surge-mlb-april-6-2026.html", title: "MLB Analysis - April 6, 2026" },
@@ -27,6 +26,7 @@ const ARCHIVE_DATA = [
     { date: "2026-03-25", page: "mlb-previews-archive-march-2026.html#2026-03-25", title: "MLB Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "mlb-previews-archive-march-2026.html#2026-03-24", title: "MLB Analysis - 2026-03-24" },
     { date: "2026-03-18", page: "spring-training-heat-wave-cubs-bregman-dodgers-tucker-mlb-march-18-2026.html", title: "MLB Analysis - March 18, 2026" },
+    { date: "2026-03-18", page: "mlb.html", title: "MLB Picks &amp; Predictions Today" },
     { date: "2026-01-08", page: "mlb-picks-analysis-against-the-spread-january-08-2026.html", title: "MLB Analysis - January 08, 2026" },
 ];
 
@@ -40,13 +40,14 @@ const SPORT_HUB_PAGE = 'mlb-previews.html';
 const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);
 window.LATEST_CONTENT_PAGE = latestContentEntry ? latestContentEntry.page : null;
 
-// Main pages and hub pages ALWAYS show today's date and highlight today on the calendar
+// Main pages and hub pages show today when today has data; otherwise show the latest available content
 const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html', 'mlb-previews.html'];
 const today = new Date();
 const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
-// Ensure today's month is always in the month list (even if no archived content yet)
 const todayMonth = todayStr.substring(0, 7);
+const latestAvailableDate = ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : todayStr;
+const todayHasData = !!dateMap[todayStr];
 
 // Handle both root pages and archive pages
 const pathname = window.location.pathname;
@@ -59,16 +60,16 @@ if (pathname.includes('/archives/')) {
     currentPage = pathname.split('/').pop() || 'index.html';
 }
 
-// For main/hub pages, ALWAYS use today's date
+// For main/hub pages, prefer today when populated, then fall back to latest available content
 // For archive pages, use the page's mapped date
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
-const currentPageDate = isMainPage ? (forcedDate || todayStr) : (pageToDateMap[currentPage] || null);
+const currentPageDate = isMainPage ? (forcedDate || (todayHasData ? todayStr : latestAvailableDate)) : (pageToDateMap[currentPage] || null);
 
 const months = new Set();
 ARCHIVE_DATA.forEach(item => { const [y, m] = item.date.split('-'); months.add(y + '-' + m); });
-// Always include today's month so the calendar can show it
-months.add(todayMonth);
+// Include today's month only when that sport has content today
+if (todayHasData) months.add(todayMonth);
 
 // Main/hub pages show today's month; archive pages show their month
 const sortedMonths = Array.from(months).sort().reverse();
