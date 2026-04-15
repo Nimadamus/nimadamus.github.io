@@ -185,9 +185,10 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 
 <script src="scripts/nhl-calendar.js?v=20260415"></script>
 <script>
-// Auto-redirect to latest daily page
+// Auto-redirect to the newest real daily page, never back to this hub placeholder.
 if (typeof ARCHIVE_DATA !== 'undefined' && ARCHIVE_DATA.length > 0) {
-    var latestPage = ARCHIVE_DATA[0].page;
+    var latestEntry = ARCHIVE_DATA.find(function(item) { return item.page && item.page !== 'nhl-previews.html'; });
+    var latestPage = (window.LATEST_CONTENT_PAGE || (latestEntry && latestEntry.page));
     var currentPage = window.location.pathname.split('/').pop();
     if (latestPage && latestPage !== currentPage) {
         window.location.replace('/' + latestPage);

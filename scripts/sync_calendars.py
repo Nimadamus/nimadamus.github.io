@@ -442,6 +442,30 @@ def get_sport_pages(sport_config):
                 })
                 print(f"    {relative_path}: {date}")
 
+    def archive_page_for_date(date):
+        """Return a month archive anchor for a recovered hub date when it exists."""
+        if not archive_pattern:
+            return None
+
+        date_obj = datetime.strptime(date, '%Y-%m-%d')
+        month_name = date_obj.strftime('%B').lower()
+        year = date_obj.strftime('%Y')
+        archive_filename = archive_pattern.replace('*', f'{month_name}-{year}')
+        archive_path = REPO_DIR / archive_filename
+
+        if not archive_path.exists():
+            return None
+
+        try:
+            with open(archive_path, 'r', encoding='utf-8', errors='ignore') as f:
+                archive_html = f.read()
+            if f'id="{date}"' in archive_html or f"id='{date}'" in archive_html:
+                return f'{archive_filename}#{date}'
+        except Exception:
+            return None
+
+        return None
+
     # =========================================================================
     # ARCHIVE DATE RECOVERY: Read from JSON manifest (primary) + HTML (fallback)
     # The manifest is the single source of truth, written by rotate_hub_content.py.
@@ -461,9 +485,13 @@ def get_sport_pages(sport_config):
             sport_dates = manifest.get(prefix, [])
             for date in sport_dates:
                 if date not in existing_dates:
+                    archive_page = archive_page_for_date(date)
+                    if not archive_page and hub_page:
+                        print(f"    [SKIP MANIFEST] {hub_page}: {date} has no archive anchor or specific page")
+                        continue
                     pages.append({
                         'date': date,
-                        'page': hub_page or f'{prefix}.html',
+                        'page': archive_page or hub_page or f'{prefix}.html',
                         'title': f'{prefix.upper()} Analysis - {date}'
                     })
                     existing_dates.add(date)
@@ -478,9 +506,13 @@ def get_sport_pages(sport_config):
             archive_dates = extract_dates_from_rotation_archive(filepath)
             for date in archive_dates:
                 if date not in existing_dates:
+                    archive_page = archive_page_for_date(date)
+                    if not archive_page and hub_page:
+                        print(f"    [SKIP ARCHIVE HTML] {hub_page}: {date} has no archive anchor or specific page")
+                        continue
                     pages.append({
                         'date': date,
-                        'page': hub_page or f'{prefix}.html',
+                        'page': archive_page or hub_page or f'{prefix}.html',
                         'title': f'{prefix.upper()} Analysis - {date}'
                     })
                     existing_dates.add(date)
@@ -538,6 +570,10 @@ def generate_calendar_js(sport_name, sport_config, pages):
         '',
         'const pageToDateMap = {};',
         'ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });',
+        '',
+        f"const SPORT_HUB_PAGE = '{hub_page or ''}';",
+        "const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);",
+        "window.LATEST_CONTENT_PAGE = latestContentEntry ? latestContentEntry.page : null;",
         '',
         '// Main pages and hub pages ALWAYS show today\'s date and highlight today on the calendar',
         f"const MAIN_PAGES = [{main_pages_js}];",
