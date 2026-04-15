@@ -107,7 +107,7 @@ h2{margin:0;font-family:Oswald,Manrope,sans-serif;font-size:40px;line-height:1.0
 .board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .card,.panel{overflow:hidden;border:1px solid rgba(255,238,203,.13);background:#181612;border-radius:9px}
 .card{display:flex;flex-direction:column}
-.card img{width:100%;height:230px;min-height:230px;max-height:230px;object-fit:cover;object-position:center center;flex:0 0 230px;background:#111}
+.card img{width:100%;height:230px;min-height:230px;max-height:230px;aspect-ratio:16/9;object-fit:cover;object-position:center center;flex:0 0 230px;background:#111}
 .card.feature img{height:230px;min-height:230px;max-height:230px}
 .img-pos-top{object-position:center 24%!important}
 .img-pos-upper{object-position:center 36%!important}
@@ -141,7 +141,7 @@ h2{margin:0;font-family:Oswald,Manrope,sans-serif;font-size:40px;line-height:1.0
 .compact-picks-grid{grid-template-columns:repeat(4,1fr)}
 .pick-card,.pick-card-sm{display:block;overflow:hidden;border:1px solid rgba(255,238,203,.13);background:#181612;border-radius:9px}
 .pick-card-img-wrap,.pick-card-sm-img-wrap{height:230px;min-height:230px;max-height:230px;background:#111}
-.pick-card-img,.pick-card-sm-img{width:100%;height:100%;object-fit:cover;object-position:center center;background:#111}
+.pick-card-img,.pick-card-sm-img{width:100%;height:100%;aspect-ratio:16/9;object-fit:cover;object-position:center center;background:#111}
 .pick-card-header,.pick-card-sm-header,.pick-card-meta,.pick-card-sm-meta,.pick-card-footer,.pick-card-sm-footer{padding:13px 15px}
 .pick-card-title,.pick-card-sm-title{display:block;min-height:48px;font-family:Oswald,Manrope,sans-serif;font-size:20px;line-height:1.12;text-transform:uppercase;color:#fbf7ed}
 .pick-card-sm-title{font-size:16px;min-height:58px}
@@ -154,7 +154,7 @@ h2{margin:0;font-family:Oswald,Manrope,sans-serif;font-size:40px;line-height:1.0
 .compact-picks-pagination button.active{background:#e8b85c;color:#16120c;border-color:#e8b85c}
 .article-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
 .article-card{overflow:hidden;border:1px solid rgba(255,238,203,.13);background:#181612;border-radius:9px;display:flex;flex-direction:column}
-.article-card img{width:100%;height:230px;min-height:230px;max-height:230px;object-fit:cover;object-position:center center;flex:0 0 230px;background:#111}
+.article-card img{width:100%;height:230px;min-height:230px;max-height:230px;aspect-ratio:16/9;object-fit:cover;object-position:center center;flex:0 0 230px;background:#111}
 .article-card.feature img{height:230px;min-height:230px;max-height:230px}
 .article-card .card-body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
 .article-card time{display:block;margin-top:12px;color:#aaa091;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
@@ -375,7 +375,7 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
     </div>
     <div class="article-grid">
       <a class="article-card feature" href="nba-play-in-tournament-2026-full-preview-matchups-analysis.html">
-        <img class="img-pos-top" src="images/steph-curry-hero.png" alt="NBA Play-In Tournament preview">
+        <img src="images/allstars.png" alt="NBA Play-In Tournament preview">
         <div class="card-body">
           <span class="tag blue">NBA News</span>
           <h3>NBA Play-In Tournament full preview</h3>
@@ -393,7 +393,7 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
         </div>
       </a>
       <a class="article-card" href="sports-handicapping-hub-guide.html">
-        <img src="images/fantasy-betting-post.png" alt="Sports handicapping research dashboard">
+        <img src="images/proof-bet-screenshot-1000079686.jpg" alt="Sports handicapping research dashboard">
         <div class="card-body">
           <span class="tag red">Research</span>
           <h3>How to use the Handicapping Hub</h3>
@@ -493,6 +493,7 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
 </footer>
 
 <script src="homepage-picks-data.js"></script>
+<script src="homepage-image-system.js"></script>
 <script>
 document.querySelectorAll('.nav-item .dropbtn').forEach(function(button) {
   button.addEventListener('click', function() {
@@ -522,11 +523,15 @@ document.addEventListener('click', function(event) {
     return '<span class="pick-result-badge ' + cls + '">' + label + '</span>';
   }
 
-  function imageHTML(pick, cls) {
-    return '<img class="' + cls + '" src="' + pick.image + '" alt="' + pick.title + '" onerror="this.onerror=null;this.src=\'images/mlb-coors-field-diamondbacks-rockies-over.png\'">';
+  function imageHTML(pick, cls, usedImages) {
+    var src = window.BetLegendImages
+      ? window.BetLegendImages.resolvePickImage(pick, usedImages)
+      : (pick.image || 'images/proof-bet-screenshot-1000079685.jpg');
+    return '<img class="' + cls + '" src="' + src + '" alt="' + pick.title + '" onerror="this.onerror=null;this.src=\'images/proof-bet-screenshot-1000079685.jpg\'">';
   }
 
   var grid = document.getElementById('picks-grid');
+  var featuredImageUrls = new Set();
   if (grid) {
     HOMEPAGE_PICKS.slice(0, 3).forEach(function(pick) {
       var card = document.createElement('a');
@@ -534,7 +539,7 @@ document.addEventListener('click', function(event) {
       card.className = 'pick-card';
       card.innerHTML =
         '<div class="pick-card-header"><span class="pick-card-title">' + pick.title + '</span></div>' +
-        '<div class="pick-card-img-wrap">' + imageHTML(pick, 'pick-card-img') + '</div>' +
+        '<div class="pick-card-img-wrap">' + imageHTML(pick, 'pick-card-img', featuredImageUrls) + '</div>' +
         '<div class="pick-card-meta"><span class="pick-sport-tag">' + (pick.sport || 'PICK') + '</span>' + resultBadgeHTML(pick.result) + '</div>' +
         '<div class="pick-card-footer"><span>' + pick.date + '</span></div>';
       grid.appendChild(card);
@@ -550,13 +555,14 @@ document.addEventListener('click', function(event) {
 
   function renderCompactPage(page) {
     compactGrid.innerHTML = '';
+    var usedImages = new Set(featuredImageUrls);
     compactPicks.slice(page * perPage, page * perPage + perPage).forEach(function(pick) {
       var card = document.createElement('a');
       card.href = pick.url;
       card.className = 'pick-card-sm';
       card.innerHTML =
         '<div class="pick-card-sm-header"><span class="pick-card-sm-title">' + pick.title + '</span></div>' +
-        '<div class="pick-card-sm-img-wrap">' + imageHTML(pick, 'pick-card-sm-img') + '</div>' +
+        '<div class="pick-card-sm-img-wrap">' + imageHTML(pick, 'pick-card-sm-img', usedImages) + '</div>' +
         '<div class="pick-card-sm-meta"><span class="pick-sport-tag">' + (pick.sport || 'PICK') + '</span>' + resultBadgeHTML(pick.result) + '</div>' +
         '<div class="pick-card-sm-footer"><span>' + pick.date + '</span></div>';
       compactGrid.appendChild(card);
