@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "April 15, 2026",
         result: "",
         url: "kraken-plus-1-5-puck-line-daccord-tortorella-vegas-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/lqcetp0mtaoqdh8rvirg.jpg"
+        image: "https://soundofhockey.com/wp-content/uploads/2025/12/BL57971.jpg"
     },
     {
         sport: "NHL",
@@ -36,7 +36,7 @@ var HOMEPAGE_PICKS = [
         date: "April 14, 2026",
         result: "",
         url: "capitals-blue-jackets-under-6-5-thompson-greaves-nationwide-arena-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/ejaxkor8ko1pw8gjtcdv.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_auto/prd/ddozer6gbjvbypi7uens.jpg"
     },
     {
         sport: "MLB",
@@ -44,7 +44,7 @@ var HOMEPAGE_PICKS = [
         date: "April 14, 2026",
         result: "",
         url: "rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656427/action/hero/current"
+        image: "https://www.justbaseball.com/wp-content/uploads/sites/2/2026/03/GettyImages-2266677309-e1775064373445-768x432.jpg"
     },
     {
         sport: "NHL",
