@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Reds ML (+154) at Twins 2.5u",
+        date: "April 17, 2026",
+        result: "",
+        url: "reds-moneyline-williamson-twins-target-field-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/668715/action/hero/current"
+    },
+    {
         sport: "NHL",
         title: "Canucks/Oilers OVER 6.5 (-125) 2.5u",
         date: "April 16, 2026",
