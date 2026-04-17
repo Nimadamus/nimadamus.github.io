@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Canucks/Oilers OVER 6.5 (-125) 2.5u",
+        date: "April 16, 2026",
+        result: "",
+        url: "canucks-oilers-over-6-5-total-edmonton-powerplay-rogers-place-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_auto/prd/rm9h99mderwz4cfkooqf.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Maple Leafs +1.5 (-145) at Senators 2.5u",
         date: "April 15, 2026",
         result: "",
