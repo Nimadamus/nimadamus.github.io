@@ -52,7 +52,7 @@ var HOMEPAGE_PICKS = [
         date: "April 15, 2026",
         result: "",
         url: "kraken-plus-1-5-puck-line-daccord-tortorella-vegas-nhl.html",
-        image: "images/utah-hockey-club-san-jose-sharks-nhl-betting-pick-prediction-november-18-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/lqcetp0mtaoqdh8rvirg.jpg"
     },
     {
         sport: "NHL",
@@ -60,7 +60,7 @@ var HOMEPAGE_PICKS = [
         date: "April 14, 2026",
         result: "",
         url: "capitals-blue-jackets-under-6-5-thompson-greaves-nationwide-arena-nhl.html",
-        image: "images/penguins-plus-1-5-senators-december-18-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/ejaxkor8ko1pw8gjtcdv.jpg"
     },
     {
         sport: "MLB",
@@ -68,7 +68,7 @@ var HOMEPAGE_PICKS = [
         date: "April 14, 2026",
         result: "",
         url: "rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html",
-        image: "images/mlb-rangers-athletics-prediction-july.png"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656427/action/hero/current"
     },
     {
         sport: "NHL",
@@ -76,7 +76,7 @@ var HOMEPAGE_PICKS = [
         date: "April 13, 2026",
         result: "",
         url: "wild-blues-under-5-5-gustavsson-hofer-enterprise-center-nhl.html",
-        image: "images/wild-puck-line-oilers-december-2-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/slh8fgt2yfqan3ys4vit.jpg"
     },
     {
         sport: "MLB",
@@ -84,7 +84,7 @@ var HOMEPAGE_PICKS = [
         date: "April 13, 2026",
         result: "",
         url: "yankees-angels-under-9-5-warren-kikuchi-yankee-stadium-mlb.html",
-        image: "images/mlb-aaron-judge-yankees-batting.png"
+        image: "https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_239,w_3174,h_1785/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/inside_the_pinstripes/01kk6p6ywmpepmzg6g9m.jpg"
     },
     {
         sport: "NHL",
@@ -92,7 +92,7 @@ var HOMEPAGE_PICKS = [
         date: "April 12, 2026",
         result: "",
         url: "mammoth-flames-under-6-saddledome-calgary-nhl.html",
-        image: "images/sharks-mammoth-nhl-picks-december-1-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/c1c01ufph2bsqfq0npsu.jpg"
     },
     {
         sport: "MLB",
@@ -100,7 +100,7 @@ var HOMEPAGE_PICKS = [
         date: "April 11, 2026",
         result: "",
         url: "giants-moneyline-webb-orioles-camden-yards-mlb.html",
-        image: "images/mlb-logan-webb-giants-guardians-moneyline.png"
+        image: "https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/v1773507436/mlb/rsxmjlczbv0elpmrsm6c.jpg"
     },
     {
         sport: "MLB",
@@ -108,7 +108,7 @@ var HOMEPAGE_PICKS = [
         date: "April 10, 2026",
         result: "",
         url: "rangers-dodgers-under-9-glasnow-rocker-dodger-stadium-mlb.html",
-        image: "images/mlb-world-series-game1-dodgers-betting-pick-oct-24-2025.png"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607192/action/hero/current"
     },
     {
         sport: "MLB",
@@ -116,7 +116,7 @@ var HOMEPAGE_PICKS = [
         date: "April 8, 2026",
         result: "",
         url: "cardinals-nationals-over-8-5-runs-nationals-park-mlb.html",
-        image: "images/mlb-twins-coors-field-betting-pick.png"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/676475/action/hero/current"
     },
     {
         sport: "NHL",
@@ -124,7 +124,7 @@ var HOMEPAGE_PICKS = [
         date: "April 7, 2026",
         result: "",
         url: "blues-puck-line-moneyline-avalanche-enterprise-center-nhl.html",
-        image: "images/blackhawks-blues-december-12-2025.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1775448838/prd/trepka02swudorxhugpg"
     },
     {
         sport: "MLB",
@@ -132,7 +132,7 @@ var HOMEPAGE_PICKS = [
         date: "April 6, 2026",
         result: "",
         url: "braves-f5-moneyline-sale-dominates-angels-mlb.html",
-        image: "images/mlb-braves-rays-betting-pick-july.png"
+        image: "https://a.espncdn.com/photo/2026/0401/r1637364_1296x729_16-9.jpg"
     },
     {
         sport: "MLB",
@@ -140,7 +140,7 @@ var HOMEPAGE_PICKS = [
         date: "April 5, 2026",
         result: "",
         url: "mariners-moneyline-castillo-angels-rubber-match-mlb.html",
-        image: "images/mlb-seattle-mariners-twins-betting-pick.png"
+        image: "https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/mlb/vtmwkwrwxgev9wnb0hwg.jpg"
     },
     {
         sport: "MLB",
@@ -148,7 +148,7 @@ var HOMEPAGE_PICKS = [
         date: "April 4, 2026",
         result: "L",
         url: "red-sox-moneyline-early-padres-fenway-mlb.html",
-        image: "images/mlb-red-sox-blue-jays-betting-pick.png"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/813349/action/hero/current"
     },
     {
         sport: "NHL",
@@ -156,7 +156,7 @@ var HOMEPAGE_PICKS = [
         date: "April 3, 2026",
         result: "L",
         url: "blues-ducks-under-6-honda-center-nhl.html",
-        image: "images/utah-mammoth-vegas.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/btwtujci49zhm95003ov"
     },
     {
         sport: "MLB",
@@ -164,7 +164,7 @@ var HOMEPAGE_PICKS = [
         date: "April 1, 2026",
         result: "L",
         url: "twins-royals-under-8-5-joe-ryan-kauffman-mlb.html",
-        image: "images/mlb-great-american-ballpark-yankees-reds.png"
+        image: "http://res.cloudinary.com/ybmedia/image/upload/c_crop,e_improve,h_513,w_912,x_0,y_0/c_fill,f_auto,h_900,q_auto,w_1600/v1/m/9/e/9e1649e8af5186e9ea20d235baeb9c780cf47287/01kmp1d5y8pw48g3nscg.jpg"
     },
     {
         sport: "MLB",
@@ -172,7 +172,7 @@ var HOMEPAGE_PICKS = [
         date: "March 31, 2026",
         result: "W",
         url: "giants-moneyline-webb-padres-petco-park-mlb.html",
-        image: "images/mlb-colorado-rockies-brewers-betting-pick.png"
+        image: "https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/v1773507436/mlb/rsxmjlczbv0elpmrsm6c.jpg"
     },
     {
         sport: "MLB",
@@ -180,7 +180,7 @@ var HOMEPAGE_PICKS = [
         date: "March 30, 2026",
         result: "L",
         url: "brewers-moneyline-harrison-rays-series-opener-mlb.html",
-        image: "images/mlb-giants-dodgers-oracle-park-under-sept-13-2025.png"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/690986/action/hero/current"
     },
     {
         sport: "MLB",
@@ -188,7 +188,7 @@ var HOMEPAGE_PICKS = [
         date: "March 29, 2026",
         result: "W",
         url: "brewers-moneyline-sproat-white-sox-sweep-mlb.html",
-        image: "images/mlb-guardians-moneyline-pick-sept-19-2025.png"
+        image: "https://a.espncdn.com/photo/2026/0326/r1634325_1296x729_16-9.jpg"
     },
     {
         sport: "MLB",
@@ -196,7 +196,7 @@ var HOMEPAGE_PICKS = [
         date: "March 28, 2026",
         result: "W",
         url: "yankees-giants-under-8-5-oracle-park-mlb.html",
-        image: "images/mlb-cubs-pirates-betting-pick-sept-17-2025.png"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/701542/action/hero/current"
     },
     {
         sport: "MLB",
@@ -204,7 +204,7 @@ var HOMEPAGE_PICKS = [
         date: "March 27, 2026",
         result: "W",
         url: "blue-jays-moneyline-gausman-athletics-opening-series-mlb.html",
-        image: "images/mlb-garrett-crochet-fenway-park-sept-02-2025.png"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592332/action/hero/current"
     },
     {
         sport: "MLB",
@@ -212,7 +212,7 @@ var HOMEPAGE_PICKS = [
         date: "March 26, 2026",
         result: "W",
         url: "red-sox-moneyline-crochet-reds-opening-day-mlb.html",
-        image: "images/mlb-yankees-bluejays-alds-game4-total-oct-08-2025.png"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/676979/action/hero/current"
     },
     {
         sport: "MLB",
@@ -220,7 +220,7 @@ var HOMEPAGE_PICKS = [
         date: "March 25, 2026",
         result: "P",
         url: "yankees-giants-over-7-opening-day-mlb.html",
-        image: "images/mlb-picks-team-logos-july-11-2025.png"
+        image: "https://img.mlbstatic.com/mlb-images/image/upload/t_16x9/t_w1024/mlb/i8rrz7i5pyfxit8mo78l"
     },
     {
         sport: "NHL",
@@ -228,7 +228,7 @@ var HOMEPAGE_PICKS = [
         date: "March 24, 2026",
         result: "W",
         url: "blackhawks-puck-line-moneyline-at-islanders-nhl.html",
-        image: "images/blackhawks-puck-line-kings-december-4-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/p02oc3irhchowhosjttd"
     },
     {
         sport: "NHL",
@@ -236,7 +236,7 @@ var HOMEPAGE_PICKS = [
         date: "March 21, 2026",
         result: "L",
         url: "kraken-blue-jackets-under-6-5-nhl.html",
-        image: "images/nhl.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/xrvcgou7nncebdksdrg1.jpg"
     },
     {
         sport: "NBA",
@@ -244,7 +244,7 @@ var HOMEPAGE_PICKS = [
         date: "March 20, 2026",
         result: "L",
         url: "hawks-plus-2-5-at-rockets-nba.html",
-        image: "images/warriors-kings-kuminga-over-nov5-2025.png"
+        image: "https://www.orlandosentinel.com/wp-content/uploads/2026/03/Magic-Hawks-Basketball-5.jpg?w=1600&resize=1600,900"
     },
     {
         sport: "NHL",
@@ -252,7 +252,7 @@ var HOMEPAGE_PICKS = [
         date: "March 20, 2026",
         result: "L",
         url: "devils-moneyline-plus-110-at-capitals-nhl.html",
-        image: "images/devils-team-total-under-dallas-december-3-2025.png"
+        image: "https://platform.allaboutthejersey.com/wp-content/uploads/sites/6/2026/03/gettyimages-2266728853.jpg"
     },
     {
         sport: "NHL",
@@ -260,7 +260,7 @@ var HOMEPAGE_PICKS = [
         date: "March 19, 2026",
         result: "L",
         url: "bruins-team-total-under-3-5-jets-nhl.html",
-        image: "images/bruins-islanders-under-6-nhl-betting-pick-november-26-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/mowaqhfcoindv24tzzax.jpg"
     },
     {
         sport: "NHL",
@@ -268,7 +268,7 @@ var HOMEPAGE_PICKS = [
         date: "March 18, 2026",
         result: "W",
         url: "senators-team-total-under-3-5-at-capitals-nhl.html",
-        image: "images/dallas-stars-edmonton-oilers-over-6-nhl-betting-pick-november-25-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1773114872/prd/e3gfsrtvzz0kxmyd7vaa"
     },
     {
         sport: "NHL",
@@ -276,7 +276,7 @@ var HOMEPAGE_PICKS = [
         date: "March 17, 2026",
         result: "W",
         url: "panthers-team-total-under-3-5-at-canucks-nhl.html",
-        image: "images/dallas-stars-team-total-under-minnesota-wild-december-11-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/al0kehobnis0ep3ehn3s.jpg"
     },
     {
         sport: "NHL",
@@ -284,7 +284,7 @@ var HOMEPAGE_PICKS = [
         date: "March 16, 2026",
         result: "W",
         url: "penguins-avalanche-over-6-5-nhl.html",
-        image: "images/anaheim-ducks-nhl-betting-pick-november-19-2025.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlvywrl77gjjekmzt3qg"
     },
     {
         sport: "NHL",
@@ -292,7 +292,7 @@ var HOMEPAGE_PICKS = [
         date: "March 15, 2026",
         result: "L",
         url: "sharks-moneyline-puck-line-value-at-canadiens-nhl.html",
-        image: "images/blackhawks-puck-line-kings-december-4-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1772057935/prd/v3ftqvttong49pvykmt0"
     },
     {
         sport: "NHL",
@@ -300,7 +300,7 @@ var HOMEPAGE_PICKS = [
         date: "March 14, 2026",
         result: "W",
         url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl-march-14-2026.html",
-        image: "images/boston-bruins-carolina-hurricanes-nhl-betting-pick-november-17-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlx0hqpifhq8kfmt1y9x"
     },
     {
         sport: "NHL",
@@ -308,7 +308,7 @@ var HOMEPAGE_PICKS = [
         date: "March 13, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260313-blues-puckline",
-        image: "images/islanders-nhl-puck-line-betting-pick-nov-10-2025.png"
+        image: "images/blackhawks-blues-december-12-2025.jpg"
     },
     {
         sport: "NHL",
@@ -316,7 +316,7 @@ var HOMEPAGE_PICKS = [
         date: "March 11, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260311-mtl-ott-over",
-        image: "images/islanders-puck-line-lightning-december-6-2025.png"
+        image: "images/montreal-canadiens-puck-line-rangers-december-13-2025.jpg"
     },
     {
         sport: "NHL",
@@ -324,7 +324,7 @@ var HOMEPAGE_PICKS = [
         date: "March 10, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260310-sharks-sabres-over",
-        image: "images/kings-stars-under-5-5-nhl-december-15-2025.jpeg"
+        image: "images/sharks-flames-nhl-puck-line-nov-13-2025.png"
     },
     {
         sport: "NHL",
@@ -340,7 +340,7 @@ var HOMEPAGE_PICKS = [
         date: "March 8, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260308-avalanche-moneyline",
-        image: "images/montreal-canadiens-puck-line-rangers-december-13-2025.jpg"
+        image: "images/nhl-avalanche-utah-road-matchup-oct-21-2025.png"
     },
     {
         sport: "NHL",
@@ -348,7 +348,7 @@ var HOMEPAGE_PICKS = [
         date: "March 7, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260307-kings-teamtotal-under",
-        image: "images/sharks-flames-nhl-puck-line-nov-13-2025.png"
+        image: "images/los-angeles-kings-ml-utah-mammoth-december-8-2025.png"
     },
     {
         sport: "NHL",
@@ -356,7 +356,7 @@ var HOMEPAGE_PICKS = [
         date: "March 6, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260306-redwings-moneyline",
-        image: "images/sharksbruins.png"
+        image: "images/nhl-oct19.png"
     },
     {
         sport: "NHL",
@@ -364,7 +364,7 @@ var HOMEPAGE_PICKS = [
         date: "March 5, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260305-leafs-moneyline",
-        image: "images/nhl-avalanche-utah-road-matchup-oct-21-2025.png"
+        image: "images/blackhawks-plus-1-5-maple-leafs-december-16-2025.jpeg"
     },
     {
         sport: "NHL",
@@ -372,7 +372,7 @@ var HOMEPAGE_PICKS = [
         date: "March 4, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260304-kraken-moneyline",
-        image: "images/nhl-oct19.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/xrvcgou7nncebdksdrg1"
     },
     {
         sport: "NHL",
@@ -380,7 +380,7 @@ var HOMEPAGE_PICKS = [
         date: "March 3, 2026",
         result: "6-1",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260303-nhl-ncaab-picks",
-        image: "images/nhl.png"
+        image: "images/boston-bruins-carolina-hurricanes-nhl-betting-pick-november-17-2025.png"
     },
     {
         sport: "NHL",
@@ -388,7 +388,7 @@ var HOMEPAGE_PICKS = [
         date: "March 2, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260302-redwings-predators-under",
-        image: "images/utah-mammoth-vegas.png"
+        image: "images/nhl-oct19.png"
     },
     {
         sport: "NHL",
@@ -396,7 +396,7 @@ var HOMEPAGE_PICKS = [
         date: "March 1, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260301-ducks-flames-under",
-        image: "images/bruins-islanders-under-6-nhl-betting-pick-november-26-2025.png"
+        image: "images/anaheim-ducks-nhl-betting-pick-november-19-2025.jpg"
     },
     {
         sport: "NHL",
@@ -404,7 +404,7 @@ var HOMEPAGE_PICKS = [
         date: "February 28, 2026",
         result: "5-2",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260228-nhl-saturday-card",
-        image: "images/dallas-stars-edmonton-oilers-over-6-nhl-betting-pick-november-25-2025.png"
+        image: "images/islanders-nhl-puck-line-betting-pick-nov-10-2025.png"
     },
     {
         sport: "NHL",
@@ -412,7 +412,7 @@ var HOMEPAGE_PICKS = [
         date: "February 27, 2026",
         result: "1-1",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260227-sabres-illinois",
-        image: "images/wild-puck-line-oilers-december-2-2025.png"
+        image: "images/bruins-islanders-under-6-nhl-betting-pick-november-26-2025.png"
     },
     {
         sport: "NHL",
@@ -420,7 +420,7 @@ var HOMEPAGE_PICKS = [
         date: "February 25, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260225-vgk-lak-under",
-        image: "images/dallas-stars-team-total-under-minnesota-wild-december-11-2025.png"
+        image: "images/utah-mammoth-vegas.png"
     },
     {
         sport: "NBA",
