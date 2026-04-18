@@ -187,6 +187,11 @@
   }
 
   function resolvePickImage(pick, usedImages) {
+    var pickImg = pick && pick.image ? String(pick.image) : '';
+    if (pickImg && pickImg !== 'newlogo.png' && !BLOCKED_IMAGE_RE.test(pickImg)) {
+      if (usedImages) usedImages.add(pickImg);
+      return pickImg;
+    }
     var sport = pick && pick.sport ? pick.sport : 'Betting';
     var src = makeThumbnail({
       sport: sport,
