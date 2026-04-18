@@ -308,7 +308,7 @@ var HOMEPAGE_PICKS = [
         date: "March 13, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260313-blues-puckline",
-        image: "images/blackhawks-blues-december-12-2025.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_png/v1773366397/prd/ckwxgsj13uyzf1c4ciuz.png"
     },
     {
         sport: "NHL",
@@ -316,7 +316,7 @@ var HOMEPAGE_PICKS = [
         date: "March 11, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260311-mtl-ott-over",
-        image: "images/montreal-canadiens-puck-line-rangers-december-13-2025.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_png/prd/fheppawnueem5lvuoywk.png"
     },
     {
         sport: "NHL",
@@ -324,7 +324,7 @@ var HOMEPAGE_PICKS = [
         date: "March 10, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260310-sharks-sabres-over",
-        image: "images/sharks-flames-nhl-puck-line-nov-13-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_auto/prd/po2acmf2h1bkk60rcfu0.jpg"
     },
     {
         sport: "NHL",
@@ -332,7 +332,7 @@ var HOMEPAGE_PICKS = [
         date: "March 9, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260309-kings-bluejackets-under",
-        image: "images/los-angeles-kings-ml-utah-mammoth-december-8-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/v1772774164/prd/h2qw1ix5gixoeumq24wf"
     },
     {
         sport: "NHL",
@@ -340,7 +340,7 @@ var HOMEPAGE_PICKS = [
         date: "March 8, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260308-avalanche-moneyline",
-        image: "images/nhl-avalanche-utah-road-matchup-oct-21-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_png/prd/fljwnnebgww50wd3v3nf.png"
     },
     {
         sport: "NHL",
@@ -348,7 +348,7 @@ var HOMEPAGE_PICKS = [
         date: "March 7, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260307-kings-teamtotal-under",
-        image: "images/los-angeles-kings-ml-utah-mammoth-december-8-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_png/prd/zsxvhta34tlov2aq0nrq.png"
     },
     {
         sport: "NHL",
@@ -356,7 +356,7 @@ var HOMEPAGE_PICKS = [
         date: "March 6, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260306-redwings-moneyline",
-        image: "images/nhl-oct19.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1772488079/prd/jnkpqruayckihmwnj4yf"
     },
     {
         sport: "NHL",
@@ -364,7 +364,7 @@ var HOMEPAGE_PICKS = [
         date: "March 5, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260305-leafs-moneyline",
-        image: "images/blackhawks-plus-1-5-maple-leafs-december-16-2025.jpeg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1767330717/prd/aryux4ugjuduxl6kshoi"
     },
     {
         sport: "NHL",
@@ -380,7 +380,7 @@ var HOMEPAGE_PICKS = [
         date: "March 3, 2026",
         result: "6-1",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260303-nhl-ncaab-picks",
-        image: "images/boston-bruins-carolina-hurricanes-nhl-betting-pick-november-17-2025.png"
+        image: "https://i0.wp.com/www.diebytheblade.com/wp-content/uploads/sites/14/2026/03/USATSI_28313749.jpg?w=1600&ssl=1"
     },
     {
         sport: "NHL",
@@ -388,7 +388,7 @@ var HOMEPAGE_PICKS = [
         date: "March 2, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260302-redwings-predators-under",
-        image: "images/nhl-oct19.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/v1772488079/prd/jnkpqruayckihmwnj4yf"
     },
     {
         sport: "NHL",
@@ -396,7 +396,7 @@ var HOMEPAGE_PICKS = [
         date: "March 1, 2026",
         result: "W",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260301-ducks-flames-under",
-        image: "images/anaheim-ducks-nhl-betting-pick-november-19-2025.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/h6qcahnl0ij28wf8wwrc.jpg"
     },
     {
         sport: "NHL",
@@ -404,7 +404,7 @@ var HOMEPAGE_PICKS = [
         date: "February 28, 2026",
         result: "5-2",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260228-nhl-saturday-card",
-        image: "images/islanders-nhl-puck-line-betting-pick-nov-10-2025.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1772161553/prd/vhyvosphmpikst65dbrt"
     },
     {
         sport: "NHL",
@@ -420,7 +420,7 @@ var HOMEPAGE_PICKS = [
         date: "February 25, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260225-vgk-lak-under",
-        image: "images/utah-mammoth-vegas.png"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_png/prd/dmq6prh83otoftnougas.png"
     },
     {
         sport: "NBA",
@@ -428,7 +428,7 @@ var HOMEPAGE_PICKS = [
         date: "February 24, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260224-raptors-minus1",
-        image: "images/thunderwin.png"
+        image: "https://media.assettype.com/outlookindia/2026-02-09/36ve1exd/Toronto-Raptors-vs-Indiana-Pacers-nba-basketball-game-4-Scottie-Barnes.jpg"
     },
     {
         sport: "NBA",
@@ -436,6 +436,6 @@ var HOMEPAGE_PICKS = [
         date: "February 23, 2026",
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260223-utah-jazz-plus-13",
-        image: "images/sacramento-kings-oklahoma-city-thunder-nba-over-betting-pick-total-november-19-2025.png"
+        image: "https://cloudfront-us-east-1.images.arcpublishing.com/deseretnews/UGCR5NDVGNFF3OZBJVH5SHD64U.JPG"
     }
 ];

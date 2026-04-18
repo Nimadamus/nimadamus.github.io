@@ -117,7 +117,7 @@
     }
   };
 
-  var BLOCKED_IMAGE_RE = /(?:arbitrage|allstars|nddutvzz|aryux4ug|fifa\.png|moneyview|money-logo|collegeban|LIVE\.png|ai-moneyball|mlb-picks-team-logos|homepage-preview)/i;
+  var BLOCKED_IMAGE_RE = /(?:arbitrage|allstars|fifa\.png|moneyview|money-logo|collegeban|LIVE\.png|ai-moneyball|mlb-picks-team-logos|homepage-preview)/i;
 
   function isLocalImage(src) {
     return typeof src === 'string' && /^images\/[^?#]+?\.(png|jpe?g|webp|gif|svg)$/i.test(src);
