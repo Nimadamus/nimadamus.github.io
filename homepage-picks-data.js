@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Rockies ML (+235) vs Dodgers 2u",
+        date: "April 18, 2026",
+        result: "",
+        url: "rockies-moneyline-plus-235-home-dog-sheehan-coors-field-dodgers-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657077/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Reds ML (+154) at Twins 2.5u",
         date: "April 17, 2026",
         result: "",
