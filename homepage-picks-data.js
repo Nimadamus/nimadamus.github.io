@@ -52,7 +52,7 @@ var HOMEPAGE_PICKS = [
         date: "April 15, 2026",
         result: "",
         url: "kraken-plus-1-5-puck-line-daccord-tortorella-vegas-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/lqcetp0mtaoqdh8rvirg.jpg"
+        image: "https://images.foxtv.com/static.q13fox.com/www.q13fox.com/content/uploads/2026/01/764/432/gettyimages-2255003397-e1767763673947.jpg"
     },
     {
         sport: "NHL",
@@ -60,7 +60,7 @@ var HOMEPAGE_PICKS = [
         date: "April 14, 2026",
         result: "",
         url: "capitals-blue-jackets-under-6-5-thompson-greaves-nationwide-arena-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/ejaxkor8ko1pw8gjtcdv.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1768186620/prd/jxstb4k7jjm1ky3yrlp1"
     },
     {
         sport: "MLB",
@@ -76,7 +76,7 @@ var HOMEPAGE_PICKS = [
         date: "April 13, 2026",
         result: "",
         url: "wild-blues-under-5-5-gustavsson-hofer-enterprise-center-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/slh8fgt2yfqan3ys4vit.jpg"
+        image: "images/wild-puck-line-oilers-december-2-2025.png"
     },
     {
         sport: "MLB",
