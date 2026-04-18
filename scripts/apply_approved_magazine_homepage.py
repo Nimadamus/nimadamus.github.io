@@ -3,6 +3,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PREVIEW = ROOT / "homepage-preview-c-magazine.html"
 INDEX = ROOT / "index.html"
+DEPRECATED_SECTION_MARKERS = (
+    "Today's board",
+    "Latest Pick Archive",
+    "Today's Analysis",
+    "Pick paths and archives",
+)
 
 LIVE_HEAD = """<!doctype html>
 <html lang="en">
@@ -49,6 +55,12 @@ gtag('config','G-QS8L5TDNLY');
 
 def main() -> None:
     html = PREVIEW.read_text(encoding="utf-8")
+    stale_markers = [marker for marker in DEPRECATED_SECTION_MARKERS if marker in html]
+    if stale_markers:
+        raise RuntimeError(
+            "Refusing to overwrite index.html from a stale homepage preview. "
+            f"Deprecated sections detected: {', '.join(stale_markers)}"
+        )
     style_start = html.index("<style>")
     body = html[style_start:]
     body = body.replace(
