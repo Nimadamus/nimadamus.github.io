@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "April 18, 2026",
         result: "",
         url: "rockies-moneyline-plus-235-home-dog-sheehan-coors-field-dodgers-mlb.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657077/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/686668/action/hero/current"
     },
     {
         sport: "MLB",
