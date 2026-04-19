@@ -308,44 +308,32 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-head">
-      <div><h2>Today's board</h2><p class="sub">Current previews, daily picks, sport hubs, and betting resources in a cleaner visual layout.</p></div>
-      <a class="btn secondary" href="blog.html">Latest Articles</a>
-    </div>
-    <div class="board">
-      <a class="card" href="bayern-munich-vs-real-madrid-ucl-analysis-stats-preview-april-15-2026.html">
-        <img src="images/ucl-olympiakos-psv-nov4-2025.png" alt="Champions League soccer action">
-        <div class="card-body"><span class="tag">Soccer</span><h3>Bayern vs Real Madrid</h3><p>Champions League matchup analysis, stats, and betting preview.</p></div>
-      </a>
-      <a class="card" href="play-in-elimination-warriors-clippers-magic-sixers-nba-april-15-2026.html">
-        <img src="images/warriors-kings-kuminga-over-nov5-2025.png" alt="NBA playoff basketball action">
-        <div class="card-body"><span class="tag blue">NBA</span><h3>Play-In elimination pressure</h3><p>Injury context, playoff urgency, and market notes.</p></div>
-      </a>
-      <a class="card feature" href="mlb-previews.html">
-        <img src="images/mlb-coors-field-diamondbacks-rockies-over.png" alt="">
-        <div class="card-body"><span class="tag red">MLB</span><h3>Daily baseball preview hub</h3><p>Pitchers, totals, bullpens, run lines, weather, and full-slate notes.</p></div>
-      </a>
-    </div>
-  </section>
-
-  <section class="proof">
+  <section class="latest-picks">
     <div class="section">
-      <div><h2>Transparent records, not hype.</h2><p>Every pick tracked. Every result documented. Complete transparency with sport-specific breakdowns, unit tracking, and ROI analysis.</p></div>
-      <div class="proof-box"><b>Pre-game</b><span>Picks posted before games start</span></div>
-      <div class="proof-box"><b>Units</b><span>Profit/loss tracked by sport</span></div>
-      <div class="proof-box"><b>Verified</b><span>Full records available to review</span></div>
+      <div class="section-head">
+        <div><h2>Latest Blog Picks</h2><p class="sub">Newest betting picks first, ordered from the latest published blog posts so visitors land on the most current picks content before anything else.</p></div>
+        <a class="btn secondary" href="blog.html">View Latest Picks</a>
+      </div>
+      <div class="picks-grid" id="picks-grid"></div>
+    </div>
+    <div class="section" style="padding-top:0">
+      <div class="compact-picks-grid" id="compact-picks-grid"></div>
+      <div class="compact-picks-pagination" id="compact-picks-pagination"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px">
+        <a class="btn secondary" href="best-bets-today.html">Best Bets Today</a>
+        <a class="btn secondary" href="betlegend-expert-analysis-betting-picks-archive-8.html">Pick Archive</a>
+      </div>
     </div>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <div><h2>Latest standalone articles</h2><p class="sub">Full article previews with real images, like the existing blog/card format, not just text links.</p></div>
+      <div><h2>Latest Analysis</h2><p class="sub">Daily slate previews, matchup hubs, and deeper standalone articles sit directly under the latest picks feed.</p></div>
       <a class="btn secondary" href="blog.html">View Blog</a>
     </div>
     <div class="article-grid">
-      <a class="article-card feature" href="nba-play-in-tournament-2026-full-preview-matchups-analysis.html">
-        <img src="images/allstars.png" alt="NBA Play-In Tournament preview">
+      <a class="article-card feature" data-card-key="article-nba-play-in" data-card-category="NBA" data-card-section="article" href="nba-play-in-tournament-2026-full-preview-matchups-analysis.html">
+        <img data-card-image src="https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_0,w_6000,h_3375/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/si/01knw6vyfcx16wqacy2n.jpg" alt="NBA Play-In Tournament preview">
         <div class="card-body">
           <span class="tag blue">NBA News</span>
           <h3>NBA Play-In Tournament full preview</h3>
@@ -353,8 +341,8 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
           <time>Featured article</time>
         </div>
       </a>
-      <a class="article-card" href="2026-fifa-world-cup-betting-guide-odds-predictions-favorites-how-to-bet.html">
-        <img src="images/soccer-armenia-ireland-corner-betting-oct-14-2025.png" alt="2026 FIFA World Cup betting guide">
+      <a class="article-card" data-card-key="article-world-cup-guide" data-card-category="Soccer" data-card-topic="Guide" data-card-section="article" href="2026-fifa-world-cup-betting-guide-odds-predictions-favorites-how-to-bet.html">
+        <img data-card-image src="https://panamericanworld.com/en/wp-content/uploads/sites/2/2025/11/metlife-stadium0.jpg" alt="2026 FIFA World Cup betting guide">
         <div class="card-body">
           <span class="tag">Guide</span>
           <h3>2026 FIFA World Cup betting guide</h3>
@@ -362,8 +350,8 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
           <time>Standalone guide</time>
         </div>
       </a>
-      <a class="article-card" href="sports-handicapping-hub-guide.html">
-        <img src="images/proof-bet-screenshot-1000079686.jpg" alt="Sports handicapping hub guide">
+      <a class="article-card" data-card-key="article-hub-guide" data-card-category="Betting" data-card-topic="Guide" data-card-section="article" href="sports-handicapping-hub-guide.html">
+        <img data-card-image src="images/nfl-betting-boom.png" alt="Sports handicapping research dashboard">
         <div class="card-body">
           <span class="tag red">Research</span>
           <h3>How to use the Handicapping Hub</h3>
@@ -371,33 +359,35 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
           <time>Research article</time>
         </div>
       </a>
+      <a class="article-card" data-card-key="board-bayern-real" data-card-category="Soccer" data-card-section="article" href="bayern-munich-vs-real-madrid-ucl-analysis-stats-preview-april-15-2026.html">
+        <img data-card-image src="images/ucl-olympiakos-psv-nov4-2025.png" alt="Bayern Munich vs Real Madrid Champions League preview">
+        <div class="card-body">
+          <span class="tag">Soccer</span>
+          <h3>Bayern vs Real Madrid</h3>
+          <p>Champions League matchup analysis, stats, and betting preview.</p>
+          <time>Standalone preview</time>
+        </div>
+      </a>
+      <a class="article-card" data-card-key="board-play-in-pressure" data-card-category="NBA" data-card-section="article" href="play-in-elimination-warriors-clippers-magic-sixers-nba-april-15-2026.html">
+        <img class="img-pos-upper" data-card-image src="images/warriors-kings-kuminga-over-nov5-2025.png" alt="NBA Play-In elimination pressure preview">
+        <div class="card-body">
+          <span class="tag blue">NBA</span>
+          <h3>Play-In elimination pressure</h3>
+          <p>Injury context, playoff urgency, and market notes.</p>
+          <time>Standalone preview</time>
+        </div>
+      </a>
+      <a class="article-card" data-card-key="board-mlb-hub" data-card-category="MLB" data-card-section="article" href="mlb-previews.html">
+        <img data-card-image src="images/mlb-shohei-ohtani-dodgers-world-series-game4-oct-28-2025.png" alt="MLB daily preview hub">
+        <div class="card-body">
+          <span class="tag red">MLB Hub</span>
+          <h3>Daily baseball preview hub</h3>
+          <p>Pitchers, totals, bullpens, run lines, weather, and full-slate notes.</p>
+          <time>Daily slate hub</time>
+        </div>
+      </a>
     </div>
-  </section>
-
-  <section class="latest-picks">
-    <div class="section">
-      <div class="section-head">
-        <div><h2>Latest Pick Archive</h2><p class="sub">Blog and pick cards keep their image previews and card layout from the current site data.</p></div>
-        <a class="btn secondary" href="betlegend-expert-analysis-betting-picks-archive-8.html">View All</a>
-      </div>
-      <div class="picks-grid" id="picks-grid"></div>
-    </div>
-    <div class="section" style="padding-top:0">
-      <div class="compact-picks-grid" id="compact-picks-grid"></div>
-      <div class="compact-picks-pagination" id="compact-picks-pagination"></div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="lower">
-      <div class="panel"><h2>Record center</h2><p>Fast paths into all sport-specific results.</p><div class="grid-links"><a href="records.html">All</a><a href="mlb-records.html">MLB</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="nfl-records.html">NFL</a><a href="soccer-records.html">Soccer</a></div></div>
-      <div class="panel"><h2>Tools and research</h2><p>Bet sizing, calculators, bankroll work, and handicapping education.</p><div class="grid-links"><a href="kelly-criterion.html">Kelly</a><a href="betting-calculators.html">Calculators</a><a href="bankroll.html">Bankroll</a><a href="handicapping-hub.html">Hub</a><a href="ev-calculator.html">EV</a><a href="live-odds.html">Odds</a></div></div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head"><div><h2>Today's Analysis</h2><p class="sub">The same homepage analysis paths, restyled as larger magazine cards.</p></div></div>
-    <div class="quick-links-grid">
+    <div class="quick-links-grid" style="margin-top:18px">
       <a href="nba-previews.html" class="quick-link-card"><div class="card-icon">NBA</div><h3>NBA Analysis</h3><p>Today's full NBA slate with advanced stats, betting lines, and matchup breakdowns.</p></a>
       <a href="nhl-previews.html" class="quick-link-card"><div class="card-icon">NHL</div><h3>NHL Analysis</h3><p>Goalie stats, power play trends, puck line analysis, and home ice performance data.</p></a>
       <a href="college-basketball-previews.html" class="quick-link-card"><div class="card-icon">NCAAB</div><h3>College Basketball</h3><p>Top college basketball matchups with ratings, standings, and ATS trends.</p></a>
@@ -408,40 +398,9 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
   </section>
 
   <section class="section">
-    <div class="section-head"><div><h2>Pick paths and archives</h2><p class="sub">The redesign keeps current picks, historical analysis, premium tools, and betting resources easy to reach.</p></div></div>
-    <div class="wide-card">
-      <a class="card" href="best-bets-today.html"><img src="images/LIVE.png" alt=""><div class="card-body"><span class="tag">Daily Picks</span><h3>Best Bets Today</h3><p>The fastest path into current picks and priority betting angles.</p></div></a>
-      <a class="card" href="nba-college-basketball-picks-predictions-analysis-february-2026.html"><img src="images/collegeban.png" alt=""><div class="card-body"><span class="tag blue">Archive</span><h3>Pick Archive</h3><p>Historical picks, older previews, and long-tail betting content.</p></div></a>
-      <a class="card" href="moneyline-parlay-of-the-day.html"><img src="images/moneyview.jpg" alt=""><div class="card-body"><span class="tag">Parlay</span><h3>Moneyline Parlay</h3><p>Daily parlay content and supporting analysis.</p></div></a>
-      <a class="card" href="pro/index.html"><img src="images/ai-moneyball.png" alt=""><div class="card-body"><span class="tag red">Pro</span><h3>Pro Tools</h3><p>Premium tools and workflows for deeper bettors.</p></div></a>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head"><div><h2>Latest intelligence</h2><p class="sub">The lower visuals represent the sports site instead of generic blocks.</p></div></div>
-    <div class="media-row">
-      <a class="media" href="nhl-previews.html"><img src="images/bruins-islanders-under-6-nhl-betting-pick-november-26-2025.png" alt=""><b>NHL Previews</b></a>
-      <a class="media" href="nfl.html"><img src="images/detroit-lions-philadelphia-eagles-nfl-sunday-night-football-betting-pick-november-16-2025.png" alt=""><b>NFL Picks</b></a>
-      <a class="media" href="soccer-previews.html"><img src="images/ucl-olympiakos-psv-nov4-2025.png" alt=""><b>Soccer Board</b></a>
-      <a class="media" href="betting-calculators.html"><img src="images/money-logo.png" alt=""><b>Betting Tools</b></a>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head"><div><h2>Resources and betting tools</h2><p class="sub">All major education, proof, sportsbook, and tool pages remain represented in this format.</p></div></div>
-    <div class="resource-grid">
-      <a class="resource" href="proofofpicks.html"><b>Proof of Picks</b><span>Pre-game posting and tracking transparency.</span></a>
-      <a class="resource" href="live-odds.html"><b>Live Odds</b><span>Market movement and pricing context.</span></a>
-      <a class="resource" href="howitworks.html"><b>How It Works</b><span>Modeling, simulations, and publishing process.</span></a>
-      <a class="resource" href="bankroll.html"><b>Bankroll</b><span>Unit sizing and betting discipline.</span></a>
-      <a class="resource" href="kelly-criterion.html"><b>Kelly Criterion</b><span>Bet sizing from edge and odds.</span></a>
-      <a class="resource" href="ev-calculator.html"><b>EV Calculator</b><span>Expected value from probability and price.</span></a>
-      <a class="resource" href="betting-glossary.html"><b>Glossary</b><span>Betting terms and market definitions.</span></a>
-      <a class="resource" href="betting-101.html"><b>Betting 101</b><span>Beginner fundamentals and betting basics.</span></a>
-      <a class="resource" href="how-to-bet-mlb-totals.html"><b>MLB Totals</b><span>Pitchers, parks, weather, and bullpen strategy.</span></a>
-      <a class="resource" href="bestonlinesportsbook.html"><b>Sportsbooks</b><span>Sportsbook comparison and signup resources.</span></a>
-      <a class="resource" href="new-york-sports-betting.html"><b>New York Betting</b><span>State-specific betting resource.</span></a>
-      <a class="resource" href="contact.html"><b>Contact</b><span>Support, questions, and partnerships.</span></a>
+    <div class="lower">
+      <div class="panel"><h2>Record center</h2><p>Fast paths into all sport-specific results, verified records, and pick transparency pages.</p><div class="grid-links"><a href="records.html">All</a><a href="betlegend-verified-records.html">Verified</a><a href="proofofpicks.html">Proof</a><a href="mlb-records.html">MLB</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="nfl-records.html">NFL</a><a href="soccer-records.html">Soccer</a><a href="contact.html">Contact</a></div></div>
+      <div class="panel"><h2>Tools and research</h2><p>Bet sizing, calculators, bankroll work, handicapping education, and live market tools.</p><div class="grid-links"><a href="kelly-criterion.html">Kelly</a><a href="betting-calculators.html">Calculators</a><a href="bankroll.html">Bankroll</a><a href="handicapping-hub.html">Hub</a><a href="ev-calculator.html">EV</a><a href="live-odds.html">Odds</a><a href="howitworks.html">How It Works</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a><a href="how-to-bet-mlb-totals.html">MLB Totals</a><a href="bestonlinesportsbook.html">Sportsbooks</a><a href="pro/index.html">Pro Tools</a></div></div>
     </div>
   </section>
 
