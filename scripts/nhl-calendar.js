@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-19", page: "stanley-cup-playoffs-bruins-sabres-mammoth-knights-nhl-april-19-2026.html", title: "NHL Analysis - April 19, 2026" },
+    { date: "2026-04-19", page: "nhl-previews.html", title: "NHL Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-04-18", page: "playoffs-tip-off-hurricanes-stars-penguins-nhl-april-18-2026.html", title: "NHL Analysis - April 18, 2026" },
     { date: "2026-04-16", page: "nhl-previews-archive-april-2026.html#2026-04-16", title: "NHL Analysis - 2026-04-16" },
     { date: "2026-04-15", page: "sabres-division-title-celebrini-chases-history-season-finale-nhl-april-15-2026.html", title: "NHL Analysis - April 15, 2026" },
