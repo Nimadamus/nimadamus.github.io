@@ -23,6 +23,22 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Kings +1.5 (-125) at Avalanche Game 1 1u",
+        date: "April 18, 2026",
+        result: "",
+        url: "kings-plus-1-5-puck-line-avalanche-game-1-stanley-cup-playoffs-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/v1772774164/prd/h2qw1ix5gixoeumq24wf"
+    },
+    {
+        sport: "MLB",
+        title: "White Sox ML (+131) at Athletics 2u",
+        date: "April 18, 2026",
+        result: "",
+        url: "white-sox-moneyline-plus-131-fedde-athletics-sacramento-mlb.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607200/action/hero/current"
+    },
+    {
         sport: "MLB",
         title: "Rockies ML (+235) vs Dodgers 2u",
         date: "April 18, 2026",
