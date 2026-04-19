@@ -53,17 +53,21 @@ const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });
 
 const SPORT_HUB_PAGE = '';
+const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html'];
+function isConcreteContentPage(page) {
+    return !!page && !MAIN_PAGES.includes(page) && !page.includes('#') && !page.includes('-archive-');
+}
 const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);
-window.LATEST_CONTENT_PAGE = latestContentEntry ? latestContentEntry.page : null;
+const latestConcreteEntry = ARCHIVE_DATA.find(item => isConcreteContentPage(item.page));
+window.LATEST_CONTENT_PAGE = latestConcreteEntry ? latestConcreteEntry.page : (latestContentEntry ? latestContentEntry.page : null);
 
 // Main pages and hub pages show today when today has data; otherwise show the latest available content
-const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html'];
 const today = new Date();
 const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
 const todayMonth = todayStr.substring(0, 7);
-const latestAvailableDate = ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : todayStr;
-const todayHasData = !!dateMap[todayStr];
+const latestAvailableDate = latestConcreteEntry ? latestConcreteEntry.date : (ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : todayStr);
+const todayHasData = ARCHIVE_DATA.some(item => item.date === todayStr && isConcreteContentPage(item.page));
 
 // Handle both root pages and archive pages
 const pathname = window.location.pathname;
@@ -120,6 +124,11 @@ function renderCalendar(yearMonth) {
 }
 
 function initSportCalendar() {
+    if (SPORT_HUB_PAGE && currentPage === SPORT_HUB_PAGE && window.LATEST_CONTENT_PAGE && window.LATEST_CONTENT_PAGE !== currentPage) {
+        window.location.replace('/' + window.LATEST_CONTENT_PAGE);
+        return;
+    }
+
     const monthSelect = document.getElementById('month-select');
     if (monthSelect) {
         monthSelect.innerHTML = '';
