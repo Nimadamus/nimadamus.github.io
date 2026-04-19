@@ -104,6 +104,11 @@ h1,.lead,.kicker,.actions,.hero-affiliate{text-shadow:0 3px 22px rgba(0,0,0,.58)
 .section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:22px}
 h2{margin:0;font-family:Oswald,Manrope,sans-serif;font-size:40px;line-height:1.05;font-weight:700;letter-spacing:.01em;text-transform:uppercase}
 .sub{margin:8px 0 0;color:#aaa091;font-size:16px;max-width:720px}
+.section-topline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:-4px 0 18px}
+.section-chip{display:inline-flex;align-items:center;gap:8px;min-height:30px;padding:0 12px;border-radius:999px;border:1px solid rgba(255,238,203,.16);background:rgba(255,255,255,.035);color:#e6dccb;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.section-chip strong{color:#f8dca2;font-weight:800}
+.section-inline-link{color:#f8dca2;font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.section-inline-link:hover{color:#fff}
 .board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .card,.panel{overflow:hidden;border:1px solid rgba(255,238,203,.13);background:#181612;border-radius:9px}
 .card{display:flex;flex-direction:column}
@@ -148,7 +153,10 @@ h2{margin:0;font-family:Oswald,Manrope,sans-serif;font-size:40px;line-height:1.0
 .pick-card-meta,.pick-card-sm-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px solid rgba(255,238,203,.1);border-bottom:1px solid rgba(255,238,203,.1)}
 .pick-sport-tag,.pick-result-badge{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;background:rgba(232,184,92,.14);color:#f8dca2;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
 .pick-result-badge.win{background:rgba(56,193,114,.16);color:#a9e9c6}.pick-result-badge.loss{background:rgba(231,90,90,.16);color:#ffc0c0}.pick-result-badge.push,.pick-result-badge.pending{background:rgba(255,255,255,.08);color:#d8d1c4}
-.pick-card-footer,.pick-card-sm-footer{color:#aaa091;font-size:12px;font-weight:800;text-transform:uppercase}
+.pick-card-footer,.pick-card-sm-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;color:#aaa091;font-size:12px;font-weight:800;text-transform:uppercase}
+.pick-published-label{color:#655d50;letter-spacing:.05em}
+.pick-published-date{color:#e6dccb}
+.pick-card-sm-footer .pick-published-label{display:none}
 .compact-picks-pagination{display:flex;justify-content:center;gap:8px;margin-top:22px;flex-wrap:wrap}
 .compact-picks-pagination button{border:1px solid rgba(255,238,203,.13);border-radius:6px;background:#181612;color:#fbf7ed;padding:9px 12px;font-family:Oswald,Manrope,sans-serif;font-size:14px;text-transform:uppercase;cursor:pointer}
 .compact-picks-pagination button.active{background:#e8b85c;color:#16120c;border-color:#e8b85c}
@@ -184,7 +192,7 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
 @media(max-width:1260px){.nav{flex-wrap:wrap;padding:14px 22px}.nav-menu{order:3;width:100%;gap:22px;flex-wrap:wrap}.nav-item{padding:0}.dropdown{left:0;transform:none;min-width:min(92vw,760px)}}
 @media(max-width:1180px){.hero-inner{grid-template-columns:1fr;min-height:0}.featured-game-widget{max-width:560px}.board,.proof .section,.lower,.wide-card,.partner-box,footer,.article-grid{grid-template-columns:1fr}.media-row,.resource-grid,.quick-links-grid{grid-template-columns:repeat(2,1fr)}.wide-card .card{grid-template-columns:1fr}.compact-picks-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:1080px){.board,.proof .section,.lower{grid-template-columns:1fr}.media-row{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:680px){.nav{padding:12px 16px}.brand{font-size:23px}.trial{display:none}.hero{min-height:0}.hero-inner{padding:58px 18px 42px}.hero-affiliate,.fg-matchup,.fg-records-row,.fg-injuries-list,.grid-links,.media-row,.resource-grid,.quick-links-grid,.picks-grid,.compact-picks-grid{grid-template-columns:1fr}.hero-affiliate .btn{width:100%}.section{padding:42px 18px}h1{font-size:40px}h2{font-size:30px}.card.feature img,.card img,.article-card.feature img,.article-card img,.media,.pick-card-img-wrap,.pick-card-sm-img-wrap{height:220px;min-height:220px;max-height:220px}.dropdown{grid-template-columns:1fr;min-width:calc(100vw - 32px)}}
+@media(max-width:680px){.nav{padding:12px 16px}.brand{font-size:23px}.trial{display:none}.hero{min-height:0}.hero-inner{padding:58px 18px 42px}.hero-affiliate,.fg-matchup,.fg-records-row,.fg-injuries-list,.grid-links,.media-row,.resource-grid,.quick-links-grid,.picks-grid,.compact-picks-grid{grid-template-columns:1fr}.hero-affiliate .btn{width:100%}.section{padding:42px 18px}h1{font-size:40px}h2{font-size:30px}.card.feature img,.card img,.article-card.feature img,.article-card img,.media,.pick-card-img-wrap,.pick-card-sm-img-wrap{height:220px;min-height:220px;max-height:220px}.dropdown{grid-template-columns:1fr;min-width:calc(100vw - 32px)}.section-topline{align-items:flex-start}.pick-card-footer,.pick-card-sm-footer{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -340,6 +348,10 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
         <div><h2>Latest Blog Picks</h2><p class="sub">Newest betting picks first, ordered from the latest published blog posts so visitors land on the most current picks content before anything else.</p></div>
         <a class="btn secondary" href="blog.html">View Latest Picks</a>
       </div>
+      <div class="section-topline">
+        <span class="section-chip" id="latest-picks-stamp">Newest published picks shown first</span>
+        <a class="section-inline-link" href="betlegend-verified-records.html">Audit verified records</a>
+      </div>
       <div class="picks-grid" id="picks-grid"></div>
     </div>
     <div class="section" style="padding-top:0">
@@ -356,6 +368,10 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
     <div class="section-head">
       <div><h2>Latest Analysis</h2><p class="sub">Daily slate previews, matchup hubs, and deeper standalone articles sit directly under the latest picks feed.</p></div>
       <a class="btn secondary" href="blog.html">View Blog</a>
+    </div>
+    <div class="section-topline">
+      <span class="section-chip">Slate previews, hubs, and standalone breakdowns</span>
+      <a class="section-inline-link" href="records.html">See full record center</a>
     </div>
     <div class="article-grid">
       <a class="article-card feature" data-card-key="article-nba-play-in" data-card-category="NBA" data-card-section="article" href="nba-play-in-tournament-2026-full-preview-matchups-analysis.html">
@@ -474,6 +490,10 @@ document.addEventListener('click', function(event) {
 (function() {
   if (typeof HOMEPAGE_PICKS === 'undefined') return;
 
+  function footerHTML(pick) {
+    return '<span class="pick-published-label">Published</span><span class="pick-published-date">' + pick.date + '</span>';
+  }
+
   function resultBadgeHTML(result) {
     if (!result) return '<span class="pick-result-badge pending">PENDING</span>';
     if (result.indexOf('-') !== -1) return '<span class="pick-result-badge push">' + result + '</span>';
@@ -490,7 +510,11 @@ document.addEventListener('click', function(event) {
   }
 
   var grid = document.getElementById('picks-grid');
+  var latestStamp = document.getElementById('latest-picks-stamp');
   var featuredImageUrls = new Set();
+  if (latestStamp && HOMEPAGE_PICKS.length) {
+    latestStamp.innerHTML = 'Latest published pick: <strong>' + HOMEPAGE_PICKS[0].date + '</strong>';
+  }
   if (grid) {
     HOMEPAGE_PICKS.slice(0, 3).forEach(function(pick) {
       var card = document.createElement('a');
@@ -500,7 +524,7 @@ document.addEventListener('click', function(event) {
         '<div class="pick-card-header"><span class="pick-card-title">' + pick.title + '</span></div>' +
         '<div class="pick-card-img-wrap">' + imageHTML(pick, 'pick-card-img', featuredImageUrls) + '</div>' +
         '<div class="pick-card-meta"><span class="pick-sport-tag">' + (pick.sport || 'PICK') + '</span>' + resultBadgeHTML(pick.result) + '</div>' +
-        '<div class="pick-card-footer"><span>' + pick.date + '</span></div>';
+        '<div class="pick-card-footer">' + footerHTML(pick) + '</div>';
       grid.appendChild(card);
     });
   }
@@ -523,7 +547,7 @@ document.addEventListener('click', function(event) {
         '<div class="pick-card-sm-header"><span class="pick-card-sm-title">' + pick.title + '</span></div>' +
         '<div class="pick-card-sm-img-wrap">' + imageHTML(pick, 'pick-card-sm-img', usedImages) + '</div>' +
         '<div class="pick-card-sm-meta"><span class="pick-sport-tag">' + (pick.sport || 'PICK') + '</span>' + resultBadgeHTML(pick.result) + '</div>' +
-        '<div class="pick-card-sm-footer"><span>' + pick.date + '</span></div>';
+        '<div class="pick-card-sm-footer">' + footerHTML(pick) + '</div>';
       compactGrid.appendChild(card);
     });
     paginationEl.innerHTML = '';
