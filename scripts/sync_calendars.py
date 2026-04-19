@@ -16,6 +16,7 @@ ENHANCED: December 25, 2025 - Improved date extraction to find dates in:
 import os
 import re
 import json
+import html
 from datetime import datetime
 from pathlib import Path
 
@@ -36,6 +37,16 @@ SPORTS = {
     'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html', '*-soccer-*.html'], 'main': 'soccer.html', 'hub': 'soccer-previews.html', 'calendar_js': 'soccer-calendar.js', 'archive_pattern': 'soccer-previews-archive-*.html'},
 }
 
+SPORT_DISPLAY_NAMES = {
+    'nba': 'NBA',
+    'nhl': 'NHL',
+    'ncaab': 'NCAAB',
+    'ncaaf': 'NCAAF',
+    'nfl': 'NFL',
+    'mlb': 'MLB',
+    'soccer': 'Soccer',
+}
+
 # Hub pages - these always represent today's content, not a fixed date
 HUB_PAGES = {cfg['hub'] for cfg in SPORTS.values() if cfg.get('hub')}
 
@@ -49,6 +60,10 @@ EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index', '-news', 'news-',
 # NOTE: Jan 25-27 exclusion was removed April 2, 2026 - pages exist and should be in calendar
 EXCLUDED_DATES = {
 }
+
+CONTENT_START_MARKER = '<!-- ========== DAILY CONTENT START ========== -->'
+CONTENT_END_MARKER = '<!-- ========== DAILY CONTENT END ========== -->'
+PLACEHOLDER_TEXT = "Today's previews will be published shortly"
 
 # Manual date overrides for pages where automatic extraction fails
 # Format: 'filename.html': 'YYYY-MM-DD'
@@ -281,9 +296,9 @@ def extract_date_from_page(filepath):
         with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()  # Read full file to find game-time dates
 
-        # Method 0: Hub pages represent today's content only when the daily
-        # block contains real preview content. Placeholder hubs should not
-        # become the newest calendar entry because they create empty first views.
+        # Method 0: Hub pages should use the date shown in their updated line.
+        # Treating every non-placeholder hub as "today" creates false calendar
+        # entries whenever the hub content is a day or two behind publication.
         if filename in HUB_PAGES:
             start_marker = '<!-- ========== DAILY CONTENT START ========== -->'
             end_marker = '<!-- ========== DAILY CONTENT END ========== -->'
@@ -294,6 +309,15 @@ def extract_date_from_page(filepath):
                 stripped = re.sub(r'<[^>]+>', '', daily_content).strip().lower()
                 if not stripped or 'previews will be published shortly' in stripped:
                     return None
+            updated_match = re.search(
+                r'class="updated-line"[^>]*>[^<]*(?:Updated|Last Updated):?\s*(\w+ \d{1,2},?\s*\d{4})',
+                content,
+                re.I
+            )
+            if updated_match:
+                updated_date = parse_written_date(updated_match.group(1).strip())
+                if updated_date:
+                    return updated_date
             return datetime.now().strftime('%Y-%m-%d')
 
         # Method 0a: Check manual override
@@ -579,17 +603,21 @@ def generate_calendar_js(sport_name, sport_config, pages):
         'ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });',
         '',
         f"const SPORT_HUB_PAGE = '{hub_page or ''}';",
+        f"const MAIN_PAGES = [{main_pages_js}];",
+        "function isConcreteContentPage(page) {",
+        "    return !!page && !MAIN_PAGES.includes(page) && !page.includes('#') && !page.includes('-archive-');",
+        "}",
         "const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);",
-        "window.LATEST_CONTENT_PAGE = latestContentEntry ? latestContentEntry.page : null;",
+        "const latestConcreteEntry = ARCHIVE_DATA.find(item => isConcreteContentPage(item.page));",
+        "window.LATEST_CONTENT_PAGE = latestConcreteEntry ? latestConcreteEntry.page : (latestContentEntry ? latestContentEntry.page : null);",
         '',
         '// Main pages and hub pages show today when today has data; otherwise show the latest available content',
-        f"const MAIN_PAGES = [{main_pages_js}];",
         "const today = new Date();",
         "const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');",
         '',
         "const todayMonth = todayStr.substring(0, 7);",
-        "const latestAvailableDate = ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : todayStr;",
-        "const todayHasData = !!dateMap[todayStr];",
+        "const latestAvailableDate = latestConcreteEntry ? latestConcreteEntry.date : (ARCHIVE_DATA.length > 0 ? ARCHIVE_DATA[0].date : todayStr);",
+        "const todayHasData = ARCHIVE_DATA.some(item => item.date === todayStr && isConcreteContentPage(item.page));",
         '',
         '// Handle both root pages and archive pages',
         'const pathname = window.location.pathname;',
@@ -646,6 +674,11 @@ def generate_calendar_js(sport_name, sport_config, pages):
         '}',
         '',
         'function initSportCalendar() {',
+        '    if (SPORT_HUB_PAGE && currentPage === SPORT_HUB_PAGE && window.LATEST_CONTENT_PAGE && window.LATEST_CONTENT_PAGE !== currentPage) {',
+        "        window.location.replace('/' + window.LATEST_CONTENT_PAGE);",
+        '        return;',
+        '    }',
+        '',
         "    const monthSelect = document.getElementById('month-select');",
         '    if (monthSelect) {',
         "        monthSelect.innerHTML = '';",
@@ -681,6 +714,95 @@ def generate_calendar_js(sport_name, sport_config, pages):
     ])
 
     return '\n'.join(lines)
+
+
+def _format_iso_date_for_display(date_str):
+    try:
+        return datetime.strptime(date_str, '%Y-%m-%d').strftime('%A, %B %d, %Y')
+    except ValueError:
+        return date_str
+
+
+def _build_latest_preview_fallback(display_name, latest_page):
+    latest_date = _format_iso_date_for_display(latest_page['date'])
+    latest_title = html.escape(html.unescape(latest_page['title']))
+    latest_href = html.escape(latest_page['page'])
+    cta_label = f"Open Latest {display_name} Preview"
+    return f'''<div style="text-align:center;padding:48px 24px;">
+<p style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent-cyan);margin-bottom:12px;">Latest Available Preview</p>
+<p style="font-size:18px;font-family:var(--font-display);letter-spacing:1px;text-transform:uppercase;color:var(--accent-gold);margin-bottom:14px;">{latest_date}</p>
+<p style="font-size:20px;color:var(--text-primary);margin-bottom:24px;max-width:760px;margin-left:auto;margin-right:auto;">{latest_title}</p>
+<a href="{latest_href}" style="display:inline-block;padding:16px 32px;background:linear-gradient(135deg,var(--accent-orange),#ff6b20);color:#fff;font-family:var(--font-display);font-size:15px;font-weight:700;text-decoration:none;border-radius:12px;text-transform:uppercase;letter-spacing:1.5px;box-shadow:0 4px 20px rgba(253,80,0,0.35);">{html.escape(cta_label)} &rarr;</a>
+</div>'''
+
+
+def update_hub_placeholder_fallback(sport_name, sport_config, pages):
+    """When a hub is empty, publish a latest-available preview card into the daily slot."""
+    hub_page = sport_config.get('hub')
+    if not hub_page:
+        return False
+
+    hub_path = REPO_DIR / hub_page
+    if not hub_path.exists():
+        return False
+
+    with open(hub_path, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+
+    start_idx = content.find(CONTENT_START_MARKER)
+    end_idx = content.find(CONTENT_END_MARKER)
+    if start_idx == -1 or end_idx == -1:
+        return False
+
+    daily_start = start_idx + len(CONTENT_START_MARKER)
+    daily_html = content[daily_start:end_idx].strip()
+    daily_text = re.sub(r'<[^>]+>', ' ', daily_html)
+    daily_text = re.sub(r'\s+', ' ', daily_text).strip().lower()
+    has_placeholder = PLACEHOLDER_TEXT.lower() in daily_text
+    has_existing_fallback = 'latest available preview' in daily_text
+    if not has_placeholder and not has_existing_fallback:
+        return False
+
+    excluded_pages = {hub_page}
+    main_page = sport_config.get('main')
+    if main_page:
+        excluded_pages.add(main_page)
+    latest_page = next((
+        p for p in pages
+        if p.get('page') not in excluded_pages
+        and '#' not in p.get('page', '')
+        and '-archive-' not in p.get('page', '')
+    ), None)
+    if not latest_page:
+        latest_page = next((p for p in pages if p.get('page') != hub_page), None)
+    if not latest_page:
+        return False
+
+    fallback_html = _build_latest_preview_fallback(SPORT_DISPLAY_NAMES[sport_name], latest_page)
+    updated = (
+        content[:daily_start]
+        + '\n'
+        + fallback_html
+        + '\n'
+        + content[end_idx:]
+    )
+
+    latest_date_label = _format_iso_date_for_display(latest_page['date'])
+    updated = re.sub(
+        r'(<p class="updated-line">Last Updated:\s*)[^<]+(</p>)',
+        rf'\1{latest_date_label}\2',
+        updated,
+        count=1
+    )
+
+    if updated == content:
+        return False
+
+    with open(hub_path, 'w', encoding='utf-8') as f:
+        f.write(updated)
+
+    print(f"  Updated {hub_page} placeholder with latest preview fallback")
+    return True
 
 def remove_pagination_from_sports_pages():
     """
@@ -947,6 +1069,7 @@ def main():
                 f.write(js_content)
 
             print(f"  Updated {sport_config['calendar_js']}")
+            update_hub_placeholder_fallback(sport_name, sport_config, pages)
 
     # Update cache busters on all preview hub pages so browsers load fresh calendar JS
     update_calendar_cache_busters()
@@ -966,7 +1089,7 @@ def update_calendar_cache_busters():
     Added April 7, 2026 - fixes bug where calendars showed March instead of current month.
     """
     from datetime import datetime
-    today_stamp = datetime.now().strftime('%Y%m%d')
+    today_stamp = datetime.now().strftime('%Y%m%d%H%M')
 
     hub_calendar_map = {
         'nba-previews.html': 'nba-calendar.js',
