@@ -4,7 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-19", page: "nba-previews.html", title: "NBA Previews Today - Daily Analysis & Betting Lines" },
-    { date: "2026-04-17", page: "hornets-at-magic-nba-play-in-analysis-stats-preview-april-17-2026.html", title: "Hornets at Magic NBA Play-In Analysis &amp; Preview" },
+    { date: "2026-04-17", page: "curry-booker-play-in-finale-hornets-magic-east-seed-nba-april-17-2026.html", title: "NBA Analysis - April 17, 2026" },
     { date: "2026-04-15", page: "play-in-elimination-warriors-clippers-magic-sixers-nba-april-15-2026.html", title: "NBA Analysis - April 15, 2026" },
     { date: "2026-04-15", page: "nba.html", title: "NBA Picks &amp; Predictions Today" },
     { date: "2026-04-14", page: "play-in-tournament-heat-hornets-blazers-suns-nba-april-14-2026.html", title: "NBA Analysis - April 14, 2026" },
