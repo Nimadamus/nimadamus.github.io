@@ -23,6 +23,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Ducks ML +160 (1.5u) & +1.5 -155 (3u) at Oilers G1",
+        date: "April 20, 2026",
+        url: "ducks-moneyline-plus-160-puck-line-oilers-game-1-stanley-cup-playoffs-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_png/v1776402055/prd/yukw5jm35s8csetqt4xg.png"
+    },
+    {
         sport: "MLB",
         title: "Athletics ML (+142) at Mariners",
         date: "April 20, 2026",
@@ -460,13 +467,5 @@ var HOMEPAGE_PICKS = [
         result: "L",
         url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260224-raptors-minus1",
         image: "https://media.assettype.com/outlookindia/2026-02-09/36ve1exd/Toronto-Raptors-vs-Indiana-Pacers-nba-basketball-game-4-Scottie-Barnes.jpg"
-    },
-    {
-        sport: "NBA",
-        title: "Jazz +13.5 at Rockets",
-        date: "February 23, 2026",
-        result: "L",
-        url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260223-utah-jazz-plus-13",
-        image: "https://cloudfront-us-east-1.images.arcpublishing.com/deseretnews/UGCR5NDVGNFF3OZBJVH5SHD64U.JPG"
     }
 ];
