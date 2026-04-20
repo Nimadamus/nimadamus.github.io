@@ -26,7 +26,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Kings +1.5 (-125) at Avalanche Game 1 1u",
         date: "April 18, 2026",
-        result: "",
+        result: "W",
         url: "kings-plus-1-5-puck-line-avalanche-game-1-stanley-cup-playoffs-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/v1772774164/prd/h2qw1ix5gixoeumq24wf"
     },
@@ -34,7 +34,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "White Sox ML (+131) at Athletics 2u",
         date: "April 18, 2026",
-        result: "",
+        result: "L",
         url: "white-sox-moneyline-plus-131-fedde-athletics-sacramento-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607200/action/hero/current"
     },
@@ -42,7 +42,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Rockies ML (+235) vs Dodgers 2u",
         date: "April 18, 2026",
-        result: "",
+        result: "W",
         url: "rockies-moneyline-plus-235-home-dog-sheehan-coors-field-dodgers-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/686668/action/hero/current"
     },
@@ -50,7 +50,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Reds ML (+154) at Twins 2.5u",
         date: "April 17, 2026",
-        result: "",
+        result: "W",
         url: "reds-moneyline-williamson-twins-target-field-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/668715/action/hero/current"
     },
@@ -58,7 +58,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Canucks/Oilers OVER 6.5 (-125) 2.5u",
         date: "April 16, 2026",
-        result: "",
+        result: "W",
         url: "canucks-oilers-over-6-5-total-edmonton-powerplay-rogers-place-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_auto/prd/rm9h99mderwz4cfkooqf.jpg"
     },
@@ -66,7 +66,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Maple Leafs +1.5 (-145) at Senators 2.5u",
         date: "April 15, 2026",
-        result: "",
+        result: "L",
         url: "maple-leafs-plus-1-5-puck-line-battle-of-ontario-senators-nhl.html",
         image: "images/blackhawks-plus-1-5-maple-leafs-december-16-2025.jpeg"
     },
@@ -74,7 +74,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Kraken +1.5 (-108) at Golden Knights",
         date: "April 15, 2026",
-        result: "",
+        result: "L",
         url: "kraken-plus-1-5-puck-line-daccord-tortorella-vegas-nhl.html",
         image: "https://images.foxtv.com/static.q13fox.com/www.q13fox.com/content/uploads/2026/01/764/432/gettyimages-2255003397-e1767763673947.jpg"
     },
@@ -82,7 +82,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Caps/Blue Jackets UNDER 6.5 (-115) 2u",
         date: "April 14, 2026",
-        result: "",
+        result: "W",
         url: "capitals-blue-jackets-under-6-5-thompson-greaves-nationwide-arena-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1768186620/prd/jxstb4k7jjm1ky3yrlp1"
     },
@@ -90,7 +90,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Rangers ML (-111) at Athletics 2.5u",
         date: "April 14, 2026",
-        result: "",
+        result: "L",
         url: "rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656427/action/hero/current"
     },
@@ -98,7 +98,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Wild/Blues UNDER 5.5 (-105) 3u",
         date: "April 13, 2026",
-        result: "",
+        result: "L",
         url: "wild-blues-under-5-5-gustavsson-hofer-enterprise-center-nhl.html",
         image: "images/wild-puck-line-oilers-december-2-2025.png"
     },
@@ -106,7 +106,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Yankees/Angels UNDER 9.5 (-115)",
         date: "April 13, 2026",
-        result: "",
+        result: "L",
         url: "yankees-angels-under-9-5-warren-kikuchi-yankee-stadium-mlb.html",
         image: "https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_239,w_3174,h_1785/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/inside_the_pinstripes/01kk6p6ywmpepmzg6g9m.jpg"
     },
@@ -114,7 +114,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Mammoth/Flames UNDER 6 (-110)",
         date: "April 12, 2026",
-        result: "",
+        result: "W",
         url: "mammoth-flames-under-6-saddledome-calgary-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_auto/prd/c1c01ufph2bsqfq0npsu.jpg"
     },
@@ -122,7 +122,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Giants ML -114 at Orioles (3u)",
         date: "April 11, 2026",
-        result: "",
+        result: "L",
         url: "giants-moneyline-webb-orioles-camden-yards-mlb.html",
         image: "https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/v1773507436/mlb/rsxmjlczbv0elpmrsm6c.jpg"
     },
@@ -130,7 +130,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Rangers/Dodgers UNDER 9 (-138)",
         date: "April 10, 2026",
-        result: "",
+        result: "L",
         url: "rangers-dodgers-under-9-glasnow-rocker-dodger-stadium-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607192/action/hero/current"
     },
@@ -138,7 +138,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Cardinals/Nationals OVER 8.5 (-110)",
         date: "April 8, 2026",
-        result: "",
+        result: "L",
         url: "cardinals-nationals-over-8-5-runs-nationals-park-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/676475/action/hero/current"
     },
@@ -146,7 +146,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Blues +1.5 (-190) & ML (+130) vs Avalanche",
         date: "April 7, 2026",
-        result: "",
+        result: "L",
         url: "blues-puck-line-moneyline-avalanche-enterprise-center-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/v1775448838/prd/trepka02swudorxhugpg"
     },
@@ -154,7 +154,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Braves F5 ML -150 at Angels",
         date: "April 6, 2026",
-        result: "",
+        result: "L",
         url: "braves-f5-moneyline-sale-dominates-angels-mlb.html",
         image: "https://a.espncdn.com/photo/2026/0401/r1637364_1296x729_16-9.jpg"
     },
@@ -162,7 +162,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Mariners ML -162 at Angels",
         date: "April 5, 2026",
-        result: "",
+        result: "L",
         url: "mariners-moneyline-castillo-angels-rubber-match-mlb.html",
         image: "https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/mlb/vtmwkwrwxgev9wnb0hwg.jpg"
     },
