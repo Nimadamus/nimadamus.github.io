@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -480,3 +481,486 @@ months.forEach(monthKey => {
 
     </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handicapping Hub Archive | BetLegend Picks</title>
+<meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
+<meta name="description" content="Browse the complete Handicapping Hub archive. Access historical sports betting data, statistics, injuries, and betting lines by date.">
+<meta name="keywords" content="handicapping hub archive, sports betting history, NBA stats archive, NFL betting data, NHL statistics, college basketball data, NCAAF betting archive">
+
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Handicapping Hub Calendar | BetLegend Picks">
+<meta property="og:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.betlegendpicks.com/handicapping-hub-calendar.html">
+<meta property="og:site_name" content="BetLegend Picks">
+<meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Handicapping Hub Calendar | BetLegend Picks">
+<meta name="twitter:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+ :root {
+ --primary-glow: #fd5000;
+ --primary-glow-light: #ff7733;
+ --success-color: #39FF14;
+ --warning-color: #FFD700;
+ --active-color: #00d4ff;
+ --dark-bg: #0a0a0a;
+ --card-bg: rgba(15, 20, 30, 0.95);
+ --border-color: rgba(253, 80, 0, 0.3);
+ --text-primary: #ffffff;
+ --text-secondary: #b0b0b0;
+ }
+
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ body {
+ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+ background-attachment: fixed;
+ font-family: 'Inter', sans-serif;
+ color: var(--text-primary);
+ padding: 40px 20px;
+ min-height: 100vh;
+ }
+
+ .container {
+ max-width: 1000px;
+ margin: 0 auto;
+ }
+
+ .header {
+ text-align: center;
+ margin-bottom: 40px;
+ }
+
+ .title {
+ font-size: 3rem;
+ font-family: 'Orbitron', sans-serif;
+ background: linear-gradient(45deg, #fff, var(--primary-glow));
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ margin-bottom: 10px;
+ }
+
+ .subtitle {
+ color: var(--text-secondary);
+ font-size: 1.1rem;
+ }
+
+ .stats-bar {
+ display: flex;
+ justify-content: center;
+ gap: 40px;
+ margin: 30px 0;
+ flex-wrap: wrap;
+ }
+
+ .stat-item {
+ text-align: center;
+ }
+
+ .stat-value {
+ font-size: 2rem;
+ font-weight: 800;
+ color: var(--primary-glow);
+ font-family: 'Orbitron', sans-serif;
+ }
+
+ .stat-label {
+ font-size: 0.85rem;
+ color: var(--text-secondary);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ }
+
+ .calendar-container {
+ background: var(--card-bg);
+ border: 1px solid var(--border-color);
+ border-radius: 15px;
+ padding: 30px;
+ backdrop-filter: blur(20px);
+ }
+
+ .calendar-month-title {
+ font-size: 1.8rem;
+ font-family: 'Orbitron', sans-serif;
+ color: var(--primary-glow);
+ text-align: center;
+ margin-bottom: 25px;
+ }
+
+ .calendar-grid {
+ display: grid;
+ grid-template-columns: repeat(7, 1fr);
+ gap: 10px;
+ margin-bottom: 20px;
+ }
+
+ .calendar-day-header {
+ text-align: center;
+ font-weight: 600;
+ color: var(--text-secondary);
+ padding: 10px;
+ font-size: 0.9rem;
+ }
+
+ .calendar-day {
+ aspect-ratio: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ background: rgba(0,0,0,0.3);
+ border: 1px solid rgba(255,255,255,0.1);
+ border-radius: 8px;
+ font-size: 1.1rem;
+ color: var(--text-secondary);
+ transition: all 0.3s ease;
+ position: relative;
+ }
+
+ .calendar-day .day-number {
+ font-weight: 600;
+ }
+
+ .calendar-day .game-count {
+ font-size: 0.65rem;
+ color: var(--text-secondary);
+ margin-top: 2px;
+ }
+
+ /* Available days - have data but not currently viewing */
+ .calendar-day.available {
+ background: rgba(253, 80, 0, 0.15);
+ border: 2px solid rgba(253, 80, 0, 0.6);
+ color: var(--primary-glow);
+ cursor: pointer;
+ font-weight: 600;
+ }
+
+ a.calendar-day { text-decoration: none; }
+
+ .calendar-day.available:hover {
+ background: rgba(253, 80, 0, 0.3);
+ transform: translateY(-2px);
+ box-shadow: 0 5px 15px rgba(253, 80, 0, 0.3);
+ }
+
+ .calendar-day.available .game-count {
+ color: var(--primary-glow-light);
+ }
+
+ /* Active day - the page you're currently viewing */
+ .calendar-day.active {
+ background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 150, 255, 0.3));
+ border: 3px solid var(--active-color);
+ color: var(--active-color);
+ font-weight: 900;
+ box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+ transform: scale(1.05);
+ }
+
+ .calendar-day.active::after {
+ content: 'VIEWING';
+ position: absolute;
+ bottom: 2px;
+ font-size: 0.45rem;
+ color: var(--active-color);
+ font-weight: 700;
+ letter-spacing: 0.5px;
+ }
+
+ .calendar-day.active .game-count {
+ display: none;
+ }
+
+ /* Today marker - shows today's date */
+ .calendar-day.today::before {
+ content: '';
+ position: absolute;
+ top: 4px;
+ right: 4px;
+ width: 8px;
+ height: 8px;
+ background: var(--warning-color);
+ border-radius: 50%;
+ }
+
+ .legend {
+ display: flex;
+ justify-content: center;
+ gap: 30px;
+ margin-top: 20px;
+ flex-wrap: wrap;
+ }
+
+ .legend-item {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ font-size: 0.9rem;
+ color: var(--text-secondary);
+ }
+
+ .legend-box {
+ width: 24px;
+ height: 24px;
+ border-radius: 4px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 0.6rem;
+ font-weight: bold;
+ }
+
+ .legend-box.available {
+ background: rgba(253, 80, 0, 0.15);
+ border: 2px solid rgba(253, 80, 0, 0.6);
+ color: var(--primary-glow);
+ }
+
+ .legend-box.active {
+ background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 150, 255, 0.3));
+ border: 3px solid var(--active-color);
+ color: var(--active-color);
+ }
+
+ .legend-box.today {
+ background: rgba(0,0,0,0.3);
+ border: 1px solid rgba(255,255,255,0.2);
+ position: relative;
+ }
+
+ .legend-box.today::before {
+ content: '';
+ position: absolute;
+ top: 2px;
+ right: 2px;
+ width: 6px;
+ height: 6px;
+ background: var(--warning-color);
+ border-radius: 50%;
+ }
+
+ .back-link {
+ text-align: center;
+ margin-top: 40px;
+ }
+
+ .back-link a {
+ color: var(--primary-glow);
+ text-decoration: none;
+ font-size: 1.1rem;
+ padding: 12px 30px;
+ border: 1px solid var(--border-color);
+ border-radius: 8px;
+ display: inline-block;
+ transition: all 0.3s ease;
+ margin: 5px;
+ }
+
+ .back-link a:hover {
+ background: rgba(253, 80, 0, 0.1);
+ transform: translateY(-2px);
+ }
+
+ @media (max-width: 768px) {
+ .calendar-grid {
+ gap: 5px;
+ }
+
+ .calendar-day {
+ font-size: 0.9rem;
+ }
+
+ .title {
+ font-size: 2rem;
+ }
+
+ .stats-bar {
+ gap: 20px;
+ }
+ }
+
+ /* BetLegend Fixed Logo */
+ .betlegend-logo {
+ position: fixed;
+ top: 15px;
+ left: 20px;
+ z-index: 1001;
+ font-family: 'Orbitron', sans-serif;
+ font-size: 1.8rem;
+ font-weight: 900;
+ text-decoration: none;
+ color: #fff;
+ letter-spacing: 2px;
+ text-shadow: 0 0 20px rgba(255,255,255,0.5);
+ }
+ .betlegend-logo span {
+ color: #00e0ff;
+ text-shadow: 0 0 30px #00e0ff, 0 0 60px #00e0ff;
+ }
+</style>
+<link rel="stylesheet" href="/mobile-optimize.css" media="screen">
+</head>
+<body>
+<a href="index.html" class="betlegend-logo">BET<span>LEGEND</span></a>
+
+<div class="container">
+ <div class="header">
+ <h1 class="title">Handicapping Hub Archive</h1>
+ <p class="subtitle">Browse historical stats, injuries, and betting lines by date</p>
+ </div>
+
+ <div class="stats-bar">
+ <div class="stat-item">
+ <div class="stat-value" id="total-days">0</div>
+ <div class="stat-label">Days Archived</div>
+ </div>
+ <div class="stat-item">
+ <div class="stat-value">5</div>
+ <div class="stat-label">Sports Covered</div>
+ </div>
+ <div class="stat-item">
+ <div class="stat-value">30+</div>
+ <div class="stat-label">Games Per Day</div>
+ </div>
+ </div>
+
+ <div id="calendars-container"></div>
+
+ <div class="legend">
+ <div class="legend-item">
+ <div class="legend-box available"></div>
+ <span>Archive Available</span>
+ </div>
+ <div class="legend-item">
+ <div class="legend-box active"></div>
+ <span>Currently Viewing</span>
+ </div>
+ <div class="legend-item">
+ <div class="legend-box today"></div>
+ <span>Today's Date</span>
+ </div>
+ </div>
+
+ <div class="back-link">
+ <a href="handicapping-hub.html">View Today's Hub</a>
+ <a href="index.html">Back to Home</a>
+ </div>
+</div>
+
+<script>
+const archiveDates = [
+ "2025-11-30","2025-12-01","2025-12-02","2025-12-03","2025-12-04","2025-12-05","2025-12-06",
+ "2025-12-07","2025-12-08","2025-12-09","2025-12-10","2025-12-11","2025-12-12","2025-12-13",
+ "2025-12-14","2025-12-15","2025-12-16","2025-12-17","2025-12-18","2025-12-19","2025-12-20",
+ "2025-12-21","2025-12-22","2025-12-23","2025-12-24","2025-12-25","2025-12-26","2025-12-27",
+ "2025-12-28","2025-12-29","2025-12-30","2025-12-31",
+ "2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07",
+ "2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14",
+ "2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21",
+ "2026-01-22","2026-01-23","2026-01-24","2026-01-28","2026-01-29","2026-01-30","2026-01-31",
+ "2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07",
+ "2026-02-08"
+];
+
+document.getElementById('total-days').textContent = archiveDates.length;
+
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const dayHeaders = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const today = new Date();
+const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+
+// Get unique months from archive dates
+const months = [];
+const seen = {};
+archiveDates.forEach(d => {
+ const key = d.substring(0,7);
+ if (!seen[key]) { seen[key] = true; months.push(key); }
+});
+
+const container = document.getElementById('calendars-container');
+
+months.forEach(monthKey => {
+ const [yr, mo] = monthKey.split('-').map(Number);
+ const firstDay = new Date(yr, mo-1, 1).getDay();
+ const daysInMonth = new Date(yr, mo, 0).getDate();
+
+ const cal = document.createElement('div');
+ cal.className = 'calendar-container';
+ cal.style.marginBottom = '30px';
+ cal.innerHTML = '<h2 class="calendar-month-title">' + monthNames[mo-1] + ' ' + yr + '</h2>';
+
+ const grid = document.createElement('div');
+ grid.className = 'calendar-grid';
+
+ dayHeaders.forEach(h => {
+  const hdr = document.createElement('div');
+  hdr.className = 'calendar-day-header';
+  hdr.textContent = h;
+  grid.appendChild(hdr);
+ });
+
+ for (let i = 0; i < firstDay; i++) {
+  const empty = document.createElement('div');
+  empty.className = 'calendar-day';
+  grid.appendChild(empty);
+ }
+
+ for (let d = 1; d <= daysInMonth; d++) {
+  const dateStr = yr + '-' + String(mo).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+  const hasArchive = archiveDates.includes(dateStr);
+  const isToday = dateStr === todayStr;
+
+  if (hasArchive) {
+   const link = document.createElement('a');
+   link.className = 'calendar-day available';
+   if (isToday) link.className += ' today';
+   link.dataset.date = dateStr;
+   link.href = 'handicapping-hub-archive/hub-' + dateStr + '.html';
+   link.innerHTML = '<span class="day-number">' + d + '</span><span class="game-count">Archived</span>';
+   grid.appendChild(link);
+  } else {
+   const cell = document.createElement('div');
+   cell.className = 'calendar-day';
+   if (isToday) cell.className += ' today';
+   cell.innerHTML = '<span class="day-number">' + d + '</span>';
+   grid.appendChild(cell);
+  }
+ }
+
+ cal.appendChild(grid);
+ container.appendChild(cal);
+});
+</script>
+
+<!-- Clicky Analytics -->
+<a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
+<script async data-id="101485054" src="//static.getclicky.com/js"></script>
+
+    <!-- Related Analysis Section - Internal Linking -->
+    <section style="max-width:900px;margin:40px auto;padding:32px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:12px;">
+        <h3 style="font-size:18px;font-weight:700;color:#FFD700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #FFD700;letter-spacing:1px;text-transform:uppercase;">Related Analysis</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+            <a href="/celtics-depleted-cavs-knicks-lakers-abc-doubleheader-nba-march-8-2026.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NBA Analysis</a>
+            <a href="/lightning-sabres-tied-at-82-avalanche-dominant-run-nhl-march-8-2026.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NHL Analysis</a>
+            <a href="/nfl.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NFL Analysis</a>
+            <a href="/handicapping-hub.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">Handicapping Hub</a>
+        </div>
+    </section>
+
+    </body>
+</html>
+>>>>>>> Stashed changes
