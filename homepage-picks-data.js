@@ -34,7 +34,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "White Sox ML (+131) at Athletics 2u",
         date: "April 18, 2026",
-        result: "L",
+        result: "W",
         url: "white-sox-moneyline-plus-131-fedde-athletics-sacramento-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607200/action/hero/current"
     },
