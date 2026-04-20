@@ -1,11 +1,12 @@
 # Sitemap Generation Report
 
-**Generated**: 2026-03-18 08:32:05
-**Total URLs**: 1355
+**Generated**: 2026-04-19 21:24:20
+**Total URLs**: 1570
 
 ## URLs by Priority
 
-### Priority 1.0 (1 URLs)
+### Priority 1.0 (2 URLs)
+- index.html (changefreq: daily)
 - index.html (changefreq: daily)
 
 ### Priority 0.9 (17 URLs)
@@ -50,8 +51,10 @@
 - college-basketball-picks-predictions-best-bets-december-18-2025.html (changefreq: daily)
   ... and 285 more
 
-### Priority 0.7 (148 URLs)
+### Priority 0.7 (171 URLs)
+- 76ers-vs-celtics-analysis-stats-preview-april-19-2026.html (changefreq: weekly)
 - avalanche-vs-stars-nhl-analysis-stats-preview-march-6-2026.html (changefreq: weekly)
+- bayern-munich-vs-real-madrid-ucl-analysis-stats-preview-april-15-2026.html (changefreq: weekly)
 - bestonlinesportsbook.html (changefreq: monthly)
 - betlegend-daily-picks-analysis-february-14-2026.html (changefreq: weekly)
 - betlegend-daily-picks-analysis-january-2026.html (changefreq: weekly)
@@ -60,18 +63,16 @@
 - betlegend-in-depth-betting-analysis-picks-archive-9.html (changefreq: weekly)
 - betlegend-picks-analysis-march-2026.html (changefreq: weekly)
 - betlegend-recent-betting-picks-analysis-archive-11.html (changefreq: weekly)
+- cavaliers-vs-lakers-nba-analysis-stats-preview-march-31-2026.html (changefreq: weekly)
 - celtics-vs-thunder-nba-analysis-stats-preview-march-12-2026.html (changefreq: weekly)
 - contact.html (changefreq: monthly)
 - daily-mlb-breakdown-picks-july-26-2025.html (changefreq: weekly)
+- diamondbacks-vs-dodgers-analysis-stats-preview-march-27-2026.html (changefreq: weekly)
 - duke-at-nc-state-ncaab-analysis-stats-preview-march-2-2026.html (changefreq: weekly)
 - duke-vs-clemson-acc-semifinal-analysis-stats-preview-march-13-2026.html (changefreq: weekly)
 - howitworks.html (changefreq: monthly)
-- knicks-at-bucks-analysis-stats-preview-february-27-2026.html (changefreq: weekly)
-- knicks-vs-cavaliers-analysis-stats-preview-february-24-2026.html (changefreq: weekly)
-- knicks-vs-lakers-analysis-stats-preview-march-8-2026.html (changefreq: weekly)
-- lakers-vs-nuggets-nba-analysis-stats-preview-march-5-2026.html (changefreq: weekly)
-- lakers-vs-rockets-analysis-stats-preview-march-16-2026.html (changefreq: weekly)
-  ... and 128 more
+- kentucky-vs-santa-clara-analysis-stats-preview-march-20-2026.html (changefreq: weekly)
+  ... and 151 more
 
 ### Priority 0.6 (20 URLs)
 - bankroll.html (changefreq: weekly)
@@ -95,12 +96,14 @@
 - sitemap.html (changefreq: weekly)
 - upcomingpicks.html (changefreq: weekly)
 
-### Priority 0.5 (864 URLs)
+### Priority 0.5 (1055 URLs)
 - 1-arizona-at-11-kansas-prediction-picks-february-09-2026.html (changefreq: monthly)
 - 10-michigan-state-at-wisconsin-prediction-picks-february-13-2026.html (changefreq: monthly)
 - 14-kansas-vs-11-texas-tech-prediction-picks-february-02-2026.html (changefreq: monthly)
+- 15-game-playoff-push-rangers-stars-hurricanes-nhl-april-4-2026.html (changefreq: monthly)
 - 2026-fifa-world-cup-betting-guide-odds-predictions-favorites-how-to-bet.html (changefreq: monthly)
 - 4-duke-at-14-north-carolina-prediction-picks-february-07-2026.html (changefreq: monthly)
+- 404.html (changefreq: monthly)
 - 49ers-vs-colts-mnf-prediction-picks-december-22-2025.html (changefreq: monthly)
 - 49ers-vs-eagles-wild-card-picks-and-prediction-january-11-2026.html (changefreq: monthly)
 - 49ers-vs-seahawks-nfc-west-title-prediction-picks-january-03-2026.html (changefreq: monthly)
@@ -112,9 +115,7 @@
 - arkansas-vs-alabama-prediction-picks-february-18-2026.html (changefreq: monthly)
 - army-vs-navy-prediction-picks-december-13-2025.html (changefreq: monthly)
 - arsenal-chelsea-london-derby-premier-league-soccer-march-1-2026.html (changefreq: monthly)
-- avalanche-jets-bruins-capitals-14-game-saturday-nhl-march-14-2026.html (changefreq: monthly)
-- bankroll-discipline-bet-sizing.html (changefreq: monthly)
-- bankroll-management.html (changefreq: monthly)
-- bankroll-simulator.html (changefreq: monthly)
-  ... and 844 more
+- atlantic-playoff-race-lightning-canadiens-wild-stars-14-game-nhl-april-9-2026.html (changefreq: monthly)
+- avalanche-canucks-blues-kings-wild-card-race-nhl-april-1-2026.html (changefreq: monthly)
+  ... and 1035 more
 
