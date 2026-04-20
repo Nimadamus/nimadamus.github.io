@@ -23,6 +23,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Athletics ML (+142) at Mariners",
+        date: "April 20, 2026",
+        url: "nba-college-basketball-picks-predictions-analysis-february-2026.html#post-20260420-athletics-moneyline",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669372/action/hero/current"
+    },
+    {
         sport: "NHL",
         title: "Kings +1.5 (-125) at Avalanche Game 1 1u",
         date: "April 18, 2026",
