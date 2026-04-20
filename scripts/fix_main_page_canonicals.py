@@ -22,20 +22,21 @@ import sys
 REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOMAIN = "https://www.betlegendpicks.com"
 
-# Main sport pages that must ALWAYS canonicalize to themselves
-MAIN_PAGES = [
-    "nba.html",
-    "nhl.html",
-    "nfl.html",
-    "ncaab.html",
-    "ncaaf.html",
-    "mlb.html",
-    "soccer.html",
-]
+# Main sport pages -> canonical target. Pages with a preview hub canonical
+# to the hub (dedup); pages with no hub stay self-canonical.
+MAIN_PAGES = {
+    "nba.html": "nba-previews.html",
+    "nhl.html": "nhl-previews.html",
+    "mlb.html": "mlb-previews.html",
+    "ncaab.html": "college-basketball-previews.html",
+    "soccer.html": "soccer-previews.html",
+    "nfl.html": "nfl.html",
+    "ncaaf.html": "ncaaf.html",
+}
 
 
 def fix_page(filename):
-    """Fix canonical and og:url for a main sport page to point to itself."""
+    """Fix canonical and og:url for a main sport page to point to its hub target."""
     filepath = os.path.join(REPO_PATH, filename)
     if not os.path.exists(filepath):
         return False, f"  [SKIP] {filename} does not exist"
@@ -43,7 +44,8 @@ def fix_page(filename):
     with open(filepath, "r", encoding="utf-8") as f:
         content = f.read()
 
-    correct_url = f"{DOMAIN}/{filename}"
+    target = MAIN_PAGES.get(filename, filename)
+    correct_url = f"{DOMAIN}/{target}"
     changes = []
 
     # Fix canonical tag

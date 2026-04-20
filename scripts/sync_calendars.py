@@ -853,25 +853,25 @@ def remove_pagination_from_sports_pages():
 
 def fix_main_page_canonicals():
     """
-    PERMANENTLY ensures main sport pages (nba.html, nhl.html, etc.) have
-    self-referential canonical and og:url tags.
+    Enforces canonical + og:url on main sport pages.
 
-    WHY: SLATE copies archive page content into main pages, bringing along
-    the archive page's canonical/og:url. This tells Google the main page is
-    a duplicate of the archive page, which destroys SEO on the main pages.
+    Updated April 19, 2026: Pages that have a preview hub (nba-previews.html etc.)
+    must canonical to the HUB, not themselves. Prior self-canonicals created a
+    duplicate-content pair (nba.html + nba-previews.html both indexable, both
+    self-canonical) which split authority and collapsed impressions.
 
-    This runs automatically with every calendar sync (which runs after every SLATE).
-    Added March 5, 2026.
+    SLATE still copies archive content into the main pages, so this runs after
+    every sync to reset the canonical back to the correct target.
     """
-    print("\n[CANONICAL FIX] Enforcing self-referential canonicals on main sport pages...")
+    print("\n[CANONICAL FIX] Enforcing canonicals on main sport pages...")
     MAIN_PAGES = {
-        'nba.html': 'https://www.betlegendpicks.com/nba.html',
-        'nhl.html': 'https://www.betlegendpicks.com/nhl.html',
-        'ncaab.html': 'https://www.betlegendpicks.com/ncaab.html',
+        'nba.html': 'https://www.betlegendpicks.com/nba-previews.html',
+        'nhl.html': 'https://www.betlegendpicks.com/nhl-previews.html',
+        'ncaab.html': 'https://www.betlegendpicks.com/college-basketball-previews.html',
         'ncaaf.html': 'https://www.betlegendpicks.com/ncaaf.html',
         'nfl.html': 'https://www.betlegendpicks.com/nfl.html',
-        'mlb.html': 'https://www.betlegendpicks.com/mlb.html',
-        'soccer.html': 'https://www.betlegendpicks.com/soccer.html',
+        'mlb.html': 'https://www.betlegendpicks.com/mlb-previews.html',
+        'soccer.html': 'https://www.betlegendpicks.com/soccer-previews.html',
     }
     fixed_count = 0
 
