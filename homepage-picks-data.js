@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Giants ML +153 vs Dodgers 2.5u",
+        date: "April 21, 2026",
+        result: "",
+        url: "giants-moneyline-plus-153-roupp-dodgers-oracle-park-mlb.html",
+        image: "images/homepage-preview/pick-51-giants-ml-plus153-vs-dodgers-2-5u.png"
+    },
+    {
         sport: "NHL",
         title: "Ducks ML +160 (1.5u) & +1.5 -155 (3u) at Oilers G1",
         date: "April 20, 2026",
