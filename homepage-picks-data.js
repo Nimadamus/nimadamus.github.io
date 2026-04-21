@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "April 21, 2026",
         result: "",
         url: "giants-moneyline-plus-153-roupp-dodgers-oracle-park-mlb.html",
-        image: "images/homepage-preview/pick-51-giants-ml-plus153-vs-dodgers-2-5u.png"
+        image: "images/landen-roupp-giants-pitcher-april-21-2026.jpg"
     },
     {
         sport: "NHL",
