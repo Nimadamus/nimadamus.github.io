@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Sabres Team Total Under 3.5 (-140) vs Bruins G2",
+        date: "April 21, 2026",
+        result: "",
+        url: "sabres-team-total-under-3-5-bruins-game-2-stanley-cup-playoffs-nhl.html",
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_png/prd/xt36efvowmtxrbunizf5.png"
+    },
+    {
         sport: "MLB",
         title: "Giants ML +153 vs Dodgers 2.5u",
         date: "April 21, 2026",
