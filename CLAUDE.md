@@ -2,6 +2,62 @@
 
 ### SESSION VERIFICATION CODE: REPO-PROTOCOL-2026
 
+## 🟥🟥🟥 ABSOLUTE RULE: PICK PAGE HERO STANDARD (LOCKED APRIL 21, 2026) 🟥🟥🟥
+
+**Every standalone BetLegendPicks free pick page MUST use the shared hero template.**
+
+### THE STANDARD:
+```html
+<!-- In <head>: -->
+<link rel="stylesheet" href="/pick-hero.css">
+
+<!-- Directly after </nav>: -->
+<section class="pick-article-hero">
+  <div class="pick-article-hero__top">
+    <div class="pick-article-hero__crumbs">
+      <a href="index.html">Home</a> /
+      <a href="betlegend-picks-analysis-march-2026.html">Picks</a> / NHL
+    </div>
+    <span class="pick-article-hero__tag pick-article-hero__tag--nhl">NHL Free Pick of the Day</span>
+    <h1 class="pick-article-hero__title">Headline (concise, matchup + number)</h1>
+    <div class="pick-article-hero__meta">
+      <span>Month DD, YYYY</span><span>|</span>
+      <span>X min read</span><span>|</span>
+      <span>BetLegend</span>
+    </div>
+  </div>
+  <figure class="pick-article-hero__figure">
+    <img src="/images/{slug}.jpg" alt="Centered action shot of the actual team/player/matchup"/>
+    <figcaption>Specific caption | Photo: NHL</figcaption>
+  </figure>
+</section>
+```
+
+### NON-NEGOTIABLES:
+1. **Hero section lives OUTSIDE `.article-card`/`.blog-post`** - never again nest
+   the featured image inside the padded content card.
+2. **No inline `<figure>` at the top of the article body** - the image is already
+   in the hero. Delete any duplicate figure inside the content card.
+3. **Featured image = centered action shot** of the actual team/player/game.
+   No generic stock, no off-center crops, no wrong-team photos. Rendered at
+   16:9, rounded corners, glow frame - styled by pick-hero.css.
+4. **Sport tag modifier must match** the sport:
+   `--nhl`, `--mlb`, `--nba`, `--nfl`, `--ncaab`, `--ncaaf`, `--soccer`.
+5. **No generic "Expert Analysis" hero banner** on new pick pages.
+6. **Image path**: store at `images/{slug}.jpg`, never `images/homepage-preview/`
+   (the homepage-preview path is blocked by BLOCKED_IMAGE_RE in
+   homepage-image-system.js).
+
+### WHY THIS EXISTS (April 21, 2026):
+Multiple complaints that pick pages looked generic, featured image was too
+small, and the title/hero area didn't match the stronger archive-post feel.
+Six recent pick pages (Sabres, Giants, Ducks, Kings, White Sox, Rockies) were
+retrofitted to the new template on April 21, 2026. Every new pick page must
+start from this standard. If the hero is missing, the image is too small,
+or the image lives inside the content card, it is wrong.
+
+---
+
 ## ☠️☠️☠️ ABSOLUTE RULE: PICKS = STANDALONE PAGES ONLY. NEVER POST TO BLOG ARCHIVE. ☠️☠️☠️
 
 ### PERMANENTLY LOCKED - MARCH 30, 2026

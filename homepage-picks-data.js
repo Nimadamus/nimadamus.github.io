@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "April 21, 2026",
         result: "",
         url: "sabres-team-total-under-3-5-bruins-game-2-stanley-cup-playoffs-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size40/f_png/prd/xt36efvowmtxrbunizf5.png"
+        image: "images/sabres-lafferty-bench-celebration-bruins-g2-april-21-2026.jpg"
     },
     {
         sport: "MLB",

@@ -1,0 +1,145 @@
+/* ============================================================
+   BetLegendPicks - Standalone Pick Page Hero (LOCKED STANDARD)
+   Added: April 21, 2026
+   Applies to every free pick article page.
+
+   REQUIRED MARKUP (place directly after </nav>):
+   <section class="pick-article-hero">
+     <div class="pick-article-hero__top">
+       <div class="pick-article-hero__crumbs">
+         <a href="index.html">Home</a> / <a href="betlegend-picks-analysis-march-2026.html">Picks</a> / NHL
+       </div>
+       <span class="pick-article-hero__tag pick-article-hero__tag--nhl">NHL Free Pick of the Day</span>
+       <h1 class="pick-article-hero__title">Headline</h1>
+       <div class="pick-article-hero__meta">
+         <span>Month DD, YYYY</span><span>|</span>
+         <span>X min read</span><span>|</span>
+         <span>BetLegend</span>
+       </div>
+     </div>
+     <figure class="pick-article-hero__figure">
+       <img src="/images/slug.jpg" alt="Action shot describing the matchup"/>
+       <figcaption>Descriptive caption | Photo: MLB</figcaption>
+     </figure>
+   </section>
+
+   The featured image MUST be a centered action shot relevant
+   to the pick's matchup. No generic graphics. No off-center crops.
+   No wrong-team photos.
+   ============================================================ */
+
+.pick-article-hero{
+ max-width:1180px;
+ margin:24px auto 44px;
+ padding:0 24px;
+}
+.pick-article-hero__top{
+ text-align:center;
+ max-width:940px;
+ margin:0 auto 28px;
+}
+.pick-article-hero__crumbs{
+ font-family:var(--font-body,'Poppins',sans-serif);
+ font-size:12px;
+ color:#9a9a9a;
+ letter-spacing:2px;
+ text-transform:uppercase;
+ margin-bottom:18px;
+}
+.pick-article-hero__crumbs a{
+ color:var(--neon-cyan,#00fff2);
+ text-decoration:none;
+}
+.pick-article-hero__crumbs a:hover{text-decoration:underline}
+
+.pick-article-hero__tag{
+ display:inline-block;
+ padding:8px 22px;
+ border-radius:999px;
+ font-family:var(--font-display,'Orbitron',sans-serif);
+ font-size:11px;
+ font-weight:700;
+ text-transform:uppercase;
+ letter-spacing:2.5px;
+ margin-bottom:24px;
+ background:rgba(0,255,242,0.12);
+ color:var(--neon-cyan,#00fff2);
+ border:1px solid rgba(0,255,242,0.4);
+}
+.pick-article-hero__tag--nhl{background:rgba(0,255,242,0.12);color:var(--neon-cyan,#00fff2);border-color:rgba(0,255,242,0.4)}
+.pick-article-hero__tag--mlb{background:rgba(255,208,0,0.12);color:var(--neon-gold,#ffd000);border-color:rgba(255,208,0,0.4)}
+.pick-article-hero__tag--nba{background:rgba(255,140,0,0.14);color:#ff9c1f;border-color:rgba(255,140,0,0.45)}
+.pick-article-hero__tag--nfl{background:rgba(57,255,20,0.12);color:var(--neon-green,#39ff14);border-color:rgba(57,255,20,0.4)}
+.pick-article-hero__tag--ncaab,
+.pick-article-hero__tag--ncaaf{background:rgba(255,0,170,0.12);color:var(--neon-pink,#ff00aa);border-color:rgba(255,0,170,0.4)}
+.pick-article-hero__tag--soccer{background:rgba(120,255,120,0.12);color:#9cff6b;border-color:rgba(120,255,120,0.4)}
+
+.pick-article-hero__title{
+ font-family:var(--font-display,'Orbitron',sans-serif);
+ font-size:clamp(1.85rem,4.2vw,3rem);
+ font-weight:900;
+ color:#ffffff;
+ line-height:1.14;
+ letter-spacing:0.3px;
+ text-transform:none;
+ margin:0 0 18px;
+ text-shadow:0 0 22px rgba(0,255,242,0.2);
+}
+.pick-article-hero__meta{
+ font-family:var(--font-body,'Poppins',sans-serif);
+ font-size:13px;
+ color:#9a9a9a;
+ letter-spacing:1.8px;
+ text-transform:uppercase;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:10px;
+ flex-wrap:wrap;
+}
+.pick-article-hero__meta span{white-space:nowrap}
+
+.pick-article-hero__figure{
+ margin:0;
+ position:relative;
+ background:#0a0a0a;
+ border-radius:20px;
+ overflow:hidden;
+ border:1px solid rgba(0,255,242,0.28);
+ box-shadow:
+  0 34px 70px rgba(0,0,0,0.75),
+  0 0 60px rgba(0,255,242,0.12),
+  inset 0 0 0 1px rgba(255,255,255,0.025);
+}
+.pick-article-hero__figure img{
+ display:block;
+ width:100%;
+ height:auto;
+ aspect-ratio:16/9;
+ object-fit:cover;
+ object-position:center;
+}
+.pick-article-hero__figure figcaption{
+ padding:16px 26px;
+ font-family:var(--font-body,'Poppins',sans-serif);
+ font-size:13px;
+ color:#b0b0b0;
+ font-style:italic;
+ background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(10,10,10,0.95) 100%);
+ text-align:center;
+ border-top:1px solid rgba(0,255,242,0.14);
+}
+
+@media(max-width:900px){
+ .pick-article-hero{padding:0 16px;margin:16px auto 32px}
+ .pick-article-hero__top{margin-bottom:22px}
+ .pick-article-hero__figure{border-radius:14px}
+ .pick-article-hero__figure figcaption{padding:12px 16px;font-size:12px}
+}
+@media(max-width:560px){
+ .pick-article-hero{padding:0 10px}
+ .pick-article-hero__tag{font-size:10px;letter-spacing:2px;padding:6px 16px;margin-bottom:16px}
+ .pick-article-hero__title{letter-spacing:0}
+ .pick-article-hero__meta{font-size:11px;letter-spacing:1.2px;gap:6px}
+ .pick-article-hero__figure{border-radius:12px}
+}
