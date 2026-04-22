@@ -1144,19 +1144,26 @@ function parseCSV(csvText) {
  // Expected columns: Date, Pick, Line/Odds, Result, Units
  // Some sheets have blank headers or extra columns
 
- // Normalize headers - fix empty and variant names
+ // Normalize headers - fix empty and variant names.
+ //
+ // BUG WE ARE FIXING: The NBA sport sheet has a 6-column layout with
+ // TWO blank header cells ("Date,Pick,Odds,,Units,"). Without a stateful
+ // "already named Result" flag, both blank cells get renamed to "Result"
+ // and the 6th column (a pipe-joined summary string) overwrites the
+ // real W/L/P value when we build each row object. Use a flag that
+ // flips true the first time we claim a blank as Result so every
+ // subsequent blank falls through to the Column<idx> fallback. Matches
+ // records-engine.js parseCSV() exactly.
+ let hasResultHeader = headers.some(h => (h || '').toLowerCase().indexOf('result') >= 0);
  headers = headers.map((h, idx) => {
- const lower = h.toLowerCase();
+ const lower = (h || '').toLowerCase();
  if (lower === 'odds') return 'Line'; // Normalize Odds to Line
  if (h === '' || h === undefined) {
- // Fill in blank headers based on position and context
- // Check what columns exist to determine what's missing
- const existingHeaders = headers.filter(x => x && x !== '');
- if (!existingHeaders.includes('Result') && !existingHeaders.includes('result')) {
- // If Result is missing, the blank is probably Result
+ if (!hasResultHeader) {
+ hasResultHeader = true;
  return 'Result';
  }
- return `Column${idx}`; // Fallback name
+ return 'Column' + idx;
  }
  return h;
  });
