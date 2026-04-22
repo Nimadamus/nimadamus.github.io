@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """
-Build all-records.json by merging every per-sport *-records.json file.
+Build all-records.json by merging EVERY available source of per-sport picks.
 
-Output is deduped on (Sport, Date, Picks, Odds) and sorted newest-first so
-betlegend-verified-records.html shows an accurate, current all-sports log.
+Why both sources: the per-sport *-records.html tables are the source of
+truth for picks graded after Nov 2025 (sync_records_from_tracker.py writes
+into those tables). But MLB's HTML table has been truncated to recent
+picks only - the full MLB history lives in mlb-records.json. Neither
+source alone is complete, so we merge both, HTML wins on conflict because
+it's fresher.
 
-Run standalone, or call from another script:
+Output is deduped on (Sport, Date, Pick, Odds), sorted newest-first, and
+written to all-records.json for betlegend-verified-records.html.
+
+Run standalone, or from sync_records_from_tracker.py:
     python scripts/build_all_records_json.py
 """
 
@@ -16,100 +23,183 @@ from datetime import datetime
 
 REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SOURCE_FILES = [
-    'mlb-records.json',
-    'nhl-records.json',
-    'nfl-records.json',
-    'nba-records.json',
-    'ncaab-records.json',
-    'ncaaf-records.json',
-    'soccer-records.json',
+SPORTS = [
+    ('MLB',    'mlb-records.html',    'mlb-records.json'),
+    ('NHL',    'nhl-records.html',    'nhl-records.json'),
+    ('NFL',    'nfl-records.html',    'nfl-records.json'),
+    ('NBA',    'nba-records.html',    'nba-records.json'),
+    ('NCAAF',  'ncaaf-records.html',  'ncaaf-records.json'),
+    ('NCAAB',  'ncaab-records.html',  'ncaab-records.json'),
+    ('Soccer', 'soccer-records.html', 'soccer-records.json'),
 ]
 
 OUTPUT_FILE = 'all-records.json'
 
+ROW_RE = re.compile(
+    r'<tr>\s*'
+    r'<td>([^<]+)</td>\s*'       # Date
+    r'<td>([^<]+)</td>\s*'       # Pick
+    r'<td>([^<]*)</td>\s*'       # Line / Odds
+    r'<td[^>]*>([^<]*)</td>\s*'  # Result
+    r'<td[^>]*>([^<]*)</td>\s*'  # Units (profit/loss)
+    r'</tr>',
+    re.IGNORECASE,
+)
 
-def parse_date(date_str):
-    if not date_str:
-        return datetime.min
+TBODY_RE = re.compile(
+    r'<tbody id="picks-table-body">(.*?)</tbody>',
+    re.IGNORECASE | re.DOTALL,
+)
+
+
+def normalize_date(s):
+    s = (s or '').strip()
     for fmt in ('%m-%d-%Y', '%m/%d/%Y', '%Y-%m-%d', '%m-%d-%y', '%m/%d/%y'):
         try:
-            return datetime.strptime(date_str.strip(), fmt)
+            dt = datetime.strptime(s, fmt)
+            return dt.strftime('%#m/%#d/%Y') if os.name == 'nt' else dt.strftime('%-m/%-d/%Y')
         except ValueError:
             continue
-    m = re.search(r'(\d{1,2})[-/](\d{1,2})[-/](\d{2,4})', date_str)
-    if m:
-        mo, d, y = m.groups()
-        y = int(y)
-        if y < 100:
-            y += 2000
+    return s
+
+
+def parse_date_sort_key(s):
+    s = (s or '').strip()
+    for fmt in ('%m/%d/%Y', '%m-%d-%Y', '%Y-%m-%d', '%m/%d/%y', '%m-%d-%y'):
         try:
-            return datetime(y, int(mo), int(d))
+            return datetime.strptime(s, fmt)
         except ValueError:
-            pass
+            continue
     return datetime.min
 
 
+def pick_key(row):
+    return (
+        (row.get('Sport') or '').strip().lower(),
+        normalize_date(row.get('Date') or ''),
+        (row.get('Picks') or row.get('Pick') or '').strip().lower(),
+        (row.get('Odds') or row.get('Line') or '').strip(),
+    )
+
+
+def extract_html_rows(html, sport):
+    m = TBODY_RE.search(html)
+    if not m:
+        return []
+    body = m.group(1)
+    out = []
+    for date, pick, odds, result, units in ROW_RE.findall(body):
+        result = (result or '').strip().upper()
+        if result and result[0] in ('W', 'L', 'P'):
+            result = result[0]
+        else:
+            result = ''
+        units = (units or '').replace('+', '').strip()
+        out.append({
+            'Sport': sport,
+            'League': '',
+            'Date': normalize_date(date),
+            'Picks': pick.strip(),
+            'Odds': odds.strip(),
+            'Units': '',
+            'Result': result,
+            'ProfitLoss': units,
+            'GradedAt': '',
+        })
+    return out
+
+
+def load_json_rows(path, sport):
+    if not os.path.exists(path):
+        return []
+    with open(path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    out = []
+    for r in data:
+        row = {
+            'Sport': r.get('Sport') or sport,
+            'League': r.get('League', ''),
+            'Date': normalize_date(r.get('Date', '')),
+            'Picks': (r.get('Picks') or r.get('Pick') or '').strip(),
+            'Odds': (r.get('Odds') or r.get('Line') or '').strip(),
+            'Units': r.get('Units', ''),
+            'Result': (r.get('Result') or '').strip().upper()[:1],
+            'ProfitLoss': (r.get('ProfitLoss') or '').replace('+', '').strip(),
+            'GradedAt': r.get('GradedAt', ''),
+        }
+        if row['Result'] not in ('W', 'L', 'P'):
+            row['Result'] = ''
+        out.append(row)
+    return out
+
+
 def main():
-    merged = []
-    seen = set()
-    per_sport_counts = {}
+    merged = {}  # key -> row. HTML loaded last so it wins conflicts.
 
-    for fname in SOURCE_FILES:
-        path = os.path.join(REPO_PATH, fname)
-        if not os.path.exists(path):
-            print(f"  SKIP {fname} (missing)")
-            continue
-        with open(path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        added = 0
-        for row in data:
-            key = (
-                (row.get('Sport') or '').strip().lower(),
-                (row.get('Date') or '').strip(),
-                (row.get('Picks') or row.get('Pick') or '').strip().lower(),
-                (row.get('Odds') or row.get('Line') or '').strip(),
-            )
-            if key in seen:
-                continue
-            seen.add(key)
-            merged.append(row)
-            added += 1
-        per_sport_counts[fname] = added
-        print(f"  {fname}: {added} unique records")
+    json_total = 0
+    html_total = 0
 
-    merged.sort(key=lambda r: parse_date(r.get('Date', '')), reverse=True)
+    for sport, html_file, json_file in SPORTS:
+        j = load_json_rows(os.path.join(REPO_PATH, json_file), sport)
+        json_added = 0
+        for row in j:
+            k = pick_key(row)
+            if k not in merged:
+                merged[k] = row
+                json_added += 1
+        json_total += json_added
+
+        html_path = os.path.join(REPO_PATH, html_file)
+        html_rows = []
+        if os.path.exists(html_path):
+            with open(html_path, 'r', encoding='utf-8', errors='ignore') as f:
+                html_rows = extract_html_rows(f.read(), sport)
+        html_added = 0
+        html_overwritten = 0
+        for row in html_rows:
+            k = pick_key(row)
+            if k in merged:
+                html_overwritten += 1
+            else:
+                html_added += 1
+            merged[k] = row  # HTML wins
+        html_total += html_added
+
+        print(f"  {sport:6s} | JSON +{json_added:4d} | HTML +{html_added:4d} new, "
+              f"{html_overwritten:4d} overwrote")
+
+    rows = sorted(merged.values(),
+                  key=lambda r: parse_date_sort_key(r['Date']), reverse=True)
 
     out_path = os.path.join(REPO_PATH, OUTPUT_FILE)
     with open(out_path, 'w', encoding='utf-8') as f:
-        json.dump(merged, f, indent=2)
+        json.dump(rows, f, indent=2)
 
-    total_units = 0.0
     wins = losses = pushes = 0
-    year_counts = {}
-    for r in merged:
+    total_units = 0.0
+    year_units = {}
+    year_cnt = {}
+    for r in rows:
+        res = r['Result']
+        if res == 'W': wins += 1
+        elif res == 'L': losses += 1
+        elif res == 'P': pushes += 1
         try:
-            total_units += float(r.get('ProfitLoss', '') or 0)
+            pl = float(r['ProfitLoss']) if r['ProfitLoss'] else 0.0
         except ValueError:
-            pass
-        res = (r.get('Result', '') or '').upper().strip()
-        if res.startswith('W'):
-            wins += 1
-        elif res.startswith('L'):
-            losses += 1
-        elif res.startswith('P'):
-            pushes += 1
-        m = re.search(r'(20\d\d)', r.get('Date', '') or '')
+            pl = 0.0
+        total_units += pl
+        m = re.search(r'(20\d\d)', r['Date'])
         if m:
             y = m.group(1)
-            year_counts[y] = year_counts.get(y, 0) + 1
+            year_units[y] = year_units.get(y, 0.0) + pl
+            year_cnt[y] = year_cnt.get(y, 0) + 1
 
     print()
     print(f"Wrote {out_path}")
-    print(f"  Total records: {len(merged)}")
-    print(f"  Record: {wins}-{losses}-{pushes}")
-    print(f"  Total units: {total_units:+.2f}")
-    print(f"  By year: {dict(sorted(year_counts.items()))}")
+    print(f"  Total: {len(rows)} picks | {wins}-{losses}-{pushes} | {total_units:+.2f}u")
+    for y in sorted(year_cnt):
+        print(f"  {y}: {year_cnt[y]:4d} picks | {year_units[y]:+.2f}u")
 
 
 if __name__ == '__main__':
