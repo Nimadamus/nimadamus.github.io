@@ -495,6 +495,14 @@ def main():
     print(f"COMPLETE: Added {total_added} total new picks across all sports")
     print("=" * 60)
     print()
+    print("Rebuilding all-records.json from per-sport JSONs...")
+    try:
+        import build_all_records_json
+        build_all_records_json.main()
+    except Exception as e:
+        print(f"  WARNING: build_all_records_json failed: {e}")
+        print("  Run manually: python scripts/build_all_records_json.py")
+    print()
     print("Next steps:")
     print("  1. Review the changes: git diff")
     print("  2. Commit: git add -A && git commit -m 'Sync records from tracker'")
