@@ -837,11 +837,14 @@ def sync_preview():
     pattern = r'<!-- FEATURED-GAME-PREVIEW-START.*?<!-- FEATURED-GAME-PREVIEW-END -->'
 
     if not re.search(pattern, index_content, re.DOTALL):
-        print("\n  ERROR: Could not find FEATURED-GAME-PREVIEW markers in index.html")
-        print("  Add these two HTML comments around the fg-* preview block:")
+        # Non-fatal: homepage may not have the preview block at all. Log and
+        # succeed so the daily hub GitHub Actions job (which runs this after
+        # generating the hub) can still commit the hub output.
+        print("\n  NOTE: No FEATURED-GAME-PREVIEW markers in index.html - skipping sync.")
+        print("  (This is non-fatal. To enable homepage sync, wrap the preview block in:)")
         print("    <!-- FEATURED-GAME-PREVIEW-START -->")
         print("    <!-- FEATURED-GAME-PREVIEW-END -->")
-        return False
+        return True
 
     updated_content = re.sub(pattern, new_preview.rstrip(), index_content, flags=re.DOTALL)
 
