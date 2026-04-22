@@ -2856,7 +2856,14 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     # Include today's date so the calendar always shows today as clickable
     # (the archive file for today is saved AFTER HTML generation, so without
     # this, today would always be missing from the calendar - off-by-one bug)
-    existing_archive_dates.add(date_str)
+    # BUG FIX Apr 21 2026: date_str is display-format ("April 21, 2026"), not ISO.
+    # Adding it directly polluted archiveDates with a malformed entry that broke
+    # the calendar's has-content matching. Always use ISO today's date here.
+    if EASTERN:
+        _today_iso = datetime.now(EASTERN).strftime('%Y-%m-%d')
+    else:
+        _today_iso = (datetime.now() - timedelta(hours=5)).strftime('%Y-%m-%d')
+    existing_archive_dates.add(_today_iso)
 
     # Build final archive dates list from the now-complete archive folder
     archive_dates = sorted(existing_archive_dates)
