@@ -27,7 +27,7 @@ var HOMEPAGE_PICKS = [
         title: "Full Card Free Release - 6 MLB Picks (10 Units)",
         date: "April 22, 2026",
         result: "",
-        url: "full-card-free-release-six-play-mlb-wednesday-april-22-2026.html",
+        url: "free-mlb-picks-today-full-card-release-wednesday-april-22-2026.html",
         image: "images/hero-mlb-full-card-free-release-april-22-2026.jpg"
     },
     {
