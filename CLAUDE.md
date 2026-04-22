@@ -297,97 +297,21 @@ The ONLY change is the filename itself.
 
 ---
 
-## ⛔⛔⛔ ROLLING HUB SYSTEM - !!RETIRED MARCH 30, 2026!! ⛔⛔⛔
+## ⛔⛔⛔ ROLLING HUB SYSTEM — FULLY RETIRED, DO NOT RE-IMPLEMENT ⛔⛔⛔
 
-### !!RETIRED!! - This system caused too many problems and has been PERMANENTLY ABANDONED.
+### Retired March 30, 2026. Re-executed accidentally on April 19, 2026 (canonical-to-hub rewrites, sitemap purge). GSC data later confirmed the legacy sport hubs drove 0 clicks, so the "consolidation" helped nothing and the churn created confusion. NEVER RE-IMPLEMENT.
 
-**As of March 30, 2026, we are BACK to standalone daily pages. Each SLATE creates individual files per sport with UNIQUE storyline-driven URLs. The hub pages (nba-previews.html, etc.) now serve as landing/redirect pages to today's content. No more daily overwriting, no more archive rotation, no more lost content.**
+**Current system: standalone daily pages per sport with unique storyline-driven URLs.** See `feedback_back_to_standalone_daily_pages.md` in user memory for the canonical rule.
 
-**THE CURRENT SYSTEM (March 30, 2026+):**
-```
-Each SLATE creates standalone files:
-- [unique-theme]-nba-[month]-[day]-[year].html
-- [unique-theme]-nhl-[month]-[day]-[year].html
-- [unique-theme]-mlb-[month]-[day]-[year].html
-- [unique-theme]-soccer-[month]-[day]-[year].html
-- [unique-theme]-college-basketball-[month]-[day]-[year].html (when in season)
-- [away]-vs-[home]-analysis-stats-preview-[month]-[day]-[year].html (Featured Game)
+### ❌ BANNED — any agent caught doing any of these must STOP and ask Nima first:
+- Pointing `<link rel="canonical">` from `nba.html` / `nhl.html` / `mlb.html` / `soccer.html` / `ncaab.html` to any `*-previews.html` URL (or vice versa)
+- Adding/removing `<meta http-equiv="refresh">` redirects between the legacy sport hubs and the preview hubs
+- Removing the legacy sport hubs (`nba.html`, `nhl.html`, `mlb.html`, `soccer.html`, `ncaab.html`, `ncaaf.html`, `nfl.html`) from `sitemap.xml`
+- Canonicalizing dated `handicapping-hub-YYYY-MM-DD.html` archives to `handicapping-hub.html`
+- Any "SEO consolidation", "hub consolidation", "duplicate content cleanup", or bulk canonical/sitemap rewrite on betlegendpicks.com
 
-EVERY URL must be UNIQUE and STORYLINE-DRIVEN.
-NEVER use generic date-only patterns.
-Calendar links point directly to standalone files.
-Hub pages redirect to today's standalone page.
-```
-
-**!!THE BELOW SECTION IS HISTORICAL ONLY - DO NOT FOLLOW!!**
-
-### THE NEW SYSTEM:
-
-| Sport | Permanent Hub URL | Archive Pattern |
-|-------|-------------------|-----------------|
-| NBA | nba-previews.html | nba-previews-archive-[month]-[year].html |
-| NHL | nhl-previews.html | nhl-previews-archive-[month]-[year].html |
-| MLB | mlb-previews.html | mlb-previews-archive-[month]-[year].html |
-| NCAAB | college-basketball-previews.html | college-basketball-previews-archive-[month]-[year].html |
-| Soccer | soccer-previews.html | soccer-previews-archive-[month]-[year].html |
-
-### HOW IT WORKS:
-
-```
-1. Each sport has ONE permanent hub page that accumulates all SEO authority
-2. Hub pages are updated daily with fresh content (replacing yesterday's)
-3. Before updating, run the rotation script to archive yesterday's content
-4. Archives are noindexed monthly files (no crawl budget waste)
-5. Hub pages self-canonicalize (canonical points to themselves)
-6. Archives canonical-point to the hub (passes authority up)
-```
-
-### DAILY SLATE WORKFLOW (UPDATED):
-
-```
-STEP 1: Archive yesterday's content
-  python scripts/rotate_all_hubs.py
-
-STEP 2: Update each hub page with today's content
-  - Replace content between DAILY CONTENT START/END markers
-  - Update the "Last Updated" line
-  - Update JSON-LD SportsEvent schema
-  - Update hero badge (e.g., "8-Game Tuesday Slate")
-  - Update hero h1 (keeps as "NBA Previews Today" etc.)
-  - Update hero description paragraph
-
-  CONTENT STANDARD PER GAME (same as old nba.html format):
-  - Team logos from ESPN CDN (verified HTTP 200)
-  - Game number badge + broadcast badge
-  - .game-preview card (or .game-preview.marquee for top games)
-  - Full betting section: Spread/Puck Line, Moneyline, Total
-  - 4 substantial paragraphs of in-depth analysis
-  - .game-divider between games
-  - Analysis only, no picks
-
-STEP 3: Run validators and push
-  python accuracy_filter.py [file]
-  python validate_news_before_publish.py [file]
-  git add . && git commit && git push
-```
-
-### BANNED FOREVER (OLD SYSTEM):
-```
-❌ Creating new dated page files (nba-game-previews-march-22-2026.html)
-❌ Creating page-numbered files (nba-page77.html)
-❌ Creating any new sport preview URL that isn't one of the 5 hubs
-❌ Using nba.html, nhl.html, etc. as the primary sport pages
-❌ The old nba-picks-today.html, nhl-picks-today.html URLs
-```
-
-### WHY THIS EXISTS (March 22, 2026):
-- 500+ dated preview pages were diluting domain authority
-- Google was flagging thin, near-identical programmatic content
-- Crawl budget was being wasted on hundreds of low-value URLs
-- Rankings were dropping because link equity was spread across 500+ pages
-- The Rolling Hub model consolidates ALL authority onto 5 permanent URLs
-
-**IF I CREATE A NEW DATED SPORT PREVIEW PAGE INSTEAD OF UPDATING THE HUB, I HAVE FAILED.**
+### Why this rule exists
+The retired Rolling Hub block used to live here with prescriptive instructions. Agents reading top-down kept re-executing the old directive because the "retired" note was easy to miss. The rewritten canonicals did not help — the target pages had no standing traffic to gain, and the source pages were dropped from the index for no benefit. Tuning SEO on this site with AI has historically reduced traffic (see `feedback_betlegendpicks_no_ai_seo_tuning.md`). Defer all SEO decisions on this site to Nima.
 
 ---
 
