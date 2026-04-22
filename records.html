@@ -1074,12 +1074,37 @@ async function fetchAllData() {
  const seenBets = new Set();
  const duplicates = [];
 
+ // Dedup key normalization MUST match records-engine.js exactly so the
+ // hub never disagrees with the sport pages on pick counts. The engine
+ // normalizes date to M/D/YYYY, collapses pick whitespace + lowercases,
+ // and strips commas/leading "+" from the line. If we only strip leading
+ // "+" here, the same pick with slightly different whitespace or casing
+ // between the tracker and the sport sheet gets double-counted.
+ const normalizeDateKey = (s) => {
+ if (!s) return '';
+ const parts = String(s).trim().split(/[-\/]/);
+ if (parts.length !== 3) return String(s).trim();
+ const m = parseInt(parts[0], 10);
+ const d = parseInt(parts[1], 10);
+ let yStr = parts[2].trim();
+ let y = parseInt(yStr, 10);
+ if (/^0\d+$/.test(yStr)) y = parseInt(yStr.replace(/^0+/, ''), 10);
+ if (/^\d{3}$/.test(yStr) && yStr.indexOf('20') === 0) {
+ y = parseInt(yStr.slice(0, 2) + '2' + yStr.slice(2), 10);
+ }
+ if (y > 2030 && y < 3000) y = parseInt('20' + String(y).slice(-2), 10);
+ if (!isNaN(m) && !isNaN(d) && !isNaN(y) && y >= 2020 && y <= 2030) {
+ return m + '/' + d + '/' + y;
+ }
+ return String(s).trim();
+ };
+ const normalizePickKey = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+ const normalizeLineKey = (s) => String(s || '').replace(/,/g, '').trim().replace(/^\+/, '');
+
  allData = rawData.filter(row => {
- // Create unique identifier from Date, Pick, and Line
- const dateStr = row.Date || row.date || '';
- const pick = (row.Pick || row.pick || '').trim();
- // Normalize line for comparison - strip leading "+" to handle "+120" vs "120"
- const line = (row.Line || row.line || '').trim().replace(/^\+/, '');
+ const dateStr = normalizeDateKey(row.Date || row.date || '');
+ const pick = normalizePickKey(row.Pick || row.pick || '');
+ const line = normalizeLineKey(row.Line || row.line || '');
  const sport = row.sport || '';
 
  const uniqueId = `${dateStr}|${sport}|${pick}|${line}`;
