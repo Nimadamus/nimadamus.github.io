@@ -332,6 +332,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script src="records-engine.js"></script>
+<script src="records-sport-page.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.BetLegendRecords && typeof BetLegendRecords.initSportPage === "function") {
+    BetLegendRecords.initSportPage({ sport: "MLB", defaultYear: "all", chartStateKey: "__mlbRecordsChart" });
+  }
+});
+</script>
+
+
 <script>
  // MLB-specific Google Sheet (historical 2025 season data)
  const MLB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQE9RjSNABgl0SxSA1ghp9soUs4gq7teoncN5GLmG5faXmH-sDwXgg0mrk0iQwmSEYExtx6xwFMflXv/pub?output=csv';

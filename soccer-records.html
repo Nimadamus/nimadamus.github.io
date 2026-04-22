@@ -285,6 +285,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script src="records-engine.js"></script>
+<script src="records-sport-page.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.BetLegendRecords && typeof BetLegendRecords.initSportPage === "function") {
+    BetLegendRecords.initSportPage({ sport: "Soccer", defaultYear: "all", chartStateKey: "__soccerRecordsChart" });
+  }
+});
+</script>
+
+
 <script>
  // Google Sheets CSV URL - Old Soccer Sheet (correct data)
  const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQy0EQskvixsVQb1zzYtCKDa4F1Wl6WU5QuAFMit32vms-c4DxlhLik-k7U_EhuYntQrpw4BI6r0rns/pub?output=csv';

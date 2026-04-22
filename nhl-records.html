@@ -852,6 +852,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script src="records-engine.js"></script>
+<script src="records-sport-page.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.BetLegendRecords && typeof BetLegendRecords.initSportPage === "function") {
+    BetLegendRecords.initSportPage({ sport: "NHL", defaultYear: "all", chartStateKey: "__nhlRecordsChart" });
+  }
+});
+</script>
+
+
 <script>
  // Pick Tracker URL for dynamic loading
  const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';

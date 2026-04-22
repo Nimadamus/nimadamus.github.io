@@ -488,6 +488,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script src="records-engine.js"></script>
+<script src="records-sport-page.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.BetLegendRecords && typeof BetLegendRecords.initSportPage === "function") {
+    BetLegendRecords.initSportPage({ sport: "NFL", defaultYear: "all", chartStateKey: "__nflRecordsChart" });
+  }
+});
+</script>
+
+
 <script>
  // LIVE FETCHING from Pick Tracker + Static HTML fallback
  const PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0';

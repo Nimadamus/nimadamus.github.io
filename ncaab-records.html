@@ -362,6 +362,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script src="records-engine.js"></script>
+<script src="records-sport-page.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.BetLegendRecords && typeof BetLegendRecords.initSportPage === "function") {
+    BetLegendRecords.initSportPage({ sport: "NCAAB", defaultYear: "all", chartStateKey: "__ncaabRecordsChart" });
+  }
+});
+</script>
+
+
 <script>
  // Google Sheets CSV URL - NCAAB Records Tracker
  const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFb66HE90gCwliIBQlZ5cNBApJWtGuUV1WbS4pd12SMrs_3qlmSFZCLJ9vBmfgZKcaaGyg4G15J3Y/pub?output=csv';
