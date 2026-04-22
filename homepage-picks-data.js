@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Full Card Free Release - 6 MLB Picks (10 Units)",
+        date: "April 22, 2026",
+        result: "",
+        url: "full-card-free-release-six-play-mlb-wednesday-april-22-2026.html",
+        image: "images/hero-mlb-full-card-free-release-april-22-2026.jpg"
+    },
+    {
         sport: "NHL",
         title: "Sabres Team Total Under 3.5 (-140) vs Bruins G2",
         date: "April 21, 2026",
