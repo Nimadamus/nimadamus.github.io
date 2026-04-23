@@ -33,7 +33,10 @@ for path in ROOT.glob("*.html"):
     if path.name in SKIP_NAMES:
         continue
     scanned += 1
-    text = path.read_text(encoding="utf-8", errors="ignore")
+    try:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+    except FileNotFoundError:
+        continue
     new_text = text
     for pat, repl in PATTERNS:
         new_text = pat.sub(repl, new_text)

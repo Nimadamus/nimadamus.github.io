@@ -767,12 +767,43 @@ def update_hub_placeholder_fallback(sport_name, sport_config, pages):
     main_page = sport_config.get('main')
     if main_page:
         excluded_pages.add(main_page)
-    latest_page = next((
-        p for p in pages
-        if p.get('page') not in excluded_pages
-        and '#' not in p.get('page', '')
-        and '-archive-' not in p.get('page', '')
-    ), None)
+
+    # Picks pages must never hijack a preview hub. They live on /picks and
+    # duplicate the "six-play" blog card content. If the hub fallback points
+    # to one of these, users who click "Open Latest MLB Preview" land on the
+    # picks page, which reads identical to the homepage pick card.
+    pick_url_patterns = (
+        'free-mlb-picks-today',
+        'full-card-release',
+        'full-card-free-release',
+        'six-play',
+    )
+    pick_title_patterns = (
+        'picks today',
+        'full card',
+    )
+
+    def _is_preview_page(p):
+        page = (p.get('page') or '').lower()
+        title = (p.get('title') or '').lower()
+        if page in excluded_pages:
+            return False
+        if '#' in page or '-archive-' in page:
+            return False
+        if any(pat in page for pat in pick_url_patterns):
+            return False
+        if any(pat in title for pat in pick_title_patterns):
+            return False
+        return True
+
+    latest_page = next((p for p in pages if _is_preview_page(p)), None)
+    if not latest_page:
+        latest_page = next((
+            p for p in pages
+            if p.get('page') not in excluded_pages
+            and '#' not in p.get('page', '')
+            and '-archive-' not in p.get('page', '')
+        ), None)
     if not latest_page:
         latest_page = next((p for p in pages if p.get('page') != hub_page), None)
     if not latest_page:
