@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Sabres ML -110 at Bruins Game 3 2u",
+        date: "April 23, 2026",
+        result: "",
+        url: "sabres-moneyline-minus-110-bruins-game-3-td-garden-nhl.html",
+        image: "images/sabres-celebration-bruins-game-3-april-23-2026.jpg"
+    },
+    {
         sport: "MLB",
         title: "Full Card Free Release - 6 MLB Picks (10 Units)",
         date: "April 22, 2026",
