@@ -853,25 +853,26 @@ def remove_pagination_from_sports_pages():
 
 def fix_main_page_canonicals():
     """
-    Enforces canonical + og:url on main sport pages.
+    Enforces canonical + og:url on main sport pages -- ALL self-canonical.
 
-    Updated April 19, 2026: Pages that have a preview hub (nba-previews.html etc.)
-    must canonical to the HUB, not themselves. Prior self-canonicals created a
-    duplicate-content pair (nba.html + nba-previews.html both indexable, both
-    self-canonical) which split authority and collapsed impressions.
+    Rolling Hub consolidation was retired March 30, 2026 and re-executed in
+    error on April 19, 2026 (canonicals pointed nba.html -> nba-previews.html
+    etc.). That change deindexed the sport landing pages and coincided with
+    the impressions collapse to ~100/day. See CLAUDE.md "ROLLING HUB SYSTEM --
+    FULLY RETIRED". Every sport page MUST canonical to itself. Do NOT remap.
 
     SLATE still copies archive content into the main pages, so this runs after
-    every sync to reset the canonical back to the correct target.
+    every sync to reset the canonical back to self.
     """
-    print("\n[CANONICAL FIX] Enforcing canonicals on main sport pages...")
+    print("\n[CANONICAL FIX] Enforcing self-canonicals on main sport pages...")
     MAIN_PAGES = {
-        'nba.html': 'https://www.betlegendpicks.com/nba-previews.html',
-        'nhl.html': 'https://www.betlegendpicks.com/nhl-previews.html',
-        'ncaab.html': 'https://www.betlegendpicks.com/college-basketball-previews.html',
+        'nba.html': 'https://www.betlegendpicks.com/nba.html',
+        'nhl.html': 'https://www.betlegendpicks.com/nhl.html',
+        'ncaab.html': 'https://www.betlegendpicks.com/ncaab.html',
         'ncaaf.html': 'https://www.betlegendpicks.com/ncaaf.html',
         'nfl.html': 'https://www.betlegendpicks.com/nfl.html',
-        'mlb.html': 'https://www.betlegendpicks.com/mlb-previews.html',
-        'soccer.html': 'https://www.betlegendpicks.com/soccer-previews.html',
+        'mlb.html': 'https://www.betlegendpicks.com/mlb.html',
+        'soccer.html': 'https://www.betlegendpicks.com/soccer.html',
     }
     fixed_count = 0
 

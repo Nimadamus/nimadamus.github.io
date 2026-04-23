@@ -22,14 +22,16 @@ import sys
 REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOMAIN = "https://www.betlegendpicks.com"
 
-# Main sport pages -> canonical target. Pages with a preview hub canonical
-# to the hub (dedup); pages with no hub stay self-canonical.
+# Main sport pages -> canonical target. ALL self-canonical.
+# Rolling Hub consolidation was retired March 30, 2026 and re-executed in
+# error on April 19, 2026 (see CLAUDE.md "ROLLING HUB SYSTEM -- FULLY RETIRED").
+# Every sport page MUST canonicalize to itself. Do NOT map to *-previews hubs.
 MAIN_PAGES = {
-    "nba.html": "nba-previews.html",
-    "nhl.html": "nhl-previews.html",
-    "mlb.html": "mlb-previews.html",
-    "ncaab.html": "college-basketball-previews.html",
-    "soccer.html": "soccer-previews.html",
+    "nba.html": "nba.html",
+    "nhl.html": "nhl.html",
+    "mlb.html": "mlb.html",
+    "ncaab.html": "ncaab.html",
+    "soccer.html": "soccer.html",
     "nfl.html": "nfl.html",
     "ncaaf.html": "ncaaf.html",
 }
