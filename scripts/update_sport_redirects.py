@@ -157,12 +157,19 @@ def detect_current_nav_target(sport_key):
 
 
 def remove_js_redirect(main_page_path):
-    """Remove any window.location.replace() redirect from a main sport page."""
+    """Remove any JS redirect OR meta http-equiv refresh from a main sport page.
+
+    Rolling Hub is retired -- sport landing pages must not redirect to
+    *-previews hubs. Both the <script>window.location.replace()</script> and
+    the <meta http-equiv="refresh"> forms are stripped.
+    """
     with open(main_page_path, 'r', encoding='utf-8', errors='ignore') as f:
         content = f.read()
 
-    redirect_pattern = r"\n?<script>window\.location\.replace\('[^']+'\);</script>"
-    new_content = re.sub(redirect_pattern, '', content)
+    js_pattern = r"\n?<script>window\.location\.replace\('[^']+'\);</script>"
+    meta_pattern = r'\n?<meta\s+http-equiv="refresh"\s+content="0;url=[^"]+"\s*/?>'
+    new_content = re.sub(js_pattern, '', content)
+    new_content = re.sub(meta_pattern, '', new_content)
 
     if new_content != content:
         with open(main_page_path, 'w', encoding='utf-8') as f:
