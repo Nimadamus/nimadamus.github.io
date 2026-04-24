@@ -42,7 +42,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Sabres ML -110 at Bruins Game 3 2u",
         date: "April 23, 2026",
-        result: "",
+        result: "W",
         url: "sabres-moneyline-minus-110-bruins-game-3-td-garden-nhl.html",
         image: "images/sabres-celebration-bruins-game-3-april-23-2026.jpg"
     },
@@ -50,7 +50,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Full Card Free Release - 6 MLB Picks (10 Units)",
         date: "April 22, 2026",
-        result: "",
+        result: "W",
         url: "free-mlb-picks-today-full-card-release-wednesday-april-22-2026.html",
         image: "images/hero-mlb-full-card-free-release-april-22-2026.jpg"
     },
@@ -58,7 +58,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Sabres Team Total Under 3.5 (-140) vs Bruins G2",
         date: "April 21, 2026",
-        result: "",
+        result: "W",
         url: "sabres-team-total-under-3-5-bruins-game-2-stanley-cup-playoffs-nhl.html",
         image: "images/sabres-lafferty-bench-celebration-bruins-g2-april-21-2026.jpg"
     },
@@ -66,7 +66,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Giants ML +153 vs Dodgers 2.5u",
         date: "April 21, 2026",
-        result: "",
+        result: "W",
         url: "giants-moneyline-plus-153-roupp-dodgers-oracle-park-mlb.html",
         image: "images/landen-roupp-giants-pitcher-april-21-2026.jpg"
     },
@@ -74,6 +74,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Ducks ML +160 (1.5u) & +1.5 -155 (3u) at Oilers G1",
         date: "April 20, 2026",
+        result: "W",
         url: "ducks-moneyline-plus-160-puck-line-oilers-game-1-stanley-cup-playoffs-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_png/v1776402055/prd/yukw5jm35s8csetqt4xg.png"
     },
