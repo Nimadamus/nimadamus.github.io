@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Mammoth ML -110 vs Golden Knights Game 3 3u",
+        date: "April 24, 2026",
+        result: "",
+        url: "mammoth-moneyline-minus-110-home-ice-golden-knights-game-3-delta-center-nhl.html",
+        image: "images/utah-mammoth-home-ice-game-3-april-24-2026.jpg"
+    },
+    {
         sport: "MLB",
         title: "Reds ML +118 Home Dog vs Tigers 1.5u",
         date: "April 24, 2026",
