@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Reds ML +118 Home Dog vs Tigers 1.5u",
+        date: "April 24, 2026",
+        result: "",
+        url: "reds-moneyline-plus-118-home-dog-valdez-abbott-great-american-ballpark-mlb.html",
+        image: "images/tyler-stephenson-reds-home-dog-tigers-april-24-2026.jpg"
+    },
+    {
         sport: "NHL",
         title: "Sabres ML -110 at Bruins Game 3 2u",
         date: "April 23, 2026",
