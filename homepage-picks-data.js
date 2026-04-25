@@ -31,6 +31,14 @@ var HOMEPAGE_PICKS = [
         image: "images/stars-moneyline-plus-115-game-4-wild-grand-casino-arena-nhl.jpg"
     },
     {
+        sport: "MLB",
+        title: "Rockies / Mets Over 8 Quintana Senga 3u",
+        date: "April 25, 2026",
+        result: "",
+        url: "rockies-mets-over-8-quintana-senga-citi-field-mlb.html",
+        image: "images/rockies-mets-over-8-quintana-senga-citi-field-mlb.jpg"
+    },
+    {
         sport: "NHL",
         title: "Mammoth ML -110 vs Golden Knights Game 3 3u",
         date: "April 24, 2026",
