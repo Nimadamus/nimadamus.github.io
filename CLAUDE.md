@@ -297,6 +297,52 @@ The ONLY change is the filename itself.
 
 ---
 
+## ⛔⛔⛔ CALENDAR JS LOOKUP TABLE — COPY VERBATIM, NEVER INVENT ⛔⛔⛔
+
+### PERMANENTLY LOCKED — APRIL 25, 2026
+
+**Every standalone preview/featured page MUST link the matching sport-specific
+calendar JS at the bottom. There is no `scripts/sport-calendar.js`. Inventing
+a filename silently kills the calendar sidebar on the live site.**
+
+### THE TABLE — these are the ONLY valid `<script src="...">` values:
+
+| Page type | Slug pattern | Script src |
+|-----------|--------------|------------|
+| Featured Game | `*analysis-stats-preview*` | `scripts/featured-games-calendar.js` |
+| NBA preview / hub | `*-nba-*`, `nba.html`, `nba-previews.html` | `scripts/nba-calendar.js` |
+| NHL preview / hub | `*-nhl-*`, `nhl.html`, `nhl-previews.html` | `scripts/nhl-calendar.js` |
+| MLB preview / hub | `*-mlb-*`, `mlb.html`, `mlb-previews.html` | `scripts/mlb-calendar.js` |
+| NCAAB preview / hub | `*-college-basketball-*`, `*-ncaab-*`, `ncaab.html`, `college-basketball-previews.html` | `scripts/ncaab-calendar.js` |
+| NCAAF preview / hub | `*-ncaaf-*`, `*-college-football-*`, `ncaaf.html` | `scripts/ncaaf-calendar.js` |
+| NFL preview / hub | `*-nfl-*`, `nfl.html` | `scripts/nfl-calendar.js` |
+| Soccer preview / hub | `*-soccer-*`, `soccer.html`, `soccer-previews.html` | `scripts/soccer-calendar.js` |
+
+### THE RULE:
+```
+1. Determine the page's sport from the slug.
+2. Look up the script src in the table above.
+3. Paste it verbatim. Do not abbreviate, alias, or "improve" the filename.
+4. Cache-bust ?v=YYYYMMDDxx is allowed and encouraged.
+```
+
+### WHAT HAPPENED (April 25, 2026):
+Four freshly-built April 25 sport pages (NBA, NHL, MLB, Soccer) shipped with
+`<script src="scripts/sport-calendar.js?v=20260425aa">` — a filename I invented.
+That file does not exist in the repo. Result: every calendar sidebar across
+all four pages was silently dead. Nima found the breakage on
+nba-previews.html. The four pages were patched to use their correct
+sport-specific JS files and pushed in commit `6b502ddf9`.
+
+### AUTOMATED PROTECTION:
+A pre-commit gate now blocks any HTML commit where the calendar script src
+either (a) points at a non-existent file or (b) does not match the page's
+sport per this table. The gate logs the expected value and exits 1.
+
+**IF YOU INVENT A NEW CALENDAR FILENAME, THE COMMIT WILL BE BLOCKED.**
+
+---
+
 ## ⛔⛔⛔ ROLLING HUB SYSTEM — FULLY RETIRED, DO NOT RE-IMPLEMENT ⛔⛔⛔
 
 ### Retired March 30, 2026. Re-executed accidentally on April 19, 2026 (canonical-to-hub rewrites, sitemap purge). GSC data later confirmed the legacy sport hubs drove 0 clicks, so the "consolidation" helped nothing and the churn created confusion. NEVER RE-IMPLEMENT.
