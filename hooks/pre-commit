@@ -1,0 +1,354 @@
+#!/bin/sh
+echo "Running BetLegend content validator..."
+
+# Get list of staged HTML files (excluding deleted files)
+STAGED_HTML=$(git diff --cached --name-only --diff-filter=d | grep -iE '\.(html|htm)$')
+STAGED_ALL=$(git diff --cached --name-only --diff-filter=d)
+
+# Pick card image validator runs whenever homepage-picks-data.js is staged,
+# regardless of whether any HTML is also staged. This is the hard gate that
+# prevents bad graphic-template images from ever reaching the live homepage.
+if echo "$STAGED_ALL" | grep -q "^homepage-picks-data.js$"; then
+    echo ""
+    echo "Running pick card image validator (homepage-picks-data.js changed)..."
+    python scripts/validate_pick_card_images.py --mode new-only
+    PICK_IMG_RESULT=$?
+    if [ $PICK_IMG_RESULT -ne 0 ]; then
+        echo ""
+        echo "  [BLOCKED] Pick card image validator rejected one or more images."
+        echo "  Self-host the image under images/<slug>.{jpg,jpeg,png,webp} and verify it is a"
+        echo "  real centered action photo - not a post-game graphic, score card, or logo tile."
+        exit 1
+    fi
+    echo "  [OK] Pick card images pass."
+fi
+
+# CRITICAL: Block deletion of any sport-calendar JS file (runs before HTML-only early return).
+# Removing scripts/nba-calendar.js (or similar) silently kills every sidebar on every page
+# that references it. If you really mean to delete one, do it on its own branch with explicit user approval.
+DELETED_CAL=$(git diff --cached --name-only --diff-filter=D | grep -E '^scripts/[a-z-]*calendar[a-z-]*\.js$' || true)
+if [ -n "$DELETED_CAL" ]; then
+    echo ""
+    echo "  [BLOCKED] You are deleting a calendar JS file:"
+    echo "$DELETED_CAL" | sed 's/^/    /'
+    echo "  Removing this kills the sidebar on every page that references it."
+    echo "  If this is intentional, ask Nima first and stage a replacement."
+    exit 1
+fi
+
+if [ -z "$STAGED_HTML" ]; then
+    echo "  No HTML files staged. Skipping HTML-only validation steps."
+    exit 0
+fi
+
+FILE_COUNT=$(echo "$STAGED_HTML" | wc -l | tr -d ' ')
+echo "  Validating $FILE_COUNT staged HTML file(s)..."
+
+# Write staged files to a temp file to avoid command line length limits on Windows
+TMPFILE=$(mktemp)
+echo "$STAGED_HTML" > "$TMPFILE"
+
+# Read files from temp file to avoid "Argument list too long" on Windows
+# --errors-only suppresses warnings (only shows/blocks on actual errors)
+python "betlegend_validator.py" "." --errors-only --diff-only --files-from "$TMPFILE"
+RESULT=$?
+
+# Clean up temp file
+rm -f "$TMPFILE"
+
+if [ $RESULT -ne 0 ]; then
+    echo ""
+    echo "Commit blocked by validator. Fix errors above before committing."
+    exit 1
+fi
+
+# STEP 2: Universal Content Validator on new/modified HTML files
+echo ""
+echo "Running Universal Content Validator on staged files..."
+UCV_SCRIPT="C:/Users/Nima/universal_content_validator.py"
+if [ -f "$UCV_SCRIPT" ]; then
+    UCV_FAILED=0
+    for htmlfile in $STAGED_HTML; do
+        # Only validate new or significantly modified files (not just link updates)
+        ADDITIONS=$(git diff --cached --numstat "$htmlfile" 2>/dev/null | awk '{print $1}')
+        if [ "$ADDITIONS" -gt 50 ] 2>/dev/null; then
+            echo "  Validating: $htmlfile"
+            UCV_OUTPUT=$(python "$UCV_SCRIPT" --file "$htmlfile" 2>&1)
+            if echo "$UCV_OUTPUT" | grep -q "RESULT: FAIL"; then
+                # Check if there are actual errors (not just warnings)
+                if ! echo "$UCV_OUTPUT" | grep -q "Errors: 0"; then
+                    echo "$UCV_OUTPUT" | grep -E "ERROR|FAIL|Errors:"
+                    UCV_FAILED=1
+                fi
+            fi
+        fi
+    done
+    if [ $UCV_FAILED -ne 0 ]; then
+        echo ""
+        echo "  [BLOCKED] Universal Content Validator found errors."
+        echo "  Fix all errors before committing."
+        exit 1
+    fi
+    echo "  [OK] Universal Content Validator passed."
+else
+    echo "  [WARNING] universal_content_validator.py not found - skipping"
+fi
+
+# Check main sport pages are self-canonical.
+# Rolling Hub consolidation was retired March 30, 2026 and re-executed in error
+# on April 19, 2026 (canonicals pointed sport pages -> *-previews hubs), which
+# coincided with the collapse to ~100 impressions/day. Per repo CLAUDE.md
+# "ROLLING HUB SYSTEM -- FULLY RETIRED", every sport page MUST be self-canonical.
+CANONICAL_ERROR=0
+check_canonical() {
+    PAGE=$1
+    TARGET=$2
+    if echo "$STAGED_HTML" | grep -q "^${PAGE}$"; then
+        CANONICAL_URL=$(grep 'rel="canonical"' "$PAGE" | grep -oP 'href="[^"]*"' | grep -oP '"[^"]*"' | tr -d '"')
+        if [ -z "$CANONICAL_URL" ]; then
+            CANONICAL_URL=$(grep 'canonical' "$PAGE" | grep -oP 'href="[^"]*"' | head -1 | grep -oP '"[^"]*"' | tr -d '"')
+        fi
+        if [ -n "$CANONICAL_URL" ]; then
+            if ! echo "$CANONICAL_URL" | grep -qE "/${TARGET}$"; then
+                echo ""
+                echo "  [BLOCKED] $PAGE canonical points to wrong URL: $CANONICAL_URL"
+                echo "  Expected canonical target: /${TARGET}"
+                echo "  Rolling Hub is retired -- sport pages MUST be self-canonical."
+                CANONICAL_ERROR=1
+            fi
+        fi
+    fi
+}
+
+check_canonical "nba.html"    "nba.html"
+check_canonical "nhl.html"    "nhl.html"
+check_canonical "mlb.html"    "mlb.html"
+check_canonical "ncaab.html"  "ncaab.html"
+check_canonical "soccer.html" "soccer.html"
+check_canonical "nfl.html"    "nfl.html"
+check_canonical "ncaaf.html"  "ncaaf.html"
+
+if [ $CANONICAL_ERROR -ne 0 ]; then
+    echo ""
+    echo "Commit blocked: main sport page canonical targets incorrect."
+    echo "Every sport landing page must canonical to itself (Rolling Hub retired)."
+    exit 1
+fi
+
+# Check FORCED_PAGE_DATE on featured game pages is not a future date
+TODAY=$(date +%Y-%m-%d)
+FEATURED_ERROR=0
+for FILE in $(echo "$STAGED_HTML" | grep -iE '(featured-game|analysis-stats-preview)'); do
+    if [ -f "$FILE" ]; then
+        FORCED_DATE=$(grep -oP "FORCED_PAGE_DATE\s*=\s*'(\d{4}-\d{2}-\d{2})'" "$FILE" | grep -oP '\d{4}-\d{2}-\d{2}')
+        if [ -n "$FORCED_DATE" ]; then
+            if [ "$FORCED_DATE" \> "$TODAY" ]; then
+                echo ""
+                echo "  [WARNING] $FILE has FORCED_PAGE_DATE='$FORCED_DATE' which is AFTER today ($TODAY)"
+                echo "  FORCED_PAGE_DATE should be the POST date (today), not the game date."
+                echo "  If this is intentional (posting ahead), ignore this warning."
+            fi
+        fi
+    fi
+done
+
+# CRITICAL: Check index.html for broken featured game preview (numeric team names)
+if echo "$STAGED_HTML" | grep -q "^index.html$"; then
+    # Look for raw numeric IDs being displayed as team names
+    NUMERIC_NAMES=$(grep -oP 'font-weight: 700[^>]*>\s*\d+\s*</div>' index.html || true)
+    if [ -n "$NUMERIC_NAMES" ]; then
+        echo ""
+        echo "  [BLOCKED] index.html Featured Game preview has RAW NUMBERS as team names!"
+        echo "  This means the sync script failed to convert ESPN numeric IDs to team names."
+        echo "  FIX: Run python scripts/sync_featured_game_preview.py"
+        echo "  The NCAAB_TEAM_MAP in the script may be missing team IDs."
+        echo ""
+        echo "$NUMERIC_NAMES"
+        exit 1
+    fi
+    # Also check for wrong logo paths (nba/ for college teams)
+    # If we see ncaa team IDs (3+ digit numbers) in nba logo paths, that's wrong
+    NBA_COLLEGE=$(grep -oP 'teamlogos/nba/500/\d{2,4}\.png' index.html || true)
+    if [ -n "$NBA_COLLEGE" ]; then
+        echo ""
+        echo "  [BLOCKED] index.html has NCAA team IDs in NBA logo paths!"
+        echo "  College logos use teamlogos/ncaa/500/ID.png, not teamlogos/nba/500/ID.png"
+        echo "  FIX: Run python scripts/sync_featured_game_preview.py"
+        echo ""
+        echo "$NBA_COLLEGE"
+        exit 1
+    fi
+fi
+
+# CRITICAL: Guard hub pages - ensure rotation ran before content is overwritten (March 24, 2026)
+# If a hub page is staged with changed DAILY CONTENT, verify the manifest has today's date
+# This prevents losing a day's content when the hub gets overwritten without archiving first
+HUB_PAGES="nba-previews.html nhl-previews.html mlb-previews.html college-basketball-previews.html soccer-previews.html"
+HUB_WARNING=0
+for HUB in $HUB_PAGES; do
+    if echo "$STAGED_HTML" | grep -q "^${HUB}$"; then
+        # Check if the daily content section was changed
+        CONTENT_CHANGED=$(git diff --cached "$HUB" | grep -c "DAILY CONTENT" 2>/dev/null || echo "0")
+        if [ "$CONTENT_CHANGED" -gt 0 ]; then
+            # Check manifest for yesterday's date (the content being overwritten)
+            MANIFEST="scripts/hub-archive-manifest.json"
+            YESTERDAY=$(date -d "yesterday" +%Y-%m-%d 2>/dev/null || date -v-1d +%Y-%m-%d 2>/dev/null || echo "")
+            SPORT_KEY=$(echo "$HUB" | sed 's/-previews.html//' | sed 's/college-basketball/ncaab/')
+            if [ -n "$YESTERDAY" ] && [ -f "$MANIFEST" ]; then
+                if ! grep -q "\"$YESTERDAY\"" "$MANIFEST" 2>/dev/null || ! python -c "
+import json,sys
+m=json.load(open('$MANIFEST'))
+dates=m.get('$SPORT_KEY',[])
+sys.exit(0 if '$YESTERDAY' in dates else 1)
+" 2>/dev/null; then
+                    echo ""
+                    echo "  [WARNING] $HUB daily content is being overwritten!"
+                    echo "  Yesterday ($YESTERDAY) is NOT in the archive manifest for $SPORT_KEY."
+                    echo "  This means yesterday's content may be LOST if you haven't run:"
+                    echo "    python scripts/rotate_all_hubs.py"
+                    echo ""
+                    echo "  If you already archived, or this is the first content for this hub, proceed."
+                    echo "  (This is a warning, not a block - commit will continue)"
+                    HUB_WARNING=1
+                fi
+            fi
+        fi
+    fi
+done
+
+# CRITICAL: Guard featured-games-calendar.js activeDate logic (March 6, 2026)
+# The calendar MUST highlight the current page's date, not always the newest.
+# activeDate must be "pageDate || newestDate", never just "newestDate" alone.
+STAGED_JS=$(git diff --cached --name-only --diff-filter=d | grep -iE 'featured-games-calendar\.js$' || true)
+if [ -n "$STAGED_JS" ]; then
+    CAL_FILE="scripts/featured-games-calendar.js"
+    if [ -f "$CAL_FILE" ]; then
+        # Check that activeDate uses pageDate (not hardcoded to newestDate)
+        if grep -q 'const activeDate = newestDate' "$CAL_FILE"; then
+            echo ""
+            echo "  [BLOCKED] featured-games-calendar.js has broken activeDate logic!"
+            echo "  activeDate is set to newestDate alone - this means the calendar"
+            echo "  will ALWAYS highlight the newest date, not the page being viewed."
+            echo ""
+            echo "  REQUIRED: const activeDate = pageDate || newestDate;"
+            echo "  See the March 6, 2026 fix. DO NOT revert this."
+            exit 1
+        fi
+        # Also verify pageDate is defined BEFORE activeDate
+        PAGEDATE_LINE=$(grep -n 'const pageDate' "$CAL_FILE" | head -1 | cut -d: -f1)
+        ACTIVEDATE_LINE=$(grep -n 'const activeDate' "$CAL_FILE" | head -1 | cut -d: -f1)
+        if [ -n "$PAGEDATE_LINE" ] && [ -n "$ACTIVEDATE_LINE" ]; then
+            if [ "$ACTIVEDATE_LINE" -lt "$PAGEDATE_LINE" ]; then
+                echo ""
+                echo "  [BLOCKED] featured-games-calendar.js: activeDate defined BEFORE pageDate!"
+                echo "  pageDate must be declared first so activeDate can reference it."
+                echo "  This would cause a JavaScript ReferenceError."
+                exit 1
+            fi
+        fi
+        echo "  Calendar activeDate logic: OK (highlights current page)"
+    fi
+fi
+
+# CRITICAL: Block staged HTML files that reference a wrong/non-existent calendar JS (April 25, 2026)
+# Failure mode: a fresh sport page links scripts/sport-calendar.js (doesn't exist) or links
+# the wrong sport's calendar (e.g. an MLB page pointing at scripts/nba-calendar.js).
+# Either bug silently kills the calendar sidebar on the live site.
+CAL_ERROR=0
+for FILE in $STAGED_HTML; do
+    [ -f "$FILE" ] || continue
+    CAL_REF=$(grep -oE '"scripts/[a-zA-Z0-9_.-]*calendar[a-zA-Z0-9_.?=-]*\.js' "$FILE" | head -1 | sed 's/^"//; s/?.*$//')
+    [ -z "$CAL_REF" ] && continue
+
+    # 1. Referenced file must exist on disk
+    if [ ! -f "$CAL_REF" ]; then
+        echo ""
+        echo "  [BLOCKED] $FILE references missing calendar JS: $CAL_REF"
+        echo "  Valid options:"
+        echo "    scripts/nba-calendar.js     scripts/nhl-calendar.js"
+        echo "    scripts/mlb-calendar.js     scripts/soccer-calendar.js"
+        echo "    scripts/ncaab-calendar.js   scripts/ncaaf-calendar.js"
+        echo "    scripts/nfl-calendar.js     scripts/featured-games-calendar.js"
+        CAL_ERROR=1
+        continue
+    fi
+
+    # 2. Expected sport derived from page slug
+    EXPECTED=""
+    case "$FILE" in
+        *analysis-stats-preview*) EXPECTED="scripts/featured-games-calendar.js" ;;
+        *-nba-*|nba.html|nba-previews.html) EXPECTED="scripts/nba-calendar.js" ;;
+        *-nhl-*|nhl.html|nhl-previews.html) EXPECTED="scripts/nhl-calendar.js" ;;
+        *-mlb-*|mlb.html|mlb-previews.html) EXPECTED="scripts/mlb-calendar.js" ;;
+        *-college-basketball-*|*-ncaab-*|ncaab.html|college-basketball-previews.html) EXPECTED="scripts/ncaab-calendar.js" ;;
+        *-ncaaf-*|*-college-football-*|ncaaf.html) EXPECTED="scripts/ncaaf-calendar.js" ;;
+        *-nfl-*|nfl.html) EXPECTED="scripts/nfl-calendar.js" ;;
+        *-soccer-*|soccer.html|soccer-previews.html) EXPECTED="scripts/soccer-calendar.js" ;;
+    esac
+    if [ -n "$EXPECTED" ] && [ "$CAL_REF" != "$EXPECTED" ]; then
+        echo ""
+        echo "  [BLOCKED] $FILE references the wrong sport calendar JS."
+        echo "  has=$CAL_REF  expected=$EXPECTED"
+        echo "  Page slug indicates a different sport. Use the matching scripts/<sport>-calendar.js."
+        CAL_ERROR=1
+    fi
+done
+if [ $CAL_ERROR -ne 0 ]; then
+    echo ""
+    echo "Commit blocked: calendar script reference is broken on at least one file."
+    echo "See CLAUDE.md 'Calendar JS lookup table' for the canonical mapping."
+    exit 1
+fi
+
+# CRITICAL: Any staged HTML that links a calendar JS must also have the calendar markup
+# divs (#calendar-days and #month-select). Otherwise the script loads but renders nothing.
+MARKUP_ERROR=0
+for FILE in $STAGED_HTML; do
+    [ -f "$FILE" ] || continue
+    grep -qE '"scripts/[a-zA-Z0-9_.-]*calendar[a-zA-Z0-9_.?=-]*\.js' "$FILE" || continue
+    if ! grep -q 'id="calendar-days"' "$FILE"; then
+        echo ""
+        echo "  [BLOCKED] $FILE links a calendar JS but is missing <div id=\"calendar-days\">"
+        echo "  The sidebar will be empty. Copy the calendar-sidebar block from a working page."
+        MARKUP_ERROR=1
+    fi
+    if ! grep -q 'id="month-select"' "$FILE"; then
+        echo ""
+        echo "  [BLOCKED] $FILE links a calendar JS but is missing <select id=\"month-select\">"
+        echo "  The month dropdown will not render. Copy the calendar-sidebar block from a working page."
+        MARKUP_ERROR=1
+    fi
+done
+if [ $MARKUP_ERROR -ne 0 ]; then
+    exit 1
+fi
+
+# CRITICAL: Block new blog-post entries being added to the pick archive page (March 30, 2026)
+# Picks are STANDALONE PAGES ONLY. Never add picks to the blog archive.
+# This prevents duplicate content (same pick on standalone page AND archive).
+ARCHIVE_PAGE="nba-college-basketball-picks-predictions-analysis-february-2026.html"
+if echo "$STAGED_HTML" | grep -q "^${ARCHIVE_PAGE}$"; then
+    # Check if NEW blog-post divs are being added (not just edits to existing content)
+    NEW_POSTS=$(git diff --cached "$ARCHIVE_PAGE" | grep '^+.*class="blog-post"' | grep -v '^+++' || true)
+    if [ -n "$NEW_POSTS" ]; then
+        echo ""
+        echo "  ============================================================"
+        echo "  [BLOCKED] NEW PICK ADDED TO BLOG ARCHIVE PAGE!"
+        echo "  ============================================================"
+        echo ""
+        echo "  You are adding a new blog-post entry to:"
+        echo "    $ARCHIVE_PAGE"
+        echo ""
+        echo "  THIS IS BANNED. Picks are STANDALONE PAGES ONLY."
+        echo "  The archive page is FROZEN (historical picks only)."
+        echo ""
+        echo "  CORRECT WORKFLOW:"
+        echo "    1. Create a standalone HTML page for the pick"
+        echo "    2. Add a card entry to homepage-picks-data.js"
+        echo "    3. DO NOT touch the archive page"
+        echo ""
+        echo "  Duplicate content (same pick on archive + standalone) hurts SEO."
+        echo "  ============================================================"
+        exit 1
+    fi
+fi
