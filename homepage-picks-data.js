@@ -31,14 +31,6 @@ var HOMEPAGE_PICKS = [
         image: "images/stars-moneyline-plus-115-game-4-wild-grand-casino-arena-nhl.jpg"
     },
     {
-        sport: "MLB",
-        title: "Yankees ML +125 Road Dog at Astros 1.5u",
-        date: "April 25, 2026",
-        result: "",
-        url: "yankees-moneyline-plus-125-road-dog-astros-burrows-blowup-mlb.html",
-        image: "images/yankees-moneyline-plus-125-road-dog-astros-burrows-blowup-mlb.jpg"
-    },
-    {
         sport: "NHL",
         title: "Mammoth ML -110 vs Golden Knights Game 3 3u",
         date: "April 24, 2026",
