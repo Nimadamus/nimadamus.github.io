@@ -5,6 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-04-25", page: "cubs-streak-rea-sasaki-fifteen-game-saturday-mlb-april-25-2026.html", title: "MLB Analysis - April 25, 2026" },
     { date: "2026-04-25", page: "cubs-vs-dodgers-mlb-analysis-stats-preview-april-25-2026.html", title: "Cubs vs Dodgers Analysis April 25, 2026" },
+    { date: "2026-04-25", page: "mlb-previews.html", title: "MLB Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-04-24", page: "skenes-scherzer-mccullers-fourteen-game-mlb-april-24-2026.html", title: "MLB Analysis - April 24, 2026" },
     { date: "2026-04-23", page: "glasnow-webb-degrom-tolle-rivalry-thursday-nine-game-mlb-april-23-2026.html", title: "MLB Analysis - April 23, 2026" },
     { date: "2026-04-22", page: "free-mlb-picks-today-full-card-release-wednesday-april-22-2026.html", title: "Free MLB Picks Today Wednesday April 22 2026 - Full Card 6 Plays" },

@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-25", page: "thunder-pistons-cliff-knicks-nuggets-game-four-saturday-nba-april-25-2026.html", title: "NBA Analysis - April 25, 2026" },
+    { date: "2026-04-25", page: "nba-previews.html", title: "NBA Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-04-24", page: "lebron-kd-wemby-doubt-celtics-sixers-three-game-three-friday-nba-april-24-2026.html", title: "NBA Analysis - April 24, 2026" },
     { date: "2026-04-23", page: "jokic-edwards-brunson-mitchell-three-game-three-nba-april-23-2026.html", title: "NBA Analysis - April 23, 2026" },
     { date: "2026-04-22", page: "pistons-bounce-back-thunder-rout-magic-suns-nba-april-22-2026.html", title: "NBA Analysis - April 22, 2026" },
