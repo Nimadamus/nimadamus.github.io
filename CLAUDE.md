@@ -335,9 +335,16 @@ nba-previews.html. The four pages were patched to use their correct
 sport-specific JS files and pushed in commit `6b502ddf9`.
 
 ### AUTOMATED PROTECTION:
-A pre-commit gate now blocks any HTML commit where the calendar script src
-either (a) points at a non-existent file or (b) does not match the page's
-sport per this table. The gate logs the expected value and exits 1.
+A pre-commit gate now blocks four failure modes:
+  1. HTML staged with a calendar `<script src>` that points at a non-existent file.
+  2. HTML staged with a calendar `<script src>` that does not match the page's sport.
+  3. HTML staged that links a calendar JS but is missing `#calendar-days` or `#month-select`.
+  4. Any commit that deletes a `scripts/*-calendar.js` file.
+
+The hook is tracked in `hooks/pre-commit`. Install once after cloning:
+```sh
+sh hooks/install.sh
+```
 
 **IF YOU INVENT A NEW CALENDAR FILENAME, THE COMMIT WILL BE BLOCKED.**
 
