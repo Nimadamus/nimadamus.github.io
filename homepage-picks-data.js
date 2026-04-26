@@ -24,6 +24,22 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Ducks Puck Line +1.5 Game 4 at Honda Center 3u",
+        date: "April 26, 2026",
+        result: "",
+        url: "ducks-puck-line-plus-1-5-game-4-oilers-honda-center-nhl.html",
+        image: "images/ducks-puck-line-plus-1-5-game-4-oilers-honda-center-nhl.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Phillies ML +150 vs Braves Nola Sale 1u",
+        date: "April 26, 2026",
+        result: "",
+        url: "phillies-ml-plus-150-braves-nola-sale-truist-park-mlb.html",
+        image: "images/phillies-ml-plus-150-braves-nola-sale-truist-park-mlb.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Stars ML +115 Game 4 at Wild 1.5u",
         date: "April 25, 2026",
         result: "",
