@@ -24,6 +24,22 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Flyers +1.5 (-210) at Penguins Game 5 3u",
+        date: "April 27, 2026",
+        result: "",
+        url: "flyers-puck-line-plus-1-5-penguins-game-5-stanley-cup-playoffs-nhl.html",
+        image: "images/flyers-celebration-puck-line-penguins-game-5-stanley-cup-playoffs.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Cubs ML +107 at Padres 1.5u",
+        date: "April 27, 2026",
+        result: "",
+        url: "cubs-moneyline-plus-107-padres-boyd-vasquez-petco-park-mlb.html",
+        image: "images/cubs-pete-crow-armstrong-padres-petco-park-april-27-2026.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Ducks Puck Line +1.5 Game 4 at Honda Center 3u",
         date: "April 26, 2026",
         result: "",
