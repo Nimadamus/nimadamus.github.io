@@ -24,6 +24,22 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Ducks/Oilers Under 7 (-115) Game 5 Rogers Place 3u",
+        date: "April 28, 2026",
+        result: "",
+        url: "ducks-oilers-under-7-game-5-rogers-place-stanley-cup-playoffs-nhl.html",
+        image: "images/oilers-mcdavid-ducks-game-5-rogers-place-nhl.png"
+    },
+    {
+        sport: "MLB",
+        title: "Tigers ML +106 at Braves Truist Park 1u",
+        date: "April 28, 2026",
+        result: "",
+        url: "tigers-moneyline-plus-106-braves-mize-perez-truist-park-mlb.html",
+        image: "images/tigers-riley-greene-braves-truist-park-mlb.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Flyers +1.5 (-210) at Penguins Game 5 3u",
         date: "April 27, 2026",
         result: "",

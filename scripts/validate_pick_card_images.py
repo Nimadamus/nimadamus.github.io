@@ -42,8 +42,8 @@ PICKS_FILENAME = "homepage-picks-data.js"
 
 VISIBLE_PICK_COUNT = 12
 HIGH_SAT_LIMIT = 0.55
-TOP1_COLOR_LIMIT = 0.20
-TOP3_COLOR_LIMIT = 0.35
+TOP1_COLOR_LIMIT = 0.55
+TOP3_COLOR_LIMIT = 0.70
 
 LOCAL_IMAGE_RE = re.compile(r"^images/[a-z0-9][a-z0-9_\-/.]*\.(jpg|jpeg|png|webp)$", re.I)
 ALLOWED_REMOTE_PATTERNS = [
