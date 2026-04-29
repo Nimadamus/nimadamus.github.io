@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Diamondbacks Team Total Under 4.5 (-140) at Brewers AFF 1.5u",
+        date: "April 29, 2026",
+        result: "",
+        url: "diamondbacks-team-total-under-sproat-american-family-field-mlb.html",
+        image: "images/diamondbacks-team-total-under-sproat-american-family-field-mlb.jpg"
+    },
+    {
         sport: "NHL",
         title: "Ducks/Oilers Under 7 (-115) Game 5 Rogers Place 3u",
         date: "April 28, 2026",
