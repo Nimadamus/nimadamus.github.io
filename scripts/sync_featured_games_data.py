@@ -127,11 +127,14 @@ def main():
     print("=" * 60)
 
     # Find all featured game pages
+    # Updated April 29, 2026: URLs no longer required to end in a date
+    # (Nima rule). Also match the new dateless suffix `*-analysis-stats-preview.html`.
     patterns = [
         os.path.join(REPO_ROOT, 'archive-prediction-picks-november-21-2025.html'),
         os.path.join(REPO_ROOT, 'featured-game-of-the-day-page*.html'),
         os.path.join(REPO_ROOT, 'featured-game-of-the-day-*.html'),
         os.path.join(REPO_ROOT, '*-analysis-stats-preview-*.html'),
+        os.path.join(REPO_ROOT, '*-analysis-stats-preview.html'),
         os.path.join(REPO_ROOT, '*-prediction-picks-*.html'),
     ]
 
