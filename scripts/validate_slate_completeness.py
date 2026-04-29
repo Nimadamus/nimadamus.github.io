@@ -73,19 +73,22 @@ def date_to_filename_patterns(date):
 
 
 def find_sport_page(sport, date, all_files):
-    """Check if a dedicated page exists for this sport on this date."""
+    """Check if a dedicated page exists for this sport on this date.
+
+    Updated April 29, 2026: URLs no longer contain dates (Nima rule). When the
+    filename has no date pattern but matches the sport, fall back to scanning
+    FORCED_PAGE_DATE / dateModified inside the file. This keeps the validator
+    working under the new no-dates-in-URLs convention.
+    """
     date_patterns = date_to_filename_patterns(date)
     sport_patterns = SPORT_PATTERNS[sport]
+    iso_date = date.strftime('%Y-%m-%d')
 
     for filename in all_files:
         fname_lower = filename.lower()
         # Check if filename contains the sport keyword
         has_sport = any(re.search(p, fname_lower) for p in sport_patterns)
         if not has_sport:
-            continue
-        # Check if filename contains the date
-        has_date = any(dp in fname_lower for dp in date_patterns)
-        if not has_date:
             continue
         # Skip redirect stubs (they're tiny <15 lines)
         filepath = os.path.join(REPO_ROOT, filename)
@@ -95,7 +98,20 @@ def find_sport_page(sport, date, all_files):
                 continue
         except OSError:
             continue
-        return filename
+        # Path 1: filename contains the date
+        if any(dp in fname_lower for dp in date_patterns):
+            return filename
+        # Path 2: filename has no date — fall back to file content
+        try:
+            with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read(8000)  # head is enough; FORCED_PAGE_DATE lives in <head>
+        except OSError:
+            continue
+        if f"FORCED_PAGE_DATE = '{iso_date}'" in content or \
+           f'FORCED_PAGE_DATE = "{iso_date}"' in content or \
+           f'"datePublished":"{iso_date}' in content or \
+           f'"datePublished": "{iso_date}' in content:
+            return filename
     return None
 
 
