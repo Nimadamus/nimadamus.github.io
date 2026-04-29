@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Royals ML +108 at Athletics Sutter Health Park 1u",
+        date: "April 29, 2026",
+        result: "",
+        url: "royals-moneyline-plus-108-athletics-wacha-severino-sutter-health-park-mlb.html",
+        image: "images/royals-moneyline-plus-108-athletics-wacha-severino-sutter-health-park-mlb.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Diamondbacks Team Total Under 4.5 (-140) at Brewers AFF 1.5u",
         date: "April 29, 2026",
         result: "",
