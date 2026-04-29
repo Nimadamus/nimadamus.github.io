@@ -300,5 +300,56 @@ def main():
                 if len(seen) >= 25: break
         print()
 
+def audit():
+    """Audit: sum of every bet-type bucket must equal the overall sport totals."""
+    with open(DATA) as fh: data = json.load(fh)
+    rows_by_sport = collections.defaultdict(list)
+    for r in data:
+        sport = (r.get('Sport') or r.get('sport') or '').strip()
+        result = (str(r.get('Result') or r.get('result') or '').strip().upper()[:1])
+        if not result or result not in 'WLP': continue
+        odds = parse_odds(r.get('Odds') or r.get('Line') or r.get('line'))
+        pl   = parse_pl(r.get('ProfitLoss') or r.get('Units') or r.get('unitPL') or 0)
+        year = parse_year(r.get('Date') or r.get('date'))
+        cat  = category(sport, r.get('Picks') or r.get('Pick') or r.get('pick') or '')
+        rows_by_sport[sport].append({
+            'odds':odds,'pl':pl,'result':result,'year':year,'cat':cat,
+            'risk': calc_risk(odds, pl, result),
+        })
+
+    print()
+    print('=' * 78)
+    print('  AUDIT - bet-type buckets vs overall sport totals')
+    print('=' * 78)
+    print(f"{'Sport':<8} {'Year':<6} {'Top W':>5} {'Top L':>5} {'Top P':>4} {'Sum W':>5} {'Sum L':>5} {'Sum P':>4}  {'Top units':>10}  {'Sum units':>10}  {'Top risk':>10}  {'Sum risk':>10}  Match?")
+    overall_ok = True
+    for sport in ('NHL','MLB','NFL','NCAAF','NBA','NCAAB','Soccer'):
+        srows = rows_by_sport.get(sport, [])
+        for label, year_filter in (('2025', 2025), ('2026', 2026), ('TOTAL', None)):
+            picked = [r for r in srows if (year_filter is None or r['year'] == year_filter)]
+            top = aggregate(picked, lambda r: 'k')['k']
+            cats = aggregate(picked, lambda r: r['cat'])
+            sumW = sum(b['W'] for b in cats.values())
+            sumL = sum(b['L'] for b in cats.values())
+            sumP = sum(b['P'] for b in cats.values())
+            sumU = sum(b['units'] for b in cats.values())
+            sumR = sum(b['risk']  for b in cats.values())
+            ok = (
+                sumW == top['W'] and sumL == top['L'] and sumP == top['P']
+                and abs(sumU - top['units']) < 1e-6
+                and abs(sumR - top['risk']) < 1e-6
+            )
+            if not ok: overall_ok = False
+            print(f"{sport:<8} {label:<6} {top['W']:>5} {top['L']:>5} {top['P']:>4} {sumW:>5} {sumL:>5} {sumP:>4}  {top['units']:>+10.2f}  {sumU:>+10.2f}  {top['risk']:>10.4f}  {sumR:>10.4f}  {'OK' if ok else 'MISMATCH'}")
+    print()
+    print('OVERALL:', 'ALL BUCKETS RECONCILE' if overall_ok else 'MISMATCH FOUND')
+    return overall_ok
+
+
 if __name__ == '__main__':
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == 'audit':
+        ok = audit()
+        sys.exit(0 if ok else 1)
     main()
+    audit()
