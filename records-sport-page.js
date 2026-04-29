@@ -406,19 +406,19 @@
     return { W: W, L: L, P: P, units: units, winPct: winPct, roi: roi, n: rows.length };
   }
 
-  function fmtCell(b) {
-    if (!b || b.n === 0) {
-      return '<span class="bt-empty">&mdash;</span>';
-    }
-    const us = (b.units >= 0 ? '+' : '') + b.units.toFixed(2);
-    const rs = (b.roi   >= 0 ? '+' : '') + b.roi.toFixed(2);
-    const unitsClass = b.units >= 0 ? 'bt-units-win' : 'bt-units-loss';
-    const roiClass   = b.roi   >= 0 ? 'bt-units-win' : 'bt-units-loss';
-    return (
-      '<div class="bt-record">' + b.W + '-' + b.L + '-' + b.P + '</div>' +
-      '<div class="' + unitsClass + '">' + us + 'u</div>' +
-      '<div class="bt-meta">' + b.winPct.toFixed(1) + '% &middot; <span class="' + roiClass + '">' + rs + '%</span></div>'
-    );
+  function fmtCellRecord(b)  { return (!b || b.n === 0) ? '<span class="bt-empty">&mdash;</span>' : (b.W + '-' + b.L + '-' + b.P); }
+  function fmtCellWinPct(b)  { return (!b || b.n === 0) ? '<span class="bt-empty">&mdash;</span>' : b.winPct.toFixed(1) + '%'; }
+  function fmtCellUnits(b)   {
+    if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
+    const sign = b.units >= 0 ? '+' : '';
+    const cls  = b.units >= 0 ? 'win' : 'loss';
+    return '<span class="' + cls + '">' + sign + b.units.toFixed(2) + 'u</span>';
+  }
+  function fmtCellRoi(b) {
+    if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
+    const sign = b.roi >= 0 ? '+' : '';
+    const cls  = b.roi >= 0 ? 'win' : 'loss';
+    return '<span class="' + cls + '">' + sign + b.roi.toFixed(2) + '%</span>';
   }
 
   function getYearFromRow(row) {
@@ -427,9 +427,9 @@
 
   function injectBetTypeStyles() {
     if (document.getElementById('bet-type-breakdown-styles')) return;
-    // Visual style mirrors records.html table aesthetic: gradient cyan->gold
-    // thead, generous padding, soft row dividers, cyan hover tint, gold
-    // section titles. No heavy bordered "boxes" - groups blend into the page.
+    // Mirrors the records.html breakdown tables: flat columnar layout (one
+    // metric per column, no stacked numbers inside cells), gradient
+    // cyan->gold thead, gold section titles with accent bar, soft hover.
     const css = '' +
       '#bet-type-breakdown { margin: 40px 0; }' +
       '#bet-type-breakdown .bt-section-title { font-family: Orbitron, sans-serif; font-size: 32px; text-align: center; color: var(--neon-gold, #FFD700); letter-spacing: 2px; text-transform: uppercase; margin: 30px 0 6px 0; text-shadow: 0 0 12px rgba(255, 215, 0, 0.35); }' +
@@ -437,31 +437,32 @@
       '#bet-type-breakdown .bt-group { margin: 0 0 36px 0; padding: 0; background: transparent; border: 0; box-shadow: none; }' +
       '#bet-type-breakdown .bt-group h3 { font-family: Orbitron, sans-serif; font-size: 22px; color: var(--neon-gold, #FFD700); letter-spacing: 2px; text-transform: uppercase; margin: 0 0 14px 0; padding: 0 0 10px 0; text-align: left; border-bottom: 2px solid rgba(255, 215, 0, 0.35); display: flex; align-items: center; gap: 12px; }' +
       '#bet-type-breakdown .bt-group h3::before { content: ""; display: inline-block; width: 36px; height: 3px; background: linear-gradient(90deg, var(--glow-color, #00e0ff), var(--neon-gold, #FFD700)); border-radius: 2px; }' +
+      '#bet-type-breakdown .bt-table-wrap { overflow-x: auto; }' +
       '#bet-type-breakdown table.bt-table { width: 100%; border-collapse: collapse; font-family: Roboto, sans-serif; background: rgba(12, 18, 32, 0.55); border-radius: 10px; overflow: hidden; }' +
-      '#bet-type-breakdown table.bt-table thead { background: linear-gradient(135deg, rgba(0, 224, 255, 0.18) 0%, rgba(255, 215, 0, 0.18) 100%); }' +
-      '#bet-type-breakdown table.bt-table thead th { font-family: Orbitron, sans-serif; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--glow-color, #00e0ff); padding: 18px 22px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--glow-color, #00e0ff); }' +
-      '#bet-type-breakdown table.bt-table thead th + th { text-align: center; }' +
-      '#bet-type-breakdown table.bt-table tbody td { padding: 18px 22px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); color: #e6edf5; font-size: 16px; vertical-align: middle; text-align: center; }' +
-      '#bet-type-breakdown table.bt-table tbody td:first-child { text-align: left; font-family: Orbitron, sans-serif; font-size: 15px; letter-spacing: 0.5px; color: #fff; font-weight: 700; }' +
+      '#bet-type-breakdown table.bt-table thead { background: linear-gradient(135deg, rgba(0, 224, 255, 0.2) 0%, rgba(255, 215, 0, 0.2) 100%); }' +
+      '#bet-type-breakdown table.bt-table thead th { font-family: Orbitron, sans-serif; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--glow-color, #00e0ff); padding: 18px 20px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--glow-color, #00e0ff); white-space: nowrap; }' +
+      '#bet-type-breakdown table.bt-table tbody td { padding: 18px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); color: #e6edf5; font-size: 16px; vertical-align: middle; text-align: left; white-space: nowrap; }' +
+      '#bet-type-breakdown table.bt-table tbody td.bt-col-type { font-family: Orbitron, sans-serif; font-weight: 700; color: #fff; letter-spacing: 0.5px; }' +
+      '#bet-type-breakdown table.bt-table tbody td.bt-col-year { font-family: Orbitron, sans-serif; color: #9bb3c9; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }' +
+      '#bet-type-breakdown table.bt-table tbody td.bt-col-record { font-family: Orbitron, sans-serif; font-weight: 700; color: #fff; font-size: 17px; letter-spacing: 0.5px; }' +
       '#bet-type-breakdown table.bt-table tbody tr { transition: background 0.2s ease; }' +
-      '#bet-type-breakdown table.bt-table tbody tr:hover { background: rgba(0, 224, 255, 0.06); }' +
+      '#bet-type-breakdown table.bt-table tbody tr:hover { background: rgba(0, 224, 255, 0.05); }' +
       '#bet-type-breakdown table.bt-table tbody tr:last-child td { border-bottom: 0; }' +
-      '#bet-type-breakdown table.bt-table tr.bt-total td { background: linear-gradient(135deg, rgba(0, 224, 255, 0.07) 0%, rgba(255, 215, 0, 0.07) 100%); border-top: 2px solid rgba(0, 224, 255, 0.35); border-bottom: 0; }' +
-      '#bet-type-breakdown table.bt-table tr.bt-total td:first-child { color: var(--neon-gold, #FFD700); text-transform: uppercase; letter-spacing: 1px; }' +
-      '#bet-type-breakdown .bt-record { font-family: Orbitron, sans-serif; font-weight: 700; color: #fff; font-size: 18px; letter-spacing: 0.5px; }' +
-      '#bet-type-breakdown .bt-units-win { color: var(--win-color, #39FF14); font-weight: 700; }' +
-      '#bet-type-breakdown .bt-units-loss { color: var(--loss-color, #FF3131); font-weight: 700; }' +
-      '#bet-type-breakdown .bt-meta { color: #9bb3c9; font-size: 13px; margin-top: 4px; font-family: Roboto, sans-serif; }' +
-      '#bet-type-breakdown .bt-empty { color: #4a5568; font-size: 18px; }' +
+      '#bet-type-breakdown table.bt-table tr.bt-total-row td { background: linear-gradient(135deg, rgba(0, 224, 255, 0.08) 0%, rgba(255, 215, 0, 0.08) 100%); border-top: 2px solid rgba(0, 224, 255, 0.35); }' +
+      '#bet-type-breakdown table.bt-table tr.bt-total-row td.bt-col-type { color: var(--neon-gold, #FFD700); text-transform: uppercase; letter-spacing: 1px; }' +
+      '#bet-type-breakdown table.bt-table tr.bt-total-row td.bt-col-year { color: var(--neon-gold, #FFD700); }' +
+      '#bet-type-breakdown .win  { color: var(--win-color, #39FF14); font-weight: 700; }' +
+      '#bet-type-breakdown .loss { color: var(--loss-color, #FF3131); font-weight: 700; }' +
+      '#bet-type-breakdown .bt-empty { color: #4a5568; }' +
       '@media (max-width: 768px) {' +
       '  #bet-type-breakdown { margin: 30px 0; }' +
       '  #bet-type-breakdown .bt-section-title { font-size: 26px; }' +
       '  #bet-type-breakdown .bt-group h3 { font-size: 18px; }' +
       '  #bet-type-breakdown table.bt-table thead th { padding: 12px 10px; font-size: 11px; letter-spacing: 1px; }' +
       '  #bet-type-breakdown table.bt-table tbody td { padding: 12px 10px; font-size: 13px; }' +
-      '  #bet-type-breakdown table.bt-table tbody td:first-child { font-size: 12px; }' +
-      '  #bet-type-breakdown .bt-record { font-size: 14px; }' +
-      '  #bet-type-breakdown .bt-meta { font-size: 11px; }' +
+      '  #bet-type-breakdown table.bt-table tbody td.bt-col-type { font-size: 12px; }' +
+      '  #bet-type-breakdown table.bt-table tbody td.bt-col-year { font-size: 12px; }' +
+      '  #bet-type-breakdown table.bt-table tbody td.bt-col-record { font-size: 14px; }' +
       '}';
     const style = document.createElement('style');
     style.id = 'bet-type-breakdown-styles';
