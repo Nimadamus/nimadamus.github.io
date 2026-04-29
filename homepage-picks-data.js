@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NBA",
+        title: "Lakers ML -175 vs Rockets Crypto.com Arena 3u",
+        date: "April 29, 2026",
+        result: "",
+        url: "lakers-moneyline-rockets-crypto-com-arena-nba.html",
+        image: "images/lakers-moneyline-rockets-crypto-com-arena-nba.jpg"
+    },
+    {
         sport: "MLB",
         title: "Royals ML +108 at Athletics Sutter Health Park 1u",
         date: "April 29, 2026",
