@@ -427,42 +427,32 @@
 
   function injectBetTypeStyles() {
     if (document.getElementById('bet-type-breakdown-styles')) return;
-    // Mirrors the records.html breakdown tables: flat columnar layout (one
-    // metric per column, no stacked numbers inside cells), gradient
-    // cyan->gold thead, gold section titles with accent bar, soft hover.
+    // Exact port of records.html .section + .section-title + table styles.
+    // All selectors scoped under #bet-type-breakdown so they cannot affect
+    // the rest of the sport records page.
     const css = '' +
       '#bet-type-breakdown { margin: 40px 0; }' +
-      '#bet-type-breakdown .bt-section-title { font-family: Orbitron, sans-serif; font-size: 32px; text-align: center; color: var(--neon-gold, #FFD700); letter-spacing: 2px; text-transform: uppercase; margin: 30px 0 6px 0; text-shadow: 0 0 12px rgba(255, 215, 0, 0.35); }' +
-      '#bet-type-breakdown .bt-subtitle { text-align: center; color: #9bb3c9; font-family: Roboto, sans-serif; font-size: 15px; margin: 0 0 28px 0; }' +
-      '#bet-type-breakdown .bt-group { margin: 0 0 36px 0; padding: 0; background: transparent; border: 0; box-shadow: none; }' +
-      '#bet-type-breakdown .bt-group h3 { font-family: Orbitron, sans-serif; font-size: 22px; color: var(--neon-gold, #FFD700); letter-spacing: 2px; text-transform: uppercase; margin: 0 0 14px 0; padding: 0 0 10px 0; text-align: left; border-bottom: 2px solid rgba(255, 215, 0, 0.35); display: flex; align-items: center; gap: 12px; }' +
-      '#bet-type-breakdown .bt-group h3::before { content: ""; display: inline-block; width: 36px; height: 3px; background: linear-gradient(90deg, var(--glow-color, #00e0ff), var(--neon-gold, #FFD700)); border-radius: 2px; }' +
-      '#bet-type-breakdown .bt-table-wrap { overflow-x: auto; }' +
-      '#bet-type-breakdown table.bt-table { width: 100%; border-collapse: collapse; font-family: Roboto, sans-serif; background: rgba(12, 18, 32, 0.55); border-radius: 10px; overflow: hidden; }' +
+      '#bet-type-breakdown .bt-section { background: rgba(26, 26, 26, 0.6); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 15px; padding: 40px; margin-bottom: 40px; backdrop-filter: blur(10px); }' +
+      '#bet-type-breakdown .bt-section-title { font-family: Orbitron, sans-serif; font-size: 48px; font-weight: 700; color: var(--neon-gold, #FFD700); margin: 0 0 20px 0; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 15px; text-align: left; text-shadow: none; }' +
+      '#bet-type-breakdown .bt-section-title::before { content: ""; width: 50px; height: 4px; background: linear-gradient(90deg, var(--glow-color, #00e0ff), var(--neon-gold, #FFD700)); border-radius: 2px; flex: 0 0 50px; }' +
+      '#bet-type-breakdown .bt-subtitle { color: #aaa; font-size: 14px; margin: 0 0 15px 0; font-family: Roboto, sans-serif; }' +
+      '#bet-type-breakdown .bt-table-container { overflow-x: auto; }' +
+      '#bet-type-breakdown table.bt-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: Roboto, sans-serif; }' +
       '#bet-type-breakdown table.bt-table thead { background: linear-gradient(135deg, rgba(0, 224, 255, 0.2) 0%, rgba(255, 215, 0, 0.2) 100%); }' +
-      '#bet-type-breakdown table.bt-table thead th { font-family: Orbitron, sans-serif; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--glow-color, #00e0ff); padding: 18px 20px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--glow-color, #00e0ff); white-space: nowrap; }' +
-      '#bet-type-breakdown table.bt-table tbody td { padding: 18px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); color: #e6edf5; font-size: 16px; vertical-align: middle; text-align: left; white-space: nowrap; }' +
-      '#bet-type-breakdown table.bt-table tbody td.bt-col-type { font-family: Orbitron, sans-serif; font-weight: 700; color: #fff; letter-spacing: 0.5px; }' +
-      '#bet-type-breakdown table.bt-table tbody td.bt-col-year { font-family: Orbitron, sans-serif; color: #9bb3c9; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }' +
-      '#bet-type-breakdown table.bt-table tbody td.bt-col-record { font-family: Orbitron, sans-serif; font-weight: 700; color: #fff; font-size: 17px; letter-spacing: 0.5px; }' +
-      '#bet-type-breakdown table.bt-table tbody tr { transition: background 0.2s ease; }' +
+      '#bet-type-breakdown table.bt-table th { font-family: Orbitron, sans-serif; padding: 22px 20px; text-align: left; font-weight: 700; color: var(--glow-color, #00e0ff); text-transform: uppercase; font-size: 18px; letter-spacing: 1px; border-bottom: 2px solid var(--glow-color, #00e0ff); white-space: nowrap; }' +
+      '#bet-type-breakdown table.bt-table td { padding: 22px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 20px; color: #fff; white-space: nowrap; vertical-align: middle; }' +
+      '#bet-type-breakdown table.bt-table tbody tr { transition: all 0.2s ease; }' +
       '#bet-type-breakdown table.bt-table tbody tr:hover { background: rgba(0, 224, 255, 0.05); }' +
       '#bet-type-breakdown table.bt-table tbody tr:last-child td { border-bottom: 0; }' +
-      '#bet-type-breakdown table.bt-table tr.bt-total-row td { background: linear-gradient(135deg, rgba(0, 224, 255, 0.08) 0%, rgba(255, 215, 0, 0.08) 100%); border-top: 2px solid rgba(0, 224, 255, 0.35); }' +
-      '#bet-type-breakdown table.bt-table tr.bt-total-row td.bt-col-type { color: var(--neon-gold, #FFD700); text-transform: uppercase; letter-spacing: 1px; }' +
-      '#bet-type-breakdown table.bt-table tr.bt-total-row td.bt-col-year { color: var(--neon-gold, #FFD700); }' +
       '#bet-type-breakdown .win  { color: var(--win-color, #39FF14); font-weight: 700; }' +
       '#bet-type-breakdown .loss { color: var(--loss-color, #FF3131); font-weight: 700; }' +
-      '#bet-type-breakdown .bt-empty { color: #4a5568; }' +
+      '#bet-type-breakdown .bt-empty { color: #555; }' +
       '@media (max-width: 768px) {' +
-      '  #bet-type-breakdown { margin: 30px 0; }' +
-      '  #bet-type-breakdown .bt-section-title { font-size: 26px; }' +
-      '  #bet-type-breakdown .bt-group h3 { font-size: 18px; }' +
-      '  #bet-type-breakdown table.bt-table thead th { padding: 12px 10px; font-size: 11px; letter-spacing: 1px; }' +
-      '  #bet-type-breakdown table.bt-table tbody td { padding: 12px 10px; font-size: 13px; }' +
-      '  #bet-type-breakdown table.bt-table tbody td.bt-col-type { font-size: 12px; }' +
-      '  #bet-type-breakdown table.bt-table tbody td.bt-col-year { font-size: 12px; }' +
-      '  #bet-type-breakdown table.bt-table tbody td.bt-col-record { font-size: 14px; }' +
+      '  #bet-type-breakdown .bt-section { padding: 24px 18px; }' +
+      '  #bet-type-breakdown .bt-section-title { font-size: 28px; gap: 10px; letter-spacing: 1.5px; }' +
+      '  #bet-type-breakdown .bt-section-title::before { width: 36px; flex: 0 0 36px; height: 3px; }' +
+      '  #bet-type-breakdown table.bt-table th { padding: 14px 12px; font-size: 13px; letter-spacing: 1px; }' +
+      '  #bet-type-breakdown table.bt-table td { padding: 14px 12px; font-size: 14px; }' +
       '}';
     const style = document.createElement('style');
     style.id = 'bet-type-breakdown-styles';
@@ -470,17 +460,55 @@
     document.head.appendChild(style);
   }
 
+  // Flat list of every bet-type row to display, in display order, per sport.
+  // Sub-types are expanded into top-level rows (e.g. Game Total Over, Game
+  // Total Under) and a synthesized combined row is added when a group has
+  // multiple sub-types.
+  function flatBetTypeRows(sport, byCat) {
+    const groups = BET_TYPE_GROUPS[sport] || [];
+    const out = [];
+    groups.forEach(function (group) {
+      const subRows = group.rows;
+      // Skip the entire group if it has zero picks across all sub-rows
+      let total = 0;
+      subRows.forEach(function (sr) { total += (byCat[sr.key] || []).length; });
+      if (total === 0) return;
+
+      subRows.forEach(function (sr) {
+        if ((byCat[sr.key] || []).length === 0) return;
+        // Expand label so combined rows like "Team Total - Overs" make sense
+        let label;
+        if (subRows.length === 1) {
+          label = group.label;
+        } else if (sr.label === 'Overs' || sr.label === 'Unders') {
+          // Strip trailing "s" - "Team Totals" + " Over" reads better
+          const base = group.label.replace(/s$/, '');
+          label = base + ' ' + sr.label.replace(/s$/, '');
+        } else {
+          label = group.label + ' - ' + sr.label;
+        }
+        out.push({ label: label, keys: [sr.key] });
+      });
+
+      if (group.showTotal && subRows.length > 1) {
+        out.push({
+          label: group.label + ' (Total)',
+          keys: subRows.map(function (sr) { return sr.key; })
+        });
+      }
+    });
+    return out;
+  }
+
   function renderBetTypeBreakdown(rows, sport) {
     const container = document.getElementById('bet-type-breakdown');
     if (!container) return;
-    const groups = BET_TYPE_GROUPS[sport];
-    if (!groups) {
+    if (!BET_TYPE_GROUPS[sport]) {
       container.innerHTML = '';
       return;
     }
     injectBetTypeStyles();
 
-    // Index rows by category
     const byCat = {};
     rows.forEach(function (row) {
       const c = categorizeBetType(sport, row.pick);
@@ -488,79 +516,43 @@
       byCat[c].push(row);
     });
 
-    function rowsFor(catKey, year) {
-      const arr = byCat[catKey] || [];
-      if (year == null) return arr;
-      return arr.filter(function (r) { return getYearFromRow(r) === year; });
-    }
+    const flatRows = flatBetTypeRows(sport, byCat);
 
-    function bucketRow(label, year, b, opts) {
-      const isTotal = !!(opts && opts.isTotal);
-      return (
-        '<tr' + (isTotal ? ' class="bt-total-row"' : '') + '>' +
-          '<td class="bt-col-type">' + label + '</td>' +
-          '<td class="bt-col-year">' + year + '</td>' +
-          '<td class="bt-col-record">' + fmtCellRecord(b) + '</td>' +
-          '<td>' + fmtCellWinPct(b) + '</td>' +
-          '<td>' + fmtCellUnits(b) + '</td>' +
-          '<td>' + fmtCellRoi(b) + '</td>' +
-        '</tr>'
-      );
-    }
-
-    function emitYearTriad(label, catKeys) {
-      const keys = Array.isArray(catKeys) ? catKeys : [catKeys];
-      const collect = function (year) {
-        const out = [];
-        keys.forEach(function (k) {
-          (byCat[k] || []).forEach(function (r) {
-            if (year == null || getYearFromRow(r) === year) out.push(r);
-          });
-        });
-        return out;
-      };
-      const r25 = collect(2025);
-      const r26 = collect(2026);
-      const rAll = collect(null);
-      let html = '';
-      html += bucketRow(label, '2025',  aggregateBucket(r25));
-      html += bucketRow(label, '2026',  aggregateBucket(r26));
-      html += bucketRow(label, 'Total', aggregateBucket(rAll), { isTotal: true });
-      return html;
-    }
-
-    let html = '';
-    html += '<h2 class="bt-section-title">Record By Bet Type</h2>';
-    html += '<p class="bt-subtitle">Win-Loss-Push, win rate, units and ROI for each bet category. 2025, 2026 and overall.</p>';
-
-    groups.forEach(function (group) {
-      const subRows = group.rows;
-      let total = 0;
-      subRows.forEach(function (sr) { total += (byCat[sr.key] || []).length; });
-      if (total === 0) return;
-
-      html += '<div class="bt-group">';
-      html += '<h3>' + group.label + '</h3>';
-      html += '<div class="bt-table-wrap"><table class="bt-table"><thead><tr>' +
-              '<th>Bet Type</th><th>Year</th><th>Record</th><th>Win %</th><th>Units</th><th>ROI</th>' +
-              '</tr></thead><tbody>';
-
-      // One year-triad per sub-type (Overs, Unders, etc.)
-      subRows.forEach(function (sr) {
-        if ((byCat[sr.key] || []).length === 0) return;
-        html += emitYearTriad(sr.label, sr.key);
+    let body = '';
+    flatRows.forEach(function (item) {
+      const collected = [];
+      item.keys.forEach(function (k) {
+        (byCat[k] || []).forEach(function (r) { collected.push(r); });
       });
-
-      // Optional combined Total across all sub-types in the group
-      if (group.showTotal && subRows.length > 1) {
-        const keys = subRows.map(function (sr) { return sr.key; });
-        html += emitYearTriad('Total', keys);
-      }
-
-      html += '</tbody></table></div></div>';
+      if (collected.length === 0) return;
+      const b = aggregateBucket(collected);
+      body += '<tr>' +
+        '<td>' + item.label + '</td>' +
+        '<td>' + fmtCellRecord(b) + '</td>' +
+        '<td>' + fmtCellWinPct(b) + '</td>' +
+        '<td>' + fmtCellUnits(b) + '</td>' +
+        '<td>' + fmtCellRoi(b) + '</td>' +
+      '</tr>';
     });
 
-    container.innerHTML = html;
+    if (!body) {
+      container.innerHTML = '';
+      return;
+    }
+
+    container.innerHTML =
+      '<div class="bt-section">' +
+        '<h2 class="bt-section-title">Breakdown by Bet Type</h2>' +
+        '<p class="bt-subtitle">Win-Loss-Push, win rate, units and ROI for each bet category. Filtered by the year tabs above.</p>' +
+        '<div class="bt-table-container">' +
+          '<table class="bt-table">' +
+            '<thead><tr>' +
+              '<th>Bet Type</th><th>Record</th><th>Win %</th><th>Units</th><th>ROI</th>' +
+            '</tr></thead>' +
+            '<tbody>' + body + '</tbody>' +
+          '</table>' +
+        '</div>' +
+      '</div>';
   }
 
   // ---- Data loaders ----
@@ -670,18 +662,16 @@
         if (tbody) renderTableRows(filtered, tbody);
         updateSummary(filtered);
         updateChart(filtered, config.chartStateKey || '__betlegendRecordsChart');
+        // Bet-type breakdown follows the active year tab.
+        try {
+          renderBetTypeBreakdown(filtered, config.sport);
+        } catch (err) {
+          console.warn('[records-sport-page] bet-type breakdown failed:', err);
+        }
       };
 
       initYearButtons(render, config.defaultYear || 'all');
       render(config.defaultYear || 'all');
-
-      // Bet-type breakdown is independent of the year filter - it always
-      // shows 2025 / 2026 / Total side-by-side.
-      try {
-        renderBetTypeBreakdown(sportRows, config.sport);
-      } catch (err) {
-        console.warn('[records-sport-page] bet-type breakdown failed:', err);
-      }
     } catch (err) {
       console.error('[records-sport-page] fatal:', err);
       const tbody = document.getElementById('picks-table-body');
