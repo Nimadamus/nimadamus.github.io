@@ -480,8 +480,7 @@
     }
     injectBetTypeStyles();
 
-    const years = [2025, 2026];
-    // Index rows by category, then by year
+    // Index rows by category
     const byCat = {};
     rows.forEach(function (row) {
       const c = categorizeBetType(sport, row.pick);
@@ -495,56 +494,70 @@
       return arr.filter(function (r) { return getYearFromRow(r) === year; });
     }
 
+    function bucketRow(label, year, b, opts) {
+      const isTotal = !!(opts && opts.isTotal);
+      return (
+        '<tr' + (isTotal ? ' class="bt-total-row"' : '') + '>' +
+          '<td class="bt-col-type">' + label + '</td>' +
+          '<td class="bt-col-year">' + year + '</td>' +
+          '<td class="bt-col-record">' + fmtCellRecord(b) + '</td>' +
+          '<td>' + fmtCellWinPct(b) + '</td>' +
+          '<td>' + fmtCellUnits(b) + '</td>' +
+          '<td>' + fmtCellRoi(b) + '</td>' +
+        '</tr>'
+      );
+    }
+
+    function emitYearTriad(label, catKeys) {
+      const keys = Array.isArray(catKeys) ? catKeys : [catKeys];
+      const collect = function (year) {
+        const out = [];
+        keys.forEach(function (k) {
+          (byCat[k] || []).forEach(function (r) {
+            if (year == null || getYearFromRow(r) === year) out.push(r);
+          });
+        });
+        return out;
+      };
+      const r25 = collect(2025);
+      const r26 = collect(2026);
+      const rAll = collect(null);
+      let html = '';
+      html += bucketRow(label, '2025',  aggregateBucket(r25));
+      html += bucketRow(label, '2026',  aggregateBucket(r26));
+      html += bucketRow(label, 'Total', aggregateBucket(rAll), { isTotal: true });
+      return html;
+    }
+
     let html = '';
     html += '<h2 class="bt-section-title">Record By Bet Type</h2>';
-    html += '<p class="bt-subtitle">Win-Loss-Push, units, win rate and ROI for each bet category. Year-by-year and overall.</p>';
+    html += '<p class="bt-subtitle">Win-Loss-Push, win rate, units and ROI for each bet category. 2025, 2026 and overall.</p>';
 
     groups.forEach(function (group) {
       const subRows = group.rows;
-      // Skip the entire group if it has zero picks across all sub-rows
       let total = 0;
       subRows.forEach(function (sr) { total += (byCat[sr.key] || []).length; });
       if (total === 0) return;
 
       html += '<div class="bt-group">';
       html += '<h3>' + group.label + '</h3>';
-      html += '<table class="bt-table"><thead><tr>';
-      html += '<th>Type</th><th>2025</th><th>2026</th><th>Total</th>';
-      html += '</tr></thead><tbody>';
+      html += '<div class="bt-table-wrap"><table class="bt-table"><thead><tr>' +
+              '<th>Bet Type</th><th>Year</th><th>Record</th><th>Win %</th><th>Units</th><th>ROI</th>' +
+              '</tr></thead><tbody>';
 
+      // One year-triad per sub-type (Overs, Unders, etc.)
       subRows.forEach(function (sr) {
-        const all2025 = rowsFor(sr.key, 2025);
-        const all2026 = rowsFor(sr.key, 2026);
-        const allTime = rowsFor(sr.key, null);
-        if (allTime.length === 0) return;
-        html += '<tr>';
-        html += '<td>' + sr.label + '</td>';
-        html += '<td>' + fmtCell(aggregateBucket(all2025)) + '</td>';
-        html += '<td>' + fmtCell(aggregateBucket(all2026)) + '</td>';
-        html += '<td>' + fmtCell(aggregateBucket(allTime)) + '</td>';
-        html += '</tr>';
+        if ((byCat[sr.key] || []).length === 0) return;
+        html += emitYearTriad(sr.label, sr.key);
       });
 
-      if (group.showTotal) {
-        const allKeys = subRows.map(function (sr) { return sr.key; });
-        const all2025 = []; const all2026 = []; const allTime = [];
-        allKeys.forEach(function (k) {
-          (byCat[k] || []).forEach(function (r) {
-            allTime.push(r);
-            const y = getYearFromRow(r);
-            if (y === 2025) all2025.push(r);
-            else if (y === 2026) all2026.push(r);
-          });
-        });
-        html += '<tr class="bt-total">';
-        html += '<td>Total</td>';
-        html += '<td>' + fmtCell(aggregateBucket(all2025)) + '</td>';
-        html += '<td>' + fmtCell(aggregateBucket(all2026)) + '</td>';
-        html += '<td>' + fmtCell(aggregateBucket(allTime)) + '</td>';
-        html += '</tr>';
+      // Optional combined Total across all sub-types in the group
+      if (group.showTotal && subRows.length > 1) {
+        const keys = subRows.map(function (sr) { return sr.key; });
+        html += emitYearTriad('Total', keys);
       }
 
-      html += '</tbody></table></div>';
+      html += '</tbody></table></div></div>';
     });
 
     container.innerHTML = html;
