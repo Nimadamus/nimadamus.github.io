@@ -273,6 +273,270 @@
     });
   }
 
+  // ---- Bet-type breakdown (Record By Bet Type) ----
+  // Mirrors scripts/categorize_picks_verify.py exactly so on-page numbers
+  // match the verifier output. Always renders 2025 / 2026 / Total columns,
+  // independent of the year-filter tabs.
+
+  const BET_TYPE_GROUPS = {
+    NHL: [
+      { label: 'Moneyline',          rows: [{key:'Moneyline', label:'Moneyline'}], showTotal: false },
+      { label: 'Puck Line',          rows: [{key:'Puck Line', label:'Puck Line'}], showTotal: false },
+      { label: 'Game Totals',        rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
+      { label: 'Team Totals',        rows: [{key:'Team Total Over', label:'Overs'}, {key:'Team Total Under', label:'Unders'}], showTotal: true },
+      { label: '3-Way / Regulation', rows: [{key:'3-Way / Regulation', label:'3-Way'}], showTotal: false },
+      { label: 'Parlays',            rows: [{key:'Parlay', label:'Parlay'}, {key:'Teaser', label:'Teaser'}], showTotal: true }
+    ],
+    MLB: [
+      { label: 'Moneyline',          rows: [{key:'Moneyline', label:'Moneyline'}], showTotal: false },
+      { label: 'Run Line',           rows: [{key:'Run Line', label:'Run Line'}], showTotal: false },
+      { label: 'Game Totals',        rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
+      { label: 'Team Totals',        rows: [{key:'Team Total Over', label:'Overs'}, {key:'Team Total Under', label:'Unders'}], showTotal: true },
+      { label: 'First 5 Innings',    rows: [{key:'F5 Moneyline', label:'F5 Moneyline'}, {key:'F5 Total', label:'F5 Total'}], showTotal: true },
+      { label: 'NRFI / YRFI',        rows: [{key:'NRFI/YRFI', label:'NRFI/YRFI'}], showTotal: false },
+      { label: 'Futures',            rows: [{key:'Futures', label:'Futures'}], showTotal: false },
+      { label: 'Parlays',            rows: [{key:'Parlay', label:'Parlay'}, {key:'Teaser', label:'Teaser'}], showTotal: true }
+    ],
+    NFL: [
+      { label: 'Moneyline',          rows: [{key:'Moneyline', label:'Moneyline'}], showTotal: false },
+      { label: 'Spread',             rows: [{key:'Spread', label:'Spread'}], showTotal: false },
+      { label: 'Game Totals',        rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
+      { label: 'Team Totals',        rows: [{key:'Team Total Over', label:'Overs'}, {key:'Team Total Under', label:'Unders'}], showTotal: true },
+      { label: 'Teasers / Parlays',  rows: [{key:'Teaser', label:'Teaser'}, {key:'Parlay', label:'Parlay'}], showTotal: true }
+    ],
+    NCAAF: [
+      { label: 'Moneyline',          rows: [{key:'Moneyline', label:'Moneyline'}], showTotal: false },
+      { label: 'Spread',             rows: [{key:'Spread', label:'Spread'}], showTotal: false },
+      { label: 'Game Totals',        rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
+      { label: 'Team Totals',        rows: [{key:'Team Total Over', label:'Overs'}, {key:'Team Total Under', label:'Unders'}], showTotal: true },
+      { label: 'Teasers / Parlays',  rows: [{key:'Teaser', label:'Teaser'}, {key:'Parlay', label:'Parlay'}], showTotal: true }
+    ],
+    NBA: [
+      { label: 'Moneyline',          rows: [{key:'Moneyline', label:'Moneyline'}], showTotal: false },
+      { label: 'Spread',             rows: [{key:'Spread', label:'Spread'}], showTotal: false },
+      { label: 'Game Totals',        rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
+      { label: 'Team Totals',        rows: [{key:'Team Total Over', label:'Overs'}, {key:'Team Total Under', label:'Unders'}], showTotal: true },
+      { label: '1st / 2nd Half',     rows: [{key:'1H/2H Spread', label:'Spread'}, {key:'1H/2H Total', label:'Total'}], showTotal: true },
+      { label: 'Parlays / Teasers',  rows: [{key:'Parlay', label:'Parlay'}, {key:'Teaser', label:'Teaser'}], showTotal: true }
+    ],
+    NCAAB: [
+      { label: 'Moneyline',          rows: [{key:'Moneyline', label:'Moneyline'}], showTotal: false },
+      { label: 'Spread',             rows: [{key:'Spread', label:'Spread'}], showTotal: false },
+      { label: 'Game Totals',        rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
+      { label: 'Team Totals',        rows: [{key:'Team Total Over', label:'Overs'}, {key:'Team Total Under', label:'Unders'}], showTotal: true },
+      { label: '1st / 2nd Half',     rows: [{key:'1H/2H Spread', label:'Spread'}, {key:'1H/2H Total', label:'Total'}], showTotal: true },
+      { label: 'Parlays / Teasers',  rows: [{key:'Parlay', label:'Parlay'}, {key:'Teaser', label:'Teaser'}], showTotal: true }
+    ],
+    Soccer: [
+      { label: 'Moneyline / 3-Way',  rows: [{key:'Moneyline', label:'Moneyline'}], showTotal: false },
+      { label: 'Goals O/U',          rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
+      { label: 'Corners O/U',        rows: [{key:'Corners O/U', label:'Corners'}], showTotal: false },
+      { label: 'Parlays',            rows: [{key:'Parlay', label:'Parlay'}, {key:'Teaser', label:'Teaser'}], showTotal: true }
+    ]
+  };
+
+  function categorizeBetType(sport, pick) {
+    const p = String(pick || '').replace(/\s+/g, ' ').trim();
+    const pl = p.toLowerCase();
+    const hasOver  = /\bover\b/.test(pl);
+    const hasUnder = /\bunder\b/.test(pl);
+
+    if (pl.indexOf('teaser') !== -1) return 'Teaser';
+    if (pl.indexOf('parlay') !== -1) return 'Parlay';
+    const mlCount = (pl.match(/ ml\b/g) || []).length;
+    if (mlCount >= 2 && (pl.indexOf(',') !== -1 || pl.indexOf('+') !== -1)) return 'Parlay';
+    const mlnCount = (pl.match(/moneyline/g) || []).length;
+    if (mlnCount >= 2 && (pl.indexOf(',') !== -1 || pl.indexOf('+') !== -1)) return 'Parlay';
+
+    if (/to win (the )?(world series|stanley cup|super bowl|nba finals|world cup|championship|mvp|cy young|nl |al )/.test(pl)) {
+      return 'Futures';
+    }
+    if (sport === 'NHL' && pl.indexOf('regulation') !== -1 && pl.indexOf('win') !== -1) {
+      return '3-Way / Regulation';
+    }
+    if (sport === 'MLB') {
+      if (/\b(f5|first 5|first five)\b/.test(pl)) {
+        if (hasOver || hasUnder) return 'F5 Total';
+        return 'F5 Moneyline';
+      }
+      if (/\b(nrfi|yrfi)\b/.test(pl)) return 'NRFI/YRFI';
+    }
+    if (sport === 'NBA' || sport === 'NCAAB') {
+      if (/\b(1st half|first half|2nd half|second half|1h|2h)\b/.test(pl)) {
+        if (hasOver || hasUnder) return '1H/2H Total';
+        return '1H/2H Spread';
+      }
+    }
+    if (sport === 'Soccer' && pl.indexOf('corner') !== -1) return 'Corners O/U';
+
+    if (pl.indexOf('team total') !== -1) {
+      if (hasOver)  return 'Team Total Over';
+      if (hasUnder) return 'Team Total Under';
+      return 'Team Total';
+    }
+    if (hasOver || hasUnder) {
+      if (hasOver && !hasUnder) return 'Game Total Over';
+      if (hasUnder && !hasOver) return 'Game Total Under';
+    }
+    if (/\bml\b/.test(pl) || pl.indexOf('moneyline') !== -1 || /\sml$/.test(pl)) return 'Moneyline';
+    if (/[+-]\d+(\.\d+)?\b/.test(p)) {
+      if (sport === 'NHL') return 'Puck Line';
+      if (sport === 'MLB') return 'Run Line';
+      return 'Spread';
+    }
+    if (/\bpk\b/.test(pl) && (sport === 'NBA' || sport === 'NFL' || sport === 'NCAAB' || sport === 'NCAAF')) {
+      return 'Spread';
+    }
+    if (/^[A-Za-z\.\s]+$/.test(p)) return 'Moneyline';
+    return 'Other';
+  }
+
+  function aggregateBucket(rows) {
+    let W = 0, L = 0, P = 0, units = 0, risk = 0;
+    rows.forEach(function (r) {
+      if (r.result === 'W') W += 1;
+      else if (r.result === 'L') L += 1;
+      else if (r.result === 'P') P += 1;
+      units += r.profitLoss;
+      risk += calculateRisk(r);
+    });
+    const graded = W + L;
+    const winPct = graded ? (W / graded) * 100 : 0;
+    const roi = risk ? (units / risk) * 100 : 0;
+    return { W: W, L: L, P: P, units: units, winPct: winPct, roi: roi, n: rows.length };
+  }
+
+  function fmtCell(b) {
+    if (!b || b.n === 0) {
+      return '<span class="bt-empty">&mdash;</span>';
+    }
+    const us = (b.units >= 0 ? '+' : '') + b.units.toFixed(2);
+    const rs = (b.roi   >= 0 ? '+' : '') + b.roi.toFixed(2);
+    const unitsClass = b.units >= 0 ? 'bt-units-win' : 'bt-units-loss';
+    const roiClass   = b.roi   >= 0 ? 'bt-units-win' : 'bt-units-loss';
+    return (
+      '<div class="bt-record">' + b.W + '-' + b.L + '-' + b.P + '</div>' +
+      '<div class="' + unitsClass + '">' + us + 'u</div>' +
+      '<div class="bt-meta">' + b.winPct.toFixed(1) + '% &middot; <span class="' + roiClass + '">' + rs + '%</span></div>'
+    );
+  }
+
+  function getYearFromRow(row) {
+    return getYear(row.date);
+  }
+
+  function injectBetTypeStyles() {
+    if (document.getElementById('bet-type-breakdown-styles')) return;
+    const css = '' +
+      '#bet-type-breakdown { margin: 30px 0; }' +
+      '#bet-type-breakdown .bt-section-title { font-family: Orbitron, sans-serif; font-size: 28px; text-align: center; color: var(--glow-color, #00e0ff); text-shadow: 0 0 10px var(--glow-color, #00e0ff); margin: 30px 0 8px 0; }' +
+      '#bet-type-breakdown .bt-subtitle { text-align: center; color: #9bb3c9; font-family: Roboto, sans-serif; font-size: 14px; margin: 0 0 20px 0; }' +
+      '#bet-type-breakdown .bt-group { background: rgba(12, 18, 32, 0.85); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; box-shadow: 0 0 18px rgba(0, 224, 255, 0.08); }' +
+      '#bet-type-breakdown .bt-group h3 { font-family: Orbitron, sans-serif; font-size: 18px; color: var(--neon-gold, #FFD700); letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 12px 0; text-align: left; border-bottom: 1px solid rgba(255, 215, 0, 0.25); padding-bottom: 8px; }' +
+      '#bet-type-breakdown table.bt-table { width: 100%; border-collapse: collapse; font-family: Roboto, sans-serif; }' +
+      '#bet-type-breakdown table.bt-table th, #bet-type-breakdown table.bt-table td { padding: 10px 12px; vertical-align: middle; }' +
+      '#bet-type-breakdown table.bt-table thead th { font-family: Orbitron, sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--glow-color, #00e0ff); border-bottom: 1px solid rgba(0, 224, 255, 0.3); text-align: center; }' +
+      '#bet-type-breakdown table.bt-table thead th:first-child { text-align: left; }' +
+      '#bet-type-breakdown table.bt-table tbody td { border-bottom: 1px solid rgba(0, 224, 255, 0.12); text-align: center; color: #ddd; font-size: 14px; }' +
+      '#bet-type-breakdown table.bt-table tbody td:first-child { text-align: left; font-weight: 700; color: #fff; font-family: Orbitron, sans-serif; font-size: 13px; letter-spacing: 0.5px; }' +
+      '#bet-type-breakdown table.bt-table tr.bt-total td { background: rgba(0, 224, 255, 0.06); border-top: 1px solid rgba(0, 224, 255, 0.3); }' +
+      '#bet-type-breakdown table.bt-table tr.bt-total td:first-child { color: var(--neon-gold, #FFD700); }' +
+      '#bet-type-breakdown .bt-record { font-weight: 700; color: #fff; font-size: 15px; }' +
+      '#bet-type-breakdown .bt-units-win { color: var(--win-color, #39FF14); font-weight: 700; }' +
+      '#bet-type-breakdown .bt-units-loss { color: var(--loss-color, #FF3131); font-weight: 700; }' +
+      '#bet-type-breakdown .bt-meta { color: #9bb3c9; font-size: 12px; margin-top: 2px; }' +
+      '#bet-type-breakdown .bt-empty { color: #555; }' +
+      '@media (max-width: 600px) {' +
+      '  #bet-type-breakdown table.bt-table th, #bet-type-breakdown table.bt-table td { padding: 8px 6px; font-size: 12px; }' +
+      '  #bet-type-breakdown .bt-record { font-size: 13px; }' +
+      '  #bet-type-breakdown .bt-meta { font-size: 11px; }' +
+      '}';
+    const style = document.createElement('style');
+    style.id = 'bet-type-breakdown-styles';
+    style.textContent = css;
+    document.head.appendChild(style);
+  }
+
+  function renderBetTypeBreakdown(rows, sport) {
+    const container = document.getElementById('bet-type-breakdown');
+    if (!container) return;
+    const groups = BET_TYPE_GROUPS[sport];
+    if (!groups) {
+      container.innerHTML = '';
+      return;
+    }
+    injectBetTypeStyles();
+
+    const years = [2025, 2026];
+    // Index rows by category, then by year
+    const byCat = {};
+    rows.forEach(function (row) {
+      const c = categorizeBetType(sport, row.pick);
+      if (!byCat[c]) byCat[c] = [];
+      byCat[c].push(row);
+    });
+
+    function rowsFor(catKey, year) {
+      const arr = byCat[catKey] || [];
+      if (year == null) return arr;
+      return arr.filter(function (r) { return getYearFromRow(r) === year; });
+    }
+
+    let html = '';
+    html += '<h2 class="bt-section-title">Record By Bet Type</h2>';
+    html += '<p class="bt-subtitle">Win-Loss-Push, units, win rate and ROI for each bet category. Year-by-year and overall.</p>';
+
+    groups.forEach(function (group) {
+      const subRows = group.rows;
+      // Skip the entire group if it has zero picks across all sub-rows
+      let total = 0;
+      subRows.forEach(function (sr) { total += (byCat[sr.key] || []).length; });
+      if (total === 0) return;
+
+      html += '<div class="bt-group">';
+      html += '<h3>' + group.label + '</h3>';
+      html += '<table class="bt-table"><thead><tr>';
+      html += '<th>Type</th><th>2025</th><th>2026</th><th>Total</th>';
+      html += '</tr></thead><tbody>';
+
+      subRows.forEach(function (sr) {
+        const all2025 = rowsFor(sr.key, 2025);
+        const all2026 = rowsFor(sr.key, 2026);
+        const allTime = rowsFor(sr.key, null);
+        if (allTime.length === 0) return;
+        html += '<tr>';
+        html += '<td>' + sr.label + '</td>';
+        html += '<td>' + fmtCell(aggregateBucket(all2025)) + '</td>';
+        html += '<td>' + fmtCell(aggregateBucket(all2026)) + '</td>';
+        html += '<td>' + fmtCell(aggregateBucket(allTime)) + '</td>';
+        html += '</tr>';
+      });
+
+      if (group.showTotal) {
+        const allKeys = subRows.map(function (sr) { return sr.key; });
+        const all2025 = []; const all2026 = []; const allTime = [];
+        allKeys.forEach(function (k) {
+          (byCat[k] || []).forEach(function (r) {
+            allTime.push(r);
+            const y = getYearFromRow(r);
+            if (y === 2025) all2025.push(r);
+            else if (y === 2026) all2026.push(r);
+          });
+        });
+        html += '<tr class="bt-total">';
+        html += '<td>Total</td>';
+        html += '<td>' + fmtCell(aggregateBucket(all2025)) + '</td>';
+        html += '<td>' + fmtCell(aggregateBucket(all2026)) + '</td>';
+        html += '<td>' + fmtCell(aggregateBucket(allTime)) + '</td>';
+        html += '</tr>';
+      }
+
+      html += '</tbody></table></div>';
+    });
+
+    container.innerHTML = html;
+  }
+
   // ---- Data loaders ----
 
   async function loadLiveRows(sport) {
@@ -384,6 +648,14 @@
 
       initYearButtons(render, config.defaultYear || 'all');
       render(config.defaultYear || 'all');
+
+      // Bet-type breakdown is independent of the year filter - it always
+      // shows 2025 / 2026 / Total side-by-side.
+      try {
+        renderBetTypeBreakdown(sportRows, config.sport);
+      } catch (err) {
+        console.warn('[records-sport-page] bet-type breakdown failed:', err);
+      }
     } catch (err) {
       console.error('[records-sport-page] fatal:', err);
       const tbody = document.getElementById('picks-table-body');
