@@ -316,7 +316,10 @@
       { label: 'Spread',             rows: [{key:'Spread', label:'Spread'}], showTotal: false },
       { label: 'Game Totals',        rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
       { label: 'Team Totals',        rows: [{key:'Team Total Over', label:'Overs'}, {key:'Team Total Under', label:'Unders'}], showTotal: true },
-      { label: '1st / 2nd Half',     rows: [{key:'1H/2H Spread', label:'Spread'}, {key:'1H/2H Total', label:'Total'}], showTotal: true },
+      { label: '1st Half Spread',    rows: [{key:'1st Half Spread', label:'1st Half Spread'}], showTotal: false },
+      { label: '2nd Half Spread',    rows: [{key:'2nd Half Spread', label:'2nd Half Spread'}], showTotal: false },
+      { label: '1st Half Total',     rows: [{key:'1st Half Total',  label:'1st Half Total'}],  showTotal: false },
+      { label: '2nd Half Total',     rows: [{key:'2nd Half Total',  label:'2nd Half Total'}],  showTotal: false },
       { label: 'Parlays / Teasers',  rows: [{key:'Parlay', label:'Parlay'}, {key:'Teaser', label:'Teaser'}], showTotal: true }
     ],
     NCAAB: [
@@ -324,7 +327,10 @@
       { label: 'Spread',             rows: [{key:'Spread', label:'Spread'}], showTotal: false },
       { label: 'Game Totals',        rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
       { label: 'Team Totals',        rows: [{key:'Team Total Over', label:'Overs'}, {key:'Team Total Under', label:'Unders'}], showTotal: true },
-      { label: '1st / 2nd Half',     rows: [{key:'1H/2H Spread', label:'Spread'}, {key:'1H/2H Total', label:'Total'}], showTotal: true },
+      { label: '1st Half Spread',    rows: [{key:'1st Half Spread', label:'1st Half Spread'}], showTotal: false },
+      { label: '2nd Half Spread',    rows: [{key:'2nd Half Spread', label:'2nd Half Spread'}], showTotal: false },
+      { label: '1st Half Total',     rows: [{key:'1st Half Total',  label:'1st Half Total'}],  showTotal: false },
+      { label: '2nd Half Total',     rows: [{key:'2nd Half Total',  label:'2nd Half Total'}],  showTotal: false },
       { label: 'Parlays / Teasers',  rows: [{key:'Parlay', label:'Parlay'}, {key:'Teaser', label:'Teaser'}], showTotal: true }
     ],
     Soccer: [
@@ -362,9 +368,11 @@
       if (/\b(nrfi|yrfi)\b/.test(pl)) return 'NRFI/YRFI';
     }
     if (sport === 'NBA' || sport === 'NCAAB') {
-      if (/\b(1st half|first half|2nd half|second half|1h|2h)\b/.test(pl)) {
-        if (hasOver || hasUnder) return '1H/2H Total';
-        return '1H/2H Spread';
+      const isHalf2 = /\b(2nd half|second half|2h)\b/.test(pl);
+      const isHalf1 = !isHalf2 && /\b(1st half|first half|1h)\b/.test(pl);
+      if (isHalf1 || isHalf2) {
+        if (hasOver || hasUnder) return isHalf2 ? '2nd Half Total' : '1st Half Total';
+        return isHalf2 ? '2nd Half Spread' : '1st Half Spread';
       }
     }
     if (sport === 'Soccer' && pl.indexOf('corner') !== -1) return 'Corners O/U';

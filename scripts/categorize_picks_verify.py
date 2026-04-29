@@ -88,9 +88,11 @@ def category(sport, pick):
         if re.search(r'\b(nrfi|yrfi)\b', pl):
             return 'NRFI/YRFI'
     if sport in ('NBA', 'NCAAB'):
-        if re.search(r'\b(1st half|first half|2nd half|second half|1h|2h)\b', pl):
-            if has_over or has_under: return '1H/2H Total'
-            return '1H/2H Spread'
+        is_h2 = bool(re.search(r'\b(2nd half|second half|2h)\b', pl))
+        is_h1 = (not is_h2) and bool(re.search(r'\b(1st half|first half|1h)\b', pl))
+        if is_h1 or is_h2:
+            half = '2nd Half' if is_h2 else '1st Half'
+            return half + (' Total' if (has_over or has_under) else ' Spread')
 
     # ---------- Soccer corners ----------
     if sport == 'Soccer' and 'corner' in pl:
@@ -177,7 +179,10 @@ GROUPS = {
         ('Spread', ['Spread']),
         ('Game Totals', ['Game Total Over', 'Game Total Under']),
         ('Team Totals', ['Team Total Over', 'Team Total Under']),
-        ('1st / 2nd Half', ['1H/2H Spread', '1H/2H Total']),
+        ('1st Half Spread', ['1st Half Spread']),
+        ('2nd Half Spread', ['2nd Half Spread']),
+        ('1st Half Total',  ['1st Half Total']),
+        ('2nd Half Total',  ['2nd Half Total']),
         ('Parlays / Teasers', ['Parlay', 'Teaser']),
         ('Other', ['Other']),
     ],
@@ -186,7 +191,10 @@ GROUPS = {
         ('Spread', ['Spread']),
         ('Game Totals', ['Game Total Over', 'Game Total Under']),
         ('Team Totals', ['Team Total Over', 'Team Total Under']),
-        ('1st / 2nd Half', ['1H/2H Spread', '1H/2H Total']),
+        ('1st Half Spread', ['1st Half Spread']),
+        ('2nd Half Spread', ['2nd Half Spread']),
+        ('1st Half Total',  ['1st Half Total']),
+        ('2nd Half Total',  ['2nd Half Total']),
         ('Parlays / Teasers', ['Parlay', 'Teaser']),
         ('Other', ['Other']),
     ],
