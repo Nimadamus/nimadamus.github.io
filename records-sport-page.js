@@ -427,28 +427,40 @@
 
   function injectBetTypeStyles() {
     if (document.getElementById('bet-type-breakdown-styles')) return;
+    // Visual style mirrors records.html table aesthetic: gradient cyan->gold
+    // thead, generous padding, soft row dividers, cyan hover tint, gold
+    // section titles. No heavy bordered "boxes" - groups blend into the page.
     const css = '' +
-      '#bet-type-breakdown { margin: 30px 0; }' +
-      '#bet-type-breakdown .bt-section-title { font-family: Orbitron, sans-serif; font-size: 28px; text-align: center; color: var(--glow-color, #00e0ff); text-shadow: 0 0 10px var(--glow-color, #00e0ff); margin: 30px 0 8px 0; }' +
-      '#bet-type-breakdown .bt-subtitle { text-align: center; color: #9bb3c9; font-family: Roboto, sans-serif; font-size: 14px; margin: 0 0 20px 0; }' +
-      '#bet-type-breakdown .bt-group { background: rgba(12, 18, 32, 0.85); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; box-shadow: 0 0 18px rgba(0, 224, 255, 0.08); }' +
-      '#bet-type-breakdown .bt-group h3 { font-family: Orbitron, sans-serif; font-size: 18px; color: var(--neon-gold, #FFD700); letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 12px 0; text-align: left; border-bottom: 1px solid rgba(255, 215, 0, 0.25); padding-bottom: 8px; }' +
-      '#bet-type-breakdown table.bt-table { width: 100%; border-collapse: collapse; font-family: Roboto, sans-serif; }' +
-      '#bet-type-breakdown table.bt-table th, #bet-type-breakdown table.bt-table td { padding: 10px 12px; vertical-align: middle; }' +
-      '#bet-type-breakdown table.bt-table thead th { font-family: Orbitron, sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--glow-color, #00e0ff); border-bottom: 1px solid rgba(0, 224, 255, 0.3); text-align: center; }' +
-      '#bet-type-breakdown table.bt-table thead th:first-child { text-align: left; }' +
-      '#bet-type-breakdown table.bt-table tbody td { border-bottom: 1px solid rgba(0, 224, 255, 0.12); text-align: center; color: #ddd; font-size: 14px; }' +
-      '#bet-type-breakdown table.bt-table tbody td:first-child { text-align: left; font-weight: 700; color: #fff; font-family: Orbitron, sans-serif; font-size: 13px; letter-spacing: 0.5px; }' +
-      '#bet-type-breakdown table.bt-table tr.bt-total td { background: rgba(0, 224, 255, 0.06); border-top: 1px solid rgba(0, 224, 255, 0.3); }' +
-      '#bet-type-breakdown table.bt-table tr.bt-total td:first-child { color: var(--neon-gold, #FFD700); }' +
-      '#bet-type-breakdown .bt-record { font-weight: 700; color: #fff; font-size: 15px; }' +
+      '#bet-type-breakdown { margin: 40px 0; }' +
+      '#bet-type-breakdown .bt-section-title { font-family: Orbitron, sans-serif; font-size: 32px; text-align: center; color: var(--neon-gold, #FFD700); letter-spacing: 2px; text-transform: uppercase; margin: 30px 0 6px 0; text-shadow: 0 0 12px rgba(255, 215, 0, 0.35); }' +
+      '#bet-type-breakdown .bt-subtitle { text-align: center; color: #9bb3c9; font-family: Roboto, sans-serif; font-size: 15px; margin: 0 0 28px 0; }' +
+      '#bet-type-breakdown .bt-group { margin: 0 0 36px 0; padding: 0; background: transparent; border: 0; box-shadow: none; }' +
+      '#bet-type-breakdown .bt-group h3 { font-family: Orbitron, sans-serif; font-size: 22px; color: var(--neon-gold, #FFD700); letter-spacing: 2px; text-transform: uppercase; margin: 0 0 14px 0; padding: 0 0 10px 0; text-align: left; border-bottom: 2px solid rgba(255, 215, 0, 0.35); display: flex; align-items: center; gap: 12px; }' +
+      '#bet-type-breakdown .bt-group h3::before { content: ""; display: inline-block; width: 36px; height: 3px; background: linear-gradient(90deg, var(--glow-color, #00e0ff), var(--neon-gold, #FFD700)); border-radius: 2px; }' +
+      '#bet-type-breakdown table.bt-table { width: 100%; border-collapse: collapse; font-family: Roboto, sans-serif; background: rgba(12, 18, 32, 0.55); border-radius: 10px; overflow: hidden; }' +
+      '#bet-type-breakdown table.bt-table thead { background: linear-gradient(135deg, rgba(0, 224, 255, 0.18) 0%, rgba(255, 215, 0, 0.18) 100%); }' +
+      '#bet-type-breakdown table.bt-table thead th { font-family: Orbitron, sans-serif; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--glow-color, #00e0ff); padding: 18px 22px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--glow-color, #00e0ff); }' +
+      '#bet-type-breakdown table.bt-table thead th + th { text-align: center; }' +
+      '#bet-type-breakdown table.bt-table tbody td { padding: 18px 22px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); color: #e6edf5; font-size: 16px; vertical-align: middle; text-align: center; }' +
+      '#bet-type-breakdown table.bt-table tbody td:first-child { text-align: left; font-family: Orbitron, sans-serif; font-size: 15px; letter-spacing: 0.5px; color: #fff; font-weight: 700; }' +
+      '#bet-type-breakdown table.bt-table tbody tr { transition: background 0.2s ease; }' +
+      '#bet-type-breakdown table.bt-table tbody tr:hover { background: rgba(0, 224, 255, 0.06); }' +
+      '#bet-type-breakdown table.bt-table tbody tr:last-child td { border-bottom: 0; }' +
+      '#bet-type-breakdown table.bt-table tr.bt-total td { background: linear-gradient(135deg, rgba(0, 224, 255, 0.07) 0%, rgba(255, 215, 0, 0.07) 100%); border-top: 2px solid rgba(0, 224, 255, 0.35); border-bottom: 0; }' +
+      '#bet-type-breakdown table.bt-table tr.bt-total td:first-child { color: var(--neon-gold, #FFD700); text-transform: uppercase; letter-spacing: 1px; }' +
+      '#bet-type-breakdown .bt-record { font-family: Orbitron, sans-serif; font-weight: 700; color: #fff; font-size: 18px; letter-spacing: 0.5px; }' +
       '#bet-type-breakdown .bt-units-win { color: var(--win-color, #39FF14); font-weight: 700; }' +
       '#bet-type-breakdown .bt-units-loss { color: var(--loss-color, #FF3131); font-weight: 700; }' +
-      '#bet-type-breakdown .bt-meta { color: #9bb3c9; font-size: 12px; margin-top: 2px; }' +
-      '#bet-type-breakdown .bt-empty { color: #555; }' +
-      '@media (max-width: 600px) {' +
-      '  #bet-type-breakdown table.bt-table th, #bet-type-breakdown table.bt-table td { padding: 8px 6px; font-size: 12px; }' +
-      '  #bet-type-breakdown .bt-record { font-size: 13px; }' +
+      '#bet-type-breakdown .bt-meta { color: #9bb3c9; font-size: 13px; margin-top: 4px; font-family: Roboto, sans-serif; }' +
+      '#bet-type-breakdown .bt-empty { color: #4a5568; font-size: 18px; }' +
+      '@media (max-width: 768px) {' +
+      '  #bet-type-breakdown { margin: 30px 0; }' +
+      '  #bet-type-breakdown .bt-section-title { font-size: 26px; }' +
+      '  #bet-type-breakdown .bt-group h3 { font-size: 18px; }' +
+      '  #bet-type-breakdown table.bt-table thead th { padding: 12px 10px; font-size: 11px; letter-spacing: 1px; }' +
+      '  #bet-type-breakdown table.bt-table tbody td { padding: 12px 10px; font-size: 13px; }' +
+      '  #bet-type-breakdown table.bt-table tbody td:first-child { font-size: 12px; }' +
+      '  #bet-type-breakdown .bt-record { font-size: 14px; }' +
       '  #bet-type-breakdown .bt-meta { font-size: 11px; }' +
       '}';
     const style = document.createElement('style');
