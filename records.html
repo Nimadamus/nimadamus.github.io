@@ -2015,7 +2015,7 @@ function calculateTotalBetsBreakdown() {
  <td class="${rowCls(allTotalsStats)}">${allTotalsStats.record}</td>
  <td class="${rowCls(allTotalsStats)}">${allTotalsStats.winRate.toFixed(1)}%</td>
  <td class="${rowCls(allTotalsStats)}">${allTotalsStats.units >= 0 ? '+' : ''}${allTotalsStats.units.toFixed(2)}u</td>
- <td class="${allTotalsStats.roi >= 0 ? 'win' : 'loss'}">${allTotalsStats.roi >= 0 ? '+' : ''}${allTotalsStats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(allTotalsStats)}">${allTotalsStats.roi >= 0 ? '+' : ''}${allTotalsStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(totalBetsData)}</td>
  `;
  tbody.appendChild(row);
@@ -2031,10 +2031,10 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>Over Bets</strong></td>
- <td class="${overStats.winRate > 50 ? 'win' : 'loss'}">${overStats.record}</td>
- <td class="${overStats.winRate > 50 ? 'win' : ''}">${overStats.winRate.toFixed(1)}%</td>
- <td class="${overStats.units >= 0 ? 'win' : 'loss'}">${overStats.units >= 0 ? '+' : ''}${overStats.units.toFixed(2)}u</td>
- <td class="${overStats.roi >= 0 ? 'win' : 'loss'}">${overStats.roi >= 0 ? '+' : ''}${overStats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(overStats)}">${overStats.record}</td>
+ <td class="${rowCls(overStats)}">${overStats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(overStats)}">${overStats.units >= 0 ? '+' : ''}${overStats.units.toFixed(2)}u</td>
+ <td class="${rowCls(overStats)}">${overStats.roi >= 0 ? '+' : ''}${overStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(overData)}</td>
  `;
  tbody.appendChild(row);
@@ -2051,10 +2051,10 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>Under Bets</strong></td>
- <td class="${underStats.winRate > 50 ? 'win' : 'loss'}">${underStats.record}</td>
- <td class="${underStats.winRate > 50 ? 'win' : ''}">${underStats.winRate.toFixed(1)}%</td>
- <td class="${underStats.units >= 0 ? 'win' : 'loss'}">${underStats.units >= 0 ? '+' : ''}${underStats.units.toFixed(2)}u</td>
- <td class="${underStats.roi >= 0 ? 'win' : 'loss'}">${underStats.roi >= 0 ? '+' : ''}${underStats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(underStats)}">${underStats.record}</td>
+ <td class="${rowCls(underStats)}">${underStats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(underStats)}">${underStats.units >= 0 ? '+' : ''}${underStats.units.toFixed(2)}u</td>
+ <td class="${rowCls(underStats)}">${underStats.roi >= 0 ? '+' : ''}${underStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(underData)}</td>
  `;
  tbody.appendChild(row);
@@ -2073,10 +2073,10 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>Team Totals</strong></td>
- <td class="${ttStats.winRate > 50 ? 'win' : 'loss'}">${ttStats.record}</td>
- <td class="${ttStats.winRate > 50 ? 'win' : ''}">${ttStats.winRate.toFixed(1)}%</td>
- <td class="${ttStats.units >= 0 ? 'win' : 'loss'}">${ttStats.units >= 0 ? '+' : ''}${ttStats.units.toFixed(2)}u</td>
- <td class="${ttStats.roi >= 0 ? 'win' : 'loss'}">${ttStats.roi >= 0 ? '+' : ''}${ttStats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(ttStats)}">${ttStats.record}</td>
+ <td class="${rowCls(ttStats)}">${ttStats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(ttStats)}">${ttStats.units >= 0 ? '+' : ''}${ttStats.units.toFixed(2)}u</td>
+ <td class="${rowCls(ttStats)}">${ttStats.roi >= 0 ? '+' : ''}${ttStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(teamTotalData)}</td>
  `;
  tbody.appendChild(row);
@@ -2095,7 +2095,7 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>Game Totals</strong></td>
- <td class="${gameStats.winRate > 50 ? 'win' : 'loss'}">${gameStats.record}</td>
+ <td class="${rowCls(gameStats)}">${gameStats.record}</td>
  <td class="${gameStats.winRate > 50 ? 'win' : ''}">${gameStats.winRate.toFixed(1)}%</td>
  <td class="${gameStats.units >= 0 ? 'win' : 'loss'}">${gameStats.units >= 0 ? '+' : ''}${gameStats.units.toFixed(2)}u</td>
  <td class="${gameStats.roi >= 0 ? 'win' : 'loss'}">${gameStats.roi >= 0 ? '+' : ''}${gameStats.roi.toFixed(2)}%</td>
