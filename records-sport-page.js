@@ -414,38 +414,57 @@
     return { W: W, L: L, P: P, units: units, winPct: winPct, roi: roi, n: rows.length };
   }
 
-  // Row-level color: profitability priority, falls back to W/L record.
-  // Uses the shared helper from records-color.js when present.
-  function rowClass(b) {
-    if (!b || b.n === 0) return '';
-    const helper = window.BetLegendRecords && window.BetLegendRecords.rowPerfClass;
-    if (typeof helper === 'function') return helper(b.units, b.roi, b.W, b.L);
-    if (b.units > 0 || b.roi > 0) return 'win';
-    if (b.units < 0 || b.roi < 0) return 'loss';
+  // Per-cell color: each metric is colored on its own value (record by W vs L,
+  // win % vs 50, units/ROI vs 0). No more row-wide red just because the bucket
+  // lost units. Uses helpers from records-color.js when present.
+  function wrapClass(text, cls) {
+    return cls ? '<span class="' + cls + '">' + text + '</span>' : text;
+  }
+  function recordCellClass(b) {
+    const helper = window.BetLegendRecords && window.BetLegendRecords.recordClass;
+    if (typeof helper === 'function') return helper(b.W, b.L);
     if (b.W > b.L) return 'win';
     if (b.L > b.W) return 'loss';
     return '';
   }
-  function wrapClass(text, cls) {
-    return cls ? '<span class="' + cls + '">' + text + '</span>' : text;
+  function winPctCellClass(b) {
+    const helper = window.BetLegendRecords && window.BetLegendRecords.winPctClass;
+    if (typeof helper === 'function') return helper(b.winPct);
+    if (b.winPct > 50) return 'win';
+    if (b.winPct < 50) return 'loss';
+    return '';
+  }
+  function unitsCellClass(b) {
+    const helper = window.BetLegendRecords && window.BetLegendRecords.unitsClass;
+    if (typeof helper === 'function') return helper(b.units);
+    if (b.units > 0) return 'win';
+    if (b.units < 0) return 'loss';
+    return '';
+  }
+  function roiCellClass(b) {
+    const helper = window.BetLegendRecords && window.BetLegendRecords.roiClass;
+    if (typeof helper === 'function') return helper(b.roi);
+    if (b.roi > 0) return 'win';
+    if (b.roi < 0) return 'loss';
+    return '';
   }
   function fmtCellRecord(b)  {
     if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
-    return wrapClass(b.W + '-' + b.L + '-' + b.P, rowClass(b));
+    return wrapClass(b.W + '-' + b.L + '-' + b.P, recordCellClass(b));
   }
   function fmtCellWinPct(b)  {
     if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
-    return wrapClass(b.winPct.toFixed(1) + '%', rowClass(b));
+    return wrapClass(b.winPct.toFixed(1) + '%', winPctCellClass(b));
   }
   function fmtCellUnits(b)   {
     if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
     const sign = b.units >= 0 ? '+' : '';
-    return wrapClass(sign + b.units.toFixed(2) + 'u', rowClass(b));
+    return wrapClass(sign + b.units.toFixed(2) + 'u', unitsCellClass(b));
   }
   function fmtCellRoi(b) {
     if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
     const sign = b.roi >= 0 ? '+' : '';
-    return wrapClass(sign + b.roi.toFixed(2) + '%', rowClass(b));
+    return wrapClass(sign + b.roi.toFixed(2) + '%', roiCellClass(b));
   }
 
   function getYearFromRow(row) {
