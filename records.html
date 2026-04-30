@@ -1800,9 +1800,9 @@ function calculateTeaserBreakdown() {
  totalRow.innerHTML = `
  <td><strong>📊 TOTAL TEASERS</strong></td>
  <td class="${rowCls(totalStats)}">${totalStats.record}</td>
- <td class="${totalStats.winRate > 50 ? 'win' : ''}">${totalStats.winRate.toFixed(1)}%</td>
- <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
- <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(totalStats)}">${totalStats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(totalStats)}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
+ <td class="${rowCls(totalStats)}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(allTeasersData)}</td>
  `;
  tbody.appendChild(totalRow);
@@ -1921,9 +1921,9 @@ function calculateParlayBreakdown() {
  totalRow.innerHTML = `
  <td style="color: var(--accent);"><strong>TOTAL PARLAYS</strong></td>
  <td class="${rowCls(totalStats)}">${totalStats.record}</td>
- <td class="${totalStats.winRate > 50 ? 'win' : ''}">${totalStats.winRate.toFixed(1)}%</td>
- <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
- <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(totalStats)}">${totalStats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(totalStats)}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
+ <td class="${rowCls(totalStats)}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(allParlayData)}</td>
  `;
  tbody.appendChild(totalRow);
@@ -2012,9 +2012,9 @@ function calculateTotalBetsBreakdown() {
  let row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>All Total Bets</strong></td>
- <td class="${allTotalsStats.winRate > 50 ? 'win' : 'loss'}">${allTotalsStats.record}</td>
- <td class="${allTotalsStats.winRate > 50 ? 'win' : ''}">${allTotalsStats.winRate.toFixed(1)}%</td>
- <td class="${allTotalsStats.units >= 0 ? 'win' : 'loss'}">${allTotalsStats.units >= 0 ? '+' : ''}${allTotalsStats.units.toFixed(2)}u</td>
+ <td class="${rowCls(allTotalsStats)}">${allTotalsStats.record}</td>
+ <td class="${rowCls(allTotalsStats)}">${allTotalsStats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(allTotalsStats)}">${allTotalsStats.units >= 0 ? '+' : ''}${allTotalsStats.units.toFixed(2)}u</td>
  <td class="${allTotalsStats.roi >= 0 ? 'win' : 'loss'}">${allTotalsStats.roi >= 0 ? '+' : ''}${allTotalsStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(totalBetsData)}</td>
  `;
