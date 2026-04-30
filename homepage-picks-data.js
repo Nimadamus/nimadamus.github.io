@@ -23,6 +23,22 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Stars/Wild Over 5.5 (-120) Game 6 Grand Casino Arena 2u",
+        date: "April 30, 2026",
+        result: "",
+        url: "stars-wild-over-5-5-game-6-grand-casino-arena-nhl.html",
+        image: "images/stars-wild-over-5-5-game-6-grand-casino-arena-nhl.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Pirates Team Total Under 4.5 (-135) vs Cardinals PNC Park 2.5u",
+        date: "April 30, 2026",
+        result: "",
+        url: "pirates-team-total-under-4-5-cardinals-dobbins-pnc-park-skenes-mlb.html",
+        image: "images/pirates-team-total-under-4-5-cardinals-dobbins-pnc-park-skenes-mlb.jpg"
+    },
+    {
         sport: "NBA",
         title: "Lakers ML -175 vs Rockets Crypto.com Arena 3u",
         date: "April 29, 2026",
