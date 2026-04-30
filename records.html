@@ -2096,9 +2096,9 @@ function calculateTotalBetsBreakdown() {
  row.innerHTML = `
  <td><strong>Game Totals</strong></td>
  <td class="${rowCls(gameStats)}">${gameStats.record}</td>
- <td class="${gameStats.winRate > 50 ? 'win' : ''}">${gameStats.winRate.toFixed(1)}%</td>
- <td class="${gameStats.units >= 0 ? 'win' : 'loss'}">${gameStats.units >= 0 ? '+' : ''}${gameStats.units.toFixed(2)}u</td>
- <td class="${gameStats.roi >= 0 ? 'win' : 'loss'}">${gameStats.roi >= 0 ? '+' : ''}${gameStats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(gameStats)}">${gameStats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(gameStats)}">${gameStats.units >= 0 ? '+' : ''}${gameStats.units.toFixed(2)}u</td>
+ <td class="${rowCls(gameStats)}">${gameStats.roi >= 0 ? '+' : ''}${gameStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(gameTotalData)}</td>
  `;
  tbody.appendChild(row);
@@ -2117,10 +2117,10 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>First Half Totals</strong></td>
- <td class="${fhStats.winRate > 50 ? 'win' : 'loss'}">${fhStats.record}</td>
- <td class="${fhStats.winRate > 50 ? 'win' : ''}">${fhStats.winRate.toFixed(1)}%</td>
- <td class="${fhStats.units >= 0 ? 'win' : 'loss'}">${fhStats.units >= 0 ? '+' : ''}${fhStats.units.toFixed(2)}u</td>
- <td class="${fhStats.roi >= 0 ? 'win' : 'loss'}">${fhStats.roi >= 0 ? '+' : ''}${fhStats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(fhStats)}">${fhStats.record}</td>
+ <td class="${rowCls(fhStats)}">${fhStats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(fhStats)}">${fhStats.units >= 0 ? '+' : ''}${fhStats.units.toFixed(2)}u</td>
+ <td class="${rowCls(fhStats)}">${fhStats.roi >= 0 ? '+' : ''}${fhStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(firstHalfData)}</td>
  `;
  tbody.appendChild(row);
