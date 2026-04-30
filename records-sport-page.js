@@ -414,19 +414,38 @@
     return { W: W, L: L, P: P, units: units, winPct: winPct, roi: roi, n: rows.length };
   }
 
-  function fmtCellRecord(b)  { return (!b || b.n === 0) ? '<span class="bt-empty">&mdash;</span>' : (b.W + '-' + b.L + '-' + b.P); }
-  function fmtCellWinPct(b)  { return (!b || b.n === 0) ? '<span class="bt-empty">&mdash;</span>' : b.winPct.toFixed(1) + '%'; }
+  // Row-level color: profitability priority, falls back to W/L record.
+  // Uses the shared helper from records-color.js when present.
+  function rowClass(b) {
+    if (!b || b.n === 0) return '';
+    const helper = window.BetLegendRecords && window.BetLegendRecords.rowPerfClass;
+    if (typeof helper === 'function') return helper(b.units, b.roi, b.W, b.L);
+    if (b.units > 0 || b.roi > 0) return 'win';
+    if (b.units < 0 || b.roi < 0) return 'loss';
+    if (b.W > b.L) return 'win';
+    if (b.L > b.W) return 'loss';
+    return '';
+  }
+  function wrapClass(text, cls) {
+    return cls ? '<span class="' + cls + '">' + text + '</span>' : text;
+  }
+  function fmtCellRecord(b)  {
+    if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
+    return wrapClass(b.W + '-' + b.L + '-' + b.P, rowClass(b));
+  }
+  function fmtCellWinPct(b)  {
+    if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
+    return wrapClass(b.winPct.toFixed(1) + '%', rowClass(b));
+  }
   function fmtCellUnits(b)   {
     if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
     const sign = b.units >= 0 ? '+' : '';
-    const cls  = b.units >= 0 ? 'win' : 'loss';
-    return '<span class="' + cls + '">' + sign + b.units.toFixed(2) + 'u</span>';
+    return wrapClass(sign + b.units.toFixed(2) + 'u', rowClass(b));
   }
   function fmtCellRoi(b) {
     if (!b || b.n === 0) return '<span class="bt-empty">&mdash;</span>';
     const sign = b.roi >= 0 ? '+' : '';
-    const cls  = b.roi >= 0 ? 'win' : 'loss';
-    return '<span class="' + cls + '">' + sign + b.roi.toFixed(2) + '%</span>';
+    return wrapClass(sign + b.roi.toFixed(2) + '%', rowClass(b));
   }
 
   function getYearFromRow(row) {
