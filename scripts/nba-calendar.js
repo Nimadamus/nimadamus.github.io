@@ -4,6 +4,9 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-04-30", page: "celtics-vs-76ers-game-6-eastern-conference-philadelphia-nba-analysis-stats-preview.html", title: "Celtics vs 76ers Game 6 Analysis April 30, 2026" },
+    { date: "2026-04-30", page: "eastern-game-6s-knicks-celtics-wolves-elimination-thursday-nba.html", title: "NBA Analysis - April 30, 2026" },
+    { date: "2026-04-29", page: "eastern-elimination-night-three-game-5s-nba.html", title: "NBA Analysis - April 29, 2026" },
+    { date: "2026-04-29", page: "lakers-moneyline-rockets-crypto-com-arena-nba.html", title: "Lakers Moneyline Free Pick vs Rockets at Crypto.com Arena NBA" },
     { date: "2026-04-29", page: "nba-previews.html", title: "NBA Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-04-28", page: "knicks-hawks-tied-celtics-spurs-closeouts-tuesday-nba-april-28-2026.html", title: "NBA Analysis - April 28, 2026" },
     { date: "2026-04-27", page: "wolves-close-out-attempt-thunder-sweep-pistons-magic-monday-nba-april-27-2026.html", title: "NBA Analysis - April 27, 2026" },
@@ -51,6 +54,7 @@ const ARCHIVE_DATA = [
     { date: "2026-03-25", page: "nba-previews-archive-march-2026.html#2026-03-25", title: "NBA Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "nba-previews-archive-march-2026.html#2026-03-24", title: "NBA Analysis - 2026-03-24" },
     { date: "2026-03-21", page: "nba-previews-archive-march-2026.html#2026-03-21", title: "NBA Analysis - 2026-03-21" },
+    { date: "2026-03-20", page: "hawks-plus-2-5-at-rockets-nba.html", title: "Hawks +2.5 at Rockets NBA Pick" },
     { date: "2026-03-20", page: "knicks-nets-rivalry-pistons-surge-celtics-road-trip-nba-march-20-2026.html", title: "NBA Analysis - March 20, 2026" },
     { date: "2026-03-19", page: "nba-previews-archive-march-2026.html#2026-03-19", title: "NBA Analysis - 2026-03-19" },
     { date: "2026-03-18", page: "lakers-rockets-luka-durant-duel-warriors-celtics-nba-march-18-2026.html", title: "NBA Analysis - March 18, 2026" },

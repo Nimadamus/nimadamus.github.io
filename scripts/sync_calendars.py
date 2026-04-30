@@ -28,13 +28,13 @@ SCRIPTS_DIR = REPO_DIR / 'scripts'
 # Sport configurations
 # 'hub' = the rolling hub page (nba-previews.html, etc.) - always represents today's content
 SPORTS = {
-    'nba': {'prefix': 'nba', 'globs': ['nba*.html', '*-nba-*.html'], 'main': 'nba.html', 'hub': 'nba-previews.html', 'calendar_js': 'nba-calendar.js', 'archive_pattern': 'nba-previews-archive-*.html'},
-    'nhl': {'prefix': 'nhl', 'globs': ['nhl*.html', '*-nhl-*.html'], 'main': 'nhl.html', 'hub': 'nhl-previews.html', 'calendar_js': 'nhl-calendar.js', 'archive_pattern': 'nhl-previews-archive-*.html'},
-    'ncaab': {'prefix': 'ncaab', 'globs': ['ncaab*.html', 'college-basketball-*.html', '*-ncaab-*.html', '*-college-basketball-*.html'], 'main': 'ncaab.html', 'hub': 'college-basketball-previews.html', 'calendar_js': 'ncaab-calendar.js', 'archive_pattern': 'college-basketball-previews-archive-*.html'},
-    'ncaaf': {'prefix': 'ncaaf', 'globs': ['ncaaf*.html', 'college-football-*.html', '*-ncaaf-*.html', '*-college-football-*.html'], 'main': 'ncaaf.html', 'hub': None, 'calendar_js': 'ncaaf-calendar.js', 'archive_pattern': None},
-    'nfl': {'prefix': 'nfl', 'globs': ['nfl*.html', '*-nfl-*.html'], 'main': 'nfl.html', 'hub': None, 'calendar_js': 'nfl-calendar.js', 'archive_pattern': None},
-    'mlb': {'prefix': 'mlb', 'globs': ['mlb*.html', '*-mlb-*.html'], 'main': 'mlb.html', 'hub': 'mlb-previews.html', 'calendar_js': 'mlb-calendar.js', 'archive_pattern': 'mlb-previews-archive-*.html'},
-    'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html', '*-soccer-*.html'], 'main': 'soccer.html', 'hub': 'soccer-previews.html', 'calendar_js': 'soccer-calendar.js', 'archive_pattern': 'soccer-previews-archive-*.html'},
+    'nba': {'prefix': 'nba', 'globs': ['nba*.html', '*-nba-*.html', '*-nba.html'], 'main': 'nba.html', 'hub': 'nba-previews.html', 'calendar_js': 'nba-calendar.js', 'archive_pattern': 'nba-previews-archive-*.html'},
+    'nhl': {'prefix': 'nhl', 'globs': ['nhl*.html', '*-nhl-*.html', '*-nhl.html'], 'main': 'nhl.html', 'hub': 'nhl-previews.html', 'calendar_js': 'nhl-calendar.js', 'archive_pattern': 'nhl-previews-archive-*.html'},
+    'ncaab': {'prefix': 'ncaab', 'globs': ['ncaab*.html', 'college-basketball-*.html', '*-ncaab-*.html', '*-ncaab.html', '*-college-basketball-*.html', '*-college-basketball.html'], 'main': 'ncaab.html', 'hub': 'college-basketball-previews.html', 'calendar_js': 'ncaab-calendar.js', 'archive_pattern': 'college-basketball-previews-archive-*.html'},
+    'ncaaf': {'prefix': 'ncaaf', 'globs': ['ncaaf*.html', 'college-football-*.html', '*-ncaaf-*.html', '*-ncaaf.html', '*-college-football-*.html', '*-college-football.html'], 'main': 'ncaaf.html', 'hub': None, 'calendar_js': 'ncaaf-calendar.js', 'archive_pattern': None},
+    'nfl': {'prefix': 'nfl', 'globs': ['nfl*.html', '*-nfl-*.html', '*-nfl.html'], 'main': 'nfl.html', 'hub': None, 'calendar_js': 'nfl-calendar.js', 'archive_pattern': None},
+    'mlb': {'prefix': 'mlb', 'globs': ['mlb*.html', '*-mlb-*.html', '*-mlb.html'], 'main': 'mlb.html', 'hub': 'mlb-previews.html', 'calendar_js': 'mlb-calendar.js', 'archive_pattern': 'mlb-previews-archive-*.html'},
+    'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html', '*-soccer-*.html', '*-soccer.html'], 'main': 'soccer.html', 'hub': 'soccer-previews.html', 'calendar_js': 'soccer-calendar.js', 'archive_pattern': 'soccer-previews-archive-*.html'},
 }
 
 SPORT_DISPLAY_NAMES = {
