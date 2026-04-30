@@ -1313,8 +1313,8 @@ function calculateSportBreakdown() {
  <td><span class="badge badge-${sport.toLowerCase()}">${sport}</span></td>
  <td class="${rowCls(stats)}">${stats.record}</td>
  <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
  `;
  tbody.appendChild(row);
@@ -1383,8 +1383,8 @@ function calculateBetTypeBreakdown() {
  <td><strong>${betType.name}</strong></td>
  <td class="${rowCls(stats)}">${stats.record}</td>
  <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${findBestSport(betType.data)}</td>
  `;
  tbody.appendChild(row);
@@ -1458,8 +1458,8 @@ function calculateMonthlyBreakdown() {
  <td><strong>${month.name}</strong></td>
  <td class="${rowCls(stats)}">${stats.record}</td>
  <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${bestSport}</td>
  `;
  tbody.appendChild(row);
@@ -1636,8 +1636,8 @@ function calculateUnitSizingBreakdown() {
  <td>${levelData.length}</td>
  <td class="${rowCls(stats)}">${stats.record}</td>
  <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  `;
  tbody.appendChild(row);
  });
@@ -1799,7 +1799,7 @@ function calculateTeaserBreakdown() {
  totalRow.style.backgroundColor = 'rgba(0, 224, 255, 0.1)';
  totalRow.innerHTML = `
  <td><strong>📊 TOTAL TEASERS</strong></td>
- <td class="${totalStats.winRate > 50 ? 'win' : 'loss'}">${totalStats.record}</td>
+ <td class="${rowCls(totalStats)}">${totalStats.record}</td>
  <td class="${totalStats.winRate > 50 ? 'win' : ''}">${totalStats.winRate.toFixed(1)}%</td>
  <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
  <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
@@ -1835,9 +1835,9 @@ function calculateTeaserBreakdown() {
  row.innerHTML = `
  <td><strong>${teaserType.name}</strong></td>
  <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${findBestSport(typeData)}</td>
  `;
  tbody.appendChild(row);
@@ -1896,9 +1896,9 @@ function calculateParlayBreakdown() {
  row.innerHTML = `
  <td><strong>${parlayType.name}</strong></td>
  <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${findBestSport(typeData)}</td>
  `;
  tbody.appendChild(row);
@@ -1920,7 +1920,7 @@ function calculateParlayBreakdown() {
  totalRow.style.fontWeight = 'bold';
  totalRow.innerHTML = `
  <td style="color: var(--accent);"><strong>TOTAL PARLAYS</strong></td>
- <td class="${totalStats.winRate > 50 ? 'win' : 'loss'}">${totalStats.record}</td>
+ <td class="${rowCls(totalStats)}">${totalStats.record}</td>
  <td class="${totalStats.winRate > 50 ? 'win' : ''}">${totalStats.winRate.toFixed(1)}%</td>
  <td class="${totalStats.units >= 0 ? 'win' : 'loss'}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
  <td class="${totalStats.roi >= 0 ? 'win' : 'loss'}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
@@ -1976,9 +1976,9 @@ function calculateFiveInningBreakdown() {
  row.innerHTML = `
  <td><strong>${betType.name}</strong></td>
  <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${stats.winRate > 50 ? 'win' : ''}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
  `;
  tbody.appendChild(row);
@@ -2155,8 +2155,8 @@ function calculateTeamTotalsBySport() {
  <td><span class="badge badge-${sport.toLowerCase()}">${sport}</span></td>
  <td class="${rowCls(stats)}">${stats.record}</td>
  <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${stats.units >= 0 ? 'win' : 'loss'}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${stats.roi >= 0 ? 'win' : 'loss'}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
  `;
  tbody.appendChild(row);
