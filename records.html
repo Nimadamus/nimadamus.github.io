@@ -21,7 +21,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="records-engine.js"></script>
-<script src="records-color.js?v=20260429c"></script>
+<script src="records-color.js?v=20260429d"></script>
 <meta property="og:title" content="BetLegend Performance Records Dashboard">
 <meta property="og:description" content="Live betting analytics with complete breakdowns by sport, bet type, month, and confidence level">
 <meta property="og:url" content="https://www.betlegendpicks.com/records.html">
@@ -915,9 +915,46 @@ tbody tr:hover {
 </div>
 
 <script>
-// Shared row-level performance class (Record / Win % / Units / ROI all share
-// the same color). Profitability wins; falls back to W/L when units & ROI are
-// exactly neutral. Implementation lives in records-color.js.
+// Per-column performance classes. Each metric is colored on its OWN value
+// so a profitable record (W > L) stays green even if units/ROI are negative.
+// Implementations live in records-color.js.
+function recCls(s) {
+ if (!s) return '';
+ if (window.BetLegendRecords && typeof BetLegendRecords.recordClass === 'function') {
+   return BetLegendRecords.recordClass(s.wins, s.losses);
+ }
+ if (s.wins > s.losses) return 'win';
+ if (s.losses > s.wins) return 'loss';
+ return '';
+}
+function wpCls(s) {
+ if (!s) return '';
+ if (window.BetLegendRecords && typeof BetLegendRecords.winPctClass === 'function') {
+   return BetLegendRecords.winPctClass(s.winRate);
+ }
+ if (s.winRate > 50) return 'win';
+ if (s.winRate < 50) return 'loss';
+ return '';
+}
+function uCls(s) {
+ if (!s) return '';
+ if (window.BetLegendRecords && typeof BetLegendRecords.unitsClass === 'function') {
+   return BetLegendRecords.unitsClass(s.units);
+ }
+ if (s.units > 0) return 'win';
+ if (s.units < 0) return 'loss';
+ return '';
+}
+function rCls(s) {
+ if (!s) return '';
+ if (window.BetLegendRecords && typeof BetLegendRecords.roiClass === 'function') {
+   return BetLegendRecords.roiClass(s.roi);
+ }
+ if (s.roi > 0) return 'win';
+ if (s.roi < 0) return 'loss';
+ return '';
+}
+// Legacy row-wide helper kept for any caller still depending on it.
 function rowCls(s) {
  if (!s) return '';
  if (window.BetLegendRecords && typeof BetLegendRecords.rowPerfClass === 'function') {
@@ -1311,10 +1348,10 @@ function calculateSportBreakdown() {
  const row = document.createElement('tr');
  row.innerHTML = `
  <td><span class="badge badge-${sport.toLowerCase()}">${sport}</span></td>
- <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${recCls(stats)}">${stats.record}</td>
+ <td class="${wpCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
  `;
  tbody.appendChild(row);
@@ -1381,10 +1418,10 @@ function calculateBetTypeBreakdown() {
  const row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>${betType.name}</strong></td>
- <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${recCls(stats)}">${stats.record}</td>
+ <td class="${wpCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${findBestSport(betType.data)}</td>
  `;
  tbody.appendChild(row);
@@ -1456,10 +1493,10 @@ function calculateMonthlyBreakdown() {
  const row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>${month.name}</strong></td>
- <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${recCls(stats)}">${stats.record}</td>
+ <td class="${wpCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${bestSport}</td>
  `;
  tbody.appendChild(row);
@@ -1634,10 +1671,10 @@ function calculateUnitSizingBreakdown() {
  row.innerHTML = `
  <td><strong>${level.name}</strong></td>
  <td>${levelData.length}</td>
- <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${recCls(stats)}">${stats.record}</td>
+ <td class="${wpCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  `;
  tbody.appendChild(row);
  });
@@ -1799,10 +1836,10 @@ function calculateTeaserBreakdown() {
  totalRow.style.backgroundColor = 'rgba(0, 224, 255, 0.1)';
  totalRow.innerHTML = `
  <td><strong>📊 TOTAL TEASERS</strong></td>
- <td class="${rowCls(totalStats)}">${totalStats.record}</td>
- <td class="${rowCls(totalStats)}">${totalStats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(totalStats)}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
- <td class="${rowCls(totalStats)}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
+ <td class="${recCls(totalStats)}">${totalStats.record}</td>
+ <td class="${wpCls(totalStats)}">${totalStats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(totalStats)}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
+ <td class="${rCls(totalStats)}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(allTeasersData)}</td>
  `;
  tbody.appendChild(totalRow);
@@ -1834,10 +1871,10 @@ function calculateTeaserBreakdown() {
  const row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>${teaserType.name}</strong></td>
- <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${recCls(stats)}">${stats.record}</td>
+ <td class="${wpCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${findBestSport(typeData)}</td>
  `;
  tbody.appendChild(row);
@@ -1895,10 +1932,10 @@ function calculateParlayBreakdown() {
  const row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>${parlayType.name}</strong></td>
- <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${recCls(stats)}">${stats.record}</td>
+ <td class="${wpCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${findBestSport(typeData)}</td>
  `;
  tbody.appendChild(row);
@@ -1920,10 +1957,10 @@ function calculateParlayBreakdown() {
  totalRow.style.fontWeight = 'bold';
  totalRow.innerHTML = `
  <td style="color: var(--accent);"><strong>TOTAL PARLAYS</strong></td>
- <td class="${rowCls(totalStats)}">${totalStats.record}</td>
- <td class="${rowCls(totalStats)}">${totalStats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(totalStats)}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
- <td class="${rowCls(totalStats)}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
+ <td class="${recCls(totalStats)}">${totalStats.record}</td>
+ <td class="${wpCls(totalStats)}">${totalStats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(totalStats)}">${totalStats.units >= 0 ? '+' : ''}${totalStats.units.toFixed(2)}u</td>
+ <td class="${rCls(totalStats)}">${totalStats.roi >= 0 ? '+' : ''}${totalStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(allParlayData)}</td>
  `;
  tbody.appendChild(totalRow);
@@ -1975,10 +2012,10 @@ function calculateFiveInningBreakdown() {
  const row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>${betType.name}</strong></td>
- <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${recCls(stats)}">${stats.record}</td>
+ <td class="${wpCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
  `;
  tbody.appendChild(row);
@@ -2012,10 +2049,10 @@ function calculateTotalBetsBreakdown() {
  let row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>All Total Bets</strong></td>
- <td class="${rowCls(allTotalsStats)}">${allTotalsStats.record}</td>
- <td class="${rowCls(allTotalsStats)}">${allTotalsStats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(allTotalsStats)}">${allTotalsStats.units >= 0 ? '+' : ''}${allTotalsStats.units.toFixed(2)}u</td>
- <td class="${rowCls(allTotalsStats)}">${allTotalsStats.roi >= 0 ? '+' : ''}${allTotalsStats.roi.toFixed(2)}%</td>
+ <td class="${recCls(allTotalsStats)}">${allTotalsStats.record}</td>
+ <td class="${wpCls(allTotalsStats)}">${allTotalsStats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(allTotalsStats)}">${allTotalsStats.units >= 0 ? '+' : ''}${allTotalsStats.units.toFixed(2)}u</td>
+ <td class="${rCls(allTotalsStats)}">${allTotalsStats.roi >= 0 ? '+' : ''}${allTotalsStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(totalBetsData)}</td>
  `;
  tbody.appendChild(row);
@@ -2031,10 +2068,10 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>Over Bets</strong></td>
- <td class="${rowCls(overStats)}">${overStats.record}</td>
- <td class="${rowCls(overStats)}">${overStats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(overStats)}">${overStats.units >= 0 ? '+' : ''}${overStats.units.toFixed(2)}u</td>
- <td class="${rowCls(overStats)}">${overStats.roi >= 0 ? '+' : ''}${overStats.roi.toFixed(2)}%</td>
+ <td class="${recCls(overStats)}">${overStats.record}</td>
+ <td class="${wpCls(overStats)}">${overStats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(overStats)}">${overStats.units >= 0 ? '+' : ''}${overStats.units.toFixed(2)}u</td>
+ <td class="${rCls(overStats)}">${overStats.roi >= 0 ? '+' : ''}${overStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(overData)}</td>
  `;
  tbody.appendChild(row);
@@ -2051,10 +2088,10 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>Under Bets</strong></td>
- <td class="${rowCls(underStats)}">${underStats.record}</td>
- <td class="${rowCls(underStats)}">${underStats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(underStats)}">${underStats.units >= 0 ? '+' : ''}${underStats.units.toFixed(2)}u</td>
- <td class="${rowCls(underStats)}">${underStats.roi >= 0 ? '+' : ''}${underStats.roi.toFixed(2)}%</td>
+ <td class="${recCls(underStats)}">${underStats.record}</td>
+ <td class="${wpCls(underStats)}">${underStats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(underStats)}">${underStats.units >= 0 ? '+' : ''}${underStats.units.toFixed(2)}u</td>
+ <td class="${rCls(underStats)}">${underStats.roi >= 0 ? '+' : ''}${underStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(underData)}</td>
  `;
  tbody.appendChild(row);
@@ -2073,10 +2110,10 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>Team Totals</strong></td>
- <td class="${rowCls(ttStats)}">${ttStats.record}</td>
- <td class="${rowCls(ttStats)}">${ttStats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(ttStats)}">${ttStats.units >= 0 ? '+' : ''}${ttStats.units.toFixed(2)}u</td>
- <td class="${rowCls(ttStats)}">${ttStats.roi >= 0 ? '+' : ''}${ttStats.roi.toFixed(2)}%</td>
+ <td class="${recCls(ttStats)}">${ttStats.record}</td>
+ <td class="${wpCls(ttStats)}">${ttStats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(ttStats)}">${ttStats.units >= 0 ? '+' : ''}${ttStats.units.toFixed(2)}u</td>
+ <td class="${rCls(ttStats)}">${ttStats.roi >= 0 ? '+' : ''}${ttStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(teamTotalData)}</td>
  `;
  tbody.appendChild(row);
@@ -2095,10 +2132,10 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>Game Totals</strong></td>
- <td class="${rowCls(gameStats)}">${gameStats.record}</td>
- <td class="${rowCls(gameStats)}">${gameStats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(gameStats)}">${gameStats.units >= 0 ? '+' : ''}${gameStats.units.toFixed(2)}u</td>
- <td class="${rowCls(gameStats)}">${gameStats.roi >= 0 ? '+' : ''}${gameStats.roi.toFixed(2)}%</td>
+ <td class="${recCls(gameStats)}">${gameStats.record}</td>
+ <td class="${wpCls(gameStats)}">${gameStats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(gameStats)}">${gameStats.units >= 0 ? '+' : ''}${gameStats.units.toFixed(2)}u</td>
+ <td class="${rCls(gameStats)}">${gameStats.roi >= 0 ? '+' : ''}${gameStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(gameTotalData)}</td>
  `;
  tbody.appendChild(row);
@@ -2117,10 +2154,10 @@ function calculateTotalBetsBreakdown() {
  row = document.createElement('tr');
  row.innerHTML = `
  <td><strong>First Half Totals</strong></td>
- <td class="${rowCls(fhStats)}">${fhStats.record}</td>
- <td class="${rowCls(fhStats)}">${fhStats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(fhStats)}">${fhStats.units >= 0 ? '+' : ''}${fhStats.units.toFixed(2)}u</td>
- <td class="${rowCls(fhStats)}">${fhStats.roi >= 0 ? '+' : ''}${fhStats.roi.toFixed(2)}%</td>
+ <td class="${recCls(fhStats)}">${fhStats.record}</td>
+ <td class="${wpCls(fhStats)}">${fhStats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(fhStats)}">${fhStats.units >= 0 ? '+' : ''}${fhStats.units.toFixed(2)}u</td>
+ <td class="${rCls(fhStats)}">${fhStats.roi >= 0 ? '+' : ''}${fhStats.roi.toFixed(2)}%</td>
  <td>${findBestSport(firstHalfData)}</td>
  `;
  tbody.appendChild(row);
@@ -2153,10 +2190,10 @@ function calculateTeamTotalsBySport() {
  const row = document.createElement('tr');
  row.innerHTML = `
  <td><span class="badge badge-${sport.toLowerCase()}">${sport}</span></td>
- <td class="${rowCls(stats)}">${stats.record}</td>
- <td class="${rowCls(stats)}">${stats.winRate.toFixed(1)}%</td>
- <td class="${rowCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
- <td class="${rowCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
+ <td class="${recCls(stats)}">${stats.record}</td>
+ <td class="${wpCls(stats)}">${stats.winRate.toFixed(1)}%</td>
+ <td class="${uCls(stats)}">${stats.units >= 0 ? '+' : ''}${stats.units.toFixed(2)}u</td>
+ <td class="${rCls(stats)}">${stats.roi >= 0 ? '+' : ''}${stats.roi.toFixed(2)}%</td>
  <td>${stats.avgOdds > 0 ? '+' : ''}${stats.avgOdds}</td>
  `;
  tbody.appendChild(row);
