@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Sabres/Bruins Over 5.5 (-120) Game 6 TD Garden 3u",
+        date: "May 1, 2026",
+        result: "",
+        url: "sabres-bruins-over-5-5-game-6-td-garden-stanley-cup-playoffs-nhl.html",
+        image: "images/sabres-bruins-over-5-5-game-6-td-garden-stanley-cup-playoffs-nhl.jpg"
+    },
+    {
         sport: "MLB",
         title: "Padres Team Total Under 4.5 (-140) vs White Sox Petco Park 2.5u",
         date: "May 1, 2026",
