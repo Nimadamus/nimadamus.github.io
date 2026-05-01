@@ -42,7 +42,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Stars/Wild Over 5.5 (-120) Game 6 Grand Casino Arena 2u",
         date: "April 30, 2026",
-        result: "",
+        result: "W",
         url: "stars-wild-over-5-5-game-6-grand-casino-arena-nhl.html",
         image: "images/stars-wild-over-5-5-game-6-grand-casino-arena-nhl.jpg"
     },
@@ -50,7 +50,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Pirates Team Total Under 4.5 (-135) vs Cardinals PNC Park 2.5u",
         date: "April 30, 2026",
-        result: "",
+        result: "L",
         url: "pirates-team-total-under-4-5-cardinals-dobbins-pnc-park-skenes-mlb.html",
         image: "images/pirates-team-total-under-4-5-cardinals-dobbins-pnc-park-skenes-mlb.jpg"
     },
@@ -58,7 +58,7 @@ var HOMEPAGE_PICKS = [
         sport: "NBA",
         title: "Lakers ML -175 vs Rockets Crypto.com Arena 3u",
         date: "April 29, 2026",
-        result: "",
+        result: "L",
         url: "lakers-moneyline-rockets-crypto-com-arena-nba.html",
         image: "images/lakers-moneyline-rockets-crypto-com-arena-nba.jpg"
     },
@@ -66,7 +66,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Royals ML +108 at Athletics Sutter Health Park 1u",
         date: "April 29, 2026",
-        result: "",
+        result: "L",
         url: "royals-moneyline-plus-108-athletics-wacha-severino-sutter-health-park-mlb.html",
         image: "images/royals-moneyline-plus-108-athletics-wacha-severino-sutter-health-park-mlb.jpg"
     },
@@ -74,7 +74,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Diamondbacks Team Total Under 4.5 (-140) at Brewers AFF 1.5u",
         date: "April 29, 2026",
-        result: "",
+        result: "L",
         url: "diamondbacks-team-total-under-sproat-american-family-field-mlb.html",
         image: "images/diamondbacks-team-total-under-sproat-american-family-field-mlb.jpg"
     },
@@ -82,7 +82,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Ducks/Oilers Under 7 (-115) Game 5 Rogers Place 3u",
         date: "April 28, 2026",
-        result: "",
+        result: "W",
         url: "ducks-oilers-under-7-game-5-rogers-place-stanley-cup-playoffs-nhl.html",
         image: "images/oilers-mcdavid-ducks-game-5-rogers-place-nhl.png"
     },
@@ -90,7 +90,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Tigers ML +106 at Braves Truist Park 1u",
         date: "April 28, 2026",
-        result: "",
+        result: "L",
         url: "tigers-moneyline-plus-106-braves-mize-perez-truist-park-mlb.html",
         image: "images/tigers-riley-greene-braves-truist-park-mlb.jpg"
     },
@@ -98,7 +98,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Flyers +1.5 (-210) at Penguins Game 5 3u",
         date: "April 27, 2026",
-        result: "",
+        result: "W",
         url: "flyers-puck-line-plus-1-5-penguins-game-5-stanley-cup-playoffs-nhl.html",
         image: "images/flyers-celebration-puck-line-penguins-game-5-stanley-cup-playoffs.jpg"
     },
@@ -106,7 +106,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Cubs ML +107 at Padres 1.5u",
         date: "April 27, 2026",
-        result: "",
+        result: "L",
         url: "cubs-moneyline-plus-107-padres-boyd-vasquez-petco-park-mlb.html",
         image: "images/cubs-pete-crow-armstrong-padres-petco-park-april-27-2026.jpg"
     },
@@ -114,7 +114,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Ducks Puck Line +1.5 Game 4 at Honda Center 3u",
         date: "April 26, 2026",
-        result: "",
+        result: "W",
         url: "ducks-puck-line-plus-1-5-game-4-oilers-honda-center-nhl.html",
         image: "images/ducks-puck-line-plus-1-5-game-4-oilers-honda-center-nhl.jpg"
     },
@@ -122,7 +122,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Phillies ML +150 vs Braves Nola Sale 1u",
         date: "April 26, 2026",
-        result: "",
+        result: "L",
         url: "phillies-ml-plus-150-braves-nola-sale-truist-park-mlb.html",
         image: "images/phillies-ml-plus-150-braves-nola-sale-truist-park-mlb.jpg"
     },
@@ -130,7 +130,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Stars ML +115 Game 4 at Wild 1.5u",
         date: "April 25, 2026",
-        result: "",
+        result: "L",
         url: "stars-moneyline-plus-115-game-4-wild-grand-casino-arena-nhl.html",
         image: "images/stars-moneyline-plus-115-game-4-wild-grand-casino-arena-nhl.jpg"
     },
@@ -138,7 +138,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Rockies / Mets Over 8 Quintana Senga 3u",
         date: "April 25, 2026",
-        result: "",
+        result: "L",
         url: "rockies-mets-over-8-quintana-senga-citi-field-mlb.html",
         image: "images/rockies-mets-over-8-quintana-senga-citi-field-mlb.jpg"
     },
@@ -146,7 +146,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Mammoth ML -110 vs Golden Knights Game 3 3u",
         date: "April 24, 2026",
-        result: "",
+        result: "W",
         url: "mammoth-moneyline-minus-110-home-ice-golden-knights-game-3-delta-center-nhl.html",
         image: "images/utah-mammoth-home-ice-game-3-april-24-2026.jpg"
     },
@@ -154,7 +154,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Reds ML +118 Home Dog vs Tigers 1.5u",
         date: "April 24, 2026",
-        result: "",
+        result: "W",
         url: "reds-moneyline-plus-118-home-dog-valdez-abbott-great-american-ballpark-mlb.html",
         image: "images/tyler-stephenson-reds-home-dog-tigers-april-24-2026.jpg"
     },
