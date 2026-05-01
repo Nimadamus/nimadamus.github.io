@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-01", page: "three-friday-game-6s-canadiens-sabres-knights-elimination-night-nhl.html", title: "NHL Analysis - May 01, 2026" },
+    { date: "2026-05-01", page: "nhl-previews.html", title: "NHL Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-04-30", page: "stars-wild-game-6-elimination-night-saint-paul-nhl.html", title: "NHL Analysis - April 30, 2026" },
     { date: "2026-04-30", page: "stars-wild-over-5-5-game-6-grand-casino-arena-nhl.html", title: "Stars/Wild Over 5.5 Game 6 Free Pick at Grand Casino Arena NHL" },
     { date: "2026-04-29", page: "playoff-elimination-wednesday-three-game-5s-flyers-clincher-nhl.html", title: "NHL Analysis - April 29, 2026" },

@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-01", page: "mlb-friday-rotation-yankees-cubs-pirates-divisional-action-mlb.html", title: "MLB Analysis - May 01, 2026" },
+    { date: "2026-05-01", page: "mlb-previews.html", title: "MLB Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-04-30", page: "nine-game-thursday-skenes-valdez-gausman-mlb.html", title: "MLB Analysis - April 30, 2026" },
     { date: "2026-04-30", page: "pirates-team-total-under-4-5-cardinals-dobbins-pnc-park-skenes-mlb.html", title: "Pirates Team Total Under 4.5 Free Pick vs Cardinals at PNC Park MLB" },
     { date: "2026-04-29", page: "diamondbacks-team-total-under-sproat-american-family-field-mlb.html", title: "Diamondbacks Team Total Under 4.5 Free Pick vs Brewers MLB" },

@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-01", page: "three-friday-game-6s-rockets-history-bid-magic-cavs-elimination-nba.html", title: "NBA Analysis - May 01, 2026" },
+    { date: "2026-05-01", page: "nba-previews.html", title: "NBA Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-04-30", page: "celtics-vs-76ers-game-6-eastern-conference-philadelphia-nba-analysis-stats-preview.html", title: "Celtics vs 76ers Game 6 Analysis April 30, 2026" },
     { date: "2026-04-30", page: "eastern-game-6s-knicks-celtics-wolves-elimination-thursday-nba.html", title: "NBA Analysis - April 30, 2026" },
     { date: "2026-04-29", page: "eastern-elimination-night-three-game-5s-nba.html", title: "NBA Analysis - April 29, 2026" },
