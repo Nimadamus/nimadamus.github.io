@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Padres Team Total Under 4.5 (-140) vs White Sox Petco Park 2.5u",
+        date: "May 1, 2026",
+        result: "",
+        url: "padres-team-total-under-4-5-white-sox-marquez-schultz-petco-park-mlb.html",
+        image: "images/padres-team-total-under-4-5-white-sox-marquez-schultz-petco-park-mlb.jpg"
+    },
+    {
         sport: "NHL",
         title: "Stars/Wild Over 5.5 (-120) Game 6 Grand Casino Arena 2u",
         date: "April 30, 2026",
