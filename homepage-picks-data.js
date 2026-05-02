@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NBA",
+        title: "76ers +8 (-115) at Celtics Game 7 TD Garden 1.5u",
+        date: "May 2, 2026",
+        result: "",
+        url: "76ers-plus-8-celtics-game-7-td-garden-eastern-conference-pick.html",
+        image: "images/76ers-plus-8-celtics-game-7-td-garden-eastern-conference-pick.jpg"
+    },
+    {
         sport: "MLB",
         title: "Mets ML -126 at Angels McLean Angel Stadium 2u",
         date: "May 2, 2026",
