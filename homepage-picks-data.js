@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Mets ML -126 at Angels McLean Angel Stadium 2u",
+        date: "May 2, 2026",
+        result: "",
+        url: "mets-moneyline-mclean-detmers-angel-stadium-pick-mlb.html",
+        image: "images/mets-moneyline-mclean-detmers-angel-stadium-pick-mlb.jpg"
+    },
+    {
         sport: "NHL",
         title: "Sabres/Bruins Over 5.5 (-120) Game 6 TD Garden 3u",
         date: "May 1, 2026",
