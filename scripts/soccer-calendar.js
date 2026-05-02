@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-02", page: "arsenal-fulham-osasuna-barcelona-saturday-soccer-may-2-2026.html", title: "Soccer Analysis - May 02, 2026" },
+    { date: "2026-05-02", page: "soccer-previews.html", title: "Soccer Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-05-01", page: "leeds-vs-burnley-elland-road-final-stretch-premier-league-soccer.html", title: "Soccer Analysis - May 01, 2026" },
     { date: "2026-04-30", page: "europa-league-semifinal-first-legs-forest-villa-braga-freiburg-shakhtar-palace-soccer.html", title: "Soccer Analysis - April 30, 2026" },
     { date: "2026-04-29", page: "champions-league-semifinal-week-other-fixtures-soccer.html", title: "Soccer Analysis - April 29, 2026" },
