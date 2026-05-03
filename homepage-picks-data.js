@@ -23,6 +23,22 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Lightning ML -160 vs Canadiens Game 7 Amalie Arena 3u",
+        date: "May 3, 2026",
+        result: "",
+        url: "lightning-moneyline-minus-160-canadiens-game-7-amalie-arena-stanley-cup-playoffs.html",
+        image: "images/lightning-moneyline-minus-160-canadiens-game-7-amalie-arena-stanley-cup-playoffs.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Cubs ML -156 vs Diamondbacks Wrigley Field 2u",
+        date: "May 3, 2026",
+        result: "",
+        url: "cubs-moneyline-minus-156-diamondbacks-wrigley-field-home-favorite-rotation-edge.html",
+        image: "images/cubs-moneyline-minus-156-diamondbacks-wrigley-field-home-favorite-rotation-edge.jpg"
+    },
+    {
         sport: "NBA",
         title: "76ers +8 (-115) at Celtics Game 7 TD Garden 1.5u",
         date: "May 2, 2026",
