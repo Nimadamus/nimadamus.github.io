@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-03", page: "wrobleski-yesavage-leiter-fifteen-game-sunday-mlb-may-3-2026.html", title: "MLB Analysis - May 03, 2026" },
+    { date: "2026-05-03", page: "mlb-previews.html", title: "MLB Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-05-02", page: "mets-moneyline-mclean-detmers-angel-stadium-pick-mlb.html", title: "Mets Moneyline -126 Free Pick vs Angels at Angel Stadium MLB" },
     { date: "2026-05-02", page: "sasaki-mclean-painter-fifteen-game-saturday-mlb-may-2-2026.html", title: "MLB Analysis - May 02, 2026" },
     { date: "2026-05-01", page: "mlb-friday-rotation-yankees-cubs-pirates-divisional-action-mlb.html", title: "MLB Analysis - May 01, 2026" },
