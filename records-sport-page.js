@@ -538,7 +538,7 @@
 
       if (group.showTotal && subRows.length > 1) {
         out.push({
-          label: group.label + ' (Total)',
+          label: group.label + ' (All Combined)',
           keys: subRows.map(function (sr) { return sr.key; })
         });
       }
