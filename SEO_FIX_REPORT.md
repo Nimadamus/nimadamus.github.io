@@ -22,7 +22,7 @@
 - affiliates.html
 - best-online-sportsbook-old.html
 - bestbook.html
-- daily-mlb-breakdown-picks-july-26-2025.html
+- daily-mlb-breakdown-picks.html
 - daily-picks.html
 - email.html
 - FreeAlerts.html

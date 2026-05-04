@@ -88,7 +88,7 @@ All pages now have proper canonical URLs to prevent duplicate content penalties.
 - affiliates.html → "Affiliate Program | Partner with BetLegend"
 - best-online-sportsbook-old.html → "Best Online Sportsbooks 2024 | BetLegend"
 - bestbook.html → "Best Sportsbooks for Betting | BetLegend Guide"
-- daily-mlb-breakdown-picks-july-26-2025.html → "Daily MLB Picks - July 26, 2025 | BetLegend"
+- daily-mlb-breakdown-picks.html → "Daily MLB Picks - July 26, 2025 | BetLegend"
 - daily-picks.html → "Daily Sports Picks | BetLegend Today"
 - FreeAlerts.html → "Free Betting Alerts | BetLegend Picks"
 - how-to-bet-mlb-totals.html → "How to Bet MLB Totals | BetLegend Guide"

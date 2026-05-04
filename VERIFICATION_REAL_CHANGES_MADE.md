@@ -132,7 +132,7 @@
 1. affiliates.html → "Affiliate Program | Partner with BetLegend"
 2. best-online-sportsbook-old.html → "Best Online Sportsbooks 2024 | BetLegend"
 3. bestbook.html → "Best Sportsbooks for Betting | BetLegend Guide"
-4. daily-mlb-breakdown-picks-july-26-2025.html → "Daily MLB Picks - July 26, 2025 | BetLegend"
+4. daily-mlb-breakdown-picks.html → "Daily MLB Picks - July 26, 2025 | BetLegend"
 5. daily-picks.html → "Daily Sports Picks | BetLegend Today"
 6. FreeAlerts.html → "Free Betting Alerts | BetLegend Picks"
 7. how-to-bet-mlb-totals.html → "How to Bet MLB Totals | BetLegend Guide"

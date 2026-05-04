@@ -203,7 +203,7 @@ var HOMEPAGE_PICKS = [
         title: "Full Card Free Release - 6 MLB Picks (10 Units)",
         date: "April 22, 2026",
         result: "W",
-        url: "free-mlb-picks-today-full-card-release-wednesday-april-22-2026.html",
+        url: "free-mlb-picks-today-full-card-release-wednesday.html",
         image: "images/hero-mlb-full-card-free-release-april-22-2026.jpg"
     },
     {
@@ -531,7 +531,7 @@ var HOMEPAGE_PICKS = [
         title: "Rangers +167 / +1.5 -150 (3u)",
         date: "March 14, 2026",
         result: "W",
-        url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl-march-14-2026.html",
+        url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlx0hqpifhq8kfmt1y9x"
     }
 ];

@@ -210,10 +210,10 @@ BANNED FOREVER (old format):
 ❌ Any file named [sport]-page[number].html
 
 REQUIRED (new format - UNIQUE STORYLINE-DRIVEN URLs):
-✅ knicks-seek-revenge-in-denver-tatum-returns-nba-march-6-2026.html
-✅ nhl-trade-deadline-day-avalanche-stars-showdown-march-6-2026.html
-✅ miami-ohio-perfect-season-on-the-line-ncaab-march-6-2026.html
-✅ arsenal-chelsea-london-derby-premier-league-soccer-march-1-2026.html
+✅ knicks-seek-revenge-in-denver-tatum-returns-nba.html
+✅ nhl-trade-deadline-day-avalanche-stars-showdown.html
+✅ miami-ohio-perfect-season-on-the-line-ncaab.html
+✅ arsenal-chelsea-london-derby-premier-league-soccer.html
 ✅ lakers-vs-celtics-analysis-stats-preview-february-15-2026.html
 
 ALSO BANNED (too generic, just date-stamped):
@@ -234,11 +234,11 @@ EACH URL MUST BE UNIQUE AND STORYLINE-DRIVEN:
 [storyline-or-marquee-matchup]-[sport]-[month]-[day]-[year].html
 
 The URL should highlight the day's BEST storyline:
-- A rivalry game: cavaliers-bucks-battle-for-east-supremacy-nba-february-25-2026.html
+- A rivalry game: cavaliers-bucks-battle-for-east-supremacy-nba.html
 - A key player: tatum-returns-celtics-host-mavericks-nba-march-6-2026.html
-- A milestone: miami-ohio-perfect-season-on-the-line-ncaab-march-6-2026.html
-- A big event: nhl-trade-deadline-day-avalanche-stars-showdown-march-6-2026.html
-- A competition: champions-league-atletico-inter-newcastle-soccer-february-24-2026.html
+- A milestone: miami-ohio-perfect-season-on-the-line-ncaab.html
+- A big event: nhl-trade-deadline-day-avalanche-stars-showdown.html
+- A competition: champions-league-atletico-inter-newcastle-soccer.html
 
 The sport abbreviation MUST appear in the URL (nba, nhl, ncaab, ncaaf, nfl, mlb, soccer)
 so the calendar sync script can identify the sport.

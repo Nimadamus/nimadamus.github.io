@@ -29,7 +29,7 @@
 - affiliates.html
 - best-online-sportsbook-old.html
 - bestbook.html
-- daily-mlb-breakdown-picks-july-26-2025.html
+- daily-mlb-breakdown-picks.html
 - daily-picks.html
 - email.html
 - FreeAlerts.html
@@ -108,7 +108,7 @@
   - affiliates.html
   - best-online-sportsbook-old.html
   - bestbook.html
-  - daily-mlb-breakdown-picks-july-26-2025.html
+  - daily-mlb-breakdown-picks.html
   - daily-picks.html
   - FreeAlerts.html
   - how-to-bet-mlb-totals.html
@@ -165,7 +165,7 @@
 - **blog.html** → `https://www.betlegendpicks.com/blog` (link tag)
 - **blog.html** → `giants.oracle.png` (img tag)
 - **contact.html** → `https://www.betlegendpicks.com/contact.html` (link tag)
-- **daily-mlb-breakdown-picks-july-26-2025.html** → `https://www.betlegendpicks.com/mlb.html` (link tag)
+- **daily-mlb-breakdown-picks.html** → `https://www.betlegendpicks.com/mlb.html` (link tag)
 - **daily-picks.html** → `https://www.betlegendpicks.com/picks.html` (link tag)
 - **email.html** → `https://www.betlegendpicks.com` (a tag)
 - **expected-value-calculator.html** → `https://www.betlegendpicks.com/expected-value-calculator.html` (link tag)
