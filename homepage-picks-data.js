@@ -23,6 +23,22 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NBA",
+        title: "Knicks/76ers Under 213 Game 1 Madison Square Garden 3u",
+        date: "May 4, 2026",
+        result: "",
+        url: "knicks-76ers-under-213-game-1-second-round-madison-square-garden-nba-pick.html",
+        image: "images/knicks-76ers-under-213-game-1-second-round-madison-square-garden-nba-pick.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Guardians ML +109 at Royals Kauffman Stadium 2.5u",
+        date: "May 4, 2026",
+        result: "",
+        url: "guardians-moneyline-plus-109-royals-bibee-wacha-kauffman-stadium-mlb-pick.html",
+        image: "images/guardians-moneyline-plus-109-royals-bibee-wacha-kauffman-stadium-mlb-pick.jpg"
+    },
+    {
         sport: "NHL",
         title: "Lightning ML -160 vs Canadiens Game 7 Amalie Arena 3u",
         date: "May 3, 2026",
