@@ -23,6 +23,22 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Wild/Avalanche Over 6.5 Game 2 Ball Arena 2u",
+        date: "May 5, 2026",
+        result: "",
+        url: "wild-avalanche-over-6-5-game-2-ball-arena-stanley-cup-playoffs-nhl-pick.html",
+        image: "images/wild-avalanche-over-6-5-game-2-ball-arena-stanley-cup-playoffs-nhl-pick.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Giants ML -126 vs Padres Oracle Park 3u",
+        date: "May 5, 2026",
+        result: "",
+        url: "giants-moneyline-minus-126-padres-webb-buehler-oracle-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657277/action/hero/current"
+    },
+    {
         sport: "NBA",
         title: "Knicks/76ers Under 213 Game 1 Madison Square Garden 3u",
         date: "May 4, 2026",
