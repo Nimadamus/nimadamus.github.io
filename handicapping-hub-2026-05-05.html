@@ -730,6 +730,146 @@
             }
         }
         
+    /* TRENDS SECTION - LARGE & CLEAR */
+    .trends-section {
+        margin-top: 16px;
+        border-top: 3px solid rgba(0, 245, 255, 0.3);
+        padding: 20px 24px;
+        background: rgba(0, 20, 40, 0.4);
+    }
+    .trends-section .section-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #00f5ff;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+        text-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
+    }
+    .trends-badge {
+        font-size: 0.85rem;
+        background: rgba(0, 245, 255, 0.2);
+        color: #00f5ff;
+        padding: 4px 12px;
+        border-radius: 12px;
+        margin-left: 12px;
+        font-weight: 500;
+    }
+    .trends-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1.05rem;
+        margin-top: 10px;
+    }
+    .trends-table thead th {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #aaa;
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 2px solid rgba(255,255,255,0.12);
+    }
+    .trends-table tbody tr {
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        transition: background 0.2s;
+    }
+    .trends-table tbody tr:hover {
+        background: rgba(0, 245, 255, 0.05);
+    }
+    .trends-table td {
+        padding: 12px;
+        vertical-align: middle;
+    }
+    .trend-tier {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        width: 100px;
+    }
+    .tier-monster .trend-tier {
+        color: #ff3333;
+        text-shadow: 0 0 12px rgba(255,50,50,0.6);
+        font-size: 0.85rem;
+    }
+    .tier-hot .trend-tier {
+        color: #ffa500;
+        text-shadow: 0 0 10px rgba(255,165,0,0.5);
+    }
+    .tier-fade .trend-tier {
+        color: #ff69b4;
+        text-shadow: 0 0 8px rgba(255,105,180,0.4);
+    }
+    .trend-desc {
+        color: #e0e0e0;
+        font-size: 1.0rem;
+        font-weight: 500;
+        line-height: 1.4;
+    }
+    .tier-monster .trend-desc {
+        color: #fff;
+        font-weight: 600;
+    }
+    .trend-record {
+        font-weight: 700;
+        color: #fff;
+        text-align: center;
+        font-size: 1.1rem;
+        font-family: 'Rajdhani', sans-serif;
+    }
+    .trend-cover {
+        color: #00ff88;
+        font-weight: 800;
+        text-align: center;
+        font-size: 1.15rem;
+        text-shadow: 0 0 8px rgba(0,255,136,0.3);
+    }
+    .trend-fade {
+        color: #ff6b6b;
+        font-weight: 800;
+        text-align: center;
+        font-size: 1.15rem;
+        text-shadow: 0 0 8px rgba(255,107,107,0.3);
+    }
+    .trend-games {
+        color: #999;
+        font-size: 0.95rem;
+        text-align: center;
+        font-weight: 500;
+    }
+    .trends-ou {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(0, 245, 255, 0.1);
+    }
+    .trends-subtitle {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.9rem;
+        color: #00f5ff;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    .trends-ou-table {
+        font-size: 1.0rem;
+    }
+    .trends-ou-table thead th {
+        font-size: 0.75rem;
+    }
+    .ou-over {
+        color: #00ff88;
+        font-weight: 700;
+        font-size: 1.05rem;
+    }
+    .ou-under {
+        color: #ff6b6b;
+        font-weight: 700;
+        font-size: 1.05rem;
+    }
+    /* Verdict/lean CSS removed - Hub shows data only, no picks */
+    
     </style>
 </head>
 <body>
@@ -873,20 +1013,15 @@
         </div>
         
         <div class="section betting-lines-full">
-            <div class="section-title">MATCHUP & BETTING (ScoresAndOdds Style)</div>
+            <div class="section-title">MATCHUP (No Odds Available)</div>
             <table class="lines-table-full">
-                <thead>
-                    <tr><th class="team-col">TEAM</th><th>LINE</th><th>ML</th><th>O/U</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr>
-                </thead>
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/cle.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">CLE</span>
                         </td>
-                        <td class="spread">+3.5</td>
-                        <td class="ml">+124</td>
-                        <td class="total">O 215.5</td>
                         <td class="su-record">52-30</td>
                         <td class="ats-record">33-48-1</td>
                         <td class="ou-record">41-41-0</td>
@@ -899,9 +1034,6 @@
                             <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/det.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">DET</span>
                         </td>
-                        <td class="spread">-3.5</td>
-                        <td class="ml">-148</td>
-                        <td class="total">U 215.5</td>
                         <td class="su-record">60-22</td>
                         <td class="ats-record">44-37-1</td>
                         <td class="ou-record">38-44-0</td>
@@ -946,6 +1078,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">488 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Detroit Pistons at home, as the underdog, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">39-8</td>
+            <td class="trend-cover">83.0%</td>
+            <td class="trend-games">48</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Detroit Pistons at home, as the underdog, after covering the spread, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">39-8</td>
+            <td class="trend-cover">83.0%</td>
+            <td class="trend-games">48</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Cleveland Cavaliers on the road, as the underdog, after their last game went under, with a winning record, after winning as an underdog</td>
+            <td class="trend-record">53-12</td>
+            <td class="trend-cover">81.5%</td>
+            <td class="trend-games">65</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Cleveland Cavaliers on the road, as the underdog, with 3+ days rest, after winning as an underdog</td>
+            <td class="trend-record">33-2</td>
+            <td class="trend-cover">94.3%</td>
+            <td class="trend-games">35</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Cleveland Cavaliers on the road, as the underdog, with 3+ days rest, after covering the spread, after winning as an underdog</td>
+            <td class="trend-record">33-2</td>
+            <td class="trend-cover">94.3%</td>
+            <td class="trend-games">35</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Detroit Pistons at home, as the underdog, with 3+ days rest</td>
+            <td class="trend-record">65-29</td>
+            <td class="trend-cover">69.1%</td>
+            <td class="trend-games">94</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Detroit Pistons at home, as the underdog, with 3+ days rest, playing on a weekday</td>
+            <td class="trend-record">40-18</td>
+            <td class="trend-cover">69.0%</td>
+            <td class="trend-games">58</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Detroit Pistons at home, as the underdog, after failing to cover, after their last game went over</td>
+            <td class="trend-record">66-30</td>
+            <td class="trend-cover">68.8%</td>
+            <td class="trend-games">98</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Detroit Pistons at home, as the underdog</td>
+            <td class="trend-record">279-128</td>
+            <td class="trend-cover">68.6%</td>
+            <td class="trend-games">411</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Cleveland Cavaliers on the road, as the underdog, after covering the spread, after their last game went over, playing on a weekday</td>
+            <td class="trend-record">37-17</td>
+            <td class="trend-cover">68.5%</td>
+            <td class="trend-games">54</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Cleveland Cavaliers on the road, against a team with a winning record, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">7-46</td>
+            <td class="trend-fade">86.8%</td>
+            <td class="trend-games">53</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Cleveland Cavaliers on the road, after failing to cover, against a team with a winning record, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">7-46</td>
+            <td class="trend-fade">86.8%</td>
+            <td class="trend-games">53</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Detroit Pistons at home, after their last game went over, with a winning record, against a team with a winning record</td>
+            <td class="ou-under">3O-17U (15.0%)</td>
+            <td class="trend-games">20</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Cleveland Cavaliers on the road, after their last game went under, on a Tue, after losing as the favorite</td>
+            <td class="ou-over">13O-3U (81.2%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Cleveland Cavaliers on the road, after failing to cover, after their last game went under, on a Tue, after losing as the favorite</td>
+            <td class="ou-over">13O-3U (81.2%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401871326" data-sport="nba">
@@ -956,20 +1191,15 @@
         </div>
         
         <div class="section betting-lines-full">
-            <div class="section-title">MATCHUP & BETTING (ScoresAndOdds Style)</div>
+            <div class="section-title">MATCHUP (No Odds Available)</div>
             <table class="lines-table-full">
-                <thead>
-                    <tr><th class="team-col">TEAM</th><th>LINE</th><th>ML</th><th>O/U</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr>
-                </thead>
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>ATS</th><th>O/U REC</th><th>PPG</th><th>OPP</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">LAL</span>
                         </td>
-                        <td class="spread">+15.5</td>
-                        <td class="ml">+600</td>
-                        <td class="total">O 213.5</td>
                         <td class="su-record">53-29</td>
                         <td class="ats-record">44-36-1</td>
                         <td class="ou-record">42-39-0</td>
@@ -982,9 +1212,6 @@
                             <img src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/okc.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">OKC</span>
                         </td>
-                        <td class="spread">-15.5</td>
-                        <td class="ml">-900</td>
-                        <td class="total">U 213.5</td>
                         <td class="su-record">64-18</td>
                         <td class="ats-record">39-41-1</td>
                         <td class="ou-record">43-38-0</td>
@@ -1081,6 +1308,109 @@
             </tr></tbody>
             </table>
         </div>
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">722 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, as the underdog, with 3+ days rest, after their last game went over, with a winning record</td>
+            <td class="trend-record">47-5</td>
+            <td class="trend-cover">90.4%</td>
+            <td class="trend-games">52</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, as the underdog, with 3+ days rest, after covering the spread, after their last game went over</td>
+            <td class="trend-record">45-5</td>
+            <td class="trend-cover">90.0%</td>
+            <td class="trend-games">50</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, as the underdog, after their last game went over, with a winning record, playing on a weekday</td>
+            <td class="trend-record">100-12</td>
+            <td class="trend-cover">89.3%</td>
+            <td class="trend-games">113</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, with 3+ days rest, after their last game went over, with a winning record</td>
+            <td class="trend-record">49-6</td>
+            <td class="trend-cover">89.1%</td>
+            <td class="trend-games">58</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, as the underdog, after failing to cover, with a winning record, playing on a weekday</td>
+            <td class="trend-record">56-7</td>
+            <td class="trend-cover">88.9%</td>
+            <td class="trend-games">66</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, after their last game went under</td>
+            <td class="trend-record">285-123</td>
+            <td class="trend-cover">69.9%</td>
+            <td class="trend-games">413</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, against a team with a winning record, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">51-22</td>
+            <td class="trend-cover">69.9%</td>
+            <td class="trend-games">74</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, after covering the spread, against a team with a winning record, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">51-22</td>
+            <td class="trend-cover">69.9%</td>
+            <td class="trend-games">74</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, after covering the spread, against a team with a winning record</td>
+            <td class="trend-record">134-58</td>
+            <td class="trend-cover">69.8%</td>
+            <td class="trend-games">197</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Oklahoma City Thunder at home, after their last game went under, playing on a weekday</td>
+            <td class="trend-record">148-64</td>
+            <td class="trend-cover">69.8%</td>
+            <td class="trend-games">216</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Los Angeles Lakers on the road, after their last game went under, against a team with a winning record, after losing as the favorite</td>
+            <td class="trend-record">8-49</td>
+            <td class="trend-fade">86.0%</td>
+            <td class="trend-games">57</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Los Angeles Lakers on the road, against a team with a winning record, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">8-49</td>
+            <td class="trend-fade">86.0%</td>
+            <td class="trend-games">57</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Oklahoma City Thunder at home, as the underdog, after failing to cover, on a Tue</td>
+            <td class="ou-over">16O-4U (80.0%)</td>
+            <td class="trend-games">20</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Oklahoma City Thunder at home, as the underdog, after failing to cover, on a Tue, playing on a weekday</td>
+            <td class="ou-over">16O-4U (80.0%)</td>
+            <td class="trend-games">20</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Oklahoma City Thunder at home, as the underdog, after covering the spread, after their last game went under, on a Tue</td>
+            <td class="ou-under">6O-20U (23.1%)</td>
+            <td class="trend-games">26</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
             </div>
@@ -1099,21 +1429,16 @@
         </div>
         
         <div class="section betting-lines-full">
-            <div class="section-title">MATCHUP & BETTING</div>
+            <div class="section-title">MATCHUP (No Odds Available)</div>
             <table class="lines-table-full">
-                <thead>
-                    <tr><th class="team-col">TEAM</th><th>ML</th><th>O/U</th><th>SU</th><th>ML REC</th><th>O/U REC</th><th>GPG</th><th>GA</th><th>PWR</th></tr>
-                </thead>
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>O/U REC</th><th>GPG</th><th>GA</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/min.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">MIN</span>
                         </td>
-                        <td class="ml">+170</td>
-                        <td class="total">O 6.5</td>
                         <td class="su-record">46-24-12</td>
-                        <td class="ats-record">42-40</td>
                         <td class="ou-record">45-34</td>
                         <td class="ppg">0.4</td>
                         <td class="opp-ppg">0.3</td>
@@ -1124,10 +1449,7 @@
                             <img src="https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/col.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">COL</span>
                         </td>
-                        <td class="ml">-205</td>
-                        <td class="total">U 6.5</td>
                         <td class="su-record">55-16-11</td>
-                        <td class="ats-record">41-40</td>
                         <td class="ou-record">33-46</td>
                         <td class="ppg">0.3</td>
                         <td class="opp-ppg">0.1</td>
@@ -1170,6 +1492,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">373 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Colorado Avalanche at home, as the underdog, after covering the spread, after their last game went over</td>
+            <td class="trend-record">41-10</td>
+            <td class="trend-cover">80.4%</td>
+            <td class="trend-games">51</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Minnesota Wild on the road, as the underdog, with 3+ days rest, after covering the spread</td>
+            <td class="trend-record">49-12</td>
+            <td class="trend-cover">80.3%</td>
+            <td class="trend-games">61</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Minnesota Wild on the road, as the underdog, after covering the spread, after their last game went over, playing on a weekday</td>
+            <td class="trend-record">51-13</td>
+            <td class="trend-cover">79.7%</td>
+            <td class="trend-games">64</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Colorado Avalanche at home, as the underdog, after failing to cover, after their last game went under</td>
+            <td class="trend-record">41-12</td>
+            <td class="trend-cover">77.4%</td>
+            <td class="trend-games">53</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Minnesota Wild on the road, as the underdog, after covering the spread, after their last game went over, with a winning record</td>
+            <td class="trend-record">38-12</td>
+            <td class="trend-cover">76.0%</td>
+            <td class="trend-games">50</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Colorado Avalanche at home, as the underdog, with a winning record</td>
+            <td class="trend-record">37-16</td>
+            <td class="trend-cover">69.8%</td>
+            <td class="trend-games">53</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Minnesota Wild on the road, as the underdog, after covering the spread, against a team with a winning record, playing on a weekday</td>
+            <td class="trend-record">39-17</td>
+            <td class="trend-cover">69.6%</td>
+            <td class="trend-games">56</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Colorado Avalanche at home, as the underdog, after covering the spread, playing on a weekday</td>
+            <td class="trend-record">57-25</td>
+            <td class="trend-cover">69.5%</td>
+            <td class="trend-games">82</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Colorado Avalanche at home, as the underdog, after their last game went under, against a team with a winning record</td>
+            <td class="trend-record">50-22</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">72</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Minnesota Wild on the road, as the underdog, after their last game went over, against a team with a winning record</td>
+            <td class="trend-record">68-30</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">98</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Colorado Avalanche at home, with a winning record, against a team with a winning record, playing on a weekday</td>
+            <td class="trend-record">22-49</td>
+            <td class="trend-fade">69.0%</td>
+            <td class="trend-games">71</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Colorado Avalanche at home, after their last game went under, with a winning record, against a team with a winning record, playing on a weekday</td>
+            <td class="trend-record">11-28</td>
+            <td class="trend-fade">71.8%</td>
+            <td class="trend-games">39</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Colorado Avalanche at home, after their last game went over, on a Tue, after winning as an underdog</td>
+            <td class="ou-under">3O-12U (20.0%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Colorado Avalanche at home, after covering the spread, after their last game went over, on a Tue, after winning as an underdog</td>
+            <td class="ou-under">3O-12U (20.0%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Colorado Avalanche at home, after their last game went over, on a Tue, playing on a weekday, after winning as an underdog</td>
+            <td class="ou-under">3O-12U (20.0%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
             </div>
@@ -1184,21 +1609,16 @@
         </div>
         
         <div class="section betting-lines-full">
-            <div class="section-title">MATCHUP & BETTING</div>
+            <div class="section-title">MATCHUP (No Odds Available)</div>
             <table class="lines-table-full">
-                <thead>
-                    <tr><th class="team-col">TEAM</th><th>ML</th><th>O/U</th><th>SU</th><th>RL REC</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr>
-                </thead>
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/ath.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">ATH</span>
                         </td>
-                        <td class="ml">+159</td>
-                        <td class="total">O 9.0</td>
                         <td class="su-record">18-16</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">4.4</td>
                         <td class="opp-ppg">4.7</td>
@@ -1209,10 +1629,7 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/phi.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">PHI</span>
                         </td>
-                        <td class="ml">-194</td>
-                        <td class="total">U 9.0</td>
                         <td class="su-record">15-20</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">3.8</td>
                         <td class="opp-ppg">5.0</td>
@@ -1307,6 +1724,109 @@
             </tr></tbody>
             </table>
         </div>
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">165 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oakland Athletics on the road, as the underdog, after covering the spread, on a Tue</td>
+            <td class="trend-record">45-19</td>
+            <td class="trend-cover">70.3%</td>
+            <td class="trend-games">64</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oakland Athletics on the road, as the underdog, after covering the spread, on a Tue, playing on a weekday</td>
+            <td class="trend-record">45-19</td>
+            <td class="trend-cover">70.3%</td>
+            <td class="trend-games">64</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oakland Athletics on the road, as the underdog, after failing to cover, with a near-.500 record, playing on a weekday</td>
+            <td class="trend-record">42-18</td>
+            <td class="trend-cover">70.0%</td>
+            <td class="trend-games">60</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oakland Athletics on the road, as the underdog, on a Tue, after winning as an underdog</td>
+            <td class="trend-record">26-11</td>
+            <td class="trend-cover">70.3%</td>
+            <td class="trend-games">37</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Oakland Athletics on the road, as the underdog, after covering the spread, on a Tue, after winning as an underdog</td>
+            <td class="trend-record">26-11</td>
+            <td class="trend-cover">70.3%</td>
+            <td class="trend-games">37</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Oakland Athletics on the road, as the underdog, after their last game went under, with a near-.500 record, playing on a weekday</td>
+            <td class="trend-record">49-23</td>
+            <td class="trend-cover">68.1%</td>
+            <td class="trend-games">72</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Oakland Athletics on the road, as the underdog, after covering the spread, against a team with a losing record, playing on a weekday</td>
+            <td class="trend-record">36-17</td>
+            <td class="trend-cover">67.9%</td>
+            <td class="trend-games">53</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Philadelphia Phillies at home, as the underdog, after failing to cover, after their last game went under, playing on a weekday</td>
+            <td class="trend-record">43-22</td>
+            <td class="trend-cover">66.2%</td>
+            <td class="trend-games">65</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Oakland Athletics on the road, against a team with a losing record, after losing as the favorite</td>
+            <td class="trend-record">46-24</td>
+            <td class="trend-cover">65.7%</td>
+            <td class="trend-games">70</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Oakland Athletics on the road, after failing to cover, against a team with a losing record, after losing as the favorite</td>
+            <td class="trend-record">46-24</td>
+            <td class="trend-cover">65.7%</td>
+            <td class="trend-games">70</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Philadelphia Phillies at home, after covering the spread, after their last game went under, on a Tue</td>
+            <td class="trend-record">15-31</td>
+            <td class="trend-fade">67.4%</td>
+            <td class="trend-games">46</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Philadelphia Phillies at home, after covering the spread, after their last game went under, on a Tue, playing on a weekday</td>
+            <td class="trend-record">15-31</td>
+            <td class="trend-fade">67.4%</td>
+            <td class="trend-games">46</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Philadelphia Phillies at home, as the underdog, after their last game went under, in May, playing on a weekday</td>
+            <td class="ou-under">1O-13U (7.1%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Philadelphia Phillies at home, as the underdog, after failing to cover, after their last game went under, in May</td>
+            <td class="ou-under">2O-12U (14.3%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Oakland Athletics on the road, after covering the spread, after their last game went over, with a near-.500 record, on a Tue</td>
+            <td class="ou-under">3O-13U (18.8%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815215" data-sport="mlb">
@@ -1317,21 +1837,16 @@
         </div>
         
         <div class="section betting-lines-full">
-            <div class="section-title">MATCHUP & BETTING</div>
+            <div class="section-title">MATCHUP (No Odds Available)</div>
             <table class="lines-table-full">
-                <thead>
-                    <tr><th class="team-col">TEAM</th><th>ML</th><th>O/U</th><th>SU</th><th>RL REC</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr>
-                </thead>
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/bal.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">BAL</span>
                         </td>
-                        <td class="ml">+119</td>
-                        <td class="total">O 8.5</td>
                         <td class="su-record">15-20</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">4.4</td>
                         <td class="opp-ppg">5.6</td>
@@ -1342,10 +1857,7 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/mia.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">MIA</span>
                         </td>
-                        <td class="ml">-143</td>
-                        <td class="total">U 8.5</td>
                         <td class="su-record">16-19</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">4.2</td>
                         <td class="opp-ppg">4.2</td>
@@ -1388,6 +1900,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">168 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Baltimore Orioles on the road, as the underdog, on a Tue, after winning as an underdog</td>
+            <td class="trend-record">39-16</td>
+            <td class="trend-cover">70.9%</td>
+            <td class="trend-games">55</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Baltimore Orioles on the road, as the underdog, after covering the spread, on a Tue, after winning as an underdog</td>
+            <td class="trend-record">39-16</td>
+            <td class="trend-cover">70.9%</td>
+            <td class="trend-games">55</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Baltimore Orioles on the road, as the underdog, on a Tue, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">39-16</td>
+            <td class="trend-cover">70.9%</td>
+            <td class="trend-games">55</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Baltimore Orioles on the road, as the underdog, after covering the spread, after their last game went over, on a Tue</td>
+            <td class="trend-record">28-12</td>
+            <td class="trend-cover">70.0%</td>
+            <td class="trend-games">40</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Miami Marlins at home, as the underdog, after their last game went under, against a team with a losing record</td>
+            <td class="trend-record">25-10</td>
+            <td class="trend-cover">71.4%</td>
+            <td class="trend-games">35</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Baltimore Orioles on the road, as the underdog, after covering the spread, on a Tue</td>
+            <td class="trend-record">58-25</td>
+            <td class="trend-cover">69.9%</td>
+            <td class="trend-games">83</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Baltimore Orioles on the road, as the underdog, after covering the spread, on a Tue, playing on a weekday</td>
+            <td class="trend-record">58-25</td>
+            <td class="trend-cover">69.9%</td>
+            <td class="trend-games">83</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Baltimore Orioles on the road, as the underdog, in May, after winning as an underdog</td>
+            <td class="trend-record">43-20</td>
+            <td class="trend-cover">68.3%</td>
+            <td class="trend-games">63</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Baltimore Orioles on the road, as the underdog, after covering the spread, in May, after winning as an underdog</td>
+            <td class="trend-record">43-20</td>
+            <td class="trend-cover">68.3%</td>
+            <td class="trend-games">63</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Miami Marlins at home, as the underdog, after covering the spread, against a team with a losing record</td>
+            <td class="trend-record">30-13</td>
+            <td class="trend-cover">69.8%</td>
+            <td class="trend-games">43</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Miami Marlins at home, against a team with a losing record, after losing as the favorite</td>
+            <td class="trend-record">23-45</td>
+            <td class="trend-fade">66.2%</td>
+            <td class="trend-games">68</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Miami Marlins at home, after failing to cover, against a team with a losing record, after losing as the favorite</td>
+            <td class="trend-record">23-45</td>
+            <td class="trend-fade">66.2%</td>
+            <td class="trend-games">68</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Miami Marlins at home, after failing to cover, after their last game went under, with a near-.500 record, on a Tue</td>
+            <td class="ou-under">4O-14U (22.2%)</td>
+            <td class="trend-games">18</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Miami Marlins at home, after their last game went under, in May, after winning as an underdog</td>
+            <td class="ou-over">15O-5U (75.0%)</td>
+            <td class="trend-games">21</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Miami Marlins at home, after covering the spread, after their last game went under, in May, after winning as an underdog</td>
+            <td class="ou-over">15O-5U (75.0%)</td>
+            <td class="trend-games">21</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815216" data-sport="mlb">
@@ -1409,8 +2024,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/bos.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">BOS</span>
                         </td>
-                        <td class="ml">+129</td>
-                        <td class="total">O 8.5</td>
+                        <td class="ml">-126</td>
+                        <td class="total">O 8.0</td>
                         <td class="su-record">14-21</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -1423,8 +2038,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/det.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">DET</span>
                         </td>
-                        <td class="ml">-156</td>
-                        <td class="total">U 8.5</td>
+                        <td class="ml">+104</td>
+                        <td class="total">U 8.0</td>
                         <td class="su-record">18-18</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -1469,6 +2084,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">82 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Detroit Tigers at home, as the underdog, against a team with a losing record, after winning as an underdog</td>
+            <td class="trend-record">16-6</td>
+            <td class="trend-cover">72.7%</td>
+            <td class="trend-games">22</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Detroit Tigers at home, as the underdog, after covering the spread, against a team with a losing record, after winning as an underdog</td>
+            <td class="trend-record">16-6</td>
+            <td class="trend-cover">72.7%</td>
+            <td class="trend-games">22</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Detroit Tigers at home, with a near-.500 record, on a Tue, after winning as an underdog</td>
+            <td class="trend-record">15-6</td>
+            <td class="trend-cover">71.4%</td>
+            <td class="trend-games">21</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Detroit Tigers at home, after covering the spread, with a near-.500 record, on a Tue, after winning as an underdog</td>
+            <td class="trend-record">15-6</td>
+            <td class="trend-cover">71.4%</td>
+            <td class="trend-games">21</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Detroit Tigers at home, with a near-.500 record, on a Tue, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">15-6</td>
+            <td class="trend-cover">71.4%</td>
+            <td class="trend-games">21</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Detroit Tigers at home, as the underdog, after their last game went under, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">30-15</td>
+            <td class="trend-cover">66.7%</td>
+            <td class="trend-games">45</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Boston Red Sox on the road, after their last game went under, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">47-26</td>
+            <td class="trend-cover">64.4%</td>
+            <td class="trend-games">73</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Detroit Tigers at home, as the underdog, in May, playing on a weekday</td>
+            <td class="trend-record">29-17</td>
+            <td class="trend-cover">63.0%</td>
+            <td class="trend-games">46</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Detroit Tigers at home, as the underdog, after covering the spread, in May, playing on a weekday</td>
+            <td class="trend-record">20-10</td>
+            <td class="trend-cover">66.7%</td>
+            <td class="trend-games">30</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Detroit Tigers at home, as the underdog, after their last game went over, on a Tue</td>
+            <td class="trend-record">22-12</td>
+            <td class="trend-cover">64.7%</td>
+            <td class="trend-games">34</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Detroit Tigers at home, after their last game went over, with a near-.500 record, in May</td>
+            <td class="trend-record">13-30</td>
+            <td class="trend-fade">69.8%</td>
+            <td class="trend-games">43</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Detroit Tigers at home, against a team with a losing record, in May, playing on a weekday</td>
+            <td class="trend-record">11-27</td>
+            <td class="trend-fade">71.1%</td>
+            <td class="trend-games">38</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Detroit Tigers at home, after their last game went under, in May, playing on a weekday, after winning as an underdog</td>
+            <td class="ou-under">2O-13U (13.3%)</td>
+            <td class="trend-games">19</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Detroit Tigers at home, as the underdog, after their last game went under, in May, after winning as an underdog</td>
+            <td class="ou-under">2O-10U (16.7%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Detroit Tigers at home, as the underdog, after failing to cover, after their last game went under, against a team with a losing record</td>
+            <td class="ou-over">13O-3U (81.2%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815219" data-sport="mlb">
@@ -1491,7 +2209,7 @@
                             <span class="team-name">TOR</span>
                         </td>
                         <td class="ml">+109</td>
-                        <td class="total">O 7.0</td>
+                        <td class="total">O 8.0</td>
                         <td class="su-record">16-19</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -1505,7 +2223,7 @@
                             <span class="team-name">TB</span>
                         </td>
                         <td class="ml">-131</td>
-                        <td class="total">U 7.0</td>
+                        <td class="total">U 8.0</td>
                         <td class="su-record">22-12</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -1550,6 +2268,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">207 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, after their last game went under, after losing as the favorite</td>
+            <td class="trend-record">39-16</td>
+            <td class="trend-cover">70.9%</td>
+            <td class="trend-games">55</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, after failing to cover, after their last game went under, after losing as the favorite</td>
+            <td class="trend-record">39-16</td>
+            <td class="trend-cover">70.9%</td>
+            <td class="trend-games">55</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, after their last game went under, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">21-7</td>
+            <td class="trend-cover">75.0%</td>
+            <td class="trend-games">28</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, after covering the spread, after their last game went under, with a near-.500 record, on a Tue</td>
+            <td class="trend-record">21-9</td>
+            <td class="trend-cover">70.0%</td>
+            <td class="trend-games">30</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, in May, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">15-5</td>
+            <td class="trend-cover">75.0%</td>
+            <td class="trend-games">20</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, after failing to cover, in May</td>
+            <td class="trend-record">42-20</td>
+            <td class="trend-cover">67.7%</td>
+            <td class="trend-games">62</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, after covering the spread, on a Tue</td>
+            <td class="trend-record">48-23</td>
+            <td class="trend-cover">67.6%</td>
+            <td class="trend-games">71</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, after covering the spread, on a Tue, playing on a weekday</td>
+            <td class="trend-record">48-23</td>
+            <td class="trend-cover">67.6%</td>
+            <td class="trend-games">71</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, after losing as the favorite</td>
+            <td class="trend-record">70-34</td>
+            <td class="trend-cover">67.3%</td>
+            <td class="trend-games">104</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, after failing to cover, after losing as the favorite</td>
+            <td class="trend-record">70-34</td>
+            <td class="trend-cover">67.3%</td>
+            <td class="trend-games">104</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Tampa Bay Rays at home, as the favorite, after their last game went under, in May, playing on a weekday</td>
+            <td class="trend-record">14-38</td>
+            <td class="trend-fade">73.1%</td>
+            <td class="trend-games">52</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Tampa Bay Rays at home, as the favorite, after their last game went over, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">24-57</td>
+            <td class="trend-fade">70.4%</td>
+            <td class="trend-games">81</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Toronto Blue Jays on the road, after failing to cover, after their last game went under, against a team with a winning record, in May</td>
+            <td class="ou-over">12O-2U (85.7%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, in May, after losing as the favorite</td>
+            <td class="ou-over">16O-3U (84.2%)</td>
+            <td class="trend-games">21</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Toronto Blue Jays on the road, as the underdog, after failing to cover, in May, after losing as the favorite</td>
+            <td class="ou-over">16O-3U (84.2%)</td>
+            <td class="trend-games">21</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815217" data-sport="mlb">
@@ -1560,21 +2381,16 @@
         </div>
         
         <div class="section betting-lines-full">
-            <div class="section-title">MATCHUP & BETTING</div>
+            <div class="section-title">MATCHUP (No Odds Available)</div>
             <table class="lines-table-full">
-                <thead>
-                    <tr><th class="team-col">TEAM</th><th>ML</th><th>O/U</th><th>SU</th><th>RL REC</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr>
-                </thead>
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/min.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">MIN</span>
                         </td>
-                        <td class="ml">-115</td>
-                        <td class="total">O 9.5</td>
                         <td class="su-record">15-20</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">4.7</td>
                         <td class="opp-ppg">4.9</td>
@@ -1585,10 +2401,7 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/wsh.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">WSH</span>
                         </td>
-                        <td class="ml">-105</td>
-                        <td class="total">U 9.5</td>
                         <td class="su-record">16-19</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">5.1</td>
                         <td class="opp-ppg">5.6</td>
@@ -1631,6 +2444,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">133 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Minnesota Twins on the road, after failing to cover, after their last game went over, in May</td>
+            <td class="trend-record">36-15</td>
+            <td class="trend-cover">70.6%</td>
+            <td class="trend-games">51</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Minnesota Twins on the road, as the underdog, after covering the spread, after their last game went over, in May</td>
+            <td class="trend-record">31-13</td>
+            <td class="trend-cover">70.5%</td>
+            <td class="trend-games">44</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Minnesota Twins on the road, as the underdog, after their last game went over, in May, playing on a weekday</td>
+            <td class="trend-record">28-10</td>
+            <td class="trend-cover">73.7%</td>
+            <td class="trend-games">38</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Minnesota Twins on the road, after their last game went over, in May, after winning as an underdog</td>
+            <td class="trend-record">21-8</td>
+            <td class="trend-cover">72.4%</td>
+            <td class="trend-games">29</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Minnesota Twins on the road, after covering the spread, after their last game went over, in May, after winning as an underdog</td>
+            <td class="trend-record">21-8</td>
+            <td class="trend-cover">72.4%</td>
+            <td class="trend-games">29</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Minnesota Twins on the road, as the underdog, after failing to cover, after their last game went under, with a losing record</td>
+            <td class="trend-record">58-25</td>
+            <td class="trend-cover">69.9%</td>
+            <td class="trend-games">83</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Minnesota Twins on the road, as the underdog, after their last game went over, in May</td>
+            <td class="trend-record">60-26</td>
+            <td class="trend-cover">69.8%</td>
+            <td class="trend-games">86</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Minnesota Twins on the road, after failing to cover, in May</td>
+            <td class="trend-record">57-25</td>
+            <td class="trend-cover">69.5%</td>
+            <td class="trend-games">82</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Minnesota Twins on the road, as the underdog, after failing to cover, in May</td>
+            <td class="trend-record">45-20</td>
+            <td class="trend-cover">69.2%</td>
+            <td class="trend-games">65</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Minnesota Twins on the road, as the underdog, with a losing record, on a Tue</td>
+            <td class="trend-record">39-18</td>
+            <td class="trend-cover">68.4%</td>
+            <td class="trend-games">57</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Washington Nationals at home, after failing to cover, after their last game went over, with a near-.500 record, playing on a weekday</td>
+            <td class="trend-record">21-44</td>
+            <td class="trend-fade">67.7%</td>
+            <td class="trend-games">65</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Washington Nationals at home, after failing to cover, after their last game went over, against a team with a losing record, playing on a weekday</td>
+            <td class="trend-record">15-30</td>
+            <td class="trend-fade">66.7%</td>
+            <td class="trend-games">45</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Washington Nationals at home, with a near-.500 record, on a Tue, after losing as the favorite</td>
+            <td class="ou-over">11O-3U (78.6%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Washington Nationals at home, after failing to cover, with a near-.500 record, on a Tue, after losing as the favorite</td>
+            <td class="ou-over">11O-3U (78.6%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Washington Nationals at home, with a near-.500 record, on a Tue, playing on a weekday, after losing as the favorite</td>
+            <td class="ou-over">11O-3U (78.6%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815218" data-sport="mlb">
@@ -1641,21 +2557,16 @@
         </div>
         
         <div class="section betting-lines-full">
-            <div class="section-title">MATCHUP & BETTING</div>
+            <div class="section-title">MATCHUP (No Odds Available)</div>
             <table class="lines-table-full">
-                <thead>
-                    <tr><th class="team-col">TEAM</th><th>ML</th><th>O/U</th><th>SU</th><th>RL REC</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr>
-                </thead>
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/tex.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">TEX</span>
                         </td>
-                        <td class="ml">+104</td>
-                        <td class="total">O 9.0</td>
                         <td class="su-record">16-18</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">3.7</td>
                         <td class="opp-ppg">3.8</td>
@@ -1666,10 +2577,7 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/nyy.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">NYY</span>
                         </td>
-                        <td class="ml">-126</td>
-                        <td class="total">U 9.0</td>
                         <td class="su-record">24-11</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">5.5</td>
                         <td class="opp-ppg">3.3</td>
@@ -1764,6 +2672,109 @@
             </tr></tbody>
             </table>
         </div>
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">102 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Texas Rangers on the road, after their last game went under, in May, after winning as an underdog</td>
+            <td class="trend-record">29-8</td>
+            <td class="trend-cover">78.4%</td>
+            <td class="trend-games">37</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Texas Rangers on the road, after covering the spread, after their last game went under, in May, after winning as an underdog</td>
+            <td class="trend-record">29-8</td>
+            <td class="trend-cover">78.4%</td>
+            <td class="trend-games">37</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Texas Rangers on the road, as the underdog, in May, after winning as an underdog</td>
+            <td class="trend-record">44-18</td>
+            <td class="trend-cover">71.0%</td>
+            <td class="trend-games">62</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Texas Rangers on the road, as the underdog, after covering the spread, in May, after winning as an underdog</td>
+            <td class="trend-record">44-18</td>
+            <td class="trend-cover">71.0%</td>
+            <td class="trend-games">62</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Texas Rangers on the road, as the underdog, after their last game went under, against a team with a winning record, after winning as an underdog</td>
+            <td class="trend-record">32-12</td>
+            <td class="trend-cover">72.7%</td>
+            <td class="trend-games">44</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Texas Rangers on the road, after their last game went under, against a team with a winning record, after winning as an underdog</td>
+            <td class="trend-record">34-15</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">49</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Texas Rangers on the road, as the underdog, after their last game went under, in May, playing on a weekday</td>
+            <td class="trend-record">34-15</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">49</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Texas Rangers on the road, after covering the spread, after their last game went under, against a team with a winning record, after winning as an underdog</td>
+            <td class="trend-record">34-15</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">49</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Texas Rangers on the road, as the underdog, after their last game went under, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">55-25</td>
+            <td class="trend-cover">68.8%</td>
+            <td class="trend-games">80</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Texas Rangers on the road, in May, after winning as an underdog</td>
+            <td class="trend-record">48-22</td>
+            <td class="trend-cover">68.6%</td>
+            <td class="trend-games">70</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Texas Rangers on the road, with a near-.500 record, against a team with a winning record, on a Tue</td>
+            <td class="trend-record">3-14</td>
+            <td class="trend-fade">82.4%</td>
+            <td class="trend-games">17</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Texas Rangers on the road, with a near-.500 record, against a team with a winning record, on a Tue, playing on a weekday</td>
+            <td class="trend-record">3-14</td>
+            <td class="trend-fade">82.4%</td>
+            <td class="trend-games">17</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Texas Rangers on the road, against a team with a winning record, in May, after winning as an underdog</td>
+            <td class="ou-under">4O-11U (26.7%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Texas Rangers on the road, after covering the spread, against a team with a winning record, in May, after winning as an underdog</td>
+            <td class="ou-under">4O-11U (26.7%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Texas Rangers on the road, after covering the spread, with a near-.500 record, against a team with a winning record, in May</td>
+            <td class="ou-under">5O-12U (29.4%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815220" data-sport="mlb">
@@ -1785,8 +2796,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/cin.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">CIN</span>
                         </td>
-                        <td class="ml">+141</td>
-                        <td class="total">O 8.0</td>
+                        <td class="ml">+183</td>
+                        <td class="total">O 11.5</td>
                         <td class="su-record">20-15</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -1799,8 +2810,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/chc.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">CHC</span>
                         </td>
-                        <td class="ml">-171</td>
-                        <td class="total">U 8.0</td>
+                        <td class="ml">-225</td>
+                        <td class="total">U 11.5</td>
                         <td class="su-record">23-12</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -1897,6 +2908,109 @@
             </tr></tbody>
             </table>
         </div>
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">220 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Cincinnati Reds on the road, as the underdog, after their last game went under, after losing as the favorite</td>
+            <td class="trend-record">34-9</td>
+            <td class="trend-cover">79.1%</td>
+            <td class="trend-games">43</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Cincinnati Reds on the road, as the underdog, after failing to cover, after their last game went under, after losing as the favorite</td>
+            <td class="trend-record">34-9</td>
+            <td class="trend-cover">79.1%</td>
+            <td class="trend-games">43</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Cincinnati Reds on the road, after failing to cover, after their last game went under, in May</td>
+            <td class="trend-record">34-11</td>
+            <td class="trend-cover">75.6%</td>
+            <td class="trend-games">45</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Cincinnati Reds on the road, as the underdog, after losing as the favorite</td>
+            <td class="trend-record">61-23</td>
+            <td class="trend-cover">72.6%</td>
+            <td class="trend-games">84</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Cincinnati Reds on the road, as the underdog, after failing to cover, after losing as the favorite</td>
+            <td class="trend-record">61-23</td>
+            <td class="trend-cover">72.6%</td>
+            <td class="trend-games">84</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Cincinnati Reds on the road, as the underdog, after their last game went under, on a Tue</td>
+            <td class="trend-record">43-19</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">62</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Cincinnati Reds on the road, as the underdog, after their last game went under, on a Tue, playing on a weekday</td>
+            <td class="trend-record">43-19</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">62</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Cincinnati Reds on the road, as the underdog, after their last game went over, with a winning record</td>
+            <td class="trend-record">46-21</td>
+            <td class="trend-cover">68.7%</td>
+            <td class="trend-games">67</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Cincinnati Reds on the road, as the underdog, after failing to cover, in May</td>
+            <td class="trend-record">52-24</td>
+            <td class="trend-cover">68.4%</td>
+            <td class="trend-games">76</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Cincinnati Reds on the road, as the underdog, after covering the spread, with a winning record</td>
+            <td class="trend-record">51-24</td>
+            <td class="trend-cover">68.0%</td>
+            <td class="trend-games">75</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Chicago Cubs at home, as the favorite, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">12-35</td>
+            <td class="trend-fade">74.5%</td>
+            <td class="trend-games">47</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Chicago Cubs at home, as the favorite, after covering the spread, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">12-35</td>
+            <td class="trend-fade">74.5%</td>
+            <td class="trend-games">47</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Chicago Cubs at home, with a winning record, on a Tue, after losing as the favorite</td>
+            <td class="ou-under">3O-12U (20.0%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Chicago Cubs at home, after failing to cover, with a winning record, on a Tue, after losing as the favorite</td>
+            <td class="ou-under">3O-12U (20.0%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Chicago Cubs at home, with a winning record, on a Tue, playing on a weekday, after losing as the favorite</td>
+            <td class="ou-under">3O-12U (20.0%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815221" data-sport="mlb">
@@ -1918,8 +3032,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/cle.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">CLE</span>
                         </td>
-                        <td class="ml">-118</td>
-                        <td class="total">O 7.5</td>
+                        <td class="ml">-102</td>
+                        <td class="total">O 9.0</td>
                         <td class="su-record">18-18</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -1932,8 +3046,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/kc.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">KC</span>
                         </td>
-                        <td class="ml">-102</td>
-                        <td class="total">U 7.5</td>
+                        <td class="ml">-118</td>
+                        <td class="total">U 9.0</td>
                         <td class="su-record">16-19</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2030,6 +3144,109 @@
             </tr></tbody>
             </table>
         </div>
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">135 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Kansas City Royals at home, as the underdog, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">37-14</td>
+            <td class="trend-cover">72.5%</td>
+            <td class="trend-games">51</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Kansas City Royals at home, as the underdog, after failing to cover, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">37-14</td>
+            <td class="trend-cover">72.5%</td>
+            <td class="trend-games">51</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Kansas City Royals at home, as the underdog, after their last game went over, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">19-7</td>
+            <td class="trend-cover">73.1%</td>
+            <td class="trend-games">26</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Kansas City Royals at home, as the underdog, after their last game went under, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">18-7</td>
+            <td class="trend-cover">72.0%</td>
+            <td class="trend-games">25</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Cleveland Guardians on the road, after failing to cover, after their last game went over, in May, playing on a weekday</td>
+            <td class="trend-record">18-7</td>
+            <td class="trend-cover">72.0%</td>
+            <td class="trend-games">25</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Kansas City Royals at home, as the underdog, after their last game went under, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">34-15</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">49</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Kansas City Royals at home, as the underdog, after covering the spread, after their last game went under, playing on a weekday</td>
+            <td class="trend-record">57-27</td>
+            <td class="trend-cover">67.9%</td>
+            <td class="trend-games">84</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Cleveland Guardians on the road, after failing to cover, in May, playing on a weekday</td>
+            <td class="trend-record">35-17</td>
+            <td class="trend-cover">67.3%</td>
+            <td class="trend-games">52</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Kansas City Royals at home, as the underdog, after their last game went under, after losing as the favorite</td>
+            <td class="trend-record">30-14</td>
+            <td class="trend-cover">68.2%</td>
+            <td class="trend-games">44</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Kansas City Royals at home, as the underdog, after failing to cover, after their last game went under, after losing as the favorite</td>
+            <td class="trend-record">30-14</td>
+            <td class="trend-cover">68.2%</td>
+            <td class="trend-games">44</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Kansas City Royals at home, with a near-.500 record, on a Tue</td>
+            <td class="trend-record">18-45</td>
+            <td class="trend-fade">71.4%</td>
+            <td class="trend-games">63</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Kansas City Royals at home, with a near-.500 record, on a Tue, playing on a weekday</td>
+            <td class="trend-record">18-45</td>
+            <td class="trend-fade">71.4%</td>
+            <td class="trend-games">63</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Kansas City Royals at home, as the underdog, after their last game went under, in May, playing on a weekday</td>
+            <td class="ou-over">14O-3U (82.4%)</td>
+            <td class="trend-games">19</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Kansas City Royals at home, after their last game went over, in May, after winning as an underdog</td>
+            <td class="ou-under">4O-14U (22.2%)</td>
+            <td class="trend-games">18</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Kansas City Royals at home, after covering the spread, after their last game went over, in May, after winning as an underdog</td>
+            <td class="ou-under">4O-14U (22.2%)</td>
+            <td class="trend-games">18</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815223" data-sport="mlb">
@@ -2051,8 +3268,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/mil.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">MIL</span>
                         </td>
-                        <td class="ml">-108</td>
-                        <td class="total">O 7.5</td>
+                        <td class="ml">-126</td>
+                        <td class="total">O 9.0</td>
                         <td class="su-record">18-16</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2065,8 +3282,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/stl.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">STL</span>
                         </td>
-                        <td class="ml">-112</td>
-                        <td class="total">U 7.5</td>
+                        <td class="ml">+105</td>
+                        <td class="total">U 9.0</td>
                         <td class="su-record">21-14</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2111,6 +3328,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">205 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Milwaukee Brewers on the road, after covering the spread, after their last game went under, against a team with a winning record, in May</td>
+            <td class="trend-record">19-8</td>
+            <td class="trend-cover">70.4%</td>
+            <td class="trend-games">27</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Milwaukee Brewers on the road, after their last game went under, against a team with a winning record, in May, playing on a weekday</td>
+            <td class="trend-record">19-8</td>
+            <td class="trend-cover">70.4%</td>
+            <td class="trend-games">27</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Milwaukee Brewers on the road, against a team with a winning record, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">17-6</td>
+            <td class="trend-cover">73.9%</td>
+            <td class="trend-games">23</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Milwaukee Brewers on the road, after failing to cover, against a team with a winning record, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">17-6</td>
+            <td class="trend-cover">73.9%</td>
+            <td class="trend-games">23</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Milwaukee Brewers on the road, after their last game went under, against a team with a winning record, after losing as the favorite</td>
+            <td class="trend-record">15-5</td>
+            <td class="trend-cover">75.0%</td>
+            <td class="trend-games">20</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Milwaukee Brewers on the road, after failing to cover, after their last game went under, against a team with a winning record, playing on a weekday</td>
+            <td class="trend-record">35-16</td>
+            <td class="trend-cover">68.6%</td>
+            <td class="trend-games">51</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">St. Louis Cardinals at home, as the underdog, after covering the spread, playing on a weekday</td>
+            <td class="trend-record">40-19</td>
+            <td class="trend-cover">67.8%</td>
+            <td class="trend-games">59</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">St. Louis Cardinals at home, as the underdog, after their last game went under, playing on a weekday</td>
+            <td class="trend-record">46-25</td>
+            <td class="trend-cover">64.8%</td>
+            <td class="trend-games">71</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">St. Louis Cardinals at home, as the underdog, playing on a weekday</td>
+            <td class="trend-record">83-46</td>
+            <td class="trend-cover">64.3%</td>
+            <td class="trend-games">129</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">St. Louis Cardinals at home, as the underdog, after covering the spread, after their last game went over</td>
+            <td class="trend-record">32-18</td>
+            <td class="trend-cover">64.0%</td>
+            <td class="trend-games">50</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Milwaukee Brewers on the road, as the favorite, in May</td>
+            <td class="trend-record">18-54</td>
+            <td class="trend-fade">75.0%</td>
+            <td class="trend-games">72</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Milwaukee Brewers on the road, as the favorite, after their last game went over, in May</td>
+            <td class="trend-record">10-34</td>
+            <td class="trend-fade">77.3%</td>
+            <td class="trend-games">44</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Milwaukee Brewers on the road, after covering the spread, after their last game went over, with a near-.500 record, in May</td>
+            <td class="ou-under">2O-13U (13.3%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">St. Louis Cardinals at home, as the underdog, after their last game went under, in May</td>
+            <td class="ou-over">11O-2U (84.6%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Milwaukee Brewers on the road, after failing to cover, against a team with a winning record, on a Tue</td>
+            <td class="ou-under">4O-20U (16.7%)</td>
+            <td class="trend-games">25</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815222" data-sport="mlb">
@@ -2132,8 +3452,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/lad.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">LAD</span>
                         </td>
-                        <td class="ml">-232</td>
-                        <td class="total">O 8.5</td>
+                        <td class="ml">-199</td>
+                        <td class="total">O 9.0</td>
                         <td class="su-record">22-13</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2146,8 +3466,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/hou.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">HOU</span>
                         </td>
-                        <td class="ml">+189</td>
-                        <td class="total">U 8.5</td>
+                        <td class="ml">+163</td>
+                        <td class="total">U 9.0</td>
                         <td class="su-record">14-22</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2192,6 +3512,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">148 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Houston Astros at home, as the underdog, after their last game went under, in May</td>
+            <td class="trend-record">28-11</td>
+            <td class="trend-cover">71.8%</td>
+            <td class="trend-games">39</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Houston Astros at home, as the underdog, after their last game went under, with a losing record, in May</td>
+            <td class="trend-record">24-8</td>
+            <td class="trend-cover">75.0%</td>
+            <td class="trend-games">32</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Houston Astros at home, as the underdog, in May, playing on a weekday</td>
+            <td class="trend-record">25-10</td>
+            <td class="trend-cover">71.4%</td>
+            <td class="trend-games">35</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Houston Astros at home, as the underdog, after failing to cover, in May</td>
+            <td class="trend-record">23-9</td>
+            <td class="trend-cover">71.9%</td>
+            <td class="trend-games">32</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Houston Astros at home, as the underdog, with a losing record, in May, playing on a weekday</td>
+            <td class="trend-record">21-7</td>
+            <td class="trend-cover">75.0%</td>
+            <td class="trend-games">28</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Los Angeles Dodgers on the road, after failing to cover, after their last game went under, in May</td>
+            <td class="trend-record">39-17</td>
+            <td class="trend-cover">69.6%</td>
+            <td class="trend-games">56</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Los Angeles Dodgers on the road, after their last game went under, in May, playing on a weekday</td>
+            <td class="trend-record">32-15</td>
+            <td class="trend-cover">68.1%</td>
+            <td class="trend-games">47</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Houston Astros at home, after failing to cover, after their last game went under, with a losing record, playing on a weekday</td>
+            <td class="trend-record">46-23</td>
+            <td class="trend-cover">66.7%</td>
+            <td class="trend-games">69</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Los Angeles Dodgers on the road, after their last game went under, in May</td>
+            <td class="trend-record">70-36</td>
+            <td class="trend-cover">66.0%</td>
+            <td class="trend-games">106</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Los Angeles Dodgers on the road, after failing to cover, with a winning record, in May</td>
+            <td class="trend-record">34-18</td>
+            <td class="trend-cover">65.4%</td>
+            <td class="trend-games">52</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Los Angeles Dodgers on the road, after their last game went over, against a team with a losing record, in May</td>
+            <td class="trend-record">11-31</td>
+            <td class="trend-fade">73.8%</td>
+            <td class="trend-games">42</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Los Angeles Dodgers on the road, as the favorite, after their last game went under, with a winning record, on a Tue</td>
+            <td class="trend-record">19-37</td>
+            <td class="trend-fade">66.1%</td>
+            <td class="trend-games">56</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Los Angeles Dodgers on the road, after their last game went under, against a team with a losing record, in May, after losing as the favorite</td>
+            <td class="ou-over">13O-3U (81.2%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Los Angeles Dodgers on the road, after failing to cover, after their last game went under, against a team with a losing record, in May</td>
+            <td class="ou-over">16O-4U (80.0%)</td>
+            <td class="trend-games">21</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Los Angeles Dodgers on the road, on a Tue, after winning as an underdog</td>
+            <td class="ou-over">18O-5U (78.3%)</td>
+            <td class="trend-games">23</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815224" data-sport="mlb">
@@ -2213,8 +3636,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/nym.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">NYM</span>
                         </td>
-                        <td class="ml">-163</td>
-                        <td class="total">O 9.5</td>
+                        <td class="ml">-149</td>
+                        <td class="total">O 10.5</td>
                         <td class="su-record">13-22</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2227,8 +3650,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/col.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">COL</span>
                         </td>
-                        <td class="ml">+135</td>
-                        <td class="total">U 9.5</td>
+                        <td class="ml">+123</td>
+                        <td class="total">U 10.5</td>
                         <td class="su-record">14-22</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2273,6 +3696,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">186 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">New York Mets on the road, in May, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">20-7</td>
+            <td class="trend-cover">74.1%</td>
+            <td class="trend-games">27</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">New York Mets on the road, after covering the spread, in May, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">20-7</td>
+            <td class="trend-cover">74.1%</td>
+            <td class="trend-games">27</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">New York Mets on the road, after covering the spread, after their last game went under, in May, playing on a weekday</td>
+            <td class="trend-record">20-8</td>
+            <td class="trend-cover">71.4%</td>
+            <td class="trend-games">28</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Colorado Rockies at home, after covering the spread, after their last game went under, with a losing record, against a team with a losing record</td>
+            <td class="trend-record">18-7</td>
+            <td class="trend-cover">72.0%</td>
+            <td class="trend-games">25</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">New York Mets on the road, after their last game went under, against a team with a losing record, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">15-5</td>
+            <td class="trend-cover">75.0%</td>
+            <td class="trend-games">20</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">New York Mets on the road, after covering the spread, after their last game went under, against a team with a losing record, playing on a weekday</td>
+            <td class="trend-record">32-15</td>
+            <td class="trend-cover">68.1%</td>
+            <td class="trend-games">47</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">New York Mets on the road, after their last game went under, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">47-25</td>
+            <td class="trend-cover">65.3%</td>
+            <td class="trend-games">72</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">New York Mets on the road, after covering the spread, after their last game went under, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">47-25</td>
+            <td class="trend-cover">65.3%</td>
+            <td class="trend-games">72</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">New York Mets on the road, after covering the spread, after their last game went over, with a losing record</td>
+            <td class="trend-record">30-15</td>
+            <td class="trend-cover">66.7%</td>
+            <td class="trend-games">45</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">New York Mets on the road, after their last game went under, in May, playing on a weekday</td>
+            <td class="trend-record">35-19</td>
+            <td class="trend-cover">64.8%</td>
+            <td class="trend-games">54</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">New York Mets on the road, as the favorite, in May</td>
+            <td class="trend-record">20-46</td>
+            <td class="trend-fade">69.7%</td>
+            <td class="trend-games">66</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Colorado Rockies at home, after failing to cover, after their last game went under, against a team with a losing record, playing on a weekday</td>
+            <td class="trend-record">17-33</td>
+            <td class="trend-fade">66.0%</td>
+            <td class="trend-games">50</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">New York Mets on the road, as the favorite, after their last game went under, with a losing record, playing on a weekday</td>
+            <td class="ou-over">11O-2U (84.6%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">New York Mets on the road, after their last game went over, in May, playing on a weekday, after winning as an underdog</td>
+            <td class="ou-over">14O-3U (82.4%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Colorado Rockies at home, after covering the spread, after their last game went under, with a losing record, in May</td>
+            <td class="ou-over">14O-3U (82.4%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815226" data-sport="mlb">
@@ -2294,8 +3820,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/chw.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">CHW</span>
                         </td>
-                        <td class="ml">-105</td>
-                        <td class="total">O 9.0</td>
+                        <td class="ml">+133</td>
+                        <td class="total">O 7.5</td>
                         <td class="su-record">17-18</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2308,8 +3834,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/laa.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">LAA</span>
                         </td>
-                        <td class="ml">-115</td>
-                        <td class="total">U 9.0</td>
+                        <td class="ml">-161</td>
+                        <td class="total">U 7.5</td>
                         <td class="su-record">13-23</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2406,6 +3932,103 @@
             </tr></tbody>
             </table>
         </div>
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">115 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Chicago White Sox on the road, as the underdog, after their last game went over, with a near-.500 record, after winning as an underdog</td>
+            <td class="trend-record">40-13</td>
+            <td class="trend-cover">75.5%</td>
+            <td class="trend-games">53</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Chicago White Sox on the road, as the underdog, after covering the spread, with a near-.500 record, against a team with a losing record</td>
+            <td class="trend-record">37-15</td>
+            <td class="trend-cover">71.2%</td>
+            <td class="trend-games">52</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Chicago White Sox on the road, as the underdog, after their last game went under, with a near-.500 record, against a team with a losing record</td>
+            <td class="trend-record">31-13</td>
+            <td class="trend-cover">70.5%</td>
+            <td class="trend-games">44</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Chicago White Sox on the road, in May, on a Tue</td>
+            <td class="trend-record">28-10</td>
+            <td class="trend-cover">73.7%</td>
+            <td class="trend-games">38</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Chicago White Sox on the road, in May, on a Tue, playing on a weekday</td>
+            <td class="trend-record">28-10</td>
+            <td class="trend-cover">73.7%</td>
+            <td class="trend-games">38</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Chicago White Sox on the road, after their last game went over, with a near-.500 record, after winning as an underdog</td>
+            <td class="trend-record">43-19</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">62</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Chicago White Sox on the road, after covering the spread, after their last game went over, with a near-.500 record, after winning as an underdog</td>
+            <td class="trend-record">43-19</td>
+            <td class="trend-cover">69.4%</td>
+            <td class="trend-games">62</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Chicago White Sox on the road, after failing to cover, in May, playing on a weekday</td>
+            <td class="trend-record">38-18</td>
+            <td class="trend-cover">67.9%</td>
+            <td class="trend-games">56</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Chicago White Sox on the road, as the underdog, against a team with a losing record, after winning as an underdog</td>
+            <td class="trend-record">45-22</td>
+            <td class="trend-cover">67.2%</td>
+            <td class="trend-games">67</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Chicago White Sox on the road, as the underdog, after covering the spread, against a team with a losing record, after winning as an underdog</td>
+            <td class="trend-record">45-22</td>
+            <td class="trend-cover">67.2%</td>
+            <td class="trend-games">67</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Chicago White Sox on the road, as the underdog, after their last game went over, with a near-.500 record, after losing as the favorite</td>
+            <td class="trend-record">7-13</td>
+            <td class="trend-fade">65.0%</td>
+            <td class="trend-games">20</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Chicago White Sox on the road, after their last game went over, against a team with a losing record, playing on a weekday, after winning as an underdog</td>
+            <td class="ou-over">15O-4U (78.9%)</td>
+            <td class="trend-games">19</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Chicago White Sox on the road, after their last game went over, with a near-.500 record, against a team with a losing record, after winning as an underdog</td>
+            <td class="ou-over">14O-4U (77.8%)</td>
+            <td class="trend-games">19</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Chicago White Sox on the road, with a near-.500 record, against a team with a losing record, playing on a weekday, after winning as an underdog</td>
+            <td class="ou-over">15O-6U (71.4%)</td>
+            <td class="trend-games">21</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815225" data-sport="mlb">
@@ -2427,8 +4050,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/atl.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">ATL</span>
                         </td>
-                        <td class="ml">+109</td>
-                        <td class="total">O 7.5</td>
+                        <td class="ml">+119</td>
+                        <td class="total">O 8.0</td>
                         <td class="su-record">25-11</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2441,8 +4064,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/sea.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">SEA</span>
                         </td>
-                        <td class="ml">-131</td>
-                        <td class="total">U 7.5</td>
+                        <td class="ml">-143</td>
+                        <td class="total">U 8.0</td>
                         <td class="su-record">17-19</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2487,6 +4110,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">223 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Atlanta Braves on the road, as the underdog, after their last game went over, in May, after winning as an underdog</td>
+            <td class="trend-record">12-4</td>
+            <td class="trend-cover">75.0%</td>
+            <td class="trend-games">16</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Atlanta Braves on the road, after their last game went over, in May, after winning as an underdog</td>
+            <td class="trend-record">13-5</td>
+            <td class="trend-cover">72.2%</td>
+            <td class="trend-games">18</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Atlanta Braves on the road, as the underdog, with a winning record, in May, after winning as an underdog</td>
+            <td class="trend-record">13-5</td>
+            <td class="trend-cover">72.2%</td>
+            <td class="trend-games">18</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Atlanta Braves on the road, after covering the spread, after their last game went over, in May, after winning as an underdog</td>
+            <td class="trend-record">13-5</td>
+            <td class="trend-cover">72.2%</td>
+            <td class="trend-games">18</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Seattle Mariners at home, against a team with a winning record, on a Tue, after losing as the favorite</td>
+            <td class="trend-record">12-5</td>
+            <td class="trend-cover">70.6%</td>
+            <td class="trend-games">17</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Atlanta Braves on the road, as the underdog, after their last game went over, after winning as an underdog</td>
+            <td class="trend-record">64-29</td>
+            <td class="trend-cover">68.8%</td>
+            <td class="trend-games">93</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Atlanta Braves on the road, as the underdog, after covering the spread, after their last game went over, after winning as an underdog</td>
+            <td class="trend-record">64-29</td>
+            <td class="trend-cover">68.8%</td>
+            <td class="trend-games">93</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Atlanta Braves on the road, after covering the spread, after their last game went over, in May</td>
+            <td class="trend-record">31-15</td>
+            <td class="trend-cover">67.4%</td>
+            <td class="trend-games">46</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Atlanta Braves on the road, as the underdog, after winning as an underdog</td>
+            <td class="trend-record">132-68</td>
+            <td class="trend-cover">66.0%</td>
+            <td class="trend-games">200</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Atlanta Braves on the road, as the underdog, after covering the spread, after winning as an underdog</td>
+            <td class="trend-record">132-68</td>
+            <td class="trend-cover">66.0%</td>
+            <td class="trend-games">200</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Seattle Mariners at home, as the favorite, after their last game went over, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">17-49</td>
+            <td class="trend-fade">74.2%</td>
+            <td class="trend-games">66</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Seattle Mariners at home, as the favorite, after failing to cover, after their last game went over, against a team with a winning record</td>
+            <td class="trend-record">10-34</td>
+            <td class="trend-fade">77.3%</td>
+            <td class="trend-games">44</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Atlanta Braves on the road, after their last game went under, in May, on a Tue</td>
+            <td class="ou-under">3O-16U (15.8%)</td>
+            <td class="trend-games">20</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Atlanta Braves on the road, after their last game went under, in May, on a Tue, playing on a weekday</td>
+            <td class="ou-under">3O-16U (15.8%)</td>
+            <td class="trend-games">20</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Seattle Mariners at home, after their last game went under, in May, playing on a weekday, after losing as the favorite</td>
+            <td class="ou-under">2O-9U (18.2%)</td>
+            <td class="trend-games">15</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815227" data-sport="mlb">
@@ -2497,21 +4223,16 @@
         </div>
         
         <div class="section betting-lines-full">
-            <div class="section-title">MATCHUP & BETTING</div>
+            <div class="section-title">MATCHUP (No Odds Available)</div>
             <table class="lines-table-full">
-                <thead>
-                    <tr><th class="team-col">TEAM</th><th>ML</th><th>O/U</th><th>SU</th><th>RL REC</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr>
-                </thead>
+                <thead><tr><th class="team-col">TEAM</th><th>SU</th><th>O/U REC</th><th>R/G</th><th>RA</th><th>PWR</th></tr></thead>
                 <tbody>
                     <tr class="away-row">
                         <td class="team-col">
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/pit.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">PIT</span>
                         </td>
-                        <td class="ml">+119</td>
-                        <td class="total">O 9.0</td>
                         <td class="su-record">19-16</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">5.1</td>
                         <td class="opp-ppg">4.3</td>
@@ -2522,10 +4243,7 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/ari.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">ARI</span>
                         </td>
-                        <td class="ml">-143</td>
-                        <td class="total">U 9.0</td>
                         <td class="su-record">16-17</td>
-                        <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
                         <td class="ppg">4.5</td>
                         <td class="opp-ppg">5.5</td>
@@ -2568,6 +4286,109 @@
             </div>
         </div>
         
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">77 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Arizona Diamondbacks at home, after their last game went over, on a Tue, after losing as the favorite</td>
+            <td class="trend-record">18-7</td>
+            <td class="trend-cover">72.0%</td>
+            <td class="trend-games">25</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Arizona Diamondbacks at home, after failing to cover, after their last game went over, on a Tue, after losing as the favorite</td>
+            <td class="trend-record">18-7</td>
+            <td class="trend-cover">72.0%</td>
+            <td class="trend-games">25</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Arizona Diamondbacks at home, after their last game went over, on a Tue, playing on a weekday, after losing as the favorite</td>
+            <td class="trend-record">18-7</td>
+            <td class="trend-cover">72.0%</td>
+            <td class="trend-games">25</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Arizona Diamondbacks at home, after failing to cover, after their last game went over, with a near-.500 record, on a Tue</td>
+            <td class="trend-record">15-5</td>
+            <td class="trend-cover">75.0%</td>
+            <td class="trend-games">20</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">Arizona Diamondbacks at home, as the underdog, after failing to cover, with a near-.500 record, on a Tue</td>
+            <td class="trend-record">11-4</td>
+            <td class="trend-cover">73.3%</td>
+            <td class="trend-games">15</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Pittsburgh Pirates on the road, on a Tue, after winning as an underdog</td>
+            <td class="trend-record">34-20</td>
+            <td class="trend-cover">63.0%</td>
+            <td class="trend-games">54</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Pittsburgh Pirates on the road, after covering the spread, on a Tue, after winning as an underdog</td>
+            <td class="trend-record">34-20</td>
+            <td class="trend-cover">63.0%</td>
+            <td class="trend-games">54</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Pittsburgh Pirates on the road, on a Tue, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">34-20</td>
+            <td class="trend-cover">63.0%</td>
+            <td class="trend-games">54</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Arizona Diamondbacks at home, as the underdog, after failing to cover, on a Tue</td>
+            <td class="trend-record">26-15</td>
+            <td class="trend-cover">63.4%</td>
+            <td class="trend-games">41</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">Pittsburgh Pirates on the road, after their last game went over, on a Tue, after winning as an underdog</td>
+            <td class="trend-record">18-11</td>
+            <td class="trend-cover">62.1%</td>
+            <td class="trend-games">29</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Arizona Diamondbacks at home, after their last game went over, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">18-35</td>
+            <td class="trend-fade">66.0%</td>
+            <td class="trend-games">53</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">Arizona Diamondbacks at home, after covering the spread, after their last game went over, playing on a weekday, after winning as an underdog</td>
+            <td class="trend-record">18-35</td>
+            <td class="trend-fade">66.0%</td>
+            <td class="trend-games">53</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">Pittsburgh Pirates on the road, after their last game went over, in May, on a Tue</td>
+            <td class="ou-under">1O-15U (6.2%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Pittsburgh Pirates on the road, after their last game went over, in May, on a Tue, playing on a weekday</td>
+            <td class="ou-under">1O-15U (6.2%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">Arizona Diamondbacks at home, after their last game went over, in May, on a Tue</td>
+            <td class="ou-under">3O-13U (18.8%)</td>
+            <td class="trend-games">17</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
     <div class="game-card" data-event-id="401815228" data-sport="mlb">
@@ -2589,8 +4410,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/sd.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">SD</span>
                         </td>
-                        <td class="ml">+109</td>
-                        <td class="total">O 7.5</td>
+                        <td class="ml">-130</td>
+                        <td class="total">O 8.0</td>
                         <td class="su-record">20-14</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2603,8 +4424,8 @@
                             <img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/sf.png" class="team-logo" onerror="this.style.display='none'">
                             <span class="team-name">SF</span>
                         </td>
-                        <td class="ml">-131</td>
-                        <td class="total">U 7.5</td>
+                        <td class="ml">+108</td>
+                        <td class="total">U 8.0</td>
                         <td class="su-record">14-21</td>
                         <td class="ats-record stat-na">—</td>
                         <td class="ou-record stat-na">—</td>
@@ -2701,6 +4522,109 @@
             </tr></tbody>
             </table>
         </div>
+    
+    <div class="section trends-section">
+        <div class="section-title">HISTORICAL TRENDS <span class="trends-badge">195 found</span></div>
+        <table class="trends-table">
+            <thead><tr><th>TIER</th><th>SITUATION</th><th>ATS</th><th>HIT%</th><th>GAMES</th></tr></thead>
+            <tbody><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">San Francisco Giants at home, as the underdog, with a losing record, on a Tue</td>
+            <td class="trend-record">17-3</td>
+            <td class="trend-cover">85.0%</td>
+            <td class="trend-games">20</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">San Francisco Giants at home, as the underdog, with a losing record, on a Tue, playing on a weekday</td>
+            <td class="trend-record">17-3</td>
+            <td class="trend-cover">85.0%</td>
+            <td class="trend-games">20</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">San Francisco Giants at home, as the underdog, after covering the spread, on a Tue</td>
+            <td class="trend-record">19-7</td>
+            <td class="trend-cover">73.1%</td>
+            <td class="trend-games">26</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">San Francisco Giants at home, as the underdog, after covering the spread, on a Tue, playing on a weekday</td>
+            <td class="trend-record">19-7</td>
+            <td class="trend-cover">73.1%</td>
+            <td class="trend-games">26</td>
+        </tr><tr class="tier-monster">
+            <td class="trend-tier">MONSTER</td>
+            <td class="trend-desc">San Francisco Giants at home, as the underdog, after their last game went over, on a Tue</td>
+            <td class="trend-record">16-5</td>
+            <td class="trend-cover">76.2%</td>
+            <td class="trend-games">21</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">San Diego Padres on the road, after failing to cover, after their last game went over, in May</td>
+            <td class="trend-record">33-15</td>
+            <td class="trend-cover">68.8%</td>
+            <td class="trend-games">48</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">San Francisco Giants at home, as the underdog, on a Tue</td>
+            <td class="trend-record">36-17</td>
+            <td class="trend-cover">67.9%</td>
+            <td class="trend-games">53</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">San Francisco Giants at home, as the underdog, on a Tue, playing on a weekday</td>
+            <td class="trend-record">36-17</td>
+            <td class="trend-cover">67.9%</td>
+            <td class="trend-games">53</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">San Diego Padres on the road, after failing to cover, after their last game went over, on a Tue</td>
+            <td class="trend-record">31-16</td>
+            <td class="trend-cover">66.0%</td>
+            <td class="trend-games">47</td>
+        </tr><tr class="tier-hot">
+            <td class="trend-tier">HOT</td>
+            <td class="trend-desc">San Diego Padres on the road, after failing to cover, after their last game went over, on a Tue, playing on a weekday</td>
+            <td class="trend-record">31-16</td>
+            <td class="trend-cover">66.0%</td>
+            <td class="trend-games">47</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">San Diego Padres on the road, against a team with a losing record, on a Tue</td>
+            <td class="trend-record">16-34</td>
+            <td class="trend-fade">68.0%</td>
+            <td class="trend-games">50</td>
+        </tr><tr class="tier-fade">
+            <td class="trend-tier">FADE</td>
+            <td class="trend-desc">San Diego Padres on the road, against a team with a losing record, on a Tue, playing on a weekday</td>
+            <td class="trend-record">16-34</td>
+            <td class="trend-fade">68.0%</td>
+            <td class="trend-games">50</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="trends-ou">
+            <div class="trends-subtitle">O/U TRENDS</div>
+            <table class="trends-table trends-ou-table">
+                <thead><tr><th>SITUATION</th><th>RECORD</th><th>GAMES</th><th>LEAN</th></tr></thead>
+                <tbody><tr>
+            <td class="trend-desc">San Francisco Giants at home, after covering the spread, after their last game went over, with a losing record, playing on a weekday</td>
+            <td class="ou-under">3O-13U (18.8%)</td>
+            <td class="trend-games">19</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">San Francisco Giants at home, as the underdog, after their last game went under, in May, playing on a weekday</td>
+            <td class="ou-under">3O-13U (18.8%)</td>
+            <td class="trend-games">16</td>
+            <td class="ou-under"><strong>UNDER</strong></td>
+        </tr><tr>
+            <td class="trend-desc">San Diego Padres on the road, after covering the spread, after their last game went under, with a winning record, against a team with a losing record</td>
+            <td class="ou-over">16O-4U (80.0%)</td>
+            <td class="trend-games">22</td>
+            <td class="ou-over"><strong>OVER</strong></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
     </div>
     
             </div>
@@ -2727,7 +4651,7 @@
             });
         });
         // Calendar
-        const archiveDates = ["2025-11-30", "2025-12-01", "2025-12-02", "2025-12-03", "2025-12-04", "2025-12-05", "2025-12-06", "2025-12-07", "2025-12-08", "2025-12-09", "2025-12-10", "2025-12-11", "2025-12-12", "2025-12-13", "2025-12-14", "2025-12-15", "2025-12-16", "2025-12-17", "2025-12-18", "2025-12-19", "2025-12-20", "2025-12-21", "2025-12-22", "2025-12-23", "2025-12-24", "2025-12-25", "2025-12-26", "2025-12-27", "2025-12-28", "2025-12-29", "2025-12-30", "2025-12-31", "2026-01-01", "2026-01-02", "2026-01-03", "2026-01-04", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-11", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-18", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-21", "2026-03-22", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-28", "2026-03-29", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-04", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-26", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-05"];
+        const archiveDates = ["2025-11-30", "2025-12-01", "2025-12-02", "2025-12-03", "2025-12-04", "2025-12-05", "2025-12-06", "2025-12-07", "2025-12-08", "2025-12-09", "2025-12-10", "2025-12-11", "2025-12-12", "2025-12-13", "2025-12-14", "2025-12-15", "2025-12-16", "2025-12-17", "2025-12-18", "2025-12-19", "2025-12-20", "2025-12-21", "2025-12-22", "2025-12-23", "2025-12-24", "2025-12-25", "2025-12-26", "2025-12-27", "2025-12-28", "2025-12-29", "2025-12-30", "2025-12-31", "2026-01-01", "2026-01-02", "2026-01-03", "2026-01-04", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-11", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-18", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-21", "2026-03-22", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-28", "2026-03-29", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-04", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-26", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05"];
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         function renderCalendar() {
