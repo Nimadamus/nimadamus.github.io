@@ -24,6 +24,22 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Sabres/Canadiens Under 6.5 Game 1 Second Round 3u",
+        date: "May 6, 2026",
+        result: "",
+        url: "sabres-canadiens-under-6-5-game-1-second-round-keybank-center-nhl-pick.html",
+        image: "images/sabres-canadiens-under-6-5-game-1-second-round-keybank-center-nhl-pick.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Athletics ML +156 vs Phillies Citizens Bank Park 2u",
+        date: "May 6, 2026",
+        result: "",
+        url: "athletics-moneyline-plus-156-phillies-springs-wheeler-citizens-bank-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/667670/action/hero/current"
+    },
+    {
+        sport: "NHL",
         title: "Wild/Avalanche Over 6.5 Game 2 Ball Arena 2u",
         date: "May 5, 2026",
         result: "",
