@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-06", page: "knicks-host-sixers-spurs-host-wolves-conference-semis-nba.html", title: "NBA Analysis - May 06, 2026" },
+    { date: "2026-05-06", page: "nba-previews.html", title: "NBA Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-05-05", page: "lakers-thunder-cavaliers-pistons-conference-semis-open-nba.html", title: "NBA Analysis - May 05, 2026" },
     { date: "2026-05-04", page: "76ers-knicks-spurs-wolves-east-west-semis-open-nba.html", title: "NBA Analysis - May 04, 2026" },
     { date: "2026-05-04", page: "knicks-76ers-under-213-game-1-second-round-madison-square-garden-nba-pick.html", title: "Knicks/76ers Under 213 Game 1 NBA Free Pick" },
