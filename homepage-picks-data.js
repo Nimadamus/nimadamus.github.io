@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NHL",
+        title: "Hurricanes/Flyers Under 5.5 Game 3 Xfinity Mobile Arena 3u",
+        date: "May 7, 2026",
+        result: "",
+        url: "hurricanes-flyers-game-3-under-5-5-andersen-vladar-xfinity-mobile-arena-nhl-pick.html",
+        image: "images/hurricanes-flyers-game-3-under-5-5-andersen-vladar-xfinity-mobile-arena-nhl-pick.jpg"
+    },
+    {
+        sport: "NHL",
         title: "Sabres/Canadiens Under 6.5 Game 1 Second Round 3u",
         date: "May 6, 2026",
         result: "",
