@@ -581,5 +581,13 @@ var HOMEPAGE_PICKS = [
         result: "W",
         url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlx0hqpifhq8kfmt1y9x"
+    },
+    {
+        sport: "NHL",
+        title: "Kings vs Canadiens Team Total Under 3.5 (-160) 3u",
+        date: "March 7, 2026",
+        result: "",
+        url: "kings-team-total-under-nhl-pick.html",
+        image: "images/kings-team-total-under-nhl-pick.png"
     }
 ];
