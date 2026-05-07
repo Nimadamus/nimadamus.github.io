@@ -23,6 +23,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Rangers Team Total Over 3.5 at Yankees Yankee Stadium 3u",
+        date: "May 7, 2026",
+        result: "",
+        url: "rangers-team-total-over-3-5-yankees-warren-eovaldi-yankee-stadium-mlb-pick.html",
+        image: "images/rangers-team-total-over-3-5-yankees-warren-eovaldi-yankee-stadium-mlb-pick.jpg"
+    },
+    {
         sport: "NHL",
         title: "Hurricanes/Flyers Under 5.5 Game 3 Xfinity Mobile Arena 3u",
         date: "May 7, 2026",
