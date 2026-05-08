@@ -23,6 +23,22 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Ducks/Golden Knights Game 3 Under 6.5 Honda Center 2.5u",
+        date: "May 8, 2026",
+        result: "",
+        url: "ducks-golden-knights-game-3-under-6-5-honda-center-stanley-cup-playoffs-nhl-pick.html",
+        image: "images/ducks-golden-knights-game-3-under-6-5-honda-center-stanley-cup-playoffs-nhl-pick.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Royals Team Total Under 4.5 vs Tigers Kauffman Stadium 3u",
+        date: "May 8, 2026",
+        result: "",
+        url: "royals-team-total-under-4-5-tigers-montero-bubic-strike-throwers-kauffman-stadium-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/677951/action/hero/current"
+    },
+    {
         sport: "MLB",
         title: "Rangers Team Total Over 3.5 at Yankees Yankee Stadium 3u",
         date: "May 7, 2026",
