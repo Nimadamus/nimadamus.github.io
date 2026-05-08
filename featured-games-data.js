@@ -166,6 +166,7 @@ const FEATURED_GAMES = [
     { date: "2026-05-05", page: "lakers-vs-thunder-western-semis-game-1-analysis-stats-preview.html", title: "Lakers vs Thunder Game 1 Analysis" },
     { date: "2026-05-06", page: "bayern-vs-psg-ucl-semifinal-second-leg-allianz-arena-analysis-stats-preview.html", title: "Bayern vs PSG UCL Semifinal Leg 2" },
     { date: "2026-05-07", page: "lakers-vs-thunder-western-semis-game-2-analysis-stats-preview-may-7-2026.html", title: "Lakers vs Thunder Game 2 Analysis" },
+    { date: "2026-05-08", page: "knicks-vs-76ers-eastern-semis-game-3-analysis-stats-preview-may-8-2026.html", title: "Knicks vs 76ers Game 3 Analysis" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
