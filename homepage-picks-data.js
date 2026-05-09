@@ -23,6 +23,22 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Nationals Moneyline +139 at Marlins loanDepot Park 2.5u",
+        date: "May 9, 2026",
+        result: "",
+        url: "nationals-moneyline-plus-139-marlins-littell-junk-loandepot-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/695578/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Braves Moneyline +152 at Dodgers Dodger Stadium 1.5u",
+        date: "May 9, 2026",
+        result: "",
+        url: "braves-moneyline-plus-152-dodgers-strider-snell-dodger-stadium-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/675911/action/hero/current"
+    },
+    {
         sport: "NHL",
         title: "Ducks/Golden Knights Game 3 Under 6.5 Honda Center 2.5u",
         date: "May 8, 2026",
