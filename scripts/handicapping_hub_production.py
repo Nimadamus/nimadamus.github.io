@@ -2892,9 +2892,13 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         for game in games:
             cards_html += generate_game_card(game, sport)
 
+        # Check if any trends were injected into the cards
+        any_trends_in_sport = 'trends-section' in cards_html
+
         sport_sections += f'''
             <div class="sport-section {active}" id="{sport.lower()}-section">
                 {cards_html}
+                {f'<div class="no-trends-slate">No qualified Trend Spotter trends found for this {sport} slate.</div>' if not any_trends_in_sport and TRENDS_AVAILABLE else ''}
             </div>
         '''
 
@@ -2906,13 +2910,13 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Handicapping Hub - {date_str} | BetLegend</title>
     <meta name="description" content="BetLegend Handicapping Hub for {date_str}: advanced stats, betting lines, injury reports, and situational data across NBA, NHL, MLB, NFL, NCAAB, and soccer.">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
 
         /* === FUTURISTIC DARK THEME === */
         body {{
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0d0d2b 100%);
             color: #e0e0e0;
             line-height: 1.5;
@@ -2946,15 +2950,15 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             top: 15px;
             left: 20px;
             z-index: 1001;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 1.8rem;
-            font-weight: 900;
+            font-weight: 800;
             text-decoration: none;
-            color: #00f5ff;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+            color: #fff;
+            letter-spacing: 0.5px;
+            
         }}
-        .logo span {{ color: #ff6b35; text-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }}
+        .logo span {{ color: #ff6b35;  }}
         .nav-menu {{
             display: flex;
             align-items: center;
@@ -2962,7 +2966,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             flex-wrap: nowrap;
         }}
         .nav-link {{
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
             color: #e0e0e0;
@@ -2983,7 +2987,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             align-items: center;
         }}
         .dropdown .dropbtn {{
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
             color: #e0e0e0;
@@ -3022,7 +3026,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .dropdown-content a {{
             display: block;
             padding: 12px 16px;
-            color: #00f5ff;
+            color: #fff;
             text-decoration: none;
             font-size: 0.9rem;
             border-radius: 8px;
@@ -3030,9 +3034,9 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             transition: all 0.2s ease;
         }}
         .dropdown-content a:hover {{
-            background: rgba(0, 245, 255, 0.1);
+            background: rgba(0, 245, 255, 0.25);
             padding-left: 22px;
-            border-left-color: #00f5ff;
+            border-left-color: #fff;
             color: #fff;
         }}
         .sports-records-dropdown {{
@@ -3062,14 +3066,14 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .column h4 {{
             color: #0a0a1a;
             background: linear-gradient(135deg, #ffd700, #ffaa00);
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 11px;
             font-weight: 700;
             margin-bottom: 15px;
             padding: 8px 12px;
             border-radius: 6px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 0.5px;
             text-align: center;
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
         }}
@@ -3078,7 +3082,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             color: #fff;
             padding: 10px 15px;
             margin: 4px 0;
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 13px;
             font-weight: 500;
             text-decoration: none;
@@ -3090,7 +3094,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .column a:hover {{
             color: #fff;
             background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 245, 255, 0.1));
-            border-color: #00f5ff;
+            border-color: #fff;
         }}
 
         .header {{
@@ -3109,12 +3113,12 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             background: radial-gradient(ellipse at center, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
         }}
         .header h1 {{
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 3rem;
-            font-weight: 900;
+            font-weight: 800;
             margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 5px;
+            letter-spacing: 1px;
             text-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
             position: relative;
         }}
@@ -3122,9 +3126,9 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .header .subtitle {{
             opacity: 0.9;
             font-size: 1.2rem;
-            color: #00f5ff;
+            color: #fff;
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: 0.5px;
             position: relative;
         }}
 
@@ -3161,7 +3165,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .calendar-weekdays span {{
             text-align: center;
             font-size: 11px;
-            color: #00f5ff;
+            color: #fff;
             font-weight: 600;
         }}
         .calendar-days {{
@@ -3179,8 +3183,8 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             border-radius: 6px;
         }}
         .calendar-day.has-content {{
-            background: rgba(0, 245, 255, 0.1);
-            color: #00f5ff;
+            background: rgba(0, 245, 255, 0.25);
+            color: #fff;
             cursor: pointer;
             transition: all 0.2s;
         }}
@@ -3200,9 +3204,9 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             margin-bottom: 12px;
         }}
         .month-nav button {{
-            background: rgba(0, 245, 255, 0.1);
+            background: rgba(0, 245, 255, 0.25);
             border: 1px solid rgba(0, 245, 255, 0.3);
-            color: #00f5ff;
+            color: #fff;
             padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
@@ -3235,25 +3239,25 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             background: rgba(255,255,255,0.05);
             border: 2px solid rgba(0, 245, 255, 0.3);
             border-radius: 10px;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
             color: #a0a0a0;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 0.5px;
         }}
         .tab-btn:hover {{
-            background: rgba(0, 245, 255, 0.1);
-            border-color: #00f5ff;
-            color: #00f5ff;
+            background: rgba(0, 245, 255, 0.25);
+            border-color: #fff;
+            color: #fff;
             box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
         }}
         .tab-btn.active {{
             background: linear-gradient(135deg, #00f5ff 0%, #00c4cc 100%);
             color: #0a0a1a;
-            border-color: #00f5ff;
+            border-color: #fff;
             box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
         }}
 
@@ -3296,10 +3300,10 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             border-bottom: 2px solid #00f5ff;
         }}
         .game-time {{
-            color: #00f5ff;
-            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 1.1rem;
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+            
         }}
         .game-venue {{ color: #a0a0a0; font-size: 0.95rem; }}
         .game-network {{
@@ -3314,17 +3318,17 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
 
         .section {{ padding: 18px 24px; border-bottom: 1px solid rgba(0, 245, 255, 0.1); }}
         .section-title {{
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 0.9rem;
             font-weight: 700;
-            color: #00f5ff;
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 0.5px;
             margin-bottom: 14px;
             padding-bottom: 10px;
             border-bottom: 2px solid #ff6b35;
             display: inline-block;
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+            
         }}
 
         .stats-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid rgba(0, 245, 255, 0.1); }}
@@ -3335,13 +3339,13 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .lines-table th, .stats-table th {{
             text-align: center;
             padding: 12px 8px;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #00f5ff;
+            color: #fff;
             text-transform: uppercase;
             letter-spacing: 1px;
-            background: rgba(0, 245, 255, 0.1);
+            background: rgba(0, 245, 255, 0.25);
             border-bottom: 1px solid rgba(0, 245, 255, 0.2);
         }}
         .lines-table td, .stats-table td {{
@@ -3358,14 +3362,14 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .team-record {{ font-size: 0.9rem; color: #888; font-weight: 600; }}
         .team-abbr {{
             font-weight: 800;
-            color: #00f5ff;
+            color: #fff;
             text-align: left !important;
             padding-left: 12px !important;
             font-size: 1.1rem;
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+            
         }}
 
-        .spread {{ color: #ffd700; font-weight: 800; font-size: 1.15rem; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }}
+        .spread {{ color: #ffd700; font-weight: 800; font-size: 1.15rem;  }}
         .ml {{ color: #00ff88; font-weight: 800; font-size: 1.15rem; }}
         .total {{ color: #ff6b35; font-weight: 700; }}
         .away-row {{ background: rgba(0, 0, 0, 0.2); }}
@@ -3377,7 +3381,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         .lines-table-full th {{
             text-align: center;
             padding: 10px 6px;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 0.7rem;
             font-weight: 700;
             color: #ffd700;
@@ -3410,7 +3414,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             padding: 8px 12px !important;
             border-radius: 8px;
             border: 1px solid rgba(0, 255, 136, 0.3);
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+            
         }}
         .ou-record {{
             color: #00c4ff;
@@ -3420,7 +3424,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             padding: 8px 12px !important;
             border-radius: 8px;
             border: 1px solid rgba(0, 196, 255, 0.3);
-            text-shadow: 0 0 10px rgba(0, 196, 255, 0.3);
+            
         }}
 
         /* === INJURIES SECTION === */
@@ -3444,7 +3448,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             line-height: 1.5;
         }}
         .team-injuries strong {{
-            color: #00f5ff;
+            color: #fff;
         }}
 
         /* === H2H SECTION - PROFESSIONAL ESPN-STYLE === */
@@ -3547,6 +3551,23 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             font-style: normal;
         }}
 
+        .no-games, .no-trends-slate {{
+            background: rgba(30, 30, 60, 0.8);
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            color: #888;
+            font-size: 1.1rem;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            margin: 20px 0;
+            font-style: italic;
+        }}
+        .no-trends-slate {{
+            background: rgba(0, 245, 255, 0.05);
+            color: #fff;
+            opacity: 0.8;
+        }}
+
         footer {{
             text-align: center;
             padding: 40px;
@@ -3556,7 +3577,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
             margin-top: 40px;
             border-top: 1px solid rgba(0, 245, 255, 0.1);
         }}
-        footer strong {{ color: #00f5ff; }}
+        footer strong {{ color: #fff; }}
 
         @media (max-width: 768px) {{
             .nav-menu {{
@@ -3827,51 +3848,74 @@ def main():
     all_games = {}
 
     for sport, config in SPORTS.items():
-        print(f"\n[{sport}] Processing...")
+        try:
+            print(f"\n[{sport}] Processing...")
 
-        # Fetch scoreboard
-        games = fetch_espn_scoreboard(config['espn_path'])
-        print(f"  Found {len(games)} games on ESPN")
+            # Fetch scoreboard
+            games = fetch_espn_scoreboard(config['espn_path'])
+            print(f"  Found {len(games)} games on ESPN")
 
-        if not games:
+            if not games:
+                all_games[sport] = []
+                continue
+
+            # Fetch odds
+            odds_data = fetch_odds(config['odds_key'])
+            print(f"  Found {len(odds_data)} games with odds")
+
+            # NEW: Fetch ATS/O/U betting records from Covers.com
+            betting_records = fetch_covers_betting_records(sport)
+
+            # Process games
+            processed = []
+            for game in games:
+                try:
+                    # Filter out All-Star / exhibition games (Feb 15, 2026 fix)
+                    if is_exhibition_game(game):
+                        skipped_name = game.get('shortName', game.get('name', 'Unknown'))
+                        print(f"  [SKIP] Exhibition/All-Star: {skipped_name}")
+                        continue
+
+                    # NCAAB/NCAAF filtering
+                    if sport == 'NCAAB':
+                        odds_match = match_game_odds(game, odds_data)
+                        if not is_important_ncaab_game(game, has_valid_odds(odds_match)):
+                            continue
+                    elif sport == 'NCAAF':
+                        if not is_bowl_game(game):
+                            continue
+
+                    result = process_game(game, sport, config['espn_path'], odds_data, betting_records)
+                    if result:
+                        processed.append(result)
+                except Exception as e:
+                    print(f"  [ERROR] Failed to process {sport} game: {e}")
+                    continue
+
+            all_games[sport] = processed
+            print(f"  Processed {len(processed)} games")
+        except Exception as e:
+            print(f"  [CRITICAL ERROR] Failed to process {sport} slate: {e}")
             all_games[sport] = []
             continue
 
-        # Fetch odds
-        odds_data = fetch_odds(config['odds_key'])
-        print(f"  Found {len(odds_data)} games with odds")
-
-        # NEW: Fetch ATS/O/U betting records from Covers.com
-        betting_records = fetch_covers_betting_records(sport)
-
-        # Process games
-        processed = []
-        for game in games:
-            # Filter out All-Star / exhibition games (Feb 15, 2026 fix)
-            if is_exhibition_game(game):
-                skipped_name = game.get('shortName', game.get('name', 'Unknown'))
-                print(f"  [SKIP] Exhibition/All-Star: {skipped_name}")
-                continue
-
-            # NCAAB/NCAAF filtering
-            if sport == 'NCAAB':
-                odds_match = match_game_odds(game, odds_data)
-                if not is_important_ncaab_game(game, has_valid_odds(odds_match)):
-                    continue
-            elif sport == 'NCAAF':
-                if not is_bowl_game(game):
-                    continue
-
-            result = process_game(game, sport, config['espn_path'], odds_data, betting_records)
-            if result:
-                processed.append(result)
-
-        all_games[sport] = processed
-        print(f"  Processed {len(processed)} games")
-
     # Generate HTML
     print("\n[HTML] Generating preview page...")
-    html = generate_page(all_games, date_str)
+    try:
+        html = generate_page(all_games, date_str)
+        
+        # Add empty slate message if no games across all sports
+        if not any(all_games.values()):
+            no_slate_msg = '<div class="no-games">No qualifying games were available for this slate.</div>'
+            html = html.replace('{sport_sections}', no_slate_msg)
+            print("  [INFO] Empty slate detected. Adding fallback message.")
+
+        # Ensure empty trend message is handled in template if needed
+        if not TRENDS_AVAILABLE:
+            html = html.replace('HISTORICAL TRENDS', 'HISTORICAL TRENDS (No qualified trends found for this slate)')
+    except Exception as e:
+        print(f"  [CRITICAL ERROR] HTML generation failed: {e}")
+        return
 
     # PERMANENT SAFEGUARD: Remove any line movement content that might slip through
     html = block_line_movements(html)
