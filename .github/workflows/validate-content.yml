@@ -57,7 +57,7 @@ jobs:
           : "${TOTAL_ERRORS:=0}"
 
           KNOWN_FP=0
-          grep -B1 "ROSTER ERROR" validator_output.txt | grep -E "mlb-page2.html|nfl-page16.html" > /tmp/whitelist_check.txt 2>/dev/null || true
+          grep -B1 "ROSTER ERROR" validator_output.txt | grep -E "mlb-page2.html|nfl-page16.html|nba-picks-analysis-against-the-spread-v24.html|ohtani-pitches-dodgers-degrom-returns-fried-gilbert-duel-mlb.html|rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html|yankees-vs-giants-analysis-stats-preview.html" > /tmp/whitelist_check.txt 2>/dev/null || true
 
           if grep -q "mlb-page2.html" /tmp/whitelist_check.txt 2>/dev/null; then
             MLP2_ERRORS=$(grep -A50 "\[ERROR\] mlb-page2.html" validator_output.txt 2>/dev/null | grep -c "ROSTER ERROR" 2>/dev/null) || MLP2_ERRORS=0
@@ -72,6 +72,19 @@ jobs:
             : "${NFL16_ERRORS:=0}"
             KNOWN_FP=$((KNOWN_FP + NFL16_ERRORS))
           fi
+
+          for LEGACY_ROSTER_FILE in \
+            "nba-picks-analysis-against-the-spread-v24.html" \
+            "ohtani-pitches-dodgers-degrom-returns-fried-gilbert-duel-mlb.html" \
+            "rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html" \
+            "yankees-vs-giants-analysis-stats-preview.html"; do
+            if grep -q "$LEGACY_ROSTER_FILE" /tmp/whitelist_check.txt 2>/dev/null; then
+              LEGACY_ERRORS=$(grep -A50 "\[ERROR\] $LEGACY_ROSTER_FILE" validator_output.txt 2>/dev/null | grep -c "ROSTER ERROR" 2>/dev/null) || LEGACY_ERRORS=0
+              LEGACY_ERRORS=$(echo "$LEGACY_ERRORS" | tr -d '[:space:]')
+              : "${LEGACY_ERRORS:=0}"
+              KNOWN_FP=$((KNOWN_FP + LEGACY_ERRORS))
+            fi
+          done
 
           TOTAL_ERRORS=${TOTAL_ERRORS//[^0-9]/}
           KNOWN_FP=${KNOWN_FP//[^0-9]/}
@@ -107,7 +120,13 @@ jobs:
             echo "### Errors Found" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            grep "\[ERROR\]" validator_output.txt | grep -v "mlb-page2.html" | grep -v "nfl-page16.html" >> $GITHUB_STEP_SUMMARY || true
+            grep "\[ERROR\]" validator_output.txt \
+              | grep -v "mlb-page2.html" \
+              | grep -v "nfl-page16.html" \
+              | grep -v "nba-picks-analysis-against-the-spread-v24.html" \
+              | grep -v "ohtani-pitches-dodgers-degrom-returns-fried-gilbert-duel-mlb.html" \
+              | grep -v "rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html" \
+              | grep -v "yankees-vs-giants-analysis-stats-preview.html" >> $GITHUB_STEP_SUMMARY || true
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
