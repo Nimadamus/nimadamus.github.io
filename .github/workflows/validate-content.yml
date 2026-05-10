@@ -131,6 +131,10 @@ jobs:
             exit 1
           fi
 
+      - name: Run Daily Discovery Audit
+        run: |
+          python scripts/audit_daily_discovery.py --max-age-days 7
+
       - name: Upload validation report
         if: always()
         uses: actions/upload-artifact@v4
