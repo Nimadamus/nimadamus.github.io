@@ -24,6 +24,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "White Sox/Mariners Under 8 at Rate Field 2u",
+        date: "May 10, 2026",
+        result: "",
+        url: "white-sox-mariners-under-8-gilbert-martin-rate-field-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669221/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Nationals Moneyline +139 at Marlins loanDepot Park 2.5u",
         date: "May 9, 2026",
         result: "",
@@ -60,7 +68,7 @@ var HOMEPAGE_PICKS = [
         date: "May 7, 2026",
         result: "",
         url: "rangers-team-total-over-3-5-yankees-warren-eovaldi-yankee-stadium-mlb-pick.html",
-        image: "images/rangers-team-total-over-3-5-yankees-warren-eovaldi-yankee-stadium-mlb-pick.jpg"
+        image: "images/rangers-team-total-over-3-5-yankees-warren-eovaldi-yankee-stadium-mlb-pick.webp"
     },
     {
         sport: "NHL",
@@ -68,7 +76,7 @@ var HOMEPAGE_PICKS = [
         date: "May 7, 2026",
         result: "",
         url: "hurricanes-flyers-game-3-under-5-5-andersen-vladar-xfinity-mobile-arena-nhl-pick.html",
-        image: "images/hurricanes-flyers-game-3-under-5-5-andersen-vladar-xfinity-mobile-arena-nhl-pick.jpg"
+        image: "images/hurricanes-flyers-game-3-under-5-5-andersen-vladar-xfinity-mobile-arena-nhl-pick.webp"
     },
     {
         sport: "NHL",
