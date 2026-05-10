@@ -16,6 +16,14 @@ from collections import defaultdict
 from itertools import combinations
 from typing import Dict, List, Optional, Tuple
 
+# Add current directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+try:
+    from sellable_market_eligibility import public_trend_exclusion_reason
+except ImportError:
+    public_trend_exclusion_reason = None
+
 DATA_FILE = r"C:\Users\Nima\universal_games.pkl"
 
 # Thresholds
@@ -79,6 +87,19 @@ _cached_games = None
 _cached_sport = None
 
 
+def _public_trend_exclusion(game: dict, sport: str) -> str | None:
+    if public_trend_exclusion_reason is None:
+        return None
+    return public_trend_exclusion_reason(game, sport)
+
+
+def _public_team_blocked(team_name: str, sport: str) -> bool:
+    if public_trend_exclusion_reason is None:
+        return False
+    probe = {"Sport": sport, "AwayTeam": team_name, "HomeTeam": team_name}
+    return public_trend_exclusion_reason(probe, sport) is not None
+
+
 def _load_games(sport: str) -> list:
     """Load and process historical games for a sport"""
     global _cached_games, _cached_sport
@@ -99,11 +120,19 @@ def _load_games(sport: str) -> list:
                  and g.get('HomeTeam') and g.get('AwayTeam')
                  and g.get('HomeScore') is not None and g.get('AwayScore') is not None]
 
+    if public_trend_exclusion_reason is not None:
+        before_guardrails = len(raw_games)
+        raw_games = [g for g in raw_games if _public_trend_exclusion(g, sport) is None]
+        excluded_guardrails = before_guardrails - len(raw_games)
+        if excluded_guardrails:
+            print(f"  [TRENDS] Public guardrails suppressed {excluded_guardrails:,} unresolved/unsafe {sport} rows")
+
     # Filter out years with unreliable ATS spread data
     try:
         sys.path.insert(0, r"C:\Users\Nima\handicapping_tool")
         from data_quality import filter_reliable_games
         games = filter_reliable_games(raw_games, sport, include_marginal=True)
+        print(f"  [DEBUG] {sport} games after DQ filter: {len(games)}")
         excluded = len(raw_games) - len(games)
         if excluded > 0:
             print(f"  [TRENDS] Excluded {excluded:,} games from unreliable ATS years")
@@ -139,9 +168,14 @@ def _load_games(sport: str) -> list:
         except (ValueError, TypeError):
             total_line = 0
 
-        # CORRECT LOGIC: Spread in DB is AWAY TEAM SPREAD
-        # Home ATS Margin = Home Margin - Away Spread
-        home_ats_margin = home_margin - spread
+        # SPORT-SPECIFIC ATS LOGIC:
+        # NBA/NFL: Spread is AWAY TEAM SPREAD (Form 1: Home - Away - Spread)
+        # NHL/MLB/NCAAB/NCAAF: Spread is HOME TEAM SPREAD (Form 2: Home - Away + Spread)
+        if sport in ("NBA", "NFL"):
+            home_ats_margin = home_margin - spread
+        else:
+            home_ats_margin = home_margin + spread
+            
         g['_home_covered'] = home_ats_margin > 0 if spread != 0 else home_won
         g['_away_covered'] = home_ats_margin < 0 if spread != 0 else not home_won
         g['_ats_push'] = home_ats_margin == 0 if spread != 0 else False
@@ -196,13 +230,15 @@ def _load_games(sport: str) -> list:
             ga = as_ if is_home else hs
             covered = g['_home_covered'] if is_home else g['_away_covered']
             
-            # CORRECT LOGIC: spread in DB is AWAY TEAM SPREAD
-            # If team is home: fav if Spread > 0
-            # If team is away: fav if Spread < 0
-            if is_home:
-                was_fav = (spread > 0)
+            # SPORT-SPECIFIC LOGIC:
+            # NBA/NFL (Away Spr): Home is fav if Spread > 0, Away is fav if Spread < 0
+            # NHL/MLB/NCAAB/NCAAF (Home Spr): Home is fav if Spread < 0, Away is fav if Spread > 0
+            if sport in ("NBA", "NFL"):
+                if is_home: was_fav = (spread > 0)
+                else: was_fav = (spread < 0)
             else:
-                was_fav = (spread < 0)
+                if is_home: was_fav = (spread < 0)
+                else: was_fav = (spread > 0)
 
             if team_won:
                 st['w'] += 1
@@ -249,11 +285,19 @@ def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spr
     p = '_h_' if side == "home" else '_a_'
     opp_p = '_a_' if side == "home" else '_h_'
     
-    # CORRECT LOGIC: home_spread in DB is AWAY TEAM SPREAD
-    if side == "home":
-        is_fav = (home_spread > 0)
+    # SPORT-SPECIFIC LOGIC:
+    # NBA/NFL (Away Spr): Home is fav if Spread > 0, Away is fav if Spread < 0
+    # NHL/MLB/NCAAB/NCAAF (Home Spr): Home is fav if Spread < 0, Away is fav if Spread > 0
+    if sport in ("NBA", "NFL"):
+        if side == "home":
+            is_fav = (home_spread > 0)
+        else:
+            is_fav = (home_spread < 0)
     else:
-        is_fav = (home_spread < 0)
+        if side == "home":
+            is_fav = (home_spread < 0)
+        else:
+            is_fav = (home_spread > 0)
         
     last_margin = (last_gf or 0) - (last_ga or 0)
     dow = datetime.now().weekday()
@@ -261,15 +305,20 @@ def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spr
     filters = []
 
     # ---- ROLE: Favorite / Underdog ----
-    if is_fav:
-        # CORRECT LOGIC: spread in DB is AWAY TEAM SPREAD
-        # Home (p == '_h_') is favorite if Spread > 0
-        # Away (p == '_a_') is favorite if Spread < 0
-        filters.append(("as FAV", lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) > 0) or (p == '_a_' and float(g['Spread'] or 0) < 0)), "ROLE", ["as DOG"]))
+    # SPORT-SPECIFIC LOGIC:
+    # NBA/NFL (Away Spr): Home is fav if Spread > 0, Away is fav if Spread < 0
+    # NHL/MLB/NCAAB/NCAAF (Home Spr): Home is fav if Spread < 0, Away is fav if Spread > 0
+    if sport in ("NBA", "NFL"):
+        fav_lambda = lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) > 0) or (p == '_a_' and float(g['Spread'] or 0) < 0))
+        dog_lambda = lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) < 0) or (p == '_a_' and float(g['Spread'] or 0) > 0))
     else:
-        # Home (p == '_h_') is underdog if Spread < 0
-        # Away (p == '_a_') is underdog if Spread > 0
-        filters.append(("as DOG", lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) < 0) or (p == '_a_' and float(g['Spread'] or 0) > 0)), "ROLE", ["as FAV"]))
+        fav_lambda = lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) < 0) or (p == '_a_' and float(g['Spread'] or 0) > 0))
+        dog_lambda = lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) > 0) or (p == '_a_' and float(g['Spread'] or 0) < 0))
+
+    if is_fav:
+        filters.append(("as FAV", fav_lambda, "ROLE", ["as DOG"]))
+    else:
+        filters.append(("as DOG", dog_lambda, "ROLE", ["as FAV"]))
 
     # ---- SPREAD SIZE (NBA/NFL only - NHL/MLB spreads are almost always 1-1.5) ----
     if sport in ("NBA", "NFL", "NCAAB", "NCAAF"):
@@ -684,6 +733,10 @@ def get_trends_for_game(sport: str, home_abbr: str, away_abbr: str,
     away_full = _resolve_team_name(away_abbr, sport, games)
 
     if not home_full or not away_full:
+        return []
+
+    if _public_team_blocked(home_full, sport) or _public_team_blocked(away_full, sport):
+        print(f"  [TRENDS] Public guardrail blocked trends for {away_full} @ {home_full}")
         return []
 
     home_games = [g for g in games if g.get('HomeTeam') == home_full]

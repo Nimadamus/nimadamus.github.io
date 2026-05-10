@@ -2910,6 +2910,7 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Handicapping Hub - {date_str} | BetLegend</title>
     <meta name="description" content="BetLegend Handicapping Hub for {date_str}: advanced stats, betting lines, injury reports, and situational data across NBA, NHL, MLB, NFL, NCAAB, and soccer.">
+    <meta name="betlegend-public-trend-guardrails" content="v20260510-unresolved-gap-suppression">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
