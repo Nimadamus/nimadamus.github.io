@@ -1545,7 +1545,10 @@
 | pistons-vs-cavaliers-eastern-semis-game-3-analysis-stats-preview-may-9-2026.html | ✅ | ✅ sitemap-featured-games.xml and sitemap-previews.xml | nba-previews-archive-may-2026.html; scripts/nba-calendar.js |
 | mlb-friday-rotation-yankees-cubs-pirates-divisional-action-mlb.html | ✅ | ✅ sitemap-previews.xml | mlb-previews-archive-may-2026.html; scripts/mlb-calendar.js |
 | eovaldi-warren-ober-mikolas-eleven-game-wednesday-mlb.html | ✅ | ✅ sitemap-previews.xml | mlb-previews-archive-may-2026.html; scripts/mlb-calendar.js |
+| athletics-moneyline-plus-156-phillies-springs-wheeler-citizens-bank-park-mlb-pick.html | ✅ | ✅ sitemap-posts.xml | mlb-previews-archive-may-2026.html; scripts/mlb-calendar.js |
 | nationals-moneyline-plus-139-marlins-littell-junk-loandepot-park-mlb-pick.html | ✅ | ✅ sitemap-posts.xml and sitemap-previews.xml | mlb-previews-archive-may-2026.html; scripts/mlb-calendar.js |
+| braves-moneyline-plus-152-dodgers-strider-snell-dodger-stadium-mlb-pick.html | ✅ | ✅ sitemap-posts.xml | mlb-previews-archive-may-2026.html; scripts/mlb-calendar.js |
 | three-friday-game-6s-canadiens-sabres-knights-elimination-night-nhl.html | ✅ | ✅ sitemap-previews.xml | nhl-previews-archive-may-2026.html; scripts/nhl-calendar.js |
 | sabres-host-canadiens-game-1-knights-host-ducks-game-2-nhl.html | ✅ | ✅ sitemap-previews.xml | nhl-previews-archive-may-2026.html; scripts/nhl-calendar.js |
+| sabres-canadiens-under-6-5-game-1-second-round-keybank-center-nhl-pick.html | ✅ | ✅ sitemap-posts.xml | nhl-previews-archive-may-2026.html; scripts/nhl-calendar.js |
 | hurricanes-flyers-avalanche-wild-nhl-may-9-2026.html | ✅ | ✅ sitemap-previews.xml | nhl-previews-archive-may-2026.html; scripts/nhl-calendar.js |
