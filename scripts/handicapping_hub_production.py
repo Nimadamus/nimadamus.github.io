@@ -3934,6 +3934,56 @@ def main():
         f.write(html)
     print(f"\n[SUCCESS] Hub saved to: {output_path}")
 
+    # ---- PERMANENT GUARD: Trend Verification ----
+    try:
+        print("\n[GUARD] Starting trend verification audit...")
+        # Add script directory to path
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        if script_dir not in sys.path:
+            sys.path.insert(0, script_dir)
+            
+        from FullAuditVerifier import extract_trends, verify_trend, load_data
+        
+        # Extract trends from the just-saved HTML
+        trends = extract_trends(output_path)
+        if not trends:
+            print("[GUARD] No trends found to audit. Skipping.")
+        else:
+            print(f"[GUARD] Auditing {len(trends)} trends from generated HTML...")
+            sports_data = {}
+            failed_trends = []
+            
+            for t in trends:
+                sport = t['sport']
+                if sport not in sports_data:
+                    sports_data[sport] = load_data(sport)
+                
+                res = verify_trend(t, sports_data[sport])
+                if not res['passed']:
+                    failed_trends.append({"trend": t, "result": res})
+            
+            if failed_trends:
+                print(f"\n[CRITICAL FAILURE] {len(failed_trends)} trends failed verification!")
+                for f in failed_trends[:5]:
+                    t = f['trend']
+                    r = f['result']
+                    print(f"  FAILED: {t['situation']}")
+                    print(f"  Market: {t['market']} | Displayed: {t['record']} ({t['games']} games)")
+                    if t['market'] == "ATS":
+                        print(f"  Actual: {r['calc_w']}-{r['calc_l']} ({r['calc_games']} games)")
+                    else:
+                        print(f"  Actual: {r['calc_over']}O-{r['calc_under']}U ({r['calc_games']} games)")
+                
+                print("\n[ACTION] Suppressing the generated file and failing the process.")
+                if os.path.exists(output_path):
+                    os.remove(output_path)
+                sys.exit(1)
+            else:
+                print(f"[GUARD] All {len(trends)} trends verified successfully. Integrity Check: PASS.")
+    except Exception as e:
+        print(f"[GUARD ERROR] Verification system failed: {e}")
+        sys.exit(1)
+
     # IMMEDIATELY archive today's hub - don't rely on tomorrow's workflow
     # This is the bulletproof fix: every hub is archived the instant it's created.
     if EASTERN:
