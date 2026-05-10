@@ -51,6 +51,11 @@ jobs:
           echo "Syncing featured games calendar..."
           python scripts/sync_featured_games_calendar.py
 
+      - name: Guard featured game freshness
+        run: |
+          echo "Checking Featured Game of the Day freshness..."
+          python scripts/validate_featured_game_freshness.py --max-age-days 3
+
       - name: Sync records from Pick Tracker
         continue-on-error: true
         run: |
