@@ -138,9 +138,14 @@ def _load_games(sport: str) -> list:
             total_line = float(total_line) if total_line else 0
         except (ValueError, TypeError):
             total_line = 0
-        g['_home_covered'] = (home_margin + spread) > 0 if spread else None
-        g['_away_covered'] = (home_margin + spread) < 0 if spread else None
-        g['_ats_push'] = (home_margin + spread) == 0 if spread else False
+
+        # CORRECT LOGIC: Spread in DB is AWAY TEAM SPREAD
+        # Home ATS Margin = Home Margin - Away Spread
+        home_ats_margin = home_margin - spread
+        g['_home_covered'] = home_ats_margin > 0 if spread != 0 else home_won
+        g['_away_covered'] = home_ats_margin < 0 if spread != 0 else not home_won
+        g['_ats_push'] = home_ats_margin == 0 if spread != 0 else False
+        
         g['_over'] = game_total > total_line if total_line else None
         g['_under'] = game_total < total_line if total_line else None
         g['_month'] = int(date[5:7]) if date and len(date) >= 7 else 0
@@ -190,7 +195,14 @@ def _load_games(sport: str) -> list:
             gf = hs if is_home else as_
             ga = as_ if is_home else hs
             covered = g['_home_covered'] if is_home else g['_away_covered']
-            was_fav = (is_home and spread < 0) or (not is_home and spread > 0) if spread else None
+            
+            # CORRECT LOGIC: spread in DB is AWAY TEAM SPREAD
+            # If team is home: fav if Spread > 0
+            # If team is away: fav if Spread < 0
+            if is_home:
+                was_fav = (spread > 0)
+            else:
+                was_fav = (spread < 0)
 
             if team_won:
                 st['w'] += 1
@@ -236,7 +248,13 @@ def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spr
     Sport-aware: skips filters that are meaningless for certain sports."""
     p = '_h_' if side == "home" else '_a_'
     opp_p = '_a_' if side == "home" else '_h_'
-    is_fav = (side == "home" and home_spread < 0) or (side == "away" and home_spread > 0)
+    
+    # CORRECT LOGIC: home_spread in DB is AWAY TEAM SPREAD
+    if side == "home":
+        is_fav = (home_spread > 0)
+    else:
+        is_fav = (home_spread < 0)
+        
     last_margin = (last_gf or 0) - (last_ga or 0)
     dow = datetime.now().weekday()
     spread_abs = abs(home_spread) if home_spread else 0
@@ -244,9 +262,14 @@ def _build_filters(side, rest_days, streak, last_won, last_gf, last_ga, home_spr
 
     # ---- ROLE: Favorite / Underdog ----
     if is_fav:
-        filters.append(("as FAV", lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) < 0) or (p == '_a_' and float(g['Spread'] or 0) > 0)), "ROLE", ["as DOG"]))
+        # CORRECT LOGIC: spread in DB is AWAY TEAM SPREAD
+        # Home (p == '_h_') is favorite if Spread > 0
+        # Away (p == '_a_') is favorite if Spread < 0
+        filters.append(("as FAV", lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) > 0) or (p == '_a_' and float(g['Spread'] or 0) < 0)), "ROLE", ["as DOG"]))
     else:
-        filters.append(("as DOG", lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) > 0) or (p == '_a_' and float(g['Spread'] or 0) < 0)), "ROLE", ["as FAV"]))
+        # Home (p == '_h_') is underdog if Spread < 0
+        # Away (p == '_a_') is underdog if Spread > 0
+        filters.append(("as DOG", lambda g, p=p: g.get('Spread') is not None and ((p == '_h_' and float(g['Spread'] or 0) < 0) or (p == '_a_' and float(g['Spread'] or 0) > 0)), "ROLE", ["as FAV"]))
 
     # ---- SPREAD SIZE (NBA/NFL only - NHL/MLB spreads are almost always 1-1.5) ----
     if sport in ("NBA", "NFL", "NCAAB", "NCAAF"):
