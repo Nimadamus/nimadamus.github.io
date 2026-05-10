@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "May 10, 2026",
         result: "",
         url: "white-sox-mariners-under-8-gilbert-martin-rate-field-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669221/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-images/image/upload/t_16x9/t_w2208/mlb/jscgyzyckuf6apwjojoh"
     },
     {
         sport: "MLB",
