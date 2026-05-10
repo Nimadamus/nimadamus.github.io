@@ -12,6 +12,7 @@ import datetime as dt
 import re
 import sys
 import urllib.error
+import urllib.robotparser
 import urllib.request
 from pathlib import Path
 from xml.etree import ElementTree as ET
@@ -161,12 +162,25 @@ def has_noindex(content: str, headers: dict[str, str]) -> bool:
     return any("noindex" in value.lower() for value in robots)
 
 
+def robots_allows(rel: str, args: argparse.Namespace) -> bool:
+    status, _, robots = read("robots.txt", args)
+    if status != 200:
+        raise AuditError(f"robots.txt returned HTTP {status}")
+    parser = urllib.robotparser.RobotFileParser()
+    parser.set_url(args.base_url.rstrip("/") + "/robots.txt")
+    parser.parse(robots.splitlines())
+    full_url = args.base_url.rstrip("/") + "/" + rel.lstrip("/")
+    return parser.can_fetch("*", full_url)
+
+
 def require_page(rel: str, args: argparse.Namespace, urls: set[str], allow_canonical_target: bool = False) -> str:
     status, headers, content = read(rel, args)
     if status != 200:
         raise AuditError(f"{rel} returned HTTP {status}")
     if has_noindex(content, headers):
         raise AuditError(f"{rel} is noindexed")
+    if not robots_allows(rel, args):
+        raise AuditError(f"{rel} is blocked by robots.txt")
     if not re.search(r"<title>\s*[^<]+", content, re.I):
         raise AuditError(f"{rel} has blank or missing title")
     if not (
@@ -176,6 +190,8 @@ def require_page(rel: str, args: argparse.Namespace, urls: set[str], allow_canon
         raise AuditError(f"{rel} is missing meta description")
     full_url = args.base_url.rstrip("/") + "/" + rel.lstrip("/")
     canon = canonical(content)
+    if not canon:
+        raise AuditError(f"{rel} is missing a canonical tag")
     if canon and not allow_canonical_target and canon.rstrip("/") != full_url.rstrip("/"):
         raise AuditError(f"{rel} canonical mismatch: {canon}")
     if full_url not in urls:
