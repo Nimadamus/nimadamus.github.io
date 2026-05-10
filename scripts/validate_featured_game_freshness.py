@@ -12,9 +12,21 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 DATA_FILE = REPO / "featured-games-data.js"
+TITLE_GUARD_START_DATE = dt.date(2026, 5, 8)
 ENTRY_RE = re.compile(
     r"""\{\s*date:\s*["'](?P<date>\d{4}-\d{2}-\d{2})["']\s*,\s*page:\s*["'](?P<page>[^"']+)["']\s*,\s*title:\s*["'](?P<title>[^"']+)["']\s*\}"""
 )
+H1_RE = re.compile(r"""<h1[^>]*class=["'][^"']*\bmain-title\b[^"']*["'][^>]*>(?P<title>.*?)</h1>""", re.IGNORECASE | re.DOTALL)
+NEWS_HEADLINE_RE = re.compile(r'''"headline"\s*:\s*"(?P<title>(?:\\.|[^"\\])*)"''')
+ODDS_RE = re.compile(r"""(?:\b[A-Z]{2,4}\s*)?[+-]\d+(?:\.\d+)?\b|\b\d+(?:\.\d+)?-point\b""", re.IGNORECASE)
+TOTAL_RE = re.compile(r"""\b(?:total|over/under|o/u)\b|\b[OU]\s*\d{3}(?:\.\d+)?\b""", re.IGNORECASE)
+INJURY_LIST_RE = re.compile(
+    r"""\b(?:questionable|doubtful|out|return|returns|set to return|injur(?:y|ies)|injury report)\b.*\b[A-Z][a-z]+,\s+[A-Z][a-z]+,\s+(?:and\s+)?[A-Z][a-z]+""",
+    re.IGNORECASE,
+)
+VENUE_RE = re.compile(r"""\b(?:arena|center|centre|stadium|field|garden|park|coliseum|dome)\b""", re.IGNORECASE)
+SERIES_RE = re.compile(r"""\b(?:leads?|up|trails?|tied)\s+(?:series\s+)?\d-\d\b|\bseries\b""", re.IGNORECASE)
+INJURY_RE = re.compile(r"""\b(?:questionable|doubtful|out|injur(?:y|ies)|return|returns|set to return)\b""", re.IGNORECASE)
 
 
 def parse_args() -> argparse.Namespace:
@@ -38,6 +50,78 @@ def load_entries() -> list[dict[str, str]]:
     if not entries:
         raise SystemExit("No FEATURED_GAMES entries found")
     return entries
+
+
+def clean_html_text(value: str) -> str:
+    value = re.sub(r"<[^>]+>", "", value)
+    return re.sub(r"\s+", " ", value).strip()
+
+
+def extract_main_title(content: str, page: str) -> str:
+    match = H1_RE.search(content)
+    if not match:
+        raise SystemExit(f"Featured Game page is missing a main hero title: {page}")
+    return clean_html_text(match.group("title"))
+
+
+def extract_news_headline(content: str) -> str | None:
+    match = NEWS_HEADLINE_RE.search(content)
+    if not match:
+        return None
+    return match.group("title").replace(r"\"", '"').replace(r"\/", "/")
+
+
+def validate_featured_title(title: str, page: str, label: str) -> list[str]:
+    issues: list[str] = []
+    lower = title.lower()
+
+    if len(title) > 110:
+        issues.append(f"{label} exceeds 110 characters ({len(title)}): {title}")
+    if lower.count("with") > 1:
+        issues.append(f"{label} uses more than one 'with' clause: {title}")
+    if ODDS_RE.search(title) and TOTAL_RE.search(title):
+        issues.append(f"{label} contains both odds/spread and total context: {title}")
+    if INJURY_LIST_RE.search(title):
+        issues.append(f"{label} contains a comma-separated injury/return list: {title}")
+
+    stacked_metadata = [
+        bool(VENUE_RE.search(title)),
+        bool(SERIES_RE.search(title)),
+        bool(ODDS_RE.search(title)),
+        bool(INJURY_RE.search(title)),
+    ]
+    if all(stacked_metadata):
+        issues.append(f"{label} stacks venue, series status, betting line, and injury context: {title}")
+
+    return [f"{page}: {issue}" for issue in issues]
+
+
+def check_featured_title_quality(entries: list[dict[str, str]], allow_missing_latest_page: bool) -> None:
+    issues: list[str] = []
+    guarded_entries = [
+        entry for entry in entries
+        if dt.date.fromisoformat(entry["date"]) >= TITLE_GUARD_START_DATE
+    ]
+
+    for entry in guarded_entries:
+        page = entry["page"].lstrip("/")
+        page_path = REPO / page
+        if not page_path.exists():
+            if allow_missing_latest_page:
+                continue
+            issues.append(f"{page}: guarded Featured Game page is missing locally")
+            continue
+
+        content = page_path.read_text(encoding="utf-8", errors="ignore")
+        hero_title = extract_main_title(content, page)
+        issues.extend(validate_featured_title(hero_title, page, "hero title"))
+
+        news_headline = extract_news_headline(content)
+        if news_headline:
+            issues.extend(validate_featured_title(news_headline, page, "NewsArticle headline"))
+
+    if issues:
+        raise SystemExit("Featured Game title quality check failed:\n- " + "\n- ".join(issues))
 
 
 def main() -> int:
@@ -74,6 +158,8 @@ def main() -> int:
     missing = [token for token in required if token not in entrypoint_content]
     if missing:
         raise SystemExit(f"Featured Game entrypoint is missing required current routing tokens: {', '.join(missing)}")
+
+    check_featured_title_quality(entries, args.allow_missing_latest_page)
 
     print(f"Featured Game freshness OK: {latest['date']} -> {latest['page']} ({age_days} days old)")
     return 0
