@@ -56,6 +56,16 @@ jobs:
           echo "Checking Featured Game of the Day freshness..."
           python scripts/validate_featured_game_freshness.py --max-age-days 3
 
+      - name: Generate discovery artifacts
+        run: |
+          echo "Generating sitemap index, child sitemaps, and RSS feed..."
+          python scripts/generate_discovery_artifacts.py
+
+      - name: Audit daily discovery
+        run: |
+          echo "Auditing latest daily pages for sitemap, links, nav, indexability, and freshness..."
+          python scripts/audit_daily_discovery.py --max-age-days 7
+
       - name: Sync records from Pick Tracker
         continue-on-error: true
         run: |
