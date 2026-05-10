@@ -111,7 +111,31 @@ function initFeaturedGamesCalendar() {
         });
         monthSelect.addEventListener('change', function() { renderCalendar(this.value); });
     }
+    wireFeaturedCalendarMonthButtons();
     renderCalendar(state.displayMonth);
+}
+
+function changeFeaturedCalendarMonth(direction) {
+    var monthSelect = document.getElementById('month-select');
+    if (!monthSelect || !monthSelect.options.length) return;
+    var idx = monthSelect.selectedIndex;
+    var nextIdx = idx + direction;
+    if (nextIdx < 0 || nextIdx >= monthSelect.options.length) return;
+    monthSelect.selectedIndex = nextIdx;
+    renderCalendar(monthSelect.value);
+}
+
+function wireFeaturedCalendarMonthButtons() {
+    var prev = document.getElementById('featured-cal-prev');
+    var next = document.getElementById('featured-cal-next');
+    if (prev && !prev.dataset.featuredCalWired) {
+        prev.dataset.featuredCalWired = '1';
+        prev.addEventListener('click', function() { changeFeaturedCalendarMonth(1); });
+    }
+    if (next && !next.dataset.featuredCalWired) {
+        next.dataset.featuredCalWired = '1';
+        next.addEventListener('click', function() { changeFeaturedCalendarMonth(-1); });
+    }
 }
 
 function renderCalendar(yearMonth) {
