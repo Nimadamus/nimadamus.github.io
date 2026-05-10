@@ -155,6 +155,12 @@ const FEATURED_GAMES = [
     { date: "2026-04-27", page: "wolves-vs-nuggets-nba-analysis-stats-preview-april-27-2026.html", title: "Wolves vs Nuggets Analysis April 27, 2026" },
 
     // May 2026
+    { date: "2026-05-02", page: "76ers-vs-celtics-nba-analysis-stats-preview.html", title: "76ers vs Celtics Game 7" },
+    { date: "2026-05-03", page: "liverpool-vs-manchester-united-soccer-analysis-stats-preview.html", title: "Liverpool vs Manchester United" },
+    { date: "2026-05-04", page: "76ers-vs-knicks-eastern-semis-game-1-analysis-stats-preview.html", title: "76ers vs Knicks Eastern Semifinals Game 1" },
+    { date: "2026-05-05", page: "lakers-vs-thunder-western-semis-game-1-analysis-stats-preview.html", title: "Lakers vs Thunder Western Semis Game 1" },
+    { date: "2026-05-07", page: "lakers-vs-thunder-western-semis-game-2-analysis-stats-preview-may-7-2026.html", title: "Lakers vs Thunder Western Semis Game 2" },
+    { date: "2026-05-08", page: "knicks-vs-76ers-eastern-semis-game-3-analysis-stats-preview-may-8-2026.html", title: "Knicks vs 76ers Eastern Semis Game 3" },
     { date: "2026-05-09", page: "pistons-vs-cavaliers-eastern-semis-game-3-analysis-stats-preview-may-9-2026.html", title: "Pistons vs Cavaliers Eastern Semis Game 3" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
