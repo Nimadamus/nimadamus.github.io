@@ -209,6 +209,8 @@ def classify(rel: str, featured_pages: set[str]) -> str:
         "featured-game-calendar.html",
     }:
         return "featured-games"
+    if date_from_filename(name) and re.search(r"(?:^|-)(mlb|nba|nhl|nfl|ncaaf|ncaab|soccer)(?:-|$)", name):
+        return "previews"
     if re.search(r"(mlb|nba|nhl|nfl|ncaaf|ncaab|soccer|college-basketball).*(preview|previews|analysis-stats)", name):
         return "previews"
     if "record" in name or name in {"records.html", "betlegend-verified-records.html"}:
