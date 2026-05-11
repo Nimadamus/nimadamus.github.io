@@ -269,10 +269,6 @@ function renderCalendar(yearMonth) {
 }
 
 function initSportCalendar() {
-    if (SPORT_HUB_PAGE && currentPage === SPORT_HUB_PAGE && window.LATEST_CONTENT_PAGE && window.LATEST_CONTENT_PAGE !== currentPage) {
-        window.location.replace('/' + window.LATEST_CONTENT_PAGE);
-        return;
-    }
 
     const monthSelect = document.getElementById('month-select');
     if (monthSelect) {
