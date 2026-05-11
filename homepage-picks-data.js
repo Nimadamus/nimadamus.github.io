@@ -23,6 +23,22 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NBA",
+        title: "Lakers +11 vs Thunder Game 4 Elimination Spot 3u",
+        date: "May 11, 2026",
+        result: "",
+        url: "lakers-plus-11-thunder-game-4-elimination-spot-nba-pick.html",
+        image: "images/lakers-moneyline-rockets-crypto-com-arena-nba.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Astros Moneyline +124 vs Mariners at Daikin Park 1u",
+        date: "May 11, 2026",
+        result: "",
+        url: "astros-moneyline-plus-124-mariners-kirby-lambert-daikin-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/663567/action/hero/current"
+    },
+    {
         sport: "MLB",
         title: "White Sox/Mariners Under 8 at Rate Field 2u",
         date: "May 10, 2026",
