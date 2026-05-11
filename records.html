@@ -548,10 +548,8 @@ tbody tr:hover {
 </script>
 
 <link rel="stylesheet" href="/mobile-optimize.css" media="screen">
-<link rel="stylesheet" href="/site-navbar.css">
 </head>
 <body>
-<script src="/scripts/site-navbar.js" defer></script>
 
 <nav class="nav-container">
 <div class="nav-inner">
@@ -562,7 +560,7 @@ tbody tr:hover {
  <button class="dropbtn hub-btn">Handicapping Hub</button>
  <div class="dropdown-content">
  <a href="handicapping-hub.html">Today's Games</a>
- <a href="/betting-run-line-versus-money-line-major-league-baseball.html">MLB Run Line vs Money Line<span style="display:block;margin-top:4px;color:#aaa091;font-size:12px;font-weight:600;line-height:1.35">Backtest of 2,223 dog plays: ML vs +1.5.</span></a>
+ <a href="betting-run-line-versus-money-line-major-league-baseball.html">MLB Run Line vs Money Line</a>
  <a href="injury-report.html">Injury Report</a>
  </div>
  </div>
@@ -1017,6 +1015,48 @@ function calculateUnitResult(unitsStake, odds, result) {
  return 0;
 }
 
+function parseSheetDate(dateStr) {
+ if (!dateStr) return null;
+ const raw = String(dateStr).trim();
+ const parts = raw.split(/[-\/]/);
+ if (parts.length >= 3) {
+ const month = parseInt(parts[0], 10);
+ const day = parseInt(parts[1], 10);
+ const yearPart = String(parts[2] || '').match(/\d{2,4}/);
+ const year = yearPart ? parseInt(yearPart[0].length === 2 ? `20${yearPart[0]}` : yearPart[0], 10) : NaN;
+ if (!isNaN(month) && !isNaN(day) && !isNaN(year)) {
+ const parsed = new Date(year, month - 1, day);
+ if (parsed.getFullYear() === year && parsed.getMonth() === month - 1 && parsed.getDate() === day) {
+ return parsed;
+ }
+ }
+ }
+ const parsed = new Date(raw);
+ return isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function formatSheetDate(date) {
+ return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+}
+
+function correctTrackerDateFromPostedAt(row) {
+ const pickDate = parseSheetDate(row.Date || row.date || '');
+ const postedAt = parseSheetDate(row.PostedAt || row.postedAt || row['Posted At'] || '');
+ if (!pickDate || !postedAt) return row;
+
+ const sameMonthDay = pickDate.getMonth() === postedAt.getMonth() && pickDate.getDate() === postedAt.getDate();
+ const differentYear = pickDate.getFullYear() !== postedAt.getFullYear();
+ if (!sameMonthDay || !differentYear) return row;
+
+ const correctedDate = formatSheetDate(postedAt);
+ console.warn(`Corrected Pick Tracker date ${row.Date} -> ${correctedDate} for ${row.Pick || row.pick || 'unknown pick'} using PostedAt`);
+ return {
+ ...row,
+ Date: correctedDate,
+ originalTrackerDate: row.Date || row.date || ''
+ };
+}
+
 let allData = [];
 let filteredData = []; // Data filtered by year
 let currentYearFilter = 'all'; // Default to All Time (matches homepage widget)
@@ -1136,15 +1176,16 @@ async function fetchAllData() {
  const rows = parseCSV(csv);
  console.log(`📊 Pick Tracker: ${rows.length} rows`);
  return rows.map(row => {
- const detectedSport = detectSportFromPick(row);
+ const normalizedRow = correctTrackerDateFromPostedAt(row);
+ const detectedSport = detectSportFromPick(normalizedRow);
  if (!detectedSport) return null;
- const odds = row.Odds || row.Line || '-110';
- const result = row.Result || '';
+ const odds = normalizedRow.Odds || normalizedRow.Line || '-110';
+ const result = normalizedRow.Result || '';
  // Use sport-specific default stakes to match individual records pages
  const sportDefaults = { 'NFL': '2', 'NBA': '1', 'NHL': '3', 'MLB': '1', 'NCAAF': '3', 'NCAAB': '3', 'Soccer': '1' };
- const stake = row.Units || sportDefaults[detectedSport] || '1';
+ const stake = normalizedRow.Units || sportDefaults[detectedSport] || '1';
  return {
- ...row,
+ ...normalizedRow,
  sport: detectedSport,
  Line: odds,
  fromPickTracker: true,
