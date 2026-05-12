@@ -32,225 +32,29 @@ h2,h3{font-family:Oswald,Inter,Arial,sans-serif;text-transform:uppercase;line-he
 .hero-photo{margin:0 0 24px;border:1px solid rgba(232,184,92,.2);border-radius:10px;overflow:hidden;background:#15130f}.hero-photo img{display:block;width:100%;height:auto;max-height:520px;object-fit:cover}.hero-photo figcaption{padding:10px 14px;color:#aaa091;font-size:13px}.calendar-sidebar{position:fixed;left:20px;top:120px;width:280px;z-index:100}.calendar-box{background:#171713;border:1px solid rgba(255,238,203,.14);border-radius:10px;padding:20px;margin-bottom:20px}.calendar-title{font-family:Oswald,Inter,Arial,sans-serif;font-size:16px;color:#e8b85c;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;text-align:center}.year-display{font-family:Oswald,Inter,Arial,sans-serif;font-size:22px;color:#f7e6bd;text-align:center;margin-bottom:10px}.month-select,.mobile-archive-select{width:100%;background:#11110f;color:#fbf7ed;border:1px solid rgba(255,238,203,.14);padding:10px 12px;border-radius:7px}.calendar-weekdays,.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.calendar-weekdays span{text-align:center;font-size:11px;color:#aaa091;padding:5px 0}.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#aaa091;background:rgba(0,0,0,.22);border-radius:5px}.cal-day.empty{background:transparent}.cal-day.has-content{cursor:pointer;background:rgba(232,184,92,.16);color:#e8b85c;font-weight:800}.cal-day.today,.cal-day.current-page{border:2px solid #e8b85c;color:#16120c!important;background:#e8b85c!important;font-weight:900}.mobile-archive{display:none;background:#171713;border:1px solid rgba(255,238,203,.14);border-radius:10px;padding:16px;margin-bottom:24px}.mobile-archive-title{font-family:Oswald,Inter,Arial,sans-serif;color:#e8b85c;text-transform:uppercase;margin-bottom:10px}@media(max-width:1260px){.calendar-sidebar{display:none}.mobile-archive{display:block}}
 </style>
 
+<link rel="stylesheet" href="/site-navbar.css">
 </head>
 <body>
+<script src="/scripts/site-navbar.js" defer></script>
 
-<header class="nav">
-  <a class="brand" href="/"><img src="/newlogo.png" alt="BetLegend logo">Bet<span>Legend</span></a>
-  <nav class="nav-menu" aria-label="Primary navigation">
-    <div class="nav-item"><span class="dropbtn">Handicapping Hub</span><div class="dropdown">
-      <a href="/handicapping-hub.html">Today's Games<span>Main daily research hub and board.</span></a>
-      <a href="/injury-report.html">Injury Report<span>Injury context for current games.</span></a>
-      <a href="/sports-handicapping-hub-guide.html">Hub Guide<span>How to use the handicapping hub.</span></a>
-    </div></div>
-    <a href="/nba-college-basketball-picks-predictions-analysis-february-2026.html">Pick Archive</a>
-    <div class="nav-item"><span class="dropbtn">Game Previews & Records</span><div class="dropdown">
-      <a href="/mlb-previews.html">MLB Previews<span>Daily baseball previews, totals, props, and run lines.</span></a>
-      <a href="/nhl-previews.html">NHL Previews<span>Goalies, puck lines, totals, and playoff races.</span></a>
-      <a href="/nba-previews.html">NBA Previews<span>Injuries, pace, props, spreads, and totals.</span></a>
-      <a href="/soccer-previews.html">Soccer Previews<span>Champions League, World Cup, and league previews.</span></a>
-      <a href="/records.html">All Records<span>Top-level verified record hub.</span></a>
-      <a href="/betlegend-verified-records.html">Verified Records<span>Full transparency and sport breakdowns.</span></a>
-    </div></div>
-    <div class="nav-item"><span class="dropbtn">Resources</span><div class="dropdown">
-      <a href="/proofofpicks.html">Proof of Picks<span>How the picks are posted and verified.</span></a>
-      <a href="/live-odds.html">Live Odds<span>Price screens and current market context.</span></a>
-      <a href="/howitworks.html">How It Works<span>Methods, simulations, and publishing workflow.</span></a>
-      <a href="/bankroll.html">Bankroll<span>Unit sizing and bankroll management.</span></a>
-      <a href="/betting-calculators.html">Calculators<span>Odds, payouts, hold, and conversion tools.</span></a>
-      <a href="/contact.html">Contact<span>Support, questions, and partnerships.</span></a>
-    </div></div>
-    <a href="/garret-anderson-angels-legend-dies-53-pancreatitis-tribute-news.html">News</a>
-    <a href="/podcast.html">Podcast</a>
-    <div class="nav-item"><span class="dropbtn">Game of the Day</span><div class="dropdown">
-      <a href="/timberwolves-spurs-game-five-pivot-nba-analysis-stats-preview.html">Featured Game<span>Current marquee breakdown.</span></a>
-      <a href="/moneyline-parlay-of-the-day.html">Moneyline Parlay<span>Daily parlay card and supporting context.</span></a>
-    </div></div>
-  </nav>
-  <a class="trial" href="/free-trial-info.html">Free Trial</a>
-</header>
-
-
-<section class="hero"><span class="badge">MLB Slate Preview</span><h1>MLB Preview: Full 15-Game Tuesday Board</h1><p>The MLB board is a full 15-game Tuesday slate with early East Coast starts, two dome-controlled environments, and a late Giants at Dodgers capper.</p></section><main class="wrap"><aside class="calendar-sidebar"><div class="calendar-box"><div class="calendar-title">MLB Archive</div><div class="year-display" id="cal-year">2026</div><select class="month-select" id="month-select"></select><div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div><div class="calendar-days" id="calendar-days"></div></div></aside><div class="mobile-archive"><div class="mobile-archive-title">MLB Archive</div><select class="mobile-archive-select" id="mobile-archive-select"><option value="">Jump to date...</option></select></div><figure class="hero-photo"><img src="/images/mlb-aaron-judge-yankees-batting.webp" alt="Yankees hitter in MLB game action"><figcaption>A fifteen-game MLB board starts with Yankees-Orioles and finishes with Giants-Dodgers at Chavez Ravine.</figcaption></figure><div class="grid">
-<article class="card marquee">
-<div class="meta">Game 1 | MLB</div>
-<h2>Los Angeles Angels at Cleveland Guardians</h2>
-<div class="teams"><span>LAA</span><span class="meta">at</span><span>CLE</span></div>
-<div class="meta">6:10 PM EDT | Progressive Field | MLB.TV, CLEGuardians.TV, Angels.TV</div>
-<div class="lines">CLE -136 | CLE -136 / LAA +113 | total 8.5</div>
-<div class="content">
-<p>Cleveland Guardians gets the home floor, ice, or ballpark context, but the first read is market shape. CLE -136 | CLE -136 / LAA +113 | total 8.5 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Los Angeles Angels has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Cleveland Guardians is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 2 | MLB</div>
-<h2>New York Yankees at Baltimore Orioles</h2>
-<div class="teams"><span>NYY</span><span class="meta">at</span><span>BAL</span></div>
-<div class="meta">6:35 PM EDT | Oriole Park at Camden Yards | MLB.TV, MASN, YES</div>
-<div class="lines">NYY -168 | BAL +139 / NYY -168 | total 8.5</div>
-<div class="content">
-<p>Baltimore Orioles gets the home floor, ice, or ballpark context, but the first read is market shape. NYY -168 | BAL +139 / NYY -168 | total 8.5 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>New York Yankees has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Baltimore Orioles is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 3 | MLB</div>
-<h2>Colorado Rockies at Pittsburgh Pirates</h2>
-<div class="teams"><span>COL</span><span class="meta">at</span><span>PIT</span></div>
-<div class="meta">6:40 PM EDT | PNC Park | MLB.TV, Rockies.TV</div>
-<div class="lines">PIT -348 | PIT -348 / COL +273 | total 7.5</div>
-<div class="content">
-<p>Pittsburgh Pirates gets the home floor, ice, or ballpark context, but the first read is market shape. PIT -348 | PIT -348 / COL +273 | total 7.5 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Colorado Rockies has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Pittsburgh Pirates is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 4 | MLB</div>
-<h2>Washington Nationals at Cincinnati Reds</h2>
-<div class="teams"><span>WSH</span><span class="meta">at</span><span>CIN</span></div>
-<div class="meta">6:40 PM EDT | Great American Ball Park | MLB.TV, Reds.TV, Nationals.TV</div>
-<div class="lines">CIN -149 | CIN -149 / WSH +123 | total 10.0</div>
-<div class="content">
-<p>Cincinnati Reds gets the home floor, ice, or ballpark context, but the first read is market shape. CIN -149 | CIN -149 / WSH +123 | total 10.0 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Washington Nationals has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Cincinnati Reds is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 5 | MLB</div>
-<h2>Philadelphia Phillies at Boston Red Sox</h2>
-<div class="teams"><span>PHI</span><span class="meta">at</span><span>BOS</span></div>
-<div class="meta">6:45 PM EDT | Fenway Park | MLB.TV, NBC Sports Phil, NESN</div>
-<div class="lines">PHI -143 | BOS +119 / PHI -143 | total 8.0</div>
-<div class="content">
-<p>Boston Red Sox gets the home floor, ice, or ballpark context, but the first read is market shape. PHI -143 | BOS +119 / PHI -143 | total 8.0 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Philadelphia Phillies has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Boston Red Sox is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 6 | MLB</div>
-<h2>Tampa Bay Rays at Toronto Blue Jays</h2>
-<div class="teams"><span>TB</span><span class="meta">at</span><span>TOR</span></div>
-<div class="meta">7:07 PM EDT | Rogers Centre | MLB.TV, Rays.TV, Sportsnet One</div>
-<div class="lines">TB -126 | TOR +104 / TB -126 | total 8.0</div>
-<div class="content">
-<p>Toronto Blue Jays gets the home floor, ice, or ballpark context, but the first read is market shape. TB -126 | TOR +104 / TB -126 | total 8.0 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Tampa Bay Rays has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Toronto Blue Jays is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 7 | MLB</div>
-<h2>Detroit Tigers at New York Mets</h2>
-<div class="teams"><span>DET</span><span class="meta">at</span><span>NYM</span></div>
-<div class="meta">7:10 PM EDT | Citi Field | MLB.TV, Tigers.TV, SNY</div>
-<div class="lines">NYM -156 | NYM -156 / DET +129 | total 8.0</div>
-<div class="content">
-<p>New York Mets gets the home floor, ice, or ballpark context, but the first read is market shape. NYM -156 | NYM -156 / DET +129 | total 8.0 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Detroit Tigers has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>New York Mets is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 8 | MLB</div>
-<h2>Chicago Cubs at Atlanta Braves</h2>
-<div class="teams"><span>CHC</span><span class="meta">at</span><span>ATL</span></div>
-<div class="meta">7:15 PM EDT | Truist Park | MLB.TV, Marquee Sports Net, BravesVision</div>
-<div class="lines">ATL -126 | ATL -126 / CHC +104 | total 9.0</div>
-<div class="content">
-<p>Atlanta Braves gets the home floor, ice, or ballpark context, but the first read is market shape. ATL -126 | ATL -126 / CHC +104 | total 9.0 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Chicago Cubs has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Atlanta Braves is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 9 | MLB</div>
-<h2>Kansas City Royals at Chicago White Sox</h2>
-<div class="teams"><span>KC</span><span class="meta">at</span><span>CHW</span></div>
-<div class="meta">7:40 PM EDT | Rate Field | MLB.TV, Royals.TV, CHSN</div>
-<div class="lines">KC -126 | CHW +104 / KC -126 | total 9.5</div>
-<div class="content">
-<p>Chicago White Sox gets the home floor, ice, or ballpark context, but the first read is market shape. KC -126 | CHW +104 / KC -126 | total 9.5 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Kansas City Royals has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Chicago White Sox is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 10 | MLB</div>
-<h2>Miami Marlins at Minnesota Twins</h2>
-<div class="teams"><span>MIA</span><span class="meta">at</span><span>MIN</span></div>
-<div class="meta">7:40 PM EDT | Target Field | MLB.TV, Twins.TV, Marlins.TV</div>
-<div class="lines">MIN -115 | MIN -115 / MIA -105 | total 9.0</div>
-<div class="content">
-<p>Minnesota Twins gets the home floor, ice, or ballpark context, but the first read is market shape. MIN -115 | MIN -115 / MIA -105 | total 9.0 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Miami Marlins has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Minnesota Twins is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 11 | MLB</div>
-<h2>San Diego Padres at Milwaukee Brewers</h2>
-<div class="teams"><span>SD</span><span class="meta">at</span><span>MIL</span></div>
-<div class="meta">7:40 PM EDT | American Family Field | MLB.TV, Padres.TV, Brewers.TV</div>
-<div class="lines">MIL -131 | MIL -131 / SD +109 | total 8.5</div>
-<div class="content">
-<p>Milwaukee Brewers gets the home floor, ice, or ballpark context, but the first read is market shape. MIL -131 | MIL -131 / SD +109 | total 8.5 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>San Diego Padres has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Milwaukee Brewers is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 12 | MLB</div>
-<h2>Arizona Diamondbacks at Texas Rangers</h2>
-<div class="teams"><span>ARI</span><span class="meta">at</span><span>TEX</span></div>
-<div class="meta">8:05 PM EDT | Globe Life Field | MLB.TV, DBACKS.TV, Rangers Sports Network</div>
-<div class="lines">TEX -136 | TEX -136 / ARI +113 | total 8.0</div>
-<div class="content">
-<p>Texas Rangers gets the home floor, ice, or ballpark context, but the first read is market shape. TEX -136 | TEX -136 / ARI +113 | total 8.0 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Arizona Diamondbacks has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Texas Rangers is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 13 | MLB</div>
-<h2>Seattle Mariners at Houston Astros</h2>
-<div class="teams"><span>SEA</span><span class="meta">at</span><span>HOU</span></div>
-<div class="meta">8:10 PM EDT | Daikin Park | MLB.TV, Space City Home Network, Mariners.TV</div>
-<div class="lines">SEA -149 | HOU +123 / SEA -149 | total 8.5</div>
-<div class="content">
-<p>Houston Astros gets the home floor, ice, or ballpark context, but the first read is market shape. SEA -149 | HOU +123 / SEA -149 | total 8.5 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Seattle Mariners has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Houston Astros is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 14 | MLB</div>
-<h2>St. Louis Cardinals at Athletics</h2>
-<div class="teams"><span>STL</span><span class="meta">at</span><span>ATH</span></div>
-<div class="meta">9:40 PM EDT | Sutter Health Park | ESPN Unlmtd, Cardinals.TV</div>
-<div class="lines">ATH -156 | ATH -156 / STL +129 | total 10.0</div>
-<div class="content">
-<p>Athletics gets the home floor, ice, or ballpark context, but the first read is market shape. ATH -156 | ATH -156 / STL +129 | total 10.0 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>St. Louis Cardinals has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Athletics is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 15 | MLB</div>
-<h2>San Francisco Giants at Los Angeles Dodgers</h2>
-<div class="teams"><span>SF</span><span class="meta">at</span><span>LAD</span></div>
-<div class="meta">10:10 PM EDT | Dodger Stadium | MLB.TV, NBC Sports BA, Sportsnet LA</div>
-<div class="lines">LAD -300 | LAD -300 / SF +238 | total 9.0</div>
-<div class="content">
-<p>Los Angeles Dodgers gets the home floor, ice, or ballpark context, but the first read is market shape. LAD -300 | LAD -300 / SF +238 | total 9.0 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>San Francisco Giants has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Los Angeles Dodgers is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-</div><div class="note">This SLATE page is analysis only. It is not a pick page and does not make betting recommendations.</div></main>
-<footer class="footer">BetLegend Picks &copy; 2026. Analysis only. No guarantees. Please gamble responsibly.</footer><script src="scripts/mlb-calendar.js?v=20260512aa"></script></body></html>
+<section class="hero"><span class="badge">MLB Slate Preview</span><h1>MLB Preview: Yankees-Orioles, Cubs-Braves, Giants-Dodgers and the Full 15-Game Board</h1><p>A full Tuesday baseball board brings divisional pressure, extreme favorite pricing, two double-digit totals, and a late Giants-Dodgers capper at Dodger Stadium.</p></section><main class="wrap"><aside class="calendar-sidebar"><div class="calendar-box"><div class="calendar-title">MLB Archive</div><div class="year-display" id="cal-year">2026</div><select class="month-select" id="month-select"></select><div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div><div class="calendar-days" id="calendar-days"></div></div></aside><div class="mobile-archive"><div class="mobile-archive-title">MLB Archive</div><select class="mobile-archive-select" id="mobile-archive-select"><option value="">Jump to date...</option></select></div><figure class="hero-photo"><img src="/images/mlb-aaron-judge-yankees-batting.webp" alt="Yankees hitter in MLB game action"><figcaption>The Yankees open the high-profile part of the board in Baltimore before Giants-Dodgers closes the night in Los Angeles.</figcaption></figure><div class="grid">
+<article class="card marquee"><div class="meta">Board Overview | 15 games | First pitch 6:10 PM ET</div><h2>The Shape of the Tuesday MLB Card</h2><div class="lines">Largest favorites: Pirates -348, Dodgers -308, Yankees -168. Highest totals: Nationals-Reds 10.0, Cardinals-Athletics 10.0, Royals-White Sox 9.5.</div><div class="content">
+<p>The May 12 MLB slate is not just large. It is structurally interesting. There are fifteen games, but the pricing is not flat. Pittsburgh are -348 against Colorado, the Dodgers are -308 against San Francisco, and the Yankees are -168 in Baltimore. Those numbers tell you where the market sees separation. The totals tell a different story: Cincinnati and the Athletics both sit at 10.0, while Kansas City-Chicago is 9.5 and Giants-Dodgers is 9.0 despite Los Angeles carrying the largest late-night moneyline.</p>
+<p>The cleanest early headline is Yankees at Orioles. New York are 26-16 overall and 12-10 on the road, while Baltimore are 19-23 and exactly .500 at home at 11-11. A -168 road price is not casual. It says the market trusts the Yankees' run creation and bullpen stability more than Camden Yards volatility. Baltimore's challenge is to make the game about contact quality and leverage traffic, not simply power against power.</p>
+<p>Cubs at Braves might be the best pure baseball game on the board. Chicago are 27-14, Atlanta are 28-13, and yet the Braves are only -126 at Truist Park. That is a sharp number because both teams have winning profiles and real lineup depth. The total at 9.0 respects the offensive ceiling, but the narrow moneyline says the market sees a game that can be decided by bullpen sequencing, not just the better record.</p>
+<p>The late capper is Giants at Dodgers, and it carries a very different feel. Los Angeles are 24-17 overall and 13-9 at home, while San Francisco are 17-24 and 7-12 on the road. The Dodgers' -308 price is a massive regular-season baseball number, and that matters. At that level, the analytical question is not whether the favorite is better. It is whether the price has already swallowed the gap. The total of 9.0 keeps run environment in focus because a favorite that large still needs clean innings to avoid making the game weird.</p>
+</div></article>
+<article class="card"><div class="meta">East Coast Window</div><h2>Early Favorites and Run Environments</h2><div class="lines">Guardians -136 vs Angels, Reds -149 vs Nationals, Phillies -149 at Red Sox, Rays -126 at Blue Jays.</div><div class="content">
+<p>Cleveland are 22-21 and 11-9 at home, and they open the night as -136 favorites against an Angels team that is 16-26 overall and 8-16 on the road. That is a classic stability number: not dominant, but clearly tilted toward the home side. Cincinnati's -149 against Washington is more tied to run environment. Great American Ball Park gets a 10.0 total, and the Nationals' 13-9 road split makes that game more dangerous than the standings alone suggest.</p>
+<p>Phillies at Red Sox is priced toward Philadelphia at -149, with Boston just 7-12 at Fenway. Tampa Bay at Toronto is another market respect spot: the Rays are 27-13 overall and 13-9 on the road, while Toronto are 18-23 despite a 12-10 home split. Tampa Bay being favored in Rogers Centre is a nod to the Rays' season-long consistency.</p>
+</div></article>
+<article class="card"><div class="meta">Middle of the Board</div><h2>Braves-Cubs, Brewers-Padres and the Tight Games</h2><div class="lines">Braves -126 vs Cubs, Brewers -131 vs Padres, Rangers -136 vs Diamondbacks, Twins -112 vs Marlins.</div><div class="content">
+<p>The board's most useful analytical pocket is the cluster of modest favorites. Atlanta at -126 against the Cubs, Milwaukee at -131 against San Diego, Texas at -136 against Arizona, and Minnesota at -112 against Miami all sit in the zone where matchup details matter more than brand names. These are not games where the market is trying to bury an underdog. They are games where home field, lineup balance, bullpen availability, and defensive reliability can swing the entire handicap.</p>
+<p>Padres-Brewers deserves extra attention because San Diego are 24-16 overall and 11-6 on the road, yet Milwaukee are still favored at American Family Field. That is market respect for the Brewers' 13-8 home split and their ability to control the run environment indoors. Marlins-Twins is almost a pick'em at MIN -112, which is appropriate for two teams hovering around the same overall level. The difference is venue and bullpen trust, not a massive talent gap.</p>
+</div></article>
+<article class="card"><div class="meta">Late Window</div><h2>Mariners-Astros, Cardinals-Athletics and Giants-Dodgers</h2><div class="lines">Mariners -149 at Astros, Athletics -156 vs Cardinals, Dodgers -308 vs Giants.</div><div class="content">
+<p>Seattle being -149 in Houston is one of the sharper tells on the card. The Mariners are only 20-22 overall, but Houston are 16-26 and 9-11 at home, so the market is pricing current team quality more than old reputation. Cardinals-Athletics has the late-night chaos profile: St. Louis are 23-17 with a 13-7 road split, yet the Athletics are -156 at Sutter Health Park with a total of 10.0. That combination says the market expects offense but still grades the home side with a meaningful edge.</p>
+<p>Giants-Dodgers closes the board with the most dramatic favorite price. Los Angeles at -308 carries an implied probability above 75 percent before adjusting for hold, which is enormous for a regular-season baseball game. San Francisco's 7-12 road record explains part of it. The Dodgers' offensive ceiling explains the rest. Still, baseball variance never disappears, especially with a total at 9.0. The preview angle is whether the Dodgers can turn superiority into clean innings rather than simply relying on the gap in roster reputation.</p>
+<p>This SLATE page is analysis only. No picks are published here. The purpose is to map the market, the records, and the game environments so the board reads like a coherent baseball night instead of fifteen disconnected lines.</p>
+</div></article></div><div class="note">This SLATE page is analysis only. It is not a pick page and does not make betting recommendations.</div></main><footer class="footer">BetLegend Picks &copy; 2026. Analysis only. No guarantees. Please gamble responsibly.</footer><script src="scripts/mlb-calendar.js?v=20260512aa"></script>
+</body></html>

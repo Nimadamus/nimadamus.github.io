@@ -32,69 +32,22 @@ h2,h3{font-family:Oswald,Inter,Arial,sans-serif;text-transform:uppercase;line-he
 .hero-photo{margin:0 0 24px;border:1px solid rgba(232,184,92,.2);border-radius:10px;overflow:hidden;background:#15130f}.hero-photo img{display:block;width:100%;height:auto;max-height:520px;object-fit:cover}.hero-photo figcaption{padding:10px 14px;color:#aaa091;font-size:13px}.calendar-sidebar{position:fixed;left:20px;top:120px;width:280px;z-index:100}.calendar-box{background:#171713;border:1px solid rgba(255,238,203,.14);border-radius:10px;padding:20px;margin-bottom:20px}.calendar-title{font-family:Oswald,Inter,Arial,sans-serif;font-size:16px;color:#e8b85c;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;text-align:center}.year-display{font-family:Oswald,Inter,Arial,sans-serif;font-size:22px;color:#f7e6bd;text-align:center;margin-bottom:10px}.month-select,.mobile-archive-select{width:100%;background:#11110f;color:#fbf7ed;border:1px solid rgba(255,238,203,.14);padding:10px 12px;border-radius:7px}.calendar-weekdays,.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.calendar-weekdays span{text-align:center;font-size:11px;color:#aaa091;padding:5px 0}.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#aaa091;background:rgba(0,0,0,.22);border-radius:5px}.cal-day.empty{background:transparent}.cal-day.has-content{cursor:pointer;background:rgba(232,184,92,.16);color:#e8b85c;font-weight:800}.cal-day.today,.cal-day.current-page{border:2px solid #e8b85c;color:#16120c!important;background:#e8b85c!important;font-weight:900}.mobile-archive{display:none;background:#171713;border:1px solid rgba(255,238,203,.14);border-radius:10px;padding:16px;margin-bottom:24px}.mobile-archive-title{font-family:Oswald,Inter,Arial,sans-serif;color:#e8b85c;text-transform:uppercase;margin-bottom:10px}@media(max-width:1260px){.calendar-sidebar{display:none}.mobile-archive{display:block}}
 </style>
 
+<link rel="stylesheet" href="/site-navbar.css">
 </head>
 <body>
+<script src="/scripts/site-navbar.js" defer></script>
 
-<header class="nav">
-  <a class="brand" href="/"><img src="/newlogo.png" alt="BetLegend logo">Bet<span>Legend</span></a>
-  <nav class="nav-menu" aria-label="Primary navigation">
-    <div class="nav-item"><span class="dropbtn">Handicapping Hub</span><div class="dropdown">
-      <a href="/handicapping-hub.html">Today's Games<span>Main daily research hub and board.</span></a>
-      <a href="/injury-report.html">Injury Report<span>Injury context for current games.</span></a>
-      <a href="/sports-handicapping-hub-guide.html">Hub Guide<span>How to use the handicapping hub.</span></a>
-    </div></div>
-    <a href="/nba-college-basketball-picks-predictions-analysis-february-2026.html">Pick Archive</a>
-    <div class="nav-item"><span class="dropbtn">Game Previews & Records</span><div class="dropdown">
-      <a href="/mlb-previews.html">MLB Previews<span>Daily baseball previews, totals, props, and run lines.</span></a>
-      <a href="/nhl-previews.html">NHL Previews<span>Goalies, puck lines, totals, and playoff races.</span></a>
-      <a href="/nba-previews.html">NBA Previews<span>Injuries, pace, props, spreads, and totals.</span></a>
-      <a href="/soccer-previews.html">Soccer Previews<span>Champions League, World Cup, and league previews.</span></a>
-      <a href="/records.html">All Records<span>Top-level verified record hub.</span></a>
-      <a href="/betlegend-verified-records.html">Verified Records<span>Full transparency and sport breakdowns.</span></a>
-    </div></div>
-    <div class="nav-item"><span class="dropbtn">Resources</span><div class="dropdown">
-      <a href="/proofofpicks.html">Proof of Picks<span>How the picks are posted and verified.</span></a>
-      <a href="/live-odds.html">Live Odds<span>Price screens and current market context.</span></a>
-      <a href="/howitworks.html">How It Works<span>Methods, simulations, and publishing workflow.</span></a>
-      <a href="/bankroll.html">Bankroll<span>Unit sizing and bankroll management.</span></a>
-      <a href="/betting-calculators.html">Calculators<span>Odds, payouts, hold, and conversion tools.</span></a>
-      <a href="/contact.html">Contact<span>Support, questions, and partnerships.</span></a>
-    </div></div>
-    <a href="/garret-anderson-angels-legend-dies-53-pancreatitis-tribute-news.html">News</a>
-    <a href="/podcast.html">Podcast</a>
-    <div class="nav-item"><span class="dropbtn">Game of the Day</span><div class="dropdown">
-      <a href="/timberwolves-spurs-game-five-pivot-nba-analysis-stats-preview.html">Featured Game<span>Current marquee breakdown.</span></a>
-      <a href="/moneyline-parlay-of-the-day.html">Moneyline Parlay<span>Daily parlay card and supporting context.</span></a>
-    </div></div>
-  </nav>
-  <a class="trial" href="/free-trial-info.html">Free Trial</a>
-</header>
-
-
-<section class="hero"><span class="badge">NHL Slate Preview</span><h1>NHL Preview: Sabres Canadiens Ducks Knights</h1><p>Two NHL second-round games carry the hockey board, one with Montreal protecting a 2-1 lead and one with Anaheim and Vegas tied 2-2.</p></section><main class="wrap"><aside class="calendar-sidebar"><div class="calendar-box"><div class="calendar-title">NHL Archive</div><div class="year-display" id="cal-year">2026</div><select class="month-select" id="month-select"></select><div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div><div class="calendar-days" id="calendar-days"></div></div></aside><div class="mobile-archive"><div class="mobile-archive-title">NHL Archive</div><select class="mobile-archive-select" id="mobile-archive-select"><option value="">Jump to date...</option></select></div><figure class="hero-photo"><img src="/images/sabres-canadiens-under-6-5-game-1-second-round-keybank-center-nhl-pick.jpg" alt="Buffalo Sabres and Montreal Canadiens playoff game action"><figcaption>Buffalo-Montreal and Anaheim-Vegas give the NHL board two second-round pressure points on May 12.</figcaption></figure><div class="grid">
-<article class="card marquee">
-<div class="meta">Game 1 | East 2nd Round - Game 4</div>
-<h2>Buffalo Sabres at Montreal Canadiens</h2>
-<div class="teams"><span>BUF</span><span class="meta">at</span><span>MTL</span></div>
-<div class="meta">7:00 PM EDT | Bell Centre | ESPN</div>
-<div class="lines">MTL -142 | MTL -142 / BUF +120 | total 6.5</div>
-<div class="content">
-<p>Montreal Canadiens gets the home floor, ice, or ballpark context, but the first read is market shape. MTL -142 | MTL -142 / BUF +120 | total 6.5 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Buffalo Sabres has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Montreal Canadiens is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-<article class="card ">
-<div class="meta">Game 2 | West 2nd Round - Game 5</div>
-<h2>Anaheim Ducks at Vegas Golden Knights</h2>
-<div class="teams"><span>ANA</span><span class="meta">at</span><span>VGK</span></div>
-<div class="meta">9:30 PM EDT | T-Mobile Arena | ESPN</div>
-<div class="lines">VGK -155 | VGK -155 / ANA +130 | total 6.5</div>
-<div class="content">
-<p>Vegas Golden Knights gets the home floor, ice, or ballpark context, but the first read is market shape. VGK -155 | VGK -155 / ANA +130 | total 6.5 sets the expectation for tempo, run environment, or scoring pressure before matchup detail even enters the conversation.</p>
-<p>Anaheim Ducks has to manage the early segment cleanly because road games on a daily slate often swing on first-period, first-quarter, or first-inning stability. The travel side cannot give away free possessions, free bases, or careless defensive shifts and still expect the line to stay honest.</p>
-<p>Vegas Golden Knights is priced or positioned as the host, which puts the burden on execution rather than narrative. This is a preview, not a recommendation: the useful angle is how the number, venue, broadcast window, and matchup rhythm interact across the full game.</p>
-</div>
-</article>
-</div><div class="note">This SLATE page is analysis only. It is not a pick page and does not make betting recommendations.</div></main>
-<footer class="footer">BetLegend Picks &copy; 2026. Analysis only. No guarantees. Please gamble responsibly.</footer><script src="scripts/nhl-calendar.js?v=20260512aa"></script></body></html>
+<section class="hero"><span class="badge">NHL Slate Preview</span><h1>NHL Preview: Sabres-Canadiens and Ducks-Golden Knights</h1><p>Two second-round playoff games define the hockey board: Montreal tries to extend a 2-1 series lead, while Anaheim and Vegas break a 2-2 tie.</p></section><main class="wrap"><aside class="calendar-sidebar"><div class="calendar-box"><div class="calendar-title">NHL Archive</div><div class="year-display" id="cal-year">2026</div><select class="month-select" id="month-select"></select><div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div><div class="calendar-days" id="calendar-days"></div></div></aside><div class="mobile-archive"><div class="mobile-archive-title">NHL Archive</div><select class="mobile-archive-select" id="mobile-archive-select"><option value="">Jump to date...</option></select></div><figure class="hero-photo"><img src="/images/sabres-canadiens-under-6-5-game-1-second-round-keybank-center-nhl-pick.jpg" alt="Buffalo Sabres and Montreal Canadiens playoff game action"><figcaption>Montreal-Buffalo is about series control, while Anaheim-Vegas is about who handles the Game 5 pivot.</figcaption></figure><div class="grid">
+<article class="card marquee"><div class="meta">East 2nd Round Game 4 | 7:00 PM ET | Bell Centre | ESPN</div><h2>Buffalo Sabres at Montreal Canadiens</h2><div class="teams"><span>BUF</span><span class="meta">at</span><span>MTL</span></div><div class="lines">Canadiens -142 | Sabres +120 | total 6.5</div><div class="content">
+<p>The Montreal Canadiens are on home ice with a 2-1 series lead and a -142 price, but the underlying profile is more complicated than the favorite label. Buffalo went 50-23-9 in the regular season and 24-13-4 on the road. Montreal went 48-24-10 overall, with a 24-15-2 home split that is good, but not overwhelming. That makes Game 4 feel less like a coronation and more like a control test.</p>
+<p>The total at 6.5 tells you the market is leaving room for offense, but playoff hockey rarely rewards loose ambition. Buffalo's path is forecheck pressure without reckless pinches. The Sabres need to make Montreal's breakout defend every rim, every retrieval, every second puck. If Buffalo can turn the Bell Centre crowd from fuel into tension, the series dynamic changes quickly.</p>
+<p>Montreal's task is cleaner and harder: protect the lead without playing like a team trying to protect a lead. The Canadiens cannot sit back for sixty minutes and invite Buffalo's speed through the neutral zone. Their best game is proactive, with short support, disciplined puck management, and enough net-front pressure to make Buffalo defend below the dots.</p>
+<p>The analytical hinge is special-teams discipline. A 6.5 total can be reached quickly if penalties stack, but five-on-five structure still decides who controls the game. Montreal do not need a blowout. They need the type of mature home playoff performance that makes Buffalo chase the game instead of dictate it.</p>
+</div></article>
+<article class="card"><div class="meta">West 2nd Round Game 5 | 9:30 PM ET | T-Mobile Arena | ESPN</div><h2>Anaheim Ducks at Vegas Golden Knights</h2><div class="teams"><span>ANA</span><span class="meta">at</span><span>VGK</span></div><div class="lines">Golden Knights -155 | Ducks +130 | total 6.5</div><div class="content">
+<p>Anaheim and Vegas are tied 2-2, which makes this the purest swing game on the NHL board. The Golden Knights are -155 at T-Mobile Arena, but their 39-26-17 regular-season record and 20-12-9 home split do not scream automatic dominance. Anaheim were 43-33-6 overall, but the Ducks' 19-20-2 road record explains why the market still makes Vegas the clear Game 5 favorite.</p>
+<p>The Ducks have to survive the first ten minutes with composure. Vegas are at their best when the building gets loud, the defense activates, and the game starts to feel like wave after wave of pressure. Anaheim need exits with possession, not glass-and-out survival. Every controlled breakout is a way to slow the Knights down and make the home side defend in layers.</p>
+<p>Vegas have the more obvious path to territorial control. If the Golden Knights can establish an offensive-zone cycle, rotate pucks through the points, and force Anaheim into tired clears, the -155 number is justified by process rather than reputation. The danger is overextending. A tied series punishes teams that confuse pressure with impatience.</p>
+<p>The shared 6.5 total with the early game is interesting because these two matchups may reach that number in different ways. Montreal-Buffalo can get there through transition and special teams. Anaheim-Vegas can get there through sustained pressure, empty-net math, and defensive-zone fatigue. Game 5 is less about style points and more about who makes the other bench shorten first.</p>
+</div></article></div><div class="note">This SLATE page is analysis only. It is not a pick page and does not make betting recommendations.</div></main><footer class="footer">BetLegend Picks &copy; 2026. Analysis only. No guarantees. Please gamble responsibly.</footer><script src="scripts/nhl-calendar.js?v=20260512aa"></script>
+</body></html>
