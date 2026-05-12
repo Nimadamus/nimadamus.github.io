@@ -74,6 +74,7 @@ const ARCHIVE_DATA = [
     { date: "2026-03-27", page: "nhl-previews-archive-march-2026.html#2026-03-27", title: "NHL Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "nhl-previews-archive-march-2026.html#2026-03-25", title: "NHL Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "blackhawks-puck-line-moneyline-at-islanders-nhl.html", title: "Blackhawks +1.5 and Moneyline at Islanders NHL Pick" },
+    { date: "2026-03-23", page: "nhl-previews-archive-march-2026.html#2026-03-23", title: "NHL Analysis - 2026-03-23" },
     { date: "2026-03-22", page: "penguins-team-total-over-2-5-hurricanes-nhl.html", title: "Penguins Team Total Over 2.5 Goals NHL Pick" },
     { date: "2026-03-21", page: "kraken-blue-jackets-under-6-5-nhl.html", title: "Kraken vs Blue Jackets Under 6.5 Goals NHL Pick" },
     { date: "2026-03-20", page: "devils-moneyline-plus-110-at-capitals-nhl.html", title: "Devils Moneyline +110 at Capitals NHL Pick" },

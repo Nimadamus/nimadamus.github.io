@@ -497,6 +497,23 @@ def get_sport_pages(sport_config):
 
         return None
 
+    def archive_target_for_date(date):
+        """Return the best archive target for a manifest date, even if its anchor is missing."""
+        archive_page = archive_page_for_date(date)
+        if archive_page:
+            return archive_page
+        if not archive_pattern:
+            return None
+
+        date_obj = datetime.strptime(date, '%Y-%m-%d')
+        month_name = date_obj.strftime('%B').lower()
+        year = date_obj.strftime('%Y')
+        archive_filename = archive_pattern.replace('*', f'{month_name}-{year}')
+        archive_path = REPO_DIR / archive_filename
+        if archive_path.exists():
+            return f'{archive_filename}#{date}'
+        return None
+
     # =========================================================================
     # ARCHIVE DATE RECOVERY: Read from JSON manifest (primary) + HTML (fallback)
     # The manifest is the single source of truth, written by rotate_hub_content.py.
@@ -516,9 +533,9 @@ def get_sport_pages(sport_config):
             sport_dates = manifest.get(prefix, [])
             for date in sport_dates:
                 if date not in existing_dates:
-                    archive_page = archive_page_for_date(date)
-                    if not archive_page and hub_page:
-                        print(f"    [SKIP MANIFEST] {hub_page}: {date} has no archive anchor or specific page")
+                    archive_page = archive_target_for_date(date)
+                    if not archive_page and not hub_page:
+                        print(f"    [SKIP MANIFEST] {prefix}: {date} has no archive page or hub fallback")
                         continue
                     pages.append({
                         'date': date,
@@ -537,9 +554,9 @@ def get_sport_pages(sport_config):
             archive_dates = extract_dates_from_rotation_archive(filepath)
             for date in archive_dates:
                 if date not in existing_dates:
-                    archive_page = archive_page_for_date(date)
-                    if not archive_page and hub_page:
-                        print(f"    [SKIP ARCHIVE HTML] {hub_page}: {date} has no archive anchor or specific page")
+                    archive_page = archive_target_for_date(date)
+                    if not archive_page and not hub_page:
+                        print(f"    [SKIP ARCHIVE HTML] {prefix}: {date} has no archive page or hub fallback")
                         continue
                     pages.append({
                         'date': date,
@@ -1107,7 +1124,7 @@ def main():
             print(f"  Updated {sport_config['calendar_js']}")
             update_hub_placeholder_fallback(sport_name, sport_config, pages)
 
-    # Update cache busters on all preview hub pages so browsers load fresh calendar JS
+    # Update cache busters on all pages so browsers load fresh calendar JS
     update_calendar_cache_busters()
 
     print("\n" + "=" * 60)
@@ -1118,49 +1135,50 @@ def main():
 
 def update_calendar_cache_busters():
     """
-    Updates the ?v= cache buster on calendar JS script tags in all hub pages.
+    Updates the ?v= cache buster on calendar JS script tags in every HTML page.
     This ensures browsers always load the latest calendar data after sync.
     Without this, browsers serve stale calendar JS and show wrong months/dates.
 
     Added April 7, 2026 - fixes bug where calendars showed March instead of current month.
+    Expanded May 12, 2026 - standalone SLATE/article pages also load sport calendars,
+    so limiting cache busting to hub pages can make old dates appear missing.
     """
     from datetime import datetime
     today_stamp = datetime.now().strftime('%Y%m%d%H%M')
 
-    hub_calendar_map = {
-        'nba-previews.html': 'nba-calendar.js',
-        'nhl-previews.html': 'nhl-calendar.js',
-        'mlb-previews.html': 'mlb-calendar.js',
-        'soccer-previews.html': 'soccer-calendar.js',
-        'college-basketball-previews.html': 'ncaab-calendar.js',
-        'nfl.html': 'nfl-calendar.js',
-        'ncaaf.html': 'ncaaf-calendar.js',
-    }
+    calendar_scripts = [
+        'featured-games-calendar.js',
+        'nba-calendar.js',
+        'nhl-calendar.js',
+        'mlb-calendar.js',
+        'soccer-calendar.js',
+        'ncaab-calendar.js',
+        'nfl-calendar.js',
+        'ncaaf-calendar.js',
+    ]
 
     print(f"\n[CACHE BUSTER] Updating calendar JS versions to {today_stamp}...")
     updated = 0
 
-    for hub_page, cal_js in hub_calendar_map.items():
-        filepath = REPO_DIR / hub_page
-        if not filepath.exists():
-            continue
-
+    for filepath in REPO_DIR.rglob('*.html'):
         with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()
 
         original = content
-        # Match the calendar JS script tag and update its version parameter
-        content = re.sub(
-            rf'{re.escape(cal_js)}\?v=\d+',
-            f'{cal_js}?v={today_stamp}',
-            content
-        )
+        for cal_js in calendar_scripts:
+            # Match the calendar JS script tag and update/add its version parameter.
+            content = re.sub(
+                rf'{re.escape(cal_js)}(?:\?v=[A-Za-z0-9]+)?',
+                f'{cal_js}?v={today_stamp}',
+                content
+            )
 
         if content != original:
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(content)
             updated += 1
-            print(f"  [UPDATED] {hub_page} -> {cal_js}?v={today_stamp}")
+            rel = filepath.relative_to(REPO_DIR)
+            print(f"  [UPDATED] {rel}")
 
     if updated == 0:
         print("  [OK] All cache busters already current")

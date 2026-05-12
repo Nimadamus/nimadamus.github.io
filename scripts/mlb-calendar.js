@@ -90,6 +90,7 @@ const ARCHIVE_DATA = [
     { date: "2026-03-26", page: "red-sox-moneyline-crochet-reds-opening-day-mlb.html", title: "Red Sox ML -158 vs Reds Opening Day MLB Pick" },
     { date: "2026-03-25", page: "yankees-giants-over-7-opening-day-mlb.html", title: "Yankees at Giants Over 7 Opening Day MLB Pick" },
     { date: "2026-03-24", page: "mlb-previews-archive-march-2026.html#2026-03-24", title: "MLB Analysis - 2026-03-24" },
+    { date: "2026-03-23", page: "mlb-previews-archive-march-2026.html#2026-03-23", title: "MLB Analysis - 2026-03-23" },
     { date: "2026-03-18", page: "spring-training-heat-wave-cubs-bregman-dodgers-tucker-mlb.html", title: "MLB Analysis - March 18, 2026" },
     { date: "2026-01-08", page: "mlb-picks-analysis-against-the-spread.html", title: "MLB Analysis - January 08, 2026" },
 ];

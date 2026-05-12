@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-12", page: "al-nassr-al-hilal-saudi-title-decider-soccer.html", title: "Al Nassr vs Al Hilal Saudi Title Decider Preview" },
+    { date: "2026-05-12", page: "arsenal-sporting-bayern-real-madrid-second-leg-soccer.html", title: "Al Nassr vs Al Hilal Saudi Title Decider Preview" },
     { date: "2026-05-12", page: "soccer-previews.html", title: "Soccer Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-05-11", page: "tottenham-leeds-survival-rayo-girona-relegation-soccer.html", title: "Soccer Analysis - May 11, 2026" },
     { date: "2026-05-10", page: "soccer-previews-archive-may-2026.html#2026-05-10", title: "SOCCER Analysis - 2026-05-10" },
@@ -52,6 +53,7 @@ const ARCHIVE_DATA = [
     { date: "2026-03-27", page: "soccer-previews-archive-march-2026.html#2026-03-27", title: "SOCCER Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "soccer-previews-archive-march-2026.html#2026-03-25", title: "SOCCER Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "soccer-previews-archive-march-2026.html#2026-03-24", title: "SOCCER Analysis - 2026-03-24" },
+    { date: "2026-03-22", page: "soccer-previews-archive-march-2026.html#2026-03-22", title: "SOCCER Analysis - 2026-03-22" },
     { date: "2026-03-21", page: "soccer-previews-archive-march-2026.html#2026-03-21", title: "SOCCER Analysis - 2026-03-21" },
     { date: "2026-03-20", page: "bournemouth-man-united-premier-league-friday-villarreal-sociedad-soccer.html", title: "Soccer Analysis - March 20, 2026" },
     { date: "2026-03-20", page: "soccer.html", title: "Soccer Analysis - March 20, 2026" },
