@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-12", page: "sabres-canadiens-ducks-golden-knights-playoff-pivots-nhl.html", title: "NHL Preview: Sabres Canadiens Ducks Knights" },
+    { date: "2026-05-12", page: "nhl-previews.html", title: "NHL Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-05-11", page: "avalanche-vs-wild-nhl-western-semis-game-4-analysis-stats-preview.html", title: "Avalanche vs Wild Game 4 Analysis - May 11, 2026" },
     { date: "2026-05-11", page: "avalanche-wild-game-4-pivot-second-round-monday-nhl.html", title: "NHL Analysis - May 11, 2026" },
     { date: "2026-05-10", page: "sabres-canadiens-knights-ducks-game-3-4-nhl-may-10-2026.html", title: "NHL Playoff Preview: Sabres vs Canadiens and Golden Knights vs Ducks for May 10, 2026" },

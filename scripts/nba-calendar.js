@@ -5,6 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-05-12", page: "timberwolves-spurs-game-five-pivot-nba-analysis-stats-preview.html", title: "Timberwolves vs Spurs Game 5 Preview" },
     { date: "2026-05-12", page: "timberwolves-spurs-game-five-pivot-nba.html", title: "NBA Preview: Timberwolves at Spurs Game 5" },
+    { date: "2026-05-12", page: "nba-previews.html", title: "NBA Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-05-11", page: "lakers-plus-11-thunder-game-4-elimination-spot-nba-pick.html", title: "Lakers +11 vs Thunder Game 4" },
     { date: "2026-05-11", page: "thunder-sweep-watch-pistons-cavs-game-4-east-west-semis-nba.html", title: "NBA Analysis - May 11, 2026" },
     { date: "2026-05-10", page: "knicks-76ers-spurs-wolves-game-4-east-west-semis-nba-may-10-2026.html", title: "NBA Playoff Preview: Knicks vs 76ers and Spurs vs Timberwolves for May 10, 2026" },

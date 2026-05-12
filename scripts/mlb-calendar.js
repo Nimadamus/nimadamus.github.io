@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-12", page: "yankees-orioles-giants-dodgers-fifteen-game-board-mlb.html", title: "MLB Preview: Full 15-Game Tuesday Board" },
+    { date: "2026-05-12", page: "mlb-previews.html", title: "MLB Previews Today - Daily Analysis & Betting Lines" },
     { date: "2026-05-11", page: "astros-moneyline-plus-124-mariners-kirby-lambert-daikin-park-mlb-pick.html", title: "Astros ML +124 vs Mariners" },
     { date: "2026-05-11", page: "sasaki-kirby-rasmussen-eovaldi-monday-six-pack-mlb.html", title: "MLB Analysis - May 11, 2026" },
     { date: "2026-05-10", page: "sunday-fifteen-game-mlb-preview-may-10-2026.html", title: "MLB Sunday Preview: Full 15-Game Board for May 10, 2026" },
