@@ -127,7 +127,7 @@ INJURY_FACTS = {
               "message": "Jayson Tatum has ACHILLES injury, NOT ACL"},
 }
 
-PLACEHOLDER_PATTERNS = [r'\bcoming soon\b', r'\bTBD\b', r'\bTBA\b']
+PLACEHOLDER_PATTERNS = [r'\bcoming soon\b', r'\bTBD\b', r'\bTBA\b', r'PREVIEW VERSION']
 
 TRADE_CONTEXT_WORDS = [
     'traded', 'former', 'ex-', 'left', 'was with', 'from the',
