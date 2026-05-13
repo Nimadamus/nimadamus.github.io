@@ -3,8 +3,8 @@
 // ============================================================
 //
 // HOW THIS WORKS:
-// - First 3 picks show as large featured cards (title + image)
-// - Picks 4+ show in compact grid (5 per row, 2 rows = 10 per page)
+// - First 6 picks show as large featured cards (title + image)
+// - Picks 7+ show in compact grid (5 per row, 2 rows = 10 per page)
 // - Cards display LEFT to RIGHT, newest first
 // - Pagination handles older picks beyond the first 10
 //
@@ -28,7 +28,7 @@ var HOMEPAGE_PICKS = [
         date: "May 12, 2026",
         result: "",
         url: "vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html",
-        image: "images/vegas-golden-knights-moneyline-game-5-ducks-chart.svg"
+        image: "images/vegas-golden-knights-ducks-game-5-action.webp"
     },
     {
         sport: "NHL",
