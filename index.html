@@ -586,7 +586,8 @@ document.addEventListener('click', function(event) {
     latestStamp.innerHTML = 'Latest published pick: <strong>' + HOMEPAGE_PICKS[0].date + '</strong>';
   }
   if (grid) {
-    HOMEPAGE_PICKS.slice(0, 3).forEach(function(pick) {
+    grid.innerHTML = '';
+    HOMEPAGE_PICKS.slice(0, 6).forEach(function(pick) {
       var card = document.createElement('a');
       card.href = pick.url;
       card.className = 'pick-card';
