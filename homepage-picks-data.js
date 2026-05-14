@@ -48,7 +48,7 @@ var HOMEPAGE_PICKS = [
         title: "Vegas Golden Knights Moneyline -150 vs Ducks Game 5",
         date: "May 12, 2026",
         url: "vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html",
-        image: "images/anaheim-ducks-nhl-betting-pick-november-19-2025.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778591751/prd/bjchqodtuj95prh4wz2d.png"
     },
     {
         sport: "NBA",
@@ -76,7 +76,7 @@ var HOMEPAGE_PICKS = [
         title: "NHL Playoff Preview: Sabres vs Canadiens and Golden Knights vs Ducks for May 10, 2026",
         date: "May 10, 2026",
         url: "sabres-canadiens-knights-ducks-game-3-4-nhl-may-10-2026.html",
-        image: "images/sabres-celebration-bruins-game-3-april-23-2026.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778474496/prd/sqcjehqbhwcvgvzbmg8a.jpg"
     },
     {
         sport: "MLB",
@@ -97,7 +97,7 @@ var HOMEPAGE_PICKS = [
         title: "Knicks vs 76ers Game 3 Preview: New York Looks To Extend Series Lead In Philadelphia",
         date: "May 8, 2026",
         url: "knicks-vs-76ers-eastern-semis-game-3-analysis-stats-preview-may-8-2026.html",
-        image: "images/steph-curry-hero.webp"
+        image: "https://images.gmanews.tv/webpics/2026/05/2026-05-09T020532Z_2023523675_MT1USATODAY28910584_RTRMADP_3_NBA-PLAYOFFS-NEW-YORK-KNICKS-AT-PHILADELPHIA-76ERS_2026_05_09_10_22_49.jpeg"
     },
     {
         sport: "MLB",
@@ -125,7 +125,7 @@ var HOMEPAGE_PICKS = [
         title: "Sabres vs Canadiens Pick: Under 6.5 in Game 1",
         date: "May 6, 2026",
         url: "sabres-canadiens-under-6-5-game-1-second-round-keybank-center-nhl-pick.html",
-        image: "images/sabres-canadiens-under-6-5-game-1-second-round-keybank-center-nhl-pick.jpg"
+        image: "images/sabres-lafferty-bench-celebration-bruins-g2-april-21-2026.jpg"
     },
     {
         sport: "MLB",
@@ -146,14 +146,14 @@ var HOMEPAGE_PICKS = [
         title: "Yoshinobu Yamamoto Climbs The Mound At Daikin Park Opposite Colton Gordon As The Dodgers Open A Three-Game Series In Houston And A Twelve-Game Monday Carries Coast-To-Coast",
         date: "May 4, 2026",
         url: "yamamoto-gordon-twelve-game-monday-mlb.html",
-        image: "images/gausman-yamamoto-world-series-game6-oct31-2025.webp"
+        image: "images/mlb-yoshinobu-yamamoto-world-series-game6-dodgers-elimination-oct-30-2025.webp"
     },
     {
         sport: "MLB",
         title: "Wrobleski And Dustin May At Busch, Yesavage Climbs The Hill At Target Field, And Jack Leiter Anchors Sunday Night Baseball At Comerica As The MLB Sunday Slate Carries Fifteen Games Coast To Coast",
         date: "May 3, 2026",
         url: "wrobleski-yesavage-leiter-fifteen-game-sunday-mlb.html",
-        image: "images/wood.webp"
+        image: "images/mlb-bryan-woo-mariners-yankees-pitching.webp"
     },
     {
         sport: "MLB",
@@ -167,7 +167,7 @@ var HOMEPAGE_PICKS = [
         title: "Sabres vs Bruins Game 6 Pick: Over 5.5 at TD Garden",
         date: "May 1, 2026",
         url: "sabres-bruins-over-5-5-game-6-td-garden-stanley-cup-playoffs-nhl.html",
-        image: "images/sabres-bruins-over-5-5-game-6-td-garden-stanley-cup-playoffs-nhl.jpg"
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1777640939/prd/xzyqnm9sb7mk4giyhfik.png"
     },
     {
         sport: "NBA",
@@ -181,7 +181,7 @@ var HOMEPAGE_PICKS = [
         title: "Celtics Visit Philadelphia For Game 6 With A 3-2 Series Lead And A Second-Round Ticket Within Reach At The Wells Fargo Center",
         date: "April 30, 2026",
         url: "celtics-vs-76ers-game-6-eastern-conference-philadelphia-nba-analysis-stats-preview.html",
-        image: "images/warriors-kings-kuminga-over-nov5-2025.webp"
+        image: "https://kubrick.htvapps.com/htv-prod/images/471c314b-51cb-4999-b583-e82dd7043364.jpg?crop=1.00xw:0.846xh;0,0&resize=1200:*"
     },
     {
         sport: "NHL",
@@ -202,21 +202,21 @@ var HOMEPAGE_PICKS = [
         title: "Three Game 5s Anchor A Wednesday Elimination Night With Cavs-Raptors Tied 2-2 And Lakers-Rockets In A Closeout Spot",
         date: "April 29, 2026",
         url: "eastern-elimination-night-three-game-5s-nba.html",
-        image: "images/brooklyn-nets-pistons-nba-betting-analysis-nov7-2025.webp"
+        image: "images/steph-curry-hero.webp"
     },
     {
         sport: "MLB",
         title: "Ohtani Returns To The Dodger Stadium Mound, deGrom Anchors Yankees-Rangers In Texas, And A Coast-To-Coast Fifteen-Game Tuesday Defines The Late-April Schedule",
         date: "April 28, 2026",
         url: "ohtani-degrom-bibee-burns-fifteen-game-tuesday-mlb.html",
-        image: "images/rangersangelsbrewers.webp"
+        image: "images/mlb-shohei-ohtani-dodgers-world-series-game4-oct-28-2025.webp"
     },
     {
         sport: "NBA",
         title: "Three NBA Game 5s Anchor A Tuesday Of Closeouts And A Tied Series With Knicks-Hawks Even At MSG, Tatum's Celtics Hunting A 4-1 Out, And Wembanyama Back To Lock The Spurs Sweep Window",
         date: "April 28, 2026",
         url: "knicks-hawks-tied-celtics-spurs-closeouts-tuesday-nba.html",
-        image: "images/sac.webp"
+        image: "images/warriors-kings-kuminga-over-nov5-2025.webp"
     },
     {
         sport: "NHL",
@@ -286,7 +286,7 @@ var HOMEPAGE_PICKS = [
         date: "April 23, 2026",
         result: "W",
         url: "sabres-moneyline-minus-110-bruins-game-3-td-garden-nhl.html",
-        image: "images/sabres-lafferty-bench-celebration-bruins-g2-april-21-2026.jpg"
+        image: "images/sabres-celebration-bruins-game-3-april-23-2026.jpg"
     },
     {
         sport: "MLB",

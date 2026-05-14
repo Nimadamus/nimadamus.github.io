@@ -131,6 +131,10 @@ jobs:
             exit 1
           fi
 
+      - name: Validate homepage pick image uniqueness
+        run: |
+          python scripts/validate_homepage_pick_image_uniqueness.py
+
       - name: Run Daily Discovery Audit
         run: |
           python scripts/audit_daily_discovery.py --max-age-days 7
