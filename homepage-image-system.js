@@ -117,7 +117,48 @@
     }
   };
 
-  var BLOCKED_IMAGE_RE = /(?:arbitrage|allstars|fifa\.png|moneyview|money-logo|collegeban|LIVE\.png|ai-moneyball|mlb-picks-team-logos|homepage-preview)/i;
+  var BLOCKED_IMAGE_RE = /(?:arbitrage|allstars|fifa\.png|moneyview|money-logo|collegeban|LIVE\.png|ai-moneyball|mlb-picks-team-logos|homepage-preview|media\.d3\.nhle\.com|vegas-golden-knights)/i;
+
+  var PICK_IMAGE_OVERRIDES = {
+    'ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.html': 'images/ducks-puck-line-plus-1-5-game-4-oilers-honda-center-nhl.jpg',
+    'canadiens-sabres-game-5-featured-game-of-the-day.html': 'images/sabres-celebration-bruins-game-3-april-23-2026.jpg',
+    'canadiens-sabres-golden-knights-ducks-nhl-playoff-preview.html': 'images/sabres-celebration-bruins-game-3-april-23-2026.jpg',
+    'mlb-preview-today-eleven-game-board-betting-analysis.html': 'images/mlb-great-american-ballpark-yankees-reds.webp',
+    'nba-playoff-reset-cavaliers-pistons-spurs-timberwolves-game-six.html': 'images/thunderwin.webp',
+    'vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html': 'images/ducks-puck-line-plus-1-5-game-4-oilers-honda-center-nhl.jpg',
+    'thunder-sweep-watch-pistons-cavs-game-4-east-west-semis-nba.html': 'images/thunderwin.webp',
+    'lakers-plus-11-thunder-game-4-elimination-spot-nba-pick.html': 'images/thunderwin.webp',
+    'avalanche-vs-wild-nhl-western-semis-game-4-analysis-stats-preview.html': 'images/nhl-avalanche-utah-road-matchup-oct-21-2025.webp',
+    'avalanche-wild-game-4-pivot-second-round-monday-nhl.html': 'images/nhl-avalanche-utah-road-matchup-oct-21-2025.webp',
+    'sasaki-kirby-rasmussen-eovaldi-monday-six-pack-mlb.html': 'images/mlb-bryan-woo-mariners-yankees-pitching.webp',
+    'sunday-fifteen-game-mlb-preview-may-10-2026.html': 'images/mlb-great-american-ballpark-yankees-reds.webp',
+    'sabres-canadiens-knights-ducks-game-3-4-nhl-may-10-2026.html': 'images/sabres-celebration-bruins-game-3-april-23-2026.jpg',
+    'knicks-76ers-spurs-wolves-game-4-east-west-semis-nba-may-10-2026.html': 'images/brooklyn-nets-pistons-nba-betting-analysis-nov7-2025.webp',
+    'pistons-vs-cavaliers-eastern-semis-game-3-analysis-stats-preview-may-9-2026.html': 'images/brooklyn-nets-pistons-nba-betting-analysis-nov7-2025.webp',
+    'hurricanes-flyers-avalanche-wild-nhl-may-9-2026.html': 'images/boston-bruins-carolina-hurricanes-nhl-betting-pick-november-17-2025.webp',
+    'knicks-vs-76ers-eastern-semis-game-3-analysis-stats-preview-may-8-2026.html': 'images/brooklyn-nets-pistons-nba-betting-analysis-nov7-2025.webp',
+    'sale-fried-friday-fifteen-game-slate-mlb-may-8-2026.html': 'images/mlb-spencer-strider-braves-mets-f5-under.webp',
+    'sabres-canadiens-knights-ducks-second-round-game-fest-nhl-may-8-2026.html': 'images/sabres-celebration-bruins-game-3-april-23-2026.jpg',
+    'knicks-76ers-spurs-wolves-game-3-east-west-semis-nba-may-8-2026.html': 'images/brooklyn-nets-pistons-nba-betting-analysis-nov7-2025.webp',
+    'dortmund-frankfurt-bundesliga-levante-osasuna-laliga-soccer-may-8-2026.html': 'images/soccer-armenia-ireland-corner-betting-oct-14-2025.webp',
+    'thunder-cavaliers-2-0-leads-east-west-semis-nba-may-7-2026.html': 'images/thunderwin.webp',
+    'hurricanes-flyers-game-3-second-round-nhl-may-7-2026.html': 'images/boston-bruins-carolina-hurricanes-nhl-betting-pick-november-17-2025.webp',
+    'gore-blackburn-yankees-rangers-thursday-mlb-may-7-2026.html': 'images/mlb-aaron-judge-yankees-batting.webp',
+    'sabres-host-canadiens-game-1-knights-host-ducks-game-2-nhl.html': 'images/sabres-celebration-bruins-game-3-april-23-2026.jpg',
+    'knicks-host-sixers-spurs-host-wolves-conference-semis-nba.html': 'images/brooklyn-nets-pistons-nba-betting-analysis-nov7-2025.webp',
+    'eovaldi-warren-ober-mikolas-eleven-game-wednesday-mlb.html': 'images/mlb-bryan-woo-mariners-yankees-pitching.webp'
+  };
+
+  var SPORT_FALLBACK_IMAGES = {
+    NHL: 'images/sabres-celebration-bruins-game-3-april-23-2026.jpg',
+    MLB: 'images/mlb-great-american-ballpark-yankees-reds.webp',
+    NBA: 'images/thunderwin.webp',
+    NCAAB: 'images/sacramento-kings-oklahoma-city-thunder-nba-over-betting-pick-total-november-19-2025.webp',
+    NCAAF: 'images/nfl-ncaaf-two-team-teaser-eagles-tulane-oct-09-2025.webp',
+    NFL: 'images/nfl-chiefs-bills-week-9-betting-pick-nov-2-2025.webp',
+    Soccer: 'images/soccer-armenia-ireland-corner-betting-oct-14-2025.webp',
+    Betting: 'images/mlb-great-american-ballpark-yankees-reds.webp'
+  };
 
   function isLocalImage(src) {
     return typeof src === 'string' && /^images\/[^?#]+?\.(png|jpe?g|webp|gif|svg)$/i.test(src);
@@ -188,27 +229,17 @@
 
   function resolvePickImage(pick, usedImages) {
     var pickImg = pick && pick.image ? String(pick.image) : '';
+    var override = pick && pick.url ? PICK_IMAGE_OVERRIDES[pick.url] : '';
+    if (override) {
+      if (usedImages) usedImages.add(override);
+      return override;
+    }
     if (pickImg && pickImg !== 'newlogo.png' && !BLOCKED_IMAGE_RE.test(pickImg)) {
       if (usedImages) usedImages.add(pickImg);
       return pickImg;
     }
     var sport = pick && pick.sport ? pick.sport : 'Betting';
-    var src = makeThumbnail({
-      sport: sport,
-      title: pick && pick.title ? pick.title : 'BetLegend Picks',
-      kicker: pick && pick.date ? pick.date : 'Daily archive card',
-      badge: 'PICK ARCHIVE',
-      section: 'pick'
-    });
-    if (usedImages && usedImages.has(src)) {
-      src = makeThumbnail({
-        sport: sport,
-        title: pick && pick.title ? pick.title : 'BetLegend Picks',
-        kicker: (pick && pick.date ? pick.date + ' | ' : '') + (pick && pick.result ? pick.result : 'Preview'),
-        badge: 'PICK ARCHIVE',
-        section: 'pick'
-      });
-    }
+    var src = SPORT_FALLBACK_IMAGES[sport] || SPORT_FALLBACK_IMAGES.Betting;
     if (usedImages) usedImages.add(src);
     return src;
   }
