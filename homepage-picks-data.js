@@ -601,7 +601,7 @@ var HOMEPAGE_PICKS = [
         date: "April 13, 2026",
         result: "L",
         url: "wild-blues-under-5-5-gustavsson-hofer-enterprise-center-nhl.html",
-        image: "images/wild-puck-line-oilers-december-2-2025.png"
+        image: "images/wild-puck-line-oilers-december-2-2025.webp"
     },
 {
         sport: "MLB",
