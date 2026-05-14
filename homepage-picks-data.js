@@ -48,7 +48,7 @@ var HOMEPAGE_PICKS = [
         title: "Vegas Golden Knights Moneyline -150 vs Ducks Game 5",
         date: "May 12, 2026",
         url: "vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778656229/prd/izacsitjdbniesj9inpa.png"
+        image: "images/anaheim-ducks-nhl-betting-pick-november-19-2025.jpg"
     },
     {
         sport: "NBA",
@@ -209,14 +209,14 @@ var HOMEPAGE_PICKS = [
         title: "Ohtani Returns To The Dodger Stadium Mound, deGrom Anchors Yankees-Rangers In Texas, And A Coast-To-Coast Fifteen-Game Tuesday Defines The Late-April Schedule",
         date: "April 28, 2026",
         url: "ohtani-degrom-bibee-burns-fifteen-game-tuesday-mlb.html",
-        image: "images/degrom.webp"
+        image: "images/rangersangelsbrewers.webp"
     },
     {
         sport: "NBA",
         title: "Three NBA Game 5s Anchor A Tuesday Of Closeouts And A Tied Series With Knicks-Hawks Even At MSG, Tatum's Celtics Hunting A 4-1 Out, And Wembanyama Back To Lock The Spurs Sweep Window",
         date: "April 28, 2026",
         url: "knicks-hawks-tied-celtics-spurs-closeouts-tuesday-nba.html",
-        image: "images/sacramento-kings-oklahoma-city-thunder-nba-over-betting-pick-total-november-19-2025.webp"
+        image: "images/sac.webp"
     },
     {
         sport: "NHL",
@@ -302,7 +302,7 @@ var HOMEPAGE_PICKS = [
         date: "April 21, 2026",
         result: "W",
         url: "sabres-team-total-under-3-5-bruins-game-2-stanley-cup-playoffs-nhl.html",
-        image: "images/sabres-lafferty-bench-celebration-bruins-g2-april-21-2026.jpg"
+        image: "images/bruins-islanders-under-6-nhl-betting-pick-november-26-2025.webp"
     },
     {
         sport: "MLB",
