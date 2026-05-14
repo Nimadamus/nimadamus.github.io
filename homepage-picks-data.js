@@ -510,7 +510,7 @@ var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
         title: "Giants ML +153 vs Dodgers 2.5u",
-        date: "April 21, 2026",
+        date: "April 20, 2026",
         result: "W",
         url: "giants-moneyline-plus-153-roupp-dodgers-oracle-park-mlb.html",
         image: "images/landen-roupp-giants-pitcher-april-21-2026.jpg"
