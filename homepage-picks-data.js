@@ -41,15 +41,13 @@ var HOMEPAGE_PICKS = [
         title: "Canadiens at Sabres Game 5 Preview - May 14, 2026",
         date: "May 14, 2026",
         url: "canadiens-sabres-game-5-featured-game-of-the-day.html",
-        image: "newlogo.png"
-    },
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_png/v1778649049/prd/e88hxynf2fqdg8iim4zc.pngnewlogo.png,
     {
         sport: "MLB",
         title: "MLB Thursday Preview: Full 11-Game Board for May 14, 2026",
         date: "May 14, 2026",
         url: "mlb-preview-today-eleven-game-board-betting-analysis.html",
-        image: "newlogo.png"
-    },
+        image: "images/rangersangelsbrewers.webpnewlogo.png,
     {
         sport: "NHL",
         title: "NHL Playoff Preview: Canadiens-Sabres Game 5 and Golden Knights-Ducks Game 6",
@@ -62,8 +60,7 @@ var HOMEPAGE_PICKS = [
         title: "NBA Playoff Reset: No Games on Thursday, May 14, 2026",
         date: "May 14, 2026",
         url: "nba-playoff-reset-cavaliers-pistons-spurs-timberwolves-game-six.html",
-        image: "newlogo.png"
-    },
+        image: "images/thunderwin.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Angels Team Total Under 3.5 vs Guardians: Parker Messick Sets The Bar",
@@ -83,8 +80,7 @@ var HOMEPAGE_PICKS = [
         title: "NBA Conference Semifinals Monday At Crypto.com Arena And Rocket Arena - Thunder At Lakers Sweep Watch And Pistons At Cavaliers Game 4",
         date: "May 11, 2026",
         url: "thunder-sweep-watch-pistons-cavs-game-4-east-west-semis-nba.html",
-        image: "newlogo.png"
-    },
+        image: "images/thunderwin.webpnewlogo.png,
     {
         sport: "NBA",
         title: "Lakers +11 vs Thunder Game 4, Elimination Spot Creates Double-Digit Spread Value",
@@ -104,36 +100,31 @@ var HOMEPAGE_PICKS = [
         title: "Avalanche vs Wild",
         date: "May 11, 2026",
         url: "avalanche-vs-wild-nhl-western-semis-game-4-analysis-stats-preview.html",
-        image: "newlogo.png"
-    },
+        image: "images/nhl-avalanche-utah-road-matchup-oct-21-2025.webpnewlogo.png,
     {
         sport: "Soccer",
         title: "Tottenham-Leeds And Rayo-Girona Turn Monday Into A Relegation-Stress Soccer Card",
         date: "May 11, 2026",
         url: "tottenham-leeds-survival-rayo-girona-relegation-soccer.html",
-        image: "newlogo.png"
-    },
+        image: "images/ucl-olympiakos-psv-nov4-2025.webpnewlogo.png,
     {
         sport: "MLB",
         title: "MLB Monday Six-Pack May 11 2026 - Sasaki Returns At Dodger Stadium, Kirby Travels To Daikin Park, Rasmussen At Rogers Centre, Eovaldi At Globe Life Field",
         date: "May 11, 2026",
         url: "sasaki-kirby-rasmussen-eovaldi-monday-six-pack-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/woo.webpnewlogo.png,
     {
         sport: "NHL",
         title: "Stanley Cup Playoffs Round 2 Monday At Grand Casino Arena - Avalanche At Wild Game 4 After Minnesota's 5-1 Game 3 Thrashing",
         date: "May 11, 2026",
         url: "avalanche-wild-game-4-pivot-second-round-monday-nhl.html",
-        image: "newlogo.png"
-    },
+        image: "images/nhl-avalanche-utah-road-matchup-oct-21-2025.webpnewlogo.png,
     {
         sport: "MLB",
         title: "MLB Sunday Preview: Full 15-Game Board for May 10, 2026",
         date: "May 10, 2026",
         url: "sunday-fifteen-game-mlb-preview-may-10-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/ohtani.webpnewlogo.png,
     {
         sport: "NHL",
         title: "NHL Playoff Preview: Sabres vs Canadiens and Golden Knights vs Ducks for May 10, 2026",
@@ -146,8 +137,7 @@ var HOMEPAGE_PICKS = [
         title: "NBA Playoff Preview: Knicks vs 76ers and Spurs vs Timberwolves for May 10, 2026",
         date: "May 10, 2026",
         url: "knicks-76ers-spurs-wolves-game-4-east-west-semis-nba-may-10-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/steph-curry-hero.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Nationals vs Marlins Pick: Washington Moneyline at loanDepot Park",
@@ -167,29 +157,25 @@ var HOMEPAGE_PICKS = [
         title: "Pistons vs Cavaliers Game 3 Preview: Cleveland Looks To Respond At Home",
         date: "May 9, 2026",
         url: "pistons-vs-cavaliers-eastern-semis-game-3-analysis-stats-preview-may-9-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/sacramento-kings-oklahoma-city-thunder-nba-over-betting-pick-total-november-19-2025.webpnewlogo.png,
     {
         sport: "NHL",
         title: "NHL Playoff Preview: Hurricanes vs Flyers and Avalanche vs Wild for May 9, 2026",
         date: "May 9, 2026",
         url: "hurricanes-flyers-avalanche-wild-nhl-may-9-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/boston-bruins-carolina-hurricanes-nhl-betting-pick-november-17-2025.webpnewlogo.png,
     {
         sport: "NBA",
         title: "Knicks vs 76ers Game 3 Preview: New York Looks To Extend Series Lead In Philadelphia",
         date: "May 8, 2026",
         url: "knicks-vs-76ers-eastern-semis-game-3-analysis-stats-preview-may-8-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/steph-curry-hero.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Friday Fifteen-Game Slate Headlined By Sale Vs Sheehan At Dodger Stadium And Max Fried Vs Jacob Misiorowski At American Family Field",
         date: "May 8, 2026",
         url: "sale-fried-friday-fifteen-game-slate-mlb-may-8-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/crochet.webpnewlogo.png,
     {
         sport: "NHL",
         title: "Stanley Cup Playoffs Round 2 Friday At KeyBank Center And Honda Center - Canadiens At Sabres With Buffalo Up 1-0 And Golden Knights At Ducks With The Series Tied 1-1",
@@ -202,36 +188,31 @@ var HOMEPAGE_PICKS = [
         title: "NBA Playoff Preview: Knicks vs 76ers and Spurs vs Timberwolves for May 8, 2026",
         date: "May 8, 2026",
         url: "knicks-76ers-spurs-wolves-game-3-east-west-semis-nba-may-8-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/steph-curry-hero.webpnewlogo.png,
     {
         sport: "Soccer",
         title: "Bundesliga Round 33 And La Liga Friday At Signal Iduna Park And Estadi Ciutat De Valencia - Dortmund Vs Frankfurt And Levante Vs Osasuna With Champions League Spots And Relegation On The Line",
         date: "May 8, 2026",
         url: "dortmund-frankfurt-bundesliga-levante-osasuna-laliga-soccer-may-8-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/ucl-olympiakos-psv-nov4-2025.webpnewlogo.png,
     {
         sport: "NBA",
         title: "Conference Semifinals Game 2 Thursday At Little Caesars Arena And Paycom Center - Cavaliers At Pistons With Detroit -3.5 And Lakers At Thunder With Oklahoma City -15.5 As Both Series Sit At 1-0",
         date: "May 7, 2026",
         url: "thunder-cavaliers-2-0-leads-east-west-semis-nba-may-7-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/thunderwin.webpnewlogo.png,
     {
         sport: "NHL",
         title: "Hurricanes At Flyers Game 3 At Wells Fargo Center - Carolina Hunts The Road 3-0 Stranglehold While Philadelphia Plays The Series-Saving Home Game With The Total At 5.5",
         date: "May 7, 2026",
         url: "hurricanes-flyers-game-3-second-round-nhl-may-7-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/boston-bruins-carolina-hurricanes-nhl-betting-pick-november-17-2025.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Gore Vs Blackburn In The Bronx, Imanaga Hosts Lowder At Wrigley, And Scott Vs Quintana In The Coors Makeup Game Headline The Thursday Slate",
         date: "May 7, 2026",
         url: "gore-blackburn-yankees-rangers-thursday-mlb-may-7-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/rangersangelsbrewers.webpnewlogo.png,
     {
         sport: "NHL",
         title: "Sabres vs Canadiens Pick: Under 6.5 in Game 1",
@@ -258,43 +239,37 @@ var HOMEPAGE_PICKS = [
         title: "NBA Playoff Preview: 76ers vs Knicks and Timberwolves vs Spurs for May 6, 2026",
         date: "May 6, 2026",
         url: "knicks-host-sixers-spurs-host-wolves-conference-semis-nba.html",
-        image: "newlogo.png"
-    },
+        image: "images/steph-curry-hero.webpnewlogo.png,
     {
         sport: "MLB",
         title: "MLB Preview: Wednesday Eleven-Game Board for May 6, 2026",
         date: "May 6, 2026",
         url: "eovaldi-warren-ober-mikolas-eleven-game-wednesday-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/rangersangelsbrewers.webpnewlogo.png,
     {
         sport: "MLB",
         title: "DeGrom Heads Into Yankee Stadium With The Rangers, Alcantara Hosts Baltimore At LoanDepot Park, And Gausman Brings Toronto To Tampa Bay On A 10-Game Tuesday Slate",
         date: "May 5, 2026",
         url: "degrom-alcantara-gausman-tuesday-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/degrom.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Yoshinobu Yamamoto Climbs The Mound At Daikin Park Opposite Colton Gordon As The Dodgers Open A Three-Game Series In Houston And A Twelve-Game Monday Carries Coast-To-Coast",
         date: "May 4, 2026",
         url: "yamamoto-gordon-twelve-game-monday-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/ohtani.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Wrobleski And Dustin May At Busch, Yesavage Climbs The Hill At Target Field, And Jack Leiter Anchors Sunday Night Baseball At Comerica As The MLB Sunday Slate Carries Fifteen Games Coast To Coast",
         date: "May 3, 2026",
         url: "wrobleski-yesavage-leiter-fifteen-game-sunday-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/ohtani.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Sasaki Anchors Dodgers-Cardinals At Busch, Painter Climbs The Hill In Miami, And A Coast-To-Coast Fifteen-Game MLB Saturday Carries Premium Pitching From The Afternoon Through The Late West Coast Window",
         date: "May 2, 2026",
         url: "sasaki-mclean-painter-fifteen-game-saturday-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/ohtani.webpnewlogo.png,
     {
         sport: "NHL",
         title: "Sabres vs Bruins Game 6 Pick: Over 5.5 at TD Garden",
@@ -307,78 +282,67 @@ var HOMEPAGE_PICKS = [
         title: "Three Friday Game 6s With Houston Halfway To The First 3-0 Comeback In NBA History And Two Eastern Closeout Spots",
         date: "May 1, 2026",
         url: "three-friday-game-6s-rockets-history-bid-magic-cavs-elimination-nba.html",
-        image: "newlogo.png"
-    },
+        image: "images/thunderwin.webpnewlogo.png,
     {
         sport: "NHL",
         title: "Three Friday Game 6s With Closeout Spots In Montreal Boston And Salt Lake City",
         date: "May 1, 2026",
         url: "three-friday-game-6s-canadiens-sabres-knights-elimination-night-nhl.html",
-        image: "newlogo.png"
-    },
+        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/f_png/v1778649049/prd/e88hxynf2fqdg8iim4zc.pngnewlogo.png,
     {
         sport: "MLB",
         title: "Friday MLB Rotation With Yankees-Orioles At The Stadium And Dodgers-Cardinals Headlining The NL Slate",
         date: "May 1, 2026",
         url: "mlb-friday-rotation-yankees-cubs-pirates-divisional-action-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/skenes.webpnewlogo.png,
     {
         sport: "NBA",
         title: "Celtics Visit Philadelphia For Game 6 With A 3-2 Series Lead And A Second-Round Ticket Within Reach At The Wells Fargo Center",
         date: "April 30, 2026",
         url: "celtics-vs-76ers-game-6-eastern-conference-philadelphia-nba-analysis-stats-preview.html",
-        image: "newlogo.png"
-    },
+        image: "images/steph-curry-hero.webpnewlogo.png,
     {
         sport: "NHL",
         title: "Stars At Wild Game 6 In Saint Paul With Minnesota One Win From Eliminating The Western Conference Favorite",
         date: "April 30, 2026",
         url: "stars-wild-game-6-elimination-night-saint-paul-nhl.html",
-        image: "newlogo.png"
-    },
+        image: "images/stars-moneyline-plus-115-game-4-wild-grand-casino-arena-nhl.jpgnewlogo.png,
     {
         sport: "MLB",
         title: "Nine MLB Games On Thursday Headlined By Skenes At PNC Park Valdez In Atlanta And Gausman At Target Field",
         date: "April 30, 2026",
         url: "nine-game-thursday-skenes-valdez-gausman-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/skenes.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Skubal Headlines A 15-Game MLB Wednesday With Glasnow-Alcantara At Dodger Stadium And Webb Anchoring Phillies-Giants",
         date: "April 29, 2026",
         url: "midweek-rotation-arms-divisional-clashes-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/skubal.webpnewlogo.png,
     {
         sport: "NBA",
         title: "Three Game 5s Anchor A Wednesday Elimination Night With Cavs-Raptors Tied 2-2 And Lakers-Rockets In A Closeout Spot",
         date: "April 29, 2026",
         url: "eastern-elimination-night-three-game-5s-nba.html",
-        image: "newlogo.png"
-    },
+        image: "images/thunderwin.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Ohtani Returns To The Dodger Stadium Mound, deGrom Anchors Yankees-Rangers In Texas, And A Coast-To-Coast Fifteen-Game Tuesday Defines The Late-April Schedule",
         date: "April 28, 2026",
         url: "ohtani-degrom-bibee-burns-fifteen-game-tuesday-mlb.html",
-        image: "newlogo.png"
-    },
+        image: "images/ohtani.webpnewlogo.png,
     {
         sport: "NBA",
         title: "Three NBA Game 5s Anchor A Tuesday Of Closeouts And A Tied Series With Knicks-Hawks Even At MSG, Tatum's Celtics Hunting A 4-1 Out, And Wembanyama Back To Lock The Spurs Sweep Window",
         date: "April 28, 2026",
         url: "knicks-hawks-tied-celtics-spurs-closeouts-tuesday-nba.html",
-        image: "newlogo.png"
-    },
+        image: "images/steph-curry-hero.webpnewlogo.png,
     {
         sport: "NHL",
         title: "Three NHL Game 5s Anchor A Tuesday Of Eliminations With Bruins Facing The Wall In Buffalo, Wild-Stars Tied At American Airlines Center, And McDavid's Oilers Trailing Anaheim 1-3 At Home",
         date: "April 28, 2026",
         url: "bruins-elimination-night-wild-stars-tied-ducks-oilers-tuesday-nhl.html",
-        image: "newlogo.png"
-    },
+        image: "images/anaheim-ducks-nhl-betting-pick-november-19-2025.jpgnewlogo.png,
     {
         sport: "NHL",
         title: "Flyers Puck Line +1.5 (-210) vs Penguins Game 5: Philadelphia One Win Away From A Cross-State Series Win",
@@ -398,43 +362,31 @@ var HOMEPAGE_PICKS = [
         title: "Wolves Chase A Closeout Without Edwards, Thunder Hunt The Sweep In Phoenix, And A Cunningham-Banchero Game 4 Anchors The Monday Slate",
         date: "April 27, 2026",
         url: "wolves-close-out-attempt-thunder-sweep-pistons-magic-monday-nba-april-27-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/thunderwin.webpnewlogo.png,
     {
         sport: "NBA",
         title: "Wolves at Nuggets - Game 5 Closeout Watch In Denver With Edwards Out And Dosunmu Riding A 43-Point Wave",
         date: "April 27, 2026",
         url: "wolves-vs-nuggets-nba-analysis-stats-preview-april-27-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/steph-curry-hero.webpnewlogo.png,
     {
         sport: "Soccer",
         title: "Manchester United Host Brentford At Old Trafford Chasing Champions League Qualification On A Three-Match European Monday",
         date: "April 27, 2026",
         url: "manchester-united-brentford-old-trafford-monday-soccer-april-27-2026.html",
-        image: "newlogo.png"
-    },
-    {
-        sport: "Betting",
-        title: "Handicapping and Trends Hub",
-        date: "April 27, 2026",
-        url: "handicapping-hub-archive/hub-2026-04-27.html",
-        image: "newlogo.png"
-    },
+        image: "images/ucl-olympiakos-psv-nov4-2025.webpnewlogo.png,
     {
         sport: "MLB",
         title: "Fried-Leiter Anchors Yankees-Rangers In Texas, Yamamoto Returns To The Dodger Stadium Mound, And A Coast-To-Coast Eight-Game Monday Defines The Late-April Schedule",
         date: "April 27, 2026",
         url: "fried-leiter-yankees-rangers-yamamoto-dodgers-monday-mlb-april-27-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/rangersangelsbrewers.webpnewlogo.png,
     {
         sport: "NHL",
         title: "Flyers Hunt The Closeout In Pittsburgh, Vegas Tries To Stop Utah's First-Round Run, And Two Game-Day Series Pivots Anchor The Monday NHL Slate",
         date: "April 27, 2026",
         url: "flyers-clinch-bid-knights-mammoth-monday-nhl-april-27-2026.html",
-        image: "newlogo.png"
-    },
+        image: "images/flyers-celebration-puck-line-penguins-game-5-stanley-cup-playoffs.jpgnewlogo.png,
 {
         sport: "NHL",
         title: "Ducks Puck Line +1.5 Game 4 at Honda Center 3u",
