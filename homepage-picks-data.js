@@ -4,7 +4,7 @@
 //
 // HOW THIS WORKS:
 // - First 6 picks show as large featured cards (title + image)
-// - Picks 7+ show in compact grid (5 per row, 2 rows = 10 per page)
+// - Picks 7+ show in compact grid (4 per row, 2 rows = 8 per page)
 // - Cards display LEFT to RIGHT, newest first
 // - Pagination handles older picks beyond the first 10
 //
@@ -23,12 +23,20 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Angels Team Total Under 3.5 vs Guardians 1u",
+        date: "May 13, 2026",
+        result: "W",
+        url: "angels-team-total-under-3-5-guardians-messick-progressive-field-mlb-pick.html",
+        image: "images/angels.webp"
+    },
+    {
         sport: "NHL",
         title: "Vegas Golden Knights ML -150 vs Ducks Game 5 3u",
         date: "May 12, 2026",
-        result: "",
+        result: "W",
         url: "vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html",
-        image: "images/vegas-golden-knights-ducks-game-5-action.webp"
+        image: "images/vegas-golden-knights-moneyline-game-5-ducks-chart.svg"
     },
     {
         sport: "NHL",
