@@ -40,6 +40,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Angels Team Total Under 3.5 vs Guardians: Parker Messick Sets The Bar",
         date: "May 13, 2026",
+        result: "W",
         url: "angels-team-total-under-3-5-guardians-messick-progressive-field-mlb-pick.html",
         image: "images/angels.webp"
     },
@@ -62,7 +63,7 @@ var HOMEPAGE_PICKS = [
         title: "Lakers +11 vs Thunder Game 4, Elimination Spot Creates Double-Digit Spread Value",
         date: "May 11, 2026",
         url: "lakers-plus-11-thunder-game-4-elimination-spot-nba-pick.html",
-        image: "images/lakers-moneyline-rockets-crypto-com-arena-nba.jpg"
+        image: "images/sacramento-kings-oklahoma-city-thunder-nba-over-betting-pick-total-november-19-2025.webp"
     },
     {
         sport: "MLB",
