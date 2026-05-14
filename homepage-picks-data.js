@@ -40,7 +40,6 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Angels Team Total Under 3.5 vs Guardians: Parker Messick Sets The Bar",
         date: "May 13, 2026",
-        result: "W",
         url: "angels-team-total-under-3-5-guardians-messick-progressive-field-mlb-pick.html",
         image: "images/angels.webp"
     },
@@ -48,7 +47,6 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Vegas Golden Knights Moneyline -150 vs Ducks Game 5",
         date: "May 12, 2026",
-        result: "W",
         url: "vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778591751/prd/bjchqodtuj95prh4wz2d.png"
     },
@@ -63,9 +61,8 @@ var HOMEPAGE_PICKS = [
         sport: "NBA",
         title: "Lakers +11 vs Thunder Game 4, Elimination Spot Creates Double-Digit Spread Value",
         date: "May 11, 2026",
-        result: "W",
         url: "lakers-plus-11-thunder-game-4-elimination-spot-nba-pick.html",
-        image: "images/sacramento-kings-oklahoma-city-thunder-nba-over-betting-pick-total-november-19-2025.webp"
+        image: "images/lakers-moneyline-rockets-crypto-com-arena-nba.jpg"
     },
     {
         sport: "MLB",
