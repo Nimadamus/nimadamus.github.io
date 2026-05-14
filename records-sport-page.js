@@ -649,10 +649,63 @@
     return loadJsonRows(sport);
   }
 
-  function filterRows(rows, year) {
-    if (year === 'all') return rows.slice();
+  function getVisibleYearFilters() {
+    return Array.from(document.querySelectorAll('.year-filter-btn'))
+      .map((button) => button.getAttribute('data-year'))
+      .filter((year) => year && year !== 'all' && !Number.isNaN(parseInt(year, 10)))
+      .map((year) => parseInt(year, 10));
+  }
+
+  function filterRows(rows, year, visibleYears) {
+    if (year === 'all') {
+      if (!visibleYears || visibleYears.length === 0) return rows.slice();
+      const allowedYears = new Set(visibleYears);
+      return rows.filter((row) => allowedYears.has(getYear(row.date)));
+    }
     const targetYear = parseInt(year, 10);
     return rows.filter((row) => getYear(row.date) === targetYear);
+  }
+
+  function warnIfYearTotalsDisagree(rows, sport, visibleYears) {
+    if (!visibleYears || visibleYears.length === 0) return;
+
+    const allRows = filterRows(rows, 'all', visibleYears);
+    const yearlyRows = [];
+    visibleYears.forEach((year) => {
+      filterRows(rows, String(year), visibleYears).forEach((row) => yearlyRows.push(row));
+    });
+
+    const allStats = calculateStats(allRows);
+    const yearlyStats = calculateStats(yearlyRows);
+    const sameRecord = allStats.wins === yearlyStats.wins &&
+      allStats.losses === yearlyStats.losses &&
+      allStats.pushes === yearlyStats.pushes;
+    const sameUnits = Math.abs(allStats.units - yearlyStats.units) < 0.005;
+
+    if (!sameRecord || !sameUnits) {
+      console.warn('[records-sport-page] All Time does not equal visible year totals', {
+        sport: sport,
+        visibleYears: visibleYears,
+        allTime: allStats,
+        visibleYearSum: yearlyStats
+      });
+    }
+
+    const visibleYearSet = new Set(visibleYears);
+    const outsideVisibleYears = rows.filter((row) => !visibleYearSet.has(getYear(row.date)));
+    if (outsideVisibleYears.length) {
+      console.warn('[records-sport-page] Rows outside visible year filters are excluded from All Time', {
+        sport: sport,
+        visibleYears: visibleYears,
+        excludedRows: outsideVisibleYears.map((row) => ({
+          date: row.date,
+          pick: row.pick,
+          odds: row.odds,
+          result: row.result,
+          units: row.profitLoss
+        }))
+      });
+    }
   }
 
   function initYearButtons(render, defaultYear) {
@@ -703,8 +756,10 @@
         });
 
       const tbody = document.getElementById('picks-table-body');
+      const visibleYears = getVisibleYearFilters();
+      warnIfYearTotalsDisagree(sportRows, config.sport, visibleYears);
       const render = function (year) {
-        const filtered = filterRows(sportRows, year);
+        const filtered = filterRows(sportRows, year, visibleYears);
         if (tbody) renderTableRows(filtered, tbody);
         updateSummary(filtered);
         updateChart(filtered, config.chartStateKey || '__betlegendRecordsChart');
