@@ -24,6 +24,34 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Brewers Moneyline -139 vs Padres 1u",
+        date: "May 14, 2026",
+        url: "brewers-moneyline-minus-139-padres-canning-harrison-mlb-pick-may-14-2026.html",
+        image: "images/brewers.webp"
+    },
+    {
+        sport: "NHL",
+        title: "Ducks Team Total Under 3.5 vs Golden Knights Game 6",
+        date: "May 14, 2026",
+        url: "ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.html",
+        image: "images/vegas-golden-knights-premium-preview.webp"
+    },
+    {
+        sport: "NHL",
+        title: "Canadiens at Sabres Game 5 Featured Preview",
+        date: "May 14, 2026",
+        url: "canadiens-sabres-game-5-featured-game-of-the-day.html",
+        image: "newlogo.png"
+    },
+    {
+        sport: "NHL",
+        title: "Canadiens-Sabres and Golden Knights-Ducks Playoff Preview",
+        date: "May 14, 2026",
+        url: "canadiens-sabres-golden-knights-ducks-nhl-playoff-preview.html",
+        image: "images/vegas-golden-knights-premium-preview.webp"
+    },
+    {
+        sport: "MLB",
         title: "Angels Team Total Under 3.5 vs Guardians 1u",
         date: "May 13, 2026",
         result: "W",
@@ -36,7 +64,7 @@ var HOMEPAGE_PICKS = [
         date: "May 12, 2026",
         result: "W",
         url: "vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html",
-        image: "images/vegas-golden-knights-moneyline-game-5-ducks-chart.svg"
+        image: "images/vegas-golden-knights-premium-preview.webp"
     },
     {
         sport: "NHL",
