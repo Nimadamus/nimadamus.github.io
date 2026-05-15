@@ -150,20 +150,39 @@ function renderCalendar(yearMonth) {
     var container = document.getElementById('calendar-days');
     if (!container) return;
     container.innerHTML = '';
-    for (var i = 0; i < firstDay; i++) { var cell = document.createElement('div'); cell.className = 'cal-day empty'; container.appendChild(cell); }
+    for (var i = 0; i < firstDay; i++) {
+        var spacer = document.createElement('div');
+        spacer.className = 'cal-day empty';
+        spacer.setAttribute('aria-hidden', 'true');
+        container.appendChild(spacer);
+    }
     for (var d = 1; d <= daysInMonth; d++) {
         var dateStr = year + '-' + String(month).padStart(2, '0') + '-' + String(d).padStart(2, '0');
         var cell = document.createElement('div');
         cell.className = 'cal-day';
         cell.textContent = d;
+        cell.setAttribute('data-date', dateStr);
+        cell.setAttribute('aria-label', dateStr + ' - no featured game');
         // Gold highlight = the page you're currently viewing (or newest if on homepage)
         if (dateStr === state.activeDate) cell.classList.add('current-page');
         if (state.dateMap[dateStr]) {
             cell.classList.add('has-content');
             cell.title = state.dateMap[dateStr].title;
+            cell.setAttribute('aria-label', dateStr + ' - ' + state.dateMap[dateStr].title);
+            cell.setAttribute('role', 'link');
+            cell.tabIndex = 0;
             (function(page) {
                 cell.onclick = function() { window.location.href = page; };
+                cell.onkeydown = function(event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        window.location.href = page;
+                    }
+                };
             })(state.dateMap[dateStr].page);
+        } else {
+            cell.classList.add('disabled');
+            cell.title = 'No Featured Game post for ' + dateStr;
         }
         container.appendChild(cell);
     }
