@@ -39,11 +39,11 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .dropdown:hover .dropdown-content{display:block}
 .dropdown.active .dropdown-content{display:block}
 .dropdown.active .dropbtn{color:var(--accent-gold)}
-.hero{padding:82px 24px 42px;text-align:center;background:linear-gradient(180deg,rgba(253,80,0,0.1) 0%,rgba(10,12,16,0) 78%);position:relative;overflow:hidden}
+.hero{box-sizing:border-box;padding:82px 24px 42px;text-align:center;background:linear-gradient(180deg,rgba(253,80,0,0.1) 0%,rgba(10,12,16,0) 78%);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fd5000' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");opacity:0.5}
 .hero-badge{display:inline-block;background:rgba(253,80,0,0.14);border:1px solid rgba(253,80,0,0.34);padding:9px 18px;border-radius:6px;font-size:12px;font-weight:800;color:var(--accent-gold);text-transform:uppercase;letter-spacing:1.6px;margin-bottom:18px;position:relative;z-index:1}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(253,80,0,0.4)}50%{box-shadow:0 0 20px 5px rgba(253,80,0,0.2)}}
-.hero h1{font-family:var(--font-display);font-size:clamp(31px,4.2vw,48px);font-weight:800;margin:0 auto 16px;color:#fff;position:relative;z-index:1;text-shadow:0 8px 32px rgba(0,0,0,0.45);max-width:980px;line-height:1.12;letter-spacing:0}
+.hero h1{font-family:var(--font-display);font-size:clamp(30px,3.2vw,44px);font-weight:800;margin:0 auto 16px;color:#fff;position:relative;z-index:1;text-shadow:0 8px 32px rgba(0,0,0,0.45);max-width:760px;line-height:1.12;letter-spacing:0}
 .hero p{color:#d5dbe4;font-size:18px;max-width:780px;margin:0 auto;position:relative;z-index:1;line-height:1.7}
 .article-hero-card{max-width:980px;margin:28px auto 0;position:relative;z-index:1;border:1px solid rgba(255,238,203,.16);border-radius:8px;background:rgba(18,21,28,.74);box-shadow:0 22px 70px rgba(0,0,0,.34);padding:22px}
 .hero-meta{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;color:#9da6b5;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
@@ -54,7 +54,7 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .hero-matchup-title{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;line-height:1.22}
 .hero-matchup-title span{display:block;margin-top:4px;color:#b7c0cd;font-family:var(--font-body);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
 .team-logo{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:50%;padding:8px}
-.page-wrapper{max-width:900px;margin:0 auto;padding:0 24px 80px}@media(min-width:1201px){.hero{margin-left:320px;padding-left:40px;padding-right:40px}.page-wrapper{width:calc(100% - 340px);max-width:none;margin-left:320px;margin-right:20px;padding-left:40px;padding-right:40px}.main-content{max-width:900px;margin:0 auto}}
+.page-wrapper{box-sizing:border-box;max-width:900px;margin:0 auto;padding:0 24px 80px}@media(min-width:1201px){.hero{width:calc(100% - 340px);margin-left:320px;margin-right:20px;padding-left:40px;padding-right:40px}.page-wrapper{width:calc(100% - 340px);max-width:none;margin-left:320px;margin-right:20px;padding-left:40px;padding-right:40px}.main-content{max-width:900px;margin:0 auto}}
 .calendar-sidebar{position:fixed;left:20px;top:120px;width:280px;z-index:50}
 .calendar-box{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:24px;margin-bottom:20px}
 .calendar-title{font-family:var(--font-display);font-size:16px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;text-align:center}
@@ -213,8 +213,8 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 
 <header class="hero">
 <div class="hero-badge">NBA Playoff Preview</div>
-<h1>Pistons-Cavaliers and Spurs-Timberwolves Game 6 Betting Preview</h1>
-<p>Friday's NBA playoff board is built around two Prime Video elimination games: Cleveland gets the first closeout window at Rocket Arena, then Minnesota tries to force a Game 7 against San Antonio at Target Center.</p>
+<h1>NBA Game 6 Betting Preview</h1>
+<p>Pistons-Cavaliers and Spurs-Timberwolves headline Friday's Prime Video playoff board, with two elimination games and major market implications.</p>
 <div class="article-hero-card" aria-label="NBA Game 6 matchup summary">
 <div class="hero-meta"><strong>Friday, May 15, 2026</strong><span>Prime Video Doubleheader</span><span>Conference Semifinals</span></div>
 <div class="hero-matchups">
@@ -285,7 +285,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 <p>&copy; 2026 BetLegend Picks. All Rights Reserved.</p>
 <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a> | <a href="contact.html">Contact</a></p>
 </footer>
-<script src="scripts/nba-calendar.js?v=202605151200"></script>
+<script src="scripts/nba-calendar.js?v=f656a3cf3fb2102dd1e24831be45de5b438351ce"></script>
 <script>
 function stabilizeMayCalendar(){
   const calendar=document.getElementById('calendar-days');
