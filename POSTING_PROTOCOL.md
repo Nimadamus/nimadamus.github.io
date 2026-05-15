@@ -90,6 +90,11 @@ Never let a calendar/archive rail overlap, hide, crop, or sit on top of an
 article title. If the title is long, shorten the visible H1 and move matchup
 detail into the subtitle, metadata, or hero card instead of shrinking text into
 an ugly layout.
+Sport preview hub pages, including `nba-previews.html`, must follow the same
+sidebar rule: the hero headline must be centered inside the usable content
+column, not the full viewport behind the calendar. Desktop CSS must reserve the
+archive rail width, and mobile/tablet CSS must hide or stack the archive before
+the headline can be covered.
 
 If a fact cannot be verified, do not guess. Omit the claim, write only the
 limited verified context, or ask for the source.
