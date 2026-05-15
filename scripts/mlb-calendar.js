@@ -8,59 +8,85 @@ const ARCHIVE_DATA = [
     { date: "2026-05-14", page: "brewers-moneyline-minus-139-padres-canning-harrison-mlb-pick-may-14-2026.html", title: "Brewers Moneyline -139 vs Padres Pick" },
     { date: "2026-05-14", page: "mlb-preview-today-eleven-game-board-betting-analysis.html", title: "MLB Preview Today: 11-Game Betting Analysis, Giants-Dodgers, Cubs-Braves" },
     { date: "2026-05-13", page: "angels-team-total-under-3-5-guardians-messick-progressive-field-mlb-pick.html", title: "Angels Team Total Under 3.5 vs Guardians Pick" },
+    { date: "2026-05-12", page: "yankees-orioles-giants-dodgers-fifteen-game-board-mlb.html", title: "MLB Preview: Full 15-Game Tuesday Board" },
     { date: "2026-05-11", page: "astros-moneyline-plus-124-mariners-kirby-lambert-daikin-park-mlb-pick.html", title: "Astros ML +124 vs Mariners" },
+    { date: "2026-05-11", page: "sasaki-kirby-rasmussen-eovaldi-monday-six-pack-mlb.html", title: "MLB Analysis - May 11, 2026" },
     { date: "2026-05-10", page: "sunday-fifteen-game-mlb-preview-may-10-2026.html", title: "MLB Sunday Preview: Full 15-Game Board for May 10, 2026" },
     { date: "2026-05-09", page: "braves-moneyline-plus-152-dodgers-strider-snell-dodger-stadium-mlb-pick.html", title: "Braves vs Dodgers Pick: Atlanta Moneyline at Dodger Stadium" },
     { date: "2026-05-09", page: "nationals-moneyline-plus-139-marlins-littell-junk-loandepot-park-mlb-pick.html", title: "Nationals vs Marlins Pick: Washington Moneyline at loanDepot Park" },
     { date: "2026-05-08", page: "sale-fried-friday-fifteen-game-slate-mlb-may-8-2026.html", title: "MLB Analysis - May 08, 2026" },
     { date: "2026-05-07", page: "gore-blackburn-yankees-rangers-thursday-mlb-may-7-2026.html", title: "MLB Analysis - May 07, 2026" },
     { date: "2026-05-06", page: "athletics-moneyline-plus-156-phillies-springs-wheeler-citizens-bank-park-mlb-pick.html", title: "Athletics vs Phillies Pick: Oakland Moneyline at Citizens Bank Park" },
-    { date: "2026-05-05", page: "mlb-previews-archive-may-2026.html#2026-05-05", title: "MLB Analysis - 2026-05-05" },
-    { date: "2026-05-04", page: "mlb-previews-archive-may-2026.html#2026-05-04", title: "MLB Analysis - 2026-05-04" },
-    { date: "2026-05-03", page: "mlb-previews-archive-may-2026.html#2026-05-03", title: "MLB Analysis - 2026-05-03" },
-    { date: "2026-05-02", page: "mlb-previews-archive-may-2026.html#2026-05-02", title: "MLB Analysis - 2026-05-02" },
+    { date: "2026-05-06", page: "eovaldi-warren-ober-mikolas-eleven-game-wednesday-mlb.html", title: "MLB Preview: Wednesday Eleven-Game Board for May 6, 2026" },
+    { date: "2026-05-05", page: "degrom-alcantara-gausman-tuesday-mlb.html", title: "MLB Analysis - May 05, 2026" },
+    { date: "2026-05-04", page: "yamamoto-gordon-twelve-game-monday-mlb.html", title: "MLB Analysis - May 04, 2026" },
+    { date: "2026-05-03", page: "wrobleski-yesavage-leiter-fifteen-game-sunday-mlb.html", title: "MLB Analysis - May 03, 2026" },
+    { date: "2026-05-02", page: "sasaki-mclean-painter-fifteen-game-saturday-mlb.html", title: "MLB Analysis - May 02, 2026" },
     { date: "2026-05-01", page: "mlb-friday-rotation-yankees-cubs-pirates-divisional-action-mlb.html", title: "MLB Analysis - May 01, 2026" },
+    { date: "2026-04-30", page: "nine-game-thursday-skenes-valdez-gausman-mlb.html", title: "MLB Analysis - April 30, 2026" },
+    { date: "2026-04-29", page: "midweek-rotation-arms-divisional-clashes-mlb.html", title: "MLB Analysis - April 29, 2026" },
+    { date: "2026-04-28", page: "ohtani-degrom-bibee-burns-fifteen-game-tuesday-mlb.html", title: "MLB Analysis - April 28, 2026" },
+    { date: "2026-04-27", page: "cubs-moneyline-plus-107-padres-boyd-vasquez-petco-park-mlb.html", title: "Cubs Moneyline +107 Free Pick vs Padres at Petco Park MLB" },
     { date: "2026-04-27", page: "fried-leiter-yankees-rangers-yamamoto-dodgers-monday-mlb-april-27-2026.html", title: "MLB Analysis - April 27, 2026" },
+    { date: "2026-04-26", page: "phillies-ml-plus-150-braves-nola-sale-truist-park-mlb.html", title: "Phillies ML +150 Free Pick vs Braves Nola Sale Truist Park April 26 2026" },
     { date: "2026-04-26", page: "yankees-astros-cubs-dodgers-fifteen-game-sunday-mlb-april-26-2026.html", title: "MLB Analysis - April 26, 2026" },
     { date: "2026-04-25", page: "cubs-streak-rea-sasaki-fifteen-game-saturday-mlb-april-25-2026.html", title: "MLB Analysis - April 25, 2026" },
     { date: "2026-04-25", page: "cubs-vs-dodgers-mlb-analysis-stats-preview-april-25-2026.html", title: "Cubs vs Dodgers Analysis April 25, 2026" },
+    { date: "2026-04-25", page: "rockies-mets-over-8-quintana-senga-citi-field-mlb.html", title: "Rockies Mets Over 8 Free Pick Quintana Senga Citi Field April 25 2026" },
+    { date: "2026-04-24", page: "reds-moneyline-plus-118-home-dog-valdez-abbott-great-american-ballpark-mlb.html", title: "Reds ML +118 Home Dog vs Tigers Free Pick April 24 2026" },
     { date: "2026-04-24", page: "skenes-scherzer-mccullers-fourteen-game-mlb-april-24-2026.html", title: "MLB Analysis - April 24, 2026" },
     { date: "2026-04-23", page: "glasnow-webb-degrom-tolle-rivalry-thursday-nine-game-mlb-april-23-2026.html", title: "MLB Analysis - April 23, 2026" },
     { date: "2026-04-22", page: "free-mlb-picks-today-full-card-release-wednesday-april-22-2026.html", title: "Free MLB Picks Today Wednesday April 22 2026 - Full Card 6 Plays" },
     { date: "2026-04-22", page: "ohtani-duel-yankees-redsox-rivalry-wednesday-fifteen-game-mlb-april-22-2026.html", title: "MLB Analysis - April 22, 2026" },
+    { date: "2026-04-21", page: "giants-moneyline-plus-153-roupp-dodgers-oracle-park-mlb.html", title: "Giants ML +153 Free Pick vs Dodgers April 21 2026" },
     { date: "2026-04-21", page: "yankees-red-sox-dodgers-giants-rivalry-tuesday-fifteen-game-mlb-april-21-2026.html", title: "MLB Analysis - April 21, 2026" },
     { date: "2026-04-20", page: "patriots-day-cease-nola-dodgers-coors-ten-game-mlb-april-20-2026.html", title: "MLB Analysis - April 20, 2026" },
     { date: "2026-04-19", page: "sasaki-gausman-crochet-sunday-fifteen-game-mlb-april-19-2026.html", title: "MLB Analysis - April 19, 2026" },
+    { date: "2026-04-18", page: "rockies-moneyline-plus-235-home-dog-sheehan-coors-field-dodgers-mlb.html", title: "Colorado Rockies ML +235 vs Dodgers Free Pick MLB April 18" },
     { date: "2026-04-18", page: "skubal-skenes-sale-sanchez-fifteen-game-saturday-mlb-april-18-2026.html", title: "MLB Analysis - April 18, 2026" },
+    { date: "2026-04-18", page: "white-sox-moneyline-plus-131-fedde-athletics-sacramento-mlb.html", title: "Chicago White Sox ML +131 at Athletics Free MLB Pick Fedde April 18" },
     { date: "2026-04-17", page: "degrom-glasnow-schlittler-fifteen-game-friday-mlb-april-17-2026.html", title: "MLB Analysis - April 17, 2026" },
+    { date: "2026-04-17", page: "reds-moneyline-williamson-twins-target-field-mlb.html", title: "Cincinnati Reds ML +154 at Twins Free Pick MLB April 17" },
     { date: "2026-04-16", page: "mlb-previews-archive-april-2026.html#2026-04-16", title: "MLB Analysis - 2026-04-16" },
     { date: "2026-04-15", page: "ohtani-mound-return-imanaga-luzardo-duel-fifteen-game-wednesday-mlb-april-15-2026.html", title: "MLB Analysis - April 15, 2026" },
+    { date: "2026-04-14", page: "rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html", title: "Rangers ML Gore Strikeout Machine at Athletics MLB Free Pick April 14" },
     { date: "2026-04-14", page: "yamamoto-nola-mets-dodgers-cubs-phillies-15-game-tuesday-mlb-april-14-2026.html", title: "MLB Analysis - April 14, 2026" },
     { date: "2026-04-13", page: "skenes-crochet-mets-dodgers-espn-10-game-monday-mlb-april-13-2026.html", title: "MLB Analysis - April 13, 2026" },
+    { date: "2026-04-13", page: "yankees-angels-under-9-5-warren-kikuchi-yankee-stadium-mlb.html", title: "Yankees Angels Under 9.5 MLB Free Pick April 13" },
     { date: "2026-04-12", page: "degrom-sasaki-ace-duel-alcantara-dominance-saturday-mlb-april-12-2026.html", title: "MLB Analysis - April 12, 2026" },
+    { date: "2026-04-11", page: "giants-moneyline-webb-orioles-camden-yards-mlb.html", title: "Giants Moneyline -114 vs Orioles MLB Free Pick April 11" },
     { date: "2026-04-10", page: "glasnow-dodgers-host-rangers-yankees-rays-15-game-friday-mlb-april-10-2026.html", title: "MLB Analysis - April 10, 2026" },
+    { date: "2026-04-10", page: "rangers-dodgers-under-9-glasnow-rocker-dodger-stadium-mlb.html", title: "Rangers Dodgers Under 9 MLB Free Pick April 10" },
     { date: "2026-04-09", page: "lowder-meyer-young-arms-severino-yankee-stadium-mlb-april-9-2026.html", title: "MLB Analysis - April 9, 2026" },
     { date: "2026-04-09", page: "mlb.html", title: "MLB Analysis - April 9, 2026" },
+    { date: "2026-04-08", page: "cardinals-nationals-over-8-5-runs-nationals-park-mlb.html", title: "Cardinals Nationals Over 8.5 MLB Pick April 8" },
     { date: "2026-04-08", page: "ohtani-cease-world-series-rematch-coors-field-fireworks-mlb-april-8-2026.html", title: "MLB Analysis - April 8, 2026" },
     { date: "2026-04-07", page: "world-series-rematch-dodgers-blue-jays-skenes-skubal-ace-duels-mlb-april-7-2026.html", title: "MLB Analysis - April 7, 2026" },
+    { date: "2026-04-06", page: "braves-f5-moneyline-sale-dominates-angels-mlb.html", title: "Braves F5 ML -150 vs Angels: Chris Sale Dominance April 6" },
     { date: "2026-04-06", page: "dodgers-blue-jays-world-series-rematch-brewers-surge-mlb-april-6-2026.html", title: "MLB Analysis - April 6, 2026" },
     { date: "2026-04-05", page: "cubs-guardians-doubleheader-cardinals-tigers-snb-mlb-april-5-2026.html", title: "MLB Analysis - April 5, 2026" },
+    { date: "2026-04-05", page: "mariners-moneyline-castillo-angels-rubber-match-mlb.html", title: "Mariners ML -162 Castillo vs Angels Rubber Match MLB Free Pick April 5 2026" },
     { date: "2026-04-04", page: "imanaga-glasnow-headline-16-game-saturday-mlb-april-4-2026.html", title: "MLB Analysis - April 4, 2026" },
+    { date: "2026-04-04", page: "red-sox-moneyline-early-padres-fenway-mlb.html", title: "Red Sox ML -139 vs Padres Free Pick April 4 2026" },
     { date: "2026-04-03", page: "ohtani-blasts-418-ft-homer-rangers-reds-home-openers-mlb-april-3-2026.html", title: "MLB Analysis - April 3, 2026" },
     { date: "2026-04-02", page: "ragans-bradley-duel-braves-open-in-arizona-mlb-april-2-2026.html", title: "MLB Analysis - April 2, 2026" },
     { date: "2026-04-01", page: "skubal-sale-dominate-early-pitching-duels-yankees-dodgers-mlb-april-1-2026.html", title: "MLB Analysis - April 1, 2026" },
+    { date: "2026-04-01", page: "twins-royals-under-8-5-joe-ryan-kauffman-mlb.html", title: "Twins at Royals Under 8.5 Free Pick April 1 2026" },
+    { date: "2026-03-31", page: "giants-moneyline-webb-padres-petco-park-mlb.html", title: "Giants vs Padres Free Pick March 31 2026" },
     { date: "2026-03-31", page: "ohtani-pitches-dodgers-degrom-returns-fried-gilbert-duel-mlb-march-31-2026.html", title: "MLB Analysis - March 31, 2026" },
+    { date: "2026-03-30", page: "brewers-moneyline-harrison-rays-series-opener-mlb.html", title: "Brewers vs Rays Free Pick Today March 30 2026" },
     { date: "2026-03-30", page: "opening-week-15-game-monday-guardians-dodgers-nats-phillies-mlb-march-30-2026.html", title: "MLB Analysis - March 30, 2026" },
-    { date: "2026-03-29", page: "mlb-previews-archive-march-2026.html#2026-03-29", title: "MLB Analysis - 2026-03-29" },
+    { date: "2026-03-29", page: "brewers-moneyline-sproat-white-sox-sweep-mlb.html", title: "Brewers Moneyline Pick vs White Sox March 29 2026" },
     { date: "2026-03-28", page: "mlb-march28-content.html", title: "MLB Analysis - Saturday, March 28, 2026" },
-    { date: "2026-03-27", page: "mlb-previews-archive-march-2026.html#2026-03-27", title: "MLB Analysis - 2026-03-27" },
-    { date: "2026-03-25", page: "mlb-previews-archive-march-2026.html#2026-03-25", title: "MLB Analysis - 2026-03-25" },
+    { date: "2026-03-28", page: "yankees-giants-under-8-5-oracle-park-mlb.html", title: "Yankees vs Giants Under 8.5 MLB Pick March 28" },
+    { date: "2026-03-27", page: "blue-jays-moneyline-gausman-athletics-opening-series-mlb.html", title: "Blue Jays ML -170 vs Athletics MLB Pick March 27" },
+    { date: "2026-03-26", page: "red-sox-moneyline-crochet-reds-opening-day-mlb.html", title: "Red Sox ML -158 vs Reds Opening Day MLB Pick" },
+    { date: "2026-03-25", page: "yankees-giants-over-7-opening-day-mlb.html", title: "Yankees at Giants Over 7 Opening Day MLB Pick" },
     { date: "2026-03-24", page: "mlb-previews-archive-march-2026.html#2026-03-24", title: "MLB Analysis - 2026-03-24" },
+    { date: "2026-03-23", page: "mlb-previews-archive-march-2026.html", title: "MLB Analysis - 2026-03-23" },
     { date: "2026-03-18", page: "spring-training-heat-wave-cubs-bregman-dodgers-tucker-mlb-march-18-2026.html", title: "MLB Analysis - March 18, 2026" },
     { date: "2026-01-08", page: "mlb-picks-analysis-against-the-spread-january-08-2026.html", title: "MLB Analysis - January 08, 2026" },
 ];
-
-window.ARCHIVE_DATA = ARCHIVE_DATA;
 
 const dateMap = {};
 ARCHIVE_DATA.forEach(item => { if (!dateMap[item.date]) dateMap[item.date] = item; });
@@ -114,6 +140,49 @@ const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'Jul
 // For main pages, default to today's month; for archive pages, use their month
 let displayMonth = isMainPage ? todayMonth : (currentPageDate ? currentPageDate.substring(0, 7) : sortedMonths[0]);
 
+function navigateToCalendarPage(page) {
+    if (page) window.location.href = '/' + page;
+}
+
+function closeCalendarPostChooser() {
+    const existing = document.getElementById('calendar-post-chooser');
+    if (existing) existing.remove();
+}
+
+function showCalendarPostChooser(dateStr, postsForDate) {
+    closeCalendarPostChooser();
+    const overlay = document.createElement('div');
+    overlay.id = 'calendar-post-chooser';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.64);z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px;';
+    const panel = document.createElement('div');
+    panel.style.cssText = 'width:min(440px,100%);max-height:min(680px,88vh);overflow:auto;background:#171713;border:1px solid rgba(232,184,92,.35);border-radius:10px;padding:18px;box-shadow:0 24px 80px rgba(0,0,0,.55);color:#fbf7ed;';
+    const dateObj = new Date(dateStr + 'T12:00:00');
+    const title = document.createElement('div');
+    title.textContent = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    title.style.cssText = 'font-family:Oswald,Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#e8b85c;font-weight:800;margin-bottom:12px;';
+    panel.appendChild(title);
+    const list = document.createElement('div');
+    list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+    postsForDate.forEach(item => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = item.title;
+        button.style.cssText = 'width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,238,203,.14);border-radius:7px;color:#fbf7ed;padding:11px 12px;font:700 13px Inter,Arial,sans-serif;cursor:pointer;line-height:1.35;';
+        button.onclick = () => navigateToCalendarPage(item.page);
+        list.appendChild(button);
+    });
+    panel.appendChild(list);
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.textContent = 'Close';
+    close.style.cssText = 'margin-top:14px;width:100%;background:#e8b85c;border:0;border-radius:7px;color:#16120c;padding:10px 12px;font:900 12px Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;';
+    close.onclick = closeCalendarPostChooser;
+    panel.appendChild(close);
+    overlay.appendChild(panel);
+    overlay.addEventListener("click", event => { if (event.target === overlay) closeCalendarPostChooser(); });
+    document.body.appendChild(overlay);
+}
+
 function renderCalendar(yearMonth) {
     const [year, month] = yearMonth.split('-').map(Number);
     const yearEl = document.getElementById('cal-year') || document.querySelector('.year-display');
@@ -137,13 +206,17 @@ function renderCalendar(yearMonth) {
         cell.textContent = d;
         if (hasData) {
             cell.title = postsForDate.map(item => item.title).join('\n');
-            cell.onclick = () => window.location.href = "/" + hasData.page;
+            cell.onclick = () => {
+                if (postsForDate.length === 1) navigateToCalendarPage(hasData.page);
+                else showCalendarPostChooser(dateStr, postsForDate);
+            };
         }
         container.appendChild(cell);
     }
 }
 
 function initSportCalendar() {
+
     const monthSelect = document.getElementById('month-select') || document.getElementById('monthSelect');
     if (monthSelect) {
         monthSelect.innerHTML = '';

@@ -5,7 +5,22 @@
 const ARCHIVE_DATA = [
     { date: "2026-05-15", page: "aston-villa-liverpool-friday-soccer-run-in.html", title: "Soccer Friday Preview: Aston Villa-Liverpool, League Two Playoffs and NWSL May 15, 2026" },
     { date: "2026-05-15", page: "soccer-previews.html", title: "Soccer Friday Preview: Aston Villa-Liverpool, League Two Playoffs and NWSL May 15, 2026" },
+    { date: "2026-05-14", page: "soccer-previews-archive-may-2026.html#2026-05-14", title: "SOCCER Analysis - 2026-05-14" },
+    { date: "2026-05-13", page: "soccer-midweek-reset-europa-league-nwsl-premier-league-may-13-2026.html", title: "Soccer Midweek Reset: Europa League, NWSL and Premier League May 13, 2026" },
+    { date: "2026-05-12", page: "al-nassr-al-hilal-saudi-title-decider-soccer.html", title: "Al Nassr vs Al Hilal Saudi Title Decider Preview" },
+    { date: "2026-05-11", page: "tottenham-leeds-survival-rayo-girona-relegation-soccer.html", title: "Soccer Analysis - May 11, 2026" },
+    { date: "2026-05-10", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-05-10" },
     { date: "2026-05-08", page: "dortmund-frankfurt-bundesliga-levante-osasuna-laliga-soccer-may-8-2026.html", title: "Soccer Analysis - May 08, 2026" },
+    { date: "2026-05-07", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-05-07" },
+    { date: "2026-05-06", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-05-06" },
+    { date: "2026-05-05", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-05-05" },
+    { date: "2026-05-04", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-05-04" },
+    { date: "2026-05-03", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-05-03" },
+    { date: "2026-05-02", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-05-02" },
+    { date: "2026-05-01", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-05-01" },
+    { date: "2026-04-30", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-04-30" },
+    { date: "2026-04-29", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-04-29" },
+    { date: "2026-04-28", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-04-28" },
     { date: "2026-04-27", page: "manchester-united-brentford-old-trafford-monday-soccer-april-27-2026.html", title: "Soccer Analysis - April 27, 2026" },
     { date: "2026-04-26", page: "chelsea-leeds-fa-cup-milan-juventus-derby-italia-sunday-soccer-april-26-2026.html", title: "Soccer Analysis - April 26, 2026" },
     { date: "2026-04-25", page: "arsenal-newcastle-liverpool-palace-getafe-barca-saturday-soccer-april-25-2026.html", title: "Soccer Analysis - April 25, 2026" },
@@ -38,6 +53,7 @@ const ARCHIVE_DATA = [
     { date: "2026-03-27", page: "soccer-previews-archive-march-2026.html#2026-03-27", title: "SOCCER Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "soccer-previews-archive-march-2026.html#2026-03-25", title: "SOCCER Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "soccer-previews-archive-march-2026.html#2026-03-24", title: "SOCCER Analysis - 2026-03-24" },
+    { date: "2026-03-22", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-03-22" },
     { date: "2026-03-21", page: "soccer-previews-archive-march-2026.html#2026-03-21", title: "SOCCER Analysis - 2026-03-21" },
     { date: "2026-03-20", page: "bournemouth-man-united-premier-league-friday-villarreal-sociedad-soccer-march-20-2026.html", title: "Soccer Analysis - March 20, 2026" },
     { date: "2026-03-20", page: "soccer.html", title: "Soccer Analysis - March 20, 2026" },
@@ -176,13 +192,56 @@ const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'Jul
 // For main pages, default to today's month; for archive pages, use their month
 let displayMonth = isMainPage ? todayMonth : (currentPageDate ? currentPageDate.substring(0, 7) : sortedMonths[0]);
 
+function navigateToCalendarPage(page) {
+    if (page) window.location.href = '/' + page;
+}
+
+function closeCalendarPostChooser() {
+    const existing = document.getElementById('calendar-post-chooser');
+    if (existing) existing.remove();
+}
+
+function showCalendarPostChooser(dateStr, postsForDate) {
+    closeCalendarPostChooser();
+    const overlay = document.createElement('div');
+    overlay.id = 'calendar-post-chooser';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.64);z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px;';
+    const panel = document.createElement('div');
+    panel.style.cssText = 'width:min(440px,100%);max-height:min(680px,88vh);overflow:auto;background:#171713;border:1px solid rgba(232,184,92,.35);border-radius:10px;padding:18px;box-shadow:0 24px 80px rgba(0,0,0,.55);color:#fbf7ed;';
+    const dateObj = new Date(dateStr + 'T12:00:00');
+    const title = document.createElement('div');
+    title.textContent = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    title.style.cssText = 'font-family:Oswald,Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#e8b85c;font-weight:800;margin-bottom:12px;';
+    panel.appendChild(title);
+    const list = document.createElement('div');
+    list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+    postsForDate.forEach(item => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = item.title;
+        button.style.cssText = 'width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,238,203,.14);border-radius:7px;color:#fbf7ed;padding:11px 12px;font:700 13px Inter,Arial,sans-serif;cursor:pointer;line-height:1.35;';
+        button.onclick = () => navigateToCalendarPage(item.page);
+        list.appendChild(button);
+    });
+    panel.appendChild(list);
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.textContent = 'Close';
+    close.style.cssText = 'margin-top:14px;width:100%;background:#e8b85c;border:0;border-radius:7px;color:#16120c;padding:10px 12px;font:900 12px Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;';
+    close.onclick = closeCalendarPostChooser;
+    panel.appendChild(close);
+    overlay.appendChild(panel);
+    overlay.addEventListener("click", event => { if (event.target === overlay) closeCalendarPostChooser(); });
+    document.body.appendChild(overlay);
+}
+
 function renderCalendar(yearMonth) {
     const [year, month] = yearMonth.split('-').map(Number);
-    const yearEl = document.getElementById('cal-year');
+    const yearEl = document.getElementById('cal-year') || document.querySelector('.year-display');
     if (yearEl) yearEl.textContent = year;
     const firstDay = new Date(year, month - 1, 1).getDay();
     const daysInMonth = new Date(year, month, 0).getDate();
-    const container = document.getElementById('calendar-days');
+    const container = document.getElementById('calendar-days') || document.getElementById('calendarDays');
     if (!container) return;
     container.innerHTML = '';
     for (let i = 0; i < firstDay; i++) { const cell = document.createElement('div'); cell.className = 'cal-day empty'; container.appendChild(cell); }
@@ -199,19 +258,18 @@ function renderCalendar(yearMonth) {
         cell.textContent = d;
         if (hasData) {
             cell.title = postsForDate.map(item => item.title).join('\n');
-            cell.onclick = () => window.location.href = "/" + hasData.page;
+            cell.onclick = () => {
+                if (postsForDate.length === 1) navigateToCalendarPage(hasData.page);
+                else showCalendarPostChooser(dateStr, postsForDate);
+            };
         }
         container.appendChild(cell);
     }
 }
 
 function initSportCalendar() {
-    if (SPORT_HUB_PAGE && currentPage === SPORT_HUB_PAGE && window.LATEST_CONTENT_PAGE && window.LATEST_CONTENT_PAGE !== currentPage) {
-        window.location.replace('/' + window.LATEST_CONTENT_PAGE);
-        return;
-    }
 
-    const monthSelect = document.getElementById('month-select');
+    const monthSelect = document.getElementById('month-select') || document.getElementById('monthSelect');
     if (monthSelect) {
         monthSelect.innerHTML = '';
         sortedMonths.forEach(m => {
@@ -225,7 +283,7 @@ function initSportCalendar() {
         monthSelect.addEventListener('change', function() { renderCalendar(this.value); });
     }
     renderCalendar(displayMonth);
-    const mobileSelect = document.getElementById('mobile-archive-select');
+    const mobileSelect = document.getElementById('mobile-archive-select') || document.getElementById('mobileArchiveSelect');
     if (mobileSelect) {
         mobileSelect.innerHTML = '<option value="">Select a date...</option>';
         ARCHIVE_DATA.forEach(item => {

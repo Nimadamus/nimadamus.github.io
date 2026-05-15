@@ -28,13 +28,13 @@ SCRIPTS_DIR = REPO_DIR / 'scripts'
 # Sport configurations
 # 'hub' = the rolling hub page (nba-previews.html, etc.) - always represents today's content
 SPORTS = {
-    'nba': {'prefix': 'nba', 'globs': ['nba*.html', '*-nba.html', '*-nba-*.html'], 'main': 'nba.html', 'hub': 'nba-previews.html', 'calendar_js': 'nba-calendar.js', 'archive_pattern': 'nba-previews-archive-*.html'},
-    'nhl': {'prefix': 'nhl', 'globs': ['nhl*.html', '*-nhl.html', '*-nhl-*.html'], 'main': 'nhl.html', 'hub': 'nhl-previews.html', 'calendar_js': 'nhl-calendar.js', 'archive_pattern': 'nhl-previews-archive-*.html'},
-    'ncaab': {'prefix': 'ncaab', 'globs': ['ncaab*.html', 'college-basketball-*.html', '*-ncaab.html', '*-ncaab-*.html', '*-college-basketball.html', '*-college-basketball-*.html'], 'main': 'ncaab.html', 'hub': 'college-basketball-previews.html', 'calendar_js': 'ncaab-calendar.js', 'archive_pattern': 'college-basketball-previews-archive-*.html'},
-    'ncaaf': {'prefix': 'ncaaf', 'globs': ['ncaaf*.html', 'college-football-*.html', '*-ncaaf.html', '*-ncaaf-*.html', '*-college-football.html', '*-college-football-*.html'], 'main': 'ncaaf.html', 'hub': None, 'calendar_js': 'ncaaf-calendar.js', 'archive_pattern': None},
-    'nfl': {'prefix': 'nfl', 'globs': ['nfl*.html', '*-nfl.html', '*-nfl-*.html'], 'main': 'nfl.html', 'hub': None, 'calendar_js': 'nfl-calendar.js', 'archive_pattern': None},
-    'mlb': {'prefix': 'mlb', 'globs': ['mlb*.html', '*-mlb.html', '*-mlb-*.html'], 'main': 'mlb.html', 'hub': 'mlb-previews.html', 'calendar_js': 'mlb-calendar.js', 'archive_pattern': 'mlb-previews-archive-*.html'},
-    'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html', '*-soccer.html', '*-soccer-*.html'], 'main': 'soccer.html', 'hub': 'soccer-previews.html', 'calendar_js': 'soccer-calendar.js', 'archive_pattern': 'soccer-previews-archive-*.html'},
+    'nba': {'prefix': 'nba', 'globs': ['nba*.html', '*-nba-*.html', '*-nba.html'], 'main': 'nba.html', 'hub': 'nba-previews.html', 'calendar_js': 'nba-calendar.js', 'archive_pattern': 'nba-previews-archive-*.html'},
+    'nhl': {'prefix': 'nhl', 'globs': ['nhl*.html', '*-nhl-*.html', '*-nhl.html'], 'main': 'nhl.html', 'hub': 'nhl-previews.html', 'calendar_js': 'nhl-calendar.js', 'archive_pattern': 'nhl-previews-archive-*.html'},
+    'ncaab': {'prefix': 'ncaab', 'globs': ['ncaab*.html', '*-ncaab.html', 'college-basketball-*.html', '*-ncaab-*.html', '*-college-basketball-*.html'], 'main': 'ncaab.html', 'hub': 'college-basketball-previews.html', 'calendar_js': 'ncaab-calendar.js', 'archive_pattern': 'college-basketball-previews-archive-*.html'},
+    'ncaaf': {'prefix': 'ncaaf', 'globs': ['ncaaf*.html', '*-ncaaf.html', 'college-football-*.html', '*-ncaaf-*.html', '*-college-football-*.html'], 'main': 'ncaaf.html', 'hub': None, 'calendar_js': 'ncaaf-calendar.js', 'archive_pattern': None},
+    'nfl': {'prefix': 'nfl', 'globs': ['nfl*.html', '*-nfl-*.html', '*-nfl.html'], 'main': 'nfl.html', 'hub': None, 'calendar_js': 'nfl-calendar.js', 'archive_pattern': None},
+    'mlb': {'prefix': 'mlb', 'globs': ['mlb*.html', '*-mlb-*.html', '*-mlb.html'], 'main': 'mlb.html', 'hub': 'mlb-previews.html', 'calendar_js': 'mlb-calendar.js', 'archive_pattern': 'mlb-previews-archive-*.html'},
+    'soccer': {'prefix': 'soccer', 'globs': ['soccer*.html', '*-soccer-*.html', '*-soccer.html'], 'main': 'soccer.html', 'hub': 'soccer-previews.html', 'calendar_js': 'soccer-calendar.js', 'archive_pattern': 'soccer-previews-archive-*.html'},
 }
 
 SPORT_DISPLAY_NAMES = {
@@ -69,6 +69,13 @@ PLACEHOLDER_TEXT = "Today's previews will be published shortly"
 # Format: 'filename.html': 'YYYY-MM-DD'
 # These are used when the page title is generic and content dates are unreliable
 MANUAL_DATE_OVERRIDES = {
+    # May 12, 2026 slate recovery pages. These were built as valid standalone
+    # articles but some filenames do not carry the date, so keep them locked.
+    'timberwolves-spurs-game-five-pivot-nba.html': '2026-05-12',
+    'timberwolves-spurs-game-five-pivot-nba-analysis-stats-preview.html': '2026-05-12',
+    'yankees-orioles-giants-dodgers-fifteen-game-board-mlb.html': '2026-05-12',
+    'sabres-canadiens-ducks-golden-knights-playoff-pivots-nhl.html': '2026-05-12',
+    'al-nassr-al-hilal-saudi-title-decider-soccer.html': '2026-05-12',
     # NFL archive pages with Week 16 games
     'nfl-picks-predictions-against-the-spread-november-28-2025.html': '2025-11-28',  # Thanksgiving games (Week 13)
     'nfl-picks-predictions-against-the-spread-december-21-2025.html': '2025-12-21',  # Week 16 Saturday games
@@ -167,6 +174,10 @@ MANUAL_DATE_OVERRIDES = {
     # Soccer archive pages (NOT main page - soccer.html extracts from title)
     'soccer-predictions-picks-best-bets-january-27-2026.html': '2026-01-27',  # January 27 Soccer
     'soccer-predictions-picks-best-bets-january-26-2026.html': '2026-01-26',  # January 26 Soccer
+}
+
+CALENDAR_PRIMARY_PAGES = {
+    ('nba', '2026-05-12'): 'timberwolves-spurs-game-five-pivot-nba.html',
 }
 
 # Month name to number mapping
@@ -384,10 +395,10 @@ def extract_date_from_page(filepath):
         if date:
             return date
 
-        # Method 8: Fallback to file modification date
-        mtime = os.path.getmtime(filepath)
-        dt = datetime.fromtimestamp(mtime)
-        return dt.strftime('%Y-%m-%d')
+        # Do not fall back to file modification time. Editing an old article
+        # would move it to today's calendar date and hide the real old entry.
+        print(f"    [NO DATE] {filename}: skipped because no reliable date was found")
+        return None
 
     except Exception as e:
         print(f"  ERROR reading {filepath}: {e}")
@@ -474,13 +485,14 @@ def get_sport_pages(sport_config):
                 print(f"    {relative_path}: {date}")
 
     def archive_page_for_date(date):
-        """Return a month archive anchor for a recovered hub date when it exists."""
+        """Return a month archive target for a recovered hub date when it exists."""
         if not archive_pattern:
             return None
 
         date_obj = datetime.strptime(date, '%Y-%m-%d')
         month_name = date_obj.strftime('%B').lower()
         year = date_obj.strftime('%Y')
+        date_heading = date_obj.strftime('%B %-d, %Y') if os.name != 'nt' else f"{date_obj.strftime('%B')} {date_obj.day}, {year}"
         archive_filename = archive_pattern.replace('*', f'{month_name}-{year}')
         archive_path = REPO_DIR / archive_filename
 
@@ -492,26 +504,12 @@ def get_sport_pages(sport_config):
                 archive_html = f.read()
             if f'id="{date}"' in archive_html or f"id='{date}'" in archive_html:
                 return f'{archive_filename}#{date}'
+            if date_heading in archive_html:
+                print(f"    [ARCHIVE NO ANCHOR] {archive_filename}: {date} found by heading; using archive page")
+                return archive_filename
         except Exception:
             return None
 
-        return None
-
-    def archive_target_for_date(date):
-        """Return the best archive target for a manifest date, even if its anchor is missing."""
-        archive_page = archive_page_for_date(date)
-        if archive_page:
-            return archive_page
-        if not archive_pattern:
-            return None
-
-        date_obj = datetime.strptime(date, '%Y-%m-%d')
-        month_name = date_obj.strftime('%B').lower()
-        year = date_obj.strftime('%Y')
-        archive_filename = archive_pattern.replace('*', f'{month_name}-{year}')
-        archive_path = REPO_DIR / archive_filename
-        if archive_path.exists():
-            return f'{archive_filename}#{date}'
         return None
 
     # =========================================================================
@@ -533,10 +531,9 @@ def get_sport_pages(sport_config):
             sport_dates = manifest.get(prefix, [])
             for date in sport_dates:
                 if date not in existing_dates:
-                    archive_page = archive_target_for_date(date)
-                    if not archive_page and not hub_page:
-                        print(f"    [SKIP MANIFEST] {prefix}: {date} has no archive page or hub fallback")
-                        continue
+                    archive_page = archive_page_for_date(date)
+                    if not archive_page and hub_page:
+                        print(f"    [MANIFEST HUB FALLBACK] {hub_page}: {date} has no archive page or specific page; preserving date on hub")
                     pages.append({
                         'date': date,
                         'page': archive_page or hub_page or f'{prefix}.html',
@@ -554,10 +551,9 @@ def get_sport_pages(sport_config):
             archive_dates = extract_dates_from_rotation_archive(filepath)
             for date in archive_dates:
                 if date not in existing_dates:
-                    archive_page = archive_target_for_date(date)
-                    if not archive_page and not hub_page:
-                        print(f"    [SKIP ARCHIVE HTML] {prefix}: {date} has no archive page or hub fallback")
-                        continue
+                    archive_page = archive_page_for_date(date)
+                    if not archive_page and hub_page:
+                        print(f"    [ARCHIVE HUB FALLBACK] {hub_page}: {date} has no archive page or specific page; preserving date on hub")
                     pages.append({
                         'date': date,
                         'page': archive_page or hub_page or f'{prefix}.html',
@@ -578,8 +574,10 @@ def get_sport_pages(sport_config):
 
     def sort_key(entry):
         """Sort by date desc, then specific pages before generic ones."""
+        primary_page = CALENDAR_PRIMARY_PAGES.get((prefix, entry['date']))
+        is_primary = 0 if primary_page and entry['page'] == primary_page else 1
         is_generic = 1 if entry['page'] in generic_pages else 0
-        return (-int(entry['date'].replace('-', '')), is_generic, entry['page'])
+        return (-int(entry['date'].replace('-', '')), is_primary, is_generic, entry['page'])
 
     pages.sort(key=sort_key)
 
@@ -665,13 +663,56 @@ def generate_calendar_js(sport_name, sport_config, pages):
         '// For main pages, default to today\'s month; for archive pages, use their month',
         "let displayMonth = isMainPage ? todayMonth : (currentPageDate ? currentPageDate.substring(0, 7) : sortedMonths[0]);",
         '',
+        'function navigateToCalendarPage(page) {',
+        "    if (page) window.location.href = '/' + page;",
+        '}',
+        '',
+        'function closeCalendarPostChooser() {',
+        "    const existing = document.getElementById('calendar-post-chooser');",
+        '    if (existing) existing.remove();',
+        '}',
+        '',
+        'function showCalendarPostChooser(dateStr, postsForDate) {',
+        '    closeCalendarPostChooser();',
+        "    const overlay = document.createElement('div');",
+        "    overlay.id = 'calendar-post-chooser';",
+        "    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.64);z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px;';",
+        "    const panel = document.createElement('div');",
+        "    panel.style.cssText = 'width:min(440px,100%);max-height:min(680px,88vh);overflow:auto;background:#171713;border:1px solid rgba(232,184,92,.35);border-radius:10px;padding:18px;box-shadow:0 24px 80px rgba(0,0,0,.55);color:#fbf7ed;';",
+        "    const dateObj = new Date(dateStr + 'T12:00:00');",
+        "    const title = document.createElement('div');",
+        "    title.textContent = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });",
+        "    title.style.cssText = 'font-family:Oswald,Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#e8b85c;font-weight:800;margin-bottom:12px;';",
+        '    panel.appendChild(title);',
+        "    const list = document.createElement('div');",
+        "    list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';",
+        '    postsForDate.forEach(item => {',
+        "        const button = document.createElement('button');",
+        "        button.type = 'button';",
+        "        button.textContent = item.title;",
+        "        button.style.cssText = 'width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,238,203,.14);border-radius:7px;color:#fbf7ed;padding:11px 12px;font:700 13px Inter,Arial,sans-serif;cursor:pointer;line-height:1.35;';",
+        '        button.onclick = () => navigateToCalendarPage(item.page);',
+        '        list.appendChild(button);',
+        '    });',
+        '    panel.appendChild(list);',
+        "    const close = document.createElement('button');",
+        "    close.type = 'button';",
+        "    close.textContent = 'Close';",
+        "    close.style.cssText = 'margin-top:14px;width:100%;background:#e8b85c;border:0;border-radius:7px;color:#16120c;padding:10px 12px;font:900 12px Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;';",
+        '    close.onclick = closeCalendarPostChooser;',
+        '    panel.appendChild(close);',
+        '    overlay.appendChild(panel);',
+        '    overlay.addEventListener("click", event => { if (event.target === overlay) closeCalendarPostChooser(); });',
+        '    document.body.appendChild(overlay);',
+        '}',
+        '',
         'function renderCalendar(yearMonth) {',
         "    const [year, month] = yearMonth.split('-').map(Number);",
-        "    const yearEl = document.getElementById('cal-year');",
+        "    const yearEl = document.getElementById('cal-year') || document.querySelector('.year-display');",
         '    if (yearEl) yearEl.textContent = year;',
         '    const firstDay = new Date(year, month - 1, 1).getDay();',
         '    const daysInMonth = new Date(year, month, 0).getDate();',
-        "    const container = document.getElementById('calendar-days');",
+        "    const container = document.getElementById('calendar-days') || document.getElementById('calendarDays');",
         '    if (!container) return;',
         "    container.innerHTML = '';",
         "    for (let i = 0; i < firstDay; i++) { const cell = document.createElement('div'); cell.className = 'cal-day empty'; container.appendChild(cell); }",
@@ -688,19 +729,18 @@ def generate_calendar_js(sport_name, sport_config, pages):
         '        cell.textContent = d;',
         '        if (hasData) {',
         "            cell.title = postsForDate.map(item => item.title).join('\\n');",
-        '            cell.onclick = () => window.location.href = "/" + hasData.page;',
+        '            cell.onclick = () => {',
+        '                if (postsForDate.length === 1) navigateToCalendarPage(hasData.page);',
+        '                else showCalendarPostChooser(dateStr, postsForDate);',
+        '            };',
         '        }',
         '        container.appendChild(cell);',
         '    }',
         '}',
         '',
         'function initSportCalendar() {',
-        '    if (SPORT_HUB_PAGE && currentPage === SPORT_HUB_PAGE && window.LATEST_CONTENT_PAGE && window.LATEST_CONTENT_PAGE !== currentPage) {',
-        "        window.location.replace('/' + window.LATEST_CONTENT_PAGE);",
-        '        return;',
-        '    }',
         '',
-        "    const monthSelect = document.getElementById('month-select');",
+        "    const monthSelect = document.getElementById('month-select') || document.getElementById('monthSelect');",
         '    if (monthSelect) {',
         "        monthSelect.innerHTML = '';",
         '        sortedMonths.forEach(m => {',
@@ -714,7 +754,7 @@ def generate_calendar_js(sport_name, sport_config, pages):
         "        monthSelect.addEventListener('change', function() { renderCalendar(this.value); });",
         '    }',
         '    renderCalendar(displayMonth);',
-        "    const mobileSelect = document.getElementById('mobile-archive-select');",
+        "    const mobileSelect = document.getElementById('mobile-archive-select') || document.getElementById('mobileArchiveSelect');",
         '    if (mobileSelect) {',
         '        mobileSelect.innerHTML = \'<option value="">Select a date...</option>\';',
         '        ARCHIVE_DATA.forEach(item => {',
@@ -1124,7 +1164,7 @@ def main():
             print(f"  Updated {sport_config['calendar_js']}")
             update_hub_placeholder_fallback(sport_name, sport_config, pages)
 
-    # Update cache busters on all pages so browsers load fresh calendar JS
+    # Update cache busters on all preview hub pages so browsers load fresh calendar JS
     update_calendar_cache_busters()
 
     print("\n" + "=" * 60)
@@ -1135,50 +1175,49 @@ def main():
 
 def update_calendar_cache_busters():
     """
-    Updates the ?v= cache buster on calendar JS script tags in every HTML page.
+    Updates the ?v= cache buster on calendar JS script tags in all hub pages.
     This ensures browsers always load the latest calendar data after sync.
     Without this, browsers serve stale calendar JS and show wrong months/dates.
 
     Added April 7, 2026 - fixes bug where calendars showed March instead of current month.
-    Expanded May 12, 2026 - standalone SLATE/article pages also load sport calendars,
-    so limiting cache busting to hub pages can make old dates appear missing.
     """
     from datetime import datetime
     today_stamp = datetime.now().strftime('%Y%m%d%H%M')
 
-    calendar_scripts = [
-        'featured-games-calendar.js',
-        'nba-calendar.js',
-        'nhl-calendar.js',
-        'mlb-calendar.js',
-        'soccer-calendar.js',
-        'ncaab-calendar.js',
-        'nfl-calendar.js',
-        'ncaaf-calendar.js',
-    ]
+    hub_calendar_map = {
+        'nba-previews.html': 'nba-calendar.js',
+        'nhl-previews.html': 'nhl-calendar.js',
+        'mlb-previews.html': 'mlb-calendar.js',
+        'soccer-previews.html': 'soccer-calendar.js',
+        'college-basketball-previews.html': 'ncaab-calendar.js',
+        'nfl.html': 'nfl-calendar.js',
+        'ncaaf.html': 'ncaaf-calendar.js',
+    }
 
     print(f"\n[CACHE BUSTER] Updating calendar JS versions to {today_stamp}...")
     updated = 0
 
-    for filepath in REPO_DIR.rglob('*.html'):
+    for hub_page, cal_js in hub_calendar_map.items():
+        filepath = REPO_DIR / hub_page
+        if not filepath.exists():
+            continue
+
         with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()
 
         original = content
-        for cal_js in calendar_scripts:
-            # Match the calendar JS script tag and update/add its version parameter.
-            content = re.sub(
-                rf'{re.escape(cal_js)}(?:\?v=[A-Za-z0-9]+)?',
-                f'{cal_js}?v={today_stamp}',
-                content
-            )
+        # Match the calendar JS script tag and update its version parameter
+        content = re.sub(
+            rf'{re.escape(cal_js)}\?v=\d+',
+            f'{cal_js}?v={today_stamp}',
+            content
+        )
 
         if content != original:
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(content)
             updated += 1
-            rel = filepath.relative_to(REPO_DIR)
-            print(f"  [UPDATED] {rel}")
+            print(f"  [UPDATED] {hub_page} -> {cal_js}?v={today_stamp}")
 
     if updated == 0:
         print("  [OK] All cache busters already current")
