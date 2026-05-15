@@ -39,13 +39,13 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .dropdown:hover .dropdown-content{display:block}
 .dropdown.active .dropdown-content{display:block}
 .dropdown.active .dropbtn{color:var(--accent-gold)}
-.hero{padding:140px 24px 50px;text-align:center;background:linear-gradient(180deg,rgba(253,80,0,0.12) 0%,rgba(253,80,0,0.03) 50%,transparent 100%);position:relative;overflow:hidden}
+.hero{box-sizing:border-box;padding:72px 24px 44px;text-align:center;background:linear-gradient(180deg,rgba(253,80,0,0.12) 0%,rgba(253,80,0,0.03) 50%,transparent 100%);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fd5000' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");opacity:0.5}
-.hero-badge{display:inline-block;background:rgba(253,80,0,0.2);border:1px solid rgba(253,80,0,0.4);padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;color:var(--accent-orange);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;animation:pulse 2s ease-in-out infinite;position:relative;z-index:1}
+.hero-badge{display:inline-block;background:rgba(253,80,0,0.2);border:1px solid rgba(253,80,0,0.4);padding:9px 18px;border-radius:7px;font-size:12px;font-weight:800;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;position:relative;z-index:1}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(253,80,0,0.4)}50%{box-shadow:0 0 20px 5px rgba(253,80,0,0.2)}}
-.hero h1{font-family:var(--font-display);font-size:clamp(36px,5vw,52px);font-weight:700;margin-bottom:16px;color:#fff;position:relative;z-index:1;text-shadow:0 0 40px rgba(253,80,0,0.3)}
-.hero p{color:var(--text-secondary);font-size:18px;max-width:700px;margin:0 auto;position:relative;z-index:1}
-.page-wrapper{max-width:900px;margin:0 auto;padding:0 24px 80px}@media(min-width:1201px){.hero,.page-wrapper{padding-left:40px;padding-right:40px}}
+.hero h1{font-family:var(--font-display);font-size:clamp(30px,3.2vw,44px);font-weight:800;margin:0 auto 16px;color:#fff;position:relative;z-index:1;text-shadow:0 10px 34px rgba(0,0,0,0.42);max-width:760px;line-height:1.12;letter-spacing:0}
+.hero p{color:var(--text-secondary);font-size:17px;max-width:720px;margin:0 auto;position:relative;z-index:1;line-height:1.65}
+.page-wrapper{box-sizing:border-box;max-width:900px;margin:0 auto;padding:0 24px 80px}@media(min-width:1201px){.hero{width:calc(100% - 340px);margin-left:320px;margin-right:20px;padding-left:40px;padding-right:40px}.page-wrapper{width:calc(100% - 340px);max-width:none;margin-left:320px;margin-right:20px;padding-left:40px;padding-right:40px}.main-content{max-width:900px;margin:0 auto}}
 .calendar-sidebar{position:fixed;left:20px;top:120px;width:280px;z-index:100}
 .calendar-box{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;padding:24px;margin-bottom:20px}
 .calendar-title{font-family:var(--font-display);font-size:16px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;text-align:center}
@@ -62,7 +62,7 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--fo
 .cal-day.today{background:rgba(253,80,0,0.25);color:var(--accent-orange);font-weight:600;border:2px solid var(--accent-gold)}
 .cal-day.current-page{background:rgba(253,80,0,0.7)!important;color:#fff!important;font-weight:800!important;border:2px solid #fd5000!important;box-shadow:0 0 8px rgba(253,80,0,0.5)}
 .main-content{max-width:900px;margin:0 auto}
-.game-preview{background:linear-gradient(145deg,#14171f 0%,#0f1218 100%);border:1px solid rgba(255,255,255,0.06);border-radius:20px;padding:0;margin-bottom:40px;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}
+.game-preview{background:linear-gradient(145deg,#14171f 0%,#0f1218 100%);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0;margin-bottom:34px;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,0.24)}
 .game-preview::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--accent-orange),transparent);opacity:0;transition:opacity 0.3s}
 .game-preview:hover{border-color:rgba(253,80,0,0.3);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.4),0 0 30px rgba(253,80,0,0.1)}
 .game-preview:hover::before{opacity:1}
@@ -96,7 +96,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .mobile-archive-title{font-family:var(--font-display);font-size:14px;color:var(--accent-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
 .mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
 @media(max-width:1200px){.mobile-archive{display:block}}
-@media(max-width:768px){.hero{padding:130px 20px 40px}.game-preview{padding:0}.team-logo{width:56px;height:56px}.matchup-info h2{font-size:20px}.game-header{gap:16px;padding:40px 20px 20px}.betting-section{padding:0 20px 20px;gap:8px}.bet-box{padding:12px}.bet-value{font-size:16px}.preview-content{padding:20px}.nav-inner{padding:14px 10px 14px 70px}.logo a{font-size:1.4rem}.nav-links{gap:8px}.nav-links>a,.dropbtn{font-size:11px;padding:8px 10px}}
+@media(max-width:768px){.hero{padding:44px 18px 34px}.hero h1{font-size:clamp(28px,8vw,36px)}.hero p{font-size:16px}.game-preview{padding:0}.team-logo{width:56px;height:56px}.matchup-info h2{font-size:20px}.game-header{gap:16px;padding:40px 20px 20px}.betting-section{padding:0 20px 20px;gap:8px}.bet-box{padding:12px}.bet-value{font-size:16px}.preview-content{padding:20px}.nav-inner{padding:14px 10px 14px 70px}.logo a{font-size:1.4rem}.nav-links{gap:8px}.nav-links>a,.dropbtn{font-size:11px;padding:8px 10px}}
 .team-logo--badge{display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:linear-gradient(135deg,rgba(253,80,0,.25),rgba(15,23,42,.9));color:#fff;font-family:var(--font-display);font-weight:800;letter-spacing:1px}
 </style>
 <link rel="stylesheet" href="/mobile-optimize.css">
@@ -204,8 +204,8 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 
 <header class="hero">
 <div class="hero-badge">NBA Friday - May 15</div>
-<h1>NBA Game 6 Preview: Pistons-Cavaliers and Spurs-Timberwolves</h1>
-<p>Two Prime Video playoff Game 6s, one closeout chance in Cleveland and one in Minnesota.</p>
+<h1>NBA Game 6 Betting Preview</h1>
+<p>Pistons-Cavaliers and Spurs-Timberwolves headline Friday's Prime Video playoff board, with two elimination games and major market implications.</p>
 </header>
 
 <div class="page-wrapper">
@@ -259,7 +259,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 <p>&copy; 2026 BetLegend Picks. All Rights Reserved.</p>
 <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a> | <a href="contact.html">Contact</a></p>
 </footer>
-<script src="scripts/nba-calendar.js?v=202605150922"></script>
+<script src="scripts/nba-calendar.js?v=f656a3cf3fb2102dd1e24831be45de5b438351ce"></script>
 
 </body>
 </html>
