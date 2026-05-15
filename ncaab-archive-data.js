@@ -1,6 +1,6 @@
 // NCAAB Archive Data - synced from scripts/ncaab-calendar.js on 2026-05-15
 const NCAAB_ARCHIVE = [
-    { date: "2026-05-14", page: "college-basketball-previews.html", title: "College Basketball Previews Today - Daily NCAAB Analysis & Betting Lines" },
+    { date: "2026-05-14", page: "college-basketball-previews-archive-may-2026.html#2026-05-14", title: "College Basketball Previews Archive - May 14, 2026" },
     { date: "2026-04-27", page: "college-basketball-previews-archive-april-2026.html#2026-04-27", title: "NCAAB Analysis - 2026-04-27" },
     { date: "2026-04-26", page: "college-basketball-previews-archive-april-2026.html#2026-04-26", title: "NCAAB Analysis - 2026-04-26" },
     { date: "2026-04-25", page: "college-basketball-previews-archive-april-2026.html#2026-04-25", title: "NCAAB Analysis - 2026-04-25" },
