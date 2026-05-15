@@ -6,18 +6,24 @@ const ARCHIVE_DATA = [
     { date: "2026-05-15", page: "pistons-cavaliers-spurs-timberwolves-game-six-nba.html", title: "NBA Playoff Preview: Pistons-Cavaliers and Spurs-Timberwolves Game 6 for May 15, 2026" },
     { date: "2026-05-15", page: "nba-previews.html", title: "NBA Playoff Preview: Pistons-Cavaliers and Spurs-Timberwolves Game 6 for May 15, 2026" },
     { date: "2026-05-14", page: "nba-playoff-reset-cavaliers-pistons-spurs-timberwolves-game-six.html", title: "NBA Playoff Reset: Cavaliers-Pistons and Spurs-Timberwolves Game 6 Preview" },
+    { date: "2026-05-13", page: "nba-playoff-off-day-cavaliers-pistons-spurs-timberwolves-may-13-2026.html", title: "NBA Playoff Off-Day Reset: Cavaliers-Pistons and Spurs-Timberwolves May 13, 2026" },
+    { date: "2026-05-12", page: "timberwolves-spurs-game-five-pivot-nba.html", title: "NBA Preview: Timberwolves at Spurs Game 5" },
+    { date: "2026-05-12", page: "timberwolves-spurs-game-five-pivot-nba-analysis-stats-preview.html", title: "Timberwolves vs Spurs Game 5 Preview" },
     { date: "2026-05-11", page: "lakers-plus-11-thunder-game-4-elimination-spot-nba-pick.html", title: "Lakers +11 vs Thunder Game 4" },
+    { date: "2026-05-11", page: "thunder-sweep-watch-pistons-cavs-game-4-east-west-semis-nba.html", title: "NBA Analysis - May 11, 2026" },
     { date: "2026-05-10", page: "knicks-76ers-spurs-wolves-game-4-east-west-semis-nba-may-10-2026.html", title: "NBA Playoff Preview: Knicks vs 76ers and Spurs vs Timberwolves for May 10, 2026" },
     { date: "2026-05-09", page: "nba-previews-archive-may-2026.html#2026-05-09", title: "NBA Analysis - 2026-05-09" },
     { date: "2026-05-08", page: "knicks-76ers-spurs-wolves-game-3-east-west-semis-nba-may-8-2026.html", title: "NBA Playoff Preview: Knicks vs 76ers and Spurs vs Timberwolves for May 8, 2026" },
     { date: "2026-05-07", page: "thunder-cavaliers-2-0-leads-east-west-semis-nba-may-7-2026.html", title: "NBA Analysis - May 07, 2026" },
-    { date: "2026-05-06", page: "nba-previews-archive-may-2026.html#2026-05-06", title: "NBA Analysis - 2026-05-06" },
+    { date: "2026-05-06", page: "knicks-host-sixers-spurs-host-wolves-conference-semis-nba.html", title: "NBA Playoff Preview: 76ers vs Knicks and Timberwolves vs Spurs for May 6, 2026" },
     { date: "2026-05-05", page: "nba-previews-archive-may-2026.html#2026-05-05", title: "NBA Analysis - 2026-05-05" },
     { date: "2026-05-04", page: "nba-previews-archive-may-2026.html#2026-05-04", title: "NBA Analysis - 2026-05-04" },
     { date: "2026-05-03", page: "nba-previews-archive-may-2026.html#2026-05-03", title: "NBA Analysis - 2026-05-03" },
     { date: "2026-05-02", page: "nba-previews-archive-may-2026.html#2026-05-02", title: "NBA Analysis - 2026-05-02" },
-    { date: "2026-05-01", page: "nba-previews-archive-may-2026.html#2026-05-01", title: "NBA Analysis - 2026-05-01" },
+    { date: "2026-05-01", page: "three-friday-game-6s-rockets-history-bid-magic-cavs-elimination-nba.html", title: "NBA Analysis - May 01, 2026" },
     { date: "2026-04-30", page: "celtics-vs-76ers-game-6-eastern-conference-philadelphia-nba-analysis-stats-preview.html", title: "Celtics vs 76ers Game 6 Analysis April 30, 2026" },
+    { date: "2026-04-29", page: "eastern-elimination-night-three-game-5s-nba.html", title: "NBA Analysis - April 29, 2026" },
+    { date: "2026-04-28", page: "knicks-hawks-tied-celtics-spurs-closeouts-tuesday-nba.html", title: "NBA Analysis - April 28, 2026" },
     { date: "2026-04-27", page: "wolves-close-out-attempt-thunder-sweep-pistons-magic-monday-nba-april-27-2026.html", title: "NBA Analysis - April 27, 2026" },
     { date: "2026-04-27", page: "wolves-vs-nuggets-nba-analysis-stats-preview-april-27-2026.html", title: "Wolves vs Nuggets Analysis April 27, 2026" },
     { date: "2026-04-26", page: "cavs-celtics-spurs-lakers-game-four-sunday-nba-april-26-2026.html", title: "NBA Analysis - April 26, 2026" },
@@ -62,7 +68,10 @@ const ARCHIVE_DATA = [
     { date: "2026-03-27", page: "nba-previews-archive-march-2026.html#2026-03-27", title: "NBA Analysis - 2026-03-27" },
     { date: "2026-03-25", page: "nba-previews-archive-march-2026.html#2026-03-25", title: "NBA Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "nba-previews-archive-march-2026.html#2026-03-24", title: "NBA Analysis - 2026-03-24" },
+    { date: "2026-03-23", page: "nba-previews-archive-march-2026.html", title: "NBA Analysis - 2026-03-23" },
+    { date: "2026-03-22", page: "nba-previews-archive-march-2026.html", title: "NBA Analysis - 2026-03-22" },
     { date: "2026-03-21", page: "nba-previews-archive-march-2026.html#2026-03-21", title: "NBA Analysis - 2026-03-21" },
+    { date: "2026-03-20", page: "hawks-plus-2-5-at-rockets-nba.html", title: "Hawks +2.5 at Rockets NBA Pick" },
     { date: "2026-03-20", page: "knicks-nets-rivalry-pistons-surge-celtics-road-trip-nba-march-20-2026.html", title: "NBA Analysis - March 20, 2026" },
     { date: "2026-03-19", page: "nba-previews-archive-march-2026.html#2026-03-19", title: "NBA Analysis - 2026-03-19" },
     { date: "2026-03-18", page: "lakers-rockets-luka-durant-duel-warriors-celtics-nba-march-18-2026.html", title: "NBA Analysis - March 18, 2026" },
@@ -239,6 +248,49 @@ const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'Jul
 // For main pages, default to today's month; for archive pages, use their month
 let displayMonth = isMainPage ? todayMonth : (currentPageDate ? currentPageDate.substring(0, 7) : sortedMonths[0]);
 
+function navigateToCalendarPage(page) {
+    if (page) window.location.href = '/' + page;
+}
+
+function closeCalendarPostChooser() {
+    const existing = document.getElementById('calendar-post-chooser');
+    if (existing) existing.remove();
+}
+
+function showCalendarPostChooser(dateStr, postsForDate) {
+    closeCalendarPostChooser();
+    const overlay = document.createElement('div');
+    overlay.id = 'calendar-post-chooser';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.64);z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px;';
+    const panel = document.createElement('div');
+    panel.style.cssText = 'width:min(440px,100%);max-height:min(680px,88vh);overflow:auto;background:#171713;border:1px solid rgba(232,184,92,.35);border-radius:10px;padding:18px;box-shadow:0 24px 80px rgba(0,0,0,.55);color:#fbf7ed;';
+    const dateObj = new Date(dateStr + 'T12:00:00');
+    const title = document.createElement('div');
+    title.textContent = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    title.style.cssText = 'font-family:Oswald,Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#e8b85c;font-weight:800;margin-bottom:12px;';
+    panel.appendChild(title);
+    const list = document.createElement('div');
+    list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+    postsForDate.forEach(item => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = item.title;
+        button.style.cssText = 'width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,238,203,.14);border-radius:7px;color:#fbf7ed;padding:11px 12px;font:700 13px Inter,Arial,sans-serif;cursor:pointer;line-height:1.35;';
+        button.onclick = () => navigateToCalendarPage(item.page);
+        list.appendChild(button);
+    });
+    panel.appendChild(list);
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.textContent = 'Close';
+    close.style.cssText = 'margin-top:14px;width:100%;background:#e8b85c;border:0;border-radius:7px;color:#16120c;padding:10px 12px;font:900 12px Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;';
+    close.onclick = closeCalendarPostChooser;
+    panel.appendChild(close);
+    overlay.appendChild(panel);
+    overlay.addEventListener("click", event => { if (event.target === overlay) closeCalendarPostChooser(); });
+    document.body.appendChild(overlay);
+}
+
 function renderCalendar(yearMonth) {
     const [year, month] = yearMonth.split('-').map(Number);
     const yearEl = document.getElementById('cal-year');
@@ -262,8 +314,16 @@ function renderCalendar(yearMonth) {
         cell.textContent = d;
         if (hasData) {
             cell.title = postsForDate.map(item => item.title).join('\n');
-            cell.onclick = () => window.location.href = "/" + hasData.page;
+            cell.onclick = () => {
+                if (postsForDate.length === 1) navigateToCalendarPage(hasData.page);
+                else showCalendarPostChooser(dateStr, postsForDate);
+            };
         }
+        container.appendChild(cell);
+    }
+    while (container.children.length % 7 !== 0) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day empty';
         container.appendChild(cell);
     }
 }
