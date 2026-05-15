@@ -60,6 +60,8 @@ const ARCHIVE_DATA = [
     { date: "2026-01-08", page: "mlb-picks-analysis-against-the-spread-january-08-2026.html", title: "MLB Analysis - January 08, 2026" },
 ];
 
+window.ARCHIVE_DATA = ARCHIVE_DATA;
+
 const dateMap = {};
 ARCHIVE_DATA.forEach(item => { if (!dateMap[item.date]) dateMap[item.date] = item; });
 
@@ -114,11 +116,11 @@ let displayMonth = isMainPage ? todayMonth : (currentPageDate ? currentPageDate.
 
 function renderCalendar(yearMonth) {
     const [year, month] = yearMonth.split('-').map(Number);
-    const yearEl = document.getElementById('cal-year');
+    const yearEl = document.getElementById('cal-year') || document.querySelector('.year-display');
     if (yearEl) yearEl.textContent = year;
     const firstDay = new Date(year, month - 1, 1).getDay();
     const daysInMonth = new Date(year, month, 0).getDate();
-    const container = document.getElementById('calendar-days');
+    const container = document.getElementById('calendar-days') || document.getElementById('calendarDays');
     if (!container) return;
     container.innerHTML = '';
     for (let i = 0; i < firstDay; i++) { const cell = document.createElement('div'); cell.className = 'cal-day empty'; container.appendChild(cell); }
@@ -142,12 +144,7 @@ function renderCalendar(yearMonth) {
 }
 
 function initSportCalendar() {
-    if (SPORT_HUB_PAGE && currentPage === SPORT_HUB_PAGE && window.LATEST_CONTENT_PAGE && window.LATEST_CONTENT_PAGE !== currentPage) {
-        window.location.replace('/' + window.LATEST_CONTENT_PAGE);
-        return;
-    }
-
-    const monthSelect = document.getElementById('month-select');
+    const monthSelect = document.getElementById('month-select') || document.getElementById('monthSelect');
     if (monthSelect) {
         monthSelect.innerHTML = '';
         sortedMonths.forEach(m => {
@@ -161,7 +158,7 @@ function initSportCalendar() {
         monthSelect.addEventListener('change', function() { renderCalendar(this.value); });
     }
     renderCalendar(displayMonth);
-    const mobileSelect = document.getElementById('mobile-archive-select');
+    const mobileSelect = document.getElementById('mobile-archive-select') || document.getElementById('mobileArchiveSelect');
     if (mobileSelect) {
         mobileSelect.innerHTML = '<option value="">Select a date...</option>';
         ARCHIVE_DATA.forEach(item => {
