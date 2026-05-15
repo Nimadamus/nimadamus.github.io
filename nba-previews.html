@@ -97,6 +97,7 @@ footer a{color:var(--accent-cyan);text-decoration:none}
 .mobile-archive-select{width:100%;background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-subtle);padding:12px 16px;font-size:14px;font-family:var(--font-body);border-radius:8px;cursor:pointer}
 @media(max-width:1200px){.mobile-archive{display:block}}
 @media(max-width:768px){.hero{padding:130px 20px 40px}.game-preview{padding:0}.team-logo{width:56px;height:56px}.matchup-info h2{font-size:20px}.game-header{gap:16px;padding:40px 20px 20px}.betting-section{padding:0 20px 20px;gap:8px}.bet-box{padding:12px}.bet-value{font-size:16px}.preview-content{padding:20px}.nav-inner{padding:14px 10px 14px 70px}.logo a{font-size:1.4rem}.nav-links{gap:8px}.nav-links>a,.dropbtn{font-size:11px;padding:8px 10px}}
+.team-logo--badge{display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:linear-gradient(135deg,rgba(253,80,0,.25),rgba(15,23,42,.9));color:#fff;font-family:var(--font-display);font-weight:800;letter-spacing:1px}
 </style>
 <link rel="stylesheet" href="/mobile-optimize.css">
 <script type="application/ld+json">
@@ -200,6 +201,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 
 
 
+
 <header class="hero">
 <div class="hero-badge">NBA Friday - May 15</div>
 <h1>NBA Game 6 Preview: Pistons-Cavaliers and Spurs-Timberwolves</h1>
@@ -221,7 +223,9 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 <div class="game-number">1</div>
 
 <div class="game-header">
+<img alt="Pistons logo" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/det.png"/>
 <div class="matchup-info"><h2>Pistons at Cavaliers - Game 6</h2><span class="game-time">7:00 PM ET | Rocket Arena | Prime Video | Series: Cleveland leads 3-2</span></div>
+<img alt="Cavaliers logo" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/cle.png"/>
 </div>
 <div class="preview-content">
 <p>Detroit-Cleveland is the pressure game of the Eastern semifinal because the Cavaliers can close at home and the Pistons have to answer a 3-2 deficit on the road. NBA.com lists the game for 7:00 PM ET at Rocket Arena on Prime Video. The core question is whether Detroit can bring enough half-court shot creation to survive Cleveland's defensive pressure without turning the night into transition fuel for the Cavs.</p>
@@ -231,7 +235,9 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 <div class="game-number">2</div>
 
 <div class="game-header">
+<img alt="Spurs logo" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/sa.png"/>
 <div class="matchup-info"><h2>Spurs at Timberwolves - Game 6</h2><span class="game-time">9:30 PM ET | Target Center | Prime Video | Series: San Antonio leads 3-2</span></div>
+<img alt="Timberwolves logo" class="team-logo" src="https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/min.png"/>
 </div>
 <div class="preview-content">
 <p>San Antonio-Minnesota is the Western semifinal swing game. NBA.com lists the Spurs at Timberwolves for 9:30 PM ET at Target Center on Prime Video, with San Antonio leading 3-2. The Spurs arrive with the chance to close, but Minnesota gets the urgency, the building, and the matchup familiarity that comes from six games of adjustments.</p>
@@ -245,7 +251,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 <p>&copy; 2026 BetLegend Picks. All Rights Reserved.</p>
 <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a> | <a href="contact.html">Contact</a></p>
 </footer>
-<script src="scripts/nba-calendar.js?v=202605151200"></script>
+<script src="scripts/nba-calendar.js?v=202605150734"></script>
 <script>
 const CURRENT_PAGE_DATE='2026-05-15';
 function renderCalendar(){const el=document.getElementById('calendarDays');if(!el||!window.ARCHIVE_DATA)return;const days=new Date(2026,5,0).getDate();const first=new Date(2026,4,1).getDay();el.innerHTML='';for(let i=0;i<first;i++)el.innerHTML+='<div class="cal-day empty"></div>';for(let d=1;d<=days;d++){const date=`2026-05-${String(d).padStart(2,'0')}`;const item=window.ARCHIVE_DATA.find(x=>x.date===date);const cls='cal-day '+(item?'has-content ':'')+(date===CURRENT_PAGE_DATE?'current-page ':'');el.innerHTML+=item?`<div class="${cls}" onclick="location.href='${item.page}'">${d}</div>`:`<div class="${cls}">${d}</div>`;}}

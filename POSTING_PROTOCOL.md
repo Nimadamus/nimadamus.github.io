@@ -54,6 +54,9 @@ contains any unverified claim.
    - Every sports page must have a full post date in title/meta and
      `window.FORCED_PAGE_DATE` when applicable.
    - Calendars track post date, not game date.
+   - Every valid day of the displayed month must render in the correct weekday
+     position. Days without content can be muted, but they must not disappear.
+   - Days with content must be clickable or open the same-day post chooser.
    - Same-day posts must all remain reachable; do not remove the calendar
      chooser behavior for dates with multiple posts.
    - Missing dates are a release-blocking bug.
@@ -69,6 +72,9 @@ Get-ChildItem scripts\*-calendar.js | ForEach-Object { node --check $_.FullName 
 Before publishing or reporting complete, manually inspect the edited pages for
 logos/badges, correct format, correct sport calendar, full date metadata, and
 absence of unverified stats, records, injuries, lines, trends, or filler.
+Game preview cards must have team logos/crests/badges or polished matchup
+visual identity, verified game-specific previews, and internal/homepage link
+checks when the page is linked from navigation or feeds.
 
 Before any BetLegend article/page is marked complete, visually verify the live
 public URL in a real browser. The screenshot must show the public
@@ -2543,3 +2549,15 @@ Created by: Claude Code for BetLegend
 ---
 
 **This protocol is MANDATORY for all future posts. No exceptions unless explicitly stated by user.**
+## Gold-Standard Publishing Gate
+
+Before completion, confirm the live public URL visually and confirm it is linked correctly from the homepage, blog feed, relevant sport hub, static crawl links, and sitemap/feed files when applicable. Deployment success alone is not publication proof.
+
+For every blog post, daily pick, game preview, sport hub update, and homepage update:
+- newest content must appear newest-first without duplicate cards;
+- blog feeds must contain only real posts, picks, previews, and articles, never homepage/meta/system pages;
+- calendars and archive widgets must expose the correct dates without overlapping titles or content on desktop or mobile;
+- the verified records page must show the full betting history table, not a loading placeholder;
+- canonical tags, user-written content, recent fixes, and existing archive URLs must remain untouched unless the task explicitly says otherwise.
+
+Do not claim done until live URL proof exists and the current git diff contains only the intended targeted changes.

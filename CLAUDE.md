@@ -2,6 +2,94 @@
 
 ### SESSION VERIFICATION CODE: REPO-PROTOCOL-2026
 
+## 🟥🟥🟥 ABSOLUTE RULE: BETLEGEND SPORTS CONTENT QUALITY STANDARD (LOCKED MAY 15, 2026) 🟥🟥🟥
+
+**This is the most important rule in the repository. BetLegend cannot publish
+AI slop, fake facts, generic filler, wrong formats, missing logos, missing
+calendar days, or unverified betting/statistical claims.**
+
+### WHAT "DONE" MEANS:
+A sports post is not done until it is:
+1. **In the correct old/Claude-style BetLegend format.**
+   - Use the established archive/sports page structure already used by strong
+     existing pages, especially `<article class="game-preview">`,
+     `.game-header`, `.matchup-info`, `.team-logo`, `.preview-content`, sport
+     calendar sidebar, mobile archive selector, and dated metadata.
+   - Do not create a new generic template because it is faster.
+   - Do not ship bare text cards, generic dark cards, placeholder sections, or
+     pages that look unlike the working historical BetLegend pages.
+2. **Graphically complete.**
+   - Every matchup section needs team logos/crests/badges beside team names.
+   - If real team logos are available through ESPN/CDN/source assets, use them.
+   - If a league/team crest cannot be verified, use a clean labeled badge and
+     do not pretend it is an official logo.
+   - Featured images/graphics must be relevant to the team, sport, matchup, or
+     slate. The article must describe what the image/graphic is showing when it
+     is part of the page.
+3. **Specific, verified, and current.**
+   - All records, standings, player stats, team form, injuries, availability,
+     betting lines, totals, moneylines, schedules, venues, TV networks, and
+     trends must be verified from a source or omitted.
+   - Never invent a stat, record, trend, injury, market number, player status,
+     schedule note, or matchup history.
+   - Never write "team has been hot", "defense has struggled", "public loves",
+     "sharp money", "trend points", or similar claims unless the underlying
+     evidence has been checked.
+   - If a number cannot be verified, say less. Do not fill the gap with a
+     plausible-sounding claim.
+4. **Written like a real article, not filler.**
+   - Every game section must mention actual teams, how they have been playing,
+     the specific tactical/statistical reason the matchup matters, and what
+     the market/schedule context is.
+   - Generic paragraphs that could fit any matchup are banned.
+   - Placeholder phrases are banned: "coming soon", "TBD", "analysis pending",
+     "check back", "generic preview", "both teams will look to execute", etc.
+5. **Calendar-safe and archive-safe.**
+   - Every sports post must have a full date in `<title>`, metadata, and
+     `window.FORCED_PAGE_DATE` when applicable.
+   - The calendar tracks POST DATE, not game date.
+   - Every valid day of the visible month must render in the correct weekday
+     position. Empty days can be muted, but no date may disappear.
+   - Days with content must be clickable or open the multi-post chooser.
+   - Run `python scripts/sync_calendars.py` after creating/updating sports
+     pages.
+   - Run `python scripts/validate_slate_completeness.py --range 3` before
+     calling the slate/calendar work complete.
+   - Same-day posts must all remain reachable. The calendar generator now opens
+     a chooser for multi-post dates; do not remove that logic.
+6. **Source-aware.**
+   - Use primary/current sources whenever possible: official league schedule,
+     ESPN/team pages, official injury reports, sportsbook/odds pages, or the
+     project data files that already contain verified inputs.
+   - If the page includes betting lines, search/verify them first.
+   - If the page includes historical trends or ATS records, verify the dataset
+     first. Otherwise, omit those claims.
+
+### IF YOU CANNOT VERIFY:
+Do **not** guess. Do **not** make the sentence vaguer and publish it anyway.
+Either omit the claim, write a clearly limited observation based on verified
+information, or ask the user for the missing source/input.
+
+### REQUIRED FINAL CHECK BEFORE REPORTING COMPLETE:
+```
+python scripts/sync_calendars.py
+python scripts/validate_slate_completeness.py --range 3
+Get-ChildItem scripts\*-calendar.js | ForEach-Object { node --check $_.FullName }
+```
+
+Also manually inspect the created/edited pages for:
+- team logos or verified badges in every matchup block
+- correct sport calendar script
+- full date in title/meta/FORCED_PAGE_DATE
+- no placeholders
+- no unverified stats, records, lines, injuries, or trends
+- article-specific analysis rather than generic filler
+
+**If any of those checks fail, the work is not complete. Fix it before
+reporting back.**
+
+---
+
 ## 🟥🟥🟥 ABSOLUTE RULE: HOMEPAGE PICK FEED QUALITY GATE (LOCKED MAY 14, 2026) 🟥🟥🟥
 
 **The BetLegendPicks homepage pick grid must never ship duplicate previews,
@@ -1110,6 +1198,13 @@ If the user asks you to create a slate post (NBA, NHL, NFL, NCAAB, MLB), you MUS
 4. **VERIFY ALL STATS AND RECORDS**
    - Never guess - search and verify everything
 
+5. **USE THE FULL CLAUDE-STYLE ARTICLE FORMAT**
+   - Every game section must be `<article class="game-preview">`, never a bare text card.
+   - Every matchup header must show both team logos/crests next to the team names.
+   - Every article must discuss the featured image or graphic when one is present.
+   - Every article must include actual current form, records, market numbers, injuries/availability, and concrete matchup stats.
+   - Do not publish generic paragraphs that could fit any game. If the section does not mention how the teams have been playing and the specific statistical reason the matchup matters, it is not ready.
+
 ---
 
 ## STEP 3: KEY 2025 ROSTER CHANGES TO REMEMBER
@@ -1353,3 +1448,10 @@ After deployment completes AND CDN propagates:
 ---
 
 **One false claim destroys credibility. Verify everything.**
+## BetLegend No-Regression Publishing Standard
+
+All future publishing or cleanup runs must fix forward from the current working version. Do not revert to old commits, restore old files, overwrite recent fixes, force push, or make broad cleanup changes. Inspect git diff, recent commits, live site state, and current files first.
+
+Completion requires live URL proof with the page visible in a browser. Do not claim completion based only on local build success, generated files, or deployment success. Check homepage/latest sections, blog feed order and cleanliness, daily pick links, sport hubs, calendar/archive widgets, static crawl links, sitemap/feed files where applicable, verified records table integrity, and live internal links before saying done.
+
+Canonical tags and user-written content are protected. Touch them only when explicitly instructed.

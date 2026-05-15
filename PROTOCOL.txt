@@ -1,0 +1,227 @@
+BETLEGEND PICKS - CONTENT WORKFLOW SHEET
+
+LOCKED MASTER WORKFLOW - MAY 15, 2026
+-------------------------------------
+
+This sheet is the required order of operations for every BetLegend sports
+article, slate post, preview, calendar page, and pick. Do not skip steps. Do
+not call work complete until every applicable check passes.
+
+STEP 1 - DEFINE THE JOB
+-----------------------
+
+1. Identify the exact content type:
+   - Daily slate article
+   - Single-game preview
+   - Pick page
+   - Calendar/archive article
+   - Homepage featured game or pick card
+   - Data/update page
+
+2. Identify the sport and page family:
+   - NBA, NHL, MLB, NFL, NCAAB, NCAAF, Soccer, Featured Game, Picks
+
+3. Identify the post date:
+   - Use the publishing/post date, not the game date, for calendars
+   - The post date must appear in title/meta where applicable
+   - Add window.FORCED_PAGE_DATE when the page type uses it
+
+4. Identify the expected output files before editing.
+
+STEP 2 - FIND THE CORRECT EXISTING FORMAT
+-----------------------------------------
+
+1. Open strong historical pages from the same sport/page family.
+2. Match the old/Claude-style BetLegend structure.
+3. Required sports article elements:
+   - Matchup blocks
+   - Team logos/crests/badges beside team names
+   - Dated metadata
+   - Sport calendar/sidebar
+   - Mobile archive selector when applicable
+   - Correct sport calendar script
+   - Clean spacing and typography matching existing pages
+
+4. Do not create a new generic template because it is faster.
+5. Do not publish plain text cards, placeholder panels, or pages that look
+   unlike established BetLegend archive/article pages.
+
+STEP 3 - GATHER AND VERIFY SOURCE DATA FIRST
+--------------------------------------------
+
+Before writing, verify every fact that may appear in the article.
+
+Required source checks:
+1. Official/primary schedule source for games, dates, times, venues, networks
+2. Current team records and standings
+3. Current player team assignments
+4. Injuries and availability from current sources
+5. Betting lines, totals, moneylines, and market movement if mentioned
+6. Team stats, player stats, rankings, splits, and recent form if mentioned
+7. ATS, O/U, head-to-head, or trend data if mentioned
+8. Weather, park, travel, rest, or schedule context if mentioned
+9. Logo/crest/badge URLs or verified visual assets
+
+Rules:
+- Never use memory for current facts
+- Never invent, estimate, extrapolate, or round unless the source does
+- Never write "hot", "struggling", "sharp money", "public side", "trend
+  points", or "line moved" without verified evidence
+- If a fact cannot be verified, omit it or ask for the source
+
+STEP 4 - BUILD A SOURCE NOTES LIST
+----------------------------------
+
+Before drafting, keep a short working list of verified inputs:
+1. Games on slate and exact game count
+2. Records/standings used
+3. Injuries/availability used
+4. Stats/rankings used
+5. Lines/totals/moneylines used
+6. Trends/splits used
+7. Images/logos used
+
+If the notes list is thin, do more research before writing.
+
+STEP 5 - WRITE THE ARTICLE
+--------------------------
+
+Required writing standard:
+1. Every section must discuss the actual teams and matchup.
+2. Explain how the teams have been playing using verified context.
+3. Include concrete statistical or tactical reasons the matchup matters.
+4. Explain schedule/rest/travel/market context when relevant and verified.
+5. If a featured image or graphic is used, mention what it shows and why it
+   matters.
+6. Use a human, sharp, professional betting-analysis tone.
+
+Banned:
+- Generic paragraphs that could fit any game
+- Empty matchup commentary
+- Placeholder language: coming soon, TBD, TBA, analysis pending, check back,
+  generic preview, matchup analysis coming soon
+- Fake stats, fake trends, fake injuries, fake odds, fake records
+- Vague unsupported claims dressed up as analysis
+
+STEP 6 - ADD GRAPHICS AND LOGOS
+-------------------------------
+
+1. Every matchup needs team logos/crests/badges.
+2. Use verified real logos when available.
+3. If a real logo cannot be verified, use a clean labeled badge and do not
+   claim it is official.
+4. Verify image URLs load when practical.
+5. Alt text must describe the team/image clearly.
+6. No broken images, missing logos, unrelated graphics, or generic placeholders.
+
+STEP 7 - ADD CALENDAR AND ARCHIVE METADATA
+------------------------------------------
+
+1. Confirm the title includes the full post date where calendar extraction
+   depends on title.
+2. Confirm meta/date text uses the post date.
+3. Confirm window.FORCED_PAGE_DATE is present when applicable.
+4. Confirm the correct sport calendar script is linked:
+   - NBA: scripts/nba-calendar.js
+   - NHL: scripts/nhl-calendar.js
+   - MLB: scripts/mlb-calendar.js
+   - NFL: scripts/nfl-calendar.js
+   - NCAAB: scripts/ncaab-calendar.js
+   - NCAAF: scripts/ncaaf-calendar.js
+   - Soccer: scripts/soccer-calendar.js
+   - Featured Game: scripts/featured-games-calendar.js
+5. Calendars track post date, not game date.
+6. Same-day posts must all remain reachable through the multi-post chooser.
+7. Missing dates are a release-blocking bug.
+
+STEP 8 - UPDATE FEEDS AND RELATED DATA
+--------------------------------------
+
+Do this only when the content type requires it:
+1. Add pick cards to the correct feed.
+2. Add homepage cards only when required.
+3. Preserve existing posts. Do not overwrite or delete old content.
+4. Insert new content in the correct newest-first order.
+5. Make sure older posts remain accessible.
+
+STEP 9 - RUN REQUIRED AUTOMATED CHECKS
+--------------------------------------
+
+For sports/calendar/slate work:
+python scripts/sync_calendars.py
+python scripts/validate_slate_completeness.py --range 3
+Get-ChildItem scripts\*-calendar.js | ForEach-Object { node --check $_.FullName }
+
+Calendar validation must prove that every valid day of each visible month
+renders in the correct weekday position. Days without content may be muted or
+disabled, but they must still appear. Days with content must be clickable or
+open the same-day post chooser.
+
+For homepage pick feed work:
+python scripts/validate_homepage_pick_image_uniqueness.py
+
+For content/news validation when applicable:
+python scripts/accuracy_filter.py
+python scripts/validate_news_before_publish.py
+
+If any command fails, fix the issue and rerun the check.
+
+STEP 10 - MANUAL QUALITY REVIEW
+-------------------------------
+
+Open or inspect every edited page and verify:
+1. Correct old/Claude-style BetLegend format
+2. Logos/crests/badges appear in every matchup block
+3. No broken images
+4. Correct sport calendar/sidebar appears
+5. Mobile archive selector exists when the page family uses it
+6. Date metadata is complete and correct
+7. All same-day posts remain reachable
+8. No placeholders
+9. No generic filler
+10. No unverified stats, records, injuries, lines, trends, or claims
+11. The article mentions the actual teams and how they have been playing
+12. The article discusses the relevant graphics/images when present
+13. Desktop screenshot shows the public URL and the complete calendar month
+14. Mobile screenshot or responsive inspection confirms cards, logos, title,
+    and calendar/mobile archive do not overlap
+15. Homepage/internal links pointing to the page still resolve
+
+STEP 11 - GIT REVIEW BEFORE FINAL
+---------------------------------
+
+1. Run git status.
+2. Review the diff for edited files.
+3. Confirm no unrelated user changes were reverted.
+4. Confirm no generated calendar or data file was missed.
+5. Confirm no old posts disappeared.
+
+STEP 12 - DEPLOYMENT OR HANDOFF
+-------------------------------
+
+If the user asked for publish/deploy:
+1. Commit the correct files.
+2. Push.
+3. Verify the live pages.
+4. Spot-check links, images, calendars, and latest content.
+5. Capture live URL screenshot proof after deploy.
+
+If the user did not ask for publish/deploy:
+1. Leave the work staged/unstaged as appropriate.
+2. Report exactly what changed.
+3. Report which checks passed.
+4. Report any remaining risk or check that could not be run.
+
+FINAL STANDARD
+--------------
+
+Correct format plus verified facts is the minimum. If it looks generic, misses
+logos, hides posts, skips calendar days, or includes an unverified claim, it is
+not ready.
+GOLD-STANDARD LIVE PUBLISHING GATE - MAY 15, 2026
+
+Before any BetLegend publishing task is called complete, verify the current live public URL, not only the local file or deploy log. Do not claim a page is published until it is visible on https://www.betlegendpicks.com/ at its final URL.
+
+Every publishing run must check: homepage latest sections, Latest Blog Picks, daily pick links, game preview hubs, sport hubs, calendar/archive widgets, static crawl links, sitemap/feed entries where applicable, and the verified records page table. Do not claim completion based only on local build success or deployment success. Do not claim completion without checking homepage/internal links and visually checking the live page.
+
+Do not touch canonical tags unless explicitly instructed. Do not overwrite user-written content. Do not restore older files. Do not rebuild from older versions. Do not break recent fixes. Make the smallest forward patch needed and confirm the git diff before and after deploy.
