@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://www.betlegendpicks.com/mlb-calendar.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLB Archive Calendar | BetLegend</title>
+<meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
+ <meta name="description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+ 
+ <meta name="robots" content="index, follow">
+ <meta property="og:title" content="MLB Calendar | BetLegend Picks">
+ <meta property="og:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+ <meta property="og:type" content="website">
+ <meta property="og:url" content="https://www.betlegendpicks.com/mlb-calendar.html">
+ <meta property="og:site_name" content="BetLegend Picks">
+<meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png"/>
+ <meta name="twitter:card" content="summary_large_image">
+ <meta name="twitter:title" content="MLB Calendar | BetLegend Picks">
+ <meta name="twitter:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+ :root {
+ --primary-glow: #00e0ff;
+ --warning-color: #FFD700;
+ --card-bg: rgba(15, 20, 30, 0.95);
+ --border-color: rgba(0, 224, 255, 0.2);
+ --text-primary: #ffffff;
+ --text-secondary: #b0b0b0;
+ }
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+ body {
+ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+ background-attachment: fixed;
+ font-family: 'Inter', sans-serif;
+ color: var(--text-primary);
+ padding: 40px 20px;
+ min-height: 100vh;
+ }
+ .container { max-width: 1000px; margin: 0 auto; }
+ .header { text-align: center; margin-bottom: 40px; }
+ .title {
+ font-size: 3rem;
+ font-family: 'Orbitron', sans-serif;
+ background: linear-gradient(45deg, #fff, var(--primary-glow));
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ margin-bottom: 10px;
+ }
+ .subtitle { color: var(--text-secondary); font-size: 1.1rem; }
+ .month-selector { text-align: center; margin-bottom: 30px; }
+ .month-selector label { font-size: 1.1rem; color: var(--text-secondary); margin-right: 15px; }
+ .month-dropdown {
+ background: var(--card-bg); color: var(--text-primary);
+ border: 1px solid var(--border-color); padding: 12px 20px;
+ font-size: 1rem; border-radius: 8px; cursor: pointer;
+ }
+ .calendar-container { display: none; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 30px; }
+ .calendar-container.active { display: block; }
+ .calendar-month-title { font-size: 1.8rem; font-family: 'Orbitron', sans-serif; color: var(--primary-glow); text-align: center; margin-bottom: 25px; }
+ .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 20px; }
+ .calendar-day-header { text-align: center; font-weight: 600; color: var(--text-secondary); padding: 10px; font-size: 0.9rem; }
+ .calendar-day {
+ aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+ background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+ font-size: 1.1rem; color: var(--text-secondary); transition: all 0.3s ease; position: relative;
+ }
+ .calendar-day.available {
+ background: rgba(0, 224, 255, 0.1); border-color: var(--primary-glow);
+ color: var(--primary-glow); cursor: pointer; font-weight: 600;
+ }
+ .calendar-day.available:hover {
+ background: rgba(0, 224, 255, 0.2); transform: translateY(-2px);
+ box-shadow: 0 5px 15px rgba(0, 224, 255, 0.3);
+ }
+ .calendar-day.today {
+ background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
+ border: 2px solid var(--warning-color); color: var(--warning-color); font-weight: 900;
+ }
+ .calendar-day.today::after {
+ content: 'TODAY'; position: absolute; bottom: 2px; font-size: 0.45rem;
+ color: var(--warning-color); font-weight: 700;
+ }
+ .game-tooltip {
+ display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+ background: rgba(0,0,0,0.95); color: var(--primary-glow); padding: 8px 12px;
+ border-radius: 6px; font-size: 0.75rem; white-space: nowrap; z-index: 100;
+ border: 1px solid var(--primary-glow); margin-bottom: 5px;
+ }
+ .calendar-day.available:hover .game-tooltip { display: block; }
+ .back-link { text-align: center; margin-top: 40px; }
+ .back-link a {
+ color: var(--primary-glow); text-decoration: none; font-size: 1.1rem;
+ padding: 12px 30px; border: 1px solid var(--border-color); border-radius: 8px;
+ display: inline-block; transition: all 0.3s ease;
+ }
+ .back-link a:hover { background: rgba(0, 224, 255, 0.1); }
+ .legend { text-align: center; margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; }
+ .legend-item { display: inline-flex; align-items: center; margin: 0 15px; font-size: 0.85rem; color: var(--text-secondary); }
+ .legend-dot { width: 12px; height: 12px; border-radius: 3px; margin-right: 8px; }
+ .legend-dot.available { background: rgba(0, 224, 255, 0.3); border: 1px solid var(--primary-glow); }
+ .legend-dot.today { background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3)); border: 1px solid var(--warning-color); }
+ .stats-bar { text-align: center; margin-bottom: 20px; padding: 15px; background: rgba(0,224,255,0.05); border-radius: 8px; border: 1px solid var(--border-color); }
+ .stats-bar span { margin: 0 20px; font-size: 0.95rem; }
+ .stats-bar strong { color: var(--primary-glow); }
+ @media (max-width: 768px) {
+ .calendar-grid { gap: 5px; }
+ .calendar-day { font-size: 0.9rem; }
+ .title { font-size: 2rem; }
+ }
+
+ /* BetLegend Fixed Logo */
+ .betlegend-logo {
+ position: fixed;
+ top: 15px;
+ left: 20px;
+ z-index: 1001;
+ font-family: 'Orbitron', sans-serif;
+ font-size: 1.8rem;
+ font-weight: 900;
+ text-decoration: none;
+ color: #fff;
+ letter-spacing: 2px;
+ text-shadow: 0 0 20px rgba(255,255,255,0.5);
+ }
+ .betlegend-logo span {
+ color: #00e0ff;
+ text-shadow: 0 0 30px #00e0ff, 0 0 60px #00e0ff;
+ }
+</style>
+<link rel="stylesheet" href="/mobile-optimize.css" media="screen">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+<style id="betlegend-homepage-nav">
+/* Homepage-matched BetLegend navigation */
+body{padding-top:0!important}
+header.nav{position:sticky;top:0;z-index:100000;min-height:92px;padding:0 34px;display:flex;align-items:center;justify-content:space-between;gap:28px;background:rgba(16,16,14,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,238,203,.13);box-sizing:border-box}
+header.nav a{color:inherit;text-decoration:none}
+header.nav .brand{display:flex;align-items:center;gap:12px;font-family:Oswald,Manrope,Arial,sans-serif;font-size:31px;font-weight:700;white-space:nowrap;letter-spacing:.02em;text-transform:uppercase;color:#fbf7ed;text-decoration:none}
+header.nav .brand img{display:block;width:46px;height:46px;border-radius:7px;object-fit:contain;max-width:none}
+header.nav .brand span{color:#e8b85c}
+header.nav .nav-menu{display:flex;gap:28px;align-items:center;justify-content:space-evenly;flex:1;font-family:Oswald,Manrope,Arial,sans-serif;font-size:17px;font-weight:600;letter-spacing:.03em;text-transform:uppercase}
+header.nav .nav-menu a,header.nav .dropbtn{color:#e8dfcf;text-decoration:none}
+header.nav .nav-menu a:hover,header.nav .nav-item:hover .dropbtn{color:#fff}
+header.nav .nav-item{position:relative;padding:32px 0}
+header.nav .dropbtn{display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+header.nav .dropbtn:after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid #e8b85c}
+header.nav .dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%);min-width:760px;display:none;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px;background:rgba(24,22,18,.98);border:1px solid rgba(255,238,203,.18);border-radius:10px;box-shadow:0 30px 90px rgba(0,0,0,.45);text-transform:none;font-family:Manrope,Arial,sans-serif;letter-spacing:0;box-sizing:border-box}
+header.nav .nav-item:hover .dropdown,header.nav .nav-item.open .dropdown{display:grid}
+header.nav .dropdown a{display:block;padding:12px;border:1px solid rgba(255,238,203,.1);border-radius:7px;background:rgba(255,255,255,.035);color:#e8dfcf;font-size:14px;font-weight:800;text-decoration:none;box-sizing:border-box}
+header.nav .dropdown a span{display:block;margin-top:4px;color:#aaa091;font-size:12px;font-weight:600;line-height:1.35}
+header.nav .trial{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:6px;border:1px solid rgba(255,238,203,.13);font-family:Oswald,Manrope,Arial,sans-serif;font-size:16px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;background:#e8b85c;color:#16120c;text-decoration:none;white-space:nowrap}
+@media(max-width:1260px){header.nav{flex-wrap:wrap;padding:14px 22px}header.nav .nav-menu{order:3;width:100%;gap:22px;flex-wrap:wrap}header.nav .nav-item{padding:0}header.nav .dropdown{left:0;transform:none;min-width:min(92vw,760px)}}
+@media(max-width:680px){header.nav{padding:12px 16px}header.nav .brand{font-size:23px}header.nav .trial{display:none}header.nav .dropdown{grid-template-columns:1fr;min-width:calc(100vw - 32px)}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="/"><img src="/newlogo.png" alt="">Bet<span>Legend</span></a>
+  <nav class="nav-menu" aria-label="Primary navigation">
+    <div class="nav-item">
+      <span class="dropbtn">Handicapping Hub</span>
+      <div class="dropdown">
+        <a href="/handicapping-hub.html">Today's Games<span>Main daily research hub and board.</span></a>
+        <a href="/injury-report.html">Injury Report<span>Injury context for current games.</span></a>
+        <a href="/sports-handicapping-hub-guide.html">Hub Guide<span>How to use the handicapping hub.</span></a>
+      </div>
+    </div>
+    <a href="/mlb-previews.html">Pick Archive</a>
+    <div class="nav-item">
+      <span class="dropbtn">Game Previews & Records</span>
+      <div class="dropdown">
+        <a href="/mlb-previews.html">MLB Previews<span>Daily baseball previews, totals, props, and run lines.</span></a>
+        <a href="/nhl-previews.html">NHL Previews<span>Goalies, puck lines, totals, and playoff races.</span></a>
+        <a href="/nba-previews.html">NBA Previews<span>Injuries, pace, props, spreads, and totals.</span></a>
+        <a href="/nfl.html">NFL Picks<span>Spreads, totals, primetime games, and playoffs.</span></a>
+        <a href="/ncaaf.html">College Football<span>Bowls, rivalry weeks, underdogs, and totals.</span></a>
+        <a href="/college-basketball-previews.html">College Basketball<span>Tempo, tournament angles, conferences, and totals.</span></a>
+        <a href="/soccer-previews.html">Soccer Previews<span>Champions League, World Cup, and league previews.</span></a>
+        <a href="/records.html">All Records<span>Top-level verified record hub.</span></a>
+        <a href="/betlegend-verified-records.html">Verified Records<span>Full transparency and sport breakdowns.</span></a>
+        <a href="/mlb-records.html">MLB Records<span>Baseball pick history and units.</span></a>
+        <a href="/nba-records.html">NBA Records<span>Basketball record tracking.</span></a>
+        <a href="/nhl-records.html">NHL Records<span>Hockey pick tracking and units.</span></a>
+        <a href="/nfl-records.html">NFL Records<span>Football pick history.</span></a>
+        <a href="/ncaaf-records.html">NCAAF Records<span>College football results.</span></a>
+        <a href="/ncaab-records.html">NCAAB Records<span>College basketball results.</span></a>
+        <a href="/crosssport-parlays-records.html">Cross-Sport Parlays<span>Parlay and cross-sport tracking.</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <span class="dropbtn">Resources</span>
+      <div class="dropdown">
+        <a href="/proofofpicks.html">Proof of Picks<span>How the picks are posted and verified.</span></a>
+        <a href="/live-odds.html">Live Odds<span>Price screens and current market context.</span></a>
+        <a href="/howitworks.html">How It Works<span>Methods, simulations, and publishing workflow.</span></a>
+        <a href="/bankroll.html">Bankroll<span>Unit sizing and bankroll management.</span></a>
+        <a href="/kelly-criterion.html">Kelly Criterion<span>Edge-based bankroll staking.</span></a>
+        <a href="/risk-of-ruin-calculator.html">Risk of Ruin<span>Evaluate downside and bankroll risk.</span></a>
+        <a href="/bankroll-simulator.html">Bankroll Simulator<span>Run bankroll scenarios and growth paths.</span></a>
+        <a href="/betting-calculators.html">Calculators<span>Odds, payouts, hold, and conversion tools.</span></a>
+        <a href="/betting-glossary.html">Glossary<span>Betting terms, definitions, and concepts.</span></a>
+        <a href="/betting-101.html">Betting 101<span>Start with the basics and build process.</span></a>
+        <a href="/how-to-bet-mlb-totals.html">MLB Totals<span>Baseball totals strategy and market context.</span></a>
+        <a href="/contact.html">Contact<span>Support, questions, and partnerships.</span></a>
+      </div>
+    </div>
+    <a href="/garret-anderson-angels-legend-dies-53-pancreatitis-tribute-news.html">News</a>
+    <a href="/podcast.html">Podcast</a>
+    <div class="nav-item">
+      <span class="dropbtn">Game of the Day</span>
+      <div class="dropdown">
+        <a href="/wolves-vs-nuggets-nba-analysis-stats-preview-april-27-2026.html">Featured Game<span>Tonight's marquee breakdown.</span></a>
+        <a href="/moneyline-parlay-of-the-day.html">Moneyline Parlay<span>Daily parlay card and supporting context.</span></a>
+      </div>
+    </div>
+  </nav>
+  <a class="trial" href="/free-trial-info.html">Free Trial</a>
+</header>
+
+<a href="/" class="betlegend-logo">BET<span>LEGEND</span></a>
+
+
+<div class="container">
+ <div class="header">
+ <h1 class="title">NBA Archive</h1>
+ <p class="subtitle">Browse past picks and analysis by date</p>
+ </div>
+ <div class="stats-bar" id="stats-bar">Loading...</div>
+ <div class="month-selector">
+ <label for="month-select">Select Month:</label>
+ <select id="month-select" class="month-dropdown" onchange="showMonth(this.value)"></select>
+ </div>
+ <div id="calendars-container"></div>
+ <div class="back-link">
+ <a href="nba-previews.html">Back to Today's NBA</a>
+ </div>
+</div>
+<script src="mlb-archive-data.js?v=20260515calendarfix"></script>
+<script>
+const DATA = MLB_ARCHIVE;
+const gamesMap = {};
+DATA.forEach(game => {
+ if (!gamesMap[game.date]) gamesMap[game.date] = [];
+ gamesMap[game.date].push(game);
+});
+
+const today = new Date();
+const todayStr = today.toISOString().split('T')[0];
+const sortedGames = [...DATA].sort((a, b) => b.date.localeCompare(a.date));
+const latestGame = sortedGames[0];
+
+document.getElementById('stats-bar').innerHTML =
+ '<span>Total Archive Dates: <strong>' + DATA.length + '</strong></span>' +
+ '<span>Latest: <strong>' + (latestGame ? latestGame.title : '') + '</strong></span>';
+
+const months = new Set();
+DATA.forEach(game => {
+ const [year, month] = game.date.split('-');
+ months.add(year + '-' + month);
+});
+const currentMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
+months.add(currentMonth);
+
+const sortedMonths = Array.from(months).sort().reverse();
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+const monthSelect = document.getElementById('month-select');
+sortedMonths.forEach((monthKey, idx) => {
+ const [year, month] = monthKey.split('-');
+ const option = document.createElement('option');
+ option.value = monthKey;
+ option.textContent = monthNames[parseInt(month) - 1] + ' ' + year;
+ if (idx === 0) option.selected = true;
+ monthSelect.appendChild(option);
+});
+
+const calendarsContainer = document.getElementById('calendars-container');
+
+sortedMonths.forEach((monthKey, idx) => {
+ const [year, month] = monthKey.split('-');
+ const calendarDiv = document.createElement('div');
+ calendarDiv.id = 'calendar-' + monthKey;
+ calendarDiv.className = 'calendar-container' + (idx === 0 ? ' active' : '');
+
+ const titleH2 = document.createElement('h2');
+ titleH2.className = 'calendar-month-title';
+ titleH2.textContent = monthNames[parseInt(month) - 1] + ' ' + year;
+ calendarDiv.appendChild(titleH2);
+
+ const grid = document.createElement('div');
+ grid.className = 'calendar-grid';
+
+ ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
+ const header = document.createElement('div');
+ header.className = 'calendar-day-header';
+ header.textContent = day;
+ grid.appendChild(header);
+ });
+
+ const firstDay = new Date(year, parseInt(month) - 1, 1);
+ const lastDay = new Date(year, parseInt(month), 0);
+ const daysInMonth = lastDay.getDate();
+ const startDayOfWeek = firstDay.getDay();
+
+ for (let i = 0; i < startDayOfWeek; i++) {
+ const empty = document.createElement('div');
+ empty.className = 'calendar-day';
+ grid.appendChild(empty);
+ }
+
+ for (let day = 1; day <= daysInMonth; day++) {
+ const dateStr = year + '-' + month + '-' + String(day).padStart(2, '0');
+ const dayDiv = document.createElement('div');
+ dayDiv.className = 'calendar-day';
+
+ const games = gamesMap[dateStr] || [];
+ if (games.length) {
+ dayDiv.className += ' available';
+ dayDiv.onclick = function() { window.location.href = games[0].page; };
+ const tooltip = document.createElement('span');
+ tooltip.className = 'game-tooltip';
+ tooltip.textContent = games.map(g => g.title).join(' | ');
+ dayDiv.appendChild(tooltip);
+ }
+
+ if (dateStr === todayStr) dayDiv.className += ' today';
+
+ const dayNum = document.createElement('span');
+ dayNum.textContent = day;
+ dayDiv.appendChild(dayNum);
+ grid.appendChild(dayDiv);
+ }
+
+ calendarDiv.appendChild(grid);
+
+ const legend = document.createElement('div');
+ legend.className = 'legend';
+ legend.innerHTML = '<span class="legend-item"><span class="legend-dot available"></span> Archive Available</span>' +
+ '<span class="legend-item"><span class="legend-dot today"></span> Today</span>';
+ calendarDiv.appendChild(legend);
+ calendarsContainer.appendChild(calendarDiv);
+});
+
+function showMonth(monthKey) {
+ document.querySelectorAll('.calendar-container').forEach(cal => cal.classList.remove('active'));
+ document.getElementById('calendar-' + monthKey).classList.add('active');
+}
+</script>
+
+    <!-- Related Analysis Section - Internal Linking -->
+    <section style="max-width:900px;margin:40px auto;padding:32px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:12px;">
+        <h3 style="font-size:18px;font-weight:700;color:#FFD700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #FFD700;letter-spacing:1px;text-transform:uppercase;">Related Analysis</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+            <a href="/mlb-preview-friday-interleague-rivalries-subway-freeway-series.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">MLB Analysis - February 15, 2026</a>
+            <a href="/mlb-previews.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">MLB Previews Hub</a>
+            <a href="/nhl-previews.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NHL Analysis</a>
+            <a href="/nfl.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NFL Analysis</a>
+        </div>
+    </section>
+
+    </body>
+</html>
+
+
