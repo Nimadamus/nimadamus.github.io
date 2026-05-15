@@ -321,6 +321,11 @@ function renderCalendar(yearMonth) {
         }
         container.appendChild(cell);
     }
+    while (container.children.length % 7 !== 0) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day empty';
+        container.appendChild(cell);
+    }
 }
 
 function initSportCalendar() {
