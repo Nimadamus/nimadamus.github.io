@@ -84,6 +84,12 @@ not satisfy this requirement. Confirm the title/header is centered and
 professional, the calendar/archive shows the complete month with no missing
 dates, article spacing is clean, logos/hero elements render, typography matches
 the site, and there are no oversized random headings or filler sections.
+Desktop article pages with a fixed sport archive/sidebar must prove the main
+headline and hero are contained inside the content lane beside the sidebar.
+Never let a calendar/archive rail overlap, hide, crop, or sit on top of an
+article title. If the title is long, shorten the visible H1 and move matchup
+detail into the subtitle, metadata, or hero card instead of shrinking text into
+an ugly layout.
 
 If a fact cannot be verified, do not guess. Omit the claim, write only the
 limited verified context, or ask for the source.
