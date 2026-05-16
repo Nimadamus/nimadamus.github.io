@@ -135,6 +135,81 @@ publish on one site does not cascade.
 
 ---
 
+## ABSOLUTE RULE: HOMEPAGE/ARCHIVE CARD GRIDS ARE STRICTLY CHRONOLOGICAL (LOCKED MAY 16, 2026)
+
+Every card grid that lists multiple article cards on a homepage, archive page,
+sport index, or category page MUST be sorted strictly newest-first by the
+article's published date. No exceptions:
+
+- April content must NEVER appear above May content.
+- A pre-existing card MUST NEVER be left below a newly-inserted older card just
+  because the new card was prepended as a block.
+- 2025 archive recap cards (e.g. monthly daily-hammer recaps) sit at the BOTTOM
+  of the grid below all current-season dated cards.
+- The only acceptable above-newest position is a permanently pinned card
+  explicitly approved by Nima (currently none).
+
+### REQUIRED PROCESS WHEN ADDING MULTIPLE CARDS TO AN EXISTING GRID
+Do NOT prepend a block of new cards above all existing cards. Instead:
+1. Parse every existing card in the grid with its `<span class="article-date">`.
+2. Build a combined list of (date, card_block) for existing + new cards.
+3. Sort newest-first (most recent date at top, archive/recap dates at bottom).
+4. Reassemble the grid in sorted order, preserving every card's content byte
+   for byte. Only the order changes.
+5. Run `python publish.py <site>/index.html <site_key>` (or commit + push for
+   GitHub Pages sites).
+6. Live `curl` the published URL and confirm the DOM order matches the sort.
+
+### THE SORT SNIPPET (REFERENCE IMPLEMENTATION)
+```python
+import re
+from datetime import datetime
+
+card_block_pat = re.compile(
+    r'(        <a class="article-card featured" href="[^"]+">.*?        </a>\n)',
+    re.DOTALL
+)
+date_in_card = re.compile(r'<span class="article-date">([^<]+)</span>')
+
+def parse_date(s):
+    s = s.strip()
+    for fmt in ('%B %d, %Y', '%B %Y'):
+        try:
+            return datetime.strptime(s, fmt)
+        except ValueError:
+            continue
+    return datetime(1900, 1, 1)  # unparseable -> bottom
+
+# Sort matches by date desc, reassemble, write back.
+```
+
+### WHY THIS EXISTS (May 16, 2026)
+On May 15 the orphan-linking pass on bestmlbhandicapper.com prepended a 23-card
+block (April 3 → May 15) above the pre-existing card grid. The prepend pushed
+~12 pre-existing May 1 → May 11 cards below the April orphan block, creating a
+visually broken order where April dates sat above May dates on the live
+homepage. A "smallest patch" 2-card move fixed the May 14/13 boundary but
+exposed the deeper layer. A full sort of all 41 cards was then required to
+restore strict newest-first chronology.
+
+The pre-existing 2-card patch is preserved by this rule because sorting is
+stable for cards with identical dates and the patch had already placed both
+moved cards in their correct date slots.
+
+### EXPLICITLY FORBIDDEN
+- Block-prepending new cards above an existing grid without sorting.
+- Leaving a card in a position that violates chronological order with the
+  card directly above or below it.
+- Treating "the cards I just added" as a special section above the existing
+  grid. There is one grid; all cards belong to it.
+
+### AUTOMATED PROTECTION (FUTURE WORK)
+A pre-commit / pre-publish chronology check should be added that parses the
+card grid, extracts dates, and fails if any later card has a newer date than
+an earlier card. Tracked separately.
+
+---
+
 ## LOCKED SPORTS CONTENT STANDARD - MAY 15, 2026
 
 This standard applies to every BetLegend sports page, slate page, preview,
