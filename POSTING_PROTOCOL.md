@@ -8,6 +8,64 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
+## ABSOLUTE RULE: ORPHAN PAGES MUST BE LINKED, NEVER DELETED OR DEINDEXED (LOCKED MAY 15, 2026)
+
+This rule applies across every BetLegend property and every other site that publishes
+HTML pages, picks, previews, blog posts, or standalone content: betlegendpicks.com,
+mlbprediction.com, bestmlbhandicapper.com, dailymlbpicks.com (mlbpicks),
+sportsbettingprime.com, and any future site under the same workflow.
+
+### THE RULE
+An "orphan" page is a published HTML file that exists on the live site but is not
+reachable from any homepage card, archive, sport index, calendar, hub, pagination
+system, or sitemap entry.
+
+When orphan pages are discovered, the ONLY allowed remediation is to ADD INBOUND
+INTERNAL LINKS from the correct live structure so the page becomes reachable.
+
+### EXPLICITLY FORBIDDEN WITHOUT PRIOR USER APPROVAL
+- Deleting the orphan HTML file from the repo or FTP
+- Adding `<meta name="robots" content="noindex">` to the orphan
+- Adding a 410 Gone or 404 response for the orphan
+- Removing the orphan from `sitemap.xml`
+- Adding the orphan to `robots.txt` Disallow rules
+- Collapsing the orphan via `<link rel="canonical">` to another URL
+- "Quarantining", "consolidating", "scrubbing ghost files", or any equivalent
+  bulk cleanup that removes or hides the orphan from search
+- Editing internal links to remove references to the orphan
+- Reducing the orphan from the homepage feed or any rotation
+
+### REQUIRED REMEDIATION
+- FTP sites (mlbprediction, bestmlb, mlbpicks, mlbprops, sbp): add a homepage card
+  to the local `index.html` matching the existing card pattern, then
+  `python C:/Users/Nima/publish.py <site>/index.html <site_key>`
+- betlegendpicks: add an entry to `homepage-picks-data.js` using the existing
+  object schema, commit only that file, push to `origin/main`
+- Verify against the live URL with `curl -sL <homepage>` and grep the slug
+
+### WHY THIS RULE EXISTS (May 15, 2026)
+While linking 21 orphan pick pages on betlegendpicks.com, a concurrent automated
+agent staged a `db9ece9559 SEO: Permanent quarantine of 319 versioned ghost files`
+commit on top of the orphan-linking commit. Pushing that bundle would have
+deleted 319 indexable HTML content pages from the live site under cover of the
+approved orphan-linking work. The orphan-linking commit was pushed alone
+(`028e41ffb`); the quarantine commit was left local and not pushed. This rule
+documents that orphan discovery is NEVER a license for bulk deletion or
+deindexing, regardless of how the cleanup is framed ("ghost files",
+"versioned duplicates", "SEO consolidation", "quarantine guards").
+
+Page-removal actions require an explicit, per-page user approval. There is no
+batch approval, no implicit approval from a related task, and no exception
+for files that "look like" duplicates.
+
+### RELATED LOCKED RULES
+- BetLegendPicks SEO stability hold (memory `feedback_betlegendpicks_no_ai_seo_tuning.md`)
+- Never deindex BetLegendPicks pages (memory `feedback_betlegendpicks_never_deindex.md`)
+- Stay-in-scope: do not push other agents' uncommitted work
+  (memory `feedback_stay_in_scope_other_agents_files.md`)
+
+---
+
 ## LOCKED SPORTS CONTENT STANDARD - MAY 15, 2026
 
 This standard applies to every BetLegend sports page, slate page, preview,
