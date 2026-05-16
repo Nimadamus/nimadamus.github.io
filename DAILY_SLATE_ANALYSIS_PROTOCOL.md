@@ -552,7 +552,9 @@ The Daily Slate Analysis Protocol is now **fully operational** and producing **h
 *Status: Production Ready*
 ## Required Freshness And Live Proof Check
 
-Daily slate publishing must update the current sport hub, homepage latest modules, blog/latest feed, static crawl links, archive calendar dates, and sitemap/feed references where applicable. If a sport has no current slate, label the page as an archive or off-day state; never leave an old page presented as "today."
+Daily slate publishing must update the current sport hub, blog/latest feed, static crawl links, archive calendar dates, and sitemap/feed references where applicable. If a sport has no current slate, label the page as an archive or off-day state; never leave an old page presented as "today."
+
+Do not add daily slate previews, game preview articles, Featured Game of the Day articles, news, guides, or hub pages to the homepage Latest Blog Picks card feed. That feed is only for Google Sheet betting picks. Featured Game articles route through Game of the Day -> Featured Game. Sport/game preview articles route through Game Previews & Records and the relevant sport preview hub/calendar/archive.
 
 Before reporting completion, inspect the live public URL visually, verify homepage/internal links point to the new page, verify calendar dates are visible and unobstructed on desktop and mobile, and verify the verified records page still renders its betting history table. Local build success and deployment success are not enough.
 
