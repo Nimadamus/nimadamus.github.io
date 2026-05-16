@@ -1,5 +1,5 @@
 // ============================================================
-// HOMEPAGE PICKS DATA - BetLegend Latest Picks & Analysis
+// HOMEPAGE PICKS DATA - BetLegend Latest Sheet Picks
 // ============================================================
 //
 // HOW THIS WORKS:
@@ -7,6 +7,10 @@
 // - Picks 7+ show in compact grid (4 per row, 2 rows = 8 per page)
 // - Cards display LEFT to RIGHT, newest first
 // - Pagination handles older picks beyond the first 10
+// - Only Google Sheet betting picks belong here.
+// - Do not add Featured Game of the Day articles, sport preview/slate articles,
+//   news, guide, or hub pages to this feed. Route those through their proper
+//   navigation surfaces instead.
 //
 // RESULT FIELD:
 // - "W" = Win (green badge)
@@ -22,7 +26,6 @@
 // ============================================================
 
 var HOMEPAGE_PICKS = [
-
     {
         sport: "NHL",
         title: "Ducks Team Total Under 3.5 vs Golden Knights: Game 6 Scoring Ceiling",
@@ -68,20 +71,6 @@ var HOMEPAGE_PICKS = [
     },
     {
         sport: "MLB",
-        title: "MLB Sunday Preview: Full 15-Game Board for May 10, 2026",
-        date: "May 10, 2026",
-        url: "sunday-fifteen-game-mlb-preview-may-10-2026.html",
-        image: "images/mlb-shohei-ohtani-dodgers-world-series-game4-oct-28-2025.webp"
-    },
-    {
-        sport: "MLB",
-        title: "White Sox vs Mariners Under 8 at Rate Field, Gilbert vs Martin Pitching Edge",
-        date: "May 10, 2026",
-        url: "white-sox-mariners-under-8-gilbert-martin-rate-field-mlb-pick.html",
-        image: "images/white-sox-mariners-under-8-gilbert-martin-rate-field-mlb-pick.jpg"
-    },
-    {
-        sport: "MLB",
         title: "Nationals vs Marlins Pick: Washington Moneyline at loanDepot Park",
         date: "May 9, 2026",
         url: "nationals-moneyline-plus-139-marlins-littell-junk-loandepot-park-mlb-pick.html",
@@ -93,34 +82,6 @@ var HOMEPAGE_PICKS = [
         date: "May 9, 2026",
         url: "braves-moneyline-plus-152-dodgers-strider-snell-dodger-stadium-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/675911/action/hero/current"
-    },
-    {
-        sport: "MLB",
-        title: "Friday Fifteen-Game Slate Headlined By Sale vs Sheehan",
-        date: "May 8, 2026",
-        url: "sale-fried-friday-fifteen-game-slate-mlb-may-8-2026.html",
-        image: "images/mlb-garrett-crochet-fenway-park-sept-02-2025.webp"
-    },
-    {
-        sport: "NHL",
-        title: "Ducks vs Golden Knights Game 3 Under 6.5 at Honda Center",
-        date: "May 8, 2026",
-        url: "ducks-golden-knights-game-3-under-6-5-honda-center-stanley-cup-playoffs-nhl-pick.html",
-        image: "images/ducks-golden-knights-game-3-under-6-5-honda-center-stanley-cup-playoffs-nhl-pick.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Gore vs Blackburn Headlines Thursday's MLB Board",
-        date: "May 7, 2026",
-        url: "gore-blackburn-yankees-rangers-thursday-mlb-may-7-2026.html",
-        image: "images/mlb-great-american-ballpark-yankees-reds.webp"
-    },
-    {
-        sport: "NHL",
-        title: "Hurricanes vs Flyers Game 3 Under 5.5 at Xfinity Mobile Arena",
-        date: "May 7, 2026",
-        url: "hurricanes-flyers-game-3-under-5-5-andersen-vladar-xfinity-mobile-arena-nhl-pick.html",
-        image: "images/hurricanes-flyers-game-3-under-5-5-andersen-vladar-xfinity-mobile-arena-nhl-pick.webp"
     },
     {
         sport: "NHL",
@@ -137,109 +98,11 @@ var HOMEPAGE_PICKS = [
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/667670/action/hero/current"
     },
     {
-        sport: "MLB",
-        title: "DeGrom, Alcantara and Gausman Anchor Tuesday MLB",
-        date: "May 5, 2026",
-        url: "ohtani-degrom-bibee-burns-fifteen-game-tuesday-mlb.html",
-        image: "images/degrom.webp"
-    },
-    {
-        sport: "MLB",
-        title: "Giants ML -126 vs Padres at Oracle Park, Webb vs Buehler Home Edge",
-        date: "May 5, 2026",
-        url: "giants-moneyline-minus-126-padres-webb-buehler-oracle-park-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657277/action/hero/current"
-    },
-    {
-        sport: "MLB",
-        title: "Yamamoto and Gordon Lead Monday's Twelve-Game MLB Board",
-        date: "May 4, 2026",
-        url: "yamamoto-gordon-twelve-game-monday-mlb.html",
-        image: "images/mlb-yoshinobu-yamamoto-world-series-game6-dodgers-elimination-oct-30-2025.webp"
-    },
-    {
-        sport: "MLB",
-        title: "Guardians ML +109 vs Royals at Kauffman, Bibee Bounce-Back",
-        date: "May 4, 2026",
-        url: "guardians-moneyline-plus-109-royals-bibee-wacha-kauffman-stadium-mlb-pick.html",
-        image: "images/guardians-moneyline-plus-109-royals-bibee-wacha-kauffman-stadium-mlb-pick.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Wrobleski, Yesavage and Leiter Headline Sunday's MLB Slate",
-        date: "May 3, 2026",
-        url: "wrobleski-yesavage-leiter-fifteen-game-sunday-mlb.html",
-        image: "images/mlb-dodgers-pirates-pnc-park-sept-04-2025.webp"
-    },
-    {
-        sport: "MLB",
-        title: "Cubs ML -156 vs Diamondbacks at Wrigley, Boyd vs Kelly Rotation Edge",
-        date: "May 3, 2026",
-        url: "cubs-moneyline-minus-156-diamondbacks-wrigley-field-home-favorite-rotation-edge.html",
-        image: "images/cubs-moneyline-minus-156-diamondbacks-wrigley-field-home-favorite-rotation-edge.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Sasaki, McLean and Painter Lead Saturday's MLB Card",
-        date: "May 2, 2026",
-        url: "sasaki-mclean-painter-fifteen-game-saturday-mlb.html",
-        image: "images/mlb-playoffs-pick-oct-01-2025.webp"
-    },
-    {
         sport: "NHL",
         title: "Sabres vs Bruins Game 6 Pick: Over 5.5 at TD Garden",
         date: "May 1, 2026",
         url: "sabres-bruins-over-5-5-game-6-td-garden-stanley-cup-playoffs-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1777640939/prd/xzyqnm9sb7mk4giyhfik.png"
-    },
-    {
-        sport: "MLB",
-        title: "Padres Team Total Under 4.5 vs White Sox at Petco Park",
-        date: "May 1, 2026",
-        url: "padres-team-total-under-4-5-white-sox-marquez-schultz-petco-park-mlb.html",
-        image: "images/padres-team-total-under-4-5-white-sox-marquez-schultz-petco-park-mlb.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Nine MLB Games Headlined By Skenes, Valdez and Gausman",
-        date: "April 30, 2026",
-        url: "nine-game-thursday-skenes-valdez-gausman-mlb.html",
-        image: "images/skenes.webp"
-    },
-    {
-        sport: "MLB",
-        title: "Pirates Team Total Under 4.5 vs Cardinals at PNC, Skenes vs Dobbins",
-        date: "April 30, 2026",
-        url: "pirates-team-total-under-4-5-cardinals-dobbins-pnc-park-skenes-mlb.html",
-        image: "images/pirates-team-total-under-4-5-cardinals-dobbins-pnc-park-skenes-mlb.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Midweek Rotation Arms and Divisional Clashes",
-        date: "April 29, 2026",
-        url: "midweek-rotation-arms-divisional-clashes-mlb.html",
-        image: "images/webb6.webp"
-    },
-    {
-        sport: "MLB",
-        title: "Diamondbacks Team Total Under 4.5 vs Brewers at American Family Field",
-        date: "April 29, 2026",
-        url: "diamondbacks-team-total-under-sproat-american-family-field-mlb.html",
-        image: "images/diamondbacks-team-total-under-sproat-american-family-field-mlb.jpg"
-    },
-    {
-        sport: "NBA",
-        title: "Knicks, Hawks, Celtics and Spurs Closeout Tuesday",
-        date: "April 28, 2026",
-        url: "knicks-hawks-tied-celtics-spurs-closeouts-tuesday-nba.html",
-        image: "images/thunderwin.webp"
-    },
-    {
-        sport: "NHL",
-        title: "Ducks vs Oilers Under 7 Game 5 at Rogers Place",
-        date: "April 28, 2026",
-        url: "ducks-oilers-under-7-game-5-rogers-place-stanley-cup-playoffs-nhl.html",
-        image: "images/oilers-mcdavid-ducks-game-5-rogers-place-nhl.webp"
     },
     {
         sport: "NHL",
@@ -646,20 +509,5 @@ var HOMEPAGE_PICKS = [
         result: "W",
         url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl-march-14-2026.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlx0hqpifhq8kfmt1y9x"
-    },
-    {
-        sport: "NHL",
-        title: "Rangers ML +167 and Puck Line +1.5 at Wild, Three Straight Wins and Road PP Edge",
-        date: "March 14, 2026",
-        url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl.html",
-        image: "images/montreal-canadiens-puck-line-rangers-december-13-2025.jpg"
-    },
-    {
-        sport: "NHL",
-        title: "Kings vs Canadiens Team Total Under 3.5",
-        date: "March 7, 2026",
-        url: "kings-team-total-under-nhl-pick.html",
-        image: "images/kings-team-total-under-nhl-pick.png"
     }
-
 ];
