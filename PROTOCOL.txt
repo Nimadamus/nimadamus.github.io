@@ -46,28 +46,6 @@ STEP 2 - FIND THE CORRECT EXISTING FORMAT
 5. Do not publish plain text cards, placeholder panels, or pages that look
    unlike established BetLegend archive/article pages.
 
-FEATURED GAME OF THE DAY LOCKED FORMAT:
-- New or repaired Featured Game of the Day pages must use the older approved
-  Claude-created featured-game structure as the source of truth.
-- Required desktop structure: centered page-wrapper/main-content article,
-  fixed left Featured Games calendar, mobile archive selector, and the
-  featured-games-calendar.js script.
-- Required visual structure: marquee game-preview card, gold/cyan top rail,
-  Featured Game of the Day pill, game/broadcast badge, paired team logos,
-  centered matchup/time block, matchup visual panel, team imagery, context
-  badges, premium sportsbook-style dark card treatment, and the same paragraph
-  spacing used by the approved older pages.
-- Required calendar behavior: the visible month must display every numbered
-  day in the month. Featured dates may be highlighted and clickable, but
-  non-featured dates must remain visible as disabled calendar cells. Missing
-  or visually suppressed dates are release-blocking bugs.
-- Do not invent alternate grids, detached calendar/article layouts, generic
-  article cards, simplified graphics, or new spacing systems for Featured
-  Game pages. Compare against a recent approved page before publishing.
-- Before completion, visually inspect the live public Featured Game page and
-  confirm the public URL shows a complete month calendar and the full premium
-  visual package.
-
 STEP 3 - GATHER AND VERIFY SOURCE DATA FIRST
 --------------------------------------------
 
@@ -160,19 +138,19 @@ STEP 8 - UPDATE FEEDS AND RELATED DATA
 --------------------------------------
 
 Do this only when the content type requires it:
-1. Add pick cards to the correct feed.
-2. Add homepage cards only when required.
-3. Preserve existing posts. Do not overwrite or delete old content.
-4. Insert new content in the correct newest-first order.
-5. Make sure older posts remain accessible.
-6. Never create or publish a standalone orphan page. Page creation and
-   internal linking are one task. A page is not complete until it is reachable
-   from the correct live structure, such as homepage/latest card,
-   blog/news/picks archive, sport-specific index, calendar/date archive, hub
-   page, pagination/card rotation system, and sitemap where applicable.
-7. Before marking the task complete, confirm the new page has at least one
-   valid inbound internal link from the correct live structure. If it does not,
-   the task fails and cannot be called complete.
+1. Add Google Sheet betting picks to the homepage Latest Blog Picks feed.
+2. Never add Featured Game of the Day articles, sport/game preview articles,
+   news, guides, hubs, or other non-pick articles to `homepage-picks-data.js`
+   or the homepage pick-card fallback grid.
+3. Route Featured Game of the Day articles only through Game of the Day ->
+   Featured Game and the featured-games calendar/data surfaces.
+4. Route sport/game preview articles only through Game Previews & Records,
+   the relevant sport preview hub, sport calendar/archive, blog/latest feed,
+   sitemap/feed, and static crawl links.
+5. Preserve existing posts. Do not overwrite or delete old content.
+6. Insert new content in the correct newest-first order for its own surface.
+7. After publishing, verify every article is linked through the correct
+   navigation surface and that no valid article is orphaned.
 
 STEP 9 - RUN REQUIRED AUTOMATED CHECKS
 --------------------------------------
