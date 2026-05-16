@@ -76,6 +76,15 @@ Game preview cards must have team logos/crests/badges or polished matchup
 visual identity, verified game-specific previews, and internal/homepage link
 checks when the page is linked from navigation or feeds.
 
+Never create or publish a standalone orphan page. Page creation and internal
+linking are one task. A page is not complete until it is reachable from the
+correct live structure, such as homepage/latest card, blog/news/picks archive,
+sport-specific index, calendar/date archive, hub page, pagination/card rotation
+system, and sitemap where applicable. Before any article, pick, preview, blog
+post, or standalone HTML page is marked complete, confirm it has at least one
+valid inbound internal link from the correct live structure. If it does not, the
+task fails and cannot be called complete.
+
 Before any BetLegend article/page is marked complete, visually verify the live
 public URL in a real browser. The screenshot must show the public
 betlegendpicks.com URL in the address bar and the corrected page state. Local

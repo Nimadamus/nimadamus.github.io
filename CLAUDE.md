@@ -77,6 +77,15 @@ python scripts/validate_slate_completeness.py --range 3
 Get-ChildItem scripts\*-calendar.js | ForEach-Object { node --check $_.FullName }
 ```
 
+Never create or publish a standalone orphan page. Page creation and internal
+linking are one task. A page is not complete until it is reachable from the
+correct live structure, such as homepage/latest card, blog/news/picks archive,
+sport-specific index, calendar/date archive, hub page, pagination/card rotation
+system, and sitemap where applicable. Before any article, pick, preview, blog
+post, or standalone HTML page is marked complete, confirm it has at least one
+valid inbound internal link from the correct live structure. If it does not, the
+task fails and cannot be called complete.
+
 Also manually inspect the created/edited pages for:
 - team logos or verified badges in every matchup block
 - correct sport calendar script
