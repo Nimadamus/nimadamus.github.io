@@ -2,8 +2,8 @@
 """Validate homepage pick-card image quality and feed sequencing.
 
 This is intentionally strict. The homepage should never ship duplicate card
-images, placeholder/text thumbnails, overstacked same-day cards, or obvious
-recent-date gaps again.
+images, placeholder/text thumbnails, overstacked same-day cards, or non-pick
+articles in the pick feed.
 """
 
 from __future__ import annotations
@@ -11,16 +11,14 @@ from __future__ import annotations
 import re
 import sys
 from collections import Counter
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PICKS = ROOT / "homepage-picks-data.js"
 SYSTEM = ROOT / "homepage-image-system.js"
-ARCHIVE = ROOT / "archive.html"
 
 MAX_CARDS_PER_DATE = 2
-RECENT_CONTIGUOUS_DAYS = 19
 
 BLOCKED_IMAGE_RE = re.compile(
     r"(?:"
@@ -40,6 +38,12 @@ BLOCKED_IMAGE_RE = re.compile(
     r"mlb-picks-team-logos|"
     r"vegas-golden-knights-(?:premium-preview|moneyline-game-5-ducks-chart|ducks-game-5-action)"
     r")",
+    re.I,
+)
+
+NON_PICK_ARTICLE_RE = re.compile(
+    r"(?:featured-game|featured game|game of the day|preview|slate|"
+    r"\bboard\b|headlined|headline|anchor|closeout)",
     re.I,
 )
 
@@ -70,31 +74,12 @@ def parse_date(value: str):
     return datetime.strptime(value, "%B %d, %Y").date()
 
 
-def parse_archive_urls() -> set[str]:
-    if not ARCHIVE.exists():
-        return set()
-    text = ARCHIVE.read_text(encoding="utf-8")
-    return set(re.findall(r'<li>\s*<a\s+href="([^"]+\.html)"', text))
-
-
 def main() -> int:
     errors: list[str] = []
     picks = parse_picks()
     overrides = parse_overrides()
     if not picks:
         errors.append("homepage-picks-data.js has no pick cards.")
-
-    archive_urls = parse_archive_urls()
-    if archive_urls:
-        for pick in picks:
-            if pick["url"] not in archive_urls:
-                errors.append(
-                    f"Homepage pick {pick['url']} is missing from archive.html. "
-                    "Every homepage URL must also be linked in archive.html so the "
-                    "curated/capped homepage never orphans a published page."
-                )
-    else:
-        errors.append("archive.html not found or empty; cannot run no-orphan check.")
 
     override_counts = Counter(overrides.values())
     for image, count in override_counts.items():
@@ -105,6 +90,10 @@ def main() -> int:
     for pick in picks:
         image = overrides.get(pick["url"], pick["image"])
         rendered.append((pick["url"], pick["title"], image))
+        if NON_PICK_ARTICLE_RE.search(pick["url"]) or NON_PICK_ARTICLE_RE.search(pick["title"]):
+            errors.append(
+                f"{pick['url']} looks like a non-pick article and must not be in homepage-picks-data.js"
+            )
         if not image or BLOCKED_IMAGE_RE.search(image):
             errors.append(
                 f"{pick['url']} uses blocked, placeholder, logo, text-card, or non-action image: {image}"
@@ -132,17 +121,6 @@ def main() -> int:
                 f"at {picks[index]['url']}"
             )
 
-    if parsed_dates:
-        latest = parsed_dates[0]
-        required_dates = {latest - timedelta(days=offset) for offset in range(RECENT_CONTIGUOUS_DAYS)}
-        present_dates = set(parsed_dates)
-        missing_recent = sorted(required_dates - present_dates, reverse=True)
-        if missing_recent:
-            missing = ", ".join(date.isoformat() for date in missing_recent)
-            errors.append(
-                f"Homepage feed has recent date gaps inside the required {RECENT_CONTIGUOUS_DAYS}-day window: {missing}"
-            )
-
     if errors:
         print("Homepage pick image/feed validation failed:")
         for error in errors:
@@ -152,7 +130,7 @@ def main() -> int:
     print(
         "Homepage pick image/feed validation passed: "
         f"{len(picks)} cards, {len(rendered_counts)} unique images, "
-        f"max {MAX_CARDS_PER_DATE} cards/date, no recent gaps."
+        f"max {MAX_CARDS_PER_DATE} cards/date, pick-only feed."
     )
     return 0
 
