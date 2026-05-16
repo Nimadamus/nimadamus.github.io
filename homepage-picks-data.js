@@ -22,21 +22,7 @@
 // ============================================================
 
 var HOMEPAGE_PICKS = [
-    
-    {
-        sport: "NBA",
-        title: "Pistons vs Cavaliers Game 6 Featured Game of the Day",
-        date: "May 15, 2026",
-        url: "pistons-cavaliers-game-6-featured-game-of-the-day.html",
-        image: "images/brooklyn-nets-pistons-nba-betting-analysis-nov7-2025.webp"
-    },
-    {
-        sport: "MLB",
-        title: "MLB Friday Preview: Subway Series, Freeway Series and 15-Game Board for May 15, 2026",
-        date: "May 15, 2026",
-        url: "mlb-preview-friday-interleague-rivalries-subway-freeway-series.html",
-        image: "images/mlb-aaron-judge-yankees-batting.webp"
-    },
+
     {
         sport: "NHL",
         title: "Ducks Team Total Under 3.5 vs Golden Knights: Game 6 Scoring Ceiling",

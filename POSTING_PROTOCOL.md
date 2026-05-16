@@ -135,6 +135,69 @@ publish on one site does not cascade.
 
 ---
 
+## ABSOLUTE RULE: MULTI-SITE CONTENT ROUTING AND DAILY CADENCE (LOCKED MAY 16, 2026)
+
+Before publishing any new article, audit the target site's own current homepage,
+archive, category/dropdown pages, sitemap/calendar surfaces, and the most recent
+published posts. Continue that site's established pattern instead of treating the
+properties as interchangeable content feeds.
+
+### DAILY CADENCE
+- Default cadence is one post per day per site.
+- BetLegendPicks is the only standing exception and may receive two posts per
+  day.
+- BestMLBHandicapper must never receive multiple same-day homepage/archive
+  posts or duplicate/redundant slate articles unless Nima explicitly overrides
+  the rule for that specific date.
+- Duplicate slate articles on the same site are not allowed unless explicitly
+  requested.
+
+### SITE IDENTITY CHECKS
+- BestMLBHandicapper: one focused Best MLB Handicapper style pick per day; no
+  same-day flooding and no redundant daily-card duplicates.
+- BetLegendPicks: Google Sheet pick posts go in Latest Blog Picks/feed only;
+  Featured Game of the Day belongs only under Game of the Day -> Featured Game;
+  game preview articles belong under Game Previews & Records and sport preview
+  pages, not the pick-card feed.
+- MLBPrediction: keep the MLB prediction/analytics identity, one post per day
+  unless overridden, and do not duplicate the same slate topic already covered
+  elsewhere on that site.
+- DailyMLBPicks: keep the AI model showdown/daily picks identity, one post per
+  day unless overridden, and do not turn it into a duplicate of the other MLB
+  sites.
+- SportsBettingPrime and other active sites: preserve the historical site
+  identity and one-post-per-day cadence unless explicitly overridden.
+
+### ROUTING RULES
+- Homepage/latest pick grids must contain actual picks only.
+- Featured Game of the Day articles must not appear as normal pick/blog cards.
+- Game preview articles must route through the proper sport preview/dropdown
+  pages and archive/sitemap surfaces.
+- Every published article must be linked through the correct homepage, latest,
+  archive, category/dropdown, sitemap, or calendar surface so nothing is
+  orphaned.
+
+### REQUIRED PRE-PUBLISH AUDIT
+For each target site, record:
+- Posts already published today.
+- Whether each post belongs on that site and surface.
+- Whether the daily cap would be violated.
+- Whether the topic duplicates an existing same-day article.
+- Whether the target URL is reachable from the correct homepage/latest/archive/
+  category/sitemap/calendar surface.
+
+Do not publish if the audit shows a cadence violation, wrong section, duplicate
+topic, or orphan risk. Fix routing first, without deleting valid content,
+rewriting user-written content, modifying canonical tags, breaking archives,
+homepages, sitemaps, calendars, or dropdown navigation.
+
+### COMPLETION REQUIREMENT
+Before claiming completion, verify the live public pages in a real browser with
+the public URL visible. Localhost screenshots, source-code screenshots, generated
+proof images, build success, deploy success, and HTTP checks alone do not count.
+
+---
+
 ## ABSOLUTE RULE: HOMEPAGE/ARCHIVE CARD GRIDS ARE STRICTLY CHRONOLOGICAL (LOCKED MAY 16, 2026)
 
 Every card grid that lists multiple article cards on a homepage, archive page,
