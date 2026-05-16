@@ -66,6 +66,75 @@ for files that "look like" duplicates.
 
 ---
 
+## ABSOLUTE RULE: HOMEPAGE FEED = CURATED/CAPPED, ARCHIVE = COMPLETE INDEX (LOCKED MAY 16, 2026)
+
+A page does not need to appear on the homepage to be considered "linked." The
+homepage is a CURATED quality surface with a hard cap of `MAX_CARDS_PER_DATE = 2`
+cards per published date. Every published page must still be reachable through an
+archive/date/category/internal-navigation path so there are zero orphaned pages
+across the site, but it does not need to be on the homepage feed to satisfy that.
+
+### THE TWO SEPARATE RULES
+1. **Homepage feed (`homepage-picks-data.js`)** — capped at 2 cards per date,
+   ordered newest-first, no duplicate preview images. Trimming an entry from
+   the homepage is allowed only when the page is already linked elsewhere.
+2. **Archive index (`archive.html`)** — the COMPLETE index. Every URL on the
+   homepage feed MUST also appear here. Every published article page should be
+   reachable from at least one of: archive.html, sport-specific calendar JS,
+   date-specific archive page, or sitemap entry.
+
+### CORRECT REMEDIATION WHEN AN OVER-STACKED DATE IS DISCOVERED
+- Identify the date with `> 2` cards on the homepage feed.
+- Pick the lowest-priority entries (most recently added, narrowest matchup, or
+  agent-inserted) to trim from the homepage feed.
+- BEFORE trimming, confirm the trimmed URL is already in `archive.html`. If
+  missing, add a `<li><a href="...">TITLE</a> <span>DATE</span></li>` entry to
+  the correct date slot in `archive.html` FIRST.
+- ONLY THEN remove the entry from `homepage-picks-data.js`.
+- Run `python scripts/validate_homepage_pick_image_uniqueness.py`. Both rules
+  must pass: homepage cap and archive coverage.
+
+### EXPLICITLY FORBIDDEN
+- Raising `MAX_CARDS_PER_DATE` above 2 to paper over an over-stack.
+- Removing an entry from the homepage feed WITHOUT first adding it to archive.
+- Deleting the article HTML file itself (covered by the never-deindex rule above).
+- Using `--no-verify` to skip the validator.
+
+### AUTOMATED PROTECTION
+`scripts/validate_homepage_pick_image_uniqueness.py` now enforces BOTH:
+- Existing rules: image uniqueness, blocked-image patterns, max-2-per-date,
+  newest-first ordering, no recent-date gaps.
+- NEW rule (May 16, 2026): every homepage pick URL must appear in
+  `archive.html` (the no-orphan archive-coverage check). Pre-commit hook runs
+  this validator on any commit that touches `homepage-picks-data.js`.
+
+### WHY THIS RULE EXISTS (May 16, 2026)
+On May 15 an orphan-linking pass added 21 entries to `homepage-picks-data.js`
+to satisfy the "every published page must be linked" rule. 9 of those entries
+pushed their date past the locked 2-card cap. Resolving the conflict required
+splitting "linked" into two surfaces: the homepage stays curated and capped,
+while `archive.html` carries the complete index. After this rule was applied,
+9 entries were moved from the homepage to archive, 13 additional historical
+homepage entries that had been missing from archive were also added, and the
+validator was extended to enforce both rules going forward.
+
+---
+
+## WORKFLOW NOTE: DIFF REVIEW REQUIRED BEFORE MULTI-SITE FTP UPLOAD (MAY 16, 2026)
+
+When a single task spans more than one FTP site (mlbprediction, bestmlb,
+mlbpicks, mlbprops, sbp), each site's local edit MUST be presented as a textual
+diff for explicit user review before any `publish.py` upload. The diff must
+show: file path, lines being moved/changed, before/after order, confirmation
+that no content/CSS/script/canonical/image/href bytes outside the reorder were
+modified.
+
+Once the diffs are approved, uploads happen sequentially (one site per
+`publish.py` run, with live `curl` verification after each) so that a broken
+publish on one site does not cascade.
+
+---
+
 ## LOCKED SPORTS CONTENT STANDARD - MAY 15, 2026
 
 This standard applies to every BetLegend sports page, slate page, preview,

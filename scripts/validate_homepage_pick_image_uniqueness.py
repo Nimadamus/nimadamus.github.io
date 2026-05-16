@@ -17,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PICKS = ROOT / "homepage-picks-data.js"
 SYSTEM = ROOT / "homepage-image-system.js"
+ARCHIVE = ROOT / "archive.html"
 
 MAX_CARDS_PER_DATE = 2
 RECENT_CONTIGUOUS_DAYS = 19
@@ -69,12 +70,31 @@ def parse_date(value: str):
     return datetime.strptime(value, "%B %d, %Y").date()
 
 
+def parse_archive_urls() -> set[str]:
+    if not ARCHIVE.exists():
+        return set()
+    text = ARCHIVE.read_text(encoding="utf-8")
+    return set(re.findall(r'<li>\s*<a\s+href="([^"]+\.html)"', text))
+
+
 def main() -> int:
     errors: list[str] = []
     picks = parse_picks()
     overrides = parse_overrides()
     if not picks:
         errors.append("homepage-picks-data.js has no pick cards.")
+
+    archive_urls = parse_archive_urls()
+    if archive_urls:
+        for pick in picks:
+            if pick["url"] not in archive_urls:
+                errors.append(
+                    f"Homepage pick {pick['url']} is missing from archive.html. "
+                    "Every homepage URL must also be linked in archive.html so the "
+                    "curated/capped homepage never orphans a published page."
+                )
+    else:
+        errors.append("archive.html not found or empty; cannot run no-orphan check.")
 
     override_counts = Counter(overrides.values())
     for image, count in override_counts.items():

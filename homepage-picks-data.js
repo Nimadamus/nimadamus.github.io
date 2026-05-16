@@ -124,13 +124,6 @@ var HOMEPAGE_PICKS = [
     },
     {
         sport: "MLB",
-        title: "Royals Team Total Under 4.5 vs Tigers at Kauffman, Montero Strike Throwers",
-        date: "May 8, 2026",
-        url: "royals-team-total-under-4-5-tigers-montero-bubic-strike-throwers-kauffman-stadium-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/677951/action/hero/current"
-    },
-    {
-        sport: "MLB",
         title: "Gore vs Blackburn Headlines Thursday's MLB Board",
         date: "May 7, 2026",
         url: "gore-blackburn-yankees-rangers-thursday-mlb-may-7-2026.html",
@@ -142,13 +135,6 @@ var HOMEPAGE_PICKS = [
         date: "May 7, 2026",
         url: "hurricanes-flyers-game-3-under-5-5-andersen-vladar-xfinity-mobile-arena-nhl-pick.html",
         image: "images/hurricanes-flyers-game-3-under-5-5-andersen-vladar-xfinity-mobile-arena-nhl-pick.webp"
-    },
-    {
-        sport: "MLB",
-        title: "Rangers Team Total Over 3.5 vs Yankees at Yankee Stadium, Warren Regression",
-        date: "May 7, 2026",
-        url: "rangers-team-total-over-3-5-yankees-warren-eovaldi-yankee-stadium-mlb-pick.html",
-        image: "images/rangers-team-total-over-3-5-yankees-warren-eovaldi-yankee-stadium-mlb-pick.webp"
     },
     {
         sport: "NHL",
@@ -179,13 +165,6 @@ var HOMEPAGE_PICKS = [
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657277/action/hero/current"
     },
     {
-        sport: "NHL",
-        title: "Wild vs Avalanche Game 2 Over 6.5 at Ball Arena",
-        date: "May 5, 2026",
-        url: "wild-avalanche-over-6-5-game-2-ball-arena-stanley-cup-playoffs-nhl-pick.html",
-        image: "images/wild-avalanche-over-6-5-game-2-ball-arena-stanley-cup-playoffs-nhl-pick.jpg"
-    },
-    {
         sport: "MLB",
         title: "Yamamoto and Gordon Lead Monday's Twelve-Game MLB Board",
         date: "May 4, 2026",
@@ -200,13 +179,6 @@ var HOMEPAGE_PICKS = [
         image: "images/guardians-moneyline-plus-109-royals-bibee-wacha-kauffman-stadium-mlb-pick.jpg"
     },
     {
-        sport: "NBA",
-        title: "Knicks vs 76ers Under 213 Game 1 at Madison Square Garden",
-        date: "May 4, 2026",
-        url: "knicks-76ers-under-213-game-1-second-round-madison-square-garden-nba-pick.html",
-        image: "images/knicks-76ers-under-213-game-1-second-round-madison-square-garden-nba-pick.jpg"
-    },
-    {
         sport: "MLB",
         title: "Wrobleski, Yesavage and Leiter Headline Sunday's MLB Slate",
         date: "May 3, 2026",
@@ -219,13 +191,6 @@ var HOMEPAGE_PICKS = [
         date: "May 3, 2026",
         url: "cubs-moneyline-minus-156-diamondbacks-wrigley-field-home-favorite-rotation-edge.html",
         image: "images/cubs-moneyline-minus-156-diamondbacks-wrigley-field-home-favorite-rotation-edge.jpg"
-    },
-    {
-        sport: "NHL",
-        title: "Lightning ML -160 vs Canadiens Game 7 at Amalie Arena",
-        date: "May 3, 2026",
-        url: "lightning-moneyline-minus-160-canadiens-game-7-amalie-arena-stanley-cup-playoffs.html",
-        image: "images/lightning-moneyline-minus-160-canadiens-game-7-amalie-arena-stanley-cup-playoffs.webp"
     },
     {
         sport: "MLB",
@@ -263,13 +228,6 @@ var HOMEPAGE_PICKS = [
         image: "images/pirates-team-total-under-4-5-cardinals-dobbins-pnc-park-skenes-mlb.jpg"
     },
     {
-        sport: "NHL",
-        title: "Stars vs Wild Game 6 Over 5.5 at Grand Casino Arena",
-        date: "April 30, 2026",
-        url: "stars-wild-over-5-5-game-6-grand-casino-arena-nhl.html",
-        image: "images/stars-wild-over-5-5-game-6-grand-casino-arena-nhl.jpg"
-    },
-    {
         sport: "MLB",
         title: "Midweek Rotation Arms and Divisional Clashes",
         date: "April 29, 2026",
@@ -284,13 +242,6 @@ var HOMEPAGE_PICKS = [
         image: "images/diamondbacks-team-total-under-sproat-american-family-field-mlb.jpg"
     },
     {
-        sport: "MLB",
-        title: "Royals ML +108 vs Athletics at Sutter Health Park, Wacha vs Severino",
-        date: "April 29, 2026",
-        url: "royals-moneyline-plus-108-athletics-wacha-severino-sutter-health-park-mlb.html",
-        image: "images/royals-moneyline-plus-108-athletics-wacha-severino-sutter-health-park-mlb.jpg"
-    },
-    {
         sport: "NBA",
         title: "Knicks, Hawks, Celtics and Spurs Closeout Tuesday",
         date: "April 28, 2026",
@@ -303,13 +254,6 @@ var HOMEPAGE_PICKS = [
         date: "April 28, 2026",
         url: "ducks-oilers-under-7-game-5-rogers-place-stanley-cup-playoffs-nhl.html",
         image: "images/oilers-mcdavid-ducks-game-5-rogers-place-nhl.webp"
-    },
-    {
-        sport: "MLB",
-        title: "Tigers ML +106 at Braves Truist Park, Mize vs Perez",
-        date: "April 28, 2026",
-        url: "tigers-moneyline-plus-106-braves-mize-perez-truist-park-mlb.html",
-        image: "images/tigers-riley-greene-braves-truist-park-mlb.jpg"
     },
     {
         sport: "NHL",
@@ -428,13 +372,6 @@ var HOMEPAGE_PICKS = [
         result: "W",
         url: "white-sox-moneyline-plus-131-fedde-athletics-sacramento-mlb.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607200/action/hero/current"
-    },
-    {
-        sport: "MLB",
-        title: "Rockies ML +235 vs Dodgers at Coors Field, Sheehan Walking Into Thin Air",
-        date: "April 18, 2026",
-        url: "rockies-moneyline-plus-235-home-dog-sheehan-coors-field-dodgers-mlb.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/686668/action/hero/current"
     },
     {
         sport: "MLB",
