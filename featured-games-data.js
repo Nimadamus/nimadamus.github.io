@@ -167,6 +167,7 @@ const FEATURED_GAMES = [
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
     { date: "2026-05-14", page: "canadiens-sabres-game-5-featured-game-of-the-day.html", title: "Canadiens at Sabres Game 5" },
+    { date: "2026-05-17", page: "cavaliers-pistons-game-7-featured-game-of-the-day.html", title: "Cavaliers at Pistons Game 7" },
 ];
 
 // Export for use in calendar

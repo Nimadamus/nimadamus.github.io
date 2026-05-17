@@ -77,15 +77,6 @@ python scripts/validate_slate_completeness.py --range 3
 Get-ChildItem scripts\*-calendar.js | ForEach-Object { node --check $_.FullName }
 ```
 
-Never create or publish a standalone orphan page. Page creation and internal
-linking are one task. A page is not complete until it is reachable from the
-correct live structure, such as homepage/latest card, blog/news/picks archive,
-sport-specific index, calendar/date archive, hub page, pagination/card rotation
-system, and sitemap where applicable. Before any article, pick, preview, blog
-post, or standalone HTML page is marked complete, confirm it has at least one
-valid inbound internal link from the correct live structure. If it does not, the
-task fails and cannot be called complete.
-
 Also manually inspect the created/edited pages for:
 - team logos or verified badges in every matchup block
 - correct sport calendar script
@@ -101,8 +92,9 @@ reporting back.**
 
 ## 🟥🟥🟥 ABSOLUTE RULE: HOMEPAGE PICK FEED QUALITY GATE (LOCKED MAY 14, 2026) 🟥🟥🟥
 
-**The BetLegendPicks homepage pick grid must never ship duplicate previews,
-placeholder/text thumbnails, same-day card floods, or recent date gaps again.**
+**The BetLegendPicks homepage pick grid is a Google Sheet betting-pick feed.
+It must never ship Featured Game articles, sport/game preview articles,
+duplicate previews, placeholder/text thumbnails, or same-day card floods.**
 
 ### THE HOMEPAGE PICK FEED RULE:
 ```
@@ -117,36 +109,46 @@ python scripts/validate_homepage_pick_image_uniqueness.py
 ```
 
 ### NON-NEGOTIABLES:
-1. **No duplicate preview images.** The same image URL may not appear on more
+1. **Sheet picks only.** `homepage-picks-data.js` and the homepage Latest Blog
+   Picks fallback card grid may contain only actual Google Sheet betting picks.
+   Featured Game of the Day articles, sport/game preview articles, news, guides,
+   hub pages, and other non-pick content must never be inserted here.
+2. **Correct non-pick routing.** Featured Game of the Day articles route only
+   through Game of the Day -> Featured Game and featured game data/calendar
+   surfaces. Sport/game preview articles route only through Game Previews &
+   Records, the relevant sport preview hub, sport calendar/archive,
+   blog/latest feed, sitemap/feed, and static crawl links.
+3. **No duplicate preview images.** The same image URL may not appear on more
    than one homepage pick card. No exceptions for "similar enough" articles.
-2. **No placeholder or text-card images.** Do not use `newlogo.png`,
+4. **No placeholder or text-card images.** Do not use `newlogo.png`,
    `data:image` generated SVG cards, `images/homepage-preview/`, team-logo
    graphics, betting screenshots, charts, AI/text thumbnails, or generic
    branded tiles as pick-card previews.
-3. **Use action shots only.** Every homepage pick card must use a real,
+5. **Use action shots only.** Every homepage pick card must use a real,
    relevant sports action image tied to the article's sport/team/game.
-4. **Do not overstack one date.** The homepage feed is capped at **2 cards per
+6. **Do not overstack one date.** The homepage feed is capped at **2 cards per
    published date**. Never put 6 or 7 cards on one day again.
-5. **No recent date gaps.** The newest visible feed must remain reverse
-   chronological and must not skip recent publishing days in the locked
-   contiguous window.
-6. **Do not let fallback logic reuse images.** If an image is missing or
+7. **Do not fill date gaps with non-picks.** If the Google Sheet has no pick
+   for a date, leave the feed as-is instead of adding a preview/slate article.
+8. **Do not let fallback logic reuse images.** If an image is missing or
    blocked, assign a unique acceptable action image. Do not rely on one sport
    fallback across multiple cards.
-7. **Do not claim complete until live verification is clean.** After pushing,
+9. **Do not claim complete until live verification is clean.** After pushing,
    verify the public `https://www.betlegendpicks.com/` homepage data renders
    unique images, has no broken links/images, has max 2 cards per date, and is
-   in newest-to-oldest order.
+   in newest-to-oldest order. Also verify non-pick articles are linked through
+   their correct navigation surfaces and are not orphaned.
 
 ### AUTOMATED PROTECTION:
 - `scripts/validate_homepage_pick_image_uniqueness.py` fails if rendered
   homepage pick images duplicate, if blocked placeholder/text/logo images are
-  used, if any date has more than 2 cards, if order is wrong, or if the recent
-  homepage window has date gaps.
+  used, if non-pick article patterns appear, if any date has more than 2 cards,
+  or if order is wrong.
 - `.github/workflows/validate-content.yml` runs that validator on push.
 
-**IF THE HOMEPAGE HAS DUPLICATE IMAGES, PLACEHOLDER/TEXT IMAGES, DATE FLOODS,
-OR RECENT GAPS, THE WORK IS NOT DONE. FIX IT BEFORE PUSHING OR REPORTING.**
+**IF THE HOMEPAGE HAS NON-PICK ARTICLES, DUPLICATE IMAGES, PLACEHOLDER/TEXT
+IMAGES, OR DATE FLOODS, THE WORK IS NOT DONE. FIX IT BEFORE PUSHING OR
+REPORTING.**
 
 ---
 

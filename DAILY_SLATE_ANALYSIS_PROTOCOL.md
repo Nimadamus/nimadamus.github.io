@@ -418,6 +418,16 @@ Before publishing, verify:
 - Define the sport, date, output files, and exact slate coverage
 - Verify schedules, game count, records, injuries, lines, stats, and trends
 - Build source notes before writing
+- Select one Featured Game of the Day for the slate
+- Verify the featured matchup, date, teams, starting pitchers/probable starters
+  when applicable, game time, venue, team records, relevant stats, and betting
+  context from reliable current sources before publishing
+- Create or update the Featured Game of the Day page only in the proper Game of
+  the Day / Featured Game location, not as a generic blog or pick-card post
+- Update the BetLegendPicks homepage Featured Game of the Day widget so it
+  represents and links to the selected featured game with the verified matchup,
+  date, teams, starters when applicable, time, venue, records, stats, and
+  preview context
 - Generate new slate analysis using verified inputs only
 - Add logos/crests/badges and correct date metadata
 - Update "Last Updated" timestamps
@@ -425,6 +435,9 @@ Before publishing, verify:
 - Run calendar sync and validation
 - Manually verify formatting, logos, calendar/sidebar, mobile view, and no
   generic filler
+- Check the live homepage Featured Game of the Day widget before completion.
+  The slate workflow is not complete until the widget is current, linked to the
+  correct featured page, and visually verified on the public site.
 
 ### Weekly:
 - Review analytics for top-performing content
@@ -552,7 +565,11 @@ The Daily Slate Analysis Protocol is now **fully operational** and producing **h
 *Status: Production Ready*
 ## Required Freshness And Live Proof Check
 
-Daily slate publishing must update the current sport hub, homepage latest modules, blog/latest feed, static crawl links, archive calendar dates, and sitemap/feed references where applicable. If a sport has no current slate, label the page as an archive or off-day state; never leave an old page presented as "today."
+Daily slate publishing must update the current sport hub, blog/latest feed, static crawl links, archive calendar dates, and sitemap/feed references where applicable. If a sport has no current slate, label the page as an archive or off-day state; never leave an old page presented as "today."
+
+Do not add daily slate previews, game preview articles, Featured Game of the Day articles, news, guides, or hub pages to the homepage Latest Blog Picks card feed. That feed is only for Google Sheet betting picks. Featured Game articles route through Game of the Day -> Featured Game. Sport/game preview articles route through Game Previews & Records and the relevant sport preview hub/calendar/archive.
+
+Before editing, complete the routing audit: identify the content type, count today's posts on the target site, choose the allowed surfaces, identify the forbidden surfaces, and confirm the URL will not be orphaned. For BetLegend homepage feed changes, run `python scripts/validate_homepage_pick_image_uniqueness.py`; a failure blocks publishing.
 
 Route each page type before publishing. Google Sheet pick posts may appear in Latest Blog Picks/feed surfaces. Featured Game of the Day pages must stay under Game of the Day / Featured Game surfaces. Sport preview and slate articles must stay under Game Previews & Records and the correct sport preview pages, not in the Latest Blog Picks pick-card feed. BetLegendPicks is the only standing two-post-per-day site; other active sites default to one post per day unless Nima explicitly overrides that date.
 

@@ -217,8 +217,9 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 <img alt="Pirates logo" class="team-logo" src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/pit.png"/>
 </div>
 <div class="preview-content">
-<p>Philadelphia opens the Friday baseball card in Pittsburgh, and the shape of this matchup is cleaner than the brand names suggest. The Phillies bring the more imposing offensive ceiling, but PNC Park asks lineups to build innings instead of waiting for cheap carry. The key read is whether Philadelphia can create early traffic and force Pittsburgh to defend with runners moving.</p>
-<p>For the Pirates, the game is about shortening the night. If Pittsburgh keeps the first two trips through the order manageable, the home bullpen and park dimensions can keep the favorite from separating. This is a matchup where first-pitch strike rate and two-out plate appearances matter more than broad power reputation.</p>
+<span class="analysis-label">Verified setup</span><p>MLB lists Philadelphia at 21-23 and Pittsburgh at 24-20, with Aaron Nola facing Braxton Ashcraft at PNC Park. That gives this opener a real pitching contrast: Nola's name value is larger, but MLB's probable-pitcher board has him at 2-3 with a 5.14 ERA, while Ashcraft enters 2-2 with a 2.77 ERA and 51 strikeouts. The matchup cannot be priced only through brand perception, because the verified starter form and the Pirates' better listed record both push back against a simple Phillies-name handicap.</p>
+<span class="analysis-label">Pitching and run environment</span><p>Nola's handicap starts with command. Philadelphia can live with contact at PNC Park if he is ahead in counts, but the danger is traffic: walks, deep counts, and extra base runners turn a pitcher-friendly venue into a leverage problem. Ashcraft's job is different. He does not need to dominate the Phillies for seven innings; he needs enough strike throwing and early-count contact management to keep Philadelphia from forcing Pittsburgh into matchup relief before the middle innings.</p>
+<span class="analysis-label">Betting read</span><p>PNC Park keeps this more about inning construction than cheap carry. Philadelphia's path is to make Ashcraft work from the stretch, stack traffic, and avoid letting Pittsburgh play a clean home script. For the Pirates, the sharpest angle is run prevention: if Ashcraft keeps the first two trips through the order under control, Pittsburgh can push this into a lower-margin bullpen game instead of a Phillies lineup showcase. The market discussion should start with first-five versus full-game separation; if lineups confirm Philadelphia's best bats are concentrated at the top, early pressure matters more, while a quiet first half gives Pittsburgh a cleaner route through defense, park fit, and late-game leverage.</p>
 </div>
 </article><article class="game-preview">
 <div class="game-number">2</div>
@@ -396,11 +397,16 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 <p>&copy; 2026 BetLegend Picks. All Rights Reserved.</p>
 <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a> | <a href="contact.html">Contact</a></p>
 </footer>
-<script src="scripts/mlb-calendar.js?v=202605151200"></script>
+<script src="scripts/mlb-calendar.js?v=20260516calendarstate"></script>
 <script>
-const CURRENT_PAGE_DATE='2026-05-15';
-function renderCalendar(){const el=document.getElementById('calendarDays');if(!el||!window.ARCHIVE_DATA)return;const days=new Date(2026,5,0).getDate();const first=new Date(2026,4,1).getDay();el.innerHTML='';for(let i=0;i<first;i++)el.innerHTML+='<div class="cal-day empty"></div>';for(let d=1;d<=days;d++){const date=`2026-05-${String(d).padStart(2,'0')}`;const item=window.ARCHIVE_DATA.find(x=>x.date===date);const cls='cal-day '+(item?'has-content ':'')+(date===CURRENT_PAGE_DATE?'current-page ':'');el.innerHTML+=item?`<div class="${cls}" onclick="location.href='${item.page}'">${d}</div>`:`<div class="${cls}">${d}</div>`;}}
-renderCalendar();
+document.querySelectorAll('.team-logo').forEach(img => {
+  img.addEventListener('error', () => {
+    const badge = document.createElement('div');
+    badge.className = 'team-logo team-logo--badge';
+    badge.textContent = (img.alt || 'MLB').replace(/ logo/i, '').split(/\s+/).map(word => word[0]).join('').slice(0, 3).toUpperCase();
+    img.replaceWith(badge);
+  }, { once: true });
+});
 </script>
 
 </body>

@@ -1,0 +1,43 @@
+name: Live Public Browser Proof
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Public URL to capture"
+        required: true
+        type: string
+      artifact_name:
+        description: "Artifact name"
+        required: true
+        default: "live-public-browser-proof"
+        type: string
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install screenshot tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb scrot openbox xdotool
+
+      - name: Capture live public URL
+        env:
+          PROOF_URL: ${{ inputs.url }}
+        run: |
+          xvfb-run -a -s "-screen 0 1600x1200x24" bash -lc '
+            openbox &
+            google-chrome --no-sandbox --disable-dev-shm-usage --disable-gpu --no-first-run --user-data-dir=/tmp/chrome-proof --window-size=1500,1050 "$PROOF_URL" &
+            sleep 25
+            xdotool search --onlyvisible --class "google-chrome" windowactivate --sync key ctrl+l
+            sleep 1
+            scrot live-public-browser-proof.png
+          '
+
+      - name: Upload proof screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: live-public-browser-proof.png
+          retention-days: 30

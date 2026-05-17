@@ -8,55 +8,92 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
-## ABSOLUTE RULE: ORPHAN PAGES MUST BE LINKED, NEVER DELETED OR DEINDEXED (LOCKED MAY 15, 2026)
+## ABSOLUTE RULE: MULTI-SITE CONTENT ROUTING AND DAILY CADENCE (LOCKED MAY 16, 2026)
 
-This rule applies across every BetLegend property and every other site that publishes
-HTML pages, picks, previews, blog posts, or standalone content: betlegendpicks.com,
-mlbprediction.com, bestmlbhandicapper.com, dailymlbpicks.com (mlbpicks),
-sportsbettingprime.com, and any future site under the same workflow.
+Before publishing any new article, audit the target site's own current homepage,
+archive, category/dropdown pages, sitemap/calendar surfaces, and the most recent
+published posts. Continue that site's established pattern instead of treating the
+properties as interchangeable content feeds.
 
-### THE RULE
-An "orphan" page is a published HTML file that exists on the live site but is not
-reachable from any homepage card, archive, sport index, calendar, hub, pagination
-system, or sitemap entry.
+### DAILY CADENCE
+- Default cadence is one post per day per site.
+- BetLegendPicks is the only standing exception and may receive two posts per day.
+- BestMLBHandicapper must never receive multiple same-day homepage/archive posts
+  or duplicate/redundant slate articles unless Nima explicitly overrides the rule
+  for that specific date.
+- Duplicate slate articles on the same site are not allowed unless explicitly
+  requested.
 
-When orphan pages are discovered, the ONLY allowed remediation is to ADD INBOUND
-INTERNAL LINKS from the correct live structure so the page becomes reachable.
+### SITE IDENTITY CHECKS
+- BestMLBHandicapper: one focused Best MLB Handicapper style pick per day; no
+  same-day flooding and no redundant daily-card duplicates.
+- BetLegendPicks: Google Sheet pick posts go in Latest Blog Picks/feed only;
+  Featured Game of the Day belongs only under Game of the Day -> Featured Game;
+  game preview articles belong under Game Previews & Records and sport preview
+  pages, not the pick-card feed.
+- MLBPrediction: keep the MLB prediction/analytics identity, one post per day
+  unless overridden, and do not duplicate the same slate topic already covered
+  elsewhere on that site.
+- DailyMLBPicks: keep the AI model showdown/daily picks identity, one post per day
+  unless overridden, and do not turn it into a duplicate of the other MLB sites.
+- SportsBettingPrime and other active sites: preserve the historical site identity
+  and one-post-per-day cadence unless explicitly overridden.
 
-### EXPLICITLY FORBIDDEN WITHOUT PRIOR USER APPROVAL
-- Deleting the orphan HTML file from the repo or FTP
-- Adding `<meta name="robots" content="noindex">` to the orphan
-- Adding a 410 Gone or 404 response for the orphan
-- Removing the orphan from `sitemap.xml`
-- Adding the orphan to `robots.txt` Disallow rules
-- Collapsing the orphan via `<link rel="canonical">` to another URL
-- "Quarantining", "consolidating", "scrubbing ghost files", or any equivalent
-  bulk cleanup that removes or hides the orphan from search
-- Editing internal links to remove references to the orphan
-- Reducing the orphan from the homepage feed or any rotation
+### ROUTING RULES
+- Homepage/latest pick grids must contain actual picks only.
+- Featured Game of the Day articles must not appear as normal pick/blog cards.
+- Game preview articles must route through the proper sport preview/dropdown pages
+  and archive/sitemap surfaces.
+- Every published article must be linked through the correct homepage, latest,
+  archive, category/dropdown, sitemap, or calendar surface so nothing is orphaned.
 
-### REQUIRED REMEDIATION
-- FTP sites (mlbprediction, bestmlb, mlbpicks, mlbprops, sbp): add a homepage card
-  to the local `index.html` matching the existing card pattern, then
-  `python C:/Users/Nima/publish.py <site>/index.html <site_key>`
-- betlegendpicks: add an entry to `homepage-picks-data.js` using the existing
-  object schema, commit only that file, push to `origin/main`
-- Verify against the live URL with `curl -sL <homepage>` and grep the slug
+### REQUIRED PRE-PUBLISH AUDIT
+For each target site, record:
+- Posts already published today.
+- Whether each post belongs on that site and surface.
+- Whether the daily cap would be violated.
+- Whether the topic duplicates an existing same-day article.
+- Whether the target URL is reachable from the correct homepage/latest/archive/
+  category/sitemap/calendar surface.
 
-### WHY THIS RULE EXISTS (May 15, 2026)
-While linking 21 orphan pick pages on betlegendpicks.com, a concurrent automated
-agent staged a `db9ece9559 SEO: Permanent quarantine of 319 versioned ghost files`
-commit on top of the orphan-linking commit. Pushing that bundle would have
-deleted 319 indexable HTML content pages from the live site under cover of the
-approved orphan-linking work. The orphan-linking commit was pushed alone
-(`028e41ffb`); the quarantine commit was left local and not pushed. This rule
-documents that orphan discovery is NEVER a license for bulk deletion or
-deindexing, regardless of how the cleanup is framed ("ghost files",
-"versioned duplicates", "SEO consolidation", "quarantine guards").
+### ROUTING AUDIT CHECKLIST
+Complete this checklist before creating or publishing any page:
+- Identify the content type first: Google Sheet pick, Featured Game of the Day,
+  sport preview/slate article, guide/news article, archive/calendar page, or
+  records/data page.
+- Count today's posts on the target site before adding another. BetLegendPicks
+  may have two posts per day; every other active site defaults to one post per
+  day unless Nima explicitly overrides that specific date.
+- If it is a Google Sheet pick, it may appear in Latest Blog Picks,
+  `homepage-picks-data.js`, `blog.html`, archive, sitemap/feed, and the relevant
+  pick/static crawl surfaces.
+- If it is Featured Game of the Day, it must route through Game of the Day,
+  Featured Game calendar/archive surfaces, static discovery, and sitemap/archive
+  coverage. It must not be added to `homepage-picks-data.js`, Latest Blog Picks,
+  or normal pick/blog card grids.
+- Every daily slate must include one selected Featured Game of the Day. After
+  selecting it, update the homepage Featured Game of the Day widget with the
+  verified matchup, date, teams, starting pitchers/probable starters when
+  applicable, game time, venue, team records, relevant stats, and featured-game
+  betting context or preview summary. All widget facts must be checked against
+  reliable current sources before publishing.
+- The homepage Featured Game of the Day widget must link to or accurately
+  represent the proper Featured Game page. It is not a generic blog text card
+  and must not be inserted into `homepage-picks-data.js`.
+- If it is a sport preview/slate article, it must route through Game Previews &
+  Records, the matching sport preview hub/calendar/archive, static discovery,
+  and preview sitemap/archive coverage. It must not be added to
+  `homepage-picks-data.js` or normal pick-card feeds.
+- If a page is removed from a homepage/latest feed, confirm it remains linked
+  from archive, category, calendar, sitemap, or static crawl surfaces before
+  publishing.
+- Run `python scripts/validate_homepage_pick_image_uniqueness.py` before any
+  BetLegend homepage feed change. A failure blocks publishing.
 
-Page-removal actions require an explicit, per-page user approval. There is no
-batch approval, no implicit approval from a related task, and no exception
-for files that "look like" duplicates.
+Do not publish if the audit shows a cadence violation, wrong section, duplicate
+topic, or orphan risk. Fix routing first, without deleting valid content,
+rewriting user-written content, modifying canonical tags, breaking archives,
+homepages, sitemaps, calendars, or dropdown navigation.
 
 ### RELATED LOCKED RULES
 - BetLegendPicks SEO stability hold (memory `feedback_betlegendpicks_no_ai_seo_tuning.md`)
@@ -350,6 +387,11 @@ contains any unverified claim.
    - Same-day posts must all remain reachable; do not remove the calendar
      chooser behavior for dates with multiple posts.
    - Missing dates are a release-blocking bug.
+   - Current-day unpublished slate pages are not historical failures. Do not
+     fabricate, backdate, or placeholder same-day pages just to satisfy a
+     validator. The historical completeness gate starts with past dates; once a
+     current-day slate is published, it must pass the same link, archive, and
+     calendar checks as any other page.
 
 ### REQUIRED CHECKS BEFORE CALLING SPORTS WORK COMPLETE
 
@@ -359,21 +401,31 @@ python scripts/validate_slate_completeness.py --range 3
 Get-ChildItem scripts\*-calendar.js | ForEach-Object { node --check $_.FullName }
 ```
 
+### MLB PREVIEW/ARCHIVE CALENDAR AND WRITING STANDARD
+
+For MLB preview and archive pages, always verify that the calendar keeps the
+current real date, article/page date, active selected date, and linked preview
+dates as separate states. No valid date in the visible month may disappear.
+Linked dates must open the correct preview/page, and the active article date
+must not be presented as "today" unless it actually is today.
+
+MLB previews must match the deeper historical Claude style: matchup context,
+starting pitcher analysis, bullpen context where relevant, offensive form,
+handedness splits where relevant, park/weather context where relevant, and a
+market/betting angle. Use only verified source data. Do not invent stats,
+trends, injuries, weather, splits, lines, or claims.
+
+Before any MLB preview/archive work is marked complete, inspect the live public
+URL in a real browser and confirm the full calendar month, today's date,
+article date, linked dates, and at least one representative preview's writing
+quality are correct.
+
 Before publishing or reporting complete, manually inspect the edited pages for
 logos/badges, correct format, correct sport calendar, full date metadata, and
 absence of unverified stats, records, injuries, lines, trends, or filler.
 Game preview cards must have team logos/crests/badges or polished matchup
 visual identity, verified game-specific previews, and internal/homepage link
 checks when the page is linked from navigation or feeds.
-
-Never create or publish a standalone orphan page. Page creation and internal
-linking are one task. A page is not complete until it is reachable from the
-correct live structure, such as homepage/latest card, blog/news/picks archive,
-sport-specific index, calendar/date archive, hub page, pagination/card rotation
-system, and sitemap where applicable. Before any article, pick, preview, blog
-post, or standalone HTML page is marked complete, confirm it has at least one
-valid inbound internal link from the correct live structure. If it does not, the
-task fails and cannot be called complete.
 
 Before any BetLegend article/page is marked complete, visually verify the live
 public URL in a real browser. The screenshot must show the public
@@ -434,8 +486,11 @@ limited verified context, or ask for the source.
 5. HOMEPAGE CARD ROTATION
    - New pick entry goes to TOP of HOMEPAGE_PICKS array
      in homepage-picks-data.js
-   - Top 3 entries = large featured cards
-   - Entries 4+ = compact grid with pagination
+   - Homepage/latest blog pick cards are for Google Sheet betting picks only
+   - Featured Game of the Day articles must never be inserted into this feed
+   - Sports/game preview articles must never be inserted into this feed
+   - Top visible entries = large featured cards
+   - Older pick entries continue in the compact grid with pagination
    - Older picks shift down automatically
 
 6. ELITE JOURNALISM STANDARD
@@ -461,6 +516,21 @@ limited verified context, or ask for the source.
 6. PUBLISH via publish.py or git push
 7. VERIFY the card appears on the homepage
 ```
+
+### PERMANENT ROUTING RULE FOR NON-PICK ARTICLES:
+
+- Featured Game of the Day articles route only under `Game of the Day` ->
+  `Featured Game` plus the featured game data/calendar surfaces.
+- Sports/game preview articles route only under `Game Previews & Records`, the
+  matching sport preview hub, sport calendar/archive, blog/latest feed,
+  sitemap/feed, and static crawl links.
+- Non-pick articles must never be inserted into `homepage-picks-data.js` or the
+  homepage Latest Blog Picks fallback card grid.
+- After publishing, verify all content is linked through the correct navigation
+  surface and no valid article is orphaned.
+- After every slate run, verify the live BetLegendPicks homepage Featured Game
+  of the Day widget is current and visually correct before calling the workflow
+  complete.
 
 ### WHY THIS EXISTS (March 16, 2026):
 The old system posted picks to a monolithic archive page (blog-pageXX.html).
