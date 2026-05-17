@@ -74,6 +74,18 @@
  background: rgba(0, 224, 255, 0.2); transform: translateY(-2px);
  box-shadow: 0 5px 15px rgba(0, 224, 255, 0.3);
  }
+ .calendar-day.is-linked {
+ border-color: var(--primary-glow);
+ }
+ .calendar-day.is-disabled {
+ opacity: .82;
+ }
+ .calendar-day.is-past:not(.today) {
+ color: #9aa3af;
+ }
+ .calendar-day.is-future:not(.today) {
+ color: #c7ced8;
+ }
  .calendar-day.today {
  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
  border: 2px solid var(--warning-color); color: var(--warning-color); font-weight: 900;
@@ -230,7 +242,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 
 <div class="container">
  <div class="header">
- <h1 class="title">NBA Archive</h1>
+ <h1 class="title">MLB Archive</h1>
  <p class="subtitle">Browse past picks and analysis by date</p>
  </div>
  <div class="stats-bar" id="stats-bar">Loading...</div>
@@ -252,8 +264,19 @@ DATA.forEach(game => {
  gamesMap[game.date].push(game);
 });
 
-const today = new Date();
-const todayStr = today.toISOString().split('T')[0];
+function getLocalDateString(date) {
+ const parts = new Intl.DateTimeFormat('en-US', {
+ timeZone: 'America/Los_Angeles',
+ year: 'numeric',
+ month: '2-digit',
+ day: '2-digit'
+ }).formatToParts(date).reduce((acc, part) => {
+ acc[part.type] = part.value;
+ return acc;
+ }, {});
+ return parts.year + '-' + parts.month + '-' + parts.day;
+}
+const todayStr = getLocalDateString(new Date());
 const sortedGames = [...DATA].sort((a, b) => b.date.localeCompare(a.date));
 const latestGame = sortedGames[0];
 
@@ -323,15 +346,22 @@ sortedMonths.forEach((monthKey, idx) => {
 
  const games = gamesMap[dateStr] || [];
  if (games.length) {
- dayDiv.className += ' available';
+ dayDiv.className += ' available is-linked';
  dayDiv.onclick = function() { window.location.href = games[0].page; };
  const tooltip = document.createElement('span');
  tooltip.className = 'game-tooltip';
  tooltip.textContent = games.map(g => g.title).join(' | ');
  dayDiv.appendChild(tooltip);
+ } else {
+ dayDiv.className += ' is-disabled';
  }
 
  if (dateStr === todayStr) dayDiv.className += ' today';
+ if (dateStr < todayStr) dayDiv.className += ' is-past';
+ if (dateStr > todayStr) dayDiv.className += ' is-future';
+ dayDiv.dataset.date = dateStr;
+ dayDiv.dataset.currentDate = todayStr;
+ if (games.length) dayDiv.dataset.linked = 'true';
 
  const dayNum = document.createElement('span');
  dayNum.textContent = day;

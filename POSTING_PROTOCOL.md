@@ -154,6 +154,25 @@ python scripts/validate_slate_completeness.py --range 3
 Get-ChildItem scripts\*-calendar.js | ForEach-Object { node --check $_.FullName }
 ```
 
+### MLB PREVIEW/ARCHIVE CALENDAR AND WRITING STANDARD
+
+For MLB preview and archive pages, always verify that the calendar keeps the
+current real date, article/page date, active selected date, and linked preview
+dates as separate states. No valid date in the visible month may disappear.
+Linked dates must open the correct preview/page, and the active article date
+must not be presented as "today" unless it actually is today.
+
+MLB previews must match the deeper historical Claude style: matchup context,
+starting pitcher analysis, bullpen context where relevant, offensive form,
+handedness splits where relevant, park/weather context where relevant, and a
+market/betting angle. Use only verified source data. Do not invent stats,
+trends, injuries, weather, splits, lines, or claims.
+
+Before any MLB preview/archive work is marked complete, inspect the live public
+URL in a real browser and confirm the full calendar month, today's date,
+article date, linked dates, and at least one representative preview's writing
+quality are correct.
+
 Before publishing or reporting complete, manually inspect the edited pages for
 logos/badges, correct format, correct sport calendar, full date metadata, and
 absence of unverified stats, records, injuries, lines, trends, or filler.
