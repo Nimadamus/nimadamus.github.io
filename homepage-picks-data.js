@@ -38,7 +38,6 @@ var HOMEPAGE_PICKS = [
         url: "rangers-team-total-under-4-5-eovaldi-lambert-daikin-park-may-17-2026.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/543135/action/hero/current"
     },
-var HOMEPAGE_PICKS = [
 
     {
         sport: "NHL",
