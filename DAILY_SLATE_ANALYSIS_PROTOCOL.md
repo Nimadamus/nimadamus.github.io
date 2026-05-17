@@ -554,6 +554,10 @@ The Daily Slate Analysis Protocol is now **fully operational** and producing **h
 
 Daily slate publishing must update the current sport hub, homepage latest modules, blog/latest feed, static crawl links, archive calendar dates, and sitemap/feed references where applicable. If a sport has no current slate, label the page as an archive or off-day state; never leave an old page presented as "today."
 
+Route each page type before publishing. Google Sheet pick posts may appear in Latest Blog Picks/feed surfaces. Featured Game of the Day pages must stay under Game of the Day / Featured Game surfaces. Sport preview and slate articles must stay under Game Previews & Records and the correct sport preview pages, not in the Latest Blog Picks pick-card feed. BetLegendPicks is the only standing two-post-per-day site; other active sites default to one post per day unless Nima explicitly overrides that date.
+
+Before editing, complete the routing audit: identify the content type, count today's posts on the target site, choose the allowed surfaces, identify the forbidden surfaces, and confirm the URL will not be orphaned. For BetLegend homepage feed changes, run `python scripts/validate_homepage_pick_image_uniqueness.py`; a failure blocks publishing.
+
 Before reporting completion, inspect the live public URL visually, verify homepage/internal links point to the new page, verify calendar dates are visible and unobstructed on desktop and mobile, and verify the verified records page still renders its betting history table. Local build success and deployment success are not enough.
 
 Do not change canonical tags, overwrite user-written content, restore older files, or remove historical archive entries unless specifically instructed.

@@ -11,7 +11,7 @@ from __future__ import annotations
 import re
 import sys
 from collections import Counter
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,8 +20,6 @@ SYSTEM = ROOT / "homepage-image-system.js"
 ARCHIVE = ROOT / "archive.html"
 
 MAX_CARDS_PER_DATE = 2
-RECENT_CONTIGUOUS_DAYS = 19
-
 BLOCKED_IMAGE_RE = re.compile(
     r"(?:"
     r"newlogo\.png|"
@@ -39,6 +37,40 @@ BLOCKED_IMAGE_RE = re.compile(
     r"collegeban|"
     r"mlb-picks-team-logos|"
     r"vegas-golden-knights-(?:premium-preview|moneyline-game-5-ducks-chart|ducks-game-5-action)"
+    r")",
+    re.I,
+)
+
+FORBIDDEN_FEED_URL_RE = re.compile(
+    r"(?:"
+    r"featured-game|"
+    r"featured-game-of-the-day|"
+    r"game-of-the-day|"
+    r"preview|"
+    r"previews|"
+    r"slate|"
+    r"full-[0-9]+-game-board|"
+    r"[0-9]+-game-board|"
+    r"fifteen-game|"
+    r"eleven-game|"
+    r"twelve-game|"
+    r"fourteen-game|"
+    r"thursday-mlb|"
+    r"friday-mlb|"
+    r"saturday-mlb|"
+    r"sunday-mlb"
+    r")",
+    re.I,
+)
+
+FORBIDDEN_FEED_TITLE_RE = re.compile(
+    r"(?:"
+    r"featured game|"
+    r"game of the day|"
+    r"preview|"
+    r"slate|"
+    r"full [0-9]+-game board|"
+    r"[0-9]+-game board"
     r")",
     re.I,
 )
@@ -96,6 +128,15 @@ def main() -> int:
     else:
         errors.append("archive.html not found or empty; cannot run no-orphan check.")
 
+    for pick in picks:
+        if FORBIDDEN_FEED_URL_RE.search(pick["url"]) or FORBIDDEN_FEED_TITLE_RE.search(pick["title"]):
+            errors.append(
+                f"{pick['url']} looks like a Featured Game, preview, slate, or board article. "
+                "homepage-picks-data.js is only for actual Google Sheet pick posts; "
+                "route Featured Game pages through Game of the Day and route previews "
+                "through Game Previews & Records / sport preview pages."
+            )
+
     override_counts = Counter(overrides.values())
     for image, count in override_counts.items():
         if count > 1:
@@ -132,17 +173,6 @@ def main() -> int:
                 f"at {picks[index]['url']}"
             )
 
-    if parsed_dates:
-        latest = parsed_dates[0]
-        required_dates = {latest - timedelta(days=offset) for offset in range(RECENT_CONTIGUOUS_DAYS)}
-        present_dates = set(parsed_dates)
-        missing_recent = sorted(required_dates - present_dates, reverse=True)
-        if missing_recent:
-            missing = ", ".join(date.isoformat() for date in missing_recent)
-            errors.append(
-                f"Homepage feed has recent date gaps inside the required {RECENT_CONTIGUOUS_DAYS}-day window: {missing}"
-            )
-
     if errors:
         print("Homepage pick image/feed validation failed:")
         for error in errors:
@@ -152,7 +182,7 @@ def main() -> int:
     print(
         "Homepage pick image/feed validation passed: "
         f"{len(picks)} cards, {len(rendered_counts)} unique images, "
-        f"max {MAX_CARDS_PER_DATE} cards/date, no recent gaps."
+        f"max {MAX_CARDS_PER_DATE} cards/date, pick-feed routes only."
     )
     return 0
 

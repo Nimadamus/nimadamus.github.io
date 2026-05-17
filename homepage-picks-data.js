@@ -68,13 +68,6 @@ var HOMEPAGE_PICKS = [
     },
     {
         sport: "MLB",
-        title: "MLB Sunday Preview: Full 15-Game Board for May 10, 2026",
-        date: "May 10, 2026",
-        url: "sunday-fifteen-game-mlb-preview-may-10-2026.html",
-        image: "images/mlb-shohei-ohtani-dodgers-world-series-game4-oct-28-2025.webp"
-    },
-    {
-        sport: "MLB",
         title: "White Sox vs Mariners Under 8 at Rate Field, Gilbert vs Martin Pitching Edge",
         date: "May 10, 2026",
         url: "white-sox-mariners-under-8-gilbert-martin-rate-field-mlb-pick.html",
@@ -95,25 +88,11 @@ var HOMEPAGE_PICKS = [
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/675911/action/hero/current"
     },
     {
-        sport: "MLB",
-        title: "Friday Fifteen-Game Slate Headlined By Sale vs Sheehan",
-        date: "May 8, 2026",
-        url: "sale-fried-friday-fifteen-game-slate-mlb-may-8-2026.html",
-        image: "images/mlb-garrett-crochet-fenway-park-sept-02-2025.webp"
-    },
-    {
         sport: "NHL",
         title: "Ducks vs Golden Knights Game 3 Under 6.5 at Honda Center",
         date: "May 8, 2026",
         url: "ducks-golden-knights-game-3-under-6-5-honda-center-stanley-cup-playoffs-nhl-pick.html",
         image: "images/ducks-golden-knights-game-3-under-6-5-honda-center-stanley-cup-playoffs-nhl-pick.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Gore vs Blackburn Headlines Thursday's MLB Board",
-        date: "May 7, 2026",
-        url: "gore-blackburn-yankees-rangers-thursday-mlb-may-7-2026.html",
-        image: "images/mlb-great-american-ballpark-yankees-reds.webp"
     },
     {
         sport: "NHL",
@@ -138,24 +117,10 @@ var HOMEPAGE_PICKS = [
     },
     {
         sport: "MLB",
-        title: "DeGrom, Alcantara and Gausman Anchor Tuesday MLB",
-        date: "May 5, 2026",
-        url: "ohtani-degrom-bibee-burns-fifteen-game-tuesday-mlb.html",
-        image: "images/degrom.webp"
-    },
-    {
-        sport: "MLB",
         title: "Giants ML -126 vs Padres at Oracle Park, Webb vs Buehler Home Edge",
         date: "May 5, 2026",
         url: "giants-moneyline-minus-126-padres-webb-buehler-oracle-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657277/action/hero/current"
-    },
-    {
-        sport: "MLB",
-        title: "Yamamoto and Gordon Lead Monday's Twelve-Game MLB Board",
-        date: "May 4, 2026",
-        url: "yamamoto-gordon-twelve-game-monday-mlb.html",
-        image: "images/mlb-yoshinobu-yamamoto-world-series-game6-dodgers-elimination-oct-30-2025.webp"
     },
     {
         sport: "MLB",
@@ -166,24 +131,10 @@ var HOMEPAGE_PICKS = [
     },
     {
         sport: "MLB",
-        title: "Wrobleski, Yesavage and Leiter Headline Sunday's MLB Slate",
-        date: "May 3, 2026",
-        url: "wrobleski-yesavage-leiter-fifteen-game-sunday-mlb.html",
-        image: "images/mlb-dodgers-pirates-pnc-park-sept-04-2025.webp"
-    },
-    {
-        sport: "MLB",
         title: "Cubs ML -156 vs Diamondbacks at Wrigley, Boyd vs Kelly Rotation Edge",
         date: "May 3, 2026",
         url: "cubs-moneyline-minus-156-diamondbacks-wrigley-field-home-favorite-rotation-edge.html",
         image: "images/cubs-moneyline-minus-156-diamondbacks-wrigley-field-home-favorite-rotation-edge.jpg"
-    },
-    {
-        sport: "MLB",
-        title: "Sasaki, McLean and Painter Lead Saturday's MLB Card",
-        date: "May 2, 2026",
-        url: "sasaki-mclean-painter-fifteen-game-saturday-mlb.html",
-        image: "images/mlb-playoffs-pick-oct-01-2025.webp"
     },
     {
         sport: "NHL",
