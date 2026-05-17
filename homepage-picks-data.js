@@ -27,6 +27,48 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Phillies/Pirates F5 Under 4.5 (-210): Wheeler vs Skenes Run Prevention",
+        date: "May 17, 2026",
+        url: "phillies-pirates-first-five-under-4-5-wheeler-skenes-mlb-pick-may-17-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/554430/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Rangers Team Total Under 4.5 (-140): Lambert Keeps Texas In Check",
+        date: "May 17, 2026",
+        url: "rangers-team-total-under-4-5-astros-lambert-eovaldi-mlb-pick-may-17-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/663567/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Phillies Team Total Under 3.5 (-135): Skenes Sets The Ceiling",
+        date: "May 17, 2026",
+        url: "phillies-team-total-under-3-5-pirates-skenes-mlb-pick-may-17-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694973/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Rays Moneyline -151 vs Marlins: Rasmussen Backs Tampa Bay",
+        date: "May 17, 2026",
+        url: "rays-moneyline-minus-151-marlins-perez-rasmussen-mlb-pick-may-17-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656876/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Red Sox Team Total Under 3.5 (+100): Holmes Draws A Boston Lineup Test",
+        date: "May 17, 2026",
+        url: "red-sox-team-total-under-3-5-braves-holmes-bello-mlb-pick-may-17-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656550/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Cardinals Moneyline -110 vs Royals: Pallante And St. Louis At Busch",
+        date: "May 17, 2026",
+        url: "cardinals-moneyline-minus-110-royals-kolek-pallante-mlb-pick-may-17-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669467/action/hero/current"
+    },
+{
         sport: "NHL",
         title: "Ducks Team Total Under 3.5 vs Golden Knights: Game 6 Scoring Ceiling",
         date: "May 14, 2026",
