@@ -1,0 +1,93 @@
+# --------------------------------------------------------------------
+# BetLegendPicks.com – Core Configuration and Cleanup
+# --------------------------------------------------------------------
+
+# Use UTF-8 encoding for text
+AddDefaultCharset UTF-8
+
+# Enable compression
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+# Cache static assets
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:css|js|mjs|png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/avif "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/jpg "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType image/x-icon "access plus 30 days"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType text/javascript "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType font/woff2 "access plus 30 days"
+  ExpiresByType font/woff "access plus 30 days"
+</IfModule>
+
+# --------------------------------------------------------------------
+# Permanent cleanup and redirect fixes
+# --------------------------------------------------------------------
+
+# Tell Google these pages are intentionally gone forever
+Redirect 410 /email.html
+Redirect 410 /mlb-sunday-analytics.html
+Redirect 410 /odds-live.html
+
+# Fix the old typo so it redirects properly
+Redirect 301 /betlegend-verified-records.htm https://www.betlegendpicks.com/betlegend-verified-records.html
+
+# Redirect old/moved pages to their new locations
+Redirect 301 /odds.html https://www.betlegendpicks.com/blog
+Redirect 301 /sitemap.html https://www.betlegendpicks.com/sitemap.xml
+Redirect 301 /matchups.html https://www.betlegendpicks.com/betlegend-verified-records.html
+Redirect 301 "/Best Online Sportsbook.html" https://www.betlegendpicks.com/bestonlinesportsbook.html
+
+# Fix Google Search Console 404 Errors (Added 2025-10-31)
+Redirect 301 /picks-archive.html https://www.betlegendpicks.com/blog.html
+Redirect 301 /how-to-bet-mlb-totals.html https://www.betlegendpicks.com/betting-101.html
+Redirect 301 /daily-mlb-breakdown-picks-july-26-2025.html https://www.betlegendpicks.com/mlb-previews.html
+Redirect 301 /track-record.html https://www.betlegendpicks.com/records.html
+Redirect 301 /daily-picks.html https://www.betlegendpicks.com/picks.html
+Redirect 301 /social.html https://www.betlegendpicks.com/index.html
+Redirect 301 /model.html https://www.betlegendpicks.com/howitworks.html
+
+# Consolidate legacy sport hubs into the preview hub system
+Redirect 301 /mlb.html https://www.betlegendpicks.com/mlb-previews.html
+Redirect 301 /nba.html https://www.betlegendpicks.com/nba-previews.html
+Redirect 301 /nhl.html https://www.betlegendpicks.com/nhl-previews.html
+Redirect 301 /soccer.html https://www.betlegendpicks.com/soccer-previews.html
+
+# --------------------------------------------------------------------
+# Optional: security and crawl hygiene
+# --------------------------------------------------------------------
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Content-Security-Policy-Report-Only "default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://static.getclicky.com https://*.googlesyndication.com https://*.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
+</IfModule>
+
+# Block access to hidden system files
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# Block directory listings
+Options -Indexes
+
+# --------------------------------------------------------------------
+# End of file
+# --------------------------------------------------------------------
