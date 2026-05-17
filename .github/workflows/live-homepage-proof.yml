@@ -16,12 +16,8 @@ jobs:
         run: |
           xvfb-run -a -s "-screen 0 1600x1200x24" bash -lc '
             openbox &
-            google-chrome --no-sandbox --disable-dev-shm-usage --no-first-run --user-data-dir=/tmp/chrome-proof --window-size=1500,1050 about:blank &
-            sleep 8
-            xdotool search --onlyvisible --class "google-chrome" windowactivate --sync key ctrl+l
-            xdotool type --delay 1 "https://www.betlegendpicks.com/?proof=homepage-pick-routing#picks-grid"
-            xdotool key Return
-            sleep 15
+            google-chrome --no-sandbox --disable-dev-shm-usage --disable-gpu --no-first-run --user-data-dir=/tmp/chrome-proof --window-size=1500,1050 "https://www.betlegendpicks.com/?proof=homepage-pick-routing#picks-grid" &
+            sleep 25
             scrot live-homepage-proof.png
           '
 
