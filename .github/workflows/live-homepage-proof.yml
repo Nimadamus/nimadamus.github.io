@@ -10,13 +10,18 @@ jobs:
       - name: Install screenshot tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb scrot
+          sudo apt-get install -y xvfb scrot openbox xdotool
 
       - name: Capture live public homepage
         run: |
           xvfb-run -a -s "-screen 0 1600x1200x24" bash -lc '
-            google-chrome --no-sandbox --disable-dev-shm-usage --new-window --start-maximized "https://www.betlegendpicks.com/?proof=homepage-pick-routing#picks-grid" &
-            sleep 12
+            openbox &
+            google-chrome --no-sandbox --disable-dev-shm-usage --no-first-run --user-data-dir=/tmp/chrome-proof --window-size=1500,1050 about:blank &
+            sleep 8
+            xdotool search --onlyvisible --class "google-chrome" windowactivate --sync key ctrl+l
+            xdotool type --delay 1 "https://www.betlegendpicks.com/?proof=homepage-pick-routing#picks-grid"
+            xdotool key Return
+            sleep 15
             scrot live-homepage-proof.png
           '
 
