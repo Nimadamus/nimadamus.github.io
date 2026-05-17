@@ -556,6 +556,8 @@ Daily slate publishing must update the current sport hub, blog/latest feed, stat
 
 Do not add daily slate previews, game preview articles, Featured Game of the Day articles, news, guides, or hub pages to the homepage Latest Blog Picks card feed. That feed is only for Google Sheet betting picks. Featured Game articles route through Game of the Day -> Featured Game. Sport/game preview articles route through Game Previews & Records and the relevant sport preview hub/calendar/archive.
 
+Before editing, complete the routing audit: identify the content type, count today's posts on the target site, choose the allowed surfaces, identify the forbidden surfaces, and confirm the URL will not be orphaned. For BetLegend homepage feed changes, run `python scripts/validate_homepage_pick_image_uniqueness.py`; a failure blocks publishing.
+
 Before reporting completion, inspect the live public URL visually, verify homepage/internal links point to the new page, verify calendar dates are visible and unobstructed on desktop and mobile, and verify the verified records page still renders its betting history table. Local build success and deployment success are not enough.
 
 Do not change canonical tags, overwrite user-written content, restore older files, or remove historical archive entries unless specifically instructed.
