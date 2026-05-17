@@ -1,0 +1,28 @@
+name: Live Homepage Browser Proof
+
+on:
+  workflow_dispatch:
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install screenshot tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb scrot
+
+      - name: Capture live public homepage
+        run: |
+          xvfb-run -a -s "-screen 0 1600x1200x24" bash -lc '
+            google-chrome --no-sandbox --disable-dev-shm-usage --new-window --start-maximized "https://www.betlegendpicks.com/?proof=homepage-pick-routing#picks-grid" &
+            sleep 12
+            scrot live-homepage-proof.png
+          '
+
+      - name: Upload proof screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-homepage-browser-proof
+          path: live-homepage-proof.png
+          retention-days: 30
