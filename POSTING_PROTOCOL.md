@@ -145,6 +145,11 @@ contains any unverified claim.
    - Same-day posts must all remain reachable; do not remove the calendar
      chooser behavior for dates with multiple posts.
    - Missing dates are a release-blocking bug.
+   - Current-day unpublished slate pages are not historical failures. Do not
+     fabricate, backdate, or placeholder same-day pages just to satisfy a
+     validator. The historical completeness gate starts with past dates; once a
+     current-day slate is published, it must pass the same link, archive, and
+     calendar checks as any other page.
 
 ### REQUIRED CHECKS BEFORE CALLING SPORTS WORK COMPLETE
 

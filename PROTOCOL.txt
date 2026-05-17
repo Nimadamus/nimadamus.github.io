@@ -152,6 +152,10 @@ STEP 7 - ADD CALENDAR AND ARCHIVE METADATA
 5. Calendars track post date, not game date.
 6. Same-day posts must all remain reachable through the multi-post chooser.
 7. Missing dates are a release-blocking bug.
+8. Current-day unpublished slate pages are not historical completeness failures.
+   Do not create placeholders, fake pages, or backdated content just to satisfy
+   validation. The validator should skip the current date until a legitimate
+   page is published; once published, it must be linked and archived normally.
 
 STEP 8 - UPDATE FEEDS AND RELATED DATA
 --------------------------------------
@@ -183,6 +187,11 @@ Calendar validation must prove that every valid day of each visible month
 renders in the correct weekday position. Days without content may be muted or
 disabled, but they must still appear. Days with content must be clickable or
 open the same-day post chooser.
+
+The slate completeness validator should flag past dates that should already be
+published, existing pages that are orphaned, linked pages returning non-200, and
+archives/calendars missing past-date anchors. It should not flag the current
+date solely because same-day coverage has not been created yet.
 
 For homepage pick feed work:
 python scripts/validate_homepage_pick_image_uniqueness.py

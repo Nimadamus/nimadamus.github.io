@@ -337,6 +337,7 @@ def check_date(date, all_files):
 def main():
     # Parse args
     dates_to_check = []
+    today_date = datetime.now().date()
     if len(sys.argv) > 1:
         if sys.argv[1] == '--range':
             days = int(sys.argv[2]) if len(sys.argv) > 2 else 3
@@ -380,6 +381,11 @@ def main():
         date_str = date.strftime('%A, %B %d, %Y')
         print(f"\n  Date: {date_str}")
         print(f"  {'-' * 55}")
+
+        if date.date() == today_date:
+            print("  [SKIP] Current-day slate pages may not be published yet.")
+            print("  Historical completeness checks start with past dates only.")
+            continue
 
         missing, found, calendar_missing = check_date(date, all_files)
 
