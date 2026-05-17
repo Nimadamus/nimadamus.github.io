@@ -18,6 +18,8 @@ jobs:
             openbox &
             google-chrome --no-sandbox --disable-dev-shm-usage --disable-gpu --no-first-run --user-data-dir=/tmp/chrome-proof --window-size=1500,1050 "https://www.betlegendpicks.com/?proof=homepage-pick-routing#picks-grid" &
             sleep 25
+            xdotool search --onlyvisible --class "google-chrome" windowactivate --sync key ctrl+l
+            sleep 1
             scrot live-homepage-proof.png
           '
 
