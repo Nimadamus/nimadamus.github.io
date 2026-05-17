@@ -2,8 +2,8 @@
 """Validate homepage pick-card image quality and feed sequencing.
 
 This is intentionally strict. The homepage should never ship duplicate card
-images, placeholder/text thumbnails, overstacked same-day cards, or non-pick
-articles in the pick feed.
+images, placeholder/text thumbnails, overstacked same-day cards, or obvious
+recent-date gaps again.
 """
 
 from __future__ import annotations
@@ -17,9 +17,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PICKS = ROOT / "homepage-picks-data.js"
 SYSTEM = ROOT / "homepage-image-system.js"
+ARCHIVE = ROOT / "archive.html"
 
 MAX_CARDS_PER_DATE = 2
-
 BLOCKED_IMAGE_RE = re.compile(
     r"(?:"
     r"newlogo\.png|"
@@ -41,9 +41,37 @@ BLOCKED_IMAGE_RE = re.compile(
     re.I,
 )
 
-NON_PICK_ARTICLE_RE = re.compile(
-    r"(?:featured-game|featured game|game of the day|preview|slate|"
-    r"\bboard\b|headlined|headline|anchor|closeout)",
+FORBIDDEN_FEED_URL_RE = re.compile(
+    r"(?:"
+    r"featured-game|"
+    r"featured-game-of-the-day|"
+    r"game-of-the-day|"
+    r"preview|"
+    r"previews|"
+    r"slate|"
+    r"full-[0-9]+-game-board|"
+    r"[0-9]+-game-board|"
+    r"fifteen-game|"
+    r"eleven-game|"
+    r"twelve-game|"
+    r"fourteen-game|"
+    r"thursday-mlb|"
+    r"friday-mlb|"
+    r"saturday-mlb|"
+    r"sunday-mlb"
+    r")",
+    re.I,
+)
+
+FORBIDDEN_FEED_TITLE_RE = re.compile(
+    r"(?:"
+    r"featured game|"
+    r"game of the day|"
+    r"preview|"
+    r"slate|"
+    r"full [0-9]+-game board|"
+    r"[0-9]+-game board"
+    r")",
     re.I,
 )
 
@@ -74,12 +102,40 @@ def parse_date(value: str):
     return datetime.strptime(value, "%B %d, %Y").date()
 
 
+def parse_archive_urls() -> set[str]:
+    if not ARCHIVE.exists():
+        return set()
+    text = ARCHIVE.read_text(encoding="utf-8")
+    return set(re.findall(r'<li>\s*<a\s+href="([^"]+\.html)"', text))
+
+
 def main() -> int:
     errors: list[str] = []
     picks = parse_picks()
     overrides = parse_overrides()
     if not picks:
         errors.append("homepage-picks-data.js has no pick cards.")
+
+    archive_urls = parse_archive_urls()
+    if archive_urls:
+        for pick in picks:
+            if pick["url"] not in archive_urls:
+                errors.append(
+                    f"Homepage pick {pick['url']} is missing from archive.html. "
+                    "Every homepage URL must also be linked in archive.html so the "
+                    "curated/capped homepage never orphans a published page."
+                )
+    else:
+        errors.append("archive.html not found or empty; cannot run no-orphan check.")
+
+    for pick in picks:
+        if FORBIDDEN_FEED_URL_RE.search(pick["url"]) or FORBIDDEN_FEED_TITLE_RE.search(pick["title"]):
+            errors.append(
+                f"{pick['url']} looks like a Featured Game, preview, slate, or board article. "
+                "homepage-picks-data.js is only for actual Google Sheet pick posts; "
+                "route Featured Game pages through Game of the Day and route previews "
+                "through Game Previews & Records / sport preview pages."
+            )
 
     override_counts = Counter(overrides.values())
     for image, count in override_counts.items():
@@ -90,10 +146,6 @@ def main() -> int:
     for pick in picks:
         image = overrides.get(pick["url"], pick["image"])
         rendered.append((pick["url"], pick["title"], image))
-        if NON_PICK_ARTICLE_RE.search(pick["url"]) or NON_PICK_ARTICLE_RE.search(pick["title"]):
-            errors.append(
-                f"{pick['url']} looks like a non-pick article and must not be in homepage-picks-data.js"
-            )
         if not image or BLOCKED_IMAGE_RE.search(image):
             errors.append(
                 f"{pick['url']} uses blocked, placeholder, logo, text-card, or non-action image: {image}"
@@ -130,7 +182,7 @@ def main() -> int:
     print(
         "Homepage pick image/feed validation passed: "
         f"{len(picks)} cards, {len(rendered_counts)} unique images, "
-        f"max {MAX_CARDS_PER_DATE} cards/date, pick-only feed."
+        f"max {MAX_CARDS_PER_DATE} cards/date, pick-feed routes only."
     )
     return 0
 
