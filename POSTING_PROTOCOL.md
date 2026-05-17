@@ -71,6 +71,15 @@ Complete this checklist before creating or publishing any page:
   Featured Game calendar/archive surfaces, static discovery, and sitemap/archive
   coverage. It must not be added to `homepage-picks-data.js`, Latest Blog Picks,
   or normal pick/blog card grids.
+- Every daily slate must include one selected Featured Game of the Day. After
+  selecting it, update the homepage Featured Game of the Day widget with the
+  verified matchup, date, teams, starting pitchers/probable starters when
+  applicable, game time, venue, team records, relevant stats, and featured-game
+  betting context or preview summary. All widget facts must be checked against
+  reliable current sources before publishing.
+- The homepage Featured Game of the Day widget must link to or accurately
+  represent the proper Featured Game page. It is not a generic blog text card
+  and must not be inserted into `homepage-picks-data.js`.
 - If it is a sport preview/slate article, it must route through Game Previews &
   Records, the matching sport preview hub/calendar/archive, static discovery,
   and preview sitemap/archive coverage. It must not be added to
@@ -286,6 +295,9 @@ limited verified context, or ask for the source.
   homepage Latest Blog Picks fallback card grid.
 - After publishing, verify all content is linked through the correct navigation
   surface and no valid article is orphaned.
+- After every slate run, verify the live BetLegendPicks homepage Featured Game
+  of the Day widget is current and visually correct before calling the workflow
+  complete.
 
 ### WHY THIS EXISTS (March 16, 2026):
 The old system posted picks to a monolithic archive page (blog-pageXX.html).
