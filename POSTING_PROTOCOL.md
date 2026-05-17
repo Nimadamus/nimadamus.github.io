@@ -56,6 +56,31 @@ For each target site, record:
 - Whether the target URL is reachable from the correct homepage/latest/archive/
   category/sitemap/calendar surface.
 
+### ROUTING AUDIT CHECKLIST
+Complete this checklist before creating or publishing any page:
+- Identify the content type first: Google Sheet pick, Featured Game of the Day,
+  sport preview/slate article, guide/news article, archive/calendar page, or
+  records/data page.
+- Count today's posts on the target site before adding another. BetLegendPicks
+  may have two posts per day; every other active site defaults to one post per
+  day unless Nima explicitly overrides that specific date.
+- If it is a Google Sheet pick, it may appear in Latest Blog Picks,
+  `homepage-picks-data.js`, `blog.html`, archive, sitemap/feed, and the relevant
+  pick/static crawl surfaces.
+- If it is Featured Game of the Day, it must route through Game of the Day,
+  Featured Game calendar/archive surfaces, static discovery, and sitemap/archive
+  coverage. It must not be added to `homepage-picks-data.js`, Latest Blog Picks,
+  or normal pick/blog card grids.
+- If it is a sport preview/slate article, it must route through Game Previews &
+  Records, the matching sport preview hub/calendar/archive, static discovery,
+  and preview sitemap/archive coverage. It must not be added to
+  `homepage-picks-data.js` or normal pick-card feeds.
+- If a page is removed from a homepage/latest feed, confirm it remains linked
+  from archive, category, calendar, sitemap, or static crawl surfaces before
+  publishing.
+- Run `python scripts/validate_homepage_pick_image_uniqueness.py` before any
+  BetLegend homepage feed change. A failure blocks publishing.
+
 Do not publish if the audit shows a cadence violation, wrong section, duplicate
 topic, or orphan risk. Fix routing first, without deleting valid content,
 rewriting user-written content, modifying canonical tags, breaking archives,
