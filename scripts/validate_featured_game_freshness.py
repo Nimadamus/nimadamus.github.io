@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import importlib.util
 import re
 import sys
 from pathlib import Path
@@ -17,6 +18,7 @@ ENTRY_RE = re.compile(
     r"""\{\s*date:\s*["'](?P<date>\d{4}-\d{2}-\d{2})["']\s*,\s*page:\s*["'](?P<page>[^"']+)["']\s*,\s*title:\s*["'](?P<title>[^"']+)["']\s*\}"""
 )
 H1_RE = re.compile(r"""<h1[^>]*class=["'][^"']*\bmain-title\b[^"']*["'][^>]*>(?P<title>.*?)</h1>""", re.IGNORECASE | re.DOTALL)
+ANY_H1_RE = re.compile(r"""<h1[^>]*>(?P<title>.*?)</h1>""", re.IGNORECASE | re.DOTALL)
 NEWS_HEADLINE_RE = re.compile(r'''"headline"\s*:\s*"(?P<title>(?:\\.|[^"\\])*)"''')
 ODDS_RE = re.compile(r"""(?:\b[A-Z]{2,4}\s*)?[+-]\d+(?:\.\d+)?\b|\b\d+(?:\.\d+)?-point\b""", re.IGNORECASE)
 TOTAL_RE = re.compile(r"""\b(?:total|over/under|o/u)\b|\b[OU]\s*\d{3}(?:\.\d+)?\b""", re.IGNORECASE)
@@ -59,6 +61,8 @@ def clean_html_text(value: str) -> str:
 
 def extract_main_title(content: str, page: str) -> str:
     match = H1_RE.search(content)
+    if not match:
+        match = ANY_H1_RE.search(content)
     if not match:
         raise SystemExit(f"Featured Game page is missing a main hero title: {page}")
     return clean_html_text(match.group("title"))
@@ -124,6 +128,24 @@ def check_featured_title_quality(entries: list[dict[str, str]], allow_missing_la
         raise SystemExit("Featured Game title quality check failed:\n- " + "\n- ".join(issues))
 
 
+def check_homepage_widget_sync() -> None:
+    sync_script = REPO / "scripts" / "sync_featured_game_preview.py"
+    if not sync_script.exists():
+        raise SystemExit("Missing homepage Featured Game sync script: scripts/sync_featured_game_preview.py")
+
+    spec = importlib.util.spec_from_file_location("sync_featured_game_preview", sync_script)
+    if not spec or not spec.loader:
+        raise SystemExit("Could not load scripts/sync_featured_game_preview.py for homepage widget verification")
+
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    if not module.verify_sync():
+        raise SystemExit(
+            "Homepage Featured Game widget is stale or mismatched. "
+            "Run python scripts/sync_featured_game_preview.py and publish index.html."
+        )
+
+
 def main() -> int:
     args = parse_args()
     today = dt.date.fromisoformat(args.today)
@@ -160,6 +182,7 @@ def main() -> int:
         raise SystemExit(f"Featured Game entrypoint is missing required current routing tokens: {', '.join(missing)}")
 
     check_featured_title_quality(entries, args.allow_missing_latest_page)
+    check_homepage_widget_sync()
 
     print(f"Featured Game freshness OK: {latest['date']} -> {latest['page']} ({age_days} days old)")
     return 0
