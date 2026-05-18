@@ -435,6 +435,10 @@ Before publishing, verify:
 - Run `python scripts/generate_discovery_artifacts.py` after updating
   `featured-games-data.js` so the Featured Game calendar static archive links
   include every prior entry, not only the latest batch.
+- Run `python scripts/sync_calendars.py` and
+  `python scripts/validate_calendar_continuity.py 45 --today YYYY-MM-DD` before
+  publish. Calendar dates must come from real dated pages or archive entries;
+  never patch a missing date only inside the generated JavaScript.
 - Run `python scripts/validate_featured_game_freshness.py --today YYYY-MM-DD
   --max-age-days 0` before publish. This check must pass the daily featured
   continuity guard, static archive link completeness, homepage widget sync, and
