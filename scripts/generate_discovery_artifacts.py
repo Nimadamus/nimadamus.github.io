@@ -23,7 +23,7 @@ REPO = Path(__file__).resolve().parents[1]
 BASE_URL = "https://www.betlegendpicks.com"
 SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
 RSS_LIMIT = 200
-STATIC_FEATURED_LINK_LIMIT = 80
+STATIC_FEATURED_LINK_LIMIT = None
 
 EXCLUDED_DIRS = {
     ".git",
@@ -354,7 +354,9 @@ def featured_game_entries() -> list[tuple[str, str, str]]:
 
 def update_featured_calendar_static_links() -> None:
     page = REPO / "featured-game-calendar.html"
-    entries = featured_game_entries()[:STATIC_FEATURED_LINK_LIMIT]
+    entries = featured_game_entries()
+    if STATIC_FEATURED_LINK_LIMIT is not None:
+        entries = entries[:STATIC_FEATURED_LINK_LIMIT]
     if not page.exists() or not entries:
         return
     links = [
