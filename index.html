@@ -409,7 +409,7 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
 
     <div class="compact-picks-container">
       <div class="section-head">
-        <div><h2>Latest Blog Picks</h2><p class="sub">Newest Google Sheet betting picks first, kept separate from Featured Game and preview articles.</p></div>
+        <div><h2>Latest Blog Picks</h2><p class="sub">Newest published posts first from the complete site manifest; sheet picks keep their verified card images and results.</p></div>
         <a class="btn secondary" href="blog.html">View Latest Picks</a>
       </div>
       <div class="section-topline">
@@ -417,7 +417,7 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
         <a class="section-inline-link" href="betlegend-verified-records.html">Audit verified records</a>
       </div>
       <div class="picks-grid" id="picks-grid">
-        <!-- Static fallback cards; JavaScript replaces these from sheet-only HOMEPAGE_PICKS when available. -->
+        <!-- Static fallback cards; JavaScript replaces these from site-posts-manifest.json when available. -->
         <a href="ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.html" class="pick-card">
           <div class="pick-card-header"><span class="pick-card-title">Ducks Team Total Under 3.5 vs Golden Knights: Game 6 Scoring Ceiling</span></div>
           <div class="pick-card-img-wrap"><img class="pick-card-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778656229/prd/izacsitjdbniesj9inpa.png" alt="Ducks team total under 3.5 vs Golden Knights Game 6" onerror="this.onerror=null;this.src='newlogo.png'"></div>
@@ -574,6 +574,9 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
 </footer>
 
 <script src="homepage-picks-data.js"></script>
+<script>
+window.HOMEPAGE_PICK_META = Array.isArray(window.HOMEPAGE_PICKS) ? window.HOMEPAGE_PICKS.slice() : [];
+</script>
 <script src="homepage-image-system.js"></script>
 <script>
 if (window.BetLegendImages) {
@@ -598,15 +601,68 @@ document.addEventListener('click', function(event) {
 });
 
 (function() {
-  if (typeof HOMEPAGE_PICKS === 'undefined') return;
+  var MANIFEST_URL = 'site-posts-manifest.json';
+  var pickMeta = Array.isArray(window.HOMEPAGE_PICK_META) ? window.HOMEPAGE_PICK_META : [];
+  var pickMetaByUrl = {};
+  pickMeta.forEach(function(pick) { pickMetaByUrl[pick.url] = pick; });
+
+  function escapeHTML(value) {
+    return String(value || '').replace(/[&<>"']/g, function(ch) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
+    });
+  }
+
+  function displayDate(isoDate) {
+    var parts = String(isoDate || '').split('-');
+    if (parts.length !== 3) return isoDate || '';
+    var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+    return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+
+  function inferSport(post) {
+    var text = ((post.title || '') + ' ' + (post.url || '')).toLowerCase();
+    if (text.indexOf('soccer') !== -1 || text.indexOf('premier-league') !== -1 || text.indexOf('galatasaray') !== -1 || text.indexOf('ajax') !== -1 || text.indexOf('psg') !== -1) return 'SOCCER';
+    if (text.indexOf('ncaab') !== -1 || text.indexOf('college-basketball') !== -1 || text.indexOf('basketball') !== -1) return 'NCAAB';
+    if (text.indexOf('nba') !== -1 || text.indexOf('cavaliers') !== -1 || text.indexOf('pistons') !== -1 || text.indexOf('lakers') !== -1) return 'NBA';
+    if (text.indexOf('nhl') !== -1 || text.indexOf('ducks') !== -1 || text.indexOf('canadiens') !== -1 || text.indexOf('sabres') !== -1 || text.indexOf('golden-knights') !== -1) return 'NHL';
+    if (text.indexOf('nfl') !== -1 || text.indexOf('football') !== -1) return 'NFL';
+    if (text.indexOf('mlb') !== -1 || text.indexOf('dodgers') !== -1 || text.indexOf('padres') !== -1 || text.indexOf('brewers') !== -1 || text.indexOf('yankees') !== -1) return 'MLB';
+    return 'POST';
+  }
+
+  function defaultImageForSport(sport) {
+    var images = {
+      MLB: 'images/mlb-coors-field-diamondbacks-rockies-over.webp',
+      NBA: 'images/sacramento-kings-oklahoma-city-thunder-nba-over-betting-pick-total-november-19-2025.webp',
+      NHL: 'images/nhl.webp',
+      SOCCER: 'images/soccer-analysis-action-centered-preview.jpg',
+      NCAAB: 'images/collegeban.webp',
+      NFL: 'images/nfl-bills-falcons-monday-night-football-oct-13-2025.webp',
+      POST: 'newlogo.png'
+    };
+    return images[sport] || images.POST;
+  }
+
+  function normalizePost(post) {
+    var meta = pickMetaByUrl[post.url] || {};
+    var sport = meta.sport || inferSport(post);
+    return {
+      sport: sport,
+      title: post.title,
+      date: displayDate(post.date),
+      url: post.url,
+      image: meta.image || defaultImageForSport(sport),
+      result: meta.result || ''
+    };
+  }
 
   function footerHTML(pick) {
-    return '<span class="pick-published-label">Published</span><span class="pick-published-date">' + pick.date + '</span>';
+    return '<span class="pick-published-label">Published</span><span class="pick-published-date">' + escapeHTML(pick.date) + '</span>';
   }
 
   function resultBadgeHTML(result) {
     if (!result) return '<span class="pick-result-badge pending">PENDING</span>';
-    if (result.indexOf('-') !== -1) return '<span class="pick-result-badge push">' + result + '</span>';
+    if (result.indexOf('-') !== -1) return '<span class="pick-result-badge push">' + escapeHTML(result) + '</span>';
     var cls = result === 'W' ? 'win' : result === 'L' ? 'loss' : 'push';
     var label = result === 'W' ? 'WIN' : result === 'L' ? 'LOSS' : 'PUSH';
     return '<span class="pick-result-badge ' + cls + '">' + label + '</span>';
@@ -616,63 +672,79 @@ document.addEventListener('click', function(event) {
     var src = window.BetLegendImages
       ? window.BetLegendImages.resolvePickImage(pick, usedImages)
       : (pick.image || 'newlogo.png');
-    return '<img class="' + cls + '" src="' + src + '" alt="' + pick.title + '" onerror="this.onerror=null;this.src=\'newlogo.png\'">';
+    return '<img class="' + cls + '" src="' + escapeHTML(src) + '" alt="' + escapeHTML(pick.title) + '" onerror="this.onerror=null;this.src=\'newlogo.png\'">';
   }
 
-  var grid = document.getElementById('picks-grid');
-  var latestStamp = document.getElementById('latest-picks-stamp');
-  var featuredImageUrls = new Set();
-  if (latestStamp && HOMEPAGE_PICKS.length) {
-    latestStamp.innerHTML = 'Latest published pick: <strong>' + HOMEPAGE_PICKS[0].date + '</strong>';
-  }
-  if (grid) {
-    grid.innerHTML = '';
-    HOMEPAGE_PICKS.slice(0, 6).forEach(function(pick) {
-      var card = document.createElement('a');
-      card.href = pick.url;
-      card.className = 'pick-card';
-      card.innerHTML =
-        '<div class="pick-card-header"><span class="pick-card-title">' + pick.title + '</span></div>' +
-        '<div class="pick-card-img-wrap">' + imageHTML(pick, 'pick-card-img', featuredImageUrls) + '</div>' +
-        '<div class="pick-card-meta"><span class="pick-sport-tag">' + (pick.sport || 'PICK') + '</span>' + resultBadgeHTML(pick.result) + '</div>' +
-        '<div class="pick-card-footer">' + footerHTML(pick) + '</div>';
-      grid.appendChild(card);
-    });
-  }
-
-  var compactGrid = document.getElementById('compact-picks-grid');
-  var paginationEl = document.getElementById('compact-picks-pagination');
-  if (!compactGrid || !paginationEl) return;
-  var compactPicks = HOMEPAGE_PICKS.slice(6);
-  var perPage = 8;
-  var totalPages = Math.ceil(compactPicks.length / perPage);
-
-  function renderCompactPage(page) {
-    compactGrid.innerHTML = '';
-    var usedImages = new Set(featuredImageUrls);
-    compactPicks.slice(page * perPage, page * perPage + perPage).forEach(function(pick) {
-      var card = document.createElement('a');
-      card.href = pick.url;
-      card.className = 'pick-card-sm';
-      card.innerHTML =
-        '<div class="pick-card-sm-header"><span class="pick-card-sm-title">' + pick.title + '</span></div>' +
-        '<div class="pick-card-sm-img-wrap">' + imageHTML(pick, 'pick-card-sm-img', usedImages) + '</div>' +
-        '<div class="pick-card-sm-meta"><span class="pick-sport-tag">' + (pick.sport || 'PICK') + '</span>' + resultBadgeHTML(pick.result) + '</div>' +
-        '<div class="pick-card-sm-footer">' + footerHTML(pick) + '</div>';
-      compactGrid.appendChild(card);
-    });
-    paginationEl.innerHTML = '';
-    if (totalPages <= 1) return;
-    for (var i = 0; i < totalPages; i++) {
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = i + 1;
-      if (i === page) btn.className = 'active';
-      (function(idx) { btn.addEventListener('click', function() { renderCompactPage(idx); }); })(i);
-      paginationEl.appendChild(btn);
+  function renderFeed(posts) {
+    var feed = posts.map(normalizePost);
+    var grid = document.getElementById('picks-grid');
+    var latestStamp = document.getElementById('latest-picks-stamp');
+    var featuredImageUrls = new Set();
+    if (latestStamp && feed.length) {
+      latestStamp.innerHTML = 'Latest published post: <strong>' + escapeHTML(feed[0].date) + '</strong> · ' + feed.length + ' total posts';
     }
+    if (grid) {
+      grid.innerHTML = '';
+      feed.slice(0, 6).forEach(function(pick) {
+        var card = document.createElement('a');
+        card.href = pick.url;
+        card.className = 'pick-card';
+        card.innerHTML =
+          '<div class="pick-card-header"><span class="pick-card-title">' + escapeHTML(pick.title) + '</span></div>' +
+          '<div class="pick-card-img-wrap">' + imageHTML(pick, 'pick-card-img', featuredImageUrls) + '</div>' +
+          '<div class="pick-card-meta"><span class="pick-sport-tag">' + escapeHTML(pick.sport || 'POST') + '</span>' + resultBadgeHTML(pick.result) + '</div>' +
+          '<div class="pick-card-footer">' + footerHTML(pick) + '</div>';
+        grid.appendChild(card);
+      });
+    }
+
+    var compactGrid = document.getElementById('compact-picks-grid');
+    var paginationEl = document.getElementById('compact-picks-pagination');
+    if (!compactGrid || !paginationEl) return;
+    var compactPicks = feed.slice(6);
+    var perPage = 8;
+    var totalPages = Math.ceil(compactPicks.length / perPage);
+
+    function renderCompactPage(page) {
+      compactGrid.innerHTML = '';
+      var usedImages = new Set(featuredImageUrls);
+      compactPicks.slice(page * perPage, page * perPage + perPage).forEach(function(pick) {
+        var card = document.createElement('a');
+        card.href = pick.url;
+        card.className = 'pick-card-sm';
+        card.innerHTML =
+          '<div class="pick-card-sm-header"><span class="pick-card-sm-title">' + escapeHTML(pick.title) + '</span></div>' +
+          '<div class="pick-card-sm-img-wrap">' + imageHTML(pick, 'pick-card-sm-img', usedImages) + '</div>' +
+          '<div class="pick-card-sm-meta"><span class="pick-sport-tag">' + escapeHTML(pick.sport || 'POST') + '</span>' + resultBadgeHTML(pick.result) + '</div>' +
+          '<div class="pick-card-sm-footer">' + footerHTML(pick) + '</div>';
+        compactGrid.appendChild(card);
+      });
+      paginationEl.innerHTML = '';
+      if (totalPages <= 1) return;
+      for (var i = 0; i < totalPages; i++) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = i + 1;
+        if (i === page) btn.className = 'active';
+        (function(idx) { btn.addEventListener('click', function() { renderCompactPage(idx); }); })(i);
+        paginationEl.appendChild(btn);
+      }
+    }
+    renderCompactPage(0);
   }
-  renderCompactPage(0);
+
+  fetch(MANIFEST_URL, { cache: 'no-store' })
+    .then(function(response) {
+      if (!response.ok) throw new Error('Manifest unavailable');
+      return response.json();
+    })
+    .then(function(manifest) {
+      var posts = Array.isArray(manifest.posts) ? manifest.posts : [];
+      renderFeed(posts);
+    })
+    .catch(function() {
+      renderFeed(pickMeta);
+    });
 })();
 </script>
 <script async data-id="101485054" src="https://static.getclicky.com/js"></script>
