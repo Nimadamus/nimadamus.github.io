@@ -6,6 +6,7 @@ This catches the failure mode where a published daily sport page exists or is
 archived, but the generated calendar JS no longer exposes that date.
 """
 
+import argparse
 import json
 import re
 import sys
@@ -24,6 +25,21 @@ SPORTS = {
     "nfl": "nfl-calendar.js",
     "ncaaf": "ncaaf-calendar.js",
 }
+
+REQUIRED_REGRESSION_DATES = {
+    "nba": {"2026-05-16"},
+    "nhl": {"2026-05-16"},
+    "mlb": {"2026-05-16"},
+    "soccer": {"2026-05-16"},
+    "ncaab": {"2026-05-16"},
+}
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("lookback", nargs="?", type=int, default=45)
+    parser.add_argument("--today", default=datetime.now().date().isoformat())
+    return parser.parse_args()
 
 
 def calendar_dates(js_name):
@@ -65,15 +81,16 @@ def forced_page_dates_for_sport(sport):
     return dates
 
 
-def recent_dates(days):
-    today = datetime.now().date()
+def recent_dates(days, today_iso):
+    today = datetime.fromisoformat(today_iso).date()
     return {(today - timedelta(days=i)).isoformat() for i in range(days)}
 
 
 def main():
-    lookback = int(sys.argv[1]) if len(sys.argv) > 1 else 45
+    args = parse_args()
+    lookback = args.lookback
     manifest = manifest_dates()
-    recent = recent_dates(lookback)
+    recent = recent_dates(lookback, args.today)
     failures = []
 
     print("=" * 64)
@@ -83,6 +100,7 @@ def main():
     for sport, js_name in SPORTS.items():
         expected = set(manifest.get(sport, [])) | forced_page_dates_for_sport(sport)
         expected = {d for d in expected if d in recent}
+        expected |= {d for d in REQUIRED_REGRESSION_DATES.get(sport, set()) if d <= args.today}
         actual = calendar_dates(js_name)
         missing = sorted(expected - actual)
         if missing:
