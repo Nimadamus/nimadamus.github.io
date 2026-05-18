@@ -55,6 +55,25 @@ HUB_PAGES = {cfg['hub'] for cfg in SPORTS.values() if cfg.get('hub')}
 # NOTE: hub pages are handled specially (not excluded, but assigned today's date)
 EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index', '-news', 'news-', 'offseason', 'insights', 'historical', 'trends', 'splits', 'betting-hub', 'handicapping-hub', 'how-to-bet', '-guide', 'complete-guide', 'line-shopping']
 
+# Required dated targets are part of the generator contract, not just a
+# validator afterthought. These dates previously disappeared from generated
+# calendars when there was no normal daily slate page, so sync_calendars.py
+# must preserve them even if filename filters or archive routing change.
+REQUIRED_DATE_TARGETS = {
+    'nba': [
+        {'date': '2026-05-16', 'page': 'nba-may-16-2026-recovery.html', 'title': 'NBA Playoff Archive - May 16, 2026'},
+    ],
+    'nhl': [
+        {'date': '2026-05-16', 'page': 'nhl-may-16-2026-recovery.html', 'title': 'NHL Playoff Archive - May 16, 2026'},
+    ],
+    'mlb': [
+        {'date': '2026-05-16', 'page': 'mlb-may-16-2026-recovery.html', 'title': 'MLB Archive - May 16, 2026'},
+    ],
+    'soccer': [
+        {'date': '2026-05-16', 'page': 'soccer-may-16-2026-recovery.html', 'title': 'Soccer Archive - May 16, 2026'},
+    ],
+}
+
 # Dates to EXCLUDE from calendars (days when no content was posted but pages exist)
 # Format: { 'sport': ['YYYY-MM-DD', ...] }
 # NOTE: Jan 25-27 exclusion was removed April 2, 2026 - pages exist and should be in calendar
@@ -525,6 +544,17 @@ def get_sport_pages(sport_config):
     archive_pattern = sport_config.get('archive_pattern')
     existing_dates = {p['date'] for p in pages}
     manifest_dates = set()
+
+    for required in REQUIRED_DATE_TARGETS.get(prefix, []):
+        page_path = REPO_DIR / required['page']
+        if not page_path.exists():
+            print(f"    [REQUIRED MISSING FILE] {required['page']}: {required['date']} not added")
+            continue
+        if required['date'] in existing_dates:
+            continue
+        pages.append(required.copy())
+        existing_dates.add(required['date'])
+        print(f"    [REQUIRED TARGET] {required['page']}: {required['date']}")
 
     # PRIMARY: Read from hub-archive-manifest.json
     manifest_path = SCRIPTS_DIR / 'hub-archive-manifest.json'
