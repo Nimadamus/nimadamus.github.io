@@ -8,6 +8,76 @@ This protocol MUST be followed for every blog post and news article uploaded to 
 
 ---
 
+## LOCKED GOOGLE SHEET PICK PAGE STYLE - MAY 18, 2026
+
+For every BetLegendPicks Google Sheet pick page going forward, use the compact
+standalone style from:
+`dodgers-padres-first-five-innings-under-4-5-yamamoto-king-petco-park-mlb-pick.html`
+
+Start new pages from `google-sheet-pick-page-template.html` when practical.
+
+This is the default pick-page format unless Nima explicitly requests a different
+layout for a specific page.
+
+Required structure:
+- Sticky/simple top navigation with BetLegend Picks brand plus Home, Latest, and
+  Archive links.
+- Centered hero with sport/date badge, direct H1, and concise matchup subtitle.
+- One strong verified action image or relevant official image asset below the
+  hero, with descriptive alt text and caption.
+- Main article card with a gold-bordered `pickbox` at the top showing the exact
+  official pick, odds, units, and tracker row when available.
+- Verified game board table immediately after the pickbox for matchup, time,
+  venue, records, starters/players, market context, or other sourced details.
+- Sectioned analysis using short H2 blocks, not giant generic panels.
+- A clear risk/what-beats-the-bet callout.
+- Bottom-line section that restates the exact published pick.
+- Source note with tracker/source attribution and outbound source links.
+- Simple footer with publish date and responsible-analysis language.
+
+Style requirements:
+- Dark navy/blue editorial background, bright blue section accents, gold pick
+  emphasis, readable Arial/Helvetica typography, clean spacing, and mobile-safe
+  responsive sizing.
+- Keep the page compact, sharp, and standalone. Do not use the older giant
+  neon/Orbitron calendar-sidebar layout for Google Sheet pick pages unless Nima
+  explicitly asks for it.
+- Do not publish a Google Sheet pick page that lacks the pickbox, verified-detail
+  table, risk callout, source note, or responsive standalone article styling.
+
+---
+
+## LOCKED ARCHIVE SOURCE OF TRUTH - MAY 18, 2026
+
+The BetLegendPicks full archive source of truth is the current set of root-level
+dated post/article/pick HTML files, excluding utility surfaces, hubs, records
+pages, and generated archive pages. Do not manually maintain a partial archive
+list.
+
+After adding or restoring any published post/article/pick page, run:
+
+```
+python scripts/rebuild_archive_cards.py
+python scripts/audit_archive_cards.py
+```
+
+Required archive/card rules:
+- `scripts/rebuild_archive_cards.py` must regenerate `site-posts-manifest.json`,
+  `archive.html`, and `latest.html` from the full current source.
+- `archive.html` must include every valid manifest post in reverse chronological
+  order.
+- `latest.html` may show the newest subset, but it must be generated from the
+  same manifest.
+- `homepage-picks-data.js` remains the manual Google Sheet pick-card feed only;
+  it must not contain Featured Game pages, preview/slate pages, guide pages, hub
+  pages, or records pages.
+- Before publishing, `scripts/audit_archive_cards.py` must report zero missing
+  archive entries.
+- Do not point homepage Pick Archive buttons at old partial archive pages. Use
+  `archive.html` for the complete archive.
+
+---
+
 ## ABSOLUTE RULE: MULTI-SITE CONTENT ROUTING AND DAILY CADENCE (LOCKED MAY 16, 2026)
 
 Before publishing any new article, audit the target site's own current homepage,
@@ -95,243 +165,10 @@ topic, or orphan risk. Fix routing first, without deleting valid content,
 rewriting user-written content, modifying canonical tags, breaking archives,
 homepages, sitemaps, calendars, or dropdown navigation.
 
-### RELATED LOCKED RULES
-- BetLegendPicks SEO stability hold (memory `feedback_betlegendpicks_no_ai_seo_tuning.md`)
-- Never deindex BetLegendPicks pages (memory `feedback_betlegendpicks_never_deindex.md`)
-- Stay-in-scope: do not push other agents' uncommitted work
-  (memory `feedback_stay_in_scope_other_agents_files.md`)
-
----
-
-## ABSOLUTE RULE: HOMEPAGE FEED = CURATED/CAPPED, ARCHIVE = COMPLETE INDEX (LOCKED MAY 16, 2026)
-
-A page does not need to appear on the homepage to be considered "linked." The
-homepage is a CURATED quality surface with a hard cap of `MAX_CARDS_PER_DATE = 2`
-cards per published date. Every published page must still be reachable through an
-archive/date/category/internal-navigation path so there are zero orphaned pages
-across the site, but it does not need to be on the homepage feed to satisfy that.
-
-### THE TWO SEPARATE RULES
-1. **Homepage feed (`homepage-picks-data.js`)** — capped at 2 cards per date,
-   ordered newest-first, no duplicate preview images. Trimming an entry from
-   the homepage is allowed only when the page is already linked elsewhere.
-2. **Archive index (`archive.html`)** — the COMPLETE index. Every URL on the
-   homepage feed MUST also appear here. Every published article page should be
-   reachable from at least one of: archive.html, sport-specific calendar JS,
-   date-specific archive page, or sitemap entry.
-
-### CORRECT REMEDIATION WHEN AN OVER-STACKED DATE IS DISCOVERED
-- Identify the date with `> 2` cards on the homepage feed.
-- Pick the lowest-priority entries (most recently added, narrowest matchup, or
-  agent-inserted) to trim from the homepage feed.
-- BEFORE trimming, confirm the trimmed URL is already in `archive.html`. If
-  missing, add a `<li><a href="...">TITLE</a> <span>DATE</span></li>` entry to
-  the correct date slot in `archive.html` FIRST.
-- ONLY THEN remove the entry from `homepage-picks-data.js`.
-- Run `python scripts/validate_homepage_pick_image_uniqueness.py`. Both rules
-  must pass: homepage cap and archive coverage.
-
-### EXPLICITLY FORBIDDEN
-- Raising `MAX_CARDS_PER_DATE` above 2 to paper over an over-stack.
-- Removing an entry from the homepage feed WITHOUT first adding it to archive.
-- Deleting the article HTML file itself (covered by the never-deindex rule above).
-- Using `--no-verify` to skip the validator.
-
-### AUTOMATED PROTECTION
-`scripts/validate_homepage_pick_image_uniqueness.py` now enforces BOTH:
-- Existing rules: image uniqueness, blocked-image patterns, max-2-per-date,
-  newest-first ordering, no recent-date gaps.
-- NEW rule (May 16, 2026): every homepage pick URL must appear in
-  `archive.html` (the no-orphan archive-coverage check). Pre-commit hook runs
-  this validator on any commit that touches `homepage-picks-data.js`.
-
-### WHY THIS RULE EXISTS (May 16, 2026)
-On May 15 an orphan-linking pass added 21 entries to `homepage-picks-data.js`
-to satisfy the "every published page must be linked" rule. 9 of those entries
-pushed their date past the locked 2-card cap. Resolving the conflict required
-splitting "linked" into two surfaces: the homepage stays curated and capped,
-while `archive.html` carries the complete index. After this rule was applied,
-9 entries were moved from the homepage to archive, 13 additional historical
-homepage entries that had been missing from archive were also added, and the
-validator was extended to enforce both rules going forward.
-
----
-
-## WORKFLOW NOTE: DIFF REVIEW REQUIRED BEFORE MULTI-SITE FTP UPLOAD (MAY 16, 2026)
-
-When a single task spans more than one FTP site (mlbprediction, bestmlb,
-mlbpicks, mlbprops, sbp), each site's local edit MUST be presented as a textual
-diff for explicit user review before any `publish.py` upload. The diff must
-show: file path, lines being moved/changed, before/after order, confirmation
-that no content/CSS/script/canonical/image/href bytes outside the reorder were
-modified.
-
-Once the diffs are approved, uploads happen sequentially (one site per
-`publish.py` run, with live `curl` verification after each) so that a broken
-publish on one site does not cascade.
-
----
-
-## ABSOLUTE RULE: MULTI-SITE CONTENT ROUTING AND DAILY CADENCE (LOCKED MAY 16, 2026)
-
-Before publishing any new article, audit the target site's own current homepage,
-archive, category/dropdown pages, sitemap/calendar surfaces, and the most recent
-published posts. Continue that site's established pattern instead of treating the
-properties as interchangeable content feeds.
-
-### DAILY CADENCE
-- Default cadence is one post per day per site.
-- BetLegendPicks is the only standing exception and may receive two posts per
-  day.
-- BestMLBHandicapper must never receive multiple same-day homepage/archive
-  posts or duplicate/redundant slate articles unless Nima explicitly overrides
-  the rule for that specific date.
-- Duplicate slate articles on the same site are not allowed unless explicitly
-  requested.
-
-### SITE IDENTITY CHECKS
-- BestMLBHandicapper: one focused Best MLB Handicapper style pick per day; no
-  same-day flooding and no redundant daily-card duplicates.
-- BetLegendPicks: Google Sheet pick posts go in Latest Blog Picks/feed only;
-  Featured Game of the Day belongs only under Game of the Day -> Featured Game;
-  game preview articles belong under Game Previews & Records and sport preview
-  pages, not the pick-card feed.
-- MLBPrediction: keep the MLB prediction/analytics identity, one post per day
-  unless overridden, and do not duplicate the same slate topic already covered
-  elsewhere on that site.
-- DailyMLBPicks: keep the AI model showdown/daily picks identity, one post per
-  day unless overridden, and do not turn it into a duplicate of the other MLB
-  sites.
-- SportsBettingPrime and other active sites: preserve the historical site
-  identity and one-post-per-day cadence unless explicitly overridden.
-
-### ROUTING RULES
-- Homepage/latest pick grids must contain actual picks only.
-- Featured Game of the Day articles must not appear as normal pick/blog cards.
-- Game preview articles must route through the proper sport preview/dropdown
-  pages and archive/sitemap surfaces.
-- Every published article must be linked through the correct homepage, latest,
-  archive, category/dropdown, sitemap, or calendar surface so nothing is
-  orphaned.
-
-### REQUIRED PRE-PUBLISH AUDIT
-For each target site, record:
-- Posts already published today.
-- Whether each post belongs on that site and surface.
-- Whether the daily cap would be violated.
-- Whether the topic duplicates an existing same-day article.
-- Whether the target URL is reachable from the correct homepage/latest/archive/
-  category/sitemap/calendar surface.
-
-### ROUTING AUDIT CHECKLIST
-Complete this checklist before creating or publishing any page:
-- Identify the content type first: Google Sheet pick, Featured Game of the Day,
-  sport preview/slate article, guide/news article, archive/calendar page, or
-  records/data page.
-- Count today's posts on the target site before adding another. BetLegendPicks
-  may have two posts per day; every other active site defaults to one post per
-  day unless Nima explicitly overrides that specific date.
-- If it is a Google Sheet pick, it may appear in Latest Blog Picks,
-  `homepage-picks-data.js`, `blog.html`, archive, sitemap/feed, and the relevant
-  pick/static crawl surfaces.
-- If it is Featured Game of the Day, it must route through Game of the Day,
-  Featured Game calendar/archive surfaces, static discovery, and sitemap/archive
-  coverage. It must not be added to `homepage-picks-data.js`, Latest Blog Picks,
-  or normal pick/blog card grids.
-- If it is a sport preview/slate article, it must route through Game Previews &
-  Records, the matching sport preview hub/calendar/archive, static discovery,
-  and preview sitemap/archive coverage. It must not be added to
-  `homepage-picks-data.js` or normal pick-card feeds.
-- If a page is removed from a homepage/latest feed, confirm it remains linked
-  from archive, category, calendar, sitemap, or static crawl surfaces before
-  publishing.
-- Run `python scripts/validate_homepage_pick_image_uniqueness.py` before any
-  BetLegend homepage feed change. A failure blocks publishing.
-
-Do not publish if the audit shows a cadence violation, wrong section, duplicate
-topic, or orphan risk. Fix routing first, without deleting valid content,
-rewriting user-written content, modifying canonical tags, breaking archives,
-homepages, sitemaps, calendars, or dropdown navigation.
-
 ### COMPLETION REQUIREMENT
 Before claiming completion, verify the live public pages in a real browser with
 the public URL visible. Localhost screenshots, source-code screenshots, generated
 proof images, build success, deploy success, and HTTP checks alone do not count.
-
----
-
-## ABSOLUTE RULE: HOMEPAGE/ARCHIVE CARD GRIDS ARE STRICTLY CHRONOLOGICAL (LOCKED MAY 16, 2026)
-
-Every card grid that lists multiple article cards on a homepage, archive page,
-sport index, or category page MUST be sorted strictly newest-first by the
-article's published date. No exceptions:
-
-- April content must NEVER appear above May content.
-- A pre-existing card MUST NEVER be left below a newly-inserted older card just
-  because the new card was prepended as a block.
-- 2025 archive recap cards (e.g. monthly daily-hammer recaps) sit at the BOTTOM
-  of the grid below all current-season dated cards.
-- The only acceptable above-newest position is a permanently pinned card
-  explicitly approved by Nima (currently none).
-
-### REQUIRED PROCESS WHEN ADDING MULTIPLE CARDS TO AN EXISTING GRID
-Do NOT prepend a block of new cards above all existing cards. Instead:
-1. Parse every existing card in the grid with its `<span class="article-date">`.
-2. Build a combined list of (date, card_block) for existing + new cards.
-3. Sort newest-first (most recent date at top, archive/recap dates at bottom).
-4. Reassemble the grid in sorted order, preserving every card's content byte
-   for byte. Only the order changes.
-5. Run `python publish.py <site>/index.html <site_key>` (or commit + push for
-   GitHub Pages sites).
-6. Live `curl` the published URL and confirm the DOM order matches the sort.
-
-### THE SORT SNIPPET (REFERENCE IMPLEMENTATION)
-```python
-import re
-from datetime import datetime
-
-card_block_pat = re.compile(
-    r'(        <a class="article-card featured" href="[^"]+">.*?        </a>\n)',
-    re.DOTALL
-)
-date_in_card = re.compile(r'<span class="article-date">([^<]+)</span>')
-
-def parse_date(s):
-    s = s.strip()
-    for fmt in ('%B %d, %Y', '%B %Y'):
-        try:
-            return datetime.strptime(s, fmt)
-        except ValueError:
-            continue
-    return datetime(1900, 1, 1)  # unparseable -> bottom
-
-# Sort matches by date desc, reassemble, write back.
-```
-
-### WHY THIS EXISTS (May 16, 2026)
-On May 15 the orphan-linking pass on bestmlbhandicapper.com prepended a 23-card
-block (April 3 → May 15) above the pre-existing card grid. The prepend pushed
-~12 pre-existing May 1 → May 11 cards below the April orphan block, creating a
-visually broken order where April dates sat above May dates on the live
-homepage. A "smallest patch" 2-card move fixed the May 14/13 boundary but
-exposed the deeper layer. A full sort of all 41 cards was then required to
-restore strict newest-first chronology.
-
-The pre-existing 2-card patch is preserved by this rule because sorting is
-stable for cards with identical dates and the patch had already placed both
-moved cards in their correct date slots.
-
-### EXPLICITLY FORBIDDEN
-- Block-prepending new cards above an existing grid without sorting.
-- Leaving a card in a position that violates chronological order with the
-  card directly above or below it.
-- Treating "the cards I just added" as a special section above the existing
-  grid. There is one grid; all cards belong to it.
-
-### AUTOMATED PROTECTION (FUTURE WORK)
-A pre-commit / pre-publish chronology check should be added that parses the
-card grid, extracts dates, and fails if any later card has a newer date than
-an earlier card. Tracked separately.
 
 ---
 

@@ -15,6 +15,13 @@ LOCKED ROUTING ADDENDUM - MAY 16, 2026
 - Google Sheet pick posts belong in Latest Blog Picks/feed surfaces only.
 - Featured Game of the Day pages belong only under Game of the Day / Featured
   Game surfaces and must not be promoted as normal pick or blog cards.
+- Every daily slate must include one selected Featured Game of the Day.
+- The BetLegendPicks homepage Featured Game of the Day widget must be updated
+  during the slate workflow with the verified featured matchup, date, teams,
+  starting pitchers/probable starters when applicable, game time, venue, team
+  records, relevant stats, and featured-game betting context or preview summary.
+  All widget facts must be verified from reliable current sources before
+  publishing.
 - Game preview articles belong under Game Previews & Records and the matching
   sport preview pages, not in the Latest Blog Picks pick-card feed.
 - Every published article must still be reachable through the correct homepage,
@@ -25,6 +32,70 @@ LOCKED ROUTING ADDENDUM - MAY 16, 2026
   forbidden surfaces, and confirm the URL will not be orphaned.
 - Run `python scripts/validate_homepage_pick_image_uniqueness.py` before any
   BetLegend homepage feed change. A failure blocks publishing.
+
+LOCKED GOOGLE SHEET PICK PAGE STYLE - MAY 18, 2026
+--------------------------------------------------
+
+Every BetLegendPicks Google Sheet pick page must use the compact standalone
+style from:
+dodgers-padres-first-five-innings-under-4-5-yamamoto-king-petco-park-mlb-pick.html
+
+Start new pages from google-sheet-pick-page-template.html when practical.
+
+This is the default format going forward unless Nima explicitly requests a
+different layout for one specific page.
+
+Required structure:
+1. Sticky/simple top navigation with BetLegend Picks brand plus Home, Latest,
+   and Archive links.
+2. Centered hero with sport/date badge, direct H1, and concise matchup subtitle.
+3. One verified action image or relevant official image asset below the hero,
+   with descriptive alt text and caption.
+4. Main article card with a gold-bordered pickbox at the top showing the exact
+   official pick, odds, units, and tracker row when available.
+5. Verified game board table immediately after the pickbox.
+6. Short sectioned H2 analysis blocks.
+7. Risk/what-beats-the-bet callout.
+8. Bottom-line section restating the exact published pick.
+9. Source note with tracker/source attribution and outbound source links.
+10. Simple footer with publish date and responsible-analysis language.
+
+Style requirements:
+- Dark navy/blue editorial background, bright blue section accents, gold pick
+  emphasis, readable Arial/Helvetica typography, clean spacing, and responsive
+  mobile-safe sizing.
+- Keep Google Sheet pick pages compact, sharp, and standalone.
+- Do not use the older giant neon/Orbitron calendar-sidebar layout for Google
+  Sheet pick pages unless Nima explicitly asks for it.
+- Do not publish a Google Sheet pick page that lacks the pickbox,
+  verified-detail table, risk callout, source note, or responsive standalone
+  article styling.
+
+LOCKED ARCHIVE SOURCE OF TRUTH - MAY 18, 2026
+---------------------------------------------
+
+The full archive source of truth is the current set of root-level dated
+post/article/pick HTML files, excluding utility surfaces, hubs, records pages,
+and generated archive pages. Do not manually maintain a partial archive list.
+
+After adding or restoring any published post/article/pick page, run:
+python scripts/rebuild_archive_cards.py
+python scripts/audit_archive_cards.py
+
+Required archive/card rules:
+- scripts/rebuild_archive_cards.py regenerates site-posts-manifest.json,
+  archive.html, and latest.html from the full current source.
+- archive.html must include every valid manifest post in reverse chronological
+  order.
+- latest.html may show the newest subset, but it must be generated from the
+  same manifest.
+- homepage-picks-data.js remains the manual Google Sheet pick-card feed only.
+  Do not add Featured Game pages, preview/slate pages, guide pages, hub pages,
+  or records pages to it.
+- Before publishing, scripts/audit_archive_cards.py must report zero missing
+  archive entries.
+- Homepage Pick Archive buttons must point at archive.html, not old partial
+  archive pages.
 
 STEP 1 - DEFINE THE JOB
 -----------------------
@@ -264,8 +335,6 @@ GOLD-STANDARD LIVE PUBLISHING GATE - MAY 15, 2026
 Before any BetLegend publishing task is called complete, verify the current live public URL, not only the local file or deploy log. Do not claim a page is published until it is visible on https://www.betlegendpicks.com/ at its final URL.
 
 Every publishing run must check: homepage latest sections, Latest Blog Picks, daily pick links, game preview hubs, sport hubs, calendar/archive widgets, static crawl links, sitemap/feed entries where applicable, and the verified records page table. Do not claim completion based only on local build success or deployment success. Do not claim completion without checking homepage/internal links and visually checking the live page.
-
-Informational and trust pages, including About-style pages, are not complete until they are linked from the appropriate live public navigation or footer surface and that live link is visually verified in a browser.
 
 MLB PREVIEW AND ARCHIVE CALENDAR STANDARD - LOCKED MAY 16, 2026
 
