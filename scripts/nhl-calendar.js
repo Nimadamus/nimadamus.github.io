@@ -5,6 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-05-18", page: "canadiens-sabres-game-seven-east-final-berth-nhl.html", title: "Canadiens at Sabres Game 7 Preview for East Final Berth" },
     { date: "2026-05-18", page: "nhl-previews.html", title: "Canadiens at Sabres Game 7 Preview for East Final Berth" },
+    { date: "2026-05-16", page: "nhl-may-16-2026-recovery.html", title: "NHL Playoff Archive - May 16, 2026" },
     { date: "2026-05-14", page: "canadiens-sabres-golden-knights-ducks-nhl-playoff-preview.html", title: "Canadiens vs Sabres Game 5 and Golden Knights vs Ducks Game 6 NHL Playoff Preview" },
     { date: "2026-05-14", page: "ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.html", title: "Ducks Team Total Under 3.5 vs Golden Knights Game 6 Pick" },
     { date: "2026-05-13", page: "nhl-previews-archive-may-2026.html#2026-05-13", title: "NHL Analysis - 2026-05-13" },
