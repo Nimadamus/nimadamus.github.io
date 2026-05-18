@@ -13,6 +13,7 @@ import audit_archive_cards as audit
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_URL = "https://www.betlegendpicks.com"
+CANONICAL_BASE_URL = "https://betlegendpicks.com"
 MANIFEST = ROOT / "site-posts-manifest.json"
 
 
@@ -53,7 +54,7 @@ def write_archive(posts: list[dict[str, str]]) -> None:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="{BASE_URL}/archive.html">
+<link rel="canonical" href="{CANONICAL_BASE_URL}/archive.html">
 <title>Full Pick and Article Archive | BetLegendPicks</title>
 <meta name="description" content="Complete reverse chronological archive of BetLegendPicks posts, articles, previews, and picks.">
 <style>
@@ -86,7 +87,7 @@ def write_latest(posts: list[dict[str, str]]) -> None:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="{BASE_URL}/latest.html">
+<link rel="canonical" href="{CANONICAL_BASE_URL}/latest.html">
 <title>Latest Published Pages | BetLegendPicks</title>
 <meta name="description" content="Latest published BetLegendPicks pages, generated from the complete dated post manifest.">
 </head>
