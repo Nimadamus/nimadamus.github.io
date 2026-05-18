@@ -2792,3 +2792,12 @@ For every blog post, daily pick, game preview, sport hub update, and homepage up
 - canonical tags, user-written content, recent fixes, and existing archive URLs must remain untouched unless the task explicitly says otherwise.
 
 Do not claim done until live URL proof exists and the current git diff contains only the intended targeted changes.
+
+## MAY 17, 2026 PICK FEED RECOVERY NOTE
+
+May 17 has exactly two Google Sheet blog-pick cards in the homepage/archive feed:
+- `phillies-pirates-first-five-under-4-5-wheeler-skenes-pnc-may-17-2026.html`
+- `rangers-team-total-under-4-5-eovaldi-lambert-daikin-park-may-17-2026.html`
+
+Do not add May 17 generated slate pick pages, preview pages, featured-game pages, or May 16 recovery/calendar pages to homepage/latest/archive pick cards. Future daily publishing must update `homepage-picks-data.js` first, then regenerate `site-posts-manifest.json`, `archive.html`, and `latest.html` from that same ordered array.
+

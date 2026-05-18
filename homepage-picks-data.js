@@ -33,7 +33,22 @@ var HOMEPAGE_PICKS = [
         url: "dodgers-padres-first-five-innings-under-4-5-yamamoto-king-petco-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/808967/action/hero/current"
     },
+    
     {
+        sport: "MLB",
+        title: "Phillies/Pirates First 5 Under 4.5: Wheeler and Skenes Define the Early Window",
+        date: "May 17, 2026",
+        url: "phillies-pirates-first-five-under-4-5-wheeler-skenes-pnc-may-17-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/554430/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Rangers Team Total Under 4.5: Lambert and Daikin Park Set the Run Ceiling",
+        date: "May 17, 2026",
+        url: "rangers-team-total-under-4-5-eovaldi-lambert-daikin-park-may-17-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/543135/action/hero/current"
+    },
+{
         sport: "NHL",
         title: "Ducks Team Total Under 3.5 vs Golden Knights: Game 6 Scoring Ceiling",
         date: "May 14, 2026",
