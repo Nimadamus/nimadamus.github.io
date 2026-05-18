@@ -428,6 +428,10 @@ Before publishing, verify:
   represents and links to the selected featured game with the verified matchup,
   date, teams, starters when applicable, time, venue, records, stats, and
   preview context
+- Run `python scripts/sync_featured_game_preview.py`, then
+  `python scripts/sync_featured_game_preview.py --verify`, after the current
+  featured game is added to `featured-games-data.js`. Missing homepage widget
+  markers are not an acceptable skip; the widget itself must update.
 - Generate new slate analysis using verified inputs only
 - Add logos/crests/badges and correct date metadata
 - Update "Last Updated" timestamps
@@ -560,7 +564,7 @@ The Daily Slate Analysis Protocol is now **fully operational** and producing **h
 
 ---
 
-*Last Updated: May 15, 2026*
+*Last Updated: May 18, 2026*
 *Created by: Claude Code (Anthropic)*
 *Status: Production Ready*
 ## Required Freshness And Live Proof Check
