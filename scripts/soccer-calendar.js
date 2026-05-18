@@ -6,6 +6,7 @@ const ARCHIVE_DATA = [
     { date: "2026-05-18", page: "arsenal-burnley-title-door-premier-league-soccer.html", title: "Arsenal vs Burnley Premier League Title Race Preview" },
     { date: "2026-05-18", page: "soccer-previews.html", title: "Arsenal vs Burnley Premier League Title Race Preview" },
     { date: "2026-05-17", page: "psg-ajax-galatasaray-sunday-soccer-may-17-2026.html", title: "Soccer Sunday Preview: PSG, Ajax, PSV and Galatasaray for May 17, 2026" },
+    { date: "2026-05-16", page: "soccer-may-16-2026-recovery.html", title: "Soccer Archive - May 16, 2026" },
     { date: "2026-05-15", page: "aston-villa-liverpool-friday-soccer-run-in.html", title: "Soccer Friday Preview: Aston Villa-Liverpool, League Two Playoffs and NWSL May 15, 2026" },
     { date: "2026-05-14", page: "soccer-previews-archive-may-2026.html#2026-05-14", title: "SOCCER Analysis - 2026-05-14" },
     { date: "2026-05-13", page: "soccer-midweek-reset-europa-league-nwsl-premier-league-may-13-2026.html", title: "Soccer Midweek Reset: Europa League, NWSL and Premier League May 13, 2026" },
