@@ -81,28 +81,15 @@ Required archive/card rules:
 
 ## LOCKED HOMEPAGE/PICK ARCHIVE FEED SOURCE - MAY 18, 2026
 
-The BetLegendPicks homepage Latest Blog Picks card grid and the full Pick Archive
-must use `site-posts-manifest.json` as the ordering source of truth. Do not let
-`homepage-picks-data.js`, static fallback cards, old archive pages, or any stale
-hardcoded list control post order or pagination.
+The BetLegendPicks homepage Latest Blog Picks cards and Pick Archive cards are
+Google Sheet pick surfaces only. Their source of truth is `homepage-picks-data.js`.
 
 Rules:
-- `scripts/rebuild_archive_cards.py` regenerates `site-posts-manifest.json`,
-  `archive.html`, and `latest.html` from the complete current post source.
-- `index.html` must render homepage feed order from `site-posts-manifest.json`.
-- `homepage-picks-data.js` is metadata only for matching Google Sheet pick cards
-  such as image/result/sport. It must not define the primary homepage sequence.
-- Page 1 is the first six manifest posts. Compact pagination starts immediately
-  after those six at eight posts per page.
-- After publishing, verify live homepage and archive counts/order against the
-  manifest before claiming completion.
-
-For every publish or recovery run:
-
-```
-python scripts/rebuild_archive_cards.py
-python scripts/audit_archive_cards.py
-```
+- Only real Google Sheet pick pages belong in homepage cards and Pick Archive cards.
+- Do not insert preview pages, featured-game pages, sport hubs, monthly archive/calendar pages, records pages, or guide/news pages into those cards.
+- Normal cadence is one or two Google Sheet picks per day, newest first.
+- `homepage-picks-data.js` controls the visible card sequence; new sheet picks must be added at the top with exact date, URL, image, sport, and result when graded.
+- Before publishing, run `python scripts/validate_homepage_pick_image_uniqueness.py`.
 
 ---
 ## ABSOLUTE RULE: MULTI-SITE CONTENT ROUTING AND DAILY CADENCE (LOCKED MAY 16, 2026)

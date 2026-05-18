@@ -2,6 +2,16 @@
 LOCKED HOMEPAGE/PICK ARCHIVE FEED SOURCE - MAY 18, 2026
 -------------------------------------------------------
 
+The BetLegendPicks homepage Latest Blog Picks cards and Pick Archive cards are
+Google Sheet pick surfaces only. Their source of truth is homepage-picks-data.js.
+
+Rules:
+- Only real Google Sheet pick pages belong in homepage cards and Pick Archive cards.
+- Do not insert preview pages, featured-game pages, sport hubs, monthly archive/calendar pages, records pages, or guide/news pages into those cards.
+- Normal cadence is one or two Google Sheet picks per day, newest first.
+- homepage-picks-data.js controls the visible card sequence; new sheet picks must be added at the top with exact date, URL, image, sport, and result when graded.
+- Before publishing, run python scripts/validate_homepage_pick_image_uniqueness.py.
+
 The BetLegendPicks homepage Latest Blog Picks card grid and the full Pick Archive
 must use site-posts-manifest.json as the ordering source of truth. Do not let
 homepage-picks-data.js, static fallback cards, old archive pages, or any stale

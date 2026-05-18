@@ -115,10 +115,6 @@ EXCLUDED_FILE_RE = re.compile(
     re.I,
 )
 
-DATED_PREVIEW_ROUTE_RE = re.compile(
-    r"^(?:mlb|nba|nhl|soccer|college-basketball)-previews(?:-archive-[a-z]+-\d{4})?\.html$",
-    re.I,
-)
 
 FILENAME_DATE_RE = re.compile(
     r"(january|february|march|april|may|june|july|august|september|october|november|december)-(\d{1,2})-(\d{4})",
@@ -155,8 +151,6 @@ def clean(value: str) -> str:
 
 def skip(path: Path) -> bool:
     rel = path.relative_to(ROOT)
-    if DATED_PREVIEW_ROUTE_RE.match(path.name):
-        return path.name.endswith((".bak.html", ".tmp.html")) or any(part in EXCLUDED_DIRS for part in rel.parts[:-1])
     return (
         path.name in EXCLUDED_FILES
         or EXCLUDED_FILE_RE.match(path.name) is not None
