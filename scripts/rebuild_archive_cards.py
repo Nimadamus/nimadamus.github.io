@@ -29,7 +29,7 @@ def write(path: Path, content: str) -> None:
 def write_manifest(posts: list[dict[str, str]]) -> None:
     payload = {
         "generated_at": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat(),
-        "source_of_truth": "All current root-level dated post/article/pick HTML files, excluding utility surfaces, hubs, records pages, and generated archive pages.",
+        "source_of_truth": "All current root-level dated post/article/pick HTML files, plus explicitly published anchored archive entries, excluding utility surfaces, hubs, records pages, and generated archive pages.",
         "total_posts": len(posts),
         "posts": posts,
     }

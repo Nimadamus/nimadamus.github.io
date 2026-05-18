@@ -130,6 +130,14 @@ ARCHIVE_HREF_RE = re.compile(r'<li><a href="([^"]+)">', re.I)
 ARCHIVE_CARD_HREF_RE = re.compile(r'<article class="archive-card">.*?<a href="([^"]+)"', re.I | re.S)
 PICK_URL_RE = re.compile(r"url:\s*[\"']([^\"']+)[\"']")
 
+SUPPLEMENTAL_POSTS = [
+    {
+        "url": "college-basketball-previews-archive-may-2026.html#2026-05-16",
+        "date": "2026-05-16",
+        "title": "NCAAB Analysis Archive: May 16, 2026",
+    },
+]
+
 
 def read(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="ignore")
@@ -214,6 +222,8 @@ def collect_posts() -> list[dict[str, str]]:
                 "title": title_for(path, content),
             }
         )
+    existing_urls = {post["url"] for post in posts}
+    posts.extend(post for post in SUPPLEMENTAL_POSTS if post["url"] not in existing_urls)
     posts.sort(key=lambda item: (item["date"], item["url"]), reverse=True)
     return posts
 
