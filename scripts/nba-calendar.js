@@ -6,6 +6,7 @@ const ARCHIVE_DATA = [
     { date: "2026-05-18", page: "spurs-thunder-west-final-game-one-nba.html", title: "Spurs at Thunder West Final Game 1 Preview" },
     { date: "2026-05-18", page: "nba-previews.html", title: "Spurs at Thunder West Final Game 1 Preview" },
     { date: "2026-05-17", page: "cavaliers-pistons-game-7-eastern-semis-nba-may-17-2026.html", title: "NBA Game 7 Preview: Cavaliers at Pistons for May 17, 2026" },
+    { date: "2026-05-16", page: "nba-may-16-2026-recovery.html", title: "NBA Playoff Archive - May 16, 2026" },
     { date: "2026-05-15", page: "pistons-cavaliers-spurs-timberwolves-game-six-nba.html", title: "NBA Playoff Preview: Pistons-Cavaliers and Spurs-Timberwolves Game 6 for May 15, 2026" },
     { date: "2026-05-14", page: "nba-playoff-reset-cavaliers-pistons-spurs-timberwolves-game-six.html", title: "NBA Playoff Reset: Cavaliers-Pistons and Spurs-Timberwolves Game 6 Preview" },
     { date: "2026-05-13", page: "nba-playoff-off-day-cavaliers-pistons-spurs-timberwolves-may-13-2026.html", title: "NBA Playoff Off-Day Reset: Cavaliers-Pistons and Spurs-Timberwolves May 13, 2026" },
