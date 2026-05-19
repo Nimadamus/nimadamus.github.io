@@ -463,6 +463,53 @@ def extract_game_data(page_content):
             r'<span[^>]*class="injury-alert"[^>]*>\s*([^<]+?)\s*</span>',
             section_html, re.IGNORECASE
         )
+        away_market = re.search(
+            rf'(?:{re.escape(data["away_name"])}|{re.escape(data["away_abbr"])})\s*([+-]\d+(?:\.\d+)?)\s+market\s+range',
+            page_content,
+            re.IGNORECASE,
+        )
+        if away_market:
+            data['away_spread'] = f"{data['away_abbr']} {away_market.group(1)}"
+        elif home_market:
+            home_value = float(home_market.group(1))
+            away_value = -home_value
+            away_display = f"+{away_value:g}" if away_value > 0 else f"{away_value:g}"
+            data['away_spread'] = f"{data['away_abbr']} {away_display}"
+        else:
+            data['away_spread'] = f"{data['away_abbr']} PK"
+
+    # Total (O/U) — may be labelled "Total", "Over/Under", or "O/U"
+    total_match = re.search(
+        r'(?:Total|Over/Under|O/U)</div>.*?class="line-value">\s*([^<]+?)\s*</div>',
+        page_content, re.DOTALL | re.IGNORECASE
+    )
+    data['total'] = total_match.group(1).strip() if total_match else 'O/U TBD'
+
+    # Moneyline
+    ml_match = re.search(
+        r'Moneyline</div>.*?class="line-value">\s*([^<]+?)\s*</div>',
+        page_content, re.DOTALL | re.IGNORECASE
+    )
+    if ml_match:
+        data['moneyline'] = ml_match.group(1).strip().replace(' / ', ' | ')
+    else:
+        data['moneyline'] = f"{data['away_abbr']} TBD | {data['home_abbr']} TBD"
+
+    # Extract injuries from the featured game page.
+    # The canonical pattern in our featured pages is:
+    #   <div class="player-name"><span class="injury-alert">NAME - STATUS (Injury)</span></div>
+    # These sit inside team-card blocks. Split on team-card boundaries so we can
+    # attribute each injury to the right team. First team-card = away (post 2025
+    # convention); second = home.
+    def _clean_injury_text(txt, limit=90):
+        txt = re.sub(r'\s+', ' ', txt).strip().rstrip(',')
+        return txt[:limit]
+
+    def _grab_injuries(section_html):
+        items = re.findall(
+            r'<span[^>]*class="injury-alert"[^>]*>\s*([^<]+?)\s*</span>',
+            section_html, re.IGNORECASE
+        )
         # Filter to player-style items (contain a status token)
         players = [i for i in items if re.search(r'\b(OUT|GTD|DAY-TO-DAY|Questionable|Doubtful|Probable|Day to Day)\b', i, re.IGNORECASE)]
         if not players:
@@ -967,6 +1014,69 @@ def verify_sync():
     section = section_match.group(1)
     if page_filename not in section:
         print(f"  ERROR: Homepage Featured Game widget does not link to current page: {page_filename}")
+        return False
+
+    # Extract team logo IDs from the section (could be numeric for NCAA or abbreviations for pro)
+    logos = re.findall(r'teamlogos/\w+/500/(\w+)\.png', section, re.IGNORECASE)
+    if len(logos) < 2:
+        print("  WARNING: Could not find team logos in preview section")
+        return True
+
+    header_away_logo = logos[0].upper()
+    header_home_logo = logos[1].upper()
+
+    # For NCAA teams, logo IDs are numeric (130, 356) but abbreviations are text (MICH, ILL)
+    # Convert numeric logo IDs to abbreviations for comparison
+    if header_away_logo.isdigit():
+        _, header_away = get_ncaab_team_info(header_away_logo)
+        header_away = header_away.upper()
+    else:
+        header_away = header_away_logo
+
+    if header_home_logo.isdigit():
+        _, header_home = get_ncaab_team_info(header_home_logo)
+        header_home = header_home.upper()
+    else:
+        header_home = header_home_logo
+
+    # Extract team abbrs from the betting lines table (look for team abbreviation spans)
+    lines_abbrs = re.findall(r'class="fg-team-cell"[^>]*>.*?<span[^>]*>\s*(\w{2,5})\s*</span>', section, re.DOTALL)
+    if len(lines_abbrs) < 2:
+        lines_abbrs = re.findall(r'<span[^>]*font-weight: 600[^>]*>\s*(\w{2,5})\s*</span>', section)
+    if len(lines_abbrs) >= 2:
+        lines_away = lines_abbrs[0].upper()
+        lines_home = lines_abbrs[1].upper()
+    else:
+        lines_away = header_away
+        lines_home = header_home
+
+    errors = []
+
+    # Check header logos match betting lines (abbreviations should match)
+    if header_away != lines_away:
+        errors.append(f"Header team {header_away} but betting lines show {lines_away}")
+    if header_home != lines_home:
+        errors.append(f"Header team {header_home} but betting lines show {lines_home}")
+
+    # Check index.html matches featured game page
+    if header_away != data['away_abbr'].upper():
+        errors.append(f"Index shows {header_away} but {page_filename} has {data['away_abbr']}")
+    if header_home != data['home_abbr'].upper():
+        errors.append(f"Index shows {header_home} but {page_filename} has {data['home_abbr']}")
+
+    # CRITICAL: Check for raw numeric IDs displayed as team names (the bug that broke the homepage)
+    team_name_spans = re.findall(r'font-weight: 700[^>]*>([^<]+)</div>', section)
+    for name in team_name_spans:
+        name = name.strip()
+        if name.isdigit():
+            errors.append(f"Team name is showing raw number '{name}' instead of a real team name - BROKEN!")
+
+    if errors:
+        print(f"\n  MISMATCH DETECTED:")
+        for e in errors:
+            print(f"    [ERROR] {e}")
+        print(f"\n  FIX: Run this script without --verify to sync automatically")
+        print("=" * 60)
         return False
 
     # Extract team logo IDs from the section (could be numeric for NCAA or abbreviations for pro)

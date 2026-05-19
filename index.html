@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="Sports betting picks, model simulations, daily analysis, and verified records.">
 <title>Sports Betting Picks, Models & Simulations | BetLegend</title>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"BetLegend Picks","url":"https://betlegendpicks.com","logo":"https://betlegendpicks.com/newlogo.png","description":"Expert sports betting picks, model-powered simulations, daily previews, betting tools, and verified records.","sameAs":["https://twitter.com/BetLegend2025","https://discord.gg/D2yRvgttOK"],"contactPoint":{"@type":"ContactPoint","email":"picks@mlbprops.com","contactType":"Customer Service"}}
+{"@context":"https://schema.org","@type":"Organization","name":"BetLegend Picks","url":"https://betlegendpicks.com","logo":"https://betlegendpicks.com/newlogo.png","description":"Sports betting picks, model-assisted research, daily previews, betting tools, and verified records.","founder":{"@type":"Person","name":"Nima J","jobTitle":"Founder and Lead Analyst"},"sameAs":["https://twitter.com/BetLegend2025","https://discord.gg/D2yRvgttOK"],"contactPoint":{"@type":"ContactPoint","email":"picks@mlbprops.com","contactType":"Customer Service"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"BetLegend","url":"https://betlegendpicks.com","description":"Model-powered sports betting picks, daily previews, betting tools, and verified transparent records."}
@@ -159,7 +159,7 @@ h2{margin:0;font-family:Oswald,Manrope,sans-serif;font-size:40px;line-height:1.0
 .pick-card-sm-title{font-size:16px;min-height:58px}
 .pick-card-meta,.pick-card-sm-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px solid rgba(255,238,203,.1);border-bottom:1px solid rgba(255,238,203,.1)}
 .pick-sport-tag,.pick-result-badge{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;background:rgba(232,184,92,.14);color:#f8dca2;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
-.pick-result-badge.win{background:rgba(56,193,114,.16);color:#a9e9c6}.pick-result-badge.loss{background:rgba(231,90,90,.16);color:#ffc0c0}.pick-result-badge.push{background:rgba(255,255,255,.08);color:#d8d1c4}
+.pick-result-badge.win{background:rgba(56,193,114,.16);color:#a9e9c6}.pick-result-badge.loss{background:rgba(231,90,90,.16);color:#ffc0c0}.pick-result-badge.push,.pick-result-badge.pending{background:rgba(255,255,255,.08);color:#d8d1c4}
 .pick-card-footer,.pick-card-sm-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;color:#aaa091;font-size:12px;font-weight:800;text-transform:uppercase}
 .pick-published-label{color:#655d50;letter-spacing:.05em}
 .pick-published-date{color:#e6dccb}
@@ -427,7 +427,7 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
 
     <div class="compact-picks-container">
       <div class="section-head">
-        <div><h2>Latest Blog Picks</h2><p class="sub">Newest betting picks first, ordered from the latest published blog posts so visitors land on the most current picks content before anything else.</p></div>
+        <div><h2>Latest Blog Picks</h2><p class="sub">Newest Google Sheet betting picks first. Preview pages, featured games, hubs, and archive/calendar pages are not pick cards.</p></div>
         <a class="btn secondary" href="blog.html">View Latest Picks</a>
       </div>
       <div class="section-topline">
@@ -435,17 +435,17 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
         <a class="section-inline-link" href="betlegend-verified-records.html">Audit verified records</a>
       </div>
       <div class="picks-grid" id="picks-grid">
-        <!-- Static fallback cards; JavaScript replaces these from HOMEPAGE_PICKS when available. -->
+        <!-- Static fallback cards; JavaScript replaces these from sheet-only HOMEPAGE_PICKS when available. -->
         <a href="ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.html" class="pick-card">
           <div class="pick-card-header"><span class="pick-card-title">Ducks Team Total Under 3.5 vs Golden Knights: Game 6 Scoring Ceiling</span></div>
           <div class="pick-card-img-wrap"><img class="pick-card-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778656229/prd/izacsitjdbniesj9inpa.png" alt="Ducks team total under 3.5 vs Golden Knights Game 6" onerror="this.onerror=null;this.src='newlogo.png'"></div>
-          <div class="pick-card-meta"><span class="pick-sport-tag">NHL</span></div>
+          <div class="pick-card-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge pending">PENDING</span></div>
           <div class="pick-card-footer"><span class="pick-published-label">Published</span><span class="pick-published-date">May 14, 2026</span></div>
         </a>
         <a href="brewers-moneyline-minus-139-padres-canning-harrison-mlb-pick-may-14-2026.html" class="pick-card">
           <div class="pick-card-header"><span class="pick-card-title">Brewers Moneyline -139 vs Padres: Harrison Edge At Home</span></div>
           <div class="pick-card-img-wrap"><img class="pick-card-img" src="images/brewers.webp" alt="Brewers moneyline pick vs Padres" onerror="this.onerror=null;this.src='newlogo.png'"></div>
-          <div class="pick-card-meta"><span class="pick-sport-tag">MLB</span></div>
+          <div class="pick-card-meta"><span class="pick-sport-tag">MLB</span><span class="pick-result-badge pending">PENDING</span></div>
           <div class="pick-card-footer"><span class="pick-published-label">Published</span><span class="pick-published-date">May 14, 2026</span></div>
         </a>
         <a href="angels-team-total-under-3-5-guardians-messick-progressive-field-mlb-pick.html" class="pick-card">
@@ -457,8 +457,20 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
         <a href="vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html" class="pick-card">
           <div class="pick-card-header"><span class="pick-card-title">Vegas Golden Knights Moneyline -150 vs Ducks Game 5</span></div>
           <div class="pick-card-img-wrap"><img class="pick-card-img" src="https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778591751/prd/bjchqodtuj95prh4wz2d.png" alt="Vegas Golden Knights moneyline pick vs Ducks Game 5" onerror="this.onerror=null;this.src='newlogo.png'"></div>
-          <div class="pick-card-meta"><span class="pick-sport-tag">NHL</span></div>
+          <div class="pick-card-meta"><span class="pick-sport-tag">NHL</span><span class="pick-result-badge pending">PENDING</span></div>
           <div class="pick-card-footer"><span class="pick-published-label">Published</span><span class="pick-published-date">May 12, 2026</span></div>
+        </a>
+        <a href="lakers-plus-11-thunder-game-4-elimination-spot-nba-pick.html" class="pick-card">
+          <div class="pick-card-header"><span class="pick-card-title">Lakers +11 vs Thunder Game 4, Elimination Spot Creates Double-Digit Spread Value</span></div>
+          <div class="pick-card-img-wrap"><img class="pick-card-img" src="images/sacramento-kings-oklahoma-city-thunder-nba-over-betting-pick-total-november-19-2025.webp" alt="Lakers plus 11 vs Thunder Game 4 pick" onerror="this.onerror=null;this.src='newlogo.png'"></div>
+          <div class="pick-card-meta"><span class="pick-sport-tag">NBA</span><span class="pick-result-badge pending">PENDING</span></div>
+          <div class="pick-card-footer"><span class="pick-published-label">Published</span><span class="pick-published-date">May 11, 2026</span></div>
+        </a>
+        <a href="astros-moneyline-plus-124-mariners-kirby-lambert-daikin-park-mlb-pick.html" class="pick-card">
+          <div class="pick-card-header"><span class="pick-card-title">Astros ML +124 vs Mariners, Peter Lambert Gives Houston A Live Home Underdog Path</span></div>
+          <div class="pick-card-img-wrap"><img class="pick-card-img" src="https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/663567/action/hero/current" alt="Astros moneyline pick vs Mariners" onerror="this.onerror=null;this.src='newlogo.png'"></div>
+          <div class="pick-card-meta"><span class="pick-sport-tag">MLB</span><span class="pick-result-badge pending">PENDING</span></div>
+          <div class="pick-card-footer"><span class="pick-published-label">Published</span><span class="pick-published-date">May 11, 2026</span></div>
         </a>
       </div>
     </div>
@@ -467,7 +479,7 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
       <div class="compact-picks-pagination" id="compact-picks-pagination"></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px">
         <a class="btn secondary" href="best-bets-today.html">Best Bets Today</a>
-        <a class="btn secondary" href="betlegend-expert-analysis-betting-picks-archive-8.html">Pick Archive</a>
+        <a class="btn secondary" href="archive.html">Pick Archive</a>
       </div>
     </div>
   </section>
@@ -482,58 +494,67 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
       <a class="section-inline-link" href="records.html">See full record center</a>
     </div>
     <div class="article-grid">
-      <a class="article-card feature" data-card-key="article-nba-play-in" data-card-category="NBA" data-card-section="article" href="nba-play-in-tournament-2026-full-preview-matchups-analysis.html">
-        <img data-card-image src="https://images2.minutemediacdn.com/image/upload/c_crop,x_0,y_0,w_6000,h_3375/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/si/01knw6vyfcx16wqacy2n.jpg" alt="NBA Play-In Tournament preview">
-        <div class="card-body">
-          <span class="tag blue">NBA News</span>
-          <h3>NBA Play-In Tournament full preview</h3>
-          <p>Matchups, injuries, bracket impact, and betting context for the postseason race.</p>
-          <time>Featured article</time>
-        </div>
-      </a>
-      <a class="article-card" data-card-key="article-world-cup-guide" data-card-category="Soccer" data-card-topic="Guide" data-card-section="article" href="2026-fifa-world-cup-betting-guide-odds-predictions-favorites-how-to-bet.html">
-        <img data-card-image src="https://panamericanworld.com/en/wp-content/uploads/sites/2/2025/11/metlife-stadium0.jpg" alt="2026 FIFA World Cup betting guide">
-        <div class="card-body">
-          <span class="tag">Guide</span>
-          <h3>2026 FIFA World Cup betting guide</h3>
-          <p>Futures strategy, group-stage angles, dark horses, and tournament structure.</p>
-          <time>Standalone guide</time>
-        </div>
-      </a>
-      <a class="article-card" data-card-key="article-hub-guide" data-card-category="Betting" data-card-topic="Guide" data-card-section="article" href="sports-handicapping-hub-guide.html">
-        <img data-card-image src="images/nfl-betting-boom.png" alt="Sports handicapping research dashboard">
-        <div class="card-body">
-          <span class="tag red">Research</span>
-          <h3>How to use the Handicapping Hub</h3>
-          <p>Turn betting data, trends, injuries, and market context into sharper decisions.</p>
-          <time>Research article</time>
-        </div>
-      </a>
-      <a class="article-card" data-card-key="board-bayern-real" data-card-category="Soccer" data-card-section="article" href="bayern-munich-vs-real-madrid-ucl-analysis-stats-preview-april-15-2026.html">
-        <img data-card-image src="images/ucl-olympiakos-psv-nov4-2025.png" alt="Bayern Munich vs Real Madrid Champions League preview">
-        <div class="card-body">
-          <span class="tag">Soccer</span>
-          <h3>Bayern vs Real Madrid</h3>
-          <p>Champions League matchup analysis, stats, and betting preview.</p>
-          <time>Standalone preview</time>
-        </div>
-      </a>
-      <a class="article-card" data-card-key="board-play-in-pressure" data-card-category="NBA" data-card-section="article" href="play-in-elimination-warriors-clippers-magic-sixers-nba-april-15-2026.html">
-        <img class="img-pos-left" data-card-image src="images/curry.jpg" alt="Stephen Curry Warriors NBA Play-In elimination pressure preview">
+      <a class="article-card feature" data-card-key="article-cavs-pistons-g7" data-card-category="NBA" data-card-section="article" href="cavaliers-pistons-game-7-featured-game-of-the-day.html">
+        <img data-card-image src="images/steph-curry-hero.webp" alt="Cavaliers at Pistons Game 7 Featured Game">
         <div class="card-body">
           <span class="tag blue">NBA</span>
-          <h3>Play-In elimination pressure</h3>
-          <p>Injury context, playoff urgency, and market notes.</p>
-          <time>Standalone preview</time>
+          <h3>Cavaliers at Pistons Game 7</h3>
+          <p>Featured Game of the Day for the May 17 winner-take-all playoff spot.</p>
+          <time>May 17, 2026</time>
         </div>
       </a>
-      <a class="article-card" data-card-key="board-mlb-hub" data-card-category="MLB" data-card-section="article" href="mlb-previews.html">
-        <img data-card-image src="images/ohtani.png" alt="Shohei Ohtani Dodgers MLB daily preview hub">
+      <a class="article-card" data-card-key="article-mlb-may17" data-card-category="MLB" data-card-section="article" href="sunday-may-17-full-mlb-board-skenes-wheeler-sasaki-kirby.html">
+        <img data-card-image src="images/skenes.webp" alt="Sunday May 17 full MLB board preview">
         <div class="card-body">
-          <span class="tag red">MLB Hub</span>
-          <h3>Daily baseball preview hub</h3>
-          <p>Pitchers, totals, bullpens, run lines, weather, and full-slate notes.</p>
-          <time>Daily slate hub</time>
+          <span class="tag red">MLB</span>
+          <h3>Sunday full MLB board</h3>
+          <p>Skenes, Wheeler, Sasaki, Kirby, and the May 17 baseball slate.</p>
+          <time>May 17, 2026</time>
+        </div>
+      </a>
+      <a class="article-card" data-card-key="article-soccer-may17" data-card-category="Soccer" data-card-section="article" href="psg-ajax-galatasaray-sunday-soccer-may-17-2026.html">
+        <img data-card-image src="images/soccer-analysis-action-centered-preview.jpg" alt="PSG Ajax Galatasaray Sunday soccer preview">
+        <div class="card-body">
+          <span class="tag">Soccer</span>
+          <h3>PSG, Ajax, Galatasaray</h3>
+          <p>Sunday soccer preview with title-race and cup-context angles.</p>
+          <time>May 17, 2026</time>
+        </div>
+      </a>
+      <a class="article-card" data-card-key="article-nba-may17" data-card-category="NBA" data-card-section="article" href="cavaliers-pistons-game-7-eastern-semis-nba-may-17-2026.html">
+        <img data-card-image src="images/thunderwin.webp" alt="Cavaliers Pistons Game 7 Eastern Semis NBA preview">
+        <div class="card-body">
+          <span class="tag blue">NBA</span>
+          <h3>Cavaliers-Pistons Game 7</h3>
+          <p>Eastern semifinal pressure point, rotation notes, and market context.</p>
+          <time>May 17, 2026</time>
+        </div>
+      </a>
+      <a class="article-card" data-card-key="article-ncaab-may16" data-card-category="NCAAB" data-card-section="article" href="college-basketball-previews-archive-may-2026.html#2026-05-16">
+        <img data-card-image src="images/kansas-state-bowling-green-1h-under-76-ncaab-december-2025.webp" alt="NCAAB analysis archive May 16 2026">
+        <div class="card-body">
+          <span class="tag">NCAAB</span>
+          <h3>NCAAB analysis archive</h3>
+          <p>Saturday May 16 archive entry for college basketball preview coverage.</p>
+          <time>May 16, 2026</time>
+        </div>
+      </a>
+      <a class="article-card" data-card-key="article-mlb-may15" data-card-category="MLB" data-card-section="article" href="mlb-preview-friday-interleague-rivalries-subway-freeway-series.html">
+        <img data-card-image src="images/mlb-great-american-ballpark-yankees-reds.webp" alt="MLB Friday preview Subway Series Freeway Series">
+        <div class="card-body">
+          <span class="tag red">MLB</span>
+          <h3>Friday interleague rivalries</h3>
+          <p>Subway Series, Freeway Series, and the full May 15 MLB board.</p>
+          <time>May 15, 2026</time>
+        </div>
+      </a>
+      <a class="article-card" data-card-key="article-nba-may15" data-card-category="NBA" data-card-section="article" href="pistons-cavaliers-spurs-timberwolves-game-six-nba.html">
+        <img data-card-image src="images/brooklyn-nets-pistons-nba-betting-analysis-nov7-2025.webp" alt="Pistons Cavaliers Spurs Timberwolves Game 6 NBA preview">
+        <div class="card-body">
+          <span class="tag blue">NBA</span>
+          <h3>Game 6 playoff doubleheader</h3>
+          <p>Pistons-Cavaliers and Spurs-Timberwolves playoff preview.</p>
+          <time>May 15, 2026</time>
         </div>
       </a>
     </div>
@@ -567,10 +588,10 @@ footer a{display:block;font-weight:800;color:#e8dfcf;margin:8px 0}
   <div><strong>Sports</strong><a href="mlb-previews.html">MLB Previews</a><a href="nhl-previews.html">NHL Previews</a><a href="nba-previews.html">NBA Previews</a><a href="nfl.html">NFL Picks</a><a href="ncaaf.html">College Football</a><a href="soccer-previews.html">Soccer</a></div>
   <div><strong>Records</strong><a href="records.html">All Records</a><a href="betlegend-verified-records.html">Verified Records</a><a href="mlb-records.html">MLB</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="nfl-records.html">NFL</a></div>
   <div><strong>Tools</strong><a href="betting-calculators.html">Calculators</a><a href="ev-calculator.html">EV Calculator</a><a href="kelly-criterion.html">Kelly</a><a href="bankroll.html">Bankroll</a><a href="live-odds.html">Live Odds</a><a href="pro/index.html">Pro Tools</a></div>
-  <div><strong>Learn</strong><a href="handicapping-hub.html">Handicapping Hub</a><a href="sports-handicapping-hub-guide.html">Hub Guide</a><a href="betting-101.html">Betting 101</a><a href="betting-glossary.html">Glossary</a><a href="howitworks.html">How It Works</a><a href="privacy.html">Privacy Policy</a><a href="sitemap.html">Sitemap</a><a href="contact.html">Contact</a></div>
+  <div><strong>Learn</strong><a href="about.html">About</a><a href="handicapping-hub.html">Handicapping Hub</a><a href="sports-handicapping-hub-guide.html">Hub Guide</a><a href="betting-101.html">Betting 101</a><a href="betting-glossary.html">Glossary</a><a href="howitworks.html">How It Works</a><a href="privacy.html">Privacy Policy</a><a href="sitemap.html">Sitemap</a><a href="contact.html">Contact</a></div>
 </footer>
 
-<script src="homepage-picks-data.js?v=20260517-two-mlb-picks"></script>
+<script src="homepage-picks-data.js"></script>
 <script src="homepage-image-system.js"></script>
 <script>
 if (window.BetLegendImages) {
@@ -602,7 +623,7 @@ document.addEventListener('click', function(event) {
   }
 
   function resultBadgeHTML(result) {
-    if (!result) return '';
+    if (!result) return '<span class="pick-result-badge pending">PENDING</span>';
     if (result.indexOf('-') !== -1) return '<span class="pick-result-badge push">' + result + '</span>';
     var cls = result === 'W' ? 'win' : result === 'L' ? 'loss' : 'push';
     var label = result === 'W' ? 'WIN' : result === 'L' ? 'LOSS' : 'PUSH';

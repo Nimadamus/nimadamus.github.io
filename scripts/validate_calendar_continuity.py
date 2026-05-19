@@ -34,6 +34,14 @@ REQUIRED_REGRESSION_DATES = {
     "ncaab": {"2026-05-16"},
 }
 
+REQUIRED_REGRESSION_DATES = {
+    "nba": {"2026-05-16"},
+    "nhl": {"2026-05-16"},
+    "mlb": {"2026-05-16"},
+    "soccer": {"2026-05-16"},
+    "ncaab": {"2026-05-16"},
+}
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
