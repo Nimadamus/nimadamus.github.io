@@ -28,6 +28,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Guardians Moneyline -121 at Tigers: Parker Messick Takes The Hill At Comerica",
+        date: "May 19, 2026",
+        url: "guardians-moneyline-minus-121-tigers-messick-montero-comerica-park-mlb-pick-may-19-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/800048/action/hero/current"
+    },
+
+    {
+        sport: "MLB",
         title: "Dodgers-Padres First Five Under 4.5: Yamamoto vs King At Petco",
         date: "May 18, 2026",
         url: "dodgers-padres-first-five-innings-under-4-5-yamamoto-king-petco-park-mlb-pick.html",
