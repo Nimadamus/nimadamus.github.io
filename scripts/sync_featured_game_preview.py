@@ -395,9 +395,12 @@ def extract_game_data(page_content):
     if len(records) >= 2:
         data['away_record'] = records[0]
         data['home_record'] = records[1]
+    elif re.search(rf'second-seeded\s+{re.escape(data["away_name"])}', page_content, re.IGNORECASE) and re.search(rf'top-seeded\s+{re.escape(data["home_name"])}', page_content, re.IGNORECASE):
+        data['away_record'] = 'No. 2 seed'
+        data['home_record'] = 'No. 1 seed'
     else:
-        data['away_record'] = '0-0'
-        data['home_record'] = '0-0'
+        data['away_record'] = 'Record TBD'
+        data['home_record'] = 'Record TBD'
 
     # Spread (handles "Spread", "Puck Line", "Run Line")
     spread_match = re.search(
@@ -408,7 +411,25 @@ def extract_game_data(page_content):
         spread_full = spread_match.group(1).strip()
         data['away_spread'] = spread_full.split('/')[0].strip()
     else:
-        data['away_spread'] = f"{data['away_abbr']} PK"
+        home_market = re.search(
+            rf'(?:{re.escape(data["home_name"])}|{re.escape(data["home_abbr"])})\s*([+-]\d+(?:\.\d+)?)\s+market\s+range',
+            page_content,
+            re.IGNORECASE,
+        )
+        away_market = re.search(
+            rf'(?:{re.escape(data["away_name"])}|{re.escape(data["away_abbr"])})\s*([+-]\d+(?:\.\d+)?)\s+market\s+range',
+            page_content,
+            re.IGNORECASE,
+        )
+        if away_market:
+            data['away_spread'] = f"{data['away_abbr']} {away_market.group(1)}"
+        elif home_market:
+            home_value = float(home_market.group(1))
+            away_value = -home_value
+            away_display = f"+{away_value:g}" if away_value > 0 else f"{away_value:g}"
+            data['away_spread'] = f"{data['away_abbr']} {away_display}"
+        else:
+            data['away_spread'] = f"{data['away_abbr']} PK"
 
     # Total (O/U) — may be labelled "Total", "Over/Under", or "O/U"
     total_match = re.search(
@@ -481,10 +502,20 @@ def extract_game_data(page_content):
     #   "Friday, April 10, 2026 | 10:30 PM ET | Crypto.com Arena, Los Angeles, CA"
     #   "8:00 PM ET | United Center | ESPN"
     details_match = re.search(r'class="game-details">\s*([^<]+?)\s*</div>', page_content)
+    if not details_match:
+        details_match = re.search(r'class="game-time">\s*([^<]+?)\s*</span>', page_content)
     data['time'] = '7:00 PM ET'
     data['venue'] = ''
     data['network'] = ''
     data['short_date'] = 'Today'
+    forced_date = re.search(r"FORCED_PAGE_DATE\s*=\s*['\"](\d{4})-(\d{2})-(\d{2})['\"]", page_content)
+    if forced_date:
+        months = {
+            '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
+            '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug',
+            '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec',
+        }
+        data['short_date'] = f"{months[forced_date.group(2)]} {int(forced_date.group(3))}"
     if details_match:
         details = details_match.group(1).strip()
         parts = [p.strip() for p in details.split('|') if p.strip()]
@@ -521,6 +552,10 @@ def extract_game_data(page_content):
         data['venue'] = 'TBD'
     if not data.get('network'):
         data['network'] = ''
+    if re.search(r'\b(?:playoffs?|finals?|semifinals?|conference final|west final|east final|postseason)\b', page_content, re.IGNORECASE):
+        data['game_stage'] = f"{data['sport']} Playoffs"
+    else:
+        data['game_stage'] = f"{data['sport']} Regular Season"
 
     # Team colors
     away_primary, away_accent = get_team_colors(data['sport'], data['away_abbr'])
@@ -557,8 +592,8 @@ def generate_preview_html(data, page_filename):
         token = token.strip()
         m = re.search(r'([+-]\d+)', token)
         return m.group(1) if m else default
-    away_ml = _extract_ml(ml_parts[0], '-110') if ml_parts else '-110'
-    home_ml = _extract_ml(ml_parts[1], '+100') if len(ml_parts) > 1 else '+100'
+    away_ml = _extract_ml(ml_parts[0], 'TBD') if ml_parts else 'TBD'
+    home_ml = _extract_ml(ml_parts[1], 'TBD') if len(ml_parts) > 1 else 'TBD'
 
     # Parse total — "O/U 218.5" -> "218.5"
     total_raw = data.get('total', 'O/U TBD')
@@ -576,11 +611,15 @@ def generate_preview_html(data, page_filename):
     venue_bits = [data.get('short_date', '').strip()]
     if data.get('venue'):
         venue_bits.append(data['venue'])
-    venue_bits.append(f"{data['sport']} Regular Season")
+    venue_bits.append(data.get('game_stage', f"{data['sport']} Regular Season"))
+    if data.get('network'):
+        venue_bits.append(data['network'])
     venue_line = ' | '.join([b for b in venue_bits if b])
 
     away_inj = (data.get('away_injuries') or 'Check injury report').strip()
     home_inj = (data.get('home_injuries') or 'Check injury report').strip()
+    away_record_suffix = ' SU' if re.match(r'^\d+-\d+', data['away_record']) else ''
+    home_record_suffix = ' SU' if re.match(r'^\d+-\d+', data['home_record']) else ''
 
     return f'''<!-- FEATURED-GAME-PREVIEW-START (auto-synced by scripts/sync_featured_game_preview.py) -->
                     <!-- Header Banner -->
@@ -637,8 +676,8 @@ def generate_preview_html(data, page_filename):
                     <div class="fg-records-bar">
                         <div class="fg-records-label">Records</div>
                         <div class="fg-records-row">
-                            <div><span class="fg-team-tag">{data['away_abbr']}:</span> {data['away_record']} SU</div>
-                            <div><span class="fg-team-tag">{data['home_abbr']}:</span> {data['home_record']} SU</div>
+                            <div><span class="fg-team-tag">{data['away_abbr']}:</span> {data['away_record']}{away_record_suffix}</div>
+                            <div><span class="fg-team-tag">{data['home_abbr']}:</span> {data['home_record']}{home_record_suffix}</div>
                         </div>
                     </div>
 
@@ -833,20 +872,27 @@ def sync_preview():
     # Generate new preview HTML
     new_preview = generate_preview_html(data, page_filename)
 
-    # Replace between the stable markers
+    # Replace between the stable markers when present. Older homepage builds
+    # shipped the widget without these comments, so fall back to replacing the
+    # body of the featured-game-widget aside instead of silently succeeding.
     pattern = r'<!-- FEATURED-GAME-PREVIEW-START.*?<!-- FEATURED-GAME-PREVIEW-END -->'
 
-    if not re.search(pattern, index_content, re.DOTALL):
-        # Non-fatal: homepage may not have the preview block at all. Log and
-        # succeed so the daily hub GitHub Actions job (which runs this after
-        # generating the hub) can still commit the hub output.
-        print("\n  NOTE: No FEATURED-GAME-PREVIEW markers in index.html - skipping sync.")
-        print("  (This is non-fatal. To enable homepage sync, wrap the preview block in:)")
-        print("    <!-- FEATURED-GAME-PREVIEW-START -->")
-        print("    <!-- FEATURED-GAME-PREVIEW-END -->")
-        return True
-
-    updated_content = re.sub(pattern, new_preview.rstrip(), index_content, flags=re.DOTALL)
+    if re.search(pattern, index_content, re.DOTALL):
+        updated_content = re.sub(pattern, new_preview.rstrip(), index_content, flags=re.DOTALL)
+    else:
+        aside_pattern = r'(<aside\b(?=[^>]*\bfeatured-game-widget\b)[^>]*>)(.*?)(</aside>)'
+        if not re.search(aside_pattern, index_content, re.DOTALL | re.IGNORECASE):
+            print("\n  ERROR: No FEATURED-GAME-PREVIEW markers or featured-game-widget aside in index.html.")
+            print("  The daily slate workflow requires a current homepage Featured Game widget.")
+            return False
+        replacement = r'\1' + "\n" + new_preview.rstrip() + "\n      " + r'\3'
+        updated_content = re.sub(
+            aside_pattern,
+            replacement,
+            index_content,
+            count=1,
+            flags=re.DOTALL | re.IGNORECASE,
+        )
 
     if updated_content == index_content:
         print("\n  Already in sync - no changes needed.")
@@ -901,16 +947,27 @@ def verify_sync():
         print("  ERROR: Could not extract game data")
         return False
 
-    # Check internal consistency of index.html
+    # Check internal consistency of index.html. Prefer the current stable
+    # markers, but support the homepage aside wrapper used by newer builds.
     section_match = re.search(
-        r'<!-- Header Banner - Matchup Info -->(.+?)<!-- Social Links -->',
-        index_content, re.DOTALL
+        r'<!-- FEATURED-GAME-PREVIEW-START.*?(.*?)<!-- FEATURED-GAME-PREVIEW-END -->',
+        index_content,
+        re.DOTALL,
     )
     if not section_match:
-        print("  WARNING: No featured game section found in index.html")
-        return True
+        section_match = re.search(
+            r'<aside\b(?=[^>]*\bfeatured-game-widget\b)[^>]*>(.*?)</aside>',
+            index_content,
+            re.DOTALL | re.IGNORECASE,
+        )
+    if not section_match:
+        print("  ERROR: No featured game section found in index.html")
+        return False
 
     section = section_match.group(1)
+    if page_filename not in section:
+        print(f"  ERROR: Homepage Featured Game widget does not link to current page: {page_filename}")
+        return False
 
     # Extract team logo IDs from the section (could be numeric for NCAA or abbreviations for pro)
     logos = re.findall(r'teamlogos/\w+/500/(\w+)\.png', section, re.IGNORECASE)
@@ -936,7 +993,9 @@ def verify_sync():
         header_home = header_home_logo
 
     # Extract team abbrs from the betting lines table (look for team abbreviation spans)
-    lines_abbrs = re.findall(r'<span[^>]*font-weight: 600[^>]*>\s*(\w{2,5})\s*</span>', section)
+    lines_abbrs = re.findall(r'class="fg-team-cell"[^>]*>.*?<span[^>]*>\s*(\w{2,5})\s*</span>', section, re.DOTALL)
+    if len(lines_abbrs) < 2:
+        lines_abbrs = re.findall(r'<span[^>]*font-weight: 600[^>]*>\s*(\w{2,5})\s*</span>', section)
     if len(lines_abbrs) >= 2:
         lines_away = lines_abbrs[0].upper()
         lines_home = lines_abbrs[1].upper()

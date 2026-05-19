@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import importlib.util
 import re
 import sys
 from pathlib import Path
@@ -13,10 +14,12 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 DATA_FILE = REPO / "featured-games-data.js"
 TITLE_GUARD_START_DATE = dt.date(2026, 5, 8)
+DAILY_CONTINUITY_START_DATE = dt.date(2026, 5, 14)
 ENTRY_RE = re.compile(
     r"""\{\s*date:\s*["'](?P<date>\d{4}-\d{2}-\d{2})["']\s*,\s*page:\s*["'](?P<page>[^"']+)["']\s*,\s*title:\s*["'](?P<title>[^"']+)["']\s*\}"""
 )
 H1_RE = re.compile(r"""<h1[^>]*class=["'][^"']*\bmain-title\b[^"']*["'][^>]*>(?P<title>.*?)</h1>""", re.IGNORECASE | re.DOTALL)
+ANY_H1_RE = re.compile(r"""<h1[^>]*>(?P<title>.*?)</h1>""", re.IGNORECASE | re.DOTALL)
 NEWS_HEADLINE_RE = re.compile(r'''"headline"\s*:\s*"(?P<title>(?:\\.|[^"\\])*)"''')
 ODDS_RE = re.compile(r"""(?:\b[A-Z]{2,4}\s*)?[+-]\d+(?:\.\d+)?\b|\b\d+(?:\.\d+)?-point\b""", re.IGNORECASE)
 TOTAL_RE = re.compile(r"""\b(?:total|over/under|o/u)\b|\b[OU]\s*\d{3}(?:\.\d+)?\b""", re.IGNORECASE)
@@ -59,6 +62,8 @@ def clean_html_text(value: str) -> str:
 
 def extract_main_title(content: str, page: str) -> str:
     match = H1_RE.search(content)
+    if not match:
+        match = ANY_H1_RE.search(content)
     if not match:
         raise SystemExit(f"Featured Game page is missing a main hero title: {page}")
     return clean_html_text(match.group("title"))
@@ -124,6 +129,82 @@ def check_featured_title_quality(entries: list[dict[str, str]], allow_missing_la
         raise SystemExit("Featured Game title quality check failed:\n- " + "\n- ".join(issues))
 
 
+def check_homepage_widget_sync() -> None:
+    sync_script = REPO / "scripts" / "sync_featured_game_preview.py"
+    if not sync_script.exists():
+        raise SystemExit("Missing homepage Featured Game sync script: scripts/sync_featured_game_preview.py")
+
+    spec = importlib.util.spec_from_file_location("sync_featured_game_preview", sync_script)
+    if not spec or not spec.loader:
+        raise SystemExit("Could not load scripts/sync_featured_game_preview.py for homepage widget verification")
+
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    if not module.verify_sync():
+        raise SystemExit(
+            "Homepage Featured Game widget is stale or mismatched. "
+            "Run python scripts/sync_featured_game_preview.py and publish index.html."
+        )
+
+
+def check_recent_daily_continuity(entries: list[dict[str, str]], today: dt.date) -> None:
+    if today < DAILY_CONTINUITY_START_DATE:
+        return
+    dates = {dt.date.fromisoformat(entry["date"]) for entry in entries}
+    cursor = DAILY_CONTINUITY_START_DATE
+    missing: list[str] = []
+    while cursor <= today:
+        if cursor not in dates:
+            missing.append(cursor.isoformat())
+        cursor += dt.timedelta(days=1)
+    if missing:
+        raise SystemExit(
+            "Featured Game daily continuity check failed. Missing dates since "
+            f"{DAILY_CONTINUITY_START_DATE.isoformat()}: {', '.join(missing)}"
+        )
+
+
+def check_featured_calendar_static_links(entries: list[dict[str, str]]) -> None:
+    calendar = REPO / "featured-game-calendar.html"
+    if not calendar.exists():
+        raise SystemExit("Missing Featured Game calendar page: featured-game-calendar.html")
+    content = calendar.read_text(encoding="utf-8", errors="ignore")
+    required_tokens = [
+        "featured-games-data.js",
+        "FEATURED-GAME-STATIC-LINKS-START",
+        "FEATURED-GAME-STATIC-LINKS-END",
+    ]
+    missing_tokens = [token for token in required_tokens if token not in content]
+    if missing_tokens:
+        raise SystemExit(f"Featured Game calendar is missing required tokens: {', '.join(missing_tokens)}")
+
+    missing_pages = [
+        entry["page"].lstrip("/")
+        for entry in entries
+        if entry["page"].lstrip("/") not in content
+    ]
+    if missing_pages:
+        raise SystemExit(
+            "Featured Game calendar static archive links are incomplete. "
+            "Run python scripts/generate_discovery_artifacts.py. Missing: "
+            + ", ".join(missing_pages[:20])
+        )
+
+
+def check_entrypoint_calendar_position() -> None:
+    entrypoint = REPO / "featured-game-of-the-day.html"
+    content = entrypoint.read_text(encoding="utf-8", errors="ignore")
+    main_pos = content.find('<main class="main-content">')
+    aside_pos = content.find('<aside class="calendar-sidebar">')
+    if main_pos == -1 or aside_pos == -1:
+        raise SystemExit("Featured Game entrypoint must include main content and calendar sidebar landmarks")
+    if aside_pos < main_pos:
+        raise SystemExit(
+            "Featured Game entrypoint calendar sidebar appears before the article. "
+            "Keep the article first and the calendar as the right rail."
+        )
+
+
 def main() -> int:
     args = parse_args()
     today = dt.date.fromisoformat(args.today)
@@ -160,6 +241,10 @@ def main() -> int:
         raise SystemExit(f"Featured Game entrypoint is missing required current routing tokens: {', '.join(missing)}")
 
     check_featured_title_quality(entries, args.allow_missing_latest_page)
+    check_homepage_widget_sync()
+    check_recent_daily_continuity(entries, today)
+    check_featured_calendar_static_links(entries)
+    check_entrypoint_calendar_position()
 
     print(f"Featured Game freshness OK: {latest['date']} -> {latest['page']} ({age_days} days old)")
     return 0

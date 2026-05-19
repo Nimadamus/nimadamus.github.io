@@ -221,8 +221,10 @@ const FEATURED_GAMES = [
     { date: "2026-05-12", page: "timberwolves-spurs-game-five-pivot-nba-analysis-stats-preview.html", title: "Timberwolves vs Spurs Game 5 Preview" },
     { date: "2026-05-14", page: "canadiens-sabres-game-5-featured-game-of-the-day.html", title: "Canadiens at Sabres Game 5" },
     { date: "2026-05-15", page: "pistons-cavaliers-game-6-featured-game-of-the-day.html", title: "Pistons vs Cavaliers Game 6 Featured Game of the Day" },
+    { date: "2026-05-16", page: "featured-game-of-the-day-2026-05-16.html", title: "Featured Game Archive - May 16, 2026" },
     { date: "2026-05-17", page: "cavaliers-pistons-game-7-featured-game-of-the-day.html", title: "Cavaliers at Pistons Game 7" },
     { date: "2026-05-18", page: "spurs-vs-thunder-western-final-game-one-analysis-stats-preview.html", title: "Spurs vs Thunder Western Final Game 1 Analysis and Stats Preview" },
+    { date: "2026-05-19", page: "cavaliers-vs-knicks-eastern-conference-finals-game-1-analysis-stats-preview-may-19-2026.html", title: "Cavaliers vs Knicks Eastern Conference Finals Game 1" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
