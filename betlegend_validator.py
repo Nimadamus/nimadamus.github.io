@@ -65,7 +65,10 @@ class Config:
     
     # Files/dirs to skip
     SKIP_DIRS = {'.git', 'node_modules', '.claude', '__pycache__', 'assets', 'images', 'css', 'js'}
-    SKIP_FILES = {'404.html', 'template.html', 'test_article.html', 'input.html'}
+    SKIP_FILES = {
+        '404.html', 'template.html', 'test_article.html', 'input.html',
+        'latest.html', 'archive.html', 'sitemap.html'
+    }
     # Glob patterns for files to skip (e.g., google verification files)
     SKIP_FILE_PATTERNS = ['google*.html']
     
