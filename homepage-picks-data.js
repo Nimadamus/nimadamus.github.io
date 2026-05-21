@@ -27,6 +27,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Canadiens Team Total Under 2.5 vs Hurricanes: ECF Game 1 Scoring Ceiling",
+        date: "May 21, 2026",
+        url: "canadiens-team-total-under-2-5-hurricanes-game-1-nhl-pick-may-21-2026.html",
+        image: "images/canadiens-team-total-under-2-5-hurricanes-game-1-nhl-pick-may-21-2026.jpg"
+    },
+
+    {
         sport: "MLB",
         title: "Guardians Moneyline -121 at Tigers: Parker Messick Takes The Hill At Comerica",
         date: "May 19, 2026",
@@ -61,7 +69,7 @@ var HOMEPAGE_PICKS = [
         title: "Ducks Team Total Under 3.5 vs Golden Knights: Game 6 Scoring Ceiling",
         date: "May 14, 2026",
         url: "ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778656229/prd/izacsitjdbniesj9inpa.png"
+        image: "images/ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.png"
     },
     {
         sport: "MLB",
@@ -83,7 +91,7 @@ var HOMEPAGE_PICKS = [
         title: "Vegas Golden Knights Moneyline -150 vs Ducks Game 5",
         date: "May 12, 2026",
         url: "vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778591751/prd/bjchqodtuj95prh4wz2d.png"
+        image: "images/vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.webp"
     },
     {
         sport: "NBA",
@@ -132,7 +140,7 @@ var HOMEPAGE_PICKS = [
         title: "Sabres vs Bruins Game 6 Pick: Over 5.5 at TD Garden",
         date: "May 1, 2026",
         url: "sabres-bruins-over-5-5-game-6-td-garden-stanley-cup-playoffs-nhl.html",
-        image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1777640939/prd/xzyqnm9sb7mk4giyhfik.png"
+        image: "images/sabres-bruins-over-5-5-game-6-td-garden-stanley-cup-playoffs-nhl.jpg"
     },
     {
         sport: "NHL",
