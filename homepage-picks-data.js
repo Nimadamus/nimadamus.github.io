@@ -27,6 +27,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Pirates-Blue Jays Under 7.5: Skenes vs Corbin At Rogers Centre",
+        date: "May 23, 2026",
+        url: "pirates-blue-jays-under-7-5-skenes-corbin-rogers-centre-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694973/action/hero/current"
+    },
+
+    {
         sport: "NHL",
         title: "Canadiens Team Total Under 2.5 vs Hurricanes: ECF Game 1 Scoring Ceiling",
         date: "May 21, 2026",
