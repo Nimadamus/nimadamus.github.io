@@ -27,6 +27,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Canadiens +1.5 vs Hurricanes Game 2: Montreal Covers The Puck Line",
+        date: "May 23, 2026",
+        url: "canadiens-puck-line-plus-1-5-hurricanes-game-2-eastern-conference-final-nhl-pick.html",
+        image: "images/canadiens-puck-line-plus-1-5-hurricanes-game-2-eastern-conference-final-nhl-pick.jpg"
+    },
+
+    {
         sport: "MLB",
         title: "Pirates-Blue Jays Under 7.5: Skenes vs Corbin At Rogers Centre",
         date: "May 23, 2026",
