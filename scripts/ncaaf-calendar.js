@@ -171,7 +171,7 @@ function renderCalendar(yearMonth) {
         const hasData = postsForDate.length > 0 ? postsForDate[0] : null;
         let classes = 'cal-day';
         if (dateStr === currentPageDate) classes += ' current-page';
-        if (dateStr === todayStr) classes += ' today';
+        if (dateStr === todayStr && yearMonth === todayMonth) classes += ' today';
         if (hasData) classes += ' has-content is-linked';
         else classes += ' is-disabled';
         if (dateStr < todayStr) classes += ' is-past';

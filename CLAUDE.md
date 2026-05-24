@@ -500,6 +500,45 @@ sh hooks/install.sh
 
 ---
 
+## ⛔⛔⛔ CALENDAR MARKER + PREVIEW PAGE STANDARD (LOCKED MAY 24, 2026) ⛔⛔⛔
+
+**The archive calendar sidebar on every sport preview/archive page (`*-previews.html`
+and every standalone dated preview) must show ONLY these markers:**
+
+1. **Article dates** — any date with content gets `has-content is-linked` (clickable;
+   multi-post dates open the chooser). Every real article date must render.
+2. **Active article date** — the date of the page being viewed gets `current-page`
+   (cyan fill + "Article" label), driven by `window.FORCED_PAGE_DATE` / `pageToDateMap`.
+3. **Today** — `today` (gold) is applied ONLY when the rendered month is today's month.
+   The guard is literal:
+   ```js
+   if (dateStr === todayStr && yearMonth === todayMonth) classes += ' today';
+   ```
+   Never mark "today" on a month the user navigated to that isn't the real current
+   month. A stale gold "Today" badge on an unrelated day is a bug.
+
+The 8 calendar scripts (`scripts/{nba,nhl,mlb,ncaab,ncaaf,nfl,soccer}-calendar.js`)
+share identical render logic — `featured-games-calendar.js` is a separate engine with
+NO today marker. If you fix the marker logic, patch ALL of the sport scripts, not one.
+
+### PREVIEW PAGE HEADER / LAYOUT:
+- Exactly ONE `<a class="trial" href="/free-trial-info.html">Free Trial</a>` and exactly
+  ONE `</header>`. A duplicated trial link + extra `</header>` after the real one renders
+  a **stray blue/gold "Free Trial" text link under the nav** and breaks the DOM so the
+  main article column drifts off-center. Never ship two trial links / two `</header>`.
+- Desktop layout is intentional: fixed sidebar left, `.page-wrapper` offset
+  `margin-left:320px`, `.main-content{max-width:900px;margin:0 auto}` centered in the
+  remaining column. Do not "fix centering" by editing this CSS — check for malformed
+  header markup first.
+
+### WHAT HAPPENED (May 24, 2026):
+Six pages (nba/mlb/soccer previews + 3 May-19 dated pages) had a duplicated Free Trial
+link and `</header>`, producing a stray link under the nav and an off-center article. The
+today marker also lacked an explicit current-month guard. Both fixed; today-guard added to
+all 7 sport calendar scripts.
+
+---
+
 ## ⛔⛔⛔ ROLLING HUB SYSTEM — FULLY RETIRED, DO NOT RE-IMPLEMENT ⛔⛔⛔
 
 ### Retired March 30, 2026. Re-executed accidentally on April 19, 2026 (canonical-to-hub rewrites, sitemap purge). GSC data later confirmed the legacy sport hubs drove 0 clicks, so the "consolidation" helped nothing and the churn created confusion. NEVER RE-IMPLEMENT.
