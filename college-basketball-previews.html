@@ -278,23 +278,6 @@ document.querySelectorAll('.dropdown').forEach(d=>{d.addEventListener('click',fu
 document.addEventListener('click',()=>document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('active')));
 </script>
 <script src="scripts/ncaab-calendar.js?v=202605230642"></script>
-<script>
-// Auto-redirect to the newest real daily page, never back to this hub page.
-if (typeof ARCHIVE_DATA !== 'undefined' && ARCHIVE_DATA.length > 0) {
-    var latestEntry = ARCHIVE_DATA.find(function(item) {
-        return item.page
-            && item.page !== 'college-basketball-previews.html'
-            && item.page !== 'ncaab.html'
-            && !item.page.includes('#')
-            && !item.page.includes('-archive-');
-    }) || ARCHIVE_DATA.find(function(item) { return item.page && item.page !== 'college-basketball-previews.html'; });
-    var latestPage = (window.LATEST_CONTENT_PAGE || (latestEntry && latestEntry.page));
-    var currentPage = window.location.pathname.split('/').pop();
-    if (latestPage && latestPage !== currentPage) {
-        window.location.replace('/' + latestPage);
-    }
-}
-</script>
 
 </body>
 </html>
