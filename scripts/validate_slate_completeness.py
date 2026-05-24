@@ -51,6 +51,18 @@ SPORT_SEASONS = {
     'MLB':    list(range(4, 11)),                    # Apr-Oct (regular season)
 }
 
+# Verified league off-days: dates inside a sport's season window where the
+# league genuinely played NO games (e.g., gaps between playoff rounds/series).
+# Every entry must be verified against the official schedule before being added
+# here, so the validator never masks a real missing page.
+NO_GAME_DATES = {
+    'NHL': {
+        '2026-05-15',  # No NHL game: COL-MIN R2 ended May 13 (G5); MTL-BUF next game was G6 May 16
+        '2026-05-17',  # No NHL game: between MTL-BUF G6 (May 16) and G7 (May 18)
+        '2026-05-19',  # No NHL game: MTL-BUF G7 was May 18; conference finals began May 20
+    },
+}
+
 CALENDAR_JS = {
     'NBA': 'scripts/nba-calendar.js',
     'NHL': 'scripts/nhl-calendar.js',
@@ -315,6 +327,9 @@ def check_date(date, all_files):
     date_iso = date.strftime('%Y-%m-%d')
 
     for sport in active:
+        if date_iso in NO_GAME_DATES.get(sport, set()):
+            # Verified league off-day: no game scheduled, so no page is owed.
+            continue
         page = find_sport_page(sport, date, all_files)
         if page:
             found.append((sport, page))

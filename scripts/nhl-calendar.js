@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-24", page: "avalanche-golden-knights-game-3-makar-out-nhl-may-24-2026.html", title: "NHL Analysis - May 24, 2026" },
+    { date: "2026-05-24", page: "avalanche-vs-golden-knights-nhl-analysis-stats-preview-may-24-2026.html", title: "Avalanche vs Golden Knights Western Conference Final Game 3 Analysis - May 24, 2026" },
     { date: "2026-05-24", page: "nhl-previews.html", title: "Canadiens at Sabres Game 7 Preview for East Final Berth" },
     { date: "2026-05-23", page: "canadiens-hurricanes-eastern-conference-final-game-2-nhl-may-23-2026.html", title: "NHL Preview: Canadiens at Hurricanes ECF Game 2 - May 23, 2026" },
     { date: "2026-05-23", page: "canadiens-puck-line-plus-1-5-hurricanes-game-2-eastern-conference-final-nhl-pick.html", title: "Canadiens +1.5 vs Hurricanes Game 2: Montreal Covers The Puck Line" },

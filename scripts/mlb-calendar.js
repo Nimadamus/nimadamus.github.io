@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-24", page: "cease-imanaga-yamamoto-sunday-sixteen-game-mlb-may-24-2026.html", title: "MLB Preview: 16-Game Sunday Slate - May 24, 2026" },
+    { date: "2026-05-24", page: "cease-yamamoto-king-sunday-sixteen-game-mlb-may-24-2026.html", title: "MLB Preview: 16-Game Sunday Slate - May 24, 2026" },
     { date: "2026-05-23", page: "pirates-blue-jays-under-7-5-skenes-corbin-rogers-centre-mlb-pick.html", title: "Pirates-Blue Jays Under 7.5: Skenes vs Corbin At Rogers Centre" },
     { date: "2026-05-23", page: "skenes-wheeler-kirby-saturday-sixteen-game-mlb-may-23-2026.html", title: "MLB Preview: 16-Game Saturday Slate - May 23, 2026" },
     { date: "2026-05-22", page: "degrom-gausman-cole-friday-fifteen-game-mlb-may-22-2026.html", title: "MLB Preview: 15-Game Friday Slate - May 22, 2026" },

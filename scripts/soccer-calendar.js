@@ -20,6 +20,7 @@ const ARCHIVE_DATA = [
     { date: "2026-05-12", page: "arsenal-sporting-bayern-real-madrid-second-leg-soccer.html", title: "Al Nassr vs Al Hilal Saudi Title Decider Preview" },
     { date: "2026-05-11", page: "tottenham-leeds-survival-rayo-girona-relegation-soccer.html", title: "Soccer Analysis - May 11, 2026" },
     { date: "2026-05-10", page: "soccer-previews.html", title: "SOCCER Analysis - 2026-05-10" },
+    { date: "2026-05-09", page: "liverpool-chelsea-anfield-premier-league-soccer-may-9-2026.html", title: "Soccer Analysis - May 09, 2026" },
     { date: "2026-05-08", page: "dortmund-frankfurt-bundesliga-levante-osasuna-laliga-soccer-may-8-2026.html", title: "Soccer Analysis - May 08, 2026" },
     { date: "2026-05-07", page: "villa-forest-freiburg-braga-europa-league-semis-soccer-may-7-2026.html", title: "Soccer Analysis - May 07, 2026" },
     { date: "2026-05-06", page: "bayern-psg-allianz-second-leg-uefa-champions-league-soccer.html", title: "Soccer Analysis - May 06, 2026" },
