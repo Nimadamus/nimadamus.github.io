@@ -113,6 +113,7 @@ const ARCHIVE_DATA = [
     { date: "2026-03-29", page: "nba-previews-archive-march-2026.html#2026-03-29", title: "NBA Analysis - 2026-03-29" },
     { date: "2026-03-28", page: "nba-previews-archive-march-2026.html#2026-03-28", title: "NBA Analysis - 2026-03-28" },
     { date: "2026-03-27", page: "nba-previews-archive-march-2026.html#2026-03-27", title: "NBA Analysis - 2026-03-27" },
+    { date: "2026-03-26", page: "knicks-pelicans-kings-thursday-three-game-nba-march-26-2026.html", title: "NBA Analysis - March 26, 2026" },
     { date: "2026-03-25", page: "nba-previews-archive-march-2026.html#2026-03-25", title: "NBA Analysis - 2026-03-25" },
     { date: "2026-03-24", page: "nba-previews-archive-march-2026.html#2026-03-24", title: "NBA Analysis - 2026-03-24" },
     { date: "2026-03-23", page: "nba-previews-archive-march-2026.html", title: "NBA Analysis - 2026-03-23" },

@@ -57,9 +57,17 @@ SPORT_SEASONS = {
 # here, so the validator never masks a real missing page.
 NO_GAME_DATES = {
     'NHL': {
+        '2026-04-10',  # No NHL game: confirmed off-day (schedule jumped Apr 9 -> Apr 11)
+        '2026-04-17',  # No NHL game: regular season ended Apr 16, playoffs began Apr 18
         '2026-05-15',  # No NHL game: COL-MIN R2 ended May 13 (G5); MTL-BUF next game was G6 May 16
         '2026-05-17',  # No NHL game: between MTL-BUF G6 (May 16) and G7 (May 18)
         '2026-05-19',  # No NHL game: MTL-BUF G7 was May 18; conference finals began May 20
+    },
+    'NBA': {
+        '2026-04-11',  # No NBA game: confirmed off-day (0 games; next gameday Apr 12)
+    },
+    'Soccer': {
+        '2026-04-03',  # No major club soccer: Good Friday; top leagues played the Apr 4-5 weekend
     },
 }
 
