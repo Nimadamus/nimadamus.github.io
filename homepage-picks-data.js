@@ -27,6 +27,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Yankees Team Total Under 4.5 at Royals: Wacha Caps A Cold Bronx Lineup At Kauffman",
+        date: "May 25, 2026",
+        url: "yankees-team-total-under-4-5-royals-wacha-warren-kauffman-stadium-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592450/action/hero/current"
+    },
+
+    {
         sport: "NHL",
         title: "Canadiens +1.5 vs Hurricanes Game 2: Montreal Covers The Puck Line",
         date: "May 23, 2026",
