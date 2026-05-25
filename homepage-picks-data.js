@@ -28,6 +28,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Guardians Moneyline -169 vs Nationals: Bibee And The AL Central Leader Hold Serve",
+        date: "May 25, 2026",
+        url: "guardians-moneyline-nationals-bibee-littell-progressive-field-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/608070/action/hero/current"
+    },
+
+    {
+        sport: "MLB",
         title: "Yankees Team Total Under 4.5 at Royals: Wacha Caps A Cold Bronx Lineup At Kauffman",
         date: "May 25, 2026",
         url: "yankees-team-total-under-4-5-royals-wacha-warren-kauffman-stadium-mlb-pick.html",
