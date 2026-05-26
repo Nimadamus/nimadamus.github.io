@@ -233,6 +233,7 @@ const FEATURED_GAMES = [
     { date: "2026-05-23", page: "knicks-vs-cavaliers-eastern-conference-finals-game-3-analysis-stats-preview-may-23-2026.html", title: "NBA Analysis" },
     { date: "2026-05-24", page: "thunder-vs-spurs-western-conference-finals-game-4-analysis-stats-preview-may-24-2026.html", title: "Thunder vs Spurs WCF Game 4 Analysis" },
     { date: "2026-05-25", page: "hurricanes-vs-canadiens-eastern-conference-final-game-3-analysis-stats-preview-may-25-2026.html", title: "Hurricanes vs Canadiens ECF Game 3 Analysis" },
+    { date: "2026-05-26", page: "spurs-vs-thunder-western-conference-final-game-5-analysis-stats-preview-may-26-2026.html", title: "Spurs vs Thunder Game 5 Analysis, Stats, Preview" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
