@@ -27,6 +27,22 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NBA",
+        title: "Thunder Moneyline -170 vs Spurs: The Champions Defend Home Court In Game 5",
+        date: "May 26, 2026",
+        url: "thunder-moneyline-spurs-game-5-western-conference-final-paycom-center-nba-pick.html",
+        image: "images/thunderwin.webp"
+    },
+
+    {
+        sport: "MLB",
+        title: "Braves vs Red Sox Under 8.5: Strider And Suarez Headline The Night's Best Arms At Fenway",
+        date: "May 26, 2026",
+        url: "braves-red-sox-under-8-5-strider-suarez-fenway-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/624133/action/hero/current"
+    },
+
+    {
         sport: "MLB",
         title: "Guardians Moneyline -169 vs Nationals: Bibee And The AL Central Leader Hold Serve",
         date: "May 25, 2026",
