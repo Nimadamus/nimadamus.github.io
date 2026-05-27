@@ -255,6 +255,8 @@ if (pathname.includes('/archives/')) {
 
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
+// Hub/main pages never get a current-page "Article" highlight, even if a
+// stale window.FORCED_PAGE_DATE is left in the hub HTML.
 const activeArticleDate = isMainPage ? null : (forcedDate || pageToDateMap[currentPage] || null);
 const currentPageDate = activeArticleDate;
 

@@ -636,9 +636,13 @@ def generate_calendar_js(sport_name, sport_config, pages):
     lines.append('];')
     lines.append('')
 
-    # Build the MAIN_PAGES list dynamically - includes both legacy main pages AND hub pages
+    # Build the MAIN_PAGES list dynamically - includes legacy main pages AND every
+    # preview hub. ALL hubs (not just this sport's) must be listed so a hub never
+    # renders a stale "Article" current-page highlight from a leftover FORCED_PAGE_DATE.
     hub_page = sport_config.get('hub')
-    main_pages_list = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html']
+    main_pages_list = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html',
+                       'nba-previews.html', 'nhl-previews.html', 'mlb-previews.html', 'soccer-previews.html',
+                       'college-basketball-previews.html']
     if hub_page and hub_page not in main_pages_list:
         main_pages_list.append(hub_page)
     main_pages_js = ', '.join(f"'{p}'" for p in main_pages_list)
@@ -693,7 +697,9 @@ def generate_calendar_js(sport_name, sport_config, pages):
         '',
         'const isMainPage = MAIN_PAGES.includes(currentPage);',
         'const forcedDate = window.FORCED_PAGE_DATE || null;',
-        'const activeArticleDate = forcedDate || pageToDateMap[currentPage] || null;',
+        '// Hub/main pages never get a current-page "Article" highlight, even if a',
+        '// stale window.FORCED_PAGE_DATE is left in the hub HTML.',
+        'const activeArticleDate = isMainPage ? null : (forcedDate || pageToDateMap[currentPage] || null);',
         'const currentPageDate = activeArticleDate;',
         '',
         'const months = new Set();',
@@ -787,7 +793,7 @@ def generate_calendar_js(sport_name, sport_config, pages):
         '        const hasData = postsForDate.length > 0 ? postsForDate[0] : null;',
         "        let classes = 'cal-day';",
         "        if (dateStr === currentPageDate) classes += ' current-page';",
-        "        if (dateStr === todayStr) classes += ' today';",
+        "        if (dateStr === todayStr && yearMonth === todayMonth) classes += ' today';",
         "        if (hasData) classes += ' has-content is-linked';",
         "        else classes += ' is-disabled';",
         "        if (dateStr < todayStr) classes += ' is-past';",

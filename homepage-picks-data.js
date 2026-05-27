@@ -27,6 +27,14 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "BetLegend MLB Picks May 27, 2026: Six Official Plays For Wednesday",
+        date: "May 27, 2026",
+        url: "betlegend-mlb-picks-six-official-plays-may-27-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/660271/action/hero/current"
+    },
+
+    {
         sport: "NBA",
         title: "Thunder Moneyline -170 vs Spurs: The Champions Defend Home Court In Game 5",
         date: "May 26, 2026",
