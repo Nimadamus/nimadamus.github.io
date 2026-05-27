@@ -77,7 +77,7 @@ if (pathname.includes('/archives/')) {
 
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
-const activeArticleDate = isMainPage ? null : (forcedDate || pageToDateMap[currentPage] || null);
+const activeArticleDate = forcedDate || pageToDateMap[currentPage] || null;
 const currentPageDate = activeArticleDate;
 
 const months = new Set();
@@ -106,7 +106,7 @@ function installCalendarStateStyles() {
 .calendar-days .cal-day.today{border:2px solid #ffd54f!important;box-shadow:0 0 0 1px rgba(255,213,79,.34),0 0 12px rgba(255,213,79,.28)!important}
 .calendar-days .cal-day.today::after{content:'Today';position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);font-size:8px;line-height:1;color:#ffd54f;font-weight:900;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
 .calendar-days .cal-day.current-page{background:rgba(0,229,255,.72)!important;color:#fff!important;border:2px solid #00e5ff!important;font-weight:900!important;box-shadow:0 0 12px rgba(0,229,255,.45)!important}
-.calendar-days .cal-day.current-page::before{content:none}
+.calendar-days .cal-day.current-page::before{content:'Article';position:absolute;left:50%;top:-14px;transform:translateX(-50%);font-size:8px;line-height:1;color:#00e5ff;font-weight:900;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
 .calendar-days .cal-day.today.current-page{background:linear-gradient(135deg,rgba(0,229,255,.72),rgba(255,213,79,.42))!important;border-color:#ffd54f!important}
 `;
     document.head.appendChild(style);
@@ -186,7 +186,10 @@ function renderCalendar(yearMonth) {
         cell.textContent = d;
         if (hasData) {
             cell.title = postsForDate.map(item => item.title).join('\n');
-            cell.onclick = () => { navigateToCalendarPage(hasData.page); };
+            cell.onclick = () => {
+                if (postsForDate.length === 1) navigateToCalendarPage(hasData.page);
+                else showCalendarPostChooser(dateStr, postsForDate);
+            };
         }
         container.appendChild(cell);
     }
