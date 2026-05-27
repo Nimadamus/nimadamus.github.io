@@ -271,7 +271,7 @@ const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });
 
 const SPORT_HUB_PAGE = 'nhl-previews.html';
-const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html', 'nhl-previews.html'];
+const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html', 'nba-previews.html', 'nhl-previews.html', 'mlb-previews.html', 'soccer-previews.html', 'college-basketball-previews.html'];
 function isConcreteContentPage(page) {
     return !!page && !MAIN_PAGES.includes(page) && !page.includes('#') && !page.includes('-archive-');
 }
@@ -312,7 +312,7 @@ if (pathname.includes('/archives/')) {
 
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
-const activeArticleDate = forcedDate || pageToDateMap[currentPage] || null;
+const activeArticleDate = isMainPage ? null : (forcedDate || pageToDateMap[currentPage] || null);
 const currentPageDate = activeArticleDate;
 
 const months = new Set();
@@ -406,7 +406,7 @@ function renderCalendar(yearMonth) {
         const hasData = postsForDate.length > 0 ? postsForDate[0] : null;
         let classes = 'cal-day';
         if (dateStr === currentPageDate) classes += ' current-page';
-        if (dateStr === todayStr) classes += ' today';
+        if (dateStr === todayStr && yearMonth === todayMonth) classes += ' today';
         if (hasData) classes += ' has-content is-linked';
         else classes += ' is-disabled';
         if (dateStr < todayStr) classes += ' is-past';

@@ -65,18 +65,19 @@ function buildCalendarState() {
     archiveData.forEach(function(item) { var parts = item.date.split('-'); months[parts[0] + '-' + parts[1]] = true; });
     if (pageDate) { var p = pageDate.split('-'); months[p[0] + '-' + p[1]] = true; }
     if (newestDate) { var n = newestDate.split('-'); months[n[0] + '-' + n[1]] = true; }
+    var tdy = new Date(); months[tdy.getFullYear() + '-' + String(tdy.getMonth() + 1).padStart(2, '0')] = true;
 
     var sortedMonths = Object.keys(months).sort().reverse();
     var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    // Calendar opens to the ACTIVE date's month
+    // Calendar opens to the month of the page being viewed, else today's real
+    // month. Deterministic so the first paint lands on the right month even when
+    // the browser still has a stale (cache) copy of featured-games-data.js whose
+    // newestDate lags behind. (activeDate logic above is intentionally untouched.)
     var displayMonth;
-    if (activeDate) {
-        var ap = activeDate.split('-');
+    if (pageDate) {
+        var ap = pageDate.split('-');
         displayMonth = ap[0] + '-' + ap[1];
-    } else if (newestDate) {
-        var np = newestDate.split('-');
-        displayMonth = np[0] + '-' + np[1];
     } else {
         var today = new Date();
         displayMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
@@ -187,9 +188,21 @@ if (document.readyState === 'loading') { document.addEventListener('DOMContentLo
     script.src = 'featured-games-data.js?_=' + Date.now();
     script.onload = function() {
         if (dataFingerprint() !== initialFingerprint) {
-            // Data changed - rebuild state and re-render
+            // Data changed - rebuild state and re-render, but keep whatever month
+            // the user is currently viewing so the fresh data doesn't yank them.
+            var sel = document.getElementById('month-select');
+            var keepMonth = sel && sel.value ? sel.value : null;
             _calState = buildCalendarState();
             initFeaturedGamesCalendar();
+            if (keepMonth) {
+                var sel2 = document.getElementById('month-select');
+                if (sel2) {
+                    for (var i = 0; i < sel2.options.length; i++) {
+                        if (sel2.options[i].value === keepMonth) { sel2.selectedIndex = i; break; }
+                    }
+                }
+                renderCalendar(keepMonth);
+            }
         }
     };
     document.head.appendChild(script);
