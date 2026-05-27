@@ -96,7 +96,7 @@ if (pathname.includes('/archives/')) {
 
 const isMainPage = MAIN_PAGES.includes(currentPage);
 const forcedDate = window.FORCED_PAGE_DATE || null;
-const activeArticleDate = forcedDate || pageToDateMap[currentPage] || null;
+const activeArticleDate = isMainPage ? null : (forcedDate || pageToDateMap[currentPage] || null);
 const currentPageDate = activeArticleDate;
 
 const months = new Set();
@@ -205,10 +205,7 @@ function renderCalendar(yearMonth) {
         cell.textContent = d;
         if (hasData) {
             cell.title = postsForDate.map(item => item.title).join('\n');
-            cell.onclick = () => {
-                if (postsForDate.length === 1) navigateToCalendarPage(hasData.page);
-                else showCalendarPostChooser(dateStr, postsForDate);
-            };
+            cell.onclick = () => { navigateToCalendarPage(hasData.page); };
         }
         container.appendChild(cell);
     }
