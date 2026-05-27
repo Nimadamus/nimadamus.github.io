@@ -193,6 +193,18 @@ def check_featured_game_links():
 # ============================================================
 # MAIN
 # ============================================================
+def check_no_slate_rundown_box():
+    """Block the top-of-page 'Today's X-Game Slate' rundown box on any
+    MLB preview/archive article page (removed May 27, 2026 per Nima)."""
+    print("Checking no slate-rundown box on MLB pages...")
+    for filepath in REPO_DIR.glob('*mlb*.html'):
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+        if 'class="slate-summary"' in content or re.search(r"Today's\s+\d+-Game Slate", content):
+            ERRORS.append(
+                f"SLATE RUNDOWN BOX in {filepath.name}: remove the "
+                f"'Today's X-Game Slate' / class=\"slate-summary\" block")
+
 def main():
     print("=" * 60)
     print("BETLEGEND CONTENT VALIDATOR")
@@ -204,6 +216,7 @@ def main():
     check_calendars()
     check_nav_text()
     check_featured_game_links()
+    check_no_slate_rundown_box()
 
     print()
     print("=" * 60)
