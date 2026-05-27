@@ -28,10 +28,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
-        title: "BetLegend MLB Picks May 27, 2026: Six Official Plays For Wednesday",
+        title: "Padres Team Total Under 3.5: Sanchez Dominant At Petco Park",
         date: "May 27, 2026",
-        url: "betlegend-mlb-picks-six-official-plays-may-27-2026.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/660271/action/hero/current"
+        url: "padres-team-total-under-3-5-phillies-cristopher-sanchez-petco-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/650911/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Cubs Team Total Under 4.5 at Pirates: Cold Road Bats",
+        date: "May 27, 2026",
+        url: "cubs-team-total-under-4-5-pirates-jameson-taillon-pnc-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/543037/action/hero/current"
     },
 
     {
