@@ -28,10 +28,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Yankees Moneyline -143 at Athletics: Rodon Holds Off Severino At Sutter Health Park",
+        date: "May 29, 2026",
+        url: "yankees-moneyline-athletics-rodon-severino-sutter-health-park-mlb-pick-may-29-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607074/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Cubs Team Total Under 3.5 (-145): Skenes Caps Chicago At PNC",
         date: "May 28, 2026",
         url: "cubs-team-total-under-3-5-pirates-skenes-mlb-pick-may-28-2026.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694973/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607067/action/hero/current"
     },
     {
         sport: "MLB",

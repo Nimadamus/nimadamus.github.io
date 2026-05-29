@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-29", page: "wheeler-dodgers-cubs-cardinals-rivalry-friday-mlb-may-29-2026.html", title: "MLB Analysis - Wheeler at Dodger Stadium, Cubs-Cardinals Rivalry Friday - May 29, 2026" },
+    { date: "2026-05-29", page: "yankees-moneyline-athletics-rodon-severino-sutter-health-park-mlb-pick-may-29-2026.html", title: "Yankees Moneyline -143 at Athletics: Rodon Holds Off Severino At Sutter Health Park" },
     { date: "2026-05-28", page: "cubs-team-total-under-3-5-pirates-skenes-mlb-pick-may-28-2026.html", title: "Cubs Team Total Under 3.5 (-145): Skenes Caps Chicago At PNC" },
     { date: "2026-05-28", page: "sale-skenes-eovaldi-thursday-six-game-mlb-may-28-2026.html", title: "MLB Analysis - Sale Skenes Eovaldi Thursday Six-Game Slate - May 28, 2026" },
     { date: "2026-05-27", page: "cubs-team-total-under-4-5-pirates-jameson-taillon-pnc-park-mlb-pick.html", title: "Cubs Team Total Under 4.5 at Pirates: Cold Road Bats" },
