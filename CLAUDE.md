@@ -539,6 +539,50 @@ all 7 sport calendar scripts.
 
 ---
 
+## ⛔⛔⛔ CALENDAR COMPLETION GATE — A POST IS NOT DONE UNTIL IT IS ON THE CALENDAR (LOCKED MAY 28, 2026) ⛔⛔⛔
+
+**Missing calendar entries are a PUBLISHING FAILURE, not a cosmetic bug.** Any
+BetLegendPicks sport preview, pick, or hub page is INCOMPLETE until ALL of these
+are true. This applies to every sport (NBA, NHL, MLB, Soccer, NCAAB, NCAAF, NFL):
+
+1. **The article/page is live** (HTTP 200 on www.betlegendpicks.com).
+2. **The correct POST date appears on the calendar.** Sport calendars are
+   generated data in `scripts/<sport>-calendar.js` (built by
+   `scripts/sync_calendars.py` from page titles/filenames + the rotation
+   manifest). The Handicapping Hub calendar is a separate engine — the inline
+   `archiveDates` array in `handicapping-hub.html`, built by
+   `scripts/handicapping_hub_production.py` from a directory scan of
+   `handicapping-hub-archive/hub-YYYY-MM-DD.html` (+ today). THEY ARE TWO
+   DIFFERENT SYSTEMS. A page added to one does not appear in the other.
+3. **The calendar date links to that exact entry** (single post → direct link;
+   multi-post date → chooser).
+4. **No existing archive dates were removed.** Insert-only.
+
+### THE ROOT CAUSE OF "MISSING ENTRIES" (and the permanent fix):
+Calendar JS is *generated* and goes STALE the instant a page is published
+without re-running the sync. A page can be live + linked from the homepage and
+still be invisible on its sport calendar. (May 28, 2026: the Cubs MLB pick was
+on the homepage feed but never synced into `mlb-calendar.js`.)
+
+Permanent guard (installed May 28, 2026) in `hooks/pre-commit`: whenever any
+sport/preview/pick HTML is staged, it auto-runs `sync_calendars.py`, stages the
+regenerated calendar JS + hub pages, and HARD-BLOCKS the commit if
+`scripts/validate_calendar_continuity.py` reports a missing date. So you cannot
+commit a sport page whose date is absent from its calendar.
+
+### REQUIRED before reporting any sport-content task complete:
+```
+python scripts/sync_calendars.py
+python scripts/validate_calendar_continuity.py      # must print [PASSED]
+python scripts/validate_slate_completeness.py --range 3
+```
+Note: playoff OFF-DAYS (no game that day) and OFFSEASON sports (e.g. NCAAB in
+May) legitimately have no page — that is NOT a gap. Do not fabricate a page to
+fill a day no games were played. `validate_slate_completeness.py` may warn for a
+playoff off-day; confirm against the actual schedule before acting.
+
+---
+
 ## ⛔⛔⛔ ROLLING HUB SYSTEM — FULLY RETIRED, DO NOT RE-IMPLEMENT ⛔⛔⛔
 
 ### Retired March 30, 2026. Re-executed accidentally on April 19, 2026 (canonical-to-hub rewrites, sitemap purge). GSC data later confirmed the legacy sport hubs drove 0 clicks, so the "consolidation" helped nothing and the churn created confusion. NEVER RE-IMPLEMENT.
