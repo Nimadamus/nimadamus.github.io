@@ -149,45 +149,7 @@ function pickPrimaryPostForDate(postsForDate) {
     return slate || postsForDate[0];
 }
 
-// Chooser retained per CLAUDE.md (do not remove); no longer invoked on date click.
-function closeCalendarPostChooser() {
-    const existing = document.getElementById('calendar-post-chooser');
-    if (existing) existing.remove();
-}
-
-function showCalendarPostChooser(dateStr, postsForDate) {
-    closeCalendarPostChooser();
-    const overlay = document.createElement('div');
-    overlay.id = 'calendar-post-chooser';
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.64);z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px;';
-    const panel = document.createElement('div');
-    panel.style.cssText = 'width:min(440px,100%);max-height:min(680px,88vh);overflow:auto;background:#171713;border:1px solid rgba(232,184,92,.35);border-radius:10px;padding:18px;box-shadow:0 24px 80px rgba(0,0,0,.55);color:#fbf7ed;';
-    const dateObj = new Date(dateStr + 'T12:00:00');
-    const title = document.createElement('div');
-    title.textContent = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-    title.style.cssText = 'font-family:Oswald,Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#e8b85c;font-weight:800;margin-bottom:12px;';
-    panel.appendChild(title);
-    const list = document.createElement('div');
-    list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
-    postsForDate.forEach(item => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.textContent = item.title;
-        button.style.cssText = 'width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,238,203,.14);border-radius:7px;color:#fbf7ed;padding:11px 12px;font:700 13px Inter,Arial,sans-serif;cursor:pointer;line-height:1.35;';
-        button.onclick = () => navigateToCalendarPage(item.page);
-        list.appendChild(button);
-    });
-    panel.appendChild(list);
-    const close = document.createElement('button');
-    close.type = 'button';
-    close.textContent = 'Close';
-    close.style.cssText = 'margin-top:14px;width:100%;background:#e8b85c;border:0;border-radius:7px;color:#16120c;padding:10px 12px;font:900 12px Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;';
-    close.onclick = closeCalendarPostChooser;
-    panel.appendChild(close);
-    overlay.appendChild(panel);
-    overlay.addEventListener("click", event => { if (event.target === overlay) closeCalendarPostChooser(); });
-    document.body.appendChild(overlay);
-}
+// Popup chooser fully removed (Nima): clicking a date opens the page directly.
 
 function renderCalendar(yearMonth) {
     const [year, month] = yearMonth.split('-').map(Number);
