@@ -352,3 +352,43 @@ if echo "$STAGED_HTML" | grep -q "^${ARCHIVE_PAGE}$"; then
         exit 1
     fi
 fi
+
+# ============================================================
+# PERMANENT CALENDAR GATE (May 28, 2026)
+# A published sport/preview/pick page is NOT complete until its date is on the
+# correct calendar. Calendars are generated data (scripts/*-calendar.js) and go
+# stale the moment a page is published without re-running the sync. So whenever
+# any sport / preview / pick HTML is staged we (1) regenerate every calendar,
+# (2) auto-stage the regenerated calendar JS + hub pages, and (3) hard-block the
+# commit if calendar continuity is broken. Missing calendar entry = publish fail.
+# ============================================================
+SPORT_HTML=$(echo "$STAGED_HTML" | grep -iE '(-(nba|nhl|mlb|soccer|ncaab|ncaaf|nfl|college-basketball)([-.]|$))|(-pick[s]?[-.])|^(nba|nhl|mlb|soccer|nfl|ncaaf)\.html$|previews\.html$' || true)
+if [ -n "$SPORT_HTML" ]; then
+    echo ""
+    echo "Sport/preview/pick page staged - regenerating calendars (scripts/sync_calendars.py)..."
+    python scripts/sync_calendars.py >/dev/null 2>&1
+    SYNC_RESULT=$?
+    if [ $SYNC_RESULT -ne 0 ]; then
+        echo "  [BLOCKED] sync_calendars.py failed. Calendars could not be regenerated."
+        exit 1
+    fi
+    # Auto-stage only the calendar outputs sync_calendars.py rewrites.
+    git add scripts/nba-calendar.js scripts/nhl-calendar.js scripts/mlb-calendar.js \
+            scripts/soccer-calendar.js scripts/ncaab-calendar.js scripts/ncaaf-calendar.js \
+            scripts/nfl-calendar.js nba-previews.html nhl-previews.html mlb-previews.html \
+            soccer-previews.html college-basketball-previews.html nfl.html ncaaf.html 2>/dev/null || true
+    echo "  [OK] Calendars regenerated and staged."
+
+    echo ""
+    echo "Running calendar continuity gate (scripts/validate_calendar_continuity.py)..."
+    python scripts/validate_calendar_continuity.py
+    CONT_RESULT=$?
+    if [ $CONT_RESULT -ne 0 ]; then
+        echo ""
+        echo "  [BLOCKED] Calendar continuity failed - a published date is missing from a calendar."
+        echo "  A page is not done until its date appears on the correct calendar."
+        echo "  Fix the missing date(s) above, then re-stage and commit."
+        exit 1
+    fi
+    echo "  [OK] Calendar continuity intact."
+fi

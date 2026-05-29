@@ -26,20 +26,16 @@ SPORTS = {
     "ncaaf": "ncaaf-calendar.js",
 }
 
+# Locked regression dates that must always survive in each sport's calendar.
+# NCAAB is intentionally absent: college basketball is OFFSEASON from mid-April
+# through October, so there is no May 16 NCAAB page and demanding one keeps the
+# continuity gate permanently red (false positive). Only force dates that have a
+# real recovery page in REQUIRED_DATE_TARGETS (sync_calendars.py).
 REQUIRED_REGRESSION_DATES = {
     "nba": {"2026-05-16"},
     "nhl": {"2026-05-16"},
     "mlb": {"2026-05-16"},
     "soccer": {"2026-05-16"},
-    "ncaab": {"2026-05-16"},
-}
-
-REQUIRED_REGRESSION_DATES = {
-    "nba": {"2026-05-16"},
-    "nhl": {"2026-05-16"},
-    "mlb": {"2026-05-16"},
-    "soccer": {"2026-05-16"},
-    "ncaab": {"2026-05-16"},
 }
 
 
