@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-05-30", page: "spurs-vs-thunder-western-conference-final-game-7-nba-analysis-stats-preview-may-30-2026.html", title: "Spurs vs Thunder Game 7 Analysis, Stats, Preview - May 30, 2026" },
+    { date: "2026-05-30", page: "thunder-moneyline-spurs-game-7-western-conference-final-nba-pick-may-30-2026.html", title: "Thunder vs Spurs Game 7 Pick May 30 2026" },
     { date: "2026-05-30", page: "wembanyama-sga-game-7-winner-take-all-spurs-thunder-nba-may-30-2026.html", title: "NBA Analysis - Spurs-Thunder Game 7 Winner-Take-All for the West - May 30, 2026" },
     { date: "2026-05-28", page: "thunder-spurs-elimination-night-wcf-game-6-nba-may-28-2026.html", title: "NBA Analysis - Thunder vs Spurs WCF Game 6 - May 28, 2026" },
     { date: "2026-05-28", page: "thunder-vs-spurs-western-conference-final-game-6-nba-analysis-stats-preview-may-28-2026.html", title: "Thunder vs Spurs Game 6 Analysis, Stats, Preview - May 28, 2026" },

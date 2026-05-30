@@ -6,6 +6,7 @@ const ARCHIVE_DATA = [
     { date: "2026-05-30", page: "braves-reds-team-total-over-mlb-pick-may-30-2026.html", title: "Braves vs Reds Team Total Pick May 30 2026" },
     { date: "2026-05-30", page: "padres-nationals-moneyline-mlb-pick-may-30-2026.html", title: "Padres vs Nationals Pick May 30 2026" },
     { date: "2026-05-30", page: "phillies-dodgers-cubs-cardinals-saturday-mlb-may-30-2026.html", title: "MLB Analysis - Sasaki vs Luzardo at Dodger Stadium, Cubs-Cardinals Saturday - May 30, 2026" },
+    { date: "2026-05-30", page: "yankees-moneyline-athletics-mlb-pick-may-30-2026.html", title: "Yankees vs Athletics Pick May 30 2026" },
     { date: "2026-05-29", page: "wheeler-dodgers-cubs-cardinals-rivalry-friday-mlb-may-29-2026.html", title: "MLB Analysis - Wheeler at Dodger Stadium, Cubs-Cardinals Rivalry Friday - May 29, 2026" },
     { date: "2026-05-29", page: "yankees-moneyline-athletics-rodon-severino-sutter-health-park-mlb-pick-may-29-2026.html", title: "Yankees Moneyline -143 at Athletics: Rodon Holds Off Severino At Sutter Health Park" },
     { date: "2026-05-28", page: "cubs-team-total-under-3-5-pirates-skenes-mlb-pick-may-28-2026.html", title: "Cubs Team Total Under 3.5 (-145): Skenes Caps Chicago At PNC" },
