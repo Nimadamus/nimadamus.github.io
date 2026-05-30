@@ -30,6 +30,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Braves Team Total Over 4.5 (-140) vs Reds: Atlanta Bats Heat Up At Great American",
         date: "May 30, 2026",
+        result: "L",
         url: "braves-reds-team-total-over-mlb-pick-may-30-2026.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/660670/action/hero/current"
     },
@@ -37,6 +38,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Padres Moneyline -121 vs Nationals: San Diego Takes The Series At Petco",
         date: "May 30, 2026",
+        result: "L",
         url: "padres-nationals-moneyline-mlb-pick-may-30-2026.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/665487/action/hero/current"
     },
@@ -44,6 +46,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Yankees Moneyline -143 at Athletics: Rodon Holds Off Severino At Sutter Health Park",
         date: "May 29, 2026",
+        result: "W",
         url: "yankees-moneyline-athletics-rodon-severino-sutter-health-park-mlb-pick-may-29-2026.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607074/action/hero/current"
     },
@@ -51,6 +54,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Cubs Team Total Under 3.5 (-145): Skenes Caps Chicago At PNC",
         date: "May 28, 2026",
+        result: "L",
         url: "cubs-team-total-under-3-5-pirates-skenes-mlb-pick-may-28-2026.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607067/action/hero/current"
     },
@@ -58,6 +62,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Padres Team Total Under 3.5: Sanchez Dominant At Petco Park",
         date: "May 27, 2026",
+        result: "W",
         url: "padres-team-total-under-3-5-phillies-cristopher-sanchez-petco-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/650911/action/hero/current"
     },
@@ -65,6 +70,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Cubs Team Total Under 4.5 at Pirates: Cold Road Bats",
         date: "May 27, 2026",
+        result: "L",
         url: "cubs-team-total-under-4-5-pirates-jameson-taillon-pnc-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/543037/action/hero/current"
     },
@@ -73,6 +79,7 @@ var HOMEPAGE_PICKS = [
         sport: "NBA",
         title: "Thunder Moneyline -170 vs Spurs: The Champions Defend Home Court In Game 5",
         date: "May 26, 2026",
+        result: "W",
         url: "thunder-moneyline-spurs-game-5-western-conference-final-paycom-center-nba-pick.html",
         image: "images/thunderwin.webp"
     },
@@ -81,6 +88,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Braves vs Red Sox Under 8.5: Strider And Suarez Headline The Night's Best Arms At Fenway",
         date: "May 26, 2026",
+        result: "L",
         url: "braves-red-sox-under-8-5-strider-suarez-fenway-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/624133/action/hero/current"
     },
@@ -89,6 +97,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Guardians Moneyline -169 vs Nationals: Bibee And The AL Central Leader Hold Serve",
         date: "May 25, 2026",
+        result: "L",
         url: "guardians-moneyline-nationals-bibee-littell-progressive-field-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/608070/action/hero/current"
     },
@@ -97,6 +106,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Yankees Team Total Under 4.5 at Royals: Wacha Caps A Cold Bronx Lineup At Kauffman",
         date: "May 25, 2026",
+        result: "W",
         url: "yankees-team-total-under-4-5-royals-wacha-warren-kauffman-stadium-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592450/action/hero/current"
     },
@@ -105,6 +115,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Canadiens +1.5 vs Hurricanes Game 2: Montreal Covers The Puck Line",
         date: "May 23, 2026",
+        result: "W",
         url: "canadiens-puck-line-plus-1-5-hurricanes-game-2-eastern-conference-final-nhl-pick.html",
         image: "images/canadiens-puck-line-plus-1-5-hurricanes-game-2-eastern-conference-final-nhl-pick.jpg"
     },
@@ -113,6 +124,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Pirates-Blue Jays Under 7.5: Skenes vs Corbin At Rogers Centre",
         date: "May 23, 2026",
+        result: "W",
         url: "pirates-blue-jays-under-7-5-skenes-corbin-rogers-centre-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694973/action/hero/current"
     },
@@ -121,6 +133,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Canadiens Team Total Under 2.5 vs Hurricanes: ECF Game 1 Scoring Ceiling",
         date: "May 21, 2026",
+        result: "L",
         url: "canadiens-team-total-under-2-5-hurricanes-game-1-nhl-pick-may-21-2026.html",
         image: "images/canadiens-team-total-under-2-5-hurricanes-game-1-nhl-pick-may-21-2026.jpg"
     },
@@ -129,6 +142,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Guardians Moneyline -121 at Tigers: Parker Messick Takes The Hill At Comerica",
         date: "May 19, 2026",
+        result: "W",
         url: "guardians-moneyline-minus-121-tigers-messick-montero-comerica-park-mlb-pick-may-19-2026.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/800048/action/hero/current"
     },
@@ -137,6 +151,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Dodgers-Padres First Five Under 4.5: Yamamoto vs King At Petco",
         date: "May 18, 2026",
+        result: "W",
         url: "dodgers-padres-first-five-innings-under-4-5-yamamoto-king-petco-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/808967/action/hero/current"
     },
@@ -145,6 +160,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Phillies/Pirates First 5 Under 4.5: Wheeler and Skenes Define the Early Window",
         date: "May 17, 2026",
+        result: "W",
         url: "phillies-pirates-first-five-under-4-5-wheeler-skenes-pnc-may-17-2026.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/554430/action/hero/current"
     },
@@ -152,6 +168,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Rangers Team Total Under 4.5: Lambert and Daikin Park Set the Run Ceiling",
         date: "May 17, 2026",
+        result: "L",
         url: "rangers-team-total-under-4-5-eovaldi-lambert-daikin-park-may-17-2026.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/543135/action/hero/current"
     },
@@ -159,6 +176,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Ducks Team Total Under 3.5 vs Golden Knights: Game 6 Scoring Ceiling",
         date: "May 14, 2026",
+        result: "W",
         url: "ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.html",
         image: "images/ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.png"
     },
@@ -166,6 +184,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Brewers Moneyline -139 vs Padres: Harrison Edge At Home",
         date: "May 14, 2026",
+        result: "W",
         url: "brewers-moneyline-minus-139-padres-canning-harrison-mlb-pick-may-14-2026.html",
         image: "images/brewers.webp"
     },
