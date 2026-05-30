@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Braves Team Total Over 4.5 (-140) vs Reds: Atlanta Bats Heat Up At Great American",
+        date: "May 30, 2026",
+        url: "braves-reds-team-total-over-mlb-pick-may-30-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/660670/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Padres Moneyline -121 vs Nationals: San Diego Takes The Series At Petco",
+        date: "May 30, 2026",
+        url: "padres-nationals-moneyline-mlb-pick-may-30-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/665487/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Yankees Moneyline -143 at Athletics: Rodon Holds Off Severino At Sutter Health Park",
         date: "May 29, 2026",
         url: "yankees-moneyline-athletics-rodon-severino-sutter-health-park-mlb-pick-may-29-2026.html",
