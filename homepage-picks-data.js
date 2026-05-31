@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Blue Jays/Orioles Over 8 (-120) at Camden Yards: Leaky Birds Staff Fuels The Total",
+        date: "May 31, 2026",
+        url: "blue-jays-orioles-over-8-bradish-miles-camden-yards-mlb-pick-may-31-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/680694/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Astros +1.5 (-110) vs Brewers: Run Line Cushion Against Misiorowski At Daikin Park",
+        date: "May 31, 2026",
+        url: "astros-plus-1-5-runline-brewers-misiorowski-imai-daikin-park-mlb-pick-may-31-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694819/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Braves Team Total Over 4.5 (-140) vs Reds: Atlanta Bats Heat Up At Great American",
         date: "May 30, 2026",
         result: "L",
