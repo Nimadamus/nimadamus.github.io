@@ -505,17 +505,25 @@ sh hooks/install.sh
 **The archive calendar sidebar on every sport preview/archive page (`*-previews.html`
 and every standalone dated preview) must show ONLY these markers:**
 
-1. **Article dates** — any date with content gets `has-content is-linked` (clickable;
-   multi-post dates open the chooser). Every real article date must render.
+1. **Article dates** — any date with content gets `has-content is-linked` (clickable).
+   Clicking a date navigates STRAIGHT to that day's page (multi-post dates go to that
+   day's slate/preview via `pickPrimaryPostForDate`). NO popup/chooser — that was
+   removed permanently (Nima). Every real article date must render.
 2. **Active article date** — the date of the page being viewed gets `current-page`
-   (cyan fill + "Article" label), driven by `window.FORCED_PAGE_DATE` / `pageToDateMap`.
-3. **Today** — `today` (gold) is applied ONLY when the rendered month is today's month.
-   The guard is literal:
+   (cyan fill), driven by `window.FORCED_PAGE_DATE` / `pageToDateMap`.
+3. **Today** — `today` (gold border) is applied ONLY when the rendered month is today's
+   month. The guard is literal:
    ```js
    if (dateStr === todayStr && yearMonth === todayMonth) classes += ' today';
    ```
    Never mark "today" on a month the user navigated to that isn't the real current
-   month. A stale gold "Today" badge on an unrelated day is a bug.
+   month. A stale gold "Today" highlight on an unrelated day is a bug.
+
+**NO floating text labels (LOCKED June 1, 2026).** Markers are COLOR/BORDER ONLY:
+cyan tint = has content, cyan fill = active day, gold border = today. Do NOT re-add
+the `::after{content:'Today'}` / `::before{content:'Article'}` pseudo-element labels —
+they are negative-positioned, clip/overlap at grid edges, and read as "weird icons."
+They were removed from `installCalendarStateStyles` in `sync_calendars.py`.
 
 The 8 calendar scripts (`scripts/{nba,nhl,mlb,ncaab,ncaaf,nfl,soccer}-calendar.js`)
 share identical render logic — `featured-games-calendar.js` is a separate engine with

@@ -90,6 +90,25 @@ def recent_dates(days, today_iso):
     return {(today - timedelta(days=i)).isoformat() for i in range(days)}
 
 
+def broken_link_failures():
+    """Every calendar entry must point at a file that exists. A date that links
+    to a missing page means clicking it 404s instead of opening that day."""
+    problems = []
+    entry_re = re.compile(r'date:\s*"(\d{4}-\d{2}-\d{2})",\s*page:\s*"([^"]+)"')
+    for sport, js_name in SPORTS.items():
+        path = SCRIPTS_DIR / js_name
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        for date, page in entry_re.findall(text):
+            target = page.split("#")[0]
+            if not target:
+                continue
+            if not (REPO_DIR / target).exists():
+                problems.append((sport, date, target))
+    return problems
+
+
 # Sport -> rolling hub page. A hub bakes in the last published article; it must
 # only ever occupy a calendar cell on the SAME date as its own FORCED_PAGE_DATE.
 # If a hub is dated on any other day (e.g. "today" because the date couldn't be
@@ -172,13 +191,20 @@ def main():
         print(f"[FAIL] {sport.upper()} hub {hub_page} is calendar-dated {dated} "
               f"but its baked FORCED_PAGE_DATE is {forced_desc} -> STALE HUB ON WRONG DAY")
 
-    if failures or stale_hubs:
+    broken = broken_link_failures()
+    for sport, date, target in broken:
+        print(f"[FAIL] {sport.upper()} calendar date {date} links to MISSING page {target} -> click would 404")
+
+    if failures or stale_hubs or broken:
         if failures:
             print("\nCalendar continuity failed. Run sync_calendars.py and fix missing dates before publish.")
         if stale_hubs:
             print("\nStale-hub gate failed. A *-previews.html hub may only be dated on its own "
                   "FORCED_PAGE_DATE. Re-run sync_calendars.py (it now drops undated hubs) and/or "
                   "set the hub's FORCED_PAGE_DATE to match the day it represents.")
+        if broken:
+            print("\nBroken-link gate failed. Every calendar date must point at a file that exists. "
+                  "Re-run sync_calendars.py after publishing the missing page(s).")
         return 1
 
     print("\n[PASSED] Calendar continuity intact.")
