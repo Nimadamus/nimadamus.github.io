@@ -539,6 +539,41 @@ all 7 sport calendar scripts.
 
 ---
 
+## ⛔⛔⛔ ROLLING HUB MAY ONLY OCCUPY ITS OWN DATE — NO STALE GAME ON TODAY'S BOARD (LOCKED JUNE 1, 2026) ⛔⛔⛔
+
+**A rolling hub (`nhl-previews.html`, `nba-previews.html`, `mlb-previews.html`,
+`soccer-previews.html`, `college-basketball-previews.html`) bakes in the LAST
+published article. It must NEVER appear as a calendar cell on any date other
+than the exact date its baked content is for (`window.FORCED_PAGE_DATE`).**
+
+### WHAT HAPPENED (June 1, 2026):
+`nhl-previews.html` showed a weeks-old "Hurricanes at Canadiens ECF Game 5"
+preview as June 1's board. Root cause was TWO compounding bugs in
+`scripts/sync_calendars.py`:
+1. The `FORCED_PAGE_DATE` lookup only scanned `content[:8000]`. The hub's large
+   inline `<style>`/nav block pushed the marker to byte ~18,100, so the regex
+   missed it and execution fell through to `return datetime.now()` — stamping
+   the stale baked article with TODAY's date.
+2. The manifest/rotation-archive fallback assigned dates with no dedicated page
+   to `hub_page`, dumping old days (e.g. soccer 03-22/05-10, ncaab 03-22/03-23)
+   onto the rolling hub so clicking them showed today's hub.
+
+### THE PERMANENT FIXES (do not regress):
+- `extract_date_from_page` scans the WHOLE file for `FORCED_PAGE_DATE` (never
+  `content[:8000]`).
+- A hub with no provable date returns `None` (NOT today) → it is not calendar-dated.
+- Manifest/archive fallbacks route to the month archive page or SKIP; they never
+  assign a date to the rolling hub.
+- Runtime guard `renderPreviewHub()` (generated into every `scripts/*-calendar.js`)
+  strips the baked article and shows a clean empty-state + dated "latest preview"
+  link whenever `FORCED_PAGE_DATE !== today`.
+- HARD GATE in `scripts/validate_calendar_continuity.py` (runs in pre-commit):
+  fails the commit if any `*-previews.html` hub is calendar-dated on a date that
+  is not its own `FORCED_PAGE_DATE`. Run it before reporting any calendar work done:
+  `python scripts/validate_calendar_continuity.py` must print `[PASSED]`.
+
+---
+
 ## ⛔⛔⛔ CALENDAR COMPLETION GATE — A POST IS NOT DONE UNTIL IT IS ON THE CALENDAR (LOCKED MAY 28, 2026) ⛔⛔⛔
 
 **Missing calendar entries are a PUBLISHING FAILURE, not a cosmetic bug.** Any

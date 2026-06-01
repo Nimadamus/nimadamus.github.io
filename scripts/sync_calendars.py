@@ -326,7 +326,11 @@ def extract_date_from_page(filepath):
         with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()  # Read full file to find game-time dates
 
-        forced_match = re.search(r'window\.FORCED_PAGE_DATE\s*=\s*[\'"](\d{4}-\d{2}-\d{2})[\'"]', content[:8000], re.I)
+        # Scan the WHOLE file (not content[:8000]): hub pages with large inline
+        # <style>/nav blocks push the FORCED_PAGE_DATE marker past byte 8000. A
+        # truncated scan missed it and fell through to the "today" hub fallback,
+        # stamping weeks-old baked content with today's date (Jun 1 2026 incident).
+        forced_match = re.search(r'window\.FORCED_PAGE_DATE\s*=\s*[\'"](\d{4}-\d{2}-\d{2})[\'"]', content, re.I)
         if forced_match:
             return forced_match.group(1)
 
@@ -352,7 +356,9 @@ def extract_date_from_page(filepath):
                 updated_date = parse_written_date(updated_match.group(1).strip())
                 if updated_date:
                     return updated_date
-            return datetime.now().strftime('%Y-%m-%d')
+            # Cannot prove this hub's baked content is today; returning today
+            # here put a weeks-old game on the current board (Jun 1 2026). Skip it.
+            return None
 
         # Method 0a: Check manual override
         if filename in MANUAL_DATE_OVERRIDES:
@@ -533,7 +539,8 @@ def get_sport_pages(sport_config):
         except Exception:
             return None
 
-        return None
+        # File exists but no anchor/heading: route to month archive page, not hub.
+        return archive_filename
 
     # =========================================================================
     # ARCHIVE DATE RECOVERY: Read from JSON manifest (primary) + HTML (fallback)
@@ -566,16 +573,17 @@ def get_sport_pages(sport_config):
             for date in sport_dates:
                 if date not in existing_dates:
                     archive_page = archive_page_for_date(date)
-                    if not archive_page and hub_page:
-                        print(f"    [MANIFEST HUB FALLBACK] {hub_page}: {date} has no archive page or specific page; preserving date on hub")
+                    if not archive_page:
+                        print(f"    [SKIP NO ARCHIVE] {prefix}: {date} has no archive page; not dating the hub")
+                        continue
                     pages.append({
                         'date': date,
-                        'page': archive_page or hub_page or f'{prefix}.html',
+                        'page': archive_page,
                         'title': f'{prefix.upper()} Analysis - {date}'
                     })
                     existing_dates.add(date)
                     manifest_dates.add(date)
-                    print(f"    [FROM MANIFEST] {hub_page}: {date}")
+                    print(f"    [FROM MANIFEST] {archive_page}: {date}")
         except Exception as e:
             print(f"  WARNING: Could not read manifest: {e}")
 
@@ -586,15 +594,16 @@ def get_sport_pages(sport_config):
             for date in archive_dates:
                 if date not in existing_dates:
                     archive_page = archive_page_for_date(date)
-                    if not archive_page and hub_page:
-                        print(f"    [ARCHIVE HUB FALLBACK] {hub_page}: {date} has no archive page or specific page; preserving date on hub")
+                    if not archive_page:
+                        print(f"    [SKIP NO ARCHIVE] {prefix}: {date} has no archive page; not dating the hub")
+                        continue
                     pages.append({
                         'date': date,
-                        'page': archive_page or hub_page or f'{prefix}.html',
+                        'page': archive_page,
                         'title': f'{prefix.upper()} Analysis - {date}'
                     })
                     existing_dates.add(date)
-                    print(f"    [FROM ARCHIVE HTML] {hub_page}: {date}")
+                    print(f"    [FROM ARCHIVE HTML] {archive_page}: {date}")
 
     # Sort by date (newest first) then by page name
     pages.sort(key=lambda x: (x['date'], x['page']), reverse=True)
