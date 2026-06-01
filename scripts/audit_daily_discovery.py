@@ -20,8 +20,8 @@ from xml.etree import ElementTree as ET
 
 REPO = Path(__file__).resolve().parents[1]
 BASE_URL = "https://www.betlegendpicks.com"
-CURRENT_MONTH_LABEL = "May 2026"
-CURRENT_MONTH_PREFIX = "2026-05"
+CURRENT_MONTH_PREFIX = dt.date.today().strftime("%Y-%m")
+CURRENT_MONTH_LABEL = dt.date.today().strftime("%B %Y")
 NAV_TOKENS = ["Handicapping Hub", "Game Previews", "Resources", "Game of the Day"]
 SPORT_INDEXES = {
     "mlb": "mlb-previews.html",
@@ -106,6 +106,12 @@ def latest_sport_page(sport: str) -> tuple[str, str]:
     for rel in html_files():
         name = Path(rel).name.lower()
         if sport not in name or "archive" in name or "record" in name:
+            continue
+        # The previews-discovery audit gates on PREVIEW content. Standalone pick /
+        # prediction pages are a separate section/template (own nav, discovered via
+        # the homepage feed + posts sitemap), so they must not be treated as the
+        # sport's latest preview here.
+        if "pick" in name or "prediction" in name:
             continue
         page_date = date_from_filename(name)
         if page_date:
@@ -209,6 +215,41 @@ def assert_linked(source_rel: str, target_rel: str, args: argparse.Namespace) ->
         raise AuditError(f"{target_rel} is not linked from {source_rel}")
 
 
+def assert_surfaces_latest(source_rel: str, target_rel: str, args: argparse.Namespace) -> None:
+    """The permanent Featured Game hub surfaces the newest featured page either
+    by a static link OR via the documented data-driven redirect (it loads
+    featured-games-data.js and window.location.replace to the newest entry).
+    The redirect is always-current, so it satisfies the no-stale-hub intent."""
+    status, _, content = read(source_rel, args)
+    if status != 200:
+        raise AuditError(f"{source_rel} returned HTTP {status}")
+    if target_rel.lstrip("/") in content:
+        return
+    if "featured-games-data.js" in content and "location.replace" in content:
+        return
+    raise AuditError(
+        f"{source_rel} neither links {target_rel} nor redirects via featured-games-data.js"
+    )
+
+
+def assert_reachable_from_hub(hub_rel: str, target_rel: str, sport: str, args: argparse.Namespace) -> None:
+    """A JS-driven previews hub reaches every dated page through its sport
+    calendar (ARCHIVE_DATA in scripts/<sport>-calendar.js), not a static <a> in
+    the hub HTML. Accept either a static link OR presence in that calendar JS."""
+    status, _, content = read(hub_rel, args)
+    if status != 200:
+        raise AuditError(f"{hub_rel} returned HTTP {status}")
+    target = target_rel.lstrip("/")
+    if target in content:
+        return
+    js_status, _, js = read(f"scripts/{sport}-calendar.js", args)
+    if js_status == 200 and target in js:
+        return
+    raise AuditError(
+        f"{target_rel} is not reachable from {hub_rel} (no static link and not in {sport} calendar)"
+    )
+
+
 def audit(args: argparse.Namespace) -> None:
     urls = sitemap_urls(args)
     robots_status, _, robots = read("robots.txt", args)
@@ -223,24 +264,33 @@ def audit(args: argparse.Namespace) -> None:
     if (today - latest_date).days > args.max_age_days:
         raise AuditError(f"Latest featured game is stale: {latest_featured_date} {latest_featured}")
     require_page(latest_featured, args, urls)
-    assert_linked("featured-game-of-the-day.html", latest_featured, args)
+    assert_surfaces_latest("featured-game-of-the-day.html", latest_featured, args)
     assert_linked("featured-game-calendar.html", latest_featured, args)
 
-    may_featured = [date for date, _ in featured_entries() if date.startswith(CURRENT_MONTH_PREFIX)]
-    if len(may_featured) < 2:
-        raise AuditError(f"Featured calendar data does not expose current month entries: {may_featured}")
+    recent_featured = [
+        date for date, _ in featured_entries()
+        if (today - dt.date.fromisoformat(date)).days <= 31
+    ]
+    if len(recent_featured) < 2:
+        raise AuditError(f"Featured calendar data does not expose recent entries: {recent_featured}")
 
     for sport, index_rel in SPORT_INDEXES.items():
         status, _, index_content = read(index_rel, args)
         if status != 200:
             raise AuditError(f"{index_rel} returned HTTP {status}")
-        if CURRENT_MONTH_LABEL not in index_content:
-            raise AuditError(f"{index_rel} does not show {CURRENT_MONTH_LABEL}")
+        # Hubs are JS-driven: the live archive calendar always exposes the current
+        # month (sync_calendars always adds today's month). Verify the calendar is
+        # present rather than grepping a brittle hardcoded month-name string.
+        if "-calendar.js" not in index_content or 'id="month-select"' not in index_content:
+            raise AuditError(f"{index_rel} is missing the live archive calendar")
         page_date, page_rel = latest_sport_page(sport)
-        if not page_date.startswith(CURRENT_MONTH_PREFIX):
-            raise AuditError(f"Latest {sport.upper()} page is not current month: {page_date} {page_rel}")
+        # Freshness window, not calendar month: survives month rollovers and
+        # tolerates legitimate playoff off-days/offseason gaps, while still
+        # catching a sport that has genuinely gone stale.
+        if (today - dt.date.fromisoformat(page_date)).days > args.max_age_days:
+            raise AuditError(f"Latest {sport.upper()} page is stale: {page_date} {page_rel}")
         require_page(page_rel, args, urls, allow_canonical_target=True)
-        assert_linked(index_rel, page_rel, args)
+        assert_reachable_from_hub(index_rel, page_rel, sport, args)
 
     print("Discovery audit passed.")
     print(f"Latest featured game: {latest_featured_date} {latest_featured}")
