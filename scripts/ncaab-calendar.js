@@ -309,8 +309,11 @@ function renderPreviewHub() {
     // today\u2019s board. Strip the stale articles first (belt-and-suspenders
     // with the pre-paint head guard). Clean empty-state below is the fallback
     // when no concrete entry exists. Same policy as the Featured Game hub.
+    // Redirect ONLY to a current/upcoming preview (post date today or later).
+    // A past-dated (completed) preview must never stand in as today\u2019s board
+    // - fall through to the honest empty-state below instead.
     const _latest = latestConcreteEntry || latestContentEntry || null;
-    if (_latest && _latest.page && _latest.page !== currentPage && _latest.page !== SPORT_HUB_PAGE) {
+    if (_latest && _latest.page && _latest.date >= todayStr && _latest.page !== currentPage && _latest.page !== SPORT_HUB_PAGE) {
         const _m = document.querySelector('.main-content');
         if (_m) _m.querySelectorAll('.game-preview').forEach(function(el){ el.remove(); });
         window.location.replace('/' + _latest.page);

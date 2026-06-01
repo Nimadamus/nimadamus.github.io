@@ -29,8 +29,11 @@ var FEATURED_HUB_PAGES = ['featured-game-of-the-day.html'];
     var cur = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || '';
     if (FEATURED_HUB_PAGES.indexOf(cur) === -1) return;
     if (typeof FEATURED_GAMES === 'undefined' || !FEATURED_GAMES.length) return;
+    var todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date());
     var newest = FEATURED_GAMES.slice().sort(function(a, b) { return b.date.localeCompare(a.date); })[0];
-    if (newest && newest.page && newest.page !== cur) {
+    // Only redirect to a current/upcoming featured game; never to a completed
+    // past game (the hub HTML shows an honest empty-state in that case).
+    if (newest && newest.page && newest.page !== cur && newest.date >= todayStr) {
         window.location.replace('/' + newest.page);
     }
 })();

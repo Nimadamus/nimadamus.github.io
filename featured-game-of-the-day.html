@@ -16,13 +16,21 @@
 <script>
 (function () {
   try {
+    var todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date());
     if (typeof FEATURED_GAMES !== 'undefined' && FEATURED_GAMES.length) {
       var newest = FEATURED_GAMES.slice().sort(function (a, b) {
         return b.date.localeCompare(a.date);
       })[0];
-      if (newest && newest.page) {
+      // Only redirect to a CURRENT/UPCOMING featured game (post date today or
+      // later). A completed past game must never stand in as today's featured
+      // preview - fall through to the honest empty-state instead.
+      if (newest && newest.page && newest.date >= todayStr) {
         window.location.replace('/' + newest.page);
+      } else {
+        window.__FEATURED_EMPTY = true;
       }
+    } else {
+      window.__FEATURED_EMPTY = true;
     }
   } catch (e) { /* fall through to noscript / manual links */ }
 })();
@@ -35,9 +43,21 @@ a{color:#00e5ff;font-weight:700;text-decoration:none}
 </style>
 </head>
 <body>
+<div id="fg-loading">
 <h1 style="font-size:22px">Loading today's Featured Game...</h1>
 <div class="spin"></div>
 <p>If you are not redirected, <a href="/">return to the homepage</a>.</p>
+</div>
+<div id="fg-empty" style="display:none">
+<h1 style="font-size:22px">Featured Game of the Day</h1>
+<p style="max-width:560px;margin:18px auto;color:#b0b8c4">No featured game is available for this date. Check back for the next marquee matchup, or browse current previews on the <a href="/">homepage</a>.</p>
+</div>
 <noscript><p><a href="/">Go to the BetLegend homepage</a> to find today's Featured Game of the Day.</p></noscript>
+<script>
+if (window.__FEATURED_EMPTY) {
+  var l = document.getElementById('fg-loading'); if (l) l.style.display = 'none';
+  var e = document.getElementById('fg-empty'); if (e) e.style.display = 'block';
+}
+</script>
 </body>
 </html>
