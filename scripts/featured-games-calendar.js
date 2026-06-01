@@ -17,6 +17,29 @@
 // automatically. This eliminates stale cache issues permanently.
 // Static cache-busting params (?v=dataXXX) have been removed from all pages.
 
+// HUB REDIRECT (Nima, June 1 2026):
+// `featured-game-of-the-day.html` is a PERMANENT hub URL, not a dated article.
+// It must never serve a frozen old featured game. On load, bounce to the newest
+// entry in FEATURED_GAMES (the latest dated featured page). Dated pages whose
+// filename merely contains "featured-game-of-the-day" (e.g.
+// cavaliers-pistons-game-7-featured-game-of-the-day.html) are real articles and
+// are intentionally NOT in this hub list, so they render normally.
+var FEATURED_HUB_PAGES = ['featured-game-of-the-day.html'];
+(function redirectFeaturedHub() {
+    var cur = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || '';
+    if (FEATURED_HUB_PAGES.indexOf(cur) === -1) return;
+    if (typeof FEATURED_GAMES === 'undefined' || !FEATURED_GAMES.length) return;
+    var newest = FEATURED_GAMES.slice().sort(function(a, b) { return b.date.localeCompare(a.date); })[0];
+    if (newest && newest.page && newest.page !== cur) {
+        window.location.replace('/' + newest.page);
+    }
+})();
+
+function isFeaturedHubPage() {
+    var cur = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || '';
+    return FEATURED_HUB_PAGES.indexOf(cur) !== -1;
+}
+
 function buildCalendarState() {
     // Read data from FEATURED_GAMES (defined by featured-games-data.js)
     // Sort newest-first for display purposes
@@ -32,8 +55,10 @@ function buildCalendarState() {
 
     var currentPage = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || 'index.html';
 
-    // pageDate = the date of the specific page being viewed
-    var pageDate = window.FORCED_PAGE_DATE || pageToDateMap[currentPage] || (function() {
+    // pageDate = the date of the specific page being viewed.
+    // Hub pages never adopt a baked FORCED_PAGE_DATE (defense-in-depth: if the
+    // redirect above did not fire, the calendar must not lock to a stale date).
+    var pageDate = (isFeaturedHubPage() ? null : window.FORCED_PAGE_DATE) || pageToDateMap[currentPage] || (function() {
         var title = document.title || '';
         var mNames = ['January', 'February', 'March', 'April', 'May', 'June',
                         'July', 'August', 'September', 'October', 'November', 'December'];
@@ -52,6 +77,9 @@ function buildCalendarState() {
         }
         return null;
     })();
+
+    // Hub pages: never derive a date from a stale baked title/FORCED_PAGE_DATE.
+    if (isFeaturedHubPage()) pageDate = null;
 
     // Highlight the DATE OF THE PAGE YOU'RE ACTUALLY VIEWING
     var activeDate = pageDate || newestDate;

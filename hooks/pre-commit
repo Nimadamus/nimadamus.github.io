@@ -273,6 +273,21 @@ for FILE in $STAGED_HTML; do
         continue
     fi
 
+    # Registered Featured Game pages (listed in featured-games-data.js) correctly
+    # use featured-games-calendar.js regardless of the sport token in their slug
+    # (e.g. stars-vs-capitals-nhl-...-january-07-2026.html). Exempt them from the
+    # sport-match check so editing their nav doesn't trip a false positive.
+    if [ "$CAL_REF" = "scripts/featured-games-calendar.js" ]; then
+        BN=$(basename "$FILE")
+        STEM=${BN%.html}
+        # Match the page itself OR a date-stamped sibling (undated aliases like
+        # lakers-vs-spurs-nba-cup-prediction-picks.html vs the registered
+        # ...-december-10-2025.html). Both are legit Featured Game surfaces.
+        if grep -qE "page: \"${STEM}(-[a-z0-9-]+)?\.html\"" featured-games-data.js 2>/dev/null; then
+            continue
+        fi
+    fi
+
     # 2. Expected sport derived from page slug
     EXPECTED=""
     case "$FILE" in

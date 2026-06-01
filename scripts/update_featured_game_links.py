@@ -116,7 +116,45 @@ def update_file(filepath, old_page, new_page):
     return 0
 
 
+STABLE_HUB = '/featured-game-of-the-day.html'
+NAV_PATTERN = re.compile(r'(<a\b[^>]*?href=")([^"]*)("[^>]*>\s*Featured Game<)')
+
+
 def main():
+    """Future-proofed (Nima, June 1 2026): the 'Featured Game' nav link no longer
+    points at a dated page that goes stale. It always points at the permanent hub
+    `/featured-game-of-the-day.html`, which auto-redirects to the newest featured
+    game. So this runs idempotently regardless of any old/new filename args passed
+    by the daily workflow. Canonical/og:url tags are never touched (anchor-only).
+    """
+    total_files = 0
+    total_links = 0
+    for root, dirs, files in os.walk(REPO):
+        dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
+        for f in files:
+            if not f.endswith('.html'):
+                continue
+            fp = os.path.join(root, f)
+            with open(fp, 'r', encoding='utf-8', errors='ignore') as fh:
+                content = fh.read()
+            n = len(NAV_PATTERN.findall(content))
+            if not n:
+                continue
+            new = NAV_PATTERN.sub(lambda m: m.group(1) + STABLE_HUB + m.group(3), content)
+            if new != content:
+                with open(fp, 'w', encoding='utf-8') as fh:
+                    fh.write(new)
+                total_files += 1
+                total_links += n
+    print("=" * 60)
+    print("  FEATURED GAME NAV -> STABLE HUB (/featured-game-of-the-day.html)")
+    print(f"  Files updated: {total_files}  |  links normalized: {total_links}")
+    print("  Canonical/og:url: untouched (anchor-only rewrite)")
+    print("=" * 60)
+    return 0
+
+
+def _legacy_main():
     old_page = None
     new_page = None
 
