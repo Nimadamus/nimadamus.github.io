@@ -71,11 +71,13 @@ def main():
     for js in glob.glob(os.path.join(REPO, 'scripts', '*-calendar.js')):
         name = os.path.basename(js)
         check_data_file(js, name)
-        # 6: redirect guard present in sport calendars (featured engine differs)
+        # 6: stale-hub guard present in sport calendars. Sport hubs use the
+        # clean-state guard renderPreviewHub(); the featured engine uses its own
+        # redirectFeaturedHub(). Either is a valid hub stale-guard.
         if name != 'featured-games-calendar.js':
             with open(js, 'r', encoding='utf-8', errors='ignore') as f:
-                if 'window.location.replace' not in f.read():
-                    errors.append(f"{name}: stale-hub redirect guard MISSING")
+                if 'renderPreviewHub' not in f.read():
+                    errors.append(f"{name}: hub stale-guard (renderPreviewHub) MISSING")
 
     # 4: hub is a redirector
     hub = os.path.join(REPO, STABLE_HUB)

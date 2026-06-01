@@ -321,13 +321,17 @@ MARKUP_ERROR=0
 for FILE in $STAGED_HTML; do
     [ -f "$FILE" ] || continue
     grep -qE '"scripts/[a-zA-Z0-9_.-]*calendar[a-zA-Z0-9_.?=-]*\.js' "$FILE" || continue
-    if ! grep -q 'id="calendar-days"' "$FILE"; then
+    # Accept BOTH the current hyphenated IDs and the legacy camelCase IDs
+    # (calendarDays/monthSelect). The calendar JS resolves either form
+    # (getElementById('calendar-days') || getElementById('calendarDays')), so a
+    # page using the legacy IDs is NOT broken and must not be blocked.
+    if ! grep -qE 'id="(calendar-days|calendarDays)"' "$FILE"; then
         echo ""
         echo "  [BLOCKED] $FILE links a calendar JS but is missing <div id=\"calendar-days\">"
         echo "  The sidebar will be empty. Copy the calendar-sidebar block from a working page."
         MARKUP_ERROR=1
     fi
-    if ! grep -q 'id="month-select"' "$FILE"; then
+    if ! grep -qE 'id="(month-select|monthSelect)"' "$FILE"; then
         echo ""
         echo "  [BLOCKED] $FILE links a calendar JS but is missing <select id=\"month-select\">"
         echo "  The month dropdown will not render. Copy the calendar-sidebar block from a working page."
