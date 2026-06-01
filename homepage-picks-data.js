@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Dodgers Moneyline (-150) vs Diamondbacks: Los Angeles Rolls At Chase Field",
+        date: "June 1, 2026",
+        url: "dodgers-moneyline-diamondbacks-sheehan-rodriguez-chase-field-mlb-pick-june-1-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/571970/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Marlins Moneyline (+125) vs Nationals: Plus-Money Value Behind Alcantara",
+        date: "June 1, 2026",
+        url: "marlins-moneyline-nationals-alcantara-cavalli-nationals-park-mlb-pick-june-1-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/645261/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Blue Jays/Orioles Over 8 (-120) at Camden Yards: Leaky Birds Staff Fuels The Total",
         date: "May 31, 2026",
         url: "blue-jays-orioles-over-8-bradish-miles-camden-yards-mlb-pick-may-31-2026.html",

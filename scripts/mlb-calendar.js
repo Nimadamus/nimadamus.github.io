@@ -4,6 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-06-01", page: "degrom-burns-headline-monday-slate-mlb-june-1-2026.html", title: "MLB Analysis - June 1, 2026" },
+    { date: "2026-06-01", page: "dodgers-moneyline-diamondbacks-sheehan-rodriguez-chase-field-mlb-pick-june-1-2026.html", title: "Dodgers ML vs Diamondbacks Pick June 1 2026" },
+    { date: "2026-06-01", page: "marlins-moneyline-nationals-alcantara-cavalli-nationals-park-mlb-pick-june-1-2026.html", title: "Marlins ML vs Nationals Pick June 1 2026" },
     { date: "2026-05-31", page: "astros-plus-1-5-runline-brewers-misiorowski-imai-daikin-park-mlb-pick-may-31-2026.html", title: "Astros +1.5 vs Brewers Pick May 31 2026" },
     { date: "2026-05-31", page: "blue-jays-orioles-over-8-bradish-miles-camden-yards-mlb-pick-may-31-2026.html", title: "Blue Jays vs Orioles Over 8 Pick May 31 2026" },
     { date: "2026-05-31", page: "cubs-vs-cardinals-sunday-night-baseball-rivalry-mlb-analysis-stats-preview-may-31-2026.html", title: "Cubs vs Cardinals Sunday Night Baseball Analysis, Stats, Preview - May 31, 2026" },
