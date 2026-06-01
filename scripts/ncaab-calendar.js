@@ -304,6 +304,18 @@ function renderPreviewHub() {
     const baked = window.FORCED_PAGE_DATE || null;
     // Fresh slate baked for today, or an already-dynamic landing page: leave as-is.
     if (!baked || baked === todayStr) return;
+    // UNIFIED STALE-HUB POLICY (Nima, June 1 2026): redirect to the newest
+    // valid concrete preview so stale baked content can never stand in as
+    // today\u2019s board. Strip the stale articles first (belt-and-suspenders
+    // with the pre-paint head guard). Clean empty-state below is the fallback
+    // when no concrete entry exists. Same policy as the Featured Game hub.
+    const _latest = latestConcreteEntry || latestContentEntry || null;
+    if (_latest && _latest.page && _latest.page !== currentPage && _latest.page !== SPORT_HUB_PAGE) {
+        const _m = document.querySelector('.main-content');
+        if (_m) _m.querySelectorAll('.game-preview').forEach(function(el){ el.remove(); });
+        window.location.replace('/' + _latest.page);
+        return;
+    }
     const main = document.querySelector('.main-content');
     if (!main) return;
 
