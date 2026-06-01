@@ -299,6 +299,7 @@ const pageToDateMap = {};
 ARCHIVE_DATA.forEach(item => { pageToDateMap[item.page] = item.date; });
 
 const SPORT_HUB_PAGE = 'nba-previews.html';
+const SPORT_LABEL = 'NBA';
 const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html', 'nba-previews.html', 'nhl-previews.html', 'mlb-previews.html', 'soccer-previews.html', 'college-basketball-previews.html'];
 function isConcreteContentPage(page) {
     return !!page && !MAIN_PAGES.includes(page) && !page.includes('#') && !page.includes('-archive-');
@@ -435,9 +436,61 @@ function renderCalendar(yearMonth) {
     }
 }
 
+// Hub guard: a `*-previews.html` hub page bakes in the last published dated
+// slate/article. When that baked article is out of date (its FORCED_PAGE_DATE
+// is not today), it must not be presented as the current board. This removes
+// the stale article, neutralizes the stale hero, and shows a clean empty-state
+// plus a clearly-dated link to the latest available preview. No fabricated data.
+function renderPreviewHub() {
+    if (currentPage !== SPORT_HUB_PAGE || !SPORT_HUB_PAGE) return;
+    const baked = window.FORCED_PAGE_DATE || null;
+    // Fresh slate baked for today, or an already-dynamic landing page: leave as-is.
+    if (!baked || baked === todayStr) return;
+    const main = document.querySelector('.main-content');
+    if (!main) return;
+
+    const hero = document.querySelector('header.hero');
+    if (hero) {
+        const badge = hero.querySelector('.hero-badge');
+        const h1 = hero.querySelector('h1');
+        const p = hero.querySelector('p');
+        if (badge) badge.textContent = SPORT_LABEL + ' Previews';
+        if (h1) h1.textContent = SPORT_LABEL + ' Game Preview Archive';
+        if (p) p.textContent = 'Browse the latest ' + SPORT_LABEL + ' previews and the full dated archive below. This page does not present older previews as today\u2019s board.';
+    }
+
+    main.querySelectorAll('.game-preview').forEach(el => el.remove());
+
+    const todayConcrete = ARCHIVE_DATA.find(it => it.date === todayStr && isConcreteContentPage(it.page));
+    const latest = latestConcreteEntry || latestContentEntry || null;
+    const block = document.createElement('div');
+    block.id = 'hub-state';
+    let html = '';
+    if (!todayConcrete) {
+        html += '<div style="text-align:center;padding:40px 24px;background:linear-gradient(145deg,#14171f,#0f1218);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin-bottom:24px;">'
+              + '<p style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#00e5ff;margin-bottom:10px;">Today</p>'
+              + '<p style="font-size:20px;color:#fff;margin:0;">No ' + SPORT_LABEL + ' preview is available for this date.</p>'
+              + '</div>';
+    }
+    if (latest && latest.page !== SPORT_HUB_PAGE) {
+        const d = new Date(latest.date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+        html += '<a href="/' + latest.page + '" style="display:block;text-decoration:none;background:linear-gradient(145deg,#14171f,#0f1218);border:1px solid rgba(255,213,79,0.3);border-radius:12px;padding:28px 32px;">'
+              + '<p style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fd5000;margin-bottom:10px;">Latest ' + SPORT_LABEL + ' Preview</p>'
+              + '<p style="font-family:Orbitron,sans-serif;font-size:22px;color:#fff;margin:0 0 8px;line-height:1.25;">' + latest.title + '</p>'
+              + '<p style="color:#b0b8c4;font-size:14px;margin:0;">' + d + ' &nbsp;&rarr;</p>'
+              + '</a>';
+    }
+    block.innerHTML = html;
+    const mobile = main.querySelector('.mobile-archive');
+    if (mobile && mobile.nextSibling) main.insertBefore(block, mobile.nextSibling);
+    else if (mobile) main.appendChild(block);
+    else main.insertBefore(block, main.firstChild);
+}
+
 function initSportCalendar() {
 
     installCalendarStateStyles();
+    renderPreviewHub();
 
     const monthSelect = document.getElementById('month-select') || document.getElementById('monthSelect');
     if (monthSelect) {
