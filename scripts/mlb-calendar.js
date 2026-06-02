@@ -4,6 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-06-02", page: "braves-best-record-schlittler-martin-headline-tuesday-mlb-june-2-2026.html", title: "MLB Analysis" },
+    { date: "2026-06-02", page: "brewers-moneyline-giants-harrison-mcdonald-american-family-field-mlb-pick-june-2-2026.html", title: "Brewers Moneyline vs Giants Pick" },
+    { date: "2026-06-02", page: "yankees-run-line-guardians-schlittler-cantillo-yankee-stadium-mlb-pick-june-2-2026.html", title: "Yankees Run Line vs Guardians Pick" },
     { date: "2026-06-01", page: "degrom-burns-headline-monday-slate-mlb-june-1-2026.html", title: "MLB Analysis - June 1, 2026" },
     { date: "2026-06-01", page: "dodgers-moneyline-diamondbacks-sheehan-rodriguez-chase-field-mlb-pick-june-1-2026.html", title: "Dodgers ML vs Diamondbacks Pick June 1 2026" },
     { date: "2026-06-01", page: "marlins-moneyline-nationals-alcantara-cavalli-nationals-park-mlb-pick-june-1-2026.html", title: "Marlins ML vs Nationals Pick June 1 2026" },

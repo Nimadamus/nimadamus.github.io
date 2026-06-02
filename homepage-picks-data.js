@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Yankees Run Line -1.5 (-115) vs Guardians: Schlittler Sets Up The Lay",
+        date: "June 2, 2026",
+        url: "yankees-run-line-guardians-schlittler-cantillo-yankee-stadium-mlb-pick-june-2-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693645/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Brewers Moneyline (-200) vs Giants: Harrison Anchors The Home Favorite",
+        date: "June 2, 2026",
+        url: "brewers-moneyline-giants-harrison-mcdonald-american-family-field-mlb-pick-june-2-2026.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/690916/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Dodgers Moneyline (-150) vs Diamondbacks: Los Angeles Rolls At Chase Field",
         date: "June 1, 2026",
         url: "dodgers-moneyline-diamondbacks-sheehan-rodriguez-chase-field-mlb-pick-june-1-2026.html",
@@ -136,7 +150,7 @@ var HOMEPAGE_PICKS = [
         date: "May 25, 2026",
         result: "W",
         url: "yankees-team-total-under-4-5-royals-wacha-warren-kauffman-stadium-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592450/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693645/action/hero/current"
     },
 
     {
