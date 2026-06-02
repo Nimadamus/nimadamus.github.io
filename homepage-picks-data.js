@@ -150,7 +150,7 @@ var HOMEPAGE_PICKS = [
         date: "May 25, 2026",
         result: "W",
         url: "yankees-team-total-under-4-5-royals-wacha-warren-kauffman-stadium-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693645/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592450/action/hero/current"
     },
 
     {
