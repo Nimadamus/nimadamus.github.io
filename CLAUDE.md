@@ -979,6 +979,25 @@ git push
 
 **IF I GRADE PICKS AND DON'T SYNC THE RECORDS PAGE, I HAVE FAILED.**
 
+### ⛔ EVERY SUPPORTED SPORT WITH PICKS GETS FULL RECORDS COVERAGE (LOCKED JUNE 3, 2026):
+Any sport that has at least one graded pick in the Pick Tracker (currently MLB,
+NBA, NHL, NFL, NCAAF, NCAAB, Soccer) MUST have ALL FOUR of these. If a new sport
+gets its first pick, build all four before reporting the grading/records work done:
+1. **A dedicated records page** (`<sport>-records.html`) with the same quality as
+   the others: summary stat boxes (record/units/win%/ROI), units-over-time chart,
+   bet-type breakdown, full betting history loaded from `all-records.json`.
+2. **A card in the sitewide "Game Previews & Records" mega-dropdown** alongside the
+   other `X Records<span>...</span>` cards (added to all pages carrying that nav).
+3. **Inclusion in `all-records.json`** via `SPORT_CONFIG` in
+   `scripts/sync_records_from_tracker.py` AND the `SPORTS` list in
+   `scripts/build_all_records_json.py` (this is what feeds
+   `betlegend-verified-records.html` sport-level data).
+4. **Inclusion in records hub/grid surfaces**: `records.html` Records dropdown +
+   sport strip, `betlegend-verified-records.html` sport strip, and the homepage
+   footer Records group.
+WHY: On June 3, 2026 a winning 3-unit soccer pick existed but Soccer Records was
+missing from the sitewide dropdown, so the verified soccer record was invisible.
+
 ---
 
 ## ⛔⛔⛔ SPORTS PAGES = PREGAME ANALYSIS ONLY ⛔⛔⛔
