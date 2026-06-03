@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-06-03", page: "knicks-vs-spurs-nba-finals-game-1-analysis-stats-preview-june-3-2026.html", title: "Knicks vs Spurs NBA Finals Game 1 Analysis, Stats, Preview" },
+    { date: "2026-06-03", page: "spurs-moneyline-knicks-nba-finals-game-1-wembanyama-frost-bank-center-nba-pick-june-3-2026.html", title: "Spurs Moneyline vs Knicks NBA Finals Game 1 Pick" },
     { date: "2026-06-03", page: "wembanyama-brunson-nba-finals-game-1-spurs-knicks-nba-june-3-2026.html", title: "NBA Analysis" },
     { date: "2026-05-30", page: "spurs-vs-thunder-western-conference-final-game-7-nba-analysis-stats-preview-may-30-2026.html", title: "Spurs vs Thunder Game 7 Analysis, Stats, Preview - May 30, 2026" },
     { date: "2026-05-30", page: "thunder-moneyline-spurs-game-7-western-conference-final-nba-pick-may-30-2026.html", title: "Thunder vs Spurs Game 7 Pick May 30 2026" },

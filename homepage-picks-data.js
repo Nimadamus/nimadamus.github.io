@@ -27,6 +27,20 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NBA",
+        title: "Spurs Moneyline (-185) vs Knicks: Wembanyama Opens The Finals At Home",
+        date: "June 3, 2026",
+        url: "spurs-moneyline-knicks-nba-finals-game-1-wembanyama-frost-bank-center-nba-pick-june-3-2026.html",
+        image: "images/spurs-moneyline-knicks-nba-finals-game-1-wembanyama-frost-bank-center-nba-pick-june-3-2026.jpg"
+    },
+    {
+        sport: "Soccer",
+        title: "Italy Moneyline (-233) vs Luxembourg: Baldini's New Era Starts With A Win",
+        date: "June 3, 2026",
+        url: "italy-moneyline-luxembourg-baldini-new-era-friendly-soccer-pick-june-3-2026.html",
+        image: "images/italy-moneyline-luxembourg-baldini-new-era-friendly-soccer-pick-june-3-2026.webp"
+    },
+    {
         sport: "MLB",
         title: "Yankees Run Line -1.5 (-115) vs Guardians: Schlittler Sets Up The Lay",
         date: "June 2, 2026",
