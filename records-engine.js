@@ -130,6 +130,9 @@
     if (sport === 'basketball') return 'NBA';
     if (sport === 'hockey') return 'NHL';
     if (sport === 'baseball') return 'MLB';
+    // Soccer leagues vary (Friendlies, EPL, La Liga, ...) so the Sport
+    // column is the reliable signal - mirrors sync_records_from_tracker.py.
+    if (sport === 'soccer') return 'Soccer';
     return null;
   }
 

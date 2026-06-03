@@ -998,6 +998,22 @@ gets its first pick, build all four before reporting the grading/records work do
 WHY: On June 3, 2026 a winning 3-unit soccer pick existed but Soccer Records was
 missing from the sitewide dropdown, so the verified soccer record was invisible.
 
+### ⛔ SPORT RECORDS PAGES USE THE SHARED RENDERER ONLY (LOCKED JUNE 3, 2026):
+Every `<sport>-records.html` page must render via records-engine.js +
+records-sport-page.js + one `BetLegendRecords.initSportPage({sport: '<Sport>'})`
+call. NEVER ship (or leave behind) a legacy inline data app (`loadDataFromSheets`,
+its own `new Chart` on `#unitsChart`, its own dropdown listeners) on the same page.
+Two renderers on one page = "Canvas is already in use" fatal -> the shared renderer's
+catch wipes the table with "Records failed to load." (soccer-records.html, June 3,
+2026). Duplicate dropdown listeners also double-toggle the nav menus.
+Also: a new sport must be detectable in `detectSportFromTrackerRow()` in
+records-engine.js (the Sport column is the reliable signal; League values vary,
+e.g. soccer's "Friendlies") AND in `SPORT_CONFIG` in
+scripts/sync_records_from_tracker.py, or live rows silently drop.
+BEFORE reporting a records page done: load the live URL headless (Playwright),
+require zero console errors, a populated `#picks-table-body`, and summary stats
+that match the underlying rows.
+
 ---
 
 ## ⛔⛔⛔ SPORTS PAGES = PREGAME ANALYSIS ONLY ⛔⛔⛔
