@@ -30,56 +30,56 @@ var HOMEPAGE_PICKS = [
         sport: "NBA",
         title: "Spurs Moneyline (-185) vs Knicks: Wembanyama Opens The Finals At Home",
         date: "June 3, 2026",
-        url: "spurs-moneyline-knicks-nba-finals-game-1-wembanyama-frost-bank-center-nba-pick-june-3-2026.html",
+        url: "spurs-moneyline-knicks-nba-finals-game-1-wembanyama-frost-bank-center-nba-pick.html",
         image: "images/spurs-moneyline-knicks-nba-finals-game-1-wembanyama-frost-bank-center-nba-pick-june-3-2026.jpg"
     },
     {
         sport: "Soccer",
         title: "Italy Moneyline (-233) vs Luxembourg: Baldini's New Era Starts With A Win",
         date: "June 3, 2026",
-        url: "italy-moneyline-luxembourg-baldini-new-era-friendly-soccer-pick-june-3-2026.html",
+        url: "italy-moneyline-luxembourg-baldini-new-era-friendly-soccer-pick.html",
         image: "images/italy-moneyline-luxembourg-baldini-new-era-friendly-soccer-pick-june-3-2026.webp"
     },
     {
         sport: "MLB",
         title: "Yankees Run Line -1.5 (-115) vs Guardians: Schlittler Sets Up The Lay",
         date: "June 2, 2026",
-        url: "yankees-run-line-guardians-schlittler-cantillo-yankee-stadium-mlb-pick-june-2-2026.html",
+        url: "yankees-run-line-guardians-schlittler-cantillo-yankee-stadium-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693645/action/hero/current"
     },
     {
         sport: "MLB",
         title: "Brewers Moneyline (-200) vs Giants: Harrison Anchors The Home Favorite",
         date: "June 2, 2026",
-        url: "brewers-moneyline-giants-harrison-mcdonald-american-family-field-mlb-pick-june-2-2026.html",
+        url: "brewers-moneyline-giants-harrison-mcdonald-american-family-field-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/690916/action/hero/current"
     },
     {
         sport: "MLB",
         title: "Dodgers Moneyline (-150) vs Diamondbacks: Los Angeles Rolls At Chase Field",
         date: "June 1, 2026",
-        url: "dodgers-moneyline-diamondbacks-sheehan-rodriguez-chase-field-mlb-pick-june-1-2026.html",
+        url: "dodgers-moneyline-diamondbacks-sheehan-rodriguez-chase-field-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/571970/action/hero/current"
     },
     {
         sport: "MLB",
         title: "Marlins Moneyline (+125) vs Nationals: Plus-Money Value Behind Alcantara",
         date: "June 1, 2026",
-        url: "marlins-moneyline-nationals-alcantara-cavalli-nationals-park-mlb-pick-june-1-2026.html",
+        url: "marlins-moneyline-nationals-alcantara-cavalli-nationals-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/645261/action/hero/current"
     },
     {
         sport: "MLB",
         title: "Blue Jays/Orioles Over 8 (-120) at Camden Yards: Leaky Birds Staff Fuels The Total",
         date: "May 31, 2026",
-        url: "blue-jays-orioles-over-8-bradish-miles-camden-yards-mlb-pick-may-31-2026.html",
+        url: "blue-jays-orioles-over-8-bradish-miles-camden-yards-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/680694/action/hero/current"
     },
     {
         sport: "MLB",
         title: "Astros +1.5 (-110) vs Brewers: Run Line Cushion Against Misiorowski At Daikin Park",
         date: "May 31, 2026",
-        url: "astros-plus-1-5-runline-brewers-misiorowski-imai-daikin-park-mlb-pick-may-31-2026.html",
+        url: "astros-plus-1-5-runline-brewers-misiorowski-imai-daikin-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694819/action/hero/current"
     },
     {
@@ -87,7 +87,7 @@ var HOMEPAGE_PICKS = [
         title: "Braves Team Total Over 4.5 (-140) vs Reds: Atlanta Bats Heat Up At Great American",
         date: "May 30, 2026",
         result: "L",
-        url: "braves-reds-team-total-over-mlb-pick-may-30-2026.html",
+        url: "braves-reds-team-total-over-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/660670/action/hero/current"
     },
     {
@@ -95,7 +95,7 @@ var HOMEPAGE_PICKS = [
         title: "Padres Moneyline -121 vs Nationals: San Diego Takes The Series At Petco",
         date: "May 30, 2026",
         result: "L",
-        url: "padres-nationals-moneyline-mlb-pick-may-30-2026.html",
+        url: "padres-nationals-moneyline-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/665487/action/hero/current"
     },
     {
@@ -103,7 +103,7 @@ var HOMEPAGE_PICKS = [
         title: "Yankees Moneyline -143 at Athletics: Rodon Holds Off Severino At Sutter Health Park",
         date: "May 29, 2026",
         result: "W",
-        url: "yankees-moneyline-athletics-rodon-severino-sutter-health-park-mlb-pick-may-29-2026.html",
+        url: "yankees-moneyline-athletics-rodon-severino-sutter-health-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607074/action/hero/current"
     },
     {
@@ -111,7 +111,7 @@ var HOMEPAGE_PICKS = [
         title: "Cubs Team Total Under 3.5 (-145): Skenes Caps Chicago At PNC",
         date: "May 28, 2026",
         result: "L",
-        url: "cubs-team-total-under-3-5-pirates-skenes-mlb-pick-may-28-2026.html",
+        url: "cubs-team-total-under-3-5-pirates-skenes-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607067/action/hero/current"
     },
     {
@@ -190,7 +190,7 @@ var HOMEPAGE_PICKS = [
         title: "Canadiens Team Total Under 2.5 vs Hurricanes: ECF Game 1 Scoring Ceiling",
         date: "May 21, 2026",
         result: "L",
-        url: "canadiens-team-total-under-2-5-hurricanes-game-1-nhl-pick-may-21-2026.html",
+        url: "canadiens-team-total-under-2-5-hurricanes-game-1-nhl-pick.html",
         image: "images/canadiens-team-total-under-2-5-hurricanes-game-1-nhl-pick-may-21-2026.jpg"
     },
 
@@ -199,7 +199,7 @@ var HOMEPAGE_PICKS = [
         title: "Guardians Moneyline -121 at Tigers: Parker Messick Takes The Hill At Comerica",
         date: "May 19, 2026",
         result: "W",
-        url: "guardians-moneyline-minus-121-tigers-messick-montero-comerica-park-mlb-pick-may-19-2026.html",
+        url: "guardians-moneyline-minus-121-tigers-messick-montero-comerica-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/800048/action/hero/current"
     },
 
@@ -217,7 +217,7 @@ var HOMEPAGE_PICKS = [
         title: "Phillies/Pirates First 5 Under 4.5: Wheeler and Skenes Define the Early Window",
         date: "May 17, 2026",
         result: "W",
-        url: "phillies-pirates-first-five-under-4-5-wheeler-skenes-pnc-may-17-2026.html",
+        url: "phillies-pirates-first-five-under-4-5-wheeler-skenes-pnc.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/554430/action/hero/current"
     },
     {
@@ -225,7 +225,7 @@ var HOMEPAGE_PICKS = [
         title: "Rangers Team Total Under 4.5: Lambert and Daikin Park Set the Run Ceiling",
         date: "May 17, 2026",
         result: "L",
-        url: "rangers-team-total-under-4-5-eovaldi-lambert-daikin-park-may-17-2026.html",
+        url: "rangers-team-total-under-4-5-eovaldi-lambert-daikin-park.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/543135/action/hero/current"
     },
 {
@@ -233,7 +233,7 @@ var HOMEPAGE_PICKS = [
         title: "Ducks Team Total Under 3.5 vs Golden Knights: Game 6 Scoring Ceiling",
         date: "May 14, 2026",
         result: "W",
-        url: "ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.html",
+        url: "ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick.html",
         image: "images/ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.png"
     },
     {
@@ -241,7 +241,7 @@ var HOMEPAGE_PICKS = [
         title: "Brewers Moneyline -139 vs Padres: Harrison Edge At Home",
         date: "May 14, 2026",
         result: "W",
-        url: "brewers-moneyline-minus-139-padres-canning-harrison-mlb-pick-may-14-2026.html",
+        url: "brewers-moneyline-minus-139-padres-canning-harrison-mlb-pick.html",
         image: "images/brewers.webp"
     },
     {
@@ -383,7 +383,7 @@ var HOMEPAGE_PICKS = [
         title: "Full Card Free Release - 6 MLB Picks (10 Units)",
         date: "April 22, 2026",
         result: "W",
-        url: "free-mlb-picks-today-full-card-release-wednesday-april-22-2026.html",
+        url: "free-mlb-picks-today-full-card-release-wednesday.html",
         image: "images/hero-mlb-full-card-free-release-april-22-2026.jpg"
     },
     {
@@ -711,7 +711,7 @@ var HOMEPAGE_PICKS = [
         title: "Rangers +167 / +1.5 -150 (3u)",
         date: "March 14, 2026",
         result: "W",
-        url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl-march-14-2026.html",
+        url: "rangers-hot-streak-moneyline-puck-line-value-at-wild-nhl.html",
         image: "https://media.d3.nhle.com/image/private/t_ratio16_9-size20/prd/hlx0hqpifhq8kfmt1y9x"
     }
 ];

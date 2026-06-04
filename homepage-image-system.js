@@ -120,7 +120,7 @@
   var BLOCKED_IMAGE_RE = /(?:arbitrage|allstars|fifa\.png|moneyview|money-logo|collegeban|LIVE\.png|ai-moneyball|mlb-picks-team-logos|homepage-preview|vegas-golden-knights-(?:premium-preview|moneyline-game-5-ducks-chart|ducks-game-5-action))/i;
 
   var PICK_IMAGE_OVERRIDES = {
-    'ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick-may-14-2026.html': 'https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778656229/prd/izacsitjdbniesj9inpa.png',
+    'ducks-team-total-under-3-5-golden-knights-game-6-nhl-pick.html': 'https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778656229/prd/izacsitjdbniesj9inpa.png',
     'vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html': 'https://media.d3.nhle.com/image/private/t_ratio16_9-size50/v1778591751/prd/bjchqodtuj95prh4wz2d.png'
   };
 

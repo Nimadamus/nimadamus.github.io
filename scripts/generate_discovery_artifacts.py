@@ -148,9 +148,13 @@ def read_text(path: Path) -> str:
 
 
 def is_redirect_stub(content: str) -> bool:
+    # A stub is an immediate meta-refresh, a top-level location.replace(), or a
+    # "Redirecting to ..." shell. Plain `window.location.href =` inside calendar
+    # click handlers is NOT a stub (false-positived mlb-calendar.html etc.).
     return bool(
         re.search(r'<meta[^>]+http-equiv=["\']refresh["\'][^>]+content=["\']\s*0\s*;', content, re.I)
-        or re.search(r"window\.location\.(?:replace|href)\s*=", content, re.I)
+        or re.search(r"window\.location\.replace\(", content[:4000])
+        or re.search(r">\s*Redirecting to\b", content, re.I)
     )
 
 

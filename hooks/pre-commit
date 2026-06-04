@@ -23,6 +23,20 @@ if echo "$STAGED_ALL" | grep -q "^homepage-picks-data.js$"; then
     echo "  [OK] Pick card images pass."
 fi
 
+# CRITICAL: NO DATES IN URLS (Nima directive May 3, 2026; re-enforced June 3, 2026).
+# Block any NEW root-level HTML file whose slug ends in -month-day-year.html.
+# Dates live in FORCED_PAGE_DATE / metadata, never in the URL. Redirect stubs
+# at old dated URLs are exempt (they are modifications, not additions).
+NEW_DATED=$(git diff --cached --name-only --diff-filter=A | grep -iE '^[^/]+-(january|february|march|april|may|june|july|august|september|october|november|december)-[0-9]{1,2}-(202[4-9])\.html$' || true)
+if [ -n "$NEW_DATED" ]; then
+    echo ""
+    echo "  [BLOCKED] New HTML file(s) with a DATE in the URL:"
+    echo "$NEW_DATED" | sed 's/^/    /'
+    echo "  Per the May 3, 2026 directive there are NO dates in URLs on betlegendpicks.com."
+    echo "  Name the page with a dateless storyline slug and set window.FORCED_PAGE_DATE instead."
+    exit 1
+fi
+
 # CRITICAL: Block deletion of any sport-calendar JS file (runs before HTML-only early return).
 # Removing scripts/nba-calendar.js (or similar) silently kills every sidebar on every page
 # that references it. If you really mean to delete one, do it on its own branch with explicit user approval.

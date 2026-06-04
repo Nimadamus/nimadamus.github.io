@@ -447,11 +447,12 @@ class RosterManager:
             return []
         
         name_lower = player_name.lower().strip()
-        last_name = name_lower.split()[-1] if name_lower.split() else name_lower
-        
+
+        # Full-name matches only. Last-name fallback false-positived NBA names
+        # against MLB rosters (e.g. "Trae Young" -> every MLB 'Young').
         found = []
         for team_id, players in self.rosters.items():
-            if name_lower in players or last_name in players:
+            if name_lower in players:
                 found.append((team_id, MLB_TEAMS[team_id]['name']))
         return found
     
@@ -978,7 +979,8 @@ class ContentValidator:
                 pass
 
         # Check for impossible batting averages
-        ba_pattern = r'(?:batting average|avg|BA)[:\s]+\.?([5-9]\d{2}|\d{4,})'
+        # \b stops "NBA 2026-01-22" matching as BA .2026; lookahead skips ISO dates
+        ba_pattern = r'\b(?:batting average|avg|BA)\b[:\s]+\.?([5-9]\d{2}|\d{4,})(?!-\d{2})'
         for match in re.finditer(ba_pattern, text, re.IGNORECASE):
             context = text[max(0, match.start()-30):min(len(text), match.end()+30)]
             issues.append((
@@ -1114,6 +1116,11 @@ class BetLegendValidator:
             files = []
             for f in self.specific_files:
                 full_path = os.path.join(str(target), f) if not os.path.isabs(f) else f
+                fname = os.path.basename(f)
+                if fname in Config.SKIP_FILES:
+                    continue
+                if any(fnmatch.fnmatch(fname, pattern) for pattern in Config.SKIP_FILE_PATTERNS):
+                    continue
                 if os.path.exists(full_path) and Path(f).suffix.lower() in Config.HTML_EXTENSIONS:
                     files.append(full_path)
             return sorted(files)
@@ -1169,6 +1176,12 @@ class BetLegendValidator:
         except Exception as e:
             issues.append(('ERROR', f'Could not read file: {e}', ''))
             self.results[filepath] = issues
+            return
+
+        # Redirect stubs (meta refresh + noindex shells at renamed URLs) carry no
+        # content to validate; their auto-titles false-positive the roster/fact checks.
+        head = html_content[:3000]
+        if re.search(r'<meta[^>]+http-equiv=["\']refresh["\']', head, re.I) and 'noindex' in head:
             return
 
         # If diff_only mode, validate only the new/changed lines for content checks

@@ -349,6 +349,22 @@ WRONG (BANNED):
 
 **EVERY new page MUST have a unique, keyword-rich URL. The old page## numbering is DEAD.**
 
+
+### ⛔⛔⛔ NO DATES IN URLS — EVER (NIMA DIRECTIVE MAY 3, 2026; RE-ENFORCED JUNE 3, 2026) ⛔⛔⛔
+
+**No new HTML filename may contain a date** (no `-june-3-2026.html`, no `-2026-06-03.html`).
+The post date lives in `window.FORCED_PAGE_DATE` and page metadata, NEVER in the URL.
+
+WHY: On May 3, 2026 all 686 dated URLs were renamed to dateless slugs with redirect
+stubs. On May 15, 2026 commit `ee65c42d1` ("Restore sport calendar article targets")
+clobbered the stubs back to full pages while generators kept making new dated URLs.
+That left 640 dated pages live (240 exact duplicates of their dateless twin) and put
+~727 pages into Google's "Crawled - currently not indexed" bucket. Recovered June 3,
+2026 (all 640 dated URLs re-stubbed; sitemaps rebuilt to 1,502 canonical URLs).
+
+ENFORCEMENT: hooks/pre-commit BLOCKS any new root HTML file with a dated slug.
+If a same-name collision occurs, use a different storyline slug, never a date.
+
 ### THE NAMING CONVENTION:
 
 ```
@@ -360,11 +376,11 @@ BANNED FOREVER (old format):
 ❌ Any file named [sport]-page[number].html
 
 REQUIRED (new format - UNIQUE STORYLINE-DRIVEN URLs):
-✅ knicks-seek-revenge-in-denver-tatum-returns-nba-march-6-2026.html
-✅ nhl-trade-deadline-day-avalanche-stars-showdown-march-6-2026.html
-✅ miami-ohio-perfect-season-on-the-line-ncaab-march-6-2026.html
-✅ arsenal-chelsea-london-derby-premier-league-soccer-march-1-2026.html
-✅ lakers-vs-celtics-analysis-stats-preview-february-15-2026.html
+✅ knicks-seek-revenge-in-denver-tatum-returns-nba.html
+✅ nhl-trade-deadline-day-avalanche-stars-showdown.html
+✅ miami-ohio-perfect-season-on-the-line-ncaab.html
+✅ arsenal-chelsea-london-derby-premier-league-soccer.html
+✅ lakers-vs-celtics-analysis-stats-preview.html
 
 ALSO BANNED (too generic, just date-stamped):
 ❌ nba-game-previews-analysis-february-15-2026.html
@@ -381,14 +397,14 @@ BANNED WORDS IN URLs: picks, predictions, best bets, against the spread, betting
 These are analysis/preview pages - URLs must reflect that.
 
 EACH URL MUST BE UNIQUE AND STORYLINE-DRIVEN:
-[storyline-or-marquee-matchup]-[sport]-[month]-[day]-[year].html
+[storyline-or-marquee-matchup]-[sport].html   (NO DATE in the URL)
 
 The URL should highlight the day's BEST storyline:
-- A rivalry game: cavaliers-bucks-battle-for-east-supremacy-nba-february-25-2026.html
-- A key player: tatum-returns-celtics-host-mavericks-nba-march-6-2026.html
-- A milestone: miami-ohio-perfect-season-on-the-line-ncaab-march-6-2026.html
-- A big event: nhl-trade-deadline-day-avalanche-stars-showdown-march-6-2026.html
-- A competition: champions-league-atletico-inter-newcastle-soccer-february-24-2026.html
+- A rivalry game: cavaliers-bucks-battle-for-east-supremacy-nba.html
+- A key player: tatum-returns-celtics-host-mavericks-nba.html
+- A milestone: miami-ohio-perfect-season-on-the-line-ncaab.html
+- A big event: nhl-trade-deadline-day-avalanche-stars-showdown.html
+- A competition: champions-league-atletico-inter-newcastle-soccer.html
 
 The sport abbreviation MUST appear in the URL (nba, nhl, ncaab, ncaaf, nfl, mlb, soccer)
 so the calendar sync script can identify the sport.
@@ -398,12 +414,12 @@ NEVER use the same generic pattern every day. Every URL must be DIFFERENT.
 
 **Featured Game pages (ANALYSIS ONLY - no predictions/picks):**
 ```
-[away-team]-vs-[home-team]-analysis-stats-preview-[month]-[day]-[year].html
+[away-team]-vs-[home-team]-analysis-stats-preview.html   (NO DATE in the URL)
 
 Examples:
-lakers-vs-celtics-analysis-stats-preview-february-15-2026.html
-panthers-vs-lightning-nhl-analysis-stats-preview-february-15-2026.html
-duke-at-north-carolina-analysis-stats-preview-february-15-2026.html
+lakers-vs-celtics-analysis-stats-preview.html
+panthers-vs-lightning-nhl-analysis-stats-preview.html
+duke-at-north-carolina-analysis-stats-preview.html
 ```
 
 **Blog pages:**
@@ -1457,13 +1473,13 @@ SLATE is not done until ALL active sports have pages.
 
 ## STEP 4: POSTING LOCATIONS
 
-- **NBA slate posts**: NEW standalone page each day: `[unique-theme]-nba-[month]-[day]-[year].html`
-- **NHL slate posts**: NEW standalone page each day: `[unique-theme]-nhl-[month]-[day]-[year].html`
-- **MLB slate posts**: NEW standalone page each day: `[unique-theme]-mlb-[month]-[day]-[year].html`
-- **Soccer posts**: NEW standalone page each day: `[unique-theme]-soccer-[month]-[day]-[year].html`
-- **NCAAB posts**: NEW standalone page each day: `[unique-theme]-college-basketball-[month]-[day]-[year].html`
+- **NBA slate posts**: NEW standalone page each day: `[unique-theme]-nba.html` (no date in URL)
+- **NHL slate posts**: NEW standalone page each day: `[unique-theme]-nhl.html` (no date in URL)
+- **MLB slate posts**: NEW standalone page each day: `[unique-theme]-mlb.html` (no date in URL)
+- **Soccer posts**: NEW standalone page each day: `[unique-theme]-soccer.html` (no date in URL)
+- **NCAAB posts**: NEW standalone page each day: `[unique-theme]-college-basketball.html` (no date in URL)
 - **NFL posts**: nfl.html (add to TOP)
-- **Featured Game of the Day**: `[away]-vs-[home]-analysis-stats-preview-[month]-[day]-[year].html`
+- **Featured Game of the Day**: `[away]-vs-[home]-analysis-stats-preview.html` (no date in URL)
 - **Blog picks/analysis**: Standalone pick pages (NOT blog archive)
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
 - **Hub pages** (nba-previews.html, etc.): Update redirect to point to today's standalone page
