@@ -40,6 +40,19 @@ except ImportError:
 import time
 import random
 
+
+def _with_self_canonical(page_html, rel_path):
+    """Inject a per-file SELF-canonical (indexation recovery, June 4 2026).
+    Each hub page canonicals to ITSELF - never to handicapping-hub.html
+    (that consolidation is explicitly banned in CLAUDE.md)."""
+    import re as _re
+    url = 'https://www.betlegendpicks.com/' + rel_path.replace('\\', '/')
+    tag = f'<link rel="canonical" href="{url}"/>'
+    if 'rel="canonical"' in page_html:
+        return _re.sub(r'<link[^>]+rel="canonical"[^>]*>', tag, page_html, count=1)
+    return page_html.replace('</title>', '</title>\n    ' + tag, 1)
+
+
 def fetch_with_retry(url: str, params: dict = None, timeout: int = 15, max_retries: int = 3) -> Optional[requests.Response]:
     """Fetch URL with exponential backoff retry logic."""
     for attempt in range(max_retries):
@@ -3931,7 +3944,7 @@ def main():
     # Write to main hub file
     output_path = os.path.join(REPO_PATH, OUTPUT_FILE)
     with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(html)
+        f.write(_with_self_canonical(html, OUTPUT_FILE))
     print(f"\n[SUCCESS] Hub saved to: {output_path}")
 
     # ---- PERMANENT GUARD: Trend Verification ----
@@ -3994,7 +4007,7 @@ def main():
     # Save dated copy in root (backup)
     dated_root = os.path.join(REPO_PATH, f'handicapping-hub-{today_iso}.html')
     with open(dated_root, 'w', encoding='utf-8') as f:
-        f.write(html)
+        f.write(_with_self_canonical(html, f'handicapping-hub-{today_iso}.html'))
     print(f"[ARCHIVE] Root backup: handicapping-hub-{today_iso}.html")
 
     # Save directly to archive folder (what the calendar reads)
@@ -4002,7 +4015,7 @@ def main():
     os.makedirs(archive_dir, exist_ok=True)
     archive_path = os.path.join(archive_dir, f'hub-{today_iso}.html')
     with open(archive_path, 'w', encoding='utf-8') as f:
-        f.write(html)
+        f.write(_with_self_canonical(html, f'handicapping-hub-archive/hub-{today_iso}.html'))
     print(f"[ARCHIVE] Calendar entry: handicapping-hub-archive/hub-{today_iso}.html")
 
     print("\n[SUCCESS] Hub generated and archived for calendar.")
