@@ -102,20 +102,37 @@ def date_from_filename(name: str) -> str | None:
 
 
 def latest_sport_page(sport: str) -> tuple[str, str]:
+    # URLs are dateless (May 3, 2026 directive), so the post date comes from the
+    # generated calendar data, not the filename. ARCHIVE_DATA is newest-first.
+    cal = REPO / "scripts" / f"{sport}-calendar.js"
     candidates = []
-    for rel in html_files():
-        name = Path(rel).name.lower()
-        if sport not in name or "archive" in name or "record" in name:
-            continue
-        # The previews-discovery audit gates on PREVIEW content. Standalone pick /
-        # prediction pages are a separate section/template (own nav, discovered via
-        # the homepage feed + posts sitemap), so they must not be treated as the
-        # sport's latest preview here.
-        if "pick" in name or "prediction" in name:
-            continue
-        page_date = date_from_filename(name)
-        if page_date:
+    if cal.exists():
+        content = cal.read_text(encoding="utf-8", errors="ignore")
+        for page_date, rel in re.findall(
+            r'\{\s*date:\s*"(\d{4}-\d{2}-\d{2})",\s*page:\s*"([^"]+)"', content
+        ):
+            name = Path(rel).name.lower()
+            # The previews-discovery audit gates on PREVIEW content. Standalone
+            # pick / prediction pages are a separate section/template, and hub /
+            # archive / record pages are not daily previews.
+            if "archive" in name or "record" in name or "previews.html" in name:
+                continue
+            if "pick" in name or "prediction" in name:
+                continue
+            if not (REPO / rel).exists():
+                continue
             candidates.append((page_date, rel))
+    if not candidates:
+        # Fallback for sports whose calendar data is missing: legacy dated slugs.
+        for rel in html_files():
+            name = Path(rel).name.lower()
+            if sport not in name or "archive" in name or "record" in name:
+                continue
+            if "pick" in name or "prediction" in name:
+                continue
+            page_date = date_from_filename(name)
+            if page_date:
+                candidates.append((page_date, rel))
     if not candidates:
         raise AuditError(f"No dated {sport.upper()} page candidates found")
     return max(candidates)

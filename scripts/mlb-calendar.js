@@ -155,7 +155,9 @@ const SPORT_HUB_PAGE = 'mlb-previews.html';
 const SPORT_LABEL = 'MLB';
 const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.html', 'mlb.html', 'soccer.html', 'nba-previews.html', 'nhl-previews.html', 'mlb-previews.html', 'soccer-previews.html', 'college-basketball-previews.html'];
 function isConcreteContentPage(page) {
-    return !!page && !MAIN_PAGES.includes(page) && !page.includes('#') && !page.includes('-archive-');
+    // Pick pages use their own template (no archive calendar sidebar); a stale
+    // hub must never redirect to one as the day's board (soccer hub, June 3 2026).
+    return !!page && !MAIN_PAGES.includes(page) && !page.includes('#') && !page.includes('-archive-') && !/-picks?(?:-v\d+)?\.html$/.test(page);
 }
 const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);
 const latestConcreteEntry = ARCHIVE_DATA.find(item => isConcreteContentPage(item.page));
