@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Blue Jays Team Total Under 3.5 (-190) vs Braves: Chris Sale Smothers A Cold Toronto Lineup",
+        date: "June 4, 2026",
+        url: "blue-jays-team-total-under-braves-chris-sale-truist-park-mlb-pick.html",
+        image: "images/blue-jays-team-total-under-braves-chris-sale-truist-park-mlb-pick.jpg"
+    },
+    {
         sport: "NBA",
         title: "Spurs Moneyline (-185) vs Knicks: Wembanyama Opens The Finals At Home",
         date: "June 3, 2026",
