@@ -2886,10 +2886,11 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
     sport_sections = ""
     sport_order = ['NBA', 'NFL', 'NHL', 'MLB', 'NCAAB', 'NCAAF']
 
-    # Default active tab = first sport that actually has games today, so the
-    # hub never opens on an empty "No games scheduled" panel (June 6, 2026).
-    # Falls back to the first tab if no sport has games.
-    default_idx = next((i for i, s in enumerate(sport_order) if all_games.get(s)), 0)
+    # Default active tab = the sport with the most games today, so the hub
+    # never opens on an empty "No games scheduled" panel and always leads
+    # with its fullest board (June 6, 2026). Ties resolve by sport_order;
+    # falls back to the first tab if no sport has games.
+    default_idx = max(range(len(sport_order)), key=lambda i: len(all_games.get(sport_order[i], []) or []))
 
     for i, sport in enumerate(sport_order):
         games = all_games.get(sport, [])
