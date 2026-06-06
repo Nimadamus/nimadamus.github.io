@@ -9,7 +9,7 @@ const ARCHIVE_DATA = [
     { date: "2026-06-03", page: "netherlands-algeria-congo-denmark-world-cup-tuneups-soccer.html", title: "Soccer Analysis" },
     { date: "2026-06-02", page: "croatia-belgium-wales-ghana-world-cup-tuneups-soccer.html", title: "Soccer Analysis" },
     { date: "2026-06-01", page: "scandinavian-derby-world-cup-tuneups-soccer.html", title: "Soccer Analysis - June 1, 2026" },
-    { date: "2026-06-01", page: "sweden-vs-norway-scandinavian-derby-world-cup-tuneup-soccer-analysis-stats-preview.html", title: "Sweden vs Norway Analysis, Stats, Preview - June 1, 2026" },
+    { date: "2026-06-01", page: "sweden-vs-norway-scandinavian-derby-world-cup-tuneup-soccer-analysis-stats-preview.html", title: "Sweden vs Norway Analysis and Stats Preview" },
     { date: "2026-05-31", page: "usa-vs-senegal-world-cup-tuneup-charlotte-soccer.html", title: "Soccer Analysis - USA vs Senegal World Cup Tune-Up in Charlotte - May 31, 2026" },
     { date: "2026-05-30", page: "psg-arsenal-champions-league-final-soccer.html", title: "Soccer Analysis - PSG vs Arsenal Champions League Final - May 30, 2026" },
     { date: "2026-05-29", page: "bosnia-north-macedonia-world-cup-warmup-friendlies-soccer.html", title: "Soccer Analysis - World Cup Warmup Friendlies - May 29, 2026" },

@@ -4,9 +4,10 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-06-06", page: "hurricanes-golden-knights-stanley-cup-final-game-3-nhl.html", title: "NHL Analysis: Stanley Cup Final Game 3 Preview" },
+    { date: "2026-06-06", page: "nhl-previews.html", title: "NHL Stanley Cup Final Previews and Analysis" },
     { date: "2026-06-02", page: "golden-knights-hurricanes-stanley-cup-final-game-1-nhl.html", title: "NHL Analysis" },
-    { date: "2026-06-02", page: "golden-knights-vs-hurricanes-stanley-cup-final-game-1-nhl-analysis-stats-preview.html", title: "Golden Knights vs Hurricanes Stanley Cup Final Game 1 Analysis, Stats, Preview" },
-    { date: "2026-06-01", page: "nhl-previews.html", title: "NHL Stanley Cup Final: Hurricanes vs Golden Knights - June 1, 2026" },
+    { date: "2026-06-02", page: "golden-knights-vs-hurricanes-stanley-cup-final-game-1-nhl-analysis-stats-preview.html", title: "Golden Knights vs Hurricanes Game 1 Preview" },
+    { date: "2026-06-01", page: "hurricanes-reach-stanley-cup-final-golden-knights-await-nhl.html", title: "Hurricanes vs Golden Knights Stanley Cup Final" },
     { date: "2026-05-29", page: "canadiens-vs-hurricanes-eastern-conference-final-game-5-nhl-analysis-stats-preview.html", title: "Canadiens vs Hurricanes Game 5 Analysis, Stats, Preview - May 29, 2026" },
     { date: "2026-05-29", page: "hurricanes-chase-cup-final-vegas-waits-nhl.html", title: "NHL Analysis - Hurricanes Chase the Cup Final, Vegas Waits - May 29, 2026" },
     { date: "2026-05-27", page: "hurricanes-canadiens-eastern-conference-final-game-4-montreal-nhl.html", title: "NHL Analysis - May 27, 2026" },
