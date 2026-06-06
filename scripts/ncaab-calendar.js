@@ -270,9 +270,12 @@ function renderCalendar(yearMonth) {
 
 // Hub guard: a `*-previews.html` hub page bakes in the last published dated
 // slate/article. When that baked article is out of date (its FORCED_PAGE_DATE
-// is not today), it must not be presented as the current board. This removes
-// the stale article, neutralizes the stale hero, and shows a clean empty-state
-// plus a clearly-dated link to the latest available preview. No fabricated data.
+// is not today), it must not be presented as the current board. If a current/
+// upcoming concrete preview exists we redirect to it. Otherwise the baked
+// board STAYS VISIBLE (STALE_GUARD_BANNER_20260606, Nima June 6 2026: a
+// near-empty hub is worse for visitors and Googlebot than a clearly-dated
+// older board) and is labeled with its real date plus a link to the latest
+// available preview. It is never presented as today\u2019s board. No fabricated data.
 function renderPreviewHub() {
     if (currentPage !== SPORT_HUB_PAGE || !SPORT_HUB_PAGE) return;
     const baked = window.FORCED_PAGE_DATE || null;
@@ -306,17 +309,16 @@ function renderPreviewHub() {
         if (p) p.textContent = 'Browse the latest ' + SPORT_LABEL + ' previews and the full dated archive below. This page does not present older previews as today\u2019s board.';
     }
 
-    main.querySelectorAll('.game-preview').forEach(el => el.remove());
-
-    const todayConcrete = ARCHIVE_DATA.find(it => it.date === todayStr && isConcreteContentPage(it.page));
+    // STALE_GUARD_BANNER_20260606: keep the baked articles visible - only label them.
     const latest = latestConcreteEntry || latestContentEntry || null;
     const block = document.createElement('div');
     block.id = 'hub-state';
     let html = '';
-    if (!todayConcrete) {
-        html += '<div style="text-align:center;padding:40px 24px;background:linear-gradient(145deg,#14171f,#0f1218);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin-bottom:24px;">'
-              + '<p style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#00e5ff;margin-bottom:10px;">Today</p>'
-              + '<p style="font-size:20px;color:#fff;margin:0;">No ' + SPORT_LABEL + ' preview is available for this date.</p>'
+    if (!document.getElementById('board-date-note')) {
+        const bakedLabel = new Date(baked + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+        html += '<div style="text-align:center;padding:20px 24px;background:linear-gradient(145deg,#14171f,#0f1218);border:1px solid rgba(255,213,79,0.3);border-radius:12px;margin-bottom:24px;">'
+              + '<p style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#ffd54f;margin-bottom:8px;">Board From</p>'
+              + '<p style="font-size:18px;color:#fff;margin:0;">' + bakedLabel + '</p>'
               + '</div>';
     }
     if (latest && latest.page !== SPORT_HUB_PAGE) {

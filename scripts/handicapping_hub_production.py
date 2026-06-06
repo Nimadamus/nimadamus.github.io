@@ -2921,8 +2921,8 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handicapping Hub - {date_str} | BetLegend</title>
-    <meta name="description" content="BetLegend Handicapping Hub for {date_str}: advanced stats, betting lines, injury reports, and situational data across NBA, NHL, MLB, NFL, NCAAB, and soccer.">
+    <title>Handicapping Hub: Today's Betting Stats, Lines and Injury Reports | BetLegend</title>
+    <meta name="description" content="BetLegend Handicapping Hub, updated daily: advanced stats, betting lines, injury reports, and situational data across NBA, NHL, MLB, NFL, NCAAB, and soccer.">
     <meta name="betlegend-public-trend-guardrails" content="v20260510-unresolved-gap-suppression">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -4004,11 +4004,11 @@ def main():
     else:
         today_iso = (datetime.now() - timedelta(hours=5)).strftime('%Y-%m-%d')
 
-    # Save dated copy in root (backup)
-    dated_root = os.path.join(REPO_PATH, f'handicapping-hub-{today_iso}.html')
-    with open(dated_root, 'w', encoding='utf-8') as f:
-        f.write(_with_self_canonical(html, f'handicapping-hub-{today_iso}.html'))
-    print(f"[ARCHIVE] Root backup: handicapping-hub-{today_iso}.html")
+    # NOTE (June 6, 2026, Nima directive): the dated root copy
+    # (handicapping-hub-YYYY-MM-DD.html) is retired. It duplicated the archive
+    # copy below, was self-canonical, sat in the sitemap with zero inbound
+    # links, and split duplicate-content signals with the rolling hub. The 146
+    # legacy root copies are noindexed in place. Do NOT reintroduce this write.
 
     # Save directly to archive folder (what the calendar reads)
     archive_dir = os.path.join(REPO_PATH, 'handicapping-hub-archive')
