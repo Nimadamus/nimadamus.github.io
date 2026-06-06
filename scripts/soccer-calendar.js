@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-06-06", page: "world-cup-warmup-friendlies-usa-germany-brazil-egypt-soccer.html", title: "Soccer Analysis: World Cup Warm-Up Friendlies Preview" },
+    { date: "2026-06-06", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-06-05", page: "canada-ireland-haiti-peru-world-cup-sendoffs-soccer.html", title: "Soccer Analysis: World Cup Send-Off Friendlies" },
     { date: "2026-06-03", page: "italy-moneyline-luxembourg-baldini-new-era-friendly-soccer-pick.html", title: "Italy Moneyline vs Luxembourg Pick" },
     { date: "2026-06-03", page: "netherlands-algeria-congo-denmark-world-cup-tuneups-soccer.html", title: "Soccer Analysis" },
@@ -23,7 +24,6 @@ const ARCHIVE_DATA = [
     { date: "2026-05-21", page: "conference-league-final-week-copa-libertadores-group-c-soccer.html", title: "Soccer: Libertadores and Final Week - May 21, 2026" },
     { date: "2026-05-20", page: "aston-villa-freiburg-europa-league-final-istanbul-soccer.html", title: "Soccer Preview: Aston Villa vs Freiburg - Europa League Final - May 20, 2026" },
     { date: "2026-05-19", page: "europa-league-final-eve-aston-villa-freiburg-istanbul-soccer.html", title: "Soccer Preview: Europa League Final Eve - Aston Villa vs Freiburg - May 19, 2026" },
-    { date: "2026-05-19", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-05-18", page: "arsenal-burnley-title-door-premier-league-soccer.html", title: "Arsenal vs Burnley Premier League Title Race Preview" },
     { date: "2026-05-17", page: "psg-ajax-galatasaray-sunday-soccer.html", title: "Soccer Sunday Preview: PSG, Ajax, PSV and Galatasaray for May 17, 2026" },
     { date: "2026-05-16", page: "soccer-may-16-2026-recovery.html", title: "Soccer Archive - May 16, 2026" },

@@ -5,6 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-06-05", page: "knicks-vs-spurs-nba-finals-game-2-analysis-stats-preview.html", title: "Knicks vs Spurs NBA Finals Game 2 Preview" },
     { date: "2026-06-05", page: "spurs-response-game-brunson-closer-finals-game-2-nba.html", title: "NBA Finals Game 2 Analysis: Knicks at Spurs" },
+    { date: "2026-06-05", page: "nba-previews.html", title: "NBA Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-06-03", page: "knicks-vs-spurs-nba-finals-game-1-analysis-stats-preview.html", title: "Knicks vs Spurs NBA Finals Game 1 Preview" },
     { date: "2026-06-03", page: "spurs-moneyline-knicks-nba-finals-game-1-wembanyama-frost-bank-center-nba-pick.html", title: "Spurs Moneyline vs Knicks NBA Finals Game 1 Pick" },
     { date: "2026-06-03", page: "wembanyama-brunson-nba-finals-game-1-spurs-knicks-nba.html", title: "NBA Analysis" },
@@ -22,7 +23,6 @@ const ARCHIVE_DATA = [
     { date: "2026-05-21", page: "brunson-encore-knicks-cavaliers-eastern-conference-finals-game-2-nba.html", title: "NBA Preview: Cavaliers at Knicks ECF Game 2 - May 21, 2026" },
     { date: "2026-05-20", page: "wembanyama-encore-fox-return-spurs-thunder-game-2-nba.html", title: "NBA Preview: Spurs at Thunder Western Conference Finals Game 2 - May 20, 2026" },
     { date: "2026-05-19", page: "knicks-host-cavaliers-eastern-conference-finals-game-1-brunson-mitchell-nba.html", title: "NBA Preview: Knicks Host Cavaliers ECF Game 1 - May 19, 2026" },
-    { date: "2026-05-19", page: "nba-previews.html", title: "NBA Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-05-18", page: "spurs-thunder-west-final-game-one-nba.html", title: "Spurs at Thunder West Final Game 1 Preview" },
     { date: "2026-05-17", page: "cavaliers-pistons-game-7-eastern-semis-nba.html", title: "NBA Game 7 Preview: Cavaliers at Pistons for May 17, 2026" },
     { date: "2026-05-16", page: "nba-may-16-2026-recovery.html", title: "NBA Playoff Archive - May 16, 2026" },
