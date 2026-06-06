@@ -30,6 +30,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Blue Jays Team Total Under 3.5 (-190) vs Braves: Chris Sale Smothers A Cold Toronto Lineup",
         date: "June 4, 2026",
+        result: "L",
         url: "blue-jays-team-total-under-braves-chris-sale-truist-park-mlb-pick.html",
         image: "images/blue-jays-team-total-under-braves-chris-sale-truist-park-mlb-pick.jpg"
     },
@@ -37,6 +38,7 @@ var HOMEPAGE_PICKS = [
         sport: "NBA",
         title: "Spurs Moneyline (-185) vs Knicks: Wembanyama Opens The Finals At Home",
         date: "June 3, 2026",
+        result: "L",
         url: "spurs-moneyline-knicks-nba-finals-game-1-wembanyama-frost-bank-center-nba-pick.html",
         image: "images/spurs-moneyline-knicks-nba-finals-game-1-wembanyama-frost-bank-center-nba-pick-june-3-2026.jpg"
     },
@@ -44,6 +46,7 @@ var HOMEPAGE_PICKS = [
         sport: "Soccer",
         title: "Italy Moneyline (-233) vs Luxembourg: Baldini's New Era Starts With A Win",
         date: "June 3, 2026",
+        result: "W",
         url: "italy-moneyline-luxembourg-baldini-new-era-friendly-soccer-pick.html",
         image: "images/italy-moneyline-luxembourg-baldini-new-era-friendly-soccer-pick-june-3-2026.webp"
     },
@@ -51,6 +54,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Yankees Run Line -1.5 (-115) vs Guardians: Schlittler Sets Up The Lay",
         date: "June 2, 2026",
+        result: "L",
         url: "yankees-run-line-guardians-schlittler-cantillo-yankee-stadium-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693645/action/hero/current"
     },
@@ -58,6 +62,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Brewers Moneyline (-200) vs Giants: Harrison Anchors The Home Favorite",
         date: "June 2, 2026",
+        result: "W",
         url: "brewers-moneyline-giants-harrison-mcdonald-american-family-field-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/690916/action/hero/current"
     },
@@ -65,6 +70,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Dodgers Moneyline (-150) vs Diamondbacks: Los Angeles Rolls At Chase Field",
         date: "June 1, 2026",
+        result: "L",
         url: "dodgers-moneyline-diamondbacks-sheehan-rodriguez-chase-field-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/571970/action/hero/current"
     },
@@ -72,6 +78,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Marlins Moneyline (+125) vs Nationals: Plus-Money Value Behind Alcantara",
         date: "June 1, 2026",
+        result: "W",
         url: "marlins-moneyline-nationals-alcantara-cavalli-nationals-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/645261/action/hero/current"
     },
@@ -79,6 +86,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Blue Jays/Orioles Over 8 (-120) at Camden Yards: Leaky Birds Staff Fuels The Total",
         date: "May 31, 2026",
+        result: "W",
         url: "blue-jays-orioles-over-8-bradish-miles-camden-yards-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/680694/action/hero/current"
     },
@@ -86,6 +94,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Astros +1.5 (-110) vs Brewers: Run Line Cushion Against Misiorowski At Daikin Park",
         date: "May 31, 2026",
+        result: "L",
         url: "astros-plus-1-5-runline-brewers-misiorowski-imai-daikin-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694819/action/hero/current"
     },
@@ -263,6 +272,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Vegas Golden Knights Moneyline -150 vs Ducks Game 5",
         date: "May 12, 2026",
+        result: "W",
         url: "vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.html",
         image: "images/vegas-golden-knights-moneyline-minus-150-ducks-game-5-nhl-pick.webp"
     },
@@ -270,6 +280,7 @@ var HOMEPAGE_PICKS = [
         sport: "NBA",
         title: "Lakers +11 vs Thunder Game 4, Elimination Spot Creates Double-Digit Spread Value",
         date: "May 11, 2026",
+        result: "W",
         url: "lakers-plus-11-thunder-game-4-elimination-spot-nba-pick.html",
         image: "images/sacramento-kings-oklahoma-city-thunder-nba-over-betting-pick-total-november-19-2025.webp"
     },
@@ -277,6 +288,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Astros ML +124 vs Mariners, Peter Lambert Gives Houston A Live Home Underdog Path",
         date: "May 11, 2026",
+        result: "L",
         url: "astros-moneyline-plus-124-mariners-kirby-lambert-daikin-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/663567/action/hero/current"
     },
@@ -284,6 +296,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Nationals vs Marlins Pick: Washington Moneyline at loanDepot Park",
         date: "May 9, 2026",
+        result: "L",
         url: "nationals-moneyline-plus-139-marlins-littell-junk-loandepot-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/695578/action/hero/current"
     },
@@ -291,6 +304,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Braves vs Dodgers Pick: Atlanta Moneyline at Dodger Stadium",
         date: "May 9, 2026",
+        result: "W",
         url: "braves-moneyline-plus-152-dodgers-strider-snell-dodger-stadium-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/675911/action/hero/current"
     },
@@ -298,6 +312,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Sabres vs Canadiens Pick: Under 6.5 in Game 1",
         date: "May 6, 2026",
+        result: "W",
         url: "sabres-canadiens-under-6-5-game-1-second-round-keybank-center-nhl-pick.html",
         image: "images/sabres-lafferty-bench-celebration-bruins-g2-april-21-2026.jpg"
     },
@@ -305,6 +320,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Athletics vs Phillies Pick: Oakland Moneyline at Citizens Bank Park",
         date: "May 6, 2026",
+        result: "L",
         url: "athletics-moneyline-plus-156-phillies-springs-wheeler-citizens-bank-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/667670/action/hero/current"
     },
@@ -312,6 +328,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Sabres vs Bruins Game 6 Pick: Over 5.5 at TD Garden",
         date: "May 1, 2026",
+        result: "L",
         url: "sabres-bruins-over-5-5-game-6-td-garden-stanley-cup-playoffs-nhl.html",
         image: "images/sabres-bruins-over-5-5-game-6-td-garden-stanley-cup-playoffs-nhl.jpg"
     },
@@ -319,6 +336,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Flyers Puck Line +1.5 (-210) vs Penguins Game 5: Philadelphia One Win Away From A Cross-State Series Win",
         date: "April 27, 2026",
+        result: "W",
         url: "flyers-puck-line-plus-1-5-penguins-game-5-stanley-cup-playoffs-nhl.html",
         image: "images/flyers-celebration-puck-line-penguins-game-5-stanley-cup-playoffs.jpg"
     },
@@ -326,6 +344,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Cubs Moneyline +107 vs Padres at Petco Park: Plus-Money Road Dog In A Pitcher's Park",
         date: "April 27, 2026",
+        result: "L",
         url: "cubs-moneyline-plus-107-padres-boyd-vasquez-petco-park-mlb.html",
         image: "images/cubs-pete-crow-armstrong-padres-petco-park-april-27-2026.jpg"
     },
