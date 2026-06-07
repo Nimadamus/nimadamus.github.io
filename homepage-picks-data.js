@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Astros Team Total Under 4.5 (-125) vs Athletics: Gage Jump Cools A Streaking Houston Bat",
+        date: "June 7, 2026",
+        url: "mlb-team-total-unders-card-tigers-astros-blue-jays-rockies-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/695611/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Tigers Team Total Under 3.5 (+100) vs Mariners: Line Steamed As Detroit's Cold Bats Get Capped",
+        date: "June 7, 2026",
+        url: "mlb-team-total-unders-card-tigers-astros-blue-jays-rockies-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/622491/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Yankees Team Total Under 4.5 (-140) vs Red Sox: Ranger Suarez Quiets The Bronx Bats",
         date: "June 6, 2026",
         result: "P",
