@@ -30,6 +30,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Yankees Team Total Under 4.5 (-140) vs Red Sox: Ranger Suarez Quiets The Bronx Bats",
         date: "June 6, 2026",
+        result: "P",
         url: "yankees-team-total-under-red-sox-warren-yankee-stadium-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/665862/action/hero/current"
     },
@@ -37,6 +38,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Braxton Ashcraft Over 5.5 Strikeouts (-102) vs Braves: The Whiff Rate Points Over",
         date: "June 6, 2026",
+        result: "L",
         url: "braxton-ashcraft-over-strikeouts-pirates-braves-strider-truist-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/677952/action/hero/current"
     },
