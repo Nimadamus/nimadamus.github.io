@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Giants ML (-140) vs Nationals: Logan Webb Draws A Mikolas Who Cannot Finish Five",
+        date: "June 8, 2026",
+        url: "road-favorites-giants-brewers-harrison-outs-athletics-team-total-under-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657277/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Athletics Team Total Under 4.5 (+100) vs Brewers: A Cold A's Bat Meets Kyle Harrison",
+        date: "June 8, 2026",
+        url: "road-favorites-giants-brewers-harrison-outs-athletics-team-total-under-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/668678/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Astros Team Total Under 4.5 (-125) vs Athletics: Gage Jump Cools A Streaking Houston Bat",
         date: "June 7, 2026",
         url: "mlb-team-total-unders-card-tigers-astros-blue-jays-rockies-mlb-pick.html",
