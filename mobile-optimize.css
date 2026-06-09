@@ -603,3 +603,21 @@
     min-width: 44px !important;
   }
 }
+
+/* IMAGE-CENTERING-GUARD (LOCKED June 9, 2026): permanent sitewide face-safe centering.
+   Any cropped (object-fit:cover) article/featured/hero/card/slate image gets a
+   top-biased center so faces/players/logos are not sliced. Team logos never crop. */
+.feature-photo,
+.featured-image,
+.hero-image,
+.hero-img,
+.slate-photo img,
+.pick-card-img,
+.pick-card-sm-img,
+.card img,
+.media img,
+.article-card img,
+.pick-article-hero__figure img{
+  object-position: center 20%;
+}
+.team-logo{ object-fit: contain; }

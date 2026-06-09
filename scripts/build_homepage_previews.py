@@ -76,7 +76,7 @@ h1{{margin:18px 0 16px;font-size:clamp(42px,5.4vw,76px);line-height:.96;letter-s
 .ticket-body{{padding:18px}}
 .match{{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;text-align:center;margin-bottom:18px}}
 .team{{border:1px solid {line};background:{team_bg};border-radius:8px;padding:14px 8px}}
-.team img{{width:66px;height:66px;object-fit:cover;border-radius:8px;margin:0 auto 8px}}
+.team img{{width:66px;height:66px;object-fit:cover;object-position:center 20%;border-radius:8px;margin:0 auto 8px}}
 .team b{{font-size:16px}}
 .vs{{color:{accent};font-weight:900}}
 .markets{{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}}
@@ -89,7 +89,7 @@ h2{{margin:0;font-size:38px;line-height:1.08;font-weight:900;letter-spacing:0}}
 .sub{{margin:8px 0 0;color:{muted};font-size:16px;max-width:720px}}
 .board{{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:16px}}
 .card,.panel{{overflow:hidden;border:1px solid {line};background:{panel};border-radius:9px}}
-.card img{{width:100%;height:220px;object-fit:cover}}
+.card img{{width:100%;height:220px;object-fit:cover;object-position:center 20%}}
 .card.feature img{{height:315px}}
 .card-body{{padding:18px}}
 .tag{{display:inline-flex;border-radius:999px;padding:5px 9px;background:{accent_wash};color:{kicker};font-size:12px;font-weight:900;text-transform:uppercase}}
@@ -111,7 +111,7 @@ h2{{margin:0;font-size:38px;line-height:1.08;font-weight:900;letter-spacing:0}}
 .grid-links a{{border:1px solid {line};background:{team_bg};border-radius:7px;padding:12px;color:{nav_text};font-size:14px;font-weight:850}}
 .media-row{{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}}
 .media{{position:relative;height:190px;border-radius:9px;overflow:hidden;border:1px solid {line};background:#111}}
-.media img{{width:100%;height:100%;object-fit:cover;opacity:.78;transition:.2s ease}}
+.media img{{width:100%;height:100%;object-fit:cover;object-position:center 20%;opacity:.78;transition:.2s ease}}
 .media:hover img{{opacity:.95;transform:scale(1.04)}}
 .media b{{position:absolute;left:14px;right:14px;bottom:14px;z-index:1;font-size:19px;text-shadow:0 2px 18px #000}}
 .media:after{{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.86))}}
