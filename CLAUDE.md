@@ -208,6 +208,41 @@ or the image lives inside the content card, it is wrong.
 
 ---
 
+## 🟥🟥🟥 ABSOLUTE RULE: ARTICLE / FEATURED IMAGE CENTERING (LOCKED JUNE 9, 2026) 🟥🟥🟥
+
+**Featured/article images must NEVER crop a player's face or the subject.**
+Most sourced photos (Wikimedia/ESPN) are tall portraits; a wide `object-fit:cover`
+box with the implicit `center center` slices the head off. That is banned.
+
+### THE PERMANENT RULE — every featured-game / article hero image:
+```css
+.feature-photo{
+  width:100%;height:auto;aspect-ratio:3/2;max-height:560px;
+  object-fit:cover;object-position:center 15%;   /* bias UP — keeps faces */
+  display:block;background:#0a0c10;
+}
+@media(max-width:950px){
+  .feature-photo{height:auto;aspect-ratio:4/5;max-height:520px;object-position:center 18%}
+}
+```
+- `object-position:center 20%` keeps the subject's head in frame for portrait
+  photos and is harmless for landscape shots (no vertical overflow to shift).
+- Larger display height is acceptable; article content sits underneath.
+- If a specific image still cuts the subject, switch THAT image to
+  `object-fit:contain` on the dark background (full image, never cropped) —
+  never ship a face-cropped hero.
+- Pick pages use the shared `pick-hero.css` `.pick-article-hero__figure img`
+  rule, which is also `object-position:center 20%`. Do not revert it to plain
+  `center`.
+
+### WHAT HAPPENED (June 9, 2026):
+The Skenes featured page (and 3 other featured pages) used
+`.feature-photo{height:360px;object-fit:cover}` with no `object-position`,
+cropping Paul Skenes' face. All 4 featured pages + `pick-hero.css` were fixed
+to the rule above. Every new featured/article hero must start from this rule.
+
+---
+
 ## ☠️☠️☠️ ABSOLUTE RULE: PICKS = STANDALONE PAGES ONLY. NEVER POST TO BLOG ARCHIVE. ☠️☠️☠️
 
 ### PERMANENTLY LOCKED - MARCH 30, 2026
