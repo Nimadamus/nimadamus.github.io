@@ -135,6 +135,10 @@ jobs:
         run: |
           python scripts/validate_homepage_pick_image_uniqueness.py
 
+      - name: Preview-hub SEO regression guard
+        run: |
+          python scripts/validate_preview_hub_seo.py
+
       - name: Run Daily Discovery Audit
         run: |
           python scripts/audit_daily_discovery.py --max-age-days 7
