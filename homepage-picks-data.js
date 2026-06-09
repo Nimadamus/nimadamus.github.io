@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Red Sox/Rays Under 7.5 (-120) at Tropicana Field: Two Sub-2.30 ERAs In A Dome",
+        date: "June 9, 2026",
+        url: "dodgers-team-total-under-yankees-moneyline-phillies-red-sox-unders-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607259/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Yankees ML (-119) at Guardians: Gerrit Cole Returns Without Allowing A Run",
+        date: "June 9, 2026",
+        url: "dodgers-team-total-under-yankees-moneyline-phillies-red-sox-unders-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/677944/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Giants ML (-140) vs Nationals: Logan Webb Draws A Mikolas Who Cannot Finish Five",
         date: "June 8, 2026",
         url: "road-favorites-giants-brewers-harrison-outs-athletics-team-total-under-mlb-pick.html",
