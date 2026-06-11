@@ -119,6 +119,7 @@ const FEATURED_GAMES = [
     { date: "2026-06-08", page: "spurs-vs-knicks-nba-finals-game-3-analysis-stats-preview.html", title: "Spurs vs Knicks NBA Finals Game 3 Analysis, Stats, Preview" },
     { date: "2026-06-09", page: "dodgers-vs-pirates-skenes-analysis-stats-preview.html", title: "Dodgers vs Pirates - Skenes Faces The Dodgers Preview" },
     { date: "2026-06-10", page: "spurs-vs-knicks-nba-finals-game-4-analysis-stats-preview.html", title: "Spurs vs Knicks NBA Finals Game 4 Analysis, Stats, Preview" },
+    { date: "2026-06-11", page: "golden-knights-vs-hurricanes-stanley-cup-final-game-5-analysis-stats-preview.html", title: "Golden Knights vs Hurricanes Stanley Cup Final Game 5 Analysis, Stats, Preview" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];

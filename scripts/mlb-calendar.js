@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-06-11", page: "braves-moneyline-road-favorite-white-sox-perez-control-mlb-pick.html", title: "Braves ML -112 at White Sox Free Pick: Perez Control" },
+    { date: "2026-06-11", page: "dodgers-braves-mariners-cubs-coors-field-board-mlb.html", title: "MLB Analysis - June 11, 2026" },
     { date: "2026-06-10", page: "dodgers-padres-astros-braves-fifteen-game-board-mlb.html", title: "MLB Preview: Full 15-Game Wednesday Board" },
     { date: "2026-06-10", page: "padres-dodgers-astros-moneylines-yankees-rays-unders-white-sox-team-total-mlb-pick.html", title: "Padres, Dodgers, Astros ML, Two Unders, White Sox TT" },
     { date: "2026-06-09", page: "dodgers-team-total-under-yankees-moneyline-phillies-red-sox-unders-mlb-pick.html", title: "Dodgers Team Total Under, Yankees ML, Two MLB Unders" },
