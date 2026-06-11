@@ -30,6 +30,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Dodgers ML (-187) at Pirates: Shohei Ohtani Carries A 0.74 ERA Into Pittsburgh",
         date: "June 10, 2026",
+        result: "L",
         url: "padres-dodgers-astros-moneylines-yankees-rays-unders-white-sox-team-total-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/660271/action/hero/current"
     },
@@ -37,6 +38,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Red Sox/Rays Under 7.5 (-125) at Tropicana Field: Rasmussen Caps A Cold Boston Bat",
         date: "June 10, 2026",
+        result: "L",
         url: "padres-dodgers-astros-moneylines-yankees-rays-unders-white-sox-team-total-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656876/action/hero/current"
     },
