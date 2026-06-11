@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Braves ML (-112) at White Sox: Martin Perez's 1.06 WHIP Control vs A .242 Lineup",
+        date: "June 11, 2026",
+        url: "braves-moneyline-road-favorite-white-sox-perez-control-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/621566/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Dodgers ML (-187) at Pirates: Shohei Ohtani Carries A 0.74 ERA Into Pittsburgh",
         date: "June 10, 2026",
         result: "L",
