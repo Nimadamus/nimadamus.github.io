@@ -28,8 +28,23 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Nationals Under 3.5 (+113) and Angels Under 3.5 (-125): Bryce Miller and Shane McClanahan Headline Two Team Total Unders",
+        date: "June 12, 2026",
+        url: "nationals-angels-team-total-unders-miller-mcclanahan-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/682243/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Mariners ML (-142), Giants ML (-114), and Braves/Mets Under 8: Roupp and Strider Anchor Friday's Board",
+        date: "June 12, 2026",
+        url: "mariners-giants-moneylines-braves-mets-under-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694738/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Braves ML (-112) at White Sox: Martin Perez's 1.06 WHIP Control vs A .242 Lineup",
         date: "June 11, 2026",
+        result: "P",
         url: "braves-moneyline-road-favorite-white-sox-perez-control-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/621566/action/hero/current"
     },
