@@ -27,6 +27,20 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Hurricanes/Golden Knights Over 5.5 (-130): A High-Event Stanley Cup Final Game 6 With Carolina Up 3-2",
+        date: "June 13, 2026",
+        url: "hurricanes-golden-knights-stanley-cup-final-game-6-over-nhl-pick.html",
+        image: "images/hurricanes-golden-knights-stanley-cup-final-game-6-over-nhl-pick.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Tigers First 5 Innings ML (-158): Tarik Skubal's 2.70 ERA Out-Pitches Joey Cantillo In Cleveland",
+        date: "June 13, 2026",
+        url: "tigers-first-five-moneyline-skubal-guardians-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669373/action/hero/current"
+    },
+    {
         sport: "MLB",
         title: "Nationals Under 3.5 (+113) and Angels Under 3.5 (-125): Bryce Miller and Shane McClanahan Headline Two Team Total Unders",
         date: "June 12, 2026",
