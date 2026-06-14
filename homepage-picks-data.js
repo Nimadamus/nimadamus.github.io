@@ -51,6 +51,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Tigers First 5 Innings ML (-158): Tarik Skubal's 2.70 ERA Out-Pitches Joey Cantillo In Cleveland",
         date: "June 13, 2026",
+        result: "L",
         url: "tigers-first-five-moneyline-skubal-guardians-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669373/action/hero/current"
     },
