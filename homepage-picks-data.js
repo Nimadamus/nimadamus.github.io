@@ -27,6 +27,20 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Marlins, Brewers, Cubs And Rockies Team Total Unders: Skenes And Sanchez Anchor A Pitching-Heavy Sunday",
+        date: "June 14, 2026",
+        url: "mlb-unders-skenes-sanchez-team-totals-pitching-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/676974/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Mariners ML (-129): Emerson Hancock And A 0.95 WHIP Carry Seattle In Washington",
+        date: "June 14, 2026",
+        url: "mariners-moneyline-hancock-nationals-road-favorite-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/676106/action/hero/current"
+    },
+    {
         sport: "NHL",
         title: "Hurricanes/Golden Knights Over 5.5 (-130): A High-Event Stanley Cup Final Game 6 With Carolina Up 3-2",
         date: "June 13, 2026",
