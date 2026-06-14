@@ -4,7 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-06-14", page: "mariners-moneyline-hancock-nationals-road-favorite-mlb-pick.html", title: "Mariners Moneyline Road Favorite Pick" },
-    { date: "2026-06-14", page: "mlb-unders-skenes-sanchez-team-totals-pitching-mlb-pick.html", title: "Sunday MLB Unders Board: Pitching-Heavy Total Picks" },
+    { date: "2026-06-14", page: "mlb-unders-skenes-sanchez-team-totals-pitching-mlb-pick.html", title: "MLB Team Total Unders: Skenes And Sanchez Pick" },
     { date: "2026-06-14", page: "skenes-sanchez-braves-sunday-pitching-board-mlb.html", title: "MLB Analysis - June 14, 2026" },
     { date: "2026-06-13", page: "dodgers-braves-yankees-saturday-fifteen-game-board-mlb.html", title: "MLB Analysis: Saturday's 15-Game Board" },
     { date: "2026-06-13", page: "dodgers-moneyline-white-sox-team-total-under-yamamoto-mlb-pick.html", title: "Dodgers Moneyline and White Sox Team Total Under Pick" },
