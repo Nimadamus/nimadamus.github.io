@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NHL",
+        title: "Hurricanes ML (-115): One Road Win From The Cup In Stanley Cup Final Game 6, Carolina Up 3-2",
+        date: "June 14, 2026",
+        url: "hurricanes-moneyline-stanley-cup-final-game-6-clinch-nhl-pick.html",
+        image: "images/hurricanes-moneyline-stanley-cup-final-game-6-clinch-nhl-pick.jpg"
+    },
+    {
         sport: "MLB",
         title: "Marlins, Brewers, Cubs And Rockies Team Total Unders: Skenes And Sanchez Anchor A Pitching-Heavy Sunday",
         date: "June 14, 2026",

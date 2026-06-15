@@ -5,6 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-06-14", page: "hurricanes-golden-knights-cup-final-game-6-vegas-closeout-nhl.html", title: "NHL Stanley Cup Final Game 6 Analysis - June 14, 2026" },
     { date: "2026-06-14", page: "hurricanes-golden-knights-stanley-cup-final-game-6-over-nhl-pick.html", title: "Hurricanes and Golden Knights Game 6 Over Pick" },
+    { date: "2026-06-14", page: "hurricanes-moneyline-stanley-cup-final-game-6-clinch-nhl-pick.html", title: "Hurricanes Moneyline Game 6 Pick (-115)" },
     { date: "2026-06-13", page: "hurricanes-golden-knights-stanley-cup-final-game-6-nhl.html", title: "NHL Stanley Cup Final Game 6 Analysis" },
     { date: "2026-06-13", page: "nhl-previews.html", title: "NHL Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-06-11", page: "hurricanes-golden-knights-stanley-cup-final-game-5-nhl.html", title: "NHL Stanley Cup Final Game 5 Analysis - June 11, 2026" },

@@ -19,7 +19,7 @@ PICKS = ROOT / "homepage-picks-data.js"
 SYSTEM = ROOT / "homepage-image-system.js"
 ARCHIVE = ROOT / "archive.html"
 
-MAX_CARDS_PER_DATE = 2
+MAX_CARDS_PER_DATE = 3
 BLOCKED_IMAGE_RE = re.compile(
     r"(?:"
     r"newlogo\.png|"
