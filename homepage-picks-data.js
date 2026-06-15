@@ -27,6 +27,20 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Cubs ML (-210): Shota Imanaga's 1.06 WHIP Hosts The NL-Worst Rockies And Michael Lorenzen At Wrigley",
+        date: "June 15, 2026",
+        url: "cubs-moneyline-imanaga-rockies-wrigley-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/684007/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Phillies ML (-184): Zack Wheeler's 2.22 ERA And 0.85 WHIP Anchor The NL East Opener vs Miami",
+        date: "June 15, 2026",
+        url: "phillies-moneyline-wheeler-marlins-citizens-bank-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/547180/action/hero/current"
+    },
+    {
         sport: "NHL",
         title: "Hurricanes ML (-115): One Road Win From The Cup In Stanley Cup Final Game 6, Carolina Up 3-2",
         date: "June 14, 2026",
