@@ -31,9 +31,11 @@ var FEATURED_HUB_PAGES = ['featured-game-of-the-day.html'];
     if (typeof FEATURED_GAMES === 'undefined' || !FEATURED_GAMES.length) return;
     var todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date());
     var newest = FEATURED_GAMES.slice().sort(function(a, b) { return b.date.localeCompare(a.date); })[0];
-    // Only redirect to a current/upcoming featured game; never to a completed
-    // past game (the hub HTML shows an honest empty-state in that case).
-    if (newest && newest.page && newest.page !== cur && newest.date >= todayStr) {
+    // FALLBACK-TO-LATEST (Nima, June 16 2026): the hub always loads the newest
+    // featured game. If today has none, fall back to the most recent past one
+    // rather than an empty state. Flag past-dated loads for the subtle note.
+    if (newest && newest.page && newest.page !== cur) {
+        if (newest.date < todayStr) { try { sessionStorage.setItem('bl_showing_latest', '1'); } catch (e) {} }
         window.location.replace('/' + newest.page);
     }
 })();
@@ -237,4 +239,24 @@ if (document.readyState === 'loading') { document.addEventListener('DOMContentLo
         }
     };
     document.head.appendChild(script);
+})();
+/* SHOWING-LATEST NOTE (Nima, June 16 2026): when a hub fell back to the most
+   recent published item (no entry for today), show a subtle one-line note on the
+   destination article. Flag is set by the hub before redirect; cleared after use. */
+(function showLatestAvailableNote() {
+    function run() {
+        var flag;
+        try { flag = sessionStorage.getItem('bl_showing_latest'); } catch (e) { return; }
+        if (!flag) return;
+        try { sessionStorage.removeItem('bl_showing_latest'); } catch (e) {}
+        if (document.getElementById('bl-latest-note')) return;
+        var host = document.querySelector('.main-content') || document.querySelector('.page-wrapper') || document.body;
+        if (!host) return;
+        var note = document.createElement('div');
+        note.id = 'bl-latest-note';
+        note.setAttribute('style', 'max-width:900px;margin:90px auto 0;padding:10px 16px;border:1px solid rgba(0,229,255,0.3);border-radius:10px;background:rgba(0,229,255,0.06);color:#9fe9f5;font-size:13px;line-height:1.5;text-align:center;font-family:Inter,system-ui,sans-serif;');
+        note.textContent = 'Showing the latest available preview. No new post has been published for today yet.';
+        host.insertBefore(note, host.firstChild);
+    }
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', run); } else { run(); }
 })();

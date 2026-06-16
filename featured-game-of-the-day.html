@@ -21,10 +21,16 @@
       var newest = FEATURED_GAMES.slice().sort(function (a, b) {
         return b.date.localeCompare(a.date);
       })[0];
-      // Only redirect to a CURRENT/UPCOMING featured game (post date today or
-      // later). A completed past game must never stand in as today's featured
-      // preview - fall through to the honest empty-state instead.
-      if (newest && newest.page && newest.date >= todayStr) {
+      // FALLBACK-TO-LATEST (Nima, June 16 2026): if there is no featured game for
+      // today, load the most recent published featured game instead of showing an
+      // empty "nothing available" page. Prefer today/upcoming; otherwise fall back
+      // to the newest past entry. Only the truly empty data file shows the empty
+      // state. This hub is noindex, so redirecting to a past-dated real article is
+      // SEO-safe (the target keeps its own canonical/date).
+      if (newest && newest.page) {
+        if (newest.date < todayStr) {
+          try { sessionStorage.setItem('bl_showing_latest', '1'); } catch (e) {}
+        }
         window.location.replace('/' + newest.page);
       } else {
         window.__FEATURED_EMPTY = true;
