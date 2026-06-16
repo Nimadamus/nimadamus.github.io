@@ -30,6 +30,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Cubs ML (-210): Shota Imanaga's 1.06 WHIP Hosts The NL-Worst Rockies And Michael Lorenzen At Wrigley",
         date: "June 15, 2026",
+        result: "W",
         url: "cubs-moneyline-imanaga-rockies-wrigley-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/684007/action/hero/current"
     },
@@ -37,6 +38,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Phillies ML (-184): Zack Wheeler's 2.22 ERA And 0.85 WHIP Anchor The NL East Opener vs Miami",
         date: "June 15, 2026",
+        result: "W",
         url: "phillies-moneyline-wheeler-marlins-citizens-bank-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/547180/action/hero/current"
     },
@@ -44,6 +46,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Hurricanes ML (-115): One Road Win From The Cup In Stanley Cup Final Game 6, Carolina Up 3-2",
         date: "June 14, 2026",
+        result: "W",
         url: "hurricanes-moneyline-stanley-cup-final-game-6-clinch-nhl-pick.html",
         image: "images/hurricanes-moneyline-stanley-cup-final-game-6-clinch-nhl-pick.jpg"
     },
@@ -51,6 +54,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Marlins, Brewers, Cubs And Rockies Team Total Unders: Skenes And Sanchez Anchor A Pitching-Heavy Sunday",
         date: "June 14, 2026",
+        result: "L",
         url: "mlb-unders-skenes-sanchez-team-totals-pitching-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/676974/action/hero/current"
     },
@@ -58,6 +62,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Mariners ML (-129): Emerson Hancock And A 0.95 WHIP Carry Seattle In Washington",
         date: "June 14, 2026",
+        result: "L",
         url: "mariners-moneyline-hancock-nationals-road-favorite-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/676106/action/hero/current"
     },
@@ -65,6 +70,7 @@ var HOMEPAGE_PICKS = [
         sport: "NHL",
         title: "Hurricanes/Golden Knights Over 5.5 (-130): A High-Event Stanley Cup Final Game 6 With Carolina Up 3-2",
         date: "June 13, 2026",
+        result: "L",
         url: "hurricanes-golden-knights-stanley-cup-final-game-6-over-nhl-pick.html",
         image: "images/hurricanes-golden-knights-stanley-cup-final-game-6-over-nhl-pick.jpg"
     },
@@ -80,6 +86,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Nationals Under 3.5 (+113) and Angels Under 3.5 (-125): Bryce Miller and Shane McClanahan Headline Two Team Total Unders",
         date: "June 12, 2026",
+        result: "L",
         url: "nationals-angels-team-total-unders-miller-mcclanahan-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/682243/action/hero/current"
     },
@@ -87,6 +94,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Mariners ML (-142), Giants ML (-114), and Braves/Mets Under 8: Roupp and Strider Anchor Friday's Board",
         date: "June 12, 2026",
+        result: "W",
         url: "mariners-giants-moneylines-braves-mets-under-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694738/action/hero/current"
     },
@@ -134,6 +142,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Giants ML (-140) vs Nationals: Logan Webb Draws A Mikolas Who Cannot Finish Five",
         date: "June 8, 2026",
+        result: "L",
         url: "road-favorites-giants-brewers-harrison-outs-athletics-team-total-under-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657277/action/hero/current"
     },
@@ -141,6 +150,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Athletics Team Total Under 4.5 (+100) vs Brewers: A Cold A's Bat Meets Kyle Harrison",
         date: "June 8, 2026",
+        result: "L",
         url: "road-favorites-giants-brewers-harrison-outs-athletics-team-total-under-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/668678/action/hero/current"
     },
@@ -148,6 +158,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Astros Team Total Under 4.5 (-125) vs Athletics: Gage Jump Cools A Streaking Houston Bat",
         date: "June 7, 2026",
+        result: "W",
         url: "mlb-team-total-unders-card-tigers-astros-blue-jays-rockies-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/695611/action/hero/current"
     },
@@ -155,6 +166,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Tigers Team Total Under 3.5 (+100) vs Mariners: Line Steamed As Detroit's Cold Bats Get Capped",
         date: "June 7, 2026",
+        result: "L",
         url: "mlb-team-total-unders-card-tigers-astros-blue-jays-rockies-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/622491/action/hero/current"
     },
