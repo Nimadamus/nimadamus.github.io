@@ -624,12 +624,41 @@ preview as June 1's board. Root cause was TWO compounding bugs in
 - Manifest/archive fallbacks route to the month archive page or SKIP; they never
   assign a date to the rolling hub.
 - Runtime guard `renderPreviewHub()` (generated into every `scripts/*-calendar.js`)
-  strips the baked article and shows a clean empty-state + dated "latest preview"
-  link whenever `FORCED_PAGE_DATE !== today`.
+  strips the stale baked article whenever `FORCED_PAGE_DATE !== today`, then applies
+  the FALLBACK-TO-LATEST policy below.
 - HARD GATE in `scripts/validate_calendar_continuity.py` (runs in pre-commit):
   fails the commit if any `*-previews.html` hub is calendar-dated on a date that
   is not its own `FORCED_PAGE_DATE`. Run it before reporting any calendar work done:
   `python scripts/validate_calendar_continuity.py` must print `[PASSED]`.
+
+### ⛔ UPDATED — FALLBACK-TO-LATEST, NOT EMPTY STATE (Nima, June 16 2026) ⛔
+**This supersedes the earlier "redirect ONLY to a current/upcoming preview / show
+an empty state otherwise" behavior.** An empty "No featured game / nothing
+available for this date" page makes the site look abandoned. When a hub has no
+entry for today it must AUTO-LOAD the most recent published item instead:
+- `renderPreviewHub()` (in `scripts/sync_calendars.py`, generated into all 7
+  `scripts/*-calendar.js`) redirects to the newest concrete preview **regardless
+  of date** — prefer today/upcoming, otherwise fall back to the most recent past
+  preview. Only a sport with ZERO concrete entries falls through to the labeled
+  empty/"Board From" state.
+- `featured-game-of-the-day.html` (head script) + `redirectFeaturedHub()` in
+  `scripts/featured-games-calendar.js`: the Featured Game hub loads the newest
+  featured game even if it is past-dated; empty state only when `FEATURED_GAMES`
+  is empty.
+- On a past-dated fallback the hub sets `sessionStorage.bl_showing_latest`; the
+  destination shows a subtle one-line note ("Showing the latest available
+  preview..."). No fabricated dates — the target keeps its own
+  `FORCED_PAGE_DATE`/canonical, so SEO and the continuity gate are unaffected.
+- This does NOT change calendar DATING (the continuity gate above still holds) and
+  does NOT redirect direct/archived article URLs — `renderPreviewHub()` only acts
+  on the hub page itself (`currentPage === SPORT_HUB_PAGE`).
+- The `const FEATURED_GAMES` → `var FEATURED_GAMES` change in
+  `featured-games-data.js` (+ `scripts/sync_featured_games_data.py` template) is
+  required: the calendar's dynamic-data refresh re-loads the file at runtime and
+  `const` threw a re-declaration console error on every featured page.
+- DO NOT revert to the old "current/upcoming only + empty state" guard. The
+  fallback is intentional. Edit the GENERATORS (not just the generated JS), or the
+  pre-commit auto-sync will overwrite hand edits to `scripts/*-calendar.js`.
 
 ---
 
