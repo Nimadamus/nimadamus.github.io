@@ -30,7 +30,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Cubs ML (-187): Edward Cabrera Hosts The NL-Worst Rockies And Ryan Feltner At Wrigley",
         date: "June 16, 2026",
-        result: "",
+        result: "L",
         url: "cubs-moneyline-cabrera-rockies-feltner-wrigley-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/665795/action/hero/current"
     },
@@ -38,7 +38,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Red Sox/Blue Jays Under 7.5 (-115): Dylan Cease's 13.63 K/9 And Payton Tolle's 2.70 ERA Anchor A Fenway Duel",
         date: "June 16, 2026",
-        result: "",
+        result: "W",
         url: "red-sox-blue-jays-under-cease-tolle-fenway-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656302/action/hero/current"
     },
