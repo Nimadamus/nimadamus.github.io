@@ -28,6 +28,27 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Rays Team Total Under 3.5 (-148): Tampa Bay Runs Into Shohei Ohtani's 1.06 ERA At Dodger Stadium",
+        date: "June 17, 2026",
+        url: "rays-team-total-under-ohtani-dodger-stadium-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/663556/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Pirates/Athletics Over 10 (-118): Hitter-Friendly Sutter Health Park And Aaron Civale's 1.47 WHIP",
+        date: "June 17, 2026",
+        url: "pirates-athletics-over-civale-sutter-health-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/650644/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Cubs -1 Run Line (-145): Javier Assad And A 1.02 WHIP Host The NL-Worst Rockies At Wrigley",
+        date: "June 17, 2026",
+        url: "cubs-run-line-assad-rockies-wrigley-field-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/665871/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Cubs ML (-187): Edward Cabrera Hosts The NL-Worst Rockies And Ryan Feltner At Wrigley",
         date: "June 16, 2026",
         result: "L",
