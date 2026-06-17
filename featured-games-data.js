@@ -125,6 +125,7 @@ var FEATURED_GAMES = [
     { date: "2026-06-14", page: "hurricanes-vs-golden-knights-stanley-cup-final-game-6-analysis-stats-preview.html", title: "Hurricanes vs Golden Knights Stanley Cup Final Game 6 Preview" },
     { date: "2026-06-15", page: "spain-vs-cape-verde-world-cup-analysis-stats-preview.html", title: "Spain vs Cape Verde World Cup Group H Opener Preview" },
     { date: "2026-06-16", page: "rays-vs-dodgers-mlb-analysis-stats-preview.html", title: "Rays vs Dodgers MLB Analysis, Stats, Preview" },
+    { date: "2026-06-17", page: "england-vs-croatia-world-cup-analysis-stats-preview.html", title: "England vs Croatia World Cup Group L Preview" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
