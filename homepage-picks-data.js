@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Dodgers Run Line -1.5 (-106): The Best Team In Baseball Lays The Run At Near Pick-Em Against Trey Gibson's 5.91 ERA",
+        date: "June 19, 2026",
+        url: "dodgers-run-line-orioles-sasaki-gibson-dodger-stadium-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/808963/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Brewers ML (-160): Jacob Misiorowski's 1.34 ERA And 131 Strikeouts Make Milwaukee Worth Laying In Atlanta",
+        date: "June 19, 2026",
+        url: "brewers-moneyline-braves-misiorowski-perez-truist-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592885/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Yankees ML (-161): A 45-27 Juggernaut And A 109-Homer Offense Host The White Sox At Yankee Stadium",
         date: "June 18, 2026",
         result: "L",
