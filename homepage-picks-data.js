@@ -30,6 +30,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Yankees ML (-161): A 45-27 Juggernaut And A 109-Homer Offense Host The White Sox At Yankee Stadium",
         date: "June 18, 2026",
+        result: "L",
         url: "yankees-moneyline-white-sox-weathers-burke-yankee-stadium-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/677960/action/hero/current"
     },
@@ -37,6 +38,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Red Sox Team Total Under 4.5 (-114): Boston's Quietest Bats Meet Trey Yesavage's .207 Opponent Average At Fenway",
         date: "June 18, 2026",
+        result: "W",
         url: "red-sox-team-total-under-4-5-blue-jays-yesavage-fenway-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/702056/action/hero/current"
     },
