@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Mets Team Total Under 3.5 (-150): A Lineup Without Lindor And Alvarez Faces Cristopher Sanchez's 1.82 ERA In Philadelphia",
+        date: "June 20, 2026",
+        url: "mets-team-total-under-3-5-phillies-sanchez-citizens-bank-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/665742/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Rockies Team Total Under 4.5 (-152): Paul Skenes And A 0.93 WHIP Quiet A Depleted Colorado Lineup At Coors Field",
+        date: "June 20, 2026",
+        url: "rockies-team-total-under-4-5-pirates-skenes-coors-field-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/696100/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Dodgers Run Line -1.5 (-106): The Best Team In Baseball Lays The Run At Near Pick-Em Against Trey Gibson's 5.91 ERA",
         date: "June 19, 2026",
         result: "L",
