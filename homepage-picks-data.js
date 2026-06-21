@@ -28,6 +28,27 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Phillies ML (-167): Zack Wheeler's 2.01 ERA Against A 5.91 Arm In David Peterson At Citizens Bank Park",
+        date: "June 21, 2026",
+        url: "phillies-moneyline-mets-wheeler-peterson-citizens-bank-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656941/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Angels/Athletics Over 9 (-120): Jack Perkins' 6.15 ERA And A Hitter-Friendly Sutter Health Park",
+        date: "June 21, 2026",
+        url: "angels-athletics-over-9-detmers-perkins-sutter-health-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/545361/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Cardinals ML (-123): Dustin May's 3.75 ERA Backs The Better Team Against A 32-45 Royals Club At Kauffman Stadium",
+        date: "June 21, 2026",
+        url: "cardinals-moneyline-royals-may-kolek-kauffman-stadium-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669160/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Mets Team Total Under 3.5 (-150): A Lineup Without Lindor And Alvarez Faces Cristopher Sanchez's 1.82 ERA In Philadelphia",
         date: "June 20, 2026",
         result: "W",
