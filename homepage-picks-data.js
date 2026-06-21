@@ -30,6 +30,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Mets Team Total Under 3.5 (-150): A Lineup Without Lindor And Alvarez Faces Cristopher Sanchez's 1.82 ERA In Philadelphia",
         date: "June 20, 2026",
+        result: "W",
         url: "mets-team-total-under-3-5-phillies-sanchez-citizens-bank-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/665742/action/hero/current"
     },
@@ -37,6 +38,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Rockies Team Total Under 4.5 (-152): Paul Skenes And A 0.93 WHIP Quiet A Depleted Colorado Lineup At Coors Field",
         date: "June 20, 2026",
+        result: "W",
         url: "rockies-team-total-under-4-5-pirates-skenes-coors-field-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/696100/action/hero/current"
     },
