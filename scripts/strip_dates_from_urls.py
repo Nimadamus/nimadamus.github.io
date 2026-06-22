@@ -72,7 +72,7 @@ def write_redirect_stub(old_filename, new_filename):
 <title>{htmllib.escape(title)}</title>
 <link rel="canonical" href="https://www.betlegendpicks.com{new_url}"/>
 <meta http-equiv="refresh" content="0; url={new_url}">
-<meta name="robots" content="noindex, follow">
+<meta name="robots" content="index, follow">
 <script>window.location.replace("{new_url}");</script>
 </head>
 <body>
