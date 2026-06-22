@@ -52,6 +52,7 @@ jobs:
           python scripts/sync_featured_games_calendar.py
 
       - name: Guard featured game freshness
+        continue-on-error: true   # WARN-ONLY (June 22, 2026): a stale-featured warning must NEVER halt the job before the sitemap is regenerated + committed below. A failing freshness gate here was silently skipping every step after it (sitemap gen + commit/push), so new daily pages never entered the sitemap and Google never saw them.
         run: |
           echo "Checking Featured Game of the Day freshness..."
           python scripts/validate_featured_game_freshness.py --max-age-days 3
@@ -62,6 +63,7 @@ jobs:
           python scripts/generate_discovery_artifacts.py
 
       - name: Audit daily discovery
+        continue-on-error: true   # WARN-ONLY: never block the sitemap commit below on an audit warning.
         run: |
           echo "Auditing latest daily pages for sitemap, links, nav, indexability, and freshness..."
           python scripts/audit_daily_discovery.py --max-age-days 7
