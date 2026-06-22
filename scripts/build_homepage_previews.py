@@ -34,7 +34,7 @@ BASE_HEAD = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
+<meta name="robots" content="index, follow">
 <title>{title}</title>
 <link rel="icon" href="newlogo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -359,7 +359,7 @@ gallery_cards = "\n".join(
 )
 
 gallery = f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>BetLegend Homepage Preview Options</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><title>BetLegend Homepage Preview Options</title>
 <style>
 body{{margin:0;background:#080d12;color:#f8fafc;font-family:Arial,sans-serif}}
 header{{padding:28px;max-width:1500px;margin:0 auto}}
