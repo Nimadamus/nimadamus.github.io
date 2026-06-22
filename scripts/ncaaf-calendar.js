@@ -40,7 +40,11 @@ const MAIN_PAGES = ['nba.html', 'nhl.html', 'ncaab.html', 'ncaaf.html', 'nfl.htm
 function isConcreteContentPage(page) {
     // Pick pages use their own template (no archive calendar sidebar); a stale
     // hub must never redirect to one as the day's board (soccer hub, June 3 2026).
-    return !!page && !MAIN_PAGES.includes(page) && !page.includes('#') && !page.includes('-archive-') && !/-picks?(?:-v\d+)?\.html$/.test(page);
+    // Featured-game (*-analysis-stats-preview) pages load featured-games-calendar.js
+    // (the all-sports marquee calendar) and have their own Featured hub; a SPORT hub
+    // must never redirect to one, or it swaps in the featured calendar and drops
+    // sport-only dates (MLB June 4 went blank when the MLB hub redirected there, June 22 2026).
+    return !!page && !MAIN_PAGES.includes(page) && !page.includes('#') && !page.includes('-archive-') && !/-analysis-stats-preview\.html$/.test(page) && !/-picks?(?:-v\d+)?\.html$/.test(page);
 }
 const latestContentEntry = ARCHIVE_DATA.find(item => item.page && item.page !== SPORT_HUB_PAGE);
 const latestConcreteEntry = ARCHIVE_DATA.find(item => isConcreteContentPage(item.page));
