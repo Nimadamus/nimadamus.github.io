@@ -30,6 +30,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Phillies ML (-167): Zack Wheeler's 2.01 ERA Against A 5.91 Arm In David Peterson At Citizens Bank Park",
         date: "June 21, 2026",
+        result: "W",
         url: "phillies-moneyline-mets-wheeler-peterson-citizens-bank-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656941/action/hero/current"
     },
@@ -37,6 +38,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Angels/Athletics Over 9 (-120): Jack Perkins' 6.15 ERA And A Hitter-Friendly Sutter Health Park",
         date: "June 21, 2026",
+        result: "W",
         url: "angels-athletics-over-9-detmers-perkins-sutter-health-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/545361/action/hero/current"
     },
@@ -44,6 +46,7 @@ var HOMEPAGE_PICKS = [
         sport: "MLB",
         title: "Cardinals ML (-123): Dustin May's 3.75 ERA Backs The Better Team Against A 32-45 Royals Club At Kauffman Stadium",
         date: "June 21, 2026",
+        result: "W",
         url: "cardinals-moneyline-royals-may-kolek-kauffman-stadium-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669160/action/hero/current"
     },
