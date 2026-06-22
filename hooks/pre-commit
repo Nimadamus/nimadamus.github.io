@@ -5,6 +5,29 @@ echo "Running BetLegend content validator..."
 STAGED_HTML=$(git diff --cached --name-only --diff-filter=d | grep -iE '\.(html|htm)$')
 STAGED_ALL=$(git diff --cached --name-only --diff-filter=d)
 
+# ZERO-TOLERANCE NOINDEX GATE (Nima directive June 2026): NO public page on
+# betlegendpicks.com may ever be noindexed - posts, categories, hubs, archives,
+# tool/dashboard pages, redirect stubs, nothing. This hard gate blocks any
+# commit that stages an HTML file containing a robots-meta noindex, so daily
+# generators (ATLAS, pitcher dashboard, URL-stub scripts) can never re-introduce
+# it. If a generator emits noindex, fix the GENERATOR, do not bypass this hook.
+NOINDEX_HITS=""
+for f in $STAGED_HTML; do
+    if git show ":$f" | grep -iqE '<meta[^>]+name=["'"'"']robots["'"'"'][^>]*content=["'"'"'][^"'"'"']*noindex'; then
+        NOINDEX_HITS="$NOINDEX_HITS$f
+"
+    fi
+done
+if [ -n "$NOINDEX_HITS" ]; then
+    echo ""
+    echo "  [BLOCKED] noindex robots meta found in staged HTML (zero-tolerance gate):"
+    echo "$NOINDEX_HITS" | sed 's/^/    /'
+    echo "  No page on betlegendpicks.com may be noindexed. Change the robots meta to"
+    echo "  'index, follow' AND fix the generator that produced it (e.g. strikeout_dashboard.py,"
+    echo "  strip_dates_from_urls.py, restore_dateless_urls.py) so it cannot regress."
+    exit 1
+fi
+
 # Pick card image validator runs whenever homepage-picks-data.js is staged,
 # regardless of whether any HTML is also staged. This is the hard gate that
 # prevents bad graphic-template images from ever reaching the live homepage.
