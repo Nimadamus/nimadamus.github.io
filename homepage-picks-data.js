@@ -31,14 +31,16 @@ var HOMEPAGE_PICKS = [
         title: "Brewers ML (-144): The NL-Best Brewers And Brandon Woodruff's 3.60 ERA Against Brady Singer At Great American Ball Park",
         date: "June 22, 2026",
         url: "brewers-moneyline-reds-woodruff-singer-great-american-ball-park-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/605540/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/605540/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Astros/Blue Jays Under 7 (+105): Hunter Brown's 1.10 ERA Against Dylan Cease's 110 Strikeouts At Rogers Centre",
         date: "June 22, 2026",
         url: "astros-blue-jays-under-7-brown-cease-rogers-centre-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/686613/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/686613/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
