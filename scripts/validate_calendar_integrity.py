@@ -79,6 +79,21 @@ def main():
                 if 'renderPreviewHub' not in f.read():
                     errors.append(f"{name}: hub stale-guard (renderPreviewHub) MISSING")
 
+    # 7: EVERY calendar engine (7 sport + featured) must inject cal-day state
+    # CSS and mark the real current day. The featured engine historically had
+    # neither, so featured pages rendered unstyled cells with no "today" marker.
+    # This guard makes that regression impossible to ship silently.
+    for js in glob.glob(os.path.join(REPO, 'scripts', '*-calendar.js')):
+        name = os.path.basename(js)
+        with open(js, 'r', encoding='utf-8', errors='ignore') as f:
+            txt = f.read()
+        if 'cal-day.today' not in txt and '.today' not in txt:
+            errors.append(f"{name}: no 'today' marker styling (current-day highlight missing)")
+        if "=== TODAY_STR" not in txt and "=== todayStr" not in txt:
+            errors.append(f"{name}: render loop never compares against today (no today marker logic)")
+        if 'has-content' not in txt:
+            errors.append(f"{name}: no 'has-content' state class (clickable dates not marked)")
+
     # 4: hub is a redirector
     hub = os.path.join(REPO, STABLE_HUB)
     if os.path.exists(hub):

@@ -130,7 +130,32 @@ function buildCalendarState() {
 
 var _calState = buildCalendarState();
 
+// Real current date (LA tz, ISO YYYY-MM-DD) — separate from the active page date.
+var TODAY_STR = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date());
+var TODAY_MONTH = TODAY_STR.substring(0, 7);
+
+// The featured engine previously injected NO cal-day state CSS, so featured
+// pages showed unstyled calendar cells (dates didn't look clickable, no today
+// marker). Inject the SAME state styles the 7 sport calendars use so the
+// Featured Archive sidebar matches the rest of the network.
+function installFeaturedCalendarStateStyles() {
+    if (document.getElementById('featured-calendar-state-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'featured-calendar-state-styles';
+    style.textContent =
+'.calendar-days .cal-day{position:relative}' +
+'.calendar-days .cal-day.has-content,.calendar-days .cal-day.is-linked{cursor:pointer;background:rgba(0,229,255,.15);color:#00e5ff;font-weight:700;border:1px solid rgba(0,229,255,.32)}' +
+'.calendar-days .cal-day.has-content:hover,.calendar-days .cal-day.is-linked:hover{background:rgba(0,229,255,.25);box-shadow:0 0 12px rgba(0,229,255,.28)}' +
+'.calendar-days .cal-day.is-past:not(.current-page):not(.today){color:#9aa3af}' +
+'.calendar-days .cal-day.is-future:not(.current-page):not(.today){color:#c7ced8}' +
+'.calendar-days .cal-day.today{border:2px solid #ffd54f!important;box-shadow:0 0 0 1px rgba(255,213,79,.34),0 0 12px rgba(255,213,79,.28)!important}' +
+'.calendar-days .cal-day.current-page{background:rgba(0,229,255,.72)!important;color:#fff!important;border:2px solid #00e5ff!important;font-weight:900!important;box-shadow:0 0 12px rgba(0,229,255,.45)!important}' +
+'.calendar-days .cal-day.today.current-page{background:linear-gradient(135deg,rgba(0,229,255,.72),rgba(255,213,79,.42))!important;border-color:#ffd54f!important}';
+    document.head.appendChild(style);
+}
+
 function initFeaturedGamesCalendar() {
+    installFeaturedCalendarStateStyles();
     var state = _calState;
     var monthSelect = document.getElementById('month-select');
     if (monthSelect) {
@@ -188,12 +213,18 @@ function renderCalendar(yearMonth) {
     for (var d = 1; d <= daysInMonth; d++) {
         var dateStr = year + '-' + String(month).padStart(2, '0') + '-' + String(d).padStart(2, '0');
         var cell = document.createElement('div');
-        cell.className = 'cal-day';
+        var classes = 'cal-day';
+        // Cyan fill = the page you're currently viewing (or newest if on homepage).
+        if (dateStr === state.activeDate) classes += ' current-page';
+        // Gold border = the real current day, but ONLY on today's actual month
+        // (never on a month the user navigated to). Mirrors the sport calendars.
+        if (dateStr === TODAY_STR && yearMonth === TODAY_MONTH) classes += ' today';
+        if (state.dateMap[dateStr]) classes += ' has-content is-linked';
+        if (dateStr < TODAY_STR) classes += ' is-past';
+        if (dateStr > TODAY_STR) classes += ' is-future';
+        cell.className = classes;
         cell.textContent = d;
-        // Gold highlight = the page you're currently viewing (or newest if on homepage)
-        if (dateStr === state.activeDate) cell.classList.add('current-page');
         if (state.dateMap[dateStr]) {
-            cell.classList.add('has-content');
             cell.title = state.dateMap[dateStr].title;
             (function(page) {
                 cell.onclick = function() { window.location.href = page; };
