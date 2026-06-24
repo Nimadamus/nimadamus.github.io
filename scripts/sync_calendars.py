@@ -1334,6 +1334,18 @@ def main():
     # Update cache busters on all preview hub pages so browsers load fresh calendar JS
     update_calendar_cache_busters()
 
+    # AUTHORITATIVE cache-bust (Nima, June 24 2026): the hub-only bump above was
+    # THE year-long bug - it refreshed 7 hub pages but left ~950 standalone
+    # article pages pointing at a frozen ?v=, so visitors kept the OLD cached
+    # engine and the calendar "broke again" even though the deployed file was
+    # fixed. This stamps EVERY page that loads a calendar engine with a hash of
+    # that engine's content, so any engine change auto-refreshes every page.
+    try:
+        import stamp_calendar_cache_bust
+        stamp_calendar_cache_bust.main()
+    except Exception as e:  # never let a stamp error abort the sync
+        print(f"  [WARN] cache-bust stamp failed: {e}")
+
     print("\n" + "=" * 60)
     print(f"Calendar sync complete! Total: {total_pages} pages across all sports")
     print("Don't forget to commit and push the changes.")
