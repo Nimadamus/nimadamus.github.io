@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Rays ML (-146): A 43-33 Tampa Bay Club Hosts A 34-46 Royals Lineup As Griffin Jax Takes The Ball At The Trop",
+        date: "June 24, 2026",
+        url: "rays-moneyline-royals-jax-cameron-tropicana-field-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/643377/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Twins Team Total Under 3.5 (-150): Minnesota's Strikeout-Heavy Lineup Against Shohei Ohtani's 1.47 ERA And 0.88 WHIP",
+        date: "June 24, 2026",
+        url: "twins-team-total-under-dodgers-ohtani-target-field-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/621439/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Rays ML (-180): Shane McClanahan's Strikeout Arm Against A 33-46 Royals Lineup And Luinder Avila's 1.71 WHIP",
         date: "June 23, 2026",
         url: "rays-moneyline-royals-mcclanahan-avila-mlb-pick.html",
