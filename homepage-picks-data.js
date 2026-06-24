@@ -31,14 +31,16 @@ var HOMEPAGE_PICKS = [
         title: "Rays ML (-180): Shane McClanahan's Strikeout Arm Against A 33-46 Royals Lineup And Luinder Avila's 1.71 WHIP",
         date: "June 23, 2026",
         url: "rays-moneyline-royals-mcclanahan-avila-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/691406/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/691406/action/hero/current",
+        result: "L"
     },
     {
         sport: "MLB",
         title: "Giants/Athletics Under 9 (-115): Oracle Park Run-Suppression With Robbie Ray And Aaron Civale In Baseball's Toughest Park To Score",
         date: "June 23, 2026",
         url: "giants-athletics-under-9-civale-ray-oracle-park-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/671218/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/671218/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
