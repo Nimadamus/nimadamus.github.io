@@ -131,6 +131,8 @@ var FEATURED_GAMES = [
     { date: "2026-06-20", page: "germany-vs-ivory-coast-world-cup-analysis-stats-preview.html", title: "Germany vs Ivory Coast World Cup Group E Preview" },
     { date: "2026-06-21", page: "mets-vs-phillies-mlb-analysis-stats-preview.html", title: "Mets vs Phillies MLB Analysis, Stats, Preview" },
     { date: "2026-06-22", page: "astros-vs-blue-jays-mlb-analysis-stats-preview.html", title: "Astros vs Blue Jays MLB Analysis, Stats, Preview" },
+    { date: "2026-06-23", page: "cubs-vs-mets-mlb-analysis-stats-preview.html", title: "Cubs vs Mets MLB Analysis, Stats, Preview" },
+    { date: "2026-06-24", page: "yankees-vs-tigers-analysis-stats-preview.html", title: "Yankees vs Tigers Analysis June 24 2026" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
