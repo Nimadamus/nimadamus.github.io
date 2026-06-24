@@ -53,6 +53,30 @@ def _with_self_canonical(page_html, rel_path):
     return page_html.replace('</title>', '</title>\n    ' + tag, 1)
 
 
+def _with_dated_archive_meta(page_html, date_iso):
+    """Give an archived hub snapshot a UNIQUE, DATED <title> + meta description.
+    The live evergreen handicapping-hub.html keeps the generic 'Today's...' title;
+    every archive copy must NOT reuse it (188 archives sharing one title diluted
+    the hub and produced stale/duplicate metadata in Google). Convention matches
+    the existing dated archives: 'Handicapping Hub - June 06, 2026 | BetLegend'."""
+    import re as _re
+    from datetime import datetime as _dt
+    try:
+        pretty = _dt.strptime(date_iso, '%Y-%m-%d').strftime('%B %d, %Y')
+    except ValueError:
+        return page_html
+    title = f'Handicapping Hub - {pretty} | BetLegend'
+    desc = (f'BetLegend Handicapping Hub for {pretty}: advanced stats, betting '
+            f'lines, injury reports, and situational data across NBA, NHL, MLB, '
+            f'NFL, NCAAB, and soccer.')
+    page_html = _re.sub(r'<title>.*?</title>', f'<title>{title}</title>',
+                        page_html, count=1, flags=_re.DOTALL)
+    page_html = _re.sub(
+        r'(<meta\s+name="description"\s+content=")[^"]*(")',
+        lambda m: m.group(1) + desc + m.group(2), page_html, count=1)
+    return page_html
+
+
 def fetch_with_retry(url: str, params: dict = None, timeout: int = 15, max_retries: int = 3) -> Optional[requests.Response]:
     """Fetch URL with exponential backoff retry logic."""
     for attempt in range(max_retries):
@@ -4020,8 +4044,10 @@ def main():
     archive_dir = os.path.join(REPO_PATH, 'handicapping-hub-archive')
     os.makedirs(archive_dir, exist_ok=True)
     archive_path = os.path.join(archive_dir, f'hub-{today_iso}.html')
+    archive_html = _with_self_canonical(html, f'handicapping-hub-archive/hub-{today_iso}.html')
+    archive_html = _with_dated_archive_meta(archive_html, today_iso)
     with open(archive_path, 'w', encoding='utf-8') as f:
-        f.write(_with_self_canonical(html, f'handicapping-hub-archive/hub-{today_iso}.html'))
+        f.write(archive_html)
     print(f"[ARCHIVE] Calendar entry: handicapping-hub-archive/hub-{today_iso}.html")
 
     print("\n[SUCCESS] Hub generated and archived for calendar.")
