@@ -138,6 +138,27 @@ else
     echo "  [WARNING] universal_content_validator.py not found - skipping"
 fi
 
+# STEP 2b: Nav/calendar overlap guard (June 24 2026)
+# site-navbar.js swaps every page's nav for a STICKY <header class="nav">. Pages
+# built from the old fixed-nav template also carry body{padding-top:140px}, which
+# pushes that sticky header onto the fixed .calendar-sidebar and clips the calendar
+# title (stray floating "2026"). Block any staged page that reintroduces the combo.
+if [ -f scripts/validate_nav_calendar_overlap.py ]; then
+    OVERLAP_BAD=""
+    for htmlfile in $STAGED_HTML; do
+        if [ -f "$htmlfile" ] && ! python scripts/validate_nav_calendar_overlap.py "$htmlfile" >/dev/null 2>&1; then
+            OVERLAP_BAD="$OVERLAP_BAD $htmlfile"
+        fi
+    done
+    if [ -n "$OVERLAP_BAD" ]; then
+        echo "  [BLOCKED] nav/calendar overlap guard failed for:$OVERLAP_BAD"
+        echo "  Remove 'padding-top:140px' from the body rule and set .calendar-sidebar{top:120px}"
+        echo "  (match the canonical featured pages). See scripts/validate_nav_calendar_overlap.py."
+        exit 1
+    fi
+    echo "  [OK] Nav/calendar overlap guard passed."
+fi
+
 # Check main sport pages are self-canonical.
 # Rolling Hub consolidation was retired March 30, 2026 and re-executed in error
 # on April 19, 2026 (canonicals pointed sport pages -> *-previews hubs), which
