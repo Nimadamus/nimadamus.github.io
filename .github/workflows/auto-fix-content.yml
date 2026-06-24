@@ -51,6 +51,16 @@ jobs:
           echo "Syncing featured games calendar..."
           python scripts/sync_featured_games_calendar.py
 
+      - name: Calendar engine integrity (BANS a returning 'today' marker)
+        # HARD GATE (Nima, June 24 2026). This daily job regenerates all calendars;
+        # without this check it could silently ship a broken engine every morning -
+        # the exact reason calendars "broke again the next day" for a year. The
+        # calendar must highlight ONLY the viewed article's date, never a 'today'
+        # cell. Fail loudly here instead of deploying a regressed calendar.
+        run: |
+          echo "Validating calendar engine integrity (no 'today' marker, state CSS, current-page)..."
+          python scripts/validate_calendar_integrity.py
+
       - name: Guard featured game freshness
         continue-on-error: true   # WARN-ONLY (June 22, 2026): a stale-featured warning must NEVER halt the job before the sitemap is regenerated + committed below. A failing freshness gate here was silently skipping every step after it (sitemap gen + commit/push), so new daily pages never entered the sitemap and Google never saw them.
         run: |

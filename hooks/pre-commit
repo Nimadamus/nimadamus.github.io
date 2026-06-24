@@ -294,6 +294,25 @@ if [ -n "$STAGED_JS" ]; then
     fi
 fi
 
+# CRITICAL: Calendar ENGINE integrity gate (Nima, June 24 2026).
+# This is the guard that was MISSING for a year - it is why "fixed" calendars
+# broke again the next day: nothing enforced the engine rules, so the daily
+# auto-fix-content.yml regeneration (or any edit) could quietly reintroduce a
+# bad highlight. Whenever a calendar engine OR its generator is staged, run the
+# integrity check. It BANS a 'today' class (the calendar must highlight ONLY the
+# viewed article's date) and requires state CSS + current-page + has-content in
+# all 8 engines. A returning 'today' marker now fails the commit, every time.
+STAGED_CAL=$(git diff --cached --name-only --diff-filter=d | grep -E '^scripts/([a-z-]*calendar[a-z-]*\.js|sync_calendars\.py)$' || true)
+if [ -n "$STAGED_CAL" ]; then
+    if ! python scripts/validate_calendar_integrity.py; then
+        echo ""
+        echo "  [BLOCKED] Calendar engine integrity check FAILED (see above)."
+        echo "  The calendar must highlight ONLY the viewed article's date - no 'today' marker."
+        echo "  Fix the GENERATOR (scripts/sync_calendars.py) + featured-games-calendar.js, re-sync, re-stage."
+        exit 1
+    fi
+fi
+
 # CRITICAL: Block staged HTML files that reference a wrong/non-existent calendar JS (April 25, 2026)
 # Failure mode: a fresh sport page links scripts/sport-calendar.js (doesn't exist) or links
 # the wrong sport's calendar (e.g. an MLB page pointing at scripts/nba-calendar.js).
