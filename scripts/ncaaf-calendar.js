@@ -152,7 +152,10 @@ function renderCalendar(yearMonth) {
         const hasData = postsForDate.length > 0 ? postsForDate[0] : null;
         let classes = 'cal-day';
         if (dateStr === currentPageDate) classes += ' current-page';
-        if (dateStr === todayStr && yearMonth === todayMonth) classes += ' today';
+        // NO 'today' marker (Nima, June 24 2026): the calendar highlights ONLY the
+        // date of the article being viewed (current-page). A separate gold 'today'
+        // cell was a wrong second highlight - on out-of-season sports (NHL/NBA) it lit
+        // a day with no article, and it fought the article's own date. Removed for good.
         if (hasData) classes += ' has-content is-linked';
         else classes += ' is-disabled';
         if (dateStr < todayStr) classes += ' is-past';

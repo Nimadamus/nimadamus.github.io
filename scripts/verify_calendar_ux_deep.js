@@ -114,13 +114,12 @@ const TITLE_AUDIT = () => {
     const entries = parseEntries(t.dataFile);
     let anyMonth = false;
 
-    // VISUAL HEALTH (added June 24, 2026): a calendar can be "clickable" yet
-    // visually broken - the engine ships no state CSS so dates don't look
-    // active and the current day is never marked (the featured-engine bug).
-    // Assert, on the live rendered current month, that (a) has-content cells
-    // actually carry the cyan state styling and (b) today's cell is marked
-    // `today` with a real gold border/shadow. This catches an engine that
-    // forgot to inject state styles or the today marker - which click-tests miss.
+    // VISUAL HEALTH (Nima, June 24 2026): the calendar must highlight ONLY the
+    // date of the article being viewed (current-page) and must NOT paint a
+    // separate gold 'today' cell. Assert, on the live rendered current month,
+    // that (a) has-content cells carry the cyan state styling (engine injected
+    // its CSS) and (b) NO cell is marked `.today` (the wrong second highlight
+    // that lit a no-article day on out-of-season sports). Click-tests miss both.
     {
       const vp = await desktop.newPage();
       try {
@@ -134,7 +133,7 @@ const TITLE_AUDIT = () => {
           }
         }, TODAY.slice(0, 7));
         await vp.waitForTimeout(350);
-        const vh = await vp.evaluate((todayDay) => {
+        const vh = await vp.evaluate(() => {
           const cells = [...document.querySelectorAll('#calendar-days .cal-day')];
           const hc = cells.find(x => x.className.includes('has-content') || x.className.includes('is-linked'));
           const problems = [];
@@ -145,19 +144,13 @@ const TITLE_AUDIT = () => {
             if (transparent && (cs.borderTopWidth === '0px' || cs.borderTopStyle === 'none'))
               problems.push('has-content cell has NO state styling (transparent bg + no border) - engine did not inject cal-day state CSS');
           }
-          const todayCell = cells.find(x => /^\d+$/.test(x.textContent.trim()) && parseInt(x.textContent.trim(), 10) === todayDay && !x.className.includes('empty'));
-          if (todayCell) {
-            if (!todayCell.className.includes('today')) problems.push('current day cell is NOT marked .today (no current-day highlight)');
-            else {
-              const cs = getComputedStyle(todayCell);
-              const marked = (parseFloat(cs.borderTopWidth) >= 2) || (cs.boxShadow && cs.boxShadow !== 'none');
-              if (!marked) problems.push('.today cell has no visible gold border/shadow (today-marker CSS not applied)');
-            }
-          }
-          return { problems, hadHc: !!hc, hadToday: !!todayCell };
-        }, parseInt(TODAY.slice(8), 10));
+          const todayMarked = cells.filter(x => x.className.split(/\s+/).includes('today'));
+          if (todayMarked.length)
+            problems.push(`${todayMarked.length} cell(s) marked .today - BANNED. Highlight only the viewed article's date, never a separate today cell.`);
+          return { problems, hadHc: !!hc };
+        });
         if (vh.problems.length) { vh.problems.forEach(p => console.log(`  [FAIL] VISUAL ${t.name}: ${p}`)); failures += vh.problems.length; }
-        else console.log(`  [OK] VISUAL ${t.name}: state styling applied${vh.hadToday ? ' + today marked' : ' (today not in this month)'}`);
+        else console.log(`  [OK] VISUAL ${t.name}: state styling applied, no stray today marker`);
       } catch (e) { console.log(`  [WARN] VISUAL ${t.name}: could not run visual health (${e.message})`); warns++; }
       await vp.close();
     }

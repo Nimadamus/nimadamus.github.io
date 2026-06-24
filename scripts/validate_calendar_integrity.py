@@ -79,20 +79,26 @@ def main():
                 if 'renderPreviewHub' not in f.read():
                     errors.append(f"{name}: hub stale-guard (renderPreviewHub) MISSING")
 
-    # 7: EVERY calendar engine (7 sport + featured) must inject cal-day state
-    # CSS and mark the real current day. The featured engine historically had
-    # neither, so featured pages rendered unstyled cells with no "today" marker.
-    # This guard makes that regression impossible to ship silently.
+    # 7: EVERY calendar engine (7 sport + featured) must inject cal-day state CSS,
+    # emit the has-content class, and highlight the VIEWED ARTICLE'S date
+    # (current-page) - and must NOT emit a separate 'today' highlight.
+    # Rule (Nima, June 24 2026): the calendar shows ONLY the day of the article
+    # the person is looking at. A gold 'today' cell was a wrong second highlight
+    # (lit a no-article day on out-of-season sports, fought the article's date).
+    # This guard makes BOTH regressions impossible: no state CSS, OR a returning
+    # 'today' marker.
     for js in glob.glob(os.path.join(REPO, 'scripts', '*-calendar.js')):
         name = os.path.basename(js)
         with open(js, 'r', encoding='utf-8', errors='ignore') as f:
             txt = f.read()
-        if 'cal-day.today' not in txt and '.today' not in txt:
-            errors.append(f"{name}: no 'today' marker styling (current-day highlight missing)")
-        if "=== TODAY_STR" not in txt and "=== todayStr" not in txt:
-            errors.append(f"{name}: render loop never compares against today (no today marker logic)")
+        if "+= ' today'" in txt or '+= " today"' in txt:
+            errors.append(f"{name}: emits a 'today' class - BANNED. Highlight only the viewed article's date (current-page).")
+        if 'current-page' not in txt:
+            errors.append(f"{name}: no 'current-page' highlight (the viewed article's date must be highlighted)")
         if 'has-content' not in txt:
             errors.append(f"{name}: no 'has-content' state class (clickable dates not marked)")
+        if 'installCalendarStateStyles' not in txt and 'installFeaturedCalendarStateStyles' not in txt:
+            errors.append(f"{name}: no state-CSS injector (cal-day cells would render unstyled)")
 
     # 4: hub is a redirector
     hub = os.path.join(REPO, STABLE_HUB)

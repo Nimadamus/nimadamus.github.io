@@ -214,11 +214,12 @@ function renderCalendar(yearMonth) {
         var dateStr = year + '-' + String(month).padStart(2, '0') + '-' + String(d).padStart(2, '0');
         var cell = document.createElement('div');
         var classes = 'cal-day';
-        // Cyan fill = the page you're currently viewing (or newest if on homepage).
+        // Cyan fill = the date of the article being viewed (or newest if on the
+        // hub). This is the ONLY highlight. NO 'today' marker (Nima, June 24 2026):
+        // a separate gold "today" cell highlighted a day with no article shown and
+        // conflicted with the article's own date. The calendar always shows the
+        // day of the article the person is looking at - nothing else.
         if (dateStr === state.activeDate) classes += ' current-page';
-        // Gold border = the real current day, but ONLY on today's actual month
-        // (never on a month the user navigated to). Mirrors the sport calendars.
-        if (dateStr === TODAY_STR && yearMonth === TODAY_MONTH) classes += ' today';
         if (state.dateMap[dateStr]) classes += ' has-content is-linked';
         if (dateStr < TODAY_STR) classes += ' is-past';
         if (dateStr > TODAY_STR) classes += ' is-future';
