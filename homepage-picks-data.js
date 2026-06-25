@@ -28,6 +28,22 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Yankees ML And Red Sox Team Total Under At Fenway: Schlittler's 1.71 ERA Frames The Card",
+        date: "June 25, 2026",
+        url: "yankees-moneyline-red-sox-team-total-under-schlittler-fenway-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693645/action/hero/current",
+        result: ""
+    },
+    {
+        sport: "MLB",
+        title: "Phillies ML And Nationals Team Total Under: Sanchez's 1.80 ERA Anchors The Card",
+        date: "June 25, 2026",
+        url: "phillies-moneyline-nationals-team-total-under-sanchez-cavalli-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/650911/action/hero/current",
+        result: ""
+    },
+    {
+        sport: "MLB",
         title: "Rays ML (-146): A 43-33 Tampa Bay Club Hosts A 34-46 Royals Lineup As Griffin Jax Takes The Ball At The Trop",
         date: "June 24, 2026",
         url: "rays-moneyline-royals-jax-cameron-tropicana-field-mlb-pick.html",
