@@ -7,7 +7,7 @@ const ARCHIVE_DATA = [
     { date: "2026-06-25", page: "blue-jays-moneyline-rangers-gausman-gore-rogers-centre-mlb-pick.html", title: "Blue Jays Moneyline vs Rangers MLB Pick" },
     { date: "2026-06-25", page: "giants-moneyline-athletics-roupp-springs-oracle-park-mlb-pick.html", title: "Giants Moneyline vs Athletics MLB Pick" },
     { date: "2026-06-25", page: "phillies-moneyline-nationals-team-total-under-sanchez-cavalli-mlb-pick.html", title: "Phillies Moneyline and Nationals Team Total Under MLB Pick" },
-    { date: "2026-06-25", page: "phillies-sanchez-yankees-schlittler-thursday-pitching-board-mlb.html", title: "MLB Analysis - June 25, 2026" },
+    { date: "2026-06-25", page: "phillies-sanchez-yankees-schlittler-thursday-pitching-board-mlb.html", title: "MLB Thursday Pitching Board Analysis Preview" },
     { date: "2026-06-25", page: "yankees-moneyline-red-sox-team-total-under-schlittler-fenway-mlb-pick.html", title: "Yankees Moneyline and Red Sox Team Total Under MLB Pick" },
     { date: "2026-06-24", page: "rays-moneyline-royals-jax-cameron-tropicana-field-mlb-pick.html", title: "Rays Moneyline vs Royals MLB Pick" },
     { date: "2026-06-24", page: "skubal-ohtani-degrom-aces-headline-sixteen-game-wednesday-mlb.html", title: "MLB Analysis - June 24, 2026" },
