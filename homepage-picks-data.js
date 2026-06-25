@@ -28,7 +28,7 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
-        title: "Yankees ML And Red Sox Team Total Under At Fenway: Schlittler's 1.71 ERA Frames The Card",
+        title: "Red Sox Team Total Under 3.5 (-130): Cam Schlittler's 1.71 ERA Smothers A 32-46 Boston Lineup As The Yankees Visit Fenway",
         date: "June 25, 2026",
         url: "yankees-moneyline-red-sox-team-total-under-schlittler-fenway-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693645/action/hero/current",
@@ -36,7 +36,7 @@ var HOMEPAGE_PICKS = [
     },
     {
         sport: "MLB",
-        title: "Phillies ML And Nationals Team Total Under: Sanchez's 1.80 ERA Anchors The Card",
+        title: "Phillies ML (-158): Cristopher Sanchez's 1.80 ERA And A 44-36 Phillies Club Against Cade Cavalli At Nationals Park",
         date: "June 25, 2026",
         url: "phillies-moneyline-nationals-team-total-under-sanchez-cavalli-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/650911/action/hero/current",
