@@ -32,7 +32,7 @@ var HOMEPAGE_PICKS = [
         date: "June 25, 2026",
         url: "yankees-moneyline-red-sox-team-total-under-schlittler-fenway-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693645/action/hero/current",
-        result: ""
+        result: "L"
     },
     {
         sport: "MLB",
@@ -40,7 +40,7 @@ var HOMEPAGE_PICKS = [
         date: "June 25, 2026",
         url: "phillies-moneyline-nationals-team-total-under-sanchez-cavalli-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/650911/action/hero/current",
-        result: ""
+        result: "W"
     },
     {
         sport: "MLB",
