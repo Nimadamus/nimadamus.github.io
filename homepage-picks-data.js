@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Brewers Run Line -1 (-185): Jacob Misiorowski And The NL-Best 49-29 Brewers Lay A Run On The Cubs At American Family Field",
+        date: "June 26, 2026",
+        url: "brewers-run-line-cubs-team-total-under-misiorowski-rea-american-family-field-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694192/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Dodgers ML (-137): The Best Record In Baseball Behind Roki Sasaki Visits Walker Buehler And The Padres At Petco Park",
+        date: "June 26, 2026",
+        url: "dodgers-moneyline-padres-team-total-under-sasaki-buehler-petco-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/605141/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Red Sox Team Total Under 3.5 (-130): Cam Schlittler's 1.71 ERA Smothers A 32-46 Boston Lineup As The Yankees Visit Fenway",
         date: "June 25, 2026",
         url: "yankees-moneyline-red-sox-team-total-under-schlittler-fenway-mlb-pick.html",
