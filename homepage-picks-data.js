@@ -28,6 +28,27 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Brewers ML (-152) and Cubs Team Total Under 3.5 (-115): Kyle Harrison's 2.50 ERA And The NL-Best 50-29 Brewers Host David Peterson And The Cubs",
+        date: "June 27, 2026",
+        url: "brewers-moneyline-cubs-team-total-under-harrison-peterson-american-family-field-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656849/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Giants ML (-125) and Braves Team Total Under 3.5 (-115): Logan Webb And Oracle Park Slow Atlanta's Bats As San Francisco Plays Home Favorite",
+        date: "June 27, 2026",
+        url: "giants-moneyline-braves-team-total-under-webb-elder-oracle-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693821/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Padres Team Total Under 3.5 (-145) and Mariners/Guardians Under 7.5 (-120): Yamamoto And Logan Gilbert Anchor A Two-Game Unders Card In Pitcher-Friendly Parks",
+        date: "June 27, 2026",
+        url: "padres-team-total-under-mariners-guardians-under-yamamoto-gilbert-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669302/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Brewers Run Line -1 (-185): Jacob Misiorowski And The NL-Best 49-29 Brewers Lay A Run On The Cubs At American Family Field",
         date: "June 26, 2026",
         url: "brewers-run-line-cubs-team-total-under-misiorowski-rea-american-family-field-mlb-pick.html",
