@@ -28,6 +28,22 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Braves and Giants Under 7.5: Two Veteran Lefties Meet At Oracle Park",
+        date: "June 28, 2026",
+        url: "braves-giants-under-7-5-sale-ray-oracle-park-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592662/action/hero/current",
+        result: ""
+    },
+    {
+        sport: "MLB",
+        title: "Mariners and Guardians Under 7.5: A Pitcher-Friendly Afternoon In Cleveland",
+        date: "June 28, 2026",
+        url: "mariners-guardians-under-7-5-hancock-williams-progressive-field-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/668909/action/hero/current",
+        result: ""
+    },
+    {
+        sport: "MLB",
         title: "Brewers ML (-152) and Cubs Team Total Under 3.5 (-115): Kyle Harrison's 2.50 ERA And The NL-Best 50-29 Brewers Host David Peterson And The Cubs",
         date: "June 27, 2026",
         url: "brewers-moneyline-cubs-team-total-under-harrison-peterson-american-family-field-mlb-pick.html",
