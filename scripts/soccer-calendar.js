@@ -4,9 +4,9 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-06-27", page: "world-cup-group-finale-england-argentina-portugal-colombia-soccer.html", title: "World Cup Group Stage Finale Analysis Preview" },
+    { date: "2026-06-27", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-06-26", page: "world-cup-final-group-matchday-france-norway-spain-uruguay-soccer.html", title: "World Cup Final Group Matchday Analysis Preview" },
     { date: "2026-06-25", page: "world-cup-group-finale-usa-germany-netherlands-soccer.html", title: "World Cup Group Stage Finale Analysis Preview" },
-    { date: "2026-06-25", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-06-24", page: "world-cup-matchday-three-switzerland-canada-brazil-scotland-mexico-soccer.html", title: "Soccer Analysis - June 24, 2026" },
     { date: "2026-06-23", page: "england-ghana-portugal-uzbekistan-croatia-panama-world-cup-matchday-2-soccer.html", title: "Soccer Analysis - June 23, 2026" },
     { date: "2026-06-22", page: "argentina-austria-france-iraq-world-cup-matchday-2-monday-soccer.html", title: "Soccer Analysis - June 22, 2026" },
