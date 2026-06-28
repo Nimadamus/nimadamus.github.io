@@ -8,6 +8,7 @@ const ARCHIVE_DATA = [
     { date: "2026-06-28", page: "brewers-moneyline-cubs-woodruff-rolison-american-family-field-mlb-pick.html", title: "Brewers Moneyline vs Cubs MLB Pick" },
     { date: "2026-06-28", page: "diamondbacks-team-total-under-3-5-rays-kelly-rasmussen-tropicana-field-mlb-pick.html", title: "Diamondbacks Team Total Under vs Rays MLB Pick" },
     { date: "2026-06-28", page: "mariners-guardians-under-7-5-hancock-williams-progressive-field-mlb-pick.html", title: "Mariners and Guardians Under 7.5 MLB Pick" },
+    { date: "2026-06-28", page: "twins-team-total-over-4-5-rockies-feltner-prielipp-target-field-mlb-pick.html", title: "Twins Team Total Over vs Rockies MLB Pick" },
     { date: "2026-06-28", page: "yankees-red-sox-under-8-rodon-gray-fenway-park-mlb-pick.html", title: "Yankees and Red Sox Under 8 MLB Pick" },
     { date: "2026-06-27", page: "brewers-moneyline-cubs-team-total-under-harrison-peterson-american-family-field-mlb-pick.html", title: "Brewers Moneyline and Cubs Team Total Under MLB Pick" },
     { date: "2026-06-27", page: "giants-moneyline-braves-team-total-under-webb-elder-oracle-park-mlb-pick.html", title: "Giants Moneyline and Braves Team Total Under MLB Pick" },
