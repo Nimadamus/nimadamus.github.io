@@ -136,6 +136,7 @@ var FEATURED_GAMES = [
     { date: "2026-06-25", page: "phillies-vs-nationals-analysis-stats-preview.html", title: "Phillies vs Nationals Analysis, Stats, Preview June 25 2026" },
     { date: "2026-06-26", page: "dodgers-vs-padres-analysis-stats-preview.html", title: "Dodgers vs Padres Analysis, Stats, Preview June 26 2026" },
     { date: "2026-06-27", page: "dodgers-vs-padres-yamamoto-vasquez-analysis-stats-preview.html", title: "Dodgers vs Padres" },
+    { date: "2026-06-28", page: "dodgers-vs-padres-sheehan-king-analysis-stats-preview.html", title: "Dodgers vs Padres" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
