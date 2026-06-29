@@ -28,11 +28,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
-        title: "Four Home Favorites: Cubs, Guardians, And Astros Moneylines With The Mariners Laying The Run Line",
+        title: "Cubs, Guardians, Astros Moneylines and Mariners Run Line (-1.5): Four Home Favorites Behind The Better Arm",
         date: "June 29, 2026",
         url: "cubs-guardians-astros-moneyline-mariners-run-line-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669923/action/hero/current",
-        result: ""
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669923/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Rangers Under 3.6, Dodgers Under 5.5, and Red Sox Over 4.5: Three Pitching-Driven Team Totals",
+        date: "June 29, 2026",
+        url: "rangers-dodgers-team-total-unders-red-sox-over-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/641778/action/hero/current"
     },
     {
         sport: "MLB",
