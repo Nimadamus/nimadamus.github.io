@@ -28,6 +28,14 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Four Home Favorites: Cubs, Guardians, And Astros Moneylines With The Mariners Laying The Run Line",
+        date: "June 29, 2026",
+        url: "cubs-guardians-astros-moneyline-mariners-run-line-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669923/action/hero/current",
+        result: ""
+    },
+    {
+        sport: "MLB",
         title: "Braves and Giants Under 7.5: Two Veteran Lefties Meet At Oracle Park",
         date: "June 28, 2026",
         url: "braves-giants-under-7-5-sale-ray-oracle-park-mlb-pick.html",
