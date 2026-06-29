@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-06-29", page: "cubs-guardians-astros-moneyline-mariners-run-line-card-mlb-pick.html", title: "Cubs, Guardians, Astros ML and Mariners Run Line Pick" },
+    { date: "2026-06-29", page: "parker-messick-shota-imanaga-monday-mlb-board-mlb.html", title: "MLB Analysis - June 29, 2026" },
     { date: "2026-06-29", page: "rangers-dodgers-team-total-unders-red-sox-over-card-mlb-pick.html", title: "Rangers, Dodgers Unders and Red Sox Over Pick" },
     { date: "2026-06-28", page: "athletics-team-total-over-4-5-angels-civale-aldegheri-angel-stadium-mlb-pick.html", title: "Athletics Team Total Over vs Angels MLB Pick" },
     { date: "2026-06-28", page: "braves-giants-under-7-5-sale-ray-oracle-park-mlb-pick.html", title: "Braves and Giants Under 7.5 at Oracle Park MLB Pick" },
