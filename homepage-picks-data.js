@@ -32,7 +32,7 @@ var HOMEPAGE_PICKS = [
         date: "June 28, 2026",
         url: "braves-giants-under-7-5-sale-ray-oracle-park-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/592662/action/hero/current",
-        result: ""
+        result: "W"
     },
     {
         sport: "MLB",
@@ -40,7 +40,7 @@ var HOMEPAGE_PICKS = [
         date: "June 28, 2026",
         url: "mariners-guardians-under-7-5-hancock-williams-progressive-field-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/668909/action/hero/current",
-        result: ""
+        result: "L"
     },
     {
         sport: "MLB",
