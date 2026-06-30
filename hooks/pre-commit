@@ -46,6 +46,28 @@ if echo "$STAGED_ALL" | grep -q "^homepage-picks-data.js$"; then
     echo "  [OK] Pick card images pass."
 fi
 
+# STATIC CRAWL-LINK FRESHNESS (June 30, 2026 fix). The daily pick cards / featured
+# game / sport previews are injected client-side, so the raw HTML Googlebot crawls
+# had NO links to new pages -> every daily page came back "URL unknown to Google".
+# Regenerate the static links on index.html whenever a homepage data source or any
+# page changes, then HARD-BLOCK if they are still stale (the missing guard that let
+# this silently regress every prior time it was "fixed").
+if echo "$STAGED_ALL" | grep -qE "^(index\.html|homepage-picks-data\.js|featured-games-data\.js|scripts/.*-calendar\.js)$" \
+   || echo "$STAGED_ALL" | grep -qiE "\.html$"; then
+    echo ""
+    echo "Refreshing static homepage crawl links (sync_homepage_crawl_links.py)..."
+    if python scripts/sync_homepage_crawl_links.py; then
+        git add index.html
+    fi
+    if ! python scripts/validate_homepage_crawl_links.py; then
+        echo ""
+        echo "  [BLOCKED] index.html static crawl links are STALE - Googlebot cannot"
+        echo "  discover today's daily pages. Run: python scripts/sync_homepage_crawl_links.py"
+        echo "  then 'git add index.html' and re-commit."
+        exit 1
+    fi
+fi
+
 # CRITICAL: NO DATES IN URLS (Nima directive May 3, 2026; re-enforced June 3, 2026).
 # Block any NEW root-level HTML file whose slug ends in -month-day-year.html.
 # Dates live in FORCED_PAGE_DATE / metadata, never in the URL. Redirect stubs
