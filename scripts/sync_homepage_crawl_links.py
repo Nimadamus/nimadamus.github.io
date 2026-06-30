@@ -126,6 +126,7 @@ def build_crawl_links(picks):
         'style="max-width:1200px;margin:30px auto 0;padding:24px 18px;border-top:1px solid rgba(255,238,203,.13);">\n'
         '  <h2 style="font-family:Oswald,sans-serif;font-size:18px;text-transform:uppercase;letter-spacing:2px;color:#aaa091;margin-bottom:14px;">Recently Published</h2>\n'
         '  <div style="display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;line-height:1.7;">' + links + '</div>\n'
+        '  <p style="margin-top:14px;font-size:13px;"><a href="complete-archive.html" style="color:#e8b85c;font-weight:700;">View the complete pick &amp; preview archive &rarr;</a></p>\n'
         '</nav>'
     )
 
@@ -165,6 +166,12 @@ def main():
         f.write(html)
     print(f"[sync_homepage_crawl_links] {min(len(picks),PICKS_GRID_N)} static pick cards + "
           f"crawl links regenerated (newest pick: {picks[0]['url']} / {today})")
+    # Keep the full static archive (linked from the crawl nav) current too.
+    try:
+        import build_static_archive
+        build_static_archive.main()
+    except Exception as e:
+        print(f"[sync_homepage_crawl_links] WARN: complete-archive.html not rebuilt: {e}", file=sys.stderr)
     return 0
 
 
