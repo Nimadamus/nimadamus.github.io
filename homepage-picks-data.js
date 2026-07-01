@@ -28,17 +28,33 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Skenes vs Wheeler Anchors Five Run-Prevention Unders: Phillies, Pirates, Reds, Brewers, Royals",
+        date: "July 1, 2026",
+        url: "skenes-wheeler-duel-mlb-unders-reds-brewers-royals-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/671096/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Braves, Marlins and Rays Moneylines and England World Cup: Four Plays On The Better Side",
+        date: "July 1, 2026",
+        url: "braves-marlins-rays-moneylines-england-world-cup-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/625643/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "MLB Unders Board: Seven Run-Prevention Totals Behind Skubal, deGrom, Schlittler and Woo",
         date: "June 30, 2026",
         url: "mlb-totals-unders-board-skubal-degrom-woo-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/594798/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/594798/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Dodgers and Brewers Moneylines, Phillies Run Line (-1.5) and Braves Over: Five Plays Behind The Better Side",
         date: "June 30, 2026",
         url: "dodgers-brewers-moneylines-phillies-run-line-braves-over-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/680736/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/680736/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
