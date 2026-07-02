@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Dodgers -1 and Mariners -1 Headline a Six-Play MLB Card: Padres, White Sox Unders and Tigers-Rangers NRFI",
+        date: "July 2, 2026",
+        url: "dodgers-mariners-run-lines-padres-white-sox-unders-nrfi-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/664285/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Skenes vs Wheeler Anchors Five Run-Prevention Unders: Phillies, Pirates, Reds, Brewers, Royals",
         date: "July 1, 2026",
         url: "skenes-wheeler-duel-mlb-unders-reds-brewers-royals-card-mlb-pick.html",
