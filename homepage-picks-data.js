@@ -31,14 +31,16 @@ var HOMEPAGE_PICKS = [
         title: "Skenes vs Wheeler Anchors Five Run-Prevention Unders: Phillies, Pirates, Reds, Brewers, Royals",
         date: "July 1, 2026",
         url: "skenes-wheeler-duel-mlb-unders-reds-brewers-royals-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/671096/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/671096/action/hero/current",
+        result: "L"
     },
     {
         sport: "MLB",
         title: "Braves, Marlins and Rays Moneylines and England World Cup: Four Plays On The Better Side",
         date: "July 1, 2026",
         url: "braves-marlins-rays-moneylines-england-world-cup-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/625643/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/625643/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
