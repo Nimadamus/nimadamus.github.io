@@ -46,6 +46,7 @@ EXCLUDED_EXACT = {
     "404.html",
     "preview.html",
     "preview-endgame-daily-card.html",
+    "index-hero-preview.html",  # gitignored staging artifact; 404s live, must not enter sitemap
 }
 _GIT_LASTMOD_CACHE: dict[str, str] | None = None
 DATE_RE = re.compile(
@@ -77,6 +78,20 @@ def run_git(args: list[str]) -> str:
         return subprocess.check_output(["git", *args], cwd=REPO, text=True, stderr=subprocess.DEVNULL).strip()
     except Exception:
         return ""
+
+
+_TRACKED_HTML: set[str] | None = None
+
+
+def tracked_html() -> set[str]:
+    """Set of git-tracked .html paths (repo-relative posix). Untracked/gitignored
+    files can never be live, so they must never enter the sitemap."""
+    global _TRACKED_HTML
+    if _TRACKED_HTML is not None:
+        return _TRACKED_HTML
+    out = run_git(["ls-files", "*.html"])
+    _TRACKED_HTML = set(out.splitlines()) if out else set()
+    return _TRACKED_HTML
 
 
 def git_lastmod_cache() -> dict[str, str]:
@@ -184,6 +199,9 @@ def is_public_html(path: Path) -> bool:
     if path.suffix.lower() != ".html":
         return False
     rel = relpath(path)
+    tracked = tracked_html()
+    if tracked and rel not in tracked:
+        return False
     parts = set(rel.split("/")[:-1])
     if parts & EXCLUDED_DIRS:
         return False
