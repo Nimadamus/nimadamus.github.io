@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Padres-Dodgers Under 8 and Blue Jays-Mariners Under 7 Headline a Three-Play Run-Prevention Card With an Astros Team Total Under",
+        date: "July 3, 2026",
+        url: "padres-dodgers-blue-jays-mariners-unders-astros-team-total-under-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/650633/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Rays and Marlins Moneylines Anchor a Four-Play Card With a Marlins-Athletics Over and a Padres-Dodgers NRFI",
+        date: "July 3, 2026",
+        url: "rays-marlins-moneylines-athletics-over-padres-dodgers-nrfi-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/650490/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Dodgers -1 and Mariners -1 Headline a Six-Play MLB Card: Padres, White Sox Unders and Tigers-Rangers NRFI",
         date: "July 2, 2026",
         url: "dodgers-mariners-run-lines-padres-white-sox-unders-nrfi-card-mlb-pick.html",
