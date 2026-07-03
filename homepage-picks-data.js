@@ -31,7 +31,8 @@ var HOMEPAGE_PICKS = [
         title: "Dodgers -1 and Mariners -1 Headline a Six-Play MLB Card: Padres, White Sox Unders and Tigers-Rangers NRFI",
         date: "July 2, 2026",
         url: "dodgers-mariners-run-lines-padres-white-sox-unders-nrfi-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/664285/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/664285/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
