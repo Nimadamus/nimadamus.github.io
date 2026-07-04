@@ -4,8 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-07-04", page: "world-cup-round-of-16-canada-morocco-france-paraguay-saturday-soccer.html", title: "Soccer Analysis - July 4, 2026" },
+    { date: "2026-07-04", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-07-03", page: "world-cup-round-of-32-argentina-cape-verde-colombia-ghana-friday-soccer.html", title: "World Cup Round of 32 Friday Knockout Ties" },
-    { date: "2026-07-03", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-07-02", page: "world-cup-round-of-32-spain-portugal-croatia-switzerland-thursday-soccer.html", title: "Soccer Analysis - July 2, 2026" },
     { date: "2026-07-01", page: "world-cup-round-of-32-england-usa-switzerland-mexico-wednesday-soccer.html", title: "Soccer Analysis - July 1, 2026" },
     { date: "2026-06-30", page: "world-cup-round-of-32-france-sweden-mexico-ecuador-tuesday-soccer.html", title: "World Cup Round of 32 Tuesday: France, Mexico, Norway" },
