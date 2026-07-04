@@ -293,7 +293,7 @@
       { label: 'Game Totals',        rows: [{key:'Game Total Over', label:'Overs'}, {key:'Game Total Under', label:'Unders'}], showTotal: true },
       { label: 'Team Totals',        rows: [{key:'Team Total Over', label:'Overs'}, {key:'Team Total Under', label:'Unders'}], showTotal: true },
       { label: 'First 5 Innings',    rows: [{key:'F5 Moneyline', label:'F5 Moneyline'}, {key:'F5 Total', label:'F5 Total'}], showTotal: true },
-      { label: 'NRFI / YRFI',        rows: [{key:'NRFI/YRFI', label:'NRFI/YRFI'}], showTotal: false },
+      { label: 'First Inning',       rows: [{key:'First Inning Yes', label:'Yes'}, {key:'First Inning No', label:'No'}], showTotal: true, alwaysShow: true, combinedLabel: 'First Inning YRFI/NRFI (All Combined)' },
       { label: 'Futures',            rows: [{key:'Futures', label:'Futures'}], showTotal: false },
       { label: 'Parlays',            rows: [{key:'Parlay', label:'Parlay'}, {key:'Teaser', label:'Teaser'}], showTotal: true }
     ],
@@ -365,7 +365,14 @@
         if (hasOver || hasUnder) return 'F5 Total';
         return 'F5 Moneyline';
       }
-      if (/\b(nrfi|yrfi)\b/.test(pl)) return 'NRFI/YRFI';
+      // First-inning run markets (YRFI/NRFI). Kept separate from Game Totals
+      // and F5. F5 is already handled above so it never reaches here.
+      if (/\byrfi\b|yes runs first inning/.test(pl)) return 'First Inning Yes';
+      if (/\bnrfi\b|no runs first inning/.test(pl)) return 'First Inning No';
+      if (/first inning/.test(pl)) {
+        if (hasOver) return 'First Inning Yes';
+        if (hasUnder) return 'First Inning No';
+      }
     }
     if (sport === 'NBA' || sport === 'NCAAB') {
       const isHalf2 = /\b(2nd half|second half|2h)\b/.test(pl);
@@ -515,13 +522,15 @@
     const out = [];
     groups.forEach(function (group) {
       const subRows = group.rows;
-      // Skip the entire group if it has zero picks across all sub-rows
+      // Skip the entire group if it has zero picks across all sub-rows,
+      // unless the group is flagged alwaysShow (e.g. First Inning), which
+      // renders 0-0-0 / 0.0% / 0.00u / 0.00% placeholder rows until data exists.
       let total = 0;
       subRows.forEach(function (sr) { total += (byCat[sr.key] || []).length; });
-      if (total === 0) return;
+      if (total === 0 && !group.alwaysShow) return;
 
       subRows.forEach(function (sr) {
-        if ((byCat[sr.key] || []).length === 0) return;
+        if ((byCat[sr.key] || []).length === 0 && !group.alwaysShow) return;
         // Expand label so combined rows like "Team Total - Overs" make sense
         let label;
         if (subRows.length === 1) {
@@ -533,13 +542,14 @@
         } else {
           label = group.label + ' - ' + sr.label;
         }
-        out.push({ label: label, keys: [sr.key] });
+        out.push({ label: label, keys: [sr.key], alwaysShow: !!group.alwaysShow });
       });
 
       if (group.showTotal && subRows.length > 1) {
         out.push({
-          label: group.label + ' (All Combined)',
-          keys: subRows.map(function (sr) { return sr.key; })
+          label: group.combinedLabel || (group.label + ' (All Combined)'),
+          keys: subRows.map(function (sr) { return sr.key; }),
+          alwaysShow: !!group.alwaysShow
         });
       }
     });
@@ -570,7 +580,18 @@
       item.keys.forEach(function (k) {
         (byCat[k] || []).forEach(function (r) { collected.push(r); });
       });
-      if (collected.length === 0) return;
+      if (collected.length === 0 && !item.alwaysShow) return;
+      if (collected.length === 0) {
+        // alwaysShow placeholder: literal zeros, neutral color, until data exists.
+        body += '<tr>' +
+          '<td>' + item.label + '</td>' +
+          '<td>0-0-0</td>' +
+          '<td>0.0%</td>' +
+          '<td>0.00u</td>' +
+          '<td>0.00%</td>' +
+        '</tr>';
+        return;
+      }
       const b = aggregateBucket(collected);
       body += '<tr>' +
         '<td>' + item.label + '</td>' +
