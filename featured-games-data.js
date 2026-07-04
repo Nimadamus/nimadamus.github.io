@@ -144,6 +144,7 @@ var FEATURED_GAMES = [
     { date: "2026-07-01", page: "marlins-vs-rockies-analysis-stats-preview.html", title: "Marlins vs Rockies Analysis, Stats, Preview" },
     { date: "2026-07-02", page: "padres-vs-dodgers-analysis-stats-preview.html", title: "Padres vs Dodgers Analysis, Stats, Preview" },
     { date: "2026-07-03", page: "padres-at-dodgers-ohtani-king-analysis-stats-preview.html", title: "Padres at Dodgers: Ohtani vs a Reeling San Diego" },
+    { date: "2026-07-04", page: "canada-vs-morocco-analysis-stats-preview.html", title: "Canada vs Morocco: World Cup Round of 16 in Houston" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];

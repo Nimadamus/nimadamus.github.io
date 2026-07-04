@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Braves, Brewers and Marlins Moneylines Anchor a Five-Play Card With a Giants Coors Angle and a Dodgers Run Line",
+        date: "July 4, 2026",
+        url: "braves-giants-brewers-marlins-moneylines-dodgers-run-line-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/519242/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Padres, Mets and White Sox Team Total Unders Headline a Seven-Play Run-Prevention Card",
+        date: "July 4, 2026",
+        url: "padres-mets-white-sox-team-total-unders-run-prevention-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/680732/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Padres-Dodgers Under 8 and Blue Jays-Mariners Under 7 Headline a Three-Play Run-Prevention Card With an Astros Team Total Under",
         date: "July 3, 2026",
         url: "padres-dodgers-blue-jays-mariners-unders-astros-team-total-under-card-mlb-pick.html",
