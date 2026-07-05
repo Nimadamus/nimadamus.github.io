@@ -87,6 +87,23 @@ def main():
 
     inserted_fig = False
     has_fig = re.search(r'class="(?:hero-figure|feature-photo|pick-article-hero__figure)"', html)
+    replaced_fig = False
+    if has_fig:
+        # replace the existing hero figure's img src/alt (+figcaption when adjacent)
+        fig_img = re.search(
+            r'(<figure class="(?:hero-figure|pick-article-hero__figure)"[^>]*>\s*<img[^>]*\bsrc=")[^"]*("[^>]*\balt=")[^"]*("[^>]*/?>)(\s*<figcaption>)?([^<]*)?(</figcaption>)?',
+            html)
+        if fig_img is None:
+            fig_img = re.search(r'(<img[^>]*class="feature-photo"[^>]*\bsrc=")[^"]*("[^>]*\balt=")[^"]*("[^>]*/?>)', html)
+            if fig_img is None:
+                fig_img = re.search(r'(<img[^>]*\bsrc=")[^"]*("[^>]*class="feature-photo"[^>]*\balt=")[^"]*("[^>]*/?>)', html)
+        if fig_img:
+            g = fig_img.groups()
+            rep = g[0] + url + g[1] + alt.replace('"', "'") + g[2]
+            if len(g) > 3 and g[3]:
+                rep += g[3] + caption + (g[5] or "</figcaption>")
+            html = html[: fig_img.start()] + rep + html[fig_img.end():]
+            replaced_fig = True
     if not has_fig:
         fig = ('<figure class="hero-figure">\n'
                '<img class="feature-photo" src="%s" alt="%s"/>\n'
@@ -112,7 +129,8 @@ def main():
     os.makedirs(led_dir, exist_ok=True)
     with open(os.path.join(led_dir, os.path.basename(page) + ".json"), "w", encoding="utf-8") as f:
         json.dump({"file": os.path.basename(page), "url": url, "alt": alt, "caption": caption}, f)
-    print("OK %s og:%s tw:%s figure:%s" % (os.path.basename(page), a1, a2, "inserted" if inserted_fig else "already-present"))
+    fig_state = "inserted" if inserted_fig else ("replaced" if replaced_fig else "already-present")
+    print("OK %s og:%s tw:%s figure:%s" % (os.path.basename(page), a1, a2, fig_state))
 
 
 if __name__ == "__main__":
