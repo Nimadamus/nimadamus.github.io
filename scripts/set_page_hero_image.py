@@ -99,6 +99,20 @@ def main():
             if fig_img is None:
                 fig_img = re.search(r'(<img[^>]*\bsrc=")[^"]*("[^>]*class="feature-photo"[^>]*\balt=")[^"]*("[^>]*/?>)', html)
     if not has_fig:
+        # bare <img class="hero-image"/"hero-img"> (older pick templates, no figure)
+        bare_img = re.search(r'(<img[^>]*class="hero-im(?:age|g)"[^>]*\bsrc=")[^"]*("[^>]*/?>)', html)
+        if bare_img is None:
+            bare_img = re.search(r'(<img[^>]*\bsrc=")[^"]*("[^>]*class="hero-im(?:age|g)"[^>]*/?>)', html)
+        if bare_img:
+            g = bare_img.groups()
+            html = html[: bare_img.start()] + g[0] + url + g[1] + html[bare_img.end():]
+            tag_m = re.search(r'<img[^>]*class="hero-im(?:age|g)"[^>]*>', html)
+            if tag_m and 'alt="' in tag_m.group(0):
+                new_tag = re.sub(r'alt="[^"]*"', 'alt="%s"' % alt.replace('"', "'"), tag_m.group(0))
+                html = html.replace(tag_m.group(0), new_tag, 1)
+            replaced_fig = True
+            has_fig = True
+    if not has_fig:
         # bare classless <figure><img> hero (older pick pages); src-first or alt-first
         alt_first = False
         bare = re.search(r'(<figure[^>]*>\s*<img[^>]*\bsrc=")[^"]*("[^>]*\balt=")[^"]*("[^>]*/?>)(\s*<figcaption>)?([^<]*)?(</figcaption>)?', html)
