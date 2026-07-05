@@ -320,8 +320,7 @@ def process(fname, meta, dry):
     html, ch = add_breadcrumb(html, fname, sport)
     if ch: actions.append("breadcrumb")
     if html != orig and not dry:
-        with open(path, "w", encoding="utf-8", newline="
-") as f:
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
             f.write(html)
     return actions, sport
 
