@@ -113,6 +113,7 @@ def main():
             (r'<div class="game-card"[^>]*>', "after"),               # old featured
             (r'<article class="game-preview[^"]*"[^>]*>', "after"),   # drifted featured
             (r'<div class="content-wrapper"[^>]*>', "after"),
+            (r'<div class="page-wrapper"[^>]*>', "after"),            # featured (soccer/UCL)
         ):
             m = re.search(pat, html)
             if m:
