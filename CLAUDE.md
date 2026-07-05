@@ -8,6 +8,13 @@
 AI slop, fake facts, generic filler, wrong formats, missing logos, missing
 calendar days, or unverified betting/statistical claims.**
 
+### THE CANONICAL TEMPLATE (LOCKED JULY 4, 2026):
+`PREVIEW_PAGE_STANDARD.md` + the skeletons in `docs/templates/` define the
+exact required structure for every preview/review/featured/board page (unique
+hero action photo per page, toc-box, anchored section-header H2s, FAQ + full
+4-block JSON-LD schema, share buttons, related-links block, /preview-article.css).
+A page that does not match that standard is not done.
+
 ### WHAT "DONE" MEANS:
 A sports post is not done until it is:
 1. **In the correct old/Claude-style BetLegend format.**
