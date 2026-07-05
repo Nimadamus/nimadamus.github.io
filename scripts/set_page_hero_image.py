@@ -147,6 +147,9 @@ def main():
             (r'<article class="game-preview[^"]*"[^>]*>', "after"),   # drifted featured
             (r'<div class="content-wrapper"[^>]*>', "after"),
             (r'<div class="page-wrapper"[^>]*>', "after"),            # featured (soccer/UCL)
+            (r'</div>\s*<!-- ?article-header ?-->', "after"),
+            (r'(?s)<div class="article-header"[^>]*>(?:(?!</div>).)*</div>', "after"),  # old pick container template
+            (r'<article[^>]*>', "after"),                              # last resort: top of first article
         ):
             m = re.search(pat, html)
             if m:
