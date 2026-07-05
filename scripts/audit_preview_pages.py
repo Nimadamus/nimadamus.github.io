@@ -86,7 +86,7 @@ def audit_file(path, fname):
             issues.append("no_toc")
         elif family == "featured" or (family == "board" and n_arts == 0):
             issues.append("needs_manual_structure")
-    if "share-buttons" not in html and family == "featured":
+    if family == "featured" and not re.search(r'share-buttons|Share on X|intent/tweet', html):
         issues.append("no_share_buttons")
     if family == "featured" and "FAQPage" not in schema_types:
         issues.append("no_faqpage_schema")
