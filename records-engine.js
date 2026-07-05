@@ -136,6 +136,56 @@
     return null;
   }
 
+  // Soccer: the competition lives in the League field, never inside the pick
+  // text. Any competition name embedded in a soccer pick is stripped out and
+  // moved to the league value ("France World Cup Moneyline" -> pick "France
+  // Moneyline", league "World Cup"). Futures like "to win the World Cup" are
+  // left alone because the competition is part of the bet itself.
+  var SOCCER_COMPETITIONS = ['World Cup Qualifiers','World Cup Qualifier','World Cup Qualifying',
+    'Club World Cup','World Cup','Champions League','Europa League','Conference League',
+    'Premier League','La Liga','Serie A','Bundesliga','Ligue 1','MLS','Euros','Euro',
+    'Nations League','Copa America','FA Cup','Carabao Cup','Copa del Rey','Friendlies','Friendly'];
+
+  // Verified competitions for historical soccer rows whose source sheet has no
+  // League column. Keyed by normalizeDate(date) + '|' + normalizePick(pick).
+  var SOCCER_LEAGUE_HISTORY = {
+    '10/14/2025|armenia ireland total corners under 8.5': 'World Cup Qualifiers',
+    '10/25/2025|real oviedo/ girona under 2.5 goals': 'La Liga',
+    '10/29/2025|chelsea ml': 'Carabao Cup',
+    '11/3/2025|cagliari/lazio under 2.5 goals': 'Serie A',
+    '11/4/2025|olympiakos/psv over 2.5': 'Champions League',
+    '11/12/2025|2 team parlay: portugal ml, germany ml': 'World Cup Qualifiers',
+    '6/3/2026|italy ml': 'Friendlies',
+    '6/4/2026|france ml': 'Friendlies',
+    '6/27/2026|england ml': 'World Cup',
+    '6/30/2026|france moneyline': 'World Cup',
+    '7/1/2026|england ml': 'World Cup',
+    '7/4/2026|france moneyline': 'World Cup'
+  };
+
+  function normalizeSoccerRow(date, pick, league) {
+    var cleanPick = String(pick || '').trim();
+    var cleanLeague = String(league || '').trim();
+    // "Soccer" is the sport, not a competition - treat it as missing.
+    if (cleanLeague.toLowerCase() === 'soccer') cleanLeague = '';
+    if (!/to win/i.test(cleanPick)) {
+      for (var i = 0; i < SOCCER_COMPETITIONS.length; i++) {
+        var comp = SOCCER_COMPETITIONS[i];
+        var re = new RegExp('\\s*\\b' + comp.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b\\s*', 'i');
+        if (re.test(cleanPick)) {
+          cleanPick = cleanPick.replace(re, ' ').replace(/\s{2,}/g, ' ').trim();
+          if (!cleanLeague) cleanLeague = comp;
+          break;
+        }
+      }
+    }
+    if (!cleanLeague) {
+      var key = normalizeDate(date) + '|' + normalizePick(cleanPick);
+      if (SOCCER_LEAGUE_HISTORY[key]) cleanLeague = SOCCER_LEAGUE_HISTORY[key];
+    }
+    return { pick: cleanPick, league: cleanLeague };
+  }
+
   var NFL_TEAM_NAMES = ['49ers','bears','bengals','bills','broncos','browns','buccaneers','bucs',
     'cardinals','chargers','chiefs','colts','commanders','cowboys','dolphins','eagles','falcons',
     'giants','jaguars','jets','lions','packers','panthers','patriots','raiders','rams','ravens',
@@ -187,12 +237,19 @@
     var stake = stakeRaw ? parseFloat(stakeRaw) : DEFAULT_STAKES[sport] || 1;
     if (isNaN(stake)) stake = DEFAULT_STAKES[sport] || 1;
     var pl = calculateUnitResult(stake, line, result);
+    var league = (row.League || '').trim();
+    if (sport === 'Soccer') {
+      var normalized = normalizeSoccerRow(date, pick, league);
+      pick = normalized.pick;
+      league = normalized.league;
+    }
     return {
       date: date,
       pick: pick,
       line: line,
       result: result.charAt(0),
       sport: sport,
+      league: league,
       stake: stake,
       unitPL: pl,
       source: 'tracker'
@@ -204,12 +261,20 @@
     if (!(result.indexOf('W') === 0 || result.indexOf('L') === 0 || result.indexOf('P') === 0)) return null;
     var line = row.Line || row.Odds || '-110';
     var pl = parseFloat((row.Units || '0').toString().replace(/,/g, '')) || 0;
+    var pick = row.Pick || '';
+    var league = (row.League || '').trim();
+    if (sport === 'Soccer') {
+      var normalized = normalizeSoccerRow(row.Date || '', pick, league);
+      pick = normalized.pick;
+      league = normalized.league;
+    }
     return {
       date: row.Date || '',
-      pick: row.Pick || '',
+      pick: pick,
       line: line,
       result: result.charAt(0),
       sport: sport,
+      league: league,
       stake: null,
       unitPL: pl,
       source: 'sheet'
@@ -385,6 +450,7 @@
     calculateStats: calculateStats,
     normalizeDate: normalizeDate,
     normalizePick: normalizePick,
+    normalizeSoccerRow: normalizeSoccerRow,
     normalizeLine: normalizeLine,
     extractYear: extractYear,
     parseOdds: parseOdds,

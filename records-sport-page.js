@@ -138,13 +138,15 @@
     return { ordered, labels, dates, cumulative };
   }
 
-  function renderTableRows(rows, tbody) {
+  function renderTableRows(rows, tbody, showLeague) {
     tbody.innerHTML = rows
       .map((row) => {
         const unitsClass = row.profitLoss > 0 ? 'win' : (row.profitLoss < 0 ? 'loss' : 'result-P');
         const unitsText = (row.profitLoss > 0 ? '+' : '') + row.profitLoss.toFixed(2);
+        const leagueCell = showLeague ? `
+  <td>${row.league || ''}</td>` : '';
         return `<tr>
-  <td>${row.date}</td>
+  <td>${row.date}</td>${leagueCell}
   <td>${row.pick}</td>
   <td>${row.odds}</td>
   <td class="result-${row.result}">${row.result}</td>
@@ -632,6 +634,7 @@
         sport: p.sport,
         date: normalizeDateString(p.date),
         pick: p.pick,
+        league: p.league || '',
         odds: p.line,
         result: p.result,
         profitLoss: typeof p.unitPL === 'number' ? p.unitPL : parseProfitLoss(p.unitPL),
@@ -647,15 +650,25 @@
     const rows = await response.json();
     return rows
       .filter((row) => String(row.Sport || row.sport || '').trim() === sport)
-      .map((row) => ({
-        sport: String(row.Sport || row.sport || '').trim(),
-        date: normalizeDateString(row.Date || row.date || ''),
-        pick: String(row.Picks || row.Pick || row.pick || '').trim(),
-        odds: String(row.Odds || row.Line || row.line || '').trim(),
-        result: normalizeResult(row.Result || row.result || ''),
-        profitLoss: parseProfitLoss(row.ProfitLoss || row.Units || row.unitPL || 0),
-        stake: null
-      }));
+      .map((row) => {
+        let pick = String(row.Picks || row.Pick || row.pick || '').trim();
+        let league = String(row.League || row.league || '').trim();
+        if (sport === 'Soccer' && window.RecordsEngine && typeof window.RecordsEngine.normalizeSoccerRow === 'function') {
+          const normalized = window.RecordsEngine.normalizeSoccerRow(row.Date || row.date || '', pick, league);
+          pick = normalized.pick;
+          league = normalized.league;
+        }
+        return {
+          sport: String(row.Sport || row.sport || '').trim(),
+          date: normalizeDateString(row.Date || row.date || ''),
+          pick: pick,
+          league: league,
+          odds: String(row.Odds || row.Line || row.line || '').trim(),
+          result: normalizeResult(row.Result || row.result || ''),
+          profitLoss: parseProfitLoss(row.ProfitLoss || row.Units || row.unitPL || 0),
+          stake: null
+        };
+      });
   }
 
   async function loadSportRows(sport) {
@@ -778,10 +791,11 @@
 
       const tbody = document.getElementById('picks-table-body');
       const visibleYears = getVisibleYearFilters();
+      const showLeague = !!config.showLeague;
       warnIfYearTotalsDisagree(sportRows, config.sport, visibleYears);
       const render = function (year) {
         const filtered = filterRows(sportRows, year, visibleYears);
-        if (tbody) renderTableRows(filtered, tbody);
+        if (tbody) renderTableRows(filtered, tbody, showLeague);
         updateSummary(filtered);
         updateChart(filtered, config.chartStateKey || '__betlegendRecordsChart');
         // Bet-type breakdown follows the active year tab.
@@ -798,7 +812,8 @@
       console.error('[records-sport-page] fatal:', err);
       const tbody = document.getElementById('picks-table-body');
       if (tbody) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:#FF3131;">Records failed to load. Please refresh the page.</td></tr>';
+        const colspan = config && config.showLeague ? 6 : 5;
+        tbody.innerHTML = '<tr><td colspan="' + colspan + '" style="text-align:center;padding:20px;color:#FF3131;">Records failed to load. Please refresh the page.</td></tr>';
       }
     } finally {
       if (loadingMessage) loadingMessage.style.display = 'none';

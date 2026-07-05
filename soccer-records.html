@@ -280,9 +280,9 @@
  <div class="loading-message" id="loading-message">Loading records from Google Sheets...</div>
  <div class="table-container">
  <table>
- <thead><tr><th>Date</th><th>Sport</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
+ <thead><tr><th>Date</th><th>League</th><th>Pick</th><th>Line</th><th>Result</th><th>Units</th></tr></thead>
  <tbody id="picks-table-body">
-                    <tr><td>6/3/2026</td><td>Italy ML</td><td>-233</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
+                    <tr><td>6/3/2026</td><td>Friendlies</td><td>Italy ML</td><td>-233</td><td class="result-W">W</td><td class="win">+3.00</td></tr>
                 </tbody>
  </table>
  </div>
@@ -290,13 +290,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script src="records-engine.js?v=20260603a"></script>
+<script src="records-engine.js?v=20260704a"></script>
 <script src="records-color.js?v=20260429d"></script>
-<script src="records-sport-page.js?v=20260603a"></script>
+<script src="records-sport-page.js?v=20260704a"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   if (window.BetLegendRecords && typeof BetLegendRecords.initSportPage === "function") {
-    BetLegendRecords.initSportPage({ sport: "Soccer", defaultYear: "all", chartStateKey: "__soccerRecordsChart" });
+    BetLegendRecords.initSportPage({ sport: "Soccer", defaultYear: "all", chartStateKey: "__soccerRecordsChart", showLeague: true });
   }
 });
 </script>
