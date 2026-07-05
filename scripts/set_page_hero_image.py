@@ -99,11 +99,21 @@ def main():
             if fig_img is None:
                 fig_img = re.search(r'(<img[^>]*\bsrc=")[^"]*("[^>]*class="feature-photo"[^>]*\balt=")[^"]*("[^>]*/?>)', html)
     if not has_fig:
-        # bare classless <figure><img> hero (older pick pages)
-        bare = re.search(r'(<figure[^>]*>\s*<img[^>]*\bsrc=")[^"]*("[^>]*\balt=")[^"]*("[^>]*/?>)', html)
+        # bare classless <figure><img> hero (older pick pages); src-first or alt-first
+        alt_first = False
+        bare = re.search(r'(<figure[^>]*>\s*<img[^>]*\bsrc=")[^"]*("[^>]*\balt=")[^"]*("[^>]*/?>)(\s*<figcaption>)?([^<]*)?(</figcaption>)?', html)
+        if bare is None:
+            bare = re.search(r'(<figure[^>]*>\s*<img[^>]*\balt=")[^"]*("[^>]*\bsrc=")[^"]*("[^>]*/?>)(\s*<figcaption>)?([^<]*)?(</figcaption>)?', html)
+            alt_first = True
         if bare:
             g = bare.groups()
-            html = html[: bare.start()] + g[0] + url + g[1] + alt.replace('"', "'") + g[2] + html[bare.end():]
+            if alt_first:
+                rep = g[0] + alt.replace('"', "'") + g[1] + url + g[2]
+            else:
+                rep = g[0] + url + g[1] + alt.replace('"', "'") + g[2]
+            if len(g) > 3 and g[3]:
+                rep += g[3] + caption + (g[5] or "</figcaption>")
+            html = html[: bare.start()] + rep + html[bare.end():]
             replaced_fig = True
             has_fig = True
     if fig_img:
