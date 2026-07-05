@@ -88,6 +88,7 @@ def main():
     inserted_fig = False
     has_fig = re.search(r'class="(?:hero-figure|feature-photo|pick-article-hero__figure)"', html)
     replaced_fig = False
+    fig_img = None
     if has_fig:
         # replace the existing hero figure's img src/alt (+figcaption when adjacent)
         fig_img = re.search(
