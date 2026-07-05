@@ -33,7 +33,7 @@ def verify_image(url):
         fail("logo/data URI not allowed")
     if re.search(r"teamlogos|/logos?/", url):
         fail("team logo URLs not allowed as hero")
-    req = urllib.request.Request(url, method="GET", headers={"User-Agent": "Mozilla/5.0 (BetLegend image check)"})
+    req = urllib.request.Request(url, method="GET", headers={"User-Agent": "BetLegendImageBot/1.0 (https://www.betlegendpicks.com; nj2121@gmail.com)"})
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
             status = r.status
