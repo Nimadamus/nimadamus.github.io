@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Rockies Team Total Under At Coors Anchors A Four-Play Run-Prevention Card With Three Full-Game Unders",
+        date: "July 5, 2026",
+        url: "rockies-team-total-under-blue-jays-mariners-rays-astros-unders-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/685299/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Brewers, Guardians and Red Sox Moneylines: Three Sunday Favorites Behind The Better Side",
+        date: "July 5, 2026",
+        url: "brewers-guardians-red-sox-sunday-moneylines-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/687075/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Braves, Brewers and Marlins Moneylines Anchor a Five-Play Card With a Giants Coors Angle and a Dodgers Run Line",
         date: "July 4, 2026",
         url: "braves-giants-brewers-marlins-moneylines-dodgers-run-line-card-mlb-pick.html",
