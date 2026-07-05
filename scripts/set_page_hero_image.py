@@ -106,13 +106,13 @@ def main():
             html = html[: bare.start()] + g[0] + url + g[1] + alt.replace('"', "'") + g[2] + html[bare.end():]
             replaced_fig = True
             has_fig = True
-        if fig_img:
-            g = fig_img.groups()
-            rep = g[0] + url + g[1] + alt.replace('"', "'") + g[2]
-            if len(g) > 3 and g[3]:
-                rep += g[3] + caption + (g[5] or "</figcaption>")
-            html = html[: fig_img.start()] + rep + html[fig_img.end():]
-            replaced_fig = True
+    if fig_img:
+        g = fig_img.groups()
+        rep = g[0] + url + g[1] + alt.replace('"', "'") + g[2]
+        if len(g) > 3 and g[3]:
+            rep += g[3] + caption + (g[5] or "</figcaption>")
+        html = html[: fig_img.start()] + rep + html[fig_img.end():]
+        replaced_fig = True
     if not has_fig:
         fig = ('<figure class="hero-figure">\n'
                '<img class="feature-photo" src="%s" alt="%s"/>\n'
