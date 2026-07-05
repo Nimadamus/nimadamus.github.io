@@ -97,6 +97,14 @@ def main():
             fig_img = re.search(r'(<img[^>]*class="feature-photo"[^>]*\bsrc=")[^"]*("[^>]*\balt=")[^"]*("[^>]*/?>)', html)
             if fig_img is None:
                 fig_img = re.search(r'(<img[^>]*\bsrc=")[^"]*("[^>]*class="feature-photo"[^>]*\balt=")[^"]*("[^>]*/?>)', html)
+    if not has_fig:
+        # bare classless <figure><img> hero (older pick pages)
+        bare = re.search(r'(<figure[^>]*>\s*<img[^>]*\bsrc=")[^"]*("[^>]*\balt=")[^"]*("[^>]*/?>)', html)
+        if bare:
+            g = bare.groups()
+            html = html[: bare.start()] + g[0] + url + g[1] + alt.replace('"', "'") + g[2] + html[bare.end():]
+            replaced_fig = True
+            has_fig = True
         if fig_img:
             g = fig_img.groups()
             rep = g[0] + url + g[1] + alt.replace('"', "'") + g[2]
