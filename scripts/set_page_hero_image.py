@@ -149,6 +149,7 @@ def main():
             (r'<div class="page-wrapper"[^>]*>', "after"),            # featured (soccer/UCL)
             (r'</div>\s*<!-- ?article-header ?-->', "after"),
             (r'(?s)<div class="article-header"[^>]*>(?:(?!</div>).)*</div>', "after"),  # old pick container template
+            (r'<div class="analysis-content"[^>]*>', "after"),        # legacy blog-post pick template
             (r'<article[^>]*>', "after"),                              # last resort: top of first article
         ):
             m = re.search(pat, html)
