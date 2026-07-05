@@ -8,7 +8,7 @@ const ARCHIVE_DATA = [
     { date: "2026-07-05", page: "rodriguez-bibee-suarez-sunday-fifteen-game-board-mlb.html", title: "MLB Sunday Board: Full 15-Game Slate" },
     { date: "2026-07-04", page: "braves-giants-brewers-marlins-moneylines-dodgers-run-line-card-mlb-pick.html", title: "Braves, Brewers, Marlins Moneylines and a Dodgers Run Line" },
     { date: "2026-07-04", page: "padres-mets-white-sox-team-total-unders-run-prevention-card-mlb-pick.html", title: "Padres, Mets, White Sox Team Total Unders" },
-    { date: "2026-07-04", page: "sale-braves-rasmussen-rays-yamamoto-dodgers-fourth-of-july-fifteen-game-mlb.html", title: "MLB Fourth of July Board: Sale, Rasmussen, Yamamoto - July 4, 2026" },
+    { date: "2026-07-04", page: "sale-braves-rasmussen-rays-yamamoto-dodgers-fourth-of-july-fifteen-game-mlb.html", title: "MLB Fourth of July Board - July 4, 2026" },
     { date: "2026-07-03", page: "ohtani-rays-astros-marlins-friday-board-mlb.html", title: "MLB Friday Board: Ohtani, Rays, Marlins, Mariners" },
     { date: "2026-07-03", page: "padres-dodgers-blue-jays-mariners-unders-astros-team-total-under-card-mlb-pick.html", title: "Three-Play MLB Run-Prevention Unders Card" },
     { date: "2026-07-03", page: "rays-marlins-moneylines-athletics-over-padres-dodgers-nrfi-card-mlb-pick.html", title: "Rays, Marlins Moneylines, A's Over and a NRFI" },

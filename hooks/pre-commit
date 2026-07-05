@@ -28,6 +28,21 @@ if [ -n "$NOINDEX_HITS" ]; then
     exit 1
 fi
 
+# PREVIEW TEMPLATE GATE (Nima directive July 5, 2026): every NEW preview/board/
+# featured page must match PREVIEW_PAGE_STANDARD.md (game-preview articles with
+# team logos, toc-box, hero figure, related-links, calendar, FORCED_PAGE_DATE).
+# The July 4 2026 MLB board shipped as bare text cards because nothing blocked
+# format drift from the daily automation. If this gate fires, fix the PAGE to
+# match docs/templates/ - never invent a new format, never bypass this hook.
+if [ -n "$STAGED_HTML" ]; then
+    if ! python scripts/validate_preview_template.py --staged-added; then
+        echo ""
+        echo "  [BLOCKED] New preview page does not match the locked template."
+        echo "  Copy docs/templates/daily-board.template or featured-preview.template."
+        exit 1
+    fi
+fi
+
 # Pick card image validator runs whenever homepage-picks-data.js is staged,
 # regardless of whether any HTML is also staged. This is the hard gate that
 # prevents bad graphic-template images from ever reaching the live homepage.
