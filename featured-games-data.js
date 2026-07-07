@@ -147,6 +147,7 @@ var FEATURED_GAMES = [
     { date: "2026-07-04", page: "canada-vs-morocco-analysis-stats-preview.html", title: "Canada vs Morocco: World Cup Round of 16 in Houston" },
     { date: "2026-07-05", page: "padres-vs-dodgers-sears-sheehan-sunday-finale-analysis-stats-preview.html", title: "Padres vs Dodgers: Sears vs Sheehan Sunday Finale" },
     { date: "2026-07-06", page: "rockies-vs-dodgers-freeland-worst-record-best-team-analysis-stats-preview.html", title: "Rockies vs Dodgers: Worst Record Meets Best Record" },
+    { date: "2026-07-07", page: "angels-vs-rangers-degrom-soriano-analysis-stats-preview.html", title: "Angels vs Rangers: deGrom vs Soriano at Globe Life" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
