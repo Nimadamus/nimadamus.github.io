@@ -31,14 +31,16 @@ var HOMEPAGE_PICKS = [
         title: "Brewers, Diamondbacks, Yankees and Blue Jays Unders: A Four-Play Run Prevention Card",
         date: "July 6, 2026",
         url: "brewers-dbacks-yankees-jays-monday-unders-run-prevention-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/621111/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/621111/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Phillies and Dodgers Moneylines: Backing Two Rotation Mismatches On Monday",
         date: "July 6, 2026",
         url: "phillies-dodgers-monday-moneylines-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/702070/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/702070/action/hero/current",
+        result: "L"
     },
     {
         sport: "MLB",
