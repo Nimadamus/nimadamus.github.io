@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Braves, Athletics and Angels Team Total Unders Plus a Rangers NRFI: A Nine-Play Run Prevention Card",
+        date: "July 7, 2026",
+        url: "braves-athletics-angels-team-total-unders-nrfi-run-prevention-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/667755/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Dodgers Run Line, White Sox and Giants Moneylines: A Three-Play Sides Card",
+        date: "July 7, 2026",
+        url: "dodgers-run-line-white-sox-giants-moneylines-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/686790/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Brewers, Diamondbacks, Yankees and Blue Jays Unders: A Four-Play Run Prevention Card",
         date: "July 6, 2026",
         url: "brewers-dbacks-yankees-jays-monday-unders-run-prevention-card-mlb-pick.html",
