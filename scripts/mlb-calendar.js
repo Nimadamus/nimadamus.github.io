@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-07-08", page: "brewers-moneyline-nationals-team-total-over-sides-card-mlb-pick.html", title: "Brewers Moneyline and a Nationals Team Total Over" },
+    { date: "2026-07-08", page: "chase-burns-mcclanahan-cole-webb-fifteen-game-wednesday-board-mlb.html", title: "MLB Preview: A 15-Game Wednesday Board" },
     { date: "2026-07-08", page: "yankees-rays-giants-blue-jays-twins-unders-run-prevention-card-mlb-pick.html", title: "Yankees-Rays, Giants-Blue Jays and Twins Unders" },
     { date: "2026-07-07", page: "braves-athletics-angels-team-total-unders-nrfi-run-prevention-card-mlb-pick.html", title: "Braves, Athletics, Angels Unders and a Rangers NRFI" },
     { date: "2026-07-07", page: "dodgers-run-line-white-sox-giants-moneylines-card-mlb-pick.html", title: "Dodgers Run Line, White Sox and Giants Moneylines" },
