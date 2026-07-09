@@ -31,14 +31,16 @@ var HOMEPAGE_PICKS = [
         title: "Yankees-Rays, Giants-Blue Jays and Twins Unders: A Five-Play Run Prevention Card",
         date: "July 8, 2026",
         url: "yankees-rays-giants-blue-jays-twins-unders-run-prevention-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669022/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669022/action/hero/current",
+        result: "L"
     },
     {
         sport: "MLB",
         title: "Brewers Moneyline and a Nationals Team Total Over: A Two-Play Sides Card",
         date: "July 8, 2026",
         url: "brewers-moneyline-nationals-team-total-over-sides-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/661388/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/661388/action/hero/current",
+        result: "L"
     },
     {
         sport: "MLB",
