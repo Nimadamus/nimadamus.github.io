@@ -27,6 +27,20 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "Soccer",
+        title: "France Moneyline vs Morocco: A World Cup Quarterfinal Play",
+        date: "July 9, 2026",
+        url: "france-moneyline-morocco-world-cup-quarterfinal-soccer-pick.html",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Kylian_Mbapp%C3%A9_2018.jpg"
+    },
+    {
+        sport: "MLB",
+        title: "Tigers Moneyline and a Marlins Team Total Under: A Two-Play Pitching Card",
+        date: "July 9, 2026",
+        url: "tigers-moneyline-marlins-team-total-under-two-play-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/664285/action/hero/current"
+    },
+    {
         sport: "MLB",
         title: "Yankees-Rays, Giants-Blue Jays and Twins Unders: A Five-Play Run Prevention Card",
         date: "July 8, 2026",
