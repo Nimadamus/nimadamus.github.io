@@ -40,7 +40,7 @@ var HOMEPAGE_PICKS = [
         date: "July 9, 2026",
         url: "tigers-moneyline-marlins-team-total-under-two-play-mlb-pick.html",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/664285/action/hero/current",
-        result: "W"
+        result: "L"
     },
     {
         sport: "MLB",
