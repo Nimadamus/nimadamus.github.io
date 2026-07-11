@@ -31,6 +31,7 @@ var HOMEPAGE_PICKS = [
         title: "Cardinals, Diamondbacks and Rockies Team Total Unders Plus a Mariners NRFI: A Ten-Play Run Prevention Card",
         date: "July 10, 2026",
         url: "cardinals-diamondbacks-rockies-unders-nrfi-run-prevention-card-mlb-pick.html",
+        result: "W",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/605400/action/hero/current"
     },
     {
@@ -38,6 +39,7 @@ var HOMEPAGE_PICKS = [
         title: "Braves, Giants and White Sox Moneylines Plus the Dodgers Run Line: A Four-Play Sides Card",
         date: "July 10, 2026",
         url: "braves-giants-white-sox-moneylines-dodgers-run-line-sides-card-mlb-pick.html",
+        result: "L",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/593958/action/hero/current"
     },
     {
