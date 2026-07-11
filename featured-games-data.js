@@ -151,6 +151,7 @@ var FEATURED_GAMES = [
     { date: "2026-07-08", page: "yankees-vs-rays-al-east-showdown-analysis-stats-preview.html", title: "Yankees vs Rays: An AL East Showdown At The Trop" },
     { date: "2026-07-09", page: "france-vs-morocco-analysis-stats-preview.html", title: "France vs Morocco: World Cup Quarterfinal in Foxborough" },
     { date: "2026-07-10", page: "diamondbacks-vs-dodgers-ohtani-rodriguez-duel-analysis-stats-preview.html", title: "Diamondbacks vs Dodgers: Ohtani Takes The Mound" },
+    { date: "2026-07-11", page: "phillies-vs-tigers-sanchez-mize-duel-analysis-stats-preview.html", title: "Phillies vs Tigers: Sanchez vs Mize July 11, 2026" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];

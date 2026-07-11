@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Diamondbacks, Tigers and Rangers Team Total Unders Plus a Petco Park NRFI: A Six-Play Run Prevention Card",
+        date: "July 11, 2026",
+        url: "diamondbacks-tigers-rangers-unders-petco-nrfi-run-prevention-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694297/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Yankees and Phillies Road Moneylines: A Two-Play Aces Sides Card",
+        date: "July 11, 2026",
+        url: "yankees-phillies-road-moneylines-schlittler-sanchez-sides-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607208/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Cardinals, Diamondbacks and Rockies Team Total Unders Plus a Mariners NRFI: A Ten-Play Run Prevention Card",
         date: "July 10, 2026",
         url: "cardinals-diamondbacks-rockies-unders-nrfi-run-prevention-card-mlb-pick.html",

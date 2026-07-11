@@ -59,7 +59,9 @@ PICK_RE = re.compile(r'-picks?(?:-v\d+)?\.html$')
 ENTRY_RE = re.compile(
     r'\{\s*date:\s*"(\d{4}-\d{2}-\d{2})"\s*,\s*page:\s*"([^"]+)"\s*,\s*title:\s*"([^"]*)"'
 )
-ARTICLE_RE = re.compile(r'<article class="game-preview[^"]*">.*?</article>', re.S)
+# Allow attributes after class (pages since Jul 4 2026 carry id="game-N-..." on
+# the article tag; the old pattern silently froze hubs at the last id-less bake).
+ARTICLE_RE = re.compile(r'<article class="game-preview[^"]*"[^>]*>.*?</article>', re.S)
 FPD_RE = re.compile(r"window\.FORCED_PAGE_DATE\s*=\s*'(\d{4}-\d{2}-\d{2})'")
 HERO_RE = re.compile(r'(<header class="hero">)(.*?)(</header>)', re.S)
 BADGE_RE = re.compile(r'(<div class="hero-badge">)(.*?)(</div>)', re.S)
