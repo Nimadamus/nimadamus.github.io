@@ -5,6 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-07-12", page: "athletics-team-total-under-phillies-tigers-nrfi-first-five-unders-card-mlb-pick.html", title: "Athletics Team Total Under and Phillies-Tigers Unders Stack" },
     { date: "2026-07-12", page: "cardinals-giants-white-sox-blue-jays-moneylines-mariners-run-line-sides-card-mlb-pick.html", title: "Cardinals, Giants, White Sox and Blue Jays Moneylines Sides Card" },
+    { date: "2026-07-12", page: "skenes-wheeler-skubal-brewers-dodgers-sunday-fifteen-game-mlb.html", title: "MLB Analysis: Skenes, Wheeler and Skubal Headline a 15-Game Sunday Slate" },
     { date: "2026-07-11", page: "diamondbacks-tigers-rangers-unders-petco-nrfi-run-prevention-card-mlb-pick.html", title: "Diamondbacks, Tigers, Rangers Unders + a Petco NRFI" },
     { date: "2026-07-11", page: "tigers-streak-sanchez-yamamoto-sixteen-game-saturday-board-mlb.html", title: "MLB Saturday Board July 11, 2026: Sanchez, Yamamoto" },
     { date: "2026-07-11", page: "yankees-phillies-road-moneylines-schlittler-sanchez-sides-card-mlb-pick.html", title: "Yankees and Phillies Road Moneylines Sides Card" },
