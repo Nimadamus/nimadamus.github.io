@@ -31,6 +31,7 @@ var HOMEPAGE_PICKS = [
         title: "Diamondbacks, Tigers and Rangers Team Total Unders Plus a Petco Park NRFI: A Six-Play Run Prevention Card",
         date: "July 11, 2026",
         url: "diamondbacks-tigers-rangers-unders-petco-nrfi-run-prevention-card-mlb-pick.html",
+        result: "L",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/694297/action/hero/current"
     },
     {
@@ -38,6 +39,7 @@ var HOMEPAGE_PICKS = [
         title: "Yankees and Phillies Road Moneylines: A Two-Play Aces Sides Card",
         date: "July 11, 2026",
         url: "yankees-phillies-road-moneylines-schlittler-sanchez-sides-card-mlb-pick.html",
+        result: "W",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/607208/action/hero/current"
     },
     {
