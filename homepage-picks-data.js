@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Cardinals, Giants, White Sox and Blue Jays Moneylines Plus the Mariners Run Line: A Five-Play Sides Card",
+        date: "July 12, 2026",
+        url: "cardinals-giants-white-sox-blue-jays-moneylines-mariners-run-line-sides-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/543243/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Athletics Team Total Under Plus a Wheeler-Skubal Unders Stack: A Four-Play Card",
+        date: "July 12, 2026",
+        url: "athletics-team-total-under-phillies-tigers-nrfi-first-five-unders-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/682120/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Diamondbacks, Tigers and Rangers Team Total Unders Plus a Petco Park NRFI: A Six-Play Run Prevention Card",
         date: "July 11, 2026",
         url: "diamondbacks-tigers-rangers-unders-petco-nrfi-run-prevention-card-mlb-pick.html",
