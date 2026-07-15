@@ -1,0 +1,1 @@
+import{n as e}from"./client-DtsE5yqZ.js";function t(t,n){if(e.isAxiosError(t)){let e=t.response?.data?.detail??t.response?.data?.message;if(typeof e==`string`&&e.trim())return e}return t instanceof Error&&t.message.trim()?t.message:n}export{t};
