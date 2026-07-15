@@ -2,6 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // GitHub Pages serves no SPA rewrite, so /pro/app/login is a hard 404.
+      // The site's 404.html encodes the requested route as "/?/login" and
+      // bounces here; this restores the real path before the router reads it.
+      // Must stay ahead of the app bundle.
+      (function () {
+        var l = window.location;
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) { return s.replace(/~and~/g, '&'); })
+            .join('?');
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/pro/app/favicon.svg" />
     <link rel="manifest" href="/pro/app/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

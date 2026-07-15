@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+// BetLegend Pro is a single-page app under /pro/app/. GitHub Pages has no
+// rewrite rule, so a deep link like /pro/app/login lands on this 404 page.
+// Re-encode the route as /pro/app/?/login and let the app restore it.
+// Scoped to /pro/app/ so every other 404 renders this page normally.
+(function () {
+  var l = window.location;
+  if (l.pathname.indexOf('/pro/app/') !== 0) return;
+  var keep = 2; // "pro/app"
+  l.replace(
+    l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+    l.pathname.split('/').slice(0, keep + 1).join('/') + '/?/' +
+    l.pathname.slice(1).split('/').slice(keep).join('/').replace(/&/g, '~and~') +
+    (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+    l.hash
+  );
+})();
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found | BetLegend</title>
