@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Dodgers-Yankees Under 9 and the Guardians Moneyline: A Two-Play Run Prevention Card",
+        date: "July 17, 2026",
+        url: "dodgers-yankees-under-9-guardians-moneyline-second-half-opener-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/671922/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Cardinals, Giants, White Sox and Blue Jays Moneylines Plus the Mariners Run Line: A Five-Play Sides Card",
         date: "July 12, 2026",
         url: "cardinals-giants-white-sox-blue-jays-moneylines-mariners-run-line-sides-card-mlb-pick.html",
