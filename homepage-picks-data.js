@@ -28,9 +28,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Cardinals-Diamondbacks Under, Brewers and Angels Team Total Unders and the Giants Run Line: A Four-Play MLB Card",
+        date: "July 18, 2026",
+        url: "cardinals-diamondbacks-under-brewers-angels-unders-giants-run-line-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693433/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Dodgers-Yankees, Orioles and Rangers Unders Plus a Coors Field Over and the Guardians Moneyline: A Five-Play MLB Card",
         date: "July 17, 2026",
         url: "dodgers-yankees-under-9-guardians-moneyline-second-half-opener-card-mlb-pick.html",
+        result: "W",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/671922/action/hero/current"
     },
     {
@@ -86,7 +94,7 @@ var HOMEPAGE_PICKS = [
         title: "France Moneyline vs Morocco: A World Cup Quarterfinal Play",
         date: "July 9, 2026",
         url: "france-moneyline-morocco-world-cup-quarterfinal-soccer-pick.html",
-        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Kylian_Mbapp%C3%A9_2018.jpg",
+        image: "images/france-moneyline-morocco-world-cup-quarterfinal-soccer-pick.jpg",
         result: "W"
     },
     {
@@ -535,7 +543,7 @@ var HOMEPAGE_PICKS = [
         date: "June 13, 2026",
         result: "L",
         url: "tigers-first-five-moneyline-skubal-guardians-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669373/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/700241/action/hero/current"
     },
     {
         sport: "MLB",
