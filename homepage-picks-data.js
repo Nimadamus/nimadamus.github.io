@@ -28,9 +28,17 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Cardinals Team Total Under 4.5, Nationals Moneyline and Giants-Mariners Under 7.5: A Three-Play MLB Card",
+        date: "July 19, 2026",
+        url: "cardinals-team-total-under-nationals-moneyline-giants-mariners-under-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669302/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Cardinals-Diamondbacks Under, Brewers and Angels Team Total Unders and the Giants Run Line: A Four-Play MLB Card",
         date: "July 18, 2026",
         url: "cardinals-diamondbacks-under-brewers-angels-unders-giants-run-line-card-mlb-pick.html",
+        result: "W",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/693433/action/hero/current"
     },
     {
