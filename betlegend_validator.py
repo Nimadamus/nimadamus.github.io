@@ -555,6 +555,18 @@ class ContentExtractor:
             for m in matches:
                 try:
                     value = float(m.group(1))
+                    # TEAM-total exclusion (July 19, 2026): season HR totals in a
+                    # clear TEAM context ("WSH offense: 540 R, 142 HR", "142 home
+                    # runs as a team") are legitimate and routinely exceed the
+                    # 0-80 single-player range. Skip only when the surrounding
+                    # clause explicitly signals a team total; bare "<N> home runs"
+                    # with no team context still validates against player range.
+                    if stat_key == 'home_runs_season':
+                        prefix = text[max(0, m.start()-60):m.start()].lower()
+                        suffix = text[m.end():m.end()+30].lower()
+                        team_ctx = r'\b(offense|team|club|lineup|combined|as a (team|club)|franchise)\b'
+                        if re.search(team_ctx + r'[^.!?]*$', prefix) or re.search(r'^[^.!?]*' + team_ctx, suffix):
+                            continue
                     stats.append({
                         'stat': stat_key,
                         'display': stat_info['display'],

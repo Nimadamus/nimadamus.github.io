@@ -28,10 +28,24 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
-        title: "Cardinals Team Total Under 4.5, Nationals Moneyline and Giants-Mariners Under 7.5: A Three-Play MLB Card",
+        title: "St. Louis Cardinals Team Total Under 4.5 (-138) vs Diamondbacks: Eduardo Rodriguez At Chase Field",
         date: "July 19, 2026",
         url: "cardinals-team-total-under-nationals-moneyline-giants-mariners-under-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669302/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669467/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Washington Nationals Moneyline (-143) at Athletics: Foster Griffin Owns The Road",
+        date: "July 19, 2026",
+        url: "cardinals-team-total-under-nationals-moneyline-giants-mariners-under-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/656492/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Giants vs Mariners Under 7.5 (-120): Robbie Ray And Logan Gilbert At T-Mobile Park",
+        date: "July 19, 2026",
+        url: "cardinals-team-total-under-nationals-moneyline-giants-mariners-under-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/663728/action/hero/current"
     },
     {
         sport: "MLB",
