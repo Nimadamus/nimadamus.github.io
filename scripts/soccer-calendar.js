@@ -4,8 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-07-18", page: "world-cup-third-place-france-england-summer-leagues-soccer.html", title: "World Cup Third Place and a Global Soccer Saturday Analysis" },
+    { date: "2026-07-18", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-07-17", page: "el-trafico-nashville-atlanta-wave-current-friday-night-soccer.html", title: "El Trafico and NWSL: Friday Soccer Analysis" },
-    { date: "2026-07-17", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-07-11", page: "norway-england-argentina-switzerland-world-cup-quarterfinals-soccer.html", title: "Norway vs England, Argentina vs Switzerland - July 11, 2026" },
     { date: "2026-07-10", page: "spain-vs-belgium-world-cup-quarterfinal-soccer.html", title: "Spain vs Belgium: A World Cup Quarterfinal At SoFi" },
     { date: "2026-07-09", page: "france-moneyline-morocco-world-cup-quarterfinal-soccer-pick.html", title: "France Moneyline vs Morocco: World Cup QF Pick" },

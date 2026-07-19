@@ -5,9 +5,9 @@
 const ARCHIVE_DATA = [
     { date: "2026-07-18", page: "brewers-cardinals-angels-mariners-saturday-run-prevention-board-mlb.html", title: "Brewers, Cardinals, Angels and Mariners Run Prevention Board: MLB Analysis" },
     { date: "2026-07-18", page: "cardinals-diamondbacks-under-brewers-angels-unders-giants-run-line-card-mlb-pick.html", title: "Brewers, Angels Unders and the Giants Run Line: MLB Card" },
+    { date: "2026-07-18", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-07-17", page: "dodgers-yankees-under-9-guardians-moneyline-second-half-opener-card-mlb-pick.html", title: "Dodgers-Yankees Under 9, Guardians Moneyline, Orioles and Rangers Unders and a Coors Over: A Five-Play MLB Card" },
     { date: "2026-07-17", page: "sasaki-cole-sale-alcantara-second-half-opener-fifteen-game-board-mlb.html", title: "MLB Second-Half Opener: Sasaki, Cole and Sale" },
-    { date: "2026-07-17", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-07-12", page: "athletics-team-total-under-phillies-tigers-nrfi-first-five-unders-card-mlb-pick.html", title: "Athletics Team Total Under and Phillies-Tigers Unders Stack" },
     { date: "2026-07-12", page: "cardinals-giants-white-sox-blue-jays-moneylines-mariners-run-line-sides-card-mlb-pick.html", title: "Cardinals, Giants, White Sox and Blue Jays Moneylines Sides Card" },
     { date: "2026-07-12", page: "skenes-wheeler-skubal-brewers-dodgers-sunday-fifteen-game-mlb.html", title: "MLB Analysis: Skenes and Skubal Headline Sunday" },
