@@ -4,8 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-07-20", page: "allsvenskan-malmo-djurgarden-uruguay-intermedio-monday-soccer.html", title: "Allsvenskan And Uruguay Monday Soccer Analysis" },
+    { date: "2026-07-20", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-07-19", page: "argentina-spain-world-cup-final-day-metlife-soccer.html", title: "Argentina Spain World Cup Final Day Soccer Analysis" },
-    { date: "2026-07-19", page: "soccer-previews.html", title: "Soccer Game Previews: Today's Matches, Odds and Betting Analysis" },
     { date: "2026-07-18", page: "world-cup-third-place-france-england-summer-leagues-soccer.html", title: "World Cup Third Place Soccer Analysis" },
     { date: "2026-07-17", page: "el-trafico-nashville-atlanta-wave-current-friday-night-soccer.html", title: "El Trafico and NWSL: Friday Soccer Analysis" },
     { date: "2026-07-11", page: "norway-england-argentina-switzerland-world-cup-quarterfinals-soccer.html", title: "Norway vs England, Argentina vs Switzerland - July 11, 2026" },
