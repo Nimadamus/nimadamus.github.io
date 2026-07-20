@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Brewers, Rockies and Diamondbacks Moneylines Plus a Rays-Blue Jays NRFI: A Four-Play MLB Card",
+        date: "July 20, 2026",
+        url: "brewers-rockies-diamondbacks-moneylines-rays-blue-jays-nrfi-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/642547/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Twins-Guardians and Rays-Blue Jays Unders Plus Red Sox and Rangers Team Total Unders: A Four-Play Card",
+        date: "July 20, 2026",
+        url: "twins-guardians-rays-blue-jays-unders-red-sox-rangers-team-totals-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657746/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "St. Louis Cardinals Team Total Under 4.5 (-138) vs Diamondbacks: Eduardo Rodriguez At Chase Field",
         date: "July 19, 2026",
         url: "cardinals-team-total-under-nationals-moneyline-giants-mariners-under-card-mlb-pick.html",
