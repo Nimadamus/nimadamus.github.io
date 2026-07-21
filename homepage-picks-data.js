@@ -28,9 +28,24 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Red Sox, Yankees, Brewers and Diamondbacks Moneylines: Four Favorites, One Price Band",
+        date: "July 21, 2026",
+        url: "red-sox-yankees-brewers-diamondbacks-moneylines-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/696149/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Two Unders And Two Moneylines: Dodgers-Phillies, Rays-Blue Jays, Guardians and Mariners",
+        date: "July 21, 2026",
+        url: "dodgers-phillies-rays-blue-jays-unders-guardians-mariners-moneylines-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/695505/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Brewers, Rockies and Diamondbacks Moneylines Plus a Rays-Blue Jays NRFI: A Four-Play MLB Card",
         date: "July 20, 2026",
         url: "brewers-rockies-diamondbacks-moneylines-rays-blue-jays-nrfi-card-mlb-pick.html",
+        result: "L",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/642547/action/hero/current"
     },
     {
@@ -38,6 +53,7 @@ var HOMEPAGE_PICKS = [
         title: "Twins-Guardians and Rays-Blue Jays Unders Plus Red Sox and Rangers Team Total Unders: A Four-Play Card",
         date: "July 20, 2026",
         url: "twins-guardians-rays-blue-jays-unders-red-sox-rangers-team-totals-card-mlb-pick.html",
+        result: "L",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657746/action/hero/current"
     },
     {

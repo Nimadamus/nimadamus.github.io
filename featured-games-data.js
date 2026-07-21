@@ -157,6 +157,7 @@ var FEATURED_GAMES = [
     { date: "2026-07-18", page: "marlins-vs-brewers-analysis-stats-preview.html", title: "Marlins vs Brewers: Max Meyer Analysis Preview" },
     { date: "2026-07-19", page: "argentina-vs-spain-analysis-stats-preview.html", title: "Argentina vs Spain World Cup Final Analysis" },
     { date: "2026-07-20", page: "dodgers-vs-phillies-analysis-stats-preview.html", title: "Dodgers vs Phillies: Sanchez Meets Baseball's Best Record" },
+    { date: "2026-07-21", page: "orioles-vs-red-sox-analysis-stats-preview.html", title: "Orioles vs Red Sox Bradish Suarez Fenway Analysis" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
