@@ -31,6 +31,7 @@ var HOMEPAGE_PICKS = [
         title: "Red Sox, Yankees, Brewers and Diamondbacks Moneylines: Four Favorites, One Price Band",
         date: "July 21, 2026",
         url: "red-sox-yankees-brewers-diamondbacks-moneylines-card-mlb-pick.html",
+        result: "W",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/696149/action/hero/current"
     },
     {
@@ -38,6 +39,7 @@ var HOMEPAGE_PICKS = [
         title: "Two Unders And Two Moneylines: Dodgers-Phillies, Rays-Blue Jays, Guardians and Mariners",
         date: "July 21, 2026",
         url: "dodgers-phillies-rays-blue-jays-unders-guardians-mariners-moneylines-card-mlb-pick.html",
+        result: "W",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/695505/action/hero/current"
     },
     {
