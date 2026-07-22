@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Guardians, Rays and Yankees Moneylines: Three Prices Set By The Last Nine Innings",
+        date: "July 22, 2026",
+        url: "guardians-rays-yankees-moneylines-bronx-nightcap-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/700250/action/vertical/current"
+    },
+    {
+        sport: "MLB",
+        title: "Marlins at Astros Under 8: Two Right-Handers And A Home Lineup That Cannot Hit",
+        date: "July 22, 2026",
+        url: "marlins-astros-under-eight-alcantara-lambert-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/669065/action/vertical/current"
+    },
+    {
+        sport: "MLB",
         title: "Red Sox, Yankees, Brewers and Diamondbacks Moneylines: Four Favorites, One Price Band",
         date: "July 21, 2026",
         url: "red-sox-yankees-brewers-diamondbacks-moneylines-card-mlb-pick.html",
