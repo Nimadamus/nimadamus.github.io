@@ -159,6 +159,7 @@ var FEATURED_GAMES = [
     { date: "2026-07-20", page: "dodgers-vs-phillies-analysis-stats-preview.html", title: "Dodgers vs Phillies: Sanchez Meets Baseball's Best Record" },
     { date: "2026-07-21", page: "orioles-vs-red-sox-analysis-stats-preview.html", title: "Orioles vs Red Sox Bradish Suarez Fenway Analysis" },
     { date: "2026-07-22", page: "dodgers-vs-phillies-nola-citizens-bank-analysis-stats-preview.html", title: "Dodgers vs Phillies: Nola And The Best Record In Baseball At Citizens Bank Park" },
+    { date: "2026-07-24", page: "yankees-vs-phillies-analysis-stats-preview.html", title: "Yankees vs Phillies: Schlittler-Luzardo Ace Duel" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];

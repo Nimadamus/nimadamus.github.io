@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Cardinals, Yankees Moneylines and a Giants First-Five: Three Sides Set By The Starters",
+        date: "July 24, 2026",
+        url: "cardinals-yankees-moneylines-giants-first-five-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/657277/action/vertical/current"
+    },
+    {
+        sport: "MLB",
+        title: "Two Team-Total Unders, a Rays-Guardians Under and an Athletics-Twins Over",
+        date: "July 24, 2026",
+        url: "guardians-rangers-team-total-unders-athletics-twins-over-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/663556/action/vertical/current"
+    },
+    {
+        sport: "MLB",
         title: "Guardians, Rays and Yankees Moneylines: Three Prices Set By The Last Nine Innings",
         date: "July 22, 2026",
         url: "guardians-rays-yankees-moneylines-bronx-nightcap-card-mlb-pick.html",
