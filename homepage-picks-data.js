@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Cubs and Mets Team Total Unders Plus Dodgers-Mets and Mariners-Rangers Game Unders: A Four-Play Card",
+        date: "July 25, 2026",
+        url: "cubs-mets-team-total-unders-dodgers-mariners-rangers-unders-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/690997/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Cardinals, Yankees Moneylines and a Giants First-Five: Three Sides Set By The Starters",
         date: "July 24, 2026",
         url: "cardinals-yankees-moneylines-giants-first-five-card-mlb-pick.html",
