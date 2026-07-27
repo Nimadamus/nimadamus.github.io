@@ -519,8 +519,8 @@ class ContentExtractor:
             # Get article/main content if available
             main = soup.find('main') or soup.find('article') or soup.find(class_=re.compile(r'content|article|post|blog'))
             if main:
-                return main.get_text(' ', strip=True)
-            return soup.get_text(' ', strip=True)
+                return main.get_text('\n', strip=True)
+            return soup.get_text('\n', strip=True)
         else:
             # Fallback: strip tags with regex
             text = re.sub(r'<script[^>]*>.*?</script>', '', html_content, flags=re.DOTALL | re.IGNORECASE)
@@ -702,10 +702,17 @@ class ContentValidator:
     def validate_stats(stats):
         """Check if statistics are within valid ranges."""
         issues = []
+        TEAM_CONTEXT_WORDS = ('lineup', 'team', 'roster', 'as a team', 'combined',
+                              'runs scored', 'this season', 'through', 'club')
         for stat in stats:
             value = stat['value']
             info = stat['range']
-            
+
+            if stat.get('stat') == 'home_runs_season' and value > info['max']:
+                ctx_lower = stat['context'].lower()
+                if any(tw in ctx_lower for tw in TEAM_CONTEXT_WORDS):
+                    continue
+
             if value < info['min'] or value > info['max']:
                 issues.append((
                     'ERROR',
@@ -975,7 +982,7 @@ class ContentValidator:
                 pass
 
         # Check for impossible batting averages
-        ba_pattern = r'(?:batting average|avg|BA)[:\s]+\.?([5-9]\d{2}|\d{4,})'
+        ba_pattern = r'\b(?:batting average|avg|BA)\b[:\s]+\.?([5-9]\d{2}|\d{4,})'
         for match in re.finditer(ba_pattern, text, re.IGNORECASE):
             context = text[max(0, match.start()-30):min(len(text), match.end()+30)]
             issues.append((

@@ -523,8 +523,8 @@ class ContentExtractor:
             # Get article/main content if available
             main = soup.find('main') or soup.find('article') or soup.find(class_=re.compile(r'content|article|post|blog'))
             if main:
-                return main.get_text(' ', strip=True)
-            return soup.get_text(' ', strip=True)
+                return main.get_text('\n', strip=True)
+            return soup.get_text('\n', strip=True)
         else:
             # Fallback: strip tags with regex
             text = re.sub(r'<script[^>]*>.*?</script>', '', html_content, flags=re.DOTALL | re.IGNORECASE)
