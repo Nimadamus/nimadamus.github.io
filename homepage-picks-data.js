@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Mets Team Total, Yankees Moneyline Headline A Five-Play Tuesday",
+        date: "July 28, 2026",
+        url: "mets-team-total-yankees-moneyline-tigers-cardinals-padres-unders-tuesday-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/681035/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Cubs and Mets Team Total Unders Plus Dodgers-Mets and Mariners-Rangers Game Unders: A Four-Play Card",
         date: "July 25, 2026",
         url: "cubs-mets-team-total-unders-dodgers-mariners-rangers-unders-card-mlb-pick.html",
