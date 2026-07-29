@@ -4,7 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-07-29", page: "sale-braves-moneyline-yankees-red-sox-mariners-dodgers-under-mlb-pick.html", title: "Sale's Delayed Start Anchors A Four-Play Wednesday" },
-    { date: "2026-07-29", page: "schlittler-sale-doubleheader-wesneski-debut-wednesday-mlb.html", title: "Sale's Doubleheader Start Headlines Wednesday's MLB Slate" },
+    { date: "2026-07-29", page: "schlittler-sale-doubleheader-wesneski-debut-wednesday-mlb.html", title: "Sale's Doubleheader Start Headlines MLB Wednesday" },
     { date: "2026-07-29", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-07-28", page: "cole-kay-division-leaders-melton-rea-king-lorenzen-tuesday-mlb.html", title: "Yankees-White Sox Headline Tuesday's MLB Slate" },
     { date: "2026-07-28", page: "mets-team-total-yankees-moneyline-tigers-cardinals-padres-unders-tuesday-mlb-pick.html", title: "Mets TT, Yankees ML Headline A Five-Play Tuesday" },
