@@ -163,6 +163,7 @@ var FEATURED_GAMES = [
     { date: "2026-07-25", page: "dodgers-vs-mets-yamamoto-mclean-analysis-stats-preview.html", title: "Dodgers vs Mets: Yamamoto Meets A Soto-Less Lineup" },
     { date: "2026-07-28", page: "braves-vs-mets-sale-soto-injury-analysis-stats-preview.html", title: "Braves vs Mets: Sale Faces A Mets Lineup Without Soto" },
     { date: "2026-07-29", page: "mariners-dodgers-home-run-barrage-analysis-stats-preview.html", title: "Mariners vs Dodgers: Can Seattle's Power Surge Carry Into Game Two" },
+    { date: "2026-07-30", page: "cubs-vs-cardinals-pallante-assad-series-finale-analysis-stats-preview.html", title: "Cubs vs Cardinals: Pallante Meets The Series Finale" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
