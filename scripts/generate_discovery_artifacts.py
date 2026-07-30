@@ -166,10 +166,15 @@ def is_redirect_stub(content: str) -> bool:
     # A stub is an immediate meta-refresh, a top-level location.replace(), or a
     # "Redirecting to ..." shell. Plain `window.location.href =` inside calendar
     # click handlers is NOT a stub (false-positived mlb-calendar.html etc.).
+    # Meta-refresh attributes appear in either order (some stubs are written as
+    # <meta content="0; url=..." http-equiv="refresh">), so match both.
+    # "Redirecting to" only counts near the top of the file — archive pages can
+    # embed an old daily card containing that text mid-page (April 2026 archives).
     return bool(
         re.search(r'<meta[^>]+http-equiv=["\']refresh["\'][^>]+content=["\']\s*0\s*;', content, re.I)
+        or re.search(r'<meta[^>]+content=["\']\s*0\s*;[^>]+http-equiv=["\']refresh["\']', content, re.I)
         or re.search(r"window\.location\.replace\(", content[:4000])
-        or re.search(r">\s*Redirecting to\b", content, re.I)
+        or re.search(r">\s*Redirecting to\b", content[:4000])
     )
 
 
