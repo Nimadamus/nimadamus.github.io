@@ -31,7 +31,8 @@ var HOMEPAGE_PICKS = [
         title: "Sale's Delayed Start Anchors A Four-Play Wednesday",
         date: "July 29, 2026",
         url: "sale-braves-moneyline-yankees-red-sox-mariners-dodgers-under-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/519242/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/519242/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
