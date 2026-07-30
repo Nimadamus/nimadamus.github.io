@@ -84,6 +84,18 @@ jobs:
           echo "Syncing records from Pick Tracker..."
           python scripts/sync_records_from_tracker.py
 
+      - name: Bake static SEO data (records + upcoming picks)
+        continue-on-error: true   # WARN-ONLY: bake writes NOTHING on failure, so the previous good baked data stays published — never block the sitemap/records commit below. A failed bake means Google keeps seeing yesterday's real numbers, not empty shells.
+        run: |
+          echo "Baking hydrated records/upcoming-picks data into static HTML..."
+          pip install playwright
+          python -m playwright install --with-deps chromium
+          python scripts/bake_seo_static_data.py
+
+      - name: Validate SEO bake integrity
+        run: |
+          python scripts/validate_seo_bake.py
+
       - name: Commit and push fixes
         run: |
           git config --local user.email "action@github.com"

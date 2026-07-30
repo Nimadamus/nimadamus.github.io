@@ -33,6 +33,10 @@ jobs:
         run: |
           pip install requests beautifulsoup4
 
+      - name: Validate SEO bake (records + upcoming picks must not be empty shells)
+        run: |
+          python scripts/validate_seo_bake.py
+
       - name: Run BetLegend Validator
         id: validate
         run: |
