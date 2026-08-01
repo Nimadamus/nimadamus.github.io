@@ -28,6 +28,31 @@ SPORT_INDEXES = {
     "nba": "nba-previews.html",
     "nhl": "nhl-previews.html",
 }
+# Approximate offseason windows (month, day) - (start, end), inclusive, where
+# a sport genuinely has no games and no new preview content is expected.
+# Generous rather than precise: better to under-cover (start blocking a few
+# days late/early) than to mistake real content silence during the season for
+# an offseason gap. Added Aug 1 2026 after this check hard-failed CI for
+# NBA (season ends mid-June, next tips off in October) with no way to pass
+# until October - a flat 7-day rule has no seasonal awareness on its own.
+SPORT_OFFSEASON = {
+    "nba": ((6, 20), (10, 15)),
+    "nhl": ((6, 20), (10, 1)),
+    "mlb": ((11, 5), (3, 15)),
+}
+
+
+def in_offseason(sport: str, today: dt.date) -> bool:
+    window = SPORT_OFFSEASON.get(sport)
+    if not window:
+        return False
+    (start_m, start_d), (end_m, end_d) = window
+    start = dt.date(today.year, start_m, start_d)
+    end = dt.date(today.year, end_m, end_d)
+    if start <= end:
+        return start <= today <= end
+    # Window wraps the new year (e.g. MLB: Nov 5 -> Mar 15)
+    return today >= start or today <= end
 DATE_RE = re.compile(
     r"(january|february|march|april|may|june|july|august|september|october|november|december)-(\d{1,2})-(\d{4})",
     re.I,
@@ -304,7 +329,8 @@ def audit(args: argparse.Namespace) -> None:
         # Freshness window, not calendar month: survives month rollovers and
         # tolerates legitimate playoff off-days/offseason gaps, while still
         # catching a sport that has genuinely gone stale.
-        if (today - dt.date.fromisoformat(page_date)).days > args.max_age_days:
+        stale = (today - dt.date.fromisoformat(page_date)).days > args.max_age_days
+        if stale and not in_offseason(sport, today):
             raise AuditError(f"Latest {sport.upper()} page is stale: {page_date} {page_rel}")
         require_page(page_rel, args, urls, allow_canonical_target=True)
         assert_reachable_from_hub(index_rel, page_rel, sport, args)
