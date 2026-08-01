@@ -97,7 +97,15 @@ class Config:
         },
         'home_runs_season': {
             'pattern': r'(\d{1,3})\s*(?:home\s*runs|HRs?|homers?)(?:\s*(?:this|on the)\s*(?:season|year))?',
-            'min': 0, 'max': 80, 'typical_min': 0, 'typical_max': 62,
+            # max raised to 800 (Aug 1 2026): "<N> home runs" routinely refers to a
+            # TEAM season total (100-270) or a player's CAREER total (up to Bonds'
+            # all-time 762), not just a single player's current season (real cap:
+            # 73, Bonds 2001) - the pattern has no way to know which. Hard-blocking
+            # at 80 flagged dozens of verified-correct team/career stats as
+            # "IMPOSSIBLE" errors sitewide; every instance audited was legitimate.
+            # typical_max stays 62 so anything above single-player-season norms
+            # still surfaces as a (non-blocking) WARNING for human review.
+            'min': 0, 'max': 800, 'typical_min': 0, 'typical_max': 62,
             'display': 'Home Runs', 'format': '{}'
         },
         'rbi_season': {
@@ -181,6 +189,14 @@ for team_id, info in MLB_TEAMS.items():
     TEAM_LOOKUP[info['abbr'].lower()] = team_id
     for alias in info['aliases']:
         TEAM_LOOKUP[alias.lower()] = team_id
+
+# Team-name/alias regex for stat-context checks (e.g. distinguishing a team's
+# season HR total - routinely 100-270 - from a player's, 0-73). Prose usually
+# names the team directly ("the Reds... 119 home runs") rather than using a
+# generic word like "team"/"offense", so a keyword list alone misses most
+# real cases. Longest-first so "Red Sox" matches before "Sox" would.
+_TEAM_NAME_ALTS = sorted((re.escape(a) for a in TEAM_LOOKUP if len(a) >= 3), key=len, reverse=True)
+TEAM_NAME_CTX = r'\b(' + '|'.join(_TEAM_NAME_ALTS) + r')\b'
 
 
 # =============================================================================
