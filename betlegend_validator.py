@@ -564,8 +564,14 @@ class ContentExtractor:
                     if stat_key == 'home_runs_season':
                         prefix = text[max(0, m.start()-60):m.start()].lower()
                         suffix = text[m.end():m.end()+30].lower()
-                        team_ctx = r'\b(offense|team|club|lineup|combined|as a (team|club)|franchise)\b'
-                        if re.search(team_ctx + r'[^.!?]*$', prefix) or re.search(r'^[^.!?]*' + team_ctx, suffix):
+                        team_ctx = r'\b(offenses?|teams?|clubs?|lineups?|combined|as a (?:team|club)|franchises?)\b'
+                        # A decimal point (".248" in a batting average/OPS figure
+                        # right next to the HR count) is not a sentence boundary -
+                        # without this, "134 home runs and a .248 team average"
+                        # truncated the lookahead at the "." and missed "team".
+                        non_terminator = r'(?:[^.!?]|\.(?=\d))'
+                        if re.search(team_ctx + non_terminator + r'*$', prefix) or \
+                           re.search(r'^' + non_terminator + r'*' + team_ctx, suffix):
                             continue
                     stats.append({
                         'stat': stat_key,
