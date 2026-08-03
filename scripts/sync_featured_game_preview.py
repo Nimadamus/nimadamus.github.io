@@ -391,20 +391,30 @@ def extract_game_data(page_content):
         data['home_name'] = data['home_abbr']
 
     # Team records: look for (XX-XX) or (XX-XX-XX) patterns
+    # None (not a placeholder string) when the article states no record -- the
+    # widget then omits the record line. "Record TBD" on the site's most-crawled
+    # page is a visible unfinished-content marker, and it is what the
+    # pre-publish validator blocks on.
     records = re.findall(r'\((\d+-\d+(?:-\d+)?)\)', page_content)
+    shared = re.search(r'(?:both teams (?:at|are)|two)\s+(\d+-\d+)(?:\s+teams)?', page_content, re.IGNORECASE)
     if len(records) >= 2:
         data['away_record'] = records[0]
         data['home_record'] = records[1]
     elif re.search(rf'second-seeded\s+{re.escape(data["away_name"])}', page_content, re.IGNORECASE) and re.search(rf'top-seeded\s+{re.escape(data["home_name"])}', page_content, re.IGNORECASE):
         data['away_record'] = 'No. 2 seed'
         data['home_record'] = 'No. 1 seed'
+    elif shared:
+        # "Two 62-48 Teams, One Tiebreaker Weekend" / "Both teams at 62-48":
+        # stated once because it is the same record for both sides.
+        data['away_record'] = shared.group(1)
+        data['home_record'] = shared.group(1)
     else:
-        data['away_record'] = 'Record TBD'
-        data['home_record'] = 'Record TBD'
+        data['away_record'] = None
+        data['home_record'] = None
 
     # Spread (handles "Spread", "Puck Line", "Run Line")
     spread_match = re.search(
-        r'(?:Spread|Puck Line|Run Line)</div>.*?class="line-value">\s*([^<]+?)\s*</div>',
+        r'(?:Spread|Puck Line|Run Line)</div>.{0,400}?class="line-value"[^>]*>\s*([^<]+?)\s*</div>',
         page_content, re.DOTALL | re.IGNORECASE
     )
     if spread_match:
@@ -429,24 +439,24 @@ def extract_game_data(page_content):
             away_display = f"+{away_value:g}" if away_value > 0 else f"{away_value:g}"
             data['away_spread'] = f"{data['away_abbr']} {away_display}"
         else:
-            data['away_spread'] = f"{data['away_abbr']} PK"
+            data['away_spread'] = None
 
     # Total (O/U) — may be labelled "Total", "Over/Under", or "O/U"
     total_match = re.search(
-        r'(?:Total|Over/Under|O/U)</div>.*?class="line-value">\s*([^<]+?)\s*</div>',
+        r'(?:Total|Over/Under|O/U)</div>.{0,400}?class="line-value"[^>]*>\s*([^<]+?)\s*</div>',
         page_content, re.DOTALL | re.IGNORECASE
     )
-    data['total'] = total_match.group(1).strip() if total_match else 'O/U TBD'
+    data['total'] = total_match.group(1).strip() if total_match else None
 
     # Moneyline
     ml_match = re.search(
-        r'Moneyline</div>.*?class="line-value">\s*([^<]+?)\s*</div>',
+        r'Moneyline</div>.{0,400}?class="line-value"[^>]*>\s*([^<]+?)\s*</div>',
         page_content, re.DOTALL | re.IGNORECASE
     )
     if ml_match:
         data['moneyline'] = ml_match.group(1).strip().replace(' / ', ' | ')
     else:
-        data['moneyline'] = f"{data['away_abbr']} TBD | {data['home_abbr']} TBD"
+        data['moneyline'] = None
 
     # Extract injuries from the featured game page.
     # The canonical pattern in our featured pages is:
@@ -480,20 +490,20 @@ def extract_game_data(page_content):
 
     # Total (O/U) — may be labelled "Total", "Over/Under", or "O/U"
     total_match = re.search(
-        r'(?:Total|Over/Under|O/U)</div>.*?class="line-value">\s*([^<]+?)\s*</div>',
+        r'(?:Total|Over/Under|O/U)</div>.{0,400}?class="line-value"[^>]*>\s*([^<]+?)\s*</div>',
         page_content, re.DOTALL | re.IGNORECASE
     )
-    data['total'] = total_match.group(1).strip() if total_match else 'O/U TBD'
+    data['total'] = total_match.group(1).strip() if total_match else None
 
     # Moneyline
     ml_match = re.search(
-        r'Moneyline</div>.*?class="line-value">\s*([^<]+?)\s*</div>',
+        r'Moneyline</div>.{0,400}?class="line-value"[^>]*>\s*([^<]+?)\s*</div>',
         page_content, re.DOTALL | re.IGNORECASE
     )
     if ml_match:
         data['moneyline'] = ml_match.group(1).strip().replace(' / ', ' | ')
     else:
-        data['moneyline'] = f"{data['away_abbr']} TBD | {data['home_abbr']} TBD"
+        data['moneyline'] = None
 
     # Extract injuries from the featured game page.
     # The canonical pattern in our featured pages is:
@@ -599,10 +609,19 @@ def extract_game_data(page_content):
         data['venue'] = 'TBD'
     if not data.get('network'):
         data['network'] = ''
-    if re.search(r'\b(?:playoffs?|finals?|semifinals?|conference final|west final|east final|postseason)\b', page_content, re.IGNORECASE):
-        data['game_stage'] = f"{data['sport']} Playoffs"
-    else:
-        data['game_stage'] = f"{data['sport']} Regular Season"
+    # Only a named postseason round counts. The previous test matched the bare
+    # word "playoffs" anywhere on the page -- including this site's own nav copy
+    # ("NFL Picks: spreads, totals, primetime games, and playoffs") -- so a
+    # regular-season August MLB game went to the homepage labelled "MLB Playoffs".
+    postseason = re.search(
+        r'\b(?:world series|stanley cup|nba finals|super bowl'
+        r'|(?:conference|division|league|championship|wild ?card) (?:series|final|finals|round)'
+        r'|(?:mlb|nba|nfl|nhl|ncaab|ncaaf) (?:playoffs|postseason)'
+        r'|game [1-7] of the)\b',
+        page_content, re.IGNORECASE,
+    )
+    stage = 'Playoffs' if postseason else 'Regular Season'
+    data['game_stage'] = f"{data['sport']} {stage}"
 
     # Team colors
     away_primary, away_accent = get_team_colors(data['sport'], data['away_abbr'])
@@ -622,41 +641,82 @@ def generate_preview_html(data, page_filename):
     <!-- FEATURED-GAME-PREVIEW-END -->.
     """
     # Parse away spread. extract_game_data returns e.g. "PHX -2.5" or "-2.5".
-    away_spread_raw = data.get('away_spread', 'PK')
+    # NOTHING in this widget is allowed to be a placeholder. A number that was
+    # not published is rendered as an em dash, never as "PK" (which asserts a
+    # real pick'em line that no book posted) or "TBD" (which asserts a number
+    # is coming). MLB previews frequently carry a moneyline and a total with no
+    # run line at all, and that is a legitimate, truthful state to show.
+    UNSET = '&mdash;'
+
+    def _cls(value):
+        # An em dash is neither a favourite nor a dog -- colouring it as one
+        # implies a price that does not exist.
+        if value == UNSET:
+            return 'fg-unset'
+        return 'fg-fav' if str(value).startswith('-') else 'fg-dog'
+    away_spread_raw = data.get('away_spread') or ''
     spread_num = re.search(r'([+-]?\d+\.?\d*)', away_spread_raw)
-    if spread_num:
+    if spread_num and re.search(r'[+-]', away_spread_raw):
         away_spread_val = float(spread_num.group(1))
         home_spread_val = -away_spread_val
         home_spread = f"+{home_spread_val}" if home_spread_val > 0 else f"{home_spread_val}"
         away_spread_display = f"+{away_spread_val}" if away_spread_val > 0 else f"{away_spread_val}"
     else:
-        away_spread_display = "PK"
-        home_spread = "PK"
+        away_spread_display = UNSET
+        home_spread = UNSET
 
     # Parse moneyline — value like "PHX -142 | LAL +120" or "-142 | +120"
-    ml_parts = data.get('moneyline', '').split('|')
-    def _extract_ml(token, default):
-        token = token.strip()
-        m = re.search(r'([+-]\d+)', token)
-        return m.group(1) if m else default
-    away_ml = _extract_ml(ml_parts[0], 'TBD') if ml_parts else 'TBD'
-    home_ml = _extract_ml(ml_parts[1], 'TBD') if len(ml_parts) > 1 else 'TBD'
+    # A price must land on the side it belongs to. The old code took the first
+    # signed number in the string and put it on the away row regardless -- a
+    # preview stating only "CHC -120" published the Cubs' price as the Yankees'
+    # and inverted the favourite on the homepage. When a token names a team,
+    # the price goes to that team and the other side stays unset; only an
+    # explicit two-part "AWAY x | HOME y" fills both.
+    def _price(token):
+        m = re.search(r'([+-]\d+)', token or '')
+        return m.group(1) if m else None
+
+    def _side(token):
+        token = (token or '').strip()
+        if re.search(rf'\b{re.escape(data["home_abbr"])}\b', token, re.IGNORECASE):
+            return 'home'
+        if re.search(rf'\b{re.escape(data["away_abbr"])}\b', token, re.IGNORECASE):
+            return 'away'
+        return None
+
+    ml_parts = [t for t in (data.get('moneyline') or '').split('|') if t.strip()]
+    away_ml = home_ml = UNSET
+    if len(ml_parts) >= 2:
+        first, second = ml_parts[0], ml_parts[1]
+        if _side(first) == 'home' or _side(second) == 'away':
+            away_ml, home_ml = _price(second) or UNSET, _price(first) or UNSET
+        else:
+            away_ml, home_ml = _price(first) or UNSET, _price(second) or UNSET
+    elif len(ml_parts) == 1:
+        side, price = _side(ml_parts[0]), _price(ml_parts[0])
+        if price and side == 'home':
+            home_ml = price
+        elif price and side == 'away':
+            away_ml = price
+        # An unattributed lone price is dropped: guessing its side is how the
+        # favourite got inverted in the first place.
 
     # Parse total — "O/U 218.5" -> "218.5"
-    total_raw = data.get('total', 'O/U TBD')
+    total_raw = data.get('total') or ''
     total_num_match = re.search(r'(\d+\.?\d*)', total_raw)
-    total = total_num_match.group(1) if total_num_match else 'TBD'
+    total_over = f"O {total_num_match.group(1)}" if total_num_match else UNSET
+    total_under = f"U {total_num_match.group(1)}" if total_num_match else UNSET
 
     # Use logo IDs for ESPN URLs (numeric for college, abbreviation for pro)
     away_logo = data.get('away_logo_id', data['away_abbr'].lower())
     home_logo = data.get('home_logo_id', data['home_abbr'].lower())
 
     # Header badge time: prefer the ET time string, fall back
-    time_badge = data.get('time', '').strip() or 'TBD'
+    time_badge = (data.get('time') or '').strip()
 
     # Venue line under matchup — "April 10 | Crypto.com Arena | NBA Regular Season"
     venue_bits = [data.get('short_date', '').strip()]
-    if data.get('venue'):
+    if data.get('venue') and data['venue'] != 'TBD':
         venue_bits.append(data['venue'])
     venue_bits.append(data.get('game_stage', f"{data['sport']} Regular Season"))
     if data.get('network'):
@@ -665,27 +725,42 @@ def generate_preview_html(data, page_filename):
 
     away_inj = (data.get('away_injuries') or 'Check injury report').strip()
     home_inj = (data.get('home_injuries') or 'Check injury report').strip()
-    away_record_suffix = ' SU' if re.match(r'^\d+-\d+', data['away_record']) else ''
-    home_record_suffix = ' SU' if re.match(r'^\d+-\d+', data['home_record']) else ''
+    # Records are omitted, not faked, when the article does not state them.
+    away_rec, home_rec = data.get('away_record'), data.get('home_record')
+    away_record_line = f"<div class=\"fg-team-record\">({away_rec})</div>" if away_rec else ''
+    home_record_line = f"<div class=\"fg-team-record\">({home_rec})</div>" if home_rec else ''
+    if away_rec or home_rec:
+        away_suffix = ' SU' if re.match(r'^\d+-\d+', away_rec or '') else ''
+        home_suffix = ' SU' if re.match(r'^\d+-\d+', home_rec or '') else ''
+        records_bar = (
+            '<div class="fg-records-bar">'
+            '<div class="fg-records-label">Records</div>'
+            '<div class="fg-records-row">'
+            f'<div><span class="fg-team-tag">{data["away_abbr"]}:</span> {away_rec or UNSET}{away_suffix}</div>'
+            f'<div><span class="fg-team-tag">{data["home_abbr"]}:</span> {home_rec or UNSET}{home_suffix}</div>'
+            '</div></div>'
+        )
+    else:
+        records_bar = ''
 
     return f'''<!-- FEATURED-GAME-PREVIEW-START (auto-synced by scripts/sync_featured_game_preview.py) -->
                     <!-- Header Banner -->
                     <div class="fg-header">
                         <div class="fg-header-top">
                             <span class="fg-header-label">Today's Featured Game</span>
-                            <span class="fg-time-badge">{data['sport']} {time_badge}</span>
+                            <span class="fg-time-badge">{(data['sport'] + ' ' + time_badge).strip()}</span>
                         </div>
                         <div class="fg-matchup">
                             <div class="fg-team">
                                 <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{away_logo}.png" alt="{data['away_name']}">
                                 <div class="fg-team-name">{data['away_name']}</div>
-                                <div class="fg-team-record">({data['away_record']})</div>
+                                {away_record_line}
                             </div>
                             <div class="fg-vs">@</div>
                             <div class="fg-team">
                                 <img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{home_logo}.png" alt="{data['home_name']}">
                                 <div class="fg-team-name">{data['home_name']}</div>
-                                <div class="fg-team-record">({data['home_record']})</div>
+                                {home_record_line}
                             </div>
                         </div>
                         <div class="fg-venue">{venue_line}</div>
@@ -705,28 +780,22 @@ def generate_preview_html(data, page_filename):
                             <tbody>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                                     <td class="fg-team-cell"><img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{away_logo}.png" alt="{data['away_abbr']}"><span>{data['away_abbr']}</span></td>
-                                    <td class="{'fg-fav' if away_spread_display.startswith('-') else 'fg-dog'}">{away_spread_display}</td>
-                                    <td class="{'fg-fav' if away_ml.startswith('-') else 'fg-dog'}">{away_ml}</td>
-                                    <td style="color: #fff; font-weight: 600; font-size: 0.9rem;">O {total}</td>
+                                    <td class="{_cls(away_spread_display)}">{away_spread_display}</td>
+                                    <td class="{_cls(away_ml)}">{away_ml}</td>
+                                    <td style="color: #fff; font-weight: 600; font-size: 0.9rem;">{total_over}</td>
                                 </tr>
                                 <tr>
                                     <td class="fg-team-cell"><img src="https://a.espncdn.com/i/teamlogos/{data['sport_path']}/500/{home_logo}.png" alt="{data['home_abbr']}"><span>{data['home_abbr']}</span></td>
-                                    <td class="{'fg-fav' if home_spread.startswith('-') else 'fg-dog'}">{home_spread}</td>
-                                    <td class="{'fg-fav' if home_ml.startswith('-') else 'fg-dog'}">{home_ml}</td>
-                                    <td style="color: #fff; font-weight: 600; font-size: 0.9rem;">U {total}</td>
+                                    <td class="{_cls(home_spread)}">{home_spread}</td>
+                                    <td class="{_cls(home_ml)}">{home_ml}</td>
+                                    <td style="color: #fff; font-weight: 600; font-size: 0.9rem;">{total_under}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <!-- Records -->
-                    <div class="fg-records-bar">
-                        <div class="fg-records-label">Records</div>
-                        <div class="fg-records-row">
-                            <div><span class="fg-team-tag">{data['away_abbr']}:</span> {data['away_record']}{away_record_suffix}</div>
-                            <div><span class="fg-team-tag">{data['home_abbr']}:</span> {data['home_record']}{home_record_suffix}</div>
-                        </div>
-                    </div>
+                    <!-- Records (omitted entirely when the preview states none) -->
+                    {records_bar}
 
                     <!-- Injuries -->
                     <div class="fg-injuries-bar">
