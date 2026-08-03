@@ -31,7 +31,8 @@ var HOMEPAGE_PICKS = [
         title: "Five Moneylines On A Fifteen-Game Saturday",
         date: "August 1, 2026",
         url: "phillies-tigers-yankees-guardians-dodgers-five-moneylines-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1280,q_auto:best/v1/people/608331/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1280,q_auto:best/v1/people/608331/action/hero/current",
+        result: "L"
     },
     {
         sport: "MLB",
