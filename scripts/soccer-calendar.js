@@ -12,7 +12,7 @@ const ARCHIVE_DATA = [
     { date: "2026-07-25", page: "liverpool-sunderland-inter-miami-lafc-saturday-soccer.html", title: "Soccer: Liverpool's Preseason Opener and MLS Saturday" },
     { date: "2026-07-24", page: "manchester-united-rosenborg-barcelona-tijuana-leon-friday-soccer.html", title: "Soccer: Man United and Barcelona Preseason Friday" },
     { date: "2026-07-22", page: "mls-midweek-nashville-vancouver-inter-miami-fifteen-match-wednesday-soccer.html", title: "MLS Midweek Board: Nashville And Vancouver" },
-    { date: "2026-07-21", page: "fenerbahce-red-star-champions-league-qualifiers-cruz-azul-toluca-soccer.html", title: "Fenerbahce, Red Star And A Faroese Champion: Soccer Board" },
+    { date: "2026-07-21", page: "fenerbahce-red-star-champions-league-qualifiers-cruz-azul-toluca-soccer.html", title: "Fenerbahce, Red Star And A Faroese Champion" },
     { date: "2026-07-20", page: "allsvenskan-malmo-djurgarden-uruguay-intermedio-monday-soccer.html", title: "Allsvenskan And Uruguay Monday Soccer Analysis" },
     { date: "2026-07-19", page: "argentina-spain-world-cup-final-day-metlife-soccer.html", title: "Argentina Spain World Cup Final Day Soccer Analysis" },
     { date: "2026-07-18", page: "world-cup-third-place-france-england-summer-leagues-soccer.html", title: "World Cup Third Place Soccer Analysis" },

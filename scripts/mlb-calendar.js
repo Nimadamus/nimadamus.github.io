@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-08-03", page: "boyd-schlittler-caminero-coors-eight-game-monday-mlb.html", title: "MLB Monday Board: Boyd, Schlittler And Coors" },
+    { date: "2026-08-03", page: "brewers-yankees-moneylines-schlittler-sproat-two-play-card-mlb-pick.html", title: "Brewers And Yankees Moneylines: Two-Play Card" },
     { date: "2026-08-03", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-08-01", page: "phillies-tigers-yankees-guardians-dodgers-five-moneylines-mlb-pick.html", title: "Five MLB Moneylines On A Loaded Saturday Card" },
     { date: "2026-08-01", page: "tolle-yamamoto-chavez-ravine-fifteen-game-saturday-mlb.html", title: "Tolle Meets Yamamoto And A Fifteen-Game MLB Saturday" },
@@ -17,7 +18,7 @@ const ARCHIVE_DATA = [
     { date: "2026-07-25", page: "skenes-yamamoto-imanaga-saturday-eight-game-board-mlb.html", title: "MLB Saturday: Skenes, Yamamoto and Imanaga Headline" },
     { date: "2026-07-24", page: "cardinals-yankees-moneylines-giants-first-five-card-mlb-pick.html", title: "Cardinals, Yankees Moneylines And A Giants First-Five" },
     { date: "2026-07-24", page: "guardians-rangers-team-total-unders-athletics-twins-over-card-mlb-pick.html", title: "MLB Totals Card: Team-Total Unders and a Twins Over" },
-    { date: "2026-07-24", page: "schlittler-luzardo-headline-fifteen-game-friday-board-mlb.html", title: "MLB Analysis: Schlittler-Luzardo Headline a 15-Game Friday" },
+    { date: "2026-07-24", page: "schlittler-luzardo-headline-fifteen-game-friday-board-mlb.html", title: "Schlittler-Luzardo Headline a 15-Game Friday" },
     { date: "2026-07-22", page: "bronx-fenway-doubleheaders-nine-game-wednesday-night-board-mlb.html", title: "Two Doubleheaders And Nine Night Games: MLB Board" },
     { date: "2026-07-22", page: "guardians-rays-yankees-moneylines-bronx-nightcap-card-mlb-pick.html", title: "Guardians, Rays And Yankees Moneylines" },
     { date: "2026-07-22", page: "marlins-astros-under-eight-alcantara-lambert-card-mlb-pick.html", title: "Marlins At Astros Under 8" },
