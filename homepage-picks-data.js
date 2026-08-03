@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Brewers And Yankees Moneylines On A Two-Play Monday",
+        date: "August 3, 2026",
+        url: "brewers-yankees-moneylines-schlittler-sproat-two-play-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1280,q_auto:best/v1/people/687075/action/vertical/current"
+    },
+    {
+        sport: "MLB",
         title: "Five Moneylines On A Fifteen-Game Saturday",
         date: "August 1, 2026",
         url: "phillies-tigers-yankees-guardians-dodgers-five-moneylines-mlb-pick.html",
