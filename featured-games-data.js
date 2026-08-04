@@ -168,6 +168,7 @@ var FEATURED_GAMES = [
     // August 2026
     { date: "2026-08-01", page: "yankees-vs-cubs-fried-peterson-wrigley-analysis-stats-preview.html", title: "Yankees vs Cubs: Fried Faces Peterson At Wrigley" },
     { date: "2026-08-03", page: "dodgers-vs-cubs-boyd-wrigley-analysis-stats-preview.html", title: "Dodgers vs Cubs: Boyd And A Rotation In Pieces" },
+    { date: "2026-08-04", page: "tigers-vs-mariners-melton-hancock-analysis-stats-preview.html", title: "Tigers vs Mariners: Melton And Hancock In Seattle" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
