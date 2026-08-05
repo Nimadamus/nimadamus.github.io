@@ -31,7 +31,8 @@ var HOMEPAGE_PICKS = [
         title: "Four Plays Built On Who Gives Away Bases",
         date: "August 4, 2026",
         url: "reds-team-total-over-dodgers-mariners-moneylines-four-play-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1280,q_auto:best/v1/people/682829/action/vertical/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1280,q_auto:best/v1/people/682829/action/vertical/current",
+        result: "L"
     },
     {
         sport: "MLB",
