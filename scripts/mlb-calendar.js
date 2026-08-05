@@ -5,7 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-08-05", page: "pirates-brewers-nrfi-under-seven-team-total-mlb-pick.html", title: "Pirates Brewers NRFI, Under And Pittsburgh Team Total" },
     { date: "2026-08-05", page: "rangers-moneyline-bradford-return-mlb-pick.html", title: "Rangers Moneyline As Cody Bradford Returns" },
-    { date: "2026-08-05", page: "skenes-imanaga-gray-fifteen-game-wednesday-mlb.html", title: "MLB Wednesday: Imanaga At Wrigley, Skenes In Milwaukee" },
+    { date: "2026-08-05", page: "skenes-imanaga-gray-fifteen-game-wednesday-mlb.html", title: "MLB Wednesday: Imanaga, Skenes And A 7 In Milwaukee" },
     { date: "2026-08-05", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-08-04", page: "reds-team-total-over-dodgers-mariners-moneylines-four-play-card-mlb-pick.html", title: "Reds Team Total Over Plus Dodgers And Mariners Moneylines" },
     { date: "2026-08-04", page: "skubal-melton-hughes-fifteen-game-tuesday-mlb.html", title: "MLB Tuesday: Skubal At Wrigley, Melton In Seattle" },
