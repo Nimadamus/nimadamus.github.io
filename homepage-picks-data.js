@@ -28,6 +28,20 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Three Units On A Left-Hander Who Has Not Pitched In Two Years",
+        date: "August 5, 2026",
+        url: "rangers-moneyline-bradford-return-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/674003/action/hero/current"
+    },
+    {
+        sport: "MLB",
+        title: "Four And A Half Units On One Quiet Game In Milwaukee",
+        date: "August 5, 2026",
+        url: "pirates-brewers-nrfi-under-seven-team-total-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/668804/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Four Plays Built On Who Gives Away Bases",
         date: "August 4, 2026",
         url: "reds-team-total-over-dodgers-mariners-moneylines-four-play-card-mlb-pick.html",
