@@ -4,8 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-08-04", page: "leagues-cup-liga-mx-mls-six-match-tuesday-soccer.html", title: "Leagues Cup: Eighteen Matches Against Three" },
+    { date: "2026-08-04", page: "soccer-previews.html", title: "Soccer Previews: Matches, Odds and Analysis" },
     { date: "2026-08-03", page: "celtic-park-opener-sirius-unbeaten-velez-independiente-soccer.html", title: "Soccer: Celtic Park Opens, Sirius Still Unbeaten" },
-    { date: "2026-08-03", page: "soccer-previews.html", title: "Soccer Previews: Matches, Odds and Analysis" },
     { date: "2026-08-01", page: "messi-crew-lafc-whitecaps-cascadia-liga-mx-saturday-soccer.html", title: "Messi Hosts The Crew Plus A Cascadia Derby" },
     { date: "2026-07-30", page: "benfica-on-the-brink-boca-gremio-sudamericana-second-legs-soccer.html", title: "Benfica On The Brink, Sudamericana Second Legs" },
     { date: "2026-07-29", page: "iraola-liverpool-wrexham-yankee-stadium-mls-all-star-soccer.html", title: "MLS All-Stars, Liverpool-Wrexham Headline Wednesday" },

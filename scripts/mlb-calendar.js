@@ -5,9 +5,9 @@
 const ARCHIVE_DATA = [
     { date: "2026-08-04", page: "reds-team-total-over-dodgers-mariners-moneylines-four-play-card-mlb-pick.html", title: "Reds Team Total Over Plus Dodgers And Mariners Moneylines" },
     { date: "2026-08-04", page: "skubal-melton-hughes-fifteen-game-tuesday-mlb.html", title: "MLB Tuesday: Skubal At Wrigley, Melton In Seattle" },
+    { date: "2026-08-04", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-08-03", page: "boyd-schlittler-caminero-coors-eight-game-monday-mlb.html", title: "MLB Monday Board: Boyd, Schlittler And Coors" },
     { date: "2026-08-03", page: "brewers-yankees-moneylines-schlittler-sproat-two-play-card-mlb-pick.html", title: "Brewers And Yankees Moneylines: Two-Play Card" },
-    { date: "2026-08-03", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-08-01", page: "phillies-tigers-yankees-guardians-dodgers-five-moneylines-mlb-pick.html", title: "Five MLB Moneylines On A Loaded Saturday Card" },
     { date: "2026-08-01", page: "tolle-yamamoto-chavez-ravine-fifteen-game-saturday-mlb.html", title: "Tolle Meets Yamamoto And A Fifteen-Game MLB Saturday" },
     { date: "2026-07-30", page: "giants-twice-red-sox-gray-braves-padres-team-total-unders-mlb-pick.html", title: "Giants Twice In San Diego Lead A Three-Play Thursday" },
