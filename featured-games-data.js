@@ -170,6 +170,7 @@ var FEATURED_GAMES = [
     { date: "2026-08-03", page: "dodgers-vs-cubs-boyd-wrigley-analysis-stats-preview.html", title: "Dodgers vs Cubs: Boyd And A Rotation In Pieces" },
     { date: "2026-08-04", page: "tigers-vs-mariners-melton-hancock-analysis-stats-preview.html", title: "Tigers vs Mariners: Melton And Hancock In Seattle" },
     { date: "2026-08-05", page: "pirates-vs-brewers-skenes-harrison-analysis-stats-preview.html", title: "Pirates vs Brewers: Skenes And Harrison In Milwaukee" },
+    { date: "2026-08-06", page: "padres-vs-diamondbacks-analysis-stats-preview.html", title: "Padres vs Diamondbacks: Buehler And A Rookie In Phoenix" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
