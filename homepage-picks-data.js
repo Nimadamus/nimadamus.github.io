@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Four Plays Built On Six Real Arms And Two Cold Lineups",
+        date: "August 6, 2026",
+        url: "nationals-tigers-unders-red-sox-moneyline-four-play-card-mlb-pick.html",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/571945/action/hero/current"
+    },
+    {
+        sport: "MLB",
         title: "Three Units On A Left-Hander Who Has Not Pitched In Two Years",
         date: "August 5, 2026",
         url: "rangers-moneyline-bradford-return-mlb-pick.html",
