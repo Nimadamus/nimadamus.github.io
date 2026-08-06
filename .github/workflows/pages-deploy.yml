@@ -48,8 +48,9 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
+  pages: write        # create the Pages deployment
+  id-token: write     # mint the OIDC token that deployment requires
+  actions: read       # look up this run's uploaded artifact
 
 # Never cancel a half-finished deploy; let it land, then run the next one.
 concurrency:
@@ -107,16 +108,101 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://www.betlegendpicks.com/
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          # The artifact is ~490MB compressed, and Pages takes its time
-          # unpacking one that size: the first run sat in deployment_queued
-          # for the action's default 600s and then cancelled ITSELF -- the
-          # upload had already succeeded. This is the action's clock, not a
-          # rejection by Pages, so give it room rather than shrinking a site
-          # that is legitimately this big.
-          timeout: 1800000
-          error_count: 20
+      # actions/deploy-pages is NOT used here, and only here.
+      #
+      # It hard-caps its own wait at ten minutes:
+      #
+      #   const MAX_TIMEOUT = 600000
+      #   this.timeout = Math.min(timeoutInput, MAX_TIMEOUT)
+      #
+      # so the `timeout` input is accepted, logged, and then clamped. A ~490MB
+      # artifact does not finish unpacking inside that window, and when the
+      # clock runs out the action CANCELS the deployment it just started --
+      # run 31107727344 died that way while the status was already
+      # deployment_in_progress. The deploy was working; the action gave up.
+      #
+      # This step calls the same official endpoints the action calls
+      # (POST /repos/{owner}/{repo}/pages/deployments, then
+      #  GET  /repos/{owner}/{repo}/pages/deployments/{id}) with the workflow's
+      # own GITHUB_TOKEN and OIDC token, and simply waits longer. It never
+      # cancels: a slow deployment is allowed to finish.
+      - name: Deploy the artifact through the Pages API, and wait for it
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MAX_WAIT_SECONDS: '2700'   # 45 min; the artifact is ~490MB
+          POLL_SECONDS: '15'
+        run: |
+          set -euo pipefail
+          API="${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}"
+          hdr=(-H "Authorization: Bearer ${GH_TOKEN}"
+               -H "Accept: application/vnd.github+json"
+               -H "X-GitHub-Api-Version: 2022-11-28")
+
+          # 1. Never open a second deployment on top of a live one. The
+          #    concurrency group already serialises this workflow, but a
+          #    deployment can outlive the run that started it -- which is
+          #    exactly what this step makes possible.
+          echo "::group::Waiting for any in-flight Pages deployment"
+          for i in $(seq 1 80); do
+            st=$(curl -sS "${hdr[@]}" "$API/pages" | jq -r '.status // "unknown"')
+            echo "  pages status: $st"
+            [ "$st" != "building" ] && break
+            sleep 15
+          done
+          echo "::endgroup::"
+
+          # 2. The artifact this run just uploaded.
+          arts=$(curl -sS "${hdr[@]}" "$API/actions/runs/${GITHUB_RUN_ID}/artifacts")
+          ART_ID=$(echo "$arts" | jq -r '[.artifacts[]|select(.name=="github-pages")][0].id // empty')
+          ART_SIZE=$(echo "$arts" | jq -r '[.artifacts[]|select(.name=="github-pages")][0].size_in_bytes // 0')
+          if [ -z "$ART_ID" ]; then echo "No github-pages artifact on this run"; exit 1; fi
+          echo "artifact id=$ART_ID size=${ART_SIZE} bytes"
+
+          # 3. OIDC token. Same call actions/deploy-pages makes (default
+          #    audience), which is why id-token: write is required above.
+          ID_TOKEN=$(curl -sS -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"                        "${ACTIONS_ID_TOKEN_REQUEST_URL}" | jq -r '.value')
+          if [ -z "$ID_TOKEN" ] || [ "$ID_TOKEN" = "null" ]; then echo "No OIDC token"; exit 1; fi
+
+          # 4. Create the deployment.
+          body=$(jq -nc --argjson a "$ART_ID" --arg v "$GITHUB_SHA" --arg t "$ID_TOKEN"                    '{artifact_id:$a, pages_build_version:$v, oidc_token:$t}')
+          resp=$(curl -sS -X POST "${hdr[@]}" -d "$body" "$API/pages/deployments")
+          DEP_ID=$(echo "$resp" | jq -r '.id // empty')
+          if [ -z "$DEP_ID" ]; then
+            # Instruction: on an explicit rejection, report exactly what the API said.
+            echo "Pages API refused the deployment. Literal response:"
+            echo "$resp"
+            exit 1
+          fi
+          echo "deployment id: $DEP_ID"
+          echo "page url     : $(echo "$resp" | jq -r '.page_url // "n/a"')"
+          echo "DEPLOYMENT_ID=$DEP_ID"   >> "$GITHUB_ENV"
+          echo "ARTIFACT_SIZE=$ART_SIZE" >> "$GITHUB_ENV"
+
+          # 5. Poll to a real terminal state. No cancel on slowness -- that is
+          #    the whole point of replacing the action.
+          started=$(date +%s)
+          while :; do
+            sleep "$POLL_SECONDS"
+            status=$(curl -sS "${hdr[@]}" "$API/pages/deployments/$DEP_ID" | jq -r '.status // "unknown_status"')
+            elapsed=$(( $(date +%s) - started ))
+            echo "  [${elapsed}s] $status"
+            case "$status" in
+              succeed)
+                echo "Deployment $DEP_ID succeeded after ${elapsed}s."
+                echo "DEPLOY_SECONDS=$elapsed" >> "$GITHUB_ENV"
+                exit 0 ;;
+              deployment_failed|deployment_content_failed|deployment_cancelled|deployment_lost)
+                echo "Deployment $DEP_ID ended in: $status"
+                curl -sS "${hdr[@]}" "$API/pages/deployments/$DEP_ID"
+                exit 1 ;;
+              deployment_queued|deployment_in_progress|deployment_attempt_error|not_found|unknown_status)
+                : ;;   # keep waiting
+            esac
+            if [ "$elapsed" -ge "$MAX_WAIT_SECONDS" ]; then
+              echo "Still '$status' after ${elapsed}s. NOT cancelling -- the"
+              echo "deployment is left to finish; the next run waits for it."
+              exit 1
+            fi
+          done
