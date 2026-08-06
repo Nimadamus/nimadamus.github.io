@@ -111,3 +111,12 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # The artifact is ~490MB compressed, and Pages takes its time
+          # unpacking one that size: the first run sat in deployment_queued
+          # for the action's default 600s and then cancelled ITSELF -- the
+          # upload had already succeeded. This is the action's clock, not a
+          # rejection by Pages, so give it room rather than shrinking a site
+          # that is legitimately this big.
+          timeout: 1800000
+          error_count: 20
