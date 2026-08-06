@@ -1,0 +1,113 @@
+name: Deploy site to Pages
+
+# Why this exists
+# ---------------
+# The legacy Pages builder walks the whole repository on every push. The
+# published tree is ~630MB (videos/ alone is 334MB) and the builds began
+# timing out: three consecutive builds of 5a1b75d47 errored or hung past the
+# limit on 2026-08-06, so a pushed commit could not reach production at all
+# while the site kept serving the previous build.
+#
+# The Actions path uploads a prepared tarball instead of asking the builder to
+# process the repo, which is what removes the timeout.
+#
+# This site has NO build step of its own: every page is committed HTML. The one
+# compiled thing, /pro/app, is built from the betlegend-pro repo and its dist
+# is committed here. So "build" here means: copy the published tree, minus the
+# things that are code rather than website.
+#
+# What is excluded, and why it is safe to exclude
+# -----------------------------------------------
+# Checked on 2026-08-06 against every .html/.css/.xml in the repo and all six
+# sitemaps (1,851 URLs). Each excluded path is referenced by ZERO pages and
+# appears in ZERO sitemap entries:
+#
+#   .git .github    repository plumbing, never served
+#   node_modules    dependencies
+#   __pycache__     bytecode cache
+#   tests/          test code
+#   hooks/          git hooks
+#
+# What is deliberately KEPT, against the temptation to shrink the artifact:
+#
+#   videos/         334MB, referenced by 6 live pages (proofofpicks.html,
+#                   usc-vs-oregon-prediction-picks.html and four archive
+#                   pages). Dropping it would break those pages.
+#   scripts/        referenced by 1,493 pages -- this is the site's JS.
+#   images/         referenced by 120 pages.
+#   verification-screenshots/  no internal references, but it is published
+#                   proof content that can be linked from outside the site.
+#                   Unreferenced is not the same as unused.
+#   CNAME .nojekyll the custom domain and the "do not run Jekyll" marker.
+#                   Losing CNAME would drop betlegendpicks.com.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never cancel a half-finished deploy; let it land, then run the next one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble the published tree
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'node_modules' \
+            --exclude '__pycache__' \
+            --exclude '*.pyc' \
+            --exclude 'tests/' \
+            --exclude 'hooks/' \
+            --exclude '_site' \
+            ./ _site/
+
+      - name: Prove the artifact still carries the site
+        run: |
+          # A deploy that silently drops the custom domain, the Jekyll opt-out
+          # or the app bundle is worse than a failed build, because it looks
+          # like it worked. Fail here instead.
+          fail=0
+          for f in CNAME .nojekyll index.html 404.html pro/app/index.html; do
+            if [ ! -f "_site/$f" ]; then echo "MISSING: $f"; fail=1; fi
+          done
+          for d in videos images scripts pro/app handicapping-hub-archive; do
+            if [ ! -d "_site/$d" ]; then echo "MISSING DIR: $d"; fail=1; fi
+          done
+          # The compiled app must bring its hashed assets with it.
+          n=$(ls _site/pro/app/assets/index-*.js 2>/dev/null | wc -l)
+          if [ "$n" -lt 1 ]; then echo "MISSING: pro/app/assets/index-*.js"; fail=1; fi
+          echo "--- artifact ---"
+          echo "files: $(find _site -type f | wc -l)"
+          echo "size:  $(du -sh _site | cut -f1)"
+          echo "app bundle: $(ls _site/pro/app/assets/index-*.js | xargs -n1 basename)"
+          exit $fail
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
