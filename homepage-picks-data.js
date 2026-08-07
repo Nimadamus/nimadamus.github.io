@@ -31,7 +31,8 @@ var HOMEPAGE_PICKS = [
         title: "Four Plays Built On Six Real Arms And Two Cold Lineups",
         date: "August 6, 2026",
         url: "nationals-tigers-unders-red-sox-moneyline-four-play-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/571945/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/571945/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
