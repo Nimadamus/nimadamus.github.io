@@ -31,7 +31,8 @@ var HOMEPAGE_PICKS = [
         title: "Nine And A Half Units On Six Games Where The Arms Do Not Match",
         date: "August 7, 2026",
         url: "red-sox-run-line-guardians-cubs-tigers-moneylines-six-play-card-mlb-pick.html",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/801139/action/hero/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_1024,q_auto:best/v1/people/801139/action/hero/current",
+        result: "W"
     },
     {
         sport: "MLB",
