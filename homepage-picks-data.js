@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Thirteen Units On Six Games Where The Missing Bats Decide It",
+        date: "August 9, 2026",
+        url: "brewers-run-line-red-sox-yankees-dodgers-moneylines-seven-play-card-mlb-pick.html",
+        image: "images/brewers-run-line-red-sox-yankees-dodgers-moneylines-seven-play-card-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Nine And A Half Units On Six Games Where The Arms Do Not Match",
         date: "August 7, 2026",
         url: "red-sox-run-line-guardians-cubs-tigers-moneylines-six-play-card-mlb-pick.html",
