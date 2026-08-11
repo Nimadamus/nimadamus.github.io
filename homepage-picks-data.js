@@ -31,7 +31,8 @@ var HOMEPAGE_PICKS = [
         title: "Six And A Half Units On Two Arms Still Finding Their New Teams",
         date: "August 10, 2026",
         url: "rays-moneyline-diamondbacks-team-total-dodgers-run-line-three-play-mlb-pick.html",
-        image: "images/rays-moneyline-diamondbacks-team-total-dodgers-run-line-three-play-mlb-pick.jpg"
+        image: "images/rays-moneyline-diamondbacks-team-total-dodgers-run-line-three-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
