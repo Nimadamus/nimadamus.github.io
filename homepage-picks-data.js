@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Six And A Half Units On Two Arms Still Finding Their New Teams",
+        date: "August 10, 2026",
+        url: "rays-moneyline-diamondbacks-team-total-dodgers-run-line-three-play-mlb-pick.html",
+        image: "images/rays-moneyline-diamondbacks-team-total-dodgers-run-line-three-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Thirteen Units On Six Games Where The Missing Bats Decide It",
         date: "August 9, 2026",
         url: "brewers-run-line-red-sox-yankees-dodgers-moneylines-seven-play-card-mlb-pick.html",
