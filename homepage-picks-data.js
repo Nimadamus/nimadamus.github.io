@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Twelve Units On Eight Games Where The Arm Beats The Record",
+        date: "August 11, 2026",
+        url: "marlins-braves-team-total-unders-rays-phillies-moneylines-eight-play-mlb-pick.html",
+        image: "images/marlins-braves-team-total-unders-rays-phillies-moneylines-eight-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Six And A Half Units On Two Arms Still Finding Their New Teams",
         date: "August 10, 2026",
         url: "rays-moneyline-diamondbacks-team-total-dodgers-run-line-three-play-mlb-pick.html",
