@@ -174,6 +174,7 @@ var FEATURED_GAMES = [
     { date: "2026-08-07", page: "braves-vs-yankees-fried-faces-atlanta-analysis-stats-preview.html", title: "Braves vs Yankees: Fried Faces Atlanta" },
     { date: "2026-08-09", page: "blue-jays-vs-phillies-bieber-luzardo-analysis-stats-preview.html", title: "Blue Jays vs Phillies: Bieber Against Luzardo" },
     { date: "2026-08-10", page: "brewers-vs-padres-henderson-mize-analysis-stats-preview.html", title: "Brewers vs Padres: Henderson Against Mize" },
+    { date: "2026-08-11", page: "pirates-vs-marlins-skenes-perez-analysis-stats-preview.html", title: "Pirates vs Marlins: Skenes Against Eury Perez" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
