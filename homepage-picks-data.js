@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Two Units On A Cornfield Slugfest And The Quietest Lineup DeGrom Could Ask For",
+        date: "August 13, 2026",
+        url: "angels-team-total-under-degrom-field-of-dreams-over-two-play-mlb-pick.html",
+        image: "images/angels-team-total-under-degrom-field-of-dreams-over-two-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Twelve Units On Eight Games Where The Arm Beats The Record",
         date: "August 11, 2026",
         url: "marlins-braves-team-total-unders-rays-phillies-moneylines-eight-play-mlb-pick.html",
