@@ -5,9 +5,9 @@
 const ARCHIVE_DATA = [
     { date: "2026-08-13", page: "angels-team-total-under-degrom-field-of-dreams-over-two-play-mlb-pick.html", title: "MLB Card: Angels Under And A Field Of Dreams Over" },
     { date: "2026-08-13", page: "field-of-dreams-phillies-twins-degrom-sasaki-nine-game-thursday-mlb.html", title: "MLB Thursday: The Field Of Dreams Returns" },
+    { date: "2026-08-13", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-08-11", page: "marlins-braves-team-total-unders-rays-phillies-moneylines-eight-play-mlb-pick.html", title: "MLB Card: Marlins, Braves Unders And Rays Moneyline" },
     { date: "2026-08-11", page: "skenes-cease-sanchez-fifteen-game-tuesday-mlb.html", title: "MLB Tuesday: Skenes, Cease And Sanchez" },
-    { date: "2026-08-11", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-08-10", page: "gray-elder-detmers-ten-game-monday-mlb.html", title: "MLB Monday: Gray, Elder And Detmers" },
     { date: "2026-08-10", page: "rays-moneyline-diamondbacks-team-total-dodgers-run-line-three-play-mlb-pick.html", title: "Rays Moneyline Anchors A Three-Play MLB Card" },
     { date: "2026-08-09", page: "brewers-run-line-red-sox-yankees-dodgers-moneylines-seven-play-card-mlb-pick.html", title: "Brewers Run Line Anchors A Seven-Play MLB Card" },

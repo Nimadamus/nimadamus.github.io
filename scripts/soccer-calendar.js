@@ -4,8 +4,8 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-08-13", page: "leagues-cup-phase-one-finale-timbers-tijuana-libertadores-soccer.html", title: "Soccer Thursday: Leagues Cup Phase One Closes" },
+    { date: "2026-08-13", page: "soccer-previews.html", title: "Soccer Previews: Matches, Odds and Analysis" },
     { date: "2026-08-11", page: "lyon-sparta-prague-boca-fluminense-libertadores-tuesday-soccer.html", title: "Soccer Tuesday: Lyon Trail Sparta In The Third Round" },
-    { date: "2026-08-11", page: "soccer-previews.html", title: "Soccer Previews: Matches, Odds and Analysis" },
     { date: "2026-08-10", page: "plymouth-exeter-devon-derby-monday-soccer.html", title: "Soccer Monday: Devon Derby Opens League Cup" },
     { date: "2026-08-09", page: "leagues-cup-sounders-nashville-rangers-porto-opener-sunday-soccer.html", title: "Soccer Sunday Analysis: Leagues Cup, Rangers, Porto" },
     { date: "2026-08-07", page: "leagues-cup-second-round-gotham-brugge-friday-soccer.html", title: "Soccer Friday: Leagues Cup, Gotham And Brugge" },
