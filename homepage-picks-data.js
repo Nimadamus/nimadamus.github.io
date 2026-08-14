@@ -31,7 +31,8 @@ var HOMEPAGE_PICKS = [
         title: "Two Units On A Cornfield Slugfest And The Quietest Lineup DeGrom Could Ask For",
         date: "August 13, 2026",
         url: "angels-team-total-under-degrom-field-of-dreams-over-two-play-mlb-pick.html",
-        image: "images/angels-team-total-under-degrom-field-of-dreams-over-two-play-mlb-pick.jpg"
+        image: "images/angels-team-total-under-degrom-field-of-dreams-over-two-play-mlb-pick.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
