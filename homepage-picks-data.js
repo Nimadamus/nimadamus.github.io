@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Eleven And A Half Units On Six Games Decided By The Man On The Mound",
+        date: "August 15, 2026",
+        url: "rockies-under-yankees-tigers-rangers-moneylines-six-play-card-mlb-pick.html",
+        image: "images/rockies-under-yankees-tigers-rangers-moneylines-six-play-card-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Two Units On A Cornfield Slugfest And The Quietest Lineup DeGrom Could Ask For",
         date: "August 13, 2026",
         url: "angels-team-total-under-degrom-field-of-dreams-over-two-play-mlb-pick.html",
