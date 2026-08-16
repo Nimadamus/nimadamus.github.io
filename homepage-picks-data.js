@@ -31,7 +31,8 @@ var HOMEPAGE_PICKS = [
         title: "Eleven And A Half Units On Six Games Decided By The Man On The Mound",
         date: "August 15, 2026",
         url: "rockies-under-yankees-tigers-rangers-moneylines-six-play-card-mlb-pick.html",
-        image: "images/rockies-under-yankees-tigers-rangers-moneylines-six-play-card-mlb-pick.jpg"
+        image: "images/rockies-under-yankees-tigers-rangers-moneylines-six-play-card-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
