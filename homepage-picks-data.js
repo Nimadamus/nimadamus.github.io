@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Three Plays That Look Wrong Until You Read The Splits",
+        date: "August 16, 2026",
+        url: "rangers-moneyline-astros-mariners-under-dodgers-team-total-three-play-mlb-pick.html",
+        image: "images/rangers-moneyline-astros-mariners-under-dodgers-team-total-three-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Eleven And A Half Units On Six Games Decided By The Man On The Mound",
         date: "August 15, 2026",
         url: "rockies-under-yankees-tigers-rangers-moneylines-six-play-card-mlb-pick.html",
