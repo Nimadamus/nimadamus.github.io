@@ -5,7 +5,7 @@
 const ARCHIVE_DATA = [
     { date: "2026-08-16", page: "racing-santander-villarreal-laliga-ajax-eredivisie-sunday-soccer.html", title: "Soccer Sunday: Racing Santander Hosts Villarreal" },
     { date: "2026-08-16", page: "soccer-previews.html", title: "Soccer Previews: Matches, Odds and Analysis" },
-    { date: "2026-08-15", page: "laliga-opening-day-sevilla-rayo-nashville-inter-miami-soccer.html", title: "Soccer Saturday: LaLiga Opens And Nashville Hosts Miami" },
+    { date: "2026-08-15", page: "laliga-opening-day-sevilla-rayo-nashville-inter-miami-soccer.html", title: "Soccer Saturday: LaLiga Opens, Nashville Hosts Miami" },
     { date: "2026-08-13", page: "leagues-cup-phase-one-finale-timbers-tijuana-libertadores-soccer.html", title: "Soccer Thursday: Leagues Cup Phase One Closes" },
     { date: "2026-08-11", page: "lyon-sparta-prague-boca-fluminense-libertadores-tuesday-soccer.html", title: "Soccer Tuesday: Lyon Trail Sparta In The Third Round" },
     { date: "2026-08-10", page: "plymouth-exeter-devon-derby-monday-soccer.html", title: "Soccer Monday: Devon Derby Opens League Cup" },
