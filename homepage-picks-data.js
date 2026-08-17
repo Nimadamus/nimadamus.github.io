@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Two Moneylines And The Walks That Pay For Them",
+        date: "August 17, 2026",
+        url: "royals-moneyline-red-sox-moneyline-walks-two-play-mlb-pick.html",
+        image: "images/royals-moneyline-red-sox-moneyline-two-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Three Plays That Look Wrong Until You Read The Splits",
         date: "August 16, 2026",
         url: "rangers-moneyline-astros-mariners-under-dodgers-team-total-three-play-mlb-pick.html",
-        image: "images/rangers-moneyline-astros-mariners-under-dodgers-team-total-three-play-mlb-pick.jpg"
+        image: "images/rangers-moneyline-astros-mariners-under-dodgers-team-total-three-play-mlb-pick.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
