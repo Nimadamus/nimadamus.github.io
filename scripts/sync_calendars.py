@@ -630,6 +630,17 @@ def generate_calendar_js(sport_name, sport_config, pages):
     """Generate the calendar JS file content."""
     today = datetime.now().strftime('%B %d, %Y')
 
+    # ROUTING RULE (Aug 17, 2026): a `*-previews.html` hub must never occupy a
+    # calendar date that already has a concrete content page. A hub carries a
+    # baked FORCED_PAGE_DATE from its last publish, so on any date where a real
+    # dated page exists the hub produces a duplicate entry for that date and the
+    # calendar's date -> page mapping becomes ambiguous (the engine resolves to
+    # the concrete page while validators resolve to the hub). Drop the hub entry
+    # on those dates; a hub with a date nothing else claims is still kept.
+    concrete_dates = {pg['date'] for pg in pages if pg['page'] not in HUB_PAGES}
+    pages = [pg for pg in pages
+             if pg['page'] not in HUB_PAGES or pg['date'] not in concrete_dates]
+
     lines = [
         f'// {sport_name.upper()} Archive Calendar Data',
         f'// Last updated: {today}',

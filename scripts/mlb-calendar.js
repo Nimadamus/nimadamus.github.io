@@ -7,7 +7,6 @@ const ARCHIVE_DATA = [
     { date: "2026-08-17", page: "royals-moneyline-red-sox-moneyline-walks-two-play-mlb-pick.html", title: "MLB Card: Royals Moneyline, Red Sox Moneyline" },
     { date: "2026-08-16", page: "alvarez-daikin-park-skubal-dodger-stadium-sunday-fifteen-game-mlb.html", title: "MLB Sunday: Fifteen Games, Ten Unfamiliar Arms" },
     { date: "2026-08-16", page: "rangers-moneyline-astros-mariners-under-dodgers-team-total-three-play-mlb-pick.html", title: "MLB Card: Rangers ML, Astros Under, Dodgers Total" },
-    { date: "2026-08-16", page: "mlb-previews.html", title: "MLB Game Previews: Today's Matchups, Odds and Betting Analysis" },
     { date: "2026-08-15", page: "first-place-saturday-misiorowski-dodger-stadium-fifteen-game-mlb.html", title: "MLB Saturday: First Place At Dodger Stadium" },
     { date: "2026-08-15", page: "rockies-under-yankees-tigers-rangers-moneylines-six-play-card-mlb-pick.html", title: "MLB Card: Rockies Under And Three Road Moneylines" },
     { date: "2026-08-13", page: "angels-team-total-under-degrom-field-of-dreams-over-two-play-mlb-pick.html", title: "MLB Card: Angels Under And A Field Of Dreams Over" },
