@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Nine Plays, Fifteen Units, And A Pitcher Who Has Not Started Since June",
+        date: "August 18, 2026",
+        url: "yankees-royals-cubs-moneylines-marlins-team-total-nine-play-mlb-pick.html",
+        image: "images/yankees-royals-cubs-moneylines-marlins-team-total-nine-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Two Moneylines And The Walks That Pay For Them",
         date: "August 17, 2026",
         url: "royals-moneyline-red-sox-moneyline-walks-two-play-mlb-pick.html",
-        image: "images/royals-moneyline-red-sox-moneyline-two-play-mlb-pick.jpg"
+        image: "images/royals-moneyline-red-sox-moneyline-two-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
