@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "One Play, One Unit, And A Price That Calls This A Coin Flip",
+        date: "August 20, 2026",
+        url: "yankees-moneyline-cole-camden-yards-one-play-mlb-pick.html",
+        image: "images/yankees-moneyline-cole-camden-yards-one-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Nine Plays, Fifteen Units, And A Pitcher Who Has Not Started Since June",
         date: "August 18, 2026",
         url: "yankees-royals-cubs-moneylines-marlins-team-total-nine-play-mlb-pick.html",
-        image: "images/yankees-royals-cubs-moneylines-marlins-team-total-nine-play-mlb-pick.jpg"
+        image: "images/yankees-royals-cubs-moneylines-marlins-team-total-nine-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",

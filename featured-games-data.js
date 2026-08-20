@@ -180,6 +180,7 @@ var FEATURED_GAMES = [
     { date: "2026-08-16", page: "cardinals-vs-cubs-analysis-stats-preview.html", title: "Cardinals vs Cubs As Cabrera Returns At Wrigley" },
     { date: "2026-08-17", page: "white-sox-vs-cubs-analysis-stats-preview.html", title: "White Sox vs Cubs: Imanaga At Wrigley" },
     { date: "2026-08-18", page: "dodgers-vs-rockies-analysis-stats-preview.html", title: "Dodgers vs Rockies Analysis Stats Preview" },
+    { date: "2026-08-20", page: "nationals-vs-rangers-degrom-globe-life-analysis-stats-preview.html", title: "Nationals vs Rangers: deGrom Meets The Top Offense" },
 
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
