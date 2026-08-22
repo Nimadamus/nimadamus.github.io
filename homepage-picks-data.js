@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Five And A Half Units, Four Games, And A Run Line That Pushes On A One Run Win",
+        date: "August 22, 2026",
+        url: "astros-run-line-rays-guardians-moneylines-tigers-team-total-four-play-mlb-pick.html",
+        image: "images/astros-run-line-rays-guardians-moneylines-tigers-team-total-four-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "One Play, One Unit, And A Price That Calls This A Coin Flip",
         date: "August 20, 2026",
         url: "yankees-moneyline-cole-camden-yards-one-play-mlb-pick.html",
-        image: "images/yankees-moneyline-cole-camden-yards-one-play-mlb-pick.jpg"
+        image: "images/yankees-moneyline-cole-camden-yards-one-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
