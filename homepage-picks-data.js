@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "One Play, One Unit, And A Ballpark That Takes 1.33 Runs Off A Pitching Staff",
+        date: "August 23, 2026",
+        url: "mariners-moneyline-cubs-imanaga-bryce-miller-t-mobile-park-mlb-pick.html",
+        image: "images/mariners-moneyline-cubs-imanaga-bryce-miller-t-mobile-park-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Five And A Half Units, Four Games, And A Run Line That Pushes On A One Run Win",
         date: "August 22, 2026",
         url: "astros-run-line-rays-guardians-moneylines-tigers-team-total-four-play-mlb-pick.html",
-        image: "images/astros-run-line-rays-guardians-moneylines-tigers-team-total-four-play-mlb-pick.jpg"
+        image: "images/astros-run-line-rays-guardians-moneylines-tigers-team-total-four-play-mlb-pick.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
