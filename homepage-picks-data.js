@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Seven Plays, 11.5 Units, And Four Tickets That All Say The Same Thing",
+        date: "August 24, 2026",
+        url: "cubs-guardians-moneylines-angels-mariners-team-totals-seven-play-mlb-pick.html",
+        image: "images/cubs-guardians-moneylines-angels-mariners-team-totals-seven-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "One Play, One Unit, And A Ballpark That Takes 1.33 Runs Off A Pitching Staff",
         date: "August 23, 2026",
         url: "mariners-moneyline-cubs-imanaga-bryce-miller-t-mobile-park-mlb-pick.html",
-        image: "images/mariners-moneyline-cubs-imanaga-bryce-miller-t-mobile-park-mlb-pick.jpg"
+        image: "images/mariners-moneyline-cubs-imanaga-bryce-miller-t-mobile-park-mlb-pick.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
