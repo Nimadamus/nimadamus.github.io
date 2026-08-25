@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Five Plays, Seven Units, And A Starter Who Has Thrown Three And Two Thirds Innings",
+        date: "August 25, 2026",
+        url: "brewers-mets-under-dodgers-yankees-moneylines-angels-team-total-five-play-mlb-pick.html",
+        image: "images/brewers-mets-under-dodgers-yankees-moneylines-angels-team-total-five-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Seven Plays, 11.5 Units, And Four Tickets That All Say The Same Thing",
         date: "August 24, 2026",
         url: "cubs-guardians-moneylines-angels-mariners-team-totals-seven-play-mlb-pick.html",
-        image: "images/cubs-guardians-moneylines-angels-mariners-team-totals-seven-play-mlb-pick.jpg"
+        image: "images/cubs-guardians-moneylines-angels-mariners-team-totals-seven-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
