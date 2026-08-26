@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Four Units On Three Games And A Ballpark Averaging 12.03 Runs",
+        date: "August 26, 2026",
+        url: "brewers-dodgers-moneylines-twins-athletics-over-three-play-mlb-pick.html",
+        image: "images/brewers-dodgers-moneylines-twins-athletics-over-three-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Five Plays, Seven Units, And A Starter Who Has Thrown Three And Two Thirds Innings",
         date: "August 25, 2026",
         url: "brewers-mets-under-dodgers-yankees-moneylines-angels-team-total-five-play-mlb-pick.html",
-        image: "images/brewers-mets-under-dodgers-yankees-moneylines-angels-team-total-five-play-mlb-pick.jpg"
+        image: "images/brewers-mets-under-dodgers-yankees-moneylines-angels-team-total-five-play-mlb-pick.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
