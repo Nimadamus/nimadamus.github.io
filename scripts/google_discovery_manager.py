@@ -144,24 +144,19 @@ def main():
     print("  GOOGLE DISCOVERY & INDEXING MANAGER")
     print("=" * 60)
     
-    # 1. Regenerate Discovery Artifacts
-    success, _ = run_command([sys.executable, str(SCRIPTS / "generate_discovery_artifacts.py")], "Regenerating discovery artifacts")
-    if not success:
-        print("[WARNING] Discovery artifacts generation might have failed or timed out. Proceeding to audit.")
-        
-    # 2. Identify new URLs
+    # Do not regenerate sitemaps/RSS here. Full regen stamps lastmod on the
+    # whole site and trains Google to ignore freshness. Append + inspect only.
     new_urls = get_new_urls()
     print(f"Identified {len(new_urls)} new or recently modified pages.")
-    
-    # 3. Run Discovery Audit
-    success, audit_output = run_command([sys.executable, str(SCRIPTS / "audit_daily_discovery.py")], "Running discovery audit")
-    
-    # 4. Generate Discovery Report
+    success, audit_output = run_command(
+        [sys.executable, str(SCRIPTS / "notify_google.py"), "--days", "7"],
+        "Notifying Google of new URLs",
+    )
+    if not success:
+        print("[WARNING] notify_google failed. Submitting sitemap only.")
+        submit_sitemaps()
     report_path = generate_report(audit_output, new_urls)
     print(f"\n[DONE] Google Discovery Report generated: {report_path.name}")
-    
-    # 5. Submit sitemaps to GSC
-    submit_sitemaps()
     
     return 0
 

@@ -131,6 +131,9 @@ def file_lastmod(path: Path) -> str:
     content_date = published_date_from_content(path)
     if content_date:
         return content_date
+    git_date = git_lastmod_cache().get(rel)
+    if git_date:
+        return git_date
     return dt.datetime.fromtimestamp(path.stat().st_mtime, dt.timezone.utc).date().isoformat()
 
 
