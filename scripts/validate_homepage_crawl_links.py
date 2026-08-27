@@ -75,7 +75,47 @@ def main():
             print(f"   MISSING <a href>: {page}   <- {label}")
         print("\nFix: python scripts/sync_homepage_crawl_links.py  (then re-stage index.html)")
         return 1
+
+    months = {m: i for i, m in enumerate(
+        ["January","February","March","April","May","June","July","August",
+         "September","October","November","December"], 1)}
+
+    def parse_label(s):
+        m = re.match(r"([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})$", (s or "").strip())
+        if not m or m.group(1) not in months:
+            return None
+        return datetime.date(int(m.group(3)), months[m.group(1)], int(m.group(2)))
+
+    stamp = re.search(r"Static crawl links updated ([A-Za-z]+ \d{1,2}, \d{4})", html)
+    if not stamp:
+        print("[FAILED] index.html missing 'Static crawl links updated' stamp.")
+        print("Fix: python scripts/sync_homepage_crawl_links.py")
+        return 1
+    stamp_d = parse_label(stamp.group(1))
+    if not stamp_d or (today - stamp_d).days > 3:
+        print(f"[FAILED] Static crawl links stamp is stale: {stamp.group(1)}")
+        print("Fix: python scripts/sync_homepage_crawl_links.py")
+        return 1
+
+    grid = ""
+    gs = html.find("<!--ANALYSIS_GRID_START-->")
+    ge = html.find("<!--ANALYSIS_GRID_END-->")
+    if gs != -1 and ge > gs:
+        grid = html[gs:ge]
+    times = [parse_label(t) for t in re.findall(r"<time>([^<]+)</time>", grid)]
+    times = [t for t in times if t]
+    if not times:
+        print("[FAILED] Latest Analysis grid has no dated cards.")
+        print("Fix: python scripts/sync_homepage_crawl_links.py")
+        return 1
+    newest = max(times)
+    if (today - newest).days > 10:
+        print(f"[FAILED] Latest Analysis newest card is {newest.isoformat()} (>{10} days old).")
+        print("Fix: python scripts/sync_homepage_crawl_links.py")
+        return 1
+
     print(f"[PASSED] index.html static HTML carries all {len(required)} newest pages as crawlable links.")
+    print(f"[PASSED] crawl stamp {stamp.group(1)}; newest analysis {newest.isoformat()}")
     return 0
 
 

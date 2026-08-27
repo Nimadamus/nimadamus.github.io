@@ -19,6 +19,7 @@ A one-time static snapshot was added once and then froze (stale at May 2026).
 This script makes the static links regenerate on EVERY publish; the pre-commit
 hook runs it and validate_homepage_crawl_links.py blocks a stale commit.
 """
+import argparse
 import re, sys, os, datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -285,7 +286,11 @@ def replace_between(html, start, end, payload):
     return html[:s] + "\n" + payload + "\n        " + html[e:]
 
 
-def main():
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--skip-archive", action="store_true",
+                    help="Do not rebuild complete-archive.html")
+    args = ap.parse_args(argv)
     picks = parse_homepage_picks()
     if not picks:
         print("ERROR: no HOMEPAGE_PICKS parsed", file=sys.stderr)
@@ -326,12 +331,12 @@ def main():
     print(f"[sync_homepage_crawl_links] {min(len(picks),PICKS_GRID_N)} static pick cards + "
           f"{min(len(analysis), ANALYSIS_N)} analysis cards + crawl links "
           f"(newest pick: {picks[0]['url']} / {today})")
-    # Keep the full static archive (linked from the crawl nav) current too.
-    try:
-        import build_static_archive
-        build_static_archive.main()
-    except Exception as e:
-        print(f"[sync_homepage_crawl_links] WARN: complete-archive.html not rebuilt: {e}", file=sys.stderr)
+    if not args.skip_archive:
+        try:
+            import build_static_archive
+            build_static_archive.main()
+        except Exception as e:
+            print(f"[sync_homepage_crawl_links] WARN: complete-archive.html not rebuilt: {e}", file=sys.stderr)
     return 0
 
 
