@@ -140,7 +140,7 @@ def build_crawl_links(picks):
             if e["page"] not in seen and e["page"].endswith(".html"):
                 seen[e["page"]] = e
     items = sorted(seen.values(), key=lambda x: x.get("date") or "", reverse=True)[:CRAWL_N]
-    links = "".join(f'<a href="{esc(i["page"])}">{esc(i["title"] or i["page"])}</a>' for i in items)
+    links = "\n".join(f'<a href="{esc(i["page"])}">{esc(i["title"] or i["page"])}</a>' for i in items)
     return (
         '<nav class="seo-crawl-links" aria-label="Recently published pages" '
         'style="max-width:1200px;margin:30px auto 0;padding:24px 18px;border-top:1px solid rgba(255,238,203,.13);">\n'

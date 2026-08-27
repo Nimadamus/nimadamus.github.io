@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Six Units On Three Games And A Pitcher Opponents Are Hitting .152 Against",
+        date: "August 27, 2026",
+        url: "brewers-yankees-moneylines-braves-team-total-under-three-play-mlb-pick.html",
+        image: "images/brewers-yankees-moneylines-braves-team-total-under-three-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Four Units On Three Games And A Ballpark Averaging 12.03 Runs",
         date: "August 26, 2026",
         url: "brewers-dodgers-moneylines-twins-athletics-over-three-play-mlb-pick.html",
-        image: "images/brewers-dodgers-moneylines-twins-athletics-over-three-play-mlb-pick.jpg"
+        image: "images/brewers-dodgers-moneylines-twins-athletics-over-three-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
