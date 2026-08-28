@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Twelve Units On Nine Plays And A Starter Opponents Are Hitting .199 Against",
+        date: "August 28, 2026",
+        url: "yankees-guardians-rays-moneylines-four-team-total-unders-nine-play-mlb-pick.html",
+        image: "images/yankees-guardians-rays-moneylines-four-team-total-unders-nine-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Six Units On Three Games And A Pitcher Opponents Are Hitting .152 Against",
         date: "August 27, 2026",
         url: "brewers-yankees-moneylines-braves-team-total-under-three-play-mlb-pick.html",
-        image: "images/brewers-yankees-moneylines-braves-team-total-under-three-play-mlb-pick.jpg"
+        image: "images/brewers-yankees-moneylines-braves-team-total-under-three-play-mlb-pick.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
