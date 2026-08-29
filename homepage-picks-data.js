@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Six Plays, Nine Units, And Four Favorites Whose Entire Case Is Run Prevention",
+        date: "August 29, 2026",
+        url: "guardians-brewers-orioles-mets-moneylines-reds-cubs-under-six-play-mlb-pick.html",
+        image: "images/guardians-brewers-orioles-mets-moneylines-reds-cubs-under-six-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Twelve Units On Nine Plays And A Starter Opponents Are Hitting .199 Against",
         date: "August 28, 2026",
         url: "yankees-guardians-rays-moneylines-four-team-total-unders-nine-play-mlb-pick.html",
-        image: "images/yankees-guardians-rays-moneylines-four-team-total-unders-nine-play-mlb-pick.jpg"
+        image: "images/yankees-guardians-rays-moneylines-four-team-total-unders-nine-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
