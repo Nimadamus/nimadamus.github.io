@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-08-29", page: "guardians-brewers-orioles-mets-moneylines-reds-cubs-under-six-play-mlb-pick.html", title: "MLB Picks August 29 2026: Six Plays, Nine Units" },
+    { date: "2026-08-29", page: "mclean-alcantara-sanchez-seventeen-game-saturday-mlb.html", title: "MLB Analysis - August 29, 2026" },
     { date: "2026-08-28", page: "yankees-guardians-rays-moneylines-four-team-total-unders-nine-play-mlb-pick.html", title: "MLB Picks August 28 2026: Nine Plays, 12 Units" },
     { date: "2026-08-27", page: "brewers-yankees-moneylines-braves-team-total-under-three-play-mlb-pick.html", title: "MLB Picks August 27 2026: Three Plays, 6 Units" },
     { date: "2026-08-26", page: "brewers-dodgers-moneylines-twins-athletics-over-three-play-mlb-pick.html", title: "MLB Picks August 26 2026: Three Plays, 4 Units" },
