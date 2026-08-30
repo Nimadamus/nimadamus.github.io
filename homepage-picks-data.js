@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Four Units On One Rookie, And A Card Where Five Of Seven Started Without Me",
+        date: "August 30, 2026",
+        url: "royals-team-total-under-guardians-run-line-red-sox-yankees-under-seven-play-mlb-pick.html",
+        image: "images/royals-team-total-under-guardians-run-line-red-sox-yankees-under-seven-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Six Plays, Nine Units, And Four Favorites Whose Entire Case Is Run Prevention",
         date: "August 29, 2026",
         url: "guardians-brewers-orioles-mets-moneylines-reds-cubs-under-six-play-mlb-pick.html",
-        image: "images/guardians-brewers-orioles-mets-moneylines-reds-cubs-under-six-play-mlb-pick.jpg"
+        image: "images/guardians-brewers-orioles-mets-moneylines-reds-cubs-under-six-play-mlb-pick.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
