@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "A Run Line That Costs Less Than The Moneyline, And Seven Units On Four Starting Pitchers",
+        date: "August 31, 2026",
+        url: "rangers-run-line-astros-rays-moneylines-red-sox-mariners-under-four-play-mlb-pick.html",
+        image: "images/rangers-run-line-astros-rays-moneylines-red-sox-mariners-under-four-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Four Units On One Rookie, And A Card Where Five Of Seven Started Without Me",
         date: "August 30, 2026",
         url: "royals-team-total-under-guardians-run-line-red-sox-yankees-under-seven-play-mlb-pick.html",
-        image: "images/royals-team-total-under-guardians-run-line-red-sox-yankees-under-seven-play-mlb-pick.jpg"
+        image: "images/royals-team-total-under-guardians-run-line-red-sox-yankees-under-seven-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
