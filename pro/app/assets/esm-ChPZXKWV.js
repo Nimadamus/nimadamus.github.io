@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/web-D-khKRy_.js","assets/dist-BPKjGFtv.js"])))=>i.map(i=>d[i]);
+import{t as e}from"./index-C6O51BSl.js";import{n as t}from"./dist-BPKjGFtv.js";var n=t(`Network`,{web:()=>e(()=>import(`./web-D-khKRy_.js`).then(e=>new e.NetworkWeb),__vite__mapDeps([0,1]))});export{n as Network};
