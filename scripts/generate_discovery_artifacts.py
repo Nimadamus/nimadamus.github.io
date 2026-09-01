@@ -194,13 +194,22 @@ def canonical_path(content: str) -> str | None:
     if not match:
         return None
     href = match.group(1).strip()
-    if href.startswith(BASE_URL + "/"):
-        return href[len(BASE_URL) + 1 :]
     if href == BASE_URL + "/":
         return "index.html"
-    if href.startswith("/"):
-        return href.lstrip("/")
-    return None
+    if href.startswith(BASE_URL + "/"):
+        rel = href[len(BASE_URL) + 1 :]
+    elif href.startswith("/"):
+        rel = href.lstrip("/")
+    else:
+        return None
+    # A canonical that names a directory ("/pro/") is the same page as that
+    # directory's index.html. Without this, is_public_html() compared "pro/"
+    # against "pro/index.html", found them different and treated the page as
+    # canonicalised elsewhere -- which is why /pro/, the BetLegend Pro sales
+    # page, was never in any sitemap.
+    if rel.endswith("/"):
+        rel += "index.html"
+    return rel
 
 
 def is_public_html(path: Path) -> bool:
