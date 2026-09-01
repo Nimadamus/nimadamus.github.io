@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Three Units On Webb Against Skenes Through Five, And Two Run Lines At A Whole Number",
+        date: "September 1, 2026",
+        url: "giants-pirates-first-five-under-guardians-rangers-run-lines-rays-moneyline-four-play-mlb-pick.html",
+        image: "images/giants-pirates-first-five-under-guardians-rangers-run-lines-rays-moneyline-four-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "A Run Line That Costs Less Than The Moneyline, And Seven Units On Four Starting Pitchers",
         date: "August 31, 2026",
         url: "rangers-run-line-astros-rays-moneylines-red-sox-mariners-under-four-play-mlb-pick.html",
-        image: "images/rangers-run-line-astros-rays-moneylines-red-sox-mariners-under-four-play-mlb-pick.jpg"
+        image: "images/rangers-run-line-astros-rays-moneylines-red-sox-mariners-under-four-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
