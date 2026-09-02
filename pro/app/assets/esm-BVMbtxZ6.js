@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/web-LDQmoiZR.js","assets/dist-Bewr9i1a.js"])))=>i.map(i=>d[i]);
+import{t as e}from"./preload-helper-BKbkAfLu.js";import{n as t}from"./dist-Bewr9i1a.js";var n=t(`Browser`,{web:()=>e(()=>import(`./web-LDQmoiZR.js`).then(e=>new e.BrowserWeb),__vite__mapDeps([0,1]))});export{n as Browser};

@@ -1,0 +1,294 @@
+// Featured Games Calendar - RENDERING ENGINE ONLY
+// Data comes from featured-games-data.js (loaded before this script)
+// This file contains ONLY rendering logic - NO embedded data
+// Last updated: March 11, 2026 - Added dynamic data refresh to prevent stale cache issues
+//
+// !! CRITICAL - DO NOT CHANGE THE activeDate LOGIC !!
+// activeDate MUST equal: pageDate || newestDate
+// This ensures the calendar highlights the page you're VIEWING.
+// If you set activeDate = newestDate alone, the highlight will be
+// stuck on the newest date no matter which page the user visits.
+// The pre-commit hook enforces this. See March 6 2026 fix.
+//
+// CACHE FIX (March 11, 2026):
+// After the initial render (from whatever data the browser has cached),
+// this script dynamically reloads featured-games-data.js with a timestamp
+// cache buster. If the fresh data has new entries, the calendar re-renders
+// automatically. This eliminates stale cache issues permanently.
+// Static cache-busting params (?v=dataXXX) have been removed from all pages.
+
+// HUB REDIRECT (Nima, June 1 2026):
+// `featured-game-of-the-day.html` is a PERMANENT hub URL, not a dated article.
+// It must never serve a frozen old featured game. On load, bounce to the newest
+// entry in FEATURED_GAMES (the latest dated featured page). Dated pages whose
+// filename merely contains "featured-game-of-the-day" (e.g.
+// cavaliers-pistons-game-7-featured-game-of-the-day.html) are real articles and
+// are intentionally NOT in this hub list, so they render normally.
+var FEATURED_HUB_PAGES = ['featured-game-of-the-day.html'];
+(function redirectFeaturedHub() {
+    var cur = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || '';
+    if (FEATURED_HUB_PAGES.indexOf(cur) === -1) return;
+    if (typeof FEATURED_GAMES === 'undefined' || !FEATURED_GAMES.length) return;
+    var todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date());
+    var newest = FEATURED_GAMES.slice().sort(function(a, b) { return b.date.localeCompare(a.date); })[0];
+    // FALLBACK-TO-LATEST (Nima, June 16 2026): the hub always loads the newest
+    // featured game. If today has none, fall back to the most recent past one
+    // rather than an empty state. Flag past-dated loads for the subtle note.
+    if (newest && newest.page && newest.page !== cur) {
+        if (newest.date < todayStr) { try { sessionStorage.setItem('bl_showing_latest', '1'); } catch (e) {} }
+        window.location.replace('/' + newest.page);
+    }
+})();
+
+function isFeaturedHubPage() {
+    var cur = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || '';
+    return FEATURED_HUB_PAGES.indexOf(cur) !== -1;
+}
+
+function buildCalendarState() {
+    // Read data from FEATURED_GAMES (defined by featured-games-data.js)
+    // Sort newest-first for display purposes
+    var archiveData = (typeof FEATURED_GAMES !== 'undefined') ? FEATURED_GAMES.slice().sort(function(a, b) { return b.date.localeCompare(a.date); }) : [];
+
+    var newestDate = archiveData.length > 0 ? archiveData[0].date : null;
+
+    var dateMap = {};
+    archiveData.forEach(function(item) { if (!dateMap[item.date]) dateMap[item.date] = item; });
+
+    var pageToDateMap = {};
+    archiveData.forEach(function(item) { pageToDateMap[item.page] = item.date; });
+
+    var currentPage = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || 'index.html';
+
+    // pageDate = the date of the specific page being viewed.
+    // Hub pages never adopt a baked FORCED_PAGE_DATE (defense-in-depth: if the
+    // redirect above did not fire, the calendar must not lock to a stale date).
+    var pageDate = (isFeaturedHubPage() ? null : window.FORCED_PAGE_DATE) || pageToDateMap[currentPage] || (function() {
+        var title = document.title || '';
+        var mNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+        var dateMatch = title.match(/(\w+)\s+(\d{1,2}),?\s+(\d{4})/);
+        if (dateMatch) {
+            var monthStr = dateMatch[1];
+            var day = parseInt(dateMatch[2]);
+            var year = parseInt(dateMatch[3]);
+            var monthIdx = -1;
+            for (var i = 0; i < mNames.length; i++) {
+                if (mNames[i].toLowerCase().indexOf(monthStr.toLowerCase()) === 0) { monthIdx = i; break; }
+            }
+            if (monthIdx !== -1) {
+                return year + '-' + String(monthIdx + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+            }
+        }
+        return null;
+    })();
+
+    // Hub pages: never derive a date from a stale baked title/FORCED_PAGE_DATE.
+    if (isFeaturedHubPage()) pageDate = null;
+
+    // Highlight the DATE OF THE PAGE YOU'RE ACTUALLY VIEWING
+    var activeDate = pageDate || newestDate;
+
+    // Auto-add current page to dateMap if not already there
+    if (pageDate && !dateMap[pageDate]) {
+        dateMap[pageDate] = { date: pageDate, page: currentPage, title: document.title.split('|')[0].trim() };
+    }
+
+    var months = {};
+    archiveData.forEach(function(item) { var parts = item.date.split('-'); months[parts[0] + '-' + parts[1]] = true; });
+    if (pageDate) { var p = pageDate.split('-'); months[p[0] + '-' + p[1]] = true; }
+    if (newestDate) { var n = newestDate.split('-'); months[n[0] + '-' + n[1]] = true; }
+    var tdy = new Date(); months[tdy.getFullYear() + '-' + String(tdy.getMonth() + 1).padStart(2, '0')] = true;
+
+    var sortedMonths = Object.keys(months).sort().reverse();
+    var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    // Calendar opens to the month of the page being viewed, else today's real
+    // month. Deterministic so the first paint lands on the right month even when
+    // the browser still has a stale (cache) copy of featured-games-data.js whose
+    // newestDate lags behind. (activeDate logic above is intentionally untouched.)
+    var displayMonth;
+    if (pageDate) {
+        var ap = pageDate.split('-');
+        displayMonth = ap[0] + '-' + ap[1];
+    } else {
+        var today = new Date();
+        displayMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
+    }
+
+    return {
+        archiveData: archiveData,
+        newestDate: newestDate,
+        dateMap: dateMap,
+        pageDate: pageDate,
+        activeDate: activeDate,
+        sortedMonths: sortedMonths,
+        monthNames: monthNames,
+        displayMonth: displayMonth
+    };
+}
+
+var _calState = buildCalendarState();
+
+// Real current date (LA tz, ISO YYYY-MM-DD) — separate from the active page date.
+var TODAY_STR = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date());
+var TODAY_MONTH = TODAY_STR.substring(0, 7);
+
+// The featured engine previously injected NO cal-day state CSS, so featured
+// pages showed unstyled calendar cells (dates didn't look clickable, no today
+// marker). Inject the SAME state styles the 7 sport calendars use so the
+// Featured Archive sidebar matches the rest of the network.
+function installFeaturedCalendarStateStyles() {
+    if (document.getElementById('featured-calendar-state-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'featured-calendar-state-styles';
+    style.textContent =
+'.calendar-days .cal-day{position:relative}' +
+'.calendar-days .cal-day.has-content,.calendar-days .cal-day.is-linked{cursor:pointer;background:rgba(0,229,255,.15);color:#00e5ff;font-weight:700;border:1px solid rgba(0,229,255,.32)}' +
+'.calendar-days .cal-day.has-content:hover,.calendar-days .cal-day.is-linked:hover{background:rgba(0,229,255,.25);box-shadow:0 0 12px rgba(0,229,255,.28)}' +
+'.calendar-days .cal-day.is-past:not(.current-page):not(.today){color:#9aa3af}' +
+'.calendar-days .cal-day.is-future:not(.current-page):not(.today){color:#c7ced8}' +
+'.calendar-days .cal-day.today{border:2px solid #ffd54f!important;box-shadow:0 0 0 1px rgba(255,213,79,.34),0 0 12px rgba(255,213,79,.28)!important}' +
+'.calendar-days .cal-day.current-page{background:rgba(0,229,255,.72)!important;color:#fff!important;border:2px solid #00e5ff!important;font-weight:900!important;box-shadow:0 0 12px rgba(0,229,255,.45)!important}' +
+'.calendar-days .cal-day.today.current-page{background:linear-gradient(135deg,rgba(0,229,255,.72),rgba(255,213,79,.42))!important;border-color:#ffd54f!important}';
+    document.head.appendChild(style);
+}
+
+function initFeaturedGamesCalendar() {
+    installFeaturedCalendarStateStyles();
+    var state = _calState;
+    var monthSelect = document.getElementById('month-select');
+    if (monthSelect) {
+        monthSelect.innerHTML = '';
+        state.sortedMonths.forEach(function(m) {
+            var parts = m.split('-');
+            var opt = document.createElement('option');
+            opt.value = m;
+            opt.textContent = state.monthNames[parseInt(parts[1]) - 1] + ' ' + parts[0];
+            if (m === state.displayMonth) opt.selected = true;
+            monthSelect.appendChild(opt);
+        });
+        monthSelect.addEventListener('change', function() { renderCalendar(this.value); });
+    }
+    wireFeaturedCalendarMonthButtons();
+    renderCalendar(state.displayMonth);
+}
+
+function changeFeaturedCalendarMonth(direction) {
+    var monthSelect = document.getElementById('month-select');
+    if (!monthSelect || !monthSelect.options.length) return;
+    var idx = monthSelect.selectedIndex;
+    var nextIdx = idx + direction;
+    if (nextIdx < 0 || nextIdx >= monthSelect.options.length) return;
+    monthSelect.selectedIndex = nextIdx;
+    renderCalendar(monthSelect.value);
+}
+
+function wireFeaturedCalendarMonthButtons() {
+    var prev = document.getElementById('featured-cal-prev');
+    var next = document.getElementById('featured-cal-next');
+    if (prev && !prev.dataset.featuredCalWired) {
+        prev.dataset.featuredCalWired = '1';
+        prev.addEventListener('click', function() { changeFeaturedCalendarMonth(1); });
+    }
+    if (next && !next.dataset.featuredCalWired) {
+        next.dataset.featuredCalWired = '1';
+        next.addEventListener('click', function() { changeFeaturedCalendarMonth(-1); });
+    }
+}
+
+function renderCalendar(yearMonth) {
+    var state = _calState;
+    var parts = yearMonth.split('-');
+    var year = parseInt(parts[0]);
+    var month = parseInt(parts[1]);
+    var yearEl = document.getElementById('cal-year');
+    if (yearEl) yearEl.textContent = year;
+    var firstDay = new Date(year, month - 1, 1).getDay();
+    var daysInMonth = new Date(year, month, 0).getDate();
+    var container = document.getElementById('calendar-days');
+    if (!container) return;
+    container.innerHTML = '';
+    for (var i = 0; i < firstDay; i++) { var cell = document.createElement('div'); cell.className = 'cal-day empty'; container.appendChild(cell); }
+    for (var d = 1; d <= daysInMonth; d++) {
+        var dateStr = year + '-' + String(month).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+        var cell = document.createElement('div');
+        var classes = 'cal-day';
+        // Cyan fill = the date of the article being viewed (or newest if on the
+        // hub). This is the ONLY highlight. NO 'today' marker (Nima, June 24 2026):
+        // a separate gold "today" cell highlighted a day with no article shown and
+        // conflicted with the article's own date. The calendar always shows the
+        // day of the article the person is looking at - nothing else.
+        if (dateStr === state.activeDate) classes += ' current-page';
+        if (state.dateMap[dateStr]) classes += ' has-content is-linked';
+        if (dateStr < TODAY_STR) classes += ' is-past';
+        if (dateStr > TODAY_STR) classes += ' is-future';
+        cell.className = classes;
+        cell.textContent = d;
+        if (state.dateMap[dateStr]) {
+            cell.title = state.dateMap[dateStr].title;
+            (function(page) {
+                cell.onclick = function() { window.location.href = page; };
+            })(state.dateMap[dateStr].page);
+        }
+        container.appendChild(cell);
+    }
+}
+
+if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initFeaturedGamesCalendar); } else { initFeaturedGamesCalendar(); }
+
+// DYNAMIC DATA REFRESH - Prevents stale cache issues permanently
+// After the initial render, dynamically reload featured-games-data.js with a
+// timestamp cache buster. If the data has changed in ANY way, re-render.
+// We fingerprint the data (count + newest date + newest page) so changes
+// are detected even when the entry count stays the same.
+(function() {
+    function dataFingerprint() {
+        if (typeof FEATURED_GAMES === 'undefined' || !FEATURED_GAMES.length) return '';
+        var sorted = FEATURED_GAMES.slice().sort(function(a, b) { return b.date.localeCompare(a.date); });
+        return FEATURED_GAMES.length + '|' + sorted[0].date + '|' + sorted[0].page;
+    }
+    var initialFingerprint = dataFingerprint();
+    var script = document.createElement('script');
+    script.src = 'featured-games-data.js?_=' + Date.now();
+    script.onload = function() {
+        if (dataFingerprint() !== initialFingerprint) {
+            // Data changed - rebuild state and re-render, but keep whatever month
+            // the user is currently viewing so the fresh data doesn't yank them.
+            var sel = document.getElementById('month-select');
+            var keepMonth = sel && sel.value ? sel.value : null;
+            _calState = buildCalendarState();
+            initFeaturedGamesCalendar();
+            if (keepMonth) {
+                var sel2 = document.getElementById('month-select');
+                if (sel2) {
+                    for (var i = 0; i < sel2.options.length; i++) {
+                        if (sel2.options[i].value === keepMonth) { sel2.selectedIndex = i; break; }
+                    }
+                }
+                renderCalendar(keepMonth);
+            }
+        }
+    };
+    document.head.appendChild(script);
+})();
+/* SHOWING-LATEST NOTE (Nima, June 16 2026): when a hub fell back to the most
+   recent published item (no entry for today), show a subtle one-line note on the
+   destination article. Flag is set by the hub before redirect; cleared after use. */
+(function showLatestAvailableNote() {
+    function run() {
+        var flag;
+        try { flag = sessionStorage.getItem('bl_showing_latest'); } catch (e) { return; }
+        if (!flag) return;
+        try { sessionStorage.removeItem('bl_showing_latest'); } catch (e) {}
+        if (document.getElementById('bl-latest-note')) return;
+        var host = document.querySelector('.main-content') || document.querySelector('.page-wrapper') || document.body;
+        if (!host) return;
+        var note = document.createElement('div');
+        note.id = 'bl-latest-note';
+        note.setAttribute('style', 'max-width:900px;margin:90px auto 0;padding:10px 16px;border:1px solid rgba(0,229,255,0.3);border-radius:10px;background:rgba(0,229,255,0.06);color:#9fe9f5;font-size:13px;line-height:1.5;text-align:center;font-family:Inter,system-ui,sans-serif;');
+        note.textContent = 'Showing the latest available preview. No new post has been published for today yet.';
+        host.insertBefore(note, host.firstChild);
+    }
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', run); } else { run(); }
+})();

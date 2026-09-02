@@ -1,0 +1,126 @@
+# .htaccess for BetLegendPicks.com
+# SEO-optimized configuration with redirects and caching
+
+# Enable RewriteEngine
+RewriteEngine On
+
+# Force HTTPS (if you have SSL certificate)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Force www (or non-www - choose one)
+# Remove the # below to force www
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 301 Redirects for moved/removed pages
+# Old pages that should redirect to new locations
+Redirect 301 /email.html /contact.html
+Redirect 301 /best-online-sportsbook-old.html /bestonlinesportsbook.html
+Redirect 301 /nfl-records-broken-backup.html /nfl-records.html
+
+# If you had old blog pagination URLs, redirect them
+# Redirect 301 /blog/page/2 /blog-page2.html
+
+# Remove .html extension (optional - makes URLs cleaner)
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME}\.html -f
+# RewriteRule ^(.*)$ $1.html [L]
+
+# 404 Error Page (create custom 404.html)
+ErrorDocument 404 /404.html
+
+# Set default charset
+AddDefaultCharset UTF-8
+
+# GZIP Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+</IfModule>
+
+# Browser Caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # CSS and JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+
+    # HTML (short cache for dynamic content)
+    ExpiresByType text/html "access plus 1 hour"
+
+    # Data
+    ExpiresByType application/json "access plus 1 day"
+    ExpiresByType application/xml "access plus 1 day"
+    ExpiresByType text/xml "access plus 1 day"
+
+    # Fonts
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Cache-Control Headers
+<IfModule mod_headers.c>
+    # Cache static assets
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|css|js|svg|woff|woff2|ttf)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+
+    # Don't cache HTML files as much
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=3600, public, must-revalidate"
+    </FilesMatch>
+
+    # Security headers
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Remove ETags (improves caching)
+    Header unset ETag
+</IfModule>
+FileETag None
+
+# Block access to sensitive files
+<FilesMatch "(^#.*#|\.(bak|backup|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op])|~)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block access to .git directory (if exists)
+RedirectMatch 404 /\.git
+
+# Prevent directory browsing
+Options -Indexes
+
+# Follow symbolic links (needed for some redirects)
+Options +FollowSymLinks
+
+# Protect .htaccess file itself
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Sitemap location hint for crawlers
+# Actual sitemap should be submitted via Google Search Console
+# The sitemap is at: https://www.betlegendpicks.com/sitemap.xml

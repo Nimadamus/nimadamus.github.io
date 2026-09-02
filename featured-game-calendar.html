@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://www.betlegendpicks.com/featured-game-calendar.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Featured Game Calendar | BetLegend Picks</title>
+<meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png">
+ <meta name="description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+ 
+ <meta name="robots" content="index, follow">
+ <meta property="og:title" content="Featured Game Calendar | BetLegend Picks">
+ <meta property="og:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+ <meta property="og:type" content="website">
+ <meta property="og:url" content="https://www.betlegendpicks.com/featured-game-calendar.html">
+ <meta property="og:site_name" content="BetLegend Picks">
+<meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png"/>
+ <meta name="twitter:card" content="summary_large_image">
+ <meta name="twitter:title" content="Featured Game Calendar | BetLegend Picks">
+ <meta name="twitter:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+ :root {
+ --primary-glow: #00e0ff;
+ --success-color: #39FF14;
+ --warning-color: #FFD700;
+ --dark-bg: #0a0a0a;
+ --card-bg: rgba(15, 20, 30, 0.95);
+ --border-color: rgba(0, 224, 255, 0.2);
+ --text-primary: #ffffff;
+ --text-secondary: #b0b0b0;
+ }
+
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ body {
+ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+ background-attachment: fixed;
+ font-family: 'Inter', sans-serif;
+ color: var(--text-primary);
+ padding: 40px 20px;
+ min-height: 100vh;
+ }
+
+ .container {
+ max-width: 1000px;
+ margin: 0 auto;
+ }
+
+ .header {
+ text-align: center;
+ margin-bottom: 40px;
+ }
+
+ .title {
+ font-size: 3rem;
+ font-family: 'Orbitron', sans-serif;
+ background: linear-gradient(45deg, #fff, var(--primary-glow));
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ margin-bottom: 10px;
+ }
+
+ .subtitle {
+ color: var(--text-secondary);
+ font-size: 1.1rem;
+ }
+
+ .month-selector {
+ text-align: center;
+ margin-bottom: 30px;
+ }
+
+ .month-selector label {
+ font-size: 1.1rem;
+ color: var(--text-secondary);
+ margin-right: 15px;
+ }
+
+ .month-dropdown {
+ background: var(--card-bg);
+ color: var(--text-primary);
+ border: 1px solid var(--border-color);
+ padding: 12px 20px;
+ font-size: 1rem;
+ border-radius: 8px;
+ cursor: pointer;
+ font-family: 'Inter', sans-serif;
+ }
+
+ .calendar-container {
+ display: none;
+ background: var(--card-bg);
+ border: 1px solid var(--border-color);
+ border-radius: 15px;
+ padding: 30px;
+ backdrop-filter: blur(20px);
+ }
+
+ .calendar-container.active {
+ display: block;
+ }
+
+ .calendar-month-title {
+ font-size: 1.8rem;
+ font-family: 'Orbitron', sans-serif;
+ color: var(--primary-glow);
+ text-align: center;
+ margin-bottom: 25px;
+ }
+
+ .calendar-grid {
+ display: grid;
+ grid-template-columns: repeat(7, 1fr);
+ gap: 10px;
+ margin-bottom: 20px;
+ }
+
+ .calendar-day-header {
+ text-align: center;
+ font-weight: 600;
+ color: var(--text-secondary);
+ padding: 10px;
+ font-size: 0.9rem;
+ }
+
+ .calendar-day {
+ aspect-ratio: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ background: rgba(0,0,0,0.3);
+ border: 1px solid rgba(255,255,255,0.1);
+ border-radius: 8px;
+ font-size: 1.1rem;
+ color: var(--text-secondary);
+ transition: all 0.3s ease;
+ position: relative;
+ }
+
+ .calendar-day.available {
+ background: rgba(0, 224, 255, 0.1);
+ border-color: var(--primary-glow);
+ color: var(--primary-glow);
+ cursor: pointer;
+ font-weight: 600;
+ }
+
+ .calendar-day.available:hover {
+ background: rgba(0, 224, 255, 0.2);
+ transform: translateY(-2px);
+ box-shadow: 0 5px 15px rgba(0, 224, 255, 0.3);
+ }
+
+ .calendar-day.today {
+ background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
+ border: 2px solid var(--warning-color);
+ color: var(--warning-color);
+ font-weight: 900;
+ }
+
+ .calendar-day.today::after {
+ content: 'TODAY';
+ position: absolute;
+ bottom: 2px;
+ font-size: 0.45rem;
+ color: var(--warning-color);
+ font-weight: 700;
+ letter-spacing: 0.5px;
+ }
+
+ .game-tooltip {
+ display: none;
+ position: absolute;
+ bottom: 100%;
+ left: 50%;
+ transform: translateX(-50%);
+ background: rgba(0,0,0,0.95);
+ color: var(--primary-glow);
+ padding: 8px 12px;
+ border-radius: 6px;
+ font-size: 0.75rem;
+ white-space: nowrap;
+ z-index: 100;
+ border: 1px solid var(--primary-glow);
+ margin-bottom: 5px;
+ }
+
+ .calendar-day.available:hover .game-tooltip {
+ display: block;
+ }
+
+ .back-link {
+ text-align: center;
+ margin-top: 40px;
+ }
+
+ .back-link a {
+ color: var(--primary-glow);
+ text-decoration: none;
+ font-size: 1.1rem;
+ padding: 12px 30px;
+ border: 1px solid var(--border-color);
+ border-radius: 8px;
+ display: inline-block;
+ transition: all 0.3s ease;
+ }
+
+ .back-link a:hover {
+ background: rgba(0, 224, 255, 0.1);
+ transform: translateY(-2px);
+ }
+
+ .legend {
+ text-align: center;
+ margin-top: 20px;
+ padding: 15px;
+ background: rgba(0,0,0,0.2);
+ border-radius: 8px;
+ }
+
+ .legend-item {
+ display: inline-flex;
+ align-items: center;
+ margin: 0 15px;
+ font-size: 0.85rem;
+ color: var(--text-secondary);
+ }
+
+ .legend-dot {
+ width: 12px;
+ height: 12px;
+ border-radius: 3px;
+ margin-right: 8px;
+ }
+
+ .legend-dot.available {
+ background: rgba(0, 224, 255, 0.3);
+ border: 1px solid var(--primary-glow);
+ }
+
+ .legend-dot.today {
+ background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(0, 224, 255, 0.3));
+ border: 1px solid var(--warning-color);
+ }
+
+ .stats-bar {
+ text-align: center;
+ margin-bottom: 20px;
+ padding: 15px;
+ background: rgba(0,224,255,0.05);
+ border-radius: 8px;
+ border: 1px solid var(--border-color);
+ }
+
+ .stats-bar span {
+ margin: 0 20px;
+ font-size: 0.95rem;
+ }
+
+ .stats-bar strong {
+ color: var(--primary-glow);
+ }
+
+ @media (max-width: 768px) {
+ .calendar-grid {
+ gap: 5px;
+ }
+
+ .calendar-day {
+ font-size: 0.9rem;
+ }
+
+ .title {
+ font-size: 2rem;
+ }
+
+ .calendar-day.today::after {
+ font-size: 0.35rem;
+ bottom: 1px;
+ }
+
+ .game-tooltip {
+ display: none !important;
+ }
+ }
+
+ /* BetLegend Fixed Logo */
+ .betlegend-logo {
+ position: fixed;
+ top: 15px;
+ left: 20px;
+ z-index: 1001;
+ font-family: 'Orbitron', sans-serif;
+ font-size: 1.8rem;
+ font-weight: 900;
+ text-decoration: none;
+ color: #fff;
+ letter-spacing: 2px;
+ text-shadow: 0 0 20px rgba(255,255,255,0.5);
+ }
+ .betlegend-logo span {
+ color: #00e0ff;
+ text-shadow: 0 0 30px #00e0ff, 0 0 60px #00e0ff;
+ }
+</style>
+<link rel="stylesheet" href="/mobile-optimize.css" media="screen">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+</head>
+<body>
+<a href="index.html" class="betlegend-logo">BET<span>LEGEND</span></a>
+<nav style="background:#1a365d;padding:12px 20px;margin-bottom:20px;border-bottom:3px solid #fd5000;">
+ <div style="max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+ <a href="index.html" style="font-size:1.4rem;font-weight:800;color:white;text-decoration:none;">BET<span style="color:#fd5000;">LEGEND</span></a>
+ <div style="display:flex;gap:15px;flex-wrap:wrap;">
+ <a href="index.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Home</a>
+ <a href="handicapping-hub.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Hub</a>
+ <a href="records.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Records</a>
+ <a href="live-odds.html" style="color:#fd5000;text-decoration:none;font-weight:800;font-size:0.85rem;">Live Odds</a>
+ <a href="nba-college-basketball-picks-predictions-analysis-february-2026.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Picks</a>
+ <a href="9-kansas-at-5-iowa-state-prediction-picks.html" style="color:white;text-decoration:none;font-weight:600;font-size:0.85rem;">Featured</a>
+ </div>
+ </div>
+</nav>
+
+<div class="container">
+ <div class="header">
+ <h1 class="title">Featured Game Calendar</h1>
+ <p class="subtitle">Browse all featured game analysis by date</p>
+ </div>
+
+ <div class="stats-bar" id="stats-bar">
+ Loading...
+ </div>
+
+ <div class="month-selector">
+ <label for="month-select">Select Month:</label>
+ <select id="month-select" class="month-dropdown" onchange="showMonth(this.value)">
+ <!-- Options will be auto-generated -->
+ </select>
+ </div>
+
+ <div id="calendars-container">
+ <!-- Calendars will be auto-generated -->
+ </div>
+
+ <div class="back-link" id="back-link">
+ <a href="#">Back to Latest Featured Game</a>
+ </div>
+</div>
+
+<!-- Load featured games data -->
+<script src="featured-games-data.js"></script>
+
+<script>
+// Build a lookup map for quick date checking
+const gamesMap = {};
+FEATURED_GAMES.forEach(game => {
+ gamesMap[game.date] = game;
+});
+
+// Get today's date in YYYY-MM-DD format
+const today = new Date();
+const todayStr = today.toISOString().split('T')[0];
+
+// Find the latest game for the back link
+const sortedGames = [...FEATURED_GAMES].sort((a, b) => b.date.localeCompare(a.date));
+const latestGame = sortedGames[0];
+document.querySelector('#back-link a').href = latestGame.page;
+
+// Update stats
+const totalGames = FEATURED_GAMES.length;
+const uniqueDates = new Set(FEATURED_GAMES.map(g => g.date)).size;
+document.getElementById('stats-bar').innerHTML = `
+ <span>Total Featured Games: <strong>${totalGames}</strong></span>
+ <span>Days with Games: <strong>${uniqueDates}</strong></span>
+ <span>Latest: <strong>${latestGame.title}</strong></span>
+`;
+
+// Get all unique months from the data
+const months = new Set();
+FEATURED_GAMES.forEach(game => {
+ const [year, month] = game.date.split('-');
+ months.add(`${year}-${month}`);
+});
+
+// Add current month if not in data
+const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+months.add(currentMonth);
+
+// Sort months
+const sortedMonths = Array.from(months).sort();
+
+// Month names
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+ 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Generate month selector options
+const monthSelect = document.getElementById('month-select');
+sortedMonths.forEach(monthKey => {
+ const [year, month] = monthKey.split('-');
+ const monthName = monthNames[parseInt(month) - 1];
+ const option = document.createElement('option');
+ option.value = monthKey;
+ option.textContent = `${monthName} ${year}`;
+ if (monthKey === currentMonth) {
+ option.selected = true;
+ }
+ monthSelect.appendChild(option);
+});
+
+// Generate calendars for each month
+const calendarsContainer = document.getElementById('calendars-container');
+
+sortedMonths.forEach(monthKey => {
+ const [year, month] = monthKey.split('-');
+ const monthName = monthNames[parseInt(month) - 1];
+
+ // Create calendar container
+ const calendarDiv = document.createElement('div');
+ calendarDiv.id = `calendar-${monthKey}`;
+ calendarDiv.className = 'calendar-container' + (monthKey === currentMonth ? ' active' : '');
+
+ // Create month title
+ const titleH2 = document.createElement('h2');
+ titleH2.className = 'calendar-month-title';
+ titleH2.textContent = `${monthName} ${year}`;
+ calendarDiv.appendChild(titleH2);
+
+ // Create calendar grid
+ const grid = document.createElement('div');
+ grid.className = 'calendar-grid';
+
+ // Add day headers
+ ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
+ const header = document.createElement('div');
+ header.className = 'calendar-day-header';
+ header.textContent = day;
+ grid.appendChild(header);
+ });
+
+ // Get first day of month and number of days
+ const firstDay = new Date(year, parseInt(month) - 1, 1);
+ const lastDay = new Date(year, parseInt(month), 0);
+ const daysInMonth = lastDay.getDate();
+ const startDayOfWeek = firstDay.getDay();
+
+ // Add empty cells for days before the 1st
+ for (let i = 0; i < startDayOfWeek; i++) {
+ const emptyDay = document.createElement('div');
+ emptyDay.className = 'calendar-day';
+ grid.appendChild(emptyDay);
+ }
+
+ // Add days of the month
+ for (let day = 1; day <= daysInMonth; day++) {
+ const dateStr = `${year}-${month}-${String(day).padStart(2, '0')}`;
+ const dayDiv = document.createElement('div');
+ dayDiv.className = 'calendar-day';
+
+ // Check if this date has a featured game
+ const game = gamesMap[dateStr];
+ if (game) {
+ dayDiv.className += ' available';
+ dayDiv.onclick = () => window.location.href = game.page;
+
+ // Add tooltip with game title
+ const tooltip = document.createElement('span');
+ tooltip.className = 'game-tooltip';
+ tooltip.textContent = game.title;
+ dayDiv.appendChild(tooltip);
+ }
+
+ // Check if this is today
+ if (dateStr === todayStr) {
+ dayDiv.className += ' today';
+ }
+
+ // Add the day number
+ const dayNum = document.createElement('span');
+ dayNum.textContent = day;
+ dayDiv.appendChild(dayNum);
+
+ grid.appendChild(dayDiv);
+ }
+
+ calendarDiv.appendChild(grid);
+
+ // Add legend
+ const legend = document.createElement('div');
+ legend.className = 'legend';
+ legend.innerHTML = `
+ <span class="legend-item"><span class="legend-dot available"></span> Game Available</span>
+ <span class="legend-item"><span class="legend-dot today"></span> Today</span>
+ `;
+ calendarDiv.appendChild(legend);
+
+ calendarsContainer.appendChild(calendarDiv);
+});
+
+// Show selected month
+function showMonth(monthKey) {
+ document.querySelectorAll('.calendar-container').forEach(cal => {
+ cal.classList.remove('active');
+ });
+ document.getElementById(`calendar-${monthKey}`).classList.add('active');
+}
+</script>
+
+<!-- Clicky Analytics -->
+<a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
+<script async data-id="101485054" src="//static.getclicky.com/js"></script>
+
+    <!-- Related Analysis Section - Internal Linking -->
+    <section style="max-width:900px;margin:40px auto;padding:32px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:12px;">
+        <h3 style="font-size:18px;font-weight:700;color:#FFD700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #FFD700;letter-spacing:1px;text-transform:uppercase;">Related Analysis</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+            <a href="/featured-game-of-the-day-2026-01-01.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">Featured Game Of The Day 2026 01 01</a>
+            <a href="/nba-previews.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NBA Analysis</a>
+            <a href="/nhl-previews.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NHL Analysis</a>
+        </div>
+    </section>
+
+    <!-- FEATURED-GAME-STATIC-LINKS-START -->
+<section id="featured-game-static-links" style="max-width:1100px;margin:40px auto;padding:24px;border:1px solid rgba(0,224,255,.18);border-radius:12px;background:rgba(0,0,0,.24)">
+<h2 style="font-family:Orbitron,Arial,sans-serif;color:#00e0ff;margin:0 0 16px">Latest Featured Game Archive Links</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px">
+<a href="/marlins-vs-nationals-alcantara-cavalli-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-29 - Marlins vs Nationals: Alcantara And Cavalli In An Eleven Run Park</a>
+<a href="/pirates-vs-dodgers-skubal-jones-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-22 - Pirates vs Dodgers: Skubal&#x27;s Fourth Start In Blue</a>
+<a href="/nationals-vs-rangers-degrom-globe-life-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-20 - Nationals vs Rangers: deGrom Meets The Top Offense</a>
+<a href="/dodgers-vs-rockies-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-18 - Dodgers vs Rockies Analysis Stats Preview</a>
+<a href="/white-sox-vs-cubs-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-17 - White Sox vs Cubs: Imanaga At Wrigley</a>
+<a href="/cardinals-vs-cubs-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-16 - Cardinals vs Cubs As Cabrera Returns At Wrigley</a>
+<a href="/brewers-vs-dodgers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-15 - Brewers vs Dodgers For The National League Lead</a>
+<a href="/phillies-vs-twins-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-13 - Phillies vs Twins At The Field Of Dreams</a>
+<a href="/pirates-vs-marlins-skenes-perez-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-11 - Pirates vs Marlins: Skenes Against Eury Perez</a>
+<a href="/brewers-vs-padres-henderson-mize-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-10 - Brewers vs Padres: Henderson Against Mize</a>
+<a href="/blue-jays-vs-phillies-bieber-luzardo-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-09 - Blue Jays vs Phillies: Bieber Against Luzardo</a>
+<a href="/braves-vs-yankees-fried-faces-atlanta-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-07 - Braves vs Yankees: Fried Faces Atlanta</a>
+<a href="/padres-vs-diamondbacks-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-06 - Padres vs Diamondbacks: Buehler And A Rookie In Phoenix</a>
+<a href="/pirates-vs-brewers-skenes-harrison-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-05 - Pirates vs Brewers: Skenes And Harrison In Milwaukee</a>
+<a href="/tigers-vs-mariners-melton-hancock-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-04 - Tigers vs Mariners: Melton And Hancock In Seattle</a>
+<a href="/dodgers-vs-cubs-boyd-wrigley-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-03 - Dodgers vs Cubs: Boyd And A Rotation In Pieces</a>
+<a href="/yankees-vs-cubs-fried-peterson-wrigley-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-08-01 - Yankees vs Cubs: Fried Faces Peterson At Wrigley</a>
+<a href="/cubs-vs-cardinals-pallante-assad-series-finale-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-30 - Cubs vs Cardinals: Pallante Meets The Series Finale</a>
+<a href="/mariners-dodgers-home-run-barrage-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-29 - Mariners vs Dodgers: Can Seattle&#x27;s Power Surge Carry Into Game Two</a>
+<a href="/braves-vs-mets-sale-soto-injury-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-28 - Braves vs Mets: Sale Faces A Mets Lineup Without Soto</a>
+<a href="/dodgers-vs-mets-yamamoto-mclean-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-25 - Dodgers vs Mets: Yamamoto Meets A Soto-Less Lineup</a>
+<a href="/yankees-vs-phillies-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-24 - Yankees vs Phillies: Schlittler-Luzardo Ace Duel</a>
+<a href="/dodgers-vs-phillies-nola-citizens-bank-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-22 - Dodgers vs Phillies: Nola And The Best Record In Baseball At Citizens Bank Park</a>
+<a href="/orioles-vs-red-sox-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-21 - Orioles vs Red Sox Bradish Suarez Fenway Analysis</a>
+<a href="/dodgers-vs-phillies-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-20 - Dodgers vs Phillies: Sanchez Meets Baseball&#x27;s Best Record</a>
+<a href="/argentina-vs-spain-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-19 - Argentina vs Spain World Cup Final Analysis</a>
+<a href="/marlins-vs-brewers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-18 - Marlins vs Brewers: Max Meyer Analysis Preview</a>
+<a href="/dodgers-vs-yankees-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-17 - Dodgers vs Yankees: Sasaki vs Cole Analysis Preview</a>
+<a href="/blue-jays-vs-padres-gausman-marquez-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-12 - Blue Jays vs Padres: Gausman vs Marquez</a>
+<a href="/phillies-vs-tigers-sanchez-mize-duel-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-11 - Phillies vs Tigers: Sanchez vs Mize July 11, 2026</a>
+<a href="/diamondbacks-vs-dodgers-ohtani-rodriguez-duel-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-10 - Diamondbacks vs Dodgers: Ohtani Takes The Mound</a>
+<a href="/france-vs-morocco-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-09 - France vs Morocco: World Cup Quarterfinal in Foxborough</a>
+<a href="/yankees-vs-rays-al-east-showdown-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-08 - Yankees vs Rays: An AL East Showdown At The Trop</a>
+<a href="/angels-vs-rangers-degrom-soriano-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-07 - Angels vs Rangers: deGrom vs Soriano at Globe Life</a>
+<a href="/rockies-vs-dodgers-freeland-worst-record-best-team-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-06 - Rockies vs Dodgers: Worst Record Meets Best Record</a>
+<a href="/padres-vs-dodgers-sears-sheehan-sunday-finale-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-05 - Padres vs Dodgers: Sears vs Sheehan Sunday Finale</a>
+<a href="/canada-vs-morocco-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-04 - Canada vs Morocco: World Cup Round of 16 in Houston</a>
+<a href="/padres-at-dodgers-ohtani-king-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-03 - Padres at Dodgers: Ohtani vs a Reeling San Diego</a>
+<a href="/padres-vs-dodgers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-02 - Padres vs Dodgers Analysis, Stats, Preview</a>
+<a href="/marlins-vs-rockies-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-07-01 - Marlins vs Rockies Analysis, Stats, Preview</a>
+<a href="/pirates-vs-phillies-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-30 - Pirates vs Phillies Analysis, Stats, Preview</a>
+<a href="/padres-vs-cubs-imanaga-canning-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-29 - Padres vs Cubs Imanaga Canning Analysis, Stats, Preview</a>
+<a href="/dodgers-vs-padres-sheehan-king-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-28 - Dodgers vs Padres</a>
+<a href="/dodgers-vs-padres-yamamoto-vasquez-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-27 - Dodgers vs Padres</a>
+<a href="/dodgers-vs-padres-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-26 - Dodgers vs Padres Analysis, Stats, Preview June 26 2026</a>
+<a href="/phillies-vs-nationals-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-25 - Phillies vs Nationals Analysis, Stats, Preview June 25 2026</a>
+<a href="/yankees-vs-tigers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-24 - Yankees vs Tigers Analysis June 24 2026</a>
+<a href="/cubs-vs-mets-mlb-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-23 - Cubs vs Mets MLB Analysis, Stats, Preview</a>
+<a href="/astros-vs-blue-jays-mlb-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-22 - Astros vs Blue Jays MLB Analysis, Stats, Preview</a>
+<a href="/mets-vs-phillies-mlb-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-21 - Mets vs Phillies MLB Analysis, Stats, Preview</a>
+<a href="/germany-vs-ivory-coast-world-cup-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-20 - Germany vs Ivory Coast World Cup Group E Preview</a>
+<a href="/brewers-vs-braves-mlb-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-19 - Brewers vs Braves MLB Analysis, Stats, Preview</a>
+<a href="/mexico-vs-south-korea-world-cup-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-18 - Mexico vs South Korea World Cup Group A Preview</a>
+<a href="/england-vs-croatia-world-cup-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-17 - England vs Croatia World Cup Group L Preview</a>
+<a href="/rays-vs-dodgers-mlb-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-16 - Rays vs Dodgers MLB Analysis, Stats, Preview</a>
+<a href="/spain-vs-cape-verde-world-cup-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-15 - Spain vs Cape Verde World Cup Group H Opener Preview</a>
+<a href="/hurricanes-vs-golden-knights-stanley-cup-final-game-6-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-14 - Hurricanes vs Golden Knights Stanley Cup Final Game 6 Preview</a>
+<a href="/knicks-vs-spurs-nba-finals-game-5-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-13 - Knicks vs Spurs NBA Finals Game 5 Preview</a>
+<a href="/usa-vs-paraguay-world-cup-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-12 - USA vs Paraguay World Cup Opener Analysis, Stats, Preview</a>
+<a href="/golden-knights-vs-hurricanes-stanley-cup-final-game-5-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-11 - Golden Knights vs Hurricanes Stanley Cup Final Game 5 Analysis, Stats, Preview</a>
+<a href="/spurs-vs-knicks-nba-finals-game-4-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-10 - Spurs vs Knicks NBA Finals Game 4 Analysis, Stats, Preview</a>
+<a href="/dodgers-vs-pirates-skenes-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-09 - Dodgers vs Pirates - Skenes Faces The Dodgers Preview</a>
+<a href="/spurs-vs-knicks-nba-finals-game-3-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-08 - Spurs vs Knicks NBA Finals Game 3 Analysis, Stats, Preview</a>
+<a href="/red-sox-vs-yankees-rivalry-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-07 - Red Sox vs Yankees Rivalry Analysis, Stats, Preview</a>
+<a href="/hurricanes-vs-golden-knights-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-06 - Hurricanes vs Golden Knights Cup Final Preview</a>
+<a href="/knicks-vs-spurs-nba-finals-game-2-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-05 - Knicks vs Spurs NBA Finals Game 2 Analysis, Stats, Preview</a>
+<a href="/knicks-vs-spurs-nba-finals-game-1-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-03 - Knicks vs Spurs NBA Finals Game 1 Analysis, Stats, Preview</a>
+<a href="/golden-knights-vs-hurricanes-stanley-cup-final-game-1-nhl-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-02 - Golden Knights vs Hurricanes Stanley Cup Final Game 1 Analysis, Stats, Preview</a>
+<a href="/sweden-vs-norway-scandinavian-derby-world-cup-tuneup-soccer-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-06-01 - Sweden vs Norway Analysis, Stats, Preview</a>
+<a href="/cubs-vs-cardinals-sunday-night-baseball-rivalry-mlb-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-31 - Cubs vs Cardinals Sunday Night Baseball Analysis, Stats, Preview</a>
+<a href="/spurs-vs-thunder-western-conference-final-game-7-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-30 - Spurs vs Thunder Game 7 Analysis, Stats, Preview</a>
+<a href="/canadiens-vs-hurricanes-eastern-conference-final-game-5-nhl-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-29 - Canadiens vs Hurricanes Game 5 Analysis, Stats, Preview</a>
+<a href="/thunder-vs-spurs-western-conference-final-game-6-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-28 - Thunder vs Spurs Game 6 Analysis, Stats, Preview</a>
+<a href="/hurricanes-vs-canadiens-eastern-conference-final-game-4-nhl-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-27 - Hurricanes vs Canadiens Game 4 Preview</a>
+<a href="/spurs-vs-thunder-western-conference-final-game-5-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-26 - Spurs vs Thunder Game 5 Analysis, Stats, Preview</a>
+<a href="/hurricanes-vs-canadiens-eastern-conference-final-game-3-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-25 - Hurricanes vs Canadiens ECF Game 3 Analysis</a>
+<a href="/thunder-vs-spurs-western-conference-finals-game-4-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-24 - Thunder vs Spurs WCF Game 4 Analysis</a>
+<a href="/knicks-vs-cavaliers-eastern-conference-finals-game-3-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-23 - NBA Analysis</a>
+<a href="/thunder-vs-spurs-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-22 - Thunder vs Spurs WCF Game 3 Analysis</a>
+<a href="/cavaliers-vs-knicks-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-21 - Cavaliers vs Knicks Eastern Conference Finals Game 2 Analysis</a>
+<a href="/golden-knights-vs-avalanche-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-20 - Golden Knights vs Avalanche Western Conference Finals Game 1 Analysis</a>
+<a href="/cavaliers-vs-knicks-eastern-conference-finals-game-1-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-19 - Cavaliers vs Knicks Eastern Conference Finals Game 1</a>
+<a href="/spurs-vs-thunder-western-final-game-one-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-18 - Spurs vs Thunder Western Final Game 1 Analysis and Stats Preview</a>
+<a href="/cavaliers-pistons-game-7-featured-game-of-the-day.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-17 - Cavaliers at Pistons Game 7</a>
+<a href="/featured-game-of-the-day-2026-05-16.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-16 - Featured Game Archive - May 16, 2026</a>
+<a href="/pistons-cavaliers-game-6-featured-game-of-the-day.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-15 - Pistons vs Cavaliers Game 6 Featured Game of the Day</a>
+<a href="/canadiens-sabres-game-5-featured-game-of-the-day.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-14 - Canadiens at Sabres Game 5</a>
+<a href="/nba-playoff-off-day-cavaliers-pistons-spurs-timberwolves.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-13 - NBA Playoff Off-Day Reset: Cavaliers-Pistons and Spurs-Timberwolves</a>
+<a href="/timberwolves-spurs-game-five-pivot-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-12 - Timberwolves vs Spurs Game 5 Preview</a>
+<a href="/avalanche-vs-wild-nhl-western-semis-game-4-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-11 - Avalanche vs Wild Game 4 Analysis</a>
+<a href="/knicks-76ers-spurs-wolves-game-4-east-west-semis-nba.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-10 - Knicks-76ers and Spurs-Timberwolves Game 4 East/West Semis</a>
+<a href="/pistons-vs-cavaliers-eastern-semis-game-3-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-09 - Pistons vs Cavaliers Eastern Semis Game 3</a>
+<a href="/knicks-vs-76ers-eastern-semis-game-3-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-08 - Knicks vs 76ers Eastern Semis Game 3</a>
+<a href="/lakers-vs-thunder-western-semis-game-2-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-07 - Lakers vs Thunder Western Semis Game 2</a>
+<a href="/bayern-vs-psg-ucl-semifinal-second-leg-allianz-arena-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-06 - Bayern vs PSG UCL Semifinal Leg 2</a>
+<a href="/lakers-vs-thunder-western-semis-game-1-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-05 - Lakers vs Thunder Western Semis Game 1</a>
+<a href="/76ers-vs-knicks-eastern-semis-game-1-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-04 - 76ers vs Knicks Eastern Semifinals Game 1</a>
+<a href="/liverpool-vs-manchester-united-soccer-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-03 - Liverpool vs Manchester United</a>
+<a href="/76ers-vs-celtics-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-02 - 76ers vs Celtics Game 7</a>
+<a href="/lakers-vs-rockets-game-6-historic-comeback-bid-houston-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-05-01 - Lakers vs Rockets Game 6 Analysis May 01, 2026</a>
+<a href="/celtics-vs-76ers-game-6-eastern-conference-philadelphia-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-30 - Celtics vs 76ers Game 6 Analysis April 30, 2026</a>
+<a href="/atletico-vs-arsenal-ucl-semifinal-first-leg-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-29 - Atletico vs Arsenal UCL Semifinal Analysis April 29, 2026</a>
+<a href="/psg-vs-bayern-munich-soccer-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-28 - PSG vs Bayern Munich Analysis April 28, 2026</a>
+<a href="/wolves-vs-nuggets-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-27 - Wolves vs Nuggets Analysis April 27, 2026</a>
+<a href="/lakers-vs-rockets-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-26 - Lakers vs Rockets Analysis April 26, 2026</a>
+<a href="/cubs-vs-dodgers-mlb-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-25 - Cubs vs Dodgers Analysis April 25, 2026</a>
+<a href="/lakers-vs-rockets-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-24 - Lakers vs Rockets Game 3 Analysis April 24 2026</a>
+<a href="/yankees-vs-red-sox-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-23 - Yankees vs Red Sox Analysis April 23 2026</a>
+<a href="/magic-vs-pistons-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-22 - Magic vs Pistons Game 2 Analysis April 22 2026</a>
+<a href="/rockets-vs-lakers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-21 - Rockets vs Lakers Game 2 Analysis April 21 2026</a>
+<a href="/timberwolves-vs-nuggets-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-20 - Timberwolves vs Nuggets Game 2 Analysis April 20 2026</a>
+<a href="/76ers-vs-celtics-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-19 - 76ers vs Celtics Game 1 Analysis April 19 2026</a>
+<a href="/warriors-vs-suns-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-17 - Warriors vs Suns NBA Play-In Analysis &amp;amp; Preview April 17 2026</a>
+<a href="/bayern-munich-vs-real-madrid-ucl-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-15 - Bayern Munich vs Real Madrid Champions League QF Analysis &amp; Preview</a>
+<a href="/liverpool-vs-psg-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-14 - Liverpool vs PSG Champions League QF Analysis &amp; Preview</a>
+<a href="/mets-vs-dodgers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-13 - Mets vs Dodgers MLB Preview April 13 2026</a>
+<a href="/nuggets-vs-spurs-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-12 - Nuggets vs Spurs NBA Preview April 12 2026</a>
+<a href="/suns-vs-lakers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-10 - Suns vs Lakers NBA Preview April 10 2026</a>
+<a href="/psg-vs-liverpool-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-08 - PSG vs Liverpool Champions League Preview April 8 2026</a>
+<a href="/real-madrid-vs-bayern-munich-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-07 - Real Madrid vs Bayern Munich Champions League Preview</a>
+<a href="/michigan-vs-uconn-ncaa-championship-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-06 - Michigan vs UConn NCAA Championship Preview</a>
+<a href="/rockets-vs-warriors-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-05 - Rockets vs Warriors NBA Analysis Stats Preview April 5 2026</a>
+<a href="/michigan-vs-arizona-ncaa-final-four-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-04 - Michigan vs Arizona Final Four Analysis Stats Preview April 4 2026</a>
+<a href="/lakers-vs-thunder-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-02 - Lakers vs Thunder Analysis Stats Preview April 2 2026</a>
+<a href="/spurs-vs-warriors-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-04-01 - Spurs vs Warriors Analysis Stats Preview April 1 2026</a>
+<a href="/cavaliers-vs-lakers-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-31 - Cavaliers vs Lakers Analysis Stats Preview March 31 2026</a>
+<a href="/pistons-vs-thunder-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-30 - Pistons vs Thunder Analysis Stats Preview March 30 2026</a>
+<a href="/purdue-vs-arizona-elite-eight-west-regional-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-28 - Purdue vs Arizona Elite Eight Analysis March 28 2026</a>
+<a href="/diamondbacks-vs-dodgers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-27 - Diamondbacks vs Dodgers Analysis Stats Preview March 27 2026</a>
+<a href="/yankees-vs-giants-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-25 - Yankees vs Giants Analysis Stats Preview March 25 2026</a>
+<a href="/nuggets-vs-suns-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-24 - Nuggets vs Suns Analysis Stats Preview March 24 2026</a>
+<a href="/kentucky-vs-santa-clara-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-20 - Kentucky vs Santa Clara Analysis Stats Preview March 20 2026</a>
+<a href="/lakers-vs-heat-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-19 - Lakers vs Heat Analysis Stats Preview March 19 2026</a>
+<a href="/stars-vs-avalanche-nhl-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-18 - Dallas Stars vs Colorado Avalanche NHL Analysis Stats Preview March 18 2026</a>
+<a href="/man-city-vs-real-madrid-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-17 - Man City vs Real Madrid UCL Analysis Stats Preview March 17 2026</a>
+<a href="/michigan-vs-purdue-big-ten-championship-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-15 - Michigan vs Purdue Big Ten Championship March 15 2026</a>
+<a href="/nuggets-vs-lakers-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-14 - Denver Nuggets vs Los Angeles Lakers Analysis Stats Preview March 14 2026</a>
+<a href="/duke-vs-clemson-acc-semifinal-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-13 - Duke vs Clemson ACC Semifinal Analysis Stats Preview March 13 2026</a>
+<a href="/celtics-vs-thunder-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-12 - Celtics at Thunder NBA Analysis Stats Preview March 12 2026</a>
+<a href="/real-madrid-vs-manchester-city-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-11 - Real Madrid vs Man City UCL R16 Preview March 11 2026</a>
+<a href="/newcastle-vs-barcelona-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-10 - Newcastle vs Barcelona Champions League R16 Analysis Stats Preview March 10 2026</a>
+<a href="/nuggets-vs-thunder-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-09 - Nuggets at Thunder NBA Analysis Stats Preview March 9 2026</a>
+<a href="/knicks-vs-lakers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-08 - Knicks at Lakers NBA Analysis Stats Preview March 8 2026</a>
+<a href="/warriors-vs-thunder-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-07 - Warriors at Thunder NBA Analysis Stats Preview March 7 2026</a>
+<a href="/avalanche-vs-stars-nhl-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-06 - Avalanche at Stars NHL Analysis Stats Preview March 6 2026</a>
+<a href="/lakers-vs-nuggets-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-05 - Lakers at Nuggets NBA Analysis Stats Preview March 5 2026</a>
+<a href="/thunder-at-knicks-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-04 - Thunder at Knicks NBA Analysis Stats Preview March 4 2026</a>
+<a href="/lightning-vs-wild-nhl-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-03 - Lightning at Wild NHL Analysis Stats Preview March 3 2026</a>
+<a href="/duke-at-nc-state-ncaab-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-02 - Duke at NC State NCAAB Analysis Stats Preview March 2 2026</a>
+<a href="/spurs-at-knicks-nba-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-03-01 - Spurs at Knicks Analysis Stats Preview March 1 2026</a>
+<a href="/knicks-at-bucks-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-02-27 - Knicks at Bucks Analysis Preview Feb 27 2026</a>
+<a href="/michigan-at-illinois-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-02-26 - Michigan at Illinois Analysis Preview Feb 27 2026</a>
+<a href="/maple-leafs-vs-lightning-nhl-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-02-25 - Maple Leafs vs Lightning Analysis Preview Feb 25 2026</a>
+<a href="/knicks-vs-cavaliers-analysis-stats-preview.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-02-24 - Knicks vs Cavaliers Analysis Preview Feb 24 2026</a>
+<a href="/nba-all-star-game-2026-usa-vs-world-prediction-picks.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-02-15 - NBA All-Star Game 2026: USA vs World</a>
+<a href="/pacers-vs-thunder-nba-finals-rematch-prediction-picks.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-01-23 - Pacers vs Thunder NBA Finals Rematch</a>
+<a href="/warriors-vs-mavericks-nba-prediction-picks.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-01-22 - Warriors vs Mavericks NBA</a>
+<a href="/thunder-vs-bucks-nba-prediction-picks.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-01-21 - Thunder vs Bucks NBA</a>
+<a href="/spurs-vs-rockets-nba-prediction-picks.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-01-20 - Spurs vs Rockets NBA</a>
+<a href="/nfl-divisional-round-prediction-picks.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-01-17 - NFL Divisional Round</a>
+<a href="/stars-vs-capitals-nhl-picks-and-prediction.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2026-01-07 - Stars vs Capitals NHL Picks &amp; Prediction</a>
+<a href="/lakers-vs-spurs-nba-cup-prediction-picks.html" style="display:block;color:#FFD700;text-decoration:none;padding:10px 12px;border:1px solid rgba(255,215,0,.18);border-radius:8px;background:rgba(255,215,0,.06)">2025-12-10 - Lakers vs Spurs NBA Cup</a>
+</div>
+</section>
+<!-- FEATURED-GAME-STATIC-LINKS-END -->
+</body>
+</html>

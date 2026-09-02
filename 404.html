@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+// BetLegend Pro is a single-page app under /pro/app/. GitHub Pages has no
+// rewrite rule, so a deep link like /pro/app/login lands on this 404 page.
+// Re-encode the route as /pro/app/?/login and let the app restore it.
+// Scoped to /pro/app/ so every other 404 renders this page normally.
+(function () {
+  var l = window.location;
+  if (l.pathname.indexOf('/pro/app/') !== 0) return;
+  var keep = 2; // "pro/app"
+  l.replace(
+    l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+    l.pathname.split('/').slice(0, keep + 1).join('/') + '/?/' +
+    l.pathname.slice(1).split('/').slice(keep).join('/').replace(/&/g, '~and~') +
+    (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+    l.hash
+  );
+})();
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | BetLegend</title>
+  <meta name="description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+    <meta name="robots" content="index, follow">
+  <meta property="og:title" content="404 | BetLegend Picks">
+  <meta property="og:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.betlegendpicks.com/404.html">
+  <meta property="og:site_name" content="BetLegend Picks">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="404 | BetLegend Picks">
+  <meta name="twitter:description" content="Expert sports betting picks and analysis with verified track records. Free daily picks for NFL, NBA, NHL, MLB and college sports.">
+    <link rel="icon" type="image/png" href="/newlogo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #010008;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            color: #c4a200;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: #8fa8c8;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #8fa8c8;
+            max-width: 500px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+        .nav-links a {
+            display: inline-block;
+            padding: 12px 28px;
+            border: 1px solid rgba(196, 162, 0, 0.4);
+            border-radius: 8px;
+            color: #c4a200;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            background: rgba(196, 162, 0, 0.05);
+        }
+        .nav-links a:hover {
+            background: rgba(196, 162, 0, 0.15);
+            border-color: #c4a200;
+            box-shadow: 0 0 20px rgba(196, 162, 0, 0.2);
+        }
+        .nav-links a.primary {
+            background: #c4a200;
+            color: #010008;
+            border-color: #c4a200;
+        }
+        .nav-links a.primary:hover {
+            background: #d4b200;
+            box-shadow: 0 0 25px rgba(196, 162, 0, 0.4);
+        }
+    </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QS8L5TDNLY');
+</script>
+    <link rel="canonical" href="https://www.betlegendpicks.com/404.html" />
+</head>
+<body>
+    <img src="/newlogo.png" alt="BetLegend" class="logo">
+    <h1>404</h1>
+    <h2>Page Not Found</h2>
+    <p>The page you're looking for doesn't exist or has been moved. Head back to the homepage or check out today's analysis.</p>
+    <div class="nav-links">
+        <a href="index.html" class="primary">Homepage</a>
+        <a href="nba-previews.html">NBA</a>
+        <a href="nhl-previews.html">NHL</a>
+        <a href="blog.html">Blog</a>
+    </div>
+</body>
+</html>

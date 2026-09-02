@@ -1,0 +1,55 @@
+# --------------------------------------------------------------------
+# BetLegendPicks.com – Core Configuration and Cleanup
+# --------------------------------------------------------------------
+
+# Use UTF-8 encoding for text
+AddDefaultCharset UTF-8
+
+# Enable compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript
+</IfModule>
+
+# Cache static assets for 30 days
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
+
+# --------------------------------------------------------------------
+# Permanent cleanup and redirect fixes
+# --------------------------------------------------------------------
+
+# Tell Google these pages are intentionally gone forever
+Redirect 410 /email.html
+Redirect 410 /mlb-sunday-analytics.html
+Redirect 410 /odds-live.html
+
+# Fix the old typo so it redirects properly
+Redirect 301 /betlegend-verified-records.htm https://www.betlegendpicks.com/betlegend-verified-records.html
+
+# Redirect old/moved pages to their new locations
+Redirect 301 /odds.html https://www.betlegendpicks.com/blog
+Redirect 301 /sitemap.html https://www.betlegendpicks.com/sitemap.xml
+Redirect 301 /matchups.html https://www.betlegendpicks.com/betlegend-verified-records.html
+Redirect 301 "/Best Online Sportsbook.html" https://www.betlegendpicks.com/bestonlinesportsbook.html
+
+# --------------------------------------------------------------------
+# Optional: security and crawl hygiene
+# --------------------------------------------------------------------
+
+# Block access to hidden system files
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# Block directory listings
+Options -Indexes
+
+# --------------------------------------------------------------------
+# End of file
+# --------------------------------------------------------------------

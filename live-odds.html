@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Line Shopping Tool | Live Odds Comparison Across Sportsbooks</title>
+<meta name="description" content="Free line shopping tool for sports bettors. Compare live odds from DraftKings, FanDuel, BetMGM, Pinnacle, Bovada and 10+ books. Best NFL, NBA, MLB, NHL lines."/>
+<meta name="keywords" content="live betting odds, odds comparison, line shopping, sports betting odds, NFL odds, NBA odds, MLB odds, NHL odds, NCAAB odds, NCAAF odds, best betting lines, sportsbook comparison, DraftKings odds, FanDuel odds, Pinnacle odds"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.betlegendpicks.com/live-odds.html"/>
+<link href="https://www.betlegendpicks.com/newlogo.png" rel="icon" type="image/png"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+<meta property="og:title" content="Line Shopping Tool | Live Odds Comparison | BetLegend"/>
+<meta property="og:description" content="Free line shopping tool. Compare live odds from DraftKings, FanDuel, BetMGM, Pinnacle, Bovada and more across NFL, NBA, MLB, NHL."/>
+<meta property="og:url" content="https://www.betlegendpicks.com/live-odds.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://www.betlegendpicks.com/newlogo.png"/>
+<meta property="og:site_name" content="BetLegend Picks"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:site" content="@BetLegend2025"/>
+<meta name="twitter:title" content="Line Shopping Tool | Live Odds Comparison | BetLegend"/>
+<meta name="twitter:description" content="Free line shopping tool. Compare live odds from 10+ sportsbooks. Find the best NFL, NBA, MLB, NHL lines instantly."/>
+<meta name="twitter:image" content="https://www.betlegendpicks.com/newlogo.png"/>
+<style>
+:root {
+ --primary: #0a0a0a;
+ --secondary: #1a1a1a;
+ --accent: #00e0ff;
+ --gold: #FFD700;
+ --green: #39FF14;
+ --red: #FF3131;
+ --text: #ffffff;
+ --muted: #888;
+}
+
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+}
+
+body {
+ background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+ font-family: 'Roboto', sans-serif;
+ color: var(--text);
+ line-height: 1.6;
+ min-height: 100vh;
+ padding-bottom: 50px;
+
+ padding-top: 140px;}
+
+.header {
+ background: linear-gradient(135deg, rgba(0, 224, 255, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
+ border-bottom: 2px solid var(--accent);
+ padding: 30px 20px;
+ text-align: center;
+}
+
+.header h1 {
+ font-family: 'Orbitron', sans-serif;
+ font-size: 48px;
+ font-weight: 900;
+ color: var(--accent);
+ text-shadow: 0 0 30px var(--accent);
+ margin-bottom: 10px;
+ letter-spacing: 2px;
+}
+
+.header .tagline {
+ font-size: 16px;
+ color: var(--gold);
+ font-weight: 500;
+ text-transform: uppercase;
+ letter-spacing: 2px;
+}
+
+.controls {
+ max-width: 1400px;
+ margin: 30px auto;
+ padding: 0 20px;
+ display: flex;
+ gap: 15px;
+ flex-wrap: wrap;
+ align-items: center;
+ justify-content: center;
+}
+
+.sport-btn {
+ background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(20, 20, 40, 0.95) 100%);
+ border: 2px solid var(--accent);
+ color: var(--accent);
+ padding: 12px 24px;
+ font-size: 16px;
+ font-weight: 700;
+ cursor: pointer;
+ border-radius: 8px;
+ transition: all 0.3s ease;
+ font-family: 'Orbitron', sans-serif;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+}
+
+.sport-btn:hover {
+ background: var(--accent);
+ color: #000;
+ box-shadow: 0 0 20px var(--accent);
+}
+
+.sport-btn.active {
+ background: var(--gold);
+ border-color: var(--gold);
+ color: #000;
+ box-shadow: 0 0 20px var(--gold);
+}
+
+.container {
+ max-width: 1400px;
+ margin: 0 auto;
+ padding: 20px;
+}
+
+.loading {
+ text-align: center;
+ padding: 60px 20px;
+ font-size: 24px;
+ color: var(--accent);
+}
+
+.game-card {
+ background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(20, 20, 40, 0.95) 100%);
+ border: 2px solid var(--accent);
+ border-radius: 15px;
+ padding: 25px;
+ margin-bottom: 25px;
+ transition: all 0.3s ease;
+}
+
+.game-card:hover {
+ box-shadow: 0 0 30px rgba(0, 224, 255, 0.3);
+ transform: translateY(-2px);
+}
+
+.game-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 20px;
+ padding-bottom: 15px;
+ border-bottom: 1px solid rgba(0, 224, 255, 0.3);
+}
+
+.teams {
+ flex: 1;
+}
+
+.team {
+ font-size: 20px;
+ font-weight: 700;
+ margin: 5px 0;
+ color: var(--text);
+}
+
+.game-time {
+ font-size: 14px;
+ color: var(--muted);
+ text-align: right;
+}
+
+.odds-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ gap: 20px;
+}
+
+.market-section {
+ background: rgba(0, 0, 0, 0.3);
+ border-radius: 10px;
+ padding: 15px;
+}
+
+.market-title {
+ font-family: 'Orbitron', sans-serif;
+ font-size: 16px;
+ color: var(--gold);
+ margin-bottom: 12px;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+}
+
+.odds-row {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 10px;
+ margin: 8px 0;
+ background: rgba(0, 224, 255, 0.05);
+ border-radius: 8px;
+ border-left: 3px solid var(--accent);
+}
+
+.odds-row.best {
+ background: rgba(57, 255, 20, 0.1);
+ border-left-color: var(--green);
+}
+
+.book-name {
+ font-size: 14px;
+ color: var(--muted);
+ font-weight: 500;
+}
+
+.odds-value {
+ font-family: 'Orbitron', sans-serif;
+ font-size: 18px;
+ font-weight: 700;
+ color: var(--accent);
+}
+
+.odds-value.positive {
+ color: var(--green);
+}
+
+.odds-value.negative {
+ color: var(--text);
+}
+
+.best-badge {
+ background: var(--green);
+ color: #000;
+ padding: 2px 8px;
+ border-radius: 4px;
+ font-size: 11px;
+ font-weight: 700;
+ margin-left: 8px;
+}
+
+.no-games {
+ text-align: center;
+ padding: 60px 20px;
+ font-size: 20px;
+ color: var(--muted);
+}
+
+.last-update {
+ text-align: center;
+ padding: 20px;
+ color: var(--muted);
+ font-size: 14px;
+}
+
+.api-notice {
+ background: rgba(255, 215, 0, 0.1);
+ border: 1px solid var(--gold);
+ border-radius: 10px;
+ padding: 15px;
+ margin: 20px auto;
+ max-width: 800px;
+ text-align: center;
+ color: var(--gold);
+}
+
+@media (max-width: 768px) {
+ /* Mobile dropdown fix - full width centered */
+ .dropdown-content,
+ .sports-records-dropdown {
+ position: fixed !important;
+ left: 5% !important;
+ right: 5% !important;
+ top: 120px !important;
+ width: 90% !important;
+ min-width: unset !important;
+ max-width: none !important;
+ max-height: 65vh;
+ overflow-y: auto;
+ -webkit-overflow-scrolling: touch;
+ z-index: 999999 !important;
+ }
+
+ .header h1 {
+ font-size: 32px;
+ }
+
+ .odds-grid {
+ grid-template-columns: 1fr;
+ }
+
+ .controls {
+ flex-direction: column;
+ }
+
+ .sport-btn {
+ width: 100%;
+ }
+}
+
+.nav-links a {
+ font-family: var(--font-secondary);
+ text-decoration: none;
+ color: var(--text-color);
+ font-weight: 600;
+ font-size: 0.9rem;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ padding: 8px 10px;
+ border-radius: 5px;
+ transition: all 0.3s ease;
+ text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+ white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+ color: var(--neon-gold);
+ text-shadow: 0 0 8px var(--neon-gold);
+}
+
+/* Dropdown */
+.dropdown {
+ position: relative;
+ display: inline-flex;
+ align-items: center;
+}
+
+.dropdown .dropbtn {
+ font-family: var(--font-secondary);
+ text-decoration: none;
+ color: var(--text-color);
+ font-weight: 600;
+ font-size: 0.9rem;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ padding: 8px 10px;
+ border-radius: 5px;
+ transition: all 0.3s ease;
+ text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+ background: none;
+ border: none;
+ cursor: pointer;
+ white-space: nowrap;
+ display: inline-flex;
+ align-items: center;
+}
+
+.dropdown:hover .dropbtn {
+ color: var(--neon-gold);
+ text-shadow: 0 0 8px var(--neon-gold);
+}
+
+.dropdown-content {
+ display: none;
+ position: absolute;
+ top: 100%;
+ left: 0;
+ background: rgba(0, 0, 0, 0.95);
+ backdrop-filter: blur(20px);
+ min-width: 200px;
+ box-shadow: 0px 8px 30px rgba(0, 224, 255, 0.4);
+ z-index: 9999;
+ border: 2px solid rgba(0, 224, 255, 0.5);
+ border-radius: 10px;
+ padding: 15px 0;
+ margin-top: 10px;
+}
+
+.dropdown-content a {
+ color: var(--neon-cyan);
+ padding: 14px 20px;
+ text-decoration: none;
+ display: block;
+ font-size: 0.95rem;
+ text-align: left;
+ transition: all 0.3s ease;
+ text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+ border-left: 3px solid transparent;
+}
+
+.dropdown-content a:hover {
+ background: linear-gradient(90deg, rgba(0, 224, 255, 0.3), rgba(0, 224, 255, 0.1));
+ color: #fff;
+ padding-left: 30px;
+ text-shadow: 0 0 10px var(--glow-color);
+ border-left-color: var(--neon-cyan);
+}
+
+/* Desktop only: show dropdown on hover */
+@media (hover: hover) and (pointer: fine) {
+ .dropdown:hover .dropdown-content {
+ display: block;
+ animation: dropdownFade 0.3s ease;
+ }
+
+ .dropdown:hover .dropbtn {
+ color: var(--neon-gold);
+ text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
+ }
+}
+
+/* Both desktop and mobile: show dropdown when active (clicked/tapped) */
+.dropdown.active .dropdown-content {
+ display: block;
+ animation: dropdownFade 0.3s ease;
+}
+
+.dropdown.active .dropbtn {
+ color: var(--neon-gold);
+ text-shadow: 0 0 15px var(--neon-gold), 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes dropdownFade {
+ from { opacity: 0; transform: translateY(-10px); }
+ to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+ body {
+ padding-top: 120px !important;
+ }
+
+ .logo-container {
+ top: 10px;
+ left: 20px;
+ }
+
+ .logo-container a {
+ font-size: 1.5rem;
+ }
+
+ .nav-links {
+ flex-wrap:wrap;
+ gap: 8px;
+ justify-content: center;
+ padding: 10px 5px;
+ }
+
+ .nav-links a {
+ font-size: 0.75rem;
+ padding: 6px 10px;
+ }
+
+ .dropdown .dropbtn {
+ font-size: 0.75rem;
+ padding: 6px 10px;
+ }
+
+ .dropdown-content {
+ min-width: 160px;
+ padding: 10px 0;
+ }
+
+ .dropdown-content a {
+ font-size: 0.85rem;
+ padding: 12px 15px;
+ min-height: 44px;
+ display: flex;
+ align-items: center;
+ }
+}
+
+ /* Navigation */
+.nav-container{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 5% 18px 280px}
+.logo{position:fixed;top:15px;left:15px;z-index:1001}
+.logo a{font-family:var(--font-display,'Orbitron',sans-serif);font-size:2.2rem;font-weight:900;color:#fff;text-decoration:none;text-shadow:0 0 10px rgba(255,255,255,0.5)}
+.logo a span{color:#00e5ff;text-shadow:0 0 15px rgba(0,255,255,0.8)}
+.nav-links{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.nav-links>a,.nav-links>.dropdown,.dropbtn{font-family:var(--font-body,'Poppins',sans-serif);color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:12px 18px;white-space:nowrap;border-radius:8px;background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;margin:0}
+.nav-links>a:hover,.dropbtn:hover{color:#FFD700}
+.dropdown{position:relative;padding:0;margin:0}
+.dropdown-content{display:none;position:absolute;top:100%;left:0;background:rgba(10,12,16,0.98);min-width:180px;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 0;margin-top:8px;z-index:9999}
+.dropdown-content a{color:#00e5ff;padding:12px 18px;display:block;text-decoration:none;font-size:14px}
+.dropdown-content a:hover{background:rgba(0,229,255,0.1);color:#fff}
+.dropdown:hover .dropdown-content{display:block}
+.dropdown.active .dropdown-content{display:block}
+.dropdown.active .dropbtn{color:#FFD700}
+@media(max-width:768px){
+.dropdown-content{position:fixed!important;left:5%!important;right:5%!important;top:120px!important;width:90%!important;min-width:unset!important;max-height:65vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.nav-inner{padding:18px 5% 18px 5%;flex-wrap:wrap;justify-content:center;gap:40px}
+.logo{position:relative;top:0;left:0;margin-bottom:10px}
+.nav-links{justify-content:center}
+.nav-links>a,.nav-links>.dropdown,.dropbtn{font-size:12px;padding:8px 12px;margin:0}
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'G-QS8L5TDNLY');
+</script>
+
+<link rel="stylesheet" href="/mobile-optimize.css" media="screen">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "WebApplication",
+ "name": "BetLegend Line Shopping Tool - Live Odds Comparison",
+ "description": "Free line shopping tool for sports bettors. Compare real-time spreads, moneylines, and totals from DraftKings, FanDuel, BetMGM, Pinnacle, Bovada, BetRivers and more across NFL, NBA, MLB, NHL, NCAAF, and NCAAB.",
+ "url": "https://www.betlegendpicks.com/live-odds.html",
+ "applicationCategory": "SportsApplication",
+ "operatingSystem": "Web",
+ "offers": {
+ "@type": "Offer",
+ "price": "0",
+ "priceCurrency": "USD"
+ },
+ "author": {
+ "@type": "Organization",
+ "name": "BetLegend Picks",
+ "url": "https://www.betlegendpicks.com",
+ "logo": {
+ "@type": "ImageObject",
+ "url": "https://www.betlegendpicks.com/newlogo.png"
+ }
+ }
+}
+</script>
+<link rel="stylesheet" href="/site-navbar.css">
+</head>
+<body>
+<script src="/scripts/site-navbar.js" defer></script>
+
+<nav class="nav-container">
+<div class="nav-inner">
+<div class="logo"><a href="index.html">BET<span>LEGEND</span></a></div>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<div class="dropdown">
+ <button class="dropbtn hub-btn">Handicapping Hub</button>
+ <div class="dropdown-content">
+ <a href="handicapping-hub.html">Today's Games</a>
+ <a href="/betting-run-line-versus-money-line-major-league-baseball.html">MLB Run Line vs Money Line<span style="display:block;margin-top:4px;color:#aaa091;font-size:12px;font-weight:600;line-height:1.35">Backtest of 2,223 dog plays: ML vs +1.5.</span></a>
+ <a href="injury-report.html">Injury Report</a>
+ </div>
+ </div>
+<a href="nba-college-basketball-picks-predictions-analysis-february-2026.html">Picks</a>
+<div class="dropdown"><button class="dropbtn">Sports</button><div class="dropdown-content"><a href="nfl.html">NFL</a><a href="nba-previews.html">NBA</a><a href="nhl-previews.html">NHL</a><a href="ncaaf.html">NCAAF</a><a href="college-basketball-previews.html">NCAAB</a><a href="mlb-previews.html">MLB</a><a href="soccer-previews.html">Soccer</a></div></div>
+<div class="dropdown"><button class="dropbtn">Records</button><div class="dropdown-content"><a href="records.html">Detailed Breakdown</a><a href="nfl-records.html">NFL</a><a href="nba-records.html">NBA</a><a href="nhl-records.html">NHL</a><a href="ncaaf-records.html">NCAAF</a><a href="ncaab-records.html">NCAAB</a><a href="mlb-records.html">MLB</a><a href="soccer-records.html">Soccer</a>
+<a href="crosssport-parlays-records.html" title="Cross-Sport Bets">Cross-Sport Bets</a>
+ <a href="player-props-records.html" title="Player Props Records">Player Props</a>
+ </div></div>
+<div class="dropdown"><button class="dropbtn">Resources</button><div class="dropdown-content"><a href="proofofpicks.html">Proof of Picks</a><a href="live-odds.html">Live Odds</a><a href="howitworks.html">How It Works</a><a href="bankroll.html">Bankroll Management</a><a href="kelly-criterion.html">Kelly Criterion</a><a href="risk-of-ruin-calculator.html">Risk of Ruin</a><a href="bankroll-simulator.html">Bankroll Simulator</a><a href="betting-calculators.html">Calculators</a><a href="index.html">Screenshots</a><a href="bestonlinesportsbook.html">Best Sportsbook</a><a href="betting-glossary.html">Glossary</a><a href="betting-101.html">Betting 101</a><a href="how-to-bet-mlb-totals.html">How to Bet MLB Totals</a><a href="contact.html">Contact Us</a></div></div>
+<a href="news.html">News</a>
+<a href="podcast.html">Podcast</a>
+<div class="dropdown"><button class="dropbtn">Game of Day</button><div class="dropdown-content"><a href="/featured-game-of-the-day.html">Featured Game</a><a href="moneyline-parlay-of-the-day.html">ML Parlay</a></div></div>
+</div>
+</div>
+</nav>
+
+<div class="header">
+ <h1>LIVE ODDS LINE SHOPPING</h1>
+ <p class="tagline">Compare Lines Across Every Major Sportsbook</p>
+</div>
+
+<div style="max-width: 900px; margin: 20px auto 10px; padding: 0 20px; color: #ccc; font-size: 16px; line-height: 1.8; text-align: center;">
+<p>Compare real-time odds from every major sportsbook in one place. This tool pulls live spreads, moneylines, and totals from DraftKings, FanDuel, BetMGM, Pinnacle, Bovada, and more, highlighting the best available price on every outcome. <a href="line-shopping-guide.html" style="color: #00e0ff; text-decoration: none; border-bottom: 1px solid rgba(0,224,255,0.3);">Learn why line shopping matters</a>.</p>
+</div>
+
+<div class="controls">
+ <button class="sport-btn" onclick="changeSport('americanfootball_nfl')">NFL</button>
+ <button class="sport-btn active" onclick="changeSport('basketball_nba')">NBA</button>
+ <button class="sport-btn" onclick="changeSport('icehockey_nhl')">NHL</button>
+ <button class="sport-btn" onclick="changeSport('baseball_mlb')">MLB</button>
+ <button class="sport-btn" onclick="changeSport('americanfootball_ncaaf')">NCAAF</button>
+ <button class="sport-btn" onclick="changeSport('basketball_ncaab')">NCAAB</button>
+</div>
+
+<div id="loading" class="loading">
+ <p>⏳ Loading live odds...</p>
+</div>
+
+<div class="container" id="games-container" style="display: none;">
+</div>
+
+<div class="last-update" id="last-update"></div>
+
+<div style="text-align: center; margin-top: 40px;">
+ <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 700; font-size: 16px;">Back to Home</a>
+</div>
+
+<script>
+// The Odds API Configuration
+const API_KEY = 'c405ed8a7e1f4ec945d39aeeaf647e4b';
+const API_BASE_URL = 'https://api.the-odds-api.com/v4';
+let currentSport = 'basketball_nba';
+
+// Fetch ALL available bookmakers from the API (no filter = maximum coverage)
+// US region returns: DraftKings, FanDuel, BetMGM, BetRivers, Bovada, BetOnline, etc.
+// EU region adds: Pinnacle (sharpest lines in the world)
+
+async function fetchOdds(sport) {
+ try {
+ const response = await fetch(
+ `${API_BASE_URL}/sports/${sport}/odds/?apiKey=${API_KEY}&regions=us,us2,eu&markets=h2h,spreads,totals&oddsFormat=american`
+ );
+
+ if (!response.ok) {
+ throw new Error(`API Error: ${response.status} ${response.statusText}`);
+ }
+
+ const data = await response.json();
+ return data;
+ } catch (error) {
+ console.error('Error fetching odds:', error);
+ document.getElementById('loading').innerHTML = '<div class="no-games">Unable to load odds. Please try again in a moment.</div>';
+ return [];
+ }
+}
+
+function formatBookmakerName(key) {
+ const names = {
+ 'draftkings': 'DraftKings',
+ 'fanduel': 'FanDuel',
+ 'betmgm': 'BetMGM',
+ 'caesars': 'Caesars',
+ 'pinnacle': 'Pinnacle',
+ 'betrivers': 'BetRivers',
+ 'bovada': 'Bovada',
+ 'betonlineag': 'BetOnline',
+ 'mybookieag': 'MyBookie',
+ 'betus': 'BetUS',
+ 'lowvig': 'LowVig',
+ 'pointsbetus': 'PointsBet',
+ 'superbook': 'SuperBook',
+ 'unibet_us': 'Unibet',
+ 'williamhill_us': 'Caesars',
+ 'betfair': 'Betfair',
+ 'bet365': 'Bet365',
+ 'foxbet': 'FOX Bet',
+ 'wynnbet': 'WynnBET',
+ 'twinspires': 'TwinSpires',
+ 'barstool': 'Barstool',
+ 'espnbet': 'ESPN BET',
+ 'hardrockbet': 'Hard Rock Bet',
+ 'fliff': 'Fliff',
+ 'fanatics': 'Fanatics'
+ };
+ return names[key] || key.charAt(0).toUpperCase() + key.slice(1);
+}
+
+function formatOdds(odds) {
+ return odds > 0 ? `+${odds}` : odds;
+}
+
+function findBestOdds(outcomes, teamName) {
+ if (!outcomes || outcomes.length === 0) return null;
+
+ const teamOutcomes = outcomes.filter(o => o.name === teamName);
+ if (teamOutcomes.length === 0) return null;
+
+ let best = teamOutcomes[0];
+ for (const outcome of teamOutcomes) {
+ if (outcome.price > best.price) {
+ best = outcome;
+ }
+ }
+ return best;
+}
+
+function renderOdds(games) {
+ const container = document.getElementById('games-container');
+ const loading = document.getElementById('loading');
+
+ if (!games || games.length === 0) {
+ loading.innerHTML = '<div class="no-games">No upcoming games available for this sport.</div>';
+ loading.style.display = 'block';
+ container.style.display = 'none';
+ return;
+ }
+
+ loading.style.display = 'none';
+ container.style.display = 'block';
+ container.innerHTML = '';
+
+ for (const game of games) {
+ const homeTeam = game.home_team;
+ const awayTeam = game.away_team;
+ const gameTime = new Date(game.commence_time).toLocaleString();
+
+ const gameCard = document.createElement('div');
+ gameCard.className = 'game-card';
+
+ let oddsHTML = '';
+
+ // Process each market type
+ const markets = ['h2h', 'spreads', 'totals'];
+ const marketTitles = {
+ 'h2h': '💰 Moneyline',
+ 'spreads': '📊 Spread',
+ 'totals': '🎯 Total (Over/Under)'
+ };
+
+ for (const marketType of markets) {
+ const bookmakerOdds = game.bookmakers
+ .filter(b => b.markets.some(m => m.key === marketType))
+ .map(b => ({
+ key: b.key,
+ market: b.markets.find(m => m.key === marketType)
+ }));
+
+ if (bookmakerOdds.length === 0) continue;
+
+ let marketHTML = `<div class="market-section"><div class="market-title">${marketTitles[marketType]}</div>`;
+
+ // Find best odds for each team
+ const allOutcomes = bookmakerOdds.flatMap(b =>
+ b.market.outcomes.map(o => ({...o, bookmaker: b.key}))
+ );
+
+ const teams = marketType === 'totals' ? ['Over', 'Under'] : [awayTeam, homeTeam];
+
+ for (const team of teams) {
+ const bestOdd = findBestOdds(allOutcomes, team);
+
+ for (const bookmaker of bookmakerOdds) {
+ const outcome = bookmaker.market.outcomes.find(o => o.name === team);
+ if (!outcome) continue;
+
+ const isBest = bestOdd && outcome.price === bestOdd.price && bookmaker.key === bestOdd.bookmaker;
+
+ let displayValue = '';
+ if (marketType === 'spreads') {
+ displayValue = `${outcome.point > 0 ? '+' : ''}${outcome.point} (${formatOdds(outcome.price)})`;
+ } else {
+ displayValue = formatOdds(outcome.price);
+ if (marketType === 'totals' && outcome.point) {
+ displayValue = `${outcome.name} ${outcome.point} (${displayValue})`;
+ }
+ }
+
+ marketHTML += `
+ <div class="odds-row ${isBest ? 'best' : ''}">
+ <span class="book-name">${formatBookmakerName(bookmaker.key)}</span>
+ <span>
+ <span class="odds-value ${outcome.price > 0 ? 'positive' : 'negative'}">${displayValue}</span>
+ ${isBest ? '<span class="best-badge">BEST</span>' : ''}
+ </span>
+ </div>
+ `;
+ }
+
+ if (marketType !== 'totals') {
+ marketHTML += '<div style="height: 10px;"></div>';
+ }
+ }
+
+ marketHTML += '</div>';
+ oddsHTML += marketHTML;
+ }
+
+ const sportEmoji = {'americanfootball_nfl':'🏈','americanfootball_ncaaf':'🏈','basketball_nba':'🏀','basketball_ncaab':'🏀','icehockey_nhl':'🏒','baseball_mlb':'⚾'}[currentSport]||'🏆';
+
+ gameCard.innerHTML = `
+ <div class="game-header">
+ <div class="teams">
+ <div class="team">${sportEmoji} ${awayTeam}</div>
+ <div class="team" style="color: var(--gold);">@</div>
+ <div class="team">${sportEmoji} ${homeTeam}</div>
+ </div>
+ <div class="game-time">
+ <div style="font-size: 16px; font-weight: 700; color: var(--accent);">${gameTime}</div>
+ </div>
+ </div>
+ <div class="odds-grid">${oddsHTML}</div>
+ `;
+
+ container.appendChild(gameCard);
+ }
+
+ // Update last refresh time
+ document.getElementById('last-update').textContent =
+ `Last updated: ${new Date().toLocaleString()} • Auto-refresh every 60 seconds`;
+}
+
+async function loadOdds() {
+ const games = await fetchOdds(currentSport);
+ renderOdds(games);
+}
+
+function changeSport(sport) {
+ currentSport = sport;
+
+ // Update active button
+ document.querySelectorAll('.sport-btn').forEach(btn => {
+ btn.classList.remove('active');
+ });
+ event.target.classList.add('active');
+
+ // Show loading and fetch new odds
+ document.getElementById('loading').style.display = 'block';
+ document.getElementById('games-container').style.display = 'none';
+ loadOdds();
+}
+
+// Initial load
+loadOdds();
+
+// Auto-refresh every 60 seconds
+setInterval(loadOdds, 60000);
+
+// Mobile dropdown menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+ const dropdowns = document.querySelectorAll('.dropdown');
+ dropdowns.forEach(dropdown => {
+ const dropbtn = dropdown.querySelector('.dropbtn');
+ const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+ if (dropbtn && dropdownContent) {
+ // Handle button clicks to toggle dropdown
+ dropbtn.addEventListener('click', function(e) {
+ e.preventDefault();
+ e.stopPropagation();
+
+ // Close all other dropdowns
+ dropdowns.forEach(otherDropdown => {
+ if (otherDropdown !== dropdown) {
+ otherDropdown.classList.remove('active');
+ }
+ });
+
+ // Toggle current dropdown
+ dropdown.classList.toggle('active');
+ });
+
+ }
+ });
+
+ // Close dropdowns when clicking outside
+ document.addEventListener('click', function(e) {
+ // Check if click is outside all dropdowns
+ if (!e.target.closest('.dropdown')) {
+ dropdowns.forEach(dropdown => {
+ dropdown.classList.remove('active');
+ });
+ }
+ });
+});
+ </script>
+
+<!-- Clicky Analytics -->
+<a title="Web Analytics" href="https://clicky.com/101485054"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
+<script async data-id="101485054" src="//static.getclicky.com/js"></script>
+
+    <!-- Related Analysis Section - Internal Linking -->
+    <section style="max-width:900px;margin:40px auto;padding:32px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:12px;">
+        <h3 style="font-size:18px;font-weight:700;color:#FFD700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #FFD700;letter-spacing:1px;text-transform:uppercase;">Related Analysis</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+            <a href="/nba-previews.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NBA Analysis</a>
+            <a href="/nhl-previews.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NHL Analysis</a>
+            <a href="/nfl.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">NFL Analysis</a>
+            <a href="/handicapping-hub.html" style="display:block;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:#FFD700;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s ease;">Handicapping Hub</a>
+        </div>
+    </section>
+
+    </body>
+</html>

@@ -20,7 +20,7 @@ import json
 import time
 import codecs
 import fnmatch
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from pathlib import Path
 from collections import defaultdict
 
@@ -51,9 +51,6 @@ except ImportError:
 # =============================================================================
 
 class Config:
-    # Roster and date-staleness checks apply to pages published within this window.
-    ROSTER_HISTORY_DAYS = 14
-
     """All configurable thresholds and settings."""
     
     # MLB Stats API (free, no key needed)
@@ -89,10 +86,7 @@ class Config:
             'display': 'ERA', 'format': '{}'
         },
         'whip': {
-            # Same line only, and not a "WHIP  3.69 / 1.16" ERA-first pair: a
-            # "1.15 WHIP" followed by "6.44 K/9" on the next stat line used to
-            # read as WHIP 6.44, and "Staff ERA / WHIP  3.69 / 1.16" as WHIP 3.69.
-            'pattern': r'(?:WHIP)[: \t]*(?:of[ \t]*)?(\d\.\d{2,3})(?![ \t]*/)',
+            'pattern': r'(?:WHIP)[:\s]*(?:of\s*)?(\d\.\d{2,3})',
             'min': 0.00, 'max': 3.50, 'typical_min': 0.70, 'typical_max': 2.00,
             'display': 'WHIP', 'format': '{}'
         },
@@ -115,8 +109,7 @@ class Config:
             'display': 'Home Runs', 'format': '{}'
         },
         'rbi_season': {
-            # (?<![\d,]) keeps a career line like "1,365 RBIs" from reading as 365.
-            'pattern': r'(?<![\d,])(\d{1,3})\s*(?:RBIs?|runs?\s*batted\s*in)',
+            'pattern': r'(\d{1,3})\s*(?:RBIs?|runs?\s*batted\s*in)',
             'min': 0, 'max': 200, 'typical_min': 0, 'typical_max': 165,
             'display': 'RBI', 'format': '{}'
         },
@@ -128,9 +121,7 @@ class Config:
         },
         'strikeouts_pitcher': {
             'pattern': r'(\d{1,3})\s*(?:strikeouts|Ks|punch\s*outs)',
-            # Team staffs strike out 1,100 to 1,700 a season and pages quote those
-            # totals ("Colorado has 848 strikeouts as a staff"); 400 was a pitcher cap.
-            'min': 0, 'max': 1800, 'typical_min': 0, 'typical_max': 1700,
+            'min': 0, 'max': 400, 'typical_min': 0, 'typical_max': 350,
             'display': 'Strikeouts', 'format': '{}'
         },
     }
@@ -509,49 +500,6 @@ class RosterManager:
 # =============================================================================
 
 class ContentExtractor:
-    @staticmethod
-    def published_date(html_content):
-        """The page's own publication date (JSON-LD datePublished, article:published_time
-        or a <time datetime>), or None when it does not state one."""
-        q = "[" + chr(34) + chr(39) + "]"
-        patterns = (
-            chr(34) + "datePublished" + chr(34) + r"\s*:\s*" + chr(34) + "([^" + chr(34) + "]+)" + chr(34),
-            "property=" + q + "article:published_time" + q + "[^>]*content=" + q + "([^" + chr(34) + chr(39) + "]+)",
-            "<time[^>]+datetime=" + q + "([^" + chr(34) + chr(39) + "]+)",
-        )
-        for pat in patterns:
-            m = re.search(pat, html_content)
-            if not m:
-                continue
-            raw = m.group(1).strip().replace("Z", "+00:00")
-            try:
-                d = datetime.fromisoformat(raw[:25] if len(raw) > 25 else raw)
-            except ValueError:
-                try:
-                    d = datetime.fromisoformat(raw[:10])
-                except ValueError:
-                    return None
-            if d.tzinfo is None:
-                d = d.replace(tzinfo=timezone.utc)
-            return d
-        # No structured date: fall back to the newest written date on the page
-        # ("January 08, 2026"). Archive hubs such as mlb-picks-analysis-against-
-        # the-spread.html carry months-old game writeups and no metadata; their
-        # newest date says how old the content is. A page with no date at all
-        # stays subject to every check.
-        months = ('January', 'February', 'March', 'April', 'May', 'June', 'July',
-                  'August', 'September', 'October', 'November', 'December')
-        newest = None
-        text = re.sub(r'<[^>]+>', ' ', html_content)
-        for m in re.finditer(r'(' + '|'.join(months) + r')\s+(\d{1,2}),?\s+(20\d{2})', text):
-            try:
-                d = datetime(int(m.group(3)), months.index(m.group(1)) + 1, int(m.group(2)), tzinfo=timezone.utc)
-            except ValueError:
-                continue
-            if newest is None or d > newest:
-                newest = d
-        return newest
-
     """Extracts player references, stats, and betting lines from HTML content."""
     
     # Common patterns for player-team associations in sports writing
@@ -1298,18 +1246,14 @@ class BetLegendValidator:
         line_issues = ContentValidator.validate_betting_lines(betting_lines)
         issues.extend(line_issues)
 
-        # 4. Roster validation, 5. Date validation: only for pages published in the
-        # last ROSTER_HISTORY_DAYS. A July card that had Luis Castillo in Seattle was
-        # right in July; judging it against today's rosters (or calling its own date
-        # stale) turns every trade into a permanent red build for the archive.
-        published = ContentExtractor.published_date(html_content)
-        historical = bool(published) and (datetime.now(published.tzinfo) - published).days > Config.ROSTER_HISTORY_DAYS
-        if not historical:
-            player_refs = ContentExtractor.extract_player_team_refs(ct)
-            roster_issues = ContentValidator.validate_roster(player_refs, self.roster_manager)
-            issues.extend(roster_issues)
-            date_issues = ContentValidator.check_date_references(ct)
-            issues.extend(date_issues)
+        # 4. Roster validation
+        player_refs = ContentExtractor.extract_player_team_refs(ct)
+        roster_issues = ContentValidator.validate_roster(player_refs, self.roster_manager)
+        issues.extend(roster_issues)
+
+        # 5. Date validation
+        date_issues = ContentValidator.check_date_references(ct)
+        issues.extend(date_issues)
 
         # 6. Known facts validation (CRITICAL - catches player trades, injuries, etc.)
         known_facts_issues = ContentValidator.check_known_facts(ct)

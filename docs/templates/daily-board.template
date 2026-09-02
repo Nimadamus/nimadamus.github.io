@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- BETLEGEND DAILY SPORT BOARD SKELETON (multi-game, PREVIEW_PAGE_STANDARD.md, locked July 4 2026).
+     Replace every {{PLACEHOLDER}}. Head/meta/nav/hero/calendar conventions identical to
+     featured-preview.template - abbreviated here; copy the full head from that skeleton with:
+       - og:image / twitter:image / NewsArticle image = {{UNIQUE_HERO_IMAGE_URL}} (marquee game
+         action photo, HTTP 200 verified, NEVER newlogo.png)
+       - schema: NewsArticle + BreadcrumbList (+ SportsEvent for the marquee game)
+       - <link rel="stylesheet" href="/preview-article.css"> after the inline style block
+       - window.FORCED_PAGE_DATE = post date -->
+<html lang="en">
+<head>
+{{FULL_HEAD_PER_FEATURED_TEMPLATE}}
+</head>
+<body>
+{{FULL_SITE_NAV}}
+
+<header class="hero">
+<div class="hero-badge">{{SPORT}} - {{Weekday, Month D}}</div>
+<h1>{{STORYLINE HEADLINE FOR THE DAY'S BOARD - names marquee teams/players}}</h1>
+<p>{{LEDE - the day's board in one paragraph: game count, marquee matchups, stakes.}}</p>
+</header>
+
+<div class="page-wrapper">
+<aside class="calendar-sidebar">
+<div class="calendar-box">
+<div class="calendar-title">{{SPORT}} Archive</div>
+<div class="year-display" id="cal-year">{{YYYY}}</div>
+<select class="month-select" id="month-select"></select>
+<div class="calendar-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+<div class="calendar-days" id="calendar-days"></div>
+</div>
+</aside>
+<div class="mobile-archive">
+<div class="mobile-archive-title">{{SPORT}} Archive</div>
+<select class="mobile-archive-select" id="mobile-archive-select"><option value="">Jump to date...</option></select>
+</div>
+
+<main class="main-content">
+
+<figure class="hero-figure">
+<img class="feature-photo" src="{{UNIQUE_HERO_IMAGE_URL}}" alt="{{MARQUEE PLAYER/TEAMS + action}}"/>
+<figcaption>{{WHAT THE PHOTO SHOWS | Photo: {{SOURCE}}}}</figcaption>
+</figure>
+
+<div class="toc-box">
+<div class="toc-title">On Today's Board</div>
+<ul class="toc-list">
+<li><a href="#game-1-{{away}}-{{home}}">{{Away}} vs {{Home}} - {{hook}}</a></li>
+<li><a href="#game-2-{{away}}-{{home}}">{{Away}} vs {{Home}} - {{hook}}</a></li>
+<!-- one li per game article below -->
+</ul>
+</div>
+
+<article class="game-preview marquee" id="game-1-{{away}}-{{home}}">
+<div class="game-number">Marquee Matchup</div>
+<div class="broadcast-badge">{{Local / NATIONAL NETWORK}}</div>
+<div class="game-header">
+<img alt="{{AWAY_FULL}}" class="team-logo" src="{{AWAY_LOGO}}"/>
+<div class="matchup-info">
+<h2>{{Away}} vs {{Home}}</h2>
+<span class="game-time">{{Weekday}}, {{TIME}} ET | {{VENUE}}, {{CITY}}</span>
+</div>
+<img alt="{{HOME_FULL}}" class="team-logo" src="{{HOME_LOGO}}"/>
+</div>
+<div class="preview-content">
+<p>{{Para 1 - records, stakes, why this is the marquee. Verified numbers only.}}</p>
+<p>{{Para 2 - away side: starter/form/stats.}}</p>
+<p>{{Para 3 - home side: starter/form/stats, the matchup read.}}</p>
+</div>
+</article>
+<div class="game-divider"></div>
+
+<article class="game-preview" id="game-2-{{away}}-{{home}}">
+<div class="game-number">{{Angle label - e.g. Ace On The Mound}}</div>
+<div class="broadcast-badge">{{Local / NETWORK}}</div>
+<div class="game-header">
+<img alt="{{AWAY_FULL}}" class="team-logo" src="{{AWAY_LOGO}}"/>
+<div class="matchup-info">
+<h2>{{Away}} vs {{Home}}</h2>
+<span class="game-time">{{Weekday}}, {{TIME}} ET | {{VENUE}}, {{CITY}}</span>
+</div>
+<img alt="{{HOME_FULL}}" class="team-logo" src="{{HOME_LOGO}}"/>
+</div>
+<div class="preview-content">
+<p>{{3 substantial matchup-specific paragraphs, stats woven in. Analysis only, no picks.}}</p>
+</div>
+</article>
+<!-- repeat per game, game-divider between -->
+
+<div class="related-links">
+<div class="related-title">More {{SPORT}} On BetLegend</div>
+<ul>
+<li><a href="{{SPORT_PREVIEW_HUB}}.html">{{SPORT}} Game Previews</a></li>
+<li><a href="{{SPORT_ARCHIVE}}.html">{{SPORT}} Preview Archive</a></li>
+<li><a href="{{SPORT}}-records.html">{{SPORT}} Verified Records</a></li>
+<li><a href="handicapping-hub.html">Today's Handicapping Hub</a></li>
+</ul>
+</div>
+
+</main>
+</div>
+
+<footer>
+<p>&copy; {{YYYY}} BetLegend Picks. All Rights Reserved.</p>
+<p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a> | <a href="contact.html">Contact</a></p>
+</footer>
+<script src="scripts/{{SPORT_CALENDAR_JS}}?v={{CACHEBUST}}"></script>
+</body>
+</html>

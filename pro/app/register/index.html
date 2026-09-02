@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // GitHub Pages serves no SPA rewrite, so /pro/app/login is a hard 404.
+      // The site's 404.html encodes the requested route as "/?/login" and
+      // bounces here; this restores the real path before the router reads it.
+      // Must stay ahead of the app bundle.
+      (function () {
+        var l = window.location;
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) { return s.replace(/~and~/g, '&'); })
+            .join('?');
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/pro/app/favicon.svg" />
+    <link rel="manifest" href="/pro/app/manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f59e0b" />
+    <meta name="description" content="BetLegend Pro - Professional handicapping tools, AI predictions, and 130K+ game database." />
+    <!-- Shared-link metadata. This page is in the sitemap and is the URL a buyer
+         is sent, so a bare link on X, iMessage or Slack rendered with no title,
+         no description and no image. The marketing page at /pro/ already
+         carries these; the app shell did not. -->
+    <link rel="canonical" href="https://www.betlegendpicks.com/pro/app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BetLegend Pro" />
+    <meta property="og:url" content="https://www.betlegendpicks.com/pro/app/" />
+    <meta property="og:title" content="BetLegend Pro - Advanced Handicapping Research Tool" />
+    <meta property="og:description" content="Ask any team, any situation, any sport. 130,000+ games, 100+ variables, straight-up, ATS and over/under records computed from closing lines." />
+    <meta property="og:image" content="https://www.betlegendpicks.com/pro/icon-512.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BetLegend Pro - Advanced Handicapping Research Tool" />
+    <meta name="twitter:description" content="Ask any team, any situation, any sport. 130,000+ games, 100+ variables, straight-up, ATS and over/under records computed from closing lines." />
+    <meta name="twitter:image" content="https://www.betlegendpicks.com/pro/icon-512.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>BetLegend Pro</title>
+    <!-- Same GA4 property as the /pro/ marketing page. Without it the funnel
+         went blind at the exact step that matters: we could see a visitor reach
+         the landing page and, from the database, count who ended up signing up,
+         but nothing in between. A drop-off between "opened the app" and
+         "started checkout" was unmeasurable. Nothing extra is loaded and no
+         third party beyond the analytics already in use. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8L5TDNLY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QS8L5TDNLY');
+    </script>
+    <script type="module" crossorigin src="/pro/app/assets/index-BYq4mxs2.js"></script>
+    <link rel="modulepreload" crossorigin href="/pro/app/assets/jsx-runtime-Bg_NI1en.js">
+    <link rel="modulepreload" crossorigin href="/pro/app/assets/preload-helper-BKbkAfLu.js">
+    <link rel="modulepreload" crossorigin href="/pro/app/assets/QueryClientProvider-C6-SoaTJ.js">
+    <link rel="modulepreload" crossorigin href="/pro/app/assets/createLucideIcon-C4O96Xzc.js">
+    <link rel="modulepreload" crossorigin href="/pro/app/assets/axios-Bc7dI0iR.js">
+    <link rel="modulepreload" crossorigin href="/pro/app/assets/client-Cw0TM8pO.js">
+    <link rel="stylesheet" crossorigin href="/pro/app/assets/index-DzijAWEB.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

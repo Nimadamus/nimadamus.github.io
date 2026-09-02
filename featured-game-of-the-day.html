@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.betlegendpicks.com/featured-game-of-the-day.html">
+<title>Featured Game of the Day | BetLegend</title>
+<meta name="description" content="BetLegend Featured Game of the Day - redirecting to today's marquee matchup breakdown.">
+<!-- PERMANENT HUB (Nima, June 1 2026): this URL is the stable target of every
+     "Featured Game" nav link. It holds NO frozen article content; it always
+     bounces to the newest entry in featured-games-data.js so it can never go
+     stale. featured-games-calendar.js also performs this redirect, but doing it
+     here in <head> avoids any flash of old content. -->
+<script src="featured-games-data.js"></script>
+<script>
+(function () {
+  try {
+    var todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date());
+    if (typeof FEATURED_GAMES !== 'undefined' && FEATURED_GAMES.length) {
+      var newest = FEATURED_GAMES.slice().sort(function (a, b) {
+        return b.date.localeCompare(a.date);
+      })[0];
+      // FALLBACK-TO-LATEST (Nima, June 16 2026): if there is no featured game for
+      // today, load the most recent published featured game instead of showing an
+      // empty "nothing available" page. Prefer today/upcoming; otherwise fall back
+      // to the newest past entry. Only the truly empty data file shows the empty
+      // state. This hub is noindex, so redirecting to a past-dated real article is
+      // SEO-safe (the target keeps its own canonical/date).
+      if (newest && newest.page) {
+        if (newest.date < todayStr) {
+          try { sessionStorage.setItem('bl_showing_latest', '1'); } catch (e) {}
+        }
+        window.location.replace('/' + newest.page);
+      } else {
+        window.__FEATURED_EMPTY = true;
+      }
+    } else {
+      window.__FEATURED_EMPTY = true;
+    }
+  } catch (e) { /* fall through to noscript / manual links */ }
+})();
+</script>
+<style>
+body{margin:0;background:#0a0c10;color:#fff;font-family:Inter,system-ui,Arial,sans-serif;text-align:center;padding:80px 24px}
+a{color:#00e5ff;font-weight:700;text-decoration:none}
+.spin{margin:30px auto;width:34px;height:34px;border:3px solid rgba(255,255,255,.15);border-top-color:#fd5000;border-radius:50%;animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="fg-loading">
+<h1 style="font-size:22px">Loading today's Featured Game...</h1>
+<div class="spin"></div>
+<p>If you are not redirected, <a href="/">return to the homepage</a>.</p>
+</div>
+<div id="fg-empty" style="display:none">
+<h1 style="font-size:22px">Featured Game of the Day</h1>
+<p style="max-width:560px;margin:18px auto;color:#b0b8c4">No featured game is available for this date. Check back for the next marquee matchup, or browse current previews on the <a href="/">homepage</a>.</p>
+</div>
+<noscript><p><a href="/">Go to the BetLegend homepage</a> to find today's Featured Game of the Day.</p></noscript>
+<script>
+if (window.__FEATURED_EMPTY) {
+  var l = document.getElementById('fg-loading'); if (l) l.style.display = 'none';
+  var e = document.getElementById('fg-empty'); if (e) e.style.display = 'block';
+}
+</script>
+</body>
+</html>
