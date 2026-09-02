@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "A 0.75 WHIP Against The Highest Scoring Lineup In Baseball, And Seven Plays For 12.5 Units",
+        date: "September 2, 2026",
+        url: "misiorowski-cubs-team-total-under-brewers-rangers-moneylines-rays-run-line-seven-play-mlb-pick.html",
+        image: "images/misiorowski-cubs-team-total-under-brewers-rangers-moneylines-rays-run-line-seven-play-mlb-pick.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Three Units On Webb Against Skenes Through Five, And Two Run Lines At A Whole Number",
         date: "September 1, 2026",
         url: "giants-pirates-first-five-under-guardians-rangers-run-lines-rays-moneyline-four-play-mlb-pick.html",
-        image: "images/giants-pirates-first-five-under-guardians-rangers-run-lines-rays-moneyline-four-play-mlb-pick.jpg"
+        image: "images/giants-pirates-first-five-under-guardians-rangers-run-lines-rays-moneyline-four-play-mlb-pick.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
