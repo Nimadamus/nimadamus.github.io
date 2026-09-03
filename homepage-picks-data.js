@@ -27,11 +27,19 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NCAAF",
+        title: "Colorado Went 0-5 On The Road Last Year, And Georgia Tech Is Five Units To Win",
+        date: "September 3, 2026",
+        url: "georgia-tech-colorado-moneyline-mariners-run-line-rays-moneyline-three-play-card.html",
+        image: "images/georgia-tech-colorado-moneyline-mariners-run-line-rays-moneyline-three-play-card.jpg"
+    },
+    {
         sport: "MLB",
         title: "A 0.75 WHIP Against The Highest Scoring Lineup In Baseball, And Seven Plays For 12.5 Units",
         date: "September 2, 2026",
         url: "misiorowski-cubs-team-total-under-brewers-rangers-moneylines-rays-run-line-seven-play-mlb-pick.html",
-        image: "images/misiorowski-cubs-team-total-under-brewers-rangers-moneylines-rays-run-line-seven-play-mlb-pick.jpg"
+        image: "images/misiorowski-cubs-team-total-under-brewers-rangers-moneylines-rays-run-line-seven-play-mlb-pick.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
