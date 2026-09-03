@@ -117,6 +117,33 @@ if [ -n "$DELETED_CAL" ]; then
     exit 1
 fi
 
+# CRITICAL (added 2026-09-03 after the 11b1484 incident): never let a commit delete a
+# GitHub Actions workflow. betlegendpicks.com is served by .github/workflows/pages-deploy.yml,
+# so losing that directory silently freezes the live site while pushes keep appearing to work.
+# On 2026-09-02 a broken checkout produced an empty index, `git add -A` staged the whole tree as
+# deletions, and all 17 workflow files went with it. The site served stale content for a day.
+DELETED_WF=$(git diff --cached --name-only --diff-filter=D | grep -E '^\.github/workflows/' || true)
+if [ -n "$DELETED_WF" ]; then
+    echo ""
+    echo "  [BLOCKED] You are deleting GitHub Actions workflow file(s):"
+    echo "$DELETED_WF" | sed 's/^/    /'
+    echo "  .github/workflows/pages-deploy.yml is what publishes betlegendpicks.com."
+    echo "  Deleting it freezes the live site while pushes still look successful."
+    echo "  If this is genuinely intended, ask Nima and do it on its own branch."
+    exit 1
+fi
+
+# CRITICAL: a mass deletion is almost always a broken working tree, not an intention.
+# This is the shape the 2026-09-02 wipe had: the whole tree staged as D in one commit.
+DELETED_COUNT=$(git diff --cached --name-only --diff-filter=D | wc -l | tr -d ' ')
+if [ "$DELETED_COUNT" -gt 50 ]; then
+    echo ""
+    echo "  [BLOCKED] This commit deletes $DELETED_COUNT files."
+    echo "  That is the signature of a failed checkout or an empty working tree, not a real edit."
+    echo "  Run git status and git diff --cached --stat and confirm before continuing."
+    echo "  If it is genuinely intended, commit with --no-verify after checking with Nima."
+    exit 1
+fi
 if [ -z "$STAGED_HTML" ]; then
     echo "  No HTML files staged. Skipping HTML-only validation steps."
     exit 0
