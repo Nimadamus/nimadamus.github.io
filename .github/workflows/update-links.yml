@@ -1,0 +1,40 @@
+name: Update Internal Links
+
+# CHANGED Feb 20, 2026: Removed push trigger to stop cascade spam
+# This was firing on every push, pushing its own commit, which triggered
+# validate-content + auto-fix-content, which pushed more commits...
+# Now manual-only. We update links locally via scripts when needed.
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  update-links:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run link updater
+        run: python update_site_links.py
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git commit -m "Auto-update internal links"
+          git push

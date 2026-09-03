@@ -1,0 +1,51 @@
+name: Content Quality Check
+
+# DISABLED - This is a duplicate of validate-content.yml
+# Both workflows ran on every push and created GitHub Issues, causing email spam
+# Disabled on February 19, 2026
+on:
+  workflow_dispatch:  # Manual trigger only - no longer fires on push
+
+jobs:
+  validate-content:
+    runs-on: ubuntu-latest
+    name: Validate Changed Files
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed files
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only --diff-filter=ACMR HEAD~1 HEAD -- '*.html' 'news/*.html' 'blog/*.html' 2>/dev/null || echo "")
+          if [ -z "$CHANGED" ]; then
+            echo "No HTML files changed in this push"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changed files:"
+            echo "$CHANGED"
+            echo "$CHANGED" > changed_files.txt
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "count=$(echo "$CHANGED" | wc -l)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up Python
+        if: steps.changed.outputs.has_changes == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        if: steps.changed.outputs.has_changes == 'true'
+        run: pip install requests
+
+      - name: Run enhanced content validator
+        if: steps.changed.outputs.has_changes == 'true'
+        run: python scripts/live_content_validator.py
+
+      - name: Skip validation
+        if: steps.changed.outputs.has_changes != 'true'
+        run: echo "No HTML files changed - skipping validation"

@@ -1,0 +1,156 @@
+name: Content Validation & Deployment Gate
+
+# Runs on every push - notifications are disabled at repo level so no email spam
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Ensure only one deployment at a time
+concurrency:
+  group: "pages-validation"
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate Content
+    runs-on: ubuntu-latest
+    outputs:
+      validation_passed: ${{ steps.validate.outputs.passed }}
+      error_count: ${{ steps.validate.outputs.errors }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Validate SEO bake (records + upcoming picks must not be empty shells)
+        run: |
+          python scripts/validate_seo_bake.py
+
+      - name: Run BetLegend Validator
+        id: validate
+        run: |
+          echo "## Content Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Time:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Run the validator and capture output
+          set +e
+          python betlegend_validator.py . > validator_output.txt 2>&1
+          VALIDATOR_EXIT=$?
+          set -e
+
+          # Show output in logs
+          cat validator_output.txt
+
+          TOTAL_ERRORS=$(grep -cE "\[ERROR\] (ROSTER ERROR|IMPOSSIBLE|Missing <)" validator_output.txt 2>/dev/null) || TOTAL_ERRORS=0
+          TOTAL_ERRORS=$(echo "$TOTAL_ERRORS" | tr -d '[:space:]')
+          : "${TOTAL_ERRORS:=0}"
+
+          KNOWN_FP=0
+          grep -B1 "ROSTER ERROR" validator_output.txt | grep -E "mlb-page2.html|nfl-page16.html|nba-picks-analysis-against-the-spread-v24.html|ohtani-pitches-dodgers-degrom-returns-fried-gilbert-duel-mlb.html|rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html|yankees-vs-giants-analysis-stats-preview.html" > /tmp/whitelist_check.txt 2>/dev/null || true
+
+          if grep -q "mlb-page2.html" /tmp/whitelist_check.txt 2>/dev/null; then
+            MLP2_ERRORS=$(grep -A50 "\[ERROR\] mlb-page2.html" validator_output.txt 2>/dev/null | grep -c "ROSTER ERROR" 2>/dev/null) || MLP2_ERRORS=0
+            MLP2_ERRORS=$(echo "$MLP2_ERRORS" | tr -d '[:space:]')
+            : "${MLP2_ERRORS:=0}"
+            KNOWN_FP=$((KNOWN_FP + MLP2_ERRORS))
+          fi
+
+          if grep -q "nfl-page16.html" /tmp/whitelist_check.txt 2>/dev/null; then
+            NFL16_ERRORS=$(grep -A50 "\[ERROR\] nfl-page16.html" validator_output.txt 2>/dev/null | grep -c "ROSTER ERROR" 2>/dev/null) || NFL16_ERRORS=0
+            NFL16_ERRORS=$(echo "$NFL16_ERRORS" | tr -d '[:space:]')
+            : "${NFL16_ERRORS:=0}"
+            KNOWN_FP=$((KNOWN_FP + NFL16_ERRORS))
+          fi
+
+          for LEGACY_ROSTER_FILE in \
+            "nba-picks-analysis-against-the-spread-v24.html" \
+            "ohtani-pitches-dodgers-degrom-returns-fried-gilbert-duel-mlb.html" \
+            "rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html" \
+            "yankees-vs-giants-analysis-stats-preview.html"; do
+            if grep -q "$LEGACY_ROSTER_FILE" /tmp/whitelist_check.txt 2>/dev/null; then
+              LEGACY_ERRORS=$(grep -A50 "\[ERROR\] $LEGACY_ROSTER_FILE" validator_output.txt 2>/dev/null | grep -c "ROSTER ERROR" 2>/dev/null) || LEGACY_ERRORS=0
+              LEGACY_ERRORS=$(echo "$LEGACY_ERRORS" | tr -d '[:space:]')
+              : "${LEGACY_ERRORS:=0}"
+              KNOWN_FP=$((KNOWN_FP + LEGACY_ERRORS))
+            fi
+          done
+
+          TOTAL_ERRORS=${TOTAL_ERRORS//[^0-9]/}
+          KNOWN_FP=${KNOWN_FP//[^0-9]/}
+          : "${TOTAL_ERRORS:=0}"
+          : "${KNOWN_FP:=0}"
+          REAL_ERRORS=$((TOTAL_ERRORS - KNOWN_FP))
+          if [ "$REAL_ERRORS" -lt 0 ] 2>/dev/null; then
+            REAL_ERRORS=0
+          fi
+
+          echo "errors=$REAL_ERRORS" >> $GITHUB_OUTPUT
+
+          echo "### Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ $REAL_ERRORS -eq 0 ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+            echo "| Status | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| :white_check_mark: Real Errors | **0** |" >> $GITHUB_STEP_SUMMARY
+            echo "| :information_source: Whitelisted (old archives) | $KNOWN_FP |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "> **Validation PASSED** - Safe to deploy" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            echo "| Status | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| :x: **Real Errors** | **$REAL_ERRORS** |" >> $GITHUB_STEP_SUMMARY
+            echo "| :information_source: Whitelisted (old archives) | $KNOWN_FP |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "> :rotating_light: **Validation FAILED**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Errors Found" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            grep "\[ERROR\]" validator_output.txt \
+              | grep -v "mlb-page2.html" \
+              | grep -v "nfl-page16.html" \
+              | grep -v "nba-picks-analysis-against-the-spread-v24.html" \
+              | grep -v "ohtani-pitches-dodgers-degrom-returns-fried-gilbert-duel-mlb.html" \
+              | grep -v "rangers-moneyline-gore-strikeouts-athletics-sacramento-mlb.html" \
+              | grep -v "yankees-vs-giants-analysis-stats-preview.html" >> $GITHUB_STEP_SUMMARY || true
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+      - name: Validate homepage pick image uniqueness
+        run: |
+          python scripts/validate_homepage_pick_image_uniqueness.py
+
+      - name: Preview-hub SEO regression guard
+        run: |
+          python scripts/validate_preview_hub_seo.py
+
+      - name: Run Daily Discovery Audit
+        run: |
+          python scripts/audit_daily_discovery.py --max-age-days 7
+
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: validator_output.txt
+          retention-days: 30

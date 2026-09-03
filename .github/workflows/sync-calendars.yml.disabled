@@ -1,0 +1,53 @@
+name: Sync Sport Calendars
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'nba*.html'
+      - 'nhl*.html'
+      - 'ncaab*.html'
+      - 'ncaaf*.html'
+      - 'nfl*.html'
+      - 'mlb*.html'
+      - 'soccer*.html'
+      - 'scripts/sync_calendars.py'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  sync-calendars:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run calendar sync
+        run: python scripts/sync_calendars.py
+
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet scripts/*.js; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push calendar updates
+        if: steps.check-changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add scripts/*-calendar.js
+          git commit -m "Auto-sync sport calendars"
+          git push
