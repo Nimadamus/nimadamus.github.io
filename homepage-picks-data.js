@@ -27,11 +27,19 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Chris Sale Has Allowed 1.21 Runs Through Five Innings All Season, And The First Five Under Is Six Units Of Risk",
+        date: "September 4, 2026",
+        url: "braves-phillies-first-five-under-mariners-run-line-yankees-padres-under-six-play-mlb-card.html",
+        image: "images/braves-phillies-first-five-under-mariners-run-line-yankees-padres-under-six-play-mlb-card.jpg"
+    },
+    {
         sport: "NCAAF",
         title: "Colorado Went 0-5 On The Road Last Year, And Georgia Tech Is Five Units To Win",
         date: "September 3, 2026",
         url: "georgia-tech-colorado-moneyline-mariners-run-line-rays-moneyline-three-play-card.html",
-        image: "images/georgia-tech-colorado-moneyline-mariners-run-line-rays-moneyline-three-play-card.jpg"
+        image: "images/georgia-tech-colorado-moneyline-mariners-run-line-rays-moneyline-three-play-card.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
