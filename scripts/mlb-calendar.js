@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-09-04", page: "braves-phillies-first-five-under-mariners-run-line-yankees-padres-under-six-play-mlb-card.html", title: "Braves/Phillies First 5 Under 4.5, Mariners -1, Yankees/Padres Under 7.5: Six Plays, 10.52 Units" },
+    { date: "2026-09-04", page: "sale-sanchez-guardians-doubleheader-sixteen-game-friday-mlb.html", title: "MLB Analysis - September 4, 2026" },
     { date: "2026-09-02", page: "misiorowski-cease-schlittler-fifteen-game-wednesday-mlb.html", title: "MLB Analysis - September 2, 2026" },
     { date: "2026-09-02", page: "misiorowski-cubs-team-total-under-brewers-rangers-moneylines-rays-run-line-seven-play-mlb-pick.html", title: "MLB Picks September 2 2026: Seven Plays, 12.5 Units" },
     { date: "2026-09-01", page: "giants-pirates-first-five-under-guardians-rangers-run-lines-rays-moneyline-four-play-mlb-pick.html", title: "MLB Picks September 1 2026: Four Plays, 8.5 Units" },
