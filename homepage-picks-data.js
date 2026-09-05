@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Parker Messick Has A 2.46 ERA And Cleveland Scores 4.06 A Game, And The Under Is Three Units",
+        date: "September 5, 2026",
+        url: "tigers-guardians-rays-rangers-phillies-six-play-mlb-card-five-unders.html",
+        image: "images/progressive-field-tigers-guardians-under.jpg"
+    },
+    {
         sport: "NCAAF",
         title: "Oregon State Scored 18.2 A Game Last Year, And Houston Is Three Units To Win",
         date: "September 5, 2026",
