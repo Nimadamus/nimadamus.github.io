@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NCAAF",
+        title: "Oregon State Scored 18.2 A Game Last Year, And Houston Is Three Units To Win",
+        date: "September 5, 2026",
+        url: "houston-oregon-lsu-college-football-spreads-three-play-card.html",
+        image: "images/houston-tdecu-stadium-skyline.jpg"
+    },
+    {
         sport: "MLB",
         title: "Chris Sale Has Allowed 1.21 Runs Through Five Innings All Season, And The First Five Under Is Six Units Of Risk",
         date: "September 4, 2026",
