@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NCAAF",
+        title: "Seven Was The Most Common Margin In Games Priced Like This One, So I Paid To Get Louisville Onto +7.5",
+        date: "September 6, 2026",
+        url: "louisville-ole-miss-buying-the-point-to-plus-seven-and-a-half-college-football-pick.html",
+        image: "images/nissan-stadium-louisville-ole-miss-nashville.jpg"
+    },
+    {
+        sport: "NCAAF",
         title: "Wisconsin Scored 9.5 A Game Against Power Four Teams, And The Under Is Two Units",
         date: "September 6, 2026",
         url: "wisconsin-notre-dame-under-46-lambeau-field-college-football-pick.html",
