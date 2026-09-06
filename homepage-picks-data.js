@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "San Francisco Is Starting A Pitcher With Zero Career Starts, And The Over Is 1.5 Units",
+        date: "September 6, 2026",
+        url: "giants-mets-over-eight-pirates-mariners-seven-play-mlb-card-three-sides.html",
+        image: "images/citi-field-giants-mets-over-eight.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Parker Messick Has A 2.46 ERA And Cleveland Scores 4.06 A Game, And The Under Is Three Units",
         date: "September 5, 2026",
         url: "tigers-guardians-rays-rangers-phillies-six-play-mlb-card-five-unders.html",
