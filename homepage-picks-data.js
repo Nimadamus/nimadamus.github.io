@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NCAAF",
+        title: "Wisconsin Scored 9.5 A Game Against Power Four Teams, And The Under Is Two Units",
+        date: "September 6, 2026",
+        url: "wisconsin-notre-dame-under-46-lambeau-field-college-football-pick.html",
+        image: "images/lambeau-field-wisconsin-notre-dame-under.jpg"
+    },
+    {
         sport: "MLB",
         title: "San Francisco Is Starting A Pitcher With Zero Career Starts, And The Over Is 1.5 Units",
         date: "September 6, 2026",
