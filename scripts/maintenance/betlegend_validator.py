@@ -910,8 +910,9 @@ class ContentValidator:
                 for match in matches:
                     context = text[max(0, match.start()-30):min(len(text), match.end()+50)]
                     issues.append((
-                        'ERROR',
-                        f"BANNED CONTENT: Line movement discussions are BANNED per January 24, 2026 rule",
+                        'WARNING',
+                        f"Line movement claim: only publish this when it is backed by a sourced opener, "
+                        f"current number and ticket or money split read in session (Nima, September 6, 2026)",
                         context.strip()
                     ))
 

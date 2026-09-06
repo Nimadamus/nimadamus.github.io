@@ -28,7 +28,7 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NCAAF",
-        title: "Seven Was The Most Common Margin In Games Priced Like This One, So I Paid To Get Louisville Onto +7.5",
+        title: "The Public Is 71 Percent On Ole Miss, The Number Went The Other Way, And I Bought Louisville Back To +7.5",
         date: "September 6, 2026",
         url: "louisville-ole-miss-buying-the-point-to-plus-seven-and-a-half-college-football-pick.html",
         image: "images/nissan-stadium-louisville-ole-miss-nashville.jpg"
