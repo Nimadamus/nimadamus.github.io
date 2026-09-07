@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Six Straight Meetings Went Over, And The Under Is Still Two Units At Comerica",
+        date: "September 7, 2026",
+        url: "twins-tigers-under-eight-blue-jays-moneyline-two-play-mlb-card-comerica.html",
+        image: "images/comerica-park-twins-tigers-under-eight.jpg"
+    },
+    {
         sport: "NCAAF",
         title: "The Public Is 71 Percent On Ole Miss, The Number Went The Other Way, And I Bought Louisville Back To +7.5",
         date: "September 6, 2026",
