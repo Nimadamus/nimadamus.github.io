@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NCAAF",
+        title: "Florida State +3.5 At -136: The Point Through 3 Is The Whole Bet, 2.5 Units",
+        date: "September 7, 2026",
+        url: "florida-state-smu-plus-three-and-a-half-bought-point-college-football-pick.html",
+        image: "images/doak-campbell-florida-state-smu-plus-three-half.jpg"
+    },
+    {
         sport: "MLB",
         title: "Six Straight Meetings Went Over, And The Under Is Still Two Units At Comerica",
         date: "September 7, 2026",
