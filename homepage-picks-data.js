@@ -27,32 +27,43 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Misiorowski Has A 1.62 ERA At Home, And The Cubs Team Total Under Is Three Units",
+        date: "September 8, 2026",
+        url: "cubs-team-total-under-four-and-a-half-tigers-moneyline-two-play-mlb-card-milwaukee.html",
+        image: "images/american-family-field-cubs-team-total-under.jpg"
+    },
+    {
         sport: "NCAAF",
         title: "Florida State +3.5 At -136: The Point Through 3 Is The Whole Bet, 2.5 Units",
         date: "September 7, 2026",
         url: "florida-state-smu-plus-three-and-a-half-bought-point-college-football-pick.html",
-        image: "images/doak-campbell-florida-state-smu-plus-three-half.jpg"
+        image: "images/doak-campbell-florida-state-smu-plus-three-half.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Six Straight Meetings Went Over, And The Under Is Still Two Units At Comerica",
         date: "September 7, 2026",
         url: "twins-tigers-under-eight-blue-jays-moneyline-two-play-mlb-card-comerica.html",
-        image: "images/comerica-park-twins-tigers-under-eight.jpg"
+        image: "images/comerica-park-twins-tigers-under-eight.jpg",
+        result: "L"
     },
     {
         sport: "NCAAF",
         title: "The Public Is 71 Percent On Ole Miss, The Number Went The Other Way, And I Bought Louisville Back To +7.5",
         date: "September 6, 2026",
         url: "louisville-ole-miss-buying-the-point-to-plus-seven-and-a-half-college-football-pick.html",
-        image: "images/nissan-stadium-louisville-ole-miss-nashville.jpg"
+        image: "images/nissan-stadium-louisville-ole-miss-nashville.jpg",
+        result: "W"
     },
     {
         sport: "NCAAF",
         title: "Wisconsin Scored 9.5 A Game Against Power Four Teams, And The Under Is Two Units",
         date: "September 6, 2026",
         url: "wisconsin-notre-dame-under-46-lambeau-field-college-football-pick.html",
-        image: "images/lambeau-field-wisconsin-notre-dame-under.jpg"
+        image: "images/lambeau-field-wisconsin-notre-dame-under.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
