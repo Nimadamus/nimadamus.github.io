@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NFL",
+        title: "Patriots +3.5 At -115: Both Teams Went 14-3, And Only One Of Them Went 8-0 On The Road",
+        date: "September 9, 2026",
+        url: "patriots-plus-three-and-a-half-seahawks-super-bowl-rematch-nfl-week-one-pick.html",
+        image: "images/lumen-field-patriots-seahawks-plus-three-half.jpg"
+    },
+    {
         sport: "MLB",
         title: "Two Team Total Unders, A Bullpen Game Over, And Only One Of Them Is Priced Honestly",
         date: "September 9, 2026",
