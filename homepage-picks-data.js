@@ -28,10 +28,18 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Two Team Total Unders, A Bullpen Game Over, And Only One Of Them Is Priced Honestly",
+        date: "September 9, 2026",
+        url: "reds-team-total-under-three-and-a-half-braves-under-four-and-a-half-four-play-mlb-card.html",
+        image: "images/dodger-stadium-reds-team-total-under.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Misiorowski Has A 1.62 ERA At Home, And The Cubs Team Total Under Is Three Units",
         date: "September 8, 2026",
         url: "cubs-team-total-under-four-and-a-half-tigers-moneyline-two-play-mlb-card-milwaukee.html",
-        image: "images/american-family-field-cubs-team-total-under.jpg"
+        image: "images/american-family-field-cubs-team-total-under.jpg",
+        result: "W"
     },
     {
         sport: "NCAAF",
