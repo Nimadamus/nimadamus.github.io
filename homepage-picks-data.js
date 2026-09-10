@@ -28,17 +28,26 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "NFL",
+        title: "49ers +3.5 And The Yankees Run Line: A Two Play Card Worth 3.5 Units",
+        date: "September 10, 2026",
+        url: "49ers-plus-three-and-a-half-rams-yankees-run-line-two-play-card.html",
+        image: "images/sofi-stadium-49ers-rams-plus-three-half.jpg"
+    },
+    {
+        sport: "NFL",
         title: "Patriots +3.5 At -115: Both Teams Went 14-3, And Only One Of Them Went 8-0 On The Road",
         date: "September 9, 2026",
         url: "patriots-plus-three-and-a-half-seahawks-super-bowl-rematch-nfl-week-one-pick.html",
-        image: "images/lumen-field-patriots-seahawks-plus-three-half.jpg"
+        image: "images/lumen-field-patriots-seahawks-plus-three-half.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Two Team Total Unders, A Bullpen Game Over, And Only One Of Them Is Priced Honestly",
         date: "September 9, 2026",
         url: "reds-team-total-under-three-and-a-half-braves-under-four-and-a-half-four-play-mlb-card.html",
-        image: "images/dodger-stadium-reds-team-total-under.jpg"
+        image: "images/dodger-stadium-reds-team-total-under.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
