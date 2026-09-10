@@ -31,7 +31,7 @@ var HOMEPAGE_PICKS = [
         title: "49ers +3.5 And The Yankees Run Line: A Two Play Card Worth 3.5 Units",
         date: "September 10, 2026",
         url: "49ers-plus-three-and-a-half-rams-yankees-run-line-two-play-card.html",
-        image: "images/sofi-stadium-49ers-rams-plus-three-half.jpg"
+        image: "images/melbourne-cricket-ground-49ers-rams-plus-three-half.jpg"
     },
     {
         sport: "NFL",
