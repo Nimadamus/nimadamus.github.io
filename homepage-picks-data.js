@@ -27,11 +27,19 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Houston Is Starting A Pitcher With Zero Career Starts, And The Rays Are 47-25 At Home",
+        date: "September 11, 2026",
+        url: "rays-moneyline-yankees-team-total-under-four-and-a-half-eight-play-mlb-card.html",
+        image: "images/yankee-stadium-subway-series-under-eight.jpg"
+    },
+    {
         sport: "NFL",
         title: "49ers +3.5 And The Yankees Run Line: A Two Play Card Worth 3.5 Units",
         date: "September 10, 2026",
         url: "49ers-plus-three-and-a-half-rams-yankees-run-line-two-play-card.html",
-        image: "images/melbourne-cricket-ground-49ers-rams-plus-three-half.jpg"
+        image: "images/melbourne-cricket-ground-49ers-rams-plus-three-half.jpg",
+        result: "W"
     },
     {
         sport: "NFL",
