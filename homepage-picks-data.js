@@ -27,18 +27,27 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Paul Skenes Is Pitching To The Best Offense In Baseball, And The Ticket Is The Cubs Team Total Under",
+        date: "September 12, 2026",
+        url: "cubs-team-total-under-four-and-a-half-skenes-pittsburgh-moneyline-five-play-card.html",
+        image: "images/paul-skenes-pirates-cubs-team-total-under.jpg"
+    },
+    {
         sport: "NCAAF",
         title: "Boston College Won Two Games Last Year And One Of Them Was Against An FCS Team, And It Is Laying 3",
         date: "September 11, 2026",
         url: "rutgers-plus-three-boston-college-two-and-ten-at-home-college-football-pick.html",
-        image: "images/alumni-stadium-rutgers-boston-college-plus-three.jpg"
+        image: "images/alumni-stadium-rutgers-boston-college-plus-three.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
         title: "Houston Is Starting A Pitcher With Zero Career Starts, And The Rays Are 47-25 At Home",
         date: "September 11, 2026",
         url: "rays-moneyline-yankees-team-total-under-four-and-a-half-eight-play-mlb-card.html",
-        image: "images/yankee-stadium-subway-series-under-eight.jpg"
+        image: "images/yankee-stadium-subway-series-under-eight.jpg",
+        result: "L"
     },
     {
         sport: "NFL",
