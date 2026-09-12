@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NCAAF",
+        title: "Clemson Just Lost 51-10 And Is Laying Nineteen And A Half, And Texas Gets Number One Ohio State At Home",
+        date: "September 12, 2026",
+        url: "texas-moneyline-ohio-state-georgia-southern-plus-nineteen-and-a-half-clemson-two-play-card.html",
+        image: "images/dkr-texas-memorial-stadium-ohio-state-texas-moneyline.jpg"
+    },
+    {
         sport: "MLB",
         title: "Paul Skenes Is Pitching To The Best Offense In Baseball, And The Ticket Is The Cubs Team Total Under",
         date: "September 12, 2026",
