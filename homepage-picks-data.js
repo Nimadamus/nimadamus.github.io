@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "The Mets Just Scored Twelve On The Yankees, And The Ticket Is Their Team Total Under Against Cam Schlittler",
+        date: "September 13, 2026",
+        url: "mets-team-total-under-three-and-a-half-schlittler-blue-jays-moneyline-four-play-mlb-card.html",
+        image: "images/cam-schlittler-yankees-mets-team-total-under-three-and-a-half.jpg"
+    },
+    {
         sport: "NFL",
         title: "Atlanta Is Down To Its Third Quarterback, And Pittsburgh At -300 Is The Biggest Ticket On A Five Play NFL Card",
         date: "September 13, 2026",
