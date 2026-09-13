@@ -27,18 +27,27 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NFL",
+        title: "Atlanta Is Down To Its Third Quarterback, And Pittsburgh At -300 Is The Biggest Ticket On A Five Play NFL Card",
+        date: "September 13, 2026",
+        url: "steelers-moneyline-falcons-cooper-rush-cowboys-giants-team-total-over-five-play-nfl-card.html",
+        image: "images/acrisure-stadium-pittsburgh-steelers-falcons-cooper-rush.jpg"
+    },
+    {
         sport: "NCAAF",
         title: "Clemson Just Lost 51-10 And Is Laying Nineteen And A Half, And Texas Gets Number One Ohio State At Home",
         date: "September 12, 2026",
         url: "texas-moneyline-ohio-state-georgia-southern-plus-nineteen-and-a-half-clemson-two-play-card.html",
-        image: "images/dkr-texas-memorial-stadium-ohio-state-texas-moneyline.jpg"
+        image: "images/dkr-texas-memorial-stadium-ohio-state-texas-moneyline.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Paul Skenes Is Pitching To The Best Offense In Baseball, And The Ticket Is The Cubs Team Total Under",
         date: "September 12, 2026",
         url: "cubs-team-total-under-four-and-a-half-skenes-pittsburgh-moneyline-five-play-card.html",
-        image: "images/paul-skenes-pirates-cubs-team-total-under.jpg"
+        image: "images/paul-skenes-pirates-cubs-team-total-under.jpg",
+        result: "L"
     },
     {
         sport: "NCAAF",
