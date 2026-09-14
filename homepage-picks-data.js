@@ -27,18 +27,27 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NFL",
+        title: "Mahomes Is Back At Arrowhead, And The Ticket Is Denver +1.5 Against The Rookie Protecting Him",
+        date: "September 14, 2026",
+        url: "broncos-plus-one-and-a-half-mahomes-return-guardians-blue-jays-moneyline-four-play-card.html",
+        image: "images/arrowhead-stadium-broncos-chiefs-monday-night-plus-one-and-a-half.jpg"
+    },
+    {
         sport: "MLB",
         title: "The Mets Just Scored Twelve On The Yankees, And The Ticket Is Their Team Total Under Against Cam Schlittler",
         date: "September 13, 2026",
         url: "mets-team-total-under-three-and-a-half-schlittler-blue-jays-moneyline-four-play-mlb-card.html",
-        image: "images/cam-schlittler-yankees-mets-team-total-under-three-and-a-half.jpg"
+        image: "images/cam-schlittler-yankees-mets-team-total-under-three-and-a-half.jpg",
+        result: "L"
     },
     {
         sport: "NFL",
         title: "Atlanta Is Down To Its Third Quarterback, And Pittsburgh At -300 Is The Biggest Ticket On A Five Play NFL Card",
         date: "September 13, 2026",
         url: "steelers-moneyline-falcons-cooper-rush-cowboys-giants-team-total-over-five-play-nfl-card.html",
-        image: "images/acrisure-stadium-pittsburgh-steelers-falcons-cooper-rush.jpg"
+        image: "images/acrisure-stadium-pittsburgh-steelers-falcons-cooper-rush.jpg",
+        result: "L"
     },
     {
         sport: "NCAAF",
