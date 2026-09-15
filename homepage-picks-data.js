@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "The Athletics Are 2 And 12 When Jack Perkins Starts, And Tampa Bay Is The Biggest Ticket On An Eight Play Card",
+        date: "September 15, 2026",
+        url: "rays-run-line-jack-perkins-cardinals-yankees-moneyline-eight-play-mlb-card.html",
+        image: "images/tropicana-field-rays-athletics-run-line-jack-perkins.jpg"
+    },
+    {
         sport: "NFL",
         title: "Mahomes Is Back At Arrowhead, And The Ticket Is Denver +1.5 Against The Rookie Protecting Him",
         date: "September 14, 2026",
