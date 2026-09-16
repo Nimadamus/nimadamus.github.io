@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Blake Snell Hasn't Allowed A Home Run All Season, And The Reds Have Scored 3 Or Fewer In Every Game Against The Dodgers",
+        date: "September 16, 2026",
+        url: "dodgers-reds-under-blake-snell-rays-padres-brewers-moneyline-five-play-mlb-card.html",
+        image: "images/great-american-ball-park-dodgers-reds-under-blake-snell.jpg"
+    },
+    {
+        sport: "MLB",
         title: "The Athletics Are 2 And 12 When Jack Perkins Starts, And Tampa Bay Is The Biggest Ticket On An Eight Play Card",
         date: "September 15, 2026",
         url: "rays-run-line-jack-perkins-cardinals-yankees-moneyline-eight-play-mlb-card.html",
