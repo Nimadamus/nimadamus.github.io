@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Michael King Has A 1.38 ERA Over His Last Five Starts, And Tanner Gordon Has A 7.47 ERA At Home",
+        date: "September 17, 2026",
+        url: "padres-moneyline-michael-king-coors-white-sox-team-total-under-framber-valdez-two-play-mlb-card.html",
+        image: "images/coors-field-padres-moneyline-michael-king-white-sox-team-total-under.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Blake Snell Hasn't Allowed A Home Run All Season, And The Reds Have Scored 3 Or Fewer In Every Game Against The Dodgers",
         date: "September 16, 2026",
         url: "dodgers-reds-under-blake-snell-rays-padres-brewers-moneyline-five-play-mlb-card.html",
