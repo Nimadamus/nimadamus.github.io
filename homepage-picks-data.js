@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NFL",
+        title: "Pittsburgh Scored 12 Points Last Week And Is Laying 10.5, And Detroit Ran For 165 Yards In Its Opener",
+        date: "September 17, 2026",
+        url: "syracuse-plus-ten-and-a-half-lions-plus-five-and-a-half-detroit-team-total-over-three-play-football-card.html",
+        image: "images/acrisure-stadium-syracuse-pittsburgh-lions-bills-football-card.jpg"
+    },
+    {
         sport: "MLB",
         title: "Michael King Has A 1.38 ERA Over His Last Five Starts, And Tanner Gordon Has A 7.47 ERA At Home",
         date: "September 17, 2026",
