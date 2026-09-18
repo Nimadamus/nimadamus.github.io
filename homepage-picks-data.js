@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "The Yankees Scored Four Or More In 7 Of Their Last 10, And Their Team Total At Chase Field Is 3.5",
+        date: "September 18, 2026",
+        url: "yankees-team-total-over-three-and-a-half-eduardo-rodriguez-diamondbacks-mlb-pick.html",
+        image: "images/chase-field-yankees-team-total-over-eduardo-rodriguez.jpg"
+    },
+    {
         sport: "NCAAF",
         title: "Houston Held Oregon State To 26 Rushing Yards, Texas Tech Got Outgained By The Same Team, And The Red Raiders Are Laying 7.5",
         date: "September 18, 2026",

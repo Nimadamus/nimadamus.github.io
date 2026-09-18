@@ -4,6 +4,7 @@
 
 const ARCHIVE_DATA = [
     { date: "2026-09-18", page: "guardians-run-line-mason-barnett-blue-jays-yankees-mariners-moneyline-royals-braves-team-total-under-six-play-mlb-card.html", title: "Guardians -1, Blue Jays ML -132, Yankees ML -110, Mariners ML -181, Royals And Braves Team Total Unders: Six Play MLB Card, 11.5 Units" },
+    { date: "2026-09-18", page: "yankees-team-total-over-three-and-a-half-eduardo-rodriguez-diamondbacks-mlb-pick.html", title: "Yankees Team Total Over 3.5 At Diamondbacks: 3 Units, MLB Pick" },
     { date: "2026-09-17", page: "padres-moneyline-michael-king-coors-white-sox-team-total-under-framber-valdez-two-play-mlb-card.html", title: "Padres ML -195, White Sox Team Total Under 4.5 -145: Two Play MLB Card, 3.5 Units" },
     { date: "2026-09-16", page: "dodgers-reds-under-blake-snell-rays-padres-brewers-moneyline-five-play-mlb-card.html", title: "Dodgers Reds Under 8.5, Rays ML -173, Padres ML -162, Brewers ML -124: Five Play MLB Card, 10 Units" },
     { date: "2026-09-15", page: "rays-run-line-jack-perkins-cardinals-yankees-moneyline-eight-play-mlb-card.html", title: "Rays -1, Cardinals ML -165, Yankees ML -165, Twins Team Total Under 3.5: Eight Play MLB Card, 17 Units" },
