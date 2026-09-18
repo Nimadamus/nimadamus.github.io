@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Mason Barnett Has Allowed 12 Home Runs In 40.2 Innings, And Cleveland Is Tied For First",
+        date: "September 18, 2026",
+        url: "guardians-run-line-mason-barnett-blue-jays-yankees-mariners-moneyline-royals-braves-team-total-under-six-play-mlb-card.html",
+        image: "images/progressive-field-guardians-athletics-mlb-card.jpg"
+    },
+    {
         sport: "NFL",
         title: "Pittsburgh Scored 12 Points Last Week And Is Laying 10.5, And Detroit Ran For 165 Yards In Its Opener",
         date: "September 17, 2026",
