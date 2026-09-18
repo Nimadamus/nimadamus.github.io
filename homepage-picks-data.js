@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NCAAF",
+        title: "Houston Held Oregon State To 26 Rushing Yards, Texas Tech Got Outgained By The Same Team, And The Red Raiders Are Laying 7.5",
+        date: "September 18, 2026",
+        url: "houston-plus-seven-and-a-half-texas-tech-oregon-state-common-opponent-college-football-pick.html",
+        image: "images/lubbock-stadium-houston-plus-seven-and-a-half-texas-tech.jpg"
+    },
+    {
         sport: "MLB",
         title: "Mason Barnett Has Allowed 12 Home Runs In 40.2 Innings, And Cleveland Is Tied For First",
         date: "September 18, 2026",
