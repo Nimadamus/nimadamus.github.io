@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Freddy Peralta Has Allowed 2 Earned Runs In His Last 23 Innings, And The Rays Are 53 And 26 At Home",
+        date: "September 19, 2026",
+        url: "rays-moneyline-freddy-peralta-guardians-padres-moneyline-blue-jays-rangers-royals-pirates-under-five-play-mlb-card.html",
+        image: "images/petco-park-padres-rays-guardians-five-play-mlb-card.jpg"
+    },
+    {
         sport: "NCAAF",
         title: "LSU Has Allowed 284 Yards In Two Games And Goes To Oxford, Plus Northwestern, Louisville And Virginia",
         date: "September 19, 2026",
