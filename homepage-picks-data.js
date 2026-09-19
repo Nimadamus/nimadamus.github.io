@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NCAAF",
+        title: "LSU Has Allowed 284 Yards In Two Games And Goes To Oxford, Plus Northwestern, Louisville And Virginia",
+        date: "September 19, 2026",
+        url: "northwestern-moneyline-lsu-ole-miss-louisville-smu-virginia-west-virginia-four-play-college-football-card.html",
+        image: "images/martin-stadium-northwestern-colorado-lsu-ole-miss-louisville-virginia-college-football-card.jpg"
+    },
+    {
         sport: "MLB",
         title: "The Yankees Scored Four Or More In 7 Of Their Last 10, And Their Team Total At Chase Field Is 3.5",
         date: "September 18, 2026",
