@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Jack Perkins Has A 6.14 ERA, And Cleveland Has Won Four Straight",
+        date: "September 20, 2026",
+        url: "guardians-moneyline-jack-perkins-rays-brewers-phillies-yankees-two-unders-seven-play-mlb-card.html",
+        image: "images/progressive-field-guardians-athletics-seven-play-mlb-card.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Freddy Peralta Has Allowed 2 Earned Runs In His Last 23 Innings, And The Rays Are 53 And 26 At Home",
         date: "September 19, 2026",
         url: "rays-moneyline-freddy-peralta-guardians-padres-moneyline-blue-jays-rangers-royals-pirates-under-five-play-mlb-card.html",
