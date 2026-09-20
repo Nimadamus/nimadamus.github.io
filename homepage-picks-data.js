@@ -38,70 +38,80 @@ var HOMEPAGE_PICKS = [
         title: "Freddy Peralta Has Allowed 2 Earned Runs In His Last 23 Innings, And The Rays Are 53 And 26 At Home",
         date: "September 19, 2026",
         url: "rays-moneyline-freddy-peralta-guardians-padres-moneyline-blue-jays-rangers-royals-pirates-under-five-play-mlb-card.html",
-        image: "images/petco-park-padres-rays-guardians-five-play-mlb-card.jpg"
+        image: "images/petco-park-padres-rays-guardians-five-play-mlb-card.jpg",
+        result: "W"
     },
     {
         sport: "NCAAF",
         title: "LSU Has Allowed 284 Yards In Two Games And Goes To Oxford, Plus Northwestern, Louisville And Virginia",
         date: "September 19, 2026",
         url: "northwestern-moneyline-lsu-ole-miss-louisville-smu-virginia-west-virginia-four-play-college-football-card.html",
-        image: "images/martin-stadium-northwestern-colorado-lsu-ole-miss-louisville-virginia-college-football-card.jpg"
+        image: "images/martin-stadium-northwestern-colorado-lsu-ole-miss-louisville-virginia-college-football-card.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
         title: "The Yankees Scored Four Or More In 7 Of Their Last 10, And Their Team Total At Chase Field Is 3.5",
         date: "September 18, 2026",
         url: "yankees-team-total-over-three-and-a-half-eduardo-rodriguez-diamondbacks-mlb-pick.html",
-        image: "images/chase-field-yankees-team-total-over-eduardo-rodriguez.jpg"
+        image: "images/chase-field-yankees-team-total-over-eduardo-rodriguez.jpg",
+        result: "W"
     },
     {
         sport: "NCAAF",
         title: "Houston Held Oregon State To 26 Rushing Yards, Texas Tech Got Outgained By The Same Team, And The Red Raiders Are Laying 7.5",
         date: "September 18, 2026",
         url: "houston-plus-seven-and-a-half-texas-tech-oregon-state-common-opponent-college-football-pick.html",
-        image: "images/lubbock-stadium-houston-plus-seven-and-a-half-texas-tech.jpg"
+        image: "images/lubbock-stadium-houston-plus-seven-and-a-half-texas-tech.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Mason Barnett Has Allowed 12 Home Runs In 40.2 Innings, And Cleveland Is Tied For First",
         date: "September 18, 2026",
         url: "guardians-run-line-mason-barnett-blue-jays-yankees-mariners-moneyline-royals-braves-team-total-under-six-play-mlb-card.html",
-        image: "images/progressive-field-guardians-athletics-mlb-card.jpg"
+        image: "images/progressive-field-guardians-athletics-mlb-card.jpg",
+        result: "W"
     },
     {
         sport: "NFL",
         title: "Pittsburgh Scored 12 Points Last Week And Is Laying 10.5, And Detroit Ran For 165 Yards In Its Opener",
         date: "September 17, 2026",
         url: "syracuse-plus-ten-and-a-half-lions-plus-five-and-a-half-detroit-team-total-over-three-play-football-card.html",
-        image: "images/acrisure-stadium-syracuse-pittsburgh-lions-bills-football-card.jpg"
+        image: "images/acrisure-stadium-syracuse-pittsburgh-lions-bills-football-card.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
         title: "Michael King Has A 1.38 ERA Over His Last Five Starts, And Tanner Gordon Has A 7.47 ERA At Home",
         date: "September 17, 2026",
         url: "padres-moneyline-michael-king-coors-white-sox-team-total-under-framber-valdez-two-play-mlb-card.html",
-        image: "images/coors-field-padres-moneyline-michael-king-white-sox-team-total-under.jpg"
+        image: "images/coors-field-padres-moneyline-michael-king-white-sox-team-total-under.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Blake Snell Hasn't Allowed A Home Run All Season, And The Reds Have Scored 3 Or Fewer In Every Game Against The Dodgers",
         date: "September 16, 2026",
         url: "dodgers-reds-under-blake-snell-rays-padres-brewers-moneyline-five-play-mlb-card.html",
-        image: "images/great-american-ball-park-dodgers-reds-under-blake-snell.jpg"
+        image: "images/great-american-ball-park-dodgers-reds-under-blake-snell.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "The Athletics Are 2 And 12 When Jack Perkins Starts, And Tampa Bay Is The Biggest Ticket On An Eight Play Card",
         date: "September 15, 2026",
         url: "rays-run-line-jack-perkins-cardinals-yankees-moneyline-eight-play-mlb-card.html",
-        image: "images/tropicana-field-rays-athletics-run-line-jack-perkins.jpg"
+        image: "images/tropicana-field-rays-athletics-run-line-jack-perkins.jpg",
+        result: "W"
     },
     {
         sport: "NFL",
         title: "Mahomes Is Back At Arrowhead, And The Ticket Is Denver +1.5 Against The Rookie Protecting Him",
         date: "September 14, 2026",
         url: "broncos-plus-one-and-a-half-mahomes-return-guardians-blue-jays-moneyline-four-play-card.html",
-        image: "images/arrowhead-stadium-broncos-chiefs-monday-night-plus-one-and-a-half.jpg"
+        image: "images/arrowhead-stadium-broncos-chiefs-monday-night-plus-one-and-a-half.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
@@ -220,28 +230,32 @@ var HOMEPAGE_PICKS = [
         title: "San Francisco Is Starting A Pitcher With Zero Career Starts, And The Over Is 1.5 Units",
         date: "September 6, 2026",
         url: "giants-mets-over-eight-pirates-mariners-seven-play-mlb-card-three-sides.html",
-        image: "images/citi-field-giants-mets-over-eight.jpg"
+        image: "images/citi-field-giants-mets-over-eight.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Parker Messick Has A 2.46 ERA And Cleveland Scores 4.06 A Game, And The Under Is Three Units",
         date: "September 5, 2026",
         url: "tigers-guardians-rays-rangers-phillies-six-play-mlb-card-five-unders.html",
-        image: "images/progressive-field-tigers-guardians-under.jpg"
+        image: "images/progressive-field-tigers-guardians-under.jpg",
+        result: "W"
     },
     {
         sport: "NCAAF",
         title: "Oregon State Scored 18.2 A Game Last Year, And Houston Is Three Units To Win",
         date: "September 5, 2026",
         url: "houston-oregon-lsu-college-football-spreads-three-play-card.html",
-        image: "images/houston-tdecu-stadium-skyline.jpg"
+        image: "images/houston-tdecu-stadium-skyline.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
         title: "Chris Sale Has Allowed 1.21 Runs Through Five Innings All Season, And The First Five Under Is Six Units Of Risk",
         date: "September 4, 2026",
         url: "braves-phillies-first-five-under-mariners-run-line-yankees-padres-under-six-play-mlb-card.html",
-        image: "images/braves-phillies-first-five-under-mariners-run-line-yankees-padres-under-six-play-mlb-card.jpg"
+        image: "images/braves-phillies-first-five-under-mariners-run-line-yankees-padres-under-six-play-mlb-card.jpg",
+        result: "L"
     },
     {
         sport: "NCAAF",
