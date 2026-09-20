@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NFL",
+        title: "Green Bay Lost 39-22 Last Week, And The Jets Are Still Plus 4 At Home",
+        date: "September 20, 2026",
+        url: "jets-plus-four-vikings-jaguars-colts-four-underdog-nfl-card.html",
+        image: "images/metlife-stadium-jets-packers-plus-four.jpg"
+    },
+    {
         sport: "MLB",
         title: "Jack Perkins Has A 6.14 ERA, And Cleveland Has Won Four Straight",
         date: "September 20, 2026",
