@@ -106,7 +106,7 @@ def parse_archive_urls() -> set[str]:
     if not ARCHIVE.exists():
         return set()
     text = ARCHIVE.read_text(encoding="utf-8")
-    return set(re.findall(r'<li>\s*<a\s+href="([^"]+\.html)"', text))
+    return set(re.findall(r'<li[^>]*>\s*<a[^>]*href="([^"]+\.html)"', text))
 
 
 def main() -> int:
