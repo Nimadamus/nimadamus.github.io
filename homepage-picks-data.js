@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "MLB",
+        title: "Carlos Rodon Has a 2.85 ERA, And the Yankees Game 1 Price Is -141",
+        date: "September 22, 2026",
+        url: "yankees-game-one-moneyline-brewers-phillies-under-red-sox-team-total-five-play-mlb-card.html",
+        image: "images/yankee-stadium-rays-game-one-mlb-card.jpg"
+    },
+    {
         sport: "NFL",
         title: "Green Bay Lost 39-22 Last Week, And The Jets Are Still Plus 4 At Home",
         date: "September 20, 2026",
