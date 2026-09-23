@@ -28,6 +28,13 @@
 var HOMEPAGE_PICKS = [
     {
         sport: "MLB",
+        title: "Chris Sale Has a 2.18 ERA, And the Braves First 5 Price Is -274",
+        date: "September 23, 2026",
+        url: "sale-first-five-braves-nationals-team-total-four-play-mlb-card.html",
+        image: "images/truist-park-braves-first-five-mlb-card.jpg"
+    },
+    {
+        sport: "MLB",
         title: "Carlos Rodon Has a 2.85 ERA, And the Yankees Game 1 Price Is -141",
         date: "September 22, 2026",
         url: "yankees-game-one-moneyline-brewers-phillies-under-red-sox-team-total-five-play-mlb-card.html",
