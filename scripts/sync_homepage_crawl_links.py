@@ -286,6 +286,32 @@ def replace_between(html, start, end, payload):
     return html[:s] + "\n" + payload + "\n        " + html[e:]
 
 
+def stamp_head(html, pick):
+    """The homepage title was a fixed slogan, so Google never saw the day's card."""
+    card = (pick.get("title") or "").strip()
+    when = (pick.get("date") or "").strip()
+    if not card:
+        return html
+    head = "BetLegend Picks Today | " + card
+    desc = "Today's BetLegend card"
+    if when:
+        desc += ", " + when
+    desc += ": " + card + "."
+    pairs = (
+        (r"<title>.*?</title>", "<title>" + esc(head) + "</title>", re.S),
+        (r'(<meta property="og:title" content=")[^"]*', r"\1" + esc(head), 0),
+        (r'(<meta name="twitter:title" content=")[^"]*', r"\1" + esc(head), 0),
+        (r'(<meta name="description" content=")[^"]*', r"\1" + esc(desc), 0),
+        (r'(<meta property="og:description" content=")[^"]*', r"\1" + esc(desc), 0),
+        (r'(<meta name="twitter:description" content=")[^"]*', r"\1" + esc(desc), 0),
+    )
+    for pat, repl, flags in pairs:
+        html, n = re.subn(pat, repl, html, count=1, flags=flags)
+        if n != 1:
+            print("WARN: homepage head pattern missed", pat[:40], file=sys.stderr)
+    return html
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--skip-archive", action="store_true",
@@ -326,6 +352,7 @@ def main(argv=None):
     s = html.index("<!-- STATIC_DISCOVERY_LINKS_START -->") + len("<!-- STATIC_DISCOVERY_LINKS_START -->")
     e = html.index("<!-- STATIC_DISCOVERY_LINKS_END -->")
     html = html[:s] + "\n" + build_static_discovery(analysis) + "\n" + html[e:]
+    html = stamp_head(html, picks[0])
     with open(INDEX, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"[sync_homepage_crawl_links] {min(len(picks),PICKS_GRID_N)} static pick cards + "
