@@ -31,28 +31,32 @@ var HOMEPAGE_PICKS = [
         title: "Chris Sale Has a 2.18 ERA, And the Braves First 5 Price Is -274",
         date: "September 23, 2026",
         url: "sale-first-five-braves-nationals-team-total-four-play-mlb-card.html",
-        image: "images/truist-park-braves-first-five-mlb-card.jpg"
+        image: "images/truist-park-braves-first-five-mlb-card.jpg",
+        result: "L"
     },
     {
         sport: "MLB",
         title: "Carlos Rodon Has a 2.85 ERA, And the Yankees Game 1 Price Is -141",
         date: "September 22, 2026",
         url: "yankees-game-one-moneyline-brewers-phillies-under-red-sox-team-total-five-play-mlb-card.html",
-        image: "images/yankee-stadium-rays-game-one-mlb-card.jpg"
+        image: "images/yankee-stadium-rays-game-one-mlb-card.jpg",
+        result: "L"
     },
     {
         sport: "NFL",
         title: "Green Bay Lost 39-22 Last Week, And The Jets Are Still Plus 4 At Home",
         date: "September 20, 2026",
         url: "jets-plus-four-vikings-jaguars-colts-four-underdog-nfl-card.html",
-        image: "images/metlife-stadium-jets-packers-plus-four.jpg"
+        image: "images/metlife-stadium-jets-packers-plus-four.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
         title: "Jack Perkins Has A 6.14 ERA, And Cleveland Has Won Four Straight",
         date: "September 20, 2026",
         url: "guardians-moneyline-jack-perkins-rays-brewers-phillies-yankees-two-unders-seven-play-mlb-card.html",
-        image: "images/progressive-field-guardians-athletics-seven-play-mlb-card.jpg"
+        image: "images/progressive-field-guardians-athletics-seven-play-mlb-card.jpg",
+        result: "W"
     },
     {
         sport: "MLB",
