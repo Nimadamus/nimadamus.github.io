@@ -322,18 +322,18 @@ def main(argv=None):
         print("ERROR: no HOMEPAGE_PICKS parsed", file=sys.stderr)
         return 2
     html = read(INDEX)
-    for marker in ("<!--PICKS_GRID_START", "<!--PICKS_GRID_END-->",
-                   "<!--CRAWL_LINKS_START", "<!--CRAWL_LINKS_END-->",
+    for marker in ("<!--CRAWL_LINKS_START", "<!--CRAWL_LINKS_END-->",
                    "<!--ANALYSIS_GRID_START-->", "<!--ANALYSIS_GRID_END-->",
                    "<!-- STATIC_DISCOVERY_LINKS_START -->", "<!-- STATIC_DISCOVERY_LINKS_END -->"):
         if marker not in html:
             print(f"ERROR: marker {marker} missing from index.html", file=sys.stderr)
             return 2
-    # 1) static pick cards
-    s = html.index("<!--PICKS_GRID_START")
-    s = html.index("-->", s) + 3
-    e = html.index("<!--PICKS_GRID_END-->")
-    html = html[:s] + "\n" + build_pick_cards(picks) + "\n        " + html[e:]
+    # 1) static pick cards (retired Sep 25 2026: picks now post to blog.html only)
+    if "<!--PICKS_GRID_START" in html and "<!--PICKS_GRID_END-->" in html:
+        s = html.index("<!--PICKS_GRID_START")
+        s = html.index("-->", s) + 3
+        e = html.index("<!--PICKS_GRID_END-->")
+        html = html[:s] + "\n" + build_pick_cards(picks) + "\n        " + html[e:]
     # 2) crawl-links nav
     s = html.index("<!--CRAWL_LINKS_START")
     s = html.index("-->", s) + 3

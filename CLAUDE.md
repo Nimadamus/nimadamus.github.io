@@ -250,38 +250,25 @@ to the rule above. Every new featured/article hero must start from this rule.
 
 ---
 
-## ☠️☠️☠️ ABSOLUTE RULE: PICKS = STANDALONE PAGES ONLY. NEVER POST TO BLOG ARCHIVE. ☠️☠️☠️
+## ☠️☠️☠️ ABSOLUTE RULE: PICKS POST TO blog.html. NO HOMEPAGE PICK CARDS. (NIMA, SEPTEMBER 25, 2026) ☠️☠️☠️
 
-### PERMANENTLY LOCKED - MARCH 30, 2026
-
-**Picks are STANDALONE PAGES ONLY. NEVER post a pick to the blog archive page.**
+**This replaces the March 30, 2026 "standalone pages only" rule.** Nima, Sep 25 2026:
+"let's go back to what we were doing before, just posting to one blog page, one news
+page, no more text cards on the home page."
 
 ### THE RULE:
 ```
-WHEN CREATING A NEW PICK:
-1. Create a standalone HTML page (keyword-rich URL, no date in slug)
-2. Add a card entry to homepage-picks-data.js
-3. DONE. That's it. Two files only.
-
-NEVER TOUCH:
-❌ nba-college-basketball-picks-predictions-analysis-february-2026.html
-❌ Any blog-page*.html file
-❌ Any archive page
-
-The blog archive is FROZEN. It contains historical picks from before
-March 14, 2026. No new picks should ever be added to it.
+WHEN POSTING A PICK:
+1. INSERT a new <div class="blog-post" id="post-YYYYMMDD-slug"> at the TOP of blog.html
+   (directly above <!-- RECENT-ARTICLE-RESTORE-START -->). Keep every existing post.
+2. Do NOT create a standalone pick page.
+3. Do NOT add anything to homepage-picks-data.js. The homepage pick card grid is retired;
+   the homepage only links to blog.html and news.html.
+NEWS: insert new stories at the top of news.html.
 ```
 
-### WHY THIS EXISTS (March 30, 2026):
-A Brewers ML -157 pick was posted to BOTH a standalone page AND the blog
-archive, creating duplicate content. Same full analysis on two URLs.
-Google penalizes duplicate content. This must never happen again.
-
-### AUTOMATED PROTECTION:
-- Pre-commit hook BLOCKS any commit adding new blog-post divs to the archive
-- Run `python scripts/validate_no_duplicate_picks.py` to check for duplicates
-
-**IF I ADD A PICK TO THE BLOG ARCHIVE, THE COMMIT WILL BE BLOCKED.**
+The frozen February 2026 archive page (nba-college-basketball-picks-predictions-analysis-february-2026.html)
+stays frozen. Existing standalone pick pages stay live; never delete or redirect them.
 
 ---
 
@@ -1551,7 +1538,7 @@ SLATE is not done until ALL active sports have pages.
 - **NCAAB posts**: NEW standalone page each day: `[unique-theme]-college-basketball.html` (no date in URL)
 - **NFL posts**: nfl.html (add to TOP)
 - **Featured Game of the Day**: `[away]-vs-[home]-analysis-stats-preview.html` (no date in URL)
-- **Blog picks/analysis**: Standalone pick pages (NOT blog archive)
+- **Blog picks/analysis**: new post at the top of blog.html (no standalone pick page, no homepage card)
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
 - **Hub pages** (nba-previews.html, etc.): Update redirect to point to today's standalone page
 
