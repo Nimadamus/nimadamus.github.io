@@ -27,6 +27,13 @@
 
 var HOMEPAGE_PICKS = [
     {
+        sport: "NCAAF",
+        title: "Army Has Thrown 24 Passes All Season, Temple Allows 3.96 Yards A Carry, And Army Is Laying 3.5 In Philadelphia",
+        date: "September 25, 2026",
+        url: "temple-plus-three-and-a-half-army-option-run-defense-college-football-pick.html",
+        image: "images/lincoln-financial-field-temple-owls-army-plus-three-and-a-half.jpg"
+    },
+    {
         sport: "MLB",
         title: "Chris Sale Has a 2.18 ERA, And the Braves First 5 Price Is -274",
         date: "September 23, 2026",
