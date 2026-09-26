@@ -22,9 +22,9 @@ class BaseScraper:
         self.sport = sport
         self.league = league
         self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        })
+        # ESPN's site API answers 403 to the old truncated browser User-Agent and to custom
+        # bot strings (every run since Feb 2026 logged "No games found" and wrote nothing),
+        # and 200 to the plain requests client string. Keep the requests default.
         self._teams_cache = None
         self._standings_cache = None
 
