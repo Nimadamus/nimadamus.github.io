@@ -127,6 +127,12 @@ ESPN_ODDS_ENDPOINTS = {
 REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_FILE = "handicapping-hub.html"  # Production file
 
+# Nima 2026-09-26: ONE persistent hub URL, updated daily. No new dated copy per day
+# (thin near-duplicate pages whose only difference is the date). The 271 existing
+# handicapping-hub-archive/hub-YYYY-MM-DD.html pages stay live and stay on the
+# calendar; nothing is deleted, redirected or re-canonicalized.
+WRITE_DATED_ARCHIVE = False
+
 SPORTS = {
     'NBA': {
         'espn_path': 'basketball/nba',
@@ -2900,7 +2906,8 @@ def generate_page(all_games: Dict[str, List], date_str: str) -> str:
         _today_iso = datetime.now(EASTERN).strftime('%Y-%m-%d')
     else:
         _today_iso = (datetime.now() - timedelta(hours=5)).strftime('%Y-%m-%d')
-    existing_archive_dates.add(_today_iso)
+    if WRITE_DATED_ARCHIVE:
+        existing_archive_dates.add(_today_iso)
 
     # Build final archive dates list from the now-complete archive folder
     archive_dates = sorted(existing_archive_dates)
@@ -4047,6 +4054,11 @@ def main():
     # copy below, was self-canonical, sat in the sitemap with zero inbound
     # links, and split duplicate-content signals with the rolling hub. The 146
     # legacy root copies are noindexed in place. Do NOT reintroduce this write.
+
+    if not WRITE_DATED_ARCHIVE:
+        print("[SUCCESS] Hub generated (persistent URL handicapping-hub.html; no dated copy).")
+        print("=" * 60)
+        return
 
     # Save directly to archive folder (what the calendar reads)
     archive_dir = os.path.join(REPO_PATH, 'handicapping-hub-archive')
