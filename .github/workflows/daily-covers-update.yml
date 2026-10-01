@@ -15,6 +15,10 @@ env:
 
 jobs:
   update-site:
+    # OPTIONAL (Nima, Oct 1 2026): the Anthropic hub writer is intentionally off (no API
+    # spend on it). The run shows as skipped, not failed. To turn it back on, set the
+    # repository variable AI_HUB_WRITER to "on".
+    if: vars.AI_HUB_WRITER == 'on'
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
