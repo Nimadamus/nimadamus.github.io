@@ -250,6 +250,12 @@ RELATED = (f'<section id="related"><h2>Related NBA betting data</h2><ul class="l
            f'<li><a href="nba-records.html">BetLegend NBA picks record</a></li><li><a href="kelly-criterion.html">Kelly criterion calculator</a></li></ul></section>')
 
 
+def rivalry_file(a, b):
+    x, y = sorted((a, b), key=lambda t: TEAMS[t][0])
+    f = f"{TEAMS[x][0].lower().replace(' ', '-')}-vs-{TEAMS[y][0].lower().replace(' ', '-')}-nba-betting-history.html"
+    return f if os.path.isfile(os.path.join(ROOT, f)) else None
+
+
 def build_team(team, games, cur, aggs, now_pt, finished, ok):
     short, conf, div, _ = TEAMS[team]
     rows = rows_for(games, team)
@@ -349,7 +355,7 @@ def build_team(team, games, cur, aggs, now_pt, finished, ok):
 {faq_html(faq)}
 </section>
 {method(note)}
-<section id="related2"><h2>Division rivals</h2><ul class="links">{"".join(f'<li><a href="{page_file(t)}">{e(t)} betting record</a></li>' for t in rivals)}</ul></section>
+<section id="related2"><h2>Division rivals</h2><ul class="links">{"".join(f'<li><a href="{page_file(t)}">{e(t)} betting record</a></li>' for t in rivals)}{"".join(f'<li><a href="{rv}">{e(short)} vs {e(TEAMS[t][0])} betting history</a></li>' for t, rv in ((t, rivalry_file(team, t)) for t in rivals) if rv)}</ul></section>
 {RELATED}"""
     title = f"{team} ATS Record {label(cur)}: Betting Record, O/U & Trends"
     desc = (f"{team} {label(cur)} betting record: {ats(a, cr)} against the spread, {a['w']}-{a['l']} straight up, {a['o']}-{a['u']}-{a['p']} over/under, "
