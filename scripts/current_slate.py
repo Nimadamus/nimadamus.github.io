@@ -480,7 +480,7 @@ def update_page(path, key, data, now_pt, is_main_hub):
         return False
     rest = page[m.end():end]
     # Other auto-managed blocks (Pro module, email signup) are not "written analysis".
-    rest = re.sub(r"<!-- (PRO-CTA|EMAIL-SIGNUP)-START.*?<!-- \1-END -->", "", rest, flags=re.S)
+    rest = re.sub(r"<!-- (PRO-CTA|EMAIL-SIGNUP|DATA-LINKS)-START.*?<!-- \1-END -->", "", rest, flags=re.S)
     rest_text = re.sub(r"<[^>]+>|\s+", "", rest)
     main_hash = hashlib.sha1(rest_text.encode("utf-8")).hexdigest()[:12]
     has_rest = len(rest_text) > 200
@@ -501,6 +501,8 @@ def update_page(path, key, data, now_pt, is_main_hub):
         title_core = head.replace(" Games Today: ", " Games Today, ").replace(": ", ", ")
         if date_label:
             title = f"{label} Slate, Odds and Analysis for {date_label} | BetLegend"
+            if key == "mlb":  # approved by Nima 2026-10-01 on Search Console evidence (mlb / baseball betting stats)
+                title = f"MLB Betting Odds, Stats and Picks for {date_label} | BetLegend"
             if SPORTS[key]["weekly"]:
                 title = f"{head.replace(' Slate: ', ' Slate, Odds and Analysis: ')} | BetLegend"
         else:
