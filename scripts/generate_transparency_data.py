@@ -540,6 +540,14 @@ def main():
     )
 
     output_path = os.path.join(REPO_ROOT, "transparency-widget-data.js")
+    # Only the timestamp would change when the record has not; skip the write so
+    # scheduled runs do not create empty commits.
+    if os.path.isfile(output_path):
+        with open(output_path, encoding="utf-8") as handle:
+            current = handle.read()
+        if f"sports: {json.dumps(combined_data, indent=4)}" in current:
+            print("No change in the record; transparency-widget-data.js left as is")
+            return
     with open(output_path, "w", encoding="utf-8") as handle:
         handle.write(js_content)
 

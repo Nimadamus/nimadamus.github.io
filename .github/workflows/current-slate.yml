@@ -60,7 +60,9 @@ jobs:
       - name: Build the canonical record
         id: records
         continue-on-error: true
-        run: python scripts/build_canonical_records.py
+        run: |
+          python scripts/build_canonical_records.py
+          python scripts/generate_transparency_data.py
 
       - name: Commit, push and deploy
         env:
@@ -72,7 +74,8 @@ jobs:
                   nhl.html nhl-previews.html ncaab.html college-basketball-previews.html \
                   soccer.html soccer-previews.html index.html mlb-picks-today.html \
                   all-records.json data/records_totals.json mlb-records.html nhl-records.html nfl-records.html \
-                  nba-records.html ncaaf-records.html ncaab-records.html soccer-records.html
+                  nba-records.html ncaaf-records.html ncaab-records.html soccer-records.html \
+                  transparency-widget-data.js
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0

@@ -14,7 +14,13 @@ on:
       - 'soccer-records.html'
       - 'mlb-records.html'
       - 'scripts/generate_transparency_data.py'
+      - 'all-records.json'
+      - 'data/records_totals.json'
   workflow_dispatch:  # Allow manual trigger
+
+concurrency:
+  group: transparency-widget
+  cancel-in-progress: false
 
 permissions:
   contents: write
