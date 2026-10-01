@@ -22,6 +22,9 @@ hook runs it and validate_homepage_crawl_links.py blocks a stale commit.
 import argparse
 import re, sys, os, datetime
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from card_thumbs import card_thumb
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEX = os.path.join(ROOT, "index.html")
 PICKS_DATA = os.path.join(ROOT, "homepage-picks-data.js")
@@ -231,6 +234,8 @@ def build_analysis_cards(items):
         tag = "red" if sport == "MLB" else ("blue" if sport in ("NBA", "NFL") else "")
         tag_attr = f' tag {tag}'.strip() if tag else "tag"
         img = og_image(e["page"]) or SPORT_FALLBACK_IMG.get(sport, "newlogo.png")
+        img, iw, ih = card_thumb(img)
+        size_attr = f' width="{iw}" height="{ih}"' if iw and ih else ""
         title = e.get("title") or e["page"].replace(".html", "").replace("-", " ").title()
         blurb = title if len(title) < 120 else title[:117] + "..."
         d = e.get("date") or ""
@@ -242,7 +247,7 @@ def build_analysis_cards(items):
         feat = " feature" if i == 0 else ""
         cards.append(
             f'      <a class="article-card{feat}" data-card-category="{esc(sport)}" data-card-section="article" href="{esc(e["page"])}">\n'
-            f'        <img data-card-image src="{esc(img)}" alt="{esc(title)}">\n'
+            f'        <img data-card-image src="{esc(img)}" alt="{esc(title)}" loading="lazy" decoding="async"{size_attr}>\n'
             f'        <div class="card-body">\n'
             f'          <span class="{tag_attr}">{esc(sport)}</span>\n'
             f'          <h3>{esc(title)}</h3>\n'
