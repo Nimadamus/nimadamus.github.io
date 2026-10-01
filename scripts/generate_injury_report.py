@@ -7,6 +7,7 @@ Runs hourly via GitHub Actions
 
 import urllib.request
 import json
+import sys
 from datetime import datetime, timezone
 import os
 
@@ -93,13 +94,15 @@ def get_team_logo(sport, team_id):
 
 def fetch_injuries(sport, url):
     try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        # ESPN's site API has answered 403 to the truncated 'Mozilla/5.0' string from
+        # GitHub runners (same finding as commit 55fd8a840a); use the library default.
+        req = urllib.request.Request(url)
         with urllib.request.urlopen(req, timeout=15) as response:
             data = json.loads(response.read().decode())
             return data.get('injuries', [])
     except Exception as e:
         print(f"Error fetching {sport}: {e}")
-        return []
+        return None   # None = feed failed (not "no injuries"); main() refuses to publish
 
 def extract_injury_type(comment):
     if not comment:
@@ -1081,6 +1084,7 @@ def main():
     is_nfl_offseason = current_month in NFL_OFFSEASON_MONTHS
 
     all_data = {}
+    failed = []
     for sport, url in ENDPOINTS.items():
         # Skip fetching MLB during offseason
         if sport == 'MLB' and is_mlb_offseason:
@@ -1096,13 +1100,30 @@ def main():
 
         print(f"Fetching {sport}...")
         teams_data = fetch_injuries(sport, url)
+        if teams_data is None:
+            failed.append(sport)
+            continue
         teams = parse_all_injuries(sport, teams_data)
         all_data[sport] = teams
         total_injured = sum(len(t['players']) for t in teams.values())
         print(f"  {len(teams)} teams, {total_injured} injured players")
 
+    # Oct 1 2026: a failed ESPN feed used to publish an empty "no injuries" section
+    # under a fresh timestamp. Now any failed feed leaves the live page untouched
+    # and the run fails so the workflow shows red.
+    if failed:
+        print(f"FAILED feeds: {', '.join(failed)}. injury-report.html NOT rewritten.")
+        sys.exit(2)
+
     print("\nGenerating HTML...")
     html = generate_html(all_data)
+    # The page showed the VISITOR'S clock as "Last Updated" (client-side JS), so it
+    # always looked current. Bake the real generation time instead.
+    from zoneinfo import ZoneInfo
+    now_pt = datetime.now(ZoneInfo('America/Los_Angeles'))
+    stamp = now_pt.strftime('%B %d, %Y at %I:%M %p PT').replace(' 0', ' ')
+    html = html.replace('Last Updated: Loading...', f'Last Updated: {stamp}')
+    html = html.replace('updateTimestamp();', '').replace('setInterval(updateTimestamp, 60000);', '')
 
     # Determine output path
     script_dir = os.path.dirname(os.path.abspath(__file__))
