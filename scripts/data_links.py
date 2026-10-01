@@ -16,9 +16,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import mlb_team_pages as mtp  # noqa: E402
 import nhl_data_pages as ntp  # noqa: E402
+import nba_data_pages as btp  # noqa: E402
 
 # mlb-picks-today.html gets the block from scripts/picks_today.py, which rebuilds that page.
-PAGES = {"mlb.html": "mlb", "mlb-previews.html": "mlb", "mlb-records.html": "mlb", "records.html": "both",
+PAGES = {"mlb.html": "mlb", "mlb-previews.html": "mlb", "mlb-records.html": "mlb", "records.html": "all",
+         "nba.html": "nba", "nba-previews.html": "nba", "nba-records.html": "nba",
          "nhl.html": "nhl", "nhl-previews.html": "nhl", "nhl-records.html": "nhl", "nhl-betting-hub.html": "nhl",
          "nhl-home-away-splits.html": "nhl", "nhl-team-trends.html": "nhl", "nhl-totals-trends.html": "nhl"}
 START, END = "<!-- DATA-LINKS-START (scripts/data_links.py) -->", "<!-- DATA-LINKS-END -->"
@@ -56,8 +58,21 @@ def nhl_section():
             f"<ul>{items}</ul></section>")
 
 
+def nba_section():
+    teams = sorted(btp.TEAMS, key=lambda t: btp.TEAMS[t][0])
+    items = "".join(f'<li><a href="/{btp.page_file(t)}">{btp.TEAMS[t][0]} ATS record</a></li>' for t in teams)
+    return ("<section class=\"blp-data-links\" aria-label=\"NBA team betting records\">"
+            "<h2>NBA team ATS and betting records</h2>"
+            "<p>Every team against the spread and the total at closing lines, season by season since 2016-17, with home, road, back to back and favorite/underdog splits.</p>"
+            f"<p class=\"hubs\"><a class=\"all\" href=\"/{btp.HUB}\">All 30 teams ranked</a> &middot; "
+            f"<a class=\"all\" href=\"/{btp.ATS_HUB}\">ATS records</a> &middot; <a class=\"all\" href=\"/{btp.OU_HUB}\">Over/under records</a> &middot; "
+            f"<a class=\"all\" href=\"/{btp.B2B_HUB}\">Back to back records</a></p>"
+            f"<ul>{items}</ul></section>")
+
+
 def block(kind="mlb"):
-    parts = {"mlb": [mlb_section()], "nhl": [nhl_section()], "both": [mlb_section(), nhl_section()]}[kind]
+    parts = {"mlb": [mlb_section()], "nhl": [nhl_section()], "nba": [nba_section()],
+             "all": [mlb_section(), nhl_section(), nba_section()]}[kind]
     return f"\n{START}\n{CSS}\n" + "\n".join(parts) + f"\n{END}\n"
 
 

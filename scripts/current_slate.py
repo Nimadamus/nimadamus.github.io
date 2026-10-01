@@ -242,10 +242,10 @@ def fmt_time(t):
 
 def team_page(key, t):
     """The team's betting record page (Phase 5 data pages), when one exists for this sport."""
-    if key not in ("mlb", "nhl"):
+    if key not in ("mlb", "nhl", "nba"):
         return None
     try:
-        mod = __import__("mlb_team_pages" if key == "mlb" else "nhl_data_pages")
+        mod = __import__({"mlb": "mlb_team_pages", "nhl": "nhl_data_pages", "nba": "nba_data_pages"}[key])
     except Exception:
         return None
     name = mod.ALIASES.get(t.get("name"), t.get("name"))

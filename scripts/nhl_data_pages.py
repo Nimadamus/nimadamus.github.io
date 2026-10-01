@@ -168,6 +168,9 @@ def verify_against_espn(cur_games, season):
     return bad
 
 
+from mlb_data_pages import close_is_consistent  # noqa: E402
+
+
 def attach_prices(games, price_dir):
     idx = {}
     for f in glob.glob(os.path.join(price_dir, "nhl_close_prices_*.json")):
@@ -181,7 +184,7 @@ def attach_prices(games, price_dir):
                    if abs((dt.date.fromisoformat(c["date"]) - gd).days) <= 1), None)
         c = (ev or {}).get("close") or {}
         hl = c.get("home_line")
-        if hl is not None and abs(hl) == 1.5 and c.get("home_rl_price") and c.get("away_rl_price"):
+        if hl is not None and abs(hl) == 1.5 and close_is_consistent(c):
             g["plp"] = (hl, c["home_rl_price"], c["away_rl_price"]); n["pl"] += 1
         if c.get("total") and c.get("over_price") and c.get("under_price"):
             g["oup"] = (c["total"], c["over_price"], c["under_price"]); n["ou"] += 1
@@ -350,7 +353,7 @@ def build_team(team, games, cur, aggs, now_pt, finished, pl_ok):
 {"".join(f"<details><summary>{e(q)}</summary><p>{e(x)}</p></details>" for q, x in faq)}
 </section>
 <section id="method"><h2>Methodology</h2>
-<p>{e(note)}Final scores, closing moneylines, the closing 1.5 puck line and closing totals for every regular season game come from the Bet Legend game database; playoff games are excluded. Results include overtime and shootouts, as sportsbooks grade them, and every game is checked against ESPN's official final score. Moneyline units risk 1 unit at the close. Puck line units (where shown) use the DraftKings closing puck line and price published by ESPN. A back to back is a game played the day after the previous one. These are market results, not BetLegend picks; our own picks are on the <a href="nhl-records.html">NHL betting record page</a>.</p>
+<p>{e(note)}Final scores, closing moneylines, the closing 1.5 puck line and closing totals for every regular season game come from the Bet Legend game database; playoff games are excluded. Results include overtime and shootouts, as sportsbooks grade them, and every game is checked against ESPN's official final score. Moneyline units risk 1 unit at the close. Puck line units (where shown) use the sportsbook closing puck line and price ESPN publishes. A back to back is a game played the day after the previous one. These are market results, not BetLegend picks; our own picks are on the <a href="nhl-records.html">NHL betting record page</a>.</p>
 </section>
 <section id="related"><h2>Related NHL betting data</h2>
 {related_html}
@@ -430,7 +433,7 @@ def build_pl_hub(games, cur, now_pt, finished, pl_ok):
     fc = sum(((g["hs"] - g["as"]) if g["line"] < 0 else (g["as"] - g["hs"])) >= 2 for g in curg)
     lead = (f"Every NHL team's puck line record for {label(cur)} at the closing 1.5 line. The {top[0]} covered most often ({top[1]['cov']}-{top[1]['ncov']}) and the "
             f"{bot[0]} least ({bot[1]['cov']}-{bot[1]['ncov']}). Favorites laying 1.5 goals covered {pct(fc, len(curg) - fc)} of the time.")
-    pnote = "Puck line units use the DraftKings closing puck line and price published by ESPN." if pl_ok else "Units are shown only when at least 95% of games have a published closing puck line price."
+    pnote = "Puck line units use the sportsbook closing puck line and price ESPN publishes (DraftKings or ESPN BET)." if pl_ok else "Units are shown only when at least 95% of games have a published closing puck line price."
     faq = [(f"Which NHL team has the best puck line record in {label(cur)}?", f"The {top[0]}: {top[1]['cov']}-{top[1]['ncov']} ({pct(top[1]['cov'], top[1]['ncov'])})."),
            ("How often do NHL favorites cover -1.5?", f"In {label(cur)}, -1.5 favorites covered {fc} of {len(curg)} games ({pct(fc, len(curg) - fc)}). Empty net goals late in close games are a big part of why favorites win by two."),
            ("Does overtime count for the puck line?", "Yes. Sportsbooks grade the puck line on the final score including overtime and the shootout, so a shootout win is a one goal win.")]

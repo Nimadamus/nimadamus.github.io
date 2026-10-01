@@ -59,11 +59,23 @@ def attach_prices(games, price_dir):
             continue
         stats["matched"] += 1
         hl = c.get("home_line")
-        if hl is not None and abs(hl) == 1.5 and c.get("home_rl_price") and c.get("away_rl_price"):
+        if hl is not None and abs(hl) == 1.5 and close_is_consistent(c):
             g["rlp"] = (hl, c["home_rl_price"], c["away_rl_price"]); stats["rl"] += 1
         if c.get("total") and c.get("over_price") and c.get("under_price"):
             g["oup"] = (c["total"], c["over_price"], c["under_price"]); stats["ou"] += 1
     return stats
+
+
+def close_is_consistent(c):
+    """ESPN's published close sometimes swaps the home and away spread (checked 2026-10-01: about 11% of
+    MLB closes put the 1.5 run line on the wrong side of that same book's moneyline favorite). A spread
+    close is used only when its favorite is the moneyline favorite of the same close."""
+    hl, hm, am = c.get("home_line"), c.get("home_ml"), c.get("away_ml")
+    if hl is None or hm is None or am is None or not c.get("home_rl_price") or not c.get("away_rl_price"):
+        return False
+    if hm == am or hl == 0:
+        return True
+    return (hl < 0) == (hm < am)
 
 
 def priced_seasons(games, key):
@@ -217,7 +229,7 @@ def build_ou_hub(games, cur, now_pt, finished, last_date):
     lead = (f"Every MLB team's over/under record for {when} against the closing total. Overs went {lo}-{lu} league wide ({pct(lo, lu)}). "
             f"The {top[0]} were the best over team at {top[1]['o']}-{top[1]['u']}-{top[1]['p']}, and the {bot[0]} the best under team at "
             f"{bot[1]['o']}-{bot[1]['u']}-{bot[1]['p']}.")
-    price_note = ("Over and under units bet 1 unit on every game at the DraftKings closing total and price published by ESPN." if ok else
+    price_note = ("Over and under units bet 1 unit on every game at the sportsbook closing total and price ESPN publishes (ESPN BET in 2025, DraftKings in 2026)." if ok else
                   "Units are shown only for seasons where at least 95% of games have a published closing over/under price.")
     faq = [
         (f"Which MLB team went over the most in {cur}?", f"The {top[0]}: {top[1]['o']}-{top[1]['u']}-{top[1]['p']} against the closing total ({pct(top[1]['o'], top[1]['u'])} overs)."),
@@ -246,7 +258,7 @@ def build_ou_hub(games, cur, now_pt, finished, last_date):
 {"".join(f"<details><summary>{e(q)}</summary><p>{e(x)}</p></details>" for q, x in faq)}
 </section>
 <section id="method"><h2>Methodology</h2>
-<p>Final scores and closing totals for every regular season game since 2016 come from the Bet Legend game database. A game goes over when total runs beat the closing total, under when they fall short, and pushes on an exact match. {e(price_note)} Units use the DraftKings closing total and price that ESPN publishes for each game; when that book closed at a different total than the one in our database, the unit result follows the DraftKings number, so a game can count as an over in the record and still lose in the units column. These are market results, not BetLegend picks.</p>
+<p>Final scores and closing totals for every regular season game since 2016 come from the Bet Legend game database. A game goes over when total runs beat the closing total, under when they fall short, and pushes on an exact match. {e(price_note)} Units use the sportsbook closing total and price that ESPN publishes for each game; when that book closed at a different total than the one in our database, the unit result follows the DraftKings number, so a game can count as an over in the record and still lose in the units column. These are market results, not BetLegend picks.</p>
 </section>
 <section id="related"><h2>Related</h2>
 <ul class="links"><li><a href="{m.HUB}">MLB team betting records</a></li><li><a href="{RL_HUB}">MLB run line records</a></li><li><a href="how-to-bet-mlb-totals.html">How to bet MLB totals</a></li><li><a href="mlb-picks-today.html">MLB picks today</a></li><li><a href="mlb.html">MLB odds, stats and picks</a></li><li><a href="ev-calculator.html">Expected value calculator</a></li></ul>
@@ -341,7 +353,7 @@ def build_rl_hub(games, cur, now_pt, finished, last_date):
     when = f"the {cur} regular season" if finished else f"{cur} through {fdate(last_date)}"
     lead = (f"Every MLB team's run line record for {when} at the closing 1.5 run line. The {top[0]} covered most often ({top[1]['cov']}-{top[1]['ncov']}), "
             f"the {bot[0]} least ({bot[1]['cov']}-{bot[1]['ncov']}). League wide, -1.5 favorites covered {pct(fw, len(allfav) - fw)} of the time.")
-    price_note = ("Run line units bet 1 unit on that side at the DraftKings closing run line and price published by ESPN." if ok else
+    price_note = ("Run line units bet 1 unit on that side at the sportsbook closing run line and price ESPN publishes." if ok else
                   "Units are shown only for seasons where at least 95% of games have a published closing run line price.")
     faq = [
         (f"Which MLB team has the best run line record in {cur}?", f"The {top[0]}: {top[1]['cov']}-{top[1]['ncov']} ({pct(top[1]['cov'], top[1]['ncov'])})."),
@@ -369,7 +381,7 @@ def build_rl_hub(games, cur, now_pt, finished, last_date):
 {"".join(f"<details><summary>{e(q)}</summary><p>{e(x)}</p></details>" for q, x in faq)}
 </section>
 <section id="method"><h2>Methodology</h2>
-<p>Final scores and the closing 1.5 run line for every regular season game since 2016 come from the Bet Legend game database. A side covers when its final margin plus its run line is above zero. {e(price_note)} Units use the DraftKings closing run line and price that ESPN publishes for each game; on the few games where that book hung the run line the other way, the unit result follows the DraftKings line. These are market results, not BetLegend picks.</p>
+<p>Final scores and the closing 1.5 run line for every regular season game since 2016 come from the Bet Legend game database. A side covers when its final margin plus its run line is above zero. {e(price_note)} Units use the sportsbook closing run line and price that ESPN publishes for each game, and only when that close puts the 1.5 runs on the same side as its own moneyline favorite. These are market results, not BetLegend picks.</p>
 </section>
 <section id="related"><h2>Related</h2>
 <ul class="links"><li><a href="{m.HUB}">MLB team betting records</a></li><li><a href="{OU_HUB}">MLB over/under records</a></li><li><a href="spread-vs-moneyline-betting.html">Moneyline vs spread explained</a></li><li><a href="mlb-picks-today.html">MLB picks today</a></li><li><a href="mlb.html">MLB odds, stats and picks</a></li><li><a href="parlay-calculator.html">Parlay calculator</a></li></ul>
