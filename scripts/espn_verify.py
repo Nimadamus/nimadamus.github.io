@@ -69,7 +69,7 @@ def verify(games, sport, abbrs, aliases, espn_season_of, current, team_set):
     def fetch(job):
         t, s = job
         try:
-            return job, team_schedule(sport, abbrs[t], espn_season_of(s), refresh=(s == current))
+            return job, team_schedule(sport, abbrs[t], espn_season_of(s), refresh=(s >= current))
         except Exception:
             return job, None
     sched = {}
