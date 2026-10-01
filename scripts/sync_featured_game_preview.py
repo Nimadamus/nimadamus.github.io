@@ -920,6 +920,47 @@ def _unused_legacy_preview(data, page_filename):
 '''
 
 
+def featured_article_is_current():
+    """True when featured-games-data.js has an entry dated today (Pacific)."""
+    import datetime as _dt
+    from zoneinfo import ZoneInfo
+    today = _dt.datetime.now(ZoneInfo('America/Los_Angeles')).strftime('%Y-%m-%d')
+    try:
+        with open(os.path.join(REPO, 'featured-games-data.js'), 'r', encoding='utf-8', errors='ignore') as f:
+            dates = re.findall(r'date:\s*"(\d{4}-\d{2}-\d{2})"', f.read())
+    except OSError:
+        return False
+    return bool(dates) and max(dates) >= today
+
+
+def sync_live_widget(index_content):
+    """Replace the widget with today's marquee game from the live ESPN slate."""
+    import datetime as _dt
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import current_slate
+    now_pt = _dt.datetime.now(current_slate.PT)
+    key, game = current_slate.pick_featured(now_pt)
+    if not game:
+        print("  No upcoming game found in the ESPN feeds; homepage widget left unchanged.")
+        return False
+    print(f"  No featured article for today; live marquee game: {key.upper()} "
+          f"{game['away']['name']} @ {game['home']['name']} ({game['start'].isoformat()})")
+    new_preview = current_slate.featured_widget_html(key, game, now_pt)
+    pattern = r'<!-- FEATURED-GAME-PREVIEW-START.*?<!-- FEATURED-GAME-PREVIEW-END -->'
+    if not re.search(pattern, index_content, re.DOTALL):
+        print("  ERROR: FEATURED-GAME-PREVIEW markers missing from index.html.")
+        return False
+    updated = re.sub(pattern, lambda m: new_preview, index_content, count=1, flags=re.DOTALL)
+    strip = lambda s: re.sub(r'refreshed [A-Z][a-z]+ \d{1,2} at [0-9:]+ [AP]M PT', '', s)
+    if strip(updated) == strip(index_content):
+        print("  Already in sync - no changes needed.")
+        return True
+    with open(INDEX_PATH, 'w', encoding='utf-8') as f:
+        f.write(updated)
+    print("  SUCCESS: homepage Featured Game widget updated from the live slate.")
+    return True
+
+
 def sync_preview():
     """Main sync function."""
     print("=" * 60)
@@ -929,6 +970,13 @@ def sync_preview():
     # Read index.html
     with open(INDEX_PATH, 'r', encoding='utf-8', errors='ignore') as f:
         index_content = f.read()
+
+    # LIVE FALLBACK (Oct 1 2026): the widget used to mirror only the newest
+    # hand-written Featured Game article, so when those stopped on Aug 29 the
+    # homepage showed MIA @ WSH from Aug 29 for a month. When no article exists
+    # for today (Pacific), show today's marquee game from the ESPN slate instead.
+    if not featured_article_is_current():
+        return sync_live_widget(index_content)
 
     # Find current featured game page
     page_filename = get_current_featured_page(index_content)
