@@ -18,7 +18,7 @@ THUMB_W = 800
 def card_thumb(src, width=THUMB_W, quality=72):
     """Return (path, w, h) for a card thumbnail, or (src, None, None) if it
     cannot be made (remote URL, missing file, no Pillow)."""
-    if not src or src.startswith(("http://", "https://", "data:")):
+    if not src or src.startswith(("http://", "https://", "data:")) or os.path.basename(src) == "newlogo.png":
         return src, None, None
     rel = src.lstrip("/")
     full = os.path.join(ROOT, rel)

@@ -48,6 +48,12 @@ SPORT_FALLBACK_IMG = {
     "NCAAB": "images/kansas-state-bowling-green-1h-under-76-ncaab-december-2025.webp",
     "NCAAF": "images/nfl-panthers-jets-betting-analysis-oct-19-2025.png",
 }
+# Sport hubs carry a daily-refreshed slate (scripts/current_slate.py) and a
+# current date in their title, so the calendars date them today. They are hubs,
+# not new analysis articles, and must never fill a Latest Analysis card.
+SPORT_HUBS = {"mlb.html", "nfl.html", "ncaaf.html", "nba.html", "nhl.html", "ncaab.html", "soccer.html",
+              "mlb-previews.html", "nba-previews.html", "nhl-previews.html", "soccer-previews.html",
+              "college-basketball-previews.html"}
 EVERGREEN_DISCOVERY = [
     ("pro/index.html", "BetLegend Pro"),
     ("kelly-criterion/simple-guide.html", "Simple Kelly Criterion Guide"),
@@ -198,7 +204,7 @@ def analysis_items(picks):
     for src in sources:
         for e in parse_dated_pages(src):
             page = e["page"]
-            if not page.endswith(".html") or is_pick_url(page) or page in seen:
+            if not page.endswith(".html") or is_pick_url(page) or page in seen or page in SPORT_HUBS:
                 continue
             seen[page] = e
     for p in picks:
@@ -210,7 +216,7 @@ def analysis_items(picks):
     keys = ("analysis-stats-preview", "fifteen-game", "soccer.html", "-soccer.html",
             "preseason", "champions-league", "europa-", "laliga")
     for name in os.listdir(ROOT):
-        if not name.endswith(".html") or is_pick_url(name) or name in seen:
+        if not name.endswith(".html") or is_pick_url(name) or name in seen or name in SPORT_HUBS:
             continue
         if not any(k in name for k in keys) and "soccer" not in name and "nfl" not in name:
             continue
