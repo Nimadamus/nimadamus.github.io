@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Closing run line and over/under PRICES for MLB games, from ESPN's published closes.
+"""Closing spread (run line, puck line) and over/under PRICES from ESPN's published closes (MLB, NHL, NBA).
 
 The Bet Legend dataset stores the closing run line and total but not their prices,
 so run line units and over/under units cannot be computed from it. ESPN's core
@@ -20,8 +20,17 @@ import sys
 import time
 import urllib.request
 
-SB = "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates={}&limit=100"
-CORE = "https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/events/{0}/competitions/{0}/odds"
+PATHS = {"mlb": "baseball/mlb", "nhl": "hockey/nhl", "nba": "basketball/nba"}
+SPORT = "mlb"
+
+
+def sb_url(day):
+    return f"https://site.api.espn.com/apis/site/v2/sports/{PATHS[SPORT]}/scoreboard?dates={day}&limit=100"
+
+
+def core_url(eid):
+    lg = PATHS[SPORT].split("/")
+    return f"https://sports.core.api.espn.com/v2/sports/{lg[0]}/leagues/{lg[1]}/events/{eid}/competitions/{eid}/odds"
 
 
 def get(url, tries=3):
@@ -51,7 +60,7 @@ def am(node):
 
 
 def events_on(day):
-    d = get(SB.format(day.strftime("%Y%m%d")))
+    d = get(sb_url(day.strftime("%Y%m%d")))
     out = []
     for ev in d.get("events", []):
         c = ev["competitions"][0]
@@ -65,7 +74,7 @@ def events_on(day):
 
 
 def close_for(eid):
-    items = sorted(get(CORE.format(eid)).get("items") or [], key=lambda it: (it.get("provider") or {}).get("priority", 99))
+    items = sorted(get(core_url(eid)).get("items") or [], key=lambda it: (it.get("provider") or {}).get("priority", 99))
     for it in items:
         h = (it.get("homeTeamOdds") or {}).get("close") or {}
         a = (it.get("awayTeamOdds") or {}).get("close") or {}
@@ -82,10 +91,13 @@ def close_for(eid):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--season", type=int, required=True)
+    ap.add_argument("--sport", default="mlb", choices=sorted(PATHS))
     ap.add_argument("--out", required=True)
     ap.add_argument("--start")
     ap.add_argument("--end")
     a = ap.parse_args()
+    global SPORT
+    SPORT = a.sport
     start = dt.date.fromisoformat(a.start or f"{a.season}-03-15")
     end = dt.date.fromisoformat(a.end or min(dt.date.today().isoformat(), f"{a.season}-10-05"))
     cache = json.load(open(a.out)) if os.path.isfile(a.out) else {}

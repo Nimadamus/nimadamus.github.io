@@ -195,6 +195,31 @@ def verify_against_espn(cur_games, season):
     return bad
 
 
+COVERAGE = {}  # (team, season) -> (kept, espn_games, dropped_rows, missing_games), filled by verified_games()
+
+
+def verified_games(db, cur, check=True):
+    """Load the dataset and keep only games ESPN records identically (regular season, same teams and score).
+    The current season must match ESPN game for game or the build stops."""
+    import espn_verify
+    games = load_games(db)
+    if not check:
+        g2, _ = regular_season(games)
+        return g2, {}, True
+    kept, dropped, report, cur_bad, finished = espn_verify.verify(
+        games, "mlb", ESPN_ABBR, ALIASES, lambda s: s, cur, TEAMS)
+    if cur_bad:
+        sys.exit(f"ABORT: {cur} games disagree with ESPN: {cur_bad}")
+    COVERAGE.clear(); COVERAGE.update(report)
+    by = collections.defaultdict(lambda: [0, 0])
+    for (t, s), (k, n, dr, mi) in report.items():
+        by[s][0] += dr; by[s][1] += mi
+    for s in sorted(by):
+        print(f"  {s}: verified against ESPN; team rows dropped {by[s][0]}, team games missing {by[s][1]}")
+    print(f"  {cur}: every team matches ESPN game for game; season finished={finished}")
+    return kept, report, finished
+
+
 def ml_profit(ml, won):
     if not won:
         return -1.0
@@ -300,7 +325,7 @@ CSS = """body{margin:0;background:#0d0f14;color:#e8ecf2;font-family:Inter,Manrop
 .tr th{text-align:right;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#d4af37;padding:8px;border-bottom:1px solid rgba(212,175,55,.35);white-space:nowrap}
 .tr td{padding:8px;border-bottom:1px solid rgba(255,255,255,.08);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .tr th:first-child,.tr td:first-child{text-align:left}
-.tr td.t{white-space:normal}
+.tr td.t{white-space:normal;text-align:left}
 .tr .w{color:#6fd08f}.tr .l{color:#ef7d6f}
 .tr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:8px 0 4px}
 .tr-stats div{background:#141821;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px}
@@ -426,6 +451,8 @@ def build_team(team, games, all_teams_season, cur, now_pt, rank):
     pm = prev_map(rows)
     file = page_file(team)
     last_date = cur_rows[-1]["date"]
+    import espn_verify
+    cov_note = espn_verify.coverage_note(COVERAGE, team, str)
     span = f"{seasons[-1]} to {seasons[0]}"
     allr = agg(rows)
 
@@ -552,7 +579,8 @@ def build_team(team, games, all_teams_season, cur, now_pt, rank):
 {faq_html}
 </section>
 <section id="method"><h2>Methodology</h2>
-<p>Results and closing lines come from the Bet Legend game database: final scores for every regular season game since {seasons[-1]}, with the closing moneyline, run line and total. Postseason games are excluded. Moneyline units risk 1 unit per game at the close, so a win at -150 pays +0.67u and a win at +130 pays +1.30u. The run line record compares the final margin with the closing line (MLB run lines are 1.5 runs, so there are no pushes). Over and under results compare total runs with the closing total; an exact match is a push. {e(f"{cur} figures run through {fdate(last_date)}.")}</p>
+<p>Results and closing lines come from the Bet Legend game database: final scores for every regular season game since {seasons[-1]}, with the closing moneyline, run line and total. Every game is checked against ESPN's official schedule and final score; postseason games are excluded. Moneyline units risk 1 unit per game at the close, so a win at -150 pays +0.67u and a win at +130 pays +1.30u. The run line record compares the final margin with the closing line (MLB run lines are 1.5 runs, so there are no pushes). Over and under results compare total runs with the closing total; an exact match is a push. {e(f"{cur} figures run through {fdate(last_date)}.")}</p>
+{('<p class="note">' + e(cov_note) + '</p>') if cov_note else ''}
 <p class="note">These are market results for the team, not BetLegend picks. Our own graded picks are on the <a href="mlb-records.html">MLB betting record page</a>.</p>
 </section>
 <section id="related"><h2>Related MLB betting data</h2>
@@ -634,11 +662,8 @@ def main():
     ap.add_argument("--no-espn-check", action="store_true")
     a = ap.parse_args()
     now_pt = dt.datetime.now(PT)
-    games, report = regular_season(load_games(a.db))
-    for s in sorted(report):
-        end, mn, mx, nreg, npost = report[s]
-        print(f"  {s}: regular season through {end}, {nreg} games ({mn}-{mx} per team), {npost} postseason dropped")
     cur = a.season
+    games, report, finished = verified_games(a.db, cur, check=not a.no_espn_check)
     cur_games = [g for g in games if g["season"] == cur]
     if not cur_games:
         sys.exit(f"no {cur} games")
@@ -648,13 +673,7 @@ def main():
         sys.exit(f"ABORT: {len(missing)} {cur} games lack closing lines; refresh the dataset first")
     if any(g["est"] for g in games):
         sys.exit("ABORT: estimated lines present")
-    if not a.no_espn_check:
-        bad = verify_against_espn(cur_games, cur)
-        if bad:
-            sys.exit(f"ABORT: {cur} games disagree with ESPN for {bad}")
-        print(f"  ESPN check: all 30 teams match ESPN game for game")
     last_date = max(g["date"] for g in cur_games)
-    finished = report[cur][0] != "9999-12-31"
     season_aggs = {t: agg(team_rows(cur_games, t)) for t in TEAMS}
     out = {HUB: build_hub(games, cur, season_aggs, now_pt, finished, last_date)}
     meta = []

@@ -44,7 +44,7 @@ ORDER_OVERRIDES = {frozenset(("New York Yankees", "Boston Red Sox")): ("New York
 def attach_prices(games, price_dir):
     """Attach the DraftKings close (line and price) that ESPN publishes, matched by teams, score and date."""
     idx = {}
-    for f in glob.glob(os.path.join(price_dir, "close_prices_*.json")):
+    for f in glob.glob(os.path.join(price_dir, "mlb_close_prices_*.json")):
         for ev in json.load(open(f)).values():
             h = m.ALIASES.get(ev["home"], ev["home"]); a = m.ALIASES.get(ev["away"], ev["away"])
             idx.setdefault((h, a, ev["hs"], ev["as"]), []).append(ev)
@@ -487,7 +487,7 @@ def build_rivalry(a, b, games, now_pt):
 {faq_html}
 </section>
 <section id="method"><h2>Methodology</h2>
-<p>Every regular season meeting since {seasons[-1]} comes from the Bet Legend game database with its final score, closing moneylines, closing 1.5 run line and closing total; postseason meetings are not included. Moneyline units risk 1 unit at the close: a win at -150 pays +0.67u, a win at +130 pays +1.30u. Over and under compare total runs with the closing total, and an exact match is a push. A "clear favorite" is a game where the two closing moneylines differ. These are market results, not BetLegend picks.</p>
+<p>Every regular season meeting since {seasons[-1]} comes from the Bet Legend game database with its final score, closing moneylines, closing 1.5 run line and closing total, and each game is checked against ESPN's official final score; postseason meetings are not included. Moneyline units risk 1 unit at the close: a win at -150 pays +0.67u, a win at +130 pays +1.30u. Over and under compare total runs with the closing total, and an exact match is a push. A "clear favorite" is a game where the two closing moneylines differ. These are market results, not BetLegend picks.</p>
 </section>
 <section id="related"><h2>Related</h2>
 {related_html}
@@ -516,18 +516,12 @@ def main():
     ap.add_argument("--no-espn-check", action="store_true")
     a = ap.parse_args()
     now_pt = dt.datetime.now(m.PT)
-    games, report = m.regular_season(m.load_games(a.db))
     cur = a.season
+    games, report, finished = m.verified_games(a.db, cur, check=not a.no_espn_check)
     cur_games = [g for g in games if g["season"] == cur]
-    if not a.no_espn_check:
-        bad = m.verify_against_espn(cur_games, cur)
-        if bad:
-            sys.exit(f"ABORT: {cur} games disagree with ESPN for {bad}")
-        print("  ESPN check: all 30 teams match ESPN game for game")
     st = attach_prices(games, a.prices)
     print(f"  prices: matched {st['matched']}, run line priced {st['rl']}, totals priced {st['ou']}")
     print("  run line priced seasons:", sorted(priced_seasons(games, "rlp")), " totals priced seasons:", sorted(priced_seasons(games, "oup")))
-    finished = report[cur][0] != "9999-12-31"
     last_date = max(g["date"] for g in cur_games)
     out = {OU_HUB: build_ou_hub(games, cur, now_pt, finished, last_date), RL_HUB: build_rl_hub(games, cur, now_pt, finished, last_date)}
     meta = []
