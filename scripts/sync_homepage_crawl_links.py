@@ -176,6 +176,14 @@ def sport_from_page(page):
         return "NCAAB"
     if "ncaaf" in p or "college-football" in p:
         return "NCAAF"
+    # Dateless featured slugs (e.g. steelers-vs-browns-analysis-stats-preview.html)
+    # carry no sport token; read the page's own ESPN logo path before assuming MLB.
+    try:
+        m = re.search(r"teamlogos/(nfl|nba|nhl|mlb)/", read(os.path.join(ROOT, page)) or "")
+        if m:
+            return m.group(1).upper()
+    except Exception:
+        pass
     return "MLB"
 
 
