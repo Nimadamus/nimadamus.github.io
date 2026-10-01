@@ -166,7 +166,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 @media(max-width:1260px){header.nav{flex-wrap:wrap;padding:14px 22px}header.nav .nav-menu{order:3;width:100%;gap:22px;flex-wrap:wrap}header.nav .nav-item{padding:0}header.nav .dropdown{left:0;transform:none;min-width:min(92vw,760px)}}
 @media(max-width:680px){header.nav{padding:12px 16px}header.nav .brand{font-size:23px}header.nav .trial{display:none}header.nav .dropdown{grid-template-columns:1fr;min-width:calc(100vw - 32px)}}
 </style>
-</head>
+<script>function blCents(x){const a=Math.round(Math.abs(x)*100+1e-6)/100;return (x<0&&a>0?-a:a).toFixed(2);}</script></head>
 <body>
 <header class="nav">
   <a class="brand" href="/"><img src="/newlogo.png" alt="Newlogo">Bet<span>Legend</span></a>
@@ -577,13 +577,13 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
  <tr>
  <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
  <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
- <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${p.units.toFixed(2)}</td>
+ <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${blCents(p.units)}</td>
  </tr>`).join('');
 
  const summaryStats = aggregateStats(filteredPicks);
  document.getElementById('summary-record').textContent = `${summaryStats.wins}-${summaryStats.losses}-${summaryStats.pushes}`;
  const unitsEl = document.getElementById('summary-units');
- unitsEl.textContent = `${summaryStats.totalUnits >= 0 ? '+' : ''}${summaryStats.totalUnits.toFixed(2)}`;
+ unitsEl.textContent = `${summaryStats.totalUnits >= 0 ? '+' : ''}${blCents(summaryStats.totalUnits)}`;
  unitsEl.className = summaryStats.totalUnits >= 0 ? 'units-win' : 'units-loss';
  document.getElementById('summary-win-pct').textContent = summaryStats.wins + summaryStats.losses > 0 ? `${((summaryStats.wins / (summaryStats.wins + summaryStats.losses)) * 100).toFixed(1)}%` : '0.0%';
  const roiEl = document.getElementById('summary-roi');
@@ -758,9 +758,9 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
  var peakUnits = Math.max(...data.cumulative);
  
  document.getElementById('chart-total-bets').textContent = data.totalBets;
- document.getElementById('chart-current-units').textContent = (currentUnits >= 0 ? '+' : '') + currentUnits.toFixed(2);
+ document.getElementById('chart-current-units').textContent = (currentUnits >= 0 ? '+' : '') + blCents(currentUnits);
  document.getElementById('chart-current-units').style.color = currentUnits >= 0 ? '#39FF14' : '#FF3131';
- document.getElementById('chart-peak-units').textContent = (peakUnits >= 0 ? '+' : '') + peakUnits.toFixed(2);
+ document.getElementById('chart-peak-units').textContent = (peakUnits >= 0 ? '+' : '') + blCents(peakUnits);
 
  if(window.__nflUnitsChart) { 
  window.__nflUnitsChart.destroy(); 
@@ -941,5 +941,11 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </section>
 
-    </body>
+    <!-- EMAIL-SIGNUP-START (scripts/email_signup.py) -->
+<style>.blp-email{box-sizing:border-box;max-width:880px;margin:32px auto 40px;padding:22px 24px;border:1px solid rgba(120,170,255,.35);border-radius:12px;background:linear-gradient(160deg,#0f1520,#0d1016);color:#e8ecf2;font-family:inherit;text-align:left}.blp-email .k{margin:0 0 6px;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#7fb2ff}.blp-email h2{margin:0 0 8px;font-size:1.3rem;line-height:1.25;color:#fff}.blp-email p{margin:0 0 12px;color:#c9d0da;line-height:1.55;font-size:.98rem}.blp-email ul{list-style:none;margin:0 0 14px;padding:0}.blp-email li{margin:0 0 8px}.blp-email li label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;color:#dfe5ee;line-height:1.45}.blp-email li input{margin-top:4px;accent-color:#7fb2ff}.blp-email li b{color:#fff}.blp-email .row{display:flex;gap:10px;flex-wrap:wrap}.blp-email input[type=email]{flex:1 1 240px;min-width:0;padding:11px 12px;border-radius:7px;border:1px solid #2b3445;background:#0a0d13;color:#fff;font-size:1rem}.blp-email button{padding:11px 18px;border:0;border-radius:7px;background:#7fb2ff;color:#0b1220;font-weight:700;font-size:1rem;cursor:pointer}.blp-email button:disabled{opacity:.6;cursor:default}.blp-email button:focus-visible,.blp-email input:focus-visible{outline:2px solid #fff;outline-offset:2px}.blp-email .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}.blp-email .s{display:block;margin-top:10px;font-size:.8rem;color:#9aa3af}.blp-email .s a{color:#9fc3ff}.blp-email-msg{margin:10px 0 0;font-size:.95rem}.blp-email-msg.ok{color:#8fe3a8}.blp-email-msg.err{color:#ff9a9a}@media(max-width:600px){.blp-email{margin:24px 12px 32px;padding:18px 16px}}</style>
+<section class="blp-email" aria-label="BetLegend email" data-source="betlegendpicks" data-page-type="records" data-sport="all"><p class="k">Free by email</p><h2>Get our picks and the weekly record in your inbox</h2><form novalidate><ul><li><label><input type="checkbox" name="list" value="betlegend_card" checked> <span><b>The BetLegend Card.</b> The day's picks with the posted price and size, plus yesterday's results, on days we post.</span></label></li><li><label><input type="checkbox" name="list" value="monday_report" checked> <span><b>Monday Record Report.</b> Every graded result from the past week, wins and losses, with the running record.</span></label></li></ul><div class="row"><label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label><input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Email address"><button type="submit">Sign me up</button></div></form><p class="blp-email-msg" role="status" aria-live="polite"></p><span class="s">Free. We email you a confirmation link first, and every email has a one click unsubscribe. <a href="privacy.html">Privacy</a></span></section>
+<script src="blp-events.js" defer></script>
+<script src="blp-email.js" defer></script>
+<!-- EMAIL-SIGNUP-END -->
+</body>
 </html>

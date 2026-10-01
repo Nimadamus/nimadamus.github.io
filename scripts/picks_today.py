@@ -312,6 +312,10 @@ def main(argv=None):
     with open(os.path.join(ROOT, "blog.html"), encoding="utf-8", errors="ignore") as f:
         blog = f.read()
     page = build(a.sport, now_pt, rows, blog, slate)
+    # email signup module (scripts/email_signup.py) right before the FAQ
+    import email_signup
+    label = "Soccer" if a.sport == "soccer" else a.sport.upper()
+    page = page.replace('<section id="faq">', email_signup.block(SPORT_PAGES[a.sport]["file"], "picks", label).lstrip() + '<section id="faq">', 1)
     path = os.path.join(ROOT, SPORT_PAGES[a.sport]["file"])
     old = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
     strip = lambda s: re.sub(r"Updated [A-Z][a-z]+ \d{1,2}, \d{4} at [0-9:]+ [AP]M PT\.|\"dateModified\": \"[^\"]*\"", "", s)

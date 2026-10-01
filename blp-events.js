@@ -11,6 +11,7 @@
    GA4 sees the arrival, checkout starts and purchases with the same campaign tags. */
 (function () {
   'use strict';
+  if (window.blpTrack) return; // the Pro and email modules both include this file
   window.dataLayer = window.dataLayer || [];
   function send(name, params) {
     params = params || {};

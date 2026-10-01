@@ -190,7 +190,8 @@ def load(overrides):
 
 
 def q(x):
-    return float(Decimal(str(x)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP))
+    # round to 6 places first so float noise (14.374999999) cannot flip a half cent
+    return float(Decimal(str(round(x, 6))).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP))
 
 
 def tally(rs):
