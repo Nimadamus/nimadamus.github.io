@@ -84,6 +84,8 @@ def put(path, name, block, anchor_re, dry):
     ls = s.rfind("\n", 0, mm.start()) + 1
     b = (f"{start}\n{BLOCK_CSS}\n{block}\n{end}\n").replace("\n", nl)
     s = s[:ls] + b + s[ls:]
+    if s != s0:  # real content change: the page's dateModified (and so its sitemap lastmod) moves to today
+        s = re.sub(r'("dateModified"\s*:\s*")\d{4}-\d{2}-\d{2}', lambda mm: mm.group(1) + dt.date.today().isoformat(), s)
     if s != s0 and not dry:
         open(full, "w", encoding="utf-8", newline="").write(s)
     print(f"  {path}: {'updated' if s != s0 else 'no change'}")

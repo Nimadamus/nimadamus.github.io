@@ -22,6 +22,7 @@ import datetime as dt
 import glob
 import itertools
 import json
+import re
 import os
 import sys
 
@@ -505,6 +506,28 @@ def build_rivalry(a, b, games, now_pt):
     return file, m.shell(file, title, desc, h1, EXTRA_CSS + body, ld, crumbs, now_pt), {"pair": (A, B), "games": aa["n"], "title": title}
 
 
+def link_rivalries_from_hub():
+    """List all 60 rivalry pages on the MLB team hub (one click from the MLB hubs), grouped by division."""
+    path = os.path.join(ROOT, m.HUB)
+    s = open(path, encoding="utf-8").read()
+    s = re.sub(r"<!-- RIVALRIES-START.*?<!-- RIVALRIES-END -->\n?", "", s, flags=re.S)
+    groups = collections.OrderedDict()
+    for a, b in rivalry_pairs():
+        groups.setdefault(f"{m.TEAMS[a][2]} {m.TEAMS[a][3]}", []).append((a, b))
+    html = "".join(f"<h3>{e(div)}</h3><ul class=\"links\">" + "".join(
+        f'<li><a href="{rivalry_file(a, b)}">{e(SHORT[a])} vs {e(SHORT[b])} betting history</a></li>' for a, b in prs) + "</ul>"
+        for div, prs in sorted(groups.items()))
+    block = (f"<!-- RIVALRIES-START (scripts/mlb_data_pages.py) -->\n<section id=\"rivalries\"><h2>Division rivalry betting history</h2>"
+             f"<p>Every regular season meeting between division rivals since 2016 at closing odds, with moneyline units for both teams, totals and ballpark splits.</p>"
+             f"{html}</section>\n<!-- RIVALRIES-END -->\n")
+    i = s.find('<section id="method">')
+    s = s[:i] + block + s[i:]
+    s = s.replace('<li><a href="mlb-picks-today.html">MLB picks today</a></li><li><a href="mlb.html">MLB slate, odds and analysis</a></li>',
+                  f'<li><a href="{OU_HUB}">MLB over/under records</a></li><li><a href="{RL_HUB}">MLB run line records</a></li>'
+                  '<li><a href="mlb-picks-today.html">MLB picks today</a></li><li><a href="mlb.html">MLB odds, stats and picks</a></li>', 1)
+    open(path, "w", encoding="utf-8", newline="\n").write(s)
+
+
 # ---------------------------------------------------------------- main
 
 def main():
@@ -534,6 +557,7 @@ def main():
         for f, page in out.items():
             with open(os.path.join(ROOT, f), "w", encoding="utf-8", newline="\n") as fh:
                 fh.write(page)
+        link_rivalries_from_hub()
     print(f"[mlb_data_pages] {'would write' if a.dry_run else 'wrote'} {len(out)} pages ({len(meta)} rivalries); "
           f"fewest meetings {min(i['games'] for i in meta)}, most {max(i['games'] for i in meta)}")
     return 0

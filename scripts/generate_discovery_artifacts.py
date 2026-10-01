@@ -147,7 +147,10 @@ def date_from_filename(rel: str) -> str | None:
 
 def published_date_from_content(path: Path) -> str | None:
     content = path.read_text(encoding="utf-8", errors="ignore")
-    iso = re.search(r'(?:datePublished|FORCED_PAGE_DATE)[^0-9]*(\d{4}-\d{2}-\d{2})', content)
+    # dateModified is the page's own statement of its last real content change (accurate lastmod);
+    # git dates are not used first because calendar cache-busting touches hundreds of files.
+    iso = (re.search(r'"dateModified"\s*:\s*"(\d{4}-\d{2}-\d{2})', content)
+           or re.search(r'(?:datePublished|FORCED_PAGE_DATE)[^0-9]*(\d{4}-\d{2}-\d{2})', content))
     if iso:
         return iso.group(1)
     text = re.search(
