@@ -184,6 +184,9 @@ var FEATURED_GAMES = [
     { date: "2026-08-29", page: "marlins-vs-nationals-alcantara-cavalli-analysis-stats-preview.html", title: "Marlins vs Nationals: Alcantara And Cavalli In An Eleven Run Park" },
     { date: "2026-08-22", page: "pirates-vs-dodgers-skubal-jones-analysis-stats-preview.html", title: "Pirates vs Dodgers: Skubal's Fourth Start In Blue" },
 
+    // October 2026
+    { date: "2026-10-01", page: "steelers-vs-browns-analysis-stats-preview.html", title: "Steelers vs Browns: Four 2-1 Teams On Thursday Night Football" },
+
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
