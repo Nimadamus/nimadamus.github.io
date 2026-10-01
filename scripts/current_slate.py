@@ -459,6 +459,8 @@ def update_page(path, key, data, now_pt, is_main_hub):
         print(f"  [{key}] {os.path.basename(path)}: no <main>, skipped")
         return False
     rest = page[m.end():end]
+    # Other auto-managed blocks (Pro module, email signup) are not "written analysis".
+    rest = re.sub(r"<!-- (PRO-CTA|EMAIL-SIGNUP)-START.*?<!-- \1-END -->", "", rest, flags=re.S)
     rest_text = re.sub(r"<[^>]+>|\s+", "", rest)
     main_hash = hashlib.sha1(rest_text.encode("utf-8")).hexdigest()[:12]
     has_rest = len(rest_text) > 200
