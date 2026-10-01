@@ -88,12 +88,12 @@ jobs:
           echo "Auditing latest daily pages for sitemap, links, nav, indexability, and freshness..."
           python scripts/audit_daily_discovery.py --max-age-days 7
 
-      - name: Sync records from Pick Tracker
+      - name: Build the canonical record (approved 2026-10-01)
         id: warn7
         continue-on-error: true
         run: |
-          echo "Syncing records from Pick Tracker..."
-          python scripts/sync_records_from_tracker.py
+          echo "Building all-records.json and the sport record tables from the tracker and the 2025 sheets..."
+          python scripts/build_canonical_records.py
 
       - name: Bake static SEO data (records + upcoming picks)
         id: warn8
@@ -128,7 +128,7 @@ jobs:
         run: |
           fail=0
           echo "## Step outcomes" >> "$GITHUB_STEP_SUMMARY"
-          for kv in "Fix college logos (convert abbreviations to numeric IDs)=${{ steps.warn1.outcome }}" "Sync all calendars=${{ steps.warn2.outcome }}" "Sync featured games data (scan pages - update data file)=${{ steps.warn3.outcome }}" "Sync featured games calendar (data file - calendar JS)=${{ steps.warn4.outcome }}" "Guard featured game freshness=${{ steps.warn5.outcome }}" "Audit daily discovery=${{ steps.warn6.outcome }}" "Sync records from Pick Tracker=${{ steps.warn7.outcome }}" "Bake static SEO data (records + upcoming picks)=${{ steps.warn8.outcome }}"; do
+          for kv in "Fix college logos (convert abbreviations to numeric IDs)=${{ steps.warn1.outcome }}" "Sync all calendars=${{ steps.warn2.outcome }}" "Sync featured games data (scan pages - update data file)=${{ steps.warn3.outcome }}" "Sync featured games calendar (data file - calendar JS)=${{ steps.warn4.outcome }}" "Guard featured game freshness=${{ steps.warn5.outcome }}" "Audit daily discovery=${{ steps.warn6.outcome }}" "Build canonical record=${{ steps.warn7.outcome }}" "Bake static SEO data (records + upcoming picks)=${{ steps.warn8.outcome }}"; do
             echo "- ${kv}" | tee -a "$GITHUB_STEP_SUMMARY"
             case "$kv" in *=failure) fail=1 ;; esac
           done

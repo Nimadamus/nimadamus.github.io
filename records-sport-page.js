@@ -12,6 +12,9 @@
   records.html and the individual sport pages can never disagree.
 */
 (function () {
+  // Round to cents half away from zero, the same rule the published totals use
+  // (scripts/build_canonical_records.py); plain toFixed shows -14.155 as -14.15.
+  function cents(x) { const a = Math.round(Math.abs(x) * 100 + 1e-6) / 100; return (x < 0 && a > 0 ? -a : a).toFixed(2); }
   const DATA_URL = 'all-records.json';
 
   function normalizeResult(value) {
@@ -163,7 +166,7 @@
 
     const unitsEl = document.getElementById('summary-units');
     if (unitsEl) {
-      unitsEl.textContent = (stats.units >= 0 ? '+' : '') + stats.units.toFixed(2);
+      unitsEl.textContent = (stats.units >= 0 ? '+' : '') + cents(stats.units);
       unitsEl.className = stats.units >= 0 ? 'units-win' : 'units-loss';
     }
 
@@ -191,11 +194,11 @@
     if (totalBetsEl) totalBetsEl.textContent = String(rows.length);
     const currentUnitsEl = document.getElementById('chart-current-units');
     if (currentUnitsEl) {
-      currentUnitsEl.textContent = (currentUnits >= 0 ? '+' : '') + currentUnits.toFixed(2);
+      currentUnitsEl.textContent = (currentUnits >= 0 ? '+' : '') + cents(currentUnits);
       currentUnitsEl.style.color = currentUnits >= 0 ? '#39FF14' : '#FF3131';
     }
     const peakUnitsEl = document.getElementById('chart-peak-units');
-    if (peakUnitsEl) peakUnitsEl.textContent = (peakUnits >= 0 ? '+' : '') + peakUnits.toFixed(2);
+    if (peakUnitsEl) peakUnitsEl.textContent = (peakUnits >= 0 ? '+' : '') + cents(peakUnits);
 
     if (!window.Chart) return;
     const canvas = document.getElementById('unitsChart');

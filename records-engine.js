@@ -399,9 +399,43 @@
   }
 
   var _cachedLoad = null;
+  // CANONICAL RECORD (Nima approved 2026-10-01): every records page renders the
+  // deduplicated record built by scripts/build_canonical_records.py into
+  // /all-records.json (tracker from 2025-12-25, the 2025 sport sheets before it,
+  // approved row rulings in data/records_overrides.json). Merging the raw sheets in
+  // the browser double counted some bets and could not apply those rulings, so the
+  // live sheet merge below is kept only as a fallback if the JSON cannot be loaded.
+  function loadCanonicalPicks() {
+    return fetch('/all-records.json?v=' + Date.now(), { cache: 'no-store' })
+      .then(function (res) { if (!res.ok) throw new Error('all-records.json ' + res.status); return res.json(); })
+      .then(function (rows) {
+        if (!Array.isArray(rows) || !rows.length) throw new Error('all-records.json empty');
+        return rows.map(function (r) {
+          var pick = r.Picks || '';
+          var league = r.League || '';
+          if (r.Sport === 'Soccer') {
+            var n = normalizeSoccerRow(r.Date || '', pick, league);
+            pick = n.pick; league = n.league;
+          }
+          return {
+            date: r.Date || '', pick: pick, line: r.Odds || '', result: (r.Result || '').charAt(0),
+            sport: r.Sport, league: league, stake: r.Units ? parseFloat(r.Units) : null,
+            unitPL: parseFloat(r.ProfitLoss) || 0, source: r.Source || 'canonical'
+          };
+        });
+      });
+  }
+
   function loadAllPicks(options) {
     if (_cachedLoad && !(options && options.force)) return _cachedLoad;
+    _cachedLoad = loadCanonicalPicks().catch(function (err) {
+      if (window.console) console.warn('[records-engine] canonical record unavailable, using live sheets', err);
+      return loadLiveSheetPicks();
+    });
+    return _cachedLoad;
+  }
 
+  function loadLiveSheetPicks() {
     var trackerPromise = fetchCSV(PICK_TRACKER_URL).then(function (csv) {
       return parseCSV(csv).map(mapTrackerRow).filter(Boolean);
     });
@@ -412,7 +446,7 @@
       });
     });
 
-    _cachedLoad = Promise.all([trackerPromise, Promise.all(sheetPromises)]).then(function (parts) {
+    return Promise.all([trackerPromise, Promise.all(sheetPromises)]).then(function (parts) {
       var trackerRows = parts[0];
       var sheetBundles = parts[1];
       var sheetBySport = {};
@@ -425,7 +459,6 @@
       });
       return merged;
     });
-    return _cachedLoad;
   }
 
   function parseDateForSort(dateStr) {

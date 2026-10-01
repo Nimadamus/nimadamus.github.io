@@ -324,7 +324,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
  <!-- Year Filter Tabs -->
  <div class="year-filter-wrapper">
  <div class="year-filter-title">Filter by Year</div>
- <div class="year-filter-subtitle">Combined all-sport record. "All Time" shows every graded pick since Sept 2025 - click 2025 or 2026 to isolate a season.</div>
+ <div class="year-filter-subtitle">Combined all-sport record. "All Time" shows every graded pick since May 30, 2025. Click 2025 or 2026 to isolate a season.</div>
  <div class="year-filter-container">
  <button class="year-filter-btn" data-year="2025">2025</button>
  <button class="year-filter-btn" data-year="2026">2026</button>
@@ -338,6 +338,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
  <div class="stat-box"><h3>Win Percentage</h3><p id="summary-win-pct">54.5%</p></div>
  <div class="stat-box"><h3>ROI</h3><p id="summary-roi" class="roi-loss">-1.74%</p></div>
  </div>
+ <p class="records-scope-note" style="margin:10px 0 0;color:#9bb3c9;font-size:13px;text-align:center">The overall record includes cross-sport parlays, single bets that combine two sports. Each sport's own records page counts only that sport's bets.</p>
 
  <!-- CHART SECTION -->
  <section id="units-chart-section" style="max-width:1140px;margin:30px auto;padding:25px;background:linear-gradient(135deg, #0c1220 0%, #1a2332 100%);border-radius:15px;box-shadow:0 0 30px rgba(0,224,255,0.1),inset 0 1px 0 rgba(255,255,255,0.1);border:1px solid rgba(0,224,255,0.2)">
@@ -624,7 +625,8 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
  try {
  const processedPicks = mlbPicksData.map(p => {
  try {
- if (!p.Pick || !p.Result || p.Units === undefined || p.Units === '' || !p.Line || !p.Date) return null;
+ // A missing odds value must not drop a graded bet from the record (Oct 1 2026); -110 is used only to estimate risk.
+ if (!p.Pick || !p.Result || p.Units === undefined || p.Units === '' || !p.Date) return null;
  const pickText = String(p.Pick).trim();
  let resultText = String(p.Result).trim().toUpperCase();
  // Normalize Win/Loss/Push to W/L/P
@@ -632,8 +634,9 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
  else if (resultText === 'LOSS') resultText = 'L';
  else if (resultText === 'PUSH') resultText = 'P';
  const units = parseFloat(p.Units);
- const line = parseFloat(p.Line);
- if (pickText === '' || resultText === '' || isNaN(units) || isNaN(line)) return null;
+ const parsedLine = parseFloat(p.Line);
+ const line = isNaN(parsedLine) ? -110 : parsedLine;
+ if (pickText === '' || resultText === '' || isNaN(units)) return null;
  let risk = 0;
  if (units < 0) {
  risk = Math.abs(units);
@@ -660,8 +663,9 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
  }
  }).filter(p => p !== null).sort((a, b) => b.parsedDate - a.parsedDate);
 
- // Filter out cross-sport parlays (they go on the cross-sport parlays page)
- const singleSportPicks = processedPicks.filter(p => !isCrossSportParlay(p.Pick));
+ // Oct 1 2026: this is the combined record, so it includes cross-sport parlays, exactly like
+ // the approved overall record (all-records.json). Sport pages exclude them.
+ const singleSportPicks = processedPicks;
  allProcessedPicks = singleSportPicks;
  displayFilteredPicks(currentYearFilter);
 

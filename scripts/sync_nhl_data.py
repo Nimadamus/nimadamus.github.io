@@ -32,6 +32,48 @@ TEAM_NAME_MAP = {
 }
 
 
+MIN_GP = 5  # a new season replaces the last one only once every team has played this many games
+SEASONS_URL = "https://api-web.nhle.com/v1/standings-season"
+
+
+def _get(url):
+    req = urllib.request.Request(url, headers={"User-Agent": "BetLegend-Sync/1.0"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+
+def season_label(season_id):
+    s = str(season_id)
+    return f"{s[:4]}-{s[6:8]}" if len(s) == 8 else s
+
+
+def fetch_season_data():
+    """SEASON ROLLOVER (Oct 1 2026). Returns (api_data, label, final_through) where
+    final_through is a date string when the data are a finished season's final
+    standings. The current season is used once every team has MIN_GP games; until
+    then the pages keep the previous season's final standings, clearly labeled.
+    (At the 2026-27 opener some teams had 0 games and the old code divided by zero.)"""
+    now = fetch_api()
+    if now is None:
+        return None, None, None
+    sid = now["standings"][0].get("seasonId")
+    min_gp = min(t.get("gamesPlayed", 0) for t in now["standings"])
+    if min_gp >= MIN_GP:
+        return now, season_label(sid), None
+    try:
+        seasons = _get(SEASONS_URL).get("seasons", [])
+        prev = [x for x in seasons if x.get("id") and x["id"] < sid]
+        end = max(prev, key=lambda x: x["id"])["standingsEnd"]
+        final = _get(f"https://api-web.nhle.com/v1/standings/{end}")
+    except Exception as e:
+        print(f"ERROR: could not load the previous season's final standings: {e}")
+        return None, None, None
+    print(f"{season_label(sid)} has started but the fewest games played is {min_gp} (< {MIN_GP}); "
+          f"keeping {season_label(final['standings'][0].get('seasonId'))} final standings through {end}.")
+    d = datetime.strptime(end, "%Y-%m-%d")
+    return final, season_label(final["standings"][0].get("seasonId")), d.strftime("%B %d, %Y").replace(" 0", " ")
+
+
 def fetch_api():
     """Fetch standings from NHL API. Returns parsed JSON or None on failure."""
     try:
@@ -116,27 +158,45 @@ def compute_league_summary(teams):
     return {
         "total_home_wins": total_hw,
         "total_home_gp": total_home_gp,
-        "home_win_pct": f"{total_hw / total_home_gp * 100:.1f}%",
+        "home_win_pct": f"{total_hw / max(total_home_gp, 1) * 100:.1f}%",
         "total_road_wins": total_rw,
         "total_road_gp": total_road_gp,
-        "road_win_pct": f"{total_rw / total_road_gp * 100:.1f}%",
-        "avg_gf_per_team": round(total_gf / total_gp, 2),
-        "avg_combined_goals": round(total_gf / total_games, 2),
+        "road_win_pct": f"{total_rw / max(total_road_gp, 1) * 100:.1f}%",
+        "avg_gf_per_team": round(total_gf / max(total_gp, 1), 2),
+        "avg_combined_goals": round(total_gf / max(total_games, 1), 2),
     }
+
+
+SEASON = {"label": "2025-26", "final_through": None}  # set by main()
 
 
 def save_json(teams, summary, date_str):
     """Write the canonical JSON data file."""
     data = {
         "last_updated": date_str,
-        "source": "NHL API (api-web.nhle.com/v1/standings/now)",
-        "season": "2025-26",
+        "source": "NHL API (api-web.nhle.com/v1/standings)",
+        "season": SEASON["label"],
+        "final_through": SEASON["final_through"],
         "league_summary": summary,
         "teams": teams,
     }
     with open(JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
     print(f"Updated {JSON_PATH}")
+
+
+def relabel(html, date_str):
+    """Season label, 'as of' wording and 'Last updated' date, all from the data in use."""
+    lab = SEASON["label"]
+    def season_sub(m):
+        a, b = int(m.group(1)), int(m.group(2))
+        return lab if (a + 1) % 100 == b else m.group(0)
+    html = re.sub(r"(?<![\d/-])(20\d\d)-(\d\d)(?![\d-])", season_sub, html)
+    as_of = (f"as of the end of the {lab} regular season ({SEASON['final_through']})"
+             if SEASON["final_through"] else f"as of {date_str}")
+    html = re.sub(r"as of (?:the end of the \d{4}-\d\d regular season \([A-Z][a-z]+ \d{1,2}, \d{4}\)|[A-Z][a-z]+ \d{1,2}, \d{4})", as_of, html)
+    html = re.sub(r"Last updated: [^.]+\.", f"Last updated: {date_str}.", html)
+    return html
 
 
 def fmt_pct(numerator, denominator):
@@ -176,12 +236,7 @@ def update_splits_page(teams, summary, date_str):
         rf'\g<1>{worst_h_rec}\g<2>{worst_h_pct} win rate\3', html)
 
     # Update date references
-    html = re.sub(
-        r'as of March \d+, 2026',
-        f'as of {date_str}', html)
-    html = re.sub(
-        r'Last updated: [^.]+\.',
-        f'Last updated: {date_str}.', html)
+    html = relabel(html, date_str)
 
     # Rebuild division tables
     for div_name in ["Atlantic", "Metropolitan", "Central", "Pacific"]:
@@ -239,7 +294,7 @@ def update_totals_page(teams, summary, date_str):
         rf'\g<1>{summary["avg_gf_per_team"]}\2', html)
 
     # Update highest/lowest scoring
-    team_combined = [(t, round((t["gf"] + t["ga"]) / t["gp"], 2)) for t in teams]
+    team_combined = [(t, round((t["gf"] + t["ga"]) / max(t["gp"], 1), 2)) for t in teams]
     highest = max(team_combined, key=lambda x: x[1])
     lowest = min(team_combined, key=lambda x: x[1])
 
@@ -252,16 +307,15 @@ def update_totals_page(teams, summary, date_str):
 
     # Update per-team GF/GP, GA/GP, Combined in the table
     for t in teams:
-        gfgp = round(t["gf"] / t["gp"], 2)
-        gagp = round(t["ga"] / t["gp"], 2)
-        combined = round((t["gf"] + t["ga"]) / t["gp"], 2)
+        gfgp = round(t["gf"] / max(t["gp"], 1), 2)
+        gagp = round(t["ga"] / max(t["gp"], 1), 2)
+        combined = round((t["gf"] + t["ga"]) / max(t["gp"], 1), 2)
         # Find the row for this team and update GF/GP, GA/GP, Combined columns
         pattern = rf'(<td>{re.escape(t["name"])}</td>.*?<td>\d+\.\d+%</td><td>)\d+\.\d+(</td><td>)\d+\.\d+(</td><td>)\d+\.\d+(</td>)'
         replacement = rf'\g<1>{gfgp:.2f}\g<2>{gagp:.2f}\g<3>{combined:.2f}\4'
         html = re.sub(pattern, replacement, html)
 
-    html = re.sub(r'as of March \d+, 2026', f'as of {date_str}', html)
-    html = re.sub(r'Last updated: [^.]+\.', f'Last updated: {date_str}.', html)
+    html = relabel(html, date_str)
 
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
@@ -280,8 +334,7 @@ def update_trends_page(teams, date_str):
         pattern = rf'(<td>{re.escape(t["name"])}</td><td>)\d+-\d+-\d+(</td>)'
         html = re.sub(pattern, rf'\g<1>{overall}\2', html)
 
-    html = re.sub(r'as of March \d+, 2026', f'as of {date_str}', html)
-    html = re.sub(r'Last updated: [^.]+\.', f'Last updated: {date_str}.', html)
+    html = relabel(html, date_str)
 
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
@@ -294,7 +347,7 @@ def update_hub_page(date_str):
     with open(path, "r", encoding="utf-8") as f:
         html = f.read()
 
-    html = re.sub(r'Last updated: [^.]+\.', f'Last updated: {date_str}.', html)
+    html = relabel(html, date_str)
 
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
@@ -368,7 +421,9 @@ def main():
     print("=" * 60)
 
     # Step 1: Fetch from API
-    api_data = fetch_api()
+    api_data, label, final_through = fetch_season_data()
+    if api_data is not None:
+        SEASON["label"], SEASON["final_through"] = label, final_through
     if api_data is None:
         print("SAFEGUARD: API fetch failed. Existing data preserved. No changes made.")
         sys.exit(1)
@@ -387,9 +442,21 @@ def main():
             print(f"  - {e}")
         sys.exit(1)
 
+    # Step 3b: Only a real data change moves "Last updated" (it used to be restamped
+    # every day while the standings sat unchanged since April).
+    relabel_only = "--relabel" in sys.argv
+    try:
+        prev = json.load(open(JSON_PATH, encoding="utf-8"))
+    except Exception:
+        prev = {}
+    if prev.get("teams") == teams and prev.get("season") == SEASON["label"] and not relabel_only:
+        print(f"No change in {SEASON['label']} standings since {prev.get('last_updated')}. Nothing written.")
+        return
+
     # Step 4: Compute league summary
     summary = compute_league_summary(teams)
-    date_str = datetime.now().strftime("%B %d, %Y").replace(" 0", " ")
+    from zoneinfo import ZoneInfo
+    date_str = datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%B %d, %Y").replace(" 0", " ")
 
     print(f"\nDate: {date_str}")
     print(f"Teams: {len(teams)}")
@@ -412,7 +479,14 @@ def main():
     save_json(teams, summary, date_str)
     update_splits_page(teams, summary, date_str)
     update_totals_page(teams, summary, date_str)
-    update_trends_page(teams, date_str)
+    # nhl-team-trends.html also carries ATS and puck line columns from a static
+    # source for its own season. Never relabel it to a new season whose ATS data
+    # we do not have; it keeps its season until that data exists.
+    trends_html = open(os.path.join(REPO_ROOT, "nhl-team-trends.html"), encoding="utf-8").read()
+    if SEASON["label"] in trends_html:
+        update_trends_page(teams, date_str)
+    else:
+        print(f"nhl-team-trends.html left on its own season: no {SEASON['label']} ATS source yet.")
     update_hub_page(date_str)
 
     # Step 7: Post-write validation

@@ -486,109 +486,52 @@ def fetch_tracker_pick_maps():
 # ---- Main ----
 
 def main():
-    # Each sport's records page uses a specific data flow. We mirror it exactly.
-    #
-    # "html_then_tracker" (NHL, NFL, NCAAF):
-    #   HTML table is primary, Pick Tracker supplements with new picks
-    #
-    # "sheet_then_tracker" (NBA, NCAAB, MLB):
-    #   Google Sheet is primary, Pick Tracker supplements with new picks
-    #   (HTML table is just a static snapshot, NOT used for calculations)
-    #
-    # "sheet_only" (Soccer):
-    #   Google Sheet only, no Pick Tracker
-
-    # STEP 1: Parse HTML tables (for html_then_tracker sports)
-    print("Step 1: Parsing HTML tables (NHL, NFL, NCAAF)...")
-    html_picks = {}
-    for sport in ALL_SPORTS:
-        if SPORT_DATA_MODE[sport] == "html_then_tracker":
-            filepath = os.path.join(REPO_ROOT, HTML_RECORDS_PAGES[sport])
-            pick_map = parse_html_table(filepath)
-            html_picks[sport] = pick_map
-            stats = build_stats(pick_map)
-            print(
-                f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
-                f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} picks"
-            )
-
-    # STEP 2: Fetch Google Sheets (for sheet-based sports)
-    print("\nStep 2: Fetching Google Sheets (NBA, NCAAB, MLB, Soccer)...")
-    sheet_picks = {}
-    for sport, url in SHEET_URLS.items():
-        try:
-            rows = fetch_csv_rows(url)
-            pick_map = sheet_rows_to_pick_map(rows)
-            sheet_picks[sport] = pick_map
-            stats = build_stats(pick_map)
-            print(
-                f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
-                f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} picks"
-            )
-        except Exception as e:
-            print(f"  {sport:8s}: ERROR fetching sheet - {e}")
-            sheet_picks[sport] = {}
-
-    # STEP 3: Fetch Pick Tracker
-    print("\nStep 3: Fetching Pick Tracker...")
-    tracker_picks, skipped = fetch_tracker_pick_maps()
-    if skipped:
-        print(f"  Skipped {skipped} ambiguous tracker rows")
-    for sport in ALL_SPORTS:
-        count = len(tracker_picks.get(sport, {}))
-        if count:
-            print(f"  {sport:8s}: {count} picks from Tracker")
-
-    # STEP 4: Merge per sport using the CORRECT data flow
-    print("\nStep 4: Merging (matching each records page's logic)...")
+    # Oct 1 2026: the widget reads the canonical record (all-records.json, built by
+    # scripts/build_canonical_records.py from the approved Pick Tracker + sport
+    # sheets). It used to run its own merge, which disagreed with the records pages.
+    with open(os.path.join(REPO_ROOT, "all-records.json"), encoding="utf-8") as handle:
+        rows = json.load(handle)
+    with open(os.path.join(REPO_ROOT, "data", "records_totals.json"), encoding="utf-8") as handle:
+        totals = json.load(handle)
+    per_sport = {sport: {} for sport in ALL_SPORTS}
+    for i, row in enumerate(rows):
+        sport = row.get("Sport")
+        if sport not in per_sport:
+            continue  # cross-sport parlays count only in the overall record
+        key = f"{row.get('Date', '')}|{row.get('Picks', '')}|{i}"
+        per_sport[sport][key] = (
+            normalize_result(row.get("Result")),
+            safe_float(row.get("ProfitLoss")),
+            safe_float(row.get("Odds"), default=0.0),
+        )
     combined_data = {}
     for sport in ALL_SPORTS:
-        mode = SPORT_DATA_MODE[sport]
-        merged = {}
-
-        if mode == "html_then_tracker":
-            # Start with HTML table, add tracker picks not already present
-            merged.update(html_picks.get(sport, {}))
-            base_count = len(merged)
-            for key, value in tracker_picks.get(sport, {}).items():
-                if key not in merged:
-                    merged[key] = value
-            added = len(merged) - base_count
-            source_desc = f"HTML:{base_count} +Tracker:{added}"
-
-        elif mode == "sheet_then_tracker":
-            # Start with Google Sheet, add tracker picks not already present
-            merged.update(sheet_picks.get(sport, {}))
-            base_count = len(merged)
-            for key, value in tracker_picks.get(sport, {}).items():
-                if key not in merged:
-                    merged[key] = value
-            added = len(merged) - base_count
-            source_desc = f"Sheet:{base_count} +Tracker:{added}"
-
-        elif mode == "sheet_only":
-            # Google Sheet only
-            merged.update(sheet_picks.get(sport, {}))
-            source_desc = f"Sheet:{len(merged)}"
-
-        stats = build_stats(merged)
+        stats = build_stats(per_sport[sport])
+        wins = sum(1 for r, _, _ in per_sport[sport].values() if r == "W")
+        losses = sum(1 for r, _, _ in per_sport[sport].values() if r == "L")
+        pushes = len(per_sport[sport]) - wins - losses
+        # units come from records_totals.json (full precision sum); all-records.json rows are rounded to 4 places
+        units = totals["by_sport"][sport]["units"] if sport in totals["by_sport"] else 0.0
+        stats.update(wins=wins, losses=losses, pushes=pushes, totalUnits=units, totalPicks=len(per_sport[sport]),
+                     winPct=round(wins / (wins + losses) * 100, 1) if (wins + losses) else 0.0)
+        expected = totals["by_sport"].get(sport)
+        if expected and (stats["wins"], stats["losses"], stats["pushes"]) != (
+                expected["wins"], expected["losses"], expected["pushes"]) or (
+                expected and abs(stats["totalUnits"] - expected["units"]) > 0.006):
+            raise SystemExit(f"{sport}: widget totals {stats} disagree with records_totals.json {expected}")
         combined_data[sport] = {
             "displayName": DISPLAY_NAMES[sport],
             "recordsLink": RECORDS_LINKS[sport],
             **stats,
         }
-        print(
-            f"  {sport:8s}: {stats['wins']}-{stats['losses']}-{stats['pushes']} | "
-            f"Units: {stats['totalUnits']:+.2f} | {stats['totalPicks']} total "
-            f"({source_desc})"
-        )
+        print(f"  {sport:8s}: {wins}-{losses}-{pushes} | Units: {stats['totalUnits']:+.2f}")
 
     # STEP 5: Write JS file
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     js_content = (
         f"// Auto-generated by scripts/generate_transparency_data.py\n"
         f"// Last updated: {now}\n"
-        f"// Source: records page HTML tables + Google Sheets + Pick Tracker\n"
+        f"// Source: all-records.json (canonical record)\n"
         f"// DO NOT EDIT MANUALLY - run the script to regenerate\n\n"
         f"const TRANSPARENCY_DATA = {{\n"
         f"  lastUpdated: \"{now}\",\n"
