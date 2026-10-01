@@ -293,7 +293,8 @@ CSS = """<style id="current-slate-css">
 #current-slate{margin:0 0 32px;padding:22px 22px 18px;border:1px solid rgba(212,175,55,.35);border-radius:12px;background:linear-gradient(160deg,#141821,#0d1016);color:#e8ecf2;font-family:inherit}
 #current-slate h2{margin:0 0 4px;font-size:1.45rem;line-height:1.25;color:#fff}
 #current-slate .cs-sub{margin:0 0 14px;color:#aeb6c2;font-size:.92rem}
-#current-slate .cs-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+#current-slate{max-width:100%;box-sizing:border-box}
+#current-slate .cs-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;width:0;min-width:100%}
 #current-slate table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:560px}
 #current-slate th{text-align:left;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#d4af37;padding:8px 8px;border-bottom:1px solid rgba(212,175,55,.35)}
 #current-slate td{padding:9px 8px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top;line-height:1.4}
@@ -507,6 +508,30 @@ def update_page(path, key, data, now_pt, is_main_hub):
         h1_text = f"{label} Game Previews and Odds: " + (head.split(": ", 1)[1] if ": " in head else head)
         page = re.sub(r"(<header[^>]*class=[\"'][^\"']*\bhero\b[^\"']*[\"'][^>]*>.*?<h1[^>]*>)(.*?)(</h1>)",
                       lambda mm: mm.group(1) + esc(h1_text) + mm.group(3), page, count=1, flags=re.S | re.I)
+    # Hero badge and intro line used to describe the last written article
+    # ("NFL Archive", "Spring Training 2026", a June Game 6 recap). Describe the slate instead.
+    games, mode = slate_window(data, now_pt)
+    stype = next((g["season_type"] for g in games if g.get("season_type") in ("Preseason", "Postseason")), None)
+    if SPORTS[key]["weekly"] and data.get("week") and stype != "Postseason":
+        badge = f"{label} Week {data['week']}"
+    else:
+        badge = f"{label} {stype}" if stype else f"{label} Today"
+    if games:
+        n = len(games)
+        when = {"today": "on today's board", "next": "on the next game day", "week": "this week",
+                "past": "on the board"}[mode]
+        intro = (f"{n} {label} game{'s' if n != 1 else ''} {when}, with start times, records and the current "
+                 f"lines for every one, refreshed automatically four times a day. BetLegend picks post to the blog, "
+                 f"and any written analysis further down this page carries its own date.")
+    else:
+        intro = (f"No {label} games are on the schedule right now. Start times and lines appear here "
+                 f"automatically as soon as the schedule is posted.")
+    hero = re.search(r"(<header[^>]*class=[\"'][^\"']*\bhero\b[^\"']*[\"'][^>]*>)(.*?)(</header>)", page, re.S | re.I)
+    if hero:
+        inner = hero.group(2)
+        inner = re.sub(r'(<div class="hero-badge">)(.*?)(</div>)', lambda mm: mm.group(1) + esc(badge) + mm.group(3), inner, count=1, flags=re.S)
+        inner = re.sub(r"(</h1>\s*<p[^>]*>)(.*?)(</p>)", lambda mm: mm.group(1) + esc(intro) + mm.group(3), inner, count=1, flags=re.S)
+        page = page[:hero.start(2)] + inner + page[hero.end(2):]
     iso = now_pt.replace(microsecond=0).isoformat()
     page = re.sub(r'("dateModified"\s*:\s*")[^"]*(")', lambda mm: mm.group(1) + iso + mm.group(2), page)
     page = re.sub(r'(<meta\s+property=["\']article:modified_time["\']\s+content=["\'])[^"\']*', lambda mm: mm.group(1) + iso, page)

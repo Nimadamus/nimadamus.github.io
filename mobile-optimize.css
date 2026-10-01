@@ -621,3 +621,31 @@
   object-position: center 20%;
 }
 .team-logo{ object-fit: contain; }
+
+/* MOBILE-OVERFLOW-GUARD (Oct 1 2026, Nima: no horizontal scrolling at 390/375/360 px).
+   Layout only, no redesign. Wide data tables scroll inside themselves instead of
+   widening the page, oversized images shrink to the screen, two fixed-padding blocks
+   get phone padding, and as a last line the page itself never scrolls sideways.
+   overflow-x:clip (not hidden) keeps sticky headers working. Same block lives in
+   site-navbar.css for pages that do not load this file. */
+@media (max-width: 768px) {
+  html, body { overflow-x: clip; }
+  img, video { max-width: 100%; height: auto; }
+  main, .main-content, .page-wrapper, .container, .page-wrap { min-width: 0; }
+  table.ev-table, table.bt-table, .records-table, table:has(#picks-table-body),
+  .blog-post table, .preview-content table, .game-preview table, .container table {
+    display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%;
+  }
+  .year-filter-container { flex-wrap: wrap; }
+  header.nav { flex-wrap: wrap !important; }
+  header.nav .nav-menu { order: 3; flex: 1 1 100% !important; width: 100% !important; max-width: 100%; }
+  header.nav .nav-item, header.nav .dropbtn, header.nav .nav-menu > a { white-space: normal; max-width: 100%; }
+  .methodology-section [style*="minmax(350px"] { grid-template-columns: 1fr !important; }
+  header.nav.blp-standard-nav { flex-wrap: wrap !important; padding: 12px 16px !important; min-height: 0 !important; }
+  header.nav.blp-standard-nav .nav-menu { order: 3 !important; flex: 1 1 100% !important; width: 100% !important;
+    flex-wrap: wrap !important; gap: 6px 18px !important; justify-content: center !important; font-size: 14px !important; }
+  header.nav.blp-standard-nav .nav-item { padding: 8px 0 !important; }
+  .methodology-section { padding: 28px 18px !important; margin: 2rem 0 !important; }
+  .access-options { grid-template-columns: 1fr !important; }
+  .access-card { min-width: 0 !important; max-width: 100%; box-sizing: border-box; }
+}
