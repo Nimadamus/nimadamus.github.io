@@ -316,6 +316,9 @@ def main(argv=None):
     import email_signup
     label = "Soccer" if a.sport == "soccer" else a.sport.upper()
     page = page.replace('<section id="faq">', email_signup.block(SPORT_PAGES[a.sport]["file"], "picks", label).lstrip() + '<section id="faq">', 1)
+    if a.sport == "mlb":  # team betting record links (scripts/data_links.py)
+        import data_links
+        page = page.replace('<section id="faq">', data_links.block().lstrip() + '<section id="faq">', 1)
     path = os.path.join(ROOT, SPORT_PAGES[a.sport]["file"])
     old = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
     strip = lambda s: re.sub(r"Updated [A-Z][a-z]+ \d{1,2}, \d{4} at [0-9:]+ [AP]M PT\.|\"dateModified\": \"[^\"]*\"", "", s)
