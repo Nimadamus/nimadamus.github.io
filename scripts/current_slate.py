@@ -701,7 +701,9 @@ def main(argv=None):
             json.dump(dump, f, indent=1, default=str)
     print(f"[current_slate] updated {len(changed)} page(s): {', '.join(changed) or 'none'}"
           + (f"; feed failures: {', '.join(failed)}" if failed else ""))
-    return 0
+    # Non-zero when any feed failed so the workflow run turns red; pages for the
+    # sports that did update are still written before this returns.
+    return 2 if failed else 0
 
 
 if __name__ == "__main__":

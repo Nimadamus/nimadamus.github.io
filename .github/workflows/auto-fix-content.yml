@@ -10,11 +10,15 @@ on:
   workflow_dispatch:
     # Allow manual trigger from GitHub Actions UI
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   validate-and-fix:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
 
     steps:
       - name: Checkout repository
@@ -28,24 +32,28 @@ jobs:
           python-version: '3.11'
 
       - name: Fix college logos (convert abbreviations to numeric IDs)
+        id: warn1
         continue-on-error: true
         run: |
           echo "Fixing college logo URLs..."
           python scripts/college_logo_ids.py
 
       - name: Sync all calendars
+        id: warn2
         continue-on-error: true
         run: |
           echo "Syncing all sport calendars..."
           python scripts/sync_calendars.py
 
       - name: Sync featured games data (scan pages - update data file)
+        id: warn3
         continue-on-error: true
         run: |
           echo "Scanning featured game pages for missing entries..."
           python scripts/sync_featured_games_data.py
 
       - name: Sync featured games calendar (data file - calendar JS)
+        id: warn4
         continue-on-error: true
         run: |
           echo "Syncing featured games calendar..."
@@ -62,6 +70,7 @@ jobs:
           python scripts/validate_calendar_integrity.py
 
       - name: Guard featured game freshness
+        id: warn5
         continue-on-error: true   # WARN-ONLY (June 22, 2026): a stale-featured warning must NEVER halt the job before the sitemap is regenerated + committed below. A failing freshness gate here was silently skipping every step after it (sitemap gen + commit/push), so new daily pages never entered the sitemap and Google never saw them.
         run: |
           echo "Checking Featured Game of the Day freshness..."
@@ -73,18 +82,21 @@ jobs:
           python scripts/generate_discovery_artifacts.py
 
       - name: Audit daily discovery
+        id: warn6
         continue-on-error: true   # WARN-ONLY: never block the sitemap commit below on an audit warning.
         run: |
           echo "Auditing latest daily pages for sitemap, links, nav, indexability, and freshness..."
           python scripts/audit_daily_discovery.py --max-age-days 7
 
       - name: Sync records from Pick Tracker
+        id: warn7
         continue-on-error: true
         run: |
           echo "Syncing records from Pick Tracker..."
           python scripts/sync_records_from_tracker.py
 
       - name: Bake static SEO data (records + upcoming picks)
+        id: warn8
         continue-on-error: true   # WARN-ONLY: bake writes NOTHING on failure, so the previous good baked data stays published — never block the sitemap/records commit below. A failed bake means Google keeps seeing yesterday's real numbers, not empty shells.
         run: |
           echo "Baking hydrated records/upcoming-picks data into static HTML..."
@@ -105,5 +117,22 @@ jobs:
             echo "No changes needed"
           else
             git commit -m "Auto-sync: calendars, logos, records"
-            git push || echo "Push failed - will retry next scheduled run"
+            bash scripts/ci_push_and_deploy.sh
+          fi
+
+      # Oct 1 2026 (Nima): steps above are continue-on-error so one failure does not
+      # block the commit and deploy, but a failure must never look like success.
+      # This step lists every step's outcome and fails the run if any failed.
+      - name: Report step outcomes (fails the run if any step failed)
+        if: always()
+        run: |
+          fail=0
+          echo "## Step outcomes" >> "$GITHUB_STEP_SUMMARY"
+          for kv in "Fix college logos (convert abbreviations to numeric IDs)=${{ steps.warn1.outcome }}" "Sync all calendars=${{ steps.warn2.outcome }}" "Sync featured games data (scan pages - update data file)=${{ steps.warn3.outcome }}" "Sync featured games calendar (data file - calendar JS)=${{ steps.warn4.outcome }}" "Guard featured game freshness=${{ steps.warn5.outcome }}" "Audit daily discovery=${{ steps.warn6.outcome }}" "Sync records from Pick Tracker=${{ steps.warn7.outcome }}" "Bake static SEO data (records + upcoming picks)=${{ steps.warn8.outcome }}"; do
+            echo "- ${kv}" | tee -a "$GITHUB_STEP_SUMMARY"
+            case "$kv" in *=failure) fail=1 ;; esac
+          done
+          if [ "$fail" = 1 ]; then
+            echo "::error::One or more steps failed. Their output above is stale or missing; see the list."
+            exit 1
           fi

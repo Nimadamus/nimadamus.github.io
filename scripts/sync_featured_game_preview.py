@@ -941,8 +941,9 @@ def sync_live_widget(index_content):
     now_pt = _dt.datetime.now(current_slate.PT)
     key, game = current_slate.pick_featured(now_pt)
     if not game:
+        # Not a failure: some days (All-Star breaks, late at night) have no game left to start.
         print("  No upcoming game found in the ESPN feeds; homepage widget left unchanged.")
-        return False
+        return True
     print(f"  No featured article for today; live marquee game: {key.upper()} "
           f"{game['away']['name']} @ {game['home']['name']} ({game['start'].isoformat()})")
     new_preview = current_slate.featured_widget_html(key, game, now_pt)

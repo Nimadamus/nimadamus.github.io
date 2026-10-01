@@ -6,6 +6,13 @@ name: Update Live Feed Daily
 on:
   workflow_dispatch:       # Allows manual run in Actions tab
 
+permissions:
+  contents: write
+  actions: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   update-feed:
     runs-on: ubuntu-latest
@@ -41,6 +48,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Auto-update live feed"
-            git pull --rebase origin main || true
-            git push
+            bash scripts/ci_push_and_deploy.sh
           fi

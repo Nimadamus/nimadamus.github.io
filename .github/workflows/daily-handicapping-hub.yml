@@ -6,6 +6,13 @@ on:
     - cron: '0 15 * * *'
   workflow_dispatch:  # Allow manual trigger
 
+permissions:
+  contents: write
+  actions: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   update-handicapping-hub:
     runs-on: ubuntu-latest
@@ -158,5 +165,5 @@ jobs:
               exit 1
             fi
 
-            git push
+            bash scripts/ci_push_and_deploy.sh
           fi

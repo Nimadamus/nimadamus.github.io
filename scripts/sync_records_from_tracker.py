@@ -15,6 +15,7 @@ import csv
 import io
 import os
 import re
+import sys
 import urllib.request
 from datetime import datetime
 
@@ -22,7 +23,14 @@ from datetime import datetime
 PICK_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1izhxwiiazn99SRqcK8QpUE4pfvDRIFpgSyw5ZlMsvmY/export?format=csv&gid=0'
 
 # Repo path
-REPO_PATH = r'C:\Users\Nima\nimadamus.github.io'
+# Repo-relative (Oct 1 2026): this was a hardcoded C:/Users/Nima path, so on the Linux
+# runner every records page was 'not found, skipping' and records froze on June 2, 2026.
+REPO_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# PUBLISH GATE (Nima, Oct 1 2026): the rebuilt record must be deduped and approved before it
+# is published. Until then the script reports what it WOULD change and writes nothing unless
+# run with --write. The daily workflow runs it without --write.
+WRITE = '--write' in sys.argv
 
 # Sport mapping - how to identify picks for each sport from the tracker
 SPORT_CONFIG = {
@@ -421,12 +429,13 @@ def update_records_page(sport_key, picks):
         new_tbody = f'{match.group(1)}\n{all_rows}\n                {match.group(2)}'
         new_html = html[:match.start()] + new_tbody + html[match.end():]
 
-        # Write updated file
-        with open(file_path, 'w', encoding='utf-8') as f:
-            f.write(new_html)
+        # Write updated file (only with --write; see PUBLISH GATE above)
+        if WRITE:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(new_html)
 
         if new_picks:
-            print(f"  {sport_key.upper()}: Added {len(new_picks)} new picks, re-sorted {len(all_picks)} total picks by date")
+            print(f"  {sport_key.upper()}: {'Added' if WRITE else 'Would add'} {len(new_picks)} new picks, re-sorted {len(all_picks)} total picks by date")
         else:
             print(f"  {sport_key.upper()}: Re-sorted {len(all_picks)} picks by date (no new picks)")
         return len(new_picks)
@@ -495,6 +504,10 @@ def main():
     print(f"COMPLETE: Added {total_added} total new picks across all sports")
     print("=" * 60)
     print()
+    if not WRITE:
+        print("DRY RUN (no --write): no records page or all-records.json was modified.")
+        print(f"PENDING_NEW_PICKS={total_added}")
+        return
     print("Rebuilding all-records.json from per-sport JSONs...")
     try:
         import build_all_records_json

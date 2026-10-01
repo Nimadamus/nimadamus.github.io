@@ -6,6 +6,13 @@ name: Update Odds Page Daily
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   update-odds:
     runs-on: ubuntu-latest
@@ -42,8 +49,7 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Auto-update odds-live.html"
-            git pull --rebase origin main || true
-            git push
+            bash scripts/ci_push_and_deploy.sh
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -43,9 +43,13 @@ jobs:
         run: pip install requests
 
       - name: Bake current slate into sport hubs
+        id: slate
+        continue-on-error: true
         run: python scripts/current_slate.py
 
       - name: Sync homepage Featured Game
+        id: featured
+        continue-on-error: true
         run: python scripts/sync_featured_game_preview.py
 
       - name: Commit, push and deploy
@@ -72,3 +76,12 @@ jobs:
           done
           echo "ERROR: could not push after 3 attempts"
           exit 1
+
+      - name: Report step outcomes (fails the run if any step failed)
+        if: always()
+        run: |
+          echo "slate=${{ steps.slate.outcome }} featured=${{ steps.featured.outcome }}" | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.slate.outcome }}" = failure ] || [ "${{ steps.featured.outcome }}" = failure ]; then
+            echo "::error::A feed or the featured game sync failed; affected pages kept their previous content."
+            exit 1
+          fi

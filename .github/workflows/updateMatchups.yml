@@ -3,6 +3,13 @@ name: Update Matchups Daily
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,4 +43,4 @@ jobs:
           git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git
           git add matchups.html
           git commit -m "Update matchups" || echo "No changes to commit"
-          git push
+          bash scripts/ci_push_and_deploy.sh

@@ -7,6 +7,13 @@ name: Update Internal Links
 on:
   workflow_dispatch:  # Manual trigger only
 
+permissions:
+  contents: write
+  actions: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   update-links:
     runs-on: ubuntu-latest
@@ -37,4 +44,4 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add -A
           git commit -m "Auto-update internal links"
-          git push
+          bash scripts/ci_push_and_deploy.sh
