@@ -649,3 +649,26 @@
   .access-options { grid-template-columns: 1fr !important; }
   .access-card { min-width: 0 !important; max-width: 100%; box-sizing: border-box; }
 }
+
+/* DESKTOP-LAYOUT-GUARD (Oct 1 2026, Nima: fix desktop nav overflow and sidebar overlap,
+   layout only, verify 1280/1366/1440/1920). The nav row was wider than 1280 to 1440 px
+   screens (items do not wrap and the Free Trial button was pushed off the right edge),
+   blog images were wider than the post column, and between 1201 and 1560 px the fixed
+   calendar sidebar sat on top of the centered article column. */
+@media (min-width: 769px) {
+  header.nav .nav-menu { flex-wrap: wrap !important; min-width: 0 !important; }
+  header.nav .trial { flex-shrink: 0; }
+  .blog-post img, .blog-post figure img { max-width: 100%; height: auto; }
+}
+@media (min-width: 769px) and (max-width: 1600px) {
+  header.nav .nav-menu { gap: 6px 12px !important; font-size: 13px !important; letter-spacing: .02em !important; }
+  header.nav.blp-standard-nav .nav-menu { gap: 6px 12px !important; font-size: 13px !important; letter-spacing: .02em !important; }
+  header.nav.blp-standard-nav { padding: 0 20px !important; gap: 16px !important; }
+  header.nav .brand, header.nav.blp-standard-nav .brand { font-size: 24px !important; }
+  header.nav { gap: 16px !important; padding-left: 20px !important; padding-right: 20px !important; }
+}
+@media (min-width: 1201px) and (max-width: 1560px) {
+  body:has(.calendar-sidebar) .page-wrapper { margin-left: 320px !important; margin-right: 24px !important; max-width: none !important; }
+  body:has(.calendar-sidebar) header.hero { padding-left: 320px !important; box-sizing: border-box; }
+  .calendar-sidebar { top: 210px !important; }
+}

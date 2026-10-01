@@ -535,6 +535,10 @@ def update_page(path, key, data, now_pt, is_main_hub):
         inner = re.sub(r'(<div class="hero-badge">)(.*?)(</div>)', lambda mm: mm.group(1) + esc(badge) + mm.group(3), inner, count=1, flags=re.S)
         inner = re.sub(r"(</h1>\s*<p[^>]*>)(.*?)(</p>)", lambda mm: mm.group(1) + esc(intro) + mm.group(3), inner, count=1, flags=re.S)
         page = page[:hero.start(2)] + inner + page[hero.end(2):]
+    # Hubs that load neither shared stylesheet get the small layout guard (no sideways
+    # scrolling on phones, nav and sidebar fit desktop widths).
+    if "mobile-optimize.css" not in page and "layout-guard.css" not in page and "</head>" in page:
+        page = page.replace("</head>", '<link rel="stylesheet" href="/layout-guard.css">\n</head>', 1)
     iso = now_pt.replace(microsecond=0).isoformat()
     page = re.sub(r'("dateModified"\s*:\s*")[^"]*(")', lambda mm: mm.group(1) + iso + mm.group(2), page)
     page = re.sub(r'(<meta\s+property=["\']article:modified_time["\']\s+content=["\'])[^"\']*', lambda mm: mm.group(1) + iso, page)
