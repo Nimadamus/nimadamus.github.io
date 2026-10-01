@@ -502,7 +502,15 @@ def build_team(team, games, all_teams_season, cur, now_pt, rank):
     ]
     faq_html = "".join(f"<details><summary>{e(q)}</summary><p>{e(x)}</p></details>" for q, x in faq)
 
-    related = [(f"{t} betting record", page_file(t)) for t in rivals]
+    def rivalry(t):
+        for x, y in ((team, t), (t, team)):
+            f = f"{TEAMS[x][0].lower().replace(' ', '-')}-vs-{TEAMS[y][0].lower().replace(' ', '-')}-betting-history.html"
+            if os.path.isfile(os.path.join(ROOT, f)):
+                return f
+        return None
+    related = [(f"{short} vs {TEAMS[t][0]} betting history", rivalry(t)) for t in rivals if rivalry(t)]
+    related += [(f"{t} betting record", page_file(t)) for t in rivals]
+    related += [("MLB over/under records by team", "mlb-team-over-under-records.html"), ("MLB run line records by team", "mlb-run-line-records.html")]
     related += [("All 30 MLB team betting records", HUB), ("MLB picks today", "mlb-picks-today.html"),
                 ("MLB slate, odds and analysis", "mlb.html"), ("BetLegend MLB picks record", "mlb-records.html"),
                 ("How to bet MLB totals", "how-to-bet-mlb-totals.html"), ("Moneyline vs run line explained", "spread-vs-moneyline-betting.html")]
@@ -606,7 +614,7 @@ def build_hub(games, cur, season_aggs, now_pt, finished, last_date):
 <p>Final scores and closing lines for every regular season game come from the Bet Legend game database. Moneyline units risk 1 unit per game at the close. The run line record compares the final margin with the closing 1.5 run line. Over and under compare total runs with the closing total. Postseason games are excluded. These are market results, not BetLegend picks; our own graded picks are on the <a href="mlb-records.html">MLB betting record page</a>.</p>
 </section>
 <section id="related"><h2>Related</h2>
-<ul class="links"><li><a href="mlb-picks-today.html">MLB picks today</a></li><li><a href="mlb.html">MLB slate, odds and analysis</a></li><li><a href="mlb-records.html">BetLegend MLB picks record</a></li><li><a href="how-to-bet-mlb-totals.html">How to bet MLB totals</a></li><li><a href="ev-calculator.html">Expected value calculator</a></li><li><a href="kelly-criterion.html">Kelly criterion calculator</a></li></ul>
+<ul class="links"><li><a href="mlb-team-over-under-records.html">MLB over/under records by team</a></li><li><a href="mlb-run-line-records.html">MLB run line records by team</a></li><li><a href="yankees-vs-red-sox-betting-history.html">Yankees vs Red Sox betting history</a></li><li><a href="dodgers-vs-padres-betting-history.html">Dodgers vs Padres betting history</a></li><li><a href="mlb-picks-today.html">MLB picks today</a></li><li><a href="mlb.html">MLB odds, stats and picks</a></li><li><a href="mlb-records.html">BetLegend MLB picks record</a></li><li><a href="how-to-bet-mlb-totals.html">How to bet MLB totals</a></li><li><a href="ev-calculator.html">Expected value calculator</a></li><li><a href="kelly-criterion.html">Kelly criterion calculator</a></li></ul>
 </section>"""
     title = f"MLB Team Betting Records {cur}: Moneyline, Run Line & Over/Under"
     desc = (f"All 30 MLB teams' {cur} betting records at closing lines: moneyline units and ROI, run line and over/under records, "

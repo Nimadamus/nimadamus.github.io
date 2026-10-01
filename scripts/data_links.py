@@ -34,7 +34,11 @@ def block():
     return (f"\n{START}\n{CSS}\n<section class=\"blp-data-links\" aria-label=\"MLB team betting records\">"
             "<h2>MLB team betting records</h2>"
             "<p>Every team's record at closing lines: moneyline units, run line and over/under, season by season since 2016, with home, road, favorite and underdog splits.</p>"
-            f"<a class=\"all\" href=\"/{mtp.HUB}\">All 30 teams ranked</a><ul>{items}</ul></section>\n{END}\n")
+            f"<p class=\"hubs\"><a class=\"all\" href=\"/{mtp.HUB}\">All 30 teams ranked</a> &middot; "
+            "<a class=\"all\" href=\"/mlb-team-over-under-records.html\">Over/under records</a> &middot; "
+            "<a class=\"all\" href=\"/mlb-run-line-records.html\">Run line records</a> &middot; "
+            "<a class=\"all\" href=\"/yankees-vs-red-sox-betting-history.html\">Yankees vs Red Sox betting history</a></p>"
+            f"<ul>{items}</ul></section>\n{END}\n")
 
 
 def apply(path, dry):
