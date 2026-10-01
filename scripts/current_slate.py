@@ -240,11 +240,30 @@ def fmt_time(t):
     return f"{et:%I:%M %p}".lstrip("0") + " ET / " + f"{pt:%I:%M %p}".lstrip("0") + " PT"
 
 
-def team_cell(t):
+def team_page(key, t):
+    """The team's betting record page (Phase 5 data pages), when one exists for this sport."""
+    if key != "mlb":
+        return None
+    try:
+        import mlb_team_pages
+    except Exception:
+        return None
+    name = mlb_team_pages.ALIASES.get(t.get("name"), t.get("name"))
+    if name not in mlb_team_pages.TEAMS:
+        return None
+    f = mlb_team_pages.page_file(name)
+    return f if os.path.isfile(os.path.join(ROOT, f)) else None
+
+
+def team_cell(t, key=None):
     rank = f'<span class="cs-rank">{t["rank"]}</span> ' if t.get("rank") else ""
     rec = f' <span class="cs-rec">({esc(t["record"])})</span>' if t.get("record") else ""
     prob = f'<span class="cs-prob">{esc(t["probable"])}</span>' if t.get("probable") else ""
-    return f'{logo_img(t)}{rank}<strong>{esc(t["short"] or t["name"])}</strong>{rec}{prob}'
+    label = esc(t["short"] or t["name"])
+    page = team_page(key, t)
+    if page:
+        label = f'<a href="{page}" title="{esc(t["name"])} betting record">{label}</a>'
+    return f'{logo_img(t)}{rank}<strong>{label}</strong>{rec}{prob}'
 
 
 def line_cell(e, key):
@@ -379,7 +398,7 @@ def render_block(key, data, now_pt, analysis_date=None, page=None):
             if g.get("tv"):
                 where += f'<br><span class="cs-muted">TV: {esc(g["tv"])}</span>'
             rows.append(
-                f'<tr><td>{note}{team_cell(g["away"])} <span class="cs-muted">{sep}</span><br>{team_cell(g["home"])}</td>'
+                f'<tr><td>{note}{team_cell(g["away"], key)} <span class="cs-muted">{sep}</span><br>{team_cell(g["home"], key)}</td>'
                 f'<td class="cs-time">{status_cell(g)}</td><td>{line_cell(g, key)}</td><td>{where}</td></tr>')
         parts.append('<div class="cs-wrap"><table><thead><tr><th>Matchup</th><th>Start</th>'
                      '<th>Lines</th><th>Venue and TV</th></tr></thead><tbody>' + "".join(rows) + "</tbody></table></div>")
