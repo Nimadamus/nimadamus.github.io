@@ -43,6 +43,7 @@ def mlb_section():
             "<a class=\"all\" href=\"/mlb-team-over-under-records.html\">Over/under records</a> &middot; "
             "<a class=\"all\" href=\"/mlb-run-line-records.html\">Run line records</a> &middot; "
             "<a class=\"all\" href=\"/mlb-favorites-underdogs-records.html\">Favorites and underdogs</a> &middot; "
+            "<a class=\"all\" href=\"/mlb-home-road-records.html\">Home and road records</a> &middot; "
             "<a class=\"all\" href=\"/yankees-vs-red-sox-betting-history.html\">Yankees vs Red Sox betting history</a></p>"
             f"<ul>{items}</ul></section>")
 
@@ -69,7 +70,8 @@ def nba_section():
             f"<p class=\"hubs\"><a class=\"all\" href=\"/{btp.HUB}\">All 30 teams ranked</a> &middot; "
             f"<a class=\"all\" href=\"/{btp.ATS_HUB}\">ATS records</a> &middot; <a class=\"all\" href=\"/{btp.OU_HUB}\">Over/under records</a> &middot; "
             f"<a class=\"all\" href=\"/{btp.B2B_HUB}\">Back to back records</a> &middot; "
-            "<a class=\"all\" href=\"/nba-favorites-underdogs-ats.html\">Favorites vs underdogs ATS</a></p>"
+            "<a class=\"all\" href=\"/nba-favorites-underdogs-ats.html\">Favorites vs underdogs ATS</a> &middot; "
+            "<a class=\"all\" href=\"/nba-home-road-records.html\">Home and road records</a></p>"
             f"<ul>{items}</ul></section>")
 
 

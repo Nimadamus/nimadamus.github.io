@@ -262,6 +262,57 @@ def nhl_page(db, now_pt):
                 [("Home", "/"), ("NHL", "nhl.html"), ("NHL Team Betting Records", nhl.HUB), ("Back to Back Records", None)], now_pt)
 
 
+# ---------------------------------------------------------------- home and road (MLB, NBA)
+
+def venue_page(sport, games, rows_for, teams, page_file, label, cur, line_word, now_pt):
+    file = f"{sport.lower()}-home-road-records.html"
+    seasons = sorted({g["season"] for g in games}, reverse=True)
+    cg = [g for g in games if g["season"] == cur]
+    data = []
+    for t in teams:
+        rs = rows_for(cg, t)
+        h = [r for r in rs if r["home"]]; rd = [r for r in rs if not r["home"]]
+        data.append((t, m.agg(h), m.agg(rd), h, rd))
+    data.sort(key=lambda x: -(x[1]["w"] / max(1, x[1]["n"])))
+
+    def rec(a):
+        return f"{a['cov']}-{a['ncov']}"
+    trs = [f"<tr><td>{i}</td><td class=\"t\"><a href=\"{page_file(t)}\">{e(t)}</a></td><td>{h['w']}-{h['l']}</td><td class=\"{cls(h['units'])}\">{fu(h['units'])}</td>"
+           f"<td>{rec(h)}</td><td>{h['o']}-{h['u']}-{h['p']}</td><td>{r['w']}-{r['l']}</td><td class=\"{cls(r['units'])}\">{fu(r['units'])}</td>"
+           f"<td>{rec(r)}</td><td>{r['o']}-{r['u']}-{r['p']}</td></tr>" for i, (t, h, r, _, _) in enumerate(data, 1)]
+    t_team = table(["#", "Team", "Home record", "Home ML units", f"Home {line_word}", "Home O/U/P", "Road record", "Road ML units", f"Road {line_word}", "Road O/U/P"], trs)
+    srows = []
+    for s_ in seasons:
+        gs = [g for g in games if g["season"] == s_]
+        hw = sum(g["hs"] > g["as"] for g in gs); n = len(gs)
+        hu = sum(m.ml_profit(g["hml"], g["hs"] > g["as"]) for g in gs if g["hml"])
+        ru = sum(m.ml_profit(g["aml"], g["as"] > g["hs"]) for g in gs if g["aml"])
+        lg = [g for g in gs if g["line"] is not None]
+        hc = sum(g["hs"] - g["as"] + g["line"] > 0 for g in lg); hl = sum(g["hs"] - g["as"] + g["line"] < 0 for g in lg)
+        srows.append(f"<tr><td>{label(s_)}</td><td>{n}</td><td>{hw}-{n - hw}</td><td>{pct(hw, n - hw)}</td><td class=\"{cls(hu)}\">{fu(hu)}</td>"
+                     f"<td class=\"{cls(ru)}\">{fu(ru)}</td><td>{hc}-{hl}</td><td>{pct(hc, hl)}</td></tr>")
+    t_season = table(["Season", "Games", "Home teams", "Home win %", "All home ML units", "All road ML units", f"Home {line_word}", "Home cover %"], srows)
+    top = data[0]; bot = data[-1]; road_top = max(data, key=lambda x: x[2]["w"] / max(1, x[2]["n"]))
+    gs = [g for g in games if g["season"] == cur]
+    hw = sum(g["hs"] > g["as"] for g in gs)
+    faq = [(f"Which {sport} team had the best home record in {label(cur)}?", f"The {top[0]}: {top[1]['w']}-{top[1]['l']} at home, {fu(top[1]['units'])} on the moneyline."),
+           (f"Which {sport} team was the best on the road in {label(cur)}?", f"The {road_top[0]}: {road_top[2]['w']}-{road_top[2]['l']} on the road, {fu(road_top[2]['units'])}."),
+           (f"How often do {sport} home teams win?", f"{pct(hw, len(gs) - hw)} of the time in {label(cur)}; the season table shows every year since {label(seasons[-1])}."),
+           (f"Is betting {sport} home teams profitable?", "Rarely across a whole season: the home price already includes home advantage. The season table shows the units for betting every home or every road team at the close.")]
+    top_rec = f"{top[1]['w']}-{top[1]['l']}"
+    body = (f"<p class=\"lead\">{e(f'Every {sport} team at home and on the road in {label(cur)}, at closing lines. The {top[0]} had the best home record ({top_rec}) and the {bot[0]} the worst.')}</p>"
+            f"<p class=\"upd\">Updated {{UPDATED}}. Regular season only. Click a team for its full betting record.</p>"
+            f"<section id=\"teams\"><h2>{sport} home and road betting records, {label(cur)}</h2><p>Sorted by home win percentage.</p>{t_team}</section>"
+            f"<section id=\"seasons\"><h2>Home teams by season</h2>{t_season}</section>"
+            "<section id=\"method\"><h2>Methodology</h2><p>Final scores and closing lines come from the Bet Legend game database, each game checked against ESPN's official final score. "
+            "Moneyline units risk 1 unit at the closing price. These are market results, not BetLegend picks.</p></section>")
+    return file, page(file, f"{sport} Home and Road Records {label(cur)}: Betting Results by Team",
+                      f"Every {sport} team's {label(cur)} home and road record at closing lines: moneyline units, {line_word.lower()} and over/under by venue, plus home team results by season since {label(seasons[-1])}.",
+                      f"{sport} Home and Road Betting Records {label(cur)}", body, faq,
+                      [("Home", "/"), (sport, f"{sport.lower()}.html"), (f"{sport} Team Betting Records", "mlb-team-betting-records.html" if sport == "MLB" else nba.HUB),
+                       ("Home and Road Records", None)], now_pt)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", required=True)
@@ -270,6 +321,12 @@ def main():
     a = ap.parse_args()
     now_pt = dt.datetime.now(m.PT)
     out = {MLB_FILE: mlb_page(a.db, now_pt), NBA_FILE: nba_page(a.db, a.prices, now_pt), NHL_FILE: nhl_page(a.db, now_pt)}
+    mg, _, _ = m.verified_games(a.db, 2026)
+    f, p = venue_page("MLB", mg, lambda gs, t: m.team_rows(gs, t), m.TEAMS, m.page_file, str, 2026, "Run line", now_pt)
+    out[f] = p
+    ng, ncur = nba_games(a.db, a.prices)
+    f, p = venue_page("NBA", ng, nba.rows_for, nba.TEAMS, nba.page_file, nba.label, ncur, "ATS", now_pt)
+    out[f] = p
     if not a.dry_run:
         for f, p in out.items():
             open(os.path.join(m.ROOT, f), "w", encoding="utf-8", newline="\n").write(p)
