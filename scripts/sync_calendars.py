@@ -53,6 +53,11 @@ HUB_PAGES = {cfg['hub'] for cfg in SPORTS.values() if cfg.get('hub')}
 # Pages to exclude from calendar (utility pages, news pages, data hubs, not daily analysis)
 # NOTE: 'archive' excludes *-archive-* files from page scanning (dates from archives are extracted separately)
 # NOTE: hub pages are handled specially (not excluded, but assigned today's date)
+# Evergreen pages whose title carries today's date (Oct 1 2026). They are not dated
+# posts, so they never go on a calendar (a calendar cell would move every day).
+EVERGREEN_SKIP = {'mlb-picks-today.html', 'nfl-picks-today.html', 'college-football-picks-today.html',
+                  'nba-picks-today.html', 'nhl-picks-today.html'}
+
 EXCLUDE_PATTERNS = ['calendar', 'archive', 'records', 'index', '-news', 'news-', 'offseason', 'insights', 'historical', 'trends', 'splits', 'betting-hub', 'handicapping-hub', 'how-to-bet', '-guide', 'complete-guide', 'line-shopping']
 
 # Required dated targets are part of the generator contract, not just a
@@ -467,7 +472,7 @@ def get_sport_pages(sport_config):
             seen_files.add(filename)
 
             # Skip utility pages
-            skip = False
+            skip = filename in EVERGREEN_SKIP
             for excl_pattern in EXCLUDE_PATTERNS:
                 if excl_pattern in filename.lower():
                     skip = True

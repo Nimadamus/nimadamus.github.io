@@ -341,7 +341,8 @@ def render_block(key, data, now_pt, analysis_date=None, page=None):
     updated = f"{now_pt:%B} {now_pt.day}, {now_pt.year} at " + f"{now_pt:%I:%M %p}".lstrip("0") + " PT"
     attrs = (f'id="current-slate" data-sport="{key}" data-updated="{now_pt:%Y-%m-%d}"'
              + (f' data-analysis-date="{esc(analysis_date)}"' if analysis_date else ""))
-    links = [("blog.html", "Today's BetLegend picks"), (cfg["records"], f"{cfg.get('short', cfg['label'])} betting record"),
+    picks_page = {"mlb": "mlb-picks-today.html"}.get(key)
+    links = [(picks_page, f"Today's BetLegend {cfg['label']} picks") if picks_page else ("blog.html", "Today's BetLegend picks"), (cfg["records"], f"{cfg.get('short', cfg['label'])} betting record"),
              ("injury-report.html", "Injury report"), ("live-odds.html", "Line shopping")]
     links_html = "".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in links)
     if not games:

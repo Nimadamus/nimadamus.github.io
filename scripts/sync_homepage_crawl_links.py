@@ -53,7 +53,9 @@ SPORT_FALLBACK_IMG = {
 # not new analysis articles, and must never fill a Latest Analysis card.
 SPORT_HUBS = {"mlb.html", "nfl.html", "ncaaf.html", "nba.html", "nhl.html", "ncaab.html", "soccer.html",
               "mlb-previews.html", "nba-previews.html", "nhl-previews.html", "soccer-previews.html",
-              "college-basketball-previews.html"}
+              "college-basketball-previews.html",
+              "mlb-picks-today.html", "nfl-picks-today.html", "college-football-picks-today.html",
+              "nba-picks-today.html", "nhl-picks-today.html"}
 EVERGREEN_DISCOVERY = [
     ("pro/index.html", "BetLegend Pro"),
     ("kelly-criterion/simple-guide.html", "Simple Kelly Criterion Guide"),

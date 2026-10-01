@@ -52,6 +52,11 @@ jobs:
         continue-on-error: true
         run: python scripts/sync_featured_game_preview.py
 
+      - name: Update MLB picks today page
+        id: picks
+        continue-on-error: true
+        run: python scripts/picks_today.py --sport mlb
+
       - name: Commit, push and deploy
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -60,7 +65,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add mlb.html mlb-previews.html nfl.html ncaaf.html nba.html nba-previews.html \
                   nhl.html nhl-previews.html ncaab.html college-basketball-previews.html \
-                  soccer.html soccer-previews.html index.html
+                  soccer.html soccer-previews.html index.html mlb-picks-today.html
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0
@@ -80,8 +85,8 @@ jobs:
       - name: Report step outcomes (fails the run if any step failed)
         if: always()
         run: |
-          echo "slate=${{ steps.slate.outcome }} featured=${{ steps.featured.outcome }}" | tee -a "$GITHUB_STEP_SUMMARY"
-          if [ "${{ steps.slate.outcome }}" = failure ] || [ "${{ steps.featured.outcome }}" = failure ]; then
+          echo "slate=${{ steps.slate.outcome }} featured=${{ steps.featured.outcome }} picks=${{ steps.picks.outcome }}" | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.slate.outcome }}" = failure ] || [ "${{ steps.featured.outcome }}" = failure ] || [ "${{ steps.picks.outcome }}" = failure ]; then
             echo "::error::A feed or the featured game sync failed; affected pages kept their previous content."
             exit 1
           fi
