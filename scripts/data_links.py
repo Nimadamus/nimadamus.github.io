@@ -42,6 +42,7 @@ def mlb_section():
             f"<p class=\"hubs\"><a class=\"all\" href=\"/{mtp.HUB}\">All 30 teams ranked</a> &middot; "
             "<a class=\"all\" href=\"/mlb-team-over-under-records.html\">Over/under records</a> &middot; "
             "<a class=\"all\" href=\"/mlb-run-line-records.html\">Run line records</a> &middot; "
+            "<a class=\"all\" href=\"/mlb-favorites-underdogs-records.html\">Favorites and underdogs</a> &middot; "
             "<a class=\"all\" href=\"/yankees-vs-red-sox-betting-history.html\">Yankees vs Red Sox betting history</a></p>"
             f"<ul>{items}</ul></section>")
 
@@ -54,7 +55,8 @@ def nhl_section():
             "<p>Every team's record at closing lines: moneyline units, puck line and over/under, season by season since 2016-17, with home, road, back to back and favorite/underdog splits.</p>"
             f"<p class=\"hubs\"><a class=\"all\" href=\"/{ntp.HUB}\">All 32 teams ranked</a> &middot; "
             f"<a class=\"all\" href=\"/{ntp.PL_HUB}\">Puck line records</a> &middot; "
-            f"<a class=\"all\" href=\"/{ntp.HA_HUB}\">Home and road betting records</a></p>"
+            f"<a class=\"all\" href=\"/{ntp.HA_HUB}\">Home and road betting records</a> &middot; "
+            "<a class=\"all\" href=\"/nhl-back-to-back-records.html\">Back to back records</a></p>"
             f"<ul>{items}</ul></section>")
 
 
@@ -66,7 +68,8 @@ def nba_section():
             "<p>Every team against the spread and the total at closing lines, season by season since 2016-17, with home, road, back to back and favorite/underdog splits.</p>"
             f"<p class=\"hubs\"><a class=\"all\" href=\"/{btp.HUB}\">All 30 teams ranked</a> &middot; "
             f"<a class=\"all\" href=\"/{btp.ATS_HUB}\">ATS records</a> &middot; <a class=\"all\" href=\"/{btp.OU_HUB}\">Over/under records</a> &middot; "
-            f"<a class=\"all\" href=\"/{btp.B2B_HUB}\">Back to back records</a></p>"
+            f"<a class=\"all\" href=\"/{btp.B2B_HUB}\">Back to back records</a> &middot; "
+            "<a class=\"all\" href=\"/nba-favorites-underdogs-ats.html\">Favorites vs underdogs ATS</a></p>"
             f"<ul>{items}</ul></section>")
 
 
