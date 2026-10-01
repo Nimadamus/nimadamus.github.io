@@ -71,7 +71,8 @@ def nba_section():
             f"<a class=\"all\" href=\"/{btp.ATS_HUB}\">ATS records</a> &middot; <a class=\"all\" href=\"/{btp.OU_HUB}\">Over/under records</a> &middot; "
             f"<a class=\"all\" href=\"/{btp.B2B_HUB}\">Back to back records</a> &middot; "
             "<a class=\"all\" href=\"/nba-favorites-underdogs-ats.html\">Favorites vs underdogs ATS</a> &middot; "
-            "<a class=\"all\" href=\"/nba-home-road-records.html\">Home and road records</a></p>"
+            "<a class=\"all\" href=\"/nba-home-road-records.html\">Home and road records</a> &middot; "
+            "<a class=\"all\" href=\"/nba-rivalry-betting-history.html\">Rivalry betting history</a></p>"
             f"<ul>{items}</ul></section>")
 
 
