@@ -305,7 +305,7 @@ def audit(args: argparse.Namespace) -> None:
     today = dt.date.today()
     if (today - latest_date).days > args.max_age_days:
         raise AuditError(f"Latest featured game is stale: {latest_featured_date} {latest_featured}")
-    require_page(latest_featured, args, urls)
+    require_page(latest_featured.split("#")[0], args, urls)
     assert_surfaces_latest("featured-game-of-the-day.html", latest_featured, args)
     assert_linked("featured-game-calendar.html", latest_featured, args)
 

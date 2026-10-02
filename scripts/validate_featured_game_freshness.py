@@ -110,7 +110,7 @@ def check_featured_title_quality(entries: list[dict[str, str]], allow_missing_la
 
     for entry in guarded_entries:
         page = entry["page"].lstrip("/")
-        page_path = REPO / page
+        page_path = REPO / page.split("#")[0]
         if not page_path.exists():
             if allow_missing_latest_page:
                 continue
@@ -118,6 +118,14 @@ def check_featured_title_quality(entries: list[dict[str, str]], allow_missing_la
             continue
 
         content = page_path.read_text(encoding="utf-8", errors="ignore")
+        if "#" in page:
+            # Thread post (Nima 2026-10-01): judge the post, whose hero title is its h2.
+            m = re.search(r'<article class="fg-post" id="%s"[^>]*>(.*?)</article>' % re.escape(page.split("#", 1)[1]),
+                          content, re.S)
+            if not m:
+                issues.append(f"{page}: thread post not found")
+                continue
+            content = re.sub(r"<h2([^>]*)>(.*?)</h2>", lambda h: "<h1" + h.group(1) + ">" + h.group(2) + "</h1>", m.group(1), count=1, flags=re.S)
         hero_title = extract_main_title(content, page)
         issues.extend(validate_featured_title(hero_title, page, "hero title"))
 
@@ -300,7 +308,7 @@ def main() -> int:
             f"({latest['page']}), {age_days} days old; max allowed is {args.max_age_days}."
         )
 
-    latest_page = REPO / latest["page"].lstrip("/")
+    latest_page = REPO / latest["page"].lstrip("/").split("#")[0]
     if not latest_page.exists() and not args.allow_missing_latest_page:
         raise SystemExit(f"Latest featured game page is missing locally: {latest['page']}")
 

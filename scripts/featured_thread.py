@@ -32,8 +32,9 @@ DESC = ('BetLegend Featured Game of the Day in one running thread: the marquee m
         'odds, starters, advanced stats, injuries and trends, newest first.')
 H1 = 'Featured Game of the Day'
 INTRO = ('Every Featured Game breakdown lives here in one running thread, newest first. Analysis only, '
-         'every number read live on the day it was written. Breakdowns from before October 2026 keep their '
-         'own pages and are listed under Earlier breakdowns.')
+         'every number read live on the day it was written. Breakdowns published before the thread started '
+         'keep their own pages and are listed under Earlier breakdowns.')
+SITEMAPS = [os.path.join(REPO, 'sitemap-featured-games.xml'), os.path.join(REPO, 'sitemap-archive.xml')]
 
 
 def read(p):
@@ -106,14 +107,58 @@ def fresh_shell():
             '<!--FG-OLD:START--><!--FG-OLD:END-->\n' + tail)
 
 
+def normalize(html):
+    """Article first in <main class="main-content">, calendar rail after it (the rail is
+    position:fixed, so DOM order does not move it), and the data file loaded for the calendar."""
+    if '<main class="main-content">' not in html:
+        a0 = html.index('<aside class="calendar-sidebar">')
+        cw = html.index('<div class="content-wrapper">', a0)
+        rail = html[a0:cw]
+        html = html[:a0] + '<main class="main-content">\n' + html[cw:]
+        bn = html.index('<div class="back-nav">')
+        close = html.index('</div>', html.index('</div>', bn) + 6)  # back-nav close, then content-wrapper close
+        html = html[:close + 6] + '\n</main>\n' + rail + html[close + 6:]
+    if '<script src="featured-games-data.js"></script>' not in html:
+        html = html.replace('<script src="scripts/featured-games-calendar.js',
+                            '<script src="featured-games-data.js"></script>\n<script src="scripts/featured-games-calendar.js', 1)
+    if '<!--FG-LATEST:START-->' not in html:
+        html = html.replace('<!--FG-POSTS:START-->', '<!--FG-LATEST:START--><!--FG-LATEST:END-->\n<!--FG-POSTS:START-->', 1)
+    return html
+
+
 def ensure_thread():
     html = read(THREAD)
     if '<!--FG-POSTS:START-->' not in html:
         html = fresh_shell()
-    return html
+    return normalize(html)
+
+
+def latest_card():
+    """While the newest entry is still a standalone page, point to it above the thread."""
+    ents = sorted(entries(), reverse=True)
+    if not ents or '#' in ents[0][1]:
+        return ''
+    d, page, title = ents[0]
+    return ('<div class="fg-latest"><span class="hero-badge">Latest breakdown, %s</span>'
+            '<h2><a href="%s">%s</a></h2></div>' % (escape(d), escape(page), escape(title)))
+
+
+def bump_sitemap():
+    import datetime
+    today = datetime.date.today().isoformat()
+    for path in SITEMAPS:
+        if not os.path.exists(path):
+            continue
+        sm = read(path)
+        sm2 = re.sub(r'(<loc>%s/featured-game-of-the-day\.html</loc>\s*<lastmod>)[^<]*' % re.escape(SITE), r'\g<1>' + today, sm)
+        if sm2 != sm:
+            write(path, sm2)
 
 
 def rebuild(html):
+    html = re.sub(r'<!--FG-LATEST:START-->.*?<!--FG-LATEST:END-->',
+                  lambda _m: '<!--FG-LATEST:START-->' + latest_card() + '<!--FG-LATEST:END-->', html, count=1, flags=re.S)
+    bump_sitemap()
     return re.sub(r'<!--FG-OLD:START-->.*?<!--FG-OLD:END-->',
                   lambda _m: '<!--FG-OLD:START-->' + old_list() + '<!--FG-OLD:END-->', html, count=1, flags=re.S)
 
@@ -128,7 +173,7 @@ def add(built, date):
     pid = '%s-%s' % (base, date)
     hero = re.sub(r'<h1([^>]*)>(.*?)</h1>', r'<h2\1>\2</h2>', hero, count=1, flags=re.S)
     hero = hero.replace('<header class="hero">', '<div class="hero">').replace('</header>', '</div>')
-    post = ('<article class="fg-post" id="%s" data-title="%s">\n%s\n%s\n<p><a href="#%s">Link to this breakdown</a></p>\n'
+    post = ('<article class="fg-post" id="%s" data-title="%s">\n%s\n%s\n<p><a href="featured-game-of-the-day.html#%s">Link to this breakdown</a></p>\n'
             '</article><!--/fg-post-->\n' % (pid, escape(t), hero, body, pid))
     html = ensure_thread()
     html = re.sub(r'<article class="fg-post" id="%s".*?</article><!--/fg-post-->\n?' % re.escape(pid), '', html, flags=re.S)
@@ -142,6 +187,10 @@ def add(built, date):
         data = data.replace(marker, line + marker, 1) if marker in data else data.replace('];', line + '];', 1)
         write(DATA, data)
     write(THREAD, rebuild(html))
+    # Keep featured-game-calendar.html's static archive links in step with the data file.
+    sys.path.insert(0, os.path.join(REPO, 'scripts'))
+    import generate_discovery_artifacts
+    generate_discovery_artifacts.update_featured_calendar_static_links()
     print('thread post', pid)
 
 
