@@ -105,8 +105,9 @@ def main():
     if os.path.exists(hub):
         with open(hub, 'r', encoding='utf-8', errors='ignore') as f:
             hub_txt = f.read()
-        if 'location.replace' not in hub_txt:
-            errors.append(f"{STABLE_HUB}: must be a redirector (location.replace missing)")
+        # Since 2026-10-01 (Nima) the hub is the running Featured Game thread, not a redirector.
+        if 'location.replace' not in hub_txt and '<!--FG-POSTS:START-->' not in hub_txt:
+            errors.append(f"{STABLE_HUB}: must be the Featured Game thread (FG-POSTS markers missing)")
         if 'class="game-preview"' in hub_txt:
             errors.append(f"{STABLE_HUB}: still contains a frozen <article class=game-preview> board")
     else:

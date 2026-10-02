@@ -1537,7 +1537,7 @@ SLATE is not done until ALL active sports have pages.
 - **Soccer posts**: NEW standalone page each day: `[unique-theme]-soccer.html` (no date in URL)
 - **NCAAB posts**: NEW standalone page each day: `[unique-theme]-college-basketball.html` (no date in URL)
 - **NFL posts**: nfl.html (add to TOP)
-- **Featured Game of the Day**: `[away]-vs-[home]-analysis-stats-preview.html` (no date in URL)
+- **Featured Game of the Day**: ONE RUNNING THREAD (Nima, Oct 1 2026). Build the breakdown outside the repo, then `python scripts/featured_thread.py add <built.html> <YYYY-MM-DD>` puts it at the top of `featured-game-of-the-day.html` and adds the data entry. No new standalone featured page; existing ones stay live. The hub no longer redirects.
 - **Blog picks/analysis**: new post at the top of blog.html (no standalone pick page, no homepage card)
 - **Moneyline Parlay**: moneyline-parlay-of-the-day.html
 - **Hub pages** (nba-previews.html, etc.): Update redirect to point to today's standalone page

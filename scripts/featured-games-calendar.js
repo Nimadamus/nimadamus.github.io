@@ -26,6 +26,9 @@
 // are intentionally NOT in this hub list, so they render normally.
 var FEATURED_HUB_PAGES = ['featured-game-of-the-day.html'];
 (function redirectFeaturedHub() {
+    // THREAD (Nima, 2026-10-01): the hub is now the running thread of every
+    // breakdown, so it never redirects. Kept as a no-op for old cached pages.
+    return;
     var cur = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || '';
     if (FEATURED_HUB_PAGES.indexOf(cur) === -1) return;
     if (typeof FEATURED_GAMES === 'undefined' || !FEATURED_GAMES.length) return;

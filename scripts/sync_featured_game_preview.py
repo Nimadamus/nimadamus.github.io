@@ -205,6 +205,25 @@ def get_team_colors(sport, abbr):
     return TEAM_COLORS.get((sport, abbr.upper()), DEFAULT_COLORS)
 
 
+def read_featured(page_filename):
+    """Page text for a featured entry. A thread entry (featured-game-of-the-day.html#id,
+    Nima 2026-10-01) returns only that post, under its original article title."""
+    path = os.path.join(REPO, page_filename.split('#')[0])
+    if not os.path.exists(path):
+        return None
+    with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+    if '#' not in page_filename:
+        return content
+    pid = page_filename.split('#', 1)[1]
+    m = re.search(r'<article class="fg-post" id="%s" data-title="([^"]*)">(.*?)</article>' % re.escape(pid),
+                  content, re.S)
+    if not m:
+        return None
+    title = m.group(1).replace('&amp;', '&').replace('&#x27;', "'").replace('&quot;', '"')
+    return '<title>%s</title>\n%s' % (title, m.group(2))
+
+
 def get_current_featured_page(index_content):
     """Find which featured game page to sync from.
 
@@ -218,13 +237,13 @@ def get_current_featured_page(index_content):
         with open(data_path, 'r', encoding='utf-8', errors='ignore') as f:
             data_content = f.read()
         entries = re.findall(
-            r'\{\s*date:\s*"(\d{4}-\d{2}-\d{2})"\s*,\s*page:\s*"([^"]+\.html)"',
+            r'\{\s*date:\s*"(\d{4}-\d{2}-\d{2})"\s*,\s*page:\s*"([^"]+\.html(?:#[^"]*)?)"',
             data_content
         )
         if entries:
             entries.sort(key=lambda e: e[0])
             latest_page = entries[-1][1]
-            page_path = os.path.join(REPO, latest_page)
+            page_path = os.path.join(REPO, latest_page.split('#')[0])
             if os.path.exists(page_path):
                 return latest_page
             print(f"  WARNING: Latest featured game in data file not found on disk: {latest_page}")
@@ -988,13 +1007,10 @@ def sync_preview():
     print(f"\n  Featured game page: {page_filename}")
 
     # Read featured game page
-    page_path = os.path.join(REPO, page_filename)
-    if not os.path.exists(page_path):
-        print(f"  ERROR: File not found: {page_path}")
+    page_content = read_featured(page_filename)
+    if page_content is None:
+        print(f"  ERROR: File not found: {page_filename}")
         return False
-
-    with open(page_path, 'r', encoding='utf-8', errors='ignore') as f:
-        page_content = f.read()
 
     # Extract game data
     data = extract_game_data(page_content)
@@ -1099,13 +1115,10 @@ def verify_sync():
         print("  ERROR: No featured game link found")
         return False
 
-    page_path = os.path.join(REPO, page_filename)
-    if not os.path.exists(page_path):
+    page_content = read_featured(page_filename)
+    if page_content is None:
         print(f"  ERROR: {page_filename} not found")
         return False
-
-    with open(page_path, 'r', encoding='utf-8', errors='ignore') as f:
-        page_content = f.read()
 
     data = extract_game_data(page_content)
     if not data:
