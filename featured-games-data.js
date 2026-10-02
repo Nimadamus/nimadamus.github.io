@@ -187,6 +187,7 @@ var FEATURED_GAMES = [
     // October 2026
     { date: "2026-10-01", page: "steelers-vs-browns-analysis-stats-preview.html", title: "Steelers vs Browns: Four 2-1 Teams On Thursday Night Football" },
 
+    { date: "2026-10-02", page: "featured-game-of-the-day.html#blues-vs-stars-2026-10-02", title: "Blues vs Stars: Dallas Opens At Home With Last Season's Best Power Play Against A Kill That Leaked" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
