@@ -188,6 +188,7 @@ var FEATURED_GAMES = [
     { date: "2026-10-01", page: "steelers-vs-browns-analysis-stats-preview.html", title: "Steelers vs Browns: Four 2-1 Teams On Thursday Night Football" },
 
     { date: "2026-10-02", page: "featured-game-of-the-day.html#blues-vs-stars-2026-10-02", title: "Blues vs Stars: Dallas Opens At Home With Last Season's Best Power Play Against A Kill That Leaked" },
+    { date: "2026-10-03", page: "featured-game-of-the-day.html#yankees-vs-rays-alds-game-1-2026-10-03", title: "Yankees vs Rays ALDS Game 1: Cole And Rasmussen Run It Back, And Aaron Judge Is On The Injured List" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
