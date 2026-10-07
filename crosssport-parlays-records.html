@@ -423,49 +423,25 @@
 
  async function loadDataFromSheets() {
  try {
- const promises = Object.entries(SHEET_URLS).map(async ([sheetSport, url]) => {
- try {
- const response = await fetch(url);
- const csv = await response.text();
- const rows = parseCSV(csv);
- return rows.map(row => ({
- ...row,
- sourceSport: sheetSport
+ // Canonical record (all-records.json): the same graded rows and P/L every
+ // records page uses. ProfitLoss is settled units, so losses are negative.
+ const recResponse = await fetch('all-records.json?v=' + Date.now(), { cache: 'no-store' });
+ const recRows = await recResponse.json();
+ let allData = recRows.map(r => ({
+ Date: r.Date, Pick: r.Picks, Line: r.Odds, Result: r.Result,
+ Units: String(parseFloat(r.ProfitLoss)), sourceSport: r.Sport, isCross: r.Sport === 'Cross-Sport'
  }));
- } catch (error) {
- console.error(`Error fetching ${sheetSport} data:`, error);
- return [];
- }
- });
-
- const results = await Promise.all(promises);
- let allData = results.flat();
-
- // Also fetch from the Pick Tracker (contains new picks with Sport column)
- try {
- const trackerResponse = await fetch(PICK_TRACKER_URL + '&cache=' + Date.now());
- const trackerCsv = await trackerResponse.text();
- const trackerRows = parseCSV(trackerCsv);
- // Add tracker rows with their Sport column as sourceSport
- const trackerData = trackerRows.map(row => ({
- ...row,
- sourceSport: row.Sport || 'Unknown'
- }));
- allData = [...allData, ...trackerData];
- } catch (error) {
- console.log('Pick tracker fetch failed, using sport sheets only');
- }
 
  // Filter for cross-sport parlays
  const crossSportParlays = allData.filter(row => {
  const pick = row.Pick || row.pick || '';
- return isCrossSportParlay(pick);
+ return isCrossSportParlay(pick) || (row.isCross && !/teaser/i.test(pick));
  });
 
  // Filter for cross-sport teasers
  const crossSportTeasers = allData.filter(row => {
  const pick = row.Pick || row.pick || '';
- return isCrossSportTeaser(pick);
+ return isCrossSportTeaser(pick) || (row.isCross && /teaser/i.test(pick));
  });
 
  // Deduplicate parlays
@@ -702,7 +678,7 @@
  if (tr.style.display === 'none') return null;
 
  var cells = tr.querySelectorAll('td');
- if (!cells.length) return null;
+ if (cells.length < 6) return null;
 
  var dateTxt = cells[0].textContent.trim();
  var unitsTxt = (cells[5] || {}).textContent || "0";

@@ -135,7 +135,7 @@
       const date = parseDate(row.date);
       labels.push(date ? (date.getMonth() + 1) + '/' + date.getDate() : row.date);
       dates.push(row.date);
-      cumulative.push(Number(runningUnits.toFixed(2)));
+      cumulative.push(Number(cents(runningUnits)));
     });
 
     return { ordered, labels, dates, cumulative };

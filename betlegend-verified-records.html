@@ -574,7 +574,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
  const filteredPicks = filterPicksByYear(allProcessedPicks, yearFilter);
 
  document.getElementById('picks-table-body').innerHTML = filteredPicks.map(p => `
- <tr>
+ <tr data-u="${p.units}">
  <td>${p.Date}</td><td>${p.Sport}</td><td>${p.Pick}</td><td>${p.Line}</td>
  <td class="result-${p.Result.trim().toUpperCase().charAt(0)}">${p.Result}</td>
  <td class="${p.units > 0 ? 'win' : (p.units < 0 ? 'loss' : 'result-P')}">${blCents(p.units)}</td>
@@ -701,7 +701,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
 
  var dateTxt = cells[0].textContent.trim();
  var unitsTxt = (cells[5] || {}).textContent || "0";
- var unitsVal = parseNumber(unitsTxt);
+ var unitsVal = tr.dataset.u !== undefined ? parseFloat(tr.dataset.u) : parseNumber(unitsTxt);
  
  var dateObj = new Date(dateTxt);
  
@@ -731,7 +731,7 @@ header.nav .trial{display:inline-flex;align-items:center;justify-content:center;
  
  labels.push(displayDate);
  dates.push(p.date);
- series.push(Number(cumulative.toFixed(2)));
+ series.push(Number(blCents(cumulative)));
  });
 
  return {
