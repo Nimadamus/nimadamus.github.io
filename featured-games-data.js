@@ -191,6 +191,7 @@ var FEATURED_GAMES = [
     { date: "2026-10-03", page: "featured-game-of-the-day.html#yankees-vs-rays-alds-game-1-2026-10-03", title: "Yankees vs Rays ALDS Game 1: Cole And Rasmussen Run It Back, And Aaron Judge Is On The Injured List" },
     { date: "2026-10-04", page: "featured-game-of-the-day.html#lions-vs-panthers-2026-10-04", title: "Lions vs Panthers on Sunday Night Football: Jahmyr Gibbs Gets A Run Defense Allowing 193 Yards A Game, And Bryce Young Gets A Lions Secondary Without Brian Branch" },
     { date: "2026-10-07", page: "featured-game-of-the-day.html#dodgers-vs-braves-2026-10-07", title: "Dodgers vs Braves NLDS Game 4: Glasnow Tries To Close It Out Against A Mahle Who Has Been Nearly Untouchable Since Joining Atlanta" },
+    { date: "2026-10-08", page: "featured-game-of-the-day.html#buccaneers-vs-cowboys-2026-10-08", title: "Buccaneers vs Cowboys: Baker Mayfield Is Out, The Line Has Tripled, And Tampa Bay Still Has Never Lost By More Than Seven" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
