@@ -119,7 +119,8 @@ NCAAB_TEAM_MAP = {
     '26': ('USC', 'USC'),
     '2483': ('UCLA', 'UCLA'),
     '2630': ('Washington', 'WASH'),
-    '264': ('Oregon', 'ORE'),
+    '264': ('Washington', 'WASH'),
+    '2294': ('Iowa', 'IOWA'),
     # SEC
     '2': ('Auburn', 'AUB'),
     '333': ('Alabama', 'ALA'),
