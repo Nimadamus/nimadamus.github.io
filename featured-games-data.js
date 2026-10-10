@@ -193,6 +193,7 @@ var FEATURED_GAMES = [
     { date: "2026-10-07", page: "featured-game-of-the-day.html#dodgers-vs-braves-2026-10-07", title: "Dodgers vs Braves NLDS Game 4: Glasnow Tries To Close It Out Against A Mahle Who Has Been Nearly Untouchable Since Joining Atlanta" },
     { date: "2026-10-08", page: "featured-game-of-the-day.html#buccaneers-vs-cowboys-2026-10-08", title: "Buccaneers vs Cowboys: Baker Mayfield Is Out, The Line Has Tripled, And Tampa Bay Still Has Never Lost By More Than Seven" },
     { date: "2026-10-09", page: "featured-game-of-the-day.html#iowa-vs-washington-2026-10-09", title: "Iowa vs Washington: The Hawkeyes Run It, The Huskies Throw It, And The Market Moved Toward Seattle" },
+    { date: "2026-10-10", page: "featured-game-of-the-day.html#georgia-vs-alabama-2026-10-10", title: "Georgia vs Alabama: Two Unbeaten Offenses, A Five And A Half Point Line Flip, And The Best Defense In The Game On The Road" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
