@@ -196,6 +196,7 @@ var FEATURED_GAMES = [
     { date: "2026-10-10", page: "featured-game-of-the-day.html#georgia-vs-alabama-2026-10-10", title: "Georgia vs Alabama: Two Unbeaten Offenses, A Five And A Half Point Line Flip, And The Best Defense In The Game On The Road" },
     { date: "2026-10-11", page: "featured-game-of-the-day.html#ravens-vs-falcons-2026-10-11", title: "Ravens vs Falcons on Sunday Night Football: Lamar Jackson Is Out, The Line Swung 7.5 Points, And Atlanta Has Scored 80 Points In Two Games Since Penix Took Over" },
     { date: "2026-10-13", page: "featured-game-of-the-day.html#guardians-vs-rays-2026-10-13", title: "Guardians vs Rays ALCS Game 2: Cleveland Stole Game 1 With A Late Rally, And Now Its Best Starter Gets The Ball In Tampa Bay" },
+    { date: "2026-10-14", page: "featured-game-of-the-day.html#brewers-vs-dodgers-2026-10-14", title: "Brewers vs Dodgers NLCS Game 3: Milwaukee Won Both Games At Home, And Now Blake Snell Gets The Ball At Dodger Stadium" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
