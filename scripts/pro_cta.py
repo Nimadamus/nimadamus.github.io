@@ -124,7 +124,7 @@ def block(path, page_type, sport, variant):
     return (f"\n{START}\n{CSS}\n<aside class=\"blp-pro-cta\" aria-label=\"Bet Legend Pro\">"
             f"<p class=\"k\">{e(kicker)}</p><h2>{e(head)}</h2><p>{e(body)}</p>"
             f"<a class=\"b\" href=\"{url}\" data-pro-cta=\"{e(variant)}\" data-page-type=\"{e(page_type)}\" data-sport=\"{e(sport)}\">{e(btn)}</a>"
-            f"<span class=\"s\">Monthly $49, annual $99 or lifetime $349.</span></aside>\n"
+            f"<span class=\"s\">Monthly $49 or annual $399.</span></aside>\n"
             f"<script src=\"{js}\" defer></script>\n{END}\n")
 
 
