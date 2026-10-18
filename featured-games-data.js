@@ -198,6 +198,7 @@ var FEATURED_GAMES = [
     { date: "2026-10-13", page: "featured-game-of-the-day.html#guardians-vs-rays-2026-10-13", title: "Guardians vs Rays ALCS Game 2: Cleveland Stole Game 1 With A Late Rally, And Now Its Best Starter Gets The Ball In Tampa Bay" },
     { date: "2026-10-14", page: "featured-game-of-the-day.html#brewers-vs-dodgers-2026-10-14", title: "Brewers vs Dodgers NLCS Game 3: Milwaukee Won Both Games At Home, And Now Blake Snell Gets The Ball At Dodger Stadium" },
     { date: "2026-10-17", page: "featured-game-of-the-day.html#utah-vs-colorado-2026-10-17", title: "Unbeaten No. 11 Utah Visits Colorado, Where The Buffaloes Need Answers After Three Straight Losses" },
+    { date: "2026-10-18", page: "featured-game-of-the-day.html#rays-vs-guardians-2026-10-18", title: "Rays vs Guardians ALCS Game 5: The Series Is Tied 2 To 2, And The Game 1 And Game 2 Starters Meet Again With A Pennant Lead On The Line" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
