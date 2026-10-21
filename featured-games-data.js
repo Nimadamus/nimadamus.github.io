@@ -201,6 +201,7 @@ var FEATURED_GAMES = [
     { date: "2026-10-18", page: "featured-game-of-the-day.html#rays-vs-guardians-2026-10-18", title: "Rays vs Guardians ALCS Game 5: The Series Is Tied 2 To 2, And The Game 1 And Game 2 Starters Meet Again With A Pennant Lead On The Line" },
     { date: "2026-10-19", page: "featured-game-of-the-day.html#commanders-vs-49ers-2026-10-19", title: "Commanders vs 49ers on Monday Night Football: Unbeaten San Francisco Hosts A Washington Team Still Shaking Off A Tie, And The Line Has Climbed From 5.5 To 7.5" },
     { date: "2026-10-20", page: "featured-game-of-the-day.html#thunder-vs-spurs-2026-10-20", title: "Thunder vs Spurs On Opening Night: The West Finals Rematch Opens The 2026 to 27 Season, And The Favorite Has Flipped From San Antonio To Oklahoma City" },
+    { date: "2026-10-21", page: "featured-game-of-the-day.html#warriors-vs-lakers-2026-10-21", title: "Warriors vs Lakers On Opening Night: Luka's Lakers Open Without LeBron, Golden State Opens Without Four Rotation Players, And The Line Has Climbed From 5.5 To 6.5" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
