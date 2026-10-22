@@ -164,6 +164,19 @@ def build_crawl_links(picks):
 
 def sport_from_page(page):
     p = (page or "").lower()
+    if "#" in p:   # featured thread entry: read the sport from that entry's own team logos
+        base, frag = p.split("#", 1)
+        try:
+            html = read(os.path.join(ROOT, base)) or ""
+            i = html.find('id="%s"' % frag)
+            m = re.search(r"teamlogos/(ncaa|nfl|nba|nhl|mlb|soccer)/", html[i:]) if i >= 0 else None
+            if m:
+                lg = m.group(1)
+                if lg == "ncaa":
+                    return "NCAAF" if "football" in html[i:i + 20000].lower() else "NCAAB"
+                return "Soccer" if lg == "soccer" else lg.upper()
+        except Exception:
+            pass
     if "soccer" in p or "champions-league" in p or "laliga" in p or "europa" in p:
         return "Soccer"
     if "nfl" in p or "preseason" in p and "nfl" in p:
@@ -214,7 +227,8 @@ def analysis_items(picks):
     for src in sources:
         for e in parse_dated_pages(src):
             page = e["page"]
-            if not page.endswith(".html") or is_pick_url(page) or page in seen or page in SPORT_HUBS:
+            # Featured thread entries (featured-game-of-the-day.html#slug, since 2026-10-01) are real dated articles
+            if not page.split("#")[0].endswith(".html") or is_pick_url(page) or page in seen or page in SPORT_HUBS:
                 continue
             seen[page] = e
     for p in picks:
@@ -249,7 +263,7 @@ def build_analysis_cards(items):
         sport = sport_from_page(e["page"])
         tag = "red" if sport == "MLB" else ("blue" if sport in ("NBA", "NFL") else "")
         tag_attr = f' tag {tag}'.strip() if tag else "tag"
-        img = og_image(e["page"]) or SPORT_FALLBACK_IMG.get(sport, "newlogo.png")
+        img = ("" if "#" in e["page"] else og_image(e["page"])) or SPORT_FALLBACK_IMG.get(sport, "newlogo.png")
         img, iw, ih = card_thumb(img)
         size_attr = f' width="{iw}" height="{ih}"' if iw and ih else ""
         title = e.get("title") or e["page"].replace(".html", "").replace("-", " ").title()
