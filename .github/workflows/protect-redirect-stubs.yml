@@ -1,0 +1,52 @@
+name: Protect redirect stubs
+
+# Nima 2026-10-23: old URLs that Google still knows must keep redirecting.
+# Bulk "cleanups" on 2026-05-17 (603) and 2026-06-18 (760) deleted redirect stubs
+# and 304 URLs with search impressions answered 404 for months. The local
+# pre-commit gate only runs in clones that installed it, so this job is the
+# backstop: any push to main that deletes a stub gets the stub put back and the
+# site redeployed (a push made with GITHUB_TOKEN does not trigger Pages itself).
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: protect-redirect-stubs
+  cancel-in-progress: false
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore deleted stubs
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then exit 0; fi
+          git diff --name-only --diff-filter=D "$BEFORE" "$AFTER" | grep -iE '\.html?$' > deleted.txt || true
+          : > restore.txt
+          while IFS= read -r f; do
+            if git show "$BEFORE:$f" | head -c 4000 | grep -iqE 'http-equiv=["'"'"']?refresh'; then
+              echo "$f" >> restore.txt
+            fi
+          done < deleted.txt
+          if [ ! -s restore.txt ]; then echo "no redirect stubs deleted"; exit 0; fi
+          echo "Restoring $(wc -l < restore.txt) redirect stub(s):"; cat restore.txt
+          while IFS= read -r f; do git checkout "$BEFORE" -- "$f"; done < restore.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898900+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Restore $(wc -l < restore.txt) deleted redirect stub(s) (protect-redirect-stubs)"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          gh workflow run pages-deploy.yml --ref main
