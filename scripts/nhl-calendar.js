@@ -109,7 +109,7 @@ const ARCHIVE_DATA = [
     { date: "2026-03-21", page: "kraken-blue-jackets-under-6-5-nhl.html", title: "Kraken vs Blue Jackets Under 6.5 Goals NHL Pick" },
     { date: "2026-03-20", page: "devils-moneyline-plus-110-at-capitals-nhl.html", title: "Devils Moneyline +110 at Capitals NHL Pick" },
     { date: "2026-03-20", page: "hurricanes-leafs-avalanche-roll-panthers-west-nhl.html", title: "NHL Analysis - March 20, 2026" },
-    { date: "2026-03-20", page: "nhl.html", title: "NHL Slate, Odds and Analysis for October 22, 2026" },
+    { date: "2026-03-20", page: "nhl.html", title: "NHL Slate, Odds and Analysis for October 23, 2026" },
     { date: "2026-03-19", page: "bruins-team-total-under-3-5-jets-nhl.html", title: "Bruins Team Total Under 3.5 Goals vs Jets NHL Pick" },
     { date: "2026-03-18", page: "hudson-river-rivalry-stars-avalanche-elite-showdown-nhl.html", title: "NHL Analysis - March 18, 2026" },
     { date: "2026-03-18", page: "senators-team-total-under-3-5-at-capitals-nhl.html", title: "Senators Team Total Under 3.5 Goals at Capitals NHL Pick" },
