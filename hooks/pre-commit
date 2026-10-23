@@ -5,6 +5,23 @@ echo "Running BetLegend content validator..."
 STAGED_HTML=$(git diff --cached --name-only --diff-filter=d | grep -iE '\.(html|htm)$')
 STAGED_ALL=$(git diff --cached --name-only --diff-filter=d)
 
+# REDIRECT STUB DELETION GATE (Nima 2026-10-23): old URLs Google still knows must keep
+# their redirect. The 2026-05-17 (603) and 2026-06-18 (760) "cleanups" deleted stubs
+# judged unused because no sitemap or internal link pointed at them; 239 URLs with
+# Google impressions went 404 and the site never recovered. Never delete a stub.
+STUB_DELS=""
+for f in $(git diff --cached --name-only --diff-filter=D | grep -iE '\.html?$'); do
+    if git show "HEAD:$f" 2>/dev/null | head -c 4000 | grep -iqE 'http-equiv=["'"'"']?refresh'; then
+        STUB_DELS="$STUB_DELS$f
+"
+    fi
+done
+if [ -n "$STUB_DELS" ]; then
+    echo "  [BLOCKED] commit deletes redirect stub(s); old URLs must keep redirecting:"
+    echo "$STUB_DELS" | head -20 | sed 's/^/    /'
+    exit 1
+fi
+
 # ZERO-TOLERANCE NOINDEX GATE (Nima directive June 2026): NO public page on
 # betlegendpicks.com may ever be noindexed - posts, categories, hubs, archives,
 # tool/dashboard pages, redirect stubs, nothing. This hard gate blocks any
