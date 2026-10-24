@@ -1,0 +1,1 @@
+import{r as e}from"./index-D3imvd02.js";var t=`https://trustmyrecord.com/betlegend-pro/`;function n(){return e()?window.Capacitor?.getPlatform?.()===`ios`?`external`:`none`:`web`}export{n,t};
