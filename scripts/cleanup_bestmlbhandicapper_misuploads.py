@@ -30,7 +30,7 @@ for old in [
 print(f'  Target files to remove from bestmlbhandicapper /: {len(targets)}')
 
 ftp = ftplib.FTP('208.109.70.186', timeout=60)
-ftp.login('master@bestmlbhandicapper.com', 'Warriors2025!')
+ftp.login('master@bestmlbhandicapper.com', os.environ['FTP_MASTER_PASSWORD'])
 ftp.cwd('/')
 
 # Get the actual file listing on FTP, only delete intersection (safety)

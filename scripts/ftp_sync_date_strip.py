@@ -7,7 +7,7 @@ MAP_PATH = os.path.join(ROOT, 'scripts', 'date_strip_rename_map.json')
 
 FTP_HOST = '208.109.70.186'
 FTP_USER = 'master@bestmlbhandicapper.com'
-FTP_PASS = 'Warriors2025!'
+FTP_PASS = os.environ['FTP_MASTER_PASSWORD']
 
 def main():
     with open(MAP_PATH, 'r', encoding='utf-8') as f:
