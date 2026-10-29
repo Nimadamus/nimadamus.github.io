@@ -358,13 +358,32 @@
  return values;
  }
 
- // Detect sports from BOTH explicit tags AND team names
- // For cross-sport detection, we need to check team names to catch parlays like "Warriors ML, Broncos ML"
- function detectSportsFromText(pickText) {
- const text = pickText.toLowerCase();
- const sports = new Set();
+ // Row league/sport is the classification. A nickname adds a sport only when it
+ // belongs to one league. Cardinals, Giants, Jets, Rangers, Panthers, Bears, and
+ // Kings never do, and neither do other nicknames shared by two leagues.
+ function sportFromMeta(value) {
+ const s = String(value || '').trim().toLowerCase();
+ if (s === 'nfl') return 'NFL';
+ if (s === 'nba') return 'NBA';
+ if (s === 'nhl') return 'NHL';
+ if (s === 'mlb') return 'MLB';
+ if (s === 'ncaaf' || s === 'cfb') return 'CFB';
+ if (s === 'ncaab' || s === 'cbb') return 'NCAAB';
+ if (s === 'soccer' || s === 'mls') return 'Soccer';
+ return null;
+ }
 
- // Check for explicit sport tags in parentheses first
+ function mentionsTeam(text, team) {
+ const escaped = team.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+ return new RegExp('(?:^|[^a-z0-9])' + escaped + '(?:[^a-z0-9]|$)', 'i').test(text);
+ }
+
+ function detectSportsFromText(pickText, metaSport) {
+ const text = String(pickText || '').toLowerCase();
+ const sports = new Set();
+ const meta = sportFromMeta(metaSport);
+ if (meta) sports.add(meta);
+
  if (text.includes('(nfl)')) sports.add('NFL');
  if (text.includes('(cfb)') || text.includes('(ncaaf)')) sports.add('CFB');
  if (text.includes('(nba)')) sports.add('NBA');
@@ -372,50 +391,42 @@
  if (text.includes('(mlb)')) sports.add('MLB');
  if (text.includes('(ncaab)') || text.includes('(cbb)')) sports.add('NCAAB');
  if (text.includes('(soccer)') || text.includes('(mls)')) sports.add('Soccer');
+ if (text.includes('(ncaa)')) sports.add('NCAA');
 
- // ALSO check team names for cross-sport detection
- // NFL-unique teams (avoiding overlaps like Bears, Cardinals, Panthers, Giants, Jets, Kings)
- const nflUnique = ['49ers', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'eagles', 'falcons', 'jaguars', 'jags', 'lions', 'packers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'];
- if (nflUnique.some(team => text.includes(team))) sports.add('NFL');
+ const unambiguous = {
+ NFL: ['49ers', 'bengals', 'bills', 'broncos', 'browns', 'buccaneers', 'bucs', 'chargers', 'chiefs', 'colts', 'commanders', 'cowboys', 'dolphins', 'falcons', 'jaguars', 'jags', 'lions', 'packers', 'patriots', 'pats', 'raiders', 'rams', 'ravens', 'saints', 'seahawks', 'steelers', 'texans', 'titans', 'vikings'],
+ NBA: ['lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat', 'mavericks', 'mavs', 'spurs', 'rockets', 'suns', 'bucks', 'sixers', '76ers', 'raptors', 'thunder', 'okc', 'jazz', 'nuggets', 'trail blazers', 'blazers', 'timberwolves', 'wolves', 'pelicans', 'grizzlies', 'clippers', 'hornets', 'magic', 'pistons', 'pacers', 'cavaliers', 'cavs', 'wizards'],
+ NHL: ['sabres', 'red wings', 'canadiens', 'habs', 'senators', 'sens', 'lightning', 'bolts', 'maple leafs', 'leafs', 'blue jackets', 'devils', 'islanders', 'isles', 'flyers', 'penguins', 'pens', 'capitals', 'caps', 'blackhawks', 'avalanche', 'avs', 'stars', 'wild', 'predators', 'preds', 'blues', 'flames', 'oilers', 'sharks', 'kraken', 'canucks', 'golden knights'],
+ MLB: ['yankees', 'red sox', 'blue jays', 'rays', 'orioles', 'white sox', 'guardians', 'royals', 'twins', 'astros', 'angels', 'athletics', 'mariners', 'mets', 'phillies', 'braves', 'marlins', 'nationals', 'cubs', 'brewers', 'reds', 'pirates', 'dodgers', 'padres', 'diamondbacks', 'd-backs', 'rockies']
+ };
+ Object.keys(unambiguous).forEach(sport => {
+ if (unambiguous[sport].some(team => mentionsTeam(text, team))) sports.add(sport);
+ });
 
- // NBA-unique teams
- const nbaUnique = ['lakers', 'celtics', 'warriors', 'nets', 'knicks', 'heat', 'mavericks', 'mavs', 'spurs', 'rockets', 'suns', 'bucks', 'sixers', '76ers', 'raptors', 'thunder', 'okc', 'jazz', 'nuggets', 'trail blazers', 'blazers', 'timberwolves', 'wolves', 'pelicans', 'grizzlies', 'clippers', 'hornets', 'magic', 'pistons', 'pacers', 'cavaliers', 'cavs', 'wizards'];
- if (nbaUnique.some(team => text.includes(team))) sports.add('NBA');
+ const schools = [
+ ['CFB', ['james madison', 'missouri st', 'missouri state', 'tulane', 'tullane', 'troy', 'arizona u']],
+ ['NCAAB', ['loyola marymount', 'davidson']],
+ ['NCAA', ['boise st', 'boise state', 'mcneese']]
+ ];
+ schools.forEach(pair => {
+ if (pair[1].some(team => mentionsTeam(text, team))) sports.add(pair[0]);
+ });
 
- // NHL-unique teams
- const nhlUnique = ['bruins', 'sabres', 'red wings', 'canadiens', 'habs', 'senators', 'sens', 'lightning', 'bolts', 'maple leafs', 'leafs', 'hurricanes', 'canes', 'blue jackets', 'devils', 'islanders', 'isles', 'rangers', 'flyers', 'penguins', 'pens', 'capitals', 'caps', 'blackhawks', 'avalanche', 'avs', 'stars', 'wild', 'predators', 'preds', 'blues', 'ducks', 'flames', 'oilers', 'sharks', 'kraken', 'canucks', 'golden knights'];
- if (nhlUnique.some(team => text.includes(team))) sports.add('NHL');
-
- // MLB-unique teams
- const mlbUnique = ['yankees', 'red sox', 'blue jays', 'rays', 'orioles', 'white sox', 'guardians', 'tigers', 'royals', 'twins', 'astros', 'angels', 'athletics', 'mariners', 'mets', 'phillies', 'braves', 'marlins', 'nationals', 'cubs', 'cardinals', 'brewers', 'reds', 'pirates', 'dodgers', 'padres', 'diamondbacks', 'd-backs', 'rockies'];
- if (mlbUnique.some(team => text.includes(team))) sports.add('MLB');
-
- return Array.from(sports);
+ const order = ['NFL', 'NBA', 'NHL', 'MLB', 'CFB', 'NCAAB', 'NCAA', 'Soccer'];
+ return order.filter(sport => sports.has(sport));
  }
 
- // Check if a pick is a cross-sport parlay
- // Uses both explicit sport tags AND team name matching
- function isCrossSportParlay(pickText) {
- const text = pickText.toLowerCase();
- // Must be a parlay (not a teaser)
+ function isCrossSportParlay(pickText, metaSport) {
+ const text = String(pickText || '').toLowerCase();
  if (!text.includes('parlay')) return false;
  if (text.includes('teaser')) return false;
-
- const sports = detectSportsFromText(pickText);
- // Must have 2+ different sports
- return sports.length > 1;
+ return detectSportsFromText(pickText, metaSport).length > 1;
  }
 
- // Check if a pick is a cross-sport teaser
- // Uses both explicit sport tags AND team name matching
- function isCrossSportTeaser(pickText) {
- const text = pickText.toLowerCase();
- // Must be a teaser
+ function isCrossSportTeaser(pickText, metaSport) {
+ const text = String(pickText || '').toLowerCase();
  if (!text.includes('teaser')) return false;
-
- const sports = detectSportsFromText(pickText);
- // Must have 2+ different sports
- return sports.length > 1;
+ return detectSportsFromText(pickText, metaSport).length > 1;
  }
 
  let allParlays = [];
@@ -429,19 +440,19 @@
  const recRows = await recResponse.json();
  let allData = recRows.map(r => ({
  Date: r.Date, Pick: r.Picks, Line: r.Odds, Result: r.Result,
- Units: String(parseFloat(r.ProfitLoss)), sourceSport: r.Sport, isCross: r.Sport === 'Cross-Sport'
+ Units: String(parseFloat(r.ProfitLoss)), sourceSport: r.Sport, sourceLeague: r.League, isCross: r.Sport === 'Cross-Sport'
  }));
 
  // Filter for cross-sport parlays
  const crossSportParlays = allData.filter(row => {
  const pick = row.Pick || row.pick || '';
- return isCrossSportParlay(pick) || (row.isCross && !/teaser/i.test(pick));
+ return isCrossSportParlay(pick, row.sourceLeague || row.sourceSport) || (row.isCross && !/teaser/i.test(pick));
  });
 
  // Filter for cross-sport teasers
  const crossSportTeasers = allData.filter(row => {
  const pick = row.Pick || row.pick || '';
- return isCrossSportTeaser(pick) || (row.isCross && /teaser/i.test(pick));
+ return isCrossSportTeaser(pick, row.sourceLeague || row.sourceSport) || (row.isCross && /teaser/i.test(pick));
  });
 
  // Deduplicate parlays
@@ -536,7 +547,7 @@
  }
  }
 
- const sports = detectSportsFromText(pickText);
+ const sports = detectSportsFromText(pickText, p.sourceLeague || p.sourceSport);
  const dateParts = p.Date.split(/[-/]/);
  const parsedDate = dateParts.length === 3
  ? new Date(dateParts[2], dateParts[0] - 1, dateParts[1])
