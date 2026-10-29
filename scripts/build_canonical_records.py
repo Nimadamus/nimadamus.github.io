@@ -95,6 +95,11 @@ def toks(s):
     return set(re.findall(r"[a-z]{2,}|\d+(?:\.\d+)?", (s or "").lower().replace("point", "pt"))) - {"team", "the", "pt", "teaser", "tsr", "ml"}
 
 
+def clean_odds(odds):
+    # Drop Excel's leading apostrophe or quote and the spaces it inserts.
+    return re.sub(r"\s+", "", str(odds or "").replace("'", "").replace('"', "").replace(",", ""))
+
+
 def fnum(v):
     try:
         return float(str(v).replace(",", "").replace("+", ""))
@@ -127,9 +132,10 @@ def load(overrides):
         if not sport or not d:
             rejects.append(("tracker", i + 2, "unknown sport or date", r.get("Pick")))
             continue
-        tracker.append({"sport": sport, "date": d, "pick": (r.get("Pick") or "").strip(), "odds": (r.get("Odds") or "").strip(),
+        odds = clean_odds(r.get("Odds"))
+        tracker.append({"sport": sport, "date": d, "pick": (r.get("Pick") or "").strip(), "odds": odds,
                         "units": (r.get("Units") or "").strip(), "league": (r.get("League") or "").strip(), "result": res,
-                        "pl": calculate_unit_result(r.get("Units", "3"), r.get("Odds", ""), res), "source": "tracker-row-%d" % (i + 2)})
+                        "pl": calculate_unit_result(r.get("Units", "3"), odds, res), "source": "tracker-row-%d" % (i + 2)})
     sheet = []
     for sport, key in SHEETS.items():
         raw = list(csv.reader(io.StringIO(fetch("https://docs.google.com/spreadsheets/d/e/%s/pub?output=csv" % key))))

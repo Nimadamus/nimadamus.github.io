@@ -258,8 +258,11 @@ def calculate_unit_result(units_stake, odds, result):
     - Underdog (positive odds): You LOSE exactly the units listed
     """
     try:
-        stake = float(units_stake) if units_stake else 3.0
-        odds_num = float(str(odds).replace('+', '').replace(',', '')) if odds else -110
+        stake = float(str(units_stake).replace(',', '').strip()) if units_stake else 3.0
+        # A leading apostrophe or quote is Excel's text marker (Indiana -7, Washington -3).
+        odds_text = str(odds or "").replace("'", "").replace('"', "").replace(",", "").replace("+", "")
+        odds_text = "".join(odds_text.split())
+        odds_num = float(odds_text) if odds_text else -110
         result_upper = (result or '').upper().strip()
     except (ValueError, TypeError):
         return 0.0
