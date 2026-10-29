@@ -203,6 +203,7 @@ var FEATURED_GAMES = [
     { date: "2026-10-20", page: "featured-game-of-the-day.html#thunder-vs-spurs-2026-10-20", title: "Thunder vs Spurs On Opening Night: The West Finals Rematch Opens The 2026 to 27 Season, And The Favorite Has Flipped From San Antonio To Oklahoma City" },
     { date: "2026-10-21", page: "featured-game-of-the-day.html#warriors-vs-lakers-2026-10-21", title: "Warriors vs Lakers On Opening Night: Luka's Lakers Open Without LeBron, Golden State Opens Without Four Rotation Players, And The Line Has Climbed From 5.5 To 6.5" },
     { date: "2026-10-22", page: "featured-game-of-the-day.html#patriots-vs-bears-2026-10-22", title: "Patriots vs Bears on Thursday Night Football: Drake Maye Against Caleb Williams, Two 4 and 2 Teams, And A Line That Has Moved From 1.5 To 3" },
+    { date: "2026-10-29", page: "featured-game-of-the-day.html#panthers-vs-packers-2026-10-29", title: "Panthers vs Packers on Thursday Night Football: Two Angry Teams, The Worst Run Game In The NFL Against The Worst Run Defense, And A Line That Fell From 7 To 3.5" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
