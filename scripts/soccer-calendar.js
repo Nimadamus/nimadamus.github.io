@@ -92,7 +92,6 @@ const ARCHIVE_DATA = [
     { date: "2026-05-14", page: "soccer-previews-archive-may-2026.html#2026-05-14", title: "SOCCER Analysis - 2026-05-14" },
     { date: "2026-05-13", page: "soccer-midweek-reset-europa-league-nwsl-premier-league.html", title: "Soccer Midweek Reset: Europa League, NWSL and Premier League May 13, 2026" },
     { date: "2026-05-12", page: "al-nassr-al-hilal-saudi-title-decider-soccer.html", title: "Al Nassr vs Al Hilal Saudi Title Decider Preview" },
-    { date: "2026-05-12", page: "arsenal-sporting-bayern-real-madrid-second-leg-soccer.html", title: "Al Nassr vs Al Hilal Saudi Title Decider Preview" },
     { date: "2026-05-11", page: "tottenham-leeds-survival-rayo-girona-relegation-soccer.html", title: "Soccer Analysis - May 11, 2026" },
     { date: "2026-05-10", page: "soccer-previews-archive-may-2026.html", title: "SOCCER Analysis - 2026-05-10" },
     { date: "2026-05-09", page: "liverpool-chelsea-anfield-premier-league-soccer.html", title: "Soccer Analysis - May 09, 2026" },

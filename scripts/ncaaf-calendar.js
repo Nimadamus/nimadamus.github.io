@@ -17,7 +17,7 @@ const ARCHIVE_DATA = [
     { date: "2026-01-08", page: "college-football-picks-predictions-against-the-spread-v3.html", title: "NCAAF Analysis - January 08, 2026" },
     { date: "2026-01-06", page: "college-football-picks-predictions-against-the-spread-v4.html", title: "FCS Championship - January 6, 2026" },
     { date: "2026-01-02", page: "archives/ncaaf/2026-01-02.html", title: "NCAAF Archive - 2026-01-02" },
-    { date: "2026-01-02", page: "college-football-picks-predictions-against-the-spread-v5.html", title: "NCAAF Bowl Games - January 2, 2026" },
+    { date: "2026-01-02", page: "college-football-picks-predictions-against-the-spread-v5.html", title: "January 2, 2026 Bowl Picks and Previews: Armed Forces to Holiday Bowl" },
     { date: "2026-01-01", page: "college-football-picks-predictions-against-the-spread-v6.html", title: "CFP Quarterfinals - January 1, 2026" },
     { date: "2025-12-31", page: "college-football-picks-predictions-against-the-spread-v7.html", title: "Bowl Games - December 31, 2025" },
     { date: "2025-12-30", page: "college-football-picks-predictions-against-the-spread-v8.html", title: "NCAAF Bowl Games - December 30, 2025" },
