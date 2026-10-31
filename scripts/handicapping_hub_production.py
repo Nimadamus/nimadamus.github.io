@@ -13,6 +13,9 @@ Generates the Handicapping Hub with:
 import requests
 import json
 import os
+import sys as _sys_logo
+_sys_logo.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from espn_logo_names import espn_logo  # ESPN logo URLs need abbreviations, never full team names
 import sys
 import shutil
 import re
@@ -1843,11 +1846,11 @@ def process_game(espn_game: Dict, sport: str, sport_path: str, odds_data: List[D
 def get_logo_url(sport: str, abbr: str, team_id: str = '') -> str:
     abbr_lower = abbr.lower()
     if sport == 'NFL':
-        return f"https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/{abbr_lower}.png"
+        return espn_logo("nfl", abbr)
     elif sport == 'NBA':
-        return f"https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/{abbr_lower}.png"
+        return espn_logo("nba", abbr)
     elif sport == 'NHL':
-        return f"https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{abbr_lower}.png"
+        return espn_logo("nhl", abbr)
     elif sport == 'NCAAF':
         if team_id:
             return f"https://a.espncdn.com/i/teamlogos/ncaa/500/{team_id}.png"
@@ -2392,8 +2395,8 @@ def generate_game_card_nhl(game: Dict) -> str:
             </table>
         </div>'''
 
-    away_logo = f"https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{away['abbr'].lower()}.png"
-    home_logo = f"https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/{home['abbr'].lower()}.png"
+    away_logo = espn_logo("nhl", away["abbr"])
+    home_logo = espn_logo("nhl", home["abbr"])
 
     betting_lines_html = ''
     if has_valid_odds(odds):
@@ -2619,8 +2622,8 @@ def generate_game_card_mlb(game: Dict) -> str:
             </table>
         </div>'''
 
-    away_logo = f"https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/{away['abbr'].lower()}.png"
-    home_logo = f"https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/{home['abbr'].lower()}.png"
+    away_logo = espn_logo("mlb", away["abbr"])
+    home_logo = espn_logo("mlb", home["abbr"])
 
     betting_lines_html = ''
     if has_valid_odds(odds):
