@@ -4,7 +4,7 @@
    (blp-events.js): email_signup_view, email_signup_submit, email_signup_pending,
    email_signup_error. */
 (function () {
-  var API = 'https://trustmyrecord-api.onrender.com/api/email/subscribe';
+  var API = 'https://api.trustmyrecord.com/api/email/subscribe';
   function track(name, params) {
     try { if (typeof window.blpTrack === 'function') window.blpTrack(name, params); } catch (e) {}
   }
