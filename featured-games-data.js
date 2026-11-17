@@ -205,6 +205,7 @@ var FEATURED_GAMES = [
     { date: "2026-10-22", page: "featured-game-of-the-day.html#patriots-vs-bears-2026-10-22", title: "Patriots vs Bears on Thursday Night Football: Drake Maye Against Caleb Williams, Two 4 and 2 Teams, And A Line That Has Moved From 1.5 To 3" },
     { date: "2026-10-29", page: "featured-game-of-the-day.html#panthers-vs-packers-2026-10-29", title: "Panthers vs Packers on Thursday Night Football: Two Angry Teams, The Worst Run Game In The NFL Against The Worst Run Defense, And A Line That Fell From 7 To 3.5" },
     { date: "2026-11-10", page: "featured-game-of-the-day.html#celtics-vs-76ers-2026-11-10", title: "Celtics vs 76ers on NBC: Two Of The East's Hottest Starts Meet In Philadelphia, And Boston's Three Point Barrage Runs Into A Pick'em Line" },
+    { date: "2026-11-16", page: "featured-game-of-the-day.html#chargers-vs-ravens-2026-11-16", title: "Chargers vs Ravens on Monday Night Football: An 0 and 8 Team, A Fourth Ravens Quarterback In Four Weeks, And A Total That Fell From 48.5 To 39.5" },
     // ADD NEW FEATURED GAMES HERE (format: date, page, title)
 ];
 
