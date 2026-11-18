@@ -82,7 +82,9 @@ def label(s):
 
 def season_of(date):
     d = dt.date.fromisoformat(date)
-    return d.year if d.month >= 10 else d.year - 1  # the 2020 bubble playoffs (Aug, Sep) belong to 2019-20
+    if d.year == 2020 and d.month in (8, 9):  # the 2020 bubble playoffs belong to 2019-20
+        return 2019
+    return d.year if d.month >= 9 else d.year - 1  # 2026-27 opened September 29, 2026
 
 
 def load_games(db):
