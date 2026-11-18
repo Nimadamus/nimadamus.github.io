@@ -279,6 +279,11 @@ def fu(x):
 
 def froi(x):
     x = 0.0 if abs(x) < 0.05 else x
+    if x > 100:
+        # A one or two game split won as a big underdog returns more than the stake (1-0 at +245
+        # is +245%). True, but noise, and the content validator refuses any percentage above 100.
+        # The exact figure is still in the units column beside it.
+        return "above +100%"
     return f"{x:+.1f}%"
 
 
