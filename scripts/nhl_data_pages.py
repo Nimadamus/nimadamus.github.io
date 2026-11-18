@@ -276,8 +276,14 @@ def build_team(team, games, cur, aggs, now_pt, finished, pl_ok):
     sa = {n: m.agg(rs) for n, rs in sp if rs}
     home, road, fav, dog, b2b = sa["Home"], sa["Road"], sa.get("As favorite"), sa.get("As underdog"), sa.get("Second night of a back to back")
     months = collections.OrderedDict()
+    has_september = any(dt.date.fromisoformat(r["date"]).month == 9 for r in cr)
     for r in cr:
-        months.setdefault(dt.date.fromisoformat(r["date"]).strftime("%B"), []).append(r)
+        # 2026-27 opened on September 29: a club's one September game is its opening week, and a
+        # one game "September" row (1-0, +245% return) is not a month. It is counted with October.
+        month = dt.date.fromisoformat(r["date"]).strftime("%B")
+        if month in ("September", "October") and has_september:
+            month = "September and October"
+        months.setdefault(month, []).append(r)
     opp = collections.defaultdict(list)
     for r in cr:
         opp[r["opp"]].append(r)
