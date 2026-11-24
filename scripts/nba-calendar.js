@@ -156,7 +156,7 @@ const ARCHIVE_DATA = [
     { date: "2026-03-21", page: "nba-previews-archive-march-2026.html#2026-03-21", title: "NBA Analysis - 2026-03-21" },
     { date: "2026-03-20", page: "hawks-plus-2-5-at-rockets-nba.html", title: "Hawks +2.5 at Rockets NBA Pick" },
     { date: "2026-03-20", page: "knicks-nets-rivalry-pistons-surge-celtics-road-trip-nba.html", title: "NBA Analysis - March 20, 2026" },
-    { date: "2026-03-20", page: "nba.html", title: "NBA Slate, Odds and Analysis for November 23, 2026" },
+    { date: "2026-03-20", page: "nba.html", title: "NBA Slate, Odds and Analysis for November 24, 2026" },
     { date: "2026-03-19", page: "hornets-vs-magic-nba-betting-history.html", title: "Hornets vs Magic Betting History: ATS, Odds and Results" },
     { date: "2026-03-18", page: "lakers-rockets-luka-durant-duel-warriors-celtics-nba.html", title: "NBA Analysis - March 18, 2026" },
     { date: "2026-03-17", page: "cavaliers-thunder-dominate-march-madness-eve-nba.html", title: "NBA Analysis - March 17, 2026" },
