@@ -417,15 +417,10 @@ def extract_date_from_page(filepath):
         if iso_datetime_matches:
             return iso_datetime_matches[0]
 
-        # Method 5b: JSON-LD datePublished. A loose scan was reading the date
-        # out of a photo filename and moving a May 26, 2026 article to 2023-08-09.
-        published = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})', content)
-        if published:
-            return published.group(1)
-
-        # Method 6: Look for ISO dates anywhere in content (not the most reliable)
-        # Skip dates inside URLs and timestamps.
-        iso_match = re.search(r'(?<![/\w])(\d{4}-\d{2}-\d{2})(?![0-9T])', content[:100000])
+        # Method 6: Look for ISO dates anywhere in content (not the most reliable).
+        # Skip dates inside URLs. A Wikimedia filename dated 2023-08-09 was
+        # moving a May 26, 2026 article onto the wrong calendar day.
+        iso_match = re.search(r'(?<![/\w-])(\d{4}-\d{2}-\d{2})(?![0-9T])', content[:100000])
         if iso_match:
             return iso_match.group(1)
 
