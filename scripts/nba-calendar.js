@@ -63,7 +63,6 @@ const ARCHIVE_DATA = [
     { date: "2026-05-28", page: "thunder-spurs-elimination-night-wcf-game-6-nba.html", title: "NBA Analysis - Thunder vs Spurs WCF Game 6 - May 28, 2026" },
     { date: "2026-05-28", page: "thunder-vs-spurs-western-conference-final-game-6-nba-analysis-stats-preview.html", title: "Thunder vs Spurs Game 6 Analysis, Stats, Preview - May 28, 2026" },
     { date: "2026-05-26", page: "spurs-thunder-game-5-win-or-go-home-wembanyama-shai-nba.html", title: "NBA Analysis - May 26, 2026" },
-    { date: "2026-05-26", page: "thunder-moneyline-spurs-game-5-western-conference-final-paycom-center-nba-pick.html", title: "Thunder Moneyline vs Spurs Game 5 Pick" },
     { date: "2026-05-25", page: "knicks-sweep-bid-cavaliers-elimination-game-4-nba.html", title: "NBA Analysis - May 25, 2026" },
     { date: "2026-05-24", page: "thunder-spurs-game-4-wembanyama-sga-nba.html", title: "NBA Analysis - May 24, 2026" },
     { date: "2026-05-23", page: "cavaliers-season-on-the-line-knicks-eastern-conference-finals-game-3-nba.html", title: "NBA Preview: Knicks at Cavaliers ECF Game 3 - May 23, 2026" },
@@ -285,6 +284,7 @@ const ARCHIVE_DATA = [
     { date: "2025-11-30", page: "archives/nba/2025-11-30.html", title: "NBA Archive - 2025-11-30" },
     { date: "2025-11-29", page: "archives/nba/2025-11-29.html", title: "NBA Archive - 2025-11-29" },
     { date: "2025-11-24", page: "nba-picks-analysis-against-the-spread-v64.html", title: "NBA November 24, 2025 Preview" },
+    { date: "2023-08-09", page: "thunder-moneyline-spurs-game-5-western-conference-final-paycom-center-nba-pick.html", title: "Thunder Moneyline vs Spurs Game 5 Pick" },
 ];
 
 const dateMap = {};
