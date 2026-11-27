@@ -238,7 +238,7 @@ NAV_HTML = """
             <a href="howitworks.html">How It Works</a>
             <a href="bankroll.html">Bankroll Management</a>
             <a href="betting-calculators.html">Betting Calculators</a>
-            <a href="screenshots.html">Screenshots</a>
+            <a href="/screenshots.html">Screenshots</a>
             <a href="bestonlinesportsbook.html">Best Sportsbook</a>
             <a href="betting-101.html">Betting 101</a>
         </div>
